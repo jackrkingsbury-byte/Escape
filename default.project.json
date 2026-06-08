@@ -5,6 +5,10 @@
 
     "ServerScriptService": {
       "$className": "ServerScriptService",
+      "Installer": {
+        "$className": "Script",
+        "$path": "src/server/Installer.server.lua"
+      },
       "GameManager": {
         "$className": "Script",
         "$path": "src/server/GameManager.server.lua"
