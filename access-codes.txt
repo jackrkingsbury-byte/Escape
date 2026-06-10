@@ -1,0 +1,75 @@
+# ============================================================
+# ESCAPE — ACCESS CODES (master list)
+# ------------------------------------------------------------
+# Give ONE code to each buyer after payment. Each code unlocks
+# the full course (they enter it at checkout via "Already
+# bought? Enter your access code", or in the dashboard via
+# "I have a code").
+#
+# Tip: set your payment provider's delivery/thank-you message
+# to auto-send the next unused code, or email it manually.
+# Cross codes off this list as you hand them out.
+#
+# KEEP THIS FILE PRIVATE — do NOT deploy it to Netlify or
+# share it publicly. Only the hashed versions live in the site.
+# ============================================================
+ESCAPE-23PH-QSTA
+ESCAPE-2BRM-5P4R
+ESCAPE-3G5D-U33X
+ESCAPE-3LS9-86JT
+ESCAPE-3LT5-SXV9
+ESCAPE-3ZFV-YAQV
+ESCAPE-7PXW-MRAM
+ESCAPE-8EKB-W8KJ
+ESCAPE-AATG-BN3C
+ESCAPE-ASTZ-SYPE
+ESCAPE-AT45-PJT7
+ESCAPE-BGZU-CP2N
+ESCAPE-C56A-NHDZ
+ESCAPE-CBUT-DHAE
+ESCAPE-CR96-9HG3
+ESCAPE-D3EY-TWHG
+ESCAPE-D5MW-E9MW
+ESCAPE-DKTH-A2KG
+ESCAPE-DPFP-NXFM
+ESCAPE-DRQK-3V44
+ESCAPE-EHH6-FMLR
+ESCAPE-F3M8-K24L
+ESCAPE-GNU4-GYF8
+ESCAPE-HCP5-VGLA
+ESCAPE-HQWD-WJNV
+ESCAPE-HW4D-HM8X
+ESCAPE-JB53-Q54S
+ESCAPE-JX3V-TGNL
+ESCAPE-JYCW-THY9
+ESCAPE-KW5G-YLRV
+ESCAPE-LZ4C-LYKZ
+ESCAPE-MBEZ-UPUU
+ESCAPE-MCY7-JQU3
+ESCAPE-MSLH-BYQW
+ESCAPE-P2P3-6VMB
+ESCAPE-P6TA-A5PW
+ESCAPE-PBVC-7AKD
+ESCAPE-Q4SZ-7RWG
+ESCAPE-QLZG-RRME
+ESCAPE-QNMN-CZCK
+ESCAPE-R2ZN-PFBZ
+ESCAPE-RN4R-VXBQ
+ESCAPE-TQYF-BLJM
+ESCAPE-TS64-2DJV
+ESCAPE-TVGN-G6GK
+ESCAPE-U6XH-U4SL
+ESCAPE-UTKV-QQXZ
+ESCAPE-V7GF-9K92
+ESCAPE-VUV3-APGP
+ESCAPE-WG36-DKWZ
+ESCAPE-WLVQ-9QGZ
+ESCAPE-WMP4-AYP4
+ESCAPE-WPJJ-PMKX
+ESCAPE-WPT9-AQFP
+ESCAPE-X5NA-TR8K
+ESCAPE-XKKJ-UU5E
+ESCAPE-YDWX-R4AC
+ESCAPE-YSKU-A66P
+ESCAPE-ZDBH-LM5N
+ESCAPE-ZELS-EKC4

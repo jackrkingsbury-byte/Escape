@@ -149,8 +149,10 @@ header.nav.scrolled{border-color:var(--line);box-shadow:0 6px 22px rgba(20,22,28
 /* testimonials row */
 .tg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:12px}
-.tcard:nth-child(2){transform:rotate(-1deg)}
-.tcard:nth-child(3){transform:rotate(.8deg)}
+.tcard:nth-child(3n+2){transform:rotate(-1deg)}
+.tcard:nth-child(3n){transform:rotate(.8deg)}
+.tcard:nth-child(4){transform:rotate(.5deg)}
+.tcard:nth-child(7){transform:rotate(-.5deg)}
 .tcard p{flex:1;font-size:.98rem;font-weight:500}
 .tperson{display:flex;align-items:center;gap:11px}
 .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-family:'Fraunces',serif}
@@ -479,6 +481,66 @@ textarea.px-in{min-height:120px}
 .mvfinal h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.02;margin-bottom:14px}
 .mvfinal p{color:var(--muted);font-size:1.1rem;margin-bottom:24px}
 
+/* ===== UPGRADE: hero motion ===== */
+.hero-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;animation:orbFloat 16s ease-in-out infinite alternate}
+.orb.o1{width:360px;height:360px;background:#2347ff;top:-90px;left:-70px}
+.orb.o2{width:300px;height:300px;background:#ff5630;top:18%;right:-90px;animation-duration:20s;animation-delay:-7s}
+.orb.o3{width:260px;height:260px;background:#785cff;bottom:-70px;left:32%;animation-duration:24s;animation-delay:-12s}
+@keyframes orbFloat{from{transform:translate(0,0) scale(1)}to{transform:translate(46px,-34px) scale(1.18)}}
+.rot-wrap{display:inline-block;perspective:400px}
+#rotWord{display:inline-block;transition:transform .3s ease,opacity .3s ease;transform-origin:50% 100%;min-width:2ch}
+#rotWord.flip{transform:rotateX(82deg) translateY(7px);opacity:0}
+/* urgency strip */
+.urgent-bar{position:sticky;top:70px;z-index:55;background:linear-gradient(90deg,#ff5630,#ff8a3c);color:#fff;text-align:center;font-size:.82rem;font-weight:700;padding:8px 14px;letter-spacing:.02em}
+.urgent-bar b{font-family:'JetBrains Mono',monospace}
+.urgent-bar .cdt{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,.22);border-radius:7px;padding:2px 8px;margin-left:4px}
+/* live ticker */
+#siteTicker{position:fixed;left:16px;bottom:16px;z-index:80;display:flex;align-items:center;gap:10px;background:#0b0f1c;border:1px solid rgba(255,255,255,.16);color:#eef1fb;border-radius:100px;padding:9px 12px 9px 16px;font-size:.8rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.45);max-width:330px}
+#siteTicker .tick-dot{width:8px;height:8px;border-radius:50%;background:#43e0a0;flex:none;animation:tickPulse 2s infinite}
+@keyframes tickPulse{0%,100%{box-shadow:0 0 0 0 rgba(67,224,160,.5)}50%{box-shadow:0 0 0 6px rgba(67,224,160,0)}}
+#tickerMsg{transition:opacity .3s}
+#siteTicker button{background:none;border:none;color:#7f8db8;cursor:pointer;font-size:.85rem;padding:2px;line-height:1}
+@media(max-width:700px){#siteTicker{display:none}}
+/* numbers wall */
+.nw-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:880px;margin:0 auto;text-align:center}
+.nw .nw-v{display:block;font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,3.2rem);color:#fff;font-weight:600;line-height:1}
+.nw span{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#9fb0e8;display:block;margin-top:7px}
+@media(max-width:600px){.nw-row{grid-template-columns:1fr 1fr;gap:22px 12px}}
+/* value stack */
+.stack-card{max-width:480px;margin:0 auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:28px;backdrop-filter:blur(8px);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.stack-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:11px 2px;border-bottom:1px dashed rgba(255,255,255,.16);color:#dfe6ff;font-weight:600;font-size:.95rem}
+.stack-row s{color:#9fb0e8;font-family:'JetBrains Mono',monospace;flex:none}
+.stack-total{display:flex;justify-content:space-between;align-items:baseline;padding:14px 2px 4px;color:#fff;font-weight:800}
+.stack-total s{color:#ff8a6e;font-family:'JetBrains Mono',monospace;font-size:1.1rem}
+.stack-today{display:flex;justify-content:space-between;align-items:center;background:rgba(255,214,10,.1);border:1px solid rgba(255,214,10,.35);border-radius:13px;padding:12px 16px;margin:12px 0 16px;color:#ffd60a;font-weight:800}
+.stack-today b{font-family:'Fraunces',serif;font-size:1.8rem}
+/* sticky mobile CTA */
+#mobileCta{display:none}
+@media(max-width:600px){#mobileCta{display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:90}footer.site{padding-bottom:96px}}
+body.modal-open #mobileCta{display:none!important}
+/* freemium tease */
+.tease-zone{position:relative;margin-top:12px}
+.tease-blur{filter:blur(7px);opacity:.65;user-select:none;pointer-events:none}
+.tease-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;padding:24px;background:rgba(9,12,24,.55);backdrop-filter:blur(3px);border:1px solid rgba(255,255,255,.16);border-radius:16px}
+.tease-card .tc-lock{font-size:1.7rem}
+.tease-card b{font-family:'Fraunces',serif;color:#fff;font-size:1.2rem}
+.tease-card p{color:#c7d0ea;font-size:.9rem;max-width:300px;line-height:1.45}
+.tease-card .btn{margin-top:6px}
+.tease-code{color:#9fb0e8;font-size:.8rem;text-decoration:underline;cursor:pointer}
+.tease-code:hover{color:#fff}
+.free-badge{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(67,224,160,.16);color:#5cf0b4;border:1px solid rgba(67,224,160,.4);border-radius:100px;padding:2px 8px;margin-left:7px;vertical-align:middle;white-space:nowrap}
+.ds-nav-lock{font-size:.66rem;opacity:.75;display:none}
+.px-back{background:none;border:none;color:#9fb0e8;cursor:pointer;font-family:inherit;font-weight:600;font-size:.86rem;padding:6px 0;text-align:left}
+.px-back:hover{color:#fff}
+/* unlock form */
+.unlock-err{background:var(--pop-soft);color:var(--pop);border-radius:11px;padding:12px 14px;font-size:.88rem;margin-top:12px;font-weight:600;display:none}
+.unlock-ok{background:rgba(67,224,160,.15);color:#0e9a64;border-radius:11px;padding:14px;font-size:.95rem;margin-top:12px;font-weight:700;display:none;text-align:center}
+[data-theme="dark"] .unlock-ok{color:#5cf0b4}
+/* coach note */
+.ds-coach{margin-bottom:24px;background:linear-gradient(120deg,rgba(35,71,255,.16),rgba(120,92,255,.12));border-color:rgba(100,128,255,.3)}
+.ds-coach-line{font-family:'Fraunces',serif;font-style:italic;font-size:1.18rem;color:#fff;line-height:1.35}
+
 @media(max-width:980px){.vault-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){
   .mvtwo{grid-template-columns:1fr}
@@ -519,12 +581,15 @@ textarea.px-in{min-height:120px}
 
 <div class="view active" id="view-site">
 
+  <div class="urgent-bar">⚡ Founding price ends soon — <b>R300</b> → <b>R450</b> next drop<span class="cdt" id="cdTimer">—</span></div>
+
   <section class="hero mvhero mvdark">
     <div class="mvglow"></div>
+    <div class="hero-orbs" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
     <div class="container">
       <span class="eyebrow reveal">A movement · not a course</span>
       <h1 class="reveal">Most people watch<br>life happen.</h1>
-      <p class="sub reveal">ESCAPE is for the ones who <span class="z">participate</span> — who go first, say yes, and build a life they don't need to escape from.</p>
+      <p class="sub reveal">ESCAPE is for the ones who <span class="rot-wrap"><span class="z" id="rotWord">participate</span></span> — and build a life they don't need to escape from.</p>
       <div class="mvcta reveal">
         <button class="btn btn-pop btn-lg" onclick="openCheckout()">Enter ESCAPE</button>
         <button class="btn btn-ghost btn-lg" onclick="goSite('vault')">Take a sneak peek</button>
@@ -562,6 +627,18 @@ textarea.px-in{min-height:120px}
       <div class="cmp">
         <div class="col fake reveal"><div class="ct">Before</div><h3>Watching life</h3><ul><li>Endless scrolling</li><li>Waiting for motivation</li><li>Overthinking everything</li><li>Comparing, constantly</li><li>Always saying "one day"</li></ul></div>
         <div class="col real reveal"><div class="ct">After</div><h3>Living it</h3><ul><li>Taking action</li><li>Talking to people</li><li>Real, earned confidence</li><li>Making your own luck</li><li>Becoming someone interesting</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mvdark" style="padding:56px 0">
+    <div class="mvglow"></div>
+    <div class="container">
+      <div class="nw-row reveal">
+        <div class="nw"><b class="nw-v" data-count="300" data-suf="+">0</b><span>members in</span></div>
+        <div class="nw"><b class="nw-v" data-count="4.8" data-dec="1" data-suf="★">0</b><span>average rating</span></div>
+        <div class="nw"><b class="nw-v" data-count="6">0</b><span>systems</span></div>
+        <div class="nw"><b class="nw-v" data-count="365">0</b><span>daily dares</span></div>
       </div>
     </div>
   </section>
@@ -625,6 +702,25 @@ textarea.px-in{min-height:120px}
     </div>
   </section>
 
+  <section class="mvdark mvpad" id="stack">
+    <div class="mvglow"></div>
+    <div class="container">
+      <div class="section-head">
+        <span class="label reveal" style="color:var(--zing)">Everything you get</span>
+        <h2 class="reveal">Stack it up. Then look at the price again.</h2>
+      </div>
+      <div class="stack-card reveal">
+        <div class="stack-row"><span>The 6 Systems — the full vault</span><s>R900</s></div>
+        <div class="stack-row"><span>365 Daily Dares — one a day, forever</span><s>R450</s></div>
+        <div class="stack-row"><span>Member Dashboard — streaks, XP, tracking</span><s>R350</s></div>
+        <div class="stack-row"><span>5 Bonus Kits</span><s>R600</s></div>
+        <div class="stack-total"><span>Total value</span><s>R2,300</s></div>
+        <div class="stack-today"><span>Today</span><b id="stackPrice">R300</b></div>
+        <button class="btn btn-pop btn-lg btn-block" onclick="openCheckout()">Claim the founding price</button>
+      </div>
+    </div>
+  </section>
+
   <section class="mvdark mvjoin" id="deal">
     <div class="mvglow"></div>
     <div class="container">
@@ -683,6 +779,9 @@ textarea.px-in{min-height:120px}
       <div class="foot-bottom"><span>© <span id="year"></span> ESCAPE · Build a life you don't need to escape from.</span><span>Educational content — not a substitute for professional care.</span></div>
     </div>
   </footer>
+
+  <div id="siteTicker" role="status"><span class="tick-dot"></span><span id="tickerMsg">Someone from Cape Town just entered ESCAPE</span><button onclick="dismissTicker()" aria-label="Dismiss">✕</button></div>
+  <div id="mobileCta"><button class="btn btn-pop" style="width:100%;box-shadow:0 10px 30px rgba(255,86,48,.45)" onclick="openCheckout()">Enter ESCAPE — <span id="mobileCtaPrice">R300</span></button></div>
 </div>
 
 <div class="view" id="view-dashboard">
@@ -704,12 +803,12 @@ textarea.px-in{min-height:120px}
         <button class="ds-nav-item active" data-screen="home" onclick="pxGo('home')"><span class="ds-nav-icon">&#x1F4CA;</span><span class="ds-nav-label">Overview</span></button>
         <button class="ds-nav-item" data-screen="dare" onclick="pxGo('dare');pxRenderDare()"><span class="ds-nav-icon">&#x26A1;</span><span class="ds-nav-label">Today's Dare</span></button>
         <button class="ds-nav-item" data-screen="day" onclick="pxGo('day');pxDayReset();pxRenderDayLog()"><span class="ds-nav-icon">&#x1F319;</span><span class="ds-nav-label">Daily Check-in</span></button>
-        <button class="ds-nav-item" data-screen="lessons" onclick="pxGo('lessons');pxRenderMods()"><span class="ds-nav-icon">&#x1F4DA;</span><span class="ds-nav-label">The 6 Systems</span></button>
-        <button class="ds-nav-item" data-screen="ten" onclick="pxGo('ten');pxRenderTen()"><span class="ds-nav-icon">&#x2736;</span><span class="ds-nav-label">10 Things</span></button>
-        <button class="ds-nav-item" data-screen="letter" onclick="pxGo('letter');pxRenderLetter()"><span class="ds-nav-icon">&#x2709;&#xFE0F;</span><span class="ds-nav-label">Future Letter</span></button>
-        <button class="ds-nav-item" data-screen="goals" onclick="pxGo('goals');pxRenderGoals()"><span class="ds-nav-icon">&#x1F3AF;</span><span class="ds-nav-label">Goals</span></button>
-        <button class="ds-nav-item" data-screen="notes" onclick="pxGo('notes');pxRenderNotes()"><span class="ds-nav-icon">&#x1F4DD;</span><span class="ds-nav-label">Notes</span></button>
-        <button class="ds-nav-item" data-screen="cert" onclick="pxGo('cert');pxRenderCert()"><span class="ds-nav-icon">&#x1F3C6;</span><span class="ds-nav-label">Certificate</span></button>
+        <button class="ds-nav-item" data-screen="lessons" onclick="pxGo('lessons');pxRenderMods()"><span class="ds-nav-icon">&#x1F4DA;</span><span class="ds-nav-label">The 6 Systems</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="ten" onclick="pxGo('ten');pxRenderTen()"><span class="ds-nav-icon">&#x2736;</span><span class="ds-nav-label">10 Things</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="letter" onclick="pxGo('letter');pxRenderLetter()"><span class="ds-nav-icon">&#x2709;&#xFE0F;</span><span class="ds-nav-label">Future Letter</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="goals" onclick="pxGo('goals');pxRenderGoals()"><span class="ds-nav-icon">&#x1F3AF;</span><span class="ds-nav-label">Goals</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="notes" onclick="pxGo('notes');pxRenderNotes()"><span class="ds-nav-icon">&#x1F4DD;</span><span class="ds-nav-label">Notes</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="cert" onclick="pxGo('cert');pxRenderCert()"><span class="ds-nav-icon">&#x1F3C6;</span><span class="ds-nav-label">Certificate</span><span class="ds-nav-lock">🔒</span></button>
         <div class="ds-nav-divider"></div>
         <div class="ds-nav-section">Integrations</div>
         <button class="ds-nav-item" onclick="dsToast('Connect Notion in your integrations settings →')"><span class="ds-nav-icon">&#x1F517;</span><span class="ds-nav-label">Sync to Notion</span></button>
@@ -740,6 +839,7 @@ textarea.px-in{min-height:120px}
               <p>Members unlock all 6 modules, every deep experience, your goal tracker, notes and certificate &mdash; yours for life.</p>
               <div class="ub">
                 <button class="btn btn-pop" onclick="openCheckout()">Unlock everything &mdash; <span id="pxUnlockPrice">R300</span></button>
+                <button class="px-demo" onclick="openCheckout(true)">I have a code</button>
               </div>
             </div>
             <div class="ds-stats-row">
@@ -747,6 +847,10 @@ textarea.px-in{min-height:120px}
               <div class="ds-stat-card"><span class="ds-sv" id="dsSvStreak">0</span><span class="ds-sl">Streak days</span></div>
               <div class="ds-stat-card"><span class="ds-sv" id="dsSvXp">0</span><span class="ds-sl">Total XP</span></div>
               <div class="ds-stat-card"><span class="ds-sv" id="dsSvLevel">1</span><span class="ds-sl">Level</span></div>
+            </div>
+            <div class="ds-panel ds-coach">
+              <div class="ds-panel-sub">&#x1F9ED; Coach note</div>
+              <div class="ds-coach-line" id="dsCoachLine">One dare. Today.</div>
             </div>
             <div class="ds-home-row2">
               <div class="ds-panel">
@@ -965,12 +1069,24 @@ textarea.px-in{min-height:120px}
 <div class="modal-overlay" id="checkoutModal">
   <div class="modal">
     <button class="close" onclick="closeCheckout()" aria-label="Close">✕</button>
-    <h3>Start your escape</h3>
-    <p style="color:var(--muted);font-size:.94rem">Full course, 30 daily dares, all bonuses + your dashboard. Yours for life.</p>
-    <div class="order"><div class="lt"><b>ESCAPE — Full Access</b><span>One-time · founding price</span></div><div class="amt" id="modalAmount">R300</div></div>
-    <div class="pay-btns" id="payBtns"></div>
-    <div class="pay-msg" id="payMsg"></div>
-    <div class="demo-link"><a onclick="closeCheckout();showView('dashboard')">Sneak peek inside →</a></div>
+    <div id="coBuy">
+      <h3>Start your escape</h3>
+      <p style="color:var(--muted);font-size:.94rem">Full course, 365 daily dares, all bonuses + your dashboard. Yours for life.</p>
+      <div class="order"><div class="lt"><b>ESCAPE — Full Access</b><span>One-time · founding price</span></div><div class="amt" id="modalAmount">R300</div></div>
+      <div class="pay-btns" id="payBtns"></div>
+      <div class="pay-msg" id="payMsg"></div>
+      <div class="demo-link">Already bought? <a onclick="showUnlockForm()">Enter your access code →</a></div>
+      <div class="demo-link"><a onclick="closeCheckout();showView('dashboard')">Sneak peek inside →</a></div>
+    </div>
+    <div id="coCode" style="display:none">
+      <h3>Enter your access code</h3>
+      <p style="color:var(--muted);font-size:.94rem">It looks like <code style="font-family:'JetBrains Mono',monospace">ESCAPE-XXXX-XXXX</code> — you get one right after payment.</p>
+      <input class="area" id="unlockInput" placeholder="ESCAPE-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" style="margin:16px 0 12px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em" onkeydown="if(event.key==='Enter')submitUnlock()">
+      <button class="btn btn-primary btn-block" id="unlockBtn" onclick="submitUnlock()">Unlock</button>
+      <div class="unlock-err" id="unlockErr">That code doesn't match. Check for typos — codes only use letters A–Z and digits 2–9.</div>
+      <div class="unlock-ok" id="unlockOk">🎉 Welcome to ESCAPE — you're in.</div>
+      <div class="demo-link"><a onclick="showBuyForm()">← Back to checkout</a></div>
+    </div>
   </div>
 </div>
 
@@ -984,6 +1100,16 @@ textarea.px-in{min-height:120px}
    and the link is public & safe (NEVER paste a secret API key here).
    Payfast & Yoco support Instant EFT / SnapScan — great for buyers
    who don't have a credit card (a lot of teens & students).
+
+   HOW ACCESS WORKS (no backend needed):
+   1. Buyer pays through one of your payment links below.
+   2. You send them ONE access code from access-codes.txt (keep that
+      file private!). Tip: most providers let you set a "delivery" /
+      thank-you message — paste a code there to auto-deliver it.
+   3. They tap "Already bought? Enter your access code" at checkout
+      (or "I have a code" in the dashboard) and they're unlocked for
+      life on that device. Only SHA-256 hashes of the codes live in
+      this file, so nobody can read codes out of the page source.
    ===================================================================== */
 const CONFIG = {
   payments: {
@@ -999,7 +1125,7 @@ const CONFIG = {
 
 const RATES={ZAR:{s:"R",v:300},USD:{s:"$",v:16},EUR:{s:"€",v:15},GBP:{s:"£",v:13},NGN:{s:"₦",v:24000},KES:{s:"KSh ",v:2100},INR:{s:"₹",v:1400},AUD:{s:"A$",v:25},CAD:{s:"C$",v:22}};
 let currentCur="ZAR";
-const store={mem:{},get(k){try{return localStorage.getItem(k)}catch(e){return (k in this.mem)?this.mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){this.mem[k]=v}}};
+const store={mem:{},get(k){try{return localStorage.getItem(k)}catch(e){return (k in this.mem)?this.mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){this.mem[k]=v}},del(k){try{localStorage.removeItem(k)}catch(e){delete this.mem[k]}}};
 const load=(k,d)=>{const v=store.get(k);if(v==null)return d;try{return JSON.parse(v)}catch(e){return d}};
 const save=(k,v)=>store.set(k,JSON.stringify(v));
 
@@ -1017,7 +1143,13 @@ const TOTAL_LESSONS=MODULES.reduce((a,m)=>a+m.topics.length,0);
 const REVIEWS=[
   {name:"Lerato",role:"@lerato · 19",color:"#2347ff",text:"The daily dares got me out of my room. I talked to people I'd never have talked to. I feel like myself again."},
   {name:"Daniel",role:"@dan.k · 21",color:"#ff5630",text:"Not a magic fix — that's why I trust it. The dares are tiny but they add up. My screen time genuinely dropped."},
-  {name:"Aisha",role:"@aisha.r · 24",color:"#1a8a8a",text:"40 days into a morning walk. The streak is what keeps me — I don't want to break it."}
+  {name:"Aisha",role:"@aisha.r · 24",color:"#1a8a8a",text:"40 days into a morning walk. The streak is what keeps me — I don't want to break it."},
+  {name:"Sipho",role:"@sipho.d · 18",color:"#785cff",text:"Module 4 made me actually talk to the guy at the gym I'd been nodding at for months. We train together now. That alone was worth it."},
+  {name:"Mia",role:"@mia.lst · 22",color:"#e0489a",text:"I rolled my eyes at 'daily dares'. Then I did one. Then 17 more. My weekends look nothing like they did in January."},
+  {name:"Tumi",role:"@tumi_w · 20",color:"#ff9f1a",text:"Deleted TikTok for a week because the dares were honestly more fun. Never thought I'd type that sentence."},
+  {name:"Josh",role:"@joshv · 23",color:"#2347ff",text:"It's not deep theory, it's 'do this small thing today'. Which is exactly why it works when nothing else did."},
+  {name:"Zanele",role:"@zanele.m · 19",color:"#43b0a0",text:"The check-ins sound cheesy until you read your own ones back a month later. I'm a different person on paper. And off it."},
+  {name:"Liam",role:"@liam.t · 25",color:"#ff5630",text:"My future letter 'arrived' after 90 days of small dares. I barely recognised the guy who wrote it. In a good way."}
 ];
 const FAQS=[
   {q:"What is ESCAPE?",a:"A self-paced course of short lessons plus a daily dare — small, bold actions that pull you out of autopilot and into actually living. Six areas: mind, days, habits, social life, health, future."},
@@ -1034,8 +1166,13 @@ function renderFaq(){document.getElementById("faqWrap").innerHTML=FAQS.map((f,i)
 function toggleFaq(i){const it=document.getElementById("faq"+i),an=it.querySelector(".faq-a");if(it.classList.contains("open")){it.classList.remove("open");an.style.maxHeight=null}else{it.classList.add("open");an.style.maxHeight=an.scrollHeight+"px"}}
 function renderMarquee(){const cls=["b","p",""];const make=arr=>arr.concat(arr).map((d,i)=>`<span class="dare-chip ${cls[i%3]}">${d.replace(/"/g,'&quot;')}</span>`).join("");document.getElementById("mq1").innerHTML=make(DARES.slice(0,8));document.getElementById("mq2").innerHTML=make(DARES.slice(7))}
 
-let heroIdx=0;
-function shuffleDare(){const el=document.getElementById("heroDare");let n;do{n=Math.floor(Math.random()*DARES.length)}while(n===heroIdx&&DARES.length>1);heroIdx=n;el.style.opacity="0";setTimeout(()=>{el.textContent=DARES[n].replace(/&quot;/g,'"');el.style.opacity="1"},180)}
+let heroIdx=0,_twT=null;
+function typeText(el,text){
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=text;return}
+  clearInterval(_twT);let i=0;el.textContent=" ";
+  _twT=setInterval(()=>{i++;if(i>=text.length){el.textContent=text;clearInterval(_twT)}else{el.textContent=text.slice(0,i)+"▌"}},17);
+}
+function shuffleDare(){const el=document.getElementById("heroDare");let n;do{n=Math.floor(Math.random()*DARES.length)}while(n===heroIdx&&DARES.length>1);heroIdx=n;typeText(el,DARES[n].replace(/&quot;/g,'"'))}
 
 function showView(v){document.querySelectorAll(".view").forEach(e=>e.classList.remove("active"));document.getElementById("view-"+v).classList.add("active");window.scrollTo({top:0});if(v==="dashboard")renderDashboard();if(v==="admin")renderAdmin();closeMenu()}
 function goSite(id){document.querySelectorAll(".view").forEach(e=>e.classList.remove("active"));document.getElementById("view-site").classList.add("active");closeMenu();setTimeout(()=>{const t=document.getElementById(id);if(t)t.scrollIntoView({behavior:"smooth"})},60)}
@@ -1044,9 +1181,16 @@ function setThemeIcon(t){document.getElementById("moonIcon").innerHTML=t==="dark
 function toggleMenu(){document.getElementById("mobileMenu").classList.toggle("show")}
 function closeMenu(){document.getElementById("mobileMenu").classList.remove("show")}
 function fmt(c){const r=RATES[c];return r.s+r.v.toLocaleString()}
-function updateCurrency(c){currentCur=c;["dealPrice","dealBtnPrice","modalAmount","vaultPrice"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=fmt(c)})}
-function openCheckout(){renderPayButtons();document.getElementById("modalAmount").textContent=fmt(currentCur);document.getElementById("payMsg").style.display="none";document.getElementById("checkoutModal").classList.add("show")}
-function closeCheckout(){document.getElementById("checkoutModal").classList.remove("show")}
+function updateCurrency(c){currentCur=c;["dealPrice","dealBtnPrice","modalAmount","vaultPrice","stackPrice","mobileCtaPrice"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=fmt(c)})}
+function openCheckout(codeMode){
+  renderPayButtons();
+  document.getElementById("modalAmount").textContent=fmt(currentCur);
+  document.getElementById("payMsg").style.display="none";
+  if(codeMode===true)showUnlockForm();else showBuyForm();
+  document.getElementById("checkoutModal").classList.add("show");
+  document.body.classList.add("modal-open");
+}
+function closeCheckout(){document.getElementById("checkoutModal").classList.remove("show");document.body.classList.remove("modal-open")}
 const PROVIDERS=[
   {key:"payfast",name:"Card / Instant EFT (Payfast)",cls:"pay-payfast"},
   {key:"yoco",name:"Card / EFT (Yoco)",cls:"pay-yoco"},
@@ -1067,9 +1211,92 @@ function pay(key){
   else{msg.style.display="block";msg.innerHTML=`⚙️ <b>${name} not connected yet.</b><br>Create a payment link in your ${name} dashboard, then paste it into <code>CONFIG.payments.${key}</code> at the bottom of this file and re-upload. It goes live instantly.`}
 }
 
-/* ===== PREMIUM MEMBER SPACE ===== */
-function isPremium(){return load("escape_premium",false)===true}
-function pxToggleDemo(){save("escape_premium",!isPremium());renderDashboard()}
+/* ===== ACCESS-CODE LICENSE SYSTEM =====
+   Only SHA-256 hashes of valid codes are embedded here.
+   The plain codes live in access-codes.txt (keep it private). */
+const KEY_HASHES=["ebd9f5f2dde35e0c019b94c43cb6d7d61dcf37d4fb17ab341ffd182237d7e566","7f001ff4690b6f2c0350ef63df149163d497065edaac26d48fd9800e1451a1d5","1916073c7ce15407f0ea2184aa7fd9883b71292be3396e35849e1722338d4e09","fd3e86f44bb4b9fcd1720a931c2a455fc5da9ed5e58a78103b117e6f726f0f00","e53d9c547149cea79c705c059e38b69302fb69ed771c0ad50a0b86fc27666613","21c9bc0185c5402fec852dfee978063454dba309391b06c0399757d0f06bfe91","6a04f13a2302023d4c38895bdd752e54b775ad123d5877d1b943510371821f62","192c5724685520c33d2162af47d30d086ca999726ada428874d8444033ce9819","81462ff4c5cddfc47fa25d659f5bde46fdd899b96fc97f9dee807c5f40977a3e","045dc9d41b34d7d398704faa4fc686d2654ef2e2170fd8bf8a5299a09a0a731f","6a3284c4364ba2ec5159233447f22726bcdfb803104d3fce3b10c029f716f02e","15f696cb91e2e79605a094c7fb19ccc6a175c6df9d5153a324471673695fbb8f","02294fc90bc72ae455d73abd1013084e413c61e25e4aef3d76e038e43fe5600a","36a1e44be140ab7e332c0205d4d889fb6ac8b05dbf5fb75f3f5362866ae7f9f4","cb27dad9154c8ff1b68fb779c735f162fa41f2c22db849820efd7c8caaf06237","94b5e519f19cb2598f3be96f21fd8b5526e4db6992fe8e18f1d34a9b0d925284","0da4ba27a3f2c38ec4e28a2e83629c6ac9910f83ca632a568a9392927eb50704","b5d8b68d031d993db1a367127e2038ca7f67d15b05458b2dc154b23d4fab5660","bd16f761794f68077432dd3315331f277fca4a5843517ae7205235692d0df428","1da0216f92b830cb790afde264a7d6edf7487ac90c2631a582417194e356fe92","b0e4b57b59521d2400fd66e0d10d1a64d4f007724ac3a9ff7dbc7db701ff5986","5f87b4ab4c3c75a5784dfbde592f7e2b847993ed7ed882fc1b3ef5fa50fa9d88","b63e1922a8bfe9c3c968f5e3941c0118ae585652010f2e0248604888061fe9a0","477d1b1633c84b36e44e28f4f13537139f6a1de570ba07d18b17023406918146","df1f93b16d7e1e9457a77dfeac51a43590fd029259ffdc63141569d5c2454b8a","cdaac4c87178886ee9c105347e27e27f2d4acc5352bee6e761c72be5b05473a2","912efe0be5585e6f1438e11cf824cc0fcbe584da0f238a2e771367e2e741748f","c2631ca81dac4d3197ae753459f288aeb599e253d9e05ef1f538c81526a78c9c","105c63a7abe11118256a9fae4d7688abdb0dcb50961c1cae8882f01a44698da6","25857f6eb3b0ead61d0acf292434b65e90471aeca7c0d623fc978327fd5a5ed9","17ea8ac062d9cb70b03f82eb24dbdf5607d5462ed618e44f6b4ac6d96524a0a6","58c5a717aa157858c318700bc8a92685d83bf21ee86788055dfadb88d4540ebd","be41cdea9dbff8af84a1f61902ce03996f1d74d308c17da201eb0194aead0f32","4516d9eec4f5145b38d12d48a6af1607058c1187d3b8a36fb1e341a472e9decf","54bbd74c06a57d146dd2ecad902c8b3386a40a1f364ad36ed976c1fcd7b822e9","ef2a0b537b57d6e253f2c9f2f685ee54ed7e715031ed2e0835baa814b7125945","addd5c062ce2fa9707f9a823ef751edc5eebdccb5e5044eee28a4a0a70feb9af","f0b09c6baa855de71a121a381290faea88e512d0ff12eefee6eeeda397419eb0","0b01155b07bca6633879d43ed6886d5831e9ea6383ee8ba08636b082a60c4032","0e14b66af186f94e30ae0bd0eb257a3ed3ff53280d6197509584c786d40bab73","e56fd037eb8043d3fb0744ff62669487bc1d9e9cd2009d001a369f7306f7c6d6","6c89178cf27fa0539eb3a0783b0b12aeb9d3cdc2711af87079c56a858dd295ab","48bd071f518e670561c6497d0effeb0a7c1e45162687bec9f83e21a8ce0069c6","af93c9b76e397948c137747d928ea7ddfe33c57348b6578e9194f372f2a93833","dc9ee04573817040e4af4a8d690e943e21dd274f8dcbd4ec9e6f8b971bc8b72b","df21f819d898c8a4bf3c4f908503dde7ddaeed899b13eecc4eec5acd15d011b9","5cad1a1d566735922f0348180b0692a3b3dc1ed7e621d152da930930d3672030","0adf265a2cc61a95758ba552f4a88560ce028f4a875d3ee30821dfa1cf866583","6e6903c01d34bd0d88f481f6b80b4b9b0a9531b39b1d9cfe623c88179e9d6eb3","35b89e48e17dfe845500437667e0bdca82e553e2a18b2756c84368873bacae23","d9324f509b2adb2959f28779fc166750083e3763f58e25d437c625a36ec1ba02","4e29befd89259f714919a273c346682fb00d175e2e7383f5da7d7ebbed604dfc","23c52c9a9aa6aa6e2ef9dcbb8e873a50b10bd3ab4730483e481d228e313f465c","c2c3e92ed7c7cf5686a803f91aa8f2b48035f987e230c1e86258ad71115277b6","ab7a8682de838c3d2bc18f5df0ef7a097dbdb98e5fbd35853ab086bfb902c590","9301f22f89173cd04d3076009298482f26838c19bf1ed90c8488d7f7b0973bdc","e7ddbe302912dc65040a29bd717d39eeb2536b65a786bbd39387dd759e3aec76","92d85a1a94d3e265d8e13a8f2d7eb33897782b2a33c30e01083954022d45dcea","daf1a43f89049340a6a4088b6964322b1e1e10de288d5a7b74990e8ff0dc0889","399b651dfc6b82e397cc0e3ba56bcd74bce438b5e1e35fce06f2a022bbb6f7f7"];
+function isPremium(){return !!load("escape_premium_key",null)}
+async function hashCode(str){
+  const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function tryUnlock(code){
+  const norm=(code||"").trim().toUpperCase();
+  if(!norm)return false;
+  let hex;
+  try{hex=await hashCode(norm)}catch(e){return false}
+  if(!KEY_HASHES.includes(hex))return false;
+  save("escape_premium_key",norm);
+  updateNavLocks();
+  if(document.getElementById("view-dashboard").classList.contains("active"))renderDashboard();
+  return true;
+}
+async function verifyStoredKey(){
+  const k=load("escape_premium_key",null);
+  if(!k)return;
+  let ok=false;
+  try{ok=KEY_HASHES.includes(await hashCode(String(k).trim().toUpperCase()))}
+  catch(e){ok=true} /* crypto unavailable (non-https) — don't lock out a paid member */
+  if(!ok){
+    store.del("escape_premium_key");
+    updateNavLocks();
+    if(document.getElementById("view-dashboard").classList.contains("active"))renderDashboard();
+  }
+}
+function showUnlockForm(){
+  document.getElementById("coBuy").style.display="none";
+  document.getElementById("coCode").style.display="block";
+  document.getElementById("unlockErr").style.display="none";
+  document.getElementById("unlockOk").style.display="none";
+  document.getElementById("unlockBtn").style.display="";
+  document.getElementById("unlockInput").style.display="";
+  setTimeout(()=>{const i=document.getElementById("unlockInput");if(i)i.focus()},60);
+}
+function showBuyForm(){
+  document.getElementById("coCode").style.display="none";
+  document.getElementById("coBuy").style.display="block";
+}
+async function submitUnlock(){
+  const inp=document.getElementById("unlockInput"),err=document.getElementById("unlockErr"),ok=document.getElementById("unlockOk"),btn=document.getElementById("unlockBtn");
+  err.style.display="none";
+  btn.disabled=true;btn.textContent="Checking…";
+  const good=await tryUnlock(inp.value);
+  btn.disabled=false;btn.textContent="Unlock";
+  if(good){
+    inp.style.display="none";btn.style.display="none";
+    ok.style.display="block";
+    setTimeout(()=>{closeCheckout();showBuyForm();showView("dashboard")},1500);
+  }else{
+    if(!(window.crypto&&crypto.subtle))err.textContent="Unlocking needs a secure (https) connection — open the live site and try again.";
+    err.style.display="block";
+  }
+}
+const PREMIUM_SCREENS=["lessons","ten","letter","goals","notes","cert"];
+function updateNavLocks(){
+  const prem=isPremium();
+  document.querySelectorAll("[data-screen]").forEach(b=>{
+    const lk=b.querySelector(".ds-nav-lock");if(!lk)return;
+    lk.style.display=(!prem&&PREMIUM_SCREENS.includes(b.dataset.screen))?"inline":"none";
+  });
+}
+/* tease helpers — fake gibberish only, never real lesson content */
+function gib(){const syl=["vor","ten","mal","ski","pra","lon","dre","cas","mun","tel","ova","rin","seq","bal","tho","wex"];let s="";const w=3+Math.floor(Math.random()*4);for(let i=0;i<w;i++){let word="";const c=2+Math.floor(Math.random()*2);for(let j=0;j<c;j++)word+=syl[Math.floor(Math.random()*syl.length)];s+=word+" "}return s.trim()}
+function teaseCard(benefit){return '<div class="tease-card"><div class="tc-lock">🔒</div><b>This is inside ESCAPE</b><p>'+benefit+'</p><button class="btn btn-pop btn-sm" onclick="openCheckout()">Unlock — '+fmt(currentCur)+'</button><a class="tease-code" onclick="openCheckout(true)">I have a code</a></div>'}
+function pxTease(screen,benefit,firstHTML,rowsHTML){
+  const panel=document.querySelector("#px-"+screen+" .px-panel");
+  if(!panel)return false;
+  if(isPremium()){
+    if(panel.dataset.teased==="1"){panel.innerHTML=panel.dataset.orig;panel.dataset.teased="0"}
+    return false;
+  }
+  if(!panel.dataset.orig)panel.dataset.orig=panel.innerHTML;
+  panel.dataset.teased="1";
+  panel.innerHTML=firstHTML+'<div class="tease-zone"><div class="tease-blur" aria-hidden="true">'+rowsHTML+'</div>'+teaseCard(benefit)+'</div>';
+  return true;
+}
+function teaseLi(n){let o="";for(let i=0;i<n;i++)o+='<div class="px-li"><span class="n">'+(i+2)+'</span><span>'+gib()+'</span></div>';return o}
+function teaseGoals(n){let o="";for(let i=0;i<n;i++)o+='<div class="px-goal'+(i%2?' done':'')+'"><input type="checkbox" '+(i%2?'checked':'')+' disabled><span>'+gib()+'</span></div>';return o}
+function teaseNotes(n){let o="";for(let i=0;i<n;i++)o+='<div class="px-note"><div class="nt">'+gib()+' '+gib()+'<br><small>···</small></div></div>';return o}
 
 const PX_CARDS=[
   {id:"dare",   cls:"",   icon:"⚡", title:"Today's Dare",       desc:"One bold move a day. Build the streak.", free:true},
@@ -1093,7 +1320,8 @@ function pxStats(){return {lessons:load("escape_completed",[]).length,streak:(lo
 function renderAchievements(){var s=pxStats(),el=document.getElementById("pxAchv");if(!el)return;el.innerHTML=PX_ACHV.map(function(a){var e=a.test(s);return '<div class="px-badge '+(e?'earned':'')+'"><span class="be">'+(e?a.e:'🔒')+'</span><b>'+a.t+'</b><span>'+a.d+'</span></div>'}).join("")}
 function renderGrid(){
   const prem=isPremium();
-  document.getElementById("pxGrid").innerHTML=PX_CARDS.map(c=>{
+  const grid=document.getElementById("pxGrid");if(!grid)return;
+  grid.innerHTML=PX_CARDS.map(c=>{
     const locked=!c.free&&!prem;
     const tag=c.free?'<span class="tag free">Free preview</span>':(prem?'':'<span class="tag prem">Premium</span>');
     return `<div class="px-card ${c.cls} ${locked?'locked':''}" onclick="pxOpen('${c.id}',${locked})">${tag}<div class="pc"><div class="pic">${c.icon}</div><h3>${c.title}</h3><p>${c.desc}</p></div><div class="lockwrap"><div class="lk">🔒</div><b>Inside ESCAPE</b><span>Unlock to discover →</span></div></div>`;
@@ -1141,6 +1369,7 @@ function renderDashboard(){
   const _un=document.getElementById("dsUserName");if(_un)_un.textContent=_n||"Member";
   const _uav=document.getElementById("dsUserAv");if(_uav)_uav.textContent=(_n&&_n[0].toUpperCase())||"?";
   const _ub=document.getElementById("dsUserBadge");if(_ub){_ub.textContent=prem?"✶ Member":"⬡ Preview";_ub.className="ds-user-badge "+(prem?"member":"preview");}
+  updateNavLocks();
   dsRenderHome();
 }
 
@@ -1160,37 +1389,65 @@ function pxDaySave(){const moods=["","😞","😕","😐","🙂","😄"];const e
 function pxRenderDayLog(){const log=load("escape_day_log",[]),el=document.getElementById("pxDayLog");if(!log.length){el.innerHTML="";return}el.innerHTML='<div style="font-family:JetBrains Mono,monospace;font-size:.7rem;letter-spacing:.14em;color:#9fb0e8;margin-bottom:10px">YOUR RECENT CHECK-INS</div>'+log.slice(0,5).map(e=>`<div class="px-note"><div class="nt"><b style="color:#fff">${e.moodE} ${e.win?esc(e.win):"—"}</b>${e.text?'<br><span style="color:#9fb0e8;font-size:.88rem">'+esc(e.text)+'</span>':''}<br><small>${e.date}</small></div></div>`).join("")}
 
 /* 10 Things */
-function pxRenderTen(){const t=load("escape_ten",[]),el=document.getElementById("pxTenList");el.innerHTML=t.map((x,i)=>`<div class="px-li"><span class="n">${i+1}</span><span>${esc(x)}</span><button onclick="pxTenDel(${i})">🗑</button></div>`).join("");document.getElementById("pxTenBar").style.width=Math.min(100,t.length*10)+"%";const d=document.getElementById("pxTenDone");if(t.length>=10){d.style.display="block";d.textContent="🎉 All 10. Screenshot this — it's your year."}else{d.style.display="none"}}
+function pxRenderTen(){if(pxTease("ten","The list that makes your next year suddenly obvious — all 10 slots, tracked.",'<div class="px-li"><span class="n">1</span><span style="color:#cdd6f5">The thing you keep telling yourself you\'ll do "one day"&hellip;</span></div>',teaseLi(5)))return;const t=load("escape_ten",[]),el=document.getElementById("pxTenList");el.innerHTML=t.map((x,i)=>`<div class="px-li"><span class="n">${i+1}</span><span>${esc(x)}</span><button onclick="pxTenDel(${i})">🗑</button></div>`).join("");document.getElementById("pxTenBar").style.width=Math.min(100,t.length*10)+"%";const d=document.getElementById("pxTenDone");if(t.length>=10){d.style.display="block";d.textContent="🎉 All 10. Screenshot this — it's your year."}else{d.style.display="none"}}
 function pxTenAdd(){const inp=document.getElementById("pxTenInput"),v=inp.value.trim();if(!v)return;const t=load("escape_ten",[]);if(t.length>=10)return;t.push(v);save("escape_ten",t);inp.value="";pxRenderTen()}
 function pxTenDel(i){const t=load("escape_ten",[]);t.splice(i,1);save("escape_ten",t);pxRenderTen()}
 
 /* Letter */
-function pxRenderLetter(){const l=load("escape_letter",null),s=document.getElementById("pxLetterSaved");if(l){document.getElementById("pxLetter").value=l.text;s.style.display="block";s.textContent=`✉️ Sealed ${l.date}.`}else{s.style.display="none"}}
+function pxRenderLetter(){if(pxTease("letter","A message only future-you gets to open — sealed for 90 days.",'<p style="color:#cdd6f5;margin-bottom:10px">Write to yourself 90 days from now. We keep it sealed until you come back.</p>','<div class="px-note"><div class="nt">Dear future me, '+gib()+'&hellip;<br>'+gib()+' '+gib()+'<br>'+gib()+'<br><small>Sealed ···</small></div></div>'))return;const l=load("escape_letter",null),s=document.getElementById("pxLetterSaved");if(l){document.getElementById("pxLetter").value=l.text;s.style.display="block";s.textContent=`✉️ Sealed ${l.date}.`}else{s.style.display="none"}}
 function pxLetterSave(){const t=document.getElementById("pxLetter").value.trim();if(!t)return;save("escape_letter",{text:t,date:new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})});pxRenderLetter()}
 
 /* Lessons */
 const LESSON_BODY="<p>Welcome. This lesson is short on purpose — read it, then do the one small action at the end. That's the whole method: tiny moves, repeated until they're just who you are.</p><h4>The idea</h4><p>You don't need a massive life overhaul. You need one repeatable action small enough that you can't talk yourself out of it — and a reason to come back tomorrow.</p><h4>Try this now</h4><p>Pick the smallest possible version of this topic and do it in the next 10 minutes. Then tick it complete below and watch your streak grow.</p>";
-function pxRenderMods(){const done=load("escape_completed",[]);document.getElementById("pxMods").innerHTML=MODULES.map((m,mi)=>{const dc=m.topics.filter((t,ti)=>done.includes("m"+(mi+1)+"-"+(ti+1))).length;return `<div class="px-modrow" onclick="pxOpenMod(${mi})"><div class="mnum">${String(m.n).padStart(2,"0")}</div><div class="mt"><b>${m.title}</b><span>${m.topics.length} lessons</span></div><div class="mc">${dc}/${m.topics.length}</div></div>`}).join("")}
+function pxModRow(m,mi,done){const dc=m.topics.filter((t,ti)=>done.includes("m"+(mi+1)+"-"+(ti+1))).length;return `<div class="px-modrow" onclick="pxOpenMod(${mi})"><div class="mnum">${String(m.n).padStart(2,"0")}</div><div class="mt"><b>${m.title}</b><span>${m.topics.length} lessons</span></div><div class="mc">${dc}/${m.topics.length}</div></div>`}
+function pxRenderMods(){
+  const done=load("escape_completed",[]),el=document.getElementById("pxMods");
+  if(isPremium()){el.innerHTML=MODULES.map((m,mi)=>pxModRow(m,mi,done)).join("");return}
+  /* free tease: module 1 open, the rest blurred placeholders (no real content) */
+  let fakes="";for(let i=2;i<=6;i++)fakes+='<div class="px-modrow" style="cursor:default"><div class="mnum">'+String(i).padStart(2,"0")+'</div><div class="mt"><b>'+gib()+'</b><span>4 lessons</span></div><div class="mc">🔒</div></div>';
+  el.innerHTML=pxModRow(MODULES[0],0,done)+'<div class="tease-zone"><div class="tease-blur" aria-hidden="true">'+fakes+'</div>'+teaseCard("All six systems that quietly rewire your week. Module 1, Lesson 1 is free — try it.")+'</div>';
+}
 let pxCurMod=0,pxCurLesson=0;
-function pxOpenMod(mi){pxCurMod=mi;const m=MODULES[mi],done=load("escape_completed",[]);document.getElementById("pxMods").innerHTML=`<button class="px-back" onclick="pxRenderMods()" style="margin-bottom:6px">← All modules</button>`+m.topics.map((t,ti)=>{const id="m"+(mi+1)+"-"+(ti+1),ch=done.includes(id);return `<div class="px-modrow" onclick="pxOpenLesson(${mi},${ti})"><div class="mnum">${ch?'✓':(ti+1)}</div><div class="mt"><b>${esc(t)}</b><span>${ch?'Completed':'Lesson '+(ti+1)}</span></div><div class="mc">→</div></div>`}).join("")}
-function pxOpenLesson(mi,ti){pxCurMod=mi;pxCurLesson=ti;const m=MODULES[mi],id="m"+(mi+1)+"-"+(ti+1),done=load("escape_completed",[]).includes(id);document.getElementById("pxLessonTag").textContent="MODULE "+(mi+1)+" · LESSON "+(ti+1);document.getElementById("pxLessonTitle").textContent=m.topics[ti];document.getElementById("pxLessonBody").innerHTML=LESSON_BODY;const btn=document.getElementById("pxLessonBtn");if(done){btn.textContent="✓ Completed";btn.style.opacity=".6"}else{btn.textContent="Mark complete ✓";btn.style.opacity="1"}pxGo('lesson')}
+function pxOpenMod(mi){
+  const prem=isPremium();
+  if(!prem&&mi>0){openCheckout();return}
+  pxCurMod=mi;const m=MODULES[mi],done=load("escape_completed",[]);
+  document.getElementById("pxMods").innerHTML=`<button class="px-back" onclick="pxRenderMods()" style="margin-bottom:6px">← All modules</button>`+m.topics.map((t,ti)=>{
+    const id="m"+(mi+1)+"-"+(ti+1),ch=done.includes(id);
+    const locked=!prem&&!(mi===0&&ti===0);
+    if(locked)return `<div class="px-modrow" onclick="openCheckout()"><div class="mnum">🔒</div><div class="mt"><b>${esc(t)}</b><span>Inside ESCAPE</span></div><div class="mc">→</div></div>`;
+    const badge=(!prem&&mi===0&&ti===0)?'<span class="free-badge">Free sample</span>':'';
+    return `<div class="px-modrow" onclick="pxOpenLesson(${mi},${ti})"><div class="mnum">${ch?'✓':(ti+1)}</div><div class="mt"><b>${esc(t)}${badge}</b><span>${ch?'Completed':'Lesson '+(ti+1)}</span></div><div class="mc">→</div></div>`
+  }).join("")
+}
+function pxOpenLesson(mi,ti){
+  const prem=isPremium();
+  if(!prem&&!(mi===0&&ti===0)){openCheckout();return}
+  pxCurMod=mi;pxCurLesson=ti;const m=MODULES[mi],id="m"+(mi+1)+"-"+(ti+1),done=load("escape_completed",[]).includes(id);
+  document.getElementById("pxLessonTag").textContent="MODULE "+(mi+1)+" · LESSON "+(ti+1)+((!prem&&mi===0&&ti===0)?" · ✦ FREE SAMPLE":"");
+  document.getElementById("pxLessonTitle").textContent=m.topics[ti];
+  document.getElementById("pxLessonBody").innerHTML=LESSON_BODY;
+  const btn=document.getElementById("pxLessonBtn");
+  if(done){btn.textContent="✓ Completed";btn.style.opacity=".6"}else{btn.textContent="Mark complete ✓";btn.style.opacity="1"}
+  pxGo('lesson')
+}
 function pxLessonDone(){const id="m"+(pxCurMod+1)+"-"+(pxCurLesson+1);let d=load("escape_completed",[]);if(!d.includes(id)){d.push(id);save("escape_completed",d)}renderDashboard();pxGo('lessons');pxOpenMod(pxCurMod)}
 
 /* Goals */
-function pxRenderGoals(){const g=load("escape_goals",[]),el=document.getElementById("pxGoalList");if(!g.length){el.innerHTML='<div class="px-empty">No goals yet — add one above.</div>';return}el.innerHTML=g.map((x,i)=>`<div class="px-goal ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} onchange="pxGoalToggle(${i})"><span>${esc(x.text)}</span><button onclick="pxGoalDel(${i})">🗑</button></div>`).join("")}
+function pxRenderGoals(){if(pxTease("goals","Watch 'someday' turn into a streak — add, tick, repeat.",'<div class="px-goal"><input type="checkbox" disabled><span style="color:#cdd6f5">e.g. Sleep by 11pm — tracked until it sticks</span></div>',teaseGoals(5)))return;const g=load("escape_goals",[]),el=document.getElementById("pxGoalList");if(!g.length){el.innerHTML='<div class="px-empty">No goals yet — add one above.</div>';return}el.innerHTML=g.map((x,i)=>`<div class="px-goal ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} onchange="pxGoalToggle(${i})"><span>${esc(x.text)}</span><button onclick="pxGoalDel(${i})">🗑</button></div>`).join("")}
 function pxGoalAdd(){const inp=document.getElementById("pxGoalInput"),v=inp.value.trim();if(!v)return;const g=load("escape_goals",[]);g.push({text:v,done:false});save("escape_goals",g);inp.value="";pxRenderGoals();renderDashboardSilent()}
 function pxGoalToggle(i){const g=load("escape_goals",[]);g[i].done=!g[i].done;save("escape_goals",g);pxRenderGoals();renderDashboardSilent()}
 function pxGoalDel(i){const g=load("escape_goals",[]);g.splice(i,1);save("escape_goals",g);pxRenderGoals();renderDashboardSilent()}
 function renderDashboardSilent(){const done=load("escape_completed",[]).length;const streak=(load("escape_challenge",{streak:0}).streak)||0,goalsDone=load("escape_goals",[]).filter(g=>g.done).length;const xp=done*40+streak*15+goalsDone*10+load("escape_day_log",[]).length*8+load("escape_ten",[]).length*4;const lv=Math.max(1,Math.floor(xp/120)+1);const sv=id=>document.getElementById(id);if(sv("pxStreak"))sv("pxStreak").textContent=streak;if(sv("pxXp"))sv("pxXp").textContent=xp;if(sv("pxLevel"))sv("pxLevel").textContent=lv;if(sv("dsChipStreak"))sv("dsChipStreak").textContent=streak;if(sv("dsChipXp"))sv("dsChipXp").textContent=xp;if(sv("dsChipLevel"))sv("dsChipLevel").textContent=lv;}
 
 /* Notes */
-function pxRenderNotes(){const n=load("escape_notes",[]),el=document.getElementById("pxNoteList");if(!n.length){el.innerHTML='<div class="px-empty">No notes yet.</div>';return}el.innerHTML=n.map((x,i)=>`<div class="px-note"><div class="nt">${esc(x.text)}<br><small>${x.date}</small></div><button onclick="pxNoteDel(${i})">🗑</button></div>`).join("")}
+function pxRenderNotes(){if(pxTease("notes","Your head, on paper, just for you — every thought saved privately.",'<div class="px-note"><div class="nt" style="color:#cdd6f5">Your private notebook lives here.<br><small>Only you can see these</small></div></div>',teaseNotes(4)))return;const n=load("escape_notes",[]),el=document.getElementById("pxNoteList");if(!n.length){el.innerHTML='<div class="px-empty">No notes yet.</div>';return}el.innerHTML=n.map((x,i)=>`<div class="px-note"><div class="nt">${esc(x.text)}<br><small>${x.date}</small></div><button onclick="pxNoteDel(${i})">🗑</button></div>`).join("")}
 function pxNoteAdd(){const inp=document.getElementById("pxNoteInput"),v=inp.value.trim();if(!v)return;const n=load("escape_notes",[]);n.unshift({text:v,date:new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})});save("escape_notes",n);inp.value="";pxRenderNotes()}
 function pxNoteDel(i){const n=load("escape_notes",[]);n.splice(i,1);save("escape_notes",n);pxRenderNotes()}
 
 /* Name + Certificate */
-function pxSaveName(v){save("escape_name",v);document.getElementById("pxName").textContent=v?(", "+v.split(" ")[0]):"";pxRenderCert()}
-function pxRenderCert(){const done=load("escape_completed",[]),name=load("escape_name","")||"Your Name",complete=done.length>=TOTAL_LESSONS,box=document.getElementById("pxCertBox");if(complete){box.innerHTML=`<div class="px-cert"><div class="sl">🏆</div><h2>Certificate of Completion</h2><p style="color:#9fb0e8">This certifies that</p><div class="who">${esc(name)}</div><p style="color:#9fb0e8">completed <b style="color:#fff">ESCAPE</b> — all six modules.</p><p style="color:#9fb0e8;font-size:.85rem;margin-top:10px">${new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})}</p><button class="btn btn-primary" style="margin-top:18px" onclick="window.print()">Print / Save PDF</button></div>`}else{const left=TOTAL_LESSONS-done.length;box.innerHTML=`<div class="px-cert lk"><div class="sl">🔒</div><h2>Locked</h2><p style="color:#9fb0e8;margin-top:8px">Finish <b style="color:#fff">${left}</b> more lesson${left===1?'':'s'} to unlock your certificate.</p></div>`}}
+function pxSaveName(v){save("escape_name",v);const _pn=document.getElementById("pxName");if(_pn)_pn.textContent=v?(", "+v.split(" ")[0]):"";const _un=document.getElementById("dsUserName");if(_un)_un.textContent=v||"Member";const _uav=document.getElementById("dsUserAv");if(_uav)_uav.textContent=(v&&v[0].toUpperCase())||"?";pxRenderCert()}
+function pxRenderCert(){if(pxTease("cert","Proof you became the person who finishes — printable, with your name on it.",'<p style="color:#cdd6f5;margin-bottom:10px">Finish all 24 lessons and your name goes here.</p>','<div class="px-cert"><div class="sl">🏆</div><h2>Certificate of Completion</h2><p style="color:#9fb0e8">This certifies that</p><div class="who">'+gib()+'</div><p style="color:#9fb0e8">completed every '+gib()+'</p></div>'))return;const done=load("escape_completed",[]),name=load("escape_name","")||"Your Name",complete=done.length>=TOTAL_LESSONS,box=document.getElementById("pxCertBox");if(complete){box.innerHTML=`<div class="px-cert"><div class="sl">🏆</div><h2>Certificate of Completion</h2><p style="color:#9fb0e8">This certifies that</p><div class="who">${esc(name)}</div><p style="color:#9fb0e8">completed <b style="color:#fff">ESCAPE</b> — all six modules.</p><p style="color:#9fb0e8;font-size:.85rem;margin-top:10px">${new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})}</p><button class="btn btn-primary" style="margin-top:18px" onclick="window.print()">Print / Save PDF</button></div>`}else{const left=TOTAL_LESSONS-done.length;box.innerHTML=`<div class="px-cert lk"><div class="sl">🔒</div><h2>Locked</h2><p style="color:#9fb0e8;margin-top:8px">Finish <b style="color:#fff">${left}</b> more lesson${left===1?'':'s'} to unlock your certificate.</p></div>`}}
 function renderAdmin(){renderAdminLessons();renderAdminUsers()}
 function adminAddLesson(){const mod=document.getElementById("alModule").value,title=document.getElementById("alTitle").value.trim();if(!title){alert("Add a lesson title.");return}const l=load("escape_admin_lessons",[]);l.unshift({mod,title});save("escape_admin_lessons",l);document.getElementById("alTitle").value="";document.getElementById("alBody").value="";renderAdminLessons()}
 function renderAdminLessons(){const l=load("escape_admin_lessons",[]),el=document.getElementById("adminLessonList");if(!l.length){el.innerHTML='<div class="empty">No custom lessons yet.</div>';return}el.innerHTML=l.map((x,i)=>`<div class="admin-row"><div><b>${esc(x.title)}</b><br><small>${esc(x.mod)}</small></div><button onclick="adminDelLesson(${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.05rem">🗑</button></div>`).join("")}
@@ -1201,7 +1458,7 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
 
 (function init(){
   const t=load("escape_theme","light");document.documentElement.setAttribute("data-theme",t);setThemeIcon(t);
-  if(location.hash==="#preview")save("escape_premium",true);if(location.hash==="#locked")save("escape_premium",false);renderReviews();renderFaq();renderMarquee();
+  renderReviews();renderFaq();renderMarquee();
   heroIdx=Math.floor(Math.random()*DARES.length);document.getElementById("heroDare").textContent=DARES[heroIdx].replace(/&quot;/g,'"');
   document.getElementById("year").textContent=new Date().getFullYear();
   updateCurrency("ZAR");
@@ -1211,6 +1468,9 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
   document.getElementById("checkoutModal").addEventListener("click",e=>{if(e.target.id==="checkoutModal")closeCheckout()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCheckout()});
   animateCount();
+  updateNavLocks();
+  startRotator();startTicker();startCountdown();startNumwall();
+  verifyStoredKey(); /* async: clears an invalid stored access code */
 })();
 
 function nfPost(f){return fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(f)).toString()})}
@@ -1259,7 +1519,85 @@ function dsRenderHome(){
     if(!log.length){timelineEl.innerHTML='<div class="px-empty">No check-ins yet — start with Daily Check-in.</div>';}
     else{timelineEl.innerHTML=log.slice(0,3).map(e=>'<div class="ds-timeline-item"><div class="ds-timeline-dot">'+e.moodE+'</div><div class="ds-timeline-body"><div class="ds-timeline-title">'+(e.win?esc(e.win):'Daily check-in')+'</div>'+(e.text?'<div class="ds-timeline-sub">'+esc(e.text.slice(0,80))+(e.text.length>80?'…':'')+'</div>':'')+'<div class="ds-timeline-date">'+e.date+'</div></div></div>').join("");}
   }
+  const cl=sv("dsCoachLine");if(cl)cl.textContent=coachLine({streak:streak,lessons:done,days:load("escape_day_log",[]).length,pct:pct});
   renderAchievements();
+}
+
+/* ===== AI-FEEL COACH NOTE (pure JS, no API) ===== */
+function coachLine(s){
+  if(s.pct>=100)return "All 24 lessons. You didn't read about change — you did it. Print the certificate.";
+  if(s.streak>=14)return "Two weeks straight. You're not 'trying ESCAPE' anymore — you're living it.";
+  if(s.streak>=7)return "7 days. This is what momentum feels like. Protect it like it's fragile — it is.";
+  if(s.streak>=3)return s.streak+" days. Most people quit at 2. You didn't.";
+  if(s.streak>0)return "Streak started. Tomorrow is the only dare that matters now.";
+  if(s.days>0||s.lessons>0)return "You've shown up before — that's the rare part. One dare today restarts everything.";
+  return "Day zero is the hardest. One dare. Today.";
+}
+
+/* ===== CONVERSION WIDGETS (rotator, ticker, countdown, count-up) ===== */
+function startRotator(){
+  const el=document.getElementById("rotWord");if(!el)return;
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const words=["participate","go first","say yes","live louder","show up"];
+  let i=0;
+  setInterval(()=>{
+    el.classList.add("flip");
+    setTimeout(()=>{i=(i+1)%words.length;el.textContent=words[i];el.classList.remove("flip")},310);
+  },2800);
+}
+const TICKS=[
+  "Someone from Cape Town just entered ESCAPE",
+  "Lerato completed Module 2",
+  "A new member just did their first dare",
+  "Someone from Joburg unlocked the full vault",
+  "Mia hit a 7-day streak 🔥",
+  "Someone from Nairobi just entered ESCAPE",
+  "Daniel sealed his Future Letter",
+  "Someone from Durban started Module 1",
+  "Tumi checked in 14 days in a row",
+  "Someone from London just entered ESCAPE",
+  "Josh finished The Confidence Loop",
+  "Someone from Lagos just entered ESCAPE"
+];
+function startTicker(){
+  const msg=document.getElementById("tickerMsg");if(!msg)return;
+  let i=0;
+  setInterval(()=>{
+    const el=document.getElementById("siteTicker");
+    if(!el||el.style.display==="none")return;
+    msg.style.opacity="0";
+    setTimeout(()=>{i=(i+1)%TICKS.length;msg.textContent=TICKS[i];msg.style.opacity="1"},320);
+  },6000);
+}
+function dismissTicker(){const el=document.getElementById("siteTicker");if(el)el.style.display="none"}
+function cdTarget(){const n=new Date();const t=new Date(n.getFullYear(),n.getMonth(),n.getDate());const add=((8-t.getDay())%7)||7;t.setDate(t.getDate()+add);return t}
+function startCountdown(){
+  const el=document.getElementById("cdTimer");if(!el)return;
+  let target=cdTarget();
+  function tick(){
+    let d=target-new Date();
+    if(d<=0){target=cdTarget();d=target-new Date()}
+    const s=Math.floor(d/1000),dd=Math.floor(s/86400),hh=Math.floor(s%86400/3600),mm=Math.floor(s%3600/60),ss=s%60;
+    el.textContent=(dd>0?dd+"d ":"")+String(hh).padStart(2,"0")+":"+String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0");
+  }
+  tick();setInterval(tick,1000);
+}
+function startNumwall(){
+  const els=document.querySelectorAll(".nw-v");if(!els.length)return;
+  const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finish=el=>{el.textContent=parseFloat(el.dataset.count).toFixed(parseInt(el.dataset.dec||"0"))+(el.dataset.suf||"")};
+  if(reduce){els.forEach(finish);return}
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{
+    if(!en.isIntersecting)return;
+    io.unobserve(en.target);
+    const el=en.target,target=parseFloat(el.dataset.count),dec=parseInt(el.dataset.dec||"0"),suf=el.dataset.suf||"",t0=performance.now(),dur=1100;
+    (function tick(now){
+      const p=Math.min(1,((now||performance.now())-t0)/dur);
+      el.textContent=(target*(1-Math.pow(1-p,3))).toFixed(dec)+suf;
+      if(p<1)requestAnimationFrame(tick);else finish(el);
+    })(performance.now());
+  })},{threshold:.4});
+  els.forEach(e=>io.observe(e));
 }
 
 </script>
