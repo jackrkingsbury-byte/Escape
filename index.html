@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ESCAPE — Build a life you don't need to escape from</title>
+<meta name="theme-color" content="#2347ff">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%232347ff'/><text x='50' y='72' font-size='64' font-family='Georgia,serif' fill='white' text-anchor='middle'>E</text></svg>">
+<meta property="og:title" content="ESCAPE — Build a life you don't need to escape from">
+<meta property="og:description" content="Trade the endless scroll for real dopamine. One dare a day, six modules, a totally different you.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ESCAPE — Build a life you don't need to escape from">
+<meta name="twitter:description" content="Trade the endless scroll for real dopamine. One dare a day, a totally different you.">
+<meta name="description" content="Trade the endless scroll for real dopamine — bold moves, new things, actual living. One dare a day, a totally different you. ESCAPE: build a life you don't need to escape from." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f5ef;--surface:#fff;--surface-2:#efe9dd;--text:#14161c;--muted:#5f6678;
+  --brand:#2347ff;--brand-deep:#1a38d6;--brand-soft:#e7eaff;
+  --pop:#ff5630;--pop-soft:#ffe7e0;--zing:#ffd60a;--line:#e4dece;
+  --shadow:0 1px 2px rgba(20,22,28,.04),0 10px 30px rgba(20,22,28,.07);
+  --shadow-lg:0 2px 5px rgba(20,22,28,.05),0 28px 64px rgba(20,22,28,.14);
+  --ring:rgba(35,71,255,.18);--radius:20px;--radius-sm:13px;--maxw:1120px;
+}
+[data-theme="dark"]{
+  --bg:#0a0c11;--surface:#11141b;--surface-2:#161a23;--text:#ececea;--muted:#9097a6;
+  --brand:#6480ff;--brand-deep:#4d6bff;--brand-soft:#1a2340;--pop:#ff6f4d;--pop-soft:#2a1712;--zing:#ffd60a;--line:#232938;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.4);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.45),0 34px 76px rgba(0,0,0,.55);--ring:rgba(100,128,255,.28);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s,color .4s}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.02;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:84px 0}
+.label{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.label.pop{color:var(--pop)}
+.section-head{max-width:680px;margin:0 auto 46px;text-align:center}
+.section-head h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:600;margin:12px 0}
+.section-head p{color:var(--muted);font-size:1.05rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-weight:800;font-size:1rem;padding:15px 28px;border-radius:100px;border:2px solid transparent;cursor:pointer;transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s,border-color .25s}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 12px 26px var(--ring)}
+.btn-primary:hover{background:var(--brand-deep);transform:translateY(-3px);box-shadow:0 20px 40px var(--ring)}
+.btn-pop{background:var(--pop);color:#fff;box-shadow:0 12px 26px rgba(255,86,48,.3)}
+.btn-pop:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 20px 40px rgba(255,86,48,.4)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--text)}
+.btn-ghost:hover{background:var(--text);color:var(--bg);transform:translateY(-3px)}
+.btn-light{background:#fff;color:var(--text)}
+.btn-block{width:100%}.btn-sm{padding:10px 18px;font-size:.9rem}.btn-lg{padding:18px 36px;font-size:1.1rem}
+header.nav{position:sticky;top:0;z-index:60;backdrop-filter:saturate(160%) blur(14px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid transparent;transition:.3s}
+header.nav.scrolled{border-color:var(--line);box-shadow:0 6px 22px rgba(20,22,28,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;letter-spacing:.04em}
+.brand .mark{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--text);position:relative}
+.brand .mark::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--pop);top:-1px;right:2px}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a.link{padding:8px 13px;border-radius:100px;font-weight:700;color:var(--muted);font-size:.92rem;transition:.2s}
+.nav-links a.link:hover{color:var(--text);background:var(--surface-2)}
+.nav-tools{display:flex;align-items:center;gap:9px}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:2px solid var(--line);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.icon-btn:hover{border-color:var(--brand);color:var(--brand)}
+.hamburger{display:none}.mobile-menu{display:none}
+/* hero */
+.hero{position:relative;padding:64px 0 76px;overflow:hidden;text-align:center}
+.hero-wash{position:absolute;inset:0;z-index:0;background:radial-gradient(640px 420px at 78% 12%,var(--brand-soft),transparent 70%),radial-gradient(520px 420px at 14% 96%,var(--pop-soft),transparent 72%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:880px;margin:0 auto}
+.tagpill{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);background:var(--zing);padding:8px 16px;border-radius:100px;transform:rotate(-2deg);box-shadow:var(--shadow)}
+.hero h1{font-size:clamp(2.8rem,8vw,5.6rem);font-weight:600;margin:22px 0;letter-spacing:-.03em}
+.hero h1 .it{font-style:italic;font-weight:500}
+.hero h1 .u{position:relative;white-space:nowrap;color:var(--brand)}
+.hero h1 .u::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.05em;height:.14em;background:var(--zing);z-index:-1;border-radius:3px}
+.hero p.sub{font-size:clamp(1.1rem,2.2vw,1.4rem);color:var(--muted);max-width:620px;margin:0 auto 30px;font-weight:500}
+.hero-cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+.hero-proof{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:30px;flex-wrap:wrap}
+.proof-faces{display:flex}
+.proof-faces span{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);margin-left:-9px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:.78rem;font-family:'Fraunces',serif}
+.proof-faces span:first-child{margin-left:0}
+.hero-proof .ptext{font-size:.9rem;color:var(--muted);font-weight:700}
+.hero-proof .ptext b{color:var(--text)}
+/* dare shuffler */
+.dare-try{max-width:520px;margin:42px auto 0}
+.dare-box{background:var(--text);color:var(--bg);border-radius:24px;padding:28px 26px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .dare-box{background:#060810;border:1px solid var(--line)}
+.dare-box::before{content:"";position:absolute;inset:0;background:radial-gradient(380px 220px at 80% 0,rgba(255,86,48,.35),transparent 70%)}
+.dare-box .dl{position:relative;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--zing)}
+.dare-box .dt{position:relative;font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;line-height:1.18;margin:10px 0 18px;min-height:2.4em;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+.dare-box .db-actions{position:relative;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+/* marquee */
+.marquee{display:flex;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.marquee .track{display:flex;gap:13px;padding:7px 6px;animation:scrollX 34s linear infinite;white-space:nowrap;will-change:transform}
+.marquee.rev .track{animation-direction:reverse;animation-duration:40s}
+@keyframes scrollX{to{transform:translateX(-50%)}}
+.dare-chip{flex:none;background:var(--surface);border:2px solid var(--line);border-radius:100px;padding:11px 19px;font-weight:700;font-size:1rem;box-shadow:var(--shadow)}
+.dare-chip.b{border-color:var(--brand);color:var(--brand)}
+.dare-chip.p{border-color:var(--pop);color:var(--pop)}
+.alt{background:var(--surface-2)}
+.ink{background:var(--text);color:var(--bg)}
+[data-theme="dark"] .ink{background:#060810;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+/* loop strip */
+.loop-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-top:30px}
+.loop-strip .ls{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;background:var(--surface);border:2px solid var(--line);border-radius:100px;padding:9px 15px}
+.loop-strip .ar{color:var(--muted);font-weight:800}
+.loop-copy{max-width:680px;margin:0 auto;text-align:center}
+.loop-copy h2{font-size:clamp(2rem,5vw,3.2rem);font-weight:600;margin:12px 0 14px}
+.loop-copy p{color:var(--muted);font-size:1.1rem}
+.loop-copy .pull{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--text);margin:22px auto;max-width:560px;line-height:1.3}
+/* dopamine compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:880px;margin:0 auto}
+.cmp .col{border-radius:20px;padding:30px;border:2px solid var(--line)}
+.cmp .fake{background:var(--surface)}
+.cmp .real{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:var(--shadow-lg)}
+.cmp .ct{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.cmp h3{font-size:1.7rem;font-weight:600;margin:8px 0 14px}
+.cmp ul{list-style:none;display:grid;gap:10px}
+.cmp li{display:flex;gap:10px;align-items:flex-start;font-weight:600;font-size:.98rem}
+.cmp .fake li::before{content:"✕";color:var(--pop);font-weight:800;flex:none}
+.cmp .real li::before{content:"✓";color:#fff;font-weight:800;flex:none}
+/* curriculum compact */
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mod{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:24px;transition:transform .2s,border-color .2s}
+.mod:hover{transform:translateY(-4px) rotate(-.6deg);border-color:var(--brand)}
+.mod .mn{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--brand);line-height:1}
+.mod h3{font-size:1.25rem;font-weight:600;margin:6px 0 10px}
+.mod .topics{display:flex;flex-wrap:wrap;gap:6px}
+.mod .topics span{font-size:.78rem;font-weight:700;color:var(--muted);background:var(--surface-2);border-radius:100px;padding:4px 10px}
+/* the deal */
+.deal{max-width:760px;margin:0 auto;text-align:center}
+.deal-price{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(4rem,15vw,9rem);line-height:.9;letter-spacing:-.04em}
+.deal-price .cur{color:var(--brand)}
+.deal-sub{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.deal-big{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0}
+.deal-tile{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:24px 18px}
+.deal-tile .di{color:var(--brand);margin-bottom:10px}
+.deal-tile b{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;display:block}
+.deal-tile span{color:var(--muted);font-size:.86rem}
+.deal-strip{background:var(--surface-2);border-radius:14px;padding:14px 20px;font-weight:600;font-size:.92rem;color:var(--muted);margin-bottom:24px}
+.deal-strip b{color:var(--text)}
+.deal-guar{display:inline-flex;gap:9px;align-items:center;color:var(--muted);font-size:.9rem;font-weight:600;margin-top:18px}
+.deal-guar svg{color:var(--brand);flex:none}
+.cur-row{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:8px}
+.cur-row label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cur-row select{font-family:inherit;font-weight:700;padding:8px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer}
+/* testimonials row */
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.tcard:nth-child(2){transform:rotate(-1deg)}
+.tcard:nth-child(3){transform:rotate(.8deg)}
+.tcard p{flex:1;font-size:.98rem;font-weight:500}
+.tperson{display:flex;align-items:center;gap:11px}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-family:'Fraunces',serif}
+.tperson b{display:block;font-size:.94rem}
+.tperson span{color:var(--muted);font-size:.8rem;font-family:'JetBrains Mono',monospace}
+.stars{color:var(--zing);font-size:.95rem}
+/* big CTA */
+.bigcta{text-align:center;max-width:760px;margin:0 auto}
+.bigcta h2{font-size:clamp(2.4rem,6.5vw,4.6rem);font-weight:600;letter-spacing:-.03em;color:#fff}
+.bigcta h2 .z{color:var(--zing);font-style:italic}
+.bigcta p{opacity:.82;margin:16px auto 28px;font-size:1.1rem;max-width:500px}
+/* faq */
+.faq-wrap{max-width:740px;margin:0 auto;display:grid;gap:11px}
+.faq-item{background:var(--surface);border:2px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--brand)}
+.faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;color:var(--text);padding:20px 22px;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.faq-q .chev{flex:none;transition:transform .3s;color:var(--brand)}
+.faq-item.open .chev{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;color:var(--muted)}
+.faq-a div{padding:0 22px 20px;line-height:1.6}
+/* footer */
+footer.site{background:var(--surface);border-top:2px solid var(--line);padding:48px 0 26px}
+.foot-grid{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;margin-bottom:30px}
+.foot-brand{max-width:300px}.foot-brand p{color:var(--muted);margin-top:12px;font-size:.94rem}
+.foot-col h4{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.foot-col a{display:block;color:var(--text);padding:5px 0;font-weight:600;font-size:.92rem;transition:.2s}
+.foot-col a:hover{color:var(--brand)}
+.foot-bottom{border-top:2px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:.84rem}
+/* views */
+.view{display:none}.view.active{display:block;animation:fadeUp .5s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.dash-hero{background:var(--text);color:var(--bg);padding:44px 0 88px;position:relative;overflow:hidden}
+[data-theme="dark"] .dash-hero{background:#060810;border-bottom:1px solid var(--line)}
+.dash-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(560px 360px at 82% 0,rgba(255,86,48,.32),transparent 70%)}
+.dash-hero .container{position:relative}.dash-hero h1{font-size:clamp(1.9rem,4vw,2.6rem);font-weight:600}.dash-hero p{opacity:.82;margin-top:5px}
+.dash-body{margin-top:-56px;position:relative;z-index:2;padding-bottom:80px}
+.dash-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;align-items:start}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:24px}
+.card h3{font-size:1.25rem;font-weight:600;margin-bottom:4px}.card .sub{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+.progress-top{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.ring{--pct:0;width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--brand) calc(var(--pct)*1%),var(--surface-2) 0);display:grid;place-items:center;flex:none;transition:background .6s}
+.ring .inner{width:90px;height:90px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
+.ring .inner b{font-family:'Fraunces',serif;font-size:1.8rem;display:block;line-height:1}.ring .inner span{font-size:.66rem;color:var(--muted);font-weight:700;font-family:'JetBrains Mono',monospace}
+.progress-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-width:230px}
+.stat{background:var(--surface-2);border-radius:13px;padding:15px;text-align:center}
+.stat b{font-family:'Fraunces',serif;font-size:1.5rem;display:block;line-height:1}.stat span{font-size:.68rem;color:var(--muted);font-weight:700;font-family:'JetBrains Mono',monospace}
+.mod-block{border:2px solid var(--line);border-radius:13px;margin-bottom:12px;overflow:hidden}
+.mod-block summary{cursor:pointer;list-style:none;padding:15px 17px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-family:'Fraunces',serif;font-size:1.05rem;background:var(--surface-2)}
+.mod-block summary::-webkit-details-marker{display:none}.mod-block summary .mc{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--muted)}
+.lesson{display:flex;align-items:center;gap:12px;padding:11px 17px;border-top:2px solid var(--line)}
+.lesson input{width:19px;height:19px;accent-color:var(--brand);cursor:pointer;flex:none}.lesson label{cursor:pointer;font-weight:600}
+.lesson.done label{color:var(--muted);text-decoration:line-through}
+.challenge{background:var(--pop);color:#fff;border-radius:18px;padding:24px;position:relative;overflow:hidden}
+.challenge::after{content:"";position:absolute;right:-26px;top:-26px;width:120px;height:120px;border:2px solid rgba(255,255,255,.25);border-radius:50%}
+.challenge .lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.92}
+.challenge p.txt{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;margin:9px 0 14px;line-height:1.22;position:relative}
+.challenge .streak{font-size:.84rem;opacity:.92;margin-bottom:13px}
+.challenge .cbtns{position:relative;display:flex;gap:9px;flex-wrap:wrap}
+.goal-row{display:flex;gap:9px;margin-bottom:13px}.goal-row input{flex:1}
+.goal-item{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:2px solid var(--line)}.goal-item:last-child{border-bottom:none}
+.goal-item input{width:18px;height:18px;accent-color:var(--brand);cursor:pointer;flex:none}.goal-item span{flex:1;font-weight:600}.goal-item.done span{text-decoration:line-through;color:var(--muted)}
+.goal-item button,.note-item button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.05rem;padding:3px;border-radius:6px}.goal-item button:hover,.note-item button:hover{color:var(--pop)}
+.note-item{background:var(--surface-2);border-radius:11px;padding:12px 14px;margin-bottom:9px;display:flex;justify-content:space-between;gap:9px;align-items:flex-start}.note-item .nt{flex:1}.note-item small{color:var(--muted);font-size:.72rem;font-family:'JetBrains Mono',monospace}
+.empty{color:var(--muted);font-size:.9rem;padding:7px 0}
+textarea.area,input.area,select.area{width:100%;font-family:inherit;font-size:1rem;padding:12px 14px;border-radius:11px;border:2px solid var(--line);background:var(--surface);color:var(--text);resize:vertical}textarea.area{min-height:84px}
+.id-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.id-chips button{font-family:inherit;font-weight:700;font-size:.84rem;padding:8px 14px;border-radius:100px;border:2px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;transition:.2s}.id-chips button.sel{background:var(--brand);border-color:var(--brand);color:#fff}
+.id-current{font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:var(--brand);margin-top:11px}
+.cert{border:3px solid var(--brand);border-radius:18px;padding:34px 28px;text-align:center;background:linear-gradient(180deg,var(--brand-soft),var(--surface))}
+.cert.locked{filter:grayscale(.6);opacity:.62}.cert .seal{width:58px;height:58px;border-radius:50%;background:var(--brand);margin:0 auto 12px;display:grid;place-items:center;color:#fff}
+.cert h2{font-size:1.7rem;font-weight:600;margin-bottom:5px}.cert .who{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--brand);font-style:italic;margin:12px 0;border-bottom:2px dashed var(--line);display:inline-block;padding:0 26px 5px}.cert .meta{color:var(--muted);font-size:.88rem}.cert-lock-msg{margin-top:12px;font-size:.88rem;color:var(--muted)}
+.admin-note{background:#fff6e6;border:2px solid #ffe0a3;color:#8a5a00;border-radius:13px;padding:15px 17px;margin-bottom:24px;font-weight:500;display:flex;gap:11px;align-items:flex-start}
+[data-theme="dark"] .admin-note{background:#2c2410;border-color:#574515;color:#f0cd84}
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.astat{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:20px}.astat .av{font-family:'Fraunces',serif;font-size:1.9rem;line-height:1}.astat .al{color:var(--muted);font-size:.76rem;font-weight:700;margin-top:4px;font-family:'JetBrains Mono',monospace}
+.admin-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.admin-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:2px solid var(--line);gap:11px}.admin-row:last-child{border-bottom:none}.admin-row small{color:var(--muted)}
+.bar{height:8px;border-radius:100px;background:var(--surface-2);overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:var(--brand);border-radius:100px}
+.modal-overlay{position:fixed;inset:0;background:rgba(11,13,18,.6);backdrop-filter:blur(5px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s}.modal-overlay.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border-radius:22px;max-width:440px;width:100%;padding:32px;box-shadow:var(--shadow-lg);position:relative;animation:fadeUp .3s ease}
+.modal .close{position:absolute;top:15px;right:15px;width:34px;height:34px;border-radius:10px;border:none;background:var(--surface-2);color:var(--text);cursor:pointer;font-size:1.1rem;display:grid;place-items:center}
+.modal h3{font-size:1.45rem;font-weight:600;margin-bottom:6px}
+.modal .order{background:var(--surface-2);border-radius:13px;padding:17px;margin:16px 0;display:flex;justify-content:space-between;align-items:center}
+.modal .order .lt b{display:block;font-family:'Fraunces',serif;font-size:1.05rem}.modal .order .lt span{color:var(--muted);font-size:.82rem}.modal .order .amt{font-family:'Fraunces',serif;font-size:1.45rem;font-weight:700}
+.pay-btns{display:grid;gap:10px}
+.pay-payfast{background:#1c3f94;color:#fff}.pay-payfast:hover{background:#163275}
+.pay-yoco{background:#13182b;color:#fff}.pay-yoco:hover{background:#0a0e1a}
+.pay-paystack{background:#0aa5e0;color:#fff}.pay-paystack:hover{background:#0892c7}
+.pay-paypal{background:#ffc439;color:#003087}.pay-paypal:hover{background:#f0b52e}
+.pay-setup{background:var(--surface-2);color:var(--text);border:2px dashed var(--line)}.pay-setup:hover{border-color:var(--brand);color:var(--brand)}
+.pay-msg{display:none;background:var(--brand-soft);color:var(--brand-deep);border-radius:11px;padding:13px;font-size:.88rem;margin-top:13px;line-height:1.5}.pay-msg code{background:rgba(0,0,0,.08);padding:2px 6px;border-radius:5px}
+.modal .demo-link{text-align:center;margin-top:15px;font-size:.88rem}.modal .demo-link a{color:var(--brand);font-weight:700;cursor:pointer}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}.reveal.in{opacity:1;transform:none}
+@media(max-width:880px){.cmp{grid-template-columns:1fr}.mods{grid-template-columns:1fr 1fr}.deal-big{grid-template-columns:1fr}.tg{grid-template-columns:1fr}.dash-grid{grid-template-columns:1fr}.admin-cols{grid-template-columns:1fr}.admin-stats{grid-template-columns:1fr 1fr}.tcard:nth-child(n){transform:none}}
+@media(max-width:600px){section{padding:60px 0}.nav-links,.nav-desktop-cta{display:none}.hamburger{display:grid}.mobile-menu{position:fixed;inset:70px 0 auto 0;background:var(--surface);border-bottom:2px solid var(--line);padding:16px 22px;z-index:55;flex-direction:column;gap:5px;box-shadow:var(--shadow-lg)}.mobile-menu.show{display:flex}.mobile-menu a{padding:12px 9px;border-radius:10px;font-weight:700;color:var(--text)}.mobile-menu .btn{margin-top:7px}.mods{grid-template-columns:1fr}.progress-stats{grid-template-columns:1fr 1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}.marquee .track{animation:none!important}}
+
+/* ===== SIDEBAR DASHBOARD ===== */
+#view-dashboard{background:#070a14;color:#eef1fb;min-height:100vh;overflow:hidden}
+.ds-wrap{display:flex;min-height:100vh}
+.ds-sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:#0b0f1c;border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.ds-sidebar-top{padding:20px 16px 16px}
+.ds-brand{display:flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;color:#eef1fb;letter-spacing:.04em;margin-bottom:3px}
+.ds-brand .ds-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6480ff,#785cff);display:grid;place-items:center;font-size:.8rem;flex:none}
+.ds-space-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#9fb0e8;padding-left:37px;margin-bottom:14px}
+.ds-user{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:10px 12px;margin-bottom:6px}
+.ds-user-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2347ff,#785cff);display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;color:#fff;font-size:.95rem;flex:none}
+.ds-user-info{flex:1;min-width:0}
+.ds-user-name{font-weight:700;color:#eef1fb;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ds-user-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:100px;margin-top:3px;display:inline-block}
+.ds-user-badge.preview{background:rgba(255,214,10,.16);color:#ffd60a;border:1px solid rgba(255,214,10,.35)}
+.ds-user-badge.member{background:rgba(67,224,160,.16);color:#43e0a0;border:1px solid rgba(67,224,160,.35)}
+.ds-nav{flex:1;padding:8px 10px}
+.ds-nav-section{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#5a6480;padding:14px 8px 6px;font-weight:700}
+.ds-nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 8px}
+.ds-nav-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:10px;border:none;background:transparent;color:#9fb0e8;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;text-align:left;transition:background .15s,color .15s;position:relative;border-left:2px solid transparent}
+.ds-nav-item:hover{background:rgba(255,255,255,.06);color:#eef1fb}
+.ds-nav-item.active{background:rgba(100,128,255,.12);color:#eef1fb;border-left:2px solid #6480ff}
+.ds-nav-item .ds-nav-icon{width:22px;text-align:center;font-size:1rem;flex:none}
+.ds-nav-item .ds-nav-label{flex:1}
+.ds-sidebar-bottom{padding:12px 10px 20px}
+.ds-exit-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#9fb0e8;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;transition:.2s}
+.ds-exit-btn:hover{background:rgba(255,255,255,.1);color:#eef1fb}
+.ds-main{flex:1;margin-left:220px;min-height:100vh;overflow-y:auto;position:relative;z-index:1}
+.ds-topbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:14px 24px;position:sticky;top:0;z-index:50;background:rgba(7,10,20,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+.ds-chip{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:5px 11px;border-radius:100px;display:flex;align-items:center;gap:5px}
+.ds-chip.streak{background:rgba(255,86,48,.14);color:#ff8a6e;border:1px solid rgba(255,86,48,.3)}
+.ds-chip.xp{background:rgba(100,128,255,.14);color:#8fa4ff;border:1px solid rgba(100,128,255,.3)}
+.ds-chip.level{background:rgba(255,214,10,.14);color:#ffd60a;border:1px solid rgba(255,214,10,.3)}
+.ds-hamburger{display:none;background:none;border:1px solid rgba(255,255,255,.15);color:#eef1fb;border-radius:9px;width:36px;height:36px;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;margin-right:auto}
+.ds-content{padding:0 0 80px}
+.px-screen{display:none;animation:pxIn .4s cubic-bezier(.2,.8,.2,1)}
+.px-screen.active{display:block}
+@keyframes pxIn{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+.px-screen-inner{max-width:720px;margin:40px auto;padding:0 24px}
+.px-unlock{position:relative;overflow:hidden;border-radius:22px;padding:24px 26px;margin-bottom:28px;background:linear-gradient(120deg,rgba(35,71,255,.92),rgba(120,92,255,.92));box-shadow:0 24px 60px rgba(35,71,255,.35)}
+.px-unlock::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border:2px solid rgba(255,255,255,.18);border-radius:50%}
+.px-unlock .pl{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;opacity:.85}
+.px-unlock h2{font-family:'Fraunces',serif;font-size:clamp(1.4rem,3.5vw,2rem);color:#fff;margin:6px 0 8px;line-height:1.1}
+.px-unlock p{color:#eef;opacity:.92;font-size:.93rem;margin-bottom:16px;max-width:470px}
+.px-unlock .ub{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.px-demo{background:none;border:none;color:#dfe6ff;text-decoration:underline;cursor:pointer;font-size:.82rem;font-family:inherit;opacity:.8}
+.px-demo:hover{opacity:1}
+.ds-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.ds-stat-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 16px;backdrop-filter:blur(8px);text-align:center}
+.ds-stat-card .ds-sv{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;color:#fff;line-height:1;display:block}
+.ds-stat-card .ds-sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9fb0e8;margin-top:4px;display:block}
+.ds-home-row2{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:24px}
+.ds-panel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px;backdrop-filter:blur(8px)}
+.ds-panel h3{font-family:'Fraunces',serif;font-size:1.15rem;color:#eef1fb;margin-bottom:4px}
+.ds-panel .ds-panel-sub{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:#9fb0e8;margin-bottom:14px}
+.ds-dare-text{font-family:'Fraunces',serif;font-size:1.35rem;color:#fff;line-height:1.25;margin:12px 0 18px;min-height:2.4em}
+.ds-dare-actions{display:flex;gap:10px;flex-wrap:wrap}
+.ds-goals-summary .ds-gbar{height:6px;border-radius:100px;background:rgba(255,255,255,.1);margin-top:6px;overflow:hidden}
+.ds-goals-summary .ds-gbar i{display:block;height:100%;background:linear-gradient(90deg,#43e0a0,#6480ff);border-radius:100px}
+.ds-goals-count{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#9fb0e8;margin-bottom:8px}
+.ds-mod-mini-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.ds-mod-mini-row .ds-mmbar{flex:1;height:5px;border-radius:100px;background:rgba(255,255,255,.1);overflow:hidden}
+.ds-mod-mini-row .ds-mmbar i{display:block;height:100%;background:#6480ff;border-radius:100px}
+.ds-mod-mini-row .ds-mmlabel{font-size:.72rem;color:#9fb0e8;white-space:nowrap;font-family:'JetBrains Mono',monospace;min-width:40px;text-align:right}
+.ds-achv-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:24px;scrollbar-width:none}
+.ds-achv-row::-webkit-scrollbar{display:none}
+.px-badge{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:14px 12px;text-align:center;opacity:.42;filter:grayscale(.7);transition:.3s;flex:none;min-width:96px}
+.px-badge.earned{opacity:1;filter:none;border-color:rgba(255,214,10,.4);background:rgba(255,214,10,.08)}
+.px-badge .be{font-size:1.5rem;display:block;margin-bottom:5px}
+.px-badge b{display:block;color:#fff;font-size:.78rem;font-family:'Fraunces',serif}
+.px-badge span{font-size:.62rem;color:#9fb0e8;font-family:'JetBrains Mono',monospace}
+.ds-timeline{display:grid;gap:10px}
+.ds-timeline-item{display:flex;gap:13px;align-items:flex-start;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px}
+.ds-timeline-dot{width:32px;height:32px;border-radius:50%;background:rgba(100,128,255,.18);border:1px solid rgba(100,128,255,.35);display:grid;place-items:center;font-size:1rem;flex:none}
+.ds-timeline-body{flex:1}
+.ds-timeline-title{color:#eef1fb;font-weight:600;font-size:.9rem}
+.ds-timeline-sub{color:#9fb0e8;font-size:.8rem;margin-top:2px}
+.ds-timeline-date{font-family:'JetBrains Mono',monospace;font-size:.64rem;color:#5a6480;margin-top:3px}
+.ds-section-header{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#9fb0e8;margin:22px 0 10px}
+.px-exp{max-width:720px;margin:0 auto}
+.px-exp .ph{text-align:center;margin-bottom:24px}
+.px-exp .ph .pl{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#9fb0e8}
+.px-exp .ph h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4.5vw,2.6rem);color:#fff;margin-top:8px;line-height:1.05}
+.px-panel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:26px;backdrop-filter:blur(8px)}
+.px-in{width:100%;font-family:inherit;font-size:1rem;padding:14px 16px;border-radius:13px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;resize:vertical}
+.px-in::placeholder{color:#7f8db8}
+.px-in:focus{outline:none;border-color:#6480ff;box-shadow:0 0 0 4px rgba(100,128,255,.25)}
+textarea.px-in{min-height:120px}
+.px-mood{display:flex;justify-content:center;gap:12px;margin:10px 0 4px;flex-wrap:wrap}
+.px-mood button{font-size:1.9rem;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);border-radius:16px;width:60px;height:60px;cursor:pointer;transition:.2s}
+.px-mood button:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.4)}
+.px-mood button.sel{border-color:#6480ff;background:rgba(100,128,255,.2);transform:translateY(-4px)}
+.px-step{display:none}.px-step.active{display:block;animation:pxIn .35s ease}
+.px-stepbar{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.px-stepbar i{width:30px;height:4px;border-radius:4px;background:rgba(255,255,255,.15)}
+.px-stepbar i.on{background:#6480ff}
+.px-tenbar{height:10px;border-radius:100px;background:rgba(255,255,255,.1);overflow:hidden;margin:14px 0}
+.px-tenbar i{display:block;height:100%;background:linear-gradient(90deg,#43e0a0,#6480ff);border-radius:100px;transition:width .4s}
+.px-list{display:grid;gap:9px;margin-top:14px}
+.px-li{display:flex;gap:11px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:11px 14px;animation:pxIn .3s ease}
+.px-li .n{font-family:'Fraunces',serif;color:#6480ff;font-weight:700;flex:none}
+.px-li span{flex:1;color:#fff;font-weight:500}
+.px-li button{background:none;border:none;color:#7f8db8;cursor:pointer;font-size:1rem}
+.px-mods{display:grid;gap:11px}
+.px-modrow{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:16px 18px;cursor:pointer;transition:.2s}
+.px-modrow:hover{border-color:rgba(255,255,255,.3);transform:translateX(4px)}
+.px-modrow .mnum{font-family:'Fraunces',serif;font-size:1.4rem;color:#6480ff;font-weight:700;flex:none;width:32px;text-align:center}
+.px-modrow .mt{flex:1}.px-modrow .mt b{color:#fff;font-family:'Fraunces',serif;font-size:1.08rem;display:block}
+.px-modrow .mt span{color:#9fb0e8;font-size:.76rem;font-family:'JetBrains Mono',monospace}
+.px-modrow .mc{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#9fb0e8}
+.px-lessonbody{color:#cdd6f5;line-height:1.7}
+.px-lessonbody p{margin-bottom:13px}
+.px-lessonbody h4{color:#fff;font-family:'Fraunces',serif;font-size:1.2rem;margin:18px 0 8px}
+.px-goal{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.px-goal:last-child{border-bottom:none}
+.px-goal input{width:19px;height:19px;accent-color:#43e0a0;cursor:pointer;flex:none}
+.px-goal span{flex:1;color:#fff;font-weight:500}.px-goal.done span{text-decoration:line-through;color:#7f8db8}
+.px-goal button{background:none;border:none;color:#7f8db8;cursor:pointer;font-size:1rem}
+.px-note{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 15px;margin-bottom:9px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.px-note .nt{flex:1;color:#eef1fb}.px-note small{color:#7f8db8;font-size:.72rem;font-family:'JetBrains Mono',monospace}
+.px-note button{background:none;border:none;color:#7f8db8;cursor:pointer}
+.px-empty{color:#7f8db8;font-size:.9rem;padding:8px 0}
+.px-saved{background:rgba(67,224,160,.14);border:1px solid rgba(67,224,160,.3);color:#5cf0b4;border-radius:12px;padding:13px 15px;font-size:.9rem;margin-top:13px;display:none}
+.px-cert{border:2px solid #6480ff;border-radius:18px;padding:34px 26px;text-align:center;background:linear-gradient(180deg,rgba(100,128,255,.18),rgba(255,255,255,.03))}
+.px-cert.lk{opacity:.6;filter:grayscale(.4)}
+.px-cert .sl{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2347ff,#785cff);margin:0 auto 12px;display:grid;place-items:center;font-size:1.5rem}
+.px-cert h2{font-family:'Fraunces',serif;color:#fff;font-size:1.6rem}
+.px-cert .who{font-family:'Fraunces',serif;font-style:italic;color:#9fb0e8;font-size:1.5rem;margin:12px 0;border-bottom:2px dashed rgba(255,255,255,.2);display:inline-block;padding:0 24px 5px}
+#view-dashboard .btn-ghost{color:#fff;border-color:rgba(255,255,255,.25)}
+#view-dashboard .btn-ghost:hover{background:#fff;color:#0b0f1c}
+.ds-bottombar{display:none;position:fixed;bottom:0;left:0;right:0;background:#0b0f1c;border-top:1px solid rgba(255,255,255,.1);z-index:110;padding:8px 0 env(safe-area-inset-bottom,0)}
+.ds-bottombar-inner{display:flex;justify-content:space-around;align-items:center}
+.ds-tab{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:#9fb0e8;font-family:'Hanken Grotesk',sans-serif;font-size:.65rem;font-weight:600;cursor:pointer;padding:4px 10px;border-radius:10px;transition:.15s}
+.ds-tab .ds-tab-icon{font-size:1.3rem}
+.ds-tab.active{color:#6480ff}
+.ds-sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;backdrop-filter:blur(3px)}
+.ds-sidebar-overlay.show{display:block}
+#view-dashboard::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(560px 380px at 80% -8%,rgba(35,71,255,.22),transparent 60%),radial-gradient(480px 380px at 8% 96%,rgba(120,92,255,.18),transparent 60%)}
+@media(max-width:768px){
+  .ds-sidebar{transform:translateX(-100%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+  .ds-sidebar.open{transform:translateX(0)}
+  .ds-main{margin-left:0}
+  .ds-hamburger{display:flex}
+  .ds-bottombar{display:block}
+  .ds-content{padding-bottom:72px}
+  .ds-stats-row{grid-template-columns:1fr 1fr}
+  .ds-home-row2{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .ds-stats-row{grid-template-columns:1fr 1fr}
+  .px-screen-inner{padding:0 16px}
+}
+/* ===== MOVEMENT REDESIGN ===== */
+.mvdark{position:relative;overflow:hidden;background:#070a14;color:#eef1fb}
+.mvdark .label{color:#9fb0e8}
+.mvdark .z{color:var(--zing)}
+.mvdark .section-head h2{color:#fff}
+.mvdark .section-head p{color:#c7d0ea}
+.mvdark .btn-ghost{color:#fff;border-color:rgba(255,255,255,.3)}
+.mvdark .btn-ghost:hover{background:#fff;color:#0b0f1c}
+.mvglow{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(600px 420px at 12% -8%,rgba(35,71,255,.55),transparent 60%),radial-gradient(560px 420px at 92% 4%,rgba(255,86,48,.32),transparent 62%),radial-gradient(720px 540px at 60% 116%,rgba(120,92,255,.3),transparent 60%)}
+.mvdark .container{position:relative;z-index:1}
+.mvpad{padding:70px 0}
+
+/* hero */
+.mvhero{padding:98px 0 64px}
+.mvhero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:#9fb0e8}
+.mvhero h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.7rem,8.4vw,5.6rem);line-height:.97;letter-spacing:-.02em;margin:18px 0 0;color:#fff}
+.mvhero .sub{max-width:600px;margin:22px auto 0;font-size:clamp(1.05rem,2.2vw,1.3rem);color:#c7d0ea;line-height:1.55}
+.mvhero .mvcta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:30px 0 16px}
+.mvhero .ptext{color:#8f9dc4}
+.mvhero .ptext b{color:#fff}
+.mvdare{max-width:450px;margin:34px auto 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:20px 22px;backdrop-filter:blur(8px)}
+.mvdare .dl{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--zing)}
+.mvdare .dt{color:#fff;margin:8px 0 14px;font-size:1.3rem;min-height:auto}
+.mvdare button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:100px;padding:9px 16px;font-family:inherit;font-weight:700;font-size:.85rem;cursor:pointer;transition:.2s}
+.mvdare button:hover{background:rgba(255,255,255,.2)}
+.mvhero .marquee{margin-top:46px}
+
+/* the line: two kinds */
+.mvline{padding:74px 0}
+.mvline h2{text-align:center;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,5vw,3rem);color:#fff;margin-bottom:34px}
+.mvtwo{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;max-width:920px;margin:0 auto}
+.mvside{border-radius:18px;padding:26px;border:1px solid rgba(255,255,255,.1)}
+.mvside .mt{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:10px}
+.mvside p{color:#c7d0ea;line-height:1.6;font-size:1.02rem}
+.mvside.watch{background:rgba(255,86,48,.06);border-color:rgba(255,86,48,.22)}
+.mvside.watch .mt{color:#ff8a6e}
+.mvside.do{background:rgba(67,224,160,.07);border-color:rgba(67,224,160,.28)}
+.mvside.do .mt{color:#5cf0b4}
+.mvvs{font-family:'Fraunces',serif;font-style:italic;color:#9fb0e8;font-size:1.4rem;text-align:center}
+.mvline-foot{text-align:center;max-width:620px;margin:30px auto 0;font-size:1.15rem;color:#c7d0ea}
+
+/* the vault */
+.vault{padding:82px 0}
+.vault-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vcard{position:relative;border-radius:20px;padding:26px 24px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.12);overflow:hidden;min-height:212px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .25s,border-color .25s}
+.vcard:hover{transform:translateY(-6px);border-color:rgba(255,214,10,.45)}
+.vcard .vnum{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--zing);letter-spacing:.1em}
+.vcard h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;line-height:1.12;color:#fff;margin:12px 0 10px}
+.vcard .vprev{font-family:'Fraunces',serif;font-style:italic;color:#c7d0ea;font-size:1.05rem;line-height:1.45;flex:1}
+.vcard .vlock{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:#9fb0e8;margin-top:16px}
+.vcard-cta{justify-content:center;text-align:center;background:linear-gradient(135deg,rgba(35,71,255,.4),rgba(120,92,255,.4));border-color:rgba(255,255,255,.22)}
+.vcard-cta .vcta-k{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;color:#fff;margin-bottom:16px;line-height:1.2}
+
+/* compound */
+.mvcomp{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;max-width:760px;margin:0 auto}
+.cstep{flex:1;min-width:148px;text-align:center;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:24px 16px;box-shadow:var(--shadow)}
+.cstep b{display:block;font-family:'Fraunces',serif;font-size:1.7rem;color:var(--brand)}
+.cstep span{color:var(--muted);font-size:.92rem}
+.carrow{color:var(--muted);font-size:1.5rem;font-weight:700}
+.mvcomp-foot{text-align:center;max-width:560px;margin:26px auto 0;font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;color:var(--muted)}
+
+/* founder */
+.mvfounder p{font-size:1.06rem;line-height:1.75;color:var(--text);margin-bottom:13px}
+.mvsign{font-family:'Fraunces',serif;font-style:italic;color:var(--muted)}
+
+/* join */
+.mvjoin{padding:82px 0;text-align:center}
+.mvjoin .deal-price{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(3rem,9vw,4.6rem);color:#fff;line-height:1;margin:10px 0 6px}
+.mvjoin .deal-sub{color:#c7d0ea;margin-bottom:14px;font-size:1.05rem}
+.mvjoin .deal-strip{color:#aeb9d8;max-width:540px;margin:0 auto 22px;font-size:.98rem;line-height:1.6}
+.mvjoin .deal-guar{color:#8f9dc4;font-size:.85rem;margin-top:16px;max-width:480px;margin-left:auto;margin-right:auto}
+.mvjoin .cur-row{display:inline-flex;gap:8px;align-items:center;color:#9fb0e8;font-size:.85rem;margin-bottom:6px}
+.mvjoin select{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:7px 12px;font-family:inherit}
+
+/* final */
+.mvfinal{padding:88px 0}
+.mvfinal h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.02;margin-bottom:14px}
+.mvfinal p{color:var(--muted);font-size:1.1rem;margin-bottom:24px}
+
+@media(max-width:980px){.vault-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){
+  .mvtwo{grid-template-columns:1fr}
+  .mvvs{margin:2px 0}
+  .vault-grid{grid-template-columns:1fr}
+  .mvcomp{flex-direction:column}
+  .carrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#" onclick="showView('site');scrollTo({top:0});return false;"><span class="mark"></span> ESCAPE</a>
+    <nav class="nav-links">
+      <a class="link" href="#movement" onclick="goSite('movement');return false;">The Movement</a>
+      <a class="link" href="#vault" onclick="goSite('vault');return false;">The Vault</a>
+      <a class="link" href="#deal" onclick="goSite('deal');return false;">Join</a>
+      <a class="link" href="#faq" onclick="goSite('faq');return false;">FAQ</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" title="Your dashboard" onclick="showView('dashboard')" aria-label="Dashboard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></button>
+      <button class="icon-btn" id="themeBtn" title="Theme" onclick="toggleTheme()" aria-label="Theme"><svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+      <button class="btn btn-primary btn-sm nav-desktop-cta" onclick="openCheckout()">Enter ESCAPE</button>
+      <button class="icon-btn hamburger" onclick="toggleMenu()" aria-label="Menu"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#movement" onclick="goSite('movement');toggleMenu();return false;">The Movement</a>
+    <a href="#vault" onclick="goSite('vault');toggleMenu();return false;">The Vault</a>
+    <a href="#deal" onclick="goSite('deal');toggleMenu();return false;">Join</a>
+    <a href="#faq" onclick="goSite('faq');toggleMenu();return false;">FAQ</a>
+    <a href="#" onclick="showView('dashboard');toggleMenu();return false;">Member space</a>
+    <button class="btn btn-primary btn-block" onclick="openCheckout();toggleMenu();">Enter ESCAPE</button>
+  </div>
+</header>
+
+<div class="view active" id="view-site">
+
+  <section class="hero mvhero mvdark">
+    <div class="mvglow"></div>
+    <div class="container">
+      <span class="eyebrow reveal">A movement · not a course</span>
+      <h1 class="reveal">Most people watch<br>life happen.</h1>
+      <p class="sub reveal">ESCAPE is for the ones who <span class="z">participate</span> — who go first, say yes, and build a life they don't need to escape from.</p>
+      <div class="mvcta reveal">
+        <button class="btn btn-pop btn-lg" onclick="openCheckout()">Enter ESCAPE</button>
+        <button class="btn btn-ghost btn-lg" onclick="goSite('vault')">Take a sneak peek</button>
+      </div>
+      <div class="ptext reveal"><b id="proofCount">300+</b> people already living louder · <b>4.8★</b></div>
+      <div class="mvdare reveal">
+        <span class="dl">⚡ Your dare, right now</span>
+        <div class="dt" id="heroDare">Talk to a stranger today — even just "hey".</div>
+        <button onclick="shuffleDare()">🎲 Give me another</button>
+      </div>
+    </div>
+    <div class="marquee"><div class="track" id="mq1"></div></div>
+    <div class="marquee rev" style="margin-top:10px"><div class="track" id="mq2"></div></div>
+  </section>
+
+  <section class="mvdark mvline" id="movement">
+    <div class="mvglow"></div>
+    <div class="container">
+      <h2 class="reveal">There are two kinds of people.</h2>
+      <div class="mvtwo">
+        <div class="mvside watch reveal"><span class="mt">The watchers</span><p>Scroll through everyone else's life. Wait for motivation. Say "one day." Stay comfortable — and stay invisible.</p></div>
+        <div class="mvvs reveal">vs</div>
+        <div class="mvside do reveal"><span class="mt">The participants</span><p>Go first. Start badly. Talk to the stranger. Take the road they've never taken. Build a life worth telling stories about.</p></div>
+      </div>
+      <p class="mvline-foot reveal">ESCAPE is where you cross the line. <span class="z">Nobody remembers safe choices.</span></p>
+    </div>
+  </section>
+
+  <section class="mvpad">
+    <div class="container">
+      <div class="section-head">
+        <span class="label reveal">Who you'll become</span>
+        <h2 class="reveal">You'll recognise yourself on the left.<br>Give it a year — you won't.</h2>
+      </div>
+      <div class="cmp">
+        <div class="col fake reveal"><div class="ct">Before</div><h3>Watching life</h3><ul><li>Endless scrolling</li><li>Waiting for motivation</li><li>Overthinking everything</li><li>Comparing, constantly</li><li>Always saying "one day"</li></ul></div>
+        <div class="col real reveal"><div class="ct">After</div><h3>Living it</h3><ul><li>Taking action</li><li>Talking to people</li><li>Real, earned confidence</li><li>Making your own luck</li><li>Becoming someone interesting</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mvdark vault" id="vault">
+    <div class="mvglow"></div>
+    <div class="container">
+      <div class="section-head">
+        <span class="label reveal">Inside the vault</span>
+        <h2 class="reveal">The turning points most people never find.</h2>
+        <p class="reveal">Not lessons — moments. The conversations, systems and decisions that quietly change everything. Here's a glimpse of what's inside.</p>
+      </div>
+      <div class="vault-grid">
+        <article class="vcard reveal"><span class="vnum">01</span><h3>The Conversation That Changed Everything</h3><p class="vprev">"One awkward conversation. One completely different life."</p><span class="vlock">🔒 Inside ESCAPE</span></article>
+        <article class="vcard reveal"><span class="vnum">02</span><h3>The Confidence Loop</h3><p class="vprev">"The trick that makes courage easier every single time."</p><span class="vlock">🔒 Inside ESCAPE</span></article>
+        <article class="vcard reveal"><span class="vnum">03</span><h3>The Year I Stopped Waiting</h3><p class="vprev">"Most people delay their life. This is how to stop."</p><span class="vlock">🔒 Inside ESCAPE</span></article>
+        <article class="vcard reveal"><span class="vnum">04</span><h3>The Opportunity Magnet</h3><p class="vprev">"Why lucky people aren't actually lucky."</p><span class="vlock">🔒 Inside ESCAPE</span></article>
+        <article class="vcard reveal"><span class="vnum">05</span><h3>The Future-You Blueprint</h3><p class="vprev">"A system for becoming the person you keep imagining."</p><span class="vlock">🔒 Inside ESCAPE</span></article>
+        <article class="vcard vcard-cta reveal"><div><div class="vcta-k">Six chapters. One very different you.</div><button class="btn btn-pop btn-lg" onclick="openCheckout()">Open the vault — <span class="cur" id="vaultPrice">R300</span></button></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt mvpad">
+    <div class="container">
+      <div class="section-head">
+        <span class="label reveal">The compound effect</span>
+        <h2 class="reveal">You don't change your life in a day.<br>You change it <span class="z">one day at a time.</span></h2>
+      </div>
+      <div class="mvcomp reveal">
+        <div class="cstep"><b>Day 1</b><span>1 brave move</span></div>
+        <div class="carrow">→</div>
+        <div class="cstep"><b>30 days</b><span>A habit you can feel</span></div>
+        <div class="carrow">→</div>
+        <div class="cstep"><b>1 year</b><span>365 reasons to back yourself</span></div>
+      </div>
+      <p class="mvcomp-foot reveal">Same you. Same 24 hours. One small action, stacked 365 times.</p>
+    </div>
+  </section>
+
+  <section class="mvpad">
+    <div class="container">
+      <div class="section-head"><span class="label reveal">Voices from the movement</span><h2 class="reveal">No overnight miracles. Just louder lives.</h2></div>
+      <div class="tg" id="reviewGrid"></div>
+    </div>
+  </section>
+
+  <section class="alt mvpad">
+    <div class="container">
+      <div class="reveal" style="max-width:680px;margin:0 auto">
+        <span class="label">Why this exists</span>
+        <h2 style="margin:12px 0 18px">A note from the person who built ESCAPE</h2>
+        <div class="mvfounder">
+          <p>I'm not a coach or a guru, and I won't pretend I've got life all figured out.</p>
+          <p>I built ESCAPE because I <i>was</i> the person it's for — losing whole evenings to the scroll, feeling behind everyone online, promising myself "tomorrow," then doing it all again.</p>
+          <p>What pulled me out wasn't motivation or some 5am routine. It was doing one small, slightly scary thing a day, and letting them stack up. So I turned what worked into something I could hand to anyone stuck in the same loop.</p>
+          <p>If one part of it gets you off the couch and into your life, it did its job.</p>
+          <p class="mvsign">— The founder of ESCAPE</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mvdark mvjoin" id="deal">
+    <div class="mvglow"></div>
+    <div class="container">
+      <span class="label reveal" style="color:var(--zing)">Join the movement</span>
+      <div class="cur-row reveal">
+        <label for="curSelect">Show in</label>
+        <select id="curSelect" onchange="updateCurrency(this.value)">
+          <option value="ZAR">🇿🇦 R</option><option value="USD">🇺🇸 $</option><option value="EUR">🇪🇺 €</option><option value="GBP">🇬🇧 £</option><option value="NGN">🇳🇬 ₦</option><option value="KES">🇰🇪 KSh</option><option value="INR">🇮🇳 ₹</option><option value="AUD">🇦🇺 A$</option><option value="CAD">🇨🇦 C$</option>
+        </select>
+      </div>
+      <div class="deal-price reveal"><span class="cur" id="dealPrice">R300</span></div>
+      <div class="deal-sub reveal">One payment. Everything. Yours for life.</div>
+      <div class="deal-strip reveal">The full vault · a daily dare · your member space · all 5 bonus kits · the Better-Days guarantee.</div>
+      <button class="btn btn-pop btn-lg reveal" onclick="openCheckout()">Enter ESCAPE — <span class="cur" id="dealBtnPrice">R300</span></button>
+      <div class="deal-guar reveal">Better-Days guarantee — feel no different in 30 days? Full refund, and you keep the bonuses.</div>
+    </div>
+  </section>
+
+  <section class="mvfinal">
+    <div class="container">
+      <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto">
+        <h2>Become the person<br>who <span class="z">goes first.</span></h2>
+        <p>Your first dare is one tap away. Your future self is already grateful.</p>
+        <button class="btn btn-pop btn-lg" onclick="openCheckout()">Enter ESCAPE</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="alt mvpad">
+    <div class="container"><div class="section-head"><span class="label reveal">Questions</span><h2 class="reveal">Good things to know</h2></div><div class="faq-wrap" id="faqWrap"></div></div>
+  </section>
+
+  <section class="reveal" style="background:linear-gradient(120deg,#2347ff,#785cff);color:#fff;padding:64px 0;text-align:center">
+    <div class="container" style="max-width:640px">
+      <span class="label" style="color:#cdd6ff">Not ready to leap yet?</span>
+      <h2 style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(1.6rem,4vw,2.4rem);margin:10px 0 8px">Get a free taste, in your inbox</h2>
+      <p style="color:#eef;opacity:.92;margin-bottom:22px">Drop your email and I'll send you a free dare and one chapter from ESCAPE. No spam — leave whenever.</p>
+      <form name="free-lesson" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return submitFreebie(event)" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <input type="hidden" name="form-name" value="free-lesson">
+        <p hidden><label>Leave this blank <input name="bot-field"></label></p>
+        <input id="fEmail" name="email" type="email" required placeholder="you@email.com" style="flex:1;min-width:240px;padding:14px 18px;border-radius:100px;border:none;font-family:inherit;font-size:1rem;color:#0b0f1c">
+        <button class="btn btn-pop" type="submit">Send it to me →</button>
+      </form>
+      <div id="freebieOk" style="display:none;margin-top:14px;color:#fff;font-weight:600">✓ Done! Check your inbox soon.</div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-brand"><a class="brand" href="#" onclick="scrollTo({top:0});return false;"><span class="mark"></span> ESCAPE</a><p>Real dopamine, not the cheap kind. A movement for people who'd rather live it than watch it.</p></div>
+        <div class="foot-col"><h4>Movement</h4><a href="#vault" onclick="goSite('vault');return false;">The Vault</a><a href="#deal" onclick="goSite('deal');return false;">Join</a><a href="#" onclick="showView('dashboard');return false;">Member space</a></div>
+        <div class="foot-col"><h4>Help</h4><a href="#faq" onclick="goSite('faq');return false;">FAQ</a><a href="#" onclick="showView('admin');return false;">Admin</a></div>
+        <div class="foot-col"><h4>Promise</h4><a style="cursor:default;color:var(--muted)">No hype</a><a style="cursor:default;color:var(--muted)">No false promises</a><a style="cursor:default;color:var(--muted)">Just real change</a></div>
+      </div>
+      <div class="foot-bottom"><span>© <span id="year"></span> ESCAPE · Build a life you don't need to escape from.</span><span>Educational content — not a substitute for professional care.</span></div>
+    </div>
+  </footer>
+</div>
+
+<div class="view" id="view-dashboard">
+  <div class="ds-sidebar-overlay" id="dsSidebarOverlay" onclick="dsCloseSidebar()"></div>
+  <div class="ds-wrap">
+    <nav class="ds-sidebar" id="dsSidebar">
+      <div class="ds-sidebar-top">
+        <div class="ds-brand"><div class="ds-mark">E</div> ESCAPE</div>
+        <div class="ds-space-label">Member Space</div>
+        <div class="ds-user">
+          <div class="ds-user-av" id="dsUserAv">?</div>
+          <div class="ds-user-info">
+            <div class="ds-user-name" id="dsUserName">Member</div>
+            <div class="ds-user-badge preview" id="dsUserBadge">Preview</div>
+          </div>
+        </div>
+      </div>
+      <div class="ds-nav">
+        <button class="ds-nav-item active" data-screen="home" onclick="pxGo('home')"><span class="ds-nav-icon">&#x1F4CA;</span><span class="ds-nav-label">Overview</span></button>
+        <button class="ds-nav-item" data-screen="dare" onclick="pxGo('dare');pxRenderDare()"><span class="ds-nav-icon">&#x26A1;</span><span class="ds-nav-label">Today's Dare</span></button>
+        <button class="ds-nav-item" data-screen="day" onclick="pxGo('day');pxDayReset();pxRenderDayLog()"><span class="ds-nav-icon">&#x1F319;</span><span class="ds-nav-label">Daily Check-in</span></button>
+        <button class="ds-nav-item" data-screen="lessons" onclick="pxGo('lessons');pxRenderMods()"><span class="ds-nav-icon">&#x1F4DA;</span><span class="ds-nav-label">The 6 Systems</span></button>
+        <button class="ds-nav-item" data-screen="ten" onclick="pxGo('ten');pxRenderTen()"><span class="ds-nav-icon">&#x2736;</span><span class="ds-nav-label">10 Things</span></button>
+        <button class="ds-nav-item" data-screen="letter" onclick="pxGo('letter');pxRenderLetter()"><span class="ds-nav-icon">&#x2709;&#xFE0F;</span><span class="ds-nav-label">Future Letter</span></button>
+        <button class="ds-nav-item" data-screen="goals" onclick="pxGo('goals');pxRenderGoals()"><span class="ds-nav-icon">&#x1F3AF;</span><span class="ds-nav-label">Goals</span></button>
+        <button class="ds-nav-item" data-screen="notes" onclick="pxGo('notes');pxRenderNotes()"><span class="ds-nav-icon">&#x1F4DD;</span><span class="ds-nav-label">Notes</span></button>
+        <button class="ds-nav-item" data-screen="cert" onclick="pxGo('cert');pxRenderCert()"><span class="ds-nav-icon">&#x1F3C6;</span><span class="ds-nav-label">Certificate</span></button>
+        <div class="ds-nav-divider"></div>
+        <div class="ds-nav-section">Integrations</div>
+        <button class="ds-nav-item" onclick="dsToast('Connect Notion in your integrations settings →')"><span class="ds-nav-icon">&#x1F517;</span><span class="ds-nav-label">Sync to Notion</span></button>
+        <button class="ds-nav-item" onclick="dsToast('Set up calendar reminders in your integrations settings →')"><span class="ds-nav-icon">&#x1F4C5;</span><span class="ds-nav-label">Calendar Reminder</span></button>
+        <button class="ds-nav-item" onclick="dsToast('Email progress reports available in your integrations settings →')"><span class="ds-nav-icon">&#x1F4E7;</span><span class="ds-nav-label">Email My Progress</span></button>
+        <button class="ds-nav-item" onclick="dsToast('Connect Slack in your integrations settings →')"><span class="ds-nav-icon">&#x1F4AC;</span><span class="ds-nav-label">Share to Slack</span></button>
+      </div>
+      <div class="ds-sidebar-bottom">
+        <button class="ds-exit-btn" onclick="showView('site')">&larr; Exit to site</button>
+      </div>
+    </nav>
+
+    <main class="ds-main">
+      <div class="ds-topbar">
+        <button class="ds-hamburger" id="dsHamburger" onclick="dsOpenSidebar()">&#9776;</button>
+        <div class="ds-chip streak">&#x1F525; <span id="dsChipStreak">0</span> streak</div>
+        <div class="ds-chip xp">&#x26A1; <span id="dsChipXp">0</span> XP</div>
+        <div class="ds-chip level">&#x2736; Lvl <span id="dsChipLevel">1</span></div>
+      </div>
+      <div class="ds-content">
+
+        <!-- OVERVIEW -->
+        <div class="px-screen active" id="px-home">
+          <div class="px-screen-inner">
+            <div class="px-unlock" id="pxUnlock">
+              <div class="pl">&#x2B21; You're on the free sneak peek</div>
+              <h2>Unlock the full ESCAPE</h2>
+              <p>Members unlock all 6 modules, every deep experience, your goal tracker, notes and certificate &mdash; yours for life.</p>
+              <div class="ub">
+                <button class="btn btn-pop" onclick="openCheckout()">Unlock everything &mdash; <span id="pxUnlockPrice">R300</span></button>
+              </div>
+            </div>
+            <div class="ds-stats-row">
+              <div class="ds-stat-card"><span class="ds-sv" id="dsSvProgress">0%</span><span class="ds-sl">Progress</span></div>
+              <div class="ds-stat-card"><span class="ds-sv" id="dsSvStreak">0</span><span class="ds-sl">Streak days</span></div>
+              <div class="ds-stat-card"><span class="ds-sv" id="dsSvXp">0</span><span class="ds-sl">Total XP</span></div>
+              <div class="ds-stat-card"><span class="ds-sv" id="dsSvLevel">1</span><span class="ds-sl">Level</span></div>
+            </div>
+            <div class="ds-home-row2">
+              <div class="ds-panel">
+                <div class="ds-panel-sub">&#x26A1; Today's focus</div>
+                <h3>Today's Dare</h3>
+                <div class="ds-dare-text" id="dsDareText">Loading your dare&hellip;</div>
+                <div class="ds-dare-actions">
+                  <button class="btn btn-pop btn-sm" id="dsDareBtn" onclick="pxDareDone();dsUpdateDareBtn()">I did it &#x2713;</button>
+                  <button class="btn btn-ghost btn-sm" onclick="pxDareReroll();dsUpdateDareBtn()">&#x1F3B2; New dare</button>
+                </div>
+              </div>
+              <div class="ds-panel">
+                <div class="ds-panel-sub">&#x1F3AF; Quick wins</div>
+                <h3>Goals</h3>
+                <div class="ds-goals-summary">
+                  <div class="ds-goals-count" id="dsGoalsCount">0 / 0 done</div>
+                  <div class="ds-gbar"><i id="dsGoalsBar" style="width:0%"></i></div>
+                </div>
+                <div class="ds-panel-sub" style="margin-top:14px">&#x1F4DA; Module progress</div>
+                <div id="dsModMini"></div>
+              </div>
+            </div>
+            <div class="ds-section-header">Achievements</div>
+            <div class="ds-achv-row" id="pxAchv"></div>
+            <div class="ds-section-header">Recent Activity</div>
+            <div class="ds-timeline" id="dsTimeline"></div>
+          </div>
+        </div>
+
+        <!-- DARE -->
+        <div class="px-screen" id="px-dare">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x26A1; Today's dare &middot; free</div><h2 id="pxDareText">&mdash;</h2></div>
+              <div class="px-panel" style="text-align:center">
+                <div id="pxDareStreak" style="color:#9fb0e8;margin-bottom:16px"></div>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                  <button class="btn btn-pop" id="pxDareBtn" onclick="pxDareDone()">I did it &#x2713;</button>
+                  <button class="btn btn-ghost" onclick="pxDareReroll()">&#x1F3B2; New dare</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHECK-IN -->
+        <div class="px-screen" id="px-day">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F319; Daily check-in &middot; free</div><h2>How was your day?</h2></div>
+              <div class="px-panel">
+                <div class="px-stepbar"><i class="on" id="ds1"></i><i id="ds2"></i><i id="ds3"></i></div>
+                <div class="px-step active" id="dstep1">
+                  <p style="text-align:center;color:#cdd6f5;margin-bottom:6px">Be honest &mdash; how did today actually feel?</p>
+                  <div class="px-mood" id="pxMood">
+                    <button onclick="pxMoodPick(this,1)">&#x1F61E;</button><button onclick="pxMoodPick(this,2)">&#x1F615;</button>
+                    <button onclick="pxMoodPick(this,3)">&#x1F610;</button><button onclick="pxMoodPick(this,4)">&#x1F642;</button>
+                    <button onclick="pxMoodPick(this,5)">&#x1F604;</button>
+                  </div>
+                  <div style="text-align:center;margin-top:18px"><button class="btn btn-primary" onclick="pxDayStep(2)">Next &rarr;</button></div>
+                </div>
+                <div class="px-step" id="dstep2">
+                  <p style="color:#cdd6f5;margin-bottom:10px">What happened today? Dump it out &mdash; no filter.</p>
+                  <textarea class="px-in" id="pxDayText" placeholder="Today I&hellip;"></textarea>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px"><button class="px-demo" onclick="pxDayStep(1)">&larr; Back</button><button class="btn btn-primary" onclick="pxDayStep(3)">Next &rarr;</button></div>
+                </div>
+                <div class="px-step" id="dstep3">
+                  <p style="color:#cdd6f5;margin-bottom:10px">Now &mdash; one good thing, however small. There's always one.</p>
+                  <input class="px-in" id="pxDayWin" placeholder="One good thing today was&hellip;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px"><button class="px-demo" onclick="pxDayStep(2)">&larr; Back</button><button class="btn btn-pop" onclick="pxDaySave()">Save my check-in &#x2713;</button></div>
+                </div>
+                <div class="px-saved" id="pxDaySaved"></div>
+              </div>
+              <div id="pxDayLog" style="margin-top:18px"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 THINGS -->
+        <div class="px-screen" id="px-ten">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x2736; Deep experience</div><h2>10 things you actually want</h2></div>
+              <div class="px-panel">
+                <p style="color:#cdd6f5;margin-bottom:8px">List 10 things you want to do, be, or feel before this time next year. Don't overthink &mdash; go.</p>
+                <div class="px-tenbar"><i id="pxTenBar" style="width:0%"></i></div>
+                <div style="display:flex;gap:9px"><input class="px-in" id="pxTenInput" placeholder="Something you actually want&hellip;" onkeydown="if(event.key==='Enter')pxTenAdd()"><button class="btn btn-primary" onclick="pxTenAdd()">Add</button></div>
+                <div class="px-list" id="pxTenList"></div>
+                <div class="px-saved" id="pxTenDone"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LETTER -->
+        <div class="px-screen" id="px-letter">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x2709;&#xFE0F; Future self</div><h2>Letter to Future You</h2></div>
+              <div class="px-panel">
+                <p style="color:#cdd6f5;margin-bottom:10px">Write to yourself 90 days from now. We'll keep it safe for when you come back.</p>
+                <textarea class="px-in" id="pxLetter" placeholder="Dear future me, right now I feel&hellip; and in 90 days I hope&hellip;"></textarea>
+                <div style="margin-top:14px"><button class="btn btn-primary" onclick="pxLetterSave()">Seal the letter</button></div>
+                <div class="px-saved" id="pxLetterSaved"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LESSONS -->
+        <div class="px-screen" id="px-lessons">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F4DA; The course</div><h2>Your lessons</h2></div>
+              <div class="px-mods" id="pxMods"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LESSON DETAIL -->
+        <div class="px-screen" id="px-lesson">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl" id="pxLessonTag">LESSON</div><h2 id="pxLessonTitle">&mdash;</h2></div>
+              <div class="px-panel">
+                <div class="px-lessonbody" id="pxLessonBody"></div>
+                <div style="margin-top:20px"><button class="btn btn-pop" id="pxLessonBtn" onclick="pxLessonDone()">Mark complete &#x2713;</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GOALS -->
+        <div class="px-screen" id="px-goals">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F3AF; Goal tracker</div><h2>What you're chasing</h2></div>
+              <div class="px-panel">
+                <div style="display:flex;gap:9px;margin-bottom:8px"><input class="px-in" id="pxGoalInput" placeholder="e.g. Sleep by 11pm" onkeydown="if(event.key==='Enter')pxGoalAdd()"><button class="btn btn-primary" onclick="pxGoalAdd()">Add</button></div>
+                <div id="pxGoalList"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTES -->
+        <div class="px-screen" id="px-notes">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F4DD; Notes</div><h2>Your notebook</h2></div>
+              <div class="px-panel">
+                <textarea class="px-in" id="pxNoteInput" placeholder="What's on your mind today?"></textarea>
+                <div style="margin-top:12px"><button class="btn btn-primary" onclick="pxNoteAdd()">Save note</button></div>
+                <div id="pxNoteList" style="margin-top:16px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CERTIFICATE -->
+        <div class="px-screen" id="px-cert">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F3C6; The finish line</div><h2>Your certificate</h2></div>
+              <div class="px-panel">
+                <div style="margin-bottom:14px"><input class="px-in" id="pxCertName" placeholder="Name on your certificate" oninput="pxSaveName(this.value)"></div>
+                <div id="pxCertBox"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile bottom tab bar -->
+  <div class="ds-bottombar">
+    <div class="ds-bottombar-inner">
+      <button class="ds-tab active" data-screen="home" onclick="pxGo('home')"><span class="ds-tab-icon">&#x1F4CA;</span>Overview</button>
+      <button class="ds-tab" data-screen="dare" onclick="pxGo('dare');pxRenderDare()"><span class="ds-tab-icon">&#x26A1;</span>Dare</button>
+      <button class="ds-tab" data-screen="day" onclick="pxGo('day');pxDayReset();pxRenderDayLog()"><span class="ds-tab-icon">&#x1F319;</span>Check-in</button>
+      <button class="ds-tab" data-screen="lessons" onclick="pxGo('lessons');pxRenderMods()"><span class="ds-tab-icon">&#x1F4DA;</span>Lessons</button>
+      <button class="ds-tab" data-screen="goals" onclick="pxGo('goals');pxRenderGoals()"><span class="ds-tab-icon">&#x1F3AF;</span>Goals</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-admin">
+  <section style="padding-top:36px"><div class="container">
+    <button class="btn btn-sm btn-ghost" style="margin-bottom:16px" onclick="showView('site')">← Back to site</button>
+    <span class="label">Admin panel</span><h2 style="font-size:1.9rem;font-weight:600;margin:10px 0 20px">Course management</h2>
+    <div class="admin-note"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><div><b>Demo panel.</b> Numbers below are local samples. Connect <b>Supabase</b> or <b>Firebase</b> (free) to save real users, purchases &amp; lessons across devices — ask me and I'll wire it up.</div></div>
+    <div class="admin-stats"><div class="astat"><div class="av">248</div><div class="al">Students</div></div><div class="astat"><div class="av">R74,400</div><div class="al">Revenue (demo)</div></div><div class="astat"><div class="av">61%</div><div class="al">Avg completion</div></div><div class="astat"><div class="av">19</div><div class="al">New / week</div></div></div>
+    <div class="admin-cols">
+      <div style="display:grid;gap:22px"><div class="card"><h3>Upload a lesson</h3><div class="sub">Saved locally for the demo.</div>
+        <div style="margin-bottom:12px"><select id="alModule" class="area"><option>Module 1 — Reset Your Mind</option><option>Module 2 — Enjoy Your Day</option><option>Module 3 — Build Better Habits</option><option>Module 4 — Social Life</option><option>Module 5 — Physical Health</option><option>Module 6 — Future You</option></select></div>
+        <div style="margin-bottom:12px"><input id="alTitle" class="area" placeholder="Lesson title"></div>
+        <div style="margin-bottom:12px"><textarea id="alBody" class="area" placeholder="Lesson content..."></textarea></div>
+        <button class="btn btn-primary" onclick="adminAddLesson()">Publish</button><div id="adminLessonList" style="margin-top:16px"></div></div></div>
+      <div style="display:grid;gap:22px">
+        <div class="card"><h3>Recent purchases</h3><div class="sub">Demo data.</div>
+          <div class="admin-row"><div><b>Thandi M.</b><br><small>thandi@email.com</small></div><div style="text-align:right"><b>R300</b><br><small>2h</small></div></div>
+          <div class="admin-row"><div><b>James K.</b><br><small>james@email.com</small></div><div style="text-align:right"><b>R300</b><br><small>5h</small></div></div>
+          <div class="admin-row"><div><b>Aisha R.</b><br><small>aisha@email.com</small></div><div style="text-align:right"><b>R300</b><br><small>1d</small></div></div></div>
+        <div class="card"><h3>Users</h3><div class="sub">Demo.</div><div id="adminUsers"></div></div>
+        <div class="card"><h3>Completion by module</h3><div class="sub">How far students get.</div>
+          <div style="margin-top:7px"><div style="display:flex;justify-content:space-between;font-size:.88rem;font-weight:700"><span>Module 1</span><span>82%</span></div><div class="bar"><i style="width:82%"></i></div></div>
+          <div style="margin-top:13px"><div style="display:flex;justify-content:space-between;font-size:.88rem;font-weight:700"><span>Module 3</span><span>64%</span></div><div class="bar"><i style="width:64%"></i></div></div>
+          <div style="margin-top:13px"><div style="display:flex;justify-content:space-between;font-size:.88rem;font-weight:700"><span>Module 6</span><span>39%</span></div><div class="bar"><i style="width:39%"></i></div></div></div>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="close" onclick="closeCheckout()" aria-label="Close">✕</button>
+    <h3>Start your escape</h3>
+    <p style="color:var(--muted);font-size:.94rem">Full course, 30 daily dares, all bonuses + your dashboard. Yours for life.</p>
+    <div class="order"><div class="lt"><b>ESCAPE — Full Access</b><span>One-time · founding price</span></div><div class="amt" id="modalAmount">R300</div></div>
+    <div class="pay-btns" id="payBtns"></div>
+    <div class="pay-msg" id="payMsg"></div>
+    <div class="demo-link"><a onclick="closeCheckout();showView('dashboard')">Sneak peek inside →</a></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   ⚙️  CONFIG — THE ONLY PART YOU NEED TO EDIT
+   ---------------------------------------------------------------------
+   Paste a payment LINK for any provider you use. Leave "" for the rest.
+   Only the ones you fill in will show as buttons at checkout.
+   All of these are hosted "payment link / page" URLs — no backend needed,
+   and the link is public & safe (NEVER paste a secret API key here).
+   Payfast & Yoco support Instant EFT / SnapScan — great for buyers
+   who don't have a credit card (a lot of teens & students).
+   ===================================================================== */
+const CONFIG = {
+  payments: {
+    payfast:  "",   // Payfast payment link   (payfast.io)
+    yoco:     "",   // Yoco Link              (yoco.com)
+    paystack: "",   // Paystack payment page  (paystack.com)
+    paypal:   ""    // PayPal.Me or button    (paypal.com)
+  },
+  contactEmail:     "hello@escapecourse.com",
+  priceZAR:         300,
+  memberCount:      300
+};
+
+const RATES={ZAR:{s:"R",v:300},USD:{s:"$",v:16},EUR:{s:"€",v:15},GBP:{s:"£",v:13},NGN:{s:"₦",v:24000},KES:{s:"KSh ",v:2100},INR:{s:"₹",v:1400},AUD:{s:"A$",v:25},CAD:{s:"C$",v:22}};
+let currentCur="ZAR";
+const store={mem:{},get(k){try{return localStorage.getItem(k)}catch(e){return (k in this.mem)?this.mem[k]:null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){this.mem[k]=v}}};
+const load=(k,d)=>{const v=store.get(k);if(v==null)return d;try{return JSON.parse(v)}catch(e){return d}};
+const save=(k,v)=>store.set(k,JSON.stringify(v));
+
+const DARES=["Talk to a stranger today — even just \"hey\".","Do one thing you've never done before.","Watch the sunrise. Phone in your pocket.","Say yes to the thing that scares you a little.","Take a route you've never taken.","Learn one chord, one word, or one trick — right now.","Text the person you keep thinking about.","Cook something you can't pronounce.","Go somewhere new, alone, just to see it.","Dance to one whole song like no one's watching.","Ask the question you've been too scared to ask.","Start the thing you keep putting off — badly is fine.","Leave your phone at home for one hour.","Compliment a stranger and mean it.","Try the hobby you've been \"too busy\" for."];
+
+const MODULES=[
+  {n:1,title:"The Anti-Overthinking System",topics:["Quiet the noise","Stop spiralling","Decide faster","The confidence loop"]},
+  {n:2,title:"The Momentum Engine",topics:["Beat the freeze","Tiny starts","Protect your time","Real focus"]},
+  {n:3,title:"The Compound Habit Loop",topics:["Habits that stick","The 1% rule","Quiet discipline","Identity change"]},
+  {n:4,title:"The Conversation That Changes Everything",topics:["Talk to anyone","Make real friends","Courage on demand","Be magnetic"]},
+  {n:5,title:"The Energy Leak Audit",topics:["Sleep that works","Move daily","Plug the leaks","All-day energy"]},
+  {n:6,title:"The Future-You Blueprint",topics:["The life-design framework","The opportunity mindset","Skills that compound","Your 1-year plan"]}
+];
+const TOTAL_LESSONS=MODULES.reduce((a,m)=>a+m.topics.length,0);
+const REVIEWS=[
+  {name:"Lerato",role:"@lerato · 19",color:"#2347ff",text:"The daily dares got me out of my room. I talked to people I'd never have talked to. I feel like myself again."},
+  {name:"Daniel",role:"@dan.k · 21",color:"#ff5630",text:"Not a magic fix — that's why I trust it. The dares are tiny but they add up. My screen time genuinely dropped."},
+  {name:"Aisha",role:"@aisha.r · 24",color:"#1a8a8a",text:"40 days into a morning walk. The streak is what keeps me — I don't want to break it."}
+];
+const FAQS=[
+  {q:"What is ESCAPE?",a:"A self-paced course of short lessons plus a daily dare — small, bold actions that pull you out of autopilot and into actually living. Six areas: mind, days, habits, social life, health, future."},
+  {q:"Who's it for?",a:"Teens, students, young adults — anyone tired of the scroll-and-feel-behind loop. No experience needed, just a willingness to try small things."},
+  {q:"Is this 'grind harder' stuff?",a:"The opposite. No hustle, no hype. Just realistic, doable moves — the antidote to both burnout culture and doomscrolling."},
+  {q:"Will it fix everything overnight?",a:"No, and we'd never promise that. It's steady, real improvement from small actions repeated — not miracles."},
+  {q:"What's the guarantee?",a:"Do the 30-day challenge. If your daily life isn't genuinely better, email us for a full refund — and keep every bonus."},
+  {q:"Is this therapy?",a:"No. It's educational and supportive, not a replacement for professional help. If you're really struggling, please reach out to a doctor, counsellor or someone you trust."}
+];
+
+function renderCurriculum(){document.getElementById("curriculumGrid").innerHTML=MODULES.map(m=>`<div class="mod reveal"><div class="mn">${String(m.n).padStart(2,"0")}</div><h3>${m.title}</h3><div class="topics">${m.topics.map(t=>`<span>${t}</span>`).join("")}</div></div>`).join("")}
+function renderReviews(){document.getElementById("reviewGrid").innerHTML=REVIEWS.map(r=>`<div class="tcard reveal"><div class="stars">★★★★★</div><p>"${r.text}"</p><div class="tperson"><div class="avatar" style="background:${r.color}">${r.name[0]}</div><div><b>${r.name}</b><span>${r.role}</span></div></div></div>`).join("")}
+function renderFaq(){document.getElementById("faqWrap").innerHTML=FAQS.map((f,i)=>`<div class="faq-item" id="faq${i}"><button class="faq-q" onclick="toggleFaq(${i})">${f.q}<span class="chev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-a"><div>${f.a}</div></div></div>`).join("")}
+function toggleFaq(i){const it=document.getElementById("faq"+i),an=it.querySelector(".faq-a");if(it.classList.contains("open")){it.classList.remove("open");an.style.maxHeight=null}else{it.classList.add("open");an.style.maxHeight=an.scrollHeight+"px"}}
+function renderMarquee(){const cls=["b","p",""];const make=arr=>arr.concat(arr).map((d,i)=>`<span class="dare-chip ${cls[i%3]}">${d.replace(/"/g,'&quot;')}</span>`).join("");document.getElementById("mq1").innerHTML=make(DARES.slice(0,8));document.getElementById("mq2").innerHTML=make(DARES.slice(7))}
+
+let heroIdx=0;
+function shuffleDare(){const el=document.getElementById("heroDare");let n;do{n=Math.floor(Math.random()*DARES.length)}while(n===heroIdx&&DARES.length>1);heroIdx=n;el.style.opacity="0";setTimeout(()=>{el.textContent=DARES[n].replace(/&quot;/g,'"');el.style.opacity="1"},180)}
+
+function showView(v){document.querySelectorAll(".view").forEach(e=>e.classList.remove("active"));document.getElementById("view-"+v).classList.add("active");window.scrollTo({top:0});if(v==="dashboard")renderDashboard();if(v==="admin")renderAdmin();closeMenu()}
+function goSite(id){document.querySelectorAll(".view").forEach(e=>e.classList.remove("active"));document.getElementById("view-site").classList.add("active");closeMenu();setTimeout(()=>{const t=document.getElementById(id);if(t)t.scrollIntoView({behavior:"smooth"})},60)}
+function toggleTheme(){const c=document.documentElement.getAttribute("data-theme"),n=c==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);save("escape_theme",n);setThemeIcon(n)}
+function setThemeIcon(t){document.getElementById("moonIcon").innerHTML=t==="dark"?'<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>':'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>'}
+function toggleMenu(){document.getElementById("mobileMenu").classList.toggle("show")}
+function closeMenu(){document.getElementById("mobileMenu").classList.remove("show")}
+function fmt(c){const r=RATES[c];return r.s+r.v.toLocaleString()}
+function updateCurrency(c){currentCur=c;["dealPrice","dealBtnPrice","modalAmount","vaultPrice"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=fmt(c)})}
+function openCheckout(){renderPayButtons();document.getElementById("modalAmount").textContent=fmt(currentCur);document.getElementById("payMsg").style.display="none";document.getElementById("checkoutModal").classList.add("show")}
+function closeCheckout(){document.getElementById("checkoutModal").classList.remove("show")}
+const PROVIDERS=[
+  {key:"payfast",name:"Card / Instant EFT (Payfast)",cls:"pay-payfast"},
+  {key:"yoco",name:"Card / EFT (Yoco)",cls:"pay-yoco"},
+  {key:"paystack",name:"Card (Paystack)",cls:"pay-paystack"},
+  {key:"paypal",name:"PayPal",cls:"pay-paypal"}
+];
+function renderPayButtons(){
+  const box=document.getElementById("payBtns");
+  const live=PROVIDERS.filter(p=>{const l=CONFIG.payments[p.key];return l&&l.trim()});
+  const list=live.length?live:PROVIDERS;            /* show only configured ones; if none set yet, show all in setup mode */
+  const setup=live.length===0;
+  box.innerHTML=list.map(p=>`<button class="btn ${setup?'pay-setup':p.cls} btn-block" onclick="pay('${p.key}')">${setup?'⚙️ Set up '+p.name+' →':'Pay with '+p.name}</button>`).join("");
+}
+function pay(key){
+  const link=CONFIG.payments[key],msg=document.getElementById("payMsg");
+  const name=({payfast:"Payfast",yoco:"Yoco",paystack:"Paystack",paypal:"PayPal"})[key];
+  if(link&&link.trim()){window.open(link,"_blank")}
+  else{msg.style.display="block";msg.innerHTML=`⚙️ <b>${name} not connected yet.</b><br>Create a payment link in your ${name} dashboard, then paste it into <code>CONFIG.payments.${key}</code> at the bottom of this file and re-upload. It goes live instantly.`}
+}
+
+/* ===== PREMIUM MEMBER SPACE ===== */
+function isPremium(){return load("escape_premium",false)===true}
+function pxToggleDemo(){save("escape_premium",!isPremium());renderDashboard()}
+
+const PX_CARDS=[
+  {id:"dare",   cls:"",   icon:"⚡", title:"Today's Dare",       desc:"One bold move a day. Build the streak.", free:true},
+  {id:"day",    cls:"c2", icon:"🌙", title:"How was your day?",  desc:"A 30-second check-in that resets your head.", free:true},
+  {id:"lessons",cls:"",   icon:"📚", title:"The 6 Systems",        desc:"Six hidden frameworks that quietly rewire your week.", free:false},
+  {id:"ten",    cls:"c3", icon:"✦",  title:"10 Things",          desc:"The list that makes your next year suddenly obvious.", free:false},
+  {id:"letter", cls:"c2", icon:"✉️", title:"Letter to Future You",desc:"A message only future-you gets to open.", free:false},
+  {id:"goals",  cls:"c3", icon:"🎯", title:"The Momentum Map",       desc:"Watch 'someday' turn into a streak.", free:false},
+  {id:"notes",  cls:"",   icon:"📝", title:"Private Notes",              desc:"Your head, on paper, just for you.", free:false},
+  {id:"cert",   cls:"c2", icon:"🏆", title:"The Certificate",        desc:"Proof you became the person who finishes.", free:false}
+];
+const PX_ACHV=[
+  {e:"🌱",t:"First Step",d:"1 lesson",test:function(s){return s.lessons>=1}},
+  {e:"🔥",t:"On Fire",d:"3-day streak",test:function(s){return s.streak>=3}},
+  {e:"🌙",t:"Reflector",d:"First check-in",test:function(s){return s.days>=1}},
+  {e:"✦",t:"Dreamer",d:"10 things",test:function(s){return s.ten>=10}},
+  {e:"⚡",t:"Halfway",d:"12 lessons",test:function(s){return s.lessons>=12}},
+  {e:"🏆",t:"Finisher",d:"All 24",test:function(s){return s.lessons>=TOTAL_LESSONS}}
+];
+function pxStats(){return {lessons:load("escape_completed",[]).length,streak:(load("escape_challenge",{streak:0}).streak)||0,days:load("escape_day_log",[]).length,ten:load("escape_ten",[]).length}}
+function renderAchievements(){var s=pxStats(),el=document.getElementById("pxAchv");if(!el)return;el.innerHTML=PX_ACHV.map(function(a){var e=a.test(s);return '<div class="px-badge '+(e?'earned':'')+'"><span class="be">'+(e?a.e:'🔒')+'</span><b>'+a.t+'</b><span>'+a.d+'</span></div>'}).join("")}
+function renderGrid(){
+  const prem=isPremium();
+  document.getElementById("pxGrid").innerHTML=PX_CARDS.map(c=>{
+    const locked=!c.free&&!prem;
+    const tag=c.free?'<span class="tag free">Free preview</span>':(prem?'':'<span class="tag prem">Premium</span>');
+    return `<div class="px-card ${c.cls} ${locked?'locked':''}" onclick="pxOpen('${c.id}',${locked})">${tag}<div class="pc"><div class="pic">${c.icon}</div><h3>${c.title}</h3><p>${c.desc}</p></div><div class="lockwrap"><div class="lk">🔒</div><b>Inside ESCAPE</b><span>Unlock to discover →</span></div></div>`;
+  }).join("");
+}
+function pxOpen(id,locked){
+  if(locked){pxGo('home');const u=document.getElementById("pxUnlock");u.scrollIntoView({behavior:"smooth"});u.style.transition="transform .2s";u.style.transform="scale(1.02)";setTimeout(()=>u.style.transform="none",240);return}
+  pxGo(id);
+  if(id==="dare")pxRenderDare();
+  if(id==="day"){pxDayReset();pxRenderDayLog()}
+  if(id==="ten")pxRenderTen();
+  if(id==="letter")pxRenderLetter();
+  if(id==="lessons")pxRenderMods();
+  if(id==="goals")pxRenderGoals();
+  if(id==="notes")pxRenderNotes();
+  if(id==="cert")pxRenderCert();
+}
+function pxGo(screen){
+  document.querySelectorAll("#view-dashboard .px-screen").forEach(s=>s.classList.remove("active"));
+  const el=document.getElementById("px-"+screen);
+  if(el)el.classList.add("active");
+  window.scrollTo({top:0});
+  document.querySelectorAll(".ds-nav-item[data-screen]").forEach(b=>b.classList.toggle("active",b.dataset.screen===screen));
+  document.querySelectorAll(".ds-tab[data-screen]").forEach(b=>b.classList.toggle("active",b.dataset.screen===screen));
+  dsCloseSidebar();
+}
+
+
+function renderDashboard(){
+  const prem=isPremium(),name=load("escape_name","");
+  const _pxn=document.getElementById("pxName");if(_pxn)_pxn.textContent=name?(", "+name.split(" ")[0]):"";
+  const st=document.getElementById("pxStatus");if(st){st.textContent=prem?"✦ Member":"⬡ Preview";st.className="px-status "+(prem?"member":"preview");}
+  document.getElementById("pxUnlock").style.display=prem?"none":"block";
+  document.getElementById("pxUnlockPrice").textContent=fmt(currentCur);
+  const done=load("escape_completed",[]).length,pct=Math.round(done/TOTAL_LESSONS*100);
+  const _ring=document.getElementById("pxRing");if(_ring)_ring.style.setProperty("--pct",pct);const _pct=document.getElementById("pxPct");if(_pct)_pct.textContent=pct+"%";
+  const streak=(load("escape_challenge",{streak:0}).streak)||0,goalsDone=load("escape_goals",[]).filter(g=>g.done).length;
+  const xp=done*40+streak*15+goalsDone*10+load("escape_day_log",[]).length*8+load("escape_ten",[]).length*4;
+  const _ps=document.getElementById("pxStreak");if(_ps)_ps.textContent=streak;const _px=document.getElementById("pxXp");if(_px)_px.textContent=xp;const _pl=document.getElementById("pxLevel");if(_pl)_pl.textContent=Math.max(1,Math.floor(xp/120)+1);
+  const _cn=document.getElementById("pxCertName");if(_cn)_cn.value=name;
+  renderGrid();renderAchievements();
+  document.querySelectorAll("#view-dashboard .px-screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("px-home").classList.add("active");
+  const _n=load("escape_name","");
+  const _un=document.getElementById("dsUserName");if(_un)_un.textContent=_n||"Member";
+  const _uav=document.getElementById("dsUserAv");if(_uav)_uav.textContent=(_n&&_n[0].toUpperCase())||"?";
+  const _ub=document.getElementById("dsUserBadge");if(_ub){_ub.textContent=prem?"✶ Member":"⬡ Preview";_ub.className="ds-user-badge "+(prem?"member":"preview");}
+  dsRenderHome();
+}
+
+/* Today's Dare */
+function pxDareIdx(){const o=load("escape_dareoffset",0);return (Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/864e5)+o)%DARES.length}
+function pxTodayKey(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function pxRenderDare(){document.getElementById("pxDareText").textContent=DARES[pxDareIdx()].replace(/&quot;/g,'"');const data=load("escape_challenge",{date:"",streak:0}),done=data.date===pxTodayKey(),btn=document.getElementById("pxDareBtn");document.getElementById("pxDareStreak").textContent=data.streak>0?`🔥 ${data.streak}-day streak — don't break it.`:"Do it to start your streak.";if(done){btn.textContent="✓ Done today";btn.style.opacity=".6";btn.disabled=true}else{btn.textContent="I did it ✓";btn.style.opacity="1";btn.disabled=false}}
+function pxDareReroll(){save("escape_dareoffset",load("escape_dareoffset",0)+1);pxRenderDare()}
+function pxDareDone(){const data=load("escape_challenge",{date:"",streak:0});if(data.date===pxTodayKey())return;const y=new Date();y.setDate(y.getDate()-1);const yk=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();data.streak=(data.date===yk)?(data.streak+1):1;data.date=pxTodayKey();save("escape_challenge",data);pxRenderDare()}
+
+/* How was your day */
+let pxMoodVal=0;
+function pxDayReset(){pxMoodVal=0;pxDayStep(1);document.querySelectorAll("#pxMood button").forEach(b=>b.classList.remove("sel"));document.getElementById("pxDayText").value="";document.getElementById("pxDayWin").value="";document.getElementById("pxDaySaved").style.display="none"}
+function pxMoodPick(b,v){pxMoodVal=v;document.querySelectorAll("#pxMood button").forEach(x=>x.classList.remove("sel"));b.classList.add("sel")}
+function pxDayStep(n){[1,2,3].forEach(i=>{document.getElementById("dstep"+i).classList.toggle("active",i===n);document.getElementById("ds"+i).classList.toggle("on",i<=n)})}
+function pxDaySave(){const moods=["","😞","😕","😐","🙂","😄"];const entry={moodE:moods[pxMoodVal]||"😐",text:document.getElementById("pxDayText").value.trim(),win:document.getElementById("pxDayWin").value.trim(),date:new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})};const log=load("escape_day_log",[]);log.unshift(entry);save("escape_day_log",log);const s=document.getElementById("pxDaySaved");s.style.display="block";s.textContent="✓ Check-in saved. That's a win in itself.";setTimeout(()=>{pxDayReset();pxRenderDayLog()},950)}
+function pxRenderDayLog(){const log=load("escape_day_log",[]),el=document.getElementById("pxDayLog");if(!log.length){el.innerHTML="";return}el.innerHTML='<div style="font-family:JetBrains Mono,monospace;font-size:.7rem;letter-spacing:.14em;color:#9fb0e8;margin-bottom:10px">YOUR RECENT CHECK-INS</div>'+log.slice(0,5).map(e=>`<div class="px-note"><div class="nt"><b style="color:#fff">${e.moodE} ${e.win?esc(e.win):"—"}</b>${e.text?'<br><span style="color:#9fb0e8;font-size:.88rem">'+esc(e.text)+'</span>':''}<br><small>${e.date}</small></div></div>`).join("")}
+
+/* 10 Things */
+function pxRenderTen(){const t=load("escape_ten",[]),el=document.getElementById("pxTenList");el.innerHTML=t.map((x,i)=>`<div class="px-li"><span class="n">${i+1}</span><span>${esc(x)}</span><button onclick="pxTenDel(${i})">🗑</button></div>`).join("");document.getElementById("pxTenBar").style.width=Math.min(100,t.length*10)+"%";const d=document.getElementById("pxTenDone");if(t.length>=10){d.style.display="block";d.textContent="🎉 All 10. Screenshot this — it's your year."}else{d.style.display="none"}}
+function pxTenAdd(){const inp=document.getElementById("pxTenInput"),v=inp.value.trim();if(!v)return;const t=load("escape_ten",[]);if(t.length>=10)return;t.push(v);save("escape_ten",t);inp.value="";pxRenderTen()}
+function pxTenDel(i){const t=load("escape_ten",[]);t.splice(i,1);save("escape_ten",t);pxRenderTen()}
+
+/* Letter */
+function pxRenderLetter(){const l=load("escape_letter",null),s=document.getElementById("pxLetterSaved");if(l){document.getElementById("pxLetter").value=l.text;s.style.display="block";s.textContent=`✉️ Sealed ${l.date}.`}else{s.style.display="none"}}
+function pxLetterSave(){const t=document.getElementById("pxLetter").value.trim();if(!t)return;save("escape_letter",{text:t,date:new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})});pxRenderLetter()}
+
+/* Lessons */
+const LESSON_BODY="<p>Welcome. This lesson is short on purpose — read it, then do the one small action at the end. That's the whole method: tiny moves, repeated until they're just who you are.</p><h4>The idea</h4><p>You don't need a massive life overhaul. You need one repeatable action small enough that you can't talk yourself out of it — and a reason to come back tomorrow.</p><h4>Try this now</h4><p>Pick the smallest possible version of this topic and do it in the next 10 minutes. Then tick it complete below and watch your streak grow.</p>";
+function pxRenderMods(){const done=load("escape_completed",[]);document.getElementById("pxMods").innerHTML=MODULES.map((m,mi)=>{const dc=m.topics.filter((t,ti)=>done.includes("m"+(mi+1)+"-"+(ti+1))).length;return `<div class="px-modrow" onclick="pxOpenMod(${mi})"><div class="mnum">${String(m.n).padStart(2,"0")}</div><div class="mt"><b>${m.title}</b><span>${m.topics.length} lessons</span></div><div class="mc">${dc}/${m.topics.length}</div></div>`}).join("")}
+let pxCurMod=0,pxCurLesson=0;
+function pxOpenMod(mi){pxCurMod=mi;const m=MODULES[mi],done=load("escape_completed",[]);document.getElementById("pxMods").innerHTML=`<button class="px-back" onclick="pxRenderMods()" style="margin-bottom:6px">← All modules</button>`+m.topics.map((t,ti)=>{const id="m"+(mi+1)+"-"+(ti+1),ch=done.includes(id);return `<div class="px-modrow" onclick="pxOpenLesson(${mi},${ti})"><div class="mnum">${ch?'✓':(ti+1)}</div><div class="mt"><b>${esc(t)}</b><span>${ch?'Completed':'Lesson '+(ti+1)}</span></div><div class="mc">→</div></div>`}).join("")}
+function pxOpenLesson(mi,ti){pxCurMod=mi;pxCurLesson=ti;const m=MODULES[mi],id="m"+(mi+1)+"-"+(ti+1),done=load("escape_completed",[]).includes(id);document.getElementById("pxLessonTag").textContent="MODULE "+(mi+1)+" · LESSON "+(ti+1);document.getElementById("pxLessonTitle").textContent=m.topics[ti];document.getElementById("pxLessonBody").innerHTML=LESSON_BODY;const btn=document.getElementById("pxLessonBtn");if(done){btn.textContent="✓ Completed";btn.style.opacity=".6"}else{btn.textContent="Mark complete ✓";btn.style.opacity="1"}pxGo('lesson')}
+function pxLessonDone(){const id="m"+(pxCurMod+1)+"-"+(pxCurLesson+1);let d=load("escape_completed",[]);if(!d.includes(id)){d.push(id);save("escape_completed",d)}renderDashboard();pxGo('lessons');pxOpenMod(pxCurMod)}
+
+/* Goals */
+function pxRenderGoals(){const g=load("escape_goals",[]),el=document.getElementById("pxGoalList");if(!g.length){el.innerHTML='<div class="px-empty">No goals yet — add one above.</div>';return}el.innerHTML=g.map((x,i)=>`<div class="px-goal ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} onchange="pxGoalToggle(${i})"><span>${esc(x.text)}</span><button onclick="pxGoalDel(${i})">🗑</button></div>`).join("")}
+function pxGoalAdd(){const inp=document.getElementById("pxGoalInput"),v=inp.value.trim();if(!v)return;const g=load("escape_goals",[]);g.push({text:v,done:false});save("escape_goals",g);inp.value="";pxRenderGoals();renderDashboardSilent()}
+function pxGoalToggle(i){const g=load("escape_goals",[]);g[i].done=!g[i].done;save("escape_goals",g);pxRenderGoals();renderDashboardSilent()}
+function pxGoalDel(i){const g=load("escape_goals",[]);g.splice(i,1);save("escape_goals",g);pxRenderGoals();renderDashboardSilent()}
+function renderDashboardSilent(){const done=load("escape_completed",[]).length;const streak=(load("escape_challenge",{streak:0}).streak)||0,goalsDone=load("escape_goals",[]).filter(g=>g.done).length;const xp=done*40+streak*15+goalsDone*10+load("escape_day_log",[]).length*8+load("escape_ten",[]).length*4;const lv=Math.max(1,Math.floor(xp/120)+1);const sv=id=>document.getElementById(id);if(sv("pxStreak"))sv("pxStreak").textContent=streak;if(sv("pxXp"))sv("pxXp").textContent=xp;if(sv("pxLevel"))sv("pxLevel").textContent=lv;if(sv("dsChipStreak"))sv("dsChipStreak").textContent=streak;if(sv("dsChipXp"))sv("dsChipXp").textContent=xp;if(sv("dsChipLevel"))sv("dsChipLevel").textContent=lv;}
+
+/* Notes */
+function pxRenderNotes(){const n=load("escape_notes",[]),el=document.getElementById("pxNoteList");if(!n.length){el.innerHTML='<div class="px-empty">No notes yet.</div>';return}el.innerHTML=n.map((x,i)=>`<div class="px-note"><div class="nt">${esc(x.text)}<br><small>${x.date}</small></div><button onclick="pxNoteDel(${i})">🗑</button></div>`).join("")}
+function pxNoteAdd(){const inp=document.getElementById("pxNoteInput"),v=inp.value.trim();if(!v)return;const n=load("escape_notes",[]);n.unshift({text:v,date:new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})});save("escape_notes",n);inp.value="";pxRenderNotes()}
+function pxNoteDel(i){const n=load("escape_notes",[]);n.splice(i,1);save("escape_notes",n);pxRenderNotes()}
+
+/* Name + Certificate */
+function pxSaveName(v){save("escape_name",v);document.getElementById("pxName").textContent=v?(", "+v.split(" ")[0]):"";pxRenderCert()}
+function pxRenderCert(){const done=load("escape_completed",[]),name=load("escape_name","")||"Your Name",complete=done.length>=TOTAL_LESSONS,box=document.getElementById("pxCertBox");if(complete){box.innerHTML=`<div class="px-cert"><div class="sl">🏆</div><h2>Certificate of Completion</h2><p style="color:#9fb0e8">This certifies that</p><div class="who">${esc(name)}</div><p style="color:#9fb0e8">completed <b style="color:#fff">ESCAPE</b> — all six modules.</p><p style="color:#9fb0e8;font-size:.85rem;margin-top:10px">${new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})}</p><button class="btn btn-primary" style="margin-top:18px" onclick="window.print()">Print / Save PDF</button></div>`}else{const left=TOTAL_LESSONS-done.length;box.innerHTML=`<div class="px-cert lk"><div class="sl">🔒</div><h2>Locked</h2><p style="color:#9fb0e8;margin-top:8px">Finish <b style="color:#fff">${left}</b> more lesson${left===1?'':'s'} to unlock your certificate.</p></div>`}}
+function renderAdmin(){renderAdminLessons();renderAdminUsers()}
+function adminAddLesson(){const mod=document.getElementById("alModule").value,title=document.getElementById("alTitle").value.trim();if(!title){alert("Add a lesson title.");return}const l=load("escape_admin_lessons",[]);l.unshift({mod,title});save("escape_admin_lessons",l);document.getElementById("alTitle").value="";document.getElementById("alBody").value="";renderAdminLessons()}
+function renderAdminLessons(){const l=load("escape_admin_lessons",[]),el=document.getElementById("adminLessonList");if(!l.length){el.innerHTML='<div class="empty">No custom lessons yet.</div>';return}el.innerHTML=l.map((x,i)=>`<div class="admin-row"><div><b>${esc(x.title)}</b><br><small>${esc(x.mod)}</small></div><button onclick="adminDelLesson(${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.05rem">🗑</button></div>`).join("")}
+function adminDelLesson(i){const l=load("escape_admin_lessons",[]);l.splice(i,1);save("escape_admin_lessons",l);renderAdminLessons()}
+function renderAdminUsers(){const u=[{n:"Thandi M.",p:"71%"},{n:"James K.",p:"44%"},{n:"Aisha R.",p:"96%"},{n:"Sipho D.",p:"12%"}];document.getElementById("adminUsers").innerHTML=u.map(x=>`<div class="admin-row"><div><b>${x.n}</b></div><small>${x.p} done</small></div>`).join("")}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function animateCount(){const el=document.getElementById("proofCount"),target=CONFIG.memberCount||0;let n=0;const step=Math.max(1,Math.floor(target/40));const t=setInterval(()=>{n+=step;if(n>=target){n=target;clearInterval(t)}el.textContent=n.toLocaleString()+"+"},25)}
+
+(function init(){
+  const t=load("escape_theme","light");document.documentElement.setAttribute("data-theme",t);setThemeIcon(t);
+  if(location.hash==="#preview")save("escape_premium",true);if(location.hash==="#locked")save("escape_premium",false);renderReviews();renderFaq();renderMarquee();
+  heroIdx=Math.floor(Math.random()*DARES.length);document.getElementById("heroDare").textContent=DARES[heroIdx].replace(/&quot;/g,'"');
+  document.getElementById("year").textContent=new Date().getFullYear();
+  updateCurrency("ZAR");
+  const nav=document.getElementById("nav");window.addEventListener("scroll",()=>{nav.classList.toggle("scrolled",window.scrollY>20)});
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll(".reveal").forEach((el,i)=>{el.style.transitionDelay=(i%4*55)+"ms";io.observe(el)});
+  document.getElementById("checkoutModal").addEventListener("click",e=>{if(e.target.id==="checkoutModal")closeCheckout()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCheckout()});
+  animateCount();
+})();
+
+function nfPost(f){return fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(f)).toString()})}
+function submitFreebie(e){e.preventDefault();var f=e.target,ok=document.getElementById("freebieOk");nfPost(f).then(function(){ok.style.display="block";f.reset()}).catch(function(){ok.style.display="block";ok.textContent="✓ Thanks! (Sends for real once live on Netlify.)"});return false}
+
+/* ===== SIDEBAR DASHBOARD JS ===== */
+function dsOpenSidebar(){document.getElementById('dsSidebar').classList.add('open');document.getElementById('dsSidebarOverlay').classList.add('show')}
+function dsCloseSidebar(){const s=document.getElementById('dsSidebar');if(s)s.classList.remove('open');const o=document.getElementById('dsSidebarOverlay');if(o)o.classList.remove('show')}
+function dsToast(msg){const t=document.getElementById('dsToast'),m=document.getElementById('dsToastMsg');if(!t||!m)return;m.textContent=msg;t.style.display='block';clearTimeout(window._toastT);window._toastT=setTimeout(()=>t.style.display='none',3200)}
+function dsUpdateDareBtn(){
+  const data=load("escape_challenge",{date:"",streak:0}),done=data.date===pxTodayKey();
+  const btn=document.getElementById("dsDareBtn");
+  if(btn){btn.textContent=done?"&#x2713; Done today":"I did it ✓";btn.style.opacity=done?".6":"1";btn.disabled=done}
+  const dt=document.getElementById("dsDareText");if(dt)dt.textContent=DARES[pxDareIdx()].replace(/&quot;/g,'"');
+}
+function dsRenderHome(){
+  const done=load("escape_completed",[]).length;
+  const pct=Math.round(done/TOTAL_LESSONS*100);
+  const streak=(load("escape_challenge",{streak:0}).streak)||0;
+  const goals=load("escape_goals",[]),goalsDone=goals.filter(g=>g.done).length;
+  const xp=done*40+streak*15+goalsDone*10+load("escape_day_log",[]).length*8+load("escape_ten",[]).length*4;
+  const level=Math.max(1,Math.floor(xp/120)+1);
+  const sv=id=>document.getElementById(id);
+  if(sv("dsSvProgress"))sv("dsSvProgress").textContent=pct+"%";
+  if(sv("dsSvStreak"))sv("dsSvStreak").textContent=streak;
+  if(sv("dsSvXp"))sv("dsSvXp").textContent=xp;
+  if(sv("dsSvLevel"))sv("dsSvLevel").textContent=level;
+  if(sv("dsChipStreak"))sv("dsChipStreak").textContent=streak;
+  if(sv("dsChipXp"))sv("dsChipXp").textContent=xp;
+  if(sv("dsChipLevel"))sv("dsChipLevel").textContent=level;
+  dsUpdateDareBtn();
+  if(sv("dsGoalsCount"))sv("dsGoalsCount").textContent=goalsDone+" / "+goals.length+" done";
+  if(sv("dsGoalsBar"))sv("dsGoalsBar").style.width=(goals.length?Math.round(goalsDone/goals.length*100):0)+"%";
+  const miniEl=sv("dsModMini");
+  if(miniEl){
+    const comp=load("escape_completed",[]);
+    miniEl.innerHTML=MODULES.map((m,mi)=>{
+      const dc=m.topics.filter((_,ti)=>comp.includes("m"+(mi+1)+"-"+(ti+1))).length;
+      const mp=Math.round(dc/m.topics.length*100);
+      return '<div class="ds-mod-mini-row"><span style="font-size:.72rem;color:#9fb0e8;font-family:JetBrains Mono,monospace;min-width:52px">M'+m.n+'</span><div class="ds-mmbar"><i style="width:'+mp+'%"></i></div><span class="ds-mmlabel">'+mp+'%</span></div>';
+    }).join("");
+  }
+  const timelineEl=sv("dsTimeline");
+  if(timelineEl){
+    const log=load("escape_day_log",[]);
+    if(!log.length){timelineEl.innerHTML='<div class="px-empty">No check-ins yet — start with Daily Check-in.</div>';}
+    else{timelineEl.innerHTML=log.slice(0,3).map(e=>'<div class="ds-timeline-item"><div class="ds-timeline-dot">'+e.moodE+'</div><div class="ds-timeline-body"><div class="ds-timeline-title">'+(e.win?esc(e.win):'Daily check-in')+'</div>'+(e.text?'<div class="ds-timeline-sub">'+esc(e.text.slice(0,80))+(e.text.length>80?'…':'')+'</div>':'')+'<div class="ds-timeline-date">'+e.date+'</div></div></div>').join("");}
+  }
+  renderAchievements();
+}
+
+</script>
+<div id="dsToast" style="position:fixed;bottom:28px;right:28px;background:#1a2340;border:1px solid rgba(100,128,255,.4);color:#eef1fb;padding:13px 18px;border-radius:13px;font-size:.88rem;z-index:999;display:none;max-width:280px;box-shadow:0 8px 32px rgba(0,0,0,.4)"><b>Not connected yet</b><br><span id="dsToastMsg">Set up your integrations via Composio.</span></div>
+</body>
+</html>
+
