@@ -37,6 +37,29 @@
 
 html,body{height:100%;overflow:hidden}
 
+/* ── PIPELINES ── */
+.pipeline-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:28px}
+.pipeline-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:18px;transition:border-color var(--transition)}
+.pipeline-card:hover{border-color:var(--card-border-hover)}
+.pipeline-card.running{border-color:rgba(255,214,10,.4);background:rgba(255,214,10,.04)}
+.pipeline-name{font-weight:600;font-size:14px;color:#fff;margin-bottom:3px}
+.pipeline-desc{font-size:11px;color:var(--text-muted);margin-bottom:12px}
+.pipeline-steps{display:flex;align-items:center;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.pipeline-chip{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.06);color:var(--text-muted);transition:all .2s}
+.pipeline-chip.active{background:rgba(255,214,10,.15);color:#ffd60a}
+.pipeline-chip.done{background:rgba(67,224,160,.12);color:#43e0a0}
+.pipeline-arrow{color:var(--text-dim);font-size:9px}
+
+/* ── BRAIN ── */
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:28px}
+.brain-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:14px;position:relative}
+.brain-card.fresh{border-color:rgba(100,128,255,.3)}
+.brain-agent{font-size:11px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.brain-dot{width:6px;height:6px;border-radius:50%;background:var(--text-dim);flex-shrink:0}
+.brain-dot.fresh{background:#43e0a0}
+.brain-insight{font-size:11px;color:var(--text-muted);line-height:1.55;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.brain-time{font-size:10px;color:var(--text-dim);margin-top:8px}
+
 /* ── TOGGLE ── */
 .toggle-label{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
 .toggle-label input[type=checkbox]{appearance:none;width:32px;height:18px;border-radius:9px;background:rgba(255,255,255,.12);position:relative;cursor:pointer;transition:background .2s}
@@ -660,6 +683,12 @@ textarea.form-control{resize:vertical;min-height:80px;line-height:1.6}
 
     <div class="section-title">AI Agents</div>
     <div class="agent-grid" id="agent-grid"></div>
+
+    <div class="section-title" style="margin-top:8px">Agent Pipelines <span style="font-size:11px;color:var(--text-dim);font-weight:400;letter-spacing:0">— agents run in sequence, each building on the last</span></div>
+    <div class="pipeline-grid" id="pipeline-grid"></div>
+
+    <div class="section-title">Business Brain <span style="font-size:11px;color:var(--text-dim);font-weight:400;letter-spacing:0">— shared intelligence across all agents</span></div>
+    <div class="brain-grid" id="brain-grid"></div>
 
     <div class="section-title">Live Activity Feed</div>
     <div class="feed-container">
@@ -1559,6 +1588,13 @@ async function runAgent(agentId, taskConfig){
 
   toast(`${agent.name} ${success?'completed':'encountered an error'}`, success?'success':'error');
 
+  // Write to Brain even in demo mode
+  if(success && !agent.platformType) writeToBrain(agentId, output);
+  renderBrain();
+
+  // Suggest next agent
+  if(success && !agent.platformType) suggestNextAgent(agentId);
+
   // Auto-trigger enabled platform flows
   if(success) triggerPlatformFlows(agentId, output).catch(()=>{});
 
@@ -1566,8 +1602,14 @@ async function runAgent(agentId, taskConfig){
 }
 
 async function runAgentReal(agent, cfg){
-  const userMsg = `Run the ${agent.name} with the following config: ${JSON.stringify(cfg)}. Produce a detailed, actionable output.`;
+  const brainCtx = readFromBrain(agent.id);
+  const pipelineCtx = cfg._pipelineContext||'';
+  let ctx = '';
+  if(pipelineCtx) ctx += `\n\nPrevious agent output to build on:\n${pipelineCtx}`;
+  if(brainCtx) ctx += `\n\nRecent intelligence from other agents:\n${brainCtx}`;
+  const userMsg = `Run the ${agent.name} with config: ${JSON.stringify(cfg)}.${ctx}\n\nProduce detailed, actionable output.`;
   const data = await claudeGenerate(agent.systemPrompt, userMsg);
+  writeToBrain(agent.id, data);
   return data;
 }
 
@@ -2194,6 +2236,165 @@ function setSaleDateDefault(){
   if(el) el.value=new Date().toISOString().split('T')[0];
 }
 
+// ── PIPELINES ──
+const PIPELINES = [
+  {
+    id:'morning-brief',
+    icon:'☀️',
+    name:'Morning Brief',
+    desc:'Analyse what\'s happening, create content, push marketing',
+    agents:['analytics','content','marketing'],
+    configs:[
+      {period:'This week',focus:'Revenue summary'},
+      {type:'Daily dares',system:'Any',count:'5'},
+      {platform:'Twitter/X',topic:'Daily momentum',tone:'Bold'}
+    ]
+  },
+  {
+    id:'sales-push',
+    icon:'🚀',
+    name:'Sales Push',
+    desc:'Check leads, find new prospects, follow up on everything',
+    agents:['sales','growth','support'],
+    configs:[
+      {action:'Check purchase inquiries',email:'',notes:''},
+      {task:'Find influencer prospects',niche:'SA lifestyle self-improvement',followerRange:'1K-10K (micro)'},
+      {action:'Scan inbox for support emails',question:''}
+    ]
+  },
+  {
+    id:'weekly-review',
+    icon:'📋',
+    name:'Weekly Review',
+    desc:'Full business review — numbers, issues, next moves',
+    agents:['analytics','support','growth'],
+    configs:[
+      {period:'This week',focus:'Drop-off analysis'},
+      {action:'Flag urgent issues',question:''},
+      {task:'Research competitors',niche:'SA self-improvement',followerRange:'Any size'}
+    ]
+  }
+];
+
+let pipelineStates = {};
+
+function renderPipelines(){
+  const grid = document.getElementById('pipeline-grid');
+  if(!grid) return;
+  grid.innerHTML = PIPELINES.map(p => {
+    const state = pipelineStates[p.id] || {running:false, step:-1};
+    const stepsHtml = p.agents.map((agentId, i) => {
+      const agent = AGENTS.find(a => a.id === agentId);
+      let cls = '';
+      if(state.running && state.step === i) cls = 'active';
+      else if(state.running && i < state.step) cls = 'done';
+      else if(!state.running && state.lastCompleted && i <= p.agents.length-1) cls = 'done';
+      return `<span class="pipeline-chip ${cls}">${agent?.icon||''} ${agent?.name||agentId}</span>${i<p.agents.length-1?'<span class="pipeline-arrow">→</span>':''}`;
+    }).join('');
+    const btnText = state.running ? '<span class="spinner"></span> Running...' : `▶ Run ${p.name}`;
+    return `<div class="pipeline-card ${state.running?'running':''}" id="pipeline-${p.id}">
+      <div style="display:flex;align-items:start;justify-content:space-between;gap:8px;margin-bottom:8px">
+        <div>
+          <div class="pipeline-name">${p.icon} ${p.name}</div>
+          <div class="pipeline-desc">${p.desc}</div>
+        </div>
+      </div>
+      <div class="pipeline-steps">${stepsHtml}</div>
+      <button class="btn btn-primary btn-sm w-full" onclick="runPipeline('${p.id}')" ${state.running?'disabled':''}>
+        ${btnText}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+async function runPipeline(pipelineId){
+  const pipeline = PIPELINES.find(p => p.id === pipelineId);
+  if(!pipeline) return;
+  if(pipelineStates[pipelineId]?.running){ toast('Pipeline already running','info'); return; }
+
+  pipelineStates[pipelineId] = {running:true, step:0};
+  renderPipelines();
+  addFeedEntry('analytics', `Pipeline started: ${pipeline.name}`);
+  toast(`${pipeline.icon} ${pipeline.name} pipeline starting…`, 'info', 3000);
+
+  let prevOutput = '';
+  for(let i = 0; i < pipeline.agents.length; i++){
+    pipelineStates[pipelineId].step = i;
+    renderPipelines();
+    const agentId = pipeline.agents[i];
+    const cfg = {...pipeline.configs[i]};
+    if(prevOutput) cfg._pipelineContext = prevOutput.slice(0,600);
+    prevOutput = await runAgent(agentId, cfg) || '';
+    if(i < pipeline.agents.length - 1) await new Promise(r=>setTimeout(r,400));
+  }
+
+  pipelineStates[pipelineId] = {running:false, step:-1, lastCompleted:Date.now()};
+  renderPipelines();
+  toast(`✅ ${pipeline.name} complete — check agent outputs`, 'success', 5000);
+  addFeedEntry('analytics', `Pipeline complete: ${pipeline.name}`);
+}
+
+// ── BUSINESS BRAIN ──
+function writeToBrain(agentId, output){
+  const brain = lsj('hq_brain', {});
+  const lines = output.split('\n').map(l=>l.trim()).filter(l=>l && !l.startsWith('[') && !l.startsWith('#') && l.length > 20);
+  const insight = (lines[0]||output).slice(0,180).replace(/^[•\-*]\s*/,'');
+  brain[agentId] = {insight, ts:Date.now(), preview:output.slice(0,400)};
+  slsj('hq_brain', brain);
+}
+
+function readFromBrain(excludeId){
+  const brain = lsj('hq_brain', {});
+  const week = Date.now() - 7*24*60*60*1000;
+  return Object.entries(brain)
+    .filter(([id,d]) => id !== excludeId && d.ts > week)
+    .map(([id,d]) => {
+      const a = AGENTS.find(a=>a.id===id);
+      return `${a?.name||id}: ${d.insight}`;
+    }).join('\n');
+}
+
+function renderBrain(){
+  const grid = document.getElementById('brain-grid');
+  if(!grid) return;
+  const brain = lsj('hq_brain', {});
+  const week = Date.now() - 7*24*60*60*1000;
+  const rows = AGENTS.filter(a=>!a.platformType).map(a => {
+    const entry = brain[a.id];
+    const fresh = entry && entry.ts > Date.now()-3600000;
+    if(!entry || entry.ts < week){
+      return `<div class="brain-card">
+        <div class="brain-agent" style="color:${a.accent}">
+          <span class="brain-dot"></span>${a.name}
+        </div>
+        <div class="brain-insight" style="color:var(--text-dim);font-style:italic">No data yet — run this agent</div>
+      </div>`;
+    }
+    return `<div class="brain-card ${fresh?'fresh':''}">
+      <div class="brain-agent" style="color:${a.accent}">
+        <span class="brain-dot ${fresh?'fresh':''}"></span>${a.name}
+      </div>
+      <div class="brain-insight">${escHtml(entry.insight)}</div>
+      <div class="brain-time">${timeAgo(entry.ts)}</div>
+    </div>`;
+  });
+  grid.innerHTML = rows.join('');
+}
+
+function suggestNextAgent(agentId){
+  const map = {
+    analytics:'marketing', marketing:'content', content:'growth',
+    growth:'sales', sales:'support', support:'analytics'
+  };
+  const nextId = map[agentId];
+  if(!nextId) return;
+  const next = AGENTS.find(a=>a.id===nextId);
+  if(!next) return;
+  setTimeout(()=>{
+    toast(`💡 Suggested next: ${next.icon} ${next.name}`, 'info', 5000);
+  }, 1500);
+}
+
 // ── PLATFORM HELPERS ──
 function getMakeWebhook(){return ls('hq_make_webhook','')}
 function getN8nWebhook(){return ls('hq_n8n_webhook','')}
@@ -2449,6 +2650,8 @@ function prefillPlatforms(){
 document.addEventListener('DOMContentLoaded',()=>{
   seedDefaults();
   renderAgentGrid();
+  renderPipelines();
+  renderBrain();
   renderFeed();
   renderStats();
   updateKeyStatus();
