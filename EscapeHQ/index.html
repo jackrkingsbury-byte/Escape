@@ -1638,16 +1638,24 @@ async function claudeGenerate(systemPrompt, userMessage){
     headers:{
       'Content-Type':'application/json',
       'x-api-key': getAnthropicKey(),
-      'anthropic-version':'2023-06-01'
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true'
     },
     body: JSON.stringify({
-      model:'claude-sonnet-4-6',
+      model:'claude-3-5-sonnet-20241022',
       max_tokens:1024,
       system: systemPrompt,
       messages:[{role:'user', content: userMessage}]
     })
   });
-  if(!res.ok){const e=await res.text();throw new Error(`Claude error: ${res.status} — ${e}`)}
+  if(!res.ok){
+    const e=await res.json().catch(()=>({error:{message:res.status}}));
+    const msg=e?.error?.message||res.status;
+    if(res.status===401) throw new Error('Invalid API key — check Settings');
+    if(res.status===403) throw new Error('API key does not have access — add a payment method at console.anthropic.com');
+    if(res.status===400) throw new Error('Bad request: '+msg);
+    throw new Error(`Claude error ${res.status}: ${msg}`);
+  }
   const d=await res.json();
   return d.content[0].text;
 }
