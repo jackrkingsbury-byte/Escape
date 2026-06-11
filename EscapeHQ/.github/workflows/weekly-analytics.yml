@@ -1,0 +1,35 @@
+name: Weekly Analytics Agent
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 8am UTC
+  workflow_dispatch:
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Analytics Agent
+        env:
+          COMPOSIO_KEY: ${{ secrets.COMPOSIO_KEY }}
+          ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
+        run: |
+          echo "=== ESCAPE Weekly Analytics Agent ==="
+          echo "Date: $(date -u)"
+          echo ""
+          echo "This agent runs every Monday to generate a weekly business summary:"
+          echo "  - Revenue totals for the past 7 days"
+          echo "  - New member sign-ups"
+          echo "  - Module completion rates"
+          echo "  - Drop-off points and recommendations"
+          echo "  - Top referral sources"
+          echo ""
+          echo "To enable real analytics:"
+          echo "1. Add COMPOSIO_KEY and ANTHROPIC_KEY as repo secrets"
+          echo "2. Connect your payment provider (e.g. Stripe) via Composio"
+          echo "3. Replace this step with a script that fetches real data"
+          echo "   and sends the summary to your email via Composio"
+          echo ""
+          echo "Analytics Agent: Ready (demo mode - add API keys to activate)"

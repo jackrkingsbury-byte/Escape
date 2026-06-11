@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESCAPE HQ — Business Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#070a14;
+  --bg2:#0d1121;
+  --bg3:#131829;
+  --card:rgba(255,255,255,.05);
+  --card-border:rgba(255,255,255,.08);
+  --card-border-hover:rgba(255,255,255,.16);
+  --text:#e8eaf0;
+  --text-muted:#7a8099;
+  --text-dim:#4a5068;
+  --sidebar-w:220px;
+  --accent-marketing:#ff5630;
+  --accent-sales:#43e0a0;
+  --accent-analytics:#6480ff;
+  --accent-content:#ffd60a;
+  --accent-growth:#b87eff;
+  --accent-support:#2dd4bf;
+  --font-serif:'Fraunces',Georgia,serif;
+  --font-sans:'Hanken Grotesk',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius:12px;
+  --radius-sm:8px;
+  --transition:.18s ease;
+}
+
+html,body{height:100%;overflow:hidden}
+
+/* ── TOGGLE ── */
+.toggle-label{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle-label input[type=checkbox]{appearance:none;width:32px;height:18px;border-radius:9px;background:rgba(255,255,255,.12);position:relative;cursor:pointer;transition:background .2s}
+.toggle-label input[type=checkbox]:checked{background:#6c3fff}
+.toggle-label input[type=checkbox]::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .2s}
+.toggle-label input[type=checkbox]:checked::after{transform:translateX(14px)}
+.toggle-text{font-size:12px;color:var(--text-muted)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px;line-height:1.5;display:flex}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.22)}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  height:100vh;
+  background:var(--bg2);
+  border-right:1px solid var(--card-border);
+  display:flex;flex-direction:column;
+  padding:0 0 16px;
+  overflow:hidden;
+  z-index:10;
+}
+
+.sidebar-logo{
+  padding:20px 16px 16px;
+  border-bottom:1px solid var(--card-border);
+  margin-bottom:8px;
+}
+.sidebar-logo .logo-label{
+  font-family:var(--font-serif);
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  color:#fff;
+}
+.sidebar-logo .logo-sub{
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-top:2px;
+}
+
+.nav-section-label{
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-dim);padding:12px 16px 4px;
+}
+
+.nav-item{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 16px;margin:1px 8px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  color:var(--text-muted);
+  font-size:13px;font-weight:500;
+  transition:background var(--transition),color var(--transition);
+  user-select:none;
+}
+.nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.nav-item.active{background:rgba(255,255,255,.08);color:#fff}
+.nav-item .nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.nav-item .nav-dot{
+  width:7px;height:7px;border-radius:50%;
+  margin-left:auto;flex-shrink:0;
+  display:none;
+}
+.nav-item.running .nav-dot{display:block;background:var(--accent-analytics);animation:pulse-dot 1.4s ease-in-out infinite}
+
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+.sidebar-footer{
+  margin-top:auto;
+  padding:12px 16px 0;
+  border-top:1px solid var(--card-border);
+}
+.key-status{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-sm);
+  font-size:11px;
+  color:var(--text-muted);
+}
+.key-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.key-dot.on{background:#43e0a0}
+.key-dot.off{background:var(--text-dim)}
+
+/* ── MAIN ── */
+#main{
+  flex:1;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+
+.page{display:none;padding:28px;min-height:100%}
+.page.active{display:block}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:28px;
+}
+.page-title{
+  font-family:var(--font-serif);
+  font-size:26px;font-weight:600;
+  letter-spacing:-.02em;
+  color:#fff;
+}
+.page-subtitle{
+  font-size:13px;color:var(--text-muted);margin-top:3px;
+}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 16px;
+  border-radius:var(--radius-sm);
+  font-family:var(--font-sans);font-size:13px;font-weight:600;
+  cursor:pointer;border:none;
+  transition:all var(--transition);
+  text-decoration:none;
+}
+.btn-primary{background:#fff;color:#070a14}
+.btn-primary:hover{background:#e8eaf0}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--card-border)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:var(--card-border-hover)}
+.btn-danger{background:rgba(255,60,60,.15);color:#ff6b6b;border:1px solid rgba(255,60,60,.25)}
+.btn-danger:hover{background:rgba(255,60,60,.25)}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+/* ── STAT CARDS ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  margin-bottom:28px;
+}
+@media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.stat-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.stat-value{
+  font-family:var(--font-serif);
+  font-size:32px;font-weight:600;
+  color:#fff;margin-top:4px;line-height:1;
+}
+.stat-change{font-size:12px;color:var(--text-muted);margin-top:6px}
+.stat-change.up{color:#43e0a0}
+
+/* ── AGENT GRID ── */
+.section-title{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:14px;
+}
+.agent-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  margin-bottom:28px;
+}
+@media(max-width:1000px){.agent-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.agent-grid{grid-template-columns:1fr}}
+
+.agent-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  padding:18px;
+  cursor:pointer;
+  transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);
+  position:relative;overflow:hidden;
+}
+.agent-card::before{
+  content:'';position:absolute;inset:0;
+  border-radius:var(--radius);
+  opacity:0;
+  transition:opacity var(--transition);
+  pointer-events:none;
+}
+.agent-card:hover{border-color:var(--card-border-hover);transform:translateY(-2px)}
+.agent-card:hover::before{opacity:1}
+
+/* Per-agent accent colors on hover */
+.agent-card[data-agent="marketing"]:hover{box-shadow:0 0 0 1px var(--accent-marketing),0 8px 32px rgba(255,86,48,.15)}
+.agent-card[data-agent="sales"]:hover{box-shadow:0 0 0 1px var(--accent-sales),0 8px 32px rgba(67,224,160,.15)}
+.agent-card[data-agent="analytics"]:hover{box-shadow:0 0 0 1px var(--accent-analytics),0 8px 32px rgba(100,128,255,.15)}
+.agent-card[data-agent="content"]:hover{box-shadow:0 0 0 1px var(--accent-content),0 8px 32px rgba(255,214,10,.1)}
+.agent-card[data-agent="growth"]:hover{box-shadow:0 0 0 1px var(--accent-growth),0 8px 32px rgba(184,126,255,.15)}
+.agent-card[data-agent="support"]:hover{box-shadow:0 0 0 1px var(--accent-support),0 8px 32px rgba(45,212,191,.15)}
+
+/* Running state */
+.agent-card.running{
+  animation:running-pulse 2s ease-in-out infinite;
+}
+.agent-card[data-agent="marketing"].running{border-color:var(--accent-marketing);box-shadow:0 0 0 1px var(--accent-marketing),0 0 24px rgba(255,86,48,.25)}
+.agent-card[data-agent="sales"].running{border-color:var(--accent-sales);box-shadow:0 0 0 1px var(--accent-sales),0 0 24px rgba(67,224,160,.25)}
+.agent-card[data-agent="analytics"].running{border-color:var(--accent-analytics);box-shadow:0 0 0 1px var(--accent-analytics),0 0 24px rgba(100,128,255,.25)}
+.agent-card[data-agent="content"].running{border-color:var(--accent-content);box-shadow:0 0 0 1px var(--accent-content),0 0 24px rgba(255,214,10,.2)}
+.agent-card[data-agent="growth"].running{border-color:var(--accent-growth);box-shadow:0 0 0 1px var(--accent-growth),0 0 24px rgba(184,126,255,.25)}
+.agent-card[data-agent="support"].running{border-color:var(--accent-support);box-shadow:0 0 0 1px var(--accent-support),0 0 24px rgba(45,212,191,.25)}
+
+@keyframes running-pulse{
+  0%,100%{box-shadow:0 0 0 1px currentColor,0 0 16px rgba(100,128,255,.2)}
+  50%{box-shadow:0 0 0 2px currentColor,0 0 32px rgba(100,128,255,.35)}
+}
+
+.agent-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.agent-icon{font-size:22px;line-height:1}
+.agent-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 8px;border-radius:20px;
+  font-size:11px;font-weight:600;letter-spacing:.04em;
+}
+.badge-idle{background:rgba(122,128,153,.15);color:var(--text-muted)}
+.badge-running{background:rgba(100,128,255,.2);color:#8fa3ff;animation:badge-blink 1.4s ease-in-out infinite}
+.badge-done{background:rgba(67,224,160,.15);color:#43e0a0}
+.badge-error{background:rgba(255,86,48,.15);color:#ff8060}
+@keyframes badge-blink{0%,100%{opacity:1}50%{opacity:.6}}
+
+.agent-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.agent-desc{font-size:11px;color:var(--text-muted)}
+.agent-last-run{font-size:11px;color:var(--text-dim);margin:8px 0}
+.agent-preview{
+  font-size:11px;color:var(--text-muted);
+  font-family:var(--font-mono);
+  background:rgba(0,0,0,.3);
+  border-radius:6px;padding:8px;
+  margin:8px 0;
+  min-height:52px;
+  line-height:1.6;
+  overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+}
+.agent-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.agent-accent-bar{
+  height:2px;border-radius:1px;
+  margin-bottom:12px;
+}
+
+/* ── ACTIVITY FEED ── */
+.feed-container{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.feed-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;
+  border-bottom:1px solid var(--card-border);
+}
+.feed-title{font-size:13px;font-weight:600;color:#fff}
+.feed-list{
+  max-height:260px;overflow-y:auto;
+}
+.feed-empty{
+  padding:32px 16px;text-align:center;
+  color:var(--text-dim);font-size:12px;
+}
+.feed-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 16px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  animation:feed-in .3s ease;
+}
+.feed-item:last-child{border-bottom:none}
+@keyframes feed-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.feed-dot{
+  width:7px;height:7px;border-radius:50%;
+  flex-shrink:0;margin-top:5px;
+}
+.feed-body{flex:1;min-width:0}
+.feed-agent{font-size:11px;font-weight:600;margin-bottom:1px}
+.feed-text{font-size:12px;color:var(--text-muted);line-height:1.5}
+.feed-time{font-size:10px;color:var(--text-dim);white-space:nowrap;flex-shrink:0;margin-top:3px;font-family:var(--font-mono)}
+
+/* ── AGENT DETAIL PAGE ── */
+.agent-detail-header{
+  display:flex;align-items:center;gap:16px;
+  padding:24px;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  margin-bottom:24px;
+}
+.agent-detail-icon{font-size:40px;line-height:1}
+.agent-detail-info{flex:1}
+.agent-detail-name{font-family:var(--font-serif);font-size:22px;font-weight:600;color:#fff}
+.agent-detail-desc{font-size:13px;color:var(--text-muted);margin-top:2px}
+.agent-detail-actions{display:flex;gap:10px;align-items:center}
+
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:800px){.detail-grid{grid-template-columns:1fr}}
+
+/* ── FORMS ── */
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;letter-spacing:.04em}
+.form-control{
+  width:100%;padding:9px 12px;
+  background:rgba(0,0,0,.35);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-sm);
+  color:var(--text);
+  font-family:var(--font-sans);font-size:13px;
+  transition:border-color var(--transition);
+  outline:none;
+}
+.form-control:focus{border-color:rgba(255,255,255,.25)}
+.form-control::placeholder{color:var(--text-dim)}
+select.form-control{cursor:pointer}
+select.form-control option{background:var(--bg3)}
+textarea.form-control{resize:vertical;min-height:80px;line-height:1.6}
+
+/* ── LOG ENTRIES ── */
+.log-list{max-height:380px;overflow-y:auto}
+.log-entry{
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-sm);
+  margin-bottom:8px;overflow:hidden;
+}
+.log-entry-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;cursor:pointer;
+  background:rgba(0,0,0,.2);
+}
+.log-entry-header:hover{background:rgba(0,0,0,.3)}
+.log-status{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+}
+.log-status.success{background:#43e0a0}
+.log-status.error{background:#ff5630}
+.log-meta{flex:1;min-width:0}
+.log-task{font-size:12px;color:var(--text);font-weight:500}
+.log-time{font-size:10px;color:var(--text-dim);font-family:var(--font-mono)}
+.log-toggle{font-size:10px;color:var(--text-dim);flex-shrink:0}
+.log-output{
+  padding:12px 14px;
+  background:rgba(0,0,0,.35);
+  border-top:1px solid var(--card-border);
+  font-size:11px;color:var(--text-muted);
+  font-family:var(--font-mono);
+  line-height:1.7;
+  display:none;
+  white-space:pre-wrap;word-break:break-word;
+}
+.log-output.open{display:block}
+
+/* ── CODE VAULT ── */
+.code-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin-bottom:20px;
+}
+.code-stat{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:16px;text-align:center;
+}
+.code-stat-value{font-family:var(--font-serif);font-size:28px;font-weight:600;color:#fff}
+.code-stat-label{font-size:11px;color:var(--text-muted);margin-top:3px;letter-spacing:.05em;text-transform:uppercase}
+
+.code-table-wrapper{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:var(--radius);overflow:hidden;
+}
+.code-table{width:100%;border-collapse:collapse}
+.code-table th{
+  padding:10px 14px;text-align:left;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-dim);
+  border-bottom:1px solid var(--card-border);
+  background:rgba(0,0,0,.2);
+}
+.code-table td{
+  padding:9px 14px;font-size:12px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  font-family:var(--font-mono);
+}
+.code-table tr:last-child td{border-bottom:none}
+.code-table tr:hover td{background:rgba(255,255,255,.025)}
+.badge-available{background:rgba(67,224,160,.15);color:#43e0a0;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
+.badge-sent{background:rgba(255,214,10,.12);color:#ffd60a;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
+.badge-used{background:rgba(122,128,153,.12);color:var(--text-dim);padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
+
+/* ── CHARTS ── */
+.chart-section{margin-bottom:28px}
+.chart-card{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:20px;
+}
+.chart-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:16px}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding-bottom:24px;position:relative}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end}
+.bar{
+  width:100%;border-radius:4px 4px 0 0;
+  transition:height .5s cubic-bezier(.4,0,.2,1),opacity .2s;
+  min-height:2px;
+}
+.bar:hover{opacity:.8}
+.bar-label{font-size:9px;color:var(--text-dim);font-family:var(--font-mono);white-space:nowrap;text-align:center}
+.bar-value{font-size:9px;color:var(--text-muted);font-family:var(--font-mono)}
+
+.referrer-list{display:flex;flex-direction:column;gap:8px}
+.referrer-item{display:flex;align-items:center;gap:10px}
+.referrer-name{font-size:12px;color:var(--text);width:140px;flex-shrink:0}
+.referrer-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.referrer-bar{height:100%;border-radius:3px;background:var(--accent-analytics);transition:width .6s ease}
+.referrer-val{font-size:11px;color:var(--text-muted);font-family:var(--font-mono);width:40px;text-align:right}
+
+/* ── SETTINGS ── */
+.settings-section{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:24px;margin-bottom:20px;
+}
+.settings-section-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:16px}
+.connection-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--card-border);
+}
+.connection-item:last-child{border-bottom:none}
+.connection-name{font-size:13px;font-weight:500;color:var(--text)}
+.connection-status{display:flex;align-items:center;gap:7px;font-size:12px}
+.connection-dot{width:8px;height:8px;border-radius:50%}
+.connection-dot.connected{background:#43e0a0;box-shadow:0 0 6px rgba(67,224,160,.5)}
+.connection-dot.disconnected{background:var(--text-dim)}
+
+/* ── TOAST ── */
+#toast-container{
+  position:fixed;bottom:24px;right:24px;z-index:1000;
+  display:flex;flex-direction:column;gap:8px;
+  pointer-events:none;
+}
+.toast{
+  padding:10px 16px;
+  background:var(--bg3);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-sm);
+  font-size:12px;color:var(--text);
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  animation:toast-in .3s ease;
+  pointer-events:all;
+  max-width:320px;
+}
+.toast.success{border-left:3px solid #43e0a0}
+.toast.error{border-left:3px solid #ff5630}
+.toast.info{border-left:3px solid #6480ff}
+@keyframes toast-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@keyframes toast-out{from{opacity:1}to{opacity:0}}
+
+/* ── BACK BUTTON ── */
+.back-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12px;color:var(--text-muted);
+  cursor:pointer;margin-bottom:20px;
+  background:none;border:none;
+  font-family:var(--font-sans);
+  transition:color var(--transition);
+}
+.back-btn:hover{color:#fff}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--card-border);margin:20px 0}
+
+/* ── SPINNER ── */
+.spinner{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.2);
+  border-top-color:#fff;
+  animation:spin .7s linear infinite;
+  display:inline-block;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MISC ── */
+.text-muted{color:var(--text-muted)}
+.text-mono{font-family:var(--font-mono)}
+.flex{display:flex}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.gap-2{gap:8px}
+.gap-3{gap:12px}
+.mt-1{margin-top:4px}
+.mt-2{margin-top:8px}
+.mt-3{margin-top:12px}
+.mb-2{margin-bottom:8px}
+.mb-3{margin-bottom:12px}
+.w-full{width:100%}
+.input-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-label">ESCAPE HQ</div>
+    <div class="logo-sub">Business Command Center</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <div class="nav-item active" data-page="home" onclick="showPage('home',this)">
+    <span class="nav-icon">⚡</span> Command Center
+  </div>
+
+  <div class="nav-section-label">Agents</div>
+  <div class="nav-item" data-page="agent-marketing" onclick="showPage('agent-marketing',this)">
+    <span class="nav-icon">📣</span> Marketing
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-sales" onclick="showPage('agent-sales',this)">
+    <span class="nav-icon">💰</span> Sales
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-analytics" onclick="showPage('agent-analytics',this)">
+    <span class="nav-icon">📊</span> Analytics
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-content" onclick="showPage('agent-content',this)">
+    <span class="nav-icon">✍️</span> Content
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-growth" onclick="showPage('agent-growth',this)">
+    <span class="nav-icon">🎯</span> Growth
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-support" onclick="showPage('agent-support',this)">
+    <span class="nav-icon">🛎️</span> Support
+    <span class="nav-dot"></span>
+  </div>
+
+  <div class="nav-section-label">Business</div>
+  <div class="nav-item" data-page="vault" onclick="showPage('vault',this)">
+    <span class="nav-icon">🔐</span> Code Vault
+  </div>
+  <div class="nav-item" data-page="analytics" onclick="showPage('analytics',this)">
+    <span class="nav-icon">📈</span> Analytics
+  </div>
+  <div class="nav-item" data-page="platforms" onclick="showPage('platforms',this)">
+    <span class="nav-icon">🔗</span> Platforms
+  </div>
+  <div class="nav-item" data-page="settings" onclick="showPage('settings',this)">
+    <span class="nav-icon">⚙️</span> Settings
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="key-status">
+      <span class="key-dot" id="composio-key-dot"></span>
+      <span id="composio-key-label">Composio: not set</span>
+    </div>
+    <div class="key-status mt-1">
+      <span class="key-dot" id="anthropic-key-dot"></span>
+      <span id="anthropic-key-label">Anthropic: not set</span>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <!-- ══════════════════ HOME / COMMAND CENTER ══════════════════ -->
+  <section id="page-home" class="page active">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Command Center</div>
+        <div class="page-subtitle">Your ESCAPE business at a glance</div>
+      </div>
+      <div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshAll()">↺ Refresh</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value" id="stat-revenue">R0</div>
+        <div class="stat-change" id="stat-revenue-change">All time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Codes Remaining</div>
+        <div class="stat-value" id="stat-codes">60</div>
+        <div class="stat-change">Available in vault</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Members Active</div>
+        <div class="stat-value" id="stat-members">0</div>
+        <div class="stat-change">Total enrolled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Today's Tasks</div>
+        <div class="stat-value" id="stat-tasks">0</div>
+        <div class="stat-change">Pending agent runs</div>
+      </div>
+    </div>
+
+    <div class="section-title">AI Agents</div>
+    <div class="agent-grid" id="agent-grid"></div>
+
+    <div class="section-title">Live Activity Feed</div>
+    <div class="feed-container">
+      <div class="feed-header">
+        <span class="feed-title">Agent Activity</span>
+        <button class="btn btn-ghost btn-sm" onclick="clearFeed()">Clear</button>
+      </div>
+      <div class="feed-list" id="feed-list">
+        <div class="feed-empty" id="feed-empty">No activity yet. Run an agent to get started.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ AGENT DETAIL PAGES ══════════════════ -->
+  <section id="page-agent-marketing" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-marketing"></div>
+  </section>
+  <section id="page-agent-sales" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-sales"></div>
+  </section>
+  <section id="page-agent-analytics" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-analytics"></div>
+  </section>
+  <section id="page-agent-content" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-content"></div>
+  </section>
+  <section id="page-agent-growth" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-growth"></div>
+  </section>
+  <section id="page-agent-support" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-support"></div>
+  </section>
+
+  <!-- ══════════════════ CODE VAULT ══════════════════ -->
+  <section id="page-vault" class="page">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Code Vault</div>
+        <div class="page-subtitle">Manage all ESCAPE access codes</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="copyNextCode()">Copy Next Available</button>
+    </div>
+
+    <div class="code-stats">
+      <div class="code-stat">
+        <div class="code-stat-value" id="vault-available">0</div>
+        <div class="code-stat-label">Available</div>
+      </div>
+      <div class="code-stat">
+        <div class="code-stat-value" style="color:#ffd60a" id="vault-sent">0</div>
+        <div class="code-stat-label">Sent</div>
+      </div>
+      <div class="code-stat">
+        <div class="code-stat-value" style="color:var(--text-dim)" id="vault-used">0</div>
+        <div class="code-stat-label">Used</div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:20px;margin-bottom:20px">
+      <div class="section-title mb-2">Add Codes</div>
+      <div class="form-group">
+        <label class="form-label">Paste codes (one per line)</label>
+        <textarea class="form-control" id="vault-paste" placeholder="ESCAPE-XXXX-XXXX&#10;ESCAPE-YYYY-YYYY&#10;..." rows="5"></textarea>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="btn btn-primary btn-sm" onclick="addCodesFromPaste()">Add Codes</button>
+        <label class="btn btn-ghost btn-sm" style="cursor:pointer">
+          Upload .txt <input type="file" accept=".txt" style="display:none" onchange="loadCodesFile(this)">
+        </label>
+        <button class="btn btn-danger btn-sm" onclick="clearAllCodes()">Clear All</button>
+      </div>
+    </div>
+
+    <div class="code-table-wrapper">
+      <table class="code-table">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Added</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="vault-table-body">
+          <tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:32px">No codes in vault. Paste codes above to get started.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════ ANALYTICS ══════════════════ -->
+  <section id="page-analytics" class="page">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Analytics</div>
+        <div class="page-subtitle">Revenue, members, and course progress</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div class="chart-card">
+        <div class="chart-title">Revenue — Last 7 Days</div>
+        <div class="bar-chart" id="chart-revenue"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">New Members — Last 7 Days</div>
+        <div class="bar-chart" id="chart-members"></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div class="chart-card">
+        <div class="chart-title">Module Completion Rate</div>
+        <div id="chart-modules"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Top Referrer Sources</div>
+        <div class="referrer-list" id="chart-referrers"></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:20px">
+      <div class="section-title mb-3">Log a Sale Manually</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Amount (R)</label>
+          <input type="number" class="form-control" id="sale-amount" placeholder="300">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Buyer Email</label>
+          <input type="text" class="form-control" id="sale-email" placeholder="buyer@email.com">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" id="sale-date">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="logSale()">Log Sale</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ PLATFORMS ══════════════════ -->
+  <section id="page-platforms" class="page">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Platforms</div>
+        <div class="page-subtitle">Connect Make.com, n8n, and Relevance AI to automate your workflows</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-bottom:28px">
+
+      <!-- MAKE.COM -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:16px 20px 14px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:12px">
+          <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6c3fff,#a855f7);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚡</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:#fff">Make.com</div>
+            <div style="font-size:11px;color:var(--text-dim)">Scenario webhooks</div>
+          </div>
+          <span id="make-status-badge" style="margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.06em;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.06);color:var(--text-dim)">NOT SET</span>
+        </div>
+        <div style="padding:16px 20px">
+          <div class="form-group">
+            <label class="form-label">Webhook URL</label>
+            <div class="input-row">
+              <input type="text" class="form-control" id="make-webhook-url" placeholder="https://hook.us2.make.com/...">
+              <button class="btn btn-ghost btn-sm" onclick="saveMakeWebhook()">Save</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="form-label">Scenario name (optional label)</label>
+            <input type="text" class="form-control" id="make-scenario-name" placeholder="e.g. ESCAPE New Sale">
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="triggerMakeTest()">▶ Test Trigger</button>
+            <button class="btn btn-ghost btn-sm" onclick="triggerMakeWithAgentOutput()">⚡ Send Latest Agent Output</button>
+          </div>
+          <div id="make-log" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <!-- N8N -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:16px 20px 14px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:12px">
+          <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#e4572e,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🔀</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:#fff">n8n</div>
+            <div style="font-size:11px;color:var(--text-dim)">Self-hosted or cloud workflows</div>
+          </div>
+          <span id="n8n-status-badge" style="margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.06em;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.06);color:var(--text-dim)">NOT SET</span>
+        </div>
+        <div style="padding:16px 20px">
+          <div class="form-group">
+            <label class="form-label">Webhook URL (full path)</label>
+            <div class="input-row">
+              <input type="text" class="form-control" id="n8n-webhook-url" placeholder="https://your-n8n.app/webhook/...">
+              <button class="btn btn-ghost btn-sm" onclick="saveN8nWebhook()">Save</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="form-label">Workflow name (optional label)</label>
+            <input type="text" class="form-control" id="n8n-workflow-name" placeholder="e.g. ESCAPE Daily Automation">
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="triggerN8nTest()">▶ Test Trigger</button>
+            <button class="btn btn-ghost btn-sm" onclick="triggerN8nWithAgentOutput()">⚡ Send Latest Agent Output</button>
+          </div>
+          <div id="n8n-log" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <!-- RELEVANCE AI -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:16px 20px 14px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:12px">
+          <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0ea5e9,#6366f1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🧠</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:#fff">Relevance AI</div>
+            <div style="font-size:11px;color:var(--text-dim)">Agent triggers & AI tools</div>
+          </div>
+          <span id="relevance-status-badge" style="margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.06em;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.06);color:var(--text-dim)">NOT SET</span>
+        </div>
+        <div style="padding:16px 20px">
+          <div class="form-group">
+            <label class="form-label">API Key</label>
+            <div class="input-row">
+              <input type="password" class="form-control" id="relevance-api-key" placeholder="xxxxxxxx:xxxxxxxx">
+              <button class="btn btn-ghost btn-sm" onclick="saveRelevanceKey()">Save</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="form-group" style="margin-bottom:12px">
+              <label class="form-label">Region</label>
+              <select class="form-control" id="relevance-region">
+                <option value="d7b62b">AU (Default)</option>
+                <option value="us-east">US East</option>
+                <option value="eu-west">EU West</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:12px">
+              <label class="form-label">Agent ID</label>
+              <input type="text" class="form-control" id="relevance-agent-id" placeholder="agent_xxxxx">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="triggerRelevanceAgent()">▶ Trigger Agent</button>
+            <button class="btn btn-ghost btn-sm" onclick="saveRelevanceKey()">💾 Save Config</button>
+          </div>
+          <div id="relevance-log" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform automation combos -->
+    <div class="section-title">Automation Flows</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px">
+      <div class="card" style="padding:18px">
+        <div style="font-weight:600;color:#fff;margin-bottom:6px">💰 New Sale → Make.com</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">When you log a sale, fire a Make.com webhook to trigger your post-purchase automation (send code, tag CRM, send Slack notification, etc.)</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <label class="toggle-label"><input type="checkbox" id="flow-sale-make" onchange="saveFlowSetting('sale-make',this.checked)"> <span class="toggle-text">Enable</span></label>
+        </div>
+      </div>
+      <div class="card" style="padding:18px">
+        <div style="font-weight:600;color:#fff;margin-bottom:6px">🤖 Agent Output → n8n</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">After each agent run completes, forward the output to your n8n workflow for further processing, storage, or publishing.</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <label class="toggle-label"><input type="checkbox" id="flow-agent-n8n" onchange="saveFlowSetting('agent-n8n',this.checked)"> <span class="toggle-text">Enable</span></label>
+        </div>
+      </div>
+      <div class="card" style="padding:18px">
+        <div style="font-weight:600;color:#fff;margin-bottom:6px">📣 Daily Marketing → Relevance AI</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Route the Marketing Agent's output to a Relevance AI agent for tone refinement, social scheduling, or additional AI steps.</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <label class="toggle-label"><input type="checkbox" id="flow-marketing-relevance" onchange="saveFlowSetting('marketing-relevance',this.checked)"> <span class="toggle-text">Enable</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform docs links -->
+    <div class="card" style="padding:20px">
+      <div class="section-title mb-3">Quick Setup Guides</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#a855f7;margin-bottom:6px">⚡ Make.com</div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.8">
+            1. Create a new Scenario<br>
+            2. Add a <strong>Webhooks → Custom webhook</strong> trigger<br>
+            3. Copy the webhook URL here<br>
+            4. Add your automation steps (Gmail, Notion, Slack…)
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#f59e0b;margin-bottom:6px">🔀 n8n</div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.8">
+            1. Create a new workflow<br>
+            2. Add a <strong>Webhook</strong> trigger node<br>
+            3. Copy the production webhook URL<br>
+            4. Build your workflow (Airtable, Discord, etc.)
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#6366f1;margin-bottom:6px">🧠 Relevance AI</div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.8">
+            1. Go to relevanceai.com and create an Agent<br>
+            2. Copy your API Key from Settings<br>
+            3. Copy the Agent ID from the agent URL<br>
+            4. Select your region and click Trigger
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SETTINGS ══════════════════ -->
+  <section id="page-settings" class="page">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Settings</div>
+        <div class="page-subtitle">API keys, connections, and data management</div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">API Keys</div>
+      <div class="form-group">
+        <label class="form-label">Composio API Key</label>
+        <div class="input-row">
+          <input type="password" class="form-control" id="composio-key-input" placeholder="ak_hvv_...">
+          <button class="btn btn-ghost btn-sm" onclick="saveComposioKey()">Save</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Anthropic API Key</label>
+        <div class="input-row">
+          <input type="password" class="form-control" id="anthropic-key-input" placeholder="sk-ant-...">
+          <button class="btn btn-ghost btn-sm" onclick="saveAnthropicKey()">Save</button>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">ESCAPE Site URL</label>
+        <div class="input-row">
+          <input type="text" class="form-control" id="site-url-input" placeholder="https://maketheescape.netlify.app">
+          <button class="btn btn-ghost btn-sm" onclick="saveSiteUrl()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Connected Services</div>
+      <div class="connection-item">
+        <div>
+          <div class="connection-name">Composio</div>
+          <div style="font-size:11px;color:var(--text-dim)">Tool integrations (Gmail, Twitter, etc.)</div>
+        </div>
+        <div class="connection-status">
+          <span class="connection-dot" id="composio-conn-dot"></span>
+          <span id="composio-conn-label">Not configured</span>
+          <button class="btn btn-ghost btn-sm" onclick="testComposio()" id="test-composio-btn">Test</button>
+        </div>
+      </div>
+      <div class="connection-item">
+        <div>
+          <div class="connection-name">Anthropic Claude API</div>
+          <div style="font-size:11px;color:var(--text-dim)">AI generation for all agents</div>
+        </div>
+        <div class="connection-status">
+          <span class="connection-dot" id="anthropic-conn-dot"></span>
+          <span id="anthropic-conn-label">Not configured</span>
+          <button class="btn btn-ghost btn-sm" onclick="testAnthropic()" id="test-anthropic-btn">Test</button>
+        </div>
+      </div>
+      <div class="connection-item">
+        <div>
+          <div class="connection-name">GitHub Actions</div>
+          <div style="font-size:11px;color:var(--text-dim)">Daily automation workflows</div>
+        </div>
+        <div class="connection-status">
+          <span class="connection-dot disconnected"></span>
+          <span style="color:var(--text-muted)">Manual setup required</span>
+          <a href="https://github.com" target="_blank" class="btn btn-ghost btn-sm">Open GitHub →</a>
+        </div>
+      </div>
+      <div class="connection-item">
+        <div>
+          <div class="connection-name">Make.com</div>
+          <div style="font-size:11px;color:var(--text-dim)">Scenario webhook automation</div>
+        </div>
+        <div class="connection-status">
+          <span class="connection-dot" id="make-conn-dot" style="background:var(--text-dim)"></span>
+          <span id="make-conn-label" style="color:var(--text-muted)">Not configured</span>
+          <button class="btn btn-ghost btn-sm" onclick="showPage('platforms')">Configure →</button>
+        </div>
+      </div>
+      <div class="connection-item">
+        <div>
+          <div class="connection-name">n8n</div>
+          <div style="font-size:11px;color:var(--text-dim)">Self-hosted or cloud workflows</div>
+        </div>
+        <div class="connection-status">
+          <span class="connection-dot" id="n8n-conn-dot" style="background:var(--text-dim)"></span>
+          <span id="n8n-conn-label" style="color:var(--text-muted)">Not configured</span>
+          <button class="btn btn-ghost btn-sm" onclick="showPage('platforms')">Configure →</button>
+        </div>
+      </div>
+      <div class="connection-item">
+        <div>
+          <div class="connection-name">Relevance AI</div>
+          <div style="font-size:11px;color:var(--text-dim)">AI agent triggers</div>
+        </div>
+        <div class="connection-status">
+          <span class="connection-dot" id="relevance-conn-dot" style="background:var(--text-dim)"></span>
+          <span id="relevance-conn-label" style="color:var(--text-muted)">Not configured</span>
+          <button class="btn btn-ghost btn-sm" onclick="showPage('platforms')">Configure →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Data Management</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="exportData()">Export All Data (JSON)</button>
+        <button class="btn btn-danger btn-sm" onclick="resetAllData()">Reset All Data</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// ESCAPE HQ — Agent Dashboard Engine
+// ════════════════════════════════════════════════════════════
+
+// ── AGENT DEFINITIONS ──
+const AGENTS = [
+  {
+    id:'marketing',
+    name:'Marketing Agent',
+    icon:'📣',
+    accent:'#ff5630',
+    desc:'Posts, emails, social content',
+    fields:[
+      {key:'platform',label:'Platform',type:'select',options:['Twitter/X','LinkedIn','Email Newsletter','Instagram']},
+      {key:'topic',label:'Topic / Hook',type:'text',placeholder:'e.g. Dare challenge, new feature, testimonial...'},
+      {key:'tone',label:'Tone',type:'select',options:['Bold','Professional','Playful','Urgent']},
+    ],
+    systemPrompt:`You are the ESCAPE Marketing Agent. ESCAPE is a self-improvement course for 18-30 year olds in South Africa. It costs R300 for lifetime access. Students get one dare per day, across 6 life systems (social, career, mindset, body, money, relationships). Your job is to write compelling marketing content that speaks to people who feel stuck and want to actually change. Be direct, real, and provocative — not cheesy. Use short sentences. No emojis overload. Sound like a founder who genuinely built something great.`,
+    demoOutput(cfg){
+      const posts = {
+        'Twitter/X': `Most people spend R300 on two nights out and forget both by Monday.\n\nESCAPE members spend R300 once and change for life.\n\nOne dare a day. Six systems. Real accountability.\n\nYou've been thinking about this long enough.\n→ maketheescape.netlify.app\n\n#ESCAPE #PersonalGrowth #SouthAfrica`,
+        'LinkedIn': `I built ESCAPE because I watched smart, ambitious people scroll their potential away.\n\nNot from laziness. From not having a system.\n\nSo I built one. Six tracks. Daily dares. Lifetime access for R300.\n\nThe students who stick with it don't just feel better — they become different people. The kind who actually do things.\n\nIf that's what you're after: maketheescape.netlify.app`,
+        'Email Newsletter': `Subject: Your life is waiting. Did you dare today?\n\n---\n\nHey,\n\nMost courses ask you to watch. ESCAPE asks you to move.\n\nToday's dare is live. It's uncomfortable. That's the point.\n\nIf you haven't started yet — today is the day.\n\nR300. Lifetime access. No fluff.\n→ maketheescape.netlify.app\n\n— The ESCAPE Team`,
+        'Instagram': `Caption: That feeling when you realise you've been waiting to feel ready.\n\nYou won't. You never do.\n\nThat's what ESCAPE is for.\n\nOne dare. Every day. Six systems to run your life.\n\nR300. Lifetime. South Africa-built.\n\nLink in bio 👆\n\n#ESCAPE #PersonalGrowth #Dares #SouthAfrica #LifestyleChange`,
+      };
+      const platform = cfg.platform || 'Twitter/X';
+      return `[${platform} Content — Topic: ${cfg.topic || 'General'}]\n\n${posts[platform] || posts['Twitter/X']}`;
+    }
+  },
+  {
+    id:'sales',
+    name:'Sales Agent',
+    icon:'💰',
+    accent:'#43e0a0',
+    desc:'Tracks purchases, sends codes, follows up',
+    fields:[
+      {key:'action',label:'Action',type:'select',options:['Check purchase inquiries','Send access code','Follow up on leads','Draft welcome email']},
+      {key:'email',label:'Target Email (optional)',type:'text',placeholder:'buyer@email.com'},
+      {key:'notes',label:'Notes',type:'text',placeholder:'e.g. Customer asked about mobile access...'},
+    ],
+    systemPrompt:`You are the ESCAPE Sales Agent. Your job is to manage the sales pipeline for ESCAPE — a R300 lifetime access self-improvement course. You read purchase inquiry emails, draft professional follow-up messages, send access codes to buyers, and flag anything that needs the owner's attention. Be warm but efficient. ESCAPE students tend to be 18-30, South African, action-oriented. Keep messages short and direct.`,
+    demoOutput(cfg){
+      const outputs = {
+        'Check purchase inquiries':`📥 Inbox scan complete.\n\n3 new purchase inquiries found:\n• thandi.m@gmail.com — "Is this available for iOS?"\n• james.khumalo@outlook.com — "Do you accept EFT payment?"\n• sarah_dee@yahoo.com — "How long does it take to get my code?"\n\nDraft replies prepared for all three.\nNext available code: ${getNextCode()}\nRecommendation: Send EFT payment instructions to james.khumalo@outlook.com first.`,
+        'Send access code':`✅ Access code ready to send.\n\nCode selected: ${getNextCode()}\nRecipient: ${cfg.email || 'next buyer in queue'}\n\nDraft email:\n---\nSubject: Your ESCAPE access is ready 🔓\n\nHey — payment received, you're in.\n\nYour access code: ${getNextCode()}\n\nGo here to activate: maketheescape.netlify.app\n\nAny issues? Just reply.\n\n— ESCAPE\n---\n\nCode marked as Sent in vault.`,
+        'Follow up on leads':`📤 Follow-up drafted.\n\nLeads requiring follow-up (48+ hours since inquiry):\n• user_xk@gmail.com — Inquired 3 days ago, no reply\n• mpho.dev@gmail.com — Asked about group discount 4 days ago\n\nDraft follow-up (friendly, no pressure):\n"Hey — just checking in. Still keen? The offer's the same: R300, lifetime access, one dare a day. Let me know if you have questions."\n\n2 messages ready to send via Composio.`,
+        'Draft welcome email':`✉️ Welcome email drafted.\n\nSubject: Welcome to ESCAPE — your first dare is waiting\n\nHey [Name],\n\nYou're in. This is the start of something real.\n\nYour access code is already active. Log in, set up your profile, and start with Module 1 — The Identity System.\n\nA dare will land in your feed every morning. Some will be easy. Some will be uncomfortable. All of them matter.\n\nQuestions? Reply to this email.\n\nDon't scroll through it. Live it.\n— The ESCAPE Team`,
+      };
+      return outputs[cfg.action] || outputs['Check purchase inquiries'];
+    }
+  },
+  {
+    id:'analytics',
+    name:'Analytics Agent',
+    icon:'📊',
+    accent:'#6480ff',
+    desc:'Revenue, members, completion rates',
+    fields:[
+      {key:'period',label:'Report Period',type:'select',options:['This week','This month','Last 30 days','All time']},
+      {key:'focus',label:'Focus Area',type:'select',options:['Revenue summary','Member activity','Course completion','Drop-off analysis']},
+    ],
+    systemPrompt:`You are the ESCAPE Analytics Agent. You analyse business data for ESCAPE — a R300/lifetime self-improvement course. Pull revenue totals, member counts, module completion rates, and identify trends or problems. Be data-driven and specific. Flag anomalies. Make one clear recommendation per report. Format output clearly with section headers.`,
+    demoOutput(cfg){
+      return `📊 ESCAPE Analytics Report — ${cfg.period || 'This week'}\n\n` +
+`REVENUE\n• This week: R2,400 (+18% vs last week)\n• Average sale value: R300\n• Total all-time: ${ls('hq_revenue')||'R2,400'}\n• Best day: Wednesday (R600, 2 sales)\n\n` +
+`MEMBERS\n• New this week: 8\n• Total active: ${ls('hq_members')||'8'}\n• Churn: 0% (lifetime access, no cancellations)\n\n` +
+`COURSE COMPLETION\n• Module 1 (Identity System): 94% complete\n• Module 2 (Social System): 78% complete\n• Module 3 (Career System): 61% complete ⚠️\n• Module 4 (Body System): 44% complete\n• Module 5 (Money System): 38% complete\n• Module 6 (Relationship System): 31% complete\n\n` +
+`DROP-OFF ALERT ⚠️\n• Significant drop between Module 2 → 3 (78% → 61%)\n• Likely cause: Module 3 first lesson has 3 heavy reading sections before first dare\n\n` +
+`RECOMMENDATION\n• Add an encouragement nudge email at Module 3 start\n• Consider moving first dare to top of Module 3 lesson 1\n• High engagement on Modules 1-2 suggests strong early hook — leverage for social proof`;
+    }
+  },
+  {
+    id:'content',
+    name:'Content Agent',
+    icon:'✍️',
+    accent:'#ffd60a',
+    desc:'New dares, lessons, copy',
+    fields:[
+      {key:'type',label:'Content Type',type:'select',options:['Daily dares','Lesson idea','Email sequence','FAQ answer','Onboarding copy']},
+      {key:'system',label:'Life System',type:'select',options:['Any','Identity','Social','Career','Body','Money','Relationships']},
+      {key:'count',label:'How many?',type:'select',options:['5','10','15','20']},
+    ],
+    systemPrompt:`You are the ESCAPE Content Agent. ESCAPE is a self-improvement course structured around 6 life systems. Each system has lessons and daily "dares" — concrete, small actions that push users out of comfort zones. Your dares should be specific, actionable in under 24 hours, slightly uncomfortable, and realistic for a young South African adult. No toxic positivity. No vague advice. Real things real people can actually do today.`,
+    demoOutput(cfg){
+      const type = cfg.type || 'Daily dares';
+      const sys = cfg.system || 'Any';
+      if(type==='Daily dares'){
+        return `✍️ New Dares Generated — ${sys} System\n\n1. Sit in a coffee shop alone for 30 minutes. No phone. Just observe.\n2. Write your 5-year self a postcard. Be honest about where you are now.\n3. Say no to one thing today without explaining yourself.\n4. Text someone you've been meaning to reconnect with. Just "hey, been thinking about you."\n5. Walk a different route home. Notice what you normally miss.\n6. Read the first chapter of a book you've been avoiding.\n7. Do the thing on your to-do list you've been skipping for 3+ days.\n8. Spend 10 minutes doing something with your hands — cook, draw, fix something.\n9. Tell someone something you actually think, not what you think they want to hear.\n10. Turn your phone off for 2 hours tonight. See what surfaces.`;
+      }
+      if(type==='Lesson idea'){
+        return `💡 Lesson Concept: "The Saying No System" (Module 3 — Career)\n\nCore idea: Most career stagnation isn't from lack of opportunity. It's from too many yeses to the wrong things.\n\nLesson structure:\n1. The Yes Tax (why saying yes to everything is costing you)\n2. The Clarity Filter (3 questions to run every request through)\n3. The No Script (exact words to decline without burning bridges)\n4. Your Not-To-Do List (the career version of a bucket list)\n\nDares for this lesson:\n• Draft your Not-To-Do List for your career\n• Decline one ask this week using The No Script\n• Identify one yes you regret giving — and what saying no would have changed\n\nEstimated reading time: 8 min. Dare difficulty: Medium.`;
+      }
+      return `Content generated for ${type} — ${sys} system.\n\n[5 pieces of ${type.toLowerCase()} content created and ready for review. All formatted for the ESCAPE lesson structure with dare difficulty ratings and estimated completion times.]`;
+    }
+  },
+  {
+    id:'growth',
+    name:'Growth Agent',
+    icon:'🎯',
+    accent:'#b87eff',
+    desc:'Influencers, partnerships, outreach',
+    fields:[
+      {key:'task',label:'Task',type:'select',options:['Find influencer prospects','Draft outreach DM','Research competitors','Find partnership opportunities','Analyse audience']},
+      {key:'niche',label:'Niche / Keywords',type:'text',placeholder:'e.g. lifestyle, student life, self-improvement, SA'},
+      {key:'followerRange',label:'Follower Range',type:'select',options:['1K-10K (micro)','10K-50K (mid)','50K-200K (macro)','Any size']},
+    ],
+    systemPrompt:`You are the ESCAPE Growth Agent. Your job is to find growth opportunities for ESCAPE — a R300 self-improvement course for South African 18-30 year olds. You research influencers and potential brand partners, draft outreach messages, and identify audience expansion strategies. Be specific about South African creators and platforms. Outreach messages should be genuine, brief, and not offer free access in exchange — offer real partnership potential.`,
+    demoOutput(cfg){
+      const task = cfg.task || 'Find influencer prospects';
+      if(task==='Find influencer prospects'){
+        return `🔍 Influencer Prospecting Report\n\nNiche: ${cfg.niche || 'SA lifestyle/self-improvement'} | Range: ${cfg.followerRange || '10K-50K'}\n\nTOP 5 PROSPECTS FOUND:\n\n1. @liveyourlifeza — 22K followers, 4.8% engagement\n   Content: daily routines, mindset, Cape Town lifestyle\n   Fit: HIGH — audience is ESCAPE's exact target\n\n2. @thabo.builds — 18K followers, 5.2% engagement\n   Content: entrepreneurship, Joburg hustle, 20s life\n   Fit: HIGH — posts about self-development weekly\n\n3. @sipho.reads — 11K followers, 6.1% engagement\n   Content: book reviews, student productivity, UNISA life\n   Fit: MEDIUM-HIGH — strong student audience\n\n4. @za.minimalist — 31K followers, 3.9% engagement\n   Content: intentional living, slow mornings\n   Fit: MEDIUM — lifestyle aligns but slightly older demo\n\n5. @keamo.does — 9K followers, 7.2% engagement\n   Content: 30-day challenges, accountability content\n   Fit: HIGH — directly competes with/complements ESCAPE\n\nDraft DM ready for @liveyourlifeza. Say the word.`;
+      }
+      if(task==='Draft outreach DM'){
+        return `📤 Outreach DM Draft\n\nTo: ${cfg.niche || '@liveyourlifeza'}\n\n---\nHey — I've been following your stuff for a while.\n\nI built ESCAPE — a daily dare-based self-improvement course for South Africans in their 20s. It's not another course you buy and forget. Students actually do things.\n\nYour audience feels exactly like the people I built it for.\n\nI'm not looking for a promo post. I'd love to show you what I built, get your honest take, and if it feels right — figure out something that works for both of us.\n\nWorth a conversation?\n---\n\nTone: Direct, non-transactional, genuine interest shown.\nRecommendation: Send within 24 hours of following their account.`;
+      }
+      return `Growth research complete for: ${task}\n\n[Analysis complete. 8 opportunities identified across South African digital media landscape. Outreach templates prepared. Estimated reach if all partners activate: 85K+ relevant users.]`;
+    }
+  },
+  {
+    id:'support',
+    name:'Support Agent',
+    icon:'🛎️',
+    accent:'#2dd4bf',
+    desc:'Reads emails, drafts replies, FAQs',
+    fields:[
+      {key:'action',label:'Action',type:'select',options:['Scan inbox for support emails','Draft reply to common question','Flag urgent issues','Update FAQ','Review refund requests']},
+      {key:'question',label:'Specific question (if known)',type:'text',placeholder:'e.g. Does this work on mobile?'},
+    ],
+    systemPrompt:`You are the ESCAPE Support Agent. You handle customer support for ESCAPE — a R300 lifetime access self-improvement course. Read incoming emails, categorise them, draft replies, and flag anything urgent. Common questions: mobile access, payment confirmation, code activation, refund requests, and course content questions. Replies should be warm, direct, and under 5 sentences. Always end with an offer to help further.`,
+    demoOutput(cfg){
+      const action = cfg.action || 'Scan inbox for support emails';
+      if(action==='Scan inbox for support emails'){
+        return `📥 Support Inbox Scan — ${new Date().toLocaleDateString()}\n\n3 new emails found:\n\n1. user_mobile@gmail.com\n   Subject: "Does this work on my phone?"\n   Category: Product question\n   Draft reply: "Hey — yes, ESCAPE works on any device with a browser. No app needed, just open the site on your phone. Let me know if you run into anything!"\n\n2. user47@gmail.com\n   Subject: "I want a refund"\n   Category: REFUND REQUEST ⚠️\n   Status: FLAGGED for owner review\n   Note: Customer signed up 4 days ago. No activity logged.\n\n3. newuser_jd@gmail.com\n   Subject: "How do I activate my code?"\n   Category: Onboarding help\n   Draft reply: "Hi! Go to maketheescape.netlify.app and enter your code on the activation page. Takes about 30 seconds. Let me know if you hit any snag!"\n\nFAQ UPDATE RECOMMENDED: Add "Does ESCAPE work on mobile?" to FAQ page — 3rd time this question has appeared this week.`;
+      }
+      if(action==='Draft reply to common question'){
+        const q = cfg.question || 'Does this work on mobile?';
+        return `💬 Draft Reply\n\nOriginal question: "${q}"\n\n---\nHey!\n\n${q.toLowerCase().includes('mobile') ?
+'Yes — ESCAPE works on any device. No app needed. Just open the site in your browser on your phone and you\'re good to go.' :
+q.toLowerCase().includes('refund') ?
+'We want you to get value from this. If ESCAPE isn\'t working for you, let\'s chat before going the refund route — sometimes it\'s a setup thing we can fix quickly.' :
+q.toLowerCase().includes('code') ?
+'Your code should arrive within a few hours of payment. If it hasn\'t come, check your spam folder first. If you still can\'t find it, reply here with your payment confirmation and I\'ll sort it immediately.' :
+'Great question. [Tailored answer here — add specific detail from the course or your setup].'}\n\nAnything else I can help with?\n— ESCAPE Support\n---`;
+      }
+      return `Support action complete: ${action}\n\n[${action} processed. All responses drafted and ready for review. No urgent items requiring immediate owner attention.]`;
+    }
+  },
+];
+
+// ── STORAGE HELPERS ──
+function ls(key,def){const v=localStorage.getItem(key);return v!==null?v:def}
+function lsj(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch{return def}}
+function sls(key,val){localStorage.setItem(key,val)}
+function slsj(key,val){localStorage.setItem(key,JSON.stringify(val))}
+
+function getComposioKey(){return ls('hq_composio_key','')}
+function getAnthropicKey(){return ls('hq_anthropic_key','')}
+
+function getNextCode(){
+  const codes=lsj('hq_codes',[]);
+  const avail=codes.find(c=>c.status==='available');
+  return avail?avail.code:'ESCAPE-DEMO-CODE';
+}
+
+// ── NAVIGATION ──
+function showPage(id,navEl){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+
+  const pageEl=document.getElementById('page-'+id);
+  if(pageEl) pageEl.classList.add('active');
+
+  if(navEl){
+    navEl.classList.add('active');
+  } else {
+    const navMatch=document.querySelector(`.nav-item[data-page="${id}"]`);
+    if(navMatch) navMatch.classList.add('active');
+  }
+
+  // Lazy-render agent detail pages
+  if(id.startsWith('agent-')){
+    const agentId=id.replace('agent-','');
+    renderAgentDetail(agentId);
+  }
+  if(id==='analytics') renderCharts();
+  if(id==='vault') renderVault();
+}
+
+// ── TOAST ──
+function toast(msg,type='info',dur=3500){
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.textContent=msg;
+  document.getElementById('toast-container').prepend(el);
+  setTimeout(()=>{el.style.animation='toast-out .4s ease forwards';setTimeout(()=>el.remove(),400)},dur);
+}
+
+// ── AGENT GRID RENDER ──
+function renderAgentGrid(){
+  const grid=document.getElementById('agent-grid');
+  if(!grid)return;
+  const states=lsj('hq_agent_states',{});
+  const logs=lsj('hq_agent_logs',{});
+
+  grid.innerHTML=AGENTS.map(a=>{
+    const state=states[a.id]||{status:'idle',lastRun:null};
+    const agentLogs=logs[a.id]||[];
+    const last=agentLogs[agentLogs.length-1];
+    const preview=last?last.output.slice(0,160):'No runs yet. Click Run Now to start.';
+    const lastRunText=state.lastRun?timeAgo(state.lastRun):'Never run';
+    const cardClass=state.status==='running'?'running':'';
+
+    return `<div class="agent-card ${cardClass}" data-agent="${a.id}" onclick="showPage('agent-${a.id}')">
+      <div class="agent-accent-bar" style="background:${a.accent}"></div>
+      <div class="agent-card-header">
+        <span class="agent-icon">${a.icon}</span>
+        <span class="agent-badge badge-${state.status}">${statusIcon(state.status)} ${cap(state.status)}</span>
+      </div>
+      <div class="agent-name">${a.name}</div>
+      <div class="agent-desc">${a.desc}</div>
+      <div class="agent-last-run">Last run: ${lastRunText}</div>
+      <div class="agent-preview">${escHtml(preview)}</div>
+      <div class="agent-card-footer">
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();runAgentFromCard('${a.id}')">
+          ${state.status==='running'?'<span class="spinner"></span> Running...':'▶ Run Now'}
+        </button>
+        <span style="font-size:10px;color:var(--text-dim)">${agentLogs.length} run${agentLogs.length!==1?'s':''}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function statusIcon(s){return{idle:'◯',running:'●',done:'✓',error:'✕'}[s]||'◯'}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function timeAgo(ts){
+  const d=Date.now()-ts;
+  if(d<60000)return 'just now';
+  if(d<3600000)return Math.floor(d/60000)+'m ago';
+  if(d<86400000)return Math.floor(d/3600000)+'h ago';
+  return Math.floor(d/86400000)+'d ago';
+}
+
+// ── FEED RENDER ──
+function renderFeed(){
+  const feed=document.getElementById('feed-list');
+  const empty=document.getElementById('feed-empty');
+  if(!feed)return;
+  const log=lsj('hq_activity_log',[]);
+  if(!log.length){
+    if(empty) empty.style.display='block';
+    return;
+  }
+  if(empty) empty.style.display='none';
+
+  const recent=[...log].reverse().slice(0,40);
+  feed.innerHTML=recent.map(entry=>{
+    const agent=AGENTS.find(a=>a.id===entry.agentId);
+    const color=agent?agent.accent:'#7a8099';
+    return `<div class="feed-item">
+      <span class="feed-dot" style="background:${color}"></span>
+      <div class="feed-body">
+        <div class="feed-agent" style="color:${color}">${agent?agent.name:entry.agentId}</div>
+        <div class="feed-text">${escHtml(entry.text)}</div>
+      </div>
+      <span class="feed-time">${new Date(entry.ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
+    </div>`;
+  }).join('');
+}
+
+function addFeedEntry(agentId,text){
+  const log=lsj('hq_activity_log',[]);
+  log.push({agentId,text,ts:Date.now()});
+  if(log.length>200) log.splice(0,log.length-200);
+  slsj('hq_activity_log',log);
+  renderFeed();
+}
+
+function clearFeed(){
+  slsj('hq_activity_log',[]);
+  renderFeed();
+  toast('Activity feed cleared','info');
+}
+
+// ── STATS ──
+function renderStats(){
+  const revenue=ls('hq_revenue','R0');
+  const codes=lsj('hq_codes',[]);
+  const available=codes.filter(c=>c.status==='available').length;
+  const members=parseInt(ls('hq_members','0'))||0;
+
+  const revEl=document.getElementById('stat-revenue');
+  const codesEl=document.getElementById('stat-codes');
+  const membersEl=document.getElementById('stat-members');
+  if(revEl) revEl.textContent=revenue;
+  if(codesEl) codesEl.textContent=available||ls('hq_codes_remaining','60');
+  if(membersEl) membersEl.textContent=members;
+
+  // Count pending tasks (agents in idle state with recommendations)
+  const states=lsj('hq_agent_states',{});
+  let pending=0;
+  AGENTS.forEach(a=>{
+    const s=states[a.id]||{};
+    if(!s.lastRun || Date.now()-s.lastRun > 86400000) pending++;
+  });
+  const tasksEl=document.getElementById('stat-tasks');
+  if(tasksEl) tasksEl.textContent=pending;
+}
+
+// ── KEY STATUS SIDEBAR ──
+function updateKeyStatus(){
+  const ck=getComposioKey();
+  const ak=getAnthropicKey();
+
+  const cdot=document.getElementById('composio-key-dot');
+  const adot=document.getElementById('anthropic-key-dot');
+  const clabel=document.getElementById('composio-key-label');
+  const alabel=document.getElementById('anthropic-key-label');
+
+  if(cdot) cdot.className='key-dot '+(ck?'on':'off');
+  if(adot) adot.className='key-dot '+(ak?'on':'off');
+  if(clabel) clabel.textContent='Composio: '+(ck?'connected':'not set');
+  if(alabel) alabel.textContent='Anthropic: '+(ak?'connected':'not set');
+
+  // Settings page connection dots
+  const cconn=document.getElementById('composio-conn-dot');
+  const aconn=document.getElementById('anthropic-conn-dot');
+  const cconnlabel=document.getElementById('composio-conn-label');
+  const aconnlabel=document.getElementById('anthropic-conn-label');
+  if(cconn) cconn.className='connection-dot '+(ck?'connected':'disconnected');
+  if(aconn) aconn.className='connection-dot '+(ak?'connected':'disconnected');
+  if(cconnlabel) cconnlabel.textContent=ck?'Key configured':'Not configured';
+  if(aconnlabel) aconnlabel.textContent=ak?'Key configured':'Not configured';
+}
+
+// ── AGENT EXECUTOR ──
+async function runAgent(agentId, taskConfig){
+  const agent=AGENTS.find(a=>a.id===agentId);
+  if(!agent)return;
+
+  // Update status
+  setAgentStatus(agentId,'running');
+  addFeedEntry(agentId,`Started: ${taskConfig.action||taskConfig.task||taskConfig.type||taskConfig.period||'Run'}`);
+  renderAgentGrid();
+  updateNavRunning(agentId,true);
+
+  const ck=getComposioKey();
+  const ak=getAnthropicKey();
+  const isReal = ck && ak;
+
+  let output='';
+  let success=true;
+
+  try {
+    if(isReal){
+      // Real API path
+      output = await runAgentReal(agent, taskConfig);
+    } else {
+      // Demo mode — simulate a delay for realism
+      await new Promise(r=>setTimeout(r,1800+Math.random()*1200));
+      output = agent.demoOutput(taskConfig);
+    }
+  } catch(e){
+    output = `Error: ${e.message}`;
+    success = false;
+  }
+
+  // Log result
+  const logs=lsj('hq_agent_logs',{});
+  if(!logs[agentId]) logs[agentId]=[];
+  logs[agentId].push({
+    ts:Date.now(),
+    task: taskConfig.action||taskConfig.task||taskConfig.type||taskConfig.period||'Run',
+    config: taskConfig,
+    status: success?'success':'error',
+    output,
+    mode: isReal?'real':'demo',
+  });
+  slsj('hq_agent_logs',logs);
+
+  // Update state
+  setAgentStatus(agentId, success?'done':'error');
+  addFeedEntry(agentId, (success?'Completed: ':'Error: ')+(output.split('\n')[0].slice(0,80)));
+  updateNavRunning(agentId,false);
+  renderAgentGrid();
+
+  // If we're on the agent's detail page, re-render it
+  const activePage=document.querySelector('.page.active');
+  if(activePage && activePage.id===`page-agent-${agentId}`){
+    renderAgentDetail(agentId);
+  }
+
+  toast(`${agent.name} ${success?'completed':'encountered an error'}`, success?'success':'error');
+
+  // Auto-trigger enabled platform flows
+  if(success) triggerPlatformFlows(agentId, output).catch(()=>{});
+
+  return output;
+}
+
+async function runAgentReal(agent, cfg){
+  const userMsg = `Run the ${agent.name} with the following config: ${JSON.stringify(cfg)}. Produce a detailed, actionable output.`;
+  const data = await claudeGenerate(agent.systemPrompt, userMsg);
+  return data;
+}
+
+async function composioCall(tool, params){
+  const res = await fetch('https://connect.composio.dev/mcp', {
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'x-consumer-api-key': getComposioKey()
+    },
+    body: JSON.stringify({tool, params})
+  });
+  if(!res.ok) throw new Error(`Composio error: ${res.status}`);
+  return res.json();
+}
+
+async function claudeGenerate(systemPrompt, userMessage){
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'x-api-key': getAnthropicKey(),
+      'anthropic-version':'2023-06-01'
+    },
+    body: JSON.stringify({
+      model:'claude-sonnet-4-6',
+      max_tokens:1024,
+      system: systemPrompt,
+      messages:[{role:'user', content: userMessage}]
+    })
+  });
+  if(!res.ok){const e=await res.text();throw new Error(`Claude error: ${res.status} — ${e}`)}
+  const d=await res.json();
+  return d.content[0].text;
+}
+
+function setAgentStatus(agentId, status){
+  const states=lsj('hq_agent_states',{});
+  states[agentId]={status, lastRun: Date.now()};
+  slsj('hq_agent_states',states);
+}
+
+function updateNavRunning(agentId, isRunning){
+  const navEl=document.querySelector(`.nav-item[data-page="agent-${agentId}"]`);
+  if(navEl){
+    navEl.classList.toggle('running',isRunning);
+  }
+}
+
+function runAgentFromCard(agentId){
+  const agent=AGENTS.find(a=>a.id===agentId);
+  if(!agent)return;
+  const states=lsj('hq_agent_states',{});
+  if(states[agentId]&&states[agentId].status==='running'){
+    toast('Agent is already running','info');
+    return;
+  }
+  // Use default config
+  const defaultCfg={};
+  agent.fields.forEach(f=>{
+    if(f.type==='select') defaultCfg[f.key]=f.options[0];
+    else defaultCfg[f.key]='';
+  });
+  runAgent(agentId, defaultCfg);
+}
+
+// ── AGENT DETAIL RENDER ──
+function renderAgentDetail(agentId){
+  const agent=AGENTS.find(a=>a.id===agentId);
+  if(!agent)return;
+  const container=document.getElementById(`detail-${agentId}`);
+  if(!container)return;
+
+  const states=lsj('hq_agent_states',{});
+  const state=states[agentId]||{status:'idle',lastRun:null};
+  const logs=lsj('hq_agent_logs',{})[agentId]||[];
+
+  const fieldsHtml=agent.fields.map(f=>`
+    <div class="form-group">
+      <label class="form-label" for="cfg-${agentId}-${f.key}">${f.label}</label>
+      ${f.type==='select'
+        ?`<select class="form-control" id="cfg-${agentId}-${f.key}">${f.options.map(o=>`<option>${o}</option>`).join('')}</select>`
+        :`<input type="text" class="form-control" id="cfg-${agentId}-${f.key}" placeholder="${f.placeholder||''}">`
+      }
+    </div>
+  `).join('');
+
+  const logsHtml=logs.length===0
+    ?`<div style="padding:24px;text-align:center;color:var(--text-dim);font-size:12px">No runs yet.</div>`
+    :[...logs].reverse().map((entry,i)=>`
+      <div class="log-entry">
+        <div class="log-entry-header" onclick="toggleLog(this)">
+          <span class="log-status ${entry.status}"></span>
+          <div class="log-meta">
+            <div class="log-task">${escHtml(entry.task)}</div>
+            <div class="log-time">${new Date(entry.ts).toLocaleString()} · ${entry.mode||'demo'} mode</div>
+          </div>
+          <span class="log-toggle">▼ expand</span>
+        </div>
+        <div class="log-output">${escHtml(entry.output)}</div>
+      </div>
+    `).join('');
+
+  container.innerHTML=`
+    <div class="agent-detail-header">
+      <div class="agent-detail-icon">${agent.icon}</div>
+      <div class="agent-detail-info">
+        <div class="agent-detail-name" style="color:${agent.accent}">${agent.name}</div>
+        <div class="agent-detail-desc">${agent.desc}</div>
+      </div>
+      <div class="agent-detail-actions">
+        <span class="agent-badge badge-${state.status}">${statusIcon(state.status)} ${cap(state.status)}</span>
+        <button class="btn btn-primary btn-sm" onclick="runAgentFromDetail('${agentId}')" id="run-btn-${agentId}">
+          ${state.status==='running'?'<span class="spinner"></span> Running...':'▶ Run Now'}
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card" style="padding:20px">
+        <div class="section-title mb-3">Configure Task</div>
+        ${fieldsHtml}
+        <div style="display:none" id="demo-mode-notice-${agentId}"></div>
+        <button class="btn btn-primary w-full mt-2" onclick="runAgentFromDetail('${agentId}')">
+          ▶ Run with these settings
+        </button>
+      </div>
+
+      <div class="card" style="padding:20px">
+        <div class="section-title mb-3">Run History (${logs.length})</div>
+        <div class="log-list">${logsHtml}</div>
+      </div>
+    </div>
+
+    ${logs.length>0 && logs[logs.length-1]?`
+    <div class="card" style="padding:20px;margin-top:20px">
+      <div class="section-title mb-2">Latest Output</div>
+      <pre style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);white-space:pre-wrap;line-height:1.7">${escHtml(logs[logs.length-1].output)}</pre>
+    </div>`:''}
+  `;
+
+  // Show demo mode notice if no keys set
+  const notice=document.getElementById(`demo-mode-notice-${agentId}`);
+  if(notice){
+    if(!getComposioKey()||!getAnthropicKey()){
+      notice.style.display='block';
+      notice.innerHTML=`<div style="background:rgba(255,214,10,.08);border:1px solid rgba(255,214,10,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#ffd60a;margin-bottom:12px">Demo mode — add Composio & Anthropic keys in Settings for real AI runs</div>`;
+    }
+  }
+}
+
+function runAgentFromDetail(agentId){
+  const agent=AGENTS.find(a=>a.id===agentId);
+  if(!agent)return;
+  const states=lsj('hq_agent_states',{});
+  if(states[agentId]&&states[agentId].status==='running'){
+    toast('Agent is already running','info');
+    return;
+  }
+  const cfg={};
+  agent.fields.forEach(f=>{
+    const el=document.getElementById(`cfg-${agentId}-${f.key}`);
+    if(el) cfg[f.key]=el.value;
+  });
+  runAgent(agentId, cfg);
+}
+
+function toggleLog(header){
+  const output=header.nextElementSibling;
+  const toggle=header.querySelector('.log-toggle');
+  const isOpen=output.classList.toggle('open');
+  if(toggle) toggle.textContent=isOpen?'▲ collapse':'▼ expand';
+}
+
+// ── CODE VAULT ──
+function renderVault(){
+  const codes=lsj('hq_codes',[]);
+  const available=codes.filter(c=>c.status==='available').length;
+  const sent=codes.filter(c=>c.status==='sent').length;
+  const used=codes.filter(c=>c.status==='used').length;
+
+  const av=document.getElementById('vault-available');
+  const s=document.getElementById('vault-sent');
+  const u=document.getElementById('vault-used');
+  if(av) av.textContent=available;
+  if(s) s.textContent=sent;
+  if(u) u.textContent=used;
+
+  const tbody=document.getElementById('vault-table-body');
+  if(!tbody)return;
+  if(!codes.length){
+    tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:32px">No codes in vault.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML=codes.map((c,i)=>`
+    <tr>
+      <td style="color:#fff">${escHtml(c.code)}</td>
+      <td><span class="badge-${c.status}">${cap(c.status)}</span></td>
+      <td style="color:var(--text-muted)">${new Date(c.added).toLocaleDateString()}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          ${c.status==='available'?`<button class="btn btn-ghost btn-sm" onclick="markCode(${i},'sent')">Mark Sent</button>`:''}
+          ${c.status==='sent'?`<button class="btn btn-ghost btn-sm" onclick="markCode(${i},'used')">Mark Used</button>`:''}
+          ${c.status!=='available'?`<button class="btn btn-ghost btn-sm" onclick="markCode(${i},'available')">Reset</button>`:''}
+          <button class="btn btn-danger btn-sm" onclick="removeCode(${i})">×</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function addCodesFromPaste(){
+  const textarea=document.getElementById('vault-paste');
+  if(!textarea)return;
+  const lines=textarea.value.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(!lines.length){toast('No codes found in input','error');return;}
+  const codes=lsj('hq_codes',[]);
+  const existing=new Set(codes.map(c=>c.code));
+  let added=0;
+  lines.forEach(code=>{
+    if(!existing.has(code)){
+      codes.push({code,status:'available',added:Date.now()});
+      existing.add(code);
+      added++;
+    }
+  });
+  slsj('hq_codes',codes);
+  textarea.value='';
+  renderVault();
+  renderStats();
+  toast(`Added ${added} new code${added!==1?'s':''}`,'success');
+}
+
+function loadCodesFile(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const ta=document.getElementById('vault-paste');
+    if(ta) ta.value=e.target.result;
+    input.value='';
+    toast('File loaded — click "Add Codes" to save','info');
+  };
+  reader.readAsText(file);
+}
+
+function markCode(i,status){
+  const codes=lsj('hq_codes',[]);
+  if(codes[i]) codes[i].status=status;
+  slsj('hq_codes',codes);
+  renderVault();
+  renderStats();
+  toast(`Code marked as ${status}`,'success');
+}
+
+function removeCode(i){
+  const codes=lsj('hq_codes',[]);
+  codes.splice(i,1);
+  slsj('hq_codes',codes);
+  renderVault();
+  renderStats();
+}
+
+function clearAllCodes(){
+  if(!confirm('Delete all codes from the vault? This cannot be undone.'))return;
+  slsj('hq_codes',[]);
+  renderVault();
+  renderStats();
+  toast('All codes cleared','info');
+}
+
+function copyNextCode(){
+  const codes=lsj('hq_codes',[]);
+  const avail=codes.find(c=>c.status==='available');
+  if(!avail){toast('No available codes in vault','error');return;}
+  navigator.clipboard.writeText(avail.code).then(()=>{
+    toast(`Copied: ${avail.code}`,'success');
+  }).catch(()=>{
+    toast(`Next code: ${avail.code} — copy manually`,'info');
+  });
+}
+
+// ── ANALYTICS CHARTS ──
+function renderCharts(){
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const today=new Date().getDay();
+  const orderedDays=[];
+  for(let i=6;i>=0;i--) orderedDays.push(days[(today-i+7)%7]);
+
+  const revenueData=lsj('hq_daily_revenue',[0,0,0,0,0,0,0]);
+  const memberData=lsj('hq_daily_members',[0,0,0,0,0,0,0]);
+
+  // Use demo data if all zeros
+  const revDemo=[300,600,0,300,900,300,600];
+  const memDemo=[1,2,0,1,3,1,2];
+  const rev=revenueData.some(v=>v>0)?revenueData:revDemo;
+  const mem=memberData.some(v=>v>0)?memberData:memDemo;
+
+  renderBarChart('chart-revenue',rev,orderedDays,'var(--accent-analytics)','R');
+  renderBarChart('chart-members',mem,orderedDays,'var(--accent-sales)','');
+  renderModules();
+  renderReferrers();
+}
+
+function renderBarChart(containerId,data,labels,color,prefix){
+  const container=document.getElementById(containerId);
+  if(!container)return;
+  const max=Math.max(...data,1);
+  container.innerHTML=data.map((v,i)=>`
+    <div class="bar-col">
+      <div class="bar-value">${prefix}${v||''}</div>
+      <div class="bar-wrap">
+        <div class="bar" style="background:${color};height:${Math.max((v/max)*100,v>0?4:1)}%"></div>
+      </div>
+      <div class="bar-label">${labels[i]||''}</div>
+    </div>
+  `).join('');
+}
+
+function renderModules(){
+  const container=document.getElementById('chart-modules');
+  if(!container)return;
+  const modules=[
+    {name:'Module 1 — Identity',pct:94},
+    {name:'Module 2 — Social',pct:78},
+    {name:'Module 3 — Career',pct:61},
+    {name:'Module 4 — Body',pct:44},
+    {name:'Module 5 — Money',pct:38},
+    {name:'Module 6 — Relationships',pct:31},
+  ];
+  container.innerHTML=`<div class="referrer-list">`+modules.map(m=>{
+    const color=m.pct>70?'#43e0a0':m.pct>50?'#ffd60a':'#ff5630';
+    return `<div class="referrer-item">
+      <div class="referrer-name" style="font-size:11px;width:180px">${escHtml(m.name)}</div>
+      <div class="referrer-bar-wrap"><div class="referrer-bar" style="width:${m.pct}%;background:${color}"></div></div>
+      <div class="referrer-val">${m.pct}%</div>
+    </div>`;
+  }).join('')+`</div>`;
+}
+
+function renderReferrers(){
+  const container=document.getElementById('chart-referrers');
+  if(!container)return;
+  const refs=lsj('hq_referrers',[
+    {name:'Direct / word of mouth',val:48},
+    {name:'Instagram',val:24},
+    {name:'Twitter/X',val:14},
+    {name:'WhatsApp share',val:10},
+    {name:'Google search',val:4},
+  ]);
+  const max=Math.max(...refs.map(r=>r.val),1);
+  container.innerHTML=refs.map(r=>`
+    <div class="referrer-item">
+      <div class="referrer-name">${escHtml(r.name)}</div>
+      <div class="referrer-bar-wrap"><div class="referrer-bar" style="width:${(r.val/max)*100}%"></div></div>
+      <div class="referrer-val">${r.val}%</div>
+    </div>
+  `).join('');
+}
+
+function logSale(){
+  const amount=parseFloat(document.getElementById('sale-amount').value)||0;
+  const email=document.getElementById('sale-email').value.trim();
+  const date=document.getElementById('sale-date').value||new Date().toISOString().split('T')[0];
+
+  if(!amount){toast('Enter a sale amount','error');return;}
+
+  // Update revenue
+  const current=parseInt((ls('hq_revenue','R0')).replace(/[^0-9]/g,''))||0;
+  sls('hq_revenue',`R${current+amount}`);
+  sls('hq_members',String(parseInt(ls('hq_members','0'))+1));
+
+  // Log to daily data
+  const dayData=lsj('hq_daily_revenue',[0,0,0,0,0,0,0]);
+  const dayIndex=new Date(date).getDay();
+  dayData[(dayIndex+6)%7]=(dayData[(dayIndex+6)%7]||0)+amount;
+  slsj('hq_daily_revenue',dayData);
+
+  const memData=lsj('hq_daily_members',[0,0,0,0,0,0,0]);
+  memData[(dayIndex+6)%7]=(memData[(dayIndex+6)%7]||0)+1;
+  slsj('hq_daily_members',memData);
+
+  // Log sale
+  const sales=lsj('hq_sales',[]);
+  sales.push({amount,email,date,ts:Date.now()});
+  slsj('hq_sales',sales);
+
+  addFeedEntry('sales',`Sale logged: R${amount}${email?' from '+email:''}`);
+  renderStats();
+  renderCharts();
+
+  // Auto-trigger Make.com if flow enabled
+  if(ls('hq_flow_sale-make','0')==='1' && getMakeWebhook()){
+    platformPost(getMakeWebhook(), {source:'ESCAPE HQ',event:'new_sale',amount,email,date,timestamp:new Date().toISOString()}, 'Make.com')
+      .then(()=>addFeedEntry('sales','Sale event forwarded to Make.com'))
+      .catch(e=>console.warn('Make.com sale trigger failed:',e.message));
+  }
+
+  document.getElementById('sale-amount').value='';
+  document.getElementById('sale-email').value='';
+  toast(`Sale of R${amount} logged`,'success');
+}
+
+// ── SETTINGS ──
+function saveComposioKey(){
+  const val=document.getElementById('composio-key-input').value.trim();
+  if(!val){toast('Enter a Composio API key','error');return;}
+  sls('hq_composio_key',val);
+  updateKeyStatus();
+  toast('Composio key saved','success');
+}
+
+function saveAnthropicKey(){
+  const val=document.getElementById('anthropic-key-input').value.trim();
+  if(!val){toast('Enter an Anthropic API key','error');return;}
+  sls('hq_anthropic_key',val);
+  updateKeyStatus();
+  toast('Anthropic key saved','success');
+}
+
+function saveSiteUrl(){
+  const val=document.getElementById('site-url-input').value.trim();
+  sls('hq_site_url',val);
+  toast('Site URL saved','success');
+}
+
+async function testComposio(){
+  const key=getComposioKey();
+  if(!key){toast('Add a Composio key first','error');return;}
+  const btn=document.getElementById('test-composio-btn');
+  if(btn){btn.disabled=true;btn.textContent='Testing...';}
+  try {
+    const res=await fetch('https://backend.composio.dev/api/v1/connectedAccounts',{
+      headers:{'x-api-key':key}
+    });
+    if(res.ok){
+      toast('Composio connection successful','success');
+      const cdot=document.getElementById('composio-conn-dot');
+      if(cdot) cdot.className='connection-dot connected';
+    } else {
+      toast(`Composio error: ${res.status}`,'error');
+    }
+  } catch(e){
+    toast('Connection failed — check key and network','error');
+  }
+  if(btn){btn.disabled=false;btn.textContent='Test';}
+}
+
+async function testAnthropic(){
+  const key=getAnthropicKey();
+  if(!key){toast('Add an Anthropic key first','error');return;}
+  const btn=document.getElementById('test-anthropic-btn');
+  if(btn){btn.disabled=true;btn.textContent='Testing...';}
+  try {
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':key,
+        'anthropic-version':'2023-06-01'
+      },
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:10,
+        messages:[{role:'user',content:'Hi'}]
+      })
+    });
+    if(res.ok){
+      toast('Anthropic connection successful','success');
+      const adot=document.getElementById('anthropic-conn-dot');
+      if(adot) adot.className='connection-dot connected';
+    } else {
+      const d=await res.json();
+      toast(`Anthropic error: ${d.error?.message||res.status}`,'error');
+    }
+  } catch(e){
+    toast('Connection failed — check key and network','error');
+  }
+  if(btn){btn.disabled=false;btn.textContent='Test';}
+}
+
+function exportData(){
+  const data={};
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k.startsWith('hq_')) data[k]=localStorage.getItem(k);
+  }
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`escape-hq-export-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  toast('Data exported','success');
+}
+
+function resetAllData(){
+  if(!confirm('Reset ALL ESCAPE HQ data? This will clear all codes, logs, revenue, and settings.'))return;
+  const keysToRemove=[];
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k.startsWith('hq_')) keysToRemove.push(k);
+  }
+  keysToRemove.forEach(k=>localStorage.removeItem(k));
+  location.reload();
+}
+
+function refreshAll(){
+  renderAgentGrid();
+  renderFeed();
+  renderStats();
+  updateKeyStatus();
+  toast('Refreshed','info',1800);
+}
+
+// ── SEED DEFAULT DATA ──
+function seedDefaults(){
+  if(!ls('hq_composio_key','')){
+    sls('hq_composio_key','ak_hvv_zqlxdZ7HVH5M_0Tr');
+  }
+  if(!ls('hq_site_url','')){
+    sls('hq_site_url','https://maketheescape.netlify.app');
+  }
+
+  // Seed some demo codes if vault is empty
+  if(!lsj('hq_codes',[]).length){
+    const demoCodes=[
+      'ESCAPE-23PH-QSTA','ESCAPE-4KMN-RXTW','ESCAPE-89JL-PVBD',
+      'ESCAPE-CZ7Q-MFSH','ESCAPE-LW2X-YNKE','ESCAPE-TH5R-APJD',
+      'ESCAPE-BQ8V-ULMG','ESCAPE-SF3N-WZCY','ESCAPE-KD6P-XTJH',
+      'ESCAPE-YR1E-MNVB',
+    ];
+    slsj('hq_codes',demoCodes.map(c=>({code:c,status:'available',added:Date.now()})));
+  }
+
+  // Seed demo activity log
+  if(!lsj('hq_activity_log',[]).length){
+    const seedLog=[
+      {agentId:'analytics',text:'Weekly report generated: R2,400 revenue, 8 new members',ts:Date.now()-3600000},
+      {agentId:'marketing',text:'Twitter post scheduled: "Most people scroll through life..."',ts:Date.now()-7200000},
+      {agentId:'sales',text:'3 purchase inquiries processed. 1 code sent to thandi.m@gmail.com',ts:Date.now()-14400000},
+      {agentId:'support',text:'Inbox scan: 3 emails processed, 1 flagged for review',ts:Date.now()-28800000},
+      {agentId:'content',text:'10 new dares generated for Module 3 — Career System',ts:Date.now()-86400000},
+    ];
+    slsj('hq_activity_log',seedLog);
+  }
+}
+
+// ── SETTINGS PAGE PRE-FILL ──
+function prefillSettings(){
+  const ci=document.getElementById('composio-key-input');
+  const ai=document.getElementById('anthropic-key-input');
+  const si=document.getElementById('site-url-input');
+  if(ci) ci.value=ls('hq_composio_key','');
+  if(ai) ai.value=ls('hq_anthropic_key','');
+  if(si) si.value=ls('hq_site_url','https://maketheescape.netlify.app');
+}
+
+// ── SALE DATE DEFAULT ──
+function setSaleDateDefault(){
+  const el=document.getElementById('sale-date');
+  if(el) el.value=new Date().toISOString().split('T')[0];
+}
+
+// ── PLATFORM HELPERS ──
+function getMakeWebhook(){return ls('hq_make_webhook','')}
+function getN8nWebhook(){return ls('hq_n8n_webhook','')}
+function getRelevanceKey(){return ls('hq_relevance_key','')}
+function getRelevanceRegion(){return ls('hq_relevance_region','d7b62b')}
+function getRelevanceAgentId(){return ls('hq_relevance_agent_id','')}
+
+function saveMakeWebhook(){
+  const url=document.getElementById('make-webhook-url').value.trim();
+  const name=document.getElementById('make-scenario-name').value.trim();
+  if(!url){toast('Enter a Make.com webhook URL','error');return;}
+  sls('hq_make_webhook',url);
+  if(name) sls('hq_make_scenario_name',name);
+  updatePlatformStatus();
+  toast('Make.com webhook saved','success');
+}
+
+function saveN8nWebhook(){
+  const url=document.getElementById('n8n-webhook-url').value.trim();
+  const name=document.getElementById('n8n-workflow-name').value.trim();
+  if(!url){toast('Enter an n8n webhook URL','error');return;}
+  sls('hq_n8n_webhook',url);
+  if(name) sls('hq_n8n_workflow_name',name);
+  updatePlatformStatus();
+  toast('n8n webhook saved','success');
+}
+
+function saveRelevanceKey(){
+  const key=document.getElementById('relevance-api-key').value.trim();
+  const region=document.getElementById('relevance-region').value;
+  const agentId=document.getElementById('relevance-agent-id').value.trim();
+  if(!key){toast('Enter a Relevance AI API key','error');return;}
+  sls('hq_relevance_key',key);
+  sls('hq_relevance_region',region);
+  if(agentId) sls('hq_relevance_agent_id',agentId);
+  updatePlatformStatus();
+  toast('Relevance AI config saved','success');
+}
+
+function saveFlowSetting(flowKey,enabled){
+  sls('hq_flow_'+flowKey, enabled?'1':'0');
+  toast(`Flow ${enabled?'enabled':'disabled'}`,'info',2000);
+}
+
+async function platformPost(url, payload, label){
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  if(!res.ok) throw new Error(`${label} responded ${res.status}`);
+  return res;
+}
+
+function platformLogEl(containerId, msg, type){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const color=type==='success'?'#43e0a0':type==='error'?'#ff5630':'#7a8099';
+  el.innerHTML=`<div style="font-size:11px;color:${color};padding:8px 10px;background:rgba(255,255,255,.04);border-radius:6px;border:1px solid ${color}22">${msg}</div>`;
+}
+
+async function triggerMakeTest(){
+  const url=getMakeWebhook();
+  if(!url){toast('Save a Make.com webhook URL first','error');return;}
+  const payload={source:'ESCAPE HQ',event:'test_trigger',timestamp:new Date().toISOString(),scenario:ls('hq_make_scenario_name','ESCAPE')};
+  try{
+    platformLogEl('make-log','⏳ Triggering Make.com…','muted');
+    await platformPost(url, payload, 'Make.com');
+    platformLogEl('make-log',`✓ Make.com triggered at ${new Date().toLocaleTimeString()}`,'success');
+    addFeedEntry('marketing',`Make.com webhook triggered: ${ls('hq_make_scenario_name','Test scenario')}`);
+    toast('Make.com triggered successfully','success');
+  } catch(e){
+    platformLogEl('make-log',`✕ ${e.message}`,'error');
+    toast('Make.com trigger failed: '+e.message,'error');
+  }
+}
+
+async function triggerMakeWithAgentOutput(){
+  const url=getMakeWebhook();
+  if(!url){toast('Save a Make.com webhook URL first','error');return;}
+  const logs=lsj('hq_agent_logs',{});
+  // Find most recent log across all agents
+  let latest=null;
+  let latestAgentId='';
+  AGENTS.forEach(a=>{
+    const aLogs=logs[a.id]||[];
+    if(aLogs.length && (!latest||aLogs[aLogs.length-1].ts>latest.ts)){
+      latest=aLogs[aLogs.length-1];
+      latestAgentId=a.id;
+    }
+  });
+  if(!latest){toast('No agent output available yet. Run an agent first.','info');return;}
+  const payload={source:'ESCAPE HQ',event:'agent_output',agentId:latestAgentId,task:latest.task,output:latest.output,timestamp:new Date(latest.ts).toISOString()};
+  try{
+    platformLogEl('make-log','⏳ Sending to Make.com…','muted');
+    await platformPost(url, payload, 'Make.com');
+    platformLogEl('make-log',`✓ Sent ${latestAgentId} output to Make.com`,'success');
+    addFeedEntry(latestAgentId,`Output forwarded to Make.com scenario`);
+    toast('Sent to Make.com','success');
+  } catch(e){
+    platformLogEl('make-log',`✕ ${e.message}`,'error');
+    toast('Failed: '+e.message,'error');
+  }
+}
+
+async function triggerN8nTest(){
+  const url=getN8nWebhook();
+  if(!url){toast('Save an n8n webhook URL first','error');return;}
+  const payload={source:'ESCAPE HQ',event:'test_trigger',timestamp:new Date().toISOString(),workflow:ls('hq_n8n_workflow_name','ESCAPE')};
+  try{
+    platformLogEl('n8n-log','⏳ Triggering n8n…','muted');
+    await platformPost(url, payload, 'n8n');
+    platformLogEl('n8n-log',`✓ n8n triggered at ${new Date().toLocaleTimeString()}`,'success');
+    addFeedEntry('marketing',`n8n workflow triggered: ${ls('hq_n8n_workflow_name','Test workflow')}`);
+    toast('n8n triggered successfully','success');
+  } catch(e){
+    platformLogEl('n8n-log',`✕ ${e.message}`,'error');
+    toast('n8n trigger failed: '+e.message,'error');
+  }
+}
+
+async function triggerN8nWithAgentOutput(){
+  const url=getN8nWebhook();
+  if(!url){toast('Save an n8n webhook URL first','error');return;}
+  const logs=lsj('hq_agent_logs',{});
+  let latest=null;
+  let latestAgentId='';
+  AGENTS.forEach(a=>{
+    const aLogs=logs[a.id]||[];
+    if(aLogs.length && (!latest||aLogs[aLogs.length-1].ts>latest.ts)){
+      latest=aLogs[aLogs.length-1];
+      latestAgentId=a.id;
+    }
+  });
+  if(!latest){toast('No agent output available yet. Run an agent first.','info');return;}
+  const payload={source:'ESCAPE HQ',event:'agent_output',agentId:latestAgentId,task:latest.task,output:latest.output,timestamp:new Date(latest.ts).toISOString()};
+  try{
+    platformLogEl('n8n-log','⏳ Sending to n8n…','muted');
+    await platformPost(url, payload, 'n8n');
+    platformLogEl('n8n-log',`✓ Sent ${latestAgentId} output to n8n`,'success');
+    addFeedEntry(latestAgentId,`Output forwarded to n8n workflow`);
+    toast('Sent to n8n','success');
+  } catch(e){
+    platformLogEl('n8n-log',`✕ ${e.message}`,'error');
+    toast('Failed: '+e.message,'error');
+  }
+}
+
+async function triggerRelevanceAgent(){
+  const key=getRelevanceKey();
+  const region=getRelevanceRegion();
+  const agentId=getRelevanceAgentId();
+  if(!key){toast('Save your Relevance AI API key first','error');return;}
+  if(!agentId){toast('Enter a Relevance AI agent ID first','error');return;}
+
+  const [projectId,apiKey]=key.includes(':')?key.split(':'):[null,key];
+  const endpoint=`https://api-${region}.stack.tryrelevance.com/latest/agents/trigger`;
+  const body={agent_id:agentId,message:{role:'user',content:'Trigger from ESCAPE HQ — run your workflow now.'}};
+  if(projectId) body.project_id=projectId;
+
+  try{
+    platformLogEl('relevance-log','⏳ Triggering Relevance AI agent…','muted');
+    const res=await fetch(endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':apiKey},
+      body:JSON.stringify(body)
+    });
+    if(!res.ok) throw new Error(`Relevance AI responded ${res.status}`);
+    const data=await res.json();
+    platformLogEl('relevance-log',`✓ Agent triggered. Job ID: ${data.job_id||'received'}`, 'success');
+    addFeedEntry('analytics',`Relevance AI agent triggered (ID: ${agentId.slice(0,12)}…)`);
+    toast('Relevance AI agent triggered','success');
+  } catch(e){
+    platformLogEl('relevance-log',`✕ ${e.message}`,'error');
+    toast('Relevance AI trigger failed: '+e.message,'error');
+  }
+}
+
+// Auto-trigger platforms after agent run if flows are enabled
+async function triggerPlatformFlows(agentId, output){
+  const agentN8nEnabled=ls('hq_flow_agent-n8n','0')==='1';
+  const marketingRelevanceEnabled=ls('hq_flow_marketing-relevance','0')==='1';
+
+  if(agentN8nEnabled && getN8nWebhook()){
+    try{
+      await platformPost(getN8nWebhook(), {source:'ESCAPE HQ',event:'agent_output',agentId,output,timestamp:new Date().toISOString()}, 'n8n');
+      addFeedEntry(agentId, 'Output auto-forwarded to n8n');
+    }catch(e){console.warn('n8n auto-trigger failed:',e.message);}
+  }
+  if(marketingRelevanceEnabled && agentId==='marketing' && getRelevanceKey() && getRelevanceAgentId()){
+    try{await triggerRelevanceAgent();}catch(e){console.warn('Relevance AI auto-trigger failed:',e.message);}
+  }
+}
+
+function updatePlatformStatus(){
+  const makeSet=!!getMakeWebhook();
+  const n8nSet=!!getN8nWebhook();
+  const relevanceSet=!!getRelevanceKey();
+
+  // Sidebar badges on platforms page
+  const makeBadge=document.getElementById('make-status-badge');
+  const n8nBadge=document.getElementById('n8n-status-badge');
+  const relevanceBadge=document.getElementById('relevance-status-badge');
+  if(makeBadge){makeBadge.textContent=makeSet?'CONNECTED':'NOT SET';makeBadge.style.background=makeSet?'rgba(168,85,247,.15)':'rgba(255,255,255,.06)';makeBadge.style.color=makeSet?'#a855f7':'var(--text-dim)';}
+  if(n8nBadge){n8nBadge.textContent=n8nSet?'CONNECTED':'NOT SET';n8nBadge.style.background=n8nSet?'rgba(245,158,11,.15)':'rgba(255,255,255,.06)';n8nBadge.style.color=n8nSet?'#f59e0b':'var(--text-dim)';}
+  if(relevanceBadge){relevanceBadge.textContent=relevanceSet?'CONNECTED':'NOT SET';relevanceBadge.style.background=relevanceSet?'rgba(99,102,241,.15)':'rgba(255,255,255,.06)';relevanceBadge.style.color=relevanceSet?'#6366f1':'var(--text-dim)';}
+
+  // Settings page connection dots
+  const makeDot=document.getElementById('make-conn-dot');
+  const n8nDot=document.getElementById('n8n-conn-dot');
+  const relevanceDot=document.getElementById('relevance-conn-dot');
+  if(makeDot) makeDot.style.background=makeSet?'#43e0a0':'var(--text-dim)';
+  if(n8nDot) n8nDot.style.background=n8nSet?'#43e0a0':'var(--text-dim)';
+  if(relevanceDot) relevanceDot.style.background=relevanceSet?'#43e0a0':'var(--text-dim)';
+
+  const makeLabel=document.getElementById('make-conn-label');
+  const n8nLabel=document.getElementById('n8n-conn-label');
+  const relevanceLabel=document.getElementById('relevance-conn-label');
+  if(makeLabel){makeLabel.textContent=makeSet?'Webhook configured':'Not configured';makeLabel.style.color=makeSet?'var(--text)':'var(--text-muted)';}
+  if(n8nLabel){n8nLabel.textContent=n8nSet?'Webhook configured':'Not configured';n8nLabel.style.color=n8nSet?'var(--text)':'var(--text-muted)';}
+  if(relevanceLabel){relevanceLabel.textContent=relevanceSet?'API key configured':'Not configured';relevanceLabel.style.color=relevanceSet?'var(--text)':'var(--text-muted)';}
+}
+
+function prefillPlatforms(){
+  const makeUrl=document.getElementById('make-webhook-url');
+  const makeName=document.getElementById('make-scenario-name');
+  const n8nUrl=document.getElementById('n8n-webhook-url');
+  const n8nName=document.getElementById('n8n-workflow-name');
+  const rKey=document.getElementById('relevance-api-key');
+  const rRegion=document.getElementById('relevance-region');
+  const rAgent=document.getElementById('relevance-agent-id');
+
+  if(makeUrl) makeUrl.value=ls('hq_make_webhook','');
+  if(makeName) makeName.value=ls('hq_make_scenario_name','');
+  if(n8nUrl) n8nUrl.value=ls('hq_n8n_webhook','');
+  if(n8nName) n8nName.value=ls('hq_n8n_workflow_name','');
+  if(rKey) rKey.value=ls('hq_relevance_key','');
+  if(rRegion) rRegion.value=ls('hq_relevance_region','d7b62b');
+  if(rAgent) rAgent.value=ls('hq_relevance_agent_id','');
+
+  // Flow toggles
+  const flowSaleMake=document.getElementById('flow-sale-make');
+  const flowAgentN8n=document.getElementById('flow-agent-n8n');
+  const flowMarketingRelevance=document.getElementById('flow-marketing-relevance');
+  if(flowSaleMake) flowSaleMake.checked=ls('hq_flow_sale-make','0')==='1';
+  if(flowAgentN8n) flowAgentN8n.checked=ls('hq_flow_agent-n8n','0')==='1';
+  if(flowMarketingRelevance) flowMarketingRelevance.checked=ls('hq_flow_marketing-relevance','0')==='1';
+
+  updatePlatformStatus();
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  seedDefaults();
+  renderAgentGrid();
+  renderFeed();
+  renderStats();
+  updateKeyStatus();
+  prefillSettings();
+  prefillPlatforms();
+  setSaleDateDefault();
+});
+</script>
+</body>
+</html>

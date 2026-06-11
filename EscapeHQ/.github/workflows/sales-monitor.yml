@@ -1,0 +1,35 @@
+name: Sales Monitor Agent
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Every 4 hours
+  workflow_dispatch:
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Sales Monitor Agent
+        env:
+          COMPOSIO_KEY: ${{ secrets.COMPOSIO_KEY }}
+          ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
+        run: |
+          echo "=== ESCAPE Sales Monitor Agent ==="
+          echo "Date: $(date -u)"
+          echo ""
+          echo "This agent runs every 4 hours to monitor sales activity:"
+          echo "  - Check for new purchase inquiries in email"
+          echo "  - Draft follow-up messages for leads"
+          echo "  - Send access codes to confirmed buyers"
+          echo "  - Flag refund requests for review"
+          echo "  - Update code vault with sent/used status"
+          echo ""
+          echo "To enable real sales monitoring:"
+          echo "1. Add COMPOSIO_KEY and ANTHROPIC_KEY as repo secrets"
+          echo "2. Connect Gmail/Outlook via Composio for email reading"
+          echo "3. Set up a Composio Gmail action to send access code emails"
+          echo "4. Replace this step with a Node.js/Python script"
+          echo ""
+          echo "Sales Agent: Ready (demo mode - add API keys to activate)"

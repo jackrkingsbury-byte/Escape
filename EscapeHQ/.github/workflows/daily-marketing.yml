@@ -1,0 +1,34 @@
+name: Daily Marketing Agent
+on:
+  schedule:
+    - cron: '0 7 * * *'  # 7am UTC daily
+  workflow_dispatch:
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Marketing Agent
+        env:
+          COMPOSIO_KEY: ${{ secrets.COMPOSIO_KEY }}
+          ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
+        run: |
+          echo "=== ESCAPE Daily Marketing Agent ==="
+          echo "Date: $(date -u)"
+          echo ""
+          echo "To enable real agent runs:"
+          echo "1. Fork this repo"
+          echo "2. Add COMPOSIO_KEY and ANTHROPIC_KEY as repo secrets"
+          echo "3. Replace this step with a Node.js/Python script that calls"
+          echo "   the Claude API with your marketing agent system prompt"
+          echo ""
+          echo "Example Claude API call:"
+          echo "  POST https://api.anthropic.com/v1/messages"
+          echo "  System: You are the ESCAPE Marketing Agent. Generate a daily"
+          echo "          social post and email subject for the ESCAPE course."
+          echo "  User: Generate today's marketing content for ESCAPE."
+          echo ""
+          echo "Marketing Agent: Ready (demo mode - add API keys to activate)"
