@@ -580,6 +580,20 @@ textarea.form-control{resize:vertical;min-height:80px;line-height:1.6}
     <span class="nav-dot"></span>
   </div>
 
+  <div class="nav-section-label" style="color:rgba(168,85,247,.7)">Automations</div>
+  <div class="nav-item" data-page="agent-make" onclick="showPage('agent-make',this)">
+    <span class="nav-icon">⚡</span> Make.com
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-n8n" onclick="showPage('agent-n8n',this)">
+    <span class="nav-icon">🔀</span> n8n
+    <span class="nav-dot"></span>
+  </div>
+  <div class="nav-item" data-page="agent-relevance" onclick="showPage('agent-relevance',this)">
+    <span class="nav-icon">🧠</span> Relevance AI
+    <span class="nav-dot"></span>
+  </div>
+
   <div class="nav-section-label">Business</div>
   <div class="nav-item" data-page="vault" onclick="showPage('vault',this)">
     <span class="nav-icon">🔐</span> Code Vault
@@ -683,6 +697,18 @@ textarea.form-control{resize:vertical;min-height:80px;line-height:1.6}
   <section id="page-agent-support" class="page">
     <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
     <div id="detail-support"></div>
+  </section>
+  <section id="page-agent-make" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-make"></div>
+  </section>
+  <section id="page-agent-n8n" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-n8n"></div>
+  </section>
+  <section id="page-agent-relevance" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Back to Command Center</button>
+    <div id="detail-relevance"></div>
   </section>
 
   <!-- ══════════════════ CODE VAULT ══════════════════ -->
@@ -1232,6 +1258,57 @@ q.toLowerCase().includes('code') ?
       return `Support action complete: ${action}\n\n[${action} processed. All responses drafted and ready for review. No urgent items requiring immediate owner attention.]`;
     }
   },
+  {
+    id:'make',
+    name:'Make.com Agent',
+    icon:'⚡',
+    accent:'#a855f7',
+    desc:'Trigger scenarios & automation chains',
+    platformType:'make',
+    fields:[
+      {key:'event',label:'Event / Trigger Reason',type:'select',options:['Manual trigger','New content ready','Sale follow-up','Weekly report','Custom event']},
+      {key:'notes',label:'Notes to send',type:'text',placeholder:'e.g. Post the Instagram content from today\'s run'},
+    ],
+    systemPrompt:'',
+    demoOutput(cfg){
+      const wh=ls('hq_make_webhook','');
+      return `⚡ Make.com Scenario Triggered\n\nEvent: ${cfg.event||'Manual trigger'}\nNotes: ${cfg.notes||'(none)'}\nWebhook: ${wh?wh.slice(0,40)+'…':'[not configured — set in Platforms page]'}\n\nPayload sent:\n{\n  "source": "ESCAPE HQ",\n  "event": "${cfg.event||'manual_trigger'}",\n  "notes": "${cfg.notes||''}",\n  "timestamp": "${new Date().toISOString()}"\n}\n\nMake.com will now execute the connected scenario steps (email, Slack, Notion, etc.) based on your scenario configuration.`;
+    }
+  },
+  {
+    id:'n8n',
+    name:'n8n Agent',
+    icon:'🔀',
+    accent:'#f59e0b',
+    desc:'Trigger workflows & multi-step automations',
+    platformType:'n8n',
+    fields:[
+      {key:'event',label:'Event / Trigger Reason',type:'select',options:['Manual trigger','Agent output ready','Daily digest','New member onboarding','Custom event']},
+      {key:'data',label:'Data to send',type:'text',placeholder:'e.g. Send today\'s content batch to Airtable'},
+    ],
+    systemPrompt:'',
+    demoOutput(cfg){
+      const wh=ls('hq_n8n_webhook','');
+      return `🔀 n8n Workflow Triggered\n\nEvent: ${cfg.event||'Manual trigger'}\nData: ${cfg.data||'(none)'}\nWebhook: ${wh?wh.slice(0,40)+'…':'[not configured — set in Platforms page]'}\n\nPayload sent:\n{\n  "source": "ESCAPE HQ",\n  "event": "${cfg.event||'manual_trigger'}",\n  "data": "${cfg.data||''}",\n  "timestamp": "${new Date().toISOString()}"\n}\n\nYour n8n workflow will now process the incoming data through your configured nodes (Airtable, Discord, Google Sheets, etc.)`;
+    }
+  },
+  {
+    id:'relevance',
+    name:'Relevance AI Agent',
+    icon:'🧠',
+    accent:'#6366f1',
+    desc:'Trigger AI agents for advanced workflows',
+    platformType:'relevance',
+    fields:[
+      {key:'prompt',label:'Message / Prompt',type:'text',placeholder:'e.g. Analyse this week\'s sales data and suggest improvements'},
+      {key:'context',label:'Context (optional)',type:'text',placeholder:'e.g. ESCAPE course, R300 product, 8 new members this week'},
+    ],
+    systemPrompt:'',
+    demoOutput(cfg){
+      const agentId=ls('hq_relevance_agent_id','');
+      return `🧠 Relevance AI Agent Triggered\n\nAgent ID: ${agentId||'[not configured — set in Platforms page]'}\nMessage: ${cfg.prompt||'(none)'}\nContext: ${cfg.context||'(none)'}\n\nRequest sent to Relevance AI. Your agent will:\n• Process the prompt and context\n• Execute its configured tool chain\n• Return output via Relevance AI dashboard\n\nCheck your Relevance AI dashboard for the agent's response and any follow-up actions it triggered.`;
+    }
+  },
 ];
 
 // ── STORAGE HELPERS ──
@@ -1439,8 +1516,11 @@ async function runAgent(agentId, taskConfig){
   let success=true;
 
   try {
-    if(isReal){
-      // Real API path
+    if(agent.platformType){
+      // Platform agents always hit their real webhook/API if configured
+      output = await runPlatformAgent(agent, taskConfig);
+    } else if(isReal){
+      // Real Claude API path
       output = await runAgentReal(agent, taskConfig);
     } else {
       // Demo mode — simulate a delay for realism
@@ -1489,6 +1569,54 @@ async function runAgentReal(agent, cfg){
   const userMsg = `Run the ${agent.name} with the following config: ${JSON.stringify(cfg)}. Produce a detailed, actionable output.`;
   const data = await claudeGenerate(agent.systemPrompt, userMsg);
   return data;
+}
+
+async function runPlatformAgent(agent, cfg){
+  const type = agent.platformType;
+  const payload = {source:'ESCAPE HQ', agent:agent.id, ...cfg, timestamp:new Date().toISOString()};
+
+  if(type==='make'){
+    const url=getMakeWebhook();
+    if(!url){
+      // Demo mode — no webhook configured
+      await new Promise(r=>setTimeout(r,1000));
+      return agent.demoOutput(cfg);
+    }
+    const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!res.ok) throw new Error(`Make.com responded ${res.status}`);
+    return `⚡ Make.com scenario triggered successfully.\n\nEvent: ${cfg.event||'manual'}\nNotes: ${cfg.notes||'(none)'}\nTimestamp: ${new Date().toLocaleString()}\n\nMake.com accepted the webhook and will now run your scenario chain. Check your Make.com dashboard for execution details.`;
+  }
+
+  if(type==='n8n'){
+    const url=getN8nWebhook();
+    if(!url){
+      await new Promise(r=>setTimeout(r,1000));
+      return agent.demoOutput(cfg);
+    }
+    const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!res.ok) throw new Error(`n8n responded ${res.status}`);
+    return `🔀 n8n workflow triggered successfully.\n\nEvent: ${cfg.event||'manual'}\nData: ${cfg.data||'(none)'}\nTimestamp: ${new Date().toLocaleString()}\n\nYour n8n workflow is now executing. Check your n8n dashboard for execution details and node outputs.`;
+  }
+
+  if(type==='relevance'){
+    const key=getRelevanceKey();
+    const region=getRelevanceRegion();
+    const agentId=getRelevanceAgentId();
+    if(!key||!agentId){
+      await new Promise(r=>setTimeout(r,1000));
+      return agent.demoOutput(cfg);
+    }
+    const [projectId,apiKey]=key.includes(':')?key.split(':'):[null,key];
+    const endpoint=`https://api-${region}.stack.tryrelevance.com/latest/agents/trigger`;
+    const body={agent_id:agentId,message:{role:'user',content:cfg.prompt||(cfg.context?`Context: ${cfg.context}. Run your workflow.`:'Run your workflow.')}};
+    if(projectId) body.project_id=projectId;
+    const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':apiKey},body:JSON.stringify(body)});
+    if(!res.ok) throw new Error(`Relevance AI responded ${res.status}`);
+    const data=await res.json();
+    return `🧠 Relevance AI agent triggered successfully.\n\nAgent ID: ${agentId}\nMessage: ${cfg.prompt||'(default prompt)'}\nJob ID: ${data.job_id||'received'}\nTimestamp: ${new Date().toLocaleString()}\n\nYour Relevance AI agent is processing the request. Check your Relevance AI dashboard for the response and any tool calls it made.`;
+  }
+
+  throw new Error(`Unknown platform type: ${type}`);
 }
 
 async function composioCall(tool, params){
@@ -1629,10 +1757,17 @@ function renderAgentDetail(agentId){
     </div>`:''}
   `;
 
-  // Show demo mode notice if no keys set
+  // Show mode notice
   const notice=document.getElementById(`demo-mode-notice-${agentId}`);
   if(notice){
-    if(!getComposioKey()||!getAnthropicKey()){
+    const platformAgents={make:getMakeWebhook,n8n:getN8nWebhook,relevance:()=>getRelevanceKey()&&getRelevanceAgentId()};
+    if(platformAgents[agentId]!==undefined){
+      const configured=!!platformAgents[agentId]();
+      if(!configured){
+        notice.style.display='block';
+        notice.innerHTML=`<div style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#a855f7;margin-bottom:12px">Demo mode — <span style="text-decoration:underline;cursor:pointer" onclick="showPage('platforms')">configure this platform in the Platforms page</span> to run for real</div>`;
+      }
+    } else if(!getComposioKey()||!getAnthropicKey()){
       notice.style.display='block';
       notice.innerHTML=`<div style="background:rgba(255,214,10,.08);border:1px solid rgba(255,214,10,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#ffd60a;margin-bottom:12px">Demo mode — add Composio & Anthropic keys in Settings for real AI runs</div>`;
     }
