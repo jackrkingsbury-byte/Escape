@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-void-950 text-slate-200 antialiased;
+}
+
+::selection {
+  background: rgba(46, 143, 255, 0.35);
+}
+
+/* Slim, dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+
+@layer components {
+  /* Frosted glass panel — the core surface of the product */
+  .glass {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] shadow-glass backdrop-blur-xl;
+  }
+  .glass-hover {
+    @apply transition-all duration-300 hover:border-electric-500/40 hover:bg-white/[0.07] hover:shadow-glow-blue;
+  }
+  /* Headline gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-electric-300 via-electric-500 to-ember-400 bg-clip-text text-transparent;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-electric-600 to-electric-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow-blue transition-all duration-200 hover:brightness-110 hover:shadow-glow-blue-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
+  }
+  .btn-ember {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-ember-600 to-ember-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow-ember transition-all duration-200 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-white/25 hover:bg-white/[0.08] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .input-dark {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition-colors focus:border-electric-500/60 focus:ring-2 focus:ring-electric-500/20;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs font-medium text-slate-300;
+  }
+}
