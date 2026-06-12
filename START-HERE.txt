@@ -1,0 +1,18 @@
+⚡ GRADEFORGE AI X — START HERE (30 seconds)
+============================================
+
+1. Unzip this folder anywhere (Desktop is fine).
+2. Double-click  index.html  — it opens in your browser.
+3. Enter your name, pick Global or South Africa mode.
+4. Tap "Explore with demo data" to see everything working,
+   or "Launch" to start fresh.
+
+That's it. Your AI Academic OS is online.
+
+TIPS
+- Bookmark the tab. Your data saves automatically on your device.
+- Works on phones too — open index.html in your phone browser.
+- Settings → Data Vault → Export Backup = move data between devices.
+
+Questions? Message us on Etsy — we reply fast.
+Loving it? A ⭐⭐⭐⭐⭐ review keeps free updates coming!
