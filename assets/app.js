@@ -181,30 +181,59 @@ GF.app = (() => {
   };
 
   const openOnboarding = () => {
-    A.openModal(`
-      <div class="onboard-hero">
-        <div class="ob-logo">
-          <svg viewBox="0 0 100 100" width="40" height="40">
-            <defs><linearGradient id="obGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00F0FF"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs>
-            <path d="M30 68 L50 28 L70 68 M38 54 H62" stroke="url(#obGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
+    const prev = document.getElementById("welcome-screen");
+    if (prev) prev.remove();
+    const el = document.createElement("div");
+    el.className = "welcome-screen";
+    el.id = "welcome-screen";
+    el.innerHTML = `
+      <div class="welcome-bg" aria-hidden="true"></div>
+      <div class="welcome-inner">
+        <div class="wc-top">
+          <div class="wc-logo">
+            <svg viewBox="0 0 100 100" width="30" height="30">
+              <defs><linearGradient id="obGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#35DDEF"/><stop offset="1" stop-color="#8B7CF6"/></linearGradient></defs>
+              <path d="M30 68 L50 28 L70 68 M38 54 H62" stroke="url(#obGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="wc-brandline">GRADEFORGE&nbsp;AI&nbsp;X</div>
         </div>
-        <h2>Welcome to <span class="hl">GradeForge AI X</span></h2>
-        <p>Your Personal AI Academic Operating System.<br><b>Track. Learn. Improve. Dominate.</b></p>
-      </div>
-      <div class="field"><label>What should we call you?</label><input id="ob-name" placeholder="Your name" maxlength="24"></div>
-      <div class="ob-choice">
-        <button class="ob-mode selected" data-mode="global" onclick="GF.app.obPick('global')">
-          <div class="om-flag">🌍</div><div class="om-name">Global Mode</div><div class="om-sub">Universal grading & tools</div>
-        </button>
-        <button class="ob-mode" data-mode="sa" onclick="GF.app.obPick('sa')">
-          <div class="om-flag">🇿🇦</div><div class="om-name">South Africa Mode</div><div class="om-sub">CAPS subjects · APS · Matric</div>
-        </button>
-      </div>
-      <div class="modal-actions" style="flex-direction:column;gap:8px">
-        <button class="btn btn-primary btn-block" onclick="GF.app.obFinish(false)">🚀 Launch My Academic OS</button>
-        <button class="btn btn-block" onclick="GF.app.obFinish(true)">✨ Explore with demo data first</button>
-      </div>`, false);
+
+        <h1 class="wc-head">Your Personal <span class="grad-text">AI&nbsp;Academic</span><br>Operating System</h1>
+        <p class="wc-tag">Forge your future — one mark at a time.</p>
+
+        <div class="wc-features">
+          <div class="wc-feat"><span class="wf-ico">📈</span> AI Grade Predictor</div>
+          <div class="wc-feat"><span class="wf-ico">🛡️</span> Exam Readiness</div>
+          <div class="wc-feat"><span class="wf-ico">⚡</span> AI Study Coach</div>
+          <div class="wc-feat"><span class="wf-ico">🔥</span> Streaks &amp; XP</div>
+        </div>
+
+        <div class="wc-card">
+          <div class="field"><label>What should we call you?</label><input id="ob-name" placeholder="Your first name" maxlength="24" autocomplete="off"></div>
+          <div class="wc-modelabel">Choose your mode</div>
+          <div class="ob-choice">
+            <button class="ob-mode selected" data-mode="global" onclick="GF.app.obPick('global')">
+              <div class="om-flag">🌍</div><div class="om-name">Global</div><div class="om-sub">Universal grading & tools</div>
+            </button>
+            <button class="ob-mode" data-mode="sa" onclick="GF.app.obPick('sa')">
+              <div class="om-flag">🇿🇦</div><div class="om-name">South Africa</div><div class="om-sub">CAPS · APS · Matric</div>
+            </button>
+          </div>
+          <button class="btn btn-primary btn-block wc-cta" onclick="GF.app.obFinish(false)">Launch My Academic OS →</button>
+          <button class="btn btn-ghost btn-block" style="margin-top:8px" onclick="GF.app.obFinish(true)">✨ Explore with demo data first</button>
+        </div>
+
+        <p class="wc-foot">🔒 Private by design · works on any device · no account needed</p>
+      </div>`;
+    document.body.appendChild(el);
+    obMode = "global";
+    setTimeout(() => { const i = document.getElementById("ob-name"); if (i) i.focus(); }, 200);
+  };
+
+  const closeWelcome = () => {
+    const w = document.getElementById("welcome-screen");
+    if (w) { w.classList.add("welcome-out"); setTimeout(() => w.remove(), 420); }
   };
 
   A.obFinish = (demo) => {
@@ -220,11 +249,12 @@ GF.app = (() => {
       GF.state.game.streak = { count: 1, last: GF.todayISO(), best: 1 };
     }
     GF.save();
+    closeWelcome();
     A.closeModal();
     A.render();
     A.confetti(90);
     A.toast("🚀", demo ? "Demo loaded — explore everything, then start fresh in Settings." : "Academic OS online. Add your subjects to begin.", 10);
-    if (!demo) setTimeout(() => A.openAddSubject(), 900);
+    if (!demo) setTimeout(() => A.openAddSubject(), 1000);
   };
 
   /* ═══════ SUBJECTS & MARKS ═══════ */
