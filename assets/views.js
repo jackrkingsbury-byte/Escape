@@ -36,10 +36,10 @@ GF.views = (() => {
 
     const meters = ac.parts ? `
       <div class="hero-meters">
-        ${heroMeter("AI Grade Predictor", forecast != null ? Math.round(forecast) : "—", "%", "#00F0FF", forecast ?? 0, "projected term result")}
-        ${heroMeter("Exam Readiness", examReady ?? "—", examReady != null ? "%" : "", "#A855F7", examReady ?? 0, exams.length ? `${exams.length} exam${exams.length > 1 ? "s" : ""} tracked` : "no exams tracked")}
-        ${heroMeter("Focus Score", focus, "%", "#3B82F6", focus, `${eng.weekFocusMinutes()} min this week`)}
-        ${heroMeter("Momentum", Math.round(ac.parts.momentum), "", "#34D399", ac.parts.momentum, ac.parts.momentum >= 55 ? "trending upward" : ac.parts.momentum >= 45 ? "holding steady" : "needs attention")}
+        ${heroMeter("AI Grade Predictor", forecast != null ? Math.round(forecast) : "—", "%", "#35DDEF", forecast ?? 0, "projected term result")}
+        ${heroMeter("Exam Readiness", examReady ?? "—", examReady != null ? "%" : "", "#8B7CF6", examReady ?? 0, exams.length ? `${exams.length} exam${exams.length > 1 ? "s" : ""} tracked` : "no exams tracked")}
+        ${heroMeter("Focus Score", focus, "%", "#4F8BFF", focus, `${eng.weekFocusMinutes()} min this week`)}
+        ${heroMeter("Momentum", Math.round(ac.parts.momentum), "", "#3DD9A4", ac.parts.momentum, ac.parts.momentum >= 55 ? "trending upward" : ac.parts.momentum >= 45 ? "holding steady" : "needs attention")}
       </div>` : `
       <div class="mt-16"><button class="btn btn-primary" onclick="GF.app.openAddSubject()">+ Add your first subject to activate the AI engine</button></div>`;
 

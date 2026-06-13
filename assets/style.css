@@ -742,6 +742,11 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.7); curs
 
 /* ═══════ MISC ═══════ */
 
+/* Fixed-width digits everywhere numbers live — steady, no jitter on count-up */
+.big-num, .ring-score, .meter .m-value, .aps-display .aps-score,
+.level-card .lvl-num, .timer-time, .cd-num, .delta, .mark-chip,
+.xp-chip .mono, .lvl-xp { font-variant-numeric: tabular-nums; }
+
 .muted { color: var(--text-3); } .small { font-size: 12px; }
 .flex { display: flex; align-items: center; gap: 10px; }
 .spread { display: flex; align-items: center; justify-content: space-between; gap: 10px; }

@@ -79,7 +79,7 @@ GF.app = (() => {
 
   A.confetti = (n = 60) => {
     const layer = $("#confetti-layer");
-    const colors = ["#00F0FF", "#3B82F6", "#A855F7", "#34D399", "#FBBF24", "#EC4899"];
+    const colors = ["#35DDEF", "#4F8BFF", "#8B7CF6", "#3DD9A4", "#F5C451", "#E879B9"];
     for (let i = 0; i < n; i++) {
       const b = document.createElement("div");
       b.className = "confetti-bit";
