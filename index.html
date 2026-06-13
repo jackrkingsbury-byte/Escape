@@ -13,6 +13,28 @@
 </head>
 <body>
 
+<!-- ════════ ACCESS GATE ════════ -->
+<div class="gate-screen" id="gate-screen" hidden>
+  <div class="gate-aurora" aria-hidden="true"></div>
+  <div class="gate-card">
+    <div class="gate-logo">
+      <svg viewBox="0 0 100 100" width="40" height="40">
+        <defs><linearGradient id="gateGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#00F0FF"/><stop offset="1" stop-color="#A855F7"/>
+        </linearGradient></defs>
+        <path d="M30 68 L50 28 L70 68 M38 54 H62" stroke="url(#gateGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <h1 class="gate-title">GradeForge <span>AI&nbsp;X</span></h1>
+    <p class="gate-sub">Your Personal AI Academic Operating System</p>
+    <div class="gate-lockrow">🔒 Members access</div>
+    <input id="gate-input" class="gate-input" type="text" placeholder="Enter your access code" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+    <div id="gate-error" class="gate-error" style="display:none"></div>
+    <button id="gate-btn" class="btn btn-primary gate-btn">Unlock GradeForge AI X</button>
+    <p class="gate-foot">Your code came with your purchase confirmation.<br>Lost it? Message the seller and we’ll send it again.</p>
+  </div>
+</div>
+
 <!-- ════════ AURORA BACKGROUND ════════ -->
 <div class="aurora" aria-hidden="true">
   <div class="aurora-blob ab-1"></div>
@@ -129,6 +151,7 @@
 <div class="toast-stack" id="toast-stack"></div>
 <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
 
+<script src="assets/gate.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/engine.js"></script>
 <script src="assets/charts.js"></script>
