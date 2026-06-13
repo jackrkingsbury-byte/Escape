@@ -1,24 +1,19 @@
 /* ═══════════════════════════════════════════════════════════════
-   GRADEFORGE AI X — ACCESS GATE
-   A purchase-code lock for the hosted app. Buyers receive a code;
-   the code is stored here only as a hash (never plain text).
-   Uses a synchronous hash (cyrb53) so it works on every browser
-   and device — no Web Crypto / secure-context dependency.
+   GRADEFORGE AI X — ACCESS GATE  (build 4)
+   Purchase-code lock. Codes stored only as a synchronous hash.
+   Runs synchronously and exposes window.GFGATE.unlock() so the
+   button can call it inline — no event-listener / timing / crypto
+   dependencies. Works on every browser and device.
    ───────────────────────────────────────────────────────────────
-   To change/add codes: replace/add the hashes in VALID_HASHES.
-   Generate a hash for a new code (letters/numbers only) with cyrb53
-   of the normalised (A-Z 0-9, uppercase) code.
+   Change/add codes: edit VALID_HASHES (cyrb53 of the normalised,
+   A-Z 0-9 uppercase code).
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
   "use strict";
 
   var UNLOCK_KEY = "gradeforge_unlocked_v1";
-
-  // cyrb53 hashes of accepted access codes (normalized: A-Z 0-9 only, uppercase).
-  var VALID_HASHES = [
-    "7376192739717603" // current launch code
-  ];
+  var VALID_HASHES = ["7376192739717603"]; // current launch code
 
   function normalize(s) { return (s || "").replace(/[^a-z0-9]/gi, "").toUpperCase(); }
 
@@ -36,63 +31,43 @@
     return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString();
   }
 
-  function alreadyUnlocked() {
+  function isUnlocked() {
     try { return localStorage.getItem(UNLOCK_KEY) === "1"; } catch (e) { return false; }
   }
-  function markUnlocked() {
-    try { localStorage.setItem(UNLOCK_KEY, "1"); } catch (e) {}
-  }
 
-  function revealApp() {
+  function reveal() {
+    try { localStorage.setItem(UNLOCK_KEY, "1"); } catch (e) {}
     document.documentElement.classList.remove("gf-locked");
     var g = document.getElementById("gate-screen");
-    if (g) g.hidden = true;
+    if (g) { g.classList.add("gate-ok"); setTimeout(function () { g.hidden = true; }, 520); }
   }
 
-  // Lock immediately (before paint) if not already unlocked.
-  if (alreadyUnlocked()) return;
-  document.documentElement.classList.add("gf-locked");
-
-  function wire() {
-    var gate = document.getElementById("gate-screen");
-    if (!gate) return;
-    gate.hidden = false;
-
-    var input = document.getElementById("gate-input");
-    var btn = document.getElementById("gate-btn");
+  function showError(msg) {
     var err = document.getElementById("gate-error");
-    if (!input || !btn) return;
-
-    function showError(msg) {
-      if (!err) return;
-      err.textContent = msg;
-      err.style.display = "block";
-      var card = gate.querySelector(".gate-card");
-      if (card) { card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
-    }
-
-    function attempt() {
-      var code = normalize(input.value);
-      if (!code) { showError("Enter your access code to continue."); return; }
-      if (VALID_HASHES.indexOf(cyrb53(code)) !== -1) {
-        markUnlocked();
-        gate.classList.add("gate-ok");
-        setTimeout(revealApp, 520);
-      } else {
-        showError("That code isn’t right. Check your purchase confirmation and try again.");
-        try { input.select(); } catch (e) {}
-      }
-    }
-
-    btn.addEventListener("click", attempt);
-    btn.addEventListener("touchend", function (e) { e.preventDefault(); attempt(); });
-    input.addEventListener("keydown", function (e) { if (e.key === "Enter") attempt(); });
-    setTimeout(function () { try { input.focus(); } catch (e) {} }, 120);
+    if (err) { err.textContent = msg; err.style.display = "block"; }
+    var card = document.querySelector(".gate-card");
+    if (card) { card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", wire);
-  } else {
-    wire();
-  }
+  // Public — called inline by the button and the input's Enter key.
+  window.GFGATE = {
+    unlock: function () {
+      var input = document.getElementById("gate-input");
+      var code = normalize(input ? input.value : "");
+      if (!code) { showError("Please type your access code first."); return false; }
+      if (VALID_HASHES.indexOf(cyrb53(code)) !== -1) { reveal(); return true; }
+      showError("That code isn’t right. Check your confirmation and try again.");
+      try { input.select(); } catch (e) {}
+      return false;
+    }
+  };
+
+  // Lock + show the gate immediately. The gate markup sits above this
+  // script in the body, so it is already parsed and available now.
+  if (isUnlocked()) return;
+  document.documentElement.classList.add("gf-locked");
+  var gate = document.getElementById("gate-screen");
+  if (gate) gate.hidden = false;
+  var inp = document.getElementById("gate-input");
+  if (inp) setTimeout(function () { try { inp.focus(); } catch (e) {} }, 120);
 })();
