@@ -8,7 +8,7 @@ Browser ──► Next.js (App Router, Vercel)
               ├── Supabase Auth  (email + Google OAuth, cookie sessions)
               ├── Supabase Postgres (RLS-protected user data)
               ├── Anthropic API  (claude-opus-4-8 — missions, coach, reviews, roadmaps)
-              └── Stripe         (subscriptions; webhook → plan sync)
+              └── Paystack       (ZAR subscriptions; webhook → plan sync)
 ```
 
 Server components fetch data with the **user's own JWT** (RLS enforced). A separate **service-role client** (`createAdminClient`) is used only where the server must write privileged state: XP grants, achievement unlocks, AI usage metering, billing sync, referral attribution.
@@ -33,7 +33,7 @@ Server components fetch data with the **user's own JWT** (RLS enforced). A separ
 Clients can never self-grant progression. Two layers:
 
 1. **RLS** restricts every table to the owning user.
-2. The `profiles_protect` trigger zeroes out any client-side change to `xp`, `level`, streaks, `plan`, Stripe columns, and referral fields. Progression flows only through `complete_mission()` (SECURITY DEFINER, owner-validated, atomic) and service-role writes.
+2. The `profiles_protect` trigger zeroes out any client-side change to `xp`, `level`, streaks, `plan`, Paystack columns, and referral fields. Progression flows only through `complete_mission()` (SECURITY DEFINER, owner-validated, atomic) and service-role writes.
 
 ### Level curve
 
@@ -55,22 +55,22 @@ All calls use `claude-opus-4-8` with adaptive thinking (`thinking: {type: "adapt
 
 ## Premium access logic
 
-- `profiles.plan` is **only** written by the Stripe webhook (single source of truth).
+- `profiles.plan` is **only** written by the Paystack webhook (single source of truth).
 - `isPremium()` additionally checks `current_period_end` hasn't passed (grace handling).
 - Free limits live in `entitlements.ts`: 2 mission generations/day, 10 coach messages/day. `consumeUsage()` increments `ai_usage` and returns allow/deny; routes respond `402` with an upgrade message the UI renders inline.
 - Premium-only surfaces: weekly challenges, roadmaps, premium achievements.
 
 ## Subscription lifecycle
 
-1. `POST /api/stripe/checkout` — creates/reuses the Stripe customer (stored on profile), opens Checkout with `supabase_user_id` metadata.
-2. Webhook (`checkout.session.completed`, `customer.subscription.*`) → `syncSubscription()` maps Stripe status → `plan`, stores `subscription_status` and `current_period_end`.
+1. `POST /api/paystack/checkout` — initializes a Paystack transaction tied to a plan code, with `supabase_user_id` in metadata, and returns the hosted `authorization_url` to redirect to.
+2. Webhook (`charge.success`, `subscription.create`, `subscription.disable`, `subscription.not_renew`) maps Paystack state → `plan`, stores `paystack_customer_code` / `paystack_subscription_code` / `paystack_email_token`, `subscription_status`, and `current_period_end`. Signature verified via HMAC-SHA512 of the raw body with the secret key.
 3. On first activation of a referred user, the referral converts: referrer gets 500 XP + `referral_1` badge.
-4. `POST /api/stripe/portal` — self-serve cancel/upgrade via the Stripe Billing Portal.
+4. `POST /api/paystack/manage` — returns a Paystack-hosted link to manage/cancel the subscription (Paystack's equivalent of a billing portal). Cancellation keeps premium until `current_period_end` via `isPremium()`'s grace check.
 
 ## Security model
 
 - All API routes resolve the session via `getAuthedContext()`; unauthenticated → 401.
 - Zod validation on every request body.
-- Stripe webhook signature verification; service-role key is server-only.
+- Paystack webhook signature verification (constant-time HMAC compare); service-role key is server-only.
 - Security headers (frame-deny, nosniff, referrer policy) in `next.config.mjs`.
 - AI prompt-injection surface is limited: user free-text reaches only the coach (chat, by design) and roadmap objective (constrained to 500 chars, output schema-validated).

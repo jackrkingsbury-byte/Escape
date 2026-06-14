@@ -18,8 +18,9 @@ export interface Profile {
   focus_areas: string[];
   intensity: "chill" | "standard" | "hardcore";
   plan: PlanTier;
-  stripe_customer_id: string | null;
-  stripe_subscription_id: string | null;
+  paystack_customer_code: string | null;
+  paystack_subscription_code: string | null;
+  paystack_email_token: string | null;
   subscription_status: string | null;
   current_period_end: string | null;
   referral_code: string;

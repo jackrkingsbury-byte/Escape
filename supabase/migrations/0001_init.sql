@@ -29,10 +29,11 @@ create table public.profiles (
   onboarded boolean not null default false,
   focus_areas text[] not null default '{}',
   intensity text not null default 'standard', -- chill | standard | hardcore
-  -- Billing
+  -- Billing (Paystack)
   plan plan_tier not null default 'free',
-  stripe_customer_id text unique,
-  stripe_subscription_id text,
+  paystack_customer_code text unique,
+  paystack_subscription_code text,
+  paystack_email_token text,
   subscription_status text,
   current_period_end timestamptz,
   -- Referrals
@@ -189,7 +190,7 @@ create policy "achievements_read_all" on public.achievements for select using (t
 create policy "user_achievements_select_own" on public.user_achievements for select using (auth.uid() = user_id);
 
 -- Server (service role) bypasses RLS for: xp grants, reviews, roadmaps,
--- referrals, ai_usage writes, achievement unlocks, Stripe billing sync.
+-- referrals, ai_usage writes, achievement unlocks, Paystack billing sync.
 
 -- ═══════════════════════════════════════════════════════════════
 -- Guard: clients cannot self-grant XP / plan / streaks via UPDATE
@@ -203,8 +204,9 @@ begin
     new.current_streak := old.current_streak;
     new.longest_streak := old.longest_streak;
     new.plan := old.plan;
-    new.stripe_customer_id := old.stripe_customer_id;
-    new.stripe_subscription_id := old.stripe_subscription_id;
+    new.paystack_customer_code := old.paystack_customer_code;
+    new.paystack_subscription_code := old.paystack_subscription_code;
+    new.paystack_email_token := old.paystack_email_token;
     new.subscription_status := old.subscription_status;
     new.current_period_end := old.current_period_end;
     new.referral_code := old.referral_code;

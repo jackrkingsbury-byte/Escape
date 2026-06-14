@@ -8,7 +8,7 @@ export function ManageBillingButton() {
 
   async function openPortal() {
     setLoading(true);
-    const res = await fetch("/api/stripe/portal", { method: "POST" });
+    const res = await fetch("/api/paystack/manage", { method: "POST" });
     const data = await res.json().catch(() => ({}));
     if (data.url) {
       window.location.href = data.url;
@@ -38,7 +38,7 @@ export function UpgradeButton({
 
   async function checkout() {
     setLoading(true);
-    const res = await fetch("/api/stripe/checkout", {
+    const res = await fetch("/api/paystack/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ interval }),

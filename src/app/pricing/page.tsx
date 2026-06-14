@@ -43,7 +43,7 @@ export default function PricingPage() {
           <h2 className="font-display text-xl font-semibold text-white">Free</h2>
           <p className="mt-1 text-sm text-slate-400">Build the habit.</p>
           <p className="mt-6 font-display text-4xl font-bold text-white">
-            $0<span className="text-base font-medium text-slate-500">/forever</span>
+            R0<span className="text-base font-medium text-slate-500">/forever</span>
           </p>
           <ul className="mt-8 space-y-3">
             {FREE_FEATURES.map((f) => (
@@ -66,9 +66,9 @@ export default function PricingPage() {
           <h2 className="font-display text-xl font-semibold text-white">Premium</h2>
           <p className="mt-1 text-sm text-slate-400">Remove every limit.</p>
           <p className="mt-6 font-display text-4xl font-bold text-white">
-            $9<span className="text-base font-medium text-slate-500">/month</span>
+            R99<span className="text-base font-medium text-slate-500">/month</span>
           </p>
-          <p className="mt-1 text-xs text-ember-300">or $79/year — save 27%</p>
+          <p className="mt-1 text-xs text-ember-300">or R899/year — save 24%</p>
           <ul className="mt-8 space-y-3">
             {PREMIUM_FEATURES.map((f) => (
               <li key={f} className="flex items-start gap-2.5 text-sm text-slate-200">
@@ -88,7 +88,7 @@ export default function PricingPage() {
       </div>
 
       <p className="mt-10 text-center text-xs text-slate-600">
-        Cancel anytime from settings. Payments secured by Stripe.
+        Cancel anytime from settings. Payments secured by Paystack.
       </p>
     </main>
   );

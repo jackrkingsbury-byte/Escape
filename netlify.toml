@@ -1,0 +1,10 @@
+# Netlify deployment config for Life OS (Next.js).
+# The official plugin runs Next.js App Router (SSR, API routes, streaming)
+# on Netlify Functions — no extra setup needed beyond installing it.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
