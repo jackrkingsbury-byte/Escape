@@ -41,7 +41,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setError(null);
 
     if (mode === "signup") {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -50,7 +50,12 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         },
       });
       if (error) setError(error.message);
-      else setSent(true);
+      // When email confirmation is disabled, sign-up returns a live session —
+      // log the user straight into onboarding instead of asking for an email.
+      else if (data.session) {
+        router.push("/onboarding");
+        router.refresh();
+      } else setSent(true);
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setError(error.message);
