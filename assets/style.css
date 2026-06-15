@@ -797,3 +797,98 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.7); curs
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ☀️ DAYLIGHT THEME — high-class light mode (white + neon accents)
+   Activated via <html data-theme="light">. Dark stays the default.
+   ═══════════════════════════════════════════════════════════════ */
+
+html[data-theme="light"] {
+  --bg-0: #E7ECF7; --bg-1: #F4F6FC; --bg-2: #FFFFFF;
+  --surface: #FFFFFF; --surface-2: #F5F8FE;
+  --glass: rgba(40,90,200,.035); --glass-strong: rgba(40,90,200,.06);
+  --stroke: rgba(30,55,120,.12); --stroke-bright: rgba(40,95,210,.26);
+  --ink-line: rgba(30,55,120,.08);
+  --blue: #2F6BF0; --indigo: #3D63F0; --cyan: #0BA5C4; --neon: #12B5D6;
+  --purple: #7C5CE0; --violet: #7A66E8;
+  --good: #12A974; --warn: #B9810F; --bad: #DB4F55;
+  --text-1: #131A2E; --text-2: #4B5878; --text-3: #8492B2;
+  --grad-main: linear-gradient(135deg, #12B5D6 0%, #3D7DF5 52%, #7A66E8 100%);
+  --grad-soft: linear-gradient(135deg, rgba(18,181,214,.12), rgba(122,102,232,.10));
+  --shadow-card: 0 14px 34px -18px rgba(40,70,140,.28), 0 2px 6px -3px rgba(40,70,140,.10);
+  --glow-cyan: 0 6px 18px -8px rgba(18,181,214,.45);
+  --glow-purple: 0 6px 18px -8px rgba(122,102,232,.4);
+  color-scheme: light;
+}
+html[data-theme="light"] body { color: var(--text-1); background: var(--bg-1); }
+
+html[data-theme="light"] .aurora { background: radial-gradient(125% 95% at 50% -5%, #FFFFFF 0%, #F1F4FC 50%, #E7ECF7 100%); }
+html[data-theme="light"] .aurora-blob { opacity: .20; filter: blur(120px); }
+html[data-theme="light"] .ab-1 { background: radial-gradient(circle, rgba(61,125,245,.40), transparent 66%); }
+html[data-theme="light"] .ab-2 { background: radial-gradient(circle, rgba(122,102,232,.34), transparent 66%); }
+html[data-theme="light"] .ab-3 { background: radial-gradient(circle, rgba(18,181,214,.30), transparent 66%); }
+html[data-theme="light"] .grid-overlay { background-image: radial-gradient(rgba(40,70,140,.11) 1px, transparent 1.4px); opacity: .55; }
+html[data-theme="light"] .stars { display: none; }
+
+html[data-theme="light"] .card { background: linear-gradient(180deg, #FFFFFF, #FBFCFF); border-color: var(--stroke); box-shadow: var(--shadow-card); }
+html[data-theme="light"] .hero-card {
+  background:
+    radial-gradient(70% 130% at 2% 0%, rgba(18,181,214,.08), transparent 52%),
+    radial-gradient(75% 140% at 100% 100%, rgba(122,102,232,.09), transparent 54%),
+    linear-gradient(165deg, #FFFFFF, #F6F9FF);
+}
+html[data-theme="light"] .hero-card::after { background: linear-gradient(180deg, rgba(40,70,140,.04), transparent 22%); }
+
+html[data-theme="light"] .meter,
+html[data-theme="light"] .row-item,
+html[data-theme="light"] .subject-card .sc-stat,
+html[data-theme="light"] .mark-chip,
+html[data-theme="light"] .aps-row,
+html[data-theme="light"] .coach-btn,
+html[data-theme="light"] .ach-card,
+html[data-theme="light"] .insight,
+html[data-theme="light"] .ach-icon { background: #F4F7FD; border-color: var(--stroke); }
+html[data-theme="light"] .row-item:hover,
+html[data-theme="light"] .meter:hover { background: #EAF0FB; }
+
+html[data-theme="light"] .sidebar { background: rgba(255,255,255,.72); }
+html[data-theme="light"] .topbar { background: linear-gradient(rgba(244,246,252,.92), rgba(244,246,252,.6) 72%, transparent); }
+html[data-theme="light"] .mobile-nav { background: rgba(255,255,255,.95); }
+html[data-theme="light"] .streak-chip,
+html[data-theme="light"] .xp-chip { background: #FFFFFF; box-shadow: var(--shadow-card); }
+html[data-theme="light"] .nav-item:hover { background: #EEF2FC; }
+
+html[data-theme="light"] .field input,
+html[data-theme="light"] .field select,
+html[data-theme="light"] .field textarea,
+html[data-theme="light"] .gate-input { background: #FFFFFF; color: var(--text-1); }
+html[data-theme="light"] .btn { background: #FFFFFF; }
+html[data-theme="light"] .btn:hover { background: #F1F5FD; }
+html[data-theme="light"] .btn-ghost { background: transparent; }
+html[data-theme="light"] .mode-pill { background: #FFFFFF; }
+
+html[data-theme="light"] .ring-svg .ring-track { stroke: rgba(30,55,120,.13); }
+html[data-theme="light"] .progress-line,
+html[data-theme="light"] .meter .m-bar,
+html[data-theme="light"] .xp-chip .xp-bar { background: rgba(30,55,120,.11); }
+html[data-theme="light"] .hm-cell { background: rgba(30,55,120,.08); }
+
+html[data-theme="light"] .modal { background: #FFFFFF; }
+html[data-theme="light"] .toast { background: #FFFFFF; color: var(--text-1); }
+html[data-theme="light"] .prompt-output { background: #0E1626; color: #CDEBF7; border-color: rgba(40,95,210,.2); }
+
+html[data-theme="light"] .gate-screen,
+html[data-theme="light"] .welcome-screen { background: radial-gradient(125% 95% at 50% -5%, #FFFFFF 0%, #F1F4FC 52%, #E7ECF7 100%); }
+html[data-theme="light"] .gate-card,
+html[data-theme="light"] .wc-card,
+html[data-theme="light"] .wc-feat { background: #FFFFFF; }
+html[data-theme="light"] .empty { border-color: var(--stroke); }
+
+/* ── Theme toggle button (topbar) ── */
+.theme-toggle {
+  width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--stroke); color: var(--text-2);
+  font-size: 16px; transition: all .18s ease;
+}
+.theme-toggle:hover { color: var(--text-1); border-color: var(--stroke-bright); transform: translateY(-1px); }

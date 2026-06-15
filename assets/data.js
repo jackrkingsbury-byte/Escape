@@ -240,6 +240,7 @@ GF.defaultState = () => ({
   user: {
     name: "",
     mode: "global",            // "global" | "sa"
+    theme: "dark",             // "dark" | "light"
     gradeLabel: "Grade 11",
     weeklyFocusGoalMin: 300,
     matricDate: new Date().getFullYear() + "-10-21",

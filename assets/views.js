@@ -682,6 +682,12 @@ GF.views = (() => {
           <div class="field"><label>Weekly focus goal (min)</label><input id="set-goal" type="number" min="30" step="30" value="${u.weeklyFocusGoalMin}"></div>
           <div class="field"><label>Matric / finals date</label><input id="set-matric" type="date" value="${u.matricDate}"></div>
         </div>
+        <div class="field"><label>Appearance</label>
+          <select id="set-theme">
+            <option value="dark" ${u.theme !== "light" ? "selected" : ""}>🌙 Midnight (premium dark)</option>
+            <option value="light" ${u.theme === "light" ? "selected" : ""}>☀️ Daylight (clean light)</option>
+          </select>
+        </div>
         <button class="btn btn-primary" onclick="GF.app.saveSettings()">Save Settings</button>
       </div>
 

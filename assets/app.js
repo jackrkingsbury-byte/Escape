@@ -705,7 +705,9 @@ GF.app = (() => {
     u.mode = $("#set-mode").value;
     u.weeklyFocusGoalMin = Math.max(30, parseInt($("#set-goal").value, 10) || 300);
     u.matricDate = $("#set-matric").value || u.matricDate;
+    u.theme = $("#set-theme").value === "light" ? "light" : "dark";
     GF.save();
+    A.applyTheme();
     A.toast("✅", "Settings saved.");
     A.render();
   };
@@ -769,10 +771,31 @@ GF.app = (() => {
     openOnboarding();
   };
 
+  /* ═══════ THEME ═══════ */
+
+  A.applyTheme = () => {
+    const t = GF.state.user.theme === "light" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", t);
+    const btn = $("#theme-toggle");
+    if (btn) {
+      btn.textContent = t === "light" ? "☀️" : "🌙";
+      btn.title = t === "light" ? "Switch to midnight theme" : "Switch to daylight theme";
+    }
+  };
+
+  A.toggleTheme = () => {
+    GF.state.user.theme = GF.state.user.theme === "light" ? "dark" : "light";
+    GF.save();
+    A.applyTheme();
+    A.toast(GF.state.user.theme === "light" ? "☀️" : "🌙",
+      GF.state.user.theme === "light" ? "Daylight theme on." : "Midnight theme on.");
+  };
+
   /* ═══════ INIT ═══════ */
 
   A.init = () => {
     GF.load();
+    A.applyTheme();
 
     document.querySelectorAll(".nav-item[data-view], .mobile-nav button[data-view]").forEach(b =>
       b.addEventListener("click", () => A.go(b.dataset.view)));
