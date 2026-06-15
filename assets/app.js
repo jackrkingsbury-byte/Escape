@@ -534,6 +534,20 @@ GF.app = (() => {
     A.gainXP(5, "🧠", "Coach prompt engineered.");
   };
 
+  A.coachOpen = (provider) => {
+    if (!GF.coachOutput) A.coachGenerate();
+    const text = GF.coachOutput || "";
+    if (!text) return A.toast("⚠️", "Pick a mode and topic first.");
+    const urls = {
+      chatgpt: "https://chatgpt.com/?q=" + encodeURIComponent(text),
+      gemini: "https://gemini.google.com/app",
+    };
+    // Open synchronously (inside the tap) so the browser doesn't block the new tab.
+    window.open(urls[provider] || urls.chatgpt, "_blank", "noopener");
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text); } catch (e) {}
+    A.toast("📋", "Prompt copied — paste it in if it isn't already filled.");
+  };
+
   A.coachCopy = () => {
     if (!GF.coachOutput) return A.toast("⚠️", "Generate a prompt first.");
     const done = () => A.toast("📋", "Copied — paste it into your AI and learn.");

@@ -442,10 +442,12 @@ GF.views = (() => {
       <div class="card col-7">
         <div class="card-title"><span class="ico">🧠</span> Deployed Prompt <span class="ai-tag">READY TO PASTE</span></div>
         <div class="prompt-output" id="coach-output">${esc(GF.coachOutput || "Your engineered prompt will appear here.\n\nSelect a coaching mode, set the subject and topic, then hit Generate.\n\nEach prompt is built with proven learning-science structure:\nactive recall · spaced repetition · 80/20 prioritisation · exam alignment.")}</div>
-        <div class="flex mt-12" style="gap:8px">
+        <div class="flex mt-12" style="gap:8px;flex-wrap:wrap">
           <button class="btn btn-primary" onclick="GF.app.coachCopy()">📋 Copy Prompt</button>
-          <span class="small muted">Works with ChatGPT, Claude, Gemini, Copilot & DeepSeek</span>
+          <button class="btn" onclick="GF.app.coachOpen('chatgpt')">💬 Open in ChatGPT</button>
+          <button class="btn" onclick="GF.app.coachOpen('gemini')">✨ Open in Gemini</button>
         </div>
+        <div class="small muted mt-8">✅ 100% free — powered by the AI you already have. Tap a button: your prompt is copied and your AI opens. Paste if it isn't already filled in.</div>
       </div>
     </div>`;
   };
