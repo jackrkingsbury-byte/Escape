@@ -1207,7 +1207,7 @@ function renderPayButtons(){
 function pay(key){
   const link=CONFIG.payments[key],msg=document.getElementById("payMsg");
   const name=({payfast:"Payfast",yoco:"Yoco",paystack:"Paystack",paypal:"PayPal"})[key];
-  if(link&&link.trim()){window.open(link,"_blank")}
+  if(link&&link.trim()){window.location.href=link}
   else{msg.style.display="block";msg.innerHTML=`⚙️ <b>${name} not connected yet.</b><br>Create a payment link in your ${name} dashboard, then paste it into <code>CONFIG.payments.${key}</code> at the bottom of this file and re-upload. It goes live instantly.`}
 }
 
