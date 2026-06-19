@@ -1514,6 +1514,26 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
   updateNavLocks();
   startRotator();startTicker();startCountdown();startNumwall();
   verifyStoredKey(); /* async: clears an invalid stored access code */
+
+  // Auto-unlock from Yoco redirect URL (?unlock=CODE)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlCode = urlParams.get('unlock');
+  if(urlCode){
+    tryUnlock(urlCode).then(success => {
+      if(success){
+        // Clean the URL so code isn't visible
+        window.history.replaceState({}, '', window.location.pathname);
+        showView('dashboard');
+        setTimeout(()=>{
+          const el = document.createElement('div');
+          el.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#43e0a0;color:#000;padding:14px 28px;border-radius:12px;font-weight:700;font-size:15px;z-index:9999;box-shadow:0 8px 30px rgba(67,224,160,.4)';
+          el.textContent = '🎉 You\'re in — welcome to ESCAPE!';
+          document.body.appendChild(el);
+          setTimeout(()=>el.remove(), 4000);
+        }, 300);
+      }
+    });
+  }
 })();
 
 function nfPost(f){return fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(f)).toString()})}
