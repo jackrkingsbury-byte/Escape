@@ -1213,11 +1213,14 @@ function pay(key){
   const emailEl=document.getElementById("buyerEmail");
   const email=emailEl?emailEl.value.trim():"";
   if(!email){if(emailEl){emailEl.style.borderColor="var(--pop)";emailEl.focus();}return;}
-  if(CONFIG.emailWebhook&&email){
-    fetch(CONFIG.emailWebhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,product:"ESCAPE Full Access",time:new Date().toISOString()})}).catch(()=>{});
-  }
   save("escape_buyer_email",email);
-  window.location.href=link;
+  if(CONFIG.emailWebhook&&email){
+    fetch(CONFIG.emailWebhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,product:"ESCAPE Full Access",time:new Date().toISOString()})})
+      .catch(()=>{})
+      .finally(()=>{window.location.href=link;});
+  } else {
+    window.location.href=link;
+  }
 }
 
 /* ===== ACCESS-CODE LICENSE SYSTEM =====
