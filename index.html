@@ -1073,6 +1073,7 @@ body.modal-open #mobileCta{display:none!important}
       <h3>Start your escape</h3>
       <p style="color:var(--muted);font-size:.94rem">Full course, 365 daily dares, all bonuses + your dashboard. Yours for life.</p>
       <div class="order"><div class="lt"><b>ESCAPE — Full Access</b><span>One-time · founding price</span></div><div class="amt" id="modalAmount">R300</div></div>
+      <input class="area" id="buyerEmail" type="email" placeholder="Your email — we'll send your access link here" autocomplete="email" style="margin:0 0 10px;font-size:.95rem" required>
       <div class="pay-btns" id="payBtns"></div>
       <div class="pay-msg" id="payMsg"></div>
       <div class="demo-link">Already bought? <a onclick="showUnlockForm()">Enter your access code →</a></div>
@@ -1118,6 +1119,7 @@ const CONFIG = {
     paystack: "",   // Paystack payment page  (paystack.com)
     paypal:   ""    // PayPal.Me or button    (paypal.com)
   },
+  emailWebhook:     "",   // Make.com webhook URL for buyer email capture
   contactEmail:     "hello@escapecourse.com",
   priceZAR:         300,
   memberCount:      300
@@ -1207,8 +1209,15 @@ function renderPayButtons(){
 function pay(key){
   const link=CONFIG.payments[key],msg=document.getElementById("payMsg");
   const name=({payfast:"Payfast",yoco:"Yoco",paystack:"Paystack",paypal:"PayPal"})[key];
-  if(link&&link.trim()){window.location.href=link}
-  else{msg.style.display="block";msg.innerHTML=`⚙️ <b>${name} not connected yet.</b><br>Create a payment link in your ${name} dashboard, then paste it into <code>CONFIG.payments.${key}</code> at the bottom of this file and re-upload. It goes live instantly.`}
+  if(!link||!link.trim()){msg.style.display="block";msg.innerHTML=`⚙️ <b>${name} not connected yet.</b><br>Create a payment link in your ${name} dashboard, then paste it into <code>CONFIG.payments.${key}</code> at the bottom of this file and re-upload. It goes live instantly.`;return}
+  const emailEl=document.getElementById("buyerEmail");
+  const email=emailEl?emailEl.value.trim():"";
+  if(!email){if(emailEl){emailEl.style.borderColor="var(--pop)";emailEl.focus();}return;}
+  if(CONFIG.emailWebhook&&email){
+    fetch(CONFIG.emailWebhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,product:"ESCAPE Full Access",time:new Date().toISOString()})}).catch(()=>{});
+  }
+  save("escape_buyer_email",email);
+  window.location.href=link;
 }
 
 /* ===== ACCESS-CODE LICENSE SYSTEM =====
