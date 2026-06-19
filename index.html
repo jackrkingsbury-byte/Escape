@@ -565,7 +565,7 @@ body.modal-open #mobileCta{display:none!important}
     <div class="nav-tools">
       <button class="icon-btn" title="Your dashboard" onclick="showView('dashboard')" aria-label="Dashboard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></button>
       <button class="icon-btn" id="themeBtn" title="Theme" onclick="toggleTheme()" aria-label="Theme"><svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
-      <button class="btn btn-primary btn-sm nav-desktop-cta" onclick="openCheckout()">Enter ESCAPE</button>
+      <button class="btn btn-primary btn-sm nav-desktop-cta" id="navCtaBtn" onclick="openCheckout()">Enter ESCAPE</button>
       <button class="icon-btn hamburger" onclick="toggleMenu()" aria-label="Menu"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
     </div>
   </div>
@@ -575,7 +575,7 @@ body.modal-open #mobileCta{display:none!important}
     <a href="#deal" onclick="goSite('deal');toggleMenu();return false;">Join</a>
     <a href="#faq" onclick="goSite('faq');toggleMenu();return false;">FAQ</a>
     <a href="#" onclick="showView('dashboard');toggleMenu();return false;">Member space</a>
-    <button class="btn btn-primary btn-block" onclick="openCheckout();toggleMenu();">Enter ESCAPE</button>
+    <button class="btn btn-primary btn-block" id="mobileMenuCtaBtn" onclick="openCheckout();toggleMenu();">Enter ESCAPE</button>
   </div>
 </header>
 
@@ -1321,6 +1321,13 @@ function updateNavLocks(){
     const lk=b.querySelector(".ds-nav-lock");if(!lk)return;
     lk.style.display=(!prem&&PREMIUM_SCREENS.includes(b.dataset.screen))?"inline":"none";
   });
+  const desktopBtn=document.getElementById("navCtaBtn");
+  const mobileBtn=document.getElementById("mobileMenuCtaBtn");
+  if(prem){
+    [desktopBtn,mobileBtn].forEach(b=>{if(!b)return;b.textContent="✓ Member";b.style.background="#43e0a0";b.style.color="#000";b.onclick=()=>{showView('dashboard');closeMenu()};});
+  }else{
+    [desktopBtn,mobileBtn].forEach(b=>{if(!b)return;b.textContent="Enter ESCAPE";b.style.background="";b.style.color="";b.onclick=openCheckout;});
+  }
 }
 /* tease helpers — fake gibberish only, never real lesson content */
 function gib(){const syl=["vor","ten","mal","ski","pra","lon","dre","cas","mun","tel","ova","rin","seq","bal","tho","wex"];let s="";const w=3+Math.floor(Math.random()*4);for(let i=0;i<w;i++){let word="";const c=2+Math.floor(Math.random()*2);for(let j=0;j<c;j++)word+=syl[Math.floor(Math.random()*syl.length)];s+=word+" "}return s.trim()}
