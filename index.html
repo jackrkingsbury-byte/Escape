@@ -713,7 +713,7 @@ body.modal-open #mobileCta{display:none!important}
         <div class="stack-row"><span>The 6 Systems — the full vault</span><s>R900</s></div>
         <div class="stack-row"><span>365 Daily Dares — one a day, forever</span><s>R450</s></div>
         <div class="stack-row"><span>Member Dashboard — streaks, XP, tracking</span><s>R350</s></div>
-        <div class="stack-row"><span>5 Bonus Kits</span><s>R600</s></div>
+        <div class="stack-row"><span>5 Bonus Kits — Morning Reset · No-Phone Hour · Social Starter · Focus Sprint · Sleep Fix</span><s>R600</s></div>
         <div class="stack-total"><span>Total value</span><s>R2,300</s></div>
         <div class="stack-today"><span>Today</span><b id="stackPrice">R300</b></div>
         <button class="btn btn-pop btn-lg btn-block" onclick="openCheckout()">Claim the founding price</button>
@@ -1071,8 +1071,15 @@ body.modal-open #mobileCta{display:none!important}
     <button class="close" onclick="closeCheckout()" aria-label="Close">✕</button>
     <div id="coBuy">
       <h3>Start your escape</h3>
-      <p style="color:var(--muted);font-size:.94rem">Full course, 365 daily dares, all bonuses + your dashboard. Yours for life.</p>
       <div class="order"><div class="lt"><b>ESCAPE — Full Access</b><span>One-time · founding price</span></div><div class="amt" id="modalAmount">R300</div></div>
+      <div style="background:var(--surface-2);border-radius:13px;padding:14px 16px;margin:0 0 14px;display:grid;gap:7px">
+        <div style="display:flex;gap:9px;align-items:center;font-size:.88rem;font-weight:600"><span style="color:#43e0a0;font-size:1rem">✓</span> 6 full course modules — Mind, Days, Habits, Social, Health, Future</div>
+        <div style="display:flex;gap:9px;align-items:center;font-size:.88rem;font-weight:600"><span style="color:#43e0a0;font-size:1rem">✓</span> 365 daily dares — one bold move every day for a year</div>
+        <div style="display:flex;gap:9px;align-items:center;font-size:.88rem;font-weight:600"><span style="color:#43e0a0;font-size:1rem">✓</span> Member dashboard with streaks, XP &amp; progress tracking</div>
+        <div style="display:flex;gap:9px;align-items:center;font-size:.88rem;font-weight:600"><span style="color:#43e0a0;font-size:1rem">✓</span> 5 bonus kits — Morning Reset, No-Phone Hour, Social Starter, Focus Sprint, Sleep Fix</div>
+        <div style="display:flex;gap:9px;align-items:center;font-size:.88rem;font-weight:600"><span style="color:#43e0a0;font-size:1rem">✓</span> Lifetime access — no subscription, no expiry</div>
+        <div style="display:flex;gap:9px;align-items:center;font-size:.88rem;font-weight:600"><span style="color:#43e0a0;font-size:1rem">✓</span> Better-Days guarantee — 30 days, full refund if it's not working</div>
+      </div>
       <input class="area" id="buyerEmail" type="email" placeholder="Your email — we'll send your access link here" autocomplete="email" style="margin:0 0 10px;font-size:.95rem" required>
       <div class="pay-btns" id="payBtns"></div>
       <div class="pay-msg" id="payMsg"></div>
