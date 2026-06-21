@@ -1548,43 +1548,27 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
   startRotator();startTicker();startCountdown();startNumwall();
   verifyStoredKey(); /* async: clears an invalid stored access code */
 
-  // Post-payment landing (?paid=1) — Yoco redirects here after successful payment
+  // Auto-unlock from email link (?unlock=CODE) — this is the "after buying" moment
   const urlParams = new URLSearchParams(window.location.search);
-  if(urlParams.get('paid')==='1'){
-    window.history.replaceState({},document.title,window.location.pathname);
-    const buyerEmail=load('escape_buyer_email','');
-    const overlay=document.createElement('div');
-    overlay.id='paidOverlay';
-    overlay.style.cssText='position:fixed;inset:0;z-index:99999;background:#070a14;display:flex;align-items:center;justify-content:center;padding:24px';
-    overlay.innerHTML=`<div style="max-width:480px;width:100%;text-align:center">
-      <div style="width:72px;height:72px;border-radius:50%;background:rgba(67,224,160,.18);border:2px solid #43e0a0;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:2rem">✓</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#43e0a0;margin-bottom:10px">Payment confirmed</div>
-      <h1 style="font-family:'Fraunces',serif;font-size:clamp(1.9rem,5vw,2.8rem);color:#eef1fb;line-height:1.1;margin:0 0 16px">You're in.<br>Welcome to ESCAPE.</h1>
-      <p style="color:#9fb0e8;font-size:1rem;line-height:1.6;margin:0 0 10px">Your access link is on its way to${buyerEmail?` <strong style="color:#eef1fb">${buyerEmail}</strong>`:" your email"}.<br>Check your inbox — it usually arrives within a minute.</p>
-      <p style="color:#5a6480;font-size:.85rem;margin:0 0 28px">Don't see it? Check your spam folder.</p>
-      <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
-        <button onclick="document.getElementById('paidOverlay').remove();openCheckout(true)" style="background:linear-gradient(120deg,#2347ff,#785cff);color:#fff;border:none;border-radius:50px;padding:14px 36px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;width:100%;max-width:320px">Enter my access code →</button>
-        <button onclick="document.getElementById('paidOverlay').remove()" style="background:none;border:none;color:#5a6480;font-size:.88rem;font-family:inherit;cursor:pointer;padding:8px">I'll wait for my email</button>
-      </div>
-    </div>`;
-    document.body.appendChild(overlay);
-  }
-
-  // Auto-unlock from Yoco redirect URL (?unlock=CODE)
   const urlCode = urlParams.get('unlock');
   if(urlCode){
     tryUnlock(urlCode).then(success => {
+      window.history.replaceState({}, '', window.location.pathname);
       if(success){
-        // Clean the URL so code isn't visible
-        window.history.replaceState({}, '', window.location.pathname);
         showView('dashboard');
+        // Full welcome screen on first unlock
         setTimeout(()=>{
-          const el = document.createElement('div');
-          el.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#43e0a0;color:#000;padding:14px 28px;border-radius:12px;font-weight:700;font-size:15px;z-index:9999;box-shadow:0 8px 30px rgba(67,224,160,.4)';
-          el.textContent = '🎉 You\'re in — welcome to ESCAPE!';
-          document.body.appendChild(el);
-          setTimeout(()=>el.remove(), 4000);
-        }, 300);
+          const ov=document.createElement('div');
+          ov.style.cssText='position:fixed;inset:0;z-index:99999;background:#070a14;display:flex;align-items:center;justify-content:center;padding:24px';
+          ov.innerHTML=`<div style="max-width:460px;width:100%;text-align:center">
+            <div style="width:76px;height:76px;border-radius:50%;background:rgba(67,224,160,.18);border:2px solid #43e0a0;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:2.2rem">✓</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#43e0a0;margin-bottom:10px">Access unlocked</div>
+            <h1 style="font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,2.9rem);color:#eef1fb;line-height:1.1;margin:0 0 14px">You're in.<br>Welcome to ESCAPE.</h1>
+            <p style="color:#9fb0e8;font-size:.97rem;line-height:1.65;margin:0 0 28px">All 6 modules, 36 lessons, every daily dare and your full member dashboard are yours. Start anywhere.</p>
+            <button onclick="this.closest('div[style]').remove()" style="background:linear-gradient(120deg,#2347ff,#785cff);color:#fff;border:none;border-radius:50px;padding:15px 40px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;width:100%;max-width:320px;box-shadow:0 10px 30px rgba(35,71,255,.4)">Let's go →</button>
+          </div>`;
+          document.body.appendChild(ov);
+        }, 200);
       }
     });
   }
