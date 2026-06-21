@@ -1383,7 +1383,7 @@ const PX_ACHV=[
   {e:"🌙",t:"Reflector",d:"First check-in",test:function(s){return s.days>=1}},
   {e:"✦",t:"Dreamer",d:"10 things",test:function(s){return s.ten>=10}},
   {e:"⚡",t:"Halfway",d:"12 lessons",test:function(s){return s.lessons>=12}},
-  {e:"🏆",t:"Finisher",d:"All 24",test:function(s){return s.lessons>=TOTAL_LESSONS}}
+  {e:"🏆",t:"Finisher",d:"All 36",test:function(s){return s.lessons>=TOTAL_LESSONS}}
 ];
 function pxStats(){return {lessons:load("escape_completed",[]).length,streak:(load("escape_challenge",{streak:0}).streak)||0,days:load("escape_day_log",[]).length,ten:load("escape_ten",[]).length}}
 function renderAchievements(){var s=pxStats(),el=document.getElementById("pxAchv");if(!el)return;el.innerHTML=PX_ACHV.map(function(a){var e=a.test(s);return '<div class="px-badge '+(e?'earned':'')+'"><span class="be">'+(e?a.e:'🔒')+'</span><b>'+a.t+'</b><span>'+a.d+'</span></div>'}).join("")}
@@ -1559,11 +1559,14 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
         // Full welcome screen on first unlock
         setTimeout(()=>{
           const ov=document.createElement('div');
-          ov.style.cssText='position:fixed;inset:0;z-index:99999;background:#070a14;display:flex;align-items:center;justify-content:center;padding:24px';
+          ov.style.cssText='position:fixed;inset:0;z-index:99999;background:#070a14;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .35s';
           const btn=document.createElement('button');
           btn.style.cssText='background:linear-gradient(120deg,#2347ff,#785cff);color:#fff;border:none;border-radius:50px;padding:15px 40px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;width:100%;max-width:320px;box-shadow:0 10px 30px rgba(35,71,255,.4)';
-          btn.textContent='Let\'s go →';
-          btn.addEventListener('click',()=>ov.remove());
+          btn.textContent='Start today\'s dare →';
+          btn.addEventListener('click',()=>{
+            ov.style.opacity='0';
+            setTimeout(()=>{ov.remove();pxGo('dare');pxRenderDare();},350);
+          });
           const inner=document.createElement('div');
           inner.style.cssText='max-width:460px;width:100%;text-align:center';
           inner.innerHTML='<div style="width:76px;height:76px;border-radius:50%;background:rgba(67,224,160,.18);border:2px solid #43e0a0;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:2.2rem">✓</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#43e0a0;margin-bottom:10px">Access unlocked</div><h1 style="font-family:\'Fraunces\',serif;font-size:clamp(2rem,5vw,2.9rem);color:#eef1fb;line-height:1.1;margin:0 0 14px">You\'re in.<br>Welcome to ESCAPE.</h1><p style="color:#9fb0e8;font-size:.97rem;line-height:1.65;margin:0 0 28px">All 6 modules, 36 lessons, every daily dare and your full member dashboard are yours. Start anywhere.</p>';
