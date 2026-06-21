@@ -1548,8 +1548,29 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
   startRotator();startTicker();startCountdown();startNumwall();
   verifyStoredKey(); /* async: clears an invalid stored access code */
 
-  // Auto-unlock from Yoco redirect URL (?unlock=CODE)
+  // Post-payment landing (?paid=1) — Yoco redirects here after successful payment
   const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.get('paid')==='1'){
+    window.history.replaceState({},document.title,window.location.pathname);
+    const buyerEmail=load('escape_buyer_email','');
+    const overlay=document.createElement('div');
+    overlay.id='paidOverlay';
+    overlay.style.cssText='position:fixed;inset:0;z-index:99999;background:#070a14;display:flex;align-items:center;justify-content:center;padding:24px';
+    overlay.innerHTML=`<div style="max-width:480px;width:100%;text-align:center">
+      <div style="width:72px;height:72px;border-radius:50%;background:rgba(67,224,160,.18);border:2px solid #43e0a0;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:2rem">✓</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#43e0a0;margin-bottom:10px">Payment confirmed</div>
+      <h1 style="font-family:'Fraunces',serif;font-size:clamp(1.9rem,5vw,2.8rem);color:#eef1fb;line-height:1.1;margin:0 0 16px">You're in.<br>Welcome to ESCAPE.</h1>
+      <p style="color:#9fb0e8;font-size:1rem;line-height:1.6;margin:0 0 10px">Your access link is on its way to${buyerEmail?` <strong style="color:#eef1fb">${buyerEmail}</strong>`:" your email"}.<br>Check your inbox — it usually arrives within a minute.</p>
+      <p style="color:#5a6480;font-size:.85rem;margin:0 0 28px">Don't see it? Check your spam folder.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+        <button onclick="document.getElementById('paidOverlay').remove();openCheckout(true)" style="background:linear-gradient(120deg,#2347ff,#785cff);color:#fff;border:none;border-radius:50px;padding:14px 36px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;width:100%;max-width:320px">Enter my access code →</button>
+        <button onclick="document.getElementById('paidOverlay').remove()" style="background:none;border:none;color:#5a6480;font-size:.88rem;font-family:inherit;cursor:pointer;padding:8px">I'll wait for my email</button>
+      </div>
+    </div>`;
+    document.body.appendChild(overlay);
+  }
+
+  // Auto-unlock from Yoco redirect URL (?unlock=CODE)
   const urlCode = urlParams.get('unlock');
   if(urlCode){
     tryUnlock(urlCode).then(success => {
