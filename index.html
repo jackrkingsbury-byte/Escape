@@ -1276,6 +1276,7 @@ const CONFIG = {
   payments: {
     payfast:  "",   // Payfast payment link   (payfast.io)
     yoco:     "https://pay.yoco.com/r/2Qw3jD",   // Yoco Link              (yoco.com)
+    yoco_test:"",   // R10 test link — paste your Yoco R10 link here to test the full flow
     paystack: "",   // Paystack payment page  (paystack.com)
     paypal:   ""    // PayPal.Me or button    (paypal.com)
   },
@@ -1362,13 +1363,17 @@ const PROVIDERS=[
 function renderPayButtons(){
   const box=document.getElementById("payBtns");
   const live=PROVIDERS.filter(p=>{const l=CONFIG.payments[p.key];return l&&l.trim()});
-  const list=live.length?live:PROVIDERS;            /* show only configured ones; if none set yet, show all in setup mode */
+  const list=live.length?live:PROVIDERS;
   const setup=live.length===0;
-  box.innerHTML=list.map(p=>`<button class="btn ${setup?'pay-setup':p.cls} btn-block" onclick="pay('${p.key}')">${setup?'⚙️ Set up '+p.name+' →':'Pay with '+p.name}</button>`).join("");
+  let html=list.map(p=>`<button class="btn ${setup?'pay-setup':p.cls} btn-block" onclick="pay('${p.key}')">${setup?'⚙️ Set up '+p.name+' →':'Pay with '+p.name}</button>`).join("");
+  if(CONFIG.payments.yoco_test&&CONFIG.payments.yoco_test.trim()){
+    html+=`<button class="btn btn-ghost btn-block" style="border-style:dashed;opacity:.7;font-size:.82rem;margin-top:4px" onclick="pay('yoco_test')">&#x1F9EA; Test purchase — R10</button>`;
+  }
+  box.innerHTML=html;
 }
 function pay(key){
   const link=CONFIG.payments[key],msg=document.getElementById("payMsg");
-  const name=({payfast:"Payfast",yoco:"Yoco",paystack:"Paystack",paypal:"PayPal"})[key];
+  const name=({payfast:"Payfast",yoco:"Yoco",yoco_test:"Yoco (R10 test)",paystack:"Paystack",paypal:"PayPal"})[key]||key;
   if(!link||!link.trim()){msg.style.display="block";msg.innerHTML=`⚙️ <b>${name} not connected yet.</b><br>Create a payment link in your ${name} dashboard, then paste it into <code>CONFIG.payments.${key}</code> at the bottom of this file and re-upload. It goes live instantly.`;return}
   const emailEl=document.getElementById("buyerEmail");
   const email=emailEl?emailEl.value.trim():"";
