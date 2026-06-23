@@ -534,6 +534,58 @@ body.modal-open #mobileCta{display:none!important}
 .ds-nav-lock{font-size:.66rem;opacity:.75;display:none}
 .px-back{background:none;border:none;color:#9fb0e8;cursor:pointer;font-family:inherit;font-weight:600;font-size:.86rem;padding:6px 0;text-align:left}
 .px-back:hover{color:#fff}
+/* HABIT TRACKER */
+.habit-item{display:flex;align-items:center;gap:11px;padding:13px 14px;border-radius:12px;background:rgba(255,255,255,.04);margin-bottom:7px}
+.habit-check{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.22);background:transparent;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:.2s;color:transparent;font-weight:700}
+.habit-check.done{background:#5b5ef4;border-color:#5b5ef4;color:#fff}
+.habit-name{flex:1;color:#cdd6f5;font-size:.93rem;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.habit-streak{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:#9fb0e8;white-space:nowrap;margin-right:2px}
+.habit-dots{display:flex;gap:3px;flex:none}
+.habit-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.1)}
+.habit-dot.on{background:#5b5ef4}
+.habit-del{background:none;border:none;color:#9fb0e8;cursor:pointer;font-size:.82rem;padding:4px 6px;opacity:.4;line-height:1;flex:none}
+.habit-del:hover{opacity:1;color:#f55}
+/* BONUS KITS */
+.kit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+@media(max-width:520px){.kit-grid{grid-template-columns:1fr}}
+.kit-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px 18px;cursor:pointer;transition:.2s;position:relative;text-align:left}
+.kit-card:hover{background:rgba(255,255,255,.08);border-color:rgba(91,94,244,.55);transform:translateY(-2px)}
+.kit-card.done-today{border-color:rgba(67,224,160,.45);background:rgba(67,224,160,.07)}
+.kit-icon{font-size:2rem;margin-bottom:10px;display:block;line-height:1}
+.kit-title{color:#fff;font-weight:700;font-size:.97rem;margin-bottom:5px;display:block}
+.kit-desc{color:#9fb0e8;font-size:.81rem;line-height:1.5;display:block}
+.kit-done-badge{position:absolute;top:12px;right:12px;background:#43e0a0;color:#061a0e;font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:99px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+.kit-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:15px 16px;margin-bottom:10px;cursor:pointer;transition:.2s;display:flex;gap:13px;align-items:flex-start}
+.kit-step:hover{background:rgba(255,255,255,.07)}
+.kit-step.done{border-color:rgba(67,224,160,.4);background:rgba(67,224,160,.06)}
+.kit-step-n{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.2);flex:none;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:#9fb0e8;transition:.2s;margin-top:1px}
+.kit-step.done .kit-step-n{background:#43e0a0;border-color:#43e0a0;color:#061a0e;font-weight:800}
+.kit-step-body{flex:1}
+.kit-step-label{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:#9fb0e8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.kit-step-text{color:#cdd6f5;font-size:.92rem;line-height:1.55}
+.kit-kprog{height:4px;background:rgba(255,255,255,.1);border-radius:99px;margin:4px 0 18px;overflow:hidden}
+.kit-kprog i{display:block;height:100%;background:#43e0a0;border-radius:99px;transition:.5s}
+/* STREAK CALENDAR */
+.sgrid-outer{overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.sgrid{display:flex;gap:3px}
+.sgrid-col{display:flex;flex-direction:column;gap:3px}
+.sgrid-cell{width:12px;height:12px;border-radius:2px;background:rgba(255,255,255,.07);flex:none}
+.sgrid-cell.a1{background:rgba(91,94,244,.35)}
+.sgrid-cell.a2{background:rgba(91,94,244,.65)}
+.sgrid-cell.a3{background:#5b5ef4}
+/* WEEKLY REVIEW */
+.wr-q{background:rgba(255,255,255,.04);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.wr-q label{display:block;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:#9fb0e8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.wr-past{margin-top:24px;display:grid;gap:10px}
+.wr-item{background:rgba(255,255,255,.04);border-radius:12px;padding:14px 16px;border-left:3px solid rgba(91,94,244,.5)}
+.wr-item-date{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:#9fb0e8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+.wr-item-line{font-size:.86rem;color:#cdd6f5;margin-bottom:5px;line-height:1.45}
+.wr-item-line b{color:#9fb0e8;font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:2px}
+/* XP / LEVEL / STATS */
+.xp-bar-wrap{background:rgba(255,255,255,.08);border-radius:99px;height:8px;overflow:hidden;margin:6px 0 3px}
+.xp-bar-fill{height:100%;background:linear-gradient(90deg,#5b5ef4,#a78bfa);border-radius:99px;transition:.7s}
+.stat-bigrow{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+@media(min-width:560px){.stat-bigrow{grid-template-columns:repeat(4,1fr)}}
 /* unlock form */
 .unlock-err{background:var(--pop-soft);color:var(--pop);border-radius:11px;padding:12px 14px;font-size:.88rem;margin-top:12px;font-weight:600;display:none}
 .unlock-ok{background:rgba(67,224,160,.15);color:#0e9a64;border-radius:11px;padding:14px;font-size:.95rem;margin-top:12px;font-weight:700;display:none;text-align:center}
@@ -810,6 +862,10 @@ body.modal-open #mobileCta{display:none!important}
         <button class="ds-nav-item" data-screen="goals" onclick="pxGo('goals');pxRenderGoals()"><span class="ds-nav-icon">&#x1F3AF;</span><span class="ds-nav-label">Goals</span><span class="ds-nav-lock">🔒</span></button>
         <button class="ds-nav-item" data-screen="notes" onclick="pxGo('notes');pxRenderNotes()"><span class="ds-nav-icon">&#x1F4DD;</span><span class="ds-nav-label">Notes</span><span class="ds-nav-lock">🔒</span></button>
         <button class="ds-nav-item" data-screen="cert" onclick="pxGo('cert');pxRenderCert()"><span class="ds-nav-icon">&#x1F3C6;</span><span class="ds-nav-label">Certificate</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="habits" onclick="pxGo('habits');pxRenderHabits()"><span class="ds-nav-icon">&#x2714;</span><span class="ds-nav-label">Habit Tracker</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="kits" onclick="pxGo('kits');pxRenderKits()"><span class="ds-nav-icon">&#x1F381;</span><span class="ds-nav-label">Bonus Kits</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="weekly" onclick="pxGo('weekly');pxRenderWeekly()"><span class="ds-nav-icon">&#x1F4C6;</span><span class="ds-nav-label">Weekly Review</span><span class="ds-nav-lock">🔒</span></button>
+        <button class="ds-nav-item" data-screen="stats" onclick="pxGo('stats');pxRenderStats()"><span class="ds-nav-icon">&#x1F4C8;</span><span class="ds-nav-label">My Stats</span></button>
         <div class="ds-nav-divider"></div>
         <div class="ds-nav-section">Integrations</div>
         <button class="ds-nav-item" onclick="dsToast('Connect Notion in your integrations settings →')"><span class="ds-nav-icon">&#x1F517;</span><span class="ds-nav-label">Sync to Notion</span></button>
@@ -1024,6 +1080,99 @@ body.modal-open #mobileCta{display:none!important}
           </div>
         </div>
 
+        <!-- HABIT TRACKER -->
+        <div class="px-screen" id="px-habits">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x2714; Daily habits &middot; member</div><h2>Habit Tracker</h2></div>
+              <div class="px-panel">
+                <p style="color:#9fb0e8;font-size:.88rem;margin-bottom:14px">Check off each habit daily to build your streak. Add up to 10 habits.</p>
+                <div style="display:flex;gap:9px;margin-bottom:18px">
+                  <input class="px-in" id="pxHabitInput" placeholder="e.g. Read 10 pages" onkeydown="if(event.key==='Enter')pxHabitAdd()">
+                  <button class="btn btn-primary" onclick="pxHabitAdd()">Add</button>
+                </div>
+                <div id="pxHabitList"></div>
+                <div id="pxHabitEmpty" style="text-align:center;color:#9fb0e8;font-size:.9rem;padding:24px 0;display:none">Add your first habit above &mdash; something small and daily works best.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BONUS KITS -->
+        <div class="px-screen" id="px-kits">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F381; Bonus kits &middot; member</div><h2>Your 5 kits</h2></div>
+              <p style="color:#9fb0e8;font-size:.88rem;margin-bottom:16px">Each kit is a focused, step-by-step experience. Tap any card to start.</p>
+              <div class="kit-grid" id="kitGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KIT DETAIL -->
+        <div class="px-screen" id="px-kit">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl" id="pxKitTag">Kit</div><h2 id="pxKitTitle">&mdash;</h2></div>
+              <div class="px-panel">
+                <div class="kit-kprog"><i id="pxKitProg" style="width:0%"></i></div>
+                <div id="pxKitSteps"></div>
+                <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                  <button class="btn btn-pop" id="pxKitDoneBtn" onclick="pxKitMarkDone()">Mark kit complete &#x2713;</button>
+                  <button class="btn btn-ghost" onclick="pxGo('kits');pxRenderKits()">&larr; All kits</button>
+                </div>
+                <div class="px-saved" id="pxKitSaved" style="display:none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WEEKLY REVIEW -->
+        <div class="px-screen" id="px-weekly">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F4C6; Weekly review &middot; member</div><h2>End-of-week check</h2></div>
+              <div class="px-panel">
+                <p style="color:#9fb0e8;font-size:.88rem;margin-bottom:16px">Takes 3 minutes. Keeps you honest and moving forward.</p>
+                <div class="wr-q">
+                  <label>What went well this week?</label>
+                  <textarea class="px-in" id="wrWin" placeholder="One thing that worked&hellip;" style="min-height:72px"></textarea>
+                </div>
+                <div class="wr-q">
+                  <label>What got in the way?</label>
+                  <textarea class="px-in" id="wrBlock" placeholder="What slowed me down&hellip;" style="min-height:72px"></textarea>
+                </div>
+                <div class="wr-q">
+                  <label>My one focus for next week</label>
+                  <input class="px-in" id="wrFocus" placeholder="Next week I will&hellip;">
+                </div>
+                <button class="btn btn-pop" onclick="pxWeeklySave()">Save review &#x2713;</button>
+                <div class="px-saved" id="pxWeeklySaved" style="display:none"></div>
+              </div>
+              <div id="pxWeeklyPast" class="wr-past"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY STATS -->
+        <div class="px-screen" id="px-stats">
+          <div class="px-screen-inner">
+            <div class="px-exp">
+              <div class="ph"><div class="pl">&#x1F4C8; Your journey</div><h2>My Stats</h2></div>
+              <div class="px-panel">
+                <div class="stat-bigrow" id="statBigRow"></div>
+                <div class="ds-panel-sub" style="margin-bottom:6px">&#x26A1; XP &amp; Level</div>
+                <div id="statXpBar"></div>
+                <div class="ds-panel-sub" style="margin:20px 0 8px">&#x1F4C5; Activity — last 91 days</div>
+                <div class="sgrid-outer"><div id="statGrid"></div></div>
+                <div style="margin-top:6px;font-size:.68rem;color:#9fb0e8;font-family:'JetBrains Mono',monospace">Each cell = 1 day. Darker = dare + check-in both done.</div>
+                <div class="ds-panel-sub" style="margin:22px 0 10px">&#x1F4DA; Module progress</div>
+                <div id="statMods"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
@@ -1036,6 +1185,8 @@ body.modal-open #mobileCta{display:none!important}
       <button class="ds-tab" data-screen="day" onclick="pxGo('day');pxDayReset();pxRenderDayLog()"><span class="ds-tab-icon">&#x1F319;</span>Check-in</button>
       <button class="ds-tab" data-screen="lessons" onclick="pxGo('lessons');pxRenderMods()"><span class="ds-tab-icon">&#x1F4DA;</span>Lessons</button>
       <button class="ds-tab" data-screen="goals" onclick="pxGo('goals');pxRenderGoals()"><span class="ds-tab-icon">&#x1F3AF;</span>Goals</button>
+      <button class="ds-tab" data-screen="habits" onclick="pxGo('habits');pxRenderHabits()"><span class="ds-tab-icon">&#x2714;</span>Habits</button>
+      <button class="ds-tab" data-screen="kits" onclick="pxGo('kits');pxRenderKits()"><span class="ds-tab-icon">&#x1F381;</span>Kits</button>
     </div>
   </div>
 </div>
@@ -1335,7 +1486,7 @@ async function submitLead(){
   if(bar) bar.innerHTML=`<div style="text-align:center;width:100%;color:#43e0a0;font-weight:600;padding:4px 0">✓ Got it — we'll be in touch soon. Watch your inbox.</div>`;
   setTimeout(()=>{const b=document.getElementById("leadCaptureBar");if(b)b.remove();},3000);
 }
-const PREMIUM_SCREENS=["lessons","ten","letter","goals","notes","cert"];
+const PREMIUM_SCREENS=["lessons","ten","letter","goals","notes","cert","habits","kits","kit","weekly"];
 function updateNavLocks(){
   const prem=isPremium();
   document.querySelectorAll("[data-screen]").forEach(b=>{
@@ -1409,6 +1560,10 @@ function pxOpen(id,locked){
   if(id==="goals")pxRenderGoals();
   if(id==="notes")pxRenderNotes();
   if(id==="cert")pxRenderCert();
+  if(id==="habits")pxRenderHabits();
+  if(id==="kits")pxRenderKits();
+  if(id==="weekly")pxRenderWeekly();
+  if(id==="stats")pxRenderStats();
 }
 function pxGo(screen){
   document.querySelectorAll("#view-dashboard .px-screen").forEach(s=>s.classList.remove("active"));
@@ -1526,6 +1681,221 @@ function pxNoteDel(i){const n=load("escape_notes",[]);n.splice(i,1);save("escape
 /* Name + Certificate */
 function pxSaveName(v){save("escape_name",v);const _pn=document.getElementById("pxName");if(_pn)_pn.textContent=v?(", "+v.split(" ")[0]):"";const _un=document.getElementById("dsUserName");if(_un)_un.textContent=v||"Member";const _uav=document.getElementById("dsUserAv");if(_uav)_uav.textContent=(v&&v[0].toUpperCase())||"?";pxRenderCert()}
 function pxRenderCert(){if(pxTease("cert","Proof you became the person who finishes — printable, with your name on it.",'<p style="color:#cdd6f5;margin-bottom:10px">Finish all 24 lessons and your name goes here.</p>','<div class="px-cert"><div class="sl">🏆</div><h2>Certificate of Completion</h2><p style="color:#9fb0e8">This certifies that</p><div class="who">'+gib()+'</div><p style="color:#9fb0e8">completed every '+gib()+'</p></div>'))return;const done=load("escape_completed",[]),name=load("escape_name","")||"Your Name",complete=done.length>=TOTAL_LESSONS,box=document.getElementById("pxCertBox");if(complete){box.innerHTML=`<div class="px-cert"><div class="sl">🏆</div><h2>Certificate of Completion</h2><p style="color:#9fb0e8">This certifies that</p><div class="who">${esc(name)}</div><p style="color:#9fb0e8">completed <b style="color:#fff">ESCAPE</b> — all six modules.</p><p style="color:#9fb0e8;font-size:.85rem;margin-top:10px">${new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})}</p><button class="btn btn-primary" style="margin-top:18px" onclick="window.print()">Print / Save PDF</button></div>`}else{const left=TOTAL_LESSONS-done.length;box.innerHTML=`<div class="px-cert lk"><div class="sl">🔒</div><h2>Locked</h2><p style="color:#9fb0e8;margin-top:8px">Finish <b style="color:#fff">${left}</b> more lesson${left===1?'':'s'} to unlock your certificate.</p></div>`}}
+/* ===== HABIT TRACKER ===== */
+function isoToday(){return new Date().toISOString().slice(0,10)}
+function pxRenderHabits(){
+  const habits=load('escape_habits',[]);
+  const done=load('escape_habit_done',{});
+  const today=isoToday();
+  const el=document.getElementById('pxHabitList');
+  const emp=document.getElementById('pxHabitEmpty');
+  if(!el)return;
+  if(!habits.length){el.innerHTML='';if(emp)emp.style.display='block';return}
+  if(emp)emp.style.display='none';
+  el.innerHTML=habits.map((h,i)=>{
+    const td=(done[today]||[]).includes(h.id);
+    const dots=Array.from({length:7},(_,d)=>{
+      const dt=new Date();dt.setDate(dt.getDate()-6+d);
+      const ds=dt.toISOString().slice(0,10);
+      return '<span class="habit-dot'+((done[ds]||[]).includes(h.id)?' on':'')+'"></span>';
+    }).join('');
+    let streak=0,sd=new Date();
+    if(!td)sd.setDate(sd.getDate()-1);
+    for(let k=0;k<90;k++){const ds=sd.toISOString().slice(0,10);if(!(done[ds]||[]).includes(h.id))break;streak++;sd.setDate(sd.getDate()-1);}
+    if(td&&streak<1)streak=1;
+    return '<div class="habit-item"><button class="habit-check'+(td?' done':'')+'" onclick="pxHabitToggle(\''+h.id+'\')">'+(td?'✓':'')+'</button><span class="habit-name">'+esc(h.name)+'</span><span class="habit-dots">'+dots+'</span><span class="habit-streak">'+(streak>1?streak+'&#x1F525;':'')+'</span><button class="habit-del" onclick="pxHabitDel('+i+')">&#x2715;</button></div>';
+  }).join('');
+}
+function pxHabitAdd(){
+  const inp=document.getElementById('pxHabitInput'),v=(inp.value||'').trim();
+  if(!v)return;
+  const habits=load('escape_habits',[]);
+  if(habits.length>=10){dsToast('10 habits max — finish some first!');return}
+  habits.push({id:'h'+Date.now(),name:v});
+  save('escape_habits',habits);inp.value='';pxRenderHabits();
+}
+function pxHabitToggle(id){
+  const done=load('escape_habit_done',{});
+  const today=isoToday();
+  if(!done[today])done[today]=[];
+  const idx=done[today].indexOf(id);
+  if(idx>-1)done[today].splice(idx,1);else done[today].push(id);
+  save('escape_habit_done',done);pxRenderHabits();
+}
+function pxHabitDel(i){const habits=load('escape_habits',[]);habits.splice(i,1);save('escape_habits',habits);pxRenderHabits();}
+
+/* ===== BONUS KITS ===== */
+const KITS=[
+  {id:'morning',icon:'&#x1F305;',title:'Morning Reset',desc:'5 moves to own your morning before it owns you.',
+   steps:[
+    {label:'First 10 minutes',text:'Don\'t touch your phone. Keep it face-down or in another room for the first 10 minutes after waking.'},
+    {label:'Hydrate first',text:'Drink a full glass of water before coffee, before your phone, before anything else.'},
+    {label:'30-second gratitude',text:'Write or say 3 things you\'re grateful for. Tiny ones count — sunshine, coffee, silence.'},
+    {label:'Set your intention',text:'What is the ONE thing that would make today a win? Write it down right now.'},
+    {label:'Three breaths',text:'Take 3 slow, deep breaths. Exhale fully each time. Now you\'re ready to begin.'}
+  ]},
+  {id:'nophone',icon:'&#x1F4F5;',title:'No-Phone Hour',desc:'One hour. No screen. More clarity than you expect.',
+   steps:[
+    {label:'Put it away',text:'Place your phone face-down in another room — not just flipped over next to you.'},
+    {label:'Decide what you\'ll do',text:'Write down exactly what you\'re going to do with this hour before it starts.'},
+    {label:'Set a physical timer',text:'Use a watch, microwave, or any non-phone timer. Set it for 60 minutes.'},
+    {label:'Do the thing',text:'Work, read, think, create, walk — whatever you chose. No checking. No "just quickly."'},
+    {label:'Reflect after',text:'When the hour ends: how did that actually feel? Write one sentence about it.'}
+  ]},
+  {id:'social',icon:'&#x1F91D;',title:'Social Starter',desc:'5 small challenges to sharpen your social edge.',
+   steps:[
+    {label:'Challenge 1',text:'Give someone a genuine, specific compliment today. Not "nice shirt" — something you actually mean.'},
+    {label:'Challenge 2',text:'Ask someone what they\'re most excited about this week. Then listen — don\'t plan your reply.'},
+    {label:'Challenge 3',text:'Start a conversation with someone you don\'t know well. One sentence is enough to begin.'},
+    {label:'Challenge 4',text:'Follow up on something someone mentioned before. "How did that thing go?" is a superpower.'},
+    {label:'Challenge 5',text:'Be the first to speak in the next group situation you\'re in — before the awkward silence starts.'}
+  ]},
+  {id:'focus',icon:'&#x1F3AF;',title:'Focus Sprint',desc:'25 minutes of real, undistracted work. One task only.',
+   steps:[
+    {label:'Pick the task',text:'Choose ONE thing to work on. Write it down. Not a category — a specific task with a clear end state.'},
+    {label:'Remove distractions',text:'Phone on silent and away. Notifications off. Close tabs you don\'t need. Full screen if possible.'},
+    {label:'Sprint for 25 minutes',text:'Work on only that task. If your mind wanders, write the thought down and return. Don\'t stop early.'},
+    {label:'5-minute break',text:'Stand up, stretch, breathe. No phone. Let your brain rest for exactly 5 minutes.'},
+    {label:'Continue or close',text:'Is the task done? If not, do another sprint. If yes — close it out, celebrate, and move on.'}
+  ]},
+  {id:'sleep',icon:'&#x1F319;',title:'Sleep Fix',desc:'A 5-step wind-down that actually works.',
+   steps:[
+    {label:'Screen cutoff',text:'Stop all screens 30 minutes before you want to be asleep. Set an alarm now as a reminder.'},
+    {label:'Brain dump',text:'Write tomorrow\'s top 3 tasks on paper. Gets them out of your head and stops the mental replay loop.'},
+    {label:'Cool the room',text:'Lower the temperature, open a window, or remove a layer. Cooler room = deeper sleep.'},
+    {label:'Slow breathing',text:'Lying down: inhale 4 counts, hold 4, exhale 6. Repeat 5 times. Your nervous system will respond.'},
+    {label:'Thought capture',text:'If your mind races, keep a notepad beside the bed. Write each thought down — once it\'s written, let it go.'}
+  ]}
+];
+let currentKit=null;
+function pxRenderKits(){
+  const done=load('escape_kit_done',{});
+  const today=isoToday();
+  const el=document.getElementById('kitGrid');if(!el)return;
+  el.innerHTML=KITS.map(k=>{
+    const dt=(done[today]||[]).includes(k.id);
+    return '<div class="kit-card'+(dt?' done-today':'')+'" onclick="pxKitOpen(\''+k.id+'\')">'+(dt?'<span class="kit-done-badge">Done &#x2713;</span>':'')+'<span class="kit-icon">'+k.icon+'</span><span class="kit-title">'+k.title+'</span><span class="kit-desc">'+k.desc+'</span></div>';
+  }).join('');
+}
+function pxKitOpen(id){
+  currentKit=KITS.find(k=>k.id===id);if(!currentKit)return;
+  const stepDone=load('escape_kit_steps',{});
+  const key=id+'_'+isoToday();
+  const ds=stepDone[key]||[];
+  const el=document.getElementById('pxKitTag');if(el)el.innerHTML=currentKit.icon+' Kit';
+  const tl=document.getElementById('pxKitTitle');if(tl)tl.textContent=currentKit.title;
+  const sv=document.getElementById('pxKitSaved');if(sv)sv.style.display='none';
+  const prog=Math.round(ds.length/currentKit.steps.length*100);
+  const pb=document.getElementById('pxKitProg');if(pb)pb.style.width=prog+'%';
+  const stEl=document.getElementById('pxKitSteps');
+  if(stEl)stEl.innerHTML=currentKit.steps.map((s,i)=>{
+    const d=ds.includes(i);
+    return '<div class="kit-step'+(d?' done':'')+'" onclick="pxKitStepToggle('+i+')"><div class="kit-step-n">'+(d?'&#x2713;':(i+1))+'</div><div class="kit-step-body"><div class="kit-step-label">'+esc(s.label)+'</div><div class="kit-step-text">'+esc(s.text)+'</div></div></div>';
+  }).join('');
+  pxGo('kit');
+}
+function pxKitStepToggle(i){
+  if(!currentKit)return;
+  const stepDone=load('escape_kit_steps',{});
+  const key=currentKit.id+'_'+isoToday();
+  if(!stepDone[key])stepDone[key]=[];
+  const idx=stepDone[key].indexOf(i);
+  if(idx>-1)stepDone[key].splice(idx,1);else stepDone[key].push(i);
+  save('escape_kit_steps',stepDone);
+  const prog=Math.round(stepDone[key].length/currentKit.steps.length*100);
+  const pb=document.getElementById('pxKitProg');if(pb)pb.style.width=prog+'%';
+  const steps=document.getElementById('pxKitSteps').querySelectorAll('.kit-step');
+  const d=stepDone[key].includes(i);
+  steps[i].classList.toggle('done',d);
+  steps[i].querySelector('.kit-step-n').innerHTML=d?'&#x2713;':(i+1);
+}
+function pxKitMarkDone(){
+  if(!currentKit)return;
+  const done=load('escape_kit_done',{});
+  const today=isoToday();
+  if(!done[today])done[today]=[];
+  if(!done[today].includes(currentKit.id))done[today].push(currentKit.id);
+  save('escape_kit_done',done);
+  const sv=document.getElementById('pxKitSaved');
+  if(sv){sv.textContent='Kit complete! Nice work.';sv.style.display='block';}
+  dsToast(currentKit.title+' kit done! &#x2713;');
+}
+
+/* ===== WEEKLY REVIEW ===== */
+function pxRenderWeekly(){
+  const reviews=load('escape_weekly',[]);
+  const el=document.getElementById('pxWeeklyPast');if(!el)return;
+  const sv=document.getElementById('pxWeeklySaved');if(sv)sv.style.display='none';
+  if(!reviews.length){el.innerHTML='';return}
+  el.innerHTML='<div class="ds-panel-sub" style="margin-bottom:12px">Past reviews</div>'+
+    reviews.slice(0,8).map(r=>'<div class="wr-item"><div class="wr-item-date">'+esc(r.date)+'</div>'+(r.win?'<div class="wr-item-line"><b>Win</b>'+esc(r.win)+'</div>':'')+(r.block?'<div class="wr-item-line"><b>Challenge</b>'+esc(r.block)+'</div>':'')+(r.focus?'<div class="wr-item-line"><b>Focus</b>'+esc(r.focus)+'</div>':'')+'</div>').join('');
+}
+function pxWeeklySave(){
+  const win=(document.getElementById('wrWin').value||'').trim();
+  const block=(document.getElementById('wrBlock').value||'').trim();
+  const focus=(document.getElementById('wrFocus').value||'').trim();
+  if(!win&&!block&&!focus)return;
+  const reviews=load('escape_weekly',[]);
+  const date=new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+  reviews.unshift({date,win,block,focus});
+  save('escape_weekly',reviews);
+  document.getElementById('wrWin').value='';
+  document.getElementById('wrBlock').value='';
+  document.getElementById('wrFocus').value='';
+  const sv=document.getElementById('pxWeeklySaved');if(sv){sv.textContent='Review saved. See you next week.';sv.style.display='block';}
+  pxRenderWeekly();dsToast('Weekly review saved! &#x2713;');
+}
+
+/* ===== MY STATS ===== */
+function pxRenderStats(){
+  const done=load('escape_completed',[]).length;
+  const streak=(load('escape_challenge',{streak:0}).streak)||0;
+  const xp=done*40+streak*15+load('escape_goals',[]).filter(g=>g.done).length*10+load('escape_day_log',[]).length*8+load('escape_ten',[]).length*4;
+  const level=Math.max(1,Math.floor(xp/120)+1);
+  const row=document.getElementById('statBigRow');
+  if(row)row.innerHTML=[{v:streak+'&#x1F525;',l:'Streak'},{v:xp,l:'Total XP'},{v:done,l:'Lessons'},{v:load('escape_day_log',[]).length,l:'Check-ins'}].map(x=>'<div class="ds-stat-card"><span class="ds-sv">'+x.v+'</span><span class="ds-sl">'+x.l+'</span></div>').join('');
+  const xpEl=document.getElementById('statXpBar');
+  if(xpEl){
+    const nextLvlXp=level*120;const pct=Math.min(100,Math.round((xp%(120))/120*100));
+    xpEl.innerHTML='<div style="display:flex;justify-content:space-between;font-size:.8rem;color:#9fb0e8;margin-bottom:4px"><span>Level '+level+'</span><span style="font-family:\'JetBrains Mono\',monospace">'+xp+' XP</span></div><div class="xp-bar-wrap"><div class="xp-bar-fill" style="width:'+pct+'%"></div></div><div style="font-size:.68rem;color:#9fb0e8;font-family:\'JetBrains Mono\',monospace;margin-top:3px">'+((120-(xp%120)))+' XP to Level '+(level+1)+'</div>';
+  }
+  const gridEl=document.getElementById('statGrid');
+  if(gridEl){
+    const challenge=load('escape_challenge',{date:'',streak:0});
+    const dayLog=load('escape_day_log',[]);
+    const dayDates=new Set(dayLog.map(d=>d.date||''));
+    const dareDateRaw=challenge.date;
+    const cols=13;
+    let colsHtml='';
+    for(let col=0;col<cols;col++){
+      let colHtml='';
+      for(let row=0;row<7;row++){
+        const daysAgo=(cols-1-col)*7+(6-row);
+        const dt=new Date();dt.setDate(dt.getDate()-daysAgo);
+        const ds=dt.toISOString().slice(0,10);
+        const dareDs=dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
+        let act=0;
+        if(dareDateRaw===dareDs)act++;
+        if(dayDates.has(ds))act++;
+        const cls=act>=2?' a3':act>=1?' a1':'';
+        colHtml+='<div class="sgrid-cell'+cls+'" title="'+ds+'"></div>';
+      }
+      colsHtml+='<div class="sgrid-col">'+colHtml+'</div>';
+    }
+    gridEl.innerHTML='<div class="sgrid">'+colsHtml+'</div>';
+  }
+  const modEl=document.getElementById('statMods');
+  if(modEl){
+    const comp=load('escape_completed',[]);
+    modEl.innerHTML=MODULES.map(m=>{
+      const total=m.topics.length;
+      const c=comp.filter(k=>k.startsWith('m'+m.n+'-')).length;
+      const pct=Math.round(c/total*100);
+      return '<div style="margin-bottom:13px"><div style="display:flex;justify-content:space-between;font-size:.83rem;margin-bottom:5px;color:#cdd6f5"><span>M'+m.n+' — '+esc(m.title)+'</span><span style="font-family:\'JetBrains Mono\',monospace;color:#9fb0e8">'+c+'/'+total+'</span></div><div class="xp-bar-wrap"><div class="xp-bar-fill" style="width:'+pct+'%"></div></div></div>';
+    }).join('');
+  }
+}
+
 function renderAdmin(){renderAdminLessons();renderAdminUsers()}
 function adminAddLesson(){const mod=document.getElementById("alModule").value,title=document.getElementById("alTitle").value.trim();if(!title){alert("Add a lesson title.");return}const l=load("escape_admin_lessons",[]);l.unshift({mod,title});save("escape_admin_lessons",l);document.getElementById("alTitle").value="";document.getElementById("alBody").value="";renderAdminLessons()}
 function renderAdminLessons(){const l=load("escape_admin_lessons",[]),el=document.getElementById("adminLessonList");if(!l.length){el.innerHTML='<div class="empty">No custom lessons yet.</div>';return}el.innerHTML=l.map((x,i)=>`<div class="admin-row"><div><b>${esc(x.title)}</b><br><small>${esc(x.mod)}</small></div><button onclick="adminDelLesson(${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.05rem">🗑</button></div>`).join("")}
