@@ -1557,8 +1557,21 @@ function animateCount(){const el=document.getElementById("proofCount"),target=CO
       window.history.replaceState({}, '', window.location.pathname);
       if(success){
         showView('dashboard');
-        pxGo('dare');
-        pxRenderDare();
+        const ov=document.createElement('div');
+        ov.id='escWelcomeOv';
+        ov.style.cssText='position:fixed;inset:0;background:#070a14;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:2rem;text-align:center;';
+        ov.innerHTML=`
+          <div style="max-width:360px;">
+            <div style="font-size:2.5rem;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:0.75rem;">You're in.</div>
+            <div style="color:#8b9cb8;font-size:1.05rem;line-height:1.6;margin-bottom:2.5rem;">Welcome to ESCAPE.<br>Your first dare is waiting.</div>
+            <button id="escWelcomeBtn" style="background:#5b5ef4;color:#fff;border:none;padding:1rem 2.8rem;border-radius:999px;font-size:1.05rem;font-weight:700;cursor:pointer;letter-spacing:0.3px;">Let's go</button>
+          </div>`;
+        document.body.appendChild(ov);
+        document.getElementById('escWelcomeBtn').addEventListener('click',()=>{
+          ov.remove();
+          pxGo('dare');
+          pxRenderDare();
+        });
       }
     });
   }
