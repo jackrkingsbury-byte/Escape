@@ -149,6 +149,8 @@ GF.app = (() => {
         const gap = (new Date(a.due) - new Date(a.doneAt)) / 86400000;
         return gap >= 0 && gap <= 1;
       }),
+      recall_1: (s.game.reviews || 0) >= 1,
+      recall_100: (s.game.reviews || 0) >= 100,
     };
     GF.ACHIEVEMENTS.forEach(a => {
       if (!got[a.id] && tests[a.id]) {
@@ -565,6 +567,87 @@ GF.app = (() => {
     ta.remove();
   };
 
+  /* ═══════ FLASHCARDS (MEMORY LAB) ═══════ */
+
+  A.openAddCard = (subjectId) => {
+    const opts = GF.state.subjects.map(s => `<option value="${s.id}" ${s.id === subjectId ? "selected" : ""}>${esc(s.name)}</option>`).join("");
+    if (!opts) return A.openAddSubject();
+    A.openModal(`
+      <h3>New Flashcard</h3>
+      <div class="modal-sub">Front = the question or cue. Back = the shortest complete answer.</div>
+      <div class="field"><label>Subject (deck)</label><select id="nc-subject">${opts}</select></div>
+      <div class="field"><label>Front — question</label><textarea id="nc-front" placeholder="e.g. What is the derivative of sin(x)?"></textarea></div>
+      <div class="field"><label>Back — answer</label><textarea id="nc-back" placeholder="e.g. cos(x)"></textarea></div>
+      <div class="modal-actions">
+        <button class="btn" onclick="GF.app.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="GF.app.saveCard()">Add Card</button>
+      </div>`);
+  };
+
+  A.saveCard = () => {
+    const subjectId = $("#nc-subject").value;
+    const front = $("#nc-front").value.trim();
+    const back = $("#nc-back").value.trim();
+    if (!front || !back) return A.toast("⚠️", "Fill in both the question and the answer.");
+    GF.state.flashcards.push({
+      id: GF.uid(), subjectId, front, back,
+      ease: 2.4, interval: 0, reps: 0, lapses: 0, due: GF.todayISO(), created: GF.todayISO(),
+    });
+    A.closeModal();
+    A.gainXP(5, "🃏", "Flashcard added to your deck.");
+    A.render();
+  };
+
+  A.openDeck = (subjectId) => {
+    const s = GF.state.subjects.find(x => x.id === subjectId);
+    if (!s) return;
+    const cards = GF.state.flashcards.filter(c => c.subjectId === subjectId);
+    A.openModal(`
+      <h3><span style="color:${s.color}">●</span> ${esc(s.name)} — ${cards.length} card${cards.length === 1 ? "" : "s"}</h3>
+      <div class="modal-sub">Spaced-repetition deck. Tap ✕ to remove a card.</div>
+      <div class="row-list" style="max-height:340px;overflow-y:auto">
+        ${cards.map(c => `<div class="row-item"><div class="ri-main"><div class="ri-title">${esc(c.front)}</div><div class="ri-sub">${esc(c.back)}</div></div>
+          <span class="pill ${(c.interval || 0) >= 21 ? "good" : (c.reps || 0) > 0 ? "warn" : "info"}">${(c.reps || 0) === 0 ? "new" : (c.interval || 0) >= 21 ? "mastered" : "learning"}</span>
+          <button class="btn btn-ghost btn-sm" onclick="GF.app.deleteCard('${c.id}','${subjectId}')">✕</button></div>`).join("") || `<div class="empty"><div class="e-ico">🃏</div><div class="e-title">No cards in this deck yet</div></div>`}
+      </div>
+      <div class="modal-actions"><button class="btn" onclick="GF.app.closeModal()">Close</button><button class="btn btn-primary" onclick="GF.app.openAddCard('${subjectId}')">+ Add Card</button></div>`, true);
+  };
+
+  A.deleteCard = (id, subjectId) => {
+    GF.state.flashcards = GF.state.flashcards.filter(c => c.id !== id);
+    GF.save();
+    A.render();
+    if (subjectId) A.openDeck(subjectId);
+  };
+
+  A.startReview = (subjectId) => {
+    const due = GF.engine.cardsDue(subjectId);
+    if (!due.length) return A.toast("✅", "No cards due — you're all caught up!");
+    GF.review = { queue: due.map(c => c.id), index: 0, showBack: false, reviewed: 0, subjectId: subjectId || null };
+    A.go("flashcards");
+  };
+
+  A.revealCard = () => { if (GF.review) { GF.review.showBack = true; A.render(); } };
+
+  A.gradeCard = (grade) => {
+    const r = GF.review;
+    if (!r) return;
+    const card = GF.state.flashcards.find(c => c.id === r.queue[r.index]);
+    if (card) GF.engine.srSchedule(card, grade);
+    GF.state.game.reviews = (GF.state.game.reviews || 0) + 1;
+    r.reviewed += 1;
+    r.index += 1;
+    r.showBack = false;
+    GF.save();
+    if (r.index >= r.queue.length) {
+      A.confetti(70);
+      A.gainXP(r.reviewed * 2, "🧠", `Memory Lab: ${r.reviewed} card${r.reviewed === 1 ? "" : "s"} reviewed.`);
+    }
+    A.render();
+  };
+
+  A.endReview = () => { GF.review = null; A.render(); };
+
   /* ═══════ FOCUS TIMER ═══════ */
 
   A.fmtTime = (sec) => {
@@ -703,6 +786,7 @@ GF.app = (() => {
     A.openModal(`
       <h3>More</h3>
       <div class="coach-actions" style="grid-template-columns:1fr 1fr">
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('flashcards')"><span class="cb-ico">🃏</span><span class="cb-name">Memory Lab</span><span class="cb-desc">Spaced-repetition flashcards</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('assignments')"><span class="cb-ico">📝</span><span class="cb-name">Assignments</span><span class="cb-desc">Mission queue</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('achievements')"><span class="cb-ico">🏆</span><span class="cb-name">Achievements</span><span class="cb-desc">XP, levels & badges</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('university')"><span class="cb-ico">🎓</span><span class="cb-name">University Hub</span><span class="cb-desc">APS · applications</span></button>

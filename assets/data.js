@@ -90,6 +90,8 @@ GF.ACHIEVEMENTS = [
   { id: "aps_36",       icon: "👑", name: "Top Tier APS",       desc: "Reach an APS score of 36+.", xp: 250 },
   { id: "level_5",      icon: "🚀", name: "Ascension",          desc: "Reach Level 5.", xp: 100 },
   { id: "night_owl",    icon: "🦉", name: "Clutch Player",      desc: "Complete an assignment due within 24h.", xp: 40 },
+  { id: "recall_1",     icon: "🃏", name: "Active Recaller",    desc: "Review your first flashcard.", xp: 25 },
+  { id: "recall_100",   icon: "🧠", name: "Memory Athlete",     desc: "Review 100 flashcards in total.", xp: 200 },
 ];
 
 GF.COACH_ACTIONS = [
@@ -248,9 +250,11 @@ GF.defaultState = () => ({
   subjects: [],
   assignments: [],
   exams: [],
+  flashcards: [],             // {id, subjectId, front, back, ease, interval, reps, lapses, due, created}
   focusSessions: [],           // {id, date, minutes, mode}
   game: {
     xp: 0,
+    reviews: 0,                // total flashcards reviewed
     streak: { count: 0, last: null, best: 0 },
     achievements: {},          // id -> dateISO
   },
@@ -353,6 +357,26 @@ GF.loadDemoData = (name) => {
     { id: GF.uid(), title: "Trial Exam", subjectId: sid("Accounting"), date: GF.todayISO(24), confidence: 55 },
   ];
 
+  const fc = (subjName, front, back, dueOffset, reps) => ({
+    id: GF.uid(), subjectId: sid(subjName), front, back,
+    ease: 2.4, interval: reps ? Math.max(1, dueOffset + 2) : 0, reps: reps || 0, lapses: 0,
+    due: GF.todayISO(dueOffset), created: GF.todayISO(-20),
+  });
+  s.flashcards = [
+    fc("Mathematics", "What is the derivative of sin(x)?", "cos(x)", 0, 2),
+    fc("Mathematics", "sin²θ + cos²θ = ?", "1", -1, 3),
+    fc("Mathematics", "Quadratic formula?", "x = (−b ± √(b² − 4ac)) / 2a", 0, 1),
+    fc("Mathematics", "Area of a circle?", "πr²", -2, 4),
+    fc("Physical", "Unit of electric current?", "Ampere (A)", 0, 1),
+    fc("Physical", "Newton's 2nd law of motion?", "F = ma  (force = mass × acceleration)", 2, 2),
+    fc("Physical", "Approx. speed of light?", "3 × 10⁸ m/s", -1, 4),
+    fc("Life", "What is the powerhouse of the cell?", "The mitochondria", 0, 5),
+    fc("Life", "Which base pairs with adenine in DNA?", "Thymine (T)", 1, 3),
+    fc("English", "Define 'juxtaposition'.", "Placing two things side by side for contrasting effect.", 0, 1),
+    fc("Accounting", "State the accounting equation.", "Assets = Liabilities + Owner's Equity", 0, 2),
+    fc("Geography", "What causes a sea breeze?", "By day, land heats faster than sea, so cool air moves from sea to land.", 3, 1),
+  ];
+
   // 8 weeks of focus history with an upward trend + 12-day streak
   for (let d = 56; d >= 0; d--) {
     const dow = new Date(GF.todayISO(-d) + "T00:00:00").getDay();
@@ -366,8 +390,9 @@ GF.loadDemoData = (name) => {
   }
 
   s.game.xp = 1685;
+  s.game.reviews = 34;
   s.game.streak = { count: 12, last: GF.todayISO(), best: 12 };
-  const unlock = ["first_mark", "ace", "streak_3", "streak_7", "assign_1", "focus_1h", "focus_10h", "full_house", "marks_25", "level_5", "aps_30"];
+  const unlock = ["first_mark", "ace", "streak_3", "streak_7", "assign_1", "focus_1h", "focus_10h", "full_house", "marks_25", "level_5", "aps_30", "recall_1"];
   unlock.forEach((id, i) => { s.game.achievements[id] = GF.todayISO(-(40 - i * 3)); });
 
   s.uni.applications = [

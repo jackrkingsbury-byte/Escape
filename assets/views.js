@@ -657,6 +657,105 @@ GF.views = (() => {
     </div>`;
   };
 
+  /* ═══════════════ MEMORY LAB (SPACED REPETITION) ═══════════════ */
+
+  const reviewSessionView = () => {
+    const r = GF.review;
+    if (r.index >= r.queue.length) {
+      return `
+      <div class="section-head"><div><div class="section-title"><span class="dot"></span> Review Complete</div></div></div>
+      <div class="grid grid-12"><div class="card col-12 hero-card" style="grid-template-columns:1fr;text-align:center">
+        <div class="hero-body" style="margin:0 auto">
+          <div style="font-size:48px">🎉</div>
+          <h2>Session complete!</h2>
+          <p style="margin:6px auto">You reviewed <b>${r.reviewed}</b> card${r.reviewed === 1 ? "" : "s"} and banked <b>${r.reviewed * 2} XP</b>. The AI has already scheduled each one for the perfect moment — come back tomorrow to lock it in.</p>
+          <div class="flex" style="justify-content:center;gap:10px;margin-top:10px">
+            <button class="btn btn-primary" onclick="GF.app.endReview()">Back to Memory Lab</button>
+          </div>
+        </div>
+      </div></div>`;
+    }
+    const card = GF.state.flashcards.find(c => c.id === r.queue[r.index]);
+    if (!card) return `<div class="card"><div class="empty"><div class="e-title">Card not found</div><button class="btn mt-12" onclick="GF.app.endReview()">Back</button></div></div>`;
+    const subj = subjById(card.subjectId);
+    const pct = Math.round((r.index / r.queue.length) * 100);
+    const hint = (g) => { const c = JSON.parse(JSON.stringify(card)); E().srSchedule(c, g); return c.interval === 0 ? "<10m" : c.interval === 1 ? "1d" : c.interval + "d"; };
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Reviewing${subj ? " · " + esc(subj.name) : ""}</div>
+      <div class="section-sub">Card ${r.index + 1} of ${r.queue.length} — recall the answer before you flip</div></div>
+      <button class="btn btn-ghost" onclick="GF.app.endReview()">✕ End</button>
+    </div>
+    <div class="progress-line" style="margin-bottom:16px"><div class="pl-fill" style="width:${pct}%"></div></div>
+    <div class="grid grid-12">
+      <div class="card col-12 flashcard ${r.showBack ? "flipped" : ""}" ${r.showBack ? "" : `onclick="GF.app.revealCard()" style="cursor:pointer"`}>
+        <div class="fc-label">${r.showBack ? "✅ ANSWER" : "❓ QUESTION — recall it"}</div>
+        <div class="fc-text">${esc(r.showBack ? card.back : card.front)}</div>
+        ${r.showBack ? "" : `<div class="small muted" style="margin-top:18px">Tap the card to reveal the answer</div>`}
+      </div>
+      ${r.showBack ? `
+      <div class="col-12 fc-grades">
+        <button class="btn fc-grade again" onclick="GF.app.gradeCard(0)">😬 Again<span>${hint(0)}</span></button>
+        <button class="btn fc-grade hard" onclick="GF.app.gradeCard(1)">😐 Hard<span>${hint(1)}</span></button>
+        <button class="btn fc-grade good" onclick="GF.app.gradeCard(2)">🙂 Good<span>${hint(2)}</span></button>
+        <button class="btn fc-grade easy" onclick="GF.app.gradeCard(3)">😎 Easy<span>${hint(3)}</span></button>
+      </div>` : `<div class="col-12 center"><button class="btn btn-primary" onclick="GF.app.revealCard()">Show Answer</button></div>`}
+    </div>`;
+  };
+
+  V.flashcards = () => {
+    const eng = E();
+    if (GF.review && GF.review.queue && GF.review.queue.length) return reviewSessionView();
+
+    const st = eng.srStats();
+    const decks = GF.state.subjects.map(s => ({
+      s, cards: GF.state.flashcards.filter(c => c.subjectId === s.id), due: eng.cardsDue(s.id).length,
+    })).filter(d => d.cards.length);
+
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Memory Lab</div>
+      <div class="section-sub">Spaced repetition + active recall — the two most proven ways to remember anything</div></div>
+      <button class="btn btn-primary" onclick="GF.app.openAddCard()">+ Add Card</button>
+    </div>
+
+    <div class="grid grid-12">
+      <div class="card col-3 hoverable center"><div class="card-title" style="justify-content:center"><span class="ico">⏰</span> Due Today</div><div class="big-num" style="color:${st.due ? "var(--cyan)" : "var(--good)"}">${st.due}</div></div>
+      <div class="card col-3 hoverable center"><div class="card-title" style="justify-content:center"><span class="ico">🃏</span> Total Cards</div><div class="big-num">${st.total}</div></div>
+      <div class="card col-3 hoverable center"><div class="card-title" style="justify-content:center"><span class="ico">🧠</span> Mastered</div><div class="big-num" style="color:var(--good)">${st.mature}</div></div>
+      <div class="card col-3 hoverable center"><div class="card-title" style="justify-content:center"><span class="ico">📈</span> Learning</div><div class="big-num" style="color:var(--warn)">${st.learning}</div></div>
+
+      ${st.due ? `
+      <div class="card col-12" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+        <div><div style="font-family:var(--font-display);font-weight:700;font-size:17px">${st.due} card${st.due === 1 ? "" : "s"} ready to review 🔥</div>
+        <div class="small muted">Reviewing right before you'd forget is what burns knowledge into long-term memory.</div></div>
+        <button class="btn btn-primary" onclick="GF.app.startReview()">⚡ Review All Due (${st.due})</button>
+      </div>` : (st.total ? `
+      <div class="card col-12"><div class="insight good"><div class="ins-icon">✅</div><div><div class="ins-title">All caught up!</div><div class="ins-text">Nothing due right now — the AI scheduled your next reviews for the optimal day. Add more cards or come back later.</div></div></div></div>` : "")}
+
+      <div class="card col-8">
+        <div class="card-title"><span class="ico">📚</span> Your Decks</div>
+        <div class="row-list">
+          ${decks.map(d => `<div class="row-item">
+            <span class="subj-dot" style="color:${d.s.color};background:${d.s.color}"></span>
+            <div class="ri-main"><div class="ri-title">${esc(d.s.name)}</div><div class="ri-sub">${d.cards.length} card${d.cards.length === 1 ? "" : "s"}${d.due ? ` · <span style="color:var(--cyan)">${d.due} due</span>` : ""}</div></div>
+            <button class="btn btn-sm ${d.due ? "btn-primary" : ""}" onclick="GF.app.startReview('${d.s.id}')" ${d.due ? "" : 'disabled style="opacity:.45"'}>Review</button>
+            <button class="btn btn-sm btn-ghost" onclick="GF.app.openDeck('${d.s.id}')">⋯</button>
+          </div>`).join("") || `<div class="empty"><div class="e-ico">🃏</div><div class="e-title">No flashcards yet</div><div class="e-sub">Create your first card — the app schedules every review with spaced repetition, so you study less and remember more.</div><button class="btn btn-primary" onclick="GF.app.openAddCard()">+ Add Your First Card</button></div>`}
+        </div>
+      </div>
+
+      <div class="card col-4">
+        <div class="card-title"><span class="ico">🔬</span> The Science <span class="ai-tag">PROVEN</span></div>
+        <div class="row-list">
+          <div class="insight"><div class="ins-icon">🔁</div><div><div class="ins-title">Spaced Repetition</div><div class="ins-text">Each card returns just before you'd forget it — proven to beat cramming by roughly 2×.</div></div></div>
+          <div class="insight purple"><div class="ins-icon">🧩</div><div><div class="ins-title">Active Recall</div><div class="ins-text">Pulling answers from memory (not re-reading) is the #1 technique in learning research.</div></div></div>
+          <div class="insight good"><div class="ins-icon">⚡</div><div><div class="ins-title">10 minutes a day</div><div class="ins-text">Short daily reviews build durable memory and feed your study streak.</div></div></div>
+        </div>
+      </div>
+    </div>`;
+  };
+
   /* ═══════════════ SETTINGS ═══════════════ */
 
   V.settings = () => {

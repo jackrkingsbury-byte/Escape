@@ -892,3 +892,18 @@ html[data-theme="light"] .empty { border-color: var(--stroke); }
   font-size: 16px; transition: all .18s ease;
 }
 .theme-toggle:hover { color: var(--text-1); border-color: var(--stroke-bright); transform: translateY(-1px); }
+
+/* ═══════ MEMORY LAB / FLASHCARDS ═══════ */
+.flashcard { min-height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px 24px; transition: border-color .2s ease, box-shadow .2s ease; animation: fcIn .35s cubic-bezier(.22,1,.36,1); }
+.flashcard.flipped { border-color: var(--stroke-bright); box-shadow: var(--shadow-card), inset 0 0 0 1px rgba(53,221,239,.14); }
+@keyframes fcIn { from { opacity: 0; transform: translateY(8px) scale(.99); } }
+.fc-label { font-size: 10px; letter-spacing: 2.2px; text-transform: uppercase; color: var(--text-3); font-weight: 800; margin-bottom: 16px; }
+.fc-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.45; max-width: 620px; }
+.fc-grades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 2px; }
+.fc-grade { flex-direction: column; padding: 14px 8px; gap: 3px; font-size: 13.5px; }
+.fc-grade span { font-size: 10px; color: var(--text-3); font-family: var(--font-mono); }
+.fc-grade.again:hover { border-color: rgba(244,120,124,.55); color: var(--bad); }
+.fc-grade.hard:hover  { border-color: rgba(245,196,81,.55); color: var(--warn); }
+.fc-grade.good:hover  { border-color: rgba(53,221,239,.55); color: var(--cyan); }
+.fc-grade.easy:hover  { border-color: rgba(61,217,164,.55); color: var(--good); }
+@media (max-width: 560px) { .fc-grades { grid-template-columns: 1fr 1fr; } .fc-text { font-size: 20px; } }

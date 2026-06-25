@@ -295,6 +295,49 @@ GF.engine = (() => {
     return Math.round(GF.clamp(4 + examLoad * 1.5 + pending * 0.5 + gapBoost, 4, 21));
   };
 
+  /* ----- spaced repetition (active recall + spaced repetition) ----- */
+
+  E.cardsDue = (subjectId) => {
+    const today = GF.todayISO();
+    return GF.state.flashcards.filter(c =>
+      (c.due || today) <= today && (!subjectId || c.subjectId === subjectId));
+  };
+
+  E.srStats = () => {
+    const all = GF.state.flashcards;
+    const today = GF.todayISO();
+    return {
+      total: all.length,
+      due: all.filter(c => (c.due || today) <= today).length,
+      mature: all.filter(c => (c.interval || 0) >= 21).length,
+      learning: all.filter(c => (c.reps || 0) > 0 && (c.interval || 0) < 21).length,
+      fresh: all.filter(c => (c.reps || 0) === 0).length,
+    };
+  };
+
+  // SM-2 inspired scheduler. grade: 0 = Again, 1 = Hard, 2 = Good, 3 = Easy.
+  E.srSchedule = (card, grade) => {
+    card.ease = GF.clamp((card.ease || 2.4) +
+      (grade === 0 ? -0.2 : grade === 1 ? -0.05 : grade === 3 ? 0.1 : 0), 1.3, 2.8);
+    if (grade === 0) {
+      card.lapses = (card.lapses || 0) + 1;
+      card.reps = 0;
+      card.interval = 0;                 // relearn today
+    } else if ((card.reps || 0) === 0) {
+      card.interval = grade === 3 ? 4 : 1;
+      card.reps = 1;
+    } else if (card.reps === 1) {
+      card.interval = grade === 1 ? 3 : grade === 3 ? 9 : 6;
+      card.reps = 2;
+    } else {
+      const mult = grade === 1 ? 1.2 : grade === 3 ? card.ease * 1.3 : card.ease;
+      card.interval = Math.max(1, Math.round((card.interval || 1) * mult));
+      card.reps += 1;
+    }
+    card.due = GF.todayISO(card.interval);
+    return card;
+  };
+
   /* ----- gamification ----- */
 
   E.levelInfo = () => {
