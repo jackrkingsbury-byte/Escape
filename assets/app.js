@@ -463,6 +463,48 @@ GF.app = (() => {
     A.render();
   };
 
+  /* ═══════ HABIT FORGE ═══════ */
+
+  A.toggleHabit = (id, iso) => {
+    const h = GF.state.habits.find(x => x.id === id);
+    if (!h) return;
+    if (!h.log) h.log = {};
+    if (h.log[iso]) { delete h.log[iso]; GF.save(); }
+    else {
+      h.log[iso] = true;
+      if (iso === GF.todayISO()) A.gainXP(4, "✅", "Habit done — chain unbroken.");
+      else GF.save();
+    }
+    A.render();
+  };
+
+  A.openAddHabit = () => {
+    A.openModal(`
+      <h3>New Habit</h3>
+      <div class="modal-sub">Keep it small and daily — that's what makes it stick.</div>
+      <div class="field"><label>Habit</label><input id="nh-name" placeholder="e.g. Review flashcards" maxlength="40"></div>
+      <div class="field"><label>Icon (emoji)</label><input id="nh-icon" placeholder="📚" maxlength="2" value="✅"></div>
+      <div class="modal-actions">
+        <button class="btn" onclick="GF.app.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="GF.app.saveHabit()">Add Habit</button>
+      </div>`);
+  };
+
+  A.saveHabit = () => {
+    const name = $("#nh-name").value.trim();
+    if (!name) return A.toast("⚠️", "Give your habit a name.");
+    const icon = ($("#nh-icon").value.trim() || "✅").slice(0, 2);
+    GF.state.habits.push({ id: GF.uid(), name, icon, created: GF.todayISO(), log: {} });
+    A.closeModal();
+    A.gainXP(5, "🔁", "Habit added — show up tomorrow.");
+    A.render();
+  };
+
+  A.deleteHabit = (id) => {
+    GF.state.habits = GF.state.habits.filter(h => h.id !== id);
+    GF.save(); A.render();
+  };
+
   /* ═══════ EXAMS ═══════ */
 
   A.openAddExam = () => {
@@ -806,6 +848,7 @@ GF.app = (() => {
       <div class="coach-actions" style="grid-template-columns:1fr 1fr">
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('today')"><span class="cb-ico">🗓️</span><span class="cb-name">Today's Plan</span><span class="cb-desc">Your AI daily plan</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('flashcards')"><span class="cb-ico">🃏</span><span class="cb-name">Memory Lab</span><span class="cb-desc">Spaced-repetition flashcards</span></button>
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('habits')"><span class="cb-ico">🔁</span><span class="cb-name">Habit Forge</span><span class="cb-desc">Daily habits & streaks</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('assignments')"><span class="cb-ico">📝</span><span class="cb-name">Assignments</span><span class="cb-desc">Mission queue</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('achievements')"><span class="cb-ico">🏆</span><span class="cb-name">Achievements</span><span class="cb-desc">XP, levels & badges</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('university')"><span class="cb-ico">🎓</span><span class="cb-name">University Hub</span><span class="cb-desc">APS · applications</span></button>

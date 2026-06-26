@@ -827,6 +827,63 @@ GF.views = (() => {
     </div>`;
   };
 
+  /* ═══════════════ HABIT FORGE ═══════════════ */
+
+  V.habits = () => {
+    const eng = E();
+    const hs = GF.state.habits;
+    const t = eng.habitsToday();
+    const cons = eng.habitConsistency();
+    const today = GF.todayISO();
+    const dayInitial = (iso) => ["S", "M", "T", "W", "T", "F", "S"][new Date(iso + "T00:00:00").getDay()];
+    const bestStreak = hs.length ? Math.max(...hs.map(h => eng.habitStreak(h))) : 0;
+
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Habit Forge</div>
+      <div class="section-sub">Small daily habits compound into big results — consistency beats intensity</div></div>
+      <button class="btn btn-primary" onclick="GF.app.openAddHabit()">+ Add Habit</button>
+    </div>
+
+    <div class="grid grid-12">
+      <div class="card col-4 center">
+        <div class="card-title" style="justify-content:center"><span class="ico">✅</span> Done Today <span class="ai-tag">LIVE</span></div>
+        <div class="hero-ring-wrap" style="margin:4px auto">
+          ${GF.charts.ring(t.total ? t.done / t.total * 100 : 0, { size: 122, stroke: 10 })}
+          <div class="ring-center"><div class="ring-score" style="font-size:30px">${t.done}<span style="font-size:16px;color:var(--text-3)">/${t.total}</span></div><div class="ring-label">habits</div></div>
+        </div>
+      </div>
+      <div class="card col-4 hoverable center"><div class="card-title" style="justify-content:center"><span class="ico">📊</span> 7-Day Consistency</div><div class="big-num" style="color:${cons >= 70 ? "var(--good)" : cons >= 40 ? "var(--warn)" : "var(--bad)"}">${cons}%</div><div class="small muted mt-8">of your habit-days hit this week</div></div>
+      <div class="card col-4 hoverable center"><div class="card-title" style="justify-content:center"><span class="ico">🔥</span> Best Streak</div><div class="big-num">${bestStreak}<span class="unit"> days</span></div><div class="small muted mt-8">don't break the chain</div></div>
+
+      <div class="card col-8">
+        <div class="card-title"><span class="ico">🔁</span> Your Daily Habits</div>
+        <div class="row-list">
+          ${hs.map(h => {
+            const wk = eng.habitWeek(h), streak = eng.habitStreak(h);
+            return `<div class="row-item habit-row">
+              <div style="font-size:20px">${h.icon || "✅"}</div>
+              <div class="ri-main"><div class="ri-title">${esc(h.name)}</div><div class="ri-sub">🔥 ${streak} day streak</div></div>
+              <div class="habit-week">
+                ${wk.map(d => `<button class="habit-dot ${d.done ? "on" : ""} ${d.iso === today ? "today" : ""}" title="${GF.fmtDate(d.iso)}" onclick="GF.app.toggleHabit('${h.id}','${d.iso}')"><span>${dayInitial(d.iso)}</span></button>`).join("")}
+              </div>
+              <button class="btn btn-ghost btn-sm" onclick="GF.app.deleteHabit('${h.id}')">✕</button>
+            </div>`;
+          }).join("") || `<div class="empty"><div class="e-ico">🔁</div><div class="e-title">No habits yet</div><div class="e-sub">Add a small daily habit — just tracking it makes you far more likely to stick with it.</div><button class="btn btn-primary" onclick="GF.app.openAddHabit()">+ Add Your First Habit</button></div>`}
+        </div>
+      </div>
+
+      <div class="card col-4">
+        <div class="card-title"><span class="ico">🔬</span> Why Habits Win <span class="ai-tag">PROVEN</span></div>
+        <div class="row-list">
+          <div class="insight good"><div class="ins-icon">📈</div><div><div class="ins-title">1% better daily</div><div class="ins-text">Tiny consistent gains compound — small habits beat occasional cramming every time.</div></div></div>
+          <div class="insight"><div class="ins-icon">🔗</div><div><div class="ins-title">Don't break the chain</div><div class="ins-text">Watching your streak grow is a powerful pull to show up again tomorrow.</div></div></div>
+          <div class="insight purple"><div class="ins-icon">🧠</div><div><div class="ins-title">Habit stacking</div><div class="ins-text">Bolt a new habit onto one you already do — "after dinner, review flashcards."</div></div></div>
+        </div>
+      </div>
+    </div>`;
+  };
+
   /* ═══════════════ SETTINGS ═══════════════ */
 
   V.settings = () => {

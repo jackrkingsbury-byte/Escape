@@ -253,6 +253,7 @@ GF.defaultState = () => ({
   flashcards: [],             // {id, subjectId, front, back, ease, interval, reps, lapses, due, created}
   focusSessions: [],           // {id, date, minutes, mode}
   plan: { date: null, done: [] },   // today's AI study-plan progress (keys completed)
+  habits: [],                  // {id, name, icon, created, log:{ISO:true}}
   game: {
     xp: 0,
     reviews: 0,                // total flashcards reviewed
@@ -376,6 +377,21 @@ GF.loadDemoData = (name) => {
     fc("English", "Define 'juxtaposition'.", "Placing two things side by side for contrasting effect.", 0, 1),
     fc("Accounting", "State the accounting equation.", "Assets = Liabilities + Owner's Equity", 0, 2),
     fc("Geography", "What causes a sea breeze?", "By day, land heats faster than sea, so cool air moves from sea to land.", 3, 1),
+  ];
+
+  const habitLog = (chance, run) => {
+    const log = {};
+    for (let d = 20; d >= 0; d--) {
+      if (d <= run || (Math.sin(d * 5.3) * 0.5 + 0.5) < chance) log[GF.todayISO(-d)] = true;
+    }
+    return log;
+  };
+  s.habits = [
+    { id: GF.uid(), name: "Review flashcards", icon: "🃏", created: GF.todayISO(-20), log: habitLog(0.8, 4) },
+    { id: GF.uid(), name: "30 minutes of focus", icon: "⏱️", created: GF.todayISO(-20), log: habitLog(0.7, 3) },
+    { id: GF.uid(), name: "Revise today's notes", icon: "📖", created: GF.todayISO(-20), log: habitLog(0.6, 2) },
+    { id: GF.uid(), name: "Phone away while studying", icon: "📵", created: GF.todayISO(-20), log: habitLog(0.65, 1) },
+    { id: GF.uid(), name: "Plan tomorrow", icon: "🗓️", created: GF.todayISO(-20), log: habitLog(0.55, 0) },
   ];
 
   // 8 weeks of focus history with an upward trend + 12-day streak

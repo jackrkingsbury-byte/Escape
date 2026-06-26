@@ -353,6 +353,42 @@ GF.engine = (() => {
     return (p && p.date === GF.todayISO()) ? (p.done || []) : [];
   };
 
+  /* ----- habit tracker (consistency · habit stacking) ----- */
+
+  E.habitWeek = (habit) => {                     // last 7 days, oldest → today
+    const out = [];
+    for (let i = 6; i >= 0; i--) {
+      const iso = GF.todayISO(-i);
+      out.push({ iso, done: !!(habit.log && habit.log[iso]) });
+    }
+    return out;
+  };
+
+  E.habitStreak = (habit) => {
+    let n = 0;
+    for (let i = 0; i < 400; i++) {
+      if (habit.log && habit.log[GF.todayISO(-i)]) n++;
+      else if (i === 0) continue;                // today not yet ticked doesn't break the streak
+      else break;
+    }
+    return n;
+  };
+
+  E.habitsToday = () => {
+    const today = GF.todayISO();
+    const total = GF.state.habits.length;
+    const done = GF.state.habits.filter(h => h.log && h.log[today]).length;
+    return { done, total };
+  };
+
+  E.habitConsistency = () => {                    // % of habit-days hit over last 7 days
+    const hs = GF.state.habits;
+    if (!hs.length) return 0;
+    let hit = 0, slots = 0;
+    hs.forEach(h => E.habitWeek(h).forEach(d => { slots++; if (d.done) hit++; }));
+    return slots ? Math.round((hit / slots) * 100) : 0;
+  };
+
   /* ----- spaced repetition (active recall + spaced repetition) ----- */
 
   E.cardsDue = (subjectId) => {

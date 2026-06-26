@@ -917,3 +917,35 @@ html[data-theme="light"] .empty { border-color: var(--stroke); }
   vertical-align: middle;
 }
 html[data-theme="light"] .method-tag { background: rgba(11,165,196,.08); border-color: rgba(11,165,196,.25); }
+
+/* ═══════ HABIT FORGE ═══════ */
+.habit-week { display: flex; gap: 6px; flex-shrink: 0; }
+.habit-dot {
+  width: 31px; height: 31px; border-radius: 50%; padding: 0;
+  display: grid; place-items: center; cursor: pointer;
+  background: rgba(7,11,22,.5); border: 1px solid var(--stroke);
+  color: var(--text-3); font-size: 10px; font-weight: 800;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+}
+.habit-dot span { pointer-events: none; }
+.habit-dot:hover { border-color: var(--stroke-bright); transform: translateY(-2px); }
+.habit-dot.on { background: var(--grad-main); border-color: transparent; color: #07121e; box-shadow: 0 0 12px rgba(53,221,239,.45); }
+.habit-dot.today { outline: 2px solid rgba(53,221,239,.5); outline-offset: 2px; }
+html[data-theme="light"] .habit-dot { background: #EEF3FB; }
+@media (max-width: 600px) { .habit-row { flex-wrap: wrap; } .habit-dot { width: 28px; height: 28px; } }
+
+/* ═══════ COOL POLISH ═══════ */
+/* gentle gradient shimmer on the big gradient numbers/wordmark */
+.ring-score, .aps-display .aps-score, .brand-name {
+  background-size: 220% auto;
+  animation: gshimmer 7s ease-in-out infinite;
+}
+@keyframes gshimmer { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+/* gradient accent line slides in on hover for stat cards */
+.card.hoverable::after {
+  content: ""; position: absolute; top: 0; left: 20px; right: 20px; height: 2px; border-radius: 2px;
+  background: var(--grad-main); opacity: 0; transform: scaleX(.6);
+  transition: opacity .25s ease, transform .25s ease; transform-origin: left;
+}
+.card.hoverable:hover::after { opacity: .85; transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .ring-score, .aps-display .aps-score, .brand-name { animation: none; } }
