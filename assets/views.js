@@ -827,6 +827,34 @@ GF.views = (() => {
     </div>`;
   };
 
+  /* ═══════════════ STUDY LAB (TECHNIQUE LIBRARY) ═══════════════ */
+
+  V.studylab = () => {
+    const techs = GF.TECHNIQUES;
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Study Lab</div>
+      <div class="section-sub">${techs.length} proven study techniques — tap any card to learn exactly how and why it works</div></div>
+    </div>
+    <div class="grid grid-12">
+      <div class="card col-12">
+        ${aiHeader("TECHNIQUE LIBRARY · grounded in learning-science research")}
+        <div class="tech-grid">
+          ${techs.map(t => `
+          <button class="tech-card" onclick="GF.app.openTechnique('${t.id}')">
+            <div class="tc-ico">${t.icon}</div>
+            <div class="tc-body">
+              <div class="tc-name">${esc(t.name)}</div>
+              <div class="tc-short">${esc(t.short)}</div>
+            </div>
+            <span class="tc-tag">${esc(t.tag)}</span>
+          </button>`).join("")}
+        </div>
+        <div class="small muted mt-16">💡 Tip: try one new technique a week. The best method is the one you'll actually use consistently.</div>
+      </div>
+    </div>`;
+  };
+
   /* ═══════════════ HABIT FORGE ═══════════════ */
 
   V.habits = () => {

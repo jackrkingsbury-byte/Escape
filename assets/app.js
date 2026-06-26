@@ -463,6 +463,26 @@ GF.app = (() => {
     A.render();
   };
 
+  /* ═══════ STUDY LAB ═══════ */
+
+  A.openTechnique = (id) => {
+    const t = (GF.TECHNIQUES || []).find(x => x.id === id);
+    if (!t) return;
+    A.openModal(`
+      <div class="tech-modal-head">
+        <div class="tech-modal-ico">${t.icon}</div>
+        <div><h3 style="margin-bottom:6px">${esc(t.name)}</h3><span class="pill info">${esc(t.tag)}</span></div>
+      </div>
+      <p class="small" style="color:var(--text-2);margin:16px 0 2px;line-height:1.6">${esc(t.what)}</p>
+      <div class="card-title mt-20"><span class="ico">🛠️</span> How to do it</div>
+      <ol class="tech-steps">${t.how.map(s => `<li>${esc(s)}</li>`).join("")}</ol>
+      <div class="insight good mt-16"><div class="ins-icon">🔬</div><div><div class="ins-title">Why it works</div><div class="ins-text">${esc(t.why)}</div></div></div>
+      <div class="modal-actions">
+        ${t.link ? `<button class="btn btn-primary" onclick="GF.app.closeModal();GF.app.go('${t.link.view}')">${esc(t.link.label)} →</button>` : ""}
+        <button class="btn" onclick="GF.app.closeModal()">Close</button>
+      </div>`, true);
+  };
+
   /* ═══════ HABIT FORGE ═══════ */
 
   A.toggleHabit = (id, iso) => {
@@ -849,6 +869,7 @@ GF.app = (() => {
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('today')"><span class="cb-ico">🗓️</span><span class="cb-name">Today's Plan</span><span class="cb-desc">Your AI daily plan</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('flashcards')"><span class="cb-ico">🃏</span><span class="cb-name">Memory Lab</span><span class="cb-desc">Spaced-repetition flashcards</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('habits')"><span class="cb-ico">🔁</span><span class="cb-name">Habit Forge</span><span class="cb-desc">Daily habits & streaks</span></button>
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('studylab')"><span class="cb-ico">🔬</span><span class="cb-name">Study Lab</span><span class="cb-desc">Proven technique library</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('assignments')"><span class="cb-ico">📝</span><span class="cb-name">Assignments</span><span class="cb-desc">Mission queue</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('achievements')"><span class="cb-ico">🏆</span><span class="cb-name">Achievements</span><span class="cb-desc">XP, levels & badges</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('university')"><span class="cb-ico">🎓</span><span class="cb-name">University Hub</span><span class="cb-desc">APS · applications</span></button>
