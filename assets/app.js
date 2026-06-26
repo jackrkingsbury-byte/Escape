@@ -79,7 +79,7 @@ GF.app = (() => {
 
   A.confetti = (n = 60) => {
     const layer = $("#confetti-layer");
-    const colors = ["#35DDEF", "#4F8BFF", "#8B7CF6", "#3DD9A4", "#F5C451", "#E879B9"];
+    const colors = ["#2347FF", "#6480FF", "#8A7BFF", "#3DD9A4", "#FFD60A", "#FF5630"];
     for (let i = 0; i < n; i++) {
       const b = document.createElement("div");
       b.className = "confetti-bit";
@@ -194,7 +194,7 @@ GF.app = (() => {
         <div class="wc-top">
           <div class="wc-logo">
             <svg viewBox="0 0 100 100" width="30" height="30">
-              <defs><linearGradient id="obGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#35DDEF"/><stop offset="1" stop-color="#8B7CF6"/></linearGradient></defs>
+              <defs><linearGradient id="obGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2347FF"/><stop offset="1" stop-color="#8A7BFF"/></linearGradient></defs>
               <path d="M30 68 L50 28 L70 68 M38 54 H62" stroke="url(#obGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             </svg>
           </div>

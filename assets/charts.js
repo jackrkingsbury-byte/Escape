@@ -9,9 +9,9 @@ GF.charts = (() => {
   const nextId = (p) => `${p}-${++gid}`;
 
   const GRAD_STOPS = `
-    <stop offset="0%" stop-color="#34DBEF"/>
-    <stop offset="55%" stop-color="#4F8BFF"/>
-    <stop offset="100%" stop-color="#8B7CF6"/>`;
+    <stop offset="0%" stop-color="#3A5CFF"/>
+    <stop offset="55%" stop-color="#6480FF"/>
+    <stop offset="100%" stop-color="#8A7BFF"/>`;
 
   /* ----- circular gauge ----- */
   C.ring = (value, { size = 150, stroke = 11, color = null, track = true } = {}) => {
@@ -33,7 +33,7 @@ GF.charts = (() => {
   };
 
   /* ----- sparkline ----- */
-  C.sparkline = (values, { w = 120, h = 34, color = "#35DDEF" } = {}) => {
+  C.sparkline = (values, { w = 120, h = 34, color = "#4D6BFF" } = {}) => {
     if (!values || values.length < 2) {
       return `<svg width="${w}" height="${h}"><line x1="0" y1="${h / 2}" x2="${w}" y2="${h / 2}" stroke="rgba(255,255,255,.15)" stroke-dasharray="3 4"/></svg>`;
     }
@@ -96,13 +96,13 @@ GF.charts = (() => {
       <defs>
         <linearGradient id="${id}-s" x1="0" y1="0" x2="1" y2="0">${GRAD_STOPS}</linearGradient>
         <linearGradient id="${id}-a" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#4F8BFF" stop-opacity=".30"/>
-          <stop offset="100%" stop-color="#4F8BFF" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#6480FF" stop-opacity=".30"/>
+          <stop offset="100%" stop-color="#6480FF" stop-opacity="0"/>
         </linearGradient>
       </defs>
       ${gridLines.join("")}
       <path d="${areaPath}" fill="url(#${id}-a)"/>
-      <path d="${linePath}" fill="none" stroke="url(#${id}-s)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(53,221,239,.35))"/>
+      <path d="${linePath}" fill="none" stroke="url(#${id}-s)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(100,128,255,.35))"/>
       ${dots}
       ${xLabels}
     </svg>`;
