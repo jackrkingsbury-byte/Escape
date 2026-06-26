@@ -525,6 +525,88 @@ GF.app = (() => {
     GF.save(); A.render();
   };
 
+  /* ═══════ NOTES ═══════ */
+
+  A.openAddNote = () => A.openNote(null);
+
+  A.openNote = (id) => {
+    const n = id ? GF.state.notes.find(x => x.id === id) : null;
+    const opts = `<option value="">General (no subject)</option>` +
+      GF.state.subjects.map(s => `<option value="${s.id}" ${n && n.subjectId === s.id ? "selected" : ""}>${esc(s.name)}</option>`).join("");
+    A.openModal(`
+      <h3>${n ? "Edit Note" : "New Note"}</h3>
+      <div class="field"><label>Title</label><input id="note-title" value="${n ? esc(n.title) : ""}" placeholder="Note title"></div>
+      <div class="field"><label>Note</label><textarea id="note-body" style="min-height:160px" placeholder="Write anything — summaries, checklists, formulas…">${n ? esc(n.body) : ""}</textarea></div>
+      <div class="field"><label>Subject</label><select id="note-subject">${opts}</select></div>
+      <label class="flex" style="gap:8px;cursor:pointer;font-size:13px;margin-bottom:4px"><input type="checkbox" id="note-pin" ${n && n.pinned ? "checked" : ""}> 📌 Pin to top</label>
+      <div class="modal-actions">
+        ${n ? `<button class="btn btn-danger" style="margin-right:auto" onclick="GF.app.deleteNote('${n.id}')">Delete</button>` : ""}
+        <button class="btn" onclick="GF.app.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="GF.app.saveNote(${n ? `'${n.id}'` : "null"})">Save Note</button>
+      </div>`, true);
+  };
+
+  A.saveNote = (id) => {
+    const title = $("#note-title").value.trim();
+    const body = $("#note-body").value.trim();
+    if (!title && !body) return A.toast("⚠️", "Write something first.");
+    const subjectId = $("#note-subject").value;
+    const pinned = $("#note-pin").checked;
+    if (id) {
+      const n = GF.state.notes.find(x => x.id === id);
+      if (n) Object.assign(n, { title: title || "Untitled", body, subjectId, pinned, updated: GF.todayISO() });
+    } else {
+      GF.state.notes.push({ id: GF.uid(), title: title || "Untitled", body, subjectId, pinned, updated: GF.todayISO() });
+      A.gainXP(3, "📝", "Note saved.");
+    }
+    GF.save(); A.closeModal(); A.render();
+  };
+
+  A.deleteNote = (id) => {
+    GF.state.notes = GF.state.notes.filter(n => n.id !== id);
+    GF.save(); A.closeModal(); A.render();
+  };
+
+  /* ═══════ TIMETABLE ═══════ */
+
+  A.openAddClass = () => {
+    const opts = GF.state.subjects.map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join("");
+    if (!opts) return A.openAddSubject();
+    const dayOpts = [["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5], ["Saturday", 6], ["Sunday", 0]]
+      .map(([n, v]) => `<option value="${v}">${n}</option>`).join("");
+    A.openModal(`
+      <h3>Add Class</h3>
+      <div class="field"><label>Day</label><select id="cl-day">${dayOpts}</select></div>
+      <div class="field"><label>Subject</label><select id="cl-subject">${opts}</select></div>
+      <div class="field-row">
+        <div class="field"><label>Start</label><input id="cl-start" type="time" value="08:00"></div>
+        <div class="field"><label>End</label><input id="cl-end" type="time" value="08:45"></div>
+      </div>
+      <div class="field"><label>Room (optional)</label><input id="cl-room" placeholder="e.g. B12"></div>
+      <div class="modal-actions">
+        <button class="btn" onclick="GF.app.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="GF.app.saveClass()">Add Class</button>
+      </div>`);
+  };
+
+  A.saveClass = () => {
+    const subjectId = $("#cl-subject").value;
+    const subj = GF.state.subjects.find(s => s.id === subjectId);
+    GF.state.timetable.push({
+      id: GF.uid(), day: parseInt($("#cl-day").value, 10),
+      start: $("#cl-start").value || "08:00", end: $("#cl-end").value || "08:45",
+      subjectId, name: subj ? subj.name : "Class", room: $("#cl-room").value.trim(),
+    });
+    GF.save(); A.closeModal();
+    A.gainXP(3, "🗓️", "Class added to your timetable.");
+    A.render();
+  };
+
+  A.deleteClass = (id) => {
+    GF.state.timetable = GF.state.timetable.filter(c => c.id !== id);
+    GF.save(); A.render();
+  };
+
   /* ═══════ EXAMS ═══════ */
 
   A.openAddExam = () => {
@@ -870,6 +952,8 @@ GF.app = (() => {
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('flashcards')"><span class="cb-ico">🃏</span><span class="cb-name">Memory Lab</span><span class="cb-desc">Spaced-repetition flashcards</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('habits')"><span class="cb-ico">🔁</span><span class="cb-name">Habit Forge</span><span class="cb-desc">Daily habits & streaks</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('studylab')"><span class="cb-ico">🔬</span><span class="cb-name">Study Lab</span><span class="cb-desc">Proven technique library</span></button>
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('notes')"><span class="cb-ico">📝</span><span class="cb-name">Notes</span><span class="cb-desc">Your notebook</span></button>
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('timetable')"><span class="cb-ico">🗓️</span><span class="cb-name">Timetable</span><span class="cb-desc">Weekly schedule</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('assignments')"><span class="cb-ico">📝</span><span class="cb-name">Assignments</span><span class="cb-desc">Mission queue</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('achievements')"><span class="cb-ico">🏆</span><span class="cb-name">Achievements</span><span class="cb-desc">XP, levels & badges</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('university')"><span class="cb-ico">🎓</span><span class="cb-name">University Hub</span><span class="cb-desc">APS · applications</span></button>

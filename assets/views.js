@@ -912,6 +912,62 @@ GF.views = (() => {
     </div>`;
   };
 
+  /* ═══════════════ NOTES ═══════════════ */
+
+  V.notes = () => {
+    const notes = [...GF.state.notes].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.updated || "").localeCompare(a.updated || ""));
+    const colOf = (id) => { const s = subjById(id); return s ? s.color : "#5F7194"; };
+    const nameOf = (id) => { const s = subjById(id); return s ? s.name : ""; };
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Notes</div>
+      <div class="section-sub">Capture summaries, checklists and reminders — pin the important ones</div></div>
+      <button class="btn btn-primary" onclick="GF.app.openAddNote()">+ New Note</button>
+    </div>
+    <div class="notes-grid">
+      ${notes.map(n => `
+      <button class="note-card" style="--nc:${colOf(n.subjectId)}" onclick="GF.app.openNote('${n.id}')">
+        <div class="note-title">${n.pinned ? "📌 " : ""}${esc(n.title || "Untitled")}</div>
+        <div class="note-body">${esc((n.body || "").slice(0, 200))}${(n.body || "").length > 200 ? "…" : ""}</div>
+        <div class="note-foot"><span class="note-subj">${n.subjectId ? esc(nameOf(n.subjectId)) : "General"}</span><span class="muted">${GF.fmtDate(n.updated)}</span></div>
+      </button>`).join("") || `<div class="card" style="grid-column:1/-1"><div class="empty"><div class="e-ico">📝</div><div class="e-title">No notes yet</div><div class="e-sub">Jot down summaries, checklists or formulas — anything you want to keep handy.</div><button class="btn btn-primary" onclick="GF.app.openAddNote()">+ Write your first note</button></div></div>`}
+    </div>`;
+  };
+
+  /* ═══════════════ TIMETABLE ═══════════════ */
+
+  V.timetable = () => {
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const todayDow = new Date(GF.todayISO() + "T00:00:00").getDay();
+    const tt = GF.state.timetable;
+    const colOf = (id) => { const s = subjById(id); return s ? s.color : "#5F7194"; };
+    const present = new Set(tt.map(c => c.day));
+    const showDays = [1, 2, 3, 4, 5].concat([6, 0].filter(d => present.has(d)));
+    const nextUp = tt.filter(c => c.day === todayDow).sort((a, b) => (a.start || "").localeCompare(b.start || ""));
+
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Timetable</div>
+      <div class="section-sub">Your weekly class schedule — always know where to be and what's next</div></div>
+      <button class="btn btn-primary" onclick="GF.app.openAddClass()">+ Add Class</button>
+    </div>
+    <div class="grid grid-12">
+      ${tt.length ? showDays.map(d => {
+        const classes = tt.filter(c => c.day === d).sort((a, b) => (a.start || "").localeCompare(b.start || ""));
+        return `<div class="card col-4 ${d === todayDow ? "tt-today" : ""}">
+          <div class="card-title"><span class="ico">${d === todayDow ? "📍" : "🗓️"}</span> ${dayNames[d]}${d === todayDow ? " · Today" : ""}</div>
+          <div class="row-list">
+            ${classes.map(c => `<div class="row-item">
+              <span class="subj-dot" style="color:${colOf(c.subjectId)};background:${colOf(c.subjectId)}"></span>
+              <div class="ri-main"><div class="ri-title">${esc(c.name)}</div><div class="ri-sub">${esc(c.start)}–${esc(c.end)}${c.room ? " · " + esc(c.room) : ""}</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="GF.app.deleteClass('${c.id}')">✕</button>
+            </div>`).join("") || `<div class="small muted" style="padding:8px 4px">No classes</div>`}
+          </div>
+        </div>`;
+      }).join("") : `<div class="card col-12"><div class="empty"><div class="e-ico">🗓️</div><div class="e-title">No classes yet</div><div class="e-sub">Add your weekly classes so you always know your schedule at a glance.</div><button class="btn btn-primary" onclick="GF.app.openAddClass()">+ Add your first class</button></div></div>`}
+    </div>`;
+  };
+
   /* ═══════════════ SETTINGS ═══════════════ */
 
   V.settings = () => {

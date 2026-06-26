@@ -317,6 +317,8 @@ GF.defaultState = () => ({
   focusSessions: [],           // {id, date, minutes, mode}
   plan: { date: null, done: [] },   // today's AI study-plan progress (keys completed)
   habits: [],                  // {id, name, icon, created, log:{ISO:true}}
+  notes: [],                   // {id, title, body, subjectId, pinned, updated}
+  timetable: [],               // {id, day(0-6), start, end, subjectId, name, room}
   game: {
     xp: 0,
     reviews: 0,                // total flashcards reviewed
@@ -455,6 +457,31 @@ GF.loadDemoData = (name) => {
     { id: GF.uid(), name: "Revise today's notes", icon: "📖", created: GF.todayISO(-20), log: habitLog(0.6, 2) },
     { id: GF.uid(), name: "Phone away while studying", icon: "📵", created: GF.todayISO(-20), log: habitLog(0.65, 1) },
     { id: GF.uid(), name: "Plan tomorrow", icon: "🗓️", created: GF.todayISO(-20), log: habitLog(0.55, 0) },
+  ];
+
+  s.notes = [
+    { id: GF.uid(), title: "Trig identities to memorise", subjectId: sid("Mathematics"), pinned: true,
+      body: "sin²θ + cos²θ = 1\n1 + tan²θ = sec²θ\nsin(2θ) = 2 sinθ cosθ\nRemember CAST diagram for signs.", updated: GF.todayISO(-1) },
+    { id: GF.uid(), title: "Chemistry prac — write-up checklist", subjectId: sid("Physical"), pinned: false,
+      body: "1. Aim\n2. Apparatus + diagram\n3. Method (past tense, passive)\n4. Results table\n5. Conclusion vs hypothesis\n6. Sources of error", updated: GF.todayISO(-3) },
+    { id: GF.uid(), title: "Macbeth — key themes", subjectId: sid("English"), pinned: false,
+      body: "Ambition · guilt · appearance vs reality · fate vs free will. Quote: 'Look like the innocent flower, but be the serpent under't.'", updated: GF.todayISO(-5) },
+    { id: GF.uid(), title: "Exam-week game plan", subjectId: "", pinned: true,
+      body: "Mornings: hardest subject (Maths/Physics).\nAfternoons: past papers.\nEvenings: flashcards + light review.\nLights out by 10:30pm.", updated: GF.todayISO() },
+  ];
+
+  s.timetable = [
+    { id: GF.uid(), day: 1, start: "08:00", end: "08:45", subjectId: sid("Mathematics"), name: "Mathematics", room: "B12" },
+    { id: GF.uid(), day: 1, start: "09:00", end: "09:45", subjectId: sid("Physical"), name: "Physical Sciences", room: "Lab 2" },
+    { id: GF.uid(), day: 1, start: "11:00", end: "11:45", subjectId: sid("English"), name: "English HL", room: "A4" },
+    { id: GF.uid(), day: 2, start: "08:00", end: "08:45", subjectId: sid("Life"), name: "Life Sciences", room: "Lab 1" },
+    { id: GF.uid(), day: 2, start: "10:00", end: "10:45", subjectId: sid("Accounting"), name: "Accounting", room: "C7" },
+    { id: GF.uid(), day: 3, start: "09:00", end: "09:45", subjectId: sid("Mathematics"), name: "Mathematics", room: "B12" },
+    { id: GF.uid(), day: 3, start: "11:00", end: "11:45", subjectId: sid("Geography"), name: "Geography", room: "A9" },
+    { id: GF.uid(), day: 4, start: "08:00", end: "08:45", subjectId: sid("Physical"), name: "Physical Sciences", room: "Lab 2" },
+    { id: GF.uid(), day: 4, start: "10:00", end: "10:45", subjectId: sid("English"), name: "English HL", room: "A4" },
+    { id: GF.uid(), day: 5, start: "09:00", end: "09:45", subjectId: sid("Life"), name: "Life Sciences", room: "Lab 1" },
+    { id: GF.uid(), day: 5, start: "10:00", end: "10:45", subjectId: sid("Accounting"), name: "Accounting", room: "C7" },
   ];
 
   // 8 weeks of focus history with an upward trend + 12-day streak
