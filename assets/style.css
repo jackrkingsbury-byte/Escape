@@ -907,3 +907,13 @@ html[data-theme="light"] .empty { border-color: var(--stroke); }
 .fc-grade.good:hover  { border-color: rgba(53,221,239,.55); color: var(--cyan); }
 .fc-grade.easy:hover  { border-color: rgba(61,217,164,.55); color: var(--good); }
 @media (max-width: 560px) { .fc-grades { grid-template-columns: 1fr 1fr; } .fc-text { font-size: 20px; } }
+
+/* ═══════ TODAY PLAN ═══════ */
+.method-tag {
+  display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: .8px;
+  text-transform: uppercase; color: var(--cyan);
+  padding: 1.5px 7px; border-radius: 6px; margin-right: 5px;
+  background: rgba(53,221,239,.08); border: 1px solid rgba(53,221,239,.2);
+  vertical-align: middle;
+}
+html[data-theme="light"] .method-tag { background: rgba(11,165,196,.08); border-color: rgba(11,165,196,.25); }

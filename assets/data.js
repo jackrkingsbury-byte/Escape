@@ -252,6 +252,7 @@ GF.defaultState = () => ({
   exams: [],
   flashcards: [],             // {id, subjectId, front, back, ease, interval, reps, lapses, due, created}
   focusSessions: [],           // {id, date, minutes, mode}
+  plan: { date: null, done: [] },   // today's AI study-plan progress (keys completed)
   game: {
     xp: 0,
     reviews: 0,                // total flashcards reviewed

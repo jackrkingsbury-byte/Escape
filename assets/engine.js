@@ -295,6 +295,64 @@ GF.engine = (() => {
     return Math.round(GF.clamp(4 + examLoad * 1.5 + pending * 0.5 + gapBoost, 4, 21));
   };
 
+  /* ----- AI daily study plan (spacing · interleaving · retrieval · 80/20) ----- */
+
+  E.dailyPlan = () => {
+    const items = [];
+    const subjOf = (id) => GF.state.subjects.find(s => s.id === id);
+
+    // 1) Time-sensitive: nearest exam that still needs work
+    const exam = E.upcomingExams().find(ex => {
+      const d = GF.daysUntil(ex.date);
+      return d <= 21 && E.examReadiness(ex) < 78;
+    });
+    if (exam) {
+      const s = subjOf(exam.subjectId), d = GF.daysUntil(exam.date);
+      items.push({ key: "exam_" + exam.id, icon: "🛡️", method: "Spaced practice",
+        title: `Exam prep: ${s ? s.name : "exam"}`, minutes: 30, action: "exams",
+        detail: `${exam.title} in ${d} day${d === 1 ? "" : "s"} · ${E.examReadiness(exam)}% ready. Build a battle plan in the AI Coach.` });
+    }
+
+    // 2) Most urgent assignment
+    const pend = E.pendingAssignments();
+    if (pend.length) {
+      const a = pend[0], s = subjOf(a.subjectId), d = GF.daysUntil(a.due);
+      items.push({ key: "assign_" + a.id, icon: "⚡", method: "Deep work",
+        title: `Make progress: ${a.title}`, minutes: 30, action: "assignments",
+        detail: `${s ? s.name + " · " : ""}${d < 0 ? Math.abs(d) + "d overdue" : d === 0 ? "due today" : d + "d left"}.` });
+    }
+
+    // 3) Daily habit: review due flashcards (spaced repetition)
+    const due = E.cardsDue().length;
+    if (due > 0) {
+      items.push({ key: "review", icon: "🃏", method: "Active recall",
+        title: `Review ${due} flashcard${due === 1 ? "" : "s"}`, minutes: GF.clamp(due, 5, 25), action: "flashcards",
+        detail: "Spaced repetition returns each card right before you'd forget it." });
+    }
+
+    // 4) 80/20: practise your weakest subject
+    const weak = E.weakestSubject();
+    if (weak && weak.avg < (weak.s.target || 75)) {
+      items.push({ key: "weak_" + weak.s.id, icon: "🎯", method: "Retrieval practice",
+        title: `Practise ${weak.s.name}`, minutes: 25, action: "coach",
+        detail: `Your lowest subject at ${Math.round(weak.avg)}% (target ${weak.s.target}%). Highest-leverage 20 minutes you can spend.` });
+    }
+
+    // 5) Anchor: a focus session (always at least something to do)
+    if (items.length < 2) {
+      items.push({ key: "focus", icon: "⏱️", method: "Deep work",
+        title: "One 25-minute focus session", minutes: 25, action: "focus",
+        detail: "Single-task with the Pomodoro timer — no phone, no extra tabs." });
+    }
+
+    return items.slice(0, 4);
+  };
+
+  E.planDoneKeys = () => {
+    const p = GF.state.plan;
+    return (p && p.date === GF.todayISO()) ? (p.done || []) : [];
+  };
+
   /* ----- spaced repetition (active recall + spaced repetition) ----- */
 
   E.cardsDue = (subjectId) => {

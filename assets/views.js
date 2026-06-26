@@ -19,6 +19,77 @@ GF.views = (() => {
 
   const aiHeader = (text) => `<div class="ai-line"><span class="ai-dot"></span>${esc(text)}</div>`;
 
+  /* ═══════════════ TODAY (AI STUDY PLANNER) ═══════════════ */
+
+  V.today = () => {
+    const eng = E();
+    const plan = eng.dailyPlan();
+    const doneKeys = eng.planDoneKeys();
+    const doneCount = plan.filter(p => doneKeys.includes(p.key)).length;
+    const totalMin = plan.reduce((a, p) => a + p.minutes, 0);
+    const doneMin = plan.filter(p => doneKeys.includes(p.key)).reduce((a, p) => a + p.minutes, 0);
+    const pct = plan.length ? Math.round(doneCount / plan.length * 100) : 0;
+    const hour = new Date().getHours();
+    const greet = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+    const name = GF.state.user.name || "Scholar";
+    const allDone = plan.length && doneCount === plan.length;
+
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Today's Plan</div>
+      <div class="section-sub">Your AI-built study plan — ranked by what moves your grades the most</div></div>
+    </div>
+
+    <div class="grid grid-12">
+      <div class="card hero-card" style="grid-template-columns:auto 1fr">
+        <div class="hero-ring-wrap">
+          ${GF.charts.ring(pct, { size: 150, stroke: 12 })}
+          <div class="ring-center"><div class="ring-score" style="font-size:34px">${doneCount}<span style="font-size:18px;color:var(--text-3)">/${plan.length}</span></div><div class="ring-label">tasks done</div></div>
+        </div>
+        <div class="hero-body">
+          ${aiHeader("PLAN ENGINE · spacing · interleaving · retrieval · 80/20")}
+          <h2>${esc(greet)}, <span class="status-word">${esc(name)}</span></h2>
+          <p>${allDone
+            ? "Plan complete — outstanding. Every task today was chosen to move your grades the most. Rest, or get ahead of tomorrow."
+            : plan.length
+              ? `${plan.length - doneCount} task${plan.length - doneCount === 1 ? "" : "s"} left — about <b>${totalMin - doneMin} min</b> of focused study. Work them top to bottom; they're ranked by impact.`
+              : "Add subjects, marks, flashcards and exams — your AI builds a fresh daily plan here automatically."}</p>
+          ${plan.length ? `<div class="progress-line mt-12" style="max-width:460px"><div class="pl-fill" style="width:${pct}%"></div></div>` : ""}
+        </div>
+      </div>
+
+      ${plan.length ? `
+      <div class="card col-8">
+        <div class="card-title"><span class="ico">✅</span> Your Missions Today <span class="ai-tag">AI RANKED</span></div>
+        <div class="row-list">
+          ${plan.map(p => { const done = doneKeys.includes(p.key); return `
+          <div class="row-item ${done ? "completed" : ""}">
+            <button class="gf-check ${done ? "done" : ""}" onclick="GF.app.togglePlanItem('${p.key}')" title="Mark done">✓</button>
+            <div style="font-size:20px">${p.icon}</div>
+            <div class="ri-main">
+              <div class="ri-title">${esc(p.title)}</div>
+              <div class="ri-sub"><span class="method-tag">${esc(p.method)}</span> ${esc(p.detail)}</div>
+            </div>
+            <div class="ri-end" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <span class="pill info">${p.minutes} min</span>
+              <button class="btn btn-sm" onclick="GF.app.go('${p.action}')">Go →</button>
+            </div>
+          </div>`; }).join("")}
+        </div>
+        <div class="small muted mt-12">⏱️ About ${totalMin} min total · ticking these off banks XP and protects your streak.</div>
+      </div>
+
+      <div class="card col-4">
+        <div class="card-title"><span class="ico">🔬</span> Why This Works <span class="ai-tag">PROVEN</span></div>
+        <div class="row-list">
+          <div class="insight"><div class="ins-icon">🔀</div><div><div class="ins-title">Interleaving</div><div class="ins-text">Mixing subjects in one day beats blocking — switching forces deeper learning.</div></div></div>
+          <div class="insight purple"><div class="ins-icon">🧩</div><div><div class="ins-title">Retrieval &amp; Spacing</div><div class="ins-text">Recalling on a schedule roughly doubles what you keep vs. re-reading.</div></div></div>
+          <div class="insight good"><div class="ins-icon">🎯</div><div><div class="ins-title">80/20 Focus</div><div class="ins-text">The plan front-loads the few tasks that shift your grades most — not busywork.</div></div></div>
+        </div>
+      </div>` : `<div class="card col-12"><div class="empty"><div class="e-ico">🗓️</div><div class="e-title">Your plan is empty</div><div class="e-sub">Add subjects, log marks, create flashcards and track exams — your AI builds a fresh daily plan automatically.</div><button class="btn btn-primary" onclick="GF.app.go('marks')">Add a subject →</button></div></div>`}
+    </div>`;
+  };
+
   /* ═══════════════ DASHBOARD ═══════════════ */
 
   V.dashboard = () => {

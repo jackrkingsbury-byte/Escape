@@ -445,6 +445,24 @@ GF.app = (() => {
     GF.save(); A.render();
   };
 
+  /* ═══════ TODAY PLAN ═══════ */
+
+  A.togglePlanItem = (key) => {
+    const today = GF.todayISO();
+    if (!GF.state.plan || GF.state.plan.date !== today) GF.state.plan = { date: today, done: [] };
+    const arr = GF.state.plan.done;
+    const i = arr.indexOf(key);
+    if (i === -1) {
+      arr.push(key);
+      A.confetti(30);
+      A.gainXP(8, "✅", "Task done — strong momentum.");
+    } else {
+      arr.splice(i, 1);
+      GF.save();
+    }
+    A.render();
+  };
+
   /* ═══════ EXAMS ═══════ */
 
   A.openAddExam = () => {
@@ -786,6 +804,7 @@ GF.app = (() => {
     A.openModal(`
       <h3>More</h3>
       <div class="coach-actions" style="grid-template-columns:1fr 1fr">
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('today')"><span class="cb-ico">🗓️</span><span class="cb-name">Today's Plan</span><span class="cb-desc">Your AI daily plan</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('flashcards')"><span class="cb-ico">🃏</span><span class="cb-name">Memory Lab</span><span class="cb-desc">Spaced-repetition flashcards</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('assignments')"><span class="cb-ico">📝</span><span class="cb-name">Assignments</span><span class="cb-desc">Mission queue</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('achievements')"><span class="cb-ico">🏆</span><span class="cb-name">Achievements</span><span class="cb-desc">XP, levels & badges</span></button>
