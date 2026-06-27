@@ -875,6 +875,7 @@ body.modal-open #mobileCta{display:none!important}
       </div>
       <div class="ds-sidebar-bottom">
         <button class="ds-exit-btn" onclick="showView('site')">&larr; Exit to site</button>
+        <button class="ds-exit-btn" id="dsLogoutBtn" style="margin-top:6px;opacity:.6;font-size:.78rem" onclick="dsLogout()">&#x1F512; Log out (lock this device)</button>
       </div>
     </nav>
 
@@ -1960,6 +1961,7 @@ function submitFreebie(e){e.preventDefault();var f=e.target,ok=document.getEleme
 function dsOpenSidebar(){document.getElementById('dsSidebar').classList.add('open');document.getElementById('dsSidebarOverlay').classList.add('show')}
 function dsCloseSidebar(){const s=document.getElementById('dsSidebar');if(s)s.classList.remove('open');const o=document.getElementById('dsSidebarOverlay');if(o)o.classList.remove('show')}
 function dsToast(msg){const t=document.getElementById('dsToast'),m=document.getElementById('dsToastMsg');if(!t||!m)return;m.textContent=msg;t.style.display='block';clearTimeout(window._toastT);window._toastT=setTimeout(()=>t.style.display='none',3200)}
+function dsLogout(){if(confirm('Log out and lock this device? You can get back in any time with your unlock link.')){store.del('escape_premium_key');updateNavLocks();location.href=location.pathname;}}
 function dsUpdateDareBtn(){
   const data=load("escape_challenge",{date:"",streak:0}),done=data.date===pxTodayKey();
   const btn=document.getElementById("dsDareBtn");
