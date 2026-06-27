@@ -1021,5 +1021,114 @@ GF.views = (() => {
     </div>`;
   };
 
+  /* ═══════════════ HELP CENTER ═══════════════ */
+
+  V.help = () => {
+    const faqs = [
+      { q: "How do I add my subjects?", a: "Go to <strong>Marks Center</strong> (sidebar or mobile nav) → tap <strong>+ Add Subject</strong>. Enter the name, choose a color, set your target %, and save. You can add as many subjects as you need." },
+      { q: "How does the AI Grade Predictor work?", a: "Once you have 3+ marks in a subject, GradeForge runs a least-squares trend line through them and forecasts where your average is heading. It also shows a <em>confidence band</em>. Add more marks to sharpen the prediction." },
+      { q: "What is the AI Academic Score?", a: "Your <strong>AAS</strong> (0–100) is a composite of five factors: grade performance, consistency between marks, recent momentum, study discipline (habits & focus), and focus session quality. It gives you a holistic view of how you're really doing — not just one test." },
+      { q: "What is spaced repetition in Memory Lab?", a: "Memory Lab uses the <strong>SM-2 algorithm</strong> — the same science used by Anki. After you rate how well you remembered a card (1–5), the app schedules the next review at the optimal interval. Easy cards come back later; hard ones come back sooner. This maximises long-term retention." },
+      { q: "How do I use the Focus Engine?", a: "Choose your mode — <strong>Pomodoro</strong> (25 min work + 5 min break), <strong>Deep Work</strong> (90 min), or <strong>Sprint</strong> (15 min). Pick a subject, hit Start, and work distraction-free. Each completed session earns XP and logs focus minutes on your dashboard." },
+      { q: "What does the AI Study Coach actually do?", a: "The Coach analyses your weakest subjects (by grade and trend), upcoming exams (by proximity), and assignment urgency. It ranks your personalised study actions and explains exactly <em>why</em> each one is top priority right now — no generic advice." },
+      { q: "Why does the app say 'AI' but not chat?", a: "All the intelligence runs <strong>locally on your device</strong> — no internet, no API key, no account. The AI is the grade predictor, study plan engine, spaced-repetition scheduler, and coaching logic. It's faster, private, and works 100% offline." },
+      { q: "How do I back up my data?", a: "Go to <strong>Settings → Data Vault → Export Backup</strong>. This downloads a JSON file with all your data. To restore it on another device (or after clearing the browser), use <strong>Import Backup</strong> and select that file." },
+      { q: "How do I use GradeForge on two devices?", a: "Export a backup on Device 1. On Device 2, open the app, enter your access code to unlock, then go to Settings → Import Backup and load the file. Your data will sync across both devices manually this way." },
+      { q: "What are XP, levels, and streaks?", a: "Every action earns <strong>XP</strong> — adding marks, completing focus sessions, flipping flashcards, hitting habits. XP fills your level bar (10 levels from Novice Scholar to GradeForge Legend). Your <strong>streak</strong> counts consecutive days you've studied; hit 3+ days for the 🔥 flame badge." },
+      { q: "What is APS (South Africa mode)?", a: "<strong>Admission Point Score</strong> is used by South African universities to rank matric applicants. GradeForge calculates your APS from your subject marks and shows which degree programmes you qualify for. Enable South Africa mode in <strong>Settings → Mode</strong>." },
+      { q: "How does Today's Plan work?", a: "Every morning, the AI Study Planner looks at your upcoming exams (2× weight), overdue assignments, weakest subjects, and flashcard reviews due. It generates a prioritised list of timed blocks — like a personal tutor telling you exactly what to study today and for how long." },
+      { q: "I lost my access code. What do I do?", a: "Message the seller on Etsy with your order number. We'll resend your access card immediately. Your code is also in your original Etsy order confirmation email." },
+    ];
+
+    const modules = [
+      { ico: "🗓️", name: "Today's Plan", desc: "AI-built daily study schedule", view: "today" },
+      { ico: "📊", name: "Command Center", desc: "Your academic dashboard & AAS score", view: "dashboard" },
+      { ico: "📈", name: "Marks Center", desc: "Enter marks & see grade trends", view: "marks" },
+      { ico: "📝", name: "Assignments", desc: "Track tasks & deadlines", view: "assignments" },
+      { ico: "🕐", name: "Timetable", desc: "Your weekly class schedule", view: "timetable" },
+      { ico: "🎓", name: "Exam Center", desc: "Countdown & readiness scores", view: "exams" },
+      { ico: "⚡", name: "AI Study Coach", desc: "Personalised study priorities", view: "coach" },
+      { ico: "🃏", name: "Memory Lab", desc: "Spaced-repetition flashcards", view: "flashcards" },
+      { ico: "🔬", name: "Study Lab", desc: "Science-backed techniques", view: "studylab" },
+      { ico: "⏱️", name: "Focus Engine", desc: "Pomodoro & deep work timer", view: "focus" },
+      { ico: "🔁", name: "Habit Forge", desc: "Daily habits & streaks", view: "habits" },
+      { ico: "📓", name: "Notes", desc: "Quick capture notebook", view: "notes" },
+      { ico: "🏆", name: "Achievements", desc: "XP, badges & level-ups", view: "achievements" },
+      { ico: "🌐", name: "University Hub", desc: "APS calculator & programmes", view: "university" },
+    ];
+
+    const tips = [
+      { ico: "🔥", text: "<strong>Keep your streak alive</strong> — even one flashcard or one habit counts. A 3-day streak unlocks the flame badge and bonus XP." },
+      { ico: "💡", text: "<strong>Load demo data</strong> first to see what a full account looks like. Go to Settings → Load Demo Data, then clear it when you're ready to go live." },
+      { ico: "🌙", text: "<strong>Switch to dark mode</strong> for night studying — tap the 🌙 button in the top-right or go to Settings → Appearance." },
+      { ico: "💾", text: "<strong>Export a backup weekly.</strong> GradeForge stores everything on your device. If you clear your browser cache, your data could be lost — a backup takes 2 seconds." },
+      { ico: "⚡", text: "<strong>Use the Coach before each study session</strong> — it tells you exactly which subject to study right now based on your upcoming exams and weakest areas." },
+      { ico: "🃏", text: "<strong>Add flashcards right after class</strong> while the material is fresh. Memory Lab will then space your reviews automatically so you never cram the night before." },
+      { ico: "🎯", text: "<strong>Set a target % per subject</strong> in Marks Center. The AI predictor will show whether you're on track to hit it — and alert you if your trend is dipping." },
+    ];
+
+    return `
+    <div class="section-head">
+      <div><div class="section-title"><span class="dot"></span> Help Center</div>
+      <div class="section-sub">Everything you need to get the most out of GradeForge AI X</div></div>
+    </div>
+
+    <div class="help-hero">
+      <div class="help-hero-title">👋 Welcome to GradeForge AI X</div>
+      <div class="help-hero-sub">Your Personal AI Academic Operating System — built to help you track every mark, predict your grades, study smarter, and arrive at exam day fully prepared. Here's how to get started in 5 simple steps.</div>
+      <div class="help-steps">
+        <div class="help-step"><div class="hs-num">1</div><div class="hs-text"><strong>Add your subjects</strong><span>Marks Center → + Add Subject</span></div></div>
+        <div class="help-step"><div class="hs-num">2</div><div class="hs-text"><strong>Enter your first marks</strong><span>Tap a subject → + Add Mark</span></div></div>
+        <div class="help-step"><div class="hs-num">3</div><div class="hs-text"><strong>Add upcoming exams</strong><span>Exam Center → + Add Exam</span></div></div>
+        <div class="help-step"><div class="hs-num">4</div><div class="hs-text"><strong>Check your Coach</strong><span>AI Study Coach → see your priorities</span></div></div>
+        <div class="help-step"><div class="hs-num">5</div><div class="hs-text"><strong>Study & earn XP</strong><span>Focus Engine → start a session</span></div></div>
+      </div>
+    </div>
+
+    <div class="grid-2-col" style="gap:20px">
+      <div>
+        <div class="card">
+          <div class="card-title"><span class="ico">❓</span> Frequently Asked Questions</div>
+          <div class="faq-list">
+            ${faqs.map((f, i) => `
+            <div class="faq-item" id="faq-${i}">
+              <button class="faq-q" onclick="GF.app.toggleFAQ(${i})" aria-expanded="false">
+                ${esc(f.q)}<span class="faq-chevron">▼</span>
+              </button>
+              <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+            </div>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="card">
+          <div class="card-title"><span class="ico">🗺️</span> All Modules</div>
+          <div class="module-grid">
+            ${modules.map(m => `
+            <button class="module-tile" onclick="GF.app.go('${m.view}')">
+              <div class="mt-ico">${m.ico}</div>
+              <div class="mt-name">${esc(m.name)}</div>
+              <div class="mt-desc">${esc(m.desc)}</div>
+            </button>`).join("")}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ico">💡</span> Pro Tips</div>
+          <div class="tip-list">
+            ${tips.map(t => `<div class="tip-row"><span class="tip-ico">${t.ico}</span><span class="tip-text">${t.text}</span></div>`).join("")}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ico">📬</span> Support</div>
+          <p class="small muted mb-12">Need help or lost your access code?</p>
+          <p class="small" style="line-height:1.7">Message the seller directly on Etsy with your order number and we'll get back to you within 24 hours.<br><br>You can also re-read the PDF that came with your purchase — it has your access code and a quick-start guide.</p>
+        </div>
+      </div>
+    </div>`;
+  };
+
   return V;
 })();

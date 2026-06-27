@@ -958,7 +958,16 @@ GF.app = (() => {
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('achievements')"><span class="cb-ico">🏆</span><span class="cb-name">Achievements</span><span class="cb-desc">XP, levels & badges</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('university')"><span class="cb-ico">🎓</span><span class="cb-name">University Hub</span><span class="cb-desc">APS · applications</span></button>
         <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('settings')"><span class="cb-ico">⚙️</span><span class="cb-name">Settings</span><span class="cb-desc">Profile & data vault</span></button>
+        <button class="coach-btn" onclick="GF.app.closeModal();GF.app.go('help')" style="border-color:var(--stroke-bright)"><span class="cb-ico">❓</span><span class="cb-name">Help Center</span><span class="cb-desc">Guide, FAQ & tips</span></button>
       </div>`);
+  };
+
+  A.toggleFAQ = (idx) => {
+    const item = document.getElementById(`faq-${idx}`);
+    if (!item) return;
+    const wasOpen = item.classList.contains("open");
+    document.querySelectorAll(".faq-item.open").forEach(el => el.classList.remove("open"));
+    if (!wasOpen) item.classList.add("open");
   };
 
   /* ═══════ SETTINGS / DATA ═══════ */
