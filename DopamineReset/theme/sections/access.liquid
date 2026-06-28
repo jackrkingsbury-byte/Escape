@@ -185,6 +185,11 @@
     <button class="dr__nav" data-go="articles"><span class="ic">📚</span> Articles</button>
     <button class="dr__nav" data-go="journeys"><span class="ic">💗</span> Mood Help</button>
     <button class="dr__nav" data-go="quotes"><span class="ic">📜</span> Quotes</button>
+    <div class="dr__navttl">Unwind</div>
+    <button class="dr__nav" data-go="relax"><span class="ic">🧘</span> Time to Relax</button>
+    <button class="dr__nav" data-go="affirm"><span class="ic">💗</span> Affirmations</button>
+    <button class="dr__nav" data-go="wins"><span class="ic">🏅</span> Daily Wins</button>
+    <div class="dr__navttl">Tools</div>
     <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
     <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Dopamine Menu</button>
     <button class="dr__nav" data-go="journal"><span class="ic">📓</span> Journal</button>
@@ -301,6 +306,31 @@
       <div id="qSaved"></div>
     </section>
 
+    <section class="panel" data-p="relax">
+      <h1>Time to relax</h1>
+      <p>No goals here. Just calm. Pick something and let your nervous system settle — <b>+5 XP</b> each.</p>
+      <div class="feed" id="relaxFeed"></div>
+    </section>
+
+    <section class="panel" data-p="affirm">
+      <h1>Affirmations</h1>
+      <p>Read it slowly. Say it like you mean it. These rewire the story you tell yourself.</p>
+      <div class="qcard"><p id="afText">"…"</p>
+        <div class="qrow"><button class="btn btn--g btn--sm" id="afSave">❤️ Save</button><button class="btn btn--ghost btn--sm" id="afNext">Next →</button></div></div>
+      <h3 style="margin-top:18px">Saved <span id="afSavedN" style="color:var(--faint)"></span></h3>
+      <div id="afSaved"></div>
+    </section>
+
+    <section class="panel" data-p="wins">
+      <h1>Daily wins</h1>
+      <p>Tiny wins compound. Log one — anything you're a little proud of. <b>+5 XP each.</b></p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="winInput" placeholder="e.g. Didn't scroll in bed last night" style="flex:1;min-width:180px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:13px;font:inherit">
+        <button class="btn btn--g btn--sm" id="winAdd">Add win 🏅</button>
+      </div>
+      <div id="winList" style="margin-top:16px"></div>
+    </section>
+
     <section class="panel" data-p="toolkit">
       <h1>Urge toolkit</h1>
       <p>Craving to scroll? Tap a tile, do it for 90 seconds, beat the urge — <b>+5 XP</b> each.</p>
@@ -351,6 +381,7 @@ try{
   if(!state.notes)state.notes={};if(!state.moods)state.moods={};if(!state.vision)state.vision={};
   if(!state.games)state.games={};if(!state.achvSeen)state.achvSeen={};if(!state.savedQ)state.savedQ=[];
   if(typeof state.qi!=='number')state.qi=0;if(!state.read)state.read={};
+  if(!state.relaxDone)state.relaxDone={};if(!state.wins)state.wins=[];if(!state.savedAff)state.savedAff=[];if(typeof state.afi!=='number')state.afi=0;
 
   var GRADS=['linear-gradient(135deg,#ff8a3d,#ffc24b)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#ff8a3d)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#ff8a3d)'];
   function g(i){return GRADS[((i%GRADS.length)+GRADS.length)%GRADS.length]}
@@ -440,6 +471,8 @@ try{
     {id:'why',e:'🧭',n:'Know your why',d:'Fill all 4 Why boxes',test:function(){return vf()>=4}},
     {id:'mind',e:'🕹️',n:'Mind gym',d:'Play all 5 games',test:function(){return gp()>=5}},
     {id:'lib',e:'🦉',n:'Scholar',d:'Read 5 articles',test:function(){return rd()>=5}},
+    {id:'zen',e:'🧘',n:'Zen mode',d:'Try a relax activity',test:function(){return Object.keys(state.relaxDone).length>0}},
+    {id:'win1',e:'🏅',n:'First win',d:'Log a daily win',test:function(){return state.wins.length>0}},
     {id:'journal',e:'📓',n:'Reflective',d:'Write a journal line',test:function(){return (state.journal||'').length>3}},
     {id:'xp250',e:'⭐',n:'Locked in',d:'Reach 250 XP',test:function(){return xp()>=250}},
     {id:'reset',e:'🏆',n:'Full reset',d:'Complete all 7 days',test:function(){return dc()>=7}}
@@ -453,7 +486,7 @@ try{
   function gp(){return Object.keys(state.games).length}
   function rd(){return Object.keys(state.read).length}
   function vf(){var n=0;for(var i=0;i<4;i++)if((state.vision[i]||'').length>1)n++;return n}
-  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+rd()*20+vf()*5+state.savedQ.length*2;if((state.journal||'').length>3)x+=10;return x}
+  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+rd()*20+vf()*5+state.savedQ.length*2;x+=Object.keys(state.relaxDone).length*5+state.wins.length*5+state.savedAff.length*2;if((state.journal||'').length>3)x+=10;return x}
   function lvl(){var x=xp(),L=0;for(var i=0;i<LEVELS.length;i++)if(x>=LEVELS[i].x)L=i;return L}
   function clamp(v){return v<0?0:v>100?100:Math.round(v)}
   function avgMood(){var v=[],k;for(k in state.moods)v.push(state.moods[k]);if(!v.length)return -1;var s=0;for(var i=0;i<v.length;i++)s+=v[i];return s/v.length}
@@ -633,6 +666,50 @@ try{
   function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
   $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
   if($('#craveCount'))$('#craveCount').textContent=state.crave;
+
+  // ===== UNWIND: Relax / Affirmations / Wins =====
+  var RELAX=[{id:'breathe',e:'🫧',t:'Breathing Bubble',s:'Slow your whole system'},{id:'pop',e:'🫧',t:'Bubble Pop',s:'Pop the stress away'},{id:'scan',e:'🧘',t:'Body Scan',s:'Melt the tension'},{id:'calm',e:'⏳',t:'Calm Timer',s:'Just sit · 2 min'},{id:'sounds',e:'🎧',t:'Calm Sounds',s:'Pick an ambient mix'}];
+  var AFFIRM=["I am building a calmer, sharper mind.","I don't need a screen to feel okay.","I keep the promises I make to myself.","My focus gets stronger every day.","I can sit with discomfort and let it pass.","I am in control of my attention.","Real life is more than enough for me.","I choose what I give my mind to.","Every urge I beat makes me stronger.","I am becoming the person I want to be.","I am allowed to rest without earning it.","Slow and steady is still moving forward.","I am proud of how far I've come.","Calm is my natural state — I'm finding my way back.","Today I choose presence over noise."];
+  var SOUNDS=[{e:'🌧️',n:'Rain on a window'},{e:'🌊',n:'Ocean waves'},{e:'🌲',n:'Forest at dawn'},{e:'🎹',n:'Soft piano / lo-fi'},{e:'🤎',n:'Brown noise'},{e:'☕',n:'Quiet café hum'}];
+  function relaxOk(id,msg){if(!state.relaxDone[id]){state.relaxDone[id]=true;save();celebrate();toast('🧘 +5 XP · '+msg)}buildRelax()}
+  function buildRelax(){if($('#relaxFeed'))$('#relaxFeed').innerHTML=RELAX.map(function(r,i){return tcard('data-relax="'+r.id+'"',r.e,g(i+2),'RELAX',r.t,state.relaxDone[r.id]?'Done ✓':r.s,state.relaxDone[r.id]?'read':'')}).join('')}
+
+  function openScan(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--blue))';$('#mEmoji').textContent='🧘';$('#mTag').textContent='Body scan';$('#mTitle').textContent='Melt the tension';
+    var steps=['Settle in. Close your eyes if you can.','Soften your forehead and jaw.','Drop your shoulders away from your ears.','Relax your chest and let the breath slow.','Unclench your hands and arms.','Let your belly go soft.','Release your legs, all the way down.','Feel your whole body held. You can stay as long as you like.'];
+    $('#mBody').innerHTML='<div class="play"><div class="rt" id="scTxt" style="font-size:1.25rem;padding:0 16px"></div></div>';
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="scDone" style="width:100%">I feel calmer ✓</button></div>';
+    var n=0;function sstep(){$('#scTxt').textContent=steps[n];n++;if(n<steps.length)gTimers.push(setTimeout(sstep,4500))}sstep();
+    $('#scDone').onclick=function(){relaxOk('scan','Tension released');closeM()};openModal()}
+  function openCalm(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--violet))';$('#mEmoji').textContent='⏳';$('#mTag').textContent='Calm timer';$('#mTitle').textContent='Just sit · 2 minutes';
+    $('#mBody').innerHTML='<div class="play"><div class="bubble" id="calmB" style="transition:transform 5s ease-in-out">2:00</div></div><p style="text-align:center;color:var(--faint)">Nothing to do. Watch it breathe with you.</p>';
+    var left=120,b=$('#calmB'),big=false;
+    function ct(){var m=Math.floor(left/60),s=left%60;b.textContent=m+':'+(s<10?'0':'')+s;big=!big;b.style.transform=big?'scale(1.18)':'scale(.85)';if(left<=0){b.textContent='Done 🌿';b.style.transform='scale(1)';relaxOk('calm','Two calm minutes');return}left--;gTimers.push(setTimeout(ct,1000))}ct();openModal()}
+  function openSounds(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--blue),var(--teal))';$('#mEmoji').textContent='🎧';$('#mTag').textContent='Calm sounds';$('#mTitle').textContent='Pick an ambient mix';
+    $('#mBody').innerHTML='<p style="color:var(--soft)">Put one of these on in your music app and let it run while you read, breathe or rest.</p>'+SOUNDS.map(function(s){return '<div class="qmini">'+s.e+' <span>'+s.n+'</span></div>'}).join('');
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="snDone" style="width:100%">Got my sound on 🎧</button></div>';
+    $('#snDone').onclick=function(){relaxOk('sounds','Ambient on');closeM()};openModal()}
+  function openPop(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent='🫧';$('#mTag').textContent='Bubble pop';$('#mTitle').textContent='Pop the stress away';
+    $('#mBody').innerHTML='<div class="play" id="popArea" style="min-height:240px"></div><p style="text-align:center" id="popMsg">Tap the bubbles. No score, no rush — just pop. <b id="popN">0</b></p>';
+    var area=$('#popArea'),popped=0,left=30;
+    function spawn(){if(left<=0)return;var s=document.createElement('div');s.className='distract';s.textContent='🫧';s.style.fontSize=(1.6+Math.random()*1.8)+'rem';s.style.left=(8+Math.random()*78)+'%';s.style.top=(70+Math.random()*20)+'%';s.style.transition='top 4s linear, opacity .3s';area.appendChild(s);gTimers.push(setTimeout(function(){s.style.top='-10%'},30));gTimers.push(setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},4200));s.addEventListener('click',function(){popped++;$('#popN').textContent=popped;s.style.opacity='0';if(s.parentNode)setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},150)});gTimers.push(setTimeout(spawn,520+Math.random()*360))}
+    function clock(){if(left<=0){$('#popMsg').innerHTML='Lovely. You popped <b>'+popped+'</b>. Feel that? 🫧';relaxOk('pop','Stress popped');return}left--;gTimers.push(setTimeout(clock,1000))}
+    spawn();clock();openModal()}
+  function openRelax(id){if(id==='breathe'){openGame('breathe');if(!state.relaxDone.breathe){state.relaxDone.breathe=true;save();buildRelax()}}else if(id==='pop')openPop();else if(id==='scan')openScan();else if(id==='calm')openCalm();else if(id==='sounds')openSounds()}
+  buildRelax();
+
+  // affirmations
+  function showAff(){var a=AFFIRM[state.afi%AFFIRM.length];if($('#afText'))$('#afText').textContent='“'+a+'”';renderAffSaved()}
+  function renderAffSaved(){var box=$('#afSaved');if(!box)return;if($('#afSavedN'))$('#afSavedN').textContent='('+state.savedAff.length+')';box.innerHTML=state.savedAff.length?state.savedAff.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join(''):'<p style="color:var(--faint)">Save the ones that land — re-read them on hard days.</p>'}
+  if($('#afNext')){showAff();
+    $('#afNext').addEventListener('click',function(){state.afi=(state.afi+1)%AFFIRM.length;save();showAff()});
+    $('#afSave').addEventListener('click',function(){var a=AFFIRM[state.afi%AFFIRM.length];if(state.savedAff.indexOf(a)<0){state.savedAff.push(a);save();toast('❤️ Saved');render()}renderAffSaved()})}
+
+  // wins
+  function renderWins(){var box=$('#winList');if(!box)return;box.innerHTML=state.wins.length?state.wins.slice().reverse().map(function(w){return '<div class="qmini">🏅 <span>'+w+'</span></div>'}).join(''):'<p style="color:var(--faint)">No wins logged yet. Even a small one counts.</p>'}
+  function addWin(){var inp=$('#winInput');if(!inp)return;var v=(inp.value||'').trim();if(!v)return;state.wins.push(v);save();inp.value='';renderWins();celebrate();toast('🏅 +5 XP · win logged')}
+  if($('#winAdd')){$('#winAdd').addEventListener('click',addWin);$('#winInput').addEventListener('keydown',function(e){if(e.key==='Enter')addWin()});renderWins()}
+
+  document.addEventListener('click',function(e){var dr=e.target.closest('[data-relax]');if(dr){openRelax(dr.getAttribute('data-relax'))}});
 
   render();renderArts();
 }catch(err){
