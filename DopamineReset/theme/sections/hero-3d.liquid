@@ -34,7 +34,8 @@
   <div class="hx__scrim"></div>
   <div class="hx__wrap"><div class="hx__in">
     {%- if section.settings.scarcity_label != blank -%}
-      <div class="hx__scar"><i></i> {{ section.settings.scarcity_label | replace: '{n}', section.settings.scarcity_base }}</div>
+      {%- assign ph = '{' | append: 'n' | append: '}' -%}
+      <div class="hx__scar"><i></i> {{ section.settings.scarcity_label | replace: ph, section.settings.scarcity_base }}</div>
     {%- endif -%}
     <p class="hx__eye">{{ section.settings.eyebrow }}</p>
     <h1>{{ section.settings.heading }}</h1>
