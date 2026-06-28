@@ -264,7 +264,8 @@
             "features": "The full 7-day protocol\nCheap-dopamine fast guide\nUrge-surfing toolkit\nReal-dopamine menu (30 lifters)\nDaily tracker + streaks\nInstant access",
             "featured": true,
             "badge": "Launch price",
-            "cta_label": "Start the reset →"
+            "cta_label": "Start the reset →",
+            "product": "the-reset"
           }
         },
         "t2": {
@@ -276,7 +277,8 @@
             "price_suffix": "once-off",
             "features": "Everything in The Reset\nMonthly top-up resets (forever)\nAdvanced focus protocols\nEvery future update free",
             "featured": false,
-            "cta_label": "Get the full toolkit"
+            "cta_label": "Get the full toolkit",
+            "product": "reset-lifetime-toolkit"
           }
         }
       },
@@ -287,7 +289,7 @@
       "settings": {
         "eyebrow": "Start today",
         "heading": "Feel different by this time next week.",
-        "subheading": "Link each option to your Shopify product to turn on instant checkout + auto-redirect.",
+        "subheading": "Pick your plan. Checkout is instant and secure.",
         "footnote": "Instant access · secure Shopify checkout · 7-day money-back guarantee."
       }
     },
