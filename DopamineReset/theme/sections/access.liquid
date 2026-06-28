@@ -2,132 +2,193 @@
 <style>
   .dr{--bg:#0c0a12;--bg2:#15121d;--bg3:#1b1727;--ink:#f6f4ef;--soft:#b8b4ad;--faint:#7e7a73;
       --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.05);--amber:#ffc24b;--orange:#ff8a3d;
-      --pink:#ff5c8a;--violet:#7c5cff;--good:#5ad48a;--r:18px;
+      --pink:#ff5c8a;--violet:#7c5cff;--blue:#4f8cff;--teal:#2bd3c6;--good:#5ad48a;--r:18px;
       --serif:'Fraunces',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;}
   .dr *{box-sizing:border-box}
-  .dr{font-family:var(--sans);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+  .dr{font-family:var(--sans);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-columns:264px 1fr}
   .dr a{color:inherit;text-decoration:none}.dr button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
-  .dr__side{grid-column:1;background:linear-gradient(180deg,var(--bg2),var(--bg));border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:5px}
-  .dr__brand{font-family:var(--serif);font-weight:700;font-size:1.35rem;padding:6px 12px 14px}.dr__brand b{color:var(--amber)}
-  .dr__navttl{font-family:var(--mono);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);padding:12px 12px 4px}
-  .dr__nav{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:var(--soft);font-weight:600;font-size:.94rem;width:100%;text-align:left;transition:.15s}
-  .dr__nav .ic{font-size:1.1rem;width:22px;text-align:center}.dr__nav:hover{background:var(--bg3);color:var(--ink)}
+  .dr__side{grid-column:1;background:linear-gradient(180deg,var(--bg2),var(--bg));border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+  .dr__brand{font-family:var(--serif);font-weight:700;font-size:1.3rem;padding:4px 12px 10px}.dr__brand b{color:var(--amber)}
+  .dr__lvlcard{margin:0 6px 10px;padding:12px;border-radius:14px;background:linear-gradient(135deg,rgba(255,194,75,.14),rgba(124,92,255,.12));border:1px solid var(--line)}
+  .dr__lvlrow{display:flex;align-items:center;gap:10px}
+  .dr__lvlbadge{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:1.3rem;background:linear-gradient(135deg,var(--orange),var(--amber));box-shadow:0 6px 16px rgba(255,138,61,.35);transition:transform .25s}
+  .dr__lvlbadge.pop{transform:scale(1.3) rotate(-8deg)}
+  .dr__lvlt b{display:block;font-family:var(--serif);font-size:.98rem;line-height:1}.dr__lvlt span{font-size:.72rem;color:var(--faint)}
+  .dr__lvlbar{height:7px;border-radius:999px;background:var(--bg3);overflow:hidden;margin-top:9px}
+  .dr__lvlbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--pink),var(--violet));transition:width .6s}
+  .dr__navttl{font-family:var(--mono);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);padding:11px 12px 4px}
+  .dr__nav{display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:11px;color:var(--soft);font-weight:600;font-size:.92rem;width:100%;text-align:left;transition:.15s}
+  .dr__nav .ic{font-size:1.05rem;width:20px;text-align:center}.dr__nav:hover{background:var(--bg3);color:var(--ink)}
   .dr__nav.on{background:linear-gradient(135deg,rgba(255,194,75,.16),rgba(255,92,138,.12));color:var(--ink)}
-  .dr__foot{margin-top:auto;padding:12px;border-top:1px solid var(--line2);color:var(--faint);font-size:.76rem}
+  .dr__foot{margin-top:auto;padding:12px;border-top:1px solid var(--line2);color:var(--faint);font-size:.74rem}
 
-  .dr__main{grid-column:2;padding:clamp(18px,4vw,40px);max-width:1000px}
+  .dr__main{grid-column:2;padding:clamp(16px,4vw,40px);max-width:1040px}
   .dr__top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:10px;flex-wrap:wrap}
   .dr__pills{display:flex;gap:8px;flex-wrap:wrap}
   .dr__pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:.8rem;color:var(--soft)}
   .dr__pill b{color:var(--ink);font-family:var(--mono)}
-  .dr h1{font-family:var(--serif);font-size:clamp(1.7rem,4.4vw,2.5rem);font-weight:600;line-height:1.05;margin:4px 0}
-  .dr h2{font-family:var(--serif);font-size:1.35rem;margin:0 0 4px}.dr h3{font-size:1.02rem;margin:0 0 6px}
+  .dr h1{font-family:var(--serif);font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:600;line-height:1.05;margin:4px 0}
+  .dr h2{font-family:var(--serif);font-size:1.3rem;margin:0 0 4px}.dr h3{font-size:1.02rem;margin:0 0 6px}
   .dr p{color:var(--soft);line-height:1.55;margin:0 0 12px}
-  .dr .eyebrow{font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
-  .dr .panel{display:none;animation:fade .3s ease}.dr .panel.on{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .dr .eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .dr .panel{display:none;animation:fade .35s ease}.dr .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .dr .hl{background:linear-gradient(135deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .dr .hl2{background:linear-gradient(135deg,var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
-  /* thumbnail grid — TikTok-style */
+  /* coach */
+  .dr .coach{position:relative;overflow:hidden;border-radius:22px;padding:24px;margin:6px 0 16px;border:1px solid rgba(255,194,75,.28);background:linear-gradient(135deg,#1a1330,#211a39)}
+  .dr .coach__bg{position:absolute;inset:0;z-index:0;background:radial-gradient(60% 90% at 85% 10%,rgba(255,138,61,.34),transparent 60%),radial-gradient(50% 80% at 10% 100%,rgba(124,92,255,.3),transparent 60%)}
+  .dr .coach>*{position:relative;z-index:1}
+  .dr .coach__row{display:flex;align-items:center;gap:14px;margin-bottom:4px}
+  .dr .coach__orb{width:54px;height:54px;border-radius:50%;flex:0 0 auto;background:radial-gradient(circle at 35% 30%,#fff,#ffd27a 30%,#ff8a3d 70%);box-shadow:0 0 0 4px rgba(255,194,75,.18),0 10px 30px rgba(255,138,61,.4);animation:coachpulse 4s ease-in-out infinite}
+  @keyframes coachpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  .dr .coach__hi{font-family:var(--serif);font-size:clamp(1.3rem,3.6vw,1.9rem);font-weight:600;color:#fff;line-height:1.1}
+  .dr .coach__sub{color:#d9d4ea;font-size:.92rem}
+  .dr .coach__say{font-size:1.04rem;color:#fff;margin:12px 0 0;line-height:1.5}
+  .dr .coach__quote{margin-top:14px;padding-top:13px;border-top:1px solid rgba(255,255,255,.12);font-style:italic;color:#e7e2f5;font-size:.96rem}
+  .dr .coach__cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+  .dr .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:999px;padding:13px 22px;background:#fff;color:#2a1400;transition:transform .15s}
+  .dr .btn:active{transform:scale(.96)}
+  .dr .btn--g{background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400}
+  .dr .btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff}
+  .dr .btn--sm{padding:9px 15px;font-size:.84rem}
+  .dr .btn[disabled]{opacity:.55;pointer-events:none}
+
   .dr .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin:16px 0}
   .dr .thumb{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4;border:1px solid var(--line);cursor:pointer;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column;justify-content:flex-end}
   .dr .thumb:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 18px 40px rgba(0,0,0,.45)}
   .dr .thumb__bg{position:absolute;inset:0;z-index:0}
-  .dr .thumb__emoji{position:absolute;top:14px;left:16px;font-size:2.6rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))}
-  .dr .thumb__tag{position:absolute;top:14px;right:14px;z-index:1;background:rgba(0,0,0,.35);backdrop-filter:blur(4px);border-radius:999px;padding:5px 11px;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:#fff}
+  .dr .thumb__emoji{position:absolute;top:14px;left:16px;font-size:2.5rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))}
+  .dr .thumb__tag{position:absolute;top:14px;right:14px;z-index:1;background:rgba(0,0,0,.35);backdrop-filter:blur(4px);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;color:#fff}
   .dr .thumb__cap{position:relative;z-index:1;padding:14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.55))}
-  .dr .thumb__cap b{display:block;font-family:var(--serif);font-size:1.05rem;line-height:1.15;color:#fff}
-  .dr .thumb__cap span{font-size:.76rem;color:rgba(255,255,255,.8)}
+  .dr .thumb__cap b{display:block;font-family:var(--serif);font-size:1.02rem;line-height:1.15;color:#fff}
+  .dr .thumb__cap span{font-size:.74rem;color:rgba(255,255,255,.8)}
   .dr .thumb.done::after{content:"✓ done";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(8,36,15,.55);color:#fff;font-weight:800;font-family:var(--mono);letter-spacing:.1em}
-  .dr .thumb.locked{cursor:not-allowed}
-  .dr .thumb.locked::after{content:"🔒";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(0,0,0,.55);font-size:1.6rem}
+  .dr .thumb.locked{cursor:not-allowed}.dr .thumb.locked::after{content:"🔒";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(0,0,0,.55);font-size:1.6rem}
 
   .dr .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:16px 0}
   .dr .tile{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1;cursor:pointer;display:grid;place-items:center;text-align:center;padding:12px;border:1px solid var(--line);transition:transform .15s}
-  .dr .tile:hover{transform:translateY(-3px)}
-  .dr .tile__bg{position:absolute;inset:0;z-index:0;opacity:.9}
-  .dr .tile__in{position:relative;z-index:1}.dr .tile__in .e{font-size:1.9rem;display:block}.dr .tile__in b{font-size:.82rem;color:#fff;display:block;margin-top:6px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+  .dr .tile:hover{transform:translateY(-3px)}.dr .tile__bg{position:absolute;inset:0;z-index:0;opacity:.9}
+  .dr .tile__in{position:relative;z-index:1}.dr .tile__in .e{font-size:1.85rem;display:block}.dr .tile__in b{font-size:.82rem;color:#fff;display:block;margin-top:6px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
   .dr .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin:14px 0}
-  .dr .card--hero{position:relative;overflow:hidden;border-color:rgba(255,194,75,.3)}
-  .dr .card--hero .hbg{position:absolute;inset:0;z-index:0;opacity:.95}
-  .dr .card--hero>*{position:relative;z-index:1}
-  .dr .card--hero h2,.dr .card--hero p,.dr .card--hero .eyebrow{color:#fff}.dr .card--hero .eyebrow{color:#fff;opacity:.85}
-  .dr .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:999px;padding:13px 24px;background:#fff;color:#2a1400;transition:transform .15s}
-  .dr .btn:active{transform:scale(.97)}
-  .dr .btn--g{background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400}
-  .dr .btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff}
-  .dr .btn--sm{padding:9px 16px;font-size:.84rem}
-  .dr .btn[disabled]{opacity:.55;pointer-events:none}
-
-  .dr .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:14px 0}
+  .dr .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:12px;margin:14px 0}
   .dr .stat{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px}
-  .dr .stat .big{font-family:var(--serif);font-size:2rem;color:var(--amber);line-height:1}.dr .stat .lbl{color:var(--faint);font-size:.8rem;margin-top:5px}
+  .dr .stat .big{font-family:var(--serif);font-size:1.9rem;color:var(--amber);line-height:1}.dr .stat .lbl{color:var(--faint);font-size:.78rem;margin-top:5px}
   .dr .bar{height:10px;border-radius:999px;background:var(--bg3);overflow:hidden;margin:8px 0}.dr .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--pink));width:0;transition:width .6s}
+
+  /* score dials */
+  .dr .dials{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+  .dr .dial{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center}
+  .dr .ring{--v:0;width:108px;height:108px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;
+    background:radial-gradient(closest-side,var(--bg2) 70%,transparent 71%),conic-gradient(var(--c,var(--amber)) calc(var(--v)*1%),var(--bg3) 0)}
+  .dr .ring b{font-family:var(--serif);font-size:1.5rem;color:#fff}
+  .dr .dial .nm{font-weight:700;font-size:.95rem}.dr .dial .ds{color:var(--faint);font-size:.78rem}
+  .dr .ring--big{width:150px;height:150px}.dr .ring--big b{font-size:2.1rem}
+
+  .dr .mgraph{display:flex;align-items:flex-end;gap:8px;height:120px;margin:14px 0 6px}
+  .dr .mgraph .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+  .dr .mgraph .bar2{width:100%;max-width:30px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--amber),var(--pink));min-height:6px;transition:height .5s}
+  .dr .mgraph .dl{font-size:.66rem;color:var(--faint);font-family:var(--mono)}
+
+  /* achievements */
+  .dr .achv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:14px 0}
+  .dr .ach{position:relative;border-radius:16px;border:1px solid var(--line);background:var(--bg2);padding:16px;text-align:center;transition:transform .15s}
+  .dr .ach .e{font-size:2rem;filter:grayscale(1) opacity(.4)}
+  .dr .ach.got{border-color:rgba(255,194,75,.5);background:linear-gradient(160deg,rgba(255,194,75,.12),var(--bg2))}
+  .dr .ach.got .e{filter:none}.dr .ach.got:hover{transform:translateY(-3px)}
+  .dr .ach b{display:block;font-size:.86rem;color:#fff;margin-top:8px}.dr .ach span{font-size:.72rem;color:var(--faint)}
+  .dr .ach.got::after{content:"✓";position:absolute;top:9px;right:11px;width:22px;height:22px;border-radius:50%;background:var(--good);color:#06270f;font-weight:800;display:grid;place-items:center;font-size:.8rem}
+
+  /* journeys */
+  .dr .moodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin:16px 0}
+  .dr .moodc{border-radius:16px;border:1px solid var(--line);padding:16px 10px;text-align:center;cursor:pointer;transition:transform .15s;position:relative;overflow:hidden}
+  .dr .moodc:hover{transform:translateY(-3px)}.dr .moodc .cbg{position:absolute;inset:0;z-index:0;opacity:.85}
+  .dr .moodc>*{position:relative;z-index:1}.dr .moodc .e{font-size:2.1rem}.dr .moodc b{display:block;color:#fff;margin-top:6px;font-size:.92rem;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+
+  .dr .moods{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .dr .moodb{font-size:1.8rem;width:60px;height:60px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:.15s;display:grid;place-items:center}
+  .dr .moodb:hover,.dr .moodb.on{transform:translateY(-3px);border-color:var(--amber);background:var(--bg3)}
+
+  .dr textarea{width:100%;min-height:130px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;color:var(--ink);padding:15px;font:inherit;resize:vertical}
+  .dr .saved{font-size:.8rem;color:var(--good);opacity:0;transition:.3s}.dr .saved.on{opacity:1}
   .dr ul.tick{list-style:none;padding:0;margin:8px 0}.dr ul.tick li{padding:9px 0 9px 26px;position:relative;color:var(--soft);border-top:1px solid var(--line2)}
   .dr ul.tick li:first-child{border:0}.dr ul.tick li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
-  .dr textarea{width:100%;min-height:150px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;color:var(--ink);padding:15px;font:inherit;resize:vertical}
-  .dr .saved{font-size:.8rem;color:var(--good);opacity:0;transition:.3s}.dr .saved.on{opacity:1}
 
   /* modal */
-  .dr__modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,4,8,.7);backdrop-filter:blur(6px)}
+  .dr__modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,4,8,.72);backdrop-filter:blur(6px)}
   .dr__modal.on{display:flex;animation:fade .25s}
-  .dr__sheet{background:var(--bg2);border:1px solid var(--line);border-radius:22px;max-width:460px;width:100%;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
-  .dr__sheet .top{position:relative;height:170px;display:grid;place-items:center}
-  .dr__sheet .top .e{font-size:4rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4))}
-  .dr__sheet .x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.4);color:#fff;display:grid;place-items:center;font-size:1.1rem}
-  .dr__sheet .body{padding:22px;overflow:auto}
-  .dr__sheet .body h2{margin-bottom:8px}
+  .dr__sheet{background:var(--bg2);border:1px solid var(--line);border-radius:22px;max-width:480px;width:100%;overflow:hidden;max-height:92vh;display:flex;flex-direction:column}
+  .dr__sheet .top{position:relative;min-height:150px;display:grid;place-items:center;padding:14px}
+  .dr__sheet .top .e{font-size:3.6rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4))}
+  .dr__sheet .x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.4);color:#fff;display:grid;place-items:center;font-size:1.1rem;z-index:2}
+  .dr__sheet .body{padding:22px;overflow:auto}.dr__sheet .body h2{margin-bottom:8px}
+  .dr .msec{margin-top:15px;padding-top:13px;border-top:1px solid var(--line)}
+  .dr .msec b{display:block;margin-bottom:6px;color:var(--amber);font-size:.92rem}.dr .msec p{margin:0;font-size:.94rem;color:var(--soft)}
+  .dr .mnote{width:100%;min-height:74px;margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:11px;font:inherit;resize:vertical}
+
+  /* games */
+  .dr .play{min-height:210px;display:grid;place-items:center;text-align:center;background:var(--bg3);border-radius:16px;margin:6px 0 14px;position:relative;overflow:hidden}
+  .dr .bubble{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;
+    background:radial-gradient(circle,rgba(255,194,75,.5),rgba(124,92,255,.2));border:1px solid rgba(255,255,255,.18);transition:transform 4s ease-in-out}
+  .dr .rt{font-family:var(--serif);font-size:1.6rem;color:#fff}
+  .dr .react{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:1.2rem;color:#fff}
+  .dr .distract{position:absolute;font-size:2.2rem;cursor:pointer;user-select:none}
+
+  /* quotes */
+  .dr .qcard{position:relative;border-radius:18px;padding:22px;border:1px solid var(--line);background:linear-gradient(135deg,#1a1330,#211a39);margin:14px 0}
+  .dr .qcard p{font-family:var(--serif);font-size:1.3rem;color:#fff;line-height:1.35;font-style:italic}
+  .dr .qcard .by{color:var(--amber);font-size:.86rem;font-family:var(--mono)}
+  .dr .qrow{display:flex;gap:10px;margin-top:14px}
+  .dr .qmini{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin:8px 0;color:var(--soft);font-size:.95rem}
+
+  /* toast + confetti */
+  .dr__toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);z-index:120;background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;font-weight:800;padding:13px 20px;border-radius:999px;box-shadow:0 16px 40px rgba(255,138,61,.45);opacity:0;transition:.35s;display:flex;align-items:center;gap:9px;max-width:90vw}
+  .dr__toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  .dr__cf{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:110}
+  .dr__cf span{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:cf linear forwards}
+  @keyframes cf{to{transform:translateY(105vh) rotate(560deg);opacity:.2}}
 
   .dr__menu{display:none}
-  /* scrim must stay OUT of the grid on wide screens — fixed + hidden by default,
-     otherwise the empty div lands in column 2 and blanks the main panel */
-  .dr__scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85;display:none}
-  .dr__scrim.on{display:block}
+  .dr__scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85;display:none}.dr__scrim.on{display:block}
   @media(max-width:820px){
     .dr{grid-template-columns:1fr}
     .dr__main{grid-column:1}
-    .dr__side{position:fixed;inset:0 28% 0 0;z-index:90;transform:translateX(-105%);transition:transform .25s}.dr__side.open{transform:none}
+    .dr__side{position:fixed;inset:0 26% 0 0;z-index:90;transform:translateX(-105%);transition:transform .25s}.dr__side.open{transform:none}
     .dr__menu{display:inline-flex;align-items:center;gap:6px;font-weight:700;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
   }
-  .dr .brz{display:grid;place-items:center;padding:26px 0}
-  .dr .brz__c{width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,194,75,.4),rgba(124,92,255,.14));border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;font-weight:800;font-size:1.15rem;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);animation:brz 11s ease-in-out infinite}
-  @keyframes brz{0%,100%{transform:scale(.78)}45%,55%{transform:scale(1.28)}}
-  @media (prefers-reduced-motion:reduce){.dr .brz__c{animation:none}}
-  .dr .moods{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-  .dr .moodb{font-size:2rem;width:64px;height:64px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:.15s}
-  .dr .moodb:hover,.dr .moodb.on{transform:translateY(-3px);border-color:var(--amber);background:var(--bg3)}
-  .dr .moodlog{display:flex;gap:8px;flex-wrap:wrap;font-size:1.5rem}
-  .dr .msec{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-  .dr .msec b{display:block;margin-bottom:6px;color:var(--amber);font-size:.95rem}
-  .dr .msec p{margin:0;font-size:.95rem;color:var(--soft)}
-  .dr .mnote{width:100%;min-height:80px;margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:12px;font:inherit;resize:vertical}
-  .dr .vision{display:grid;gap:12px;margin:16px 0}
-  .dr .vrow{position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px}
-  .dr .vrow::before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;filter:blur(26px);opacity:.4}
-  .dr .vrow.v0::before{background:#ffc24b}.dr .vrow.v1::before{background:#5ad48a}.dr .vrow.v2::before{background:#ff5c8a}.dr .vrow.v3::before{background:#7c5cff}
-  .dr .vrow label{position:relative;display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px}
-  .dr .vrow .ve{font-size:1.6rem}
-  .dr .vrow textarea{position:relative;width:100%;min-height:62px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:11px;font:inherit;resize:vertical}
+  @media (prefers-reduced-motion:reduce){.dr .coach__orb,.dr .bubble{animation:none}}
 </style>
 
 <div class="dr" id="drApp">
   <aside class="dr__side" id="drSide">
     <div class="dr__brand">Dopamine<b>.</b>Reset</div>
+    <div class="dr__lvlcard">
+      <div class="dr__lvlrow">
+        <div class="dr__lvlbadge" id="lvBadge">🌱</div>
+        <div class="dr__lvlt"><b id="lvName">Level 1</b><span id="lvTitle">Asleep</span></div>
+      </div>
+      <div class="dr__lvlbar"><i id="lvBar"></i></div>
+    </div>
     <div class="dr__navttl">Your reset</div>
-    <button class="dr__nav on" data-go="today"><span class="ic">🔥</span> Today</button>
+    <button class="dr__nav on" data-go="today"><span class="ic">🤖</span> Coach</button>
     <button class="dr__nav" data-go="plan"><span class="ic">🗓️</span> The 7 Days</button>
     <button class="dr__nav" data-go="track"><span class="ic">✅</span> Tracker</button>
-    <button class="dr__nav" data-go="stats"><span class="ic">📈</span> My Stats</button>
+    <button class="dr__nav" data-go="stats"><span class="ic">📊</span> My Stats</button>
+    <button class="dr__nav" data-go="achv"><span class="ic">🏆</span> Achievements</button>
     <button class="dr__nav" data-go="vision"><span class="ic">🌟</span> Your Why</button>
-    <div class="dr__navttl">Tools</div>
+    <div class="dr__navttl">Feel good now</div>
+    <button class="dr__nav" data-go="games"><span class="ic">🎮</span> Mind Games</button>
+    <button class="dr__nav" data-go="journeys"><span class="ic">💗</span> Mood Help</button>
+    <button class="dr__nav" data-go="quotes"><span class="ic">📜</span> Quotes</button>
     <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
     <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Dopamine Menu</button>
-    <button class="dr__nav" data-go="breathe"><span class="ic">🫁</span> Breathe</button>
-    <button class="dr__nav" data-go="mood"><span class="ic">😊</span> Mood</button>
     <button class="dr__nav" data-go="journal"><span class="ic">📓</span> Journal</button>
     <button class="dr__nav" data-go="help"><span class="ic">💬</span> Help</button>
-    <div class="dr__foot">Bookmark this — it's your home base for 7 days.</div>
+    <div class="dr__foot">Bookmark this — your home base for 7 days.</div>
   </aside>
   <div class="dr__scrim" id="drScrim"></div>
 
@@ -135,28 +196,34 @@
     <div class="dr__top">
       <button class="dr__menu" id="drBurger">☰ Menu</button>
       <div class="dr__pills">
-        <span class="dr__pill">🔥 Streak <b id="pStreak">0</b></span>
+        <span class="dr__pill">⭐ <b id="pXp">0</b> XP</span>
+        <span class="dr__pill">🔥 <b id="pStreak">0</b></span>
         <span class="dr__pill">Day <b id="pDay">1</b>/7</span>
-        <span class="dr__pill">⚡ <b id="pCrave">0</b> beaten</span>
       </div>
     </div>
 
     <section class="panel on" data-p="today">
-      <h1>You're in. Tap to begin. 👇</h1>
-      <p>Do one thing a day for 7 days. Tap today's card to open it.</p>
-      <div class="card card--hero" id="todayCard">
-        <div class="hbg" id="todayBg"></div>
-        <div class="eyebrow">Today · <span id="tLabel">Day 1</span></div>
-        <h2 id="tTitle">Delete the worst one.</h2>
-        <p id="tAction"></p>
-        <button class="btn btn--g" id="tDone">Mark today done ✓</button>
-        <button class="btn btn--ghost btn--sm" data-go="plan" style="margin-left:8px">See all 7 →</button>
+      <div class="coach">
+        <div class="coach__bg"></div>
+        <div class="coach__row"><div class="coach__orb"></div>
+          <div><div class="coach__hi" id="coHi">Hey there 👋</div><div class="coach__sub" id="coSub">Your coach is warming up…</div></div></div>
+        <p class="coach__say" id="coSay">Let's get your first win today.</p>
+        <div class="coach__quote" id="coQuote"></div>
+        <div class="coach__cta">
+          <button class="btn btn--g" data-open-today>Today's challenge →</button>
+          <button class="btn btn--ghost btn--sm" data-go="games">I need a reset now</button>
+        </div>
       </div>
       <div class="stats">
         <div class="stat"><div class="big" id="t1">0</div><div class="lbl">days done</div></div>
         <div class="stat"><div class="big" id="t2">0</div><div class="lbl">streak</div></div>
         <div class="stat"><div class="big" id="t3">0%</div><div class="lbl">complete</div></div>
+        <div class="stat"><div class="big" id="t4">0</div><div class="lbl">cravings beaten</div></div>
       </div>
+      <h3 style="margin-top:18px">How do you feel right now?</h3>
+      <p>Tap one — your coach adjusts, and you earn XP for checking in.</p>
+      <div class="moods" id="moodBtns"></div>
+      <div id="moodReply" class="card" style="display:none"></div>
     </section>
 
     <section class="panel" data-p="plan">
@@ -167,25 +234,66 @@
 
     <section class="panel" data-p="track">
       <h1>Tracker</h1>
-      <p>Tap a day card to complete it. Your streak builds as you go.</p>
+      <p>Tap a day to complete it. Each day is <b>+30 XP</b> and builds your streak.</p>
       <div class="feed" id="trackFeed"></div>
       <div class="card"><h3>Streak</h3><div class="bar"><i id="trackBar"></i></div><p id="trackMsg" style="margin:0"></p></div>
     </section>
 
     <section class="panel" data-p="stats">
       <h1>My stats</h1>
-      <div class="stats">
-        <div class="stat"><div class="big" id="sA">0</div><div class="lbl">days done</div></div>
-        <div class="stat"><div class="big" id="sB">0</div><div class="lbl">streak</div></div>
-        <div class="stat"><div class="big" id="sC">0%</div><div class="lbl">progress</div></div>
-        <div class="stat"><div class="big" id="sD">0</div><div class="lbl">cravings beaten</div></div>
+      <div class="dials">
+        <div class="dial"><div class="ring ring--big" id="ringReset" style="--c:var(--amber)"><b id="ringResetN">0%</b></div><div class="nm">Reset progress</div><div class="ds">7-day program</div></div>
+        <div class="dial"><div class="ring" id="ringFocus" style="--c:var(--teal)"><b id="rF">0</b></div><div class="nm">Focus</div><div class="ds">grows as you train</div></div>
+        <div class="dial"><div class="ring" id="ringEnergy" style="--c:var(--orange)"><b id="rE">0</b></div><div class="nm">Energy</div><div class="ds">from days + mood</div></div>
+        <div class="dial"><div class="ring" id="ringSleep" style="--c:var(--violet)"><b id="rS">0</b></div><div class="nm">Sleep</div><div class="ds">build a routine</div></div>
+        <div class="dial"><div class="ring" id="ringBrain" style="--c:var(--pink)"><b id="rB">0</b></div><div class="nm">Brain health</div><div class="ds">your overall score</div></div>
       </div>
-      <div class="card"><h3>Progress to a rewired brain</h3><div class="bar"><i id="sBar"></i></div><p id="sMsg" style="margin:0">Every day you finish rewires your reward system a little more.</p></div>
+      <div class="stats">
+        <div class="stat"><div class="big" id="sXp">0</div><div class="lbl">total XP</div></div>
+        <div class="stat"><div class="big" id="sStreak">0</div><div class="lbl">day streak</div></div>
+        <div class="stat"><div class="big" id="sTime">0h</div><div class="lbl">time reclaimed*</div></div>
+        <div class="stat"><div class="big" id="sGames">0</div><div class="lbl">games played</div></div>
+      </div>
+      <div class="card"><h3>Your mood this week</h3><div class="mgraph" id="mgraph"></div><p id="moodMsg" style="margin:8px 0 0"></p></div>
+      <p style="color:var(--faint);font-size:.82rem">*Estimated from completed days — a rough guide, not a tracker.</p>
+    </section>
+
+    <section class="panel" data-p="achv">
+      <h1>Achievements</h1>
+      <p>Unlock these as you go. <b id="achvCount">0</b>/<span id="achvTotal">0</span> earned.</p>
+      <div class="achv" id="achvGrid"></div>
+    </section>
+
+    <section class="panel" data-p="vision">
+      <h1>Your why</h1>
+      <p>The reset is the tool. <span class="hl">This</span> is the reason. Get honest about what you actually want — it's what pulls you through the hard days.</p>
+      <div class="vision" id="visionRows" style="display:grid;gap:12px;margin:16px 0"></div>
+      <p style="color:var(--faint)">Saved on this device. Re-read it any time you feel like quitting.</p>
+    </section>
+
+    <section class="panel" data-p="games">
+      <h1>Mind games</h1>
+      <p>Craving a hit? Play a 1-minute game instead. Each one is <b>+15 XP</b> the first time and actually calms the urge.</p>
+      <div class="tiles" id="gameTiles"></div>
+    </section>
+
+    <section class="panel" data-p="journeys">
+      <h1>Mood help</h1>
+      <p>However you feel right now, there's a path through it. Tap your mood.</p>
+      <div class="moodgrid" id="journeyGrid"></div>
+    </section>
+
+    <section class="panel" data-p="quotes">
+      <h1>Quotes</h1>
+      <div class="qcard"><p id="qText">"…"</p><div class="by" id="qBy"></div>
+        <div class="qrow"><button class="btn btn--g btn--sm" id="qSave">❤️ Save</button><button class="btn btn--ghost btn--sm" id="qNext">Next →</button><button class="btn btn--ghost btn--sm" id="qShare">📤 Share</button></div></div>
+      <h3 style="margin-top:18px">Saved <span id="qSavedN" style="color:var(--faint)"></span></h3>
+      <div id="qSaved"></div>
     </section>
 
     <section class="panel" data-p="toolkit">
       <h1>Urge toolkit</h1>
-      <p>Craving to scroll? Tap a tile, do it for 90 seconds, beat the urge.</p>
+      <p>Craving to scroll? Tap a tile, do it for 90 seconds, beat the urge — <b>+5 XP</b> each.</p>
       <div class="tiles" id="urgeTiles"></div>
       <button class="btn btn--g btn--sm" id="craveBtn">I beat a craving 💪</button>
       <span style="margin-left:10px;color:var(--faint)">Beaten: <b id="craveCount">0</b></span>
@@ -198,30 +306,9 @@
       <div class="tiles" id="menuTiles"></div>
     </section>
 
-    <section class="panel" data-p="breathe">
-      <h1>Breathe</h1>
-      <p>Craving hitting hard? Breathe <span style="color:#ffc24b">with the circle</span> for one minute — it physically calms the urge. In as it grows, out as it shrinks.</p>
-      <div class="brz"><div class="brz__c" id="brzC">Breathe in</div></div>
-      <p style="text-align:center;color:var(--faint)">One minute here beats ten minutes scrolling.</p>
-    </section>
-
-    <section class="panel" data-p="mood">
-      <h1>How do you feel?</h1>
-      <p>Tap your mood each day. Watch it <span style="color:#ff5c8a">climb</span> as the reset works — your happiness, tracked.</p>
-      <div class="moods" id="moodBtns"></div>
-      <div class="card"><h3>Your mood this week</h3><div class="moodlog" id="moodLog"></div><p id="moodMsg" style="margin:10px 0 0"></p></div>
-    </section>
-
-    <section class="panel" data-p="vision">
-      <h1>Your why</h1>
-      <p>The reset is the tool. <span style="color:#ffc24b">This</span> is the reason. Get honest about what you actually want — it's what pulls you through the hard days.</p>
-      <div class="vision" id="visionRows"></div>
-      <p style="color:var(--faint)">Saved on this device. Re-read it any time you feel like quitting.</p>
-    </section>
-
     <section class="panel" data-p="journal">
       <h1>Journal</h1>
-      <p>One honest line a day. Saves on this device automatically.</p>
+      <p>One honest line a day. Saves on this device automatically. <b>+10 XP.</b></p>
       <textarea id="journal" placeholder="Day 1 — didn't touch my phone for the first hour. Felt weird. Good weird."></textarea>
       <div style="margin-top:10px"><button class="btn btn--g btn--sm" id="jSave">Save</button> <span class="saved" id="jSaved">Saved ✓</span></div>
     </section>
@@ -237,22 +324,31 @@
 
 <div class="dr__modal" id="drModal"><div class="dr__sheet">
   <div class="top" id="mTop"><span class="e" id="mEmoji">🔥</span><button class="x" id="mClose">✕</button></div>
-  <div class="body"><div class="eyebrow" id="mTag">Day 1</div><h2 id="mTitle"></h2><p id="mBody"></p><div id="mAction"></div></div>
+  <div class="body"><div class="eyebrow" id="mTag">Day 1</div><h2 id="mTitle"></h2><div id="mBody"></div><div id="mAction"></div></div>
 </div></div>
+<div class="dr__toast" id="drToast"></div>
+<div class="dr__cf" id="drCf"></div>
 
 <script>
 (function(){
+try{
   var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
-  var KEY='dr_reset_v2',state=load();
+  var KEY='dr_reset_v3',state=load();
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  if(!state.done)state.done={};if(typeof state.crave!=='number')state.crave=0;if(!state.journal)state.journal='';
+  if(!state.notes)state.notes={};if(!state.moods)state.moods={};if(!state.vision)state.vision={};
+  if(!state.games)state.games={};if(!state.achvSeen)state.achvSeen={};if(!state.savedQ)state.savedQ=[];if(typeof state.qi!=='number')state.qi=0;
+
   var GRADS=['linear-gradient(135deg,#ff8a3d,#ffc24b)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#ff8a3d)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#ff8a3d)'];
   var DAYS=[
-    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards — which is exactly the muscle we're rebuilding.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
-    {e:"🌅",t:"Phone-free first hour",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull. Start calm and you stay clearer.",r:"How did the first hour feel without the phone? What did you do instead?"},
+    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards — exactly the muscle we're rebuilding.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
+    {e:"🌅",t:"Phone-free first hour",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull.",r:"How did the first hour feel without the phone? What did you do instead?"},
     {e:"🧘",t:"Boredom on purpose",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet.",w:"Boredom is withdrawal — and it's the reset working. Sitting with it teaches your brain it doesn't need constant input to be okay.",r:"What came up in the quiet? Was it as bad as you expected?"},
-    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",w:"You're not removing the urge, you're redirecting it. Every swap is a tiny rep that rewires the reward loop toward real things.",r:"How many swaps did you make today? Which one felt best?"},
-    {e:"🏃",t:"Move your body",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good — the opposite of cheap scrolling.",r:"What did you do, and how did your head feel after?"},
-    {e:"🤝",t:"One real connection",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal. One real moment reminds you what you were missing.",r:"Who did you connect with? What did it feel like to be fully present?"},
-    {e:"🧭",t:"Design your normal",a:"Write the 3 rules you're keeping for good. Lock in the version of you that you've felt this week.",w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
+    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",w:"You're not removing the urge, you're redirecting it. Every swap is a rep that rewires the reward loop toward real things.",r:"How many swaps did you make today? Which one felt best?"},
+    {e:"🏃",t:"Move your body",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good.",r:"What did you do, and how did your head feel after?"},
+    {e:"🤝",t:"One real connection",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal.",r:"Who did you connect with? What did it feel like to be fully present?"},
+    {e:"🧭",t:"Design your normal",a:"Write the 3 rules you're keeping for good. Lock in the version of you you've felt this week.",w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
   ];
   var URGES=[{e:"🗣️",k:"Name it",v:"Say out loud: \"This is just a dopamine craving.\" Naming it shrinks it instantly."},
     {e:"🌬️",k:"Breathe x10",v:"Stand up, 10 slow breaths. The urge peaks and fades in under 2 minutes."},
@@ -263,98 +359,239 @@
   var MENU=[{e:"🚶",t:"10-min walk, no phone"},{e:"💪",t:"20 push-ups or stretch"},{e:"💬",t:"Message a friend something real"},
     {e:"📖",t:"Read 5 pages"},{e:"🛠️",t:"Make something with your hands"},{e:"🧹",t:"Tidy one small corner"},
     {e:"🌳",t:"Step outside, look up 1 min"},{e:"✍️",t:"Write one journal line"},{e:"☕",t:"Make a slow coffee/tea"},{e:"⭐",t:"Plan something to look forward to"}];
+  var FACES=[{e:'😭',n:'Terrible',say:"Rough one. That's allowed. Do ONE tiny thing — a game or 3 breaths — and call today a win."},
+    {e:'☹️',n:'Bad',say:"Heavy day. Don't push hard — just don't feed the scroll. Try the Breathing Bubble for 60s."},
+    {e:'😐',n:'Okay',say:"Flat is normal mid-reset. This is the fog lifting. Knock out today's challenge — momentum beats mood."},
+    {e:'🙂',n:'Good',say:"Love that. Ride it — do today's challenge now while you've got lift."},
+    {e:'😀',n:'Amazing',say:"There it is. THIS is the reset working. Bank it — finish today and maybe a bonus game."}];
+  var JOURNEYS=[
+    {e:'😀',n:'Happy',g:GRADS[0],advice:"Don't just enjoy it — anchor it. Notice what got you here so you can do it again.",breath:"Box breathing: in 4, hold 4, out 4, hold 4.",quote:"\"The little things? The little moments? They aren't little.\" — Jon Kabat-Zinn",challenge:"Message someone and tell them why you appreciate them.",music:"Upbeat indie / feel-good playlist"},
+    {e:'🚀',n:'Motivated',g:GRADS[4],advice:"Motivation is fuel, not a plan. Pour it into ONE action in the next 10 minutes.",breath:"Energising breath: 2 quick in through the nose, 1 long out. x10.",quote:"\"Discipline is choosing between what you want now and what you want most.\"",challenge:"Start the hardest thing on your list for just 5 minutes.",music:"Lo-fi focus / hype beats"},
+    {e:'😰',n:'Anxious',g:GRADS[2],advice:"Anxiety lives in the future. Pull yourself back to right now — name 5 things you can see.",breath:"Long exhale: in 4, out 8. The long out switches off fight-or-flight.",quote:"\"You have survived 100% of your worst days. Breathe.\"",challenge:"Write the worry down, then one tiny step you can control.",music:"Calm ambient / piano"},
+    {e:'😢',n:'Sad',g:GRADS[5],advice:"You don't have to fix it. Just don't numb it with a screen. Move your body gently.",breath:"Sigh it out: deep in, then a big audible sigh. x5.",quote:"\"Rock bottom became the solid foundation on which I rebuilt my life.\" — J.K. Rowling",challenge:"10-minute walk outside, even slow. Light helps more than you think.",music:"Warm acoustic / soft soul"},
+    {e:'🤯',n:'Stressed',g:GRADS[1],advice:"Stress means too much at once. Brain-dump everything, then pick ONE.",breath:"Physiological sigh: 2 sniffs in, long out. x6.",quote:"\"You can do anything, but not everything.\"",challenge:"Close 5 browser tabs / clear one small space. Order calms the mind.",music:"Nature sounds / deep focus"}
+  ];
+  var QUOTES=[
+    {t:"You don't have to be extreme, just consistent.",b:"—"},
+    {t:"The pain of discipline weighs ounces. The pain of regret weighs tonnes.",b:"—"},
+    {t:"Your brain isn't broken. It's just been overfed. Starve the noise.",b:"Dopamine Reset"},
+    {t:"Boredom is the doorway to a calmer mind.",b:"—"},
+    {t:"Every time you resist, you get stronger. Every time you scroll, it does.",b:"—"},
+    {t:"You will never always be motivated. You must learn to be disciplined.",b:"—"},
+    {t:"Small habits don't add up. They compound.",b:"James Clear"},
+    {t:"The person you'll be in a year is built by what you do today.",b:"—"},
+    {t:"Real life is slower than a feed. That's the point.",b:"Dopamine Reset"},
+    {t:"Comparison is the thief of joy.",b:"Theodore Roosevelt"},
+    {t:"Focus is a muscle. You're in the gym right now.",b:"—"},
+    {t:"What you feed grows. Feed the real stuff.",b:"—"}];
+  var LEVELS=[{x:0,n:'Asleep',b:'🌱'},{x:60,n:'Waking up',b:'☕'},{x:140,n:'Clearing',b:'⚡'},{x:240,n:'Locked in',b:'🔥'},{x:360,n:'Glowing',b:'🌟'},{x:500,n:'Golden Mind',b:'💎'}];
+  var GAMES=[{id:'breathe',e:'🫧',t:'Breathing Bubble'},{id:'focus',e:'⏳',t:'Focus Timer'},{id:'resist',e:'🛡️',t:'Tap to Resist'},{id:'react',e:'⚡',t:'Reaction Test'}];
+  var ACHV=[
+    {id:'first',e:'👣',n:'First step',d:'Finish Day 1',test:function(){return state.done[0]}},
+    {id:'checkin',e:'💗',n:'Tuned in',d:'Log your mood',test:function(){return ck()>0}},
+    {id:'game1',e:'🎮',n:'First game',d:'Play any mind game',test:function(){return gp()>0}},
+    {id:'crave',e:'💪',n:'Urge crusher',d:'Beat 3 cravings',test:function(){return state.crave>=3}},
+    {id:'s3',e:'🔥',n:'On a roll',d:'3-day streak',test:function(){return streak()>=3}},
+    {id:'why',e:'🧭',n:'Know your why',d:'Fill all 4 Why boxes',test:function(){return vf()>=4}},
+    {id:'mind',e:'🧠',n:'Mind gym',d:'Play 3 games',test:function(){return gp()>=3}},
+    {id:'journal',e:'📓',n:'Reflective',d:'Write a journal line',test:function(){return (state.journal||'').length>3}},
+    {id:'xp250',e:'⭐',n:'Locked in',d:'Reach 250 XP',test:function(){return xp()>=250}},
+    {id:'reset',e:'🏆',n:'Full reset',d:'Complete all 7 days',test:function(){return dc()>=7}}
+  ];
 
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
-  function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-  if(!state.done)state.done={};if(typeof state.crave!=='number')state.crave=0;if(!state.journal)state.journal='';
   function dc(){var n=0;for(var i=0;i<7;i++)if(state.done[i])n++;return n}
   function cur(){for(var i=0;i<7;i++)if(!state.done[i])return i;return 6}
   function streak(){var s=0;for(var i=0;i<7;i++){if(state.done[i])s++;else break}return s}
   function pct(){return Math.round(dc()/7*100)}
+  function ck(){return Object.keys(state.moods).length}
+  function gp(){return Object.keys(state.games).length}
+  function vf(){var n=0;for(var i=0;i<4;i++)if((state.vision[i]||'').length>1)n++;return n}
+  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+vf()*5+state.savedQ.length*2;if((state.journal||'').length>3)x+=10;return x}
+  function lvl(){var x=xp(),L=0;for(var i=0;i<LEVELS.length;i++)if(x>=LEVELS[i].x)L=i;return L}
+  function clamp(v){return v<0?0:v>100?100:Math.round(v)}
+  function avgMood(){var v=[],k;for(k in state.moods)v.push(state.moods[k]);if(!v.length)return -1;var s=0;for(var i=0;i<v.length;i++)s+=v[i];return s/v.length}
 
-  function open(i){
-    var unlocked=i<=dc();if(!unlocked)return;
-    var d=DAYS[i];if(!state.notes)state.notes={};
+  // confetti + toast
+  var cf=$('#drCf'),toastEl=$('#drToast'),toastT;
+  function confetti(){if(!cf)return;var c=['#ffc24b','#ff5c8a','#7c5cff','#5ad48a','#2bd3c6'],h='';for(var i=0;i<28;i++)h+='<span style="left:'+Math.random()*100+'%;background:'+c[i%5]+';animation-duration:'+(1.1+Math.random()*1.2)+'s;animation-delay:'+(Math.random()*.3)+'s"></span>';cf.innerHTML=h;setTimeout(function(){cf.innerHTML=''},2700)}
+  function toast(msg){if(!toastEl)return;toastEl.innerHTML=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},2600)}
+
+  // modal
+  function closeM(){clearGame();$('#drModal').classList.remove('on')}
+  function openModal(){$('#drModal').classList.add('on')}
+  function openDay(i){
+    if(i>dc())return;var d=DAYS[i];
     $('#mTop').style.background=GRADS[i];$('#mEmoji').textContent=d.e;
     $('#mTag').textContent='Day '+(i+1)+' · your mission';$('#mTitle').textContent=d.t;
     $('#mBody').innerHTML='<p style="margin:0 0 4px;color:var(--ink)">'+d.a+'</p>'+
       '<div class="msec"><b>🧠 Why this works</b><p>'+d.w+'</p></div>'+
-      '<div class="msec"><b>✍️ Reflect on it</b><p>'+d.r+'</p><textarea class="mnote" id="mNote" placeholder="Write a line for today…">'+(state.notes[i]||'')+'</textarea></div>';
+      '<div class="msec"><b>✍️ Reflect</b><p>'+d.r+'</p><textarea class="mnote" id="mNote" placeholder="Write a line for today…">'+(state.notes[i]||'')+'</textarea></div>';
     var done=state.done[i];
-    $('#mAction').innerHTML='<button class="btn btn--g" id="mDoneBtn" style="width:100%">'+(done?'Mark not done':'Complete Day '+(i+1)+' ✓')+'</button>';
-    $('#mDoneBtn').onclick=function(){var n=$('#mNote');if(n){state.notes[i]=n.value}save();toggle(i);closeM();};
-    var nt=$('#mNote');if(nt){var tmr;nt.addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(function(){state.notes[i]=nt.value;save()},600)})}
-    $('#drModal').classList.add('on');
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mDoneBtn" style="width:100%">'+(done?'Mark not done':'Complete Day '+(i+1)+' · +30 XP ✓')+'</button></div>';
+    $('#mDoneBtn').onclick=function(){var n=$('#mNote');if(n)state.notes[i]=n.value;save();toggle(i);closeM()};
+    var nt=$('#mNote');if(nt){var tm;nt.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){state.notes[i]=nt.value;save()},500)})}
+    openModal();
   }
-  function openTile(o){$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').textContent=o.v||'Go do it now — that’s the whole point.';$('#mAction').innerHTML='';$('#drModal').classList.add('on');}
-  function closeM(){$('#drModal').classList.remove('on')}
-
-  function toggle(i){if(!state.done[i]&&i>dc())return;state.done[i]=!state.done[i];if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false}save();render()}
-
-  function thumb(i,withState){var d=DAYS[i],done=state.done[i],locked=i>dc();
-    return '<div class="thumb'+(done?' done':'')+(locked?' locked':'')+'" data-day="'+i+'">'+
-      '<div class="thumb__bg" style="background:'+GRADS[i]+'"></div>'+
-      '<span class="thumb__emoji">'+d.e+'</span><span class="thumb__tag">DAY '+(i+1)+'</span>'+
-      '<div class="thumb__cap"><b>'+d.t+'</b><span>'+(done?'Completed':locked?'Locked':'Tap to open')+'</span></div></div>';}
-
-  function render(){
-    $('#pStreak').textContent=streak();$('#pDay').textContent=Math.min(dc()+1,7);$('#pCrave').textContent=state.crave;
-    var c=cur();$('#todayBg').style.background=GRADS[c];$('#tLabel').textContent='Day '+(c+1);$('#tTitle').textContent=DAYS[c].t;$('#tAction').textContent=DAYS[c].a;
-    var td=$('#tDone');if(state.done[c]){td.textContent='Done for today ✓';td.setAttribute('disabled','')}else{td.removeAttribute('disabled');td.textContent='Mark today done ✓'}
-    $('#t1').textContent=dc();$('#t2').textContent=streak();$('#t3').textContent=pct()+'%';
-    $('#dayFeed').innerHTML=DAYS.map(function(d,i){return thumb(i)}).join('');
-    $('#trackFeed').innerHTML=DAYS.map(function(d,i){return thumb(i)}).join('');
-    $('#trackBar').style.width=pct()+'%';
-    $('#trackMsg').textContent=streak()>=7?"🏆 Full 7-day reset complete. Huge.":streak()>0?("🔥 "+streak()+"-day streak — keep it alive."):"Tap your first day to start the streak.";
-    $('#sA').textContent=dc();$('#sB').textContent=streak();$('#sC').textContent=pct()+'%';$('#sD').textContent=state.crave;$('#sBar').style.width=pct()+'%';$('#craveCount').textContent=state.crave;
+  function openTile(o){$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').innerHTML='<p style="margin:0;color:var(--soft)">'+(o.v||'Go do it now — that’s the whole point.')+'</p>';$('#mAction').innerHTML='';openModal()}
+  function openJourney(j){
+    $('#mTop').style.background=j.g;$('#mEmoji').textContent=j.e;$('#mTag').textContent='Feeling '+j.n;$('#mTitle').textContent='When you feel '+j.n.toLowerCase();
+    $('#mBody').innerHTML='<div class="msec"><b>💡 Advice</b><p>'+j.advice+'</p></div>'+
+      '<div class="msec"><b>🫁 Breathe</b><p>'+j.breath+'</p></div>'+
+      '<div class="msec"><b>🎯 Try this</b><p>'+j.challenge+'</p></div>'+
+      '<div class="msec"><b>📜 Read this</b><p style="font-style:italic">'+j.quote+'</p></div>'+
+      '<div class="msec"><b>🎧 Sounds for it</b><p>'+j.music+'</p></div>';
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="jrBreathe" style="width:100%">Do a 1-min breathing reset 🫧</button></div>';
+    $('#jrBreathe').onclick=function(){openGame('breathe')};
+    openModal();
   }
 
-  $('#urgeTiles').innerHTML=URGES.map(function(u,i){return '<div class="tile" data-urge="'+i+'"><div class="tile__bg" style="background:'+GRADS[(i+1)%7]+'"></div><div class="tile__in"><span class="e">'+u.e+'</span><b>'+u.k+'</b></div></div>'}).join('');
-  $('#menuTiles').innerHTML=MENU.map(function(m,i){return '<div class="tile" data-menu="'+i+'"><div class="tile__bg" style="background:'+GRADS[i%7]+'"></div><div class="tile__in"><span class="e">'+m.e+'</span><b>'+m.t+'</b></div></div>'}).join('');
-
-  document.addEventListener('click',function(e){
-    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});cs();window.scrollTo(0,0);return}
-    var dd=e.target.closest('[data-day]');if(dd){open(parseInt(dd.getAttribute('data-day'),10));return}
-    var du=e.target.closest('[data-urge]');if(du){openTile(URGES[+du.getAttribute('data-urge')]);return}
-    var dm=e.target.closest('[data-menu]');if(dm){openTile(MENU[+dm.getAttribute('data-menu')]);return}
-  });
-  $('#tDone').addEventListener('click',function(){toggle(cur())});
-  $('#mClose').addEventListener('click',closeM);$('#drModal').addEventListener('click',function(e){if(e.target===this)closeM()});
-  $('#craveBtn').addEventListener('click',function(){state.crave++;save();render();var b=this;b.textContent='Another one beaten 💪';setTimeout(function(){b.textContent='I beat a craving 💪'},1100)});
-  $('#rollBtn').addEventListener('click',function(){openTile(MENU[Math.floor(Math.random()*MENU.length)])});
-  var j=$('#journal');j.value=state.journal;function js(){state.journal=j.value;save();var s=$('#jSaved');s.classList.add('on');setTimeout(function(){s.classList.remove('on')},1300)}
-  $('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)});
-  function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
-  $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
-
-  // mood check-in
-  if(!state.moods)state.moods={};
-  var FACES=['😩','😕','😐','🙂','😄'];
-  var moodBtns=$('#moodBtns');
-  if(moodBtns){FACES.forEach(function(f,i){var b=document.createElement('button');b.className='moodb';b.textContent=f;b.setAttribute('data-mood',i);moodBtns.appendChild(b)})}
-  function renderMood(){
-    var log=$('#moodLog');if(!log)return;log.innerHTML='';
-    for(var d=0;d<7;d++){var s=document.createElement('span');s.textContent=(state.moods[d]!=null)?FACES[state.moods[d]]:'·';log.appendChild(s)}
-    var vals=Object.keys(state.moods).map(function(k){return state.moods[k]});
-    var avg=vals.length?vals.reduce(function(a,b){return a+b},0)/vals.length:0;
-    $('#moodMsg').textContent=vals.length?('Average mood: '+FACES[Math.round(avg)]+(avg>=3?' — it is working. 🎉':' — keep going, it climbs.')):'Tap a face to log today.';
+  // games
+  var gTimers=[];
+  function clearGame(){for(var i=0;i<gTimers.length;i++){clearTimeout(gTimers[i]);clearInterval(gTimers[i])}gTimers=[]}
+  function gameDone(id,msg){if(!state.games[id]){state.games[id]=true;save();celebrate();toast('🎮 +15 XP · '+msg)}else{toast(msg)}render()}
+  function openGame(id){
+    clearGame();var g=null;for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)g=GAMES[i];if(!g)return;
+    $('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--blue))';$('#mEmoji').textContent=g.e;$('#mTag').textContent='Mind game';$('#mTitle').textContent=g.t;$('#mAction').innerHTML='';
+    if(id==='breathe'){
+      $('#mBody').innerHTML='<div class="play"><div class="bubble" id="bub">Breathe in</div></div><p style="text-align:center" id="bubMsg">Follow the bubble for 4 rounds.</p>';
+      var bub=$('#bub'),ph=['Breathe in','Hold','Breathe out','Hold'],sz=['scale(1.25)','scale(1.25)','scale(.75)','scale(.75)'],n=0,rounds=0;
+      function step(){bub.textContent=ph[n];bub.style.transform=sz[n];if(n===0)rounds++;n=(n+1)%4;if(rounds>4){bub.textContent='Done 🌿';bub.style.transform='scale(1)';$('#bubMsg').textContent='Nice. Notice how the urge faded.';gameDone('breathe','Calm restored')}else{gTimers.push(setTimeout(step,4000))}}
+      step();
+    } else if(id==='focus'){
+      $('#mBody').innerHTML='<div class="play"><div class="rt" id="ft">Pick a length</div></div><div style="display:flex;gap:8px;justify-content:center" id="ftBtns"><button class="btn btn--g btn--sm" data-m="5">5 min</button><button class="btn btn--ghost btn--sm" data-m="10">10 min</button><button class="btn btn--ghost btn--sm" data-m="25">25 min</button></div><p style="text-align:center;color:var(--faint);margin-top:10px">Put the phone down. Come back when it rings.</p>';
+      $('#ftBtns').addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b)return;var sec=+b.getAttribute('data-m')*60,left=sec;$('#ftBtns').style.display='none';
+        function tick(){var m=Math.floor(left/60),s=left%60;$('#ft').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;if(left<=0){$('#ft').textContent='✓ Done';gameDone('focus','Focus locked in');return}left--;gTimers.push(setTimeout(tick,1000))}
+        tick();});
+    } else if(id==='resist'){
+      $('#mBody').innerHTML='<div class="play" id="rsArea"><div class="rt" id="rsTxt">Tap the distractions before they vanish!</div></div><p style="text-align:center" id="rsMsg">20 seconds. Resisted: <b id="rsN">0</b></p>';
+      var area=$('#rsArea'),score=0,left=20,ds=['📱','🎮','📺','🍔','🔔'];
+      $('#rsTxt').style.opacity=.6;
+      function spawn(){if(left<=0)return;var s=document.createElement('div');s.className='distract';s.textContent=ds[Math.floor(Math.random()*ds.length)];s.style.left=(10+Math.random()*72)+'%';s.style.top=(18+Math.random()*60)+'%';area.appendChild(s);var rm=setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},1100);gTimers.push(rm);s.addEventListener('click',function(){score++;$('#rsN').textContent=score;if(s.parentNode)s.parentNode.removeChild(s)});gTimers.push(setTimeout(spawn,650+Math.random()*350))}
+      function clock(){if(left<=0){$('#rsMsg').innerHTML='Time! You resisted <b>'+score+'</b>. 🛡️';gameDone('resist','You beat the pull');return}left--;gTimers.push(setTimeout(clock,1000))}
+      spawn();clock();
+    } else if(id==='react'){
+      $('#mBody').innerHTML='<div class="play" id="rcArea" style="cursor:pointer"><div class="react" id="rc" style="background:#3a2330">Wait for green…</div></div><p style="text-align:center;color:var(--faint)">Tap as soon as it turns green.</p>';
+      var rc=$('#rc'),area=$('#rcArea'),ready=false,t0=0,armed=false;
+      gTimers.push(setTimeout(function(){rc.style.background='linear-gradient(135deg,#5ad48a,#2bd3c6)';rc.textContent='TAP NOW!';ready=true;t0=Date.now()},1500+Math.random()*2800));
+      area.addEventListener('click',function(){if(armed)return;if(!ready){rc.textContent='Too early! 😅';armed=true;gTimers.push(setTimeout(function(){openGame('react')},900));return}armed=true;var ms=Date.now()-t0;rc.style.background='linear-gradient(135deg,#ffc24b,#ff8a3d)';rc.textContent=ms+' ms ⚡';if(!state.react||ms<state.react){state.react=ms;save()}gameDone('react','Sharp reflexes')});
+    }
+    openModal();
   }
-  document.addEventListener('click',function(e){var dm=e.target.closest('[data-mood]');if(dm){state.moods[cur()]=+dm.getAttribute('data-mood');save();renderMood();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===dm)})}});
-  renderMood();
-  // breathe phase text
-  var brzC=$('#brzC'),brzP=['Breathe in','Hold','Breathe out','Hold'],brzi=0;
-  if(brzC){setInterval(function(){brzi=(brzi+1)%4;brzC.textContent=brzP[brzi]},2750)}
 
-  // your why / life vision
-  if(!state.vision)state.vision={};
+  function toggle(i){if(!state.done[i]&&i>dc())return;var was=state.done[i];state.done[i]=!state.done[i];if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false}save();if(!was)celebrate();render()}
+
+  function thumb(i){var d=DAYS[i],done=state.done[i],locked=i>dc();
+    return '<div class="thumb'+(done?' done':'')+(locked?' locked':'')+'" data-day="'+i+'"><div class="thumb__bg" style="background:'+GRADS[i]+'"></div><span class="thumb__emoji">'+d.e+'</span><span class="thumb__tag">DAY '+(i+1)+'</span><div class="thumb__cap"><b>'+d.t+'</b><span>'+(done?'Completed':locked?'Locked':'Tap to open')+'</span></div></div>'}
+
+  function setRing(id,nid,v){var r=$(id);if(r)r.style.setProperty('--v',v);var n=$(nid);if(n)n.textContent=Math.round(v)}
+
+  function celebrate(){ // check for newly unlocked achievements + level
+    render(true);
+  }
+
+  var lastLvl=lvl();
+  function render(burst){
+    // header / level
+    var L=lvl(),lv=LEVELS[L],x=xp();
+    $('#pXp').textContent=x;$('#pStreak').textContent=streak();$('#pDay').textContent=Math.min(dc()+1,7);
+    $('#lvBadge').textContent=lv.b;$('#lvName').textContent='Level '+(L+1);$('#lvTitle').textContent=lv.n;
+    var nx=LEVELS[L+1],into=nx?((x-lv.x)/(nx.x-lv.x)*100):100;$('#lvBar').style.width=Math.min(100,into)+'%';
+    if(burst){var b=$('#lvBadge');b.classList.add('pop');setTimeout(function(){b.classList.remove('pop')},280)}
+    if(L>lastLvl){confetti();toast('🎉 Level up — '+lv.n+'!');lastLvl=L}
+
+    // coach
+    var h=new Date().getHours(),greet=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+    $('#coHi').textContent=greet+' 👋';
+    var c=cur();
+    $('#coSub').textContent='Day '+(c+1)+' of 7 · '+pct()+'% through your reset';
+    var am=avgMood();
+    var say=dc()>=7?"You finished the whole reset. Genuinely — that's rare. Keep one habit alive.":
+            streak()>=3?("🔥 "+streak()+" days straight. Your brain is already rewiring. Today: "+DAYS[c].t.toLowerCase()+"."):
+            dc()===0?"Let's get your first win. Today takes 10 minutes: "+DAYS[c].t.toLowerCase()+".":
+            ("You're "+pct()+"% in. Next up: "+DAYS[c].t.toLowerCase()+". Small step, big compounding.");
+    $('#coSay').textContent=say;
+    var q=QUOTES[(new Date().getDate())%QUOTES.length];$('#coQuote').textContent='“'+q.t+'”';
+
+    // today stats
+    $('#t1').textContent=dc();$('#t2').textContent=streak();$('#t3').textContent=pct()+'%';$('#t4').textContent=state.crave;
+
+    // feeds
+    var fh=DAYS.map(function(d,i){return thumb(i)}).join('');
+    if($('#dayFeed'))$('#dayFeed').innerHTML=fh;if($('#trackFeed'))$('#trackFeed').innerHTML=fh;
+    if($('#trackBar'))$('#trackBar').style.width=pct()+'%';
+    if($('#trackMsg'))$('#trackMsg').textContent=streak()>=7?"🏆 Full 7-day reset complete. Huge.":streak()>0?("🔥 "+streak()+"-day streak — keep it alive."):"Tap your first day to start the streak.";
+
+    // stats / dials
+    var reset=pct(),mood=am<0?0:am/4*100;
+    var focus=clamp(28+dc()*8+gp()*4+streak()*2);
+    var energy=clamp(32+dc()*6+mood*.3);
+    var sleep=clamp(38+dc()*5+(streak()*3));
+    var brain=clamp((reset+focus+energy+sleep)/4);
+    setRing('#ringReset','#ringResetN',reset);$('#ringResetN')&&($('#ringResetN').textContent=reset+'%');
+    setRing('#ringFocus','#rF',focus);setRing('#ringEnergy','#rE',energy);setRing('#ringSleep','#rS',sleep);setRing('#ringBrain','#rB',brain);
+    if($('#sXp'))$('#sXp').textContent=x;if($('#sStreak'))$('#sStreak').textContent=streak();
+    if($('#sTime'))$('#sTime').textContent=(Math.round((dc()*0.8+state.crave*0.05)*10)/10)+'h';
+    if($('#sGames'))$('#sGames').textContent=gp();
+
+    // mood graph
+    var mg=$('#mgraph');if(mg){var hh='';for(var d=0;d<7;d++){var mv=state.moods[d];var ht=mv==null?6:((mv+1)/5*100);hh+='<div class="col"><div class="bar2" style="height:'+ht+'%"></div><div class="dl">D'+(d+1)+'</div></div>'}mg.innerHTML=hh;
+      $('#moodMsg').textContent=am<0?'Log your mood each day to see it climb.':(am>=3?'Trending up — the reset is working. 🎉':'Early days. Watch this climb as you go.');}
+
+    // achievements
+    var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var i=0;i<ACHV.length;i++){var ac=ACHV[i],ok=!!ac.test();if(ok)got++;hh2+='<div class="ach'+(ok?' got':'')+'"><div class="e">'+ac.e+'</div><b>'+ac.n+'</b><span>'+ac.d+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
+      // celebrate newly earned
+      for(var i=0;i<ACHV.length;i++){var ac=ACHV[i];if(ac.test()&&!state.achvSeen[ac.id]){state.achvSeen[ac.id]=true;save();confetti();toast('🏆 Achievement: '+ac.n);}}}
+  }
+
+  // build static lists
+  $('#urgeTiles')&&($('#urgeTiles').innerHTML=URGES.map(function(u,i){return '<div class="tile" data-urge="'+i+'"><div class="tile__bg" style="background:'+GRADS[(i+1)%7]+'"></div><div class="tile__in"><span class="e">'+u.e+'</span><b>'+u.k+'</b></div></div>'}).join(''));
+  $('#menuTiles')&&($('#menuTiles').innerHTML=MENU.map(function(m,i){return '<div class="tile" data-menu="'+i+'"><div class="tile__bg" style="background:'+GRADS[i%7]+'"></div><div class="tile__in"><span class="e">'+m.e+'</span><b>'+m.t+'</b></div></div>'}).join(''));
+  $('#gameTiles')&&($('#gameTiles').innerHTML=GAMES.map(function(g,i){return '<div class="tile" data-game="'+g.id+'"><div class="tile__bg" style="background:'+GRADS[(i*2)%7]+'"></div><div class="tile__in"><span class="e">'+g.e+'</span><b>'+g.t+'</b></div></div>'}).join(''));
+  $('#journeyGrid')&&($('#journeyGrid').innerHTML=JOURNEYS.map(function(j,i){return '<div class="moodc" data-journey="'+i+'"><div class="cbg" style="background:'+j.g+'"></div><span class="e">'+j.e+'</span><b>'+j.n+'</b></div>'}).join(''));
+  // mood faces (today)
+  var mb=$('#moodBtns');if(mb){FACES.forEach(function(f,i){var b=document.createElement('button');b.className='moodb';b.title=f.n;b.textContent=f.e;b.setAttribute('data-face',i);mb.appendChild(b)})}
+  // vision
   var VIS=[{e:'💰',t:'Money & freedom',p:'What would real freedom let you do?'},{e:'💪',t:'Health & body',p:'How do you want to look and feel?'},{e:'❤️',t:'People',p:'Who do you want to be fully there for?'},{e:'🧭',t:'Who you are becoming',p:'A year from now, who are you proud to be?'}];
   var vr=$('#visionRows');
-  if(vr){
-    vr.innerHTML=VIS.map(function(v,i){return '<div class="vrow v'+i+'"><label><span class="ve">'+v.e+'</span> '+v.t+'</label><textarea data-vis="'+i+'" placeholder="'+v.p+'">'+(state.vision[i]||'')+'</textarea></div>'}).join('');
-    var vt;vr.addEventListener('input',function(e){var t=e.target.closest('[data-vis]');if(t){state.vision[t.getAttribute('data-vis')]=t.value;clearTimeout(vt);vt=setTimeout(save,600)}});
+  if(vr){vr.innerHTML=VIS.map(function(v,i){return '<div class="card" style="margin:0"><label style="display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px"><span style="font-size:1.5rem">'+v.e+'</span> '+v.t+'</label><textarea data-vis="'+i+'" style="min-height:64px" placeholder="'+v.p+'">'+(state.vision[i]||'')+'</textarea></div>'}).join('');
+    var vt;vr.addEventListener('input',function(e){var t=e.target.closest('[data-vis]');if(t){state.vision[t.getAttribute('data-vis')]=t.value;clearTimeout(vt);vt=setTimeout(function(){save();render()},600)}})}
+
+  // quotes panel
+  function showQuote(){var q=QUOTES[state.qi%QUOTES.length];$('#qText').textContent='“'+q.t+'”';$('#qBy').textContent=q.b||'';renderSaved()}
+  function renderSaved(){var box=$('#qSaved');if(!box)return;$('#qSavedN').textContent='('+state.savedQ.length+')';if(!state.savedQ.length){box.innerHTML='<p style="color:var(--faint)">Tap ❤️ Save to keep the ones that hit.</p>';return}box.innerHTML=state.savedQ.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join('')}
+  if($('#qNext')){
+    showQuote();
+    $('#qNext').addEventListener('click',function(){state.qi=(state.qi+1)%QUOTES.length;save();showQuote()});
+    $('#qSave').addEventListener('click',function(){var q=QUOTES[state.qi%QUOTES.length];if(state.savedQ.indexOf(q.t)<0){state.savedQ.push(q.t);save();toast('❤️ Saved');render()}renderSaved()});
+    $('#qShare').addEventListener('click',function(){var q=QUOTES[state.qi%QUOTES.length];if(navigator.share){navigator.share({text:'“'+q.t+'” — via Dopamine Reset'}).catch(function(){})}else{toast('Copy: “'+q.t+'”')}});
   }
 
+  // global click routing
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});cs();window.scrollTo(0,0);return}
+    if(e.target.closest('[data-open-today]')){openDay(cur());return}
+    var dd=e.target.closest('[data-day]');if(dd){openDay(parseInt(dd.getAttribute('data-day'),10));return}
+    var du=e.target.closest('[data-urge]');if(du){openTile(URGES[+du.getAttribute('data-urge')]);return}
+    var dm=e.target.closest('[data-menu]');if(dm){openTile(MENU[+dm.getAttribute('data-menu')]);return}
+    var dg=e.target.closest('[data-game]');if(dg){openGame(dg.getAttribute('data-game'));return}
+    var dj=e.target.closest('[data-journey]');if(dj){openJourney(JOURNEYS[+dj.getAttribute('data-journey')]);return}
+    var df=e.target.closest('[data-face]');if(df){var fi=+df.getAttribute('data-face');state.moods[cur()]=fi;save();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===df)});var rep=$('#moodReply');if(rep){rep.style.display='block';rep.innerHTML='<h3>'+FACES[fi].e+' '+FACES[fi].n+'</h3><p style="margin:0">'+FACES[fi].say+'</p>'}celebrate();return}
+  });
+  $('#mClose').addEventListener('click',closeM);$('#drModal').addEventListener('click',function(e){if(e.target===this)closeM()});
+  $('#craveBtn').addEventListener('click',function(){state.crave++;save();celebrate();var b=this;b.textContent='Another one beaten 💪';toast('💪 +5 XP');setTimeout(function(){b.textContent='I beat a craving 💪'},1100);$('#craveCount').textContent=state.crave});
+  $('#rollBtn').addEventListener('click',function(){openTile(MENU[Math.floor(Math.random()*MENU.length)])});
+  var j=$('#journal');if(j){j.value=state.journal;function js(){state.journal=j.value;save();var s=$('#jSaved');s.classList.add('on');render();setTimeout(function(){s.classList.remove('on')},1300)}$('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)})}
+  function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
+  $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
+  $('#craveCount')&&($('#craveCount').textContent=state.crave);
+
   render();
+}catch(err){
+  try{
+    var m=document.querySelector('.dr__main');
+    if(m)m.insertAdjacentHTML('afterbegin','<div style="background:#15121d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:14px;color:#f6f4ef"><b>Your reset is loaded.</b><p style="color:#b8b4ad;margin:6px 0 0">A small visual hiccup happened — tap a menu item on the left to jump in, or pull to refresh.</p></div>');
+  }catch(e){}
+}
 })();
 </script>
 {% endraw %}
