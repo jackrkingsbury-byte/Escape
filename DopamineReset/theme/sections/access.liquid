@@ -1,0 +1,103 @@
+{%- comment -%}
+  Post-purchase access page — the actual Dopamine Reset.
+  Buyers are auto-redirected here after payment.
+{%- endcomment -%}
+<section class="section" style="padding-top:clamp(40px,8vh,90px)">
+  <div class="wrap" style="max-width:820px">
+
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1 style="margin-bottom:16px">{{ section.settings.heading }}</h1>
+    <p class="lead">{{ section.settings.intro }}</p>
+
+    <!-- START HERE -->
+    <div class="guarantee" style="text-align:left;margin:34px 0 10px">
+      <p class="eyebrow" style="margin-bottom:8px">Start here · Day 1</p>
+      <h2 style="font-size:1.6rem;margin-bottom:10px">{{ section.settings.day1_title }}</h2>
+      <p style="margin:0">{{ section.settings.day1_action }}</p>
+    </div>
+
+    <!-- THE 7 DAYS -->
+    <h2 style="margin:48px 0 6px">Your 7 days</h2>
+    <p style="color:var(--ink-faint);margin-bottom:18px">One action a day. ~10 minutes. Don't skip ahead — the order is the point.</p>
+    <div class="stack">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'day' -%}
+          <div class="stack__row" style="align-items:flex-start" {{ block.shopify_attributes }}>
+            <span style="flex:1"><b style="color:var(--gold)">Day {{ block.settings.n }} — {{ block.settings.title }}</b><br><span style="color:var(--ink-soft)">{{ block.settings.action }}</span></span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- TWO TOOLKITS -->
+    <div class="split" style="margin-top:48px">
+      <div class="split__card split__card--good">
+        <h3>🌊 Urge-surfing toolkit</h3>
+        <p style="color:var(--ink-faint);font-size:.92rem;margin-bottom:10px">When the craving to scroll hits, do one of these for 90 seconds. The urge always passes.</p>
+        <ul class="split__list">
+          <li>Name it out loud: "this is a dopamine craving."</li>
+          <li>Stand up and take 10 slow breaths.</li>
+          <li>Drink a full glass of water.</li>
+          <li>Step outside for 60 seconds of daylight.</li>
+          <li>Set a 5-min timer and do literally nothing.</li>
+        </ul>
+      </div>
+      <div class="split__card">
+        <h3>☀️ Real-dopamine menu</h3>
+        <p style="color:var(--ink-faint);font-size:.92rem;margin-bottom:10px">Slow dopamine that actually fills you up. Pick one whenever you're bored.</p>
+        <ul class="split__list">
+          <li>A walk with no phone.</li>
+          <li>20 push-ups or a quick stretch.</li>
+          <li>Message a friend something real.</li>
+          <li>Read 5 pages of a book.</li>
+          <li>Make something with your hands.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THE FAST -->
+    <h2 style="margin:48px 0 12px">The cheap-dopamine fast</h2>
+    <div class="stack">
+      <div class="stack__row"><span>No phone for the first hour awake</span><span>Day 1+</span></div>
+      <div class="stack__row"><span>No short-form video (TikTok / Reels / Shorts)</span><span>All 7 days</span></div>
+      <div class="stack__row"><span>Notifications off except calls &amp; texts</span><span>All 7 days</span></div>
+      <div class="stack__row"><span>One "boring on purpose" 10-min block daily</span><span>All 7 days</span></div>
+    </div>
+
+    <p style="margin-top:40px;color:var(--ink-faint);font-size:.9rem">
+      Save this page — it's your home base for the next 7 days. Need help? Reply to your order email.
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Access page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "You're in" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Welcome to your Dopamine Reset." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Payment confirmed — nice move. This is your home base for the next 7 days. Bookmark it. Start with Day 1 below and do one action a day. That's the whole game." },
+    { "type": "text", "id": "day1_title", "label": "Day 1 title", "default": "Delete the worst one." },
+    { "type": "textarea", "id": "day1_action", "label": "Day 1 action", "default": "Pick the single app that eats the most of your time and delete it from your phone for the full 7 days (you can reinstall later — most people don't). Then turn off notifications for everything except calls and texts. That's it for today. Tomorrow unlocks the next step." }
+  ],
+  "blocks": [
+    { "type": "day", "name": "Day", "settings": [
+      { "type": "text", "id": "n", "label": "Day number", "default": "1" },
+      { "type": "text", "id": "title", "label": "Title", "default": "Delete the worst one" },
+      { "type": "textarea", "id": "action", "label": "Action", "default": "Delete your most-used app for 7 days." }
+    ]}
+  ],
+  "presets": [{
+    "name": "Access page",
+    "blocks": [
+      { "type": "day", "settings": { "n": "1", "title": "Delete the worst one", "action": "Delete your single most-used app for the 7 days. Notifications off except calls & texts." } },
+      { "type": "day", "settings": { "n": "2", "title": "Phone-free first hour", "action": "Don't touch your phone for the first hour after waking. Leave it across the room overnight." } },
+      { "type": "day", "settings": { "n": "3", "title": "Boredom on purpose", "action": "Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet — this is the reset working." } },
+      { "type": "day", "settings": { "n": "4", "title": "Swap one hit", "action": "Every time you reach to scroll, do one thing off your real-dopamine menu instead. Track how many times." } },
+      { "type": "day", "settings": { "n": "5", "title": "Move your body", "action": "20 minutes of movement — walk, gym, dance, anything. Real dopamine loves effort." } },
+      { "type": "day", "settings": { "n": "6", "title": "One real connection", "action": "Have one genuine, phone-down conversation. Call someone or meet up. Notice how good it feels." } },
+      { "type": "day", "settings": { "n": "7", "title": "Design your normal", "action": "Write the 3 rules you're keeping for good. You've felt the difference — now lock it in." } }
+    ]
+  }]
+}
+{% endschema %}

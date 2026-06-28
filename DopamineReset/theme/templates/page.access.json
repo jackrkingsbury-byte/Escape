@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "main": {
+      "type": "access",
+      "settings": {},
+      "blocks": {
+        "d1": {
+          "type": "day",
+          "settings": {
+            "n": "1",
+            "title": "Delete the worst one",
+            "action": "Delete your single most-used app for the 7 days. Notifications off except calls & texts."
+          }
+        },
+        "d2": {
+          "type": "day",
+          "settings": {
+            "n": "2",
+            "title": "Phone-free first hour",
+            "action": "Don't touch your phone for the first hour after waking. Leave it across the room overnight."
+          }
+        },
+        "d3": {
+          "type": "day",
+          "settings": {
+            "n": "3",
+            "title": "Boredom on purpose",
+            "action": "Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet — this is the reset working."
+          }
+        },
+        "d4": {
+          "type": "day",
+          "settings": {
+            "n": "4",
+            "title": "Swap one hit",
+            "action": "Every time you reach to scroll, do one thing off your real-dopamine menu instead. Track how many times."
+          }
+        },
+        "d5": {
+          "type": "day",
+          "settings": {
+            "n": "5",
+            "title": "Move your body",
+            "action": "20 minutes of movement — walk, gym, dance, anything. Real dopamine loves effort."
+          }
+        },
+        "d6": {
+          "type": "day",
+          "settings": {
+            "n": "6",
+            "title": "One real connection",
+            "action": "Have one genuine, phone-down conversation. Call someone or meet up. Notice how good it feels."
+          }
+        },
+        "d7": {
+          "type": "day",
+          "settings": {
+            "n": "7",
+            "title": "Design your normal",
+            "action": "Write the 3 rules you're keeping for good. You've felt the difference — now lock it in."
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
