@@ -41,7 +41,8 @@
 
     <div class="bn__grid">
       {%- for block in section.blocks -%}
-        {%- assign g = grads[forloop.index0 | modulo: 6] -%}
+        {%- assign gi = forloop.index0 | modulo: 6 -%}
+        {%- assign g = grads[gi] -%}
         <article class="bn__card" {{ block.shopify_attributes }}>
           <div class="bn__bg" style="background:{{ g }}"></div>
           <span class="bn__emoji">{{ block.settings.emoji }}</span>
