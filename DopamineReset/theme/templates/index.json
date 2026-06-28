@@ -398,11 +398,82 @@
         "cta_label": "Start the reset — R199",
         "cta_url": "#pricing"
       }
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "🧠",
+            "title": "Razor focus",
+            "text": "Get hours back. Read, study, work — and actually finish."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "😌",
+            "title": "Real happiness",
+            "text": "Normal life feels good again — not grey, not flat."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "⚡",
+            "title": "Real energy",
+            "text": "Wake up clear instead of foggy and already drained."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "📈",
+            "title": "Drive for your future",
+            "text": "Chase real goals — grades, money, the life you want."
+          }
+        },
+        "b5": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "❤️",
+            "title": "Better relationships",
+            "text": "Be present with people. Phone down, fully there."
+          }
+        },
+        "b6": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "💪",
+            "title": "Self-respect",
+            "text": "Do hard things on purpose. Feel proud of yourself again."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ],
+      "settings": {
+        "eyebrow": "Why this matters",
+        "heading": "This isn't about your phone. It's about your life.",
+        "lead": "Cheap dopamine quietly steals your focus, your mood and your drive. Get it back, and everything downstream gets better — school, money, health, the people you love.",
+        "show_strip": true,
+        "cta_label": "Start the reset — R199",
+        "cta_url": "#pricing",
+        "note": "Most people feel the shift by day 3."
+      }
     }
   },
   "order": [
     "hero",
     "transformation",
+    "benefits",
     "quiz",
     "features",
     "bonus_stack",
