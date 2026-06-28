@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "hero-3d",
       "blocks": {
         "s1": {
           "type": "stat",
@@ -36,8 +36,8 @@
         "subheading": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset is a simple 10-min-a-day protocol that rewires your brain to enjoy real life again — starting today.",
         "cta1_label": "Start the reset — R199",
         "cta1_url": "#pricing",
-        "cta2_label": "How it works",
-        "cta2_url": "#how",
+        "cta2_label": "Why it works",
+        "cta2_url": "#why",
         "scarcity_label": "Only {n} resets left at the R199 launch price",
         "scarcity_base": 40
       }
