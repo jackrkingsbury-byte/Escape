@@ -34,11 +34,11 @@
         "eyebrow": "Your brain is fried. Here's the reset.",
         "heading": "Quit cheap dopamine. Feel good for real — in 7 days.",
         "subheading": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset is a simple 10-min-a-day protocol that rewires your brain to enjoy real life again — starting today.",
-        "cta1_label": "Start the reset — R99",
+        "cta1_label": "Start the reset — R199",
         "cta1_url": "#pricing",
         "cta2_label": "How it works",
         "cta2_url": "#how",
-        "scarcity_label": "Only {n} resets left at the R99 launch price",
+        "scarcity_label": "Only {n} resets left at the R199 launch price",
         "scarcity_base": 40
       }
     },
@@ -245,9 +245,9 @@
         "heading": "Then look at the launch price.",
         "subheading": "Everything you get, and what it'd cost you anywhere else.",
         "was_price": 774,
-        "now_price": 99,
+        "now_price": 199,
         "note": "One payment. Instant access. 7-day money-back guarantee.",
-        "cta_label": "Get the reset for R99",
+        "cta_label": "Get the reset for R199",
         "cta_url": "#pricing"
       }
     },
@@ -259,7 +259,7 @@
           "settings": {
             "name": "The Reset",
             "tagline": "Everything you need to rewire",
-            "price": "R99",
+            "price": "R199",
             "price_suffix": "once-off",
             "features": "The full 7-day protocol\nCheap-dopamine fast guide\nUrge-surfing toolkit\nReal-dopamine menu (30 lifters)\nDaily tracker + streaks\nInstant access",
             "featured": true,
@@ -272,7 +272,7 @@
           "settings": {
             "name": "Reset + Lifetime Toolkit",
             "tagline": "For people who want to never go back",
-            "price": "R149",
+            "price": "R299",
             "price_suffix": "once-off",
             "features": "Everything in The Reset\nMonthly top-up resets (forever)\nAdvanced focus protocols\nEvery future update free",
             "featured": false,
@@ -313,7 +313,7 @@
         "q3": {
           "type": "quote",
           "settings": {
-            "quote": "Best R99 I've spent. I actually feel happy doing normal stuff again.",
+            "quote": "Best R199 I've spent. I actually feel happy doing normal stuff again.",
             "name": "Aisha",
             "meta": "23 · reset twice"
           }
@@ -371,7 +371,7 @@
           "type": "qa",
           "settings": {
             "q": "Is it a subscription?",
-            "a": "No — once-off payment. The R149 option adds lifetime top-ups, but even that's a single payment."
+            "a": "No — once-off payment. The R299 option adds lifetime top-ups, but even that's a single payment."
           }
         }
       },
@@ -392,8 +392,8 @@
       "settings": {
         "eyebrow": "This time next week",
         "heading": "You can keep scrolling. Or you can feel good again.",
-        "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R99. Pick.",
-        "cta_label": "Start the reset — R99",
+        "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R199. Pick.",
+        "cta_label": "Start the reset — R199",
         "cta_url": "#pricing"
       }
     }

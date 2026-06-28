@@ -23,7 +23,7 @@ mood are shot. Priced in ZAR (R).
 |---|---|
 | "Build a life you don't need to escape from" | "Feel good again in 7 days" |
 | Vague outcome, long commitment | One specific result, one week |
-| Premium price, lots of thinking | R99, buy on impulse |
+| Premium price, lots of thinking | R199, buy on impulse |
 | Sell the identity | Sell the relief |
 
 ---
@@ -32,15 +32,15 @@ mood are shot. Priced in ZAR (R).
 
 | Option | Price | What |
 |---|---|---|
-| **The Reset** ⭐ *Launch price* | **R99** | Full 7-day protocol + fast guide + urge toolkit + real-dopamine menu + tracker |
-| **Reset + Lifetime Toolkit** | **R149** | Everything + monthly top-up resets + advanced protocols + all future updates |
+| **The Reset** ⭐ *Launch price* | **R199** | Full 7-day protocol + fast guide + urge toolkit + real-dopamine menu + tracker |
+| **Reset + Lifetime Toolkit** | **R299** | Everything + monthly top-up resets + advanced protocols + all future updates |
 
-Keep it to **one hero CTA** ("Start the reset — R99") repeated down the page.
-The R149 is just an anchor/upsell — most buyers take the R99.
+Keep it to **one hero CTA** ("Start the reset — R199") repeated down the page.
+The R299 is just an anchor/upsell — most buyers take the R199.
 
 The conversion levers (all built into the theme):
-- **Scarcity** — "Only N resets left at the R99 launch price."
-- **Bonus stack** — totals R774, you pay R99.
+- **Scarcity** — "Only N resets left at the R199 launch price."
+- **Bonus stack** — totals R774, you pay R199.
 - **The 10-second test** — "How fried is your dopamine?" pulls people in, then
   every result pushes them to buy.
 - **Guarantee** — 7-day money-back kills the risk.
