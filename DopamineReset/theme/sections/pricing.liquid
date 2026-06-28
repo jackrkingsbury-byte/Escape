@@ -1,0 +1,92 @@
+<section class="section" id="pricing">
+  <div class="wrap center">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2 class="reveal">{{ section.settings.heading }}</h2>
+    <p class="lead mx-auto reveal" style="text-align:center">{{ section.settings.subheading }}</p>
+
+    <div class="tiers">
+      {%- for block in section.blocks -%}
+        {%- assign product = block.settings.product -%}
+        <div class="tier {% if block.settings.featured %}tier--featured{% endif %} reveal" {{ block.shopify_attributes }}>
+          {%- if block.settings.featured and block.settings.badge != blank -%}
+            <div class="tier__badge">{{ block.settings.badge }}</div>
+          {%- endif -%}
+          <div class="tier__name">{{ block.settings.name }}</div>
+          <div class="tier__tag">{{ block.settings.tagline }}</div>
+
+          <div class="tier__price">
+            {%- if product != blank -%}
+              {{ product.price | money }}
+            {%- else -%}
+              {{ block.settings.price }}
+            {%- endif -%}
+            {%- if block.settings.price_suffix != blank -%}<small> {{ block.settings.price_suffix }}</small>{%- endif -%}
+          </div>
+
+          <ul class="tier__feats">
+            {%- assign feats = block.settings.features | newline_to_br | split: '<br />' -%}
+            {%- for f in feats -%}
+              {%- assign t = f | strip -%}
+              {%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if product != blank and product.available -%}
+            <form method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8">
+              <input type="hidden" name="form_type" value="product">
+              <input type="hidden" name="utf8" value="✓">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button type="submit" class="btn {% if block.settings.featured %}btn--gold{% else %}btn--ghost{% endif %} btn--block btn--lg">
+                {{ block.settings.cta_label | default: 'Get this plan' }}
+              </button>
+            </form>
+          {%- else -%}
+            <a href="{{ block.settings.cta_url | default: '#' }}" class="btn {% if block.settings.featured %}btn--gold{% else %}btn--ghost{% endif %} btn--block btn--lg">
+              {{ block.settings.cta_label | default: 'Get this plan' }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    <p class="reveal" style="margin-top:28px;color:var(--ink-faint);font-size:.9rem">{{ section.settings.footnote }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pricing tiers",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Choose your escape" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three ways in. One direction — up." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Link each tier to a Shopify product to enable instant checkout, or leave it as a link." },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "All plans: instant access code by email · 7-day money-back guarantee · secure checkout." }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Linked Shopify product", "info": "If set, the price and a working buy button are used automatically." },
+        { "type": "text", "id": "name", "label": "Name", "default": "ESCAPE PRO" },
+        { "type": "text", "id": "tagline", "label": "Tagline", "default": "For people ready to commit" },
+        { "type": "text", "id": "price", "label": "Price (if no product linked)", "default": "R299" },
+        { "type": "text", "id": "price_suffix", "label": "Price suffix", "default": "once-off" },
+        { "type": "textarea", "id": "features", "label": "Features (one per line)", "default": "Everything in Starter\n5 Bonus Kits\nWeekly Review + My Stats\nLetter to Future You\nPriority support" },
+        { "type": "checkbox", "id": "featured", "label": "Highlight as most popular", "default": false },
+        { "type": "text", "id": "badge", "label": "Badge text", "default": "Most popular" },
+        { "type": "text", "id": "cta_label", "label": "Button label", "default": "Get this plan" },
+        { "type": "url", "id": "cta_url", "label": "Button link (if no product)" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{
+    "name": "Pricing tiers",
+    "blocks": [
+      { "type": "tier", "settings": { "name": "ESCAPE Starter", "tagline": "Test the water", "price": "R149", "price_suffix": "once-off", "features": "Full ESCAPE core course\nDaily dares\nHabit tracker + notebook\nCertificate of completion", "featured": false, "cta_label": "Start with Starter" } },
+      { "type": "tier", "settings": { "name": "ESCAPE PRO", "tagline": "For people ready to commit", "price": "R299", "price_suffix": "once-off", "features": "Everything in Starter\n5 Bonus Kits\nWeekly Review + My Stats\nLetter to Future You + 10 things you want\nPriority email support", "featured": true, "badge": "Most popular", "cta_label": "Get ESCAPE PRO" } },
+      { "type": "tier", "settings": { "name": "Inner Circle", "tagline": "Lifetime · the whole-life upgrade", "price": "R599", "price_suffix": "lifetime", "features": "Everything in PRO\nGrade Forge bundled in\nLifetime access + every future drop\nFounding-member certificate badge", "featured": false, "cta_label": "Join the Inner Circle" } }
+    ]
+  }]
+}
+{% endschema %}

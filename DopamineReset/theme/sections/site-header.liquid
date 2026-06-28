@@ -1,0 +1,39 @@
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="{{ routes.root_url }}">
+      {{ section.settings.brand_text | default: settings.brand_name }}{% if section.settings.brand_dot %}<b>.</b>{% endif %}
+    </a>
+    <button class="nav-toggle" data-nav-toggle aria-label="Menu">&#9776;</button>
+    <nav class="nav" data-nav>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link' -%}
+          <a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+      <a class="nav__cta" href="{{ section.settings.cta_url | default: '#pricing' }}">{{ section.settings.cta_label | default: 'Get ESCAPE' }}</a>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "text", "id": "brand_text", "label": "Brand text", "default": "ESCAPE" },
+    { "type": "checkbox", "id": "brand_dot", "label": "Gold dot after name", "default": true },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Get ESCAPE" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Nav link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
+  ],
+  "max_blocks": 6
+}
+{% endschema %}

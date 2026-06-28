@@ -1,0 +1,413 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "stat": "7 days",
+            "label": "to feel the shift"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "stat": "10 min",
+            "label": "a day"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "stat": "4.9★",
+            "label": "from 1,800+ resets"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "Your brain is fried. Here's the reset.",
+        "heading": "Quit cheap dopamine. Feel good for real — in 7 days.",
+        "subheading": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset is a simple 10-min-a-day protocol that rewires your brain to enjoy real life again — starting today.",
+        "cta1_label": "Start the reset — R99",
+        "cta1_url": "#pricing",
+        "cta2_label": "How it works",
+        "cta2_url": "#how",
+        "scarcity_label": "Only {n} resets left at the R99 launch price",
+        "scarcity_base": 40
+      }
+    },
+    "transformation": {
+      "type": "transformation",
+      "blocks": {
+        "b1": {
+          "type": "before",
+          "settings": {
+            "text": "Wakes up and scrolls before both eyes are even open."
+          }
+        },
+        "b2": {
+          "type": "before",
+          "settings": {
+            "text": "Needs noise, snacks and 3 tabs just to feel normal."
+          }
+        },
+        "b3": {
+          "type": "before",
+          "settings": {
+            "text": "Can't focus for 10 minutes without reaching for the phone."
+          }
+        },
+        "b4": {
+          "type": "before",
+          "settings": {
+            "text": "Everything feels a little flat and grey."
+          }
+        },
+        "a1": {
+          "type": "after",
+          "settings": {
+            "text": "Wakes up clear-headed, phone stays down for the first hour."
+          }
+        },
+        "a2": {
+          "type": "after",
+          "settings": {
+            "text": "Can sit with a coffee and just… be. No itch."
+          }
+        },
+        "a3": {
+          "type": "after",
+          "settings": {
+            "text": "Deep-focuses for hours and actually enjoys it."
+          }
+        },
+        "a4": {
+          "type": "after",
+          "settings": {
+            "text": "Small things feel good again — the colour's back."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
+      "settings": {
+        "eyebrow": "There are two kinds of dopamine",
+        "heading": "Cheap dopamine drains you. Real dopamine builds you.",
+        "bad_title": "Cheap dopamine",
+        "good_title": "Real dopamine"
+      }
+    },
+    "quiz": {
+      "type": "quiz",
+      "settings": {
+        "eyebrow": "10-second test",
+        "heading": "How fried is your dopamine?",
+        "subheading": "Answer 4 honest questions and find out where you're really at (and what to do about it).",
+        "questions_json": "[{\"q\": \"How many times have you picked up your phone in the last hour?\", \"options\": [{\"label\": \"Lost count, honestly\", \"weight\": \"circle\"}, {\"label\": \"A handful\", \"weight\": \"pro\"}, {\"label\": \"Barely touched it\", \"weight\": \"starter\"}]}, {\"q\": \"How do you feel after an hour of scrolling?\", \"options\": [{\"label\": \"Empty and foggy\", \"weight\": \"circle\"}, {\"label\": \"Kind of meh\", \"weight\": \"pro\"}, {\"label\": \"Fine, I keep it short\", \"weight\": \"starter\"}]}, {\"q\": \"Can you sit and do nothing for 5 minutes?\", \"options\": [{\"label\": \"No chance, I'd reach for my phone\", \"weight\": \"circle\"}, {\"label\": \"It's a struggle\", \"weight\": \"pro\"}, {\"label\": \"Yeah, easily\", \"weight\": \"starter\"}]}, {\"q\": \"Do the things you used to enjoy still feel good?\", \"options\": [{\"label\": \"Nothing really hits anymore\", \"weight\": \"circle\"}, {\"label\": \"A bit dulled\", \"weight\": \"pro\"}, {\"label\": \"They feel great\", \"weight\": \"starter\"}]}]",
+        "results_json": "{\"starter\": {\"title\": \"Lightly fried\", \"blurb\": \"You're doing okay — but a 7-day reset will sharpen your focus and make good things feel good again. Easy win.\", \"cta\": \"Do the 7-day reset\", \"url\": \"#pricing\"}, \"pro\": {\"title\": \"Pretty fried\", \"blurb\": \"Cheap dopamine has dulled your days. The Dopamine Reset rewires that in a week — this is exactly what you need.\", \"cta\": \"Start the reset →\", \"url\": \"#pricing\"}, \"circle\": {\"title\": \"Deep-fried 🍟\", \"blurb\": \"Be honest — you felt that. Your brain is running on cheap hits. The good news: 7 days is all it takes to feel like yourself again.\", \"cta\": \"Reset my brain now →\", \"url\": \"#pricing\"}}"
+      }
+    },
+    "features": {
+      "type": "features",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "🧠",
+            "title": "The 7-day protocol",
+            "text": "One simple action a day that resets your reward system. No willpower needed."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "📵",
+            "title": "The cheap-dopamine fast",
+            "text": "Exactly what to cut, for how long, and how to survive the first 48 hours."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "🌊",
+            "title": "Urge-surfing toolkit",
+            "text": "5 tricks to beat a craving in under 90 seconds when your brain begs to scroll."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "☀️",
+            "title": "The real-dopamine menu",
+            "text": "30 small things that genuinely make you happy — ranked by how fast they work."
+          }
+        },
+        "f5": {
+          "type": "feature",
+          "settings": {
+            "icon": "📈",
+            "title": "Daily tracker",
+            "text": "Tick off each day and watch your focus and mood climb. Streaks make it stick."
+          }
+        },
+        "f6": {
+          "type": "feature",
+          "settings": {
+            "icon": "⚡",
+            "title": "Instant access",
+            "text": "Pay and you're dropped straight into day 1. No waiting, no email hunting."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
+      ],
+      "settings": {
+        "eyebrow": "What's inside",
+        "heading": "Everything you need to feel good again."
+      }
+    },
+    "bonus_stack": {
+      "type": "bonus-stack",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "item": "The 7-Day Dopamine Reset protocol",
+            "value": 299
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "item": "The cheap-dopamine fast guide",
+            "value": 149
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "item": "Urge-surfing toolkit (5 craving-killers)",
+            "value": 99
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "item": "The real-dopamine menu (30 mood-lifters)",
+            "value": 99
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "item": "Daily tracker + streak system",
+            "value": 79
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "item": "Lifetime updates",
+            "value": 49
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "settings": {
+        "eyebrow": "Add it all up",
+        "heading": "Then look at the launch price.",
+        "subheading": "Everything you get, and what it'd cost you anywhere else.",
+        "was_price": 774,
+        "now_price": 99,
+        "note": "One payment. Instant access. 7-day money-back guarantee.",
+        "cta_label": "Get the reset for R99",
+        "cta_url": "#pricing"
+      }
+    },
+    "pricing": {
+      "type": "pricing",
+      "blocks": {
+        "t1": {
+          "type": "tier",
+          "settings": {
+            "name": "The Reset",
+            "tagline": "Everything you need to rewire",
+            "price": "R99",
+            "price_suffix": "once-off",
+            "features": "The full 7-day protocol\nCheap-dopamine fast guide\nUrge-surfing toolkit\nReal-dopamine menu (30 lifters)\nDaily tracker + streaks\nInstant access",
+            "featured": true,
+            "badge": "Launch price",
+            "cta_label": "Start the reset →"
+          }
+        },
+        "t2": {
+          "type": "tier",
+          "settings": {
+            "name": "Reset + Lifetime Toolkit",
+            "tagline": "For people who want to never go back",
+            "price": "R149",
+            "price_suffix": "once-off",
+            "features": "Everything in The Reset\nMonthly top-up resets (forever)\nAdvanced focus protocols\nEvery future update free",
+            "featured": false,
+            "cta_label": "Get the full toolkit"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2"
+      ],
+      "settings": {
+        "eyebrow": "Start today",
+        "heading": "Feel different by this time next week.",
+        "subheading": "Link each option to your Shopify product to turn on instant checkout + auto-redirect.",
+        "footnote": "Instant access · secure Shopify checkout · 7-day money-back guarantee."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "quote": "Day 3 and the fog lifted. I forgot what a clear head even felt like.",
+            "name": "Lerato",
+            "meta": "21 · finished the reset"
+          }
+        },
+        "q2": {
+          "type": "quote",
+          "settings": {
+            "quote": "I can read a whole chapter now without checking my phone. Wild.",
+            "name": "Daniel",
+            "meta": "19 · day 6"
+          }
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Best R99 I've spent. I actually feel happy doing normal stuff again.",
+            "name": "Aisha",
+            "meta": "23 · reset twice"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "eyebrow": "No overnight miracles. Just clearer days.",
+        "heading": "What people feel after a week."
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "heading": "7 days. If you don't feel the shift, it's free.",
+        "text": "Do the reset for a week. If your head isn't clearer and your days don't feel better, email us and get every cent back — no forms, no awkward questions. The only risk is staying foggy."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "a1": {
+          "type": "qa",
+          "settings": {
+            "q": "How do I get access after paying?",
+            "a": "The moment Shopify confirms your payment you're auto-redirected straight to Day 1 — no email, no waiting."
+          }
+        },
+        "a2": {
+          "type": "qa",
+          "settings": {
+            "q": "Is this just 'delete your apps'?",
+            "a": "No. It's a structured 7-day protocol with a daily action, craving tools and a real-dopamine menu. Deleting apps alone doesn't rewire anything — this does."
+          }
+        },
+        "a3": {
+          "type": "qa",
+          "settings": {
+            "q": "How much time per day?",
+            "a": "About 10 minutes. It's built for real life, not a monastery."
+          }
+        },
+        "a4": {
+          "type": "qa",
+          "settings": {
+            "q": "What if it doesn't work for me?",
+            "a": "7-day money-back guarantee, no questions asked. You risk nothing."
+          }
+        },
+        "a5": {
+          "type": "qa",
+          "settings": {
+            "q": "Is it a subscription?",
+            "a": "No — once-off payment. The R149 option adds lifetime top-ups, but even that's a single payment."
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ],
+      "settings": {
+        "eyebrow": "Good things to know",
+        "heading": "Questions, answered."
+      }
+    },
+    "final_cta": {
+      "type": "final-cta",
+      "settings": {
+        "eyebrow": "This time next week",
+        "heading": "You can keep scrolling. Or you can feel good again.",
+        "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R99. Pick.",
+        "cta_label": "Start the reset — R99",
+        "cta_url": "#pricing"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "transformation",
+    "quiz",
+    "features",
+    "bonus_stack",
+    "pricing",
+    "testimonials",
+    "guarantee",
+    "faq",
+    "final_cta"
+  ]
+}

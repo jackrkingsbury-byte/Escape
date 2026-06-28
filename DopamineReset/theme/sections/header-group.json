@@ -1,0 +1,54 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "site-header": {
+      "type": "site-header",
+      "settings": {
+        "brand_text": "Dopamine Reset",
+        "brand_dot": true,
+        "cta_label": "Start the reset",
+        "cta_url": "#pricing"
+      },
+      "blocks": {
+        "l1": {
+          "type": "link",
+          "settings": {
+            "label": "How it works",
+            "url": "#how"
+          }
+        },
+        "l2": {
+          "type": "link",
+          "settings": {
+            "label": "What's inside",
+            "url": "#features"
+          }
+        },
+        "l3": {
+          "type": "link",
+          "settings": {
+            "label": "The test",
+            "url": "#quiz"
+          }
+        },
+        "l4": {
+          "type": "link",
+          "settings": {
+            "label": "FAQ",
+            "url": "#faq"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ]
+    }
+  },
+  "order": [
+    "site-header"
+  ]
+}

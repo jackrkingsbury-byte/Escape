@@ -1,0 +1,53 @@
+<section class="section" id="how">
+  <div class="wrap">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2 class="reveal">{{ section.settings.heading }}</h2>
+    <div class="split">
+      <div class="split__card split__card--bad reveal">
+        <h3>{{ section.settings.bad_title }}</h3>
+        <ul class="split__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'before' -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="split__card split__card--good reveal">
+        <h3>{{ section.settings.good_title }}</h3>
+        <ul class="split__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'after' -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Transformation",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "There are two kinds of people" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Same day. Two completely different lives." },
+    { "type": "text", "id": "bad_title", "label": "Before column title", "default": "Stuck on autopilot" },
+    { "type": "text", "id": "good_title", "label": "After column title", "default": "Living louder" }
+  ],
+  "blocks": [
+    { "type": "before", "name": "Before point", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Wakes up, reaches for the phone, scrolls for an hour." }] },
+    { "type": "after", "name": "After point", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Wakes up to a dare, does one brave thing before 9am." }] }
+  ],
+  "presets": [{
+    "name": "Transformation",
+    "blocks": [
+      { "type": "before", "settings": { "text": "Wakes up, reaches for the phone, scrolls for an hour." } },
+      { "type": "before", "settings": { "text": "Waits for motivation that never quite arrives." } },
+      { "type": "before", "settings": { "text": "Compares their behind-the-scenes to everyone's highlight reel." } },
+      { "type": "before", "settings": { "text": "Ends the year exactly where it started." } },
+      { "type": "after", "settings": { "text": "Wakes up to a dare and does one brave thing before 9am." } },
+      { "type": "after", "settings": { "text": "Runs on a system, so momentum doesn't need motivation." } },
+      { "type": "after", "settings": { "text": "Tracks streaks and stacks small wins into a different identity." } },
+      { "type": "after", "settings": { "text": "Looks back in 90 days at someone they're proud of." } }
+    ]
+  }]
+}
+{% endschema %}
