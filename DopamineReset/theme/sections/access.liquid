@@ -23,7 +23,7 @@
   .dr__nav.on{background:linear-gradient(135deg,rgba(255,194,75,.16),rgba(255,92,138,.12));color:var(--ink)}
   .dr__foot{margin-top:auto;padding:12px;border-top:1px solid var(--line2);color:var(--faint);font-size:.74rem}
 
-  .dr__main{grid-column:2;padding:clamp(16px,4vw,40px);max-width:1040px}
+  .dr__main{grid-column:2;padding:clamp(16px,4vw,40px);max-width:1060px}
   .dr__top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:10px;flex-wrap:wrap}
   .dr__pills{display:flex;gap:8px;flex-wrap:wrap}
   .dr__pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:.8rem;color:var(--soft)}
@@ -37,18 +37,28 @@
   .dr .hl{background:linear-gradient(135deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
   .dr .hl2{background:linear-gradient(135deg,var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
-  /* coach */
-  .dr .coach{position:relative;overflow:hidden;border-radius:22px;padding:24px;margin:6px 0 16px;border:1px solid rgba(255,194,75,.28);background:linear-gradient(135deg,#1a1330,#211a39)}
-  .dr .coach__bg{position:absolute;inset:0;z-index:0;background:radial-gradient(60% 90% at 85% 10%,rgba(255,138,61,.34),transparent 60%),radial-gradient(50% 80% at 10% 100%,rgba(124,92,255,.3),transparent 60%)}
+  /* COACH — hero */
+  .dr .coach{position:relative;overflow:hidden;border-radius:24px;padding:26px;margin:6px 0 18px;border:1px solid rgba(255,194,75,.3);background:linear-gradient(135deg,#180f2e,#241a3d 55%,#2a1430)}
+  .dr .coach__bg{position:absolute;inset:0;z-index:0;background:radial-gradient(55% 90% at 88% 6%,rgba(255,138,61,.4),transparent 60%),radial-gradient(50% 80% at 6% 100%,rgba(124,92,255,.36),transparent 60%)}
   .dr .coach>*{position:relative;z-index:1}
-  .dr .coach__row{display:flex;align-items:center;gap:14px;margin-bottom:4px}
-  .dr .coach__orb{width:54px;height:54px;border-radius:50%;flex:0 0 auto;background:radial-gradient(circle at 35% 30%,#fff,#ffd27a 30%,#ff8a3d 70%);box-shadow:0 0 0 4px rgba(255,194,75,.18),0 10px 30px rgba(255,138,61,.4);animation:coachpulse 4s ease-in-out infinite}
-  @keyframes coachpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-  .dr .coach__hi{font-family:var(--serif);font-size:clamp(1.3rem,3.6vw,1.9rem);font-weight:600;color:#fff;line-height:1.1}
+  .dr .coach__row{display:flex;align-items:center;gap:15px;margin-bottom:6px}
+  .dr .coach__face{width:64px;height:64px;border-radius:50%;flex:0 0 auto;position:relative;background:radial-gradient(circle at 36% 30%,#fff,#ffd27a 32%,#ff8a3d 72%);box-shadow:0 0 0 5px rgba(255,194,75,.16),0 12px 34px rgba(255,138,61,.45);animation:coachpulse 4s ease-in-out infinite}
+  .dr .coach__face .ey{position:absolute;width:7px;height:10px;border-radius:50%;background:#5a2c00;top:42%;animation:blink 5.2s infinite}
+  .dr .coach__face .ey.l{left:38%}.dr .coach__face .ey.r{right:38%}
+  .dr .coach__face .sm{position:absolute;left:50%;top:58%;width:22px;height:11px;transform:translateX(-50%);border:3px solid #5a2c00;border-top:0;border-radius:0 0 22px 22px}
+  @keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+  @keyframes coachpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .dr .coach__hi{font-family:var(--serif);font-size:clamp(1.35rem,3.8vw,2rem);font-weight:600;color:#fff;line-height:1.1}
   .dr .coach__sub{color:#d9d4ea;font-size:.92rem}
-  .dr .coach__say{font-size:1.04rem;color:#fff;margin:12px 0 0;line-height:1.5}
-  .dr .coach__quote{margin-top:14px;padding-top:13px;border-top:1px solid rgba(255,255,255,.12);font-style:italic;color:#e7e2f5;font-size:.96rem}
-  .dr .coach__cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .dr .coach__say{font-size:1.08rem;color:#fff;margin:14px 0 0;line-height:1.5;min-height:1.5em}
+  .dr .coach__ask{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:#ffc24b;margin:16px 0 9px}
+  .dr .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .dr .chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:9px 14px;font-size:.86rem;font-weight:600;color:#fff;transition:.15s}
+  .dr .chip:hover,.dr .chip.on{background:rgba(255,194,75,.2);border-color:var(--amber)}
+  .dr .coach__reply{margin-top:14px;padding:16px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.1);display:none}
+  .dr .coach__reply.on{display:block;animation:fade .3s}
+  .dr .coach__reply p{color:#fff;margin:0 0 12px}
+  .dr .coach__quote{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-style:italic;color:#e7e2f5;font-size:.96rem}
 
   .dr .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:999px;padding:13px 22px;background:#fff;color:#2a1400;transition:transform .15s}
   .dr .btn:active{transform:scale(.96)}
@@ -57,22 +67,22 @@
   .dr .btn--sm{padding:9px 15px;font-size:.84rem}
   .dr .btn[disabled]{opacity:.55;pointer-events:none}
 
-  .dr .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin:16px 0}
+  .dr .secttl{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:22px 0 2px}
+  .dr .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;margin:14px 0}
   .dr .thumb{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4;border:1px solid var(--line);cursor:pointer;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column;justify-content:flex-end}
-  .dr .thumb:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 18px 40px rgba(0,0,0,.45)}
-  .dr .thumb__bg{position:absolute;inset:0;z-index:0}
-  .dr .thumb__emoji{position:absolute;top:14px;left:16px;font-size:2.5rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))}
-  .dr .thumb__tag{position:absolute;top:14px;right:14px;z-index:1;background:rgba(0,0,0,.35);backdrop-filter:blur(4px);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;color:#fff}
-  .dr .thumb__cap{position:relative;z-index:1;padding:14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.55))}
-  .dr .thumb__cap b{display:block;font-family:var(--serif);font-size:1.02rem;line-height:1.15;color:#fff}
-  .dr .thumb__cap span{font-size:.74rem;color:rgba(255,255,255,.8)}
-  .dr .thumb.done::after{content:"✓ done";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(8,36,15,.55);color:#fff;font-weight:800;font-family:var(--mono);letter-spacing:.1em}
+  .dr .thumb:hover{transform:translateY(-5px) scale(1.015);box-shadow:0 20px 44px rgba(0,0,0,.5)}
+  .dr .thumb__bg{position:absolute;inset:0;z-index:0;background-size:180% 180%;animation:tgrad 8s ease infinite}
+  @keyframes tgrad{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+  .dr .thumb__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(8,6,12,.72) 100%)}
+  .dr .thumb__emoji{position:absolute;top:14px;left:16px;font-size:2.5rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45));animation:tfloat 5s ease-in-out infinite}
+  @keyframes tfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(7deg)}}
+  .dr .thumb__tag{position:absolute;top:14px;right:14px;z-index:1;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:#fff}
+  .dr .thumb__cap{position:relative;z-index:1;padding:14px}
+  .dr .thumb__cap b{display:block;font-family:var(--serif);font-size:1.04rem;line-height:1.16;color:#fff}
+  .dr .thumb__cap span{font-size:.74rem;color:rgba(255,255,255,.82)}
+  .dr .thumb.done::after{content:"✓ done";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(8,36,15,.5);color:#fff;font-weight:800;font-family:var(--mono);letter-spacing:.1em}
+  .dr .thumb.read::after{content:"✓ read";position:absolute;top:13px;right:13px;z-index:2;background:var(--good);color:#06270f;font-weight:800;border-radius:999px;padding:4px 10px;font-size:.66rem;font-family:var(--mono)}
   .dr .thumb.locked{cursor:not-allowed}.dr .thumb.locked::after{content:"🔒";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(0,0,0,.55);font-size:1.6rem}
-
-  .dr .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:16px 0}
-  .dr .tile{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1;cursor:pointer;display:grid;place-items:center;text-align:center;padding:12px;border:1px solid var(--line);transition:transform .15s}
-  .dr .tile:hover{transform:translateY(-3px)}.dr .tile__bg{position:absolute;inset:0;z-index:0;opacity:.9}
-  .dr .tile__in{position:relative;z-index:1}.dr .tile__in .e{font-size:1.85rem;display:block}.dr .tile__in b{font-size:.82rem;color:#fff;display:block;margin-top:6px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
   .dr .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin:14px 0}
   .dr .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:12px;margin:14px 0}
@@ -80,7 +90,6 @@
   .dr .stat .big{font-family:var(--serif);font-size:1.9rem;color:var(--amber);line-height:1}.dr .stat .lbl{color:var(--faint);font-size:.78rem;margin-top:5px}
   .dr .bar{height:10px;border-radius:999px;background:var(--bg3);overflow:hidden;margin:8px 0}.dr .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--pink));width:0;transition:width .6s}
 
-  /* score dials */
   .dr .dials{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
   .dr .dial{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center}
   .dr .ring{--v:0;width:108px;height:108px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;
@@ -94,7 +103,6 @@
   .dr .mgraph .bar2{width:100%;max-width:30px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--amber),var(--pink));min-height:6px;transition:height .5s}
   .dr .mgraph .dl{font-size:.66rem;color:var(--faint);font-family:var(--mono)}
 
-  /* achievements */
   .dr .achv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:14px 0}
   .dr .ach{position:relative;border-radius:16px;border:1px solid var(--line);background:var(--bg2);padding:16px;text-align:center;transition:transform .15s}
   .dr .ach .e{font-size:2rem;filter:grayscale(1) opacity(.4)}
@@ -102,12 +110,6 @@
   .dr .ach.got .e{filter:none}.dr .ach.got:hover{transform:translateY(-3px)}
   .dr .ach b{display:block;font-size:.86rem;color:#fff;margin-top:8px}.dr .ach span{font-size:.72rem;color:var(--faint)}
   .dr .ach.got::after{content:"✓";position:absolute;top:9px;right:11px;width:22px;height:22px;border-radius:50%;background:var(--good);color:#06270f;font-weight:800;display:grid;place-items:center;font-size:.8rem}
-
-  /* journeys */
-  .dr .moodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin:16px 0}
-  .dr .moodc{border-radius:16px;border:1px solid var(--line);padding:16px 10px;text-align:center;cursor:pointer;transition:transform .15s;position:relative;overflow:hidden}
-  .dr .moodc:hover{transform:translateY(-3px)}.dr .moodc .cbg{position:absolute;inset:0;z-index:0;opacity:.85}
-  .dr .moodc>*{position:relative;z-index:1}.dr .moodc .e{font-size:2.1rem}.dr .moodc b{display:block;color:#fff;margin-top:6px;font-size:.92rem;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
   .dr .moods{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
   .dr .moodb{font-size:1.8rem;width:60px;height:60px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:.15s;display:grid;place-items:center}
@@ -118,34 +120,34 @@
   .dr ul.tick{list-style:none;padding:0;margin:8px 0}.dr ul.tick li{padding:9px 0 9px 26px;position:relative;color:var(--soft);border-top:1px solid var(--line2)}
   .dr ul.tick li:first-child{border:0}.dr ul.tick li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
 
-  /* modal */
   .dr__modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,4,8,.72);backdrop-filter:blur(6px)}
   .dr__modal.on{display:flex;animation:fade .25s}
-  .dr__sheet{background:var(--bg2);border:1px solid var(--line);border-radius:22px;max-width:480px;width:100%;overflow:hidden;max-height:92vh;display:flex;flex-direction:column}
+  .dr__sheet{background:var(--bg2);border:1px solid var(--line);border-radius:22px;max-width:500px;width:100%;overflow:hidden;max-height:92vh;display:flex;flex-direction:column}
   .dr__sheet .top{position:relative;min-height:150px;display:grid;place-items:center;padding:14px}
   .dr__sheet .top .e{font-size:3.6rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4))}
   .dr__sheet .x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.4);color:#fff;display:grid;place-items:center;font-size:1.1rem;z-index:2}
+  .dr__prog{height:4px;background:var(--bg3);display:none}.dr__prog.on{display:block}.dr__prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--pink))}
   .dr__sheet .body{padding:22px;overflow:auto}.dr__sheet .body h2{margin-bottom:8px}
+  .dr__sheet .body .art p{font-size:1rem;line-height:1.62;color:#d7d3ca;margin:0 0 14px}
   .dr .msec{margin-top:15px;padding-top:13px;border-top:1px solid var(--line)}
   .dr .msec b{display:block;margin-bottom:6px;color:var(--amber);font-size:.92rem}.dr .msec p{margin:0;font-size:.94rem;color:var(--soft)}
   .dr .mnote{width:100%;min-height:74px;margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:11px;font:inherit;resize:vertical}
 
-  /* games */
   .dr .play{min-height:210px;display:grid;place-items:center;text-align:center;background:var(--bg3);border-radius:16px;margin:6px 0 14px;position:relative;overflow:hidden}
-  .dr .bubble{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;
-    background:radial-gradient(circle,rgba(255,194,75,.5),rgba(124,92,255,.2));border:1px solid rgba(255,255,255,.18);transition:transform 4s ease-in-out}
+  .dr .bubble{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;background:radial-gradient(circle,rgba(255,194,75,.5),rgba(124,92,255,.2));border:1px solid rgba(255,255,255,.18);transition:transform 4s ease-in-out}
   .dr .rt{font-family:var(--serif);font-size:1.6rem;color:#fff}
   .dr .react{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:1.2rem;color:#fff}
   .dr .distract{position:absolute;font-size:2.2rem;cursor:pointer;user-select:none}
+  .dr .mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;max-width:300px}
+  .dr .memc{aspect-ratio:1;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-size:1.6rem;display:grid;place-items:center;transition:.15s}
+  .dr .memc.up{background:linear-gradient(135deg,var(--violet),var(--pink))}.dr .memc.done{opacity:.4}
 
-  /* quotes */
-  .dr .qcard{position:relative;border-radius:18px;padding:22px;border:1px solid var(--line);background:linear-gradient(135deg,#1a1330,#211a39);margin:14px 0}
-  .dr .qcard p{font-family:var(--serif);font-size:1.3rem;color:#fff;line-height:1.35;font-style:italic}
+  .dr .qcard{position:relative;border-radius:18px;padding:24px;border:1px solid var(--line);background:linear-gradient(135deg,#1a1330,#211a39);margin:14px 0}
+  .dr .qcard p{font-family:var(--serif);font-size:1.35rem;color:#fff;line-height:1.35;font-style:italic}
   .dr .qcard .by{color:var(--amber);font-size:.86rem;font-family:var(--mono)}
-  .dr .qrow{display:flex;gap:10px;margin-top:14px}
+  .dr .qrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
   .dr .qmini{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin:8px 0;color:var(--soft);font-size:.95rem}
 
-  /* toast + confetti */
   .dr__toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);z-index:120;background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;font-weight:800;padding:13px 20px;border-radius:999px;box-shadow:0 16px 40px rgba(255,138,61,.45);opacity:0;transition:.35s;display:flex;align-items:center;gap:9px;max-width:90vw}
   .dr__toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
   .dr__cf{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:110}
@@ -160,17 +162,15 @@
     .dr__side{position:fixed;inset:0 26% 0 0;z-index:90;transform:translateX(-105%);transition:transform .25s}.dr__side.open{transform:none}
     .dr__menu{display:inline-flex;align-items:center;gap:6px;font-weight:700;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
   }
-  @media (prefers-reduced-motion:reduce){.dr .coach__orb,.dr .bubble{animation:none}}
+  @media (prefers-reduced-motion:reduce){.dr .coach__face,.dr .bubble,.dr .thumb__emoji,.dr .thumb__bg{animation:none}}
 </style>
 
 <div class="dr" id="drApp">
   <aside class="dr__side" id="drSide">
     <div class="dr__brand">Dopamine<b>.</b>Reset</div>
     <div class="dr__lvlcard">
-      <div class="dr__lvlrow">
-        <div class="dr__lvlbadge" id="lvBadge">🌱</div>
-        <div class="dr__lvlt"><b id="lvName">Level 1</b><span id="lvTitle">Asleep</span></div>
-      </div>
+      <div class="dr__lvlrow"><div class="dr__lvlbadge" id="lvBadge">🌱</div>
+        <div class="dr__lvlt"><b id="lvName">Level 1</b><span id="lvTitle">Asleep</span></div></div>
       <div class="dr__lvlbar"><i id="lvBar"></i></div>
     </div>
     <div class="dr__navttl">Your reset</div>
@@ -182,6 +182,7 @@
     <button class="dr__nav" data-go="vision"><span class="ic">🌟</span> Your Why</button>
     <div class="dr__navttl">Feel good now</div>
     <button class="dr__nav" data-go="games"><span class="ic">🎮</span> Mind Games</button>
+    <button class="dr__nav" data-go="articles"><span class="ic">📚</span> Articles</button>
     <button class="dr__nav" data-go="journeys"><span class="ic">💗</span> Mood Help</button>
     <button class="dr__nav" data-go="quotes"><span class="ic">📜</span> Quotes</button>
     <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
@@ -205,14 +206,17 @@
     <section class="panel on" data-p="today">
       <div class="coach">
         <div class="coach__bg"></div>
-        <div class="coach__row"><div class="coach__orb"></div>
+        <div class="coach__row"><div class="coach__face"><span class="ey l"></span><span class="ey r"></span><span class="sm"></span></div>
           <div><div class="coach__hi" id="coHi">Hey there 👋</div><div class="coach__sub" id="coSub">Your coach is warming up…</div></div></div>
         <p class="coach__say" id="coSay">Let's get your first win today.</p>
-        <div class="coach__quote" id="coQuote"></div>
-        <div class="coach__cta">
+        <div class="coach__cta" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <button class="btn btn--g" data-open-today>Today's challenge →</button>
           <button class="btn btn--ghost btn--sm" data-go="games">I need a reset now</button>
         </div>
+        <div class="coach__ask">What are you struggling with? Tap one →</div>
+        <div class="chips" id="coachChips"></div>
+        <div class="coach__reply" id="coachReply"></div>
+        <div class="coach__quote" id="coQuote"></div>
       </div>
       <div class="stats">
         <div class="stat"><div class="big" id="t1">0</div><div class="lbl">days done</div></div>
@@ -267,20 +271,26 @@
     <section class="panel" data-p="vision">
       <h1>Your why</h1>
       <p>The reset is the tool. <span class="hl">This</span> is the reason. Get honest about what you actually want — it's what pulls you through the hard days.</p>
-      <div class="vision" id="visionRows" style="display:grid;gap:12px;margin:16px 0"></div>
+      <div id="visionRows" style="display:grid;gap:12px;margin:16px 0"></div>
       <p style="color:var(--faint)">Saved on this device. Re-read it any time you feel like quitting.</p>
     </section>
 
     <section class="panel" data-p="games">
       <h1>Mind games</h1>
-      <p>Craving a hit? Play a 1-minute game instead. Each one is <b>+15 XP</b> the first time and actually calms the urge.</p>
-      <div class="tiles" id="gameTiles"></div>
+      <p>Craving a hit? Play a 1-minute game instead. Each is <b>+15 XP</b> the first time and genuinely calms the urge.</p>
+      <div class="feed" id="gameFeed"></div>
+    </section>
+
+    <section class="panel" data-p="articles">
+      <h1>The library</h1>
+      <p>Short, premium reads that explain what's happening in your brain — and how to win. Each one read is <b>+20 XP</b>.</p>
+      <div class="feed" id="artFeed"></div>
     </section>
 
     <section class="panel" data-p="journeys">
       <h1>Mood help</h1>
       <p>However you feel right now, there's a path through it. Tap your mood.</p>
-      <div class="moodgrid" id="journeyGrid"></div>
+      <div class="feed" id="journeyFeed"></div>
     </section>
 
     <section class="panel" data-p="quotes">
@@ -294,7 +304,7 @@
     <section class="panel" data-p="toolkit">
       <h1>Urge toolkit</h1>
       <p>Craving to scroll? Tap a tile, do it for 90 seconds, beat the urge — <b>+5 XP</b> each.</p>
-      <div class="tiles" id="urgeTiles"></div>
+      <div class="feed" id="urgeFeed"></div>
       <button class="btn btn--g btn--sm" id="craveBtn">I beat a craving 💪</button>
       <span style="margin-left:10px;color:var(--faint)">Beaten: <b id="craveCount">0</b></span>
     </section>
@@ -303,7 +313,7 @@
       <h1>Dopamine menu</h1>
       <p>Bored? Tap a tile and just do it. Or roll the dice.</p>
       <button class="btn btn--g" id="rollBtn">🎲 Surprise me</button>
-      <div class="tiles" id="menuTiles"></div>
+      <div class="feed" id="menuFeed"></div>
     </section>
 
     <section class="panel" data-p="journal">
@@ -324,6 +334,7 @@
 
 <div class="dr__modal" id="drModal"><div class="dr__sheet">
   <div class="top" id="mTop"><span class="e" id="mEmoji">🔥</span><button class="x" id="mClose">✕</button></div>
+  <div class="dr__prog" id="mProg"><i id="mProgBar"></i></div>
   <div class="body"><div class="eyebrow" id="mTag">Day 1</div><h2 id="mTitle"></h2><div id="mBody"></div><div id="mAction"></div></div>
 </div></div>
 <div class="dr__toast" id="drToast"></div>
@@ -338,14 +349,16 @@ try{
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
   if(!state.done)state.done={};if(typeof state.crave!=='number')state.crave=0;if(!state.journal)state.journal='';
   if(!state.notes)state.notes={};if(!state.moods)state.moods={};if(!state.vision)state.vision={};
-  if(!state.games)state.games={};if(!state.achvSeen)state.achvSeen={};if(!state.savedQ)state.savedQ=[];if(typeof state.qi!=='number')state.qi=0;
+  if(!state.games)state.games={};if(!state.achvSeen)state.achvSeen={};if(!state.savedQ)state.savedQ=[];
+  if(typeof state.qi!=='number')state.qi=0;if(!state.read)state.read={};
 
   var GRADS=['linear-gradient(135deg,#ff8a3d,#ffc24b)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#ff8a3d)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#ff8a3d)'];
+  function g(i){return GRADS[((i%GRADS.length)+GRADS.length)%GRADS.length]}
   var DAYS=[
-    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards — exactly the muscle we're rebuilding.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
+    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
     {e:"🌅",t:"Phone-free first hour",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull.",r:"How did the first hour feel without the phone? What did you do instead?"},
     {e:"🧘",t:"Boredom on purpose",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet.",w:"Boredom is withdrawal — and it's the reset working. Sitting with it teaches your brain it doesn't need constant input to be okay.",r:"What came up in the quiet? Was it as bad as you expected?"},
-    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",w:"You're not removing the urge, you're redirecting it. Every swap is a rep that rewires the reward loop toward real things.",r:"How many swaps did you make today? Which one felt best?"},
+    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",w:"You're not removing the urge, you're redirecting it. Every swap is a rep that rewires the reward loop.",r:"How many swaps did you make today? Which one felt best?"},
     {e:"🏃",t:"Move your body",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good.",r:"What did you do, and how did your head feel after?"},
     {e:"🤝",t:"One real connection",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal.",r:"Who did you connect with? What did it feel like to be fully present?"},
     {e:"🧭",t:"Design your normal",a:"Write the 3 rules you're keeping for good. Lock in the version of you you've felt this week.",w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
@@ -364,36 +377,69 @@ try{
     {e:'😐',n:'Okay',say:"Flat is normal mid-reset. This is the fog lifting. Knock out today's challenge — momentum beats mood."},
     {e:'🙂',n:'Good',say:"Love that. Ride it — do today's challenge now while you've got lift."},
     {e:'😀',n:'Amazing',say:"There it is. THIS is the reset working. Bank it — finish today and maybe a bonus game."}];
+  var COACH=[
+    {e:'📱',l:'Doomscrolling',say:"The scroll isn't the problem — it's the escape hatch from a feeling. Next urge, run one Tap-to-Resist round before you open anything.",cta:{t:'game',id:'resist',label:'Play Tap to Resist'}},
+    {e:'🎮',l:'Gaming',say:"Games spike dopamine hard, so real life feels slow afterwards. Swap one session for a Focus Timer block today and feel the gap shrink.",cta:{t:'game',id:'focus',label:'Start a focus block'}},
+    {e:'🔞',l:'Urges',say:"Urges peak then fall in about 2 minutes — every single time. Ride this one out with a breathing round instead of feeding it.",cta:{t:'game',id:'breathe',label:'Breathe for 1 min'}},
+    {e:'💤',l:'Sleep',say:"Screens before bed wreck your reward system overnight. Read the Night Routine, then leave the phone across the room tonight.",cta:{t:'go',id:'articles',label:'Open the library'}},
+    {e:'🎯',l:'Focus',say:"Focus is a muscle and it's weak from constant switching. One 10-minute Focus Timer today starts rebuilding it.",cta:{t:'game',id:'focus',label:'Train focus now'}},
+    {e:'😰',l:'Anxiety',say:"Anxious means your nervous system is stuck 'on'. A long exhale switches it off faster than anything. Let's do one minute.",cta:{t:'game',id:'breathe',label:'Calm down now'}},
+    {e:'🔥',l:'Motivation',say:"Motivation follows action, not the other way round. Do today's 10-minute challenge and the drive shows up mid-way.",cta:{t:'today',id:'',label:"Today's challenge"}},
+    {e:'⏳',l:'Procrastination',say:"Procrastination is fear of starting. Shrink it: just 5 minutes on the thing. Set the Focus Timer to 5 and go.",cta:{t:'game',id:'focus',label:'Start 5 minutes'}},
+    {e:'📲',l:'Social media',say:"Comparison is the joy-thief. Mute 5 accounts that make you feel behind, then log it in your Journal.",cta:{t:'go',id:'journal',label:'Open Journal'}}
+  ];
   var JOURNEYS=[
-    {e:'😀',n:'Happy',g:GRADS[0],advice:"Don't just enjoy it — anchor it. Notice what got you here so you can do it again.",breath:"Box breathing: in 4, hold 4, out 4, hold 4.",quote:"\"The little things? The little moments? They aren't little.\" — Jon Kabat-Zinn",challenge:"Message someone and tell them why you appreciate them.",music:"Upbeat indie / feel-good playlist"},
-    {e:'🚀',n:'Motivated',g:GRADS[4],advice:"Motivation is fuel, not a plan. Pour it into ONE action in the next 10 minutes.",breath:"Energising breath: 2 quick in through the nose, 1 long out. x10.",quote:"\"Discipline is choosing between what you want now and what you want most.\"",challenge:"Start the hardest thing on your list for just 5 minutes.",music:"Lo-fi focus / hype beats"},
-    {e:'😰',n:'Anxious',g:GRADS[2],advice:"Anxiety lives in the future. Pull yourself back to right now — name 5 things you can see.",breath:"Long exhale: in 4, out 8. The long out switches off fight-or-flight.",quote:"\"You have survived 100% of your worst days. Breathe.\"",challenge:"Write the worry down, then one tiny step you can control.",music:"Calm ambient / piano"},
-    {e:'😢',n:'Sad',g:GRADS[5],advice:"You don't have to fix it. Just don't numb it with a screen. Move your body gently.",breath:"Sigh it out: deep in, then a big audible sigh. x5.",quote:"\"Rock bottom became the solid foundation on which I rebuilt my life.\" — J.K. Rowling",challenge:"10-minute walk outside, even slow. Light helps more than you think.",music:"Warm acoustic / soft soul"},
-    {e:'🤯',n:'Stressed',g:GRADS[1],advice:"Stress means too much at once. Brain-dump everything, then pick ONE.",breath:"Physiological sigh: 2 sniffs in, long out. x6.",quote:"\"You can do anything, but not everything.\"",challenge:"Close 5 browser tabs / clear one small space. Order calms the mind.",music:"Nature sounds / deep focus"}
+    {e:'😀',n:'Happy',advice:"Don't just enjoy it — anchor it. Notice what got you here so you can repeat it.",breath:"Box breathing: in 4, hold 4, out 4, hold 4.",quote:"\"The little things? The little moments? They aren't little.\" — Jon Kabat-Zinn",challenge:"Message someone and tell them why you appreciate them.",music:"Upbeat indie / feel-good playlist"},
+    {e:'🚀',n:'Motivated',advice:"Motivation is fuel, not a plan. Pour it into ONE action in the next 10 minutes.",breath:"Energising breath: 2 quick in through the nose, 1 long out. x10.",quote:"\"Discipline is choosing between what you want now and what you want most.\"",challenge:"Start the hardest thing on your list for just 5 minutes.",music:"Lo-fi focus / hype beats"},
+    {e:'😰',n:'Anxious',advice:"Anxiety lives in the future. Pull back to now — name 5 things you can see.",breath:"Long exhale: in 4, out 8. The long out switches off fight-or-flight.",quote:"\"You have survived 100% of your worst days. Breathe.\"",challenge:"Write the worry down, then one tiny step you can control.",music:"Calm ambient / piano"},
+    {e:'😢',n:'Sad',advice:"You don't have to fix it. Just don't numb it with a screen. Move your body gently.",breath:"Sigh it out: deep in, then a big audible sigh. x5.",quote:"\"Rock bottom became the solid foundation on which I rebuilt my life.\" — J.K. Rowling",challenge:"10-minute walk outside, even slow. Light helps more than you think.",music:"Warm acoustic / soft soul"},
+    {e:'🤯',n:'Stressed',advice:"Stress means too much at once. Brain-dump everything, then pick ONE.",breath:"Physiological sigh: 2 sniffs in, long out. x6.",quote:"\"You can do anything, but not everything.\"",challenge:"Close 5 tabs / clear one small space. Order calms the mind.",music:"Nature sounds / deep focus"}
+  ];
+  var ARTS=[
+    {e:'🧠',t:'Why dopamine feels broken',sub:'5 min · the science',b:["Dopamine isn't the 'pleasure' chemical — it's the 'go get it' chemical. It spikes in anticipation of a reward, then drops once you have it.","Endless feeds hijack this. Every swipe is a tiny maybe-reward, so your brain keeps firing dopamine in anticipation, all day long.","Over time your baseline drops. Normal life — food, friends, a walk — stops registering, because your brain recalibrated to the firehose.","The fix isn't more willpower. It's lowering the flood so normal rewards feel good again. That's the whole reset.","Give it 7 days of less spiking and your receptors literally start recovering. The colour comes back."]},
+    {e:'📵',t:'How to stop doomscrolling',sub:'4 min · practical',b:["Doomscrolling is an escape from a feeling, not a choice. The first move is to notice the feeling you're avoiding.","Add friction: log out, delete the app off your home screen, use grayscale mode. Every second of friction is a chance to choose differently.","Replace, don't just remove. Keep a 'instead' list ready — a book, a walk, a quick game here. The urge needs somewhere to go.","Use the 2-minute rule: when the urge hits, wait 2 minutes. Urges peak and fade fast. Usually it's gone.","Track wins, not failures. Every resisted scroll is a rep. Reps build the new default."]},
+    {e:'🔁',t:'How habits change your brain',sub:'4 min · the loop',b:["Every habit is a loop: cue → routine → reward. Your phone buzzing (cue) → you check it (routine) → a hit of novelty (reward).","You can't easily delete a loop, but you can swap the routine. Keep the cue, change what you do, keep a reward.","Repetition wires it in. Each rep thickens the neural path until the new routine feels automatic.","This is why streaks matter — they're not vanity, they're physical wiring happening in real time.","Make the good habit obvious, easy and satisfying. Make the bad one invisible, hard and boring."]},
+    {e:'🌅',t:'The morning routine that sets the day',sub:'3 min · routine',b:["The first hour programs your baseline. Start on a screen and you've already spiked and crashed before breakfast.","Win the first hour: no phone, water, light, movement. Even 10 minutes changes the entire day's chemistry.","Sunlight in your eyes early sets your body clock — which later sets your sleep, energy and mood.","Do one 'real' thing before you touch the internet. Make your bed, stretch, write a line. A small win first.","Keep it stupidly simple so you actually do it every day. Consistency beats the perfect routine."]},
+    {e:'🌙',t:'The night routine for deep sleep',sub:'3 min · routine',b:["Sleep is where your brain cleans up and your dopamine system resets. Wreck it and everything else gets harder.","Screens at night are the worst offender: blue light delays sleep, and the content keeps your brain spiking.","Set a 'phone curfew' an hour before bed. Charge it across the room, not next to your pillow.","Wind down on purpose: dim lights, a few pages of a book, slow breathing. Tell your body it's safe to switch off.","Same sleep and wake time daily. A steady clock is worth more than any supplement."]},
+    {e:'💪',t:'The confidence guide',sub:'4 min · identity',b:["Confidence isn't a feeling you wait for — it's evidence you build. Keep small promises to yourself and it grows.","Every time you do the hard thing you said you'd do, you cast a vote for 'I'm someone who follows through.'","Doomscrolling quietly destroys this. Each broken promise to 'just check for a sec' chips away at self-trust.","Start absurdly small. A promise you can't fail. Then keep it. Then make it slightly bigger.","Confidence is the by-product of a stack of kept promises. The reset is a 7-day stack."]},
+    {e:'🎯',t:'Deep work: how to actually focus',sub:'5 min · focus',b:["Focus is the ability to hold one thing in mind without switching. Constant phone-checking trains the opposite.","Every switch costs you — it takes minutes to fully re-focus. Ten switches an hour and you never go deep.","Protect blocks: phone in another room, one tab, a timer. Start with 10 minutes and build.","Boredom is part of it. The urge to switch will scream. Don't obey it — that's the rep.","Deep work feels hard then quietly amazing. It's one of the few clean dopamine sources left."]},
+    {e:'🏆',t:'How successful people focus',sub:'4 min · mindset',b:["High performers aren't more disciplined by birth — they design environments where the right thing is the easy thing.","They remove choices. Same routine, fewer decisions, less willpower spent on small stuff.","They protect their attention like money, because they know it's the real currency.","They use single-tasking. One thing, fully, then the next — not ten things half-done.","They rest on purpose. Recovery isn't lazy; it's what makes the focus possible."]},
+    {e:'🌀',t:'How to stop overthinking',sub:'3 min · calm',b:["Overthinking is your brain trying to control the uncontrollable. It feels productive but it's just spinning.","Get it out of your head and onto paper. Written worries shrink; trapped ones grow.","Separate what you can control from what you can't. Act on the first list, release the second.","Set a 'worry window' — 10 minutes to think it through, then you're done for the day.","Action is the cure. The smallest step forward quiets the loop better than any amount of thinking."]},
+    {e:'😴',t:'Why sleep matters more than you think',sub:'3 min · health',b:["Sleep isn't downtime — it's when your brain repairs, files memories and resets your reward system.","One bad night spikes cravings and tanks willpower the next day. You're not weak, you're under-slept.","Good sleep makes every other habit easier: better focus, calmer mood, fewer urges.","It's the highest-leverage thing you can fix. Nail sleep first and the rest follows.","Protect it like it's the foundation — because it is."]}
   ];
   var QUOTES=[
-    {t:"You don't have to be extreme, just consistent.",b:"—"},
-    {t:"The pain of discipline weighs ounces. The pain of regret weighs tonnes.",b:"—"},
-    {t:"Your brain isn't broken. It's just been overfed. Starve the noise.",b:"Dopamine Reset"},
-    {t:"Boredom is the doorway to a calmer mind.",b:"—"},
-    {t:"Every time you resist, you get stronger. Every time you scroll, it does.",b:"—"},
-    {t:"You will never always be motivated. You must learn to be disciplined.",b:"—"},
-    {t:"Small habits don't add up. They compound.",b:"James Clear"},
-    {t:"The person you'll be in a year is built by what you do today.",b:"—"},
-    {t:"Real life is slower than a feed. That's the point.",b:"Dopamine Reset"},
-    {t:"Comparison is the thief of joy.",b:"Theodore Roosevelt"},
-    {t:"Focus is a muscle. You're in the gym right now.",b:"—"},
-    {t:"What you feed grows. Feed the real stuff.",b:"—"}];
+    {t:"You don't have to be extreme, just consistent.",b:"—"},{t:"The pain of discipline weighs ounces. The pain of regret weighs tonnes.",b:"—"},
+    {t:"Your brain isn't broken. It's just been overfed. Starve the noise.",b:"Dopamine Reset"},{t:"Boredom is the doorway to a calmer mind.",b:"—"},
+    {t:"Every time you resist, you get stronger. Every time you scroll, it does.",b:"—"},{t:"You will never always be motivated. You must learn to be disciplined.",b:"—"},
+    {t:"Small habits don't add up. They compound.",b:"James Clear"},{t:"The person you'll be in a year is built by what you do today.",b:"—"},
+    {t:"Real life is slower than a feed. That's the point.",b:"Dopamine Reset"},{t:"Comparison is the thief of joy.",b:"Theodore Roosevelt"},
+    {t:"Focus is a muscle. You're in the gym right now.",b:"—"},{t:"What you feed grows. Feed the real stuff.",b:"—"},
+    {t:"Discipline is choosing what you want most over what you want now.",b:"—"},{t:"Motivation gets you started. Habit keeps you going.",b:"Jim Ryun"},
+    {t:"You are what you repeatedly do.",b:"Aristotle"},{t:"The cave you fear to enter holds the treasure you seek.",b:"Joseph Campbell"},
+    {t:"Don't watch the clock; do what it does. Keep going.",b:"Sam Levenson"},{t:"A river cuts through rock not by power, but persistence.",b:"—"},
+    {t:"Your future is hidden in your daily routine.",b:"—"},{t:"Fall seven times, stand up eight.",b:"Japanese proverb"},
+    {t:"The best time to start was yesterday. The next best time is now.",b:"—"},{t:"Slow is smooth. Smooth is fast.",b:"—"},
+    {t:"You can't pour from an empty cup. Rest, then rise.",b:"—"},{t:"One day or day one. You decide.",b:"—"},
+    {t:"Be the energy you want to attract.",b:"—"},{t:"Win the morning, win the day.",b:"—"},
+    {t:"Hard choices, easy life. Easy choices, hard life.",b:"Jerzy Gregorek"},{t:"The quieter you become, the more you can hear.",b:"Ram Dass"},
+    {t:"Dopamine is a loan. Sometimes the interest isn't worth it.",b:"—"},{t:"Slow down. Real life is happening at this speed.",b:"—"},
+    {t:"You don't rise to your goals. You fall to your systems.",b:"James Clear"},{t:"Energy flows where attention goes.",b:"—"},
+    {t:"Do something today your future self will thank you for.",b:"—"},{t:"Slay the urge once and it never owns you the same way again.",b:"—"},
+    {t:"You're not behind. You're just early in your reset.",b:"Dopamine Reset"},{t:"Slowly is the fastest way to where you want to be.",b:"—"},
+    {t:"Slay the scroll, save the soul.",b:"—"},{t:"Boring on purpose beats stimulated by accident.",b:"—"},
+    {t:"Tiny steps, every day, become a different life.",b:"—"},{t:"Less input. More life.",b:"Dopamine Reset"}];
   var LEVELS=[{x:0,n:'Asleep',b:'🌱'},{x:60,n:'Waking up',b:'☕'},{x:140,n:'Clearing',b:'⚡'},{x:240,n:'Locked in',b:'🔥'},{x:360,n:'Glowing',b:'🌟'},{x:500,n:'Golden Mind',b:'💎'}];
-  var GAMES=[{id:'breathe',e:'🫧',t:'Breathing Bubble'},{id:'focus',e:'⏳',t:'Focus Timer'},{id:'resist',e:'🛡️',t:'Tap to Resist'},{id:'react',e:'⚡',t:'Reaction Test'}];
+  var GAMES=[{id:'breathe',e:'🫧',t:'Breathing Bubble',s:'Calm an urge in 60s'},{id:'focus',e:'⏳',t:'Focus Timer',s:'Train deep focus'},{id:'resist',e:'🛡️',t:'Tap to Resist',s:'Beat the distractions'},{id:'react',e:'⚡',t:'Reaction Test',s:'Sharpen your mind'},{id:'memory',e:'🧠',t:'Memory Match',s:'Wake up your brain'}];
   var ACHV=[
     {id:'first',e:'👣',n:'First step',d:'Finish Day 1',test:function(){return state.done[0]}},
     {id:'checkin',e:'💗',n:'Tuned in',d:'Log your mood',test:function(){return ck()>0}},
     {id:'game1',e:'🎮',n:'First game',d:'Play any mind game',test:function(){return gp()>0}},
+    {id:'reader',e:'📚',n:'Bookworm',d:'Read an article',test:function(){return rd()>0}},
     {id:'crave',e:'💪',n:'Urge crusher',d:'Beat 3 cravings',test:function(){return state.crave>=3}},
     {id:'s3',e:'🔥',n:'On a roll',d:'3-day streak',test:function(){return streak()>=3}},
     {id:'why',e:'🧭',n:'Know your why',d:'Fill all 4 Why boxes',test:function(){return vf()>=4}},
-    {id:'mind',e:'🧠',n:'Mind gym',d:'Play 3 games',test:function(){return gp()>=3}},
+    {id:'mind',e:'🕹️',n:'Mind gym',d:'Play all 5 games',test:function(){return gp()>=5}},
+    {id:'lib',e:'🦉',n:'Scholar',d:'Read 5 articles',test:function(){return rd()>=5}},
     {id:'journal',e:'📓',n:'Reflective',d:'Write a journal line',test:function(){return (state.journal||'').length>3}},
     {id:'xp250',e:'⭐',n:'Locked in',d:'Reach 250 XP',test:function(){return xp()>=250}},
     {id:'reset',e:'🏆',n:'Full reset',d:'Complete all 7 days',test:function(){return dc()>=7}}
@@ -405,23 +451,23 @@ try{
   function pct(){return Math.round(dc()/7*100)}
   function ck(){return Object.keys(state.moods).length}
   function gp(){return Object.keys(state.games).length}
+  function rd(){return Object.keys(state.read).length}
   function vf(){var n=0;for(var i=0;i<4;i++)if((state.vision[i]||'').length>1)n++;return n}
-  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+vf()*5+state.savedQ.length*2;if((state.journal||'').length>3)x+=10;return x}
+  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+rd()*20+vf()*5+state.savedQ.length*2;if((state.journal||'').length>3)x+=10;return x}
   function lvl(){var x=xp(),L=0;for(var i=0;i<LEVELS.length;i++)if(x>=LEVELS[i].x)L=i;return L}
   function clamp(v){return v<0?0:v>100?100:Math.round(v)}
   function avgMood(){var v=[],k;for(k in state.moods)v.push(state.moods[k]);if(!v.length)return -1;var s=0;for(var i=0;i<v.length;i++)s+=v[i];return s/v.length}
 
-  // confetti + toast
   var cf=$('#drCf'),toastEl=$('#drToast'),toastT;
   function confetti(){if(!cf)return;var c=['#ffc24b','#ff5c8a','#7c5cff','#5ad48a','#2bd3c6'],h='';for(var i=0;i<28;i++)h+='<span style="left:'+Math.random()*100+'%;background:'+c[i%5]+';animation-duration:'+(1.1+Math.random()*1.2)+'s;animation-delay:'+(Math.random()*.3)+'s"></span>';cf.innerHTML=h;setTimeout(function(){cf.innerHTML=''},2700)}
   function toast(msg){if(!toastEl)return;toastEl.innerHTML=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},2600)}
 
-  // modal
-  function closeM(){clearGame();$('#drModal').classList.remove('on')}
+  var bodyEl=document.querySelector('#drModal .body');
+  function closeM(){clearGame();$('#drModal').classList.remove('on');$('#mProg').classList.remove('on');if(bodyEl)bodyEl.onscroll=null}
   function openModal(){$('#drModal').classList.add('on')}
   function openDay(i){
-    if(i>dc())return;var d=DAYS[i];
-    $('#mTop').style.background=GRADS[i];$('#mEmoji').textContent=d.e;
+    if(i>dc())return;var d=DAYS[i];$('#mProg').classList.remove('on');
+    $('#mTop').style.background=g(i);$('#mEmoji').textContent=d.e;
     $('#mTag').textContent='Day '+(i+1)+' · your mission';$('#mTitle').textContent=d.t;
     $('#mBody').innerHTML='<p style="margin:0 0 4px;color:var(--ink)">'+d.a+'</p>'+
       '<div class="msec"><b>🧠 Why this works</b><p>'+d.w+'</p></div>'+
@@ -432,26 +478,31 @@ try{
     var nt=$('#mNote');if(nt){var tm;nt.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){state.notes[i]=nt.value;save()},500)})}
     openModal();
   }
-  function openTile(o){$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').innerHTML='<p style="margin:0;color:var(--soft)">'+(o.v||'Go do it now — that’s the whole point.')+'</p>';$('#mAction').innerHTML='';openModal()}
+  function openTile(o){$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').innerHTML='<p style="margin:0;color:var(--soft)">'+(o.v||'Go do it now — that’s the whole point.')+'</p>';$('#mAction').innerHTML='';openModal()}
   function openJourney(j){
-    $('#mTop').style.background=j.g;$('#mEmoji').textContent=j.e;$('#mTag').textContent='Feeling '+j.n;$('#mTitle').textContent='When you feel '+j.n.toLowerCase();
-    $('#mBody').innerHTML='<div class="msec"><b>💡 Advice</b><p>'+j.advice+'</p></div>'+
-      '<div class="msec"><b>🫁 Breathe</b><p>'+j.breath+'</p></div>'+
-      '<div class="msec"><b>🎯 Try this</b><p>'+j.challenge+'</p></div>'+
-      '<div class="msec"><b>📜 Read this</b><p style="font-style:italic">'+j.quote+'</p></div>'+
-      '<div class="msec"><b>🎧 Sounds for it</b><p>'+j.music+'</p></div>';
+    $('#mProg').classList.remove('on');$('#mTop').style.background=j.gr;$('#mEmoji').textContent=j.e;$('#mTag').textContent='Feeling '+j.n;$('#mTitle').textContent='When you feel '+j.n.toLowerCase();
+    $('#mBody').innerHTML='<div class="msec"><b>💡 Advice</b><p>'+j.advice+'</p></div><div class="msec"><b>🫁 Breathe</b><p>'+j.breath+'</p></div><div class="msec"><b>🎯 Try this</b><p>'+j.challenge+'</p></div><div class="msec"><b>📜 Read this</b><p style="font-style:italic">'+j.quote+'</p></div><div class="msec"><b>🎧 Sounds for it</b><p>'+j.music+'</p></div>';
     $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="jrBreathe" style="width:100%">Do a 1-min breathing reset 🫧</button></div>';
-    $('#jrBreathe').onclick=function(){openGame('breathe')};
+    $('#jrBreathe').onclick=function(){openGame('breathe')};openModal();
+  }
+  function openArticle(i){
+    var a=ARTS[i];$('#mTop').style.background=g(i+1);$('#mEmoji').textContent=a.e;$('#mTag').textContent=a.sub;$('#mTitle').textContent=a.t;
+    $('#mBody').innerHTML='<div class="art">'+a.b.map(function(p){return '<p>'+p+'</p>'}).join('')+'</div>';
+    var done=state.read[i];
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mRead" style="width:100%">'+(done?'Read again':'Mark as read · +20 XP ✓')+'</button></div>';
+    $('#mRead').onclick=function(){if(!state.read[i]){state.read[i]=true;save();celebrate();toast('📚 +20 XP · nice read')}closeM()};
+    $('#mProg').classList.add('on');$('#mProgBar').style.width='0%';
     openModal();
+    if(bodyEl)bodyEl.onscroll=function(){var mx=bodyEl.scrollHeight-bodyEl.clientHeight;$('#mProgBar').style.width=(mx>0?Math.min(100,bodyEl.scrollTop/mx*100):100)+'%'};
   }
 
-  // games
+  // GAMES
   var gTimers=[];
   function clearGame(){for(var i=0;i<gTimers.length;i++){clearTimeout(gTimers[i]);clearInterval(gTimers[i])}gTimers=[]}
-  function gameDone(id,msg){if(!state.games[id]){state.games[id]=true;save();celebrate();toast('🎮 +15 XP · '+msg)}else{toast(msg)}render()}
+  function gameDone(id,msg){if(!state.games[id]){state.games[id]=true;save();celebrate();toast('🎮 +15 XP · '+msg)}else{toast(msg)}}
   function openGame(id){
-    clearGame();var g=null;for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)g=GAMES[i];if(!g)return;
-    $('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--blue))';$('#mEmoji').textContent=g.e;$('#mTag').textContent='Mind game';$('#mTitle').textContent=g.t;$('#mAction').innerHTML='';
+    clearGame();$('#mProg').classList.remove('on');var gm=null;for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)gm=GAMES[i];if(!gm)return;
+    $('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--blue))';$('#mEmoji').textContent=gm.e;$('#mTag').textContent='Mind game';$('#mTitle').textContent=gm.t;$('#mAction').innerHTML='';
     if(id==='breathe'){
       $('#mBody').innerHTML='<div class="play"><div class="bubble" id="bub">Breathe in</div></div><p style="text-align:center" id="bubMsg">Follow the bubble for 4 rounds.</p>';
       var bub=$('#bub'),ph=['Breathe in','Hold','Breathe out','Hold'],sz=['scale(1.25)','scale(1.25)','scale(.75)','scale(.75)'],n=0,rounds=0;
@@ -459,39 +510,42 @@ try{
       step();
     } else if(id==='focus'){
       $('#mBody').innerHTML='<div class="play"><div class="rt" id="ft">Pick a length</div></div><div style="display:flex;gap:8px;justify-content:center" id="ftBtns"><button class="btn btn--g btn--sm" data-m="5">5 min</button><button class="btn btn--ghost btn--sm" data-m="10">10 min</button><button class="btn btn--ghost btn--sm" data-m="25">25 min</button></div><p style="text-align:center;color:var(--faint);margin-top:10px">Put the phone down. Come back when it rings.</p>';
-      $('#ftBtns').addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b)return;var sec=+b.getAttribute('data-m')*60,left=sec;$('#ftBtns').style.display='none';
-        function tick(){var m=Math.floor(left/60),s=left%60;$('#ft').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;if(left<=0){$('#ft').textContent='✓ Done';gameDone('focus','Focus locked in');return}left--;gTimers.push(setTimeout(tick,1000))}
-        tick();});
+      $('#ftBtns').addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b)return;var left=+b.getAttribute('data-m')*60;$('#ftBtns').style.display='none';
+        function tick(){var m=Math.floor(left/60),s=left%60;$('#ft').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;if(left<=0){$('#ft').textContent='✓ Done';gameDone('focus','Focus locked in');return}left--;gTimers.push(setTimeout(tick,1000))}tick();});
     } else if(id==='resist'){
-      $('#mBody').innerHTML='<div class="play" id="rsArea"><div class="rt" id="rsTxt">Tap the distractions before they vanish!</div></div><p style="text-align:center" id="rsMsg">20 seconds. Resisted: <b id="rsN">0</b></p>';
+      $('#mBody').innerHTML='<div class="play" id="rsArea"><div class="rt" id="rsTxt" style="opacity:.6">Tap distractions before they vanish!</div></div><p style="text-align:center" id="rsMsg">20 seconds. Resisted: <b id="rsN">0</b></p>';
       var area=$('#rsArea'),score=0,left=20,ds=['📱','🎮','📺','🍔','🔔'];
-      $('#rsTxt').style.opacity=.6;
-      function spawn(){if(left<=0)return;var s=document.createElement('div');s.className='distract';s.textContent=ds[Math.floor(Math.random()*ds.length)];s.style.left=(10+Math.random()*72)+'%';s.style.top=(18+Math.random()*60)+'%';area.appendChild(s);var rm=setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},1100);gTimers.push(rm);s.addEventListener('click',function(){score++;$('#rsN').textContent=score;if(s.parentNode)s.parentNode.removeChild(s)});gTimers.push(setTimeout(spawn,650+Math.random()*350))}
+      function spawn(){if(left<=0)return;var s=document.createElement('div');s.className='distract';s.textContent=ds[Math.floor(Math.random()*ds.length)];s.style.left=(10+Math.random()*72)+'%';s.style.top=(20+Math.random()*58)+'%';area.appendChild(s);gTimers.push(setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},1100));s.addEventListener('click',function(){score++;$('#rsN').textContent=score;if(s.parentNode)s.parentNode.removeChild(s)});gTimers.push(setTimeout(spawn,640+Math.random()*340))}
       function clock(){if(left<=0){$('#rsMsg').innerHTML='Time! You resisted <b>'+score+'</b>. 🛡️';gameDone('resist','You beat the pull');return}left--;gTimers.push(setTimeout(clock,1000))}
       spawn();clock();
     } else if(id==='react'){
-      $('#mBody').innerHTML='<div class="play" id="rcArea" style="cursor:pointer"><div class="react" id="rc" style="background:#3a2330">Wait for green…</div></div><p style="text-align:center;color:var(--faint)">Tap as soon as it turns green.</p>';
+      $('#mBody').innerHTML='<div class="play" id="rcArea" style="cursor:pointer"><div class="react" id="rc" style="background:#3a2330">Wait for green…</div></div><p style="text-align:center;color:var(--faint)">Tap the moment it turns green.</p>';
       var rc=$('#rc'),area=$('#rcArea'),ready=false,t0=0,armed=false;
       gTimers.push(setTimeout(function(){rc.style.background='linear-gradient(135deg,#5ad48a,#2bd3c6)';rc.textContent='TAP NOW!';ready=true;t0=Date.now()},1500+Math.random()*2800));
       area.addEventListener('click',function(){if(armed)return;if(!ready){rc.textContent='Too early! 😅';armed=true;gTimers.push(setTimeout(function(){openGame('react')},900));return}armed=true;var ms=Date.now()-t0;rc.style.background='linear-gradient(135deg,#ffc24b,#ff8a3d)';rc.textContent=ms+' ms ⚡';if(!state.react||ms<state.react){state.react=ms;save()}gameDone('react','Sharp reflexes')});
+    } else if(id==='memory'){
+      var emo=['🔥','🌟','⚡','💎','🌱','🎯'],deck=emo.concat(emo);for(var z=deck.length-1;z>0;z--){var r=Math.floor(Math.random()*(z+1)),tmp=deck[z];deck[z]=deck[r];deck[r]=tmp}
+      $('#mBody').innerHTML='<div class="play" style="padding:14px"><div class="mem" id="mem"></div></div><p style="text-align:center" id="memMsg">Match all 6 pairs.</p>';
+      var memEl=$('#mem');memEl.innerHTML=deck.map(function(x,i){return '<button class="memc" data-m="'+i+'"></button>'}).join('');
+      var up=[],matched=0,lock=false;
+      memEl.addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b||lock)return;var i=+b.getAttribute('data-m');if(b.classList.contains('up')||b.classList.contains('done'))return;b.textContent=deck[i];b.classList.add('up');up.push({b:b,i:i});
+        if(up.length===2){lock=true;
+          if(deck[up[0].i]===deck[up[1].i]){up[0].b.classList.add('done');up[1].b.classList.add('done');matched++;up=[];lock=false;if(matched===6){$('#memMsg').textContent='All matched! 🧠';gameDone('memory','Brain warmed up')}}
+          else{var a=up;gTimers.push(setTimeout(function(){a[0].b.classList.remove('up');a[0].b.textContent='';a[1].b.classList.remove('up');a[1].b.textContent='';up=[];lock=false},700))}}});
     }
     openModal();
   }
 
   function toggle(i){if(!state.done[i]&&i>dc())return;var was=state.done[i];state.done[i]=!state.done[i];if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false}save();if(!was)celebrate();render()}
 
-  function thumb(i){var d=DAYS[i],done=state.done[i],locked=i>dc();
-    return '<div class="thumb'+(done?' done':'')+(locked?' locked':'')+'" data-day="'+i+'"><div class="thumb__bg" style="background:'+GRADS[i]+'"></div><span class="thumb__emoji">'+d.e+'</span><span class="thumb__tag">DAY '+(i+1)+'</span><div class="thumb__cap"><b>'+d.t+'</b><span>'+(done?'Completed':locked?'Locked':'Tap to open')+'</span></div></div>'}
+  function tcard(attr,e,grad,tag,title,sub,cls){return '<div class="thumb'+(cls?' '+cls:'')+'" '+attr+'><div class="thumb__bg" style="background:'+grad+'"></div><span class="thumb__emoji">'+e+'</span><span class="thumb__tag">'+tag+'</span><div class="thumb__cap"><b>'+title+'</b><span>'+sub+'</span></div></div>'}
+  function dayThumb(i){var d=DAYS[i],done=state.done[i],locked=i>dc();return tcard('data-day="'+i+'"',d.e,g(i),'DAY '+(i+1),d.t,(done?'Completed':locked?'Locked':'Tap to open'),(done?'done':'')+(locked?' locked':''))}
 
   function setRing(id,nid,v){var r=$(id);if(r)r.style.setProperty('--v',v);var n=$(nid);if(n)n.textContent=Math.round(v)}
-
-  function celebrate(){ // check for newly unlocked achievements + level
-    render(true);
-  }
+  function celebrate(){render(true)}
 
   var lastLvl=lvl();
   function render(burst){
-    // header / level
     var L=lvl(),lv=LEVELS[L],x=xp();
     $('#pXp').textContent=x;$('#pStreak').textContent=streak();$('#pDay').textContent=Math.min(dc()+1,7);
     $('#lvBadge').textContent=lv.b;$('#lvName').textContent='Level '+(L+1);$('#lvTitle').textContent=lv.n;
@@ -499,98 +553,90 @@ try{
     if(burst){var b=$('#lvBadge');b.classList.add('pop');setTimeout(function(){b.classList.remove('pop')},280)}
     if(L>lastLvl){confetti();toast('🎉 Level up — '+lv.n+'!');lastLvl=L}
 
-    // coach
     var h=new Date().getHours(),greet=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
-    $('#coHi').textContent=greet+' 👋';
-    var c=cur();
+    $('#coHi').textContent=greet+' 👋';var c=cur();
     $('#coSub').textContent='Day '+(c+1)+' of 7 · '+pct()+'% through your reset';
-    var am=avgMood();
-    var say=dc()>=7?"You finished the whole reset. Genuinely — that's rare. Keep one habit alive.":
-            streak()>=3?("🔥 "+streak()+" days straight. Your brain is already rewiring. Today: "+DAYS[c].t.toLowerCase()+"."):
+    $('#coSay').textContent=dc()>=7?"You finished the whole reset. Genuinely rare. Now keep one habit alive for good.":
+            streak()>=3?("🔥 "+streak()+" days straight — your brain is already rewiring. Today: "+DAYS[c].t.toLowerCase()+"."):
             dc()===0?"Let's get your first win. Today takes 10 minutes: "+DAYS[c].t.toLowerCase()+".":
             ("You're "+pct()+"% in. Next up: "+DAYS[c].t.toLowerCase()+". Small step, big compounding.");
-    $('#coSay').textContent=say;
     var q=QUOTES[(new Date().getDate())%QUOTES.length];$('#coQuote').textContent='“'+q.t+'”';
 
-    // today stats
     $('#t1').textContent=dc();$('#t2').textContent=streak();$('#t3').textContent=pct()+'%';$('#t4').textContent=state.crave;
 
-    // feeds
-    var fh=DAYS.map(function(d,i){return thumb(i)}).join('');
+    var fh='';for(var i=0;i<7;i++)fh+=dayThumb(i);
     if($('#dayFeed'))$('#dayFeed').innerHTML=fh;if($('#trackFeed'))$('#trackFeed').innerHTML=fh;
     if($('#trackBar'))$('#trackBar').style.width=pct()+'%';
     if($('#trackMsg'))$('#trackMsg').textContent=streak()>=7?"🏆 Full 7-day reset complete. Huge.":streak()>0?("🔥 "+streak()+"-day streak — keep it alive."):"Tap your first day to start the streak.";
 
-    // stats / dials
-    var reset=pct(),mood=am<0?0:am/4*100;
-    var focus=clamp(28+dc()*8+gp()*4+streak()*2);
-    var energy=clamp(32+dc()*6+mood*.3);
-    var sleep=clamp(38+dc()*5+(streak()*3));
-    var brain=clamp((reset+focus+energy+sleep)/4);
-    setRing('#ringReset','#ringResetN',reset);$('#ringResetN')&&($('#ringResetN').textContent=reset+'%');
+    var reset=pct(),am=avgMood(),mood=am<0?0:am/4*100;
+    var focus=clamp(28+dc()*8+gp()*4+streak()*2),energy=clamp(32+dc()*6+mood*.3),sleep=clamp(38+dc()*5+streak()*3),brain=clamp((reset+focus+energy+sleep)/4);
+    setRing('#ringReset','#ringResetN',reset);if($('#ringResetN'))$('#ringResetN').textContent=reset+'%';
     setRing('#ringFocus','#rF',focus);setRing('#ringEnergy','#rE',energy);setRing('#ringSleep','#rS',sleep);setRing('#ringBrain','#rB',brain);
     if($('#sXp'))$('#sXp').textContent=x;if($('#sStreak'))$('#sStreak').textContent=streak();
     if($('#sTime'))$('#sTime').textContent=(Math.round((dc()*0.8+state.crave*0.05)*10)/10)+'h';
     if($('#sGames'))$('#sGames').textContent=gp();
 
-    // mood graph
-    var mg=$('#mgraph');if(mg){var hh='';for(var d=0;d<7;d++){var mv=state.moods[d];var ht=mv==null?6:((mv+1)/5*100);hh+='<div class="col"><div class="bar2" style="height:'+ht+'%"></div><div class="dl">D'+(d+1)+'</div></div>'}mg.innerHTML=hh;
-      $('#moodMsg').textContent=am<0?'Log your mood each day to see it climb.':(am>=3?'Trending up — the reset is working. 🎉':'Early days. Watch this climb as you go.');}
+    var mg=$('#mgraph');if(mg){var hh='';for(var d2=0;d2<7;d2++){var mv=state.moods[d2];var ht=mv==null?6:((mv+1)/5*100);hh+='<div class="col"><div class="bar2" style="height:'+ht+'%"></div><div class="dl">D'+(d2+1)+'</div></div>'}mg.innerHTML=hh;
+      $('#moodMsg').textContent=am<0?'Log your mood each day to see it climb.':(am>=3?'Trending up — the reset is working. 🎉':'Early days. Watch this climb as you go.')}
 
-    // achievements
-    var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var i=0;i<ACHV.length;i++){var ac=ACHV[i],ok=!!ac.test();if(ok)got++;hh2+='<div class="ach'+(ok?' got':'')+'"><div class="e">'+ac.e+'</div><b>'+ac.n+'</b><span>'+ac.d+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
-      // celebrate newly earned
-      for(var i=0;i<ACHV.length;i++){var ac=ACHV[i];if(ac.test()&&!state.achvSeen[ac.id]){state.achvSeen[ac.id]=true;save();confetti();toast('🏆 Achievement: '+ac.n);}}}
+    var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var k=0;k<ACHV.length;k++){var ac=ACHV[k],ok=!!ac.test();if(ok)got++;hh2+='<div class="ach'+(ok?' got':'')+'"><div class="e">'+ac.e+'</div><b>'+ac.n+'</b><span>'+ac.d+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
+      for(var k2=0;k2<ACHV.length;k2++){var a2=ACHV[k2];if(a2.test()&&!state.achvSeen[a2.id]){state.achvSeen[a2.id]=true;save();confetti();toast('🏆 Achievement: '+a2.n)}}}
+
+    if($('#artFeed')&&!$('#artFeed').dataset.live){renderArts()}else if($('#artFeed')){renderArts()}
   }
 
-  // build static lists
-  $('#urgeTiles')&&($('#urgeTiles').innerHTML=URGES.map(function(u,i){return '<div class="tile" data-urge="'+i+'"><div class="tile__bg" style="background:'+GRADS[(i+1)%7]+'"></div><div class="tile__in"><span class="e">'+u.e+'</span><b>'+u.k+'</b></div></div>'}).join(''));
-  $('#menuTiles')&&($('#menuTiles').innerHTML=MENU.map(function(m,i){return '<div class="tile" data-menu="'+i+'"><div class="tile__bg" style="background:'+GRADS[i%7]+'"></div><div class="tile__in"><span class="e">'+m.e+'</span><b>'+m.t+'</b></div></div>'}).join(''));
-  $('#gameTiles')&&($('#gameTiles').innerHTML=GAMES.map(function(g,i){return '<div class="tile" data-game="'+g.id+'"><div class="tile__bg" style="background:'+GRADS[(i*2)%7]+'"></div><div class="tile__in"><span class="e">'+g.e+'</span><b>'+g.t+'</b></div></div>'}).join(''));
-  $('#journeyGrid')&&($('#journeyGrid').innerHTML=JOURNEYS.map(function(j,i){return '<div class="moodc" data-journey="'+i+'"><div class="cbg" style="background:'+j.g+'"></div><span class="e">'+j.e+'</span><b>'+j.n+'</b></div>'}).join(''));
-  // mood faces (today)
+  function renderArts(){if($('#artFeed'))$('#artFeed').innerHTML=ARTS.map(function(a,i){return tcard('data-article="'+i+'"',a.e,g(i+1),a.sub.split('·')[0].trim().toUpperCase(),a.t,state.read[i]?'Read ✓':'Tap to read',state.read[i]?'read':'')}).join('')}
+
+  // build feeds
+  if($('#gameFeed'))$('#gameFeed').innerHTML=GAMES.map(function(gm,i){return tcard('data-game="'+gm.id+'"',gm.e,g(i*2),state.games[gm.id]?'PLAYED':'GAME',gm.t,gm.s,'')}).join('');
+  if($('#journeyFeed'))$('#journeyFeed').innerHTML=JOURNEYS.map(function(j,i){return tcard('data-journey="'+i+'"',j.e,g(i+1),'MOOD',j.n,'Tap for your path','')}).join('');
+  if($('#urgeFeed'))$('#urgeFeed').innerHTML=URGES.map(function(u,i){return tcard('data-urge="'+i+'"',u.e,g(i+1),'90s',u.k,'Beat the urge','')}).join('');
+  if($('#menuFeed'))$('#menuFeed').innerHTML=MENU.map(function(m,i){return tcard('data-menu="'+i+'"',m.e,g(i),'DO IT',m.t,'Real dopamine','')}).join('');
+  // journey gradients
+  for(var jj=0;jj<JOURNEYS.length;jj++)JOURNEYS[jj].gr=g(jj+1);
+
   var mb=$('#moodBtns');if(mb){FACES.forEach(function(f,i){var b=document.createElement('button');b.className='moodb';b.title=f.n;b.textContent=f.e;b.setAttribute('data-face',i);mb.appendChild(b)})}
-  // vision
+  // coach chips
+  var chips=$('#coachChips');if(chips){chips.innerHTML=COACH.map(function(c,i){return '<button class="chip" data-coach="'+i+'">'+c.e+' '+c.l+'</button>'}).join('')}
+
   var VIS=[{e:'💰',t:'Money & freedom',p:'What would real freedom let you do?'},{e:'💪',t:'Health & body',p:'How do you want to look and feel?'},{e:'❤️',t:'People',p:'Who do you want to be fully there for?'},{e:'🧭',t:'Who you are becoming',p:'A year from now, who are you proud to be?'}];
   var vr=$('#visionRows');
   if(vr){vr.innerHTML=VIS.map(function(v,i){return '<div class="card" style="margin:0"><label style="display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px"><span style="font-size:1.5rem">'+v.e+'</span> '+v.t+'</label><textarea data-vis="'+i+'" style="min-height:64px" placeholder="'+v.p+'">'+(state.vision[i]||'')+'</textarea></div>'}).join('');
     var vt;vr.addEventListener('input',function(e){var t=e.target.closest('[data-vis]');if(t){state.vision[t.getAttribute('data-vis')]=t.value;clearTimeout(vt);vt=setTimeout(function(){save();render()},600)}})}
 
-  // quotes panel
   function showQuote(){var q=QUOTES[state.qi%QUOTES.length];$('#qText').textContent='“'+q.t+'”';$('#qBy').textContent=q.b||'';renderSaved()}
   function renderSaved(){var box=$('#qSaved');if(!box)return;$('#qSavedN').textContent='('+state.savedQ.length+')';if(!state.savedQ.length){box.innerHTML='<p style="color:var(--faint)">Tap ❤️ Save to keep the ones that hit.</p>';return}box.innerHTML=state.savedQ.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join('')}
-  if($('#qNext')){
-    showQuote();
+  if($('#qNext')){showQuote();
     $('#qNext').addEventListener('click',function(){state.qi=(state.qi+1)%QUOTES.length;save();showQuote()});
     $('#qSave').addEventListener('click',function(){var q=QUOTES[state.qi%QUOTES.length];if(state.savedQ.indexOf(q.t)<0){state.savedQ.push(q.t);save();toast('❤️ Saved');render()}renderSaved()});
     $('#qShare').addEventListener('click',function(){var q=QUOTES[state.qi%QUOTES.length];if(navigator.share){navigator.share({text:'“'+q.t+'” — via Dopamine Reset'}).catch(function(){})}else{toast('Copy: “'+q.t+'”')}});
   }
 
-  // global click routing
   document.addEventListener('click',function(e){
     var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});cs();window.scrollTo(0,0);return}
     if(e.target.closest('[data-open-today]')){openDay(cur());return}
     var dd=e.target.closest('[data-day]');if(dd){openDay(parseInt(dd.getAttribute('data-day'),10));return}
     var du=e.target.closest('[data-urge]');if(du){openTile(URGES[+du.getAttribute('data-urge')]);return}
     var dm=e.target.closest('[data-menu]');if(dm){openTile(MENU[+dm.getAttribute('data-menu')]);return}
-    var dg=e.target.closest('[data-game]');if(dg){openGame(dg.getAttribute('data-game'));return}
+    var dgm=e.target.closest('[data-game]');if(dgm){openGame(dgm.getAttribute('data-game'));return}
     var dj=e.target.closest('[data-journey]');if(dj){openJourney(JOURNEYS[+dj.getAttribute('data-journey')]);return}
+    var da=e.target.closest('[data-article]');if(da){openArticle(+da.getAttribute('data-article'));return}
     var df=e.target.closest('[data-face]');if(df){var fi=+df.getAttribute('data-face');state.moods[cur()]=fi;save();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===df)});var rep=$('#moodReply');if(rep){rep.style.display='block';rep.innerHTML='<h3>'+FACES[fi].e+' '+FACES[fi].n+'</h3><p style="margin:0">'+FACES[fi].say+'</p>'}celebrate();return}
+    var dco=e.target.closest('[data-coach]');if(dco){var ci=+dco.getAttribute('data-coach'),co=COACH[ci];$$('.chip').forEach(function(x){x.classList.toggle('on',x===dco)});var rb=$('#coachReply');if(rb){rb.classList.add('on');rb.innerHTML='<p>'+co.say+'</p><button class="btn btn--g btn--sm" data-cocta="'+ci+'">'+co.cta.label+' →</button>'}return}
+    var dcc=e.target.closest('[data-cocta]');if(dcc){var co2=COACH[+dcc.getAttribute('data-cocta')].cta;if(co2.t==='game')openGame(co2.id);else if(co2.t==='today')openDay(cur());else if(co2.t==='go'){var btn=document.querySelector('[data-go="'+co2.id+'"]');if(btn)btn.click()}return}
   });
   $('#mClose').addEventListener('click',closeM);$('#drModal').addEventListener('click',function(e){if(e.target===this)closeM()});
   $('#craveBtn').addEventListener('click',function(){state.crave++;save();celebrate();var b=this;b.textContent='Another one beaten 💪';toast('💪 +5 XP');setTimeout(function(){b.textContent='I beat a craving 💪'},1100);$('#craveCount').textContent=state.crave});
   $('#rollBtn').addEventListener('click',function(){openTile(MENU[Math.floor(Math.random()*MENU.length)])});
-  var j=$('#journal');if(j){j.value=state.journal;function js(){state.journal=j.value;save();var s=$('#jSaved');s.classList.add('on');render();setTimeout(function(){s.classList.remove('on')},1300)}$('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)})}
+  var j=$('#journal');if(j){j.value=state.journal;var js=function(){state.journal=j.value;save();var s=$('#jSaved');s.classList.add('on');render();setTimeout(function(){s.classList.remove('on')},1300)};$('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)})}
   function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
   $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
-  $('#craveCount')&&($('#craveCount').textContent=state.crave);
+  if($('#craveCount'))$('#craveCount').textContent=state.crave;
 
-  render();
+  render();renderArts();
 }catch(err){
-  try{
-    var m=document.querySelector('.dr__main');
-    if(m)m.insertAdjacentHTML('afterbegin','<div style="background:#15121d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:14px;color:#f6f4ef"><b>Your reset is loaded.</b><p style="color:#b8b4ad;margin:6px 0 0">A small visual hiccup happened — tap a menu item on the left to jump in, or pull to refresh.</p></div>');
-  }catch(e){}
+  try{var m=document.querySelector('.dr__main');if(m)m.insertAdjacentHTML('afterbegin','<div style="background:#15121d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:14px;color:#f6f4ef"><b>Your reset is loaded.</b><p style="color:#b8b4ad;margin:6px 0 0">A small visual hiccup happened — tap a menu item on the left to jump in.</p></div>')}catch(e){}
 }
 })();
 </script>
