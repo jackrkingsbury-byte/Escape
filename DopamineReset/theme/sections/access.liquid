@@ -86,6 +86,14 @@
     .dr__menu{display:inline-flex;align-items:center;gap:6px;font-weight:700;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
     .dr__scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85}.dr__scrim.on{display:block}
   }
+  .dr .brz{display:grid;place-items:center;padding:26px 0}
+  .dr .brz__c{width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,194,75,.4),rgba(124,92,255,.14));border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;font-weight:800;font-size:1.15rem;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);animation:brz 11s ease-in-out infinite}
+  @keyframes brz{0%,100%{transform:scale(.78)}45%,55%{transform:scale(1.28)}}
+  @media (prefers-reduced-motion:reduce){.dr .brz__c{animation:none}}
+  .dr .moods{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+  .dr .moodb{font-size:2rem;width:64px;height:64px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:.15s}
+  .dr .moodb:hover,.dr .moodb.on{transform:translateY(-3px);border-color:var(--amber);background:var(--bg3)}
+  .dr .moodlog{display:flex;gap:8px;flex-wrap:wrap;font-size:1.5rem}
 </style>
 
 <div class="dr" id="drApp">
@@ -99,6 +107,8 @@
     <div class="dr__navttl">Tools</div>
     <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
     <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Dopamine Menu</button>
+    <button class="dr__nav" data-go="breathe"><span class="ic">🫁</span> Breathe</button>
+    <button class="dr__nav" data-go="mood"><span class="ic">😊</span> Mood</button>
     <button class="dr__nav" data-go="journal"><span class="ic">📓</span> Journal</button>
     <button class="dr__nav" data-go="help"><span class="ic">💬</span> Help</button>
     <div class="dr__foot">Bookmark this — it's your home base for 7 days.</div>
@@ -170,6 +180,20 @@
       <p>Bored? Tap a tile and just do it. Or roll the dice.</p>
       <button class="btn btn--g" id="rollBtn">🎲 Surprise me</button>
       <div class="tiles" id="menuTiles"></div>
+    </section>
+
+    <section class="panel" data-p="breathe">
+      <h1>Breathe</h1>
+      <p>Craving hitting hard? Breathe <span style="color:#ffc24b">with the circle</span> for one minute — it physically calms the urge. In as it grows, out as it shrinks.</p>
+      <div class="brz"><div class="brz__c" id="brzC">Breathe in</div></div>
+      <p style="text-align:center;color:var(--faint)">One minute here beats ten minutes scrolling.</p>
+    </section>
+
+    <section class="panel" data-p="mood">
+      <h1>How do you feel?</h1>
+      <p>Tap your mood each day. Watch it <span style="color:#ff5c8a">climb</span> as the reset works — your happiness, tracked.</p>
+      <div class="moods" id="moodBtns"></div>
+      <div class="card"><h3>Your mood this week</h3><div class="moodlog" id="moodLog"></div><p id="moodMsg" style="margin:10px 0 0"></p></div>
     </section>
 
     <section class="panel" data-p="journal">
@@ -275,6 +299,25 @@
   $('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)});
   function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
   $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
+
+  // mood check-in
+  if(!state.moods)state.moods={};
+  var FACES=['😩','😕','😐','🙂','😄'];
+  var moodBtns=$('#moodBtns');
+  if(moodBtns){FACES.forEach(function(f,i){var b=document.createElement('button');b.className='moodb';b.textContent=f;b.setAttribute('data-mood',i);moodBtns.appendChild(b)})}
+  function renderMood(){
+    var log=$('#moodLog');if(!log)return;log.innerHTML='';
+    for(var d=0;d<7;d++){var s=document.createElement('span');s.textContent=(state.moods[d]!=null)?FACES[state.moods[d]]:'·';log.appendChild(s)}
+    var vals=Object.keys(state.moods).map(function(k){return state.moods[k]});
+    var avg=vals.length?vals.reduce(function(a,b){return a+b},0)/vals.length:0;
+    $('#moodMsg').textContent=vals.length?('Average mood: '+FACES[Math.round(avg)]+(avg>=3?' — it is working. 🎉':' — keep going, it climbs.')):'Tap a face to log today.';
+  }
+  document.addEventListener('click',function(e){var dm=e.target.closest('[data-mood]');if(dm){state.moods[cur()]=+dm.getAttribute('data-mood');save();renderMood();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===dm)})}});
+  renderMood();
+  // breathe phase text
+  var brzC=$('#brzC'),brzP=['Breathe in','Hold','Breathe out','Hold'],brzi=0;
+  if(brzC){setInterval(function(){brzi=(brzi+1)%4;brzC.textContent=brzP[brzi]},2750)}
+
   render();
 })();
 </script>

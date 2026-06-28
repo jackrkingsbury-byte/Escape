@@ -32,7 +32,7 @@
       ],
       "settings": {
         "eyebrow": "Your brain is fried. Here's the reset.",
-        "heading": "Quit cheap dopamine. Feel good for real — in 7 days.",
+        "heading": "Quit <span class=\"hl\">cheap dopamine</span>. Feel <span class=\"hl2\">good for real</span> — in 7 days.",
         "subheading": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset is a simple 10-min-a-day protocol that rewires your brain to enjoy real life again — starting today.",
         "cta1_label": "Start the reset — R199",
         "cta1_url": "#pricing",
@@ -106,7 +106,7 @@
       ],
       "settings": {
         "eyebrow": "There are two kinds of dopamine",
-        "heading": "Cheap dopamine drains you. Real dopamine builds you.",
+        "heading": "Cheap dopamine <span class=\"hl2\">drains</span> you. Real dopamine <span class=\"hl3\">builds</span> you.",
         "bad_title": "Cheap dopamine",
         "good_title": "Real dopamine"
       }
@@ -242,7 +242,7 @@
       ],
       "settings": {
         "eyebrow": "Add it all up",
-        "heading": "Then look at the launch price.",
+        "heading": "Then look at the <span class=\"hl\">launch price</span>.",
         "subheading": "Everything you get, and what it'd cost you anywhere else.",
         "was_price": 774,
         "now_price": 199,
@@ -288,7 +288,7 @@
       ],
       "settings": {
         "eyebrow": "Start today",
-        "heading": "Feel different by this time next week.",
+        "heading": "Feel <span class=\"hl\">different</span> by this time next week.",
         "subheading": "Pick your plan. Checkout is instant and secure.",
         "footnote": "Instant access · secure Shopify checkout · 7-day money-back guarantee."
       }
@@ -393,7 +393,7 @@
       "type": "final-cta",
       "settings": {
         "eyebrow": "This time next week",
-        "heading": "You can keep scrolling. Or you can feel good again.",
+        "heading": "You can keep scrolling. Or you can <span class=\"hl2\">feel good again</span>.",
         "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R199. Pick.",
         "cta_label": "Start the reset — R199",
         "cta_url": "#pricing"
@@ -461,8 +461,8 @@
       ],
       "settings": {
         "eyebrow": "Why this matters",
-        "heading": "This isn't about your phone. It's about your life.",
-        "lead": "Cheap dopamine quietly steals your focus, your mood and your drive. Get it back, and everything downstream gets better — school, money, health, the people you love.",
+        "heading": "This isn’t about your phone. It’s about <span class=\"hl\">your life</span>.",
+        "lead": "Cheap dopamine quietly steals your <span class=\"hl\">focus</span>, your <span class=\"hl2\">mood</span> and your <span class=\"hl3\">drive</span>. Get it back, and everything downstream gets better — school, money, health, the people you love.",
         "show_strip": true,
         "cta_label": "Start the reset — R199",
         "cta_url": "#pricing",
