@@ -468,10 +468,15 @@
         "cta_url": "#pricing",
         "note": "Most people feel the shift by day 3."
       }
+    },
+    "story": {
+      "type": "story",
+      "settings": {}
     }
   },
   "order": [
     "hero",
+    "story",
     "transformation",
     "benefits",
     "quiz",

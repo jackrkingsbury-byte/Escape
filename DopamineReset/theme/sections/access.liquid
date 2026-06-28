@@ -94,6 +94,17 @@
   .dr .moodb{font-size:2rem;width:64px;height:64px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:.15s}
   .dr .moodb:hover,.dr .moodb.on{transform:translateY(-3px);border-color:var(--amber);background:var(--bg3)}
   .dr .moodlog{display:flex;gap:8px;flex-wrap:wrap;font-size:1.5rem}
+  .dr .msec{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  .dr .msec b{display:block;margin-bottom:6px;color:var(--amber);font-size:.95rem}
+  .dr .msec p{margin:0;font-size:.95rem;color:var(--soft)}
+  .dr .mnote{width:100%;min-height:80px;margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:12px;font:inherit;resize:vertical}
+  .dr .vision{display:grid;gap:12px;margin:16px 0}
+  .dr .vrow{position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .dr .vrow::before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;filter:blur(26px);opacity:.4}
+  .dr .vrow.v0::before{background:#ffc24b}.dr .vrow.v1::before{background:#5ad48a}.dr .vrow.v2::before{background:#ff5c8a}.dr .vrow.v3::before{background:#7c5cff}
+  .dr .vrow label{position:relative;display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px}
+  .dr .vrow .ve{font-size:1.6rem}
+  .dr .vrow textarea{position:relative;width:100%;min-height:62px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:11px;font:inherit;resize:vertical}
 </style>
 
 <div class="dr" id="drApp">
@@ -104,6 +115,7 @@
     <button class="dr__nav" data-go="plan"><span class="ic">🗓️</span> The 7 Days</button>
     <button class="dr__nav" data-go="track"><span class="ic">✅</span> Tracker</button>
     <button class="dr__nav" data-go="stats"><span class="ic">📈</span> My Stats</button>
+    <button class="dr__nav" data-go="vision"><span class="ic">🌟</span> Your Why</button>
     <div class="dr__navttl">Tools</div>
     <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
     <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Dopamine Menu</button>
@@ -196,6 +208,13 @@
       <div class="card"><h3>Your mood this week</h3><div class="moodlog" id="moodLog"></div><p id="moodMsg" style="margin:10px 0 0"></p></div>
     </section>
 
+    <section class="panel" data-p="vision">
+      <h1>Your why</h1>
+      <p>The reset is the tool. <span style="color:#ffc24b">This</span> is the reason. Get honest about what you actually want — it's what pulls you through the hard days.</p>
+      <div class="vision" id="visionRows"></div>
+      <p style="color:var(--faint)">Saved on this device. Re-read it any time you feel like quitting.</p>
+    </section>
+
     <section class="panel" data-p="journal">
       <h1>Journal</h1>
       <p>One honest line a day. Saves on this device automatically.</p>
@@ -223,13 +242,13 @@
   var KEY='dr_reset_v2',state=load();
   var GRADS=['linear-gradient(135deg,#ff8a3d,#ffc24b)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#ff8a3d)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#ff8a3d)'];
   var DAYS=[
-    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Notifications off except calls & texts."},
-    {e:"🌅",t:"Phone-free first hour",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight."},
-    {e:"🧘",t:"Boredom on purpose",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet — this is the reset working."},
-    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your dopamine menu instead. Count how many."},
-    {e:"🏃",t:"Move your body",a:"20 minutes of movement — walk, gym, dance, anything. Real dopamine loves effort."},
-    {e:"🤝",t:"One real connection",a:"Have one genuine, phone-down conversation. Call someone or meet up."},
-    {e:"🧭",t:"Design your normal",a:"Write the 3 rules you're keeping for good. You've felt the difference — lock it in."}
+    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards — which is exactly the muscle we're rebuilding.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
+    {e:"🌅",t:"Phone-free first hour",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull. Start calm and you stay clearer.",r:"How did the first hour feel without the phone? What did you do instead?"},
+    {e:"🧘",t:"Boredom on purpose",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet.",w:"Boredom is withdrawal — and it's the reset working. Sitting with it teaches your brain it doesn't need constant input to be okay.",r:"What came up in the quiet? Was it as bad as you expected?"},
+    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",w:"You're not removing the urge, you're redirecting it. Every swap is a tiny rep that rewires the reward loop toward real things.",r:"How many swaps did you make today? Which one felt best?"},
+    {e:"🏃",t:"Move your body",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good — the opposite of cheap scrolling.",r:"What did you do, and how did your head feel after?"},
+    {e:"🤝",t:"One real connection",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal. One real moment reminds you what you were missing.",r:"Who did you connect with? What did it feel like to be fully present?"},
+    {e:"🧭",t:"Design your normal",a:"Write the 3 rules you're keeping for good. Lock in the version of you that you've felt this week.",w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
   ];
   var URGES=[{e:"🗣️",k:"Name it",v:"Say out loud: \"This is just a dopamine craving.\" Naming it shrinks it instantly."},
     {e:"🌬️",k:"Breathe x10",v:"Stand up, 10 slow breaths. The urge peaks and fades in under 2 minutes."},
@@ -251,12 +270,16 @@
 
   function open(i){
     var unlocked=i<=dc();if(!unlocked)return;
-    var d=DAYS[i];
+    var d=DAYS[i];if(!state.notes)state.notes={};
     $('#mTop').style.background=GRADS[i];$('#mEmoji').textContent=d.e;
-    $('#mTag').textContent='Day '+(i+1);$('#mTitle').textContent=d.t;$('#mBody').textContent=d.a;
+    $('#mTag').textContent='Day '+(i+1)+' · your mission';$('#mTitle').textContent=d.t;
+    $('#mBody').innerHTML='<p style="margin:0 0 4px;color:var(--ink)">'+d.a+'</p>'+
+      '<div class="msec"><b>🧠 Why this works</b><p>'+d.w+'</p></div>'+
+      '<div class="msec"><b>✍️ Reflect on it</b><p>'+d.r+'</p><textarea class="mnote" id="mNote" placeholder="Write a line for today…">'+(state.notes[i]||'')+'</textarea></div>';
     var done=state.done[i];
-    $('#mAction').innerHTML='<button class="btn btn--g" id="mDoneBtn">'+(done?'Mark not done':'Mark Day '+(i+1)+' done ✓')+'</button>';
-    $('#mDoneBtn').onclick=function(){toggle(i);closeM();};
+    $('#mAction').innerHTML='<button class="btn btn--g" id="mDoneBtn" style="width:100%">'+(done?'Mark not done':'Complete Day '+(i+1)+' ✓')+'</button>';
+    $('#mDoneBtn').onclick=function(){var n=$('#mNote');if(n){state.notes[i]=n.value}save();toggle(i);closeM();};
+    var nt=$('#mNote');if(nt){var tmr;nt.addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(function(){state.notes[i]=nt.value;save()},600)})}
     $('#drModal').classList.add('on');
   }
   function openTile(o){$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').textContent=o.v||'Go do it now — that’s the whole point.';$('#mAction').innerHTML='';$('#drModal').classList.add('on');}
@@ -317,6 +340,15 @@
   // breathe phase text
   var brzC=$('#brzC'),brzP=['Breathe in','Hold','Breathe out','Hold'],brzi=0;
   if(brzC){setInterval(function(){brzi=(brzi+1)%4;brzC.textContent=brzP[brzi]},2750)}
+
+  // your why / life vision
+  if(!state.vision)state.vision={};
+  var VIS=[{e:'💰',t:'Money & freedom',p:'What would real freedom let you do?'},{e:'💪',t:'Health & body',p:'How do you want to look and feel?'},{e:'❤️',t:'People',p:'Who do you want to be fully there for?'},{e:'🧭',t:'Who you are becoming',p:'A year from now, who are you proud to be?'}];
+  var vr=$('#visionRows');
+  if(vr){
+    vr.innerHTML=VIS.map(function(v,i){return '<div class="vrow v'+i+'"><label><span class="ve">'+v.e+'</span> '+v.t+'</label><textarea data-vis="'+i+'" placeholder="'+v.p+'">'+(state.vision[i]||'')+'</textarea></div>'}).join('');
+    var vt;vr.addEventListener('input',function(e){var t=e.target.closest('[data-vis]');if(t){state.vision[t.getAttribute('data-vis')]=t.value;clearTimeout(vt);vt=setTimeout(save,600)}});
+  }
 
   render();
 })();
