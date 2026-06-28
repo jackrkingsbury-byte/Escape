@@ -1,103 +1,363 @@
-{%- comment -%}
-  Post-purchase access page — the actual Dopamine Reset.
-  Buyers are auto-redirected here after payment.
-{%- endcomment -%}
-<section class="section" style="padding-top:clamp(40px,8vh,90px)">
-  <div class="wrap" style="max-width:820px">
+{% raw %}
+<style>
+  .dr{--bg:#0c0a12;--bg2:#15121d;--bg3:#1b1727;--ink:#f6f4ef;--soft:#b8b4ad;--faint:#7e7a73;
+      --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.05);--amber:#ffc24b;--orange:#ff8a3d;
+      --pink:#ff5c8a;--violet:#7c5cff;--good:#5ad48a;--r:16px;
+      --serif:'Fraunces',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;}
+  .dr *{box-sizing:border-box}
+  .dr{font-family:var(--sans);color:var(--ink);background:var(--bg);min-height:100vh;
+      display:grid;grid-template-columns:264px 1fr;gap:0}
+  .dr a{color:inherit;text-decoration:none}
+  .dr button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
-    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-    <h1 style="margin-bottom:16px">{{ section.settings.heading }}</h1>
-    <p class="lead">{{ section.settings.intro }}</p>
+  /* sidebar */
+  .dr__side{background:linear-gradient(180deg,var(--bg2),var(--bg));border-right:1px solid var(--line);
+      padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
+  .dr__brand{font-family:var(--serif);font-weight:700;font-size:1.35rem;padding:6px 12px 16px;letter-spacing:.01em}
+  .dr__brand b{color:var(--amber)}
+  .dr__navttl{font-family:var(--mono);font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);padding:14px 12px 6px}
+  .dr__nav{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;color:var(--soft);
+      font-weight:600;font-size:.95rem;transition:background .15s,color .15s;width:100%;text-align:left}
+  .dr__nav span.ic{font-size:1.1rem;width:22px;text-align:center}
+  .dr__nav:hover{background:var(--bg3);color:var(--ink)}
+  .dr__nav.on{background:linear-gradient(135deg,rgba(255,194,75,.16),rgba(255,92,138,.12));color:var(--ink)}
+  .dr__nav.on span.ic{filter:drop-shadow(0 0 6px rgba(255,194,75,.5))}
+  .dr__side-foot{margin-top:auto;padding:14px 12px;border-top:1px solid var(--line2);color:var(--faint);font-size:.78rem}
 
-    <!-- START HERE -->
-    <div class="guarantee" style="text-align:left;margin:34px 0 10px">
-      <p class="eyebrow" style="margin-bottom:8px">Start here · Day 1</p>
-      <h2 style="font-size:1.6rem;margin-bottom:10px">{{ section.settings.day1_title }}</h2>
-      <p style="margin:0">{{ section.settings.day1_action }}</p>
+  /* main */
+  .dr__main{padding:clamp(20px,4vw,44px);max-width:920px}
+  .dr__top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+  .dr__hello{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+  .dr__pills{display:flex;gap:8px;flex-wrap:wrap}
+  .dr__pill{display:inline-flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--line);
+      border-radius:999px;padding:8px 14px;font-size:.82rem;color:var(--soft)}
+  .dr__pill b{color:var(--ink);font-family:var(--mono)}
+  .dr h1{font-family:var(--serif);font-size:clamp(1.8rem,4.5vw,2.7rem);font-weight:600;line-height:1.05;margin:6px 0 4px}
+  .dr h2{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin:0 0 4px}
+  .dr h3{font-size:1.05rem;margin:0 0 6px}
+  .dr p{color:var(--soft);line-height:1.6;margin:0 0 12px}
+  .dr .panel{display:none;animation:fade .35s ease}
+  .dr .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .dr .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin:14px 0}
+  .dr .card--hero{background:linear-gradient(135deg,rgba(255,138,61,.14),rgba(124,92,255,.10));border-color:rgba(255,194,75,.3)}
+  .dr .eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+  .dr .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:999px;
+      padding:14px 26px;background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;
+      box-shadow:0 12px 30px rgba(255,138,61,.3);transition:transform .15s}
+  .dr .btn:active{transform:scale(.97)}
+  .dr .btn--ghost{background:transparent;border:1px solid var(--line);color:var(--ink);box-shadow:none}
+  .dr .btn--ghost:hover{border-color:var(--amber)}
+  .dr .btn--sm{padding:10px 18px;font-size:.85rem}
+  .dr .btn[disabled]{opacity:.5;pointer-events:none;background:var(--bg3);color:var(--faint);box-shadow:none}
+
+  /* day list */
+  .dr .day{display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--line);
+      border-radius:14px;margin:10px 0;background:var(--bg2);transition:border-color .15s}
+  .dr .day.done{border-color:rgba(90,212,138,.4);background:linear-gradient(180deg,rgba(90,212,138,.06),var(--bg2))}
+  .dr .day.locked{opacity:.5}
+  .dr .day__n{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+      font-family:var(--serif);font-weight:700;background:var(--bg3);color:var(--amber)}
+  .dr .day.done .day__n{background:var(--good);color:#08240f}
+  .dr .day__b{flex:1}
+  .dr .day__check{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);
+      display:grid;place-items:center;font-size:.9rem;color:transparent}
+  .dr .day.done .day__check{background:var(--good);border-color:var(--good);color:#08240f}
+
+  /* grid stats */
+  .dr .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
+  .dr .stat{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .dr .stat .big{font-family:var(--serif);font-size:2.2rem;color:var(--amber);line-height:1}
+  .dr .stat .lbl{color:var(--faint);font-size:.82rem;margin-top:6px}
+  .dr .bar{height:10px;border-radius:999px;background:var(--bg3);overflow:hidden;margin:8px 0 4px}
+  .dr .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--pink));width:0;transition:width .6s}
+
+  /* tracker grid */
+  .dr .track{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:14px 0}
+  .dr .track button{aspect-ratio:1;border-radius:12px;background:var(--bg3);border:1px solid var(--line);
+      font-family:var(--mono);font-size:.8rem;color:var(--faint);display:grid;place-items:center;transition:.15s}
+  .dr .track button.on{background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;border-color:transparent;font-weight:800}
+
+  /* toolkit + menu chips */
+  .dr .chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+  .dr .chip{padding:11px 16px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-weight:600;font-size:.9rem;transition:.15s}
+  .dr .chip:hover{border-color:var(--amber);transform:translateY(-2px)}
+  .dr .reveal-box{margin-top:12px;padding:18px;border-radius:14px;border:1px dashed rgba(255,194,75,.4);background:rgba(255,194,75,.05);min-height:64px;display:flex;align-items:center;color:var(--ink);font-size:1.05rem}
+  .dr ul.tick{list-style:none;padding:0;margin:8px 0}
+  .dr ul.tick li{padding:9px 0 9px 28px;position:relative;color:var(--soft);border-top:1px solid var(--line2)}
+  .dr ul.tick li:first-child{border:0}
+  .dr ul.tick li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
+  .dr textarea{width:100%;min-height:160px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;
+      color:var(--ink);padding:16px;font:inherit;resize:vertical}
+  .dr .saved{font-size:.8rem;color:var(--good);opacity:0;transition:opacity .3s}
+  .dr .saved.on{opacity:1}
+
+  /* mobile */
+  .dr__menu{display:none}
+  @media(max-width:820px){
+    .dr{grid-template-columns:1fr}
+    .dr__side{position:fixed;inset:0 30% 0 0;z-index:60;transform:translateX(-105%);transition:transform .25s;height:100vh}
+    .dr__side.open{transform:none}
+    .dr__menu{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+    .dr__scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55}
+    .dr__scrim.on{display:block}
+  }
+</style>
+
+<div class="dr" id="drApp">
+  <aside class="dr__side" id="drSide">
+    <div class="dr__brand">Dopamine<b>.</b>Reset</div>
+    <div class="dr__navttl">Your reset</div>
+    <button class="dr__nav on" data-go="today"><span class="ic">🔥</span> Today</button>
+    <button class="dr__nav" data-go="plan"><span class="ic">🗓️</span> The 7 Days</button>
+    <button class="dr__nav" data-go="track"><span class="ic">✅</span> Tracker</button>
+    <button class="dr__nav" data-go="stats"><span class="ic">📈</span> My Stats</button>
+    <div class="dr__navttl">Tools</div>
+    <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
+    <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Real-Dopamine Menu</button>
+    <button class="dr__nav" data-go="journal"><span class="ic">📓</span> Journal</button>
+    <button class="dr__nav" data-go="help"><span class="ic">💬</span> Help</button>
+    <div class="dr__side-foot">Bookmark this page — it's your home base for the next 7 days.</div>
+  </aside>
+  <div class="dr__scrim" id="drScrim"></div>
+
+  <main class="dr__main">
+    <div class="dr__top">
+      <button class="dr__menu btn--ghost btn btn--sm" id="drBurger">☰ Menu</button>
+      <div class="dr__hello" id="drHello">Welcome back</div>
+      <div class="dr__pills">
+        <span class="dr__pill">🔥 Streak <b id="pillStreak">0</b></span>
+        <span class="dr__pill">Day <b id="pillDay">1</b>/7</span>
+        <span class="dr__pill">⚡ Cravings beaten <b id="pillCrave">0</b></span>
+      </div>
     </div>
 
-    <!-- THE 7 DAYS -->
-    <h2 style="margin:48px 0 6px">Your 7 days</h2>
-    <p style="color:var(--ink-faint);margin-bottom:18px">One action a day. ~10 minutes. Don't skip ahead — the order is the point.</p>
-    <div class="stack">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'day' -%}
-          <div class="stack__row" style="align-items:flex-start" {{ block.shopify_attributes }}>
-            <span style="flex:1"><b style="color:var(--gold)">Day {{ block.settings.n }} — {{ block.settings.title }}</b><br><span style="color:var(--ink-soft)">{{ block.settings.action }}</span></span>
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
+    <!-- TODAY -->
+    <section class="panel on" data-p="today">
+      <h1>You're in. Let's reset your brain.</h1>
+      <p>Payment confirmed — nice move. Do <b>one action a day</b> for 7 days. That's the whole game. Start with today below.</p>
+      <div class="card card--hero">
+        <div class="eyebrow">Today · <span id="todayLabel">Day 1</span></div>
+        <h2 id="todayTitle">Delete the worst one.</h2>
+        <p id="todayAction">Pick the single app that eats the most of your time and delete it for the full 7 days. Turn notifications off for everything except calls and texts. That's it for today.</p>
+        <button class="btn" id="todayDone">Mark today done ✓</button>
+        <button class="btn btn--ghost btn--sm" data-go="plan" style="margin-left:8px">See all 7 days</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="big" id="sToday1">0</div><div class="lbl">days completed</div></div>
+        <div class="stat"><div class="big" id="sToday2">0</div><div class="lbl">day streak</div></div>
+        <div class="stat"><div class="big" id="sToday3">0%</div><div class="lbl">of your reset</div></div>
+      </div>
+    </section>
 
-    <!-- TWO TOOLKITS -->
-    <div class="split" style="margin-top:48px">
-      <div class="split__card split__card--good">
-        <h3>🌊 Urge-surfing toolkit</h3>
-        <p style="color:var(--ink-faint);font-size:.92rem;margin-bottom:10px">When the craving to scroll hits, do one of these for 90 seconds. The urge always passes.</p>
-        <ul class="split__list">
-          <li>Name it out loud: "this is a dopamine craving."</li>
-          <li>Stand up and take 10 slow breaths.</li>
-          <li>Drink a full glass of water.</li>
-          <li>Step outside for 60 seconds of daylight.</li>
-          <li>Set a 5-min timer and do literally nothing.</li>
+    <!-- 7 DAYS -->
+    <section class="panel" data-p="plan">
+      <h1>Your 7 days</h1>
+      <p>One action a day, ~10 minutes. Don't skip ahead — the order is the point.</p>
+      <div id="dayList"></div>
+    </section>
+
+    <!-- TRACKER -->
+    <section class="panel" data-p="track">
+      <h1>Tracker</h1>
+      <p>Tap a day when you finish it. Watch the streak grow — that's the dopamine working <em>for</em> you.</p>
+      <div class="track" id="trackGrid"></div>
+      <div class="card">
+        <h3>Your streak</h3>
+        <div class="bar"><i id="trackBar"></i></div>
+        <p id="trackMsg" style="margin:0">Tick your first day to start the streak.</p>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="panel" data-p="stats">
+      <h1>My stats</h1>
+      <div class="stats">
+        <div class="stat"><div class="big" id="stA">0</div><div class="lbl">days completed</div></div>
+        <div class="stat"><div class="big" id="stB">0</div><div class="lbl">current streak</div></div>
+        <div class="stat"><div class="big" id="stC">0%</div><div class="lbl">progress</div></div>
+        <div class="stat"><div class="big" id="stD">0</div><div class="lbl">cravings beaten</div></div>
+      </div>
+      <div class="card">
+        <h3>Progress to a rewired brain</h3>
+        <div class="bar"><i id="stBar"></i></div>
+        <p id="stMsg" style="margin:0">Every day you tick rewires your reward system a little more.</p>
+      </div>
+    </section>
+
+    <!-- TOOLKIT -->
+    <section class="panel" data-p="toolkit">
+      <h1>Urge-surfing toolkit</h1>
+      <p>Craving to scroll? Tap one. Do it for 90 seconds. The urge always passes — and you just beat it.</p>
+      <div class="chips" id="urgeChips"></div>
+      <div class="reveal-box" id="urgeOut">Tap a tactic above 👆</div>
+      <button class="btn btn--ghost btn--sm" id="craveBtn" style="margin-top:14px">I beat a craving 💪</button>
+      <span style="margin-left:10px;color:var(--faint)">Beaten so far: <b id="craveCount">0</b></span>
+    </section>
+
+    <!-- MENU -->
+    <section class="panel" data-p="menu">
+      <h1>Real-dopamine menu</h1>
+      <p>Slow dopamine that actually fills you up. Bored? Hit the button and just do what it says.</p>
+      <button class="btn" id="menuBtn">Give me something to do →</button>
+      <div class="reveal-box" id="menuOut" style="margin-top:14px">Your suggestion will appear here.</div>
+      <div class="card">
+        <h3>The full menu</h3>
+        <ul class="tick" id="menuList"></ul>
+      </div>
+    </section>
+
+    <!-- JOURNAL -->
+    <section class="panel" data-p="journal">
+      <h1>Journal</h1>
+      <p>One honest line a day. How do you feel? What changed? It saves automatically on this device.</p>
+      <textarea id="journal" placeholder="Day 1 — woke up, didn't reach for my phone for the first hour. Felt weird. Good weird."></textarea>
+      <div style="margin-top:10px"><button class="btn btn--sm" id="jSave">Save</button> <span class="saved" id="jSaved">Saved ✓</span></div>
+    </section>
+
+    <!-- HELP -->
+    <section class="panel" data-p="help">
+      <h1>Help & the rules</h1>
+      <div class="card">
+        <h3>The cheap-dopamine fast</h3>
+        <ul class="tick">
+          <li>No phone for the first hour after waking</li>
+          <li>No short-form video (TikTok / Reels / Shorts) for 7 days</li>
+          <li>Notifications off except calls &amp; texts</li>
+          <li>One "boring on purpose" 10-minute block daily</li>
         </ul>
       </div>
-      <div class="split__card">
-        <h3>☀️ Real-dopamine menu</h3>
-        <p style="color:var(--ink-faint);font-size:.92rem;margin-bottom:10px">Slow dopamine that actually fills you up. Pick one whenever you're bored.</p>
-        <ul class="split__list">
-          <li>A walk with no phone.</li>
-          <li>20 push-ups or a quick stretch.</li>
-          <li>Message a friend something real.</li>
-          <li>Read 5 pages of a book.</li>
-          <li>Make something with your hands.</li>
-        </ul>
+      <div class="card">
+        <h3>Stuck or need a hand?</h3>
+        <p>Reply to your order confirmation email and we'll help you out. You've got this.</p>
       </div>
-    </div>
+    </section>
+  </main>
+</div>
 
-    <!-- THE FAST -->
-    <h2 style="margin:48px 0 12px">The cheap-dopamine fast</h2>
-    <div class="stack">
-      <div class="stack__row"><span>No phone for the first hour awake</span><span>Day 1+</span></div>
-      <div class="stack__row"><span>No short-form video (TikTok / Reels / Shorts)</span><span>All 7 days</span></div>
-      <div class="stack__row"><span>Notifications off except calls &amp; texts</span><span>All 7 days</span></div>
-      <div class="stack__row"><span>One "boring on purpose" 10-min block daily</span><span>All 7 days</span></div>
-    </div>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var KEY='dr_reset_v1';
+  var state=load();
 
-    <p style="margin-top:40px;color:var(--ink-faint);font-size:.9rem">
-      Save this page — it's your home base for the next 7 days. Need help? Reply to your order email.
-    </p>
-  </div>
-</section>
+  var DAYS=[
+    {t:"Delete the worst one.",a:"Delete your single most-used app for the 7 days. Notifications off except calls & texts."},
+    {t:"Phone-free first hour.",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight."},
+    {t:"Boredom on purpose.",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet — this is the reset working."},
+    {t:"Swap one hit.",a:"Every time you reach to scroll, do one thing off your real-dopamine menu instead. Count how many times."},
+    {t:"Move your body.",a:"20 minutes of movement — walk, gym, dance, anything. Real dopamine loves effort."},
+    {t:"One real connection.",a:"Have one genuine, phone-down conversation. Call someone or meet up. Notice how good it feels."},
+    {t:"Design your normal.",a:"Write the 3 rules you're keeping for good. You've felt the difference — now lock it in."}
+  ];
+  var URGES=[
+    {k:"Name it",v:"Say out loud: \"This is just a dopamine craving.\" Naming it shrinks it instantly."},
+    {k:"Breathe x10",v:"Stand up and take 10 slow breaths. The urge peaks and fades in under 2 minutes."},
+    {k:"Cold water",v:"Drink a full glass of water or splash your face. Resets the impulse."},
+    {k:"60s outside",v:"Step outside for 60 seconds of daylight. Real light beats the screen pull."},
+    {k:"Do nothing",v:"Set a 5-minute timer and do literally nothing. Boredom is the reset, not the enemy."},
+    {k:"2-minute task",v:"Do one tiny real task — make your bed, wash a cup. Action kills the itch."}
+  ];
+  var MENU=["Go for a 10-minute walk, no phone.","Do 20 push-ups or stretch.","Message a friend something real.",
+    "Read 5 pages of a book.","Make something with your hands.","Tidy one small corner.","Step outside and look up for a minute.",
+    "Write one line in your journal.","Make a proper cup of tea/coffee slowly.","Plan one thing you're looking forward to."];
+
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+  if(!state.done)state.done={};
+  if(typeof state.crave!=='number')state.crave=0;
+  if(!state.journal)state.journal='';
+
+  function doneCount(){var n=0;for(var i=0;i<7;i++)if(state.done[i])n++;return n}
+  function currentDay(){for(var i=0;i<7;i++)if(!state.done[i])return i;return 6}
+  function streak(){var s=0;for(var i=0;i<7;i++){if(state.done[i])s++;else break;}return s}
+  function pct(){return Math.round(doneCount()/7*100)}
+
+  function render(){
+    var d=currentDay();
+    $('#pillStreak').textContent=streak();
+    $('#pillDay').textContent=Math.min(doneCount()+1,7);
+    $('#pillCrave').textContent=state.crave;
+    // today
+    $('#todayLabel').textContent='Day '+(d+1);
+    $('#todayTitle').textContent=DAYS[d].t;
+    $('#todayAction').textContent=DAYS[d].a;
+    var td=$('#todayDone');
+    if(state.done[d]){td.textContent='Done for today ✓';td.setAttribute('disabled','');}
+    else{td.removeAttribute('disabled');td.textContent='Mark today done ✓';}
+    $('#sToday1').textContent=doneCount();
+    $('#sToday2').textContent=streak();
+    $('#sToday3').textContent=pct()+'%';
+    // plan
+    var pl=$('#dayList');pl.innerHTML='';
+    DAYS.forEach(function(day,i){
+      var unlocked=i<=doneCount();
+      var el=document.createElement('div');
+      el.className='day'+(state.done[i]?' done':'')+(unlocked?'':' locked');
+      el.innerHTML='<div class="day__n">'+(i+1)+'</div><div class="day__b"><h3>'+day.t+'</h3><p style="margin:0">'+day.a+'</p></div><button class="day__check" data-day="'+i+'">✓</button>';
+      pl.appendChild(el);
+    });
+    // tracker
+    var tg=$('#trackGrid');tg.innerHTML='';
+    for(var i=0;i<7;i++){var b=document.createElement('button');b.textContent=i+1;if(state.done[i])b.className='on';b.setAttribute('data-day',i);tg.appendChild(b);}
+    $('#trackBar').style.width=pct()+'%';
+    $('#trackMsg').textContent=streak()>=7?"🏆 You finished the full 7-day reset. Huge.":streak()>0?("🔥 "+streak()+"-day streak. Keep it alive."):"Tick your first day to start the streak.";
+    // stats
+    $('#stA').textContent=doneCount();$('#stB').textContent=streak();$('#stC').textContent=pct()+'%';$('#stD').textContent=state.crave;
+    $('#stBar').style.width=pct()+'%';
+    $('#craveCount').textContent=state.crave;
+    $('#drHello').textContent=doneCount()>=7?'Reset complete 🎉':'Welcome back';
+  }
+
+  function toggle(i){
+    // only allow toggling the current day or already-done days, in order
+    if(!state.done[i] && i>doneCount()) return;
+    state.done[i]=!state.done[i];
+    // keep contiguous: if unticking, untick later days
+    if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false;}
+    save();render();
+  }
+
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');
+    if(go){var p=go.getAttribute('data-go');
+      $$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});
+      $$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});
+      closeSide();window.scrollTo(0,0);return;}
+    var dc=e.target.closest('[data-day]');
+    if(dc){toggle(parseInt(dc.getAttribute('data-day'),10));return;}
+  });
+  $('#todayDone').addEventListener('click',function(){toggle(currentDay())});
+  $('#craveBtn').addEventListener('click',function(){state.crave++;save();render();this.textContent='Nice. Another one beaten 💪';var b=this;setTimeout(function(){b.textContent='I beat a craving 💪'},1200);});
+
+  // toolkit chips
+  var uc=$('#urgeChips');URGES.forEach(function(u){var b=document.createElement('button');b.className='chip';b.textContent=u.k;b.addEventListener('click',function(){$('#urgeOut').textContent=u.v});uc.appendChild(b);});
+  // menu
+  var ml=$('#menuList');MENU.forEach(function(m){var li=document.createElement('li');li.textContent=m;ml.appendChild(li)});
+  $('#menuBtn').addEventListener('click',function(){$('#menuOut').textContent=MENU[Math.floor(Math.random()*MENU.length)]});
+  // journal
+  var j=$('#journal');j.value=state.journal;
+  function jsave(){state.journal=j.value;save();var s=$('#jSaved');s.classList.add('on');setTimeout(function(){s.classList.remove('on')},1400);}
+  $('#jSave').addEventListener('click',jsave);
+  var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(jsave,800)});
+
+  // mobile sidebar
+  function openSide(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}
+  function closeSide(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
+  $('#drBurger').addEventListener('click',openSide);
+  $('#drScrim').addEventListener('click',closeSide);
+
+  render();
+})();
+</script>
+{% endraw %}
 
 {% schema %}
 {
   "name": "Access page",
-  "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "You're in" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Welcome to your Dopamine Reset." },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Payment confirmed — nice move. This is your home base for the next 7 days. Bookmark it. Start with Day 1 below and do one action a day. That's the whole game." },
-    { "type": "text", "id": "day1_title", "label": "Day 1 title", "default": "Delete the worst one." },
-    { "type": "textarea", "id": "day1_action", "label": "Day 1 action", "default": "Pick the single app that eats the most of your time and delete it from your phone for the full 7 days (you can reinstall later — most people don't). Then turn off notifications for everything except calls and texts. That's it for today. Tomorrow unlocks the next step." }
-  ],
-  "blocks": [
-    { "type": "day", "name": "Day", "settings": [
-      { "type": "text", "id": "n", "label": "Day number", "default": "1" },
-      { "type": "text", "id": "title", "label": "Title", "default": "Delete the worst one" },
-      { "type": "textarea", "id": "action", "label": "Action", "default": "Delete your most-used app for 7 days." }
-    ]}
-  ],
-  "presets": [{
-    "name": "Access page",
-    "blocks": [
-      { "type": "day", "settings": { "n": "1", "title": "Delete the worst one", "action": "Delete your single most-used app for the 7 days. Notifications off except calls & texts." } },
-      { "type": "day", "settings": { "n": "2", "title": "Phone-free first hour", "action": "Don't touch your phone for the first hour after waking. Leave it across the room overnight." } },
-      { "type": "day", "settings": { "n": "3", "title": "Boredom on purpose", "action": "Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet — this is the reset working." } },
-      { "type": "day", "settings": { "n": "4", "title": "Swap one hit", "action": "Every time you reach to scroll, do one thing off your real-dopamine menu instead. Track how many times." } },
-      { "type": "day", "settings": { "n": "5", "title": "Move your body", "action": "20 minutes of movement — walk, gym, dance, anything. Real dopamine loves effort." } },
-      { "type": "day", "settings": { "n": "6", "title": "One real connection", "action": "Have one genuine, phone-down conversation. Call someone or meet up. Notice how good it feels." } },
-      { "type": "day", "settings": { "n": "7", "title": "Design your normal", "action": "Write the 3 rules you're keeping for good. You've felt the difference — now lock it in." } }
-    ]
-  }]
+  "settings": [],
+  "presets": [{ "name": "Access page" }]
 }
 {% endschema %}
