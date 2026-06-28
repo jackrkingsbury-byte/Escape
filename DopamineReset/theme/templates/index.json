@@ -115,7 +115,7 @@
       "type": "quiz",
       "settings": {
         "eyebrow": "10-second test",
-        "heading": "How fried is your dopamine?",
+        "heading": "How <span class=\"hl2\">fried</span> is your dopamine? Find out.",
         "subheading": "Answer 4 honest questions and find out where you're really at (and what to do about it).",
         "questions_json": "[{\"q\": \"How many times have you picked up your phone in the last hour?\", \"options\": [{\"label\": \"Lost count, honestly\", \"weight\": \"circle\"}, {\"label\": \"A handful\", \"weight\": \"pro\"}, {\"label\": \"Barely touched it\", \"weight\": \"starter\"}]}, {\"q\": \"How do you feel after an hour of scrolling?\", \"options\": [{\"label\": \"Empty and foggy\", \"weight\": \"circle\"}, {\"label\": \"Kind of meh\", \"weight\": \"pro\"}, {\"label\": \"Fine, I keep it short\", \"weight\": \"starter\"}]}, {\"q\": \"Can you sit and do nothing for 5 minutes?\", \"options\": [{\"label\": \"No chance, I'd reach for my phone\", \"weight\": \"circle\"}, {\"label\": \"It's a struggle\", \"weight\": \"pro\"}, {\"label\": \"Yeah, easily\", \"weight\": \"starter\"}]}, {\"q\": \"Do the things you used to enjoy still feel good?\", \"options\": [{\"label\": \"Nothing really hits anymore\", \"weight\": \"circle\"}, {\"label\": \"A bit dulled\", \"weight\": \"pro\"}, {\"label\": \"They feel great\", \"weight\": \"starter\"}]}]",
         "results_json": "{\"starter\": {\"title\": \"Lightly fried\", \"blurb\": \"You're doing okay — but a 7-day reset will sharpen your focus and make good things feel good again. Easy win.\", \"cta\": \"Do the 7-day reset\", \"url\": \"#pricing\"}, \"pro\": {\"title\": \"Pretty fried\", \"blurb\": \"Cheap dopamine has dulled your days. The Dopamine Reset rewires that in a week — this is exactly what you need.\", \"cta\": \"Start the reset →\", \"url\": \"#pricing\"}, \"circle\": {\"title\": \"Deep-fried 🍟\", \"blurb\": \"Be honest — you felt that. Your brain is running on cheap hits. The good news: 7 days is all it takes to feel like yourself again.\", \"cta\": \"Reset my brain now →\", \"url\": \"#pricing\"} }"
@@ -183,7 +183,7 @@
       ],
       "settings": {
         "eyebrow": "What's inside",
-        "heading": "Everything you need to feel good again."
+        "heading": "Everything you need to <span class=\"hl\">feel good again</span>."
       }
     },
     "bonus_stack": {
@@ -328,13 +328,13 @@
       ],
       "settings": {
         "eyebrow": "No overnight miracles. Just clearer days.",
-        "heading": "What people feel after a week."
+        "heading": "What people actually feel after <span class=\"hl3\">one week</span>."
       }
     },
     "guarantee": {
       "type": "guarantee",
       "settings": {
-        "heading": "7 days. If you don't feel the shift, it's free.",
+        "heading": "7 days. If you don't feel the shift, <span class=\"hl\">it's free</span>.",
         "text": "Do the reset for a week. If your head isn't clearer and your days don't feel better, email us and get every cent back — no forms, no awkward questions. The only risk is staying foggy."
       }
     },
@@ -472,16 +472,26 @@
     "story": {
       "type": "story",
       "settings": {}
+    },
+    "transform3d": {
+      "type": "transform3d",
+      "settings": {}
+    },
+    "game": {
+      "type": "game",
+      "settings": {}
     }
   },
   "order": [
     "hero",
     "story",
+    "transform3d",
     "transformation",
     "benefits",
     "quiz",
     "features",
     "bonus_stack",
+    "game",
     "pricing",
     "testimonials",
     "guarantee",

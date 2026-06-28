@@ -1,0 +1,149 @@
+{% raw %}
+<style>
+  .t3{position:relative;background:#0a0810}
+  .t3__track{position:relative;height:320vh}
+  .t3__stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center;perspective:1100px}
+  /* environment */
+  .t3__sky{position:absolute;inset:0;z-index:0;transition:none}
+  .t3__sky.storm{background:radial-gradient(80% 70% at 50% 30%,#1a1b24,#0a0810 75%)}
+  .t3__sky.dawn{background:radial-gradient(80% 80% at 50% 38%,#3a2a1c 0%,#2a1730 42%,#0a0810 78%);opacity:0}
+  .t3__sun{position:absolute;left:50%;top:34%;width:min(46vw,330px);height:min(46vw,330px);margin-left:-23vw;border-radius:50%;
+    background:radial-gradient(circle,#ffd24b,#ff8a3d 45%,transparent 70%);filter:blur(6px);opacity:0;z-index:0;will-change:transform,opacity}
+  .t3__cloud{position:absolute;top:16%;left:50%;transform:translateX(-50%);font-size:clamp(3rem,9vw,6rem);z-index:1;filter:drop-shadow(0 10px 20px rgba(0,0,0,.5));will-change:opacity,transform}
+  .t3__rain{position:absolute;inset:0;z-index:1;background-image:repeating-linear-gradient(115deg,rgba(150,170,200,.16) 0 1px,transparent 1px 9px);will-change:opacity}
+
+  /* figure */
+  .t3__figure{position:relative;z-index:3;transform-style:preserve-3d;will-change:transform;animation:t3float 5.5s ease-in-out infinite}
+  @keyframes t3float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .t3__person{position:relative;width:min(62vw,300px);height:min(62vw,300px);transform-style:preserve-3d}
+  .t3__glow{position:absolute;left:50%;top:50%;width:160%;height:160%;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(255,194,75,.45),rgba(124,92,255,.18) 45%,transparent 68%);filter:blur(26px);opacity:0;z-index:0;will-change:opacity,transform}
+  .t3__ring{position:absolute;left:50%;top:50%;width:130%;height:130%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px dashed rgba(255,255,255,.18);opacity:0;animation:t3spin 18s linear infinite;z-index:1}
+  @keyframes t3spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .face{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;backface-visibility:hidden;box-shadow:0 30px 60px rgba(0,0,0,.45);z-index:2}
+  .face--sad{background:radial-gradient(circle at 50% 38%,#41414c,#23232c 72%)}
+  .face--joy{background:radial-gradient(circle at 50% 36%,#ffd97a,#ff8a3d 55%,#ff5c8a 100%);opacity:0}
+  .feat{position:absolute;inset:0}
+  /* eyes */
+  .eye{position:absolute;width:18%;height:18%;border-radius:50%;top:33%}
+  .eye.l{left:24%}.eye.r{right:24%}
+  .face--sad .eye{background:#15151b;height:9%;border-radius:50% 50% 50% 50%/70% 70% 30% 30%}
+  .face--joy .eye{background:#2a1400;height:14%;border-radius:50% 50% 50% 50%/60% 60% 40% 40%}
+  .face--joy .cheek{position:absolute;top:55%;width:15%;height:11%;border-radius:50%;background:rgba(255,92,138,.55);filter:blur(2px)}
+  .face--joy .cheek.l{left:17%}.face--joy .cheek.r{right:17%}
+  /* mouth */
+  .mouth{position:absolute;left:50%;transform:translateX(-50%);width:42%}
+  .face--sad .mouth{top:66%;height:18%;border:7px solid #15151b;border-bottom:none;border-radius:60px 60px 0 0}
+  .face--joy .mouth{top:58%;height:26%;border:8px solid #2a1400;border-top:none;border-radius:0 0 70px 70px;background:linear-gradient(#ff4d6d,#c81d4e);background-clip:padding-box}
+  .brow{position:absolute;top:25%;width:16%;height:5%;background:#15151b;border-radius:4px}
+  .face--sad .brow.l{left:23%;transform:rotate(18deg)}.face--sad .brow.r{right:23%;transform:rotate(-18deg)}
+  .face--joy .brow{display:none}
+  /* sparkles */
+  .t3__spark{position:absolute;inset:-6%;z-index:4;opacity:0;pointer-events:none;will-change:opacity}
+  .t3__spark span{position:absolute;font-size:clamp(1rem,2.4vw,1.7rem);animation:t3tw 2.6s ease-in-out infinite}
+  @keyframes t3tw{0%,100%{transform:scale(.6);opacity:.4}50%{transform:scale(1.15);opacity:1}}
+
+  /* captions */
+  .t3__caps{position:absolute;left:0;right:0;bottom:7vh;z-index:5;text-align:center;padding:0 7vw}
+  .t3__cap{position:absolute;left:0;right:0;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;padding:0 7vw}
+  .t3__cap.on{opacity:1;transform:none;position:relative}
+  .t3__k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#ffc24b;display:block;margin-bottom:8px}
+  .t3__cap h3{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(1.5rem,4.4vw,2.6rem);line-height:1.08;color:#fff;margin:0 0 8px}
+  .t3__cap p{color:#cfccc4;font-size:clamp(1rem,2.2vw,1.2rem);margin:0 auto;max-width:34ch;line-height:1.5}
+  .t3__hint{position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:5;font-family:var(--mono,monospace);font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+  .t3__cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:800;border-radius:999px;padding:14px 28px;font-size:1.02rem;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;box-shadow:0 14px 36px rgba(255,138,61,.4)}
+  @media (prefers-reduced-motion:reduce){.t3__figure,.t3__ring,.t3__spark span{animation:none}}
+</style>
+
+<section class="t3" id="transform3d">
+  <div class="t3__track" id="t3Track">
+    <div class="t3__stage" id="t3Stage">
+      <div class="t3__sky storm"></div>
+      <div class="t3__sky dawn" id="t3Dawn"></div>
+      <div class="t3__sun" id="t3Sun"></div>
+      <div class="t3__rain" id="t3Rain"></div>
+      <div class="t3__cloud" id="t3Cloud">🌧️</div>
+      <span class="t3__hint">Scroll ↓</span>
+
+      <div class="t3__figure" id="t3Fig">
+        <div class="t3__person">
+          <div class="t3__glow" id="t3Glow"></div>
+          <div class="t3__ring" id="t3Ring"></div>
+          <div class="face face--sad">
+            <div class="feat">
+              <span class="brow l"></span><span class="brow r"></span>
+              <span class="eye l"></span><span class="eye r"></span>
+              <span class="mouth"></span>
+            </div>
+          </div>
+          <div class="face face--joy" id="t3Joy">
+            <div class="feat">
+              <span class="eye l"></span><span class="eye r"></span>
+              <span class="cheek l"></span><span class="cheek r"></span>
+              <span class="mouth"></span>
+            </div>
+          </div>
+        </div>
+        <div class="t3__spark" id="t3Spark">
+          <span style="left:6%;top:8%">✨</span><span style="right:8%;top:14%;animation-delay:.5s">⭐</span>
+          <span style="left:12%;bottom:10%;animation-delay:1s">✨</span><span style="right:10%;bottom:6%;animation-delay:1.5s">💫</span>
+          <span style="left:46%;top:-4%;animation-delay:.8s">⭐</span>
+        </div>
+      </div>
+
+      <div class="t3__caps" id="t3Caps">
+        <div class="t3__cap on"><span class="t3__k">Right now</span><h3>Flat. Foggy. Going through the motions.</h3><p>Nothing really hits anymore — and you can't tell why.</p></div>
+        <div class="t3__cap"><span class="t3__k">Day 1–3</span><h3>The fog starts to <span class="hl">lift</span>.</h3><p>One small action a day. Your brain stops screaming for the next hit.</p></div>
+        <div class="t3__cap"><span class="t3__k">Day 4–6</span><h3>Colour <span class="hl2">comes back</span>.</h3><p>Focus, energy, mood — the things that were always yours start switching back on.</p></div>
+        <div class="t3__cap"><span class="t3__k">Day 7</span><h3>You feel <span class="hl">good</span> — for real.</h3><p>Same you. Fully charged. This is what 7 days does.<br><a class="t3__cta" href="#pricing">Become this person → R199</a></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var track=document.getElementById('t3Track'),stage=document.getElementById('t3Stage');
+  if(!track||!stage)return;
+  var dawn=document.getElementById('t3Dawn'),sun=document.getElementById('t3Sun'),rain=document.getElementById('t3Rain'),
+      cloud=document.getElementById('t3Cloud'),fig=document.getElementById('t3Fig'),glow=document.getElementById('t3Glow'),
+      ring=document.getElementById('t3Ring'),joy=document.getElementById('t3Joy'),spark=document.getElementById('t3Spark'),
+      caps=[].slice.call(document.querySelectorAll('#t3Caps .t3__cap'));
+  function cl(v){return v<0?0:v>1?1:v}
+  function lerp(a,b,t){return a+(b-a)*t}
+  var p=0,target=0,raf=null;
+  function compute(){
+    var r=track.getBoundingClientRect();
+    var total=track.offsetHeight-window.innerHeight;
+    target=cl((-r.top)/(total||1));
+  }
+  function paint(){
+    p+=(target-p)*0.16; if(Math.abs(target-p)<0.001)p=target;
+    var e=p;
+    dawn.style.opacity=e;
+    sun.style.opacity=cl((e-0.15)/0.85);
+    sun.style.transform='translateY('+lerp(110,-6,e)+'px) scale('+lerp(.7,1.1,e)+')';
+    rain.style.opacity=cl(1-e*1.6);
+    cloud.style.opacity=cl(1-e*1.8);
+    cloud.style.transform='translateX(-50%) translateY('+(-e*70)+'px)';
+    joy.style.opacity=cl((e-0.18)/0.6);
+    glow.style.opacity=cl((e-0.1)/0.9);
+    glow.style.transform='translate(-50%,-50%) scale('+lerp(.6,1.15,e)+')';
+    ring.style.opacity=cl((e-0.4)/0.6)*0.9;
+    spark.style.opacity=cl((e-0.55)/0.45);
+    fig.style.transform='rotateX('+lerp(20,0,e)+'deg) rotateY('+lerp(-16,0,e)+'deg) scale('+lerp(.9,1.06,e)+')';
+    var idx=e<0.28?0:e<0.55?1:e<0.82?2:3;
+    for(var i=0;i<caps.length;i++)caps[i].classList.toggle('on',i===idx);
+    if(p!==target){raf=requestAnimationFrame(paint)}else{raf=null}
+  }
+  function onScroll(){compute();if(!raf)raf=requestAnimationFrame(paint)}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  compute();paint();
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{ "name": "Transform 3D (scroll)", "settings": [], "presets": [{ "name": "Transform 3D (scroll)" }] }
+{% endschema %}
