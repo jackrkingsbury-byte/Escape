@@ -1,7 +1,7 @@
 <section class="section hero" id="top">
   <div class="wrap hero__inner">
     {%- if section.settings.scarcity_label != blank -%}
-      <div class="scarcity"><i></i><span data-scarcity="{{ section.settings.scarcity_base }}" data-label="{{ section.settings.scarcity_label }}">{{ section.settings.scarcity_label | replace: '{n}', section.settings.scarcity_base }}</span></div>
+      <div class="scarcity"><i></i><span data-scarcity="{{ section.settings.scarcity_base }}" data-label="{{ section.settings.scarcity_label }}">{{ section.settings.scarcity_label }}</span></div>
     {%- endif -%}
     <p class="eyebrow">{{ section.settings.eyebrow }}</p>
     <h1 class="reveal">{{ section.settings.heading }}</h1>
