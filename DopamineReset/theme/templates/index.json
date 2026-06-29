@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-3d",
+      "type": "hero-rpm",
       "blocks": {
         "s1": {
           "type": "stat",
