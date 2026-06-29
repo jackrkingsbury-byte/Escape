@@ -80,6 +80,10 @@
   .dr .tl2 .node:not(:last-child)::before{content:"";position:absolute;left:14px;top:30px;bottom:0;width:2px;background:var(--line)}
   .dr .tl2 .node.done:not(:last-child)::before{background:var(--good)}
   .dr .tl2 .nc b{color:#fff;font-size:.94rem;display:block}.dr .tl2 .nc span{color:var(--faint);font-size:.8rem}
+  /* search results */
+  .dr .sr{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin-bottom:8px;cursor:pointer;transition:.15s}
+  .dr .sr:hover{border-color:var(--amber);transform:translateX(3px)}
+  .dr .sr .e{font-size:1.4rem;flex:0 0 auto}.dr .sr b{display:block;color:#fff;font-size:.95rem}.dr .sr span{color:var(--faint);font-size:.78rem}
 
   .dr__side{grid-column:1;z-index:3;background:linear-gradient(185deg,#26203a,#181226);border-right:1px solid rgba(255,255,255,.12);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
   .dr__brand{font-family:var(--serif);font-weight:700;font-size:1.3rem;padding:4px 12px 10px}.dr__brand b{color:var(--amber)}
@@ -358,6 +362,8 @@
     <button class="dr__nav" data-go="articles"><span class="ic">📚</span> Articles</button>
     <button class="dr__nav" data-go="journeys"><span class="ic">💗</span> Mood Help</button>
     <button class="dr__nav" data-go="quotes"><span class="ic">📜</span> Quotes</button>
+    <button class="dr__nav" data-go="search"><span class="ic">🔎</span> Search</button>
+    <button class="dr__nav" data-go="saved"><span class="ic">🔖</span> Saved</button>
     <div class="dr__navttl">Unwind</div>
     <button class="dr__nav" data-go="relax"><span class="ic">🧘</span> Time to Relax</button>
     <button class="dr__nav" data-go="affirm"><span class="ic">💗</span> Affirmations</button>
@@ -389,6 +395,7 @@
           <div><div class="coach__hi" id="coHi">Hey there 👋</div><div class="coach__sub" id="coSub">Your coach is warming up…</div></div></div>
         <p class="coach__say" id="coSay">Let's get your first win today.</p>
         <div id="coSuggest" style="margin-top:14px"></div>
+        <div id="coContinue"></div>
         <div class="coach__cta" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <button class="btn btn--g" data-open-today>Today's challenge →</button>
           <button class="btn btn--ghost btn--sm" data-go="games">I need a reset now</button>
@@ -494,6 +501,9 @@
       <h1>The library</h1>
       <p>Short, premium reads that explain what's happening in your brain — and how to win. Each one read is <b>+20 XP</b>.</p>
       <div class="feed" id="artFeed"></div>
+      <h3 style="margin-top:20px">Routines 🧭</h3>
+      <p>Copy-and-keep routines for the moments that matter.</p>
+      <div class="feed" id="routineFeed"></div>
     </section>
 
     <section class="panel" data-p="journeys">
@@ -533,6 +543,19 @@
         <button class="btn btn--g btn--sm" id="winAdd">Add win 🏅</button>
       </div>
       <div id="winList" style="margin-top:16px"></div>
+    </section>
+
+    <section class="panel" data-p="search">
+      <h1>Search 🔎</h1>
+      <p>Find anything — articles, routines, quotes, games, moods, sections.</p>
+      <input id="searchInput" type="search" placeholder="Type to search…" style="width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:14px;color:var(--ink);padding:14px;font:inherit;margin-bottom:14px">
+      <div id="searchResults"></div>
+    </section>
+
+    <section class="panel" data-p="saved">
+      <h1>Saved 🔖</h1>
+      <p>Everything you've bookmarked — articles, quotes and affirmations — in one place.</p>
+      <div id="savedBox"></div>
     </section>
 
     <section class="panel" data-p="toolkit">
@@ -613,6 +636,7 @@ try{
   function markDaily(a){var k=todayKey();if(!state.daily[k])state.daily[k]={};state.daily[k][a]=true;save()}
   function dailyHas(a){var k=todayKey();return !!(state.daily[k]&&state.daily[k][a])}
   if(!state.xpLog)state.xpLog={};if(!state.moodLog)state.moodLog={};if(typeof state.bestStreak!=='number')state.bestStreak=0;
+  if(!state.bookmarks)state.bookmarks={};if(typeof state.last==='undefined')state.last=null;
   function logDay(){state.xpLog[todayKey()]=xp();var s=streak();if(state.bestStreak<s)state.bestStreak=s;save()}
   function keyFor(off){var d=new Date();d.setDate(d.getDate()-off);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
 
@@ -769,8 +793,10 @@ try{
     var a=ARTS[i];$('#mTop').style.background=g(i+1);$('#mEmoji').textContent=a.e;$('#mTag').textContent=a.sub;$('#mTitle').textContent=a.t;
     $('#mBody').innerHTML='<div class="art">'+a.b.map(function(p){return '<p>'+p+'</p>'}).join('')+'</div>';
     var done=state.read[i];
-    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mRead" style="width:100%">'+(done?'Read again':'Mark as read · +20 XP ✓')+'</button></div>';
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mRead" style="width:100%">'+(done?'Read again':'Mark as read · +20 XP ✓')+'</button><button class="btn btn--ghost btn--sm" id="mBook" style="width:100%;margin-top:8px">'+(state.bookmarks['a'+i]?'★ Bookmarked':'☆ Bookmark this')+'</button></div>';
     $('#mRead').onclick=function(){markDaily('read');if(!state.read[i]){state.read[i]=true;save();celebrate();toast('📚 +20 XP · nice read')}closeM()};
+    $('#mBook').onclick=function(){var bk='a'+i;state.bookmarks[bk]=!state.bookmarks[bk];save();this.textContent=state.bookmarks[bk]?'★ Bookmarked':'☆ Bookmark this';toast(state.bookmarks[bk]?'🔖 Saved':'Removed');renderSaved2()};
+    setLast({type:'article',i:i,label:ARTS[i].t,e:ARTS[i].e});
     $('#mProg').classList.add('on');$('#mProgBar').style.width='0%';
     openModal();
     if(bodyEl)bodyEl.onscroll=function(){var mx=bodyEl.scrollHeight-bodyEl.clientHeight;$('#mProgBar').style.width=(mx>0?Math.min(100,bodyEl.scrollTop/mx*100):100)+'%'};
@@ -867,7 +893,8 @@ try{
     var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var k=0;k<ACHV.length;k++){var ac=ACHV[k],ok=!!ac.test();if(ok)got++;var hide=ac.hidden&&!ok;hh2+='<div class="ach'+(ok?' got':'')+(ac.rare?' rare':'')+'"><div class="e">'+(hide?'❔':ac.e)+'</div><b>'+(hide?'???':ac.n)+'</b><span>'+(hide?'Hidden':ac.d)+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
       for(var k2=0;k2<ACHV.length;k2++){var a2=ACHV[k2];if(a2.test()&&!state.achvSeen[a2.id]){state.achvSeen[a2.id]=true;save();confetti();toast('🏆 Achievement: '+a2.n);snd('win')}}}
 
-    renderCal();renderXpSrc();renderMissions();renderInsights();
+    renderCal();renderXpSrc();renderMissions();renderInsights();if(typeof renderSaved2==='function')renderSaved2();
+    var cc=$('#coContinue');if(cc)cc.innerHTML=state.last?'<button class="btn btn--ghost btn--sm" data-resume="1" style="margin-top:10px">↩ Continue: '+state.last.e+' '+state.last.label+'</button>':'';
     if($('#artFeed')&&!$('#artFeed').dataset.live){renderArts()}else if($('#artFeed')){renderArts()}
   }
 
@@ -899,7 +926,7 @@ try{
   }
 
   document.addEventListener('click',function(e){
-    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});setFx(p);revealPanel(p);cs();window.scrollTo(0,0);return}
+    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});setFx(p);revealPanel(p);if(p!=='today'&&p!=='search'&&p!=='saved')setLast({type:'panel',p:p,label:go.textContent.trim(),e:''});cs();window.scrollTo(0,0);return}
     if(e.target.closest('[data-open-today]')){openDay(cur());return}
     var dd=e.target.closest('[data-day]');if(dd){openDay(parseInt(dd.getAttribute('data-day'),10));return}
     var du=e.target.closest('[data-urge]');if(du){openTile(URGES[+du.getAttribute('data-urge')]);return}
@@ -1099,6 +1126,43 @@ try{
     if(e.target.closest('#drFab')){openQuick();return}
     if(e.target.closest('#quickClose')){closeQuick();return}
     if(e.target.id==='drQuick'){closeQuick();return}
+  });
+
+  // ===== content engine: routines, search, bookmarks, continue =====
+  function setLast(o){state.last=o;save();var cc=$('#coContinue');if(cc&&o)cc.innerHTML='<button class="btn btn--ghost btn--sm" data-resume="1" style="margin-top:10px">↩ Continue: '+o.e+' '+o.label+'</button>'}
+  var ROUTINES=[
+    {e:'🌅',t:'Morning routine',sub:'Win the first hour',steps:['No phone for the first 30–60 minutes','Drink a full glass of water','Get daylight in your eyes — window or outside','Move for 5 minutes: stretch or a short walk','Do one small real task before opening the internet']},
+    {e:'🌙',t:'Night routine',sub:'Set up real sleep',steps:['Phone on charge across the room, an hour before bed','Dim the lights, screens off','Write tomorrow’s top 1 task so your mind can let go','In bed: 5 slow breaths — in 4, out 8','Same sleep and wake time every day']},
+    {e:'🎯',t:'Deep focus block',sub:'Train your attention',steps:['Phone in another room','One tab, one task','Set a timer — start with 10 minutes','When the urge to switch hits, don’t. That’s the rep.','Finish, then a real break: move, water, look far away']},
+    {e:'😰',t:'Anxiety reset',sub:'Calm in 3 minutes',steps:['Name it: “this is just anxiety, and it passes”','Long-exhale breathing: in 4, out 8 — x6','Look around and name 5 things you can see','Write the worry + one tiny step you control','Do that one small step now']}
+  ];
+  function openRoutine(i){var rt=ROUTINES[i];if(!rt)return;$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--violet))';$('#mEmoji').textContent=rt.e;$('#mTag').textContent='Routine';$('#mTitle').textContent=rt.t;
+    $('#mBody').innerHTML='<p style="color:var(--soft);margin:0 0 10px">'+rt.sub+'</p>'+rt.steps.map(function(s,n){return '<div style="display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--line2)"><b style="color:var(--amber);flex:0 0 auto">'+(n+1)+'</b><p style="margin:0;color:var(--soft)">'+s+'</p></div>'}).join('');
+    $('#mAction').innerHTML='';openModal();setLast({type:'routine',i:i,label:rt.t,e:rt.e})}
+  if($('#routineFeed'))$('#routineFeed').innerHTML=ROUTINES.map(function(r,i){return tcard('data-routine="'+i+'"',r.e,g(i*2+1),'ROUTINE',r.t,r.sub,'')}).join('');
+
+  var INDEX=[];
+  ARTS.forEach(function(a,i){INDEX.push({e:a.e,t:a.t,s:'Article · '+a.sub,fn:function(){openArticle(i)}})});
+  ROUTINES.forEach(function(r,i){INDEX.push({e:r.e,t:r.t,s:'Routine · '+r.sub,fn:function(){openRoutine(i)}})});
+  GAMES.forEach(function(gm){INDEX.push({e:gm.e,t:gm.t,s:'Game · '+gm.s,fn:function(){openGame(gm.id)}})});
+  JOURNEYS.forEach(function(j){INDEX.push({e:j.e,t:j.n,s:'Mood help',fn:function(){openJourney(j)}})});
+  RELAX.forEach(function(r){INDEX.push({e:r.e,t:r.t,s:'Relax · '+r.s,fn:function(){openRelax(r.id)}})});
+  QUOTES.forEach(function(q){INDEX.push({e:'📜',t:q.t,s:'Quote',fn:function(){var b=document.querySelector('.dr__nav[data-go="quotes"]');if(b)b.click()}})});
+  [['🗓️','The 7 Days','plan'],['📊','My Stats','stats'],['📈','Insights','insights'],['🎯','Missions','missions'],['🏆','Achievements','achv'],['🌟','Your Why','vision'],['🏅','Daily Wins','wins'],['📓','Journal','journal'],['🧘','Time to Relax','relax'],['💗','Affirmations','affirm']].forEach(function(n){INDEX.push({e:n[0],t:n[1],s:'Section',fn:function(){var b=document.querySelector('.dr__nav[data-go="'+n[2]+'"]');if(b)b.click()}})});
+  var sInput=$('#searchInput');
+  function runSearch(){var box=$('#searchResults');if(!box)return;var q=(sInput.value||'').toLowerCase().trim();if(!q){box.innerHTML='<p style="color:var(--faint)">Start typing to search across everything.</p>';return}
+    var res=[];for(var i=0;i<INDEX.length&&res.length<30;i++){if((INDEX[i].t+' '+INDEX[i].s).toLowerCase().indexOf(q)>-1)res.push(i)}
+    box.innerHTML=res.length?res.map(function(ix){var x=INDEX[ix];return '<div class="sr" data-si="'+ix+'"><span class="e">'+x.e+'</span><div><b>'+x.t+'</b><span>'+x.s+'</span></div></div>'}).join(''):'<p style="color:var(--faint)">Nothing found for “'+q+'”.</p>'}
+  if(sInput){sInput.addEventListener('input',runSearch);runSearch()}
+  function renderSaved2(){var box=$('#savedBox');if(!box)return;var h='',bk=Object.keys(state.bookmarks).filter(function(k){return state.bookmarks[k]&&k.charAt(0)==='a'});
+    if(bk.length){h+='<h3>Bookmarked articles</h3><div class="feed">'+bk.map(function(k){var i=+k.slice(1),a=ARTS[i];return a?tcard('data-article="'+i+'"',a.e,g(i+1),'SAVED',a.t,'Tap to read',(state.read[i]?'read':'')):''}).join('')+'</div>'}
+    if(state.savedQ&&state.savedQ.length){h+='<h3 style="margin-top:16px">Saved quotes</h3>'+state.savedQ.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join('')}
+    if(state.savedAff&&state.savedAff.length){h+='<h3 style="margin-top:16px">Saved affirmations</h3>'+state.savedAff.map(function(t){return '<div class="qmini">💗 <span>'+t+'</span></div>'}).join('')}
+    box.innerHTML=h||'<p style="color:var(--faint)">Nothing saved yet. Bookmark an article ☆, or save quotes & affirmations.</p>'}
+  document.addEventListener('click',function(e){
+    var dr2=e.target.closest('[data-routine]');if(dr2){openRoutine(+dr2.getAttribute('data-routine'));return}
+    var srx=e.target.closest('[data-si]');if(srx){var ix=+srx.getAttribute('data-si');if(INDEX[ix])INDEX[ix].fn();return}
+    if(e.target.closest('[data-resume]')){var L=state.last;if(L){if(L.type==='article')openArticle(L.i);else if(L.type==='routine')openRoutine(L.i);else if(L.type==='panel'){var b=document.querySelector('.dr__nav[data-go="'+L.p+'"]');if(b)b.click()}}return}
   });
 
   // ===== missions + treasure chest =====
