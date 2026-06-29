@@ -480,6 +480,10 @@
     "game": {
       "type": "game",
       "settings": {}
+    },
+    "compare": {
+      "type": "compare",
+      "settings": {}
     }
   },
   "order": [
@@ -492,6 +496,7 @@
     "features",
     "bonus_stack",
     "game",
+    "compare",
     "pricing",
     "testimonials",
     "guarantee",
