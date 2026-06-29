@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-particle",
+      "type": "hero-glossy",
       "blocks": {
         "s1": {
           "type": "stat",
