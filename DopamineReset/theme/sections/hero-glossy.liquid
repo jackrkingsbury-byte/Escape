@@ -86,10 +86,10 @@
   </div></div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 {% raw %}
 <script>
-(function(){
+(function(){function __run(){
   var stage=document.getElementById('hgStage'),cv=document.getElementById('hgCanvas'),fb=document.getElementById('hgFallback'),sec=document.getElementById('heroGlossy'),
       track=document.getElementById('hgTrack'),fill=document.getElementById('hgFill'),knob=document.getElementById('hgKnob'),ctl=document.getElementById('hgCtl'),hint=document.getElementById('hgHint');
   if(!stage||!cv)return;
@@ -217,6 +217,8 @@
     renderer.render(scene,camera);
   }
   frame();
+  }
+  if(document.readyState!=='loading')__run();else document.addEventListener('DOMContentLoaded',__run);
 })();
 </script>
 {% endraw %}

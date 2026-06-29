@@ -59,10 +59,10 @@
   </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 {% raw %}
 <script>
-(function(){
+(function(){function __run(){
   var track=document.getElementById('s3Track'),cv=document.getElementById('s3Canvas'),fbk=document.getElementById('s3Fallback'),
       bgEl=document.getElementById('s3Bg'),wordEl=document.getElementById('s3Word'),sec=document.getElementById('story3d');
   if(!track||!cv)return;
@@ -185,6 +185,8 @@
     renderer.render(scene,camera);
   }
   frame();
+  }
+  if(document.readyState!=='loading')__run();else document.addEventListener('DOMContentLoaded',__run);
 })();
 </script>
 {% endraw %}
