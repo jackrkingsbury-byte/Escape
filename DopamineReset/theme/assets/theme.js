@@ -109,12 +109,53 @@
     });
   }
 
+  /* ---- premium interactions: ripple (all) + tilt & magnetic (desktop) ---- */
+  function bindPremium() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.addEventListener('pointerdown', function (e) {
+      if (reduce) return;
+      var b = e.target.closest('.btn'); if (!b) return;
+      var r = document.createElement('span'); r.className = 'rip';
+      var rc = b.getBoundingClientRect();
+      r.style.left = (e.clientX - rc.left) + 'px'; r.style.top = (e.clientY - rc.top) + 'px';
+      b.appendChild(r); setTimeout(function () { if (r.parentNode) r.parentNode.removeChild(r); }, 640);
+    });
+    var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    if (!fine || reduce) return;
+    var curT = null, curB = null, lx = 0, ly = 0, tick = false;
+    function reset(el) { if (el) el.style.transform = ''; }
+    window.addEventListener('pointermove', function (e) {
+      lx = e.clientX; ly = e.clientY; if (tick) return; tick = true;
+      requestAnimationFrame(function () {
+        tick = false;
+        var el = document.elementFromPoint(lx, ly);
+        if (!el || !el.closest) { reset(curT); curT = null; reset(curB); curB = null; return; }
+        var t = el.closest('.tier,.feature,.card,.quote,.bn__card');
+        if (t !== curT) { reset(curT); curT = t; }
+        if (t) {
+          var r = t.getBoundingClientRect();
+          var px = (lx - r.left) / r.width - 0.5, py = (ly - r.top) / r.height - 0.5;
+          var sc = (t.className.indexOf('tier--featured') > -1) ? ' scale(1.03)' : '';
+          t.style.transform = 'perspective(900px) rotateX(' + (-py * 5).toFixed(2) + 'deg) rotateY(' + (px * 6).toFixed(2) + 'deg) translateY(-4px)' + sc;
+        }
+        var b = el.closest('.btn');
+        if (b !== curB) { reset(curB); curB = b; }
+        if (b) {
+          var br = b.getBoundingClientRect();
+          var mx = lx - (br.left + br.width / 2), my = ly - (br.top + br.height / 2);
+          b.style.transform = 'translate(' + (mx * 0.14).toFixed(1) + 'px,' + (my * 0.26).toFixed(1) + 'px)';
+        }
+      });
+    });
+  }
+
   function init() {
     bindReveals();
     bindNav();
     bindFaq();
     bindQuiz();
     bindScarcity();
+    bindPremium();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

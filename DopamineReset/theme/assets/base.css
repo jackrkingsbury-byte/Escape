@@ -273,3 +273,12 @@ section .wrap, section .bn__wrap{position:relative;z-index:1}
 /* brighten the featured pricing tier */
 .tier--featured{box-shadow:0 24px 60px rgba(255,138,61,.28),0 0 0 1px rgba(255,194,75,.5) inset}
 .tier--featured .tier__badge{background:linear-gradient(135deg,#ffc24b,#ff8a3d)}
+
+/* ===== premium pass 2: ripple + depth + tilt easing ===== */
+.btn{position:relative;overflow:hidden;transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,filter .2s}
+.btn--gold:hover{filter:saturate(1.06) brightness(1.04)}
+.rip{position:absolute;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,255,.45),rgba(255,255,255,0) 70%);pointer-events:none;animation:rip .6s ease-out forwards;z-index:2}
+@keyframes rip{from{width:0;height:0;opacity:.7}to{width:380px;height:380px;opacity:0}}
+.tier,.feature,.card,.quote,.bn__card{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .2s;will-change:transform;transform-style:preserve-3d}
+.tier,.feature,.quote{box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -28px rgba(0,0,0,.7)}
+@media (prefers-reduced-motion:reduce){.rip{display:none}.tier,.feature,.card,.quote,.bn__card{will-change:auto}}
