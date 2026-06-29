@@ -203,6 +203,15 @@
   .dr__qsheet{background:var(--bg2);border:1px solid var(--line);border-radius:24px 24px 0 0;width:100%;max-width:580px;padding:22px;max-height:84vh;overflow:auto;animation:qup .3s cubic-bezier(.2,.8,.2,1)}
   @keyframes qup{from{transform:translateY(40px)}to{transform:none}}
   @media(min-width:821px){.dr__quick{align-items:center}.dr__qsheet{border-radius:24px}}
+  /* home feed blocks */
+  .dr .hblk{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0}
+  .dr .hblk__top{display:flex;align-items:center;gap:12px}
+  .dr .hblk__ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;flex:0 0 auto;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .dr .hblk h3{margin:0;font-size:1.18rem}
+  .dr .hblk__tag{color:var(--faint);font-size:.78rem;font-family:var(--mono)}
+  .dr .hblk p{margin:10px 0 12px}
+  .dr .hblk__mini{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
+  .dr .hblk__mini .thumb{min-width:128px;width:128px}
 
   /* calendar + xp source + settings */
   .dr .cal__head{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
@@ -351,6 +360,9 @@
       <p>Tap one — your coach adjusts, and you earn XP for checking in.</p>
       <div class="moods" id="moodBtns"></div>
       <div id="moodReply" class="card" style="display:none"></div>
+      <h2 style="font-family:var(--serif);margin:26px 0 2px">Everything in your reset 👇</h2>
+      <p>Scroll through it all right here — or jump straight there from the menu.</p>
+      <div id="homeFeed"></div>
     </section>
 
     <section class="panel" data-p="plan">
@@ -968,6 +980,26 @@ try{
   function actIdx(k){for(var i=0;i<ACTS.length;i++)if(ACTS[i].k===k)return i;return 0}
   function actCard(a,i){return '<div class="doCard" data-act="'+i+'"><div class="bg" style="background:'+a.g+'"></div><span class="e">'+a.e+'</span><b>'+a.t+'</b><span>'+a.s+'</span></div>'}
   (function(){var h=ACTS.map(actCard).join('');if($('#doGrid'))$('#doGrid').innerHTML=h;if($('#quickGrid'))$('#quickGrid').innerHTML=h;})();
+  // ===== home feed: every section as its own rich block =====
+  function hblk(ic,icbg,title,tag,desc,mn,goKey,btn){return '<div class="hblk"><div class="hblk__top"><div class="hblk__ic" style="background:'+icbg+'">'+ic+'</div><div><h3>'+title+'</h3><div class="hblk__tag">'+tag+'</div></div></div><p>'+desc+'</p>'+(mn||'')+'<div class="hblk__row"><button class="btn btn--g btn--sm" data-go="'+goKey+'">'+btn+' →</button></div></div>'}
+  function hmini(h){return '<div class="hblk__mini">'+h+'</div>'}
+  function buildHome(){var el=$('#homeFeed');if(!el)return;var H='';
+    H+=hblk('🗓️','linear-gradient(135deg,#ff8a3d,#ffc24b)','The 7 Days','Your core program','One tiny action a day for 7 days quietly rewires your brain’s reward system. Each day opens its mission, the science behind it, and a line to reflect on.',hmini(dayThumb(0)+dayThumb(1)+dayThumb(2)),'plan','Open the 7 days');
+    H+=hblk('✅','linear-gradient(135deg,#5ad48a,#2bd3c6)','Tracker & streak','Don’t break the chain','Tick off each day and watch your streak climb. Streaks are how a new habit physically wires in — this is how you protect your momentum.','','track','Open tracker');
+    H+=hblk('🎮','linear-gradient(135deg,#7c5cff,#ff5c8a)','Mind Games','Beat a craving in 60s','When the urge to scroll hits, play instead. Each game calms the pull and earns XP — breathing, focus timer, tap-to-resist, reaction and memory.',hmini(GAMES.slice(0,3).map(function(gm,i){return tcard('data-game="'+gm.id+'"',gm.e,g(i*2),'GAME',gm.t,gm.s,'')}).join('')),'games','See all games');
+    H+=hblk('📚','linear-gradient(135deg,#2bd3c6,#4f8cff)','The Library','Short premium reads','Two-minute reads that explain what’s happening in your brain and exactly how to win — from doomscrolling to deep work to sleep.',hmini(ARTS.slice(0,3).map(function(a,i){return tcard('data-article="'+i+'"',a.e,g(i+1),a.sub.split('·')[0].trim().toUpperCase(),a.t,'Tap to read','')}).join('')),'articles','Open the library');
+    H+=hblk('💗','linear-gradient(135deg,#ff5c8a,#7c5cff)','Mood Help','However you feel','Pick how you feel and get a full path through it — advice, a breathing exercise, a quote, a challenge and a sound to put on.',hmini(JOURNEYS.map(function(j,i){return tcard('data-journey="'+i+'"',j.e,g(i+1),'MOOD',j.n,'Tap your path','')}).join('')),'journeys','Open mood help');
+    H+=hblk('🧘','linear-gradient(135deg,#4f8cff,#7c5cff)','Time to Relax','No goals, just calm','Wind down with a bubble pop, a guided body scan, a 2-minute calm timer or an ambient sound mix. Your off-switch.',hmini(RELAX.slice(0,3).map(function(r,i){return tcard('data-relax="'+r.id+'"',r.e,g(i+2),'RELAX',r.t,r.s,'')}).join('')),'relax','Open relax');
+    H+=hblk('📜','linear-gradient(135deg,#ffd24b,#ff8a3d)','Quotes','A line to carry','A daily quote plus dozens more to swipe through. Save the ones that hit and re-read them on the hard days.','<div class="qmini" style="margin:0 0 12px">“'+QUOTES[0].t+'”</div>','quotes','Open quotes');
+    H+=hblk('💪','linear-gradient(135deg,#ff5c8a,#a06bff)','Affirmations','Rewrite your story','Short “I am…” lines to read slow and mean. They quietly change the story you tell yourself.','','affirm','Open affirmations');
+    H+=hblk('🏅','linear-gradient(135deg,#ffc24b,#5ad48a)','Daily Wins','Tiny wins compound','Log anything you’re a little proud of. Watch them stack up — proof you’re actually moving.','','wins','Open wins');
+    H+=hblk('🌟','linear-gradient(135deg,#ffc24b,#ff5c8a)','Your Why','The reason it sticks','Get honest about what you actually want — money, health, people, who you’re becoming. It’s what pulls you through the hard days.','','vision','Open your why');
+    H+=hblk('📊','linear-gradient(135deg,#ff6b6b,#ff8a3d)','My Stats','See how far you are','Your focus, energy, sleep and brain-health scores, a mood graph, a calendar of the days you showed up, and where your XP comes from.','','stats','Open stats');
+    H+=hblk('🏆','linear-gradient(135deg,#ffc24b,#ffd24b)','Achievements','Unlock badges','Twelve achievements to earn as you go — first step, streaks, scholar, mind gym and more. Each one pops with confetti.','','achv','Open achievements');
+    H+=hblk('📓','linear-gradient(135deg,#7c5cff,#4f8cff)','Journal','One honest line','A line a day, saved on your device. Naming what you feel shrinks it — and shows you your own progress.','','journal','Open journal');
+    el.innerHTML=H;
+  }
+  buildHome();
   function routeAct(k){
     if(k==='today'){openDay(cur());return}
     if(k==='breathe'){openGame('breathe');return}
