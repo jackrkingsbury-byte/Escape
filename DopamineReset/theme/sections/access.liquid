@@ -185,6 +185,35 @@
   .dr__cf span{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:cf linear forwards}
   @keyframes cf{to{transform:translateY(105vh) rotate(560deg);opacity:.2}}
 
+  /* onboarding */
+  .dr .coach__face{position:relative}
+  .coach__av{position:absolute;inset:0;display:none;place-items:center;font-size:2.1rem;border-radius:50%}
+  .coach__av.on{display:grid}
+  .dr__onb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(80% 80% at 50% 26%,#1a1330,#09070f);overflow:auto;font-family:var(--sans)}
+  .dr__onb.on{display:flex;animation:fade .4s}
+  .ob{width:100%;max-width:440px;text-align:center;color:#fff;margin:auto}
+  .ob h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,5.5vw,2.3rem);line-height:1.1;margin:0 0 10px}
+  .ob p{color:#cfccc4;margin:0 0 18px;line-height:1.5}
+  .ob__dots{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+  .ob__dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22)}.ob__dot.on{background:var(--amber)}
+  .ob__orb{width:96px;height:96px;border-radius:50%;margin:6px auto 18px;background:radial-gradient(circle at 35% 30%,#fff,#ffd27a 30%,#ff8a3d 74%);box-shadow:0 0 0 6px rgba(255,194,75,.16),0 16px 44px rgba(255,138,61,.5);animation:coachpulse 4s ease-in-out infinite}
+  .ob__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  .ob__opt{position:relative;aspect-ratio:1;border-radius:18px;border:1px solid rgba(255,255,255,.12);overflow:hidden;display:grid;place-items:center;font-size:2rem;cursor:pointer;transition:transform .15s,box-shadow .2s;background:#15121d}
+  .ob__opt:hover{transform:translateY(-3px)}.ob__opt.sel{box-shadow:0 0 0 2px var(--amber) inset,0 12px 30px rgba(0,0,0,.4)}
+  .ob__sw{aspect-ratio:1.25;border-radius:16px;cursor:pointer;border:2px solid transparent;display:flex;align-items:flex-end;padding:8px;font-size:.74rem;font-weight:800;color:#1a1320}
+  .ob__sw.sel{border-color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+  .ob__list{display:grid;gap:10px;margin:18px 0;text-align:left}
+  .ob__row{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:#15121d;cursor:pointer;transition:.15s;font-weight:600;color:#fff}
+  .ob__row:hover{transform:translateY(-2px)}.ob__row.sel{border-color:var(--amber);background:rgba(255,194,75,.08)}
+  .ob__row .e{font-size:1.5rem}
+  .ob__faces{display:flex;gap:10px;justify-content:center;margin:18px 0}
+  .ob__face{font-size:2rem;width:62px;height:62px;border-radius:16px;background:#15121d;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.15s}
+  .ob__face:hover,.ob__face.sel{transform:translateY(-3px);border-color:var(--amber)}
+  .ob__bar{height:9px;border-radius:999px;background:#241d31;overflow:hidden;margin:22px 0}
+  .ob__bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--pink),var(--violet));transition:width .5s}
+  .ob__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:15px 32px;font-size:1.04rem;background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;cursor:pointer;box-shadow:0 16px 40px rgba(255,138,61,.4)}
+  .ob__skip{display:block;margin:14px auto 0;color:#8b877f;font-size:.84rem;text-decoration:underline;cursor:pointer;background:none}
+  .ob__gen{margin:8px 0;color:#cfccc4;font-size:.95rem;min-height:1.4em}
   .dr__menu{display:none}
   .dr__scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85;display:none}.dr__scrim.on{display:block}
   @media(max-width:820px){
@@ -248,7 +277,7 @@
     <section class="panel on" data-p="today">
       <div class="coach">
         <div class="coach__bg"></div>
-        <div class="coach__row"><div class="coach__face"><span class="ey l"></span><span class="ey r"></span><span class="sm"></span></div>
+        <div class="coach__row"><div class="coach__face"><span class="ey l"></span><span class="ey r"></span><span class="sm"></span><span class="coach__av" id="coAvatar"></span></div>
           <div><div class="coach__hi" id="coHi">Hey there 👋</div><div class="coach__sub" id="coSub">Your coach is warming up…</div></div></div>
         <p class="coach__say" id="coSay">Let's get your first win today.</p>
         <div class="coach__cta" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
@@ -404,6 +433,7 @@
   <div class="dr__prog" id="mProg"><i id="mProgBar"></i></div>
   <div class="body"><div class="eyebrow" id="mTag">Day 1</div><h2 id="mTitle"></h2><div id="mBody"></div><div id="mAction"></div></div>
 </div></div>
+<div class="dr__onb" id="drOnb"><div class="ob" id="obCard"></div></div>
 <div class="dr__toast" id="drToast"></div>
 <div class="dr__cf" id="drCf"></div>
 
@@ -419,6 +449,7 @@ try{
   if(!state.games)state.games={};if(!state.achvSeen)state.achvSeen={};if(!state.savedQ)state.savedQ=[];
   if(typeof state.qi!=='number')state.qi=0;if(!state.read)state.read={};
   if(!state.relaxDone)state.relaxDone={};if(!state.wins)state.wins=[];if(!state.savedAff)state.savedAff=[];if(typeof state.afi!=='number')state.afi=0;
+  if(!state.onb)state.onb={done:false};
 
   var GRADS=['linear-gradient(135deg,#ff8a3d,#ffc24b)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#ff8a3d)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#ff8a3d)'];
   function g(i){return GRADS[((i%GRADS.length)+GRADS.length)%GRADS.length]}
@@ -789,7 +820,44 @@ try{
   function revealPanel(p){var pe=document.querySelector('.panel[data-p="'+p+'"]');if(!pe)return;var els=[].slice.call(pe.querySelectorAll('.thumb,.card,.dial,.stat,.ach,.qcard,.coach,.qmini,.moodc'));els.forEach(function(el,i){if(el.classList.contains('in'))return;el.classList.add('rv');el.style.transitionDelay=Math.min(i,10)*55+'ms';if(_io)_io.observe(el);else el.classList.add('in')})}
   $$('.dr__main .panel h1').forEach(function(hh,i){hh.classList.add(['hl','hl2','hl3'][i%3])});
 
+  // ===== after-purchase onboarding =====
+  var AVA=['🦊','🐉','🦅','🐺','🦁','🐯','🐸','🦋'];
+  var THM=[{k:'sunset',n:'Sunset',a:'#ffc24b',o:'#ff8a3d',p:'#ff5c8a',v:'#7c5cff'},{k:'aurora',n:'Aurora',a:'#ff8ad4',o:'#ff5c8a',p:'#a06bff',v:'#5cc8ff'},{k:'ocean',n:'Ocean',a:'#3fd0c9',o:'#2bd3c6',p:'#4f8cff',v:'#7c5cff'},{k:'forest',n:'Forest',a:'#9be15d',o:'#5ad48a',p:'#2bd3c6',v:'#4f8cff'},{k:'candy',n:'Candy',a:'#ffd24b',o:'#ff8a3d',p:'#ff5c8a',v:'#ff7eb3'},{k:'gold',n:'Gold',a:'#e8c87a',o:'#caa14e',p:'#b88bff',v:'#7c5cff'}];
+  var GOAL=[{e:'🎯',k:'focus',t:'Sharper focus',say:'We’ll rebuild your focus muscle one block at a time.'},{e:'😄',k:'happy',t:'Feel happier',say:'Let’s get real life feeling good again.'},{e:'😴',k:'sleep',t:'Better sleep',say:'We’ll fix the nights first — everything else follows.'},{e:'💪',k:'confidence',t:'More confidence',say:'Every promise you keep this week builds it.'},{e:'📵',k:'screen',t:'Less screen time',say:'We’ll swap cheap hits for real ones, daily.'}];
+  function thmByKey(k){for(var i=0;i<THM.length;i++)if(THM[i].k===k)return THM[i];return THM[0]}
+  function applyTheme(t){var el=document.getElementById('drApp');if(!el||!t)return;el.style.setProperty('--amber',t.a);el.style.setProperty('--orange',t.o);el.style.setProperty('--pink',t.p);el.style.setProperty('--violet',t.v);}
+  function applyAvatar(av){var a=$('#coAvatar');if(a&&av){a.textContent=av;a.classList.add('on')}}
+  function goalObj(){for(var i=0;i<GOAL.length;i++)if(GOAL[i].k===ob.goal)return GOAL[i];return GOAL[1]}
+  var onbEl=$('#drOnb'),obCard=$('#obCard'),ob={avatar:AVA[0],theme:'sunset',goal:'happy',mood:3},obStep=0;
+  function obDots(n){var h='';for(var i=0;i<7;i++)h+='<span class="ob__dot'+(i<=n?' on':'')+'"></span>';return '<div class="ob__dots">'+h+'</div>'}
+  function obGo(n){obStep=n;drawOb()}
+  function drawOb(){
+    var h=obDots(obStep);
+    if(obStep===0){h+='<div class="ob__orb"></div><h2>Welcome to your reset 🎉</h2><p>You’re in. Let’s set it up the way you like — takes 20 seconds.</p><button class="ob__btn" data-ob="go1">Let’s go →</button><button class="ob__skip" data-ob="skip">Skip setup</button>';}
+    else if(obStep===1){h+='<h2>Pick your avatar</h2><p>This is you in here.</p><div class="ob__grid">'+AVA.map(function(a,i){return '<div class="ob__opt'+(ob.avatar===a?' sel':'')+'" data-ava="'+i+'"><span>'+a+'</span></div>'}).join('')+'</div>';}
+    else if(obStep===2){h+='<h2>Choose your vibe</h2><p>Colours for your space.</p><div class="ob__grid">'+THM.map(function(t,i){return '<div class="ob__sw'+(ob.theme===t.k?' sel':'')+'" data-thm="'+i+'" style="background:linear-gradient(135deg,'+t.a+','+t.v+')">'+t.n+'</div>'}).join('')+'</div>';}
+    else if(obStep===3){h+='<h2>What do you want most?</h2><div class="ob__list">'+GOAL.map(function(g,i){return '<div class="ob__row'+(ob.goal===g.k?' sel':'')+'" data-goal="'+i+'"><span class="e">'+g.e+'</span> '+g.t+'</div>'}).join('')+'</div>';}
+    else if(obStep===4){h+='<h2>How do you feel right now?</h2><p>We’ll track it from here.</p><div class="ob__faces">'+FACES.map(function(f,i){return '<button class="ob__face'+(ob.mood===i?' sel':'')+'" data-omood="'+i+'">'+f.e+'</button>'}).join('')+'</div><button class="ob__btn" data-ob="gen">Build my dashboard →</button>';}
+    else if(obStep===5){h+='<div class="ob__orb"></div><h2>Building your dashboard…</h2><div class="ob__bar"><i id="obBar"></i></div><div class="ob__gen" id="obGen"></div>';}
+    else if(obStep===6){h+='<div class="ob__orb"></div><h2>Hey — I’m your coach 👋</h2><p>'+goalObj().say+' I’ll check in daily, keep your streak alive and nudge you when an urge hits. Ready?</p><button class="ob__btn" data-ob="enter">Enter my reset →</button>';}
+    obCard.innerHTML=h;
+    if(obStep===5)runGen();
+  }
+  function runGen(){var steps=['Calibrating your 7-day plan…','Loading your tools & games…','Setting your '+thmByKey(ob.theme).n.toLowerCase()+' theme…','Waking up your coach…'],i=0,bar=$('#obBar'),gen=$('#obGen');
+    function st(){if(i<steps.length){gen.textContent=steps[i];if(bar)bar.style.width=((i+1)/steps.length*100)+'%';i++;setTimeout(st,650)}else{setTimeout(function(){obGo(6)},500)}}st();}
+  function openOnb(){if(!onbEl)return;onbEl.classList.add('on');obGo(0)}
+  function finishOnb(){state.onb={done:true,avatar:ob.avatar,theme:ob.theme,goal:ob.goal};state.moods[cur()]=ob.mood;save();applyTheme(thmByKey(ob.theme));applyAvatar(ob.avatar);onbEl.classList.remove('on');confetti();toast('🎉 You’re all set');render();}
+  if(onbEl)onbEl.addEventListener('click',function(e){
+    var o=e.target.closest('[data-ob]');if(o){var k=o.getAttribute('data-ob');if(k==='go1')obGo(1);else if(k==='skip'){finishOnb()}else if(k==='gen')obGo(5);else if(k==='enter')finishOnb();return}
+    var av=e.target.closest('[data-ava]');if(av){ob.avatar=AVA[+av.getAttribute('data-ava')];drawOb();setTimeout(function(){obGo(2)},170);return}
+    var th=e.target.closest('[data-thm]');if(th){ob.theme=THM[+th.getAttribute('data-thm')].k;drawOb();setTimeout(function(){obGo(3)},170);return}
+    var gl=e.target.closest('[data-goal]');if(gl){ob.goal=GOAL[+gl.getAttribute('data-goal')].k;drawOb();setTimeout(function(){obGo(4)},170);return}
+    var om=e.target.closest('[data-omood]');if(om){ob.mood=+om.getAttribute('data-omood');drawOb();return}
+  });
+  if(state.onb&&state.onb.done){applyTheme(thmByKey(state.onb.theme));applyAvatar(state.onb.avatar);}
+
   render();renderArts();revealPanel('today');
+  if(!state.onb||!state.onb.done)openOnb();
 }catch(err){
   try{var m=document.querySelector('.dr__main');if(m)m.insertAdjacentHTML('afterbegin','<div style="background:#15121d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:14px;color:#f6f4ef"><b>Your reset is loaded.</b><p style="color:#b8b4ad;margin:6px 0 0">A small visual hiccup happened — tap a menu item on the left to jump in.</p></div>')}catch(e){}
 }
