@@ -10,7 +10,7 @@
 
   /* animated 3D backdrop (changes per section) */
   .dr__fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .dr__fx .blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.42;mix-blend-mode:screen;transition:background 1s ease}
+  .dr__fx .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;mix-blend-mode:screen;transition:background 1s ease}
   .dr__fx .b1{width:48vmax;height:48vmax;top:-14vmax;right:-8vmax;animation:fxd1 24s ease-in-out infinite}
   .dr__fx .b2{width:42vmax;height:42vmax;bottom:-16vmax;left:-8vmax;animation:fxd2 28s ease-in-out infinite}
   .dr__fx .b3{width:34vmax;height:34vmax;top:34%;left:42%;animation:fxd1 32s ease-in-out infinite}
@@ -57,6 +57,13 @@
   .dr p{color:var(--soft);line-height:1.55;margin:0 0 12px}
   .dr .eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
   .dr .panel{display:none;animation:fade .35s ease}.dr .panel.on{display:block}
+  /* scroll reveal */
+  .dr .rv{opacity:0;transform:translateY(24px) scale(.985)}
+  .dr .rv.in{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+  /* colour accents */
+  .dr .card{box-shadow:inset 3px 0 0 rgba(255,194,75,.55)}
+  .dr .panel p b{color:var(--amber)}
+  .dr h1{letter-spacing:-.01em}
   @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   .dr .hl{background:linear-gradient(135deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
   .dr .hl2{background:linear-gradient(135deg,var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
@@ -430,9 +437,17 @@ try{
     {e:"☀️",k:"60s outside",v:"Step outside for 60 seconds of daylight. Real light beats the screen pull."},
     {e:"⏳",k:"Do nothing",v:"5-minute timer, do literally nothing. Boredom is the reset, not the enemy."},
     {e:"✅",k:"Tiny task",v:"Make your bed, wash a cup. One small real action kills the itch."}];
-  var MENU=[{e:"🚶",t:"10-min walk, no phone"},{e:"💪",t:"20 push-ups or stretch"},{e:"💬",t:"Message a friend something real"},
-    {e:"📖",t:"Read 5 pages"},{e:"🛠️",t:"Make something with your hands"},{e:"🧹",t:"Tidy one small corner"},
-    {e:"🌳",t:"Step outside, look up 1 min"},{e:"✍️",t:"Write one journal line"},{e:"☕",t:"Make a slow coffee/tea"},{e:"⭐",t:"Plan something to look forward to"}];
+  var MENU=[
+    {e:"🚶",t:"10-min walk, no phone",v:"Walking without input gives your brain space to settle and sort itself out. Movement plus a tiny bit of boredom is one of the cleanest mood-lifters there is — and it's free."},
+    {e:"💪",t:"20 push-ups or stretch",v:"A short burst of effort floods you with real, earned dopamine and endorphins. It reminds your brain that effort feels good — the exact opposite of cheap scrolling."},
+    {e:"💬",t:"Message a friend something real",v:"Connection is one of the strongest natural rewards we have. One genuine message beats an hour of passive feed-watching every time."},
+    {e:"📖",t:"Read 5 pages",v:"Reading rebuilds the focus muscle that short videos quietly destroy. Just 5 pages retrains your brain to enjoy slower, deeper input."},
+    {e:"🛠️",t:"Make something with your hands",v:"Creating — anything — gives a sense of progress and ownership a feed never can. Your hands busy means your thumb isn't scrolling."},
+    {e:"🧹",t:"Tidy one small corner",v:"Small order outside creates calm inside. A 2-minute tidy gives a quick, visible win that lifts your mood and your space."},
+    {e:"🌳",t:"Step outside, look up 1 min",v:"Daylight and a wide view reset your nervous system and your body clock. One minute of real sky beats the blue glow of a screen."},
+    {e:"✍️",t:"Write one journal line",v:"Naming what you feel shrinks it. One honest line clears mental clutter and helps you spot what's really driving the urge."},
+    {e:"☕",t:"Make a slow coffee/tea",v:"Doing one thing slowly, on purpose, is a mini meditation. The ritual itself is the reward — no notification required."},
+    {e:"⭐",t:"Plan something to look forward to",v:"Anticipation is healthy dopamine. Giving your brain a real thing to look forward to pulls your focus off the endless now of the feed."}];
   var FACES=[{e:'😭',n:'Terrible',say:"Rough one. That's allowed. Do ONE tiny thing — a game or 3 breaths — and call today a win."},
     {e:'☹️',n:'Bad',say:"Heavy day. Don't push hard — just don't feed the scroll. Try the Breathing Bubble for 60s."},
     {e:'😐',n:'Okay',say:"Flat is normal mid-reset. This is the fog lifting. Knock out today's challenge — momentum beats mood."},
@@ -541,7 +556,7 @@ try{
     var nt=$('#mNote');if(nt){var tm;nt.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){state.notes[i]=nt.value;save()},500)})}
     openModal();
   }
-  function openTile(o){$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').innerHTML='<p style="margin:0;color:var(--soft)">'+(o.v||'Go do it now — that’s the whole point.')+'</p>';$('#mAction').innerHTML='';openModal()}
+  function openTile(o){$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').innerHTML='<div class="msec" style="border:0;margin:0;padding:0"><b>'+(o.k?'🌊 How to do it':'💡 Why this helps')+'</b><p>'+(o.v||'Go do it now — that’s the whole point.')+'</p></div>';$('#mAction').innerHTML='';openModal()}
   function openJourney(j){
     $('#mProg').classList.remove('on');$('#mTop').style.background=j.gr;$('#mEmoji').textContent=j.e;$('#mTag').textContent='Feeling '+j.n;$('#mTitle').textContent='When you feel '+j.n.toLowerCase();
     $('#mBody').innerHTML='<div class="msec"><b>💡 Advice</b><p>'+j.advice+'</p></div><div class="msec"><b>🫁 Breathe</b><p>'+j.breath+'</p></div><div class="msec"><b>🎯 Try this</b><p>'+j.challenge+'</p></div><div class="msec"><b>📜 Read this</b><p style="font-style:italic">'+j.quote+'</p></div><div class="msec"><b>🎧 Sounds for it</b><p>'+j.music+'</p></div>';
@@ -586,6 +601,7 @@ try{
       var rc=$('#rc'),area=$('#rcArea'),ready=false,t0=0,armed=false;
       gTimers.push(setTimeout(function(){rc.style.background='linear-gradient(135deg,#5ad48a,#2bd3c6)';rc.textContent='TAP NOW!';ready=true;t0=Date.now()},1500+Math.random()*2800));
       area.addEventListener('click',function(){if(armed)return;if(!ready){rc.textContent='Too early! 😅';armed=true;gTimers.push(setTimeout(function(){openGame('react')},900));return}armed=true;var ms=Date.now()-t0;rc.style.background='linear-gradient(135deg,#ffc24b,#ff8a3d)';rc.textContent=ms+' ms ⚡';if(!state.react||ms<state.react){state.react=ms;save()}gameDone('react','Sharp reflexes')});
+      if(state.react)$('#rcArea').insertAdjacentHTML('afterend','<p style="text-align:center;color:var(--amber);margin-top:6px">Your best: '+state.react+' ms</p>');
     } else if(id==='memory'){
       var emo=['🔥','🌟','⚡','💎','🌱','🎯'],deck=emo.concat(emo);for(var z=deck.length-1;z>0;z--){var r=Math.floor(Math.random()*(z+1)),tmp=deck[z];deck[z]=deck[r];deck[r]=tmp}
       $('#mBody').innerHTML='<div class="play" style="padding:14px"><div class="mem" id="mem"></div></div><p style="text-align:center" id="memMsg">Match all 6 pairs.</p>';
@@ -596,6 +612,8 @@ try{
           if(deck[up[0].i]===deck[up[1].i]){up[0].b.classList.add('done');up[1].b.classList.add('done');matched++;up=[];lock=false;if(matched===6){$('#memMsg').textContent='All matched! 🧠';gameDone('memory','Brain warmed up')}}
           else{var a=up;gTimers.push(setTimeout(function(){a[0].b.classList.remove('up');a[0].b.textContent='';a[1].b.classList.remove('up');a[1].b.textContent='';up=[];lock=false},700))}}});
     }
+    var GWHY={breathe:"Slow breathing flips your nervous system from 'fight' to 'calm' in about a minute. It physically lowers a craving's grip — the urge peaks, then fades while you breathe.",focus:"Focus is a muscle that constant phone-switching makes weak. A short timed block, phone away, is one clean rep. Start at 5 minutes and build.",resist:"This trains the exact skill the reset is about: noticing a pull and choosing not to follow it. Every tap is a rep that makes resisting real urges easier.",react:"A quick reaction drill snaps a foggy, over-stimulated brain back to sharp. It's a 10-second pattern-break that beats reaching for your phone.",memory:"Holding things in mind without checking a screen rebuilds working memory. It's a tiny, satisfying brain workout — earned focus, not cheap dopamine."};
+    var gb=$('#mBody');if(gb&&GWHY[id])gb.insertAdjacentHTML('afterbegin','<p style="color:var(--soft);margin:0 0 12px"><b style="color:var(--amber)">Why this helps · </b>'+GWHY[id]+'</p>');
     openModal();
   }
 
@@ -677,7 +695,7 @@ try{
   }
 
   document.addEventListener('click',function(e){
-    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});setFx(p);cs();window.scrollTo(0,0);return}
+    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});setFx(p);revealPanel(p);cs();window.scrollTo(0,0);return}
     if(e.target.closest('[data-open-today]')){openDay(cur());return}
     var dd=e.target.closest('[data-day]');if(dd){openDay(parseInt(dd.getAttribute('data-day'),10));return}
     var du=e.target.closest('[data-urge]');if(du){openTile(URGES[+du.getAttribute('data-urge')]);return}
@@ -766,7 +784,12 @@ try{
   function setFx(p){var s=FXSETS[p]||FXSETS.today;if(FXG){var sp=FXG.children;for(var i=0;i<sp.length;i++)sp[i].textContent=s.g[i%s.g.length]}for(var k=0;k<FXB.length;k++)if(FXB[k])FXB[k].style.background='radial-gradient(circle,'+s.c[k%s.c.length]+',transparent 65%)'}
   setFx('today');
 
-  render();renderArts();
+  // ===== scroll reveal + colourful headings =====
+  var _io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');_io.unobserve(en.target)}})},{threshold:.12}):null;
+  function revealPanel(p){var pe=document.querySelector('.panel[data-p="'+p+'"]');if(!pe)return;var els=[].slice.call(pe.querySelectorAll('.thumb,.card,.dial,.stat,.ach,.qcard,.coach,.qmini,.moodc'));els.forEach(function(el,i){if(el.classList.contains('in'))return;el.classList.add('rv');el.style.transitionDelay=Math.min(i,10)*55+'ms';if(_io)_io.observe(el);else el.classList.add('in')})}
+  $$('.dr__main .panel h1').forEach(function(hh,i){hh.classList.add(['hl','hl2','hl3'][i%3])});
+
+  render();renderArts();revealPanel('today');
 }catch(err){
   try{var m=document.querySelector('.dr__main');if(m)m.insertAdjacentHTML('afterbegin','<div style="background:#15121d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:14px;color:#f6f4ef"><b>Your reset is loaded.</b><p style="color:#b8b4ad;margin:6px 0 0">A small visual hiccup happened — tap a menu item on the left to jump in.</p></div>')}catch(e){}
 }
