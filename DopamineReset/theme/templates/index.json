@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-rpm",
+      "type": "hero-particle",
       "blocks": {
         "s1": {
           "type": "stat",
