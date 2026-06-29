@@ -101,8 +101,9 @@
     {sa:[ .16,0.82,0],sb:[ .20,0.0,0], ha:[ .17,0.90,0], hb:[ .22,0.0,0], r:.12, w:1.7}       // R leg
   ];
   var N=Math.round((window.innerWidth<820?2600:4400));
+  var FACE=window.innerWidth<820?110:170, TOT=N+FACE;
   var sumW=0;for(var b=0;b<BONES.length;b++)sumW+=BONES[b].w;
-  var sadP=new Float32Array(N*3),hapP=new Float32Array(N*3),sadC=new Float32Array(N*3),hapC=new Float32Array(N*3),ph=new Float32Array(N);
+  var sadP=new Float32Array(TOT*3),hapP=new Float32Array(TOT*3),sadC=new Float32Array(TOT*3),hapC=new Float32Array(TOT*3),ph=new Float32Array(TOT);
   function lerp3(a,bb,t){return [a[0]+(bb[0]-a[0])*t,a[1]+(bb[1]-a[1])*t,a[2]+(bb[2]-a[2])*t]}
   var idx=0,col=new THREE.Color();
   for(var bi=0;bi<BONES.length;bi++){
@@ -122,8 +123,15 @@
       ph[idx]=Math.random()*6.2832;idx++;
     }
   }
-  var pos=new Float32Array(N*3),cur=new Float32Array(N*3);
-  for(var i0=0;i0<N*3;i0++){pos[i0]=sadP[i0];cur[i0]=sadC[i0];}
+  // ---- glowing face: eyes + smile that light up only when happy ----
+  var hcS=[0,1.535,0.21],hcH=[0,1.85,0],fc=N;
+  function putFace(fx,fy,fz,br){sadP[fc*3]=hcS[0]+fx;sadP[fc*3+1]=hcS[1]+fy;sadP[fc*3+2]=hcS[2]+fz;hapP[fc*3]=hcH[0]+fx;hapP[fc*3+1]=hcH[1]+fy;hapP[fc*3+2]=hcH[2]+fz;sadC[fc*3]=0.04;sadC[fc*3+1]=0.04;sadC[fc*3+2]=0.05;hapC[fc*3]=br[0];hapC[fc*3+1]=br[1];hapC[fc*3+2]=br[2];ph[fc]=Math.random()*6.2832;fc++;}
+  var EY=22;
+  for(var e=0;e<EY;e++){var a=Math.random()*6.2832,rE=0.03*Math.sqrt(Math.random());putFace(-0.10+Math.cos(a)*rE,0.075+Math.sin(a)*rE,0.27,[1,1,1]);}
+  for(var e2=0;e2<EY;e2++){var a2=Math.random()*6.2832,rE2=0.03*Math.sqrt(Math.random());putFace(0.10+Math.cos(a2)*rE2,0.075+Math.sin(a2)*rE2,0.27,[1,1,1]);}
+  var smileN=TOT-fc;for(var s=0;s<smileN;s++){var xx=-0.13+(s/(smileN-1))*0.26;var yy=-0.03+0.055*Math.pow(xx/0.13,2)+(Math.random()-0.5)*0.012;putFace(xx,yy,0.27,[1,0.94,0.74]);}
+  var pos=new Float32Array(TOT*3),cur=new Float32Array(TOT*3);
+  for(var i0=0;i0<TOT*3;i0++){pos[i0]=sadP[i0];cur[i0]=sadC[i0];}
   var geo=new THREE.BufferGeometry();
   geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
   geo.setAttribute('color',new THREE.BufferAttribute(cur,3));
@@ -158,11 +166,12 @@
     if(!reduce)rawT+=dt;
     // progress: auto-play sad->happy over ~5.5s, then hold; scroll can also push it
     var sc=0;var r=sec.getBoundingClientRect();sc=(-r.top)/(window.innerHeight*0.9);if(sc<0)sc=0;if(sc>1)sc=1;
-    var p=Math.max(sstep(rawT/5.5),sc);if(reduce)p=1;
+    var cyc=(rawT%9)/9,autoOsc=cyc<0.55?sstep(cyc/0.55):(cyc<0.78?1:1-sstep((cyc-0.78)/0.22));
+    var p=Math.max(autoOsc,sc);if(reduce)p=1;
     // breathing + arm-raise overshoot feel
     var breathe=reduce?0:Math.sin(tt*1.5)*0.012*p;
     if(Math.abs(p-lastP)>0.0015){
-      for(var i=0;i<N;i++){
+      for(var i=0;i<TOT;i++){
         var sh=reduce?0:Math.sin(tt*2.0+ph[i])*0.012*(0.3+p*0.7);
         parr[i*3]  =sadP[i*3]  +(hapP[i*3]  -sadP[i*3])  *p + sh*0.4;
         parr[i*3+1]=sadP[i*3+1]+(hapP[i*3+1]-sadP[i*3+1])*p + breathe + sh*0.2;

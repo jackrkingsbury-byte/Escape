@@ -480,6 +480,53 @@
     "story3d": {
       "type": "story3d",
       "settings": {}
+    },
+    "facts": {
+      "type": "facts",
+      "blocks": {
+        "k1": {
+          "type": "fact",
+          "settings": {
+            "icon": "🎰",
+            "title": "Built like a slot machine",
+            "text": "Feeds run on unpredictable, variable rewards — the same design that makes gambling hard to put down."
+          }
+        },
+        "k2": {
+          "type": "fact",
+          "settings": {
+            "icon": "🧲",
+            "stat": "≠",
+            "title": "Wanting isn't liking",
+            "text": "Dopamine drives the urge to seek more, not the pleasure itself. That's why you can scroll for an hour and still feel empty."
+          }
+        },
+        "k3": {
+          "type": "fact",
+          "settings": {
+            "icon": "⏱️",
+            "stat": "~23 min",
+            "title": "To refocus after a ping",
+            "text": "Research on attention suggests it takes the average person around 23 minutes to fully refocus after a single distraction."
+          }
+        },
+        "k4": {
+          "type": "fact",
+          "settings": {
+            "icon": "🌱",
+            "stat": "days",
+            "title": "Your brain bounces back",
+            "text": "The reward system is plastic. Lower the flood of stimulation and your baseline starts recovering — often within days."
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -487,6 +534,7 @@
     "story3d",
     "transformation",
     "benefits",
+    "facts",
     "quiz",
     "features",
     "bonus_stack",

@@ -11,7 +11,7 @@
   @keyframes s3spin{to{transform:rotate(360deg)}}
 
   .s3__beats{position:relative;z-index:2;margin-top:-100vh}
-  .s3b{min-height:100vh;display:flex;align-items:center;padding:0 8vw}
+  .s3b{min-height:86vh;display:flex;align-items:center;padding:0 8vw}
   .s3b__in{max-width:560px;opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
   .s3b.in .s3b__in{opacity:1;transform:none}
   .s3b__k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:#ffc24b;display:block;margin-bottom:14px}
@@ -27,13 +27,14 @@
   .s3brk .bg{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .6s}
   .s3brk.lit .bg{opacity:.95}
   .s3brk.lit{box-shadow:0 16px 40px rgba(0,0,0,.45)}
-  .s3brk .e{position:relative;z-index:1;font-size:1.7rem}
+  .s3brk .e{position:relative;z-index:1;display:inline-block;font-size:2rem;filter:drop-shadow(0 7px 11px rgba(0,0,0,.55));animation:brk3d 5.5s ease-in-out infinite;transform-style:preserve-3d}
+  @keyframes brk3d{0%,100%{transform:perspective(420px) rotateY(-18deg) rotateX(8deg) translateY(0)}50%{transform:perspective(420px) rotateY(18deg) rotateX(-6deg) translateY(-5px)}}
   .s3brk b{position:relative;z-index:1;color:#fff;font-size:.92rem;margin-top:6px}
   .s3brk .st{position:relative;z-index:1;font-size:.68rem;color:rgba(255,255,255,.7);font-family:var(--mono,monospace)}
   .s3brk:nth-child(1){transition-delay:.04s}.s3brk:nth-child(2){transition-delay:.1s}.s3brk:nth-child(3){transition-delay:.16s}
   .s3brk:nth-child(4){transition-delay:.22s}.s3brk:nth-child(5){transition-delay:.28s}.s3brk:nth-child(6){transition-delay:.34s}
 
-  @media (prefers-reduced-motion:reduce){.s3__fbobj{animation:none}.s3b__in,.s3brk{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.s3__fbobj,.s3brk .e{animation:none}.s3b__in,.s3brk{opacity:1;transform:none}}
   @media(max-width:760px){.s3b{padding:0 7vw}.s3__bricks{grid-template-columns:repeat(2,1fr)}}
 </style>
 {% endraw %}
@@ -52,8 +53,7 @@
       <div class="s3b"><div class="s3b__in"><span class="s3b__k">Every scroll</span><h2>spends a little dopamine.</h2><p>Tiny hit, tiny crash, a thousand times a day. Until normal life can't compete.</p></div></div>
       <div class="s3b"><div class="s3b__in"><span class="s3b__k">So slowly</span><h2>everything goes <span class="g">grey</span>.</h2><p>Food, music, the people you love — it all feels a little flat. This is what it looks like inside:</p>
         <div class="s3__bricks" id="s3Bricks"></div></div></div>
-      <div class="s3b"><div class="s3b__in"><span class="s3b__k">7 days</span><h2>rewires the wiring.</h2><p>One small action a day quietly resets your reward system. No willpower marathon.</p></div></div>
-      <div class="s3b"><div class="s3b__in"><span class="s3b__k">And then</span><h2>the <span class="g">colour</span> comes back.</h2><p>Focus. Energy. Drive. Real happiness. The things that were always yours — you get them back.</p></div></div>
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">7 days later</span><h2>the <span class="g">colour</span> comes back.</h2><p>One small action a day quietly rewires your reward system — and focus, energy and real happiness switch back on.</p></div></div>
       <div class="s3b"><div class="s3b__in"><span class="s3b__k">Your turn</span><h2>Feel good — for <span class="g">real</span>.</h2><p>10 minutes a day. 7 days. A 7-day money-back guarantee.</p><a class="s3b__btn" href="{{ section.settings.cta_url | default: '#pricing' }}">{{ section.settings.cta_label | default: 'Start the reset → R199' }}</a></div></div>
     </div>
   </div>
