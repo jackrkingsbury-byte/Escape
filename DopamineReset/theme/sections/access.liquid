@@ -186,6 +186,24 @@
   .dr__cf span{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:cf linear forwards}
   @keyframes cf{to{transform:translateY(105vh) rotate(560deg);opacity:.2}}
 
+  /* quick-actions hub + FAB */
+  .dr .doNow{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin:8px 0 6px}
+  .dr .doCard{position:relative;overflow:hidden;border-radius:18px;padding:16px;min-height:108px;cursor:pointer;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;transition:transform .15s,box-shadow .2s}
+  .dr .doCard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .dr .doCard .bg{position:absolute;inset:0;z-index:0;background-size:170% 170%;animation:tgrad 8s ease infinite}
+  .dr .doCard .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 38%,rgba(8,6,12,.66))}
+  .dr .doCard .e{position:absolute;top:13px;left:15px;font-size:1.9rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45));animation:tfloat 5s ease-in-out infinite}
+  .dr .doCard b{position:relative;z-index:1;color:#fff;font-family:var(--serif);font-size:1.04rem;line-height:1.12}
+  .dr .doCard span{position:relative;z-index:1;color:rgba(255,255,255,.85);font-size:.78rem}
+  .dr__fab{position:fixed;right:18px;bottom:18px;z-index:70;display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:14px 20px;font-size:.96rem;background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;box-shadow:0 12px 32px rgba(255,138,61,.5);cursor:pointer;border:0;animation:fabpop .4s cubic-bezier(.2,.8,.2,1)}
+  @keyframes fabpop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  @media(min-width:821px){.dr__fab{right:28px;bottom:24px;padding:15px 24px;font-size:1.02rem}}
+  .dr__quick{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;justify-content:center;background:rgba(5,4,8,.62);backdrop-filter:blur(6px)}
+  .dr__quick.on{display:flex;animation:fade .25s}
+  .dr__qsheet{background:var(--bg2);border:1px solid var(--line);border-radius:24px 24px 0 0;width:100%;max-width:580px;padding:22px;max-height:84vh;overflow:auto;animation:qup .3s cubic-bezier(.2,.8,.2,1)}
+  @keyframes qup{from{transform:translateY(40px)}to{transform:none}}
+  @media(min-width:821px){.dr__quick{align-items:center}.dr__qsheet{border-radius:24px}}
+
   /* calendar + xp source + settings */
   .dr .cal__head{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
   .dr .cal__head span{text-align:center;font-size:.64rem;color:var(--faint);font-family:var(--mono)}
@@ -310,6 +328,7 @@
         <div class="coach__row"><div class="coach__face"><span class="ey l"></span><span class="ey r"></span><span class="sm"></span><span class="coach__av" id="coAvatar"></span></div>
           <div><div class="coach__hi" id="coHi">Hey there 👋</div><div class="coach__sub" id="coSub">Your coach is warming up…</div></div></div>
         <p class="coach__say" id="coSay">Let's get your first win today.</p>
+        <div id="coSuggest" style="margin-top:14px"></div>
         <div class="coach__cta" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <button class="btn btn--g" data-open-today>Today's challenge →</button>
           <button class="btn btn--ghost btn--sm" data-go="games">I need a reset now</button>
@@ -319,6 +338,9 @@
         <div class="coach__reply" id="coachReply"></div>
         <div class="coach__quote" id="coQuote"></div>
       </div>
+      <h3 style="margin:18px 0 2px">What do you want to do right now? 👇</h3>
+      <p style="margin:0 0 8px">Not sure? Just tap one — I'll take you straight there.</p>
+      <div class="doNow" id="doGrid"></div>
       <div class="stats">
         <div class="stat"><div class="big" id="t1">0</div><div class="lbl">days done</div></div>
         <div class="stat"><div class="big" id="t2">0</div><div class="lbl">streak</div></div>
@@ -474,6 +496,12 @@
   <div class="body"><div class="eyebrow" id="mTag">Day 1</div><h2 id="mTitle"></h2><div id="mBody"></div><div id="mAction"></div></div>
 </div></div>
 <div class="dr__onb" id="drOnb"><div class="ob" id="obCard"></div></div>
+<button class="dr__fab" id="drFab">✨ What now?</button>
+<div class="dr__quick" id="drQuick"><div class="dr__qsheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h2 style="margin:0">What do you want to do?</h2><button class="btn btn--ghost btn--sm" id="quickClose">✕</button></div>
+  <p>Tap one — I'll take you straight there.</p>
+  <div class="doNow" id="quickGrid"></div>
+</div></div>
 <div class="dr__toast" id="drToast"></div>
 <div class="dr__cf" id="drCf"></div>
 
@@ -718,6 +746,7 @@ try{
             dc()===0?"Let's get your first win. Today takes 10 minutes: "+DAYS[c].t.toLowerCase()+".":
             ("You're "+pct()+"% in. Next up: "+DAYS[c].t.toLowerCase()+". Small step, big compounding.");
     var q=QUOTES[(new Date().getDate())%QUOTES.length];$('#coQuote').textContent='“'+q.t+'”';
+    var sg=$('#coSuggest');if(sg&&window.ACTS){var si=(!state.done[cur()])?actIdx('today'):((state.moods[cur()]!=null&&state.moods[cur()]<=1)?actIdx('breathe'):(streak()>=3?actIdx('relax'):actIdx('random')));var sa=window.ACTS[si];sg.innerHTML='<button class="btn btn--g" data-act="'+si+'" style="width:100%">👉 Coach pick: '+sa.t+'</button>'}
 
     $('#t1').textContent=dc();$('#t2').textContent=streak();$('#t3').textContent=pct()+'%';$('#t4').textContent=state.crave;
 
@@ -920,6 +949,38 @@ try{
     var sa=e.target.closest('[data-setava]');if(sa){var av=sa.getAttribute('data-setava');if(!state.onb)state.onb={done:true};state.onb.avatar=av;save();applyAvatar(av);$$('[data-setava]').forEach(function(x){x.classList.toggle('sel',x===sa)});return}
     if(e.target.closest('#sndToggle')){state.sound=!state.sound;save();updSnd();if(state.sound)snd('win');return}
     if(e.target.closest('#replayOnb')){openOnb();return}
+  });
+
+  // ===== easy quick-actions hub + floating "What now?" =====
+  var ACTS=[
+    {e:'🔥',k:'today',t:"Today's challenge",s:'Your 10-min win',g:'linear-gradient(135deg,#ff8a3d,#ffc24b)'},
+    {e:'🌊',k:'breathe',t:'Calm an urge',s:'Breathe for 60s',g:'linear-gradient(135deg,#2bd3c6,#4f8cff)'},
+    {e:'🎮',k:'games',t:'Play a game',s:'Reset your brain',g:'linear-gradient(135deg,#7c5cff,#ff5c8a)'},
+    {e:'💗',k:'journeys',t:'How I feel',s:'Get the right help',g:'linear-gradient(135deg,#ff5c8a,#7c5cff)'},
+    {e:'📖',k:'articles',t:'Read something',s:'Quick 2-min reads',g:'linear-gradient(135deg,#2bd3c6,#4f8cff)'},
+    {e:'🧘',k:'relax',t:'Help me relax',s:'Wind down',g:'linear-gradient(135deg,#4f8cff,#7c5cff)'},
+    {e:'📜',k:'quotes',t:'Give me a boost',s:'A line to carry',g:'linear-gradient(135deg,#ffd24b,#ff8a3d)'},
+    {e:'✍️',k:'journal',t:'Journal it',s:'One honest line',g:'linear-gradient(135deg,#5ad48a,#bfe65a)'},
+    {e:'📊',k:'stats',t:'My progress',s:'See how far you are',g:'linear-gradient(135deg,#ff6b6b,#ff8a3d)'},
+    {e:'🎲',k:'random',t:'Surprise me',s:"I'll pick for you",g:'linear-gradient(135deg,#7c5cff,#2bd3c6)'}
+  ];
+  window.ACTS=ACTS;
+  function actIdx(k){for(var i=0;i<ACTS.length;i++)if(ACTS[i].k===k)return i;return 0}
+  function actCard(a,i){return '<div class="doCard" data-act="'+i+'"><div class="bg" style="background:'+a.g+'"></div><span class="e">'+a.e+'</span><b>'+a.t+'</b><span>'+a.s+'</span></div>'}
+  (function(){var h=ACTS.map(actCard).join('');if($('#doGrid'))$('#doGrid').innerHTML=h;if($('#quickGrid'))$('#quickGrid').innerHTML=h;})();
+  function routeAct(k){
+    if(k==='today'){openDay(cur());return}
+    if(k==='breathe'){openGame('breathe');return}
+    if(k==='random'){var pool=['games','journeys','articles','relax','quotes','journal','breathe','today'];routeAct(pool[Math.floor(Math.random()*pool.length)]);return}
+    var b=document.querySelector('.dr__nav[data-go="'+k+'"]');if(b)b.click();
+  }
+  function openQuick(){var q=$('#drQuick');if(q)q.classList.add('on')}
+  function closeQuick(){var q=$('#drQuick');if(q)q.classList.remove('on')}
+  document.addEventListener('click',function(e){
+    var ac=e.target.closest('[data-act]');if(ac){closeQuick();routeAct(ACTS[+ac.getAttribute('data-act')].k);return}
+    if(e.target.closest('#drFab')){openQuick();return}
+    if(e.target.closest('#quickClose')){closeQuick();return}
+    if(e.target.id==='drQuick'){closeQuick();return}
   });
 
   render();renderArts();revealPanel('today');
