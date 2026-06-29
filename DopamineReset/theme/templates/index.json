@@ -469,14 +469,6 @@
         "note": "Most people feel the shift by day 3."
       }
     },
-    "story": {
-      "type": "story",
-      "settings": {}
-    },
-    "transform3d": {
-      "type": "transform3d",
-      "settings": {}
-    },
     "game": {
       "type": "game",
       "settings": {}
