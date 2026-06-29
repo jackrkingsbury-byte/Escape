@@ -41,6 +41,27 @@
   .dr .rip{position:absolute;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,255,.5),rgba(255,255,255,0) 70%);pointer-events:none;animation:rip .6s ease-out forwards}
   @keyframes rip{from{width:0;height:0;opacity:.7}to{width:360px;height:360px;opacity:0}}
   @media (prefers-reduced-motion:reduce){.dr .rip{display:none}}
+  /* missions + treasure + fireworks + rare achievements */
+  .dr .msn{display:grid;gap:10px;margin:8px 0 18px}
+  .dr .msnc{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+  .dr .msnc.done{border-color:rgba(90,212,138,.5);background:linear-gradient(160deg,rgba(90,212,138,.08),var(--bg2))}
+  .dr .msnc .e{font-size:1.6rem;flex:0 0 auto}
+  .dr .msnc .mid{flex:1;min-width:0}
+  .dr .msnc b{display:block;font-size:.96rem;color:#fff}
+  .dr .msnc .pb{height:7px;border-radius:999px;background:var(--bg3);overflow:hidden;margin:6px 0 4px}
+  .dr .msnc .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--pink));transition:width .5s}
+  .dr .msnc .rew{font-family:var(--mono);font-size:.74rem;color:var(--amber)}
+  .dr .msnc .claim{flex:0 0 auto}
+  .dr .chest{display:flex;align-items:center;gap:14px;padding:18px;border-radius:18px;border:1px solid rgba(255,194,75,.4);background:linear-gradient(135deg,rgba(255,194,75,.16),rgba(124,92,255,.12));cursor:pointer;margin:8px 0 16px}
+  .dr .chest .ic{font-size:2.6rem;animation:chestwob 1.6s ease-in-out infinite}
+  .dr .chest b{color:#fff;display:block}
+  @keyframes chestwob{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.08)}}
+  .dr .chest.opened{opacity:.7;cursor:default}.dr .chest.opened .ic{animation:none}
+  .dr .ach.rare.got{border-color:#ffd24b;background:linear-gradient(160deg,rgba(255,210,75,.2),var(--bg2));box-shadow:0 0 22px rgba(255,210,75,.28)}
+  .dr__fw{position:fixed;inset:0;pointer-events:none;z-index:118}
+  .dr__fw span{position:absolute;width:8px;height:8px;border-radius:50%;animation:fw .9s ease-out forwards}
+  @keyframes fw{from{transform:translate(0,0) scale(1.2);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.dr .chest .ic{animation:none}}
 
   .dr__side{grid-column:1;z-index:3;background:linear-gradient(185deg,#26203a,#181226);border-right:1px solid rgba(255,255,255,.12);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
   .dr__brand{font-family:var(--serif);font-weight:700;font-size:1.3rem;padding:4px 12px 10px}.dr__brand b{color:var(--amber)}
@@ -310,6 +331,7 @@
     <button class="dr__nav" data-go="plan"><span class="ic">🗓️</span> The 7 Days</button>
     <button class="dr__nav" data-go="track"><span class="ic">✅</span> Tracker</button>
     <button class="dr__nav" data-go="stats"><span class="ic">📊</span> My Stats</button>
+    <button class="dr__nav" data-go="missions"><span class="ic">🎯</span> Missions</button>
     <button class="dr__nav" data-go="achv"><span class="ic">🏆</span> Achievements</button>
     <button class="dr__nav" data-go="vision"><span class="ic">🌟</span> Your Why</button>
     <div class="dr__navttl">Feel good now</div>
@@ -407,6 +429,15 @@
       <div class="card"><h3>Where your XP comes from</h3><div id="xpSrc"></div></div>
       <div class="card"><h3>Your calendar 🗓️</h3><div id="cal"></div><p style="color:var(--faint);font-size:.82rem;margin:12px 0 0">Green = a day you showed up. Build the chain.</p></div>
       <p style="color:var(--faint);font-size:.82rem">*Estimated from completed days — a rough guide, not a tracker.</p>
+    </section>
+
+    <section class="panel" data-p="missions">
+      <h1>Missions</h1>
+      <p>Daily, weekly and monthly goals. Claim the XP when you finish — and watch for the daily treasure chest. 🎁</p>
+      <div id="chestWrap"></div>
+      <h3 style="margin-top:14px">Today</h3><div class="msn" id="msnDaily"></div>
+      <h3>This week</h3><div class="msn" id="msnWeekly"></div>
+      <h3>This month</h3><div class="msn" id="msnMonthly"></div>
     </section>
 
     <section class="panel" data-p="achv">
@@ -526,6 +557,7 @@
 </div></div>
 <div class="dr__toast" id="drToast"></div>
 <div class="dr__cf" id="drCf"></div>
+<div class="dr__fw" id="drFw"></div>
 
 <script>
 (function(){
@@ -545,6 +577,10 @@ try{
   function tone(f,s,d,v){var o=_ax.createOscillator(),g=_ax.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+0.01);g.gain.exponentialRampToValueAtTime(0.0001,s+d);o.connect(g);g.connect(_ax.destination);o.start(s);o.stop(s+d)}
   function snd(t){if(!state.sound)return;try{_ax=_ax||new(window.AudioContext||window.webkitAudioContext)();if(_ax.state==='suspended')_ax.resume();var n=_ax.currentTime;if(t==='level'){tone(523,n,0.18,0.16);tone(659,n+0.09,0.18,0.16);tone(784,n+0.18,0.32,0.18)}else if(t==='win'){tone(660,n,0.12,0.15);tone(990,n+0.08,0.24,0.15)}else{tone(880,n,0.13,0.11)}}catch(e){}}
   function markToday(){var d=new Date();state.dates[d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()]=true;save()}
+  if(typeof state.bonusXp!=='number')state.bonusXp=0;if(!state.claimed)state.claimed={};if(!state.chest)state.chest={};if(!state.daily)state.daily={};if(typeof state.mclaimCount!=='number')state.mclaimCount=0;
+  function todayKey(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+  function markDaily(a){var k=todayKey();if(!state.daily[k])state.daily[k]={};state.daily[k][a]=true;save()}
+  function dailyHas(a){var k=todayKey();return !!(state.daily[k]&&state.daily[k][a])}
 
   var GRADS=['linear-gradient(135deg,#ff8a3d,#ffc24b)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#ff8a3d)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#ff8a3d)'];
   function g(i){return GRADS[((i%GRADS.length)+GRADS.length)%GRADS.length]}
@@ -646,7 +682,12 @@ try{
     {id:'win1',e:'🏅',n:'First win',d:'Log a daily win',test:function(){return state.wins.length>0}},
     {id:'journal',e:'📓',n:'Reflective',d:'Write a journal line',test:function(){return (state.journal||'').length>3}},
     {id:'xp250',e:'⭐',n:'Locked in',d:'Reach 250 XP',test:function(){return xp()>=250}},
-    {id:'reset',e:'🏆',n:'Full reset',d:'Complete all 7 days',test:function(){return dc()>=7}}
+    {id:'reset',e:'🏆',n:'Full reset',d:'Complete all 7 days',test:function(){return dc()>=7}},
+    {id:'level5',e:'👑',n:'Golden Mind',d:'Reach the top level',rare:true,test:function(){return lvl()>=5}},
+    {id:'mmaster',e:'🎯',n:'Mission master',d:'Claim 10 missions',rare:true,test:function(){return (state.mclaimCount||0)>=10}},
+    {id:'treasure',e:'💎',n:'Treasure hunter',d:'???',hidden:true,test:function(){return Object.keys(state.chest||{}).length>0}},
+    {id:'night',e:'🌙',n:'Night owl',d:'???',hidden:true,test:function(){return new Date().getHours()>=22&&xp()>0}},
+    {id:'early',e:'🌅',n:'Early riser',d:'???',hidden:true,test:function(){return new Date().getHours()<7&&ck()>0}}
   ];
 
   function dc(){var n=0;for(var i=0;i<7;i++)if(state.done[i])n++;return n}
@@ -657,7 +698,7 @@ try{
   function gp(){return Object.keys(state.games).length}
   function rd(){return Object.keys(state.read).length}
   function vf(){var n=0;for(var i=0;i<4;i++)if((state.vision[i]||'').length>1)n++;return n}
-  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+rd()*20+vf()*5+state.savedQ.length*2;x+=Object.keys(state.relaxDone).length*5+state.wins.length*5+state.savedAff.length*2;if((state.journal||'').length>3)x+=10;return x}
+  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+rd()*20+vf()*5+state.savedQ.length*2;x+=Object.keys(state.relaxDone).length*5+state.wins.length*5+state.savedAff.length*2;if((state.journal||'').length>3)x+=10;x+=(state.bonusXp||0);return x}
   function lvl(){var x=xp(),L=0;for(var i=0;i<LEVELS.length;i++)if(x>=LEVELS[i].x)L=i;return L}
   function clamp(v){return v<0?0:v>100?100:Math.round(v)}
   function avgMood(){var v=[],k;for(k in state.moods)v.push(state.moods[k]);if(!v.length)return -1;var s=0;for(var i=0;i<v.length;i++)s+=v[i];return s/v.length}
@@ -665,6 +706,7 @@ try{
   var cf=$('#drCf'),toastEl=$('#drToast'),toastT;
   function confetti(){if(!cf)return;var c=['#ffc24b','#ff5c8a','#7c5cff','#5ad48a','#2bd3c6'],h='';for(var i=0;i<28;i++)h+='<span style="left:'+Math.random()*100+'%;background:'+c[i%5]+';animation-duration:'+(1.1+Math.random()*1.2)+'s;animation-delay:'+(Math.random()*.3)+'s"></span>';cf.innerHTML=h;setTimeout(function(){cf.innerHTML=''},2700)}
   function toast(msg){if(!toastEl)return;toastEl.innerHTML=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},2600)}
+  function fireworks(){var fw=$('#drFw');if(!fw)return;var cols=['#ffc24b','#ff5c8a','#7c5cff','#5ad48a','#2bd3c6','#ff8a3d'],h='';for(var b=0;b<4;b++){var cx=15+Math.random()*70,cy=18+Math.random()*44;for(var i=0;i<16;i++){var ang=(i/16)*6.2832,dist=60+Math.random()*70,dx=Math.cos(ang)*dist,dy=Math.sin(ang)*dist;h+='<span style="left:'+cx+'%;top:'+cy+'%;background:'+cols[(b+i)%cols.length]+';--dx:'+dx.toFixed(0)+'px;--dy:'+dy.toFixed(0)+'px;animation-delay:'+(b*0.12).toFixed(2)+'s"></span>'}}fw.innerHTML=h;setTimeout(function(){fw.innerHTML=''},1400)}
 
   var bodyEl=document.querySelector('#drModal .body');
   function closeM(){clearGame();$('#drModal').classList.remove('on');$('#mProg').classList.remove('on');if(bodyEl)bodyEl.onscroll=null}
@@ -694,7 +736,7 @@ try{
     $('#mBody').innerHTML='<div class="art">'+a.b.map(function(p){return '<p>'+p+'</p>'}).join('')+'</div>';
     var done=state.read[i];
     $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mRead" style="width:100%">'+(done?'Read again':'Mark as read · +20 XP ✓')+'</button></div>';
-    $('#mRead').onclick=function(){if(!state.read[i]){state.read[i]=true;save();celebrate();toast('📚 +20 XP · nice read')}closeM()};
+    $('#mRead').onclick=function(){markDaily('read');if(!state.read[i]){state.read[i]=true;save();celebrate();toast('📚 +20 XP · nice read')}closeM()};
     $('#mProg').classList.add('on');$('#mProgBar').style.width='0%';
     openModal();
     if(bodyEl)bodyEl.onscroll=function(){var mx=bodyEl.scrollHeight-bodyEl.clientHeight;$('#mProgBar').style.width=(mx>0?Math.min(100,bodyEl.scrollTop/mx*100):100)+'%'};
@@ -703,7 +745,7 @@ try{
   // GAMES
   var gTimers=[];
   function clearGame(){for(var i=0;i<gTimers.length;i++){clearTimeout(gTimers[i]);clearInterval(gTimers[i])}gTimers=[]}
-  function gameDone(id,msg){if(!state.games[id]){state.games[id]=true;save();celebrate();toast('🎮 +15 XP · '+msg)}else{toast(msg)}}
+  function gameDone(id,msg){markDaily('game');if(!state.games[id]){state.games[id]=true;save();celebrate();toast('🎮 +15 XP · '+msg)}else{toast(msg)}}
   function openGame(id){
     clearGame();$('#mProg').classList.remove('on');var gm=null;for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)gm=GAMES[i];if(!gm)return;
     $('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--blue))';$('#mEmoji').textContent=gm.e;$('#mTag').textContent='Mind game';$('#mTitle').textContent=gm.t;$('#mAction').innerHTML='';
@@ -743,7 +785,7 @@ try{
     openModal();
   }
 
-  function toggle(i){if(!state.done[i]&&i>dc())return;var was=state.done[i];state.done[i]=!state.done[i];if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false}save();if(!was)celebrate();render()}
+  function toggle(i){if(!state.done[i]&&i>dc())return;var was=state.done[i];state.done[i]=!state.done[i];if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false}save();if(!was&&state.done[i]){markDaily('challenge')}if(!was)celebrate();render()}
 
   function tcard(attr,e,grad,tag,title,sub,cls){return '<div class="thumb'+(cls?' '+cls:'')+'" '+attr+'><div class="thumb__bg" style="background:'+grad+'"></div><span class="thumb__emoji">'+e+'</span><span class="thumb__tag">'+tag+'</span><div class="thumb__cap"><b>'+title+'</b><span>'+sub+'</span></div></div>'}
   function dayThumb(i){var d=DAYS[i],done=state.done[i],locked=i>dc();return tcard('data-day="'+i+'"',d.e,g(i),'DAY '+(i+1),d.t,(done?'Completed':locked?'Locked':'Tap to open'),(done?'done':'')+(locked?' locked':''))}
@@ -788,10 +830,10 @@ try{
     var mg=$('#mgraph');if(mg){var hh='';for(var d2=0;d2<7;d2++){var mv=state.moods[d2];var ht=mv==null?6:((mv+1)/5*100);hh+='<div class="col"><div class="bar2" style="height:'+ht+'%"></div><div class="dl">D'+(d2+1)+'</div></div>'}mg.innerHTML=hh;
       $('#moodMsg').textContent=am<0?'Log your mood each day to see it climb.':(am>=3?'Trending up — the reset is working. 🎉':'Early days. Watch this climb as you go.')}
 
-    var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var k=0;k<ACHV.length;k++){var ac=ACHV[k],ok=!!ac.test();if(ok)got++;hh2+='<div class="ach'+(ok?' got':'')+'"><div class="e">'+ac.e+'</div><b>'+ac.n+'</b><span>'+ac.d+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
+    var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var k=0;k<ACHV.length;k++){var ac=ACHV[k],ok=!!ac.test();if(ok)got++;var hide=ac.hidden&&!ok;hh2+='<div class="ach'+(ok?' got':'')+(ac.rare?' rare':'')+'"><div class="e">'+(hide?'❔':ac.e)+'</div><b>'+(hide?'???':ac.n)+'</b><span>'+(hide?'Hidden':ac.d)+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
       for(var k2=0;k2<ACHV.length;k2++){var a2=ACHV[k2];if(a2.test()&&!state.achvSeen[a2.id]){state.achvSeen[a2.id]=true;save();confetti();toast('🏆 Achievement: '+a2.n);snd('win')}}}
 
-    renderCal();renderXpSrc();
+    renderCal();renderXpSrc();renderMissions();
     if($('#artFeed')&&!$('#artFeed').dataset.live){renderArts()}else if($('#artFeed')){renderArts()}
   }
 
@@ -831,14 +873,14 @@ try{
     var dgm=e.target.closest('[data-game]');if(dgm){openGame(dgm.getAttribute('data-game'));return}
     var dj=e.target.closest('[data-journey]');if(dj){openJourney(JOURNEYS[+dj.getAttribute('data-journey')]);return}
     var da=e.target.closest('[data-article]');if(da){openArticle(+da.getAttribute('data-article'));return}
-    var df=e.target.closest('[data-face]');if(df){var fi=+df.getAttribute('data-face');state.moods[cur()]=fi;save();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===df)});var rep=$('#moodReply');if(rep){rep.style.display='block';rep.innerHTML='<h3>'+FACES[fi].e+' '+FACES[fi].n+'</h3><p style="margin:0">'+FACES[fi].say+'</p>'}celebrate();return}
+    var df=e.target.closest('[data-face]');if(df){var fi=+df.getAttribute('data-face');state.moods[cur()]=fi;markDaily('mood');save();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===df)});var rep=$('#moodReply');if(rep){rep.style.display='block';rep.innerHTML='<h3>'+FACES[fi].e+' '+FACES[fi].n+'</h3><p style="margin:0">'+FACES[fi].say+'</p>'}celebrate();return}
     var dco=e.target.closest('[data-coach]');if(dco){var ci=+dco.getAttribute('data-coach'),co=COACH[ci];$$('.chip').forEach(function(x){x.classList.toggle('on',x===dco)});var rb=$('#coachReply');if(rb){rb.classList.add('on');rb.innerHTML='<p>'+co.say+'</p><button class="btn btn--g btn--sm" data-cocta="'+ci+'">'+co.cta.label+' →</button>'}return}
     var dcc=e.target.closest('[data-cocta]');if(dcc){var co2=COACH[+dcc.getAttribute('data-cocta')].cta;if(co2.t==='game')openGame(co2.id);else if(co2.t==='today')openDay(cur());else if(co2.t==='go'){var btn=document.querySelector('[data-go="'+co2.id+'"]');if(btn)btn.click()}return}
   });
   $('#mClose').addEventListener('click',closeM);$('#drModal').addEventListener('click',function(e){if(e.target===this)closeM()});
-  $('#craveBtn').addEventListener('click',function(){state.crave++;save();celebrate();var b=this;b.textContent='Another one beaten 💪';toast('💪 +5 XP');setTimeout(function(){b.textContent='I beat a craving 💪'},1100);$('#craveCount').textContent=state.crave});
+  $('#craveBtn').addEventListener('click',function(){state.crave++;markDaily('crave');save();celebrate();var b=this;b.textContent='Another one beaten 💪';toast('💪 +5 XP');setTimeout(function(){b.textContent='I beat a craving 💪'},1100);$('#craveCount').textContent=state.crave});
   $('#rollBtn').addEventListener('click',function(){openTile(MENU[Math.floor(Math.random()*MENU.length)])});
-  var j=$('#journal');if(j){j.value=state.journal;var js=function(){state.journal=j.value;save();var s=$('#jSaved');s.classList.add('on');render();setTimeout(function(){s.classList.remove('on')},1300)};$('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)})}
+  var j=$('#journal');if(j){j.value=state.journal;var js=function(){state.journal=j.value;if((j.value||'').length>3)markDaily('journal');save();var s=$('#jSaved');s.classList.add('on');render();setTimeout(function(){s.classList.remove('on')},1300)};$('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)})}
   function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
   $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
   if($('#craveCount'))$('#craveCount').textContent=state.crave;
@@ -847,7 +889,7 @@ try{
   var RELAX=[{id:'breathe',e:'🫧',t:'Breathing Bubble',s:'Slow your whole system'},{id:'pop',e:'🫧',t:'Bubble Pop',s:'Pop the stress away'},{id:'scan',e:'🧘',t:'Body Scan',s:'Melt the tension'},{id:'calm',e:'⏳',t:'Calm Timer',s:'Just sit · 2 min'},{id:'sounds',e:'🎧',t:'Calm Sounds',s:'Pick an ambient mix'}];
   var AFFIRM=["I am building a calmer, sharper mind.","I don't need a screen to feel okay.","I keep the promises I make to myself.","My focus gets stronger every day.","I can sit with discomfort and let it pass.","I am in control of my attention.","Real life is more than enough for me.","I choose what I give my mind to.","Every urge I beat makes me stronger.","I am becoming the person I want to be.","I am allowed to rest without earning it.","Slow and steady is still moving forward.","I am proud of how far I've come.","Calm is my natural state — I'm finding my way back.","Today I choose presence over noise."];
   var SOUNDS=[{e:'🌧️',n:'Rain on a window'},{e:'🌊',n:'Ocean waves'},{e:'🌲',n:'Forest at dawn'},{e:'🎹',n:'Soft piano / lo-fi'},{e:'🤎',n:'Brown noise'},{e:'☕',n:'Quiet café hum'}];
-  function relaxOk(id,msg){if(!state.relaxDone[id]){state.relaxDone[id]=true;save();celebrate();toast('🧘 +5 XP · '+msg)}buildRelax()}
+  function relaxOk(id,msg){markDaily('relax');if(!state.relaxDone[id]){state.relaxDone[id]=true;save();celebrate();toast('🧘 +5 XP · '+msg)}buildRelax()}
   function buildRelax(){if($('#relaxFeed'))$('#relaxFeed').innerHTML=RELAX.map(function(r,i){return tcard('data-relax="'+r.id+'"',r.e,g(i+2),'RELAX',r.t,state.relaxDone[r.id]?'Done ✓':r.s,state.relaxDone[r.id]?'read':'')}).join('')}
 
   function openScan(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--blue))';$('#mEmoji').textContent='🧘';$('#mTag').textContent='Body scan';$('#mTitle').textContent='Melt the tension';
@@ -1023,6 +1065,37 @@ try{
     if(e.target.closest('#drFab')){openQuick();return}
     if(e.target.closest('#quickClose')){closeQuick();return}
     if(e.target.id==='drQuick'){closeQuick();return}
+  });
+
+  // ===== missions + treasure chest =====
+  var DPOOL=[
+    {a:'challenge',e:'🔥',t:'Do today’s challenge',xp:20},
+    {a:'mood',e:'💗',t:'Log your mood',xp:10},
+    {a:'game',e:'🎮',t:'Play a mind game',xp:15},
+    {a:'crave',e:'💪',t:'Beat a craving',xp:10},
+    {a:'read',e:'📚',t:'Read an article',xp:15},
+    {a:'journal',e:'📓',t:'Journal a line',xp:10},
+    {a:'relax',e:'🧘',t:'Do a relax activity',xp:10}
+  ];
+  function dailyMissions(){var d=new Date(),s=d.getFullYear()*366+d.getMonth()*31+d.getDate(),a=[],i;for(i=0;i<DPOOL.length;i++)a.push(i);var picks=[];for(i=0;i<3;i++){s=(s*9301+49297)%233280;var j=s%a.length;picks.push(DPOOL[a.splice(j,1)[0]])}return picks}
+  function weeklyM(){return [{id:'w_days',e:'📅',t:'Complete 5 days total',xp:50,cur:dc(),target:5},{id:'w_games',e:'🕹️',t:'Play 4 different games',xp:40,cur:gp(),target:4},{id:'w_read',e:'🦉',t:'Read 3 articles',xp:40,cur:rd(),target:3}]}
+  function monthlyM(){return [{id:'m_reset',e:'🏆',t:'Finish the full 7-day reset',xp:120,cur:dc(),target:7},{id:'m_level',e:'💎',t:'Reach Level 5',xp:100,cur:lvl()+1,target:5}]}
+  function msnCard(e,t,cur,target,xp,key){var done=cur>=target,claimed=!!state.claimed[key],pct=Math.min(100,Math.round(cur/target*100));
+    var right=claimed?'<span class="rew">Claimed ✓</span>':(done?'<button class="btn btn--g btn--sm claim" data-claim="'+key+'" data-cxp="'+xp+'">Claim +'+xp+'</button>':'<span class="rew">+'+xp+' XP</span>');
+    return '<div class="msnc'+(done?' done':'')+'"><span class="e">'+e+'</span><div class="mid"><b>'+t+'</b><div class="pb"><i style="width:'+pct+'%"></i></div><span class="rew">'+Math.min(cur,target)+'/'+target+'</span></div>'+right+'</div>';}
+  function renderMissions(){
+    var dl=$('#msnDaily');if(!dl)return;var tk=todayKey();
+    dl.innerHTML=dailyMissions().map(function(m){return msnCard(m.e,m.t,dailyHas(m.a)?1:0,1,m.xp,'d:'+tk+':'+m.a)}).join('');
+    $('#msnWeekly').innerHTML=weeklyM().map(function(m){return msnCard(m.e,m.t,m.cur,m.target,m.xp,m.id)}).join('');
+    $('#msnMonthly').innerHTML=monthlyM().map(function(m){return msnCard(m.e,m.t,m.cur,m.target,m.xp,m.id)}).join('');
+    var allD=dailyMissions().every(function(m){return dailyHas(m.a)}),cw=$('#chestWrap');
+    if(cw){if(state.chest[tk]){cw.innerHTML='<div class="chest opened"><span class="ic">📦</span><div><b>Chest opened — +'+state.chest[tk]+' XP</b><span style="color:var(--soft);font-size:.85rem">Come back tomorrow for another</span></div></div>';}
+      else if(allD){cw.innerHTML='<div class="chest" data-chest="1"><span class="ic">🎁</span><div><b>Daily chest unlocked!</b><span style="color:var(--soft);font-size:.85rem">Tap to open your mystery reward</span></div></div>';}
+      else{cw.innerHTML='<div class="chest opened" style="cursor:default"><span class="ic">🔒</span><div><b>Daily chest</b><span style="color:var(--soft);font-size:.85rem">Finish all 3 daily missions to unlock</span></div></div>';}}
+  }
+  document.addEventListener('click',function(e){
+    var cl=e.target.closest('[data-claim]');if(cl){var key=cl.getAttribute('data-claim'),cxp=+cl.getAttribute('data-cxp');if(!state.claimed[key]){state.claimed[key]=true;state.bonusXp+=cxp;state.mclaimCount=(state.mclaimCount||0)+1;save();fireworks();snd('win');toast('🎯 Mission complete · +'+cxp+' XP');render()}return}
+    var ch=e.target.closest('[data-chest]');if(ch){var tk=todayKey();if(!state.chest[tk]){var rew=10+Math.floor(Math.random()*31);state.chest[tk]=rew;state.bonusXp+=rew;save();fireworks();snd('level');toast('🎁 Mystery reward · +'+rew+' XP!');render()}return}
   });
 
   render();renderArts();revealPanel('today');
