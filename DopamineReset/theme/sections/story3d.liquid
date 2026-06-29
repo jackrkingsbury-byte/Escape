@@ -1,0 +1,201 @@
+{% raw %}
+<style>
+  .s3{position:relative;background:#09070f}
+  .s3__track{position:relative}
+  .s3__stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center;z-index:0}
+  .s3__canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+  .s3__bg{position:absolute;inset:0;z-index:0;transition:background 1.2s ease;background:radial-gradient(75% 80% at 60% 40%,#1a1330,#09070f 72%)}
+  .s3__word{position:absolute;z-index:0;font-family:var(--serif,'Fraunces',serif);font-weight:700;font-size:clamp(3.4rem,17vw,13rem);letter-spacing:-.03em;color:rgba(255,255,255,.05);text-transform:uppercase;white-space:nowrap;transition:color 1s ease;user-select:none;pointer-events:none}
+  .s3__fallback{position:absolute;inset:0;z-index:1;display:none;place-items:center}
+  .s3__fbobj{width:min(54vw,360px);aspect-ratio:1;border-radius:50%;background:conic-gradient(from 0deg,#ff8a3d,#ff5c8a,#7c5cff,#2bd3c6,#ffc24b,#ff8a3d);filter:blur(2px) drop-shadow(0 20px 60px rgba(124,92,255,.5));animation:s3spin 14s linear infinite}
+  @keyframes s3spin{to{transform:rotate(360deg)}}
+
+  .s3__beats{position:relative;z-index:2;margin-top:-100vh}
+  .s3b{min-height:100vh;display:flex;align-items:center;padding:0 8vw}
+  .s3b__in{max-width:560px;opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .s3b.in .s3b__in{opacity:1;transform:none}
+  .s3b__k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:#ffc24b;display:block;margin-bottom:14px}
+  .s3b h2{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(2.1rem,6.4vw,4rem);line-height:1.02;letter-spacing:-.02em;color:#fff;margin:0 0 16px}
+  .s3b h2 .g{background:linear-gradient(135deg,#ffc24b,#ff5c8a,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .s3b p{color:#cfccc4;font-size:clamp(1.05rem,2.3vw,1.4rem);line-height:1.55;margin:0;max-width:32ch}
+  .s3b__btn{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-weight:800;border-radius:999px;padding:17px 34px;font-size:1.08rem;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;box-shadow:0 18px 46px rgba(255,138,61,.4)}
+
+  /* mood bricks */
+  .s3__bricks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;max-width:440px}
+  .s3brk{position:relative;border-radius:16px;padding:18px 14px;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.1);overflow:hidden;background:#15131d;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;transform:translateY(26px) scale(.96);opacity:.0}
+  .s3b.in .s3brk{transform:none;opacity:1}
+  .s3brk .bg{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .6s}
+  .s3brk.lit .bg{opacity:.95}
+  .s3brk.lit{box-shadow:0 16px 40px rgba(0,0,0,.45)}
+  .s3brk .e{position:relative;z-index:1;font-size:1.7rem}
+  .s3brk b{position:relative;z-index:1;color:#fff;font-size:.92rem;margin-top:6px}
+  .s3brk .st{position:relative;z-index:1;font-size:.68rem;color:rgba(255,255,255,.7);font-family:var(--mono,monospace)}
+  .s3brk:nth-child(1){transition-delay:.04s}.s3brk:nth-child(2){transition-delay:.1s}.s3brk:nth-child(3){transition-delay:.16s}
+  .s3brk:nth-child(4){transition-delay:.22s}.s3brk:nth-child(5){transition-delay:.28s}.s3brk:nth-child(6){transition-delay:.34s}
+
+  @media (prefers-reduced-motion:reduce){.s3__fbobj{animation:none}.s3b__in,.s3brk{opacity:1;transform:none}}
+  @media(max-width:760px){.s3b{padding:0 7vw}.s3__bricks{grid-template-columns:repeat(2,1fr)}}
+</style>
+{% endraw %}
+
+<section class="s3" id="story3d">
+  <div class="s3__track" id="s3Track">
+    <div class="s3__stage">
+      <div class="s3__bg" id="s3Bg"></div>
+      <div class="s3__word" id="s3Word">TIRED</div>
+      <canvas class="s3__canvas" id="s3Canvas"></canvas>
+      <div class="s3__fallback" id="s3Fallback"><div class="s3__fbobj"></div></div>
+    </div>
+
+    <div class="s3__beats">
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">Right now</span><h2>Your brain is <span class="g">fried</span>.</h2><p>Not lazy. Not broken. Just overfed — by a feed that never stops.</p></div></div>
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">Every scroll</span><h2>spends a little dopamine.</h2><p>Tiny hit, tiny crash, a thousand times a day. Until normal life can't compete.</p></div></div>
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">So slowly</span><h2>everything goes <span class="g">grey</span>.</h2><p>Food, music, the people you love — it all feels a little flat. This is what it looks like inside:</p>
+        <div class="s3__bricks" id="s3Bricks"></div></div></div>
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">7 days</span><h2>rewires the wiring.</h2><p>One small action a day quietly resets your reward system. No willpower marathon.</p></div></div>
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">And then</span><h2>the <span class="g">colour</span> comes back.</h2><p>Focus. Energy. Drive. Real happiness. The things that were always yours — you get them back.</p></div></div>
+      <div class="s3b"><div class="s3b__in"><span class="s3b__k">Your turn</span><h2>Feel good — for <span class="g">real</span>.</h2><p>10 minutes a day. 7 days. A 7-day money-back guarantee.</p><a class="s3b__btn" href="{{ section.settings.cta_url | default: '#pricing' }}">{{ section.settings.cta_label | default: 'Start the reset → R199' }}</a></div></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+{% raw %}
+<script>
+(function(){
+  var track=document.getElementById('s3Track'),cv=document.getElementById('s3Canvas'),fbk=document.getElementById('s3Fallback'),
+      bgEl=document.getElementById('s3Bg'),wordEl=document.getElementById('s3Word'),sec=document.getElementById('story3d');
+  if(!track||!cv)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- scroll progress + beat reveal (works even without WebGL) ----
+  var beats=[].slice.call(sec.querySelectorAll('.s3b'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting)en.target.classList.add('in')})},{threshold:.3});
+    beats.forEach(function(b){io.observe(b)});
+  } else beats.forEach(function(b){b.classList.add('in')});
+
+  // mood palette across the journey (grey -> vibrant)
+  var STAGES=[
+    {w:'TIRED',  bg:'radial-gradient(75% 80% at 60% 40%,#211c2b,#09070f 72%)', col:0x6b6b7a, wc:'rgba(255,255,255,.05)'},
+    {w:'FOGGY',  bg:'radial-gradient(75% 80% at 60% 40%,#1b2230,#09070f 72%)', col:0x4f6a8f, wc:'rgba(120,150,200,.06)'},
+    {w:'NUMB',   bg:'radial-gradient(75% 80% at 60% 40%,#241a2e,#09070f 72%)', col:0x7c5cff, wc:'rgba(124,92,255,.07)'},
+    {w:'WAKING', bg:'radial-gradient(75% 80% at 60% 40%,#2e2236,#09070f 72%)', col:0xff5c8a, wc:'rgba(255,92,138,.08)'},
+    {w:'ALIVE',  bg:'radial-gradient(75% 80% at 60% 40%,#3a2a1c,#09070f 72%)', col:0xff8a3d, wc:'rgba(255,138,61,.1)'},
+    {w:'HAPPY',  bg:'radial-gradient(75% 80% at 60% 40%,#3a2a14,#09070f 72%)', col:0xffc24b, wc:'rgba(255,194,75,.12)'}
+  ];
+  var BRICKS=[
+    {e:'😶‍🌫️',n:'Numb',s:'OFFLINE',c:'linear-gradient(135deg,#4b4b5a,#2b2b36)'},
+    {e:'🌫️',n:'Foggy',s:'LOW',c:'linear-gradient(135deg,#4f6a8f,#2b3950)'},
+    {e:'😌',n:'Calm',s:'RISING',c:'linear-gradient(135deg,#2bd3c6,#4f8cff)'},
+    {e:'🎯',n:'Focus',s:'SHARP',c:'linear-gradient(135deg,#5ad48a,#bfe65a)'},
+    {e:'⚡',n:'Drive',s:'CHARGED',c:'linear-gradient(135deg,#ff8a3d,#ffc24b)'},
+    {e:'😄',n:'Joy',s:'ALIVE',c:'linear-gradient(135deg,#ff5c8a,#7c5cff)'}
+  ];
+  var brkEl=document.getElementById('s3Bricks');
+  if(brkEl)brkEl.innerHTML=BRICKS.map(function(b){return '<div class="s3brk" data-b><div class="bg" style="background:'+b.c+'"></div><span class="e">'+b.e+'</span><b>'+b.n+'</b><span class="st">'+b.s+'</span></div>'}).join('');
+  var brkNodes=brkEl?[].slice.call(brkEl.querySelectorAll('.s3brk')):[];
+
+  function clamp01(v){return v<0?0:v>1?1:v}
+  function prog(){var r=track.getBoundingClientRect();var total=track.offsetHeight-window.innerHeight;return clamp01((-r.top)/(total||1))}
+  var lastStage=-1;
+  function ambient(p){
+    var fi=p*(STAGES.length-1),si=Math.min(STAGES.length-1,Math.round(fi));
+    if(si!==lastStage){var s=STAGES[si];bgEl.style.background=s.bg;wordEl.textContent=s.w;wordEl.style.color=s.wc;lastStage=si;}
+    // light bricks progressively
+    var litCount=Math.round(clamp01((p-0.28)/0.5)*brkNodes.length);
+    for(var i=0;i<brkNodes.length;i++)brkNodes[i].classList.toggle('lit',i<litCount);
+  }
+
+  // ---- WebGL glossy object ----
+  var THREE=window.THREE;
+  function fail(){cv.style.display='none';if(fbk)fbk.style.display='grid';
+    // still animate ambient on scroll
+    function loop(){ambient(prog());requestAnimationFrame(loop)}loop();}
+  if(!THREE){fail();return;}
+  try{var tc=document.createElement('canvas');if(!(tc.getContext('webgl')||tc.getContext('experimental-webgl'))){fail();return;}}catch(e){fail();return;}
+  var renderer;try{renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});}catch(e){fail();return;}
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  if(renderer.outputEncoding!==undefined)renderer.outputEncoding=THREE.sRGBEncoding;
+  if(renderer.toneMapping!==undefined){renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;}
+
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(40,1,0.1,100);camera.position.set(0,0,4.2);
+
+  // procedural studio environment for reflections (no external HDR)
+  var envScene=new THREE.Scene();
+  (function(){
+    var c=document.createElement('canvas');c.width=8;c.height=256;var ctx=c.getContext('2d');
+    var grd=ctx.createLinearGradient(0,0,0,256);grd.addColorStop(0,'#4a3b6e');grd.addColorStop(.5,'#15121d');grd.addColorStop(1,'#050409');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,8,256);
+    var tex=new THREE.CanvasTexture(c);tex.mapping=THREE.EquirectangularReflectionMapping;envScene.background=tex;
+    // bright "studio light" strips that the chrome reflects
+    var lights=[[2.6,1.6,1,0xffe6c0,2.2],[-2.4,1,-1.2,0xff8a3d,1.5],[1.2,-2,1.5,0x7c5cff,1.4],[-1.5,2.2,2,0x2bd3c6,1.2]];
+    for(var i=0;i<lights.length;i++){var L=lights[i];var pl=new THREE.Mesh(new THREE.PlaneGeometry(1.6,1.6),new THREE.MeshBasicMaterial({color:L[3]}));pl.position.set(L[0],L[1],L[2]);pl.lookAt(0,0,0);pl.scale.setScalar(L[4]);envScene.add(pl);}
+  })();
+  var pmrem=new THREE.PMREMGenerator(renderer);pmrem.compileEquirectangularShader();
+  var envRT=pmrem.fromScene(envScene,0.04);scene.environment=envRT.texture;
+
+  scene.add(new THREE.AmbientLight(0xffffff,0.25));
+  var key=new THREE.DirectionalLight(0xffffff,1.1);key.position.set(2,3,2);scene.add(key);
+  var fill=new THREE.PointLight(0x7c5cff,2,20);fill.position.set(-3,-1,2);scene.add(fill);
+
+  var geo=new THREE.IcosahedronGeometry(1.18,32);
+  var basePos=geo.attributes.position.array.slice(0);
+  var baseN=geo.attributes.normal.array.slice(0);
+  var mat=new THREE.MeshPhysicalMaterial({color:0x6b6b7a,metalness:1.0,roughness:0.14,clearcoat:1.0,clearcoatRoughness:0.12,envMapIntensity:1.6,emissive:0x000000});
+  var blob=new THREE.Mesh(geo,mat);scene.add(blob);
+  // faint glow halo behind
+  var halo=new THREE.Mesh(new THREE.SphereGeometry(1.7,32,32),new THREE.MeshBasicMaterial({color:0x7c5cff,transparent:true,opacity:0.06,blending:THREE.AdditiveBlending,depthWrite:false}));scene.add(halo);
+
+  function size(){var w=cv.clientWidth||window.innerWidth,h=cv.clientHeight||window.innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  window.addEventListener('resize',size);size();
+
+  var px=0,tpx=0,py=0,tpy=0;
+  window.addEventListener('pointermove',function(e){tpx=(e.clientX/window.innerWidth-0.5);tpy=(e.clientY/window.innerHeight-0.5);});
+
+  var colA=new THREE.Color(),colB=new THREE.Color(),emi=new THREE.Color();
+  function lerpColorByP(p){
+    var fi=p*(STAGES.length-1),i0=Math.floor(fi),i1=Math.min(STAGES.length-1,i0+1),f=fi-i0;
+    colA.setHex(STAGES[i0].col);colB.setHex(STAGES[i1].col);
+    mat.color.copy(colA).lerp(colB,f);
+    // emissive glow grows as it gets happy
+    emi.copy(colB).multiplyScalar(0.12*p);mat.emissive.copy(emi);
+    mat.roughness=0.22-0.12*p; // shinier when happy
+  }
+
+  var pos=geo.attributes.position,arr=pos.array,t0=Date.now();
+  function frame(){
+    requestAnimationFrame(frame);
+    var t=(Date.now()-t0)/1000;var p=prog();ambient(p);
+    // morph: agitated/jagged when sad, smooth & breathing when happy
+    var amp=(0.16*(1-p))+0.05, sp=1.4+(1-p)*1.4;
+    var breathe=reduce?1:(1+Math.sin(t*1.3)*0.03*p);
+    for(var i=0;i<arr.length;i+=3){
+      var bx=basePos[i],by=basePos[i+1],bz=basePos[i+2];
+      var n=Math.sin(bx*2.3+t*sp)+Math.sin(by*2.9+t*sp*1.2)+Math.sin(bz*2.5+t*sp*0.8);
+      var d=1+ (reduce?0.04:amp)*n*0.18;
+      arr[i]  =bx*d*breathe;arr[i+1]=by*d*breathe;arr[i+2]=bz*d*breathe;
+    }
+    pos.needsUpdate=true;
+    lerpColorByP(p);
+    px+=(tpx-px)*0.05;py+=(tpy-py)*0.05;
+    blob.rotation.y=t*0.18+px*0.8;blob.rotation.x=Math.sin(t*0.25)*0.18 - py*0.5;
+    halo.material.opacity=0.05+0.12*p;halo.scale.setScalar(1+0.06*Math.sin(t*1.2));
+    renderer.render(scene,camera);
+  }
+  frame();
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{
+  "name": "Story 3D (scroll)",
+  "settings": [
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Start the reset → R199" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "presets": [{ "name": "Story 3D (scroll)" }]
+}
+{% endschema %}

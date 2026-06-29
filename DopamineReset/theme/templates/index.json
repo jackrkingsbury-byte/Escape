@@ -484,12 +484,15 @@
     "compare": {
       "type": "compare",
       "settings": {}
+    },
+    "story3d": {
+      "type": "story3d",
+      "settings": {}
     }
   },
   "order": [
     "hero",
-    "story",
-    "transform3d",
+    "story3d",
     "transformation",
     "benefits",
     "quiz",
