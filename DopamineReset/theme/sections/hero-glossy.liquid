@@ -14,9 +14,8 @@
     background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%)}
   .hp__halo{position:absolute;left:50%;top:42%;width:62%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(60px);z-index:0;
     background:radial-gradient(circle,rgba(255,194,75,.0),transparent 70%)}
-  .hp__faces{position:absolute;inset:0;z-index:1;will-change:filter;filter:saturate(.62) brightness(.74) contrast(.97)}
-  .hp__face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 26%}
-  .hp__face.happy{opacity:0;will-change:opacity}
+  .hp__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 32%;z-index:1;
+    filter:grayscale(1) brightness(.6) contrast(.92);transition:filter .12s linear;will-change:filter}
   .hp__cool,.hp__warm{position:absolute;inset:0;z-index:2;pointer-events:none}
   .hp__cool{background:linear-gradient(180deg,rgba(40,70,140,.55),rgba(20,30,70,.65));mix-blend-mode:soft-light}
   .hp__warm{background:radial-gradient(70% 60% at 52% 34%,rgba(255,180,80,.85),rgba(255,90,140,.35) 55%,transparent 78%);mix-blend-mode:soft-light;opacity:0}
@@ -67,15 +66,17 @@
 </style>
 {% endraw %}
 
+{%- assign hero_img = section.settings.person_image -%}
 <section class="hp" id="heroPerson">
   <div class="hp__orbs"><span class="hp__orb o1"></span><span class="hp__orb o2"></span></div>
   <div class="hp__stage" id="hpStage">
     <div class="hp__media">
       <span class="hp__halo" id="hpHalo"></span>
-      <div class="hp__faces" id="hpFaces">
-        <img class="hp__face" id="hpSad" src="{{ 'hero-sad.jpg' | asset_url }}" alt="A young man looking flat before the reset">
-        <img class="hp__face happy" id="hpHappy" src="{{ 'hero-happy.jpg' | asset_url }}" alt="The same young man smiling after the reset">
-      </div>
+      {%- if hero_img != blank -%}
+        <img class="hp__img" id="hpImg" src="{{ hero_img | image_url: width: 1400 }}" alt="A person feeling the shift from flat to good">
+      {%- else -%}
+        <img class="hp__img" id="hpImg" src="{{ 'hero-person.png' | asset_url }}" alt="A person feeling the shift from flat to good">
+      {%- endif -%}
       <span class="hp__cool" id="hpCool"></span>
       <span class="hp__warm" id="hpWarm"></span>
       <span class="hp__sheen" id="hpSheen"></span>
@@ -112,11 +113,10 @@
 {% raw %}
 <script>
 (function(){
-  var stage=document.getElementById('hpStage'),faces=document.getElementById('hpFaces'),happy=document.getElementById('hpHappy'),
-      cool=document.getElementById('hpCool'),warm=document.getElementById('hpWarm'),
+  var stage=document.getElementById('hpStage'),img=document.getElementById('hpImg'),cool=document.getElementById('hpCool'),warm=document.getElementById('hpWarm'),
       halo=document.getElementById('hpHalo'),sheen=document.getElementById('hpSheen'),media=stage&&stage.querySelector('.hp__media'),
       track=document.getElementById('hpTrack'),fill=document.getElementById('hpFill'),knob=document.getElementById('hpKnob'),hint=document.getElementById('hpHint');
-  if(!stage||!faces)return;
+  if(!stage||!img)return;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function lerp(a,b,t){return a+(b-a)*t}
 
@@ -137,10 +137,10 @@
   track.addEventListener('touchstart',dn,{passive:false});knob.addEventListener('touchstart',dn,{passive:false});
   window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
   window.addEventListener('mouseup',up);window.addEventListener('touchend',up);
-  // drag on the face itself
+  // drag on the image itself
   var cdrag=false,cx0=0,cv0=0;
-  faces.addEventListener('mousedown',function(e){cdrag=true;cx0=e.clientX;cv0=target;e.preventDefault();});
-  faces.addEventListener('touchstart',function(e){cdrag=true;cx0=e.touches[0].clientX;cv0=target;},{passive:true});
+  img.addEventListener('mousedown',function(e){cdrag=true;cx0=e.clientX;cv0=target;e.preventDefault();});
+  img.addEventListener('touchstart',function(e){cdrag=true;cx0=e.touches[0].clientX;cv0=target;},{passive:true});
   window.addEventListener('mousemove',function(e){if(!cdrag)return;setTarget(cv0+(e.clientX-cx0)/300);});
   window.addEventListener('touchmove',function(e){if(!cdrag)return;setTarget(cv0+(e.touches[0].clientX-cx0)/300);},{passive:true});
   window.addEventListener('mouseup',function(){cdrag=false;});window.addEventListener('touchend',function(){cdrag=false;});
@@ -156,10 +156,8 @@
     var m=val;
     // slider UI
     fill.style.width=(m*100)+'%';knob.style.left=(m*100)+'%';
-    // crossfade neutral -> real smile (eased), and grade cold/dim -> warm/bright
-    var sm=m*m*(3-2*m);
-    happy.style.opacity=sm.toFixed(3);
-    faces.style.filter='saturate('+lerp(0.6,1.2,m).toFixed(3)+') brightness('+lerp(0.72,1.1,m).toFixed(3)+') contrast('+lerp(0.96,1.06,m).toFixed(3)+')';
+    // image grade: cold/dim (sad) -> warm/bright (happy)
+    img.style.filter='grayscale(1) brightness('+lerp(0.55,1.14,m).toFixed(3)+') contrast('+lerp(0.9,1.1,m).toFixed(3)+')';
     cool.style.opacity=(1-m).toFixed(3);
     warm.style.opacity=Math.max(0,(m-0.15)*1.05).toFixed(3);
     // halo grows + warms
@@ -187,7 +185,8 @@
 {
   "name": "Hero person",
   "settings": [
-    { "type": "paragraph", "content": "The hero crossfades a person from a flat/neutral face to a real smile as it animates and as you drag the slider. The two photos live in theme assets as hero-sad.jpg and hero-happy.jpg — replace those files to use your own." },
+    { "type": "paragraph", "content": "The hero shows a person that shifts from cold/sad to warm/happy as it animates and as you drag the slider. Swap in your own photo below (or two-expression shots) any time." },
+    { "type": "image_picker", "id": "person_image", "label": "Hero person image", "info": "Leave empty to use the built-in render. A bright, centred head-and-shoulders shot works best." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your brain is fried. Here's the reset." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Quit cheap dopamine. Feel good for real — in 7 days." },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset rewires it in a week — 10 minutes a day. Drag the slider → that's the shift." },
