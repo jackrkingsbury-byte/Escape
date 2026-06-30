@@ -1,0 +1,50 @@
+{% raw %}
+<style>
+  .fn{position:relative;padding:clamp(72px,11vw,128px) 0;background:radial-gradient(100% 80% at 30% 0%,#14101e 0%,#0a0812 60%);overflow:hidden}
+  .fn__glow{position:absolute;width:40vmax;height:40vmax;border-radius:50%;filter:blur(95px);opacity:.28;pointer-events:none;background:radial-gradient(circle,#ff8a3d,transparent 65%);top:-12vmax;left:-8vmax}
+  .fn__wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:0 22px}
+  .fn__card{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:26px;padding:clamp(28px,5vw,52px);backdrop-filter:blur(10px);box-shadow:0 30px 70px rgba(0,0,0,.4)}
+  .fn__quote{position:absolute;top:-14px;left:26px;font-family:var(--serif,'Fraunces',serif);font-size:5rem;line-height:1;color:#ffc24b;opacity:.25}
+  .fn__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#ffc24b;margin:0 0 16px}
+  .fn__body{font-family:var(--serif,'Fraunces',serif);font-weight:400;font-size:clamp(1.18rem,2.5vw,1.55rem);line-height:1.5;color:#f3f1ea;margin:0}
+  .fn__body p{margin:0 0 18px}
+  .fn__body p:last-child{margin-bottom:0}
+  .fn__body em{font-style:normal;background:linear-gradient(135deg,#ffc24b,#ff8a3d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .fn__sign{display:flex;align-items:center;gap:15px;margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.09)}
+  .fn__ava{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif,'Fraunces',serif);font-weight:700;font-size:1.3rem;color:#1a1020;background:linear-gradient(135deg,#ffc24b,#ff8a3d);box-shadow:0 8px 22px rgba(255,138,61,.4);overflow:hidden}
+  .fn__ava img{width:100%;height:100%;object-fit:cover}
+  .fn__who b{display:block;font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:1.08rem;color:#fff}
+  .fn__who span{font-size:.85rem;color:#9b97a8}
+</style>
+{% endraw %}
+<section class="fn" id="founder">
+  <span class="fn__glow"></span>
+  <div class="fn__wrap">
+    <div class="fn__card reveal">
+      <span class="fn__quote">&ldquo;</span>
+      {%- if section.settings.eyebrow != blank -%}<p class="fn__eye">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <div class="fn__body">{{ section.settings.note }}</div>
+      <div class="fn__sign">
+        <span class="fn__ava">
+          {%- if section.settings.photo != blank -%}<img src="{{ section.settings.photo | image_url: width: 108 }}" alt="{{ section.settings.name }}">{%- else -%}{{ section.settings.initial }}{%- endif -%}
+        </span>
+        <div class="fn__who"><b>{{ section.settings.name }}</b><span>{{ section.settings.role }}</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Founder's note",
+  "settings": [
+    { "type": "paragraph", "content": "Write this in your own honest voice — it builds more trust than any stat. Use <em>…</em> around a few words to highlight them in gold." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why I made this" },
+    { "type": "richtext", "id": "note", "label": "Your note", "default": "<p>I'm not a doctor or some productivity guru. I'm a normal guy who got tired of waking up and reaching for my phone before I'd even opened both eyes.</p><p>I felt foggy, flat, and weirdly bored of everything — and deep down I knew the scrolling was the reason. So I read everything I could, tested it on myself, and put what <em>actually worked</em> into a simple 7-day plan.</p><p>This is that plan. It's the thing I wish someone had handed me. If it helps you feel a bit more like yourself again, it did its job.</p>" },
+    { "type": "image_picker", "id": "photo", "label": "Your photo (optional)" },
+    { "type": "text", "id": "initial", "label": "Initial (if no photo)", "default": "J" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Jack" },
+    { "type": "text", "id": "role", "label": "Role / line", "default": "Founder, Dopamine Reset" }
+  ],
+  "presets": [{ "name": "Founder's note" }]
+}
+{% endschema %}

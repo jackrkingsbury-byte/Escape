@@ -357,6 +357,16 @@
         "text": "Do the reset for a week. If your head isn't clearer and your days don't feel better, email us and get every cent back — no forms, no awkward questions. The only risk is staying foggy."
       }
     },
+    "founder": {
+      "type": "founder",
+      "settings": {
+        "eyebrow": "Why I made this",
+        "note": "<p>I'm not a doctor or some productivity guru. I'm a normal guy who got tired of waking up and reaching for my phone before I'd even opened both eyes.</p><p>I felt foggy, flat, and weirdly bored of everything — and deep down I knew the scrolling was the reason. So I read everything I could, tested it on myself, and put what <em>actually worked</em> into a simple 7-day plan.</p><p>This is that plan. It's the thing I wish someone had handed me. If it helps you feel a bit more like yourself again, it did its job.</p>",
+        "initial": "J",
+        "name": "Jack",
+        "role": "Founder, Dopamine Reset"
+      }
+    },
     "faq": {
       "type": "faq",
       "blocks": {
@@ -593,6 +603,7 @@
     "sticky",
     "testimonials",
     "guarantee",
+    "founder",
     "faq",
     "final_cta"
   ]
