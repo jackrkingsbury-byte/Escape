@@ -7,20 +7,21 @@
   .hp__orb.o2{width:30vmax;height:30vmax;background:radial-gradient(circle,#7c5cff,transparent 65%);bottom:-12vmax;right:24vmax;animation-duration:23s}
   @keyframes hpo{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-3vmax,3vmax) scale(1.12)}}
 
-  /* 3D stage */
-  .hp__stage{position:absolute;top:0;right:0;bottom:0;width:55%;z-index:1;touch-action:pan-y;perspective:1100px;perspective-origin:52% 38%}
-  .hp__media{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
-  .hp__backdrop{position:absolute;inset:-12%;z-index:0;transform:translateZ(-60px) scale(1.18);
-    background:radial-gradient(58% 52% at 52% 40%,rgba(124,92,255,.28),transparent 70%)}
-  .hp__floor{position:absolute;left:50%;bottom:9%;width:54%;height:9%;transform:translateX(-50%);z-index:1;border-radius:50%;
-    background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);filter:blur(8px)}
-  .hp__halo{position:absolute;left:50%;top:40%;width:60%;aspect-ratio:1;transform:translate(-50%,-50%) translateZ(-30px);border-radius:50%;filter:blur(58px);z-index:1;
-    background:radial-gradient(circle,rgba(255,194,75,0),transparent 70%)}
-  .hp__person{position:absolute;inset:0;z-index:3;transform-style:preserve-3d;will-change:transform,filter;
-    filter:saturate(.55) brightness(.74) contrast(.99)}
-  .hp__face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 16%;
-    filter:drop-shadow(0 26px 34px rgba(0,0,0,.6))}
+  /* media stage */
+  .hp__stage{position:absolute;top:0;right:0;bottom:0;width:54%;z-index:1;touch-action:pan-y;perspective:1200px;perspective-origin:55% 40%}
+  .hp__media{position:absolute;inset:0;overflow:hidden;transform-style:preserve-3d;will-change:transform}
+  .hp__sheen{position:absolute;inset:-10%;z-index:3;pointer-events:none;mix-blend-mode:soft-light;opacity:.5;
+    background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%)}
+  .hp__halo{position:absolute;left:50%;top:42%;width:62%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(60px);z-index:0;
+    background:radial-gradient(circle,rgba(255,194,75,.0),transparent 70%)}
+  .hp__faces{position:absolute;inset:0;z-index:1;will-change:filter;filter:saturate(.62) brightness(.74) contrast(.97)}
+  .hp__face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 26%}
   .hp__face.happy{opacity:0;will-change:opacity}
+  .hp__cool,.hp__warm{position:absolute;inset:0;z-index:2;pointer-events:none}
+  .hp__cool{background:linear-gradient(180deg,rgba(40,70,140,.55),rgba(20,30,70,.65));mix-blend-mode:soft-light}
+  .hp__warm{background:radial-gradient(70% 60% at 52% 34%,rgba(255,180,80,.85),rgba(255,90,140,.35) 55%,transparent 78%);mix-blend-mode:soft-light;opacity:0}
+  .hp__grain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.5;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
   .hp__spark{position:absolute;border-radius:50%;background:#ffd98a;box-shadow:0 0 10px 2px rgba(255,200,120,.8);z-index:4;opacity:0;pointer-events:none}
 
   /* mood slider */
@@ -33,7 +34,7 @@
   .hp__knob:active{cursor:grabbing}
   .hp__hint{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);z-index:6;font-family:var(--mono,monospace);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:opacity .4s;pointer-events:none}
 
-  .hp__scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(8,6,12,.96) 0%,rgba(8,6,12,.74) 36%,rgba(8,6,12,.08) 66%,transparent 100%)}
+  .hp__scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(8,6,12,.96) 0%,rgba(8,6,12,.78) 38%,rgba(8,6,12,.12) 68%,transparent 100%)}
   .hp__wrap{position:relative;z-index:3;max-width:1120px;margin:0 auto;padding:0 22px;width:100%;pointer-events:none}
   .hp__wrap a{pointer-events:auto}
   .hp__in{max-width:600px}
@@ -58,8 +59,8 @@
   .hp__trust b{color:#fff;font-family:var(--serif,'Fraunces',serif);font-size:1.05rem}
   @media(max-width:820px){
     .hp{min-height:auto;padding:84px 0 36px}
-    .hp__stage{position:relative;width:100%;height:58vh;order:-1}
-    .hp__scrim{background:linear-gradient(180deg,transparent 0%,rgba(8,6,12,.35) 60%,#080610 100%)}
+    .hp__stage{position:relative;width:100%;height:56vh;order:-1}
+    .hp__scrim{background:linear-gradient(180deg,transparent 0%,rgba(8,6,12,.4) 62%,#080610 100%)}
     .hp__in{max-width:100%}
   }
   @media (prefers-reduced-motion:reduce){.hp__orb,.hp__btnwrap::before,.hp__btn::after{animation:none}}
@@ -70,13 +71,15 @@
   <div class="hp__orbs"><span class="hp__orb o1"></span><span class="hp__orb o2"></span></div>
   <div class="hp__stage" id="hpStage">
     <div class="hp__media">
-      <span class="hp__backdrop" id="hpBack"></span>
       <span class="hp__halo" id="hpHalo"></span>
-      <span class="hp__floor"></span>
-      <div class="hp__person" id="hpPerson">
-        <img class="hp__face" id="hpSad" src="{{ 'hero-sad-cut.png' | asset_url }}" alt="A young man looking flat before the reset">
-        <img class="hp__face happy" id="hpHappy" src="{{ 'hero-happy-cut.png' | asset_url }}" alt="The same young man smiling after the reset">
+      <div class="hp__faces" id="hpFaces">
+        <img class="hp__face" id="hpSad" src="{{ 'hero-sad.jpg' | asset_url }}" alt="A young man looking flat before the reset">
+        <img class="hp__face happy" id="hpHappy" src="{{ 'hero-happy.jpg' | asset_url }}" alt="The same young man smiling after the reset">
       </div>
+      <span class="hp__cool" id="hpCool"></span>
+      <span class="hp__warm" id="hpWarm"></span>
+      <span class="hp__sheen" id="hpSheen"></span>
+      <span class="hp__grain"></span>
     </div>
     <div class="hp__hint" id="hpHint">Drag — watch the shift</div>
     <div class="hp__ctl" id="hpCtl">
@@ -109,18 +112,18 @@
 {% raw %}
 <script>
 (function(){
-  var stage=document.getElementById('hpStage'),media=stage&&stage.querySelector('.hp__media'),
-      person=document.getElementById('hpPerson'),back=document.getElementById('hpBack'),happy=document.getElementById('hpHappy'),
-      halo=document.getElementById('hpHalo'),track=document.getElementById('hpTrack'),fill=document.getElementById('hpFill'),
-      knob=document.getElementById('hpKnob'),hint=document.getElementById('hpHint');
-  if(!stage||!person)return;
+  var stage=document.getElementById('hpStage'),faces=document.getElementById('hpFaces'),happy=document.getElementById('hpHappy'),
+      cool=document.getElementById('hpCool'),warm=document.getElementById('hpWarm'),
+      halo=document.getElementById('hpHalo'),sheen=document.getElementById('hpSheen'),media=stage&&stage.querySelector('.hp__media'),
+      track=document.getElementById('hpTrack'),fill=document.getElementById('hpFill'),knob=document.getElementById('hpKnob'),hint=document.getElementById('hpHint');
+  if(!stage||!faces)return;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function lerp(a,b,t){return a+(b-a)*t}
 
-  // sparkles around the head
+  // sparkles that appear when happy
   var sparks=[];
   if(media){for(var i=0;i<14;i++){var s=document.createElement('span');s.className='hp__spark';var sz=2+Math.random()*4;
-    s.style.width=sz+'px';s.style.height=sz+'px';s.style.left=(18+Math.random()*64)+'%';s.style.top=(10+Math.random()*64)+'%';
+    s.style.width=sz+'px';s.style.height=sz+'px';s.style.left=(15+Math.random()*70)+'%';s.style.top=(12+Math.random()*70)+'%';
     s.dataset.ph=(Math.random()*6.28).toFixed(2);s.dataset.sp=(0.4+Math.random()*0.8).toFixed(2);media.appendChild(s);sparks.push(s);}}
 
   var target=0.85,val=0.18,touched=false,t0=Date.now();
@@ -134,14 +137,14 @@
   track.addEventListener('touchstart',dn,{passive:false});knob.addEventListener('touchstart',dn,{passive:false});
   window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
   window.addEventListener('mouseup',up);window.addEventListener('touchend',up);
-  // drag on the person
+  // drag on the face itself
   var cdrag=false,cx0=0,cv0=0;
-  person.addEventListener('mousedown',function(e){cdrag=true;cx0=e.clientX;cv0=target;e.preventDefault();});
-  person.addEventListener('touchstart',function(e){cdrag=true;cx0=e.touches[0].clientX;cv0=target;},{passive:true});
+  faces.addEventListener('mousedown',function(e){cdrag=true;cx0=e.clientX;cv0=target;e.preventDefault();});
+  faces.addEventListener('touchstart',function(e){cdrag=true;cx0=e.touches[0].clientX;cv0=target;},{passive:true});
   window.addEventListener('mousemove',function(e){if(!cdrag)return;setTarget(cv0+(e.clientX-cx0)/300);});
   window.addEventListener('touchmove',function(e){if(!cdrag)return;setTarget(cv0+(e.touches[0].clientX-cx0)/300);},{passive:true});
   window.addEventListener('mouseup',function(){cdrag=false;});window.addEventListener('touchend',function(){cdrag=false;});
-  // pointer parallax
+  // parallax
   var tpx=0,tpy=0,px=0,py=0;
   window.addEventListener('pointermove',function(e){var r=stage.getBoundingClientRect();tpx=((e.clientX-r.left)/r.width-0.5);tpy=((e.clientY-r.top)/r.height-0.5);});
 
@@ -150,29 +153,30 @@
     var t=(Date.now()-t0)/1000;
     if(!touched&&!reduce)target=0.5+0.46*Math.sin(t*0.5);
     val+=(target-val)*0.10;
-    var m=val, sm=m*m*(3-2*m);
+    var m=val;
     // slider UI
     fill.style.width=(m*100)+'%';knob.style.left=(m*100)+'%';
-    // crossfade neutral -> real smile
+    // crossfade neutral -> real smile (eased), and grade cold/dim -> warm/bright
+    var sm=m*m*(3-2*m);
     happy.style.opacity=sm.toFixed(3);
-    // mood grade on the person: cold/dim (sad) -> warm/bright (happy)
-    person.style.filter='saturate('+lerp(0.5,1.22,m).toFixed(3)+') brightness('+lerp(0.72,1.12,m).toFixed(3)+') contrast('+lerp(0.99,1.05,m).toFixed(3)+') sepia('+(sm*0.22).toFixed(3)+') hue-rotate('+lerp(8,-12,m).toFixed(2)+'deg)';
+    faces.style.filter='saturate('+lerp(0.6,1.2,m).toFixed(3)+') brightness('+lerp(0.72,1.1,m).toFixed(3)+') contrast('+lerp(0.96,1.06,m).toFixed(3)+')';
+    cool.style.opacity=(1-m).toFixed(3);
+    warm.style.opacity=Math.max(0,(m-0.15)*1.05).toFixed(3);
     // halo grows + warms
     var hg=Math.max(0,(m-0.2));
-    halo.style.background='radial-gradient(circle,rgba('+Math.round(lerp(120,255,m))+','+Math.round(lerp(140,200,m))+','+Math.round(lerp(255,120,m))+','+(hg*0.6).toFixed(3)+'),transparent 70%)';
-    // backdrop warms too
-    if(back)back.style.background='radial-gradient(58% 52% at 52% 40%,rgba('+Math.round(lerp(124,255,m))+','+Math.round(lerp(92,150,m))+','+Math.round(lerp(255,90,m))+','+lerp(0.22,0.4,m).toFixed(3)+'),transparent 70%)';
-    // 3D: tilt whole scene; push person forward, backdrop back, parallax differently
+    halo.style.background='radial-gradient(circle,rgba('+Math.round(lerp(120,255,m))+','+Math.round(lerp(140,200,m))+','+Math.round(lerp(255,120,m))+','+(hg*0.55).toFixed(3)+'),transparent 70%)';
+    halo.style.transform='translate(-50%,-50%) scale('+lerp(0.8,1.12,m).toFixed(3)+')';
+    // 3D parallax + breathing
     px+=(tpx-px)*0.06;py+=(tpy-py)*0.06;
     var breathe=reduce?0:Math.sin(t*0.9)*0.006, bob=reduce?0:Math.sin(t*0.9)*4;
-    var ry=px*11, rx=py*-7;
-    if(media)media.style.transform='rotateY('+ry.toFixed(2)+'deg) rotateX('+rx.toFixed(2)+'deg)';
-    person.style.transform='translateZ(62px) scale('+(1.04+breathe).toFixed(3)+') translate('+(px*-20).toFixed(1)+'px,'+(py*-14-bob).toFixed(1)+'px)';
-    if(back)back.style.transform='translateZ(-60px) scale(1.18) translate('+(px*10).toFixed(1)+'px,'+(py*8).toFixed(1)+'px)';
+    var ry=px*9, rx=py*-6;
+    if(media)media.style.transform='scale('+(1.07+breathe).toFixed(3)+') translate('+(px*-16).toFixed(1)+'px,'+(py*-12-bob).toFixed(1)+'px) rotateY('+ry.toFixed(2)+'deg) rotateX('+rx.toFixed(2)+'deg)';
+    // drifting light sweep, brighter when happy
+    if(sheen){var sp=((t*0.14)%1.4)-0.2;sheen.style.transform='translateX('+(sp*100).toFixed(1)+'%)';sheen.style.opacity=(0.28+m*0.5).toFixed(3);}
     // sparkles
     for(var i=0;i<sparks.length;i++){var s=sparks[i],ph=+s.dataset.ph,sp=+s.dataset.sp;
       s.style.opacity=(Math.max(0,m-0.45)*1.8*(0.5+0.5*Math.sin(t*sp*2+ph))).toFixed(3);
-      s.style.transform='translateZ(70px) translateY('+(Math.sin(t*sp+ph)*6).toFixed(1)+'px)';}
+      s.style.transform='translateY('+(Math.sin(t*sp+ph)*6).toFixed(1)+'px)';}
   }
   frame();
 })();
@@ -183,7 +187,7 @@
 {
   "name": "Hero person",
   "settings": [
-    { "type": "paragraph", "content": "The hero shows a cut-out person who pops out in 3D and crossfades from a flat/neutral face to a real smile as it animates and as you drag the slider. The frames live in theme assets as hero-sad-cut.png and hero-happy-cut.png — replace those files to use your own." },
+    { "type": "paragraph", "content": "The hero crossfades a person from a flat/neutral face to a real smile as it animates and as you drag the slider. The two photos live in theme assets as hero-sad.jpg and hero-happy.jpg — replace those files to use your own." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your brain is fried. Here's the reset." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Quit cheap dopamine. Feel good for real — in 7 days." },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset rewires it in a week — 10 minutes a day. Drag the slider → that's the shift." },
