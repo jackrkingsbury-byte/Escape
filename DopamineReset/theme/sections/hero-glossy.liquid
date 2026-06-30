@@ -36,9 +36,15 @@
   .hg__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#ffc24b;margin:0 0 14px}
   .hg h1{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(2.3rem,6.4vw,4.4rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 18px;color:#fff}
   .hg__sub{color:#cfccc4;font-size:clamp(1.05rem,2.1vw,1.32rem);line-height:1.55;max-width:46ch;margin:0 0 30px}
-  .hg__cta{display:flex;gap:13px;flex-wrap:wrap}
-  .hg__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.06rem;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;box-shadow:0 16px 40px rgba(255,138,61,.36);transition:transform .15s}
+  .hg__cta{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  .hg__btnwrap{position:relative;display:inline-flex}
+  .hg__btnwrap::before{content:"";position:absolute;inset:-4px;border-radius:999px;background:linear-gradient(135deg,#ffc24b,#ff8a3d);filter:blur(14px);opacity:.55;z-index:-1;animation:hgglow 2.6s ease-in-out infinite}
+  @keyframes hgglow{0%,100%{opacity:.4;transform:scale(.97)}50%{opacity:.8;transform:scale(1.06)}}
+  .hg__btn{position:relative;display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.06rem;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;box-shadow:0 16px 40px rgba(255,138,61,.36);transition:transform .15s;overflow:hidden}
+  .hg__btn::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:hgshine 3.4s ease-in-out infinite}
+  @keyframes hgshine{0%{left:-120%}28%,100%{left:160%}}
   .hg__btn:hover{transform:translateY(-2px)}
+  @media (prefers-reduced-motion:reduce){.hg__btnwrap::before,.hg__btn::after{animation:none}}
   .hg__btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.22);color:#fff;box-shadow:none}
   .hg__btn--ghost:hover{border-color:#ffc24b;color:#ffc24b}
   .hg__trust{display:flex;gap:24px;flex-wrap:wrap;margin-top:34px;color:#8b877f;font-size:.9rem}
@@ -75,7 +81,7 @@
     <h1>{{ section.settings.heading }}</h1>
     <p class="hg__sub">{{ section.settings.subheading }}</p>
     <div class="hg__cta">
-      <a class="hg__btn" href="{{ section.settings.cta1_url | default: '#pricing' }}">{{ section.settings.cta1_label }}</a>
+      <span class="hg__btnwrap"><a class="hg__btn" href="{{ section.settings.cta1_url | default: '#pricing' }}">{{ section.settings.cta1_label }}</a></span>
       <a class="hg__btn hg__btn--ghost" href="{{ section.settings.cta2_url | default: '#why' }}">{{ section.settings.cta2_label }}</a>
     </div>
     <div class="hg__trust">
