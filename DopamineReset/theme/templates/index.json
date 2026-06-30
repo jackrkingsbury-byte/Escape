@@ -251,6 +251,25 @@
         "cta_url": "#pricing"
       }
     },
+    "trust": {
+      "type": "trust-strip",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "icon": "🔒", "title": "Secure checkout", "text": "Encrypted, handled by Shopify" }},
+        "t2": { "type": "item", "settings": { "icon": "↩️", "title": "7-day guarantee", "text": "Don't feel it? Full refund" }},
+        "t3": { "type": "item", "settings": { "icon": "⚡", "title": "Instant access", "text": "Straight to Day 1, no waiting" }},
+        "t4": { "type": "item", "settings": { "icon": "✅", "title": "Once-off payment", "text": "No subscription, ever" }}
+      },
+      "block_order": ["t1","t2","t3","t4"]
+    },
+    "sticky": {
+      "type": "sticky-cta",
+      "settings": {
+        "title": "Ready to feel good again?",
+        "subtitle": "7 days · 10 min a day · money-back guarantee",
+        "cta_label": "Start — R199",
+        "cta_url": "#pricing"
+      }
+    },
     "pricing": {
       "type": "pricing",
       "blocks": {
@@ -569,7 +588,9 @@
     "bonus_stack",
     "game",
     "compare",
+    "trust",
     "pricing",
+    "sticky",
     "testimonials",
     "guarantee",
     "faq",
