@@ -149,6 +149,28 @@
     });
   }
 
+  /* ---- scroll progress bar ---- */
+  function bindProgress() {
+    if (document.getElementById('drProgress')) return;
+    var bar = document.createElement('div');
+    bar.id = 'drProgress';
+    bar.className = 'dr-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    (document.body || document.documentElement).appendChild(bar);
+    var ticking = false;
+    function paint() {
+      ticking = false;
+      var d = document.documentElement;
+      var max = (d.scrollHeight - d.clientHeight);
+      var p = max > 0 ? (window.pageYOffset || d.scrollTop) / max : 0;
+      bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, p)).toFixed(4) + ')';
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    paint();
+  }
+
   function init() {
     bindReveals();
     bindNav();
@@ -156,6 +178,7 @@
     bindQuiz();
     bindScarcity();
     bindPremium();
+    bindProgress();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
