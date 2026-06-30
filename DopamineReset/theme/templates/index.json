@@ -418,6 +418,20 @@
         "heading": "Questions, answered."
       }
     },
+    "support": {
+      "type": "support",
+      "settings": {
+        "eyebrow": "We've got your back",
+        "heading": "Real support, real privacy, <span class=\"hl\">zero risk</span>",
+        "s1_title": "Talk to a human",
+        "s1_text": "Stuck or unsure about anything? Email us and a real person replies — usually within a day.",
+        "support_email": "",
+        "s2_title": "Your data's safe",
+        "s2_text": "Checkout is encrypted and handled by Shopify. We never see your card details and we'll never sell your information.",
+        "s3_title": "Nothing to lose",
+        "s3_text": "If the reset doesn't make your week better, the 7-day money-back guarantee has you covered. No forms, no hassle."
+      }
+    },
     "final_cta": {
       "type": "final-cta",
       "settings": {
@@ -605,6 +619,7 @@
     "guarantee",
     "founder",
     "faq",
+    "support",
     "final_cta"
   ]
 }
