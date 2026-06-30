@@ -82,12 +82,6 @@
       <span class="hp__sheen" id="hpSheen"></span>
       <span class="hp__grain"></span>
     </div>
-    <div class="hp__hint" id="hpHint">Drag — watch the shift</div>
-    <div class="hp__ctl" id="hpCtl">
-      <span class="hp__cface">😔</span>
-      <div class="hp__track" id="hpTrack"><div class="hp__fill" id="hpFill"></div><div class="hp__knob" id="hpKnob"></div></div>
-      <span class="hp__cface">😄</span>
-    </div>
   </div>
   <div class="hp__scrim"></div>
   <div class="hp__wrap"><div class="hp__in">
@@ -114,67 +108,50 @@
 <script>
 (function(){
   var stage=document.getElementById('hpStage'),img=document.getElementById('hpImg'),cool=document.getElementById('hpCool'),warm=document.getElementById('hpWarm'),
-      halo=document.getElementById('hpHalo'),sheen=document.getElementById('hpSheen'),media=stage&&stage.querySelector('.hp__media'),
-      track=document.getElementById('hpTrack'),fill=document.getElementById('hpFill'),knob=document.getElementById('hpKnob'),hint=document.getElementById('hpHint');
+      halo=document.getElementById('hpHalo'),sheen=document.getElementById('hpSheen'),media=stage&&stage.querySelector('.hp__media');
   if(!stage||!img)return;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function lerp(a,b,t){return a+(b-a)*t}
 
-  // sparkles that appear when happy
+  // floating sparkles
   var sparks=[];
-  if(media){for(var i=0;i<14;i++){var s=document.createElement('span');s.className='hp__spark';var sz=2+Math.random()*4;
-    s.style.width=sz+'px';s.style.height=sz+'px';s.style.left=(15+Math.random()*70)+'%';s.style.top=(12+Math.random()*70)+'%';
-    s.dataset.ph=(Math.random()*6.28).toFixed(2);s.dataset.sp=(0.4+Math.random()*0.8).toFixed(2);media.appendChild(s);sparks.push(s);}}
+  if(media){for(var i=0;i<18;i++){var s=document.createElement('span');s.className='hp__spark';var sz=2+Math.random()*4;
+    s.style.width=sz+'px';s.style.height=sz+'px';s.style.left=(12+Math.random()*72)+'%';s.style.top=(8+Math.random()*72)+'%';
+    s.dataset.ph=(Math.random()*6.28).toFixed(2);s.dataset.sp=(0.4+Math.random()*0.9).toFixed(2);media.appendChild(s);sparks.push(s);}}
 
-  var target=0.85,val=0.18,touched=false,t0=Date.now();
-  function setTarget(v){target=v<0?0:v>1?1:v;touched=true;if(hint)hint.style.opacity='0';}
-  function fromClientX(x){var r=track.getBoundingClientRect();setTarget((x-r.left)/r.width);}
-  var tdrag=false;
-  function dn(e){tdrag=true;fromClientX(e.touches?e.touches[0].clientX:e.clientX);if(e.cancelable)e.preventDefault();}
-  function mv(e){if(!tdrag)return;fromClientX(e.touches?e.touches[0].clientX:e.clientX);if(e.cancelable)e.preventDefault();}
-  function up(){tdrag=false;}
-  track.addEventListener('mousedown',dn);knob.addEventListener('mousedown',dn);
-  track.addEventListener('touchstart',dn,{passive:false});knob.addEventListener('touchstart',dn,{passive:false});
-  window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
-  window.addEventListener('mouseup',up);window.addEventListener('touchend',up);
-  // drag on the image itself
-  var cdrag=false,cx0=0,cv0=0;
-  img.addEventListener('mousedown',function(e){cdrag=true;cx0=e.clientX;cv0=target;e.preventDefault();});
-  img.addEventListener('touchstart',function(e){cdrag=true;cx0=e.touches[0].clientX;cv0=target;},{passive:true});
-  window.addEventListener('mousemove',function(e){if(!cdrag)return;setTarget(cv0+(e.clientX-cx0)/300);});
-  window.addEventListener('touchmove',function(e){if(!cdrag)return;setTarget(cv0+(e.touches[0].clientX-cx0)/300);},{passive:true});
-  window.addEventListener('mouseup',function(){cdrag=false;});window.addEventListener('touchend',function(){cdrag=false;});
-  // parallax
+  // optional desktop parallax — purely additive; everything also moves on its own
   var tpx=0,tpy=0,px=0,py=0;
   window.addEventListener('pointermove',function(e){var r=stage.getBoundingClientRect();tpx=((e.clientX-r.left)/r.width-0.5);tpy=((e.clientY-r.top)/r.height-0.5);});
 
+  var val=0.1,t0=Date.now();
   function frame(){
     requestAnimationFrame(frame);
     var t=(Date.now()-t0)/1000;
-    if(!touched&&!reduce)target=0.5+0.46*Math.sin(t*0.5);
-    val+=(target-val)*0.10;
-    var m=val;
-    // slider UI
-    fill.style.width=(m*100)+'%';knob.style.left=(m*100)+'%';
-    // image grade: cold/dim (sad) -> warm/bright (happy)
-    img.style.filter='grayscale(1) brightness('+lerp(0.55,1.14,m).toFixed(3)+') contrast('+lerp(0.9,1.1,m).toFixed(3)+')';
-    cool.style.opacity=(1-m).toFixed(3);
-    warm.style.opacity=Math.max(0,(m-0.15)*1.05).toFixed(3);
-    // halo grows + warms
-    var hg=Math.max(0,(m-0.2));
-    halo.style.background='radial-gradient(circle,rgba('+Math.round(lerp(120,255,m))+','+Math.round(lerp(140,200,m))+','+Math.round(lerp(255,120,m))+','+(hg*0.55).toFixed(3)+'),transparent 70%)';
-    halo.style.transform='translate(-50%,-50%) scale('+lerp(0.8,1.12,m).toFixed(3)+')';
-    // 3D parallax + breathing
-    px+=(tpx-px)*0.06;py+=(tpy-py)*0.06;
-    var breathe=reduce?0:Math.sin(t*0.9)*0.006, bob=reduce?0:Math.sin(t*0.9)*4;
-    var ry=px*9, rx=py*-6;
-    if(media)media.style.transform='scale('+(1.07+breathe).toFixed(3)+') translate('+(px*-16).toFixed(1)+'px,'+(py*-12-bob).toFixed(1)+'px) rotateY('+ry.toFixed(2)+'deg) rotateX('+rx.toFixed(2)+'deg)';
-    // drifting light sweep, brighter when happy
-    if(sheen){var sp=((t*0.14)%1.4)-0.2;sheen.style.transform='translateX('+(sp*100).toFixed(1)+'%)';sheen.style.opacity=(0.28+m*0.5).toFixed(3);}
-    // sparkles
+    // fully automatic mood cycle: smooth sad -> happy and back, no input needed
+    var target=reduce?0.85:(0.5-0.5*Math.cos(t*0.42));
+    val+=(target-val)*0.06;
+    var m=val, sm=m*m*(3-2*m);
+    // picture grade: richer + brighter, cold -> warm/glowing
+    img.style.filter='grayscale(1) brightness('+lerp(0.82,1.2,m).toFixed(3)+') contrast('+lerp(1.0,1.16,m).toFixed(3)+')';
+    cool.style.opacity=(0.85*(1-m)).toFixed(3);
+    warm.style.opacity=Math.max(0,(m-0.1)*1.05).toFixed(3);
+    // glowing halo behind the head: pulses + warms
+    var hg=Math.max(0,(m-0.15)), pulse=reduce?1:(1+0.05*Math.sin(t*1.6));
+    halo.style.background='radial-gradient(circle,rgba('+Math.round(lerp(120,255,m))+','+Math.round(lerp(140,205,m))+','+Math.round(lerp(255,120,m))+','+(hg*0.6).toFixed(3)+'),transparent 70%)';
+    halo.style.transform='translate(-50%,-50%) scale('+(lerp(0.82,1.14,m)*pulse).toFixed(3)+')';
+    // cinematic: slow Ken-Burns zoom + auto 3D sway + breathing (+ pointer parallax)
+    px+=(tpx-px)*0.05;py+=(tpy-py)*0.05;
+    var kb=reduce?0:0.05*(0.5-0.5*Math.cos(t*0.16));
+    var breathe=reduce?0:Math.sin(t*0.9)*0.005, bob=reduce?0:Math.sin(t*0.9)*4;
+    var swayY=reduce?0:Math.sin(t*0.33)*3.2, swayX=reduce?0:Math.sin(t*0.27)*1.8;
+    var ry=swayY+px*8, rx=swayX+py*-6;
+    if(media)media.style.transform='scale('+(1.06+kb+breathe).toFixed(3)+') translate('+(px*-16).toFixed(1)+'px,'+(py*-12-bob).toFixed(1)+'px) rotateY('+ry.toFixed(2)+'deg) rotateX('+rx.toFixed(2)+'deg)';
+    // light sweep across the face, brighter at the happy peak
+    if(sheen){var spp=((t*0.12)%1.5)-0.25;sheen.style.transform='translateX('+(spp*100).toFixed(1)+'%)';sheen.style.opacity=(0.22+sm*0.55).toFixed(3);}
+    // rising sparkles at the happy end
     for(var i=0;i<sparks.length;i++){var s=sparks[i],ph=+s.dataset.ph,sp=+s.dataset.sp;
-      s.style.opacity=(Math.max(0,m-0.45)*1.8*(0.5+0.5*Math.sin(t*sp*2+ph))).toFixed(3);
-      s.style.transform='translateY('+(Math.sin(t*sp+ph)*6).toFixed(1)+'px)';}
+      s.style.opacity=(Math.max(0,m-0.4)*1.7*(0.5+0.5*Math.sin(t*sp*2+ph))).toFixed(3);
+      s.style.transform='translateY('+(Math.sin(t*sp+ph)*7-(m*6)).toFixed(1)+'px)';}
   }
   frame();
 })();
