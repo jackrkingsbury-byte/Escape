@@ -149,6 +149,37 @@
     });
   }
 
+  /* ---- animated count-up on stats & prices ---- */
+  function bindCounters() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+    var els = document.querySelectorAll('.hp__trust b, #stack span, .was, .now, .facts .stat b');
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        cio.unobserve(en.target);
+        var el = en.target, txt = el.textContent;
+        var mch = txt.match(/^([^0-9]*)(\d+(?:[.,]\d+)?)(.*)$/);
+        if (!mch) return;
+        var pre = mch[1], num = parseFloat(mch[2].replace(',', '.')), suf = mch[3];
+        if (!isFinite(num) || num <= 0) return;
+        var dec = (mch[2].indexOf('.') > -1 || mch[2].indexOf(',') > -1) ? 1 : 0;
+        var t0 = null, DUR = 900;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min(1, (ts - t0) / DUR);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + (num * e).toFixed(dec) + suf;
+          if (p < 1) requestAnimationFrame(step); else el.textContent = txt;
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    els.forEach(function (el) {
+      if (/\d/.test(el.textContent)) cio.observe(el);
+    });
+  }
+
   /* ---- scroll progress bar ---- */
   function bindProgress() {
     if (document.getElementById('drProgress')) return;
@@ -178,6 +209,7 @@
     bindQuiz();
     bindScarcity();
     bindPremium();
+    bindCounters();
     bindProgress();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
