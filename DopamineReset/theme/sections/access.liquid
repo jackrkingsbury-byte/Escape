@@ -205,7 +205,7 @@
   .dr ul.tick{list-style:none;padding:0;margin:8px 0}.dr ul.tick li{padding:9px 0 9px 26px;position:relative;color:var(--soft);border-top:1px solid var(--line2)}
   .dr ul.tick li:first-child{border:0}.dr ul.tick li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
 
-  .dr__modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,4,8,.72);backdrop-filter:blur(6px)}
+  .dr__modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,4,8,.84);backdrop-filter:blur(16px) saturate(.7);-webkit-backdrop-filter:blur(16px) saturate(.7)}
   .dr__modal.on{display:flex;animation:fade .25s}
   .dr__sheet{background:#14111c;border:1px solid var(--line);border-radius:22px;max-width:500px;width:100%;overflow:hidden;max-height:92vh;display:flex;flex-direction:column}
   .dr__sheet .top{position:relative;min-height:150px;display:grid;place-items:center;padding:14px}
@@ -251,7 +251,7 @@
   .dr__fab{position:fixed;right:18px;bottom:18px;z-index:70;display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:14px 20px;font-size:.96rem;background:linear-gradient(135deg,var(--amber),var(--orange));color:#2a1400;box-shadow:0 12px 32px rgba(255,138,61,.5);cursor:pointer;border:0;animation:fabpop .4s cubic-bezier(.2,.8,.2,1)}
   @keyframes fabpop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
   @media(min-width:821px){.dr__fab{right:28px;bottom:24px;padding:15px 24px;font-size:1.02rem}}
-  .dr__quick{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;justify-content:center;background:rgba(5,4,8,.62);backdrop-filter:blur(6px)}
+  .dr__quick{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;justify-content:center;background:rgba(5,4,8,.74);backdrop-filter:blur(16px) saturate(.7);-webkit-backdrop-filter:blur(16px) saturate(.7)}
   .dr__quick.on{display:flex;animation:fade .25s}
   .dr__qsheet{background:var(--bg2);border:1px solid var(--line);border-radius:24px 24px 0 0;width:100%;max-width:580px;padding:22px;max-height:84vh;overflow:auto;animation:qup .3s cubic-bezier(.2,.8,.2,1)}
   @keyframes qup{from{transform:translateY(40px)}to{transform:none}}
@@ -350,9 +350,14 @@
   /* smoother panel entrance: fade + slide up */
   .dr .panel.on{animation:drpanel .42s cubic-bezier(.2,.7,.2,1)}
   @keyframes drpanel{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  /* focus pop-in: when an overlay opens it zooms into focus while the rest blurs */
+  .dr__modal.on .dr__sheet{animation:drpop .44s cubic-bezier(.2,.8,.2,1)}
+  @keyframes drpop{from{opacity:0;transform:scale(.9) translateY(14px)}to{opacity:1;transform:none}}
+  .dr__quick.on .dr__qsheet{animation:drpopup .44s cubic-bezier(.2,.8,.2,1)}
+  @keyframes drpopup{from{opacity:0;transform:translateY(48px)}to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){
     .dr__lvlbar i::after,.dr .bar i::after,.dr .xps__bar i::after,.dr .msnc .pb i::after{animation:none}
-    .dr .panel.on{animation:none}
+    .dr .panel.on,.dr__modal.on .dr__sheet,.dr__quick.on .dr__qsheet{animation:none}
   }
 </style>
 
