@@ -29,6 +29,14 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
   .hp__spark{position:absolute;border-radius:50%;background:#ffd98a;box-shadow:0 0 10px 2px rgba(255,200,120,.8);z-index:4;opacity:0;pointer-events:none}
 
+  /* glowing brain inside the head (MindAI-style) */
+  .hp__brain{position:absolute;left:50%;top:26%;width:36%;aspect-ratio:1.2;transform:translate(-50%,-50%);z-index:2;pointer-events:none}
+  .hp__bglow{position:absolute;inset:0;border-radius:50%;filter:blur(24px);mix-blend-mode:screen;opacity:0;
+    background:radial-gradient(circle at 50% 55%,rgba(255,196,96,.95),rgba(255,120,60,.4) 52%,transparent 74%)}
+  .hp__bcore{position:absolute;left:30%;top:30%;width:40%;height:40%;border-radius:50%;filter:blur(10px);mix-blend-mode:screen;opacity:0;
+    background:radial-gradient(circle,rgba(255,240,200,.95),transparent 70%)}
+  .hp__syn{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffedbe;box-shadow:0 0 9px 2px rgba(255,205,115,.95);mix-blend-mode:screen;opacity:0}
+
   /* floating 3D objects */
   .hp__objs{position:absolute;inset:0;z-index:5;pointer-events:none}
   .hp__obj{position:absolute;will-change:transform}
@@ -100,6 +108,7 @@
       {%- else -%}
         <img class="hp__img" id="hpImg" src="{{ 'hero-person.png' | asset_url }}" alt="A person feeling the shift from flat to good">
       {%- endif -%}
+      <div class="hp__brain" id="hpBrain"><span class="hp__bglow" id="hpBglow"></span><span class="hp__bcore" id="hpBcore"></span></div>
       <span class="hp__cool" id="hpCool"></span>
       <span class="hp__warm" id="hpWarm"></span>
       <span class="hp__sheen" id="hpSheen"></span>
@@ -141,6 +150,14 @@
   var stage=document.getElementById('hpStage'),img=document.getElementById('hpImg'),cool=document.getElementById('hpCool'),warm=document.getElementById('hpWarm'),
       halo=document.getElementById('hpHalo'),sheen=document.getElementById('hpSheen'),bloom=document.getElementById('hpBloom'),media=stage&&stage.querySelector('.hp__media');
   var objs=stage?stage.querySelectorAll('.hp__obj'):[];
+  var brain=document.getElementById('hpBrain'),bglow=document.getElementById('hpBglow'),bcore=document.getElementById('hpBcore');
+  // synapse sparks scattered inside the skull area
+  var syns=[];
+  if(brain){for(var bi=0;bi<16;bi++){var sy=document.createElement('span');sy.className='hp__syn';
+    var ang=Math.random()*6.2832,rad=Math.random()*0.36+0.08;
+    sy.style.left=(50+Math.cos(ang)*rad*90)+'%';sy.style.top=(52+Math.sin(ang)*rad*74)+'%';
+    sy.dataset.ph=(Math.random()*6.28).toFixed(2);sy.dataset.sp=(0.8+Math.random()*1.6).toFixed(2);
+    brain.appendChild(sy);syns.push(sy);}}
   if(!stage||!img)return;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function lerp(a,b,t){return a+(b-a)*t}
@@ -186,6 +203,13 @@
     for(var i=0;i<sparks.length;i++){var s=sparks[i],ph=+s.dataset.ph,sp=+s.dataset.sp;
       s.style.opacity=(Math.max(0,m-0.4)*1.7*(0.5+0.5*Math.sin(t*sp*2+ph))).toFixed(3);
       s.style.transform='translateY('+(Math.sin(t*sp+ph)*7-(m*6)).toFixed(1)+'px)';}
+    // brain ignition: glow + core + synapses fire up as the mood lifts
+    if(bglow){var bp=reduce?1:(1+0.06*Math.sin(t*2.1));
+      bglow.style.opacity=(sm*0.85).toFixed(3);
+      bglow.style.transform='scale('+(bp*lerp(0.85,1.05,m)).toFixed(3)+')';}
+    if(bcore)bcore.style.opacity=(Math.max(0,sm-0.25)*1.1).toFixed(3);
+    for(var k=0;k<syns.length;k++){var sn=syns[k],sph=+sn.dataset.ph,ssp=+sn.dataset.sp;
+      sn.style.opacity=(sm*Math.max(0,0.25+0.75*Math.sin(t*ssp*2.4+sph))).toFixed(3);}
     // floating objects: depth parallax + slight lift when happy
     for(var j=0;j<objs.length;j++){var o=objs[j],d=+o.getAttribute('data-d')||1;
       o.style.transform='translate('+(px*-d*16).toFixed(1)+'px,'+(py*-d*12-m*d*4).toFixed(1)+'px)';}
