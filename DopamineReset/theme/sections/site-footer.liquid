@@ -1,10 +1,43 @@
+{% raw %}
+<style>
+  .site-footer{position:relative;background:#04060e;border-top:1px solid rgba(255,255,255,.06);padding:clamp(46px,7vw,80px) 0 34px;overflow:hidden}
+  .site-footer::before{content:"";position:absolute;left:50%;top:-40%;width:70vmax;height:60vmax;transform:translateX(-50%);border-radius:50%;filter:blur(110px);opacity:.14;pointer-events:none;background:radial-gradient(circle,#7c5cff,transparent 65%)}
+  .sf__wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px}
+  .sf__top{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;margin-bottom:clamp(30px,5vw,50px)}
+  .sf__brand{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:1.7rem;color:#fff;margin:0 0 10px}
+  .sf__brand i{font-style:normal;color:#4de3ff}
+  .sf__tag{color:#7d8499;font-size:.95rem;max-width:34ch;line-height:1.6;margin:0}
+  .sf__links{display:flex;gap:14px 28px;flex-wrap:wrap;align-items:flex-start}
+  .sf__links a{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#9aa1b5;transition:color .2s}
+  .sf__links a:hover{color:#4de3ff}
+  .sf__trust{display:flex;gap:12px 26px;flex-wrap:wrap;padding:20px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:26px}
+  .sf__trust span{display:inline-flex;align-items:center;gap:8px;color:#7d8499;font-size:.84rem}
+  .sf__bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#565d70;font-size:.8rem}
+  .sf__bottom b{color:#7d8499;font-weight:600}
+</style>
+{% endraw %}
 <footer class="site-footer">
-  <div class="wrap site-footer__inner">
-    <div>© {{ 'now' | date: '%Y' }} {{ section.settings.brand | default: settings.brand_name }}. {{ section.settings.tagline }}</div>
-    <div style="display:flex;gap:20px;flex-wrap:wrap">
-      {%- for block in section.blocks -%}
-        <a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
-      {%- endfor -%}
+  <div class="sf__wrap">
+    <div class="sf__top">
+      <div>
+        <p class="sf__brand">{{ section.settings.brand | default: settings.brand_name }}<i>.</i></p>
+        <p class="sf__tag">{{ section.settings.tagline }}</p>
+      </div>
+      <div class="sf__links">
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="sf__trust">
+      <span>⚡ Instant access after payment</span>
+      <span>🔒 Secure Shopify checkout</span>
+      <span>↩️ 7-day money-back guarantee</span>
+      <span>✅ Once-off — no subscription</span>
+    </div>
+    <div class="sf__bottom">
+      <div>© {{ 'now' | date: '%Y' }} <b>{{ section.settings.brand | default: settings.brand_name }}</b>. All rights reserved.</div>
+      <div>Made in South Africa 🇿🇦</div>
     </div>
   </div>
 </footer>
@@ -13,8 +46,8 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "text", "id": "brand", "label": "Brand", "default": "ESCAPE" },
-    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Build a life you don't need to escape from." }
+    { "type": "text", "id": "brand", "label": "Brand", "default": "Dopamine Reset" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Quit cheap dopamine. Feel good for real." }
   ],
   "blocks": [
     {
