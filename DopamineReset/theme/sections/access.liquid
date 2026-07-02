@@ -144,6 +144,18 @@
   .dr .coach__reply.on{display:block;animation:fade .3s}
   .dr .coach__reply p{color:#fff;margin:0 0 12px}
   .dr .coach__quote{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-style:italic;color:#e7e2f5;font-size:.96rem}
+  /* coach chat thread */
+  .dr .cochat{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .dr .cobub{max-width:88%;padding:12px 15px;border-radius:17px;font-size:.98rem;line-height:1.5;color:#fff;animation:fade .3s}
+  .dr .cobub.c{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:6px;align-self:flex-start}
+  .dr .cobub.u{background:linear-gradient(135deg,var(--violet),#5a3ff0);border-bottom-right-radius:6px;align-self:flex-end}
+  .dr .cobub .btn{margin-top:10px}
+  .dr .cotype{display:inline-flex;gap:4px;align-self:flex-start;padding:13px 15px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-radius:17px;border-bottom-left-radius:6px}
+  .dr .cotype i{width:7px;height:7px;border-radius:50%;background:#cfc8e8;animation:cotp 1s infinite}
+  .dr .cotype i:nth-child(2){animation-delay:.15s}.dr .cotype i:nth-child(3){animation-delay:.3s}
+  @keyframes cotp{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+  .dr .coqr{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+  @media (prefers-reduced-motion:reduce){.dr .cotype i{animation:none}}
 
   .dr .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:999px;padding:13px 22px;background:#fff;color:#2a1400;transition:transform .15s}
   .dr .btn:active{transform:scale(.96)}
@@ -429,7 +441,7 @@
         </div>
         <div class="coach__ask">What are you struggling with? Tap one →</div>
         <div class="chips" id="coachChips"></div>
-        <div class="coach__reply" id="coachReply"></div>
+        <div class="cochat" id="coChat"></div>
         <div class="coach__quote" id="coQuote"></div>
       </div>
       <h3 style="margin:18px 0 2px">What do you want to do right now? 👇</h3>
@@ -940,6 +952,22 @@ try{
   var mb=$('#moodBtns');if(mb){FACES.forEach(function(f,i){var b=document.createElement('button');b.className='moodb';b.title=f.n;b.textContent=f.e;b.setAttribute('data-face',i);mb.appendChild(b)})}
   // coach chips
   var chips=$('#coachChips');if(chips){chips.innerHTML=COACH.map(function(c,i){return '<button class="chip" data-coach="'+i+'">'+c.e+' '+c.l+'</button>'}).join('')}
+  // --- coach chat thread ---
+  function coMsg(who,html){var c=$('#coChat');if(!c)return null;var b=document.createElement('div');b.className='cobub '+who;b.innerHTML=html;c.appendChild(b);return b}
+  function coType(fn){var c=$('#coChat');if(!c){fn();return}
+    var tp=document.createElement('div');tp.className='cotype';tp.innerHTML='<i></i><i></i><i></i>';c.appendChild(tp);
+    setTimeout(function(){if(tp.parentNode)tp.parentNode.removeChild(tp);fn();
+      var e=c.lastChild;if(e&&e.scrollIntoView)e.scrollIntoView({behavior:'smooth',block:'nearest'});},650);}
+  function coPlanMsg(){var i=cur(),dn=DAYS[i];var ti=(dn&&dn.t)?dn.t:'your daily action';
+    return "Today's plan: <b>"+ti+"</b> — about 10 minutes. Do it, tick it off, +30 XP. <button class=\"btn btn--g btn--sm\" data-open-today>Open day "+(i+1)+" →</button>";}
+  (function(){var c=$('#coChat');if(!c)return;var d=dc(),s=streak();
+    var m=d===0
+      ?"Quick check-in before anything else 👊 It's day 1 — one 10-minute win is all we need today. How are you feeling?"
+      :"Daily check-in 🙌 You've done "+d+" day"+(d===1?'':'s')+(s>1?" and you're on a "+s+"-day streak 🔥":"")+". How are you feeling right now?";
+    coMsg('c',m);
+    var qr=document.createElement('div');qr.className='coqr';
+    qr.innerHTML='<button class="chip" data-cq="good">Feeling good 💪</button><button class="chip" data-cq="meh">Struggling a bit 😮‍💨</button><button class="chip" data-cq="plan">Give me today\'s plan 🎯</button>';
+    c.appendChild(qr);})();
 
   var VIS=[{e:'💰',t:'Money & freedom',p:'What would real freedom let you do?'},{e:'💪',t:'Health & body',p:'How do you want to look and feel?'},{e:'❤️',t:'People',p:'Who do you want to be fully there for?'},{e:'🧭',t:'Who you are becoming',p:'A year from now, who are you proud to be?'}];
   var vr=$('#visionRows');
@@ -964,7 +992,17 @@ try{
     var dj=e.target.closest('[data-journey]');if(dj){openJourney(JOURNEYS[+dj.getAttribute('data-journey')]);return}
     var da=e.target.closest('[data-article]');if(da){openArticle(+da.getAttribute('data-article'));return}
     var df=e.target.closest('[data-face]');if(df){var fi=+df.getAttribute('data-face');state.moods[cur()]=fi;state.moodLog[todayKey()]=fi;markDaily('mood');save();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===df)});var rep=$('#moodReply');if(rep){rep.style.display='block';rep.innerHTML='<h3>'+FACES[fi].e+' '+FACES[fi].n+'</h3><p style="margin:0">'+FACES[fi].say+'</p>'}celebrate();return}
-    var dco=e.target.closest('[data-coach]');if(dco){var ci=+dco.getAttribute('data-coach'),co=COACH[ci];$$('.chip').forEach(function(x){x.classList.toggle('on',x===dco)});var rb=$('#coachReply');if(rb){rb.classList.add('on');rb.innerHTML='<p>'+co.say+'</p><button class="btn btn--g btn--sm" data-cocta="'+ci+'">'+co.cta.label+' →</button>'}return}
+    var dcq=e.target.closest('[data-cq]');if(dcq){var qk=dcq.getAttribute('data-cq');coMsg('u',dcq.textContent);
+      var qrw=dcq.parentNode;if(qrw&&qrw.parentNode)qrw.parentNode.removeChild(qrw);
+      coType(function(){
+        if(qk==='good')coMsg('c',"Love that. Momentum is the whole game — lock it in while it's easy: today's 10-minute action. <button class=\"btn btn--g btn--sm\" data-open-today>Today's challenge →</button>");
+        else if(qk==='meh')coMsg('c',"That's honest — and completely normal mid-reset. Let's lower the bar: 90 seconds of urge-surfing or one quick game, then you decide. <button class=\"btn btn--g btn--sm\" data-go=\"games\">Reset me now →</button>");
+        else coMsg('c',coPlanMsg());
+      });return}
+    var dco=e.target.closest('[data-coach]');if(dco){var ci=+dco.getAttribute('data-coach'),co=COACH[ci];
+      coMsg('u',dco.textContent);
+      coType(function(){coMsg('c',co.say+' <button class="btn btn--g btn--sm" data-cocta="'+ci+'" style="display:block">'+co.cta.label+' →</button>');});
+      return}
     var dcc=e.target.closest('[data-cocta]');if(dcc){var co2=COACH[+dcc.getAttribute('data-cocta')].cta;if(co2.t==='game')openGame(co2.id);else if(co2.t==='today')openDay(cur());else if(co2.t==='go'){var btn=document.querySelector('[data-go="'+co2.id+'"]');if(btn)btn.click()}return}
   });
   $('#mClose').addEventListener('click',closeM);$('#drModal').addEventListener('click',function(e){if(e.target===this)closeM()});
