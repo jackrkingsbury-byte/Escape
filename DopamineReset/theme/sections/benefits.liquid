@@ -1,11 +1,11 @@
 {%- liquid
-  assign grads = "linear-gradient(135deg,#ff8a3d,#ffc24b)|linear-gradient(135deg,#ff5c8a,#7c5cff)|linear-gradient(135deg,#2bd3c6,#4f8cff)|linear-gradient(135deg,#5ad48a,#bfe65a)|linear-gradient(135deg,#7c5cff,#ff5c8a)|linear-gradient(135deg,#ffd24b,#ff6b6b)" | split: "|"
+  assign grads = "linear-gradient(135deg,#7c5cff,#4de3ff)|linear-gradient(135deg,#ff5c8a,#7c5cff)|linear-gradient(135deg,#2bd3c6,#4f8cff)|linear-gradient(135deg,#5ad48a,#bfe65a)|linear-gradient(135deg,#7c5cff,#ff5c8a)|linear-gradient(135deg,#ffd24b,#ff6b6b)" | split: "|"
 -%}
 {% raw %}
 <style>
   .bn{padding:clamp(56px,9vw,110px) 0;position:relative;overflow:hidden}
   .bn__wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
-  .bn__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#ffc24b;margin-bottom:14px}
+  .bn__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#4de3ff;margin-bottom:14px}
   .bn h2{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(1.9rem,4.6vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin:0 0 14px;max-width:20ch;color:#fff}
   .bn__lead{color:#cfccc4;font-size:clamp(1.05rem,2vw,1.25rem);max-width:54ch;margin:0 0 8px;line-height:1.55}
   .bn__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:42px;perspective:1200px}
@@ -14,7 +14,7 @@
     transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
   .bn__card:hover{transform:rotateX(7deg) rotateY(-8deg) translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
   .bn__bg{position:absolute;inset:0;z-index:0;background-size:220% 220%;animation:bngrad 9s ease infinite;opacity:.95}
-  .bn__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 30%,rgba(8,6,12,.78) 100%)}
+  .bn__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 30%,rgba(7,10,22,.78) 100%)}
   @keyframes bngrad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   .bn__stage{position:absolute;top:18px;left:0;right:0;height:140px;z-index:1;display:grid;place-items:center;transform-style:preserve-3d}
   .bn__halo{position:absolute;width:104px;height:104px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.3),transparent 62%);animation:bnpulse 4.2s ease-in-out infinite}
@@ -29,9 +29,9 @@
   @media (prefers-reduced-motion:reduce){.bn__obj,.bn__halo,.bn__ring,.bn__bg{animation:none}}
   .bn__strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
   .bn__chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:9px 16px;font-size:.9rem;color:#e8e6e0}
-  .bn__chip b{color:#ffc24b}
+  .bn__chip b{color:#4de3ff}
   .bn__cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .bn__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.05rem;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;box-shadow:0 16px 40px rgba(255,138,61,.34);transition:transform .15s}
+  .bn__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.05rem;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 16px 40px rgba(124,92,255,.34);transition:transform .15s}
   .bn__btn:hover{transform:translateY(-2px)}
   .bn__note{color:#8b877f;font-size:.92rem}
 </style>

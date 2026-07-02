@@ -4,7 +4,7 @@
    ============================================================ */
 
 :root{
-  --bg:#0d0b13;
+  --bg:#070a16;
   --bg-2:#15121d;
   --bg-3:#1b1727;
   --ink:#f5f4f0;
@@ -12,8 +12,8 @@
   --ink-faint:#7d7b74;
   --line:rgba(255,255,255,.10);
   --line-soft:rgba(255,255,255,.06);
-  --gold:#ffc24b;
-  --gold-deep:#ff8a3d;
+  --gold:#4de3ff;
+  --gold-deep:#7c5cff;
   --accent:#ff5c8a;
   --accent-2:#7c5cff;
   --good:#5ad48a;
@@ -29,7 +29,7 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-.dr-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:90;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#ffc24b,#ff5c8a,#7c5cff,#2bd3c6);box-shadow:0 1px 8px rgba(255,138,61,.5);pointer-events:none;will-change:transform}
+.dr-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:90;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#4de3ff,#ff5c8a,#7c5cff,#2bd3c6);box-shadow:0 1px 8px rgba(124,92,255,.5);pointer-events:none;will-change:transform}
 @media (prefers-reduced-motion:reduce){.dr-progress{transition:none}}
 body{
   margin:0;background:var(--bg);color:var(--ink);
@@ -106,7 +106,7 @@ p{margin:0 0 1em;color:var(--ink-soft)}
 .hero::before{
   content:"";position:absolute;inset:-20% -10% auto -10%;height:70%;
   background:radial-gradient(60% 60% at 50% 0%,rgba(255,92,138,.22),transparent 70%),
-             radial-gradient(50% 50% at 80% 10%,rgba(255,194,75,.18),transparent 70%);
+             radial-gradient(50% 50% at 80% 10%,rgba(77,227,255,.18),transparent 70%);
   filter:blur(20px);z-index:0;pointer-events:none;
 }
 .hero__inner{position:relative;z-index:1;max-width:780px}
@@ -258,7 +258,7 @@ p{margin:0 0 1em;color:var(--ink-soft)}
 /* ============================================================
    Colour-pop + animated accents (added)
    ============================================================ */
-.hl{background:linear-gradient(135deg,#ffc24b,#ff8a3d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hl{background:linear-gradient(135deg,#4de3ff,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 .hl2{background:linear-gradient(135deg,#ff5c8a,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 .hl3{background:linear-gradient(135deg,#2bd3c6,#4f8cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 @keyframes drfloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6px,-20px) scale(1.08)}}
@@ -266,15 +266,15 @@ p{margin:0 0 1em;color:var(--ink-soft)}
 @keyframes drspin{to{transform:rotate(360deg)}}
 .orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .orb{position:absolute;border-radius:50%;filter:blur(14px);opacity:.45;mix-blend-mode:screen;will-change:transform}
-.orb--a{width:220px;height:220px;background:radial-gradient(circle,#ff8a3d,transparent 70%);animation:drfloat 9s ease-in-out infinite}
+.orb--a{width:220px;height:220px;background:radial-gradient(circle,#7c5cff,transparent 70%);animation:drfloat 9s ease-in-out infinite}
 .orb--b{width:260px;height:260px;background:radial-gradient(circle,#ff5c8a,transparent 70%);animation:drfloat2 11s ease-in-out infinite}
 .orb--c{width:200px;height:200px;background:radial-gradient(circle,#7c5cff,transparent 70%);animation:drfloat 13s ease-in-out infinite}
 .orb--d{width:180px;height:180px;background:radial-gradient(circle,#2bd3c6,transparent 70%);animation:drfloat2 10s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.orb{animation:none}}
 section .wrap, section .bn__wrap{position:relative;z-index:1}
 /* brighten the featured pricing tier */
-.tier--featured{box-shadow:0 24px 60px rgba(255,138,61,.28),0 0 0 1px rgba(255,194,75,.5) inset}
-.tier--featured .tier__badge{background:linear-gradient(135deg,#ffc24b,#ff8a3d)}
+.tier--featured{box-shadow:0 24px 60px rgba(124,92,255,.28),0 0 0 1px rgba(77,227,255,.5) inset}
+.tier--featured .tier__badge{background:linear-gradient(135deg,#4de3ff,#7c5cff)}
 
 /* ===== premium pass 2: ripple + depth + tilt easing ===== */
 .btn{position:relative;overflow:hidden;transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,filter .2s}
@@ -286,5 +286,5 @@ section .wrap, section .bn__wrap{position:relative;z-index:1}
 @media (prefers-reduced-motion:reduce){.rip{display:none}.tier,.feature,.card,.quote,.bn__card{will-change:auto}}
 
 /* ===== pass 6: accessibility focus states ===== */
-a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #ffc24b;outline-offset:2px;border-radius:6px}
+a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #4de3ff;outline-offset:2px;border-radius:6px}
 .btn:focus:not(:focus-visible){outline:none}

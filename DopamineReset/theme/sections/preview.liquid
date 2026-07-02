@@ -1,6 +1,6 @@
 {% raw %}
 <style>
-  .pv{position:relative;padding:clamp(72px,11vw,128px) 0;background:radial-gradient(110% 80% at 20% 10%,#171024 0%,#0a0812 62%);overflow:hidden}
+  .pv{position:relative;padding:clamp(72px,11vw,128px) 0;background:radial-gradient(110% 80% at 20% 10%,#171024 0%,#080d1c 62%);overflow:hidden}
   .pv__glow{position:absolute;width:42vmax;height:42vmax;border-radius:50%;filter:blur(95px);opacity:.3;pointer-events:none}
   .pv__glow.g1{background:radial-gradient(circle,#2bd3c6,transparent 65%);top:-12vmax;right:-8vmax}
   .pv__glow.g2{background:radial-gradient(circle,#7c5cff,transparent 65%);bottom:-14vmax;left:-10vmax}
@@ -32,7 +32,7 @@
   .pv__phone{position:relative;width:300px;max-width:88vw;aspect-ratio:300/620;border-radius:42px;padding:13px;
     background:linear-gradient(160deg,#2a2438,#13101c);box-shadow:0 40px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.12),0 0 0 1px rgba(255,255,255,.06);animation:pvfloat 6s ease-in-out infinite}
   @keyframes pvfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  .pv__notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#0a0812;border-radius:0 0 16px 16px;z-index:6}
+  .pv__notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#080d1c;border-radius:0 0 16px 16px;z-index:6}
   .pv__screen{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;background:radial-gradient(120% 70% at 70% 0%,#1a1330,#0c0a14);color:#f3f1ea}
   .pv__sbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 6px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.66rem;color:#9b97a8}
   .pv__view{position:absolute;inset:0;top:30px;padding:14px 16px 16px;overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s;pointer-events:none}
@@ -57,10 +57,10 @@
 
   /* generic card */
   .pv__c{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 13px;margin-bottom:10px}
-  .pv__pill{display:inline-block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#ffc24b;background:rgba(255,194,75,.12);border-radius:99px;padding:3px 9px;margin-bottom:8px}
+  .pv__pill{display:inline-block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#4de3ff;background:rgba(77,227,255,.12);border-radius:99px;padding:3px 9px;margin-bottom:8px}
   .pv__ch{font-weight:700;font-size:.95rem;margin:0 0 4px}
   .pv__cx{font-size:.78rem;color:#bdb9b1;line-height:1.45;margin:0}
-  .pv__btn{display:block;text-align:center;margin-top:10px;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;font-weight:800;font-size:.82rem;border-radius:11px;padding:9px}
+  .pv__btn{display:block;text-align:center;margin-top:10px;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;font-weight:800;font-size:.82rem;border-radius:11px;padding:9px}
 
   /* habit rows */
   .pv__habit{display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:8px;font-size:.84rem}
@@ -86,7 +86,7 @@
   /* mood */
   .pv__moods{display:flex;justify-content:space-between;margin-bottom:14px}
   .pv__moods button{font-size:1.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px;width:44px;height:44px;cursor:pointer;transition:transform .15s}
-  .pv__moods button.sel{transform:scale(1.12);border-color:#ffc24b;background:rgba(255,194,75,.14)}
+  .pv__moods button.sel{transform:scale(1.12);border-color:#4de3ff;background:rgba(77,227,255,.14)}
   .pv__chart{display:flex;align-items:flex-end;gap:7px;height:96px;padding:8px 4px 0;border-bottom:1px solid rgba(255,255,255,.1)}
   .pv__bar{flex:1;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#2bd3c6,#7c5cff);opacity:.9}
   .pv__days{display:flex;justify-content:space-between;font-size:.58rem;color:#9b97a8;margin-top:6px}

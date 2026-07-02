@@ -2,24 +2,28 @@
 <style>
   .hl3d{position:relative;overflow:hidden;min-height:clamp(600px,96vh,920px);display:flex;align-items:center;color:#221a26;
     background:radial-gradient(120% 90% at 50% 0%,#eae5ec 0%,#dcd6e0 55%,#cfc9d6 100%)}
-  .hl3d::before{content:"";position:absolute;left:0;right:0;top:0;height:90px;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(8,6,16,.55),transparent)}
-  .hl3d::after{content:"";position:absolute;left:0;right:0;bottom:0;height:130px;z-index:6;pointer-events:none;background:linear-gradient(180deg,transparent,#080610)}
+  .hl3d::before{content:"";position:absolute;left:0;right:0;top:0;height:90px;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(6,9,19,.55),transparent)}
+  .hl3d::after{content:"";position:absolute;left:0;right:0;bottom:0;height:130px;z-index:6;pointer-events:none;background:linear-gradient(180deg,transparent,#060913)}
 
   /* center stage */
-  .hl3d__stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(46vw,560px);aspect-ratio:602/698;z-index:1}
+  .hl3d__stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(44vw,520px);aspect-ratio:602/696;z-index:1}
   .hl3d__media{position:absolute;inset:0;will-change:transform}
-  .hl3d__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);
-    filter:grayscale(1) brightness(1.42) contrast(1.02);
-    -webkit-mask-image:radial-gradient(74% 70% at 50% 44%,#000 52%,transparent 76%);
-    mask-image:radial-gradient(74% 70% at 50% 44%,#000 52%,transparent 76%)}
-  .hl3d__aura{position:absolute;left:58%;top:30%;width:56%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(46px);pointer-events:none;z-index:2;mix-blend-mode:screen;
-    background:radial-gradient(circle,rgba(255,190,90,.85),rgba(255,130,60,.32) 55%,transparent 74%)}
-  .hl3d__core{position:absolute;left:58%;top:29%;width:20%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(13px);pointer-events:none;z-index:2;mix-blend-mode:screen;
+  .hl3d__faces{position:absolute;inset:0;filter:grayscale(1) brightness(1.4) contrast(1.03);
+    -webkit-mask-image:radial-gradient(76% 72% at 50% 42%,#000 50%,transparent 76%);
+    mask-image:radial-gradient(76% 72% at 50% 42%,#000 50%,transparent 76%)}
+  .hl3d__face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+  .hl3d__face.happy{opacity:0;will-change:opacity}
+  .hl3d__lid{position:absolute;width:11%;height:4.4%;border-radius:50%;background:#b9b3ae;filter:blur(3px);opacity:0;transition:opacity .05s;z-index:2;pointer-events:none}
+  .hl3d__lid.l{left:31.5%;top:38.6%}
+  .hl3d__lid.r{left:52.5%;top:38.6%}
+  .hl3d__aura{position:absolute;left:50%;top:22%;width:52%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(44px);pointer-events:none;z-index:3;mix-blend-mode:screen;
+    background:radial-gradient(circle,rgba(255,190,90,.85),rgba(255,130,60,.3) 55%,transparent 74%)}
+  .hl3d__core{position:absolute;left:50%;top:21%;width:18%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;filter:blur(12px);pointer-events:none;z-index:3;mix-blend-mode:screen;
     background:radial-gradient(circle,rgba(255,244,210,.95),transparent 70%)}
-  .hl3d__syn{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff3cf;box-shadow:0 0 9px 2px rgba(255,200,110,.9);mix-blend-mode:screen;z-index:3;opacity:0;pointer-events:none}
-  .hl3d__sheen{position:absolute;inset:-8%;z-index:4;pointer-events:none;mix-blend-mode:soft-light;opacity:.5;
+  .hl3d__syn{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff3cf;box-shadow:0 0 9px 2px rgba(255,200,110,.9);mix-blend-mode:screen;z-index:4;opacity:0;pointer-events:none}
+  .hl3d__sheen{position:absolute;inset:-8%;z-index:5;pointer-events:none;mix-blend-mode:soft-light;opacity:.5;
     background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.75) 50%,transparent 60%)}
-  .hl3d__grain{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.14;mix-blend-mode:multiply;
+  .hl3d__grain{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.13;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
 
   /* editorial layout */
@@ -34,7 +38,7 @@
   .hl3d__sub{color:#5d5563;font-size:clamp(.95rem,1.4vw,1.05rem);line-height:1.65;margin:0;max-width:34ch;justify-self:end}
   .hl3d__cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
   .hl3d__btnwrap{position:relative;display:inline-flex}
-  .hl3d__btnwrap::before{content:"";position:absolute;inset:-4px;border-radius:999px;background:linear-gradient(135deg,#ffc24b,#ff8a3d);filter:blur(13px);opacity:.4;z-index:-1;animation:hl3dglow 2.8s ease-in-out infinite}
+  .hl3d__btnwrap::before{content:"";position:absolute;inset:-4px;border-radius:999px;background:linear-gradient(135deg,#4de3ff,#7c5cff);filter:blur(13px);opacity:.4;z-index:-1;animation:hl3dglow 2.8s ease-in-out infinite}
   @keyframes hl3dglow{0%,100%{opacity:.28;transform:scale(.97)}50%{opacity:.6;transform:scale(1.05)}}
   .hl3d__btn{position:relative;display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:15px 30px;font-size:1rem;background:#1d1526;color:#fff;box-shadow:0 16px 36px rgba(29,21,38,.35);transition:transform .15s;overflow:hidden}
   .hl3d__btn::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg);animation:hl3dshine 3.6s ease-in-out infinite}
@@ -48,7 +52,7 @@
 
   @media(max-width:900px){
     .hl3d{min-height:auto;padding:86px 0 30px;display:block}
-    .hl3d__stage{position:relative;left:auto;top:auto;transform:none;width:min(86vw,430px);margin:12px auto 6px}
+    .hl3d__stage{position:relative;left:auto;top:auto;transform:none;width:min(84vw,420px);margin:12px auto 6px}
     .hl3d__grid{display:block;min-height:0}
     .hl3d h1{margin-bottom:16px}
     .hl3d__sub{max-width:none;justify-self:start;margin:0 0 22px}
@@ -61,7 +65,12 @@
 <section class="hl3d" id="heroMind">
   <div class="hl3d__stage" id="hmStage">
     <div class="hl3d__media" id="hmMedia">
-      <img class="hl3d__img" src="{{ 'hero-profile.jpg' | asset_url }}" alt="A silver sculpted profile of a young man, his mind glowing gold" id="hmImg">
+      <div class="hl3d__faces" id="hmFaces">
+        <img class="hl3d__face" src="{{ 'hero-sad.jpg' | asset_url }}" alt="A silver sculpted young man, calm" id="hmSad">
+        <img class="hl3d__face happy" src="{{ 'hero-happy.jpg' | asset_url }}" alt="The same young man smiling, his mind glowing gold" id="hmHappy">
+        <span class="hl3d__lid l" id="hmLidL"></span>
+        <span class="hl3d__lid r" id="hmLidR"></span>
+      </div>
       <span class="hl3d__aura" id="hmAura"></span>
       <span class="hl3d__core" id="hmCore"></span>
       <span class="hl3d__sheen" id="hmSheen"></span>
@@ -96,32 +105,46 @@
 {% raw %}
 <script>
 (function(){
-  var stage=document.getElementById('hmStage'),media=document.getElementById('hmMedia'),
+  var stage=document.getElementById('hmStage'),media=document.getElementById('hmMedia'),happy=document.getElementById('hmHappy'),
+      lidL=document.getElementById('hmLidL'),lidR=document.getElementById('hmLidR'),
       aura=document.getElementById('hmAura'),core=document.getElementById('hmCore'),sheen=document.getElementById('hmSheen');
-  if(!stage||!media)return;
+  if(!stage||!media||!happy)return;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // synapse sparks inside the cranium (mirrored profile: skull mass right-of-center)
+  // synapse sparks in the crown of the head
   var syns=[];
-  for(var i=0;i<15;i++){var sy=document.createElement('span');sy.className='hl3d__syn';
+  for(var i=0;i<14;i++){var sy=document.createElement('span');sy.className='hl3d__syn';
     var ang=Math.random()*6.2832,rad=Math.random()*0.5+0.1;
-    sy.style.left=(58+Math.cos(ang)*rad*17)+'%';sy.style.top=(30+Math.sin(ang)*rad*14)+'%';
+    sy.style.left=(50+Math.cos(ang)*rad*15)+'%';sy.style.top=(21+Math.sin(ang)*rad*10)+'%';
     sy.dataset.ph=(Math.random()*6.28).toFixed(2);sy.dataset.sp=(0.7+Math.random()*1.5).toFixed(2);
     media.appendChild(sy);syns.push(sy);}
+  // human-timed blinking (skipped for reduced motion)
+  function blink(){
+    lidL.style.opacity='1';lidR.style.opacity='1';
+    setTimeout(function(){lidL.style.opacity='0';lidR.style.opacity='0';
+      if(Math.random()<0.14)setTimeout(blink,190);              // occasional double-blink
+      else setTimeout(blink,3200+Math.random()*3400);
+    },110);
+  }
+  if(!reduce)setTimeout(blink,1800);
   var tpx=0,tpy=0,px=0,py=0,t0=Date.now();
   window.addEventListener('pointermove',function(e){tpx=(e.clientX/window.innerWidth-0.5);tpy=(e.clientY/window.innerHeight-0.5);});
   function frame(){
     requestAnimationFrame(frame);
     var t=(Date.now()-t0)/1000;
+    // smile cycle: calm -> warm smile -> calm, fully automatic
+    var m=reduce?0.85:(0.5-0.5*Math.cos(t*0.42)), sm=m*m*(3-2*m);
+    happy.style.opacity=sm.toFixed(3);
     px+=(tpx-px)*0.05;py+=(tpy-py)*0.05;
-    var fl=reduce?0:Math.sin(t*0.7)*7, rz=reduce?0:Math.sin(t*0.5)*0.7;
+    var fl=reduce?0:Math.sin(t*0.7)*7, rz=reduce?0:Math.sin(t*0.5)*0.6;
     media.style.transform='translate('+(px*-12).toFixed(1)+'px,'+(fl+py*-8).toFixed(1)+'px) rotate('+rz.toFixed(2)+'deg)';
-    var pulse=reduce?0.8:(0.66+0.2*Math.sin(t*1.5));
-    aura.style.opacity=pulse.toFixed(3);
-    core.style.opacity=(pulse*0.9).toFixed(3);
+    // mind glow brightens with the smile
+    var pulse=(reduce?0.75:(0.45+0.22*Math.sin(t*1.5)))+sm*0.32;
+    aura.style.opacity=Math.min(1,pulse).toFixed(3);
+    core.style.opacity=Math.min(1,pulse*0.95).toFixed(3);
     core.style.transform='translate(-50%,-50%) scale('+(1+(reduce?0:0.08*Math.sin(t*2.1))).toFixed(3)+')';
     if(sheen&&!reduce){var sp=((t*0.09)%1.6)-0.3;sheen.style.transform='translateX('+(sp*100).toFixed(1)+'%)';}
     for(var k=0;k<syns.length;k++){var sn=syns[k],ph=+sn.dataset.ph,ssp=+sn.dataset.sp;
-      sn.style.opacity=(Math.max(0,0.2+0.8*Math.sin(t*ssp*2.2+ph))*0.95).toFixed(3);}
+      sn.style.opacity=((0.35+sm*0.65)*Math.max(0,0.2+0.8*Math.sin(t*ssp*2.2+ph))).toFixed(3);}
   }
   frame();
 })();
@@ -132,7 +155,7 @@
 {
   "name": "Hero — Mind (light 3D)",
   "settings": [
-    { "type": "paragraph", "content": "Minimal light hero: a silver sculpted profile with a glowing golden mind. The image lives in assets as hero-profile.jpg — replace that file to change the person." },
+    { "type": "paragraph", "content": "Minimal light hero: a silver sculpted figure who blinks and smiles on his own, his mind glowing gold. Frames live in assets as hero-sad.jpg and hero-happy.jpg — replace those files to change the person." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your brain is fried. Here's the reset." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Quit cheap dopamine. Feel good for real — in 7 days." },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset rewires it in a week — 10 minutes a day." },
