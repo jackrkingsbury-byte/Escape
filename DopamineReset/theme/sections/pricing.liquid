@@ -1,3 +1,27 @@
+{% raw %}
+<style>
+  #pricing .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:22px;max-width:880px;margin:38px auto 0;align-items:stretch}
+  #pricing .tier{position:relative;text-align:left;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:26px;padding:32px 28px 28px;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s;display:flex;flex-direction:column}
+  #pricing .tier:hover{transform:translateY(-6px);border-color:rgba(77,227,255,.35);box-shadow:0 30px 60px -22px rgba(0,0,0,.65)}
+  #pricing .tier--featured{background:linear-gradient(165deg,rgba(77,227,255,.1),rgba(124,92,255,.08)),rgba(255,255,255,.03);box-shadow:0 28px 80px -26px rgba(124,92,255,.55)}
+  #pricing .tier--featured::before{content:"";position:absolute;inset:-1px;border-radius:27px;padding:1.5px;background:linear-gradient(135deg,#4de3ff,#7c5cff,#ff5c8a);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  #pricing .tier__badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;font-weight:800;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:7px 16px;box-shadow:0 10px 26px rgba(124,92,255,.45);white-space:nowrap}
+  #pricing .tier__name{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:1.35rem;color:#fff;margin:0 0 4px}
+  #pricing .tier__tag{color:#98a0b5;font-size:.88rem;margin:0 0 18px}
+  #pricing .tier__price{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:2.7rem;line-height:1;color:#fff;margin:0 0 20px;letter-spacing:-.02em}
+  #pricing .tier__price small{font-family:var(--sans,'Hanken Grotesk',sans-serif);font-weight:500;font-size:.85rem;color:#8b93aa;letter-spacing:0}
+  #pricing .tier__feats{list-style:none;margin:0 0 24px;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.09);display:grid;gap:10px;flex:1}
+  #pricing .tier__feats li{position:relative;padding-left:28px;color:#c9cede;font-size:.94rem;line-height:1.45}
+  #pricing .tier__feats li::before{content:"✓";position:absolute;left:0;top:0;width:19px;height:19px;border-radius:6px;display:grid;place-items:center;font-size:.68rem;font-weight:800;color:#041420;background:linear-gradient(135deg,#4de3ff,#7c5cff)}
+  #pricing .tier .btn{border-radius:999px;padding:15px 22px;font-weight:800}
+  #pricing .tier--featured .btn{position:relative;overflow:hidden;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 16px 38px rgba(124,92,255,.45)}
+  #pricing .tier--featured .btn::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:prshine 3.4s ease-in-out infinite}
+  @keyframes prshine{0%{left:-120%}30%,100%{left:160%}}
+  @media (prefers-reduced-motion:reduce){#pricing .tier--featured .btn::after{animation:none}}
+</style>
+{% endraw %}
 <section class="section" id="pricing">
   <div class="orbs"><span class="orb orb--a" style="top:-30px;right:10%"></span><span class="orb orb--c" style="bottom:-40px;left:8%"></span></div>
   <div class="wrap center">
