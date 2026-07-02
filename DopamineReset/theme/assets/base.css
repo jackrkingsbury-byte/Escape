@@ -86,11 +86,11 @@ p{margin:0 0 1em;color:var(--ink-soft)}
 .site-header__inner{display:flex;align-items:center;justify-content:space-between;height:66px}
 .brand{font-family:var(--serif);font-weight:600;font-size:1.35rem;letter-spacing:.04em}
 .brand b{color:var(--gold)}
-.nav{display:flex;gap:26px;align-items:center}
-.nav a{color:var(--ink-soft);font-size:.95rem;font-weight:600}
+.nav{display:flex;gap:30px;align-items:center}
+.nav a{color:var(--ink-soft);font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;transition:color .2s}
 .nav a:hover{color:var(--ink)}
-.nav__cta{padding:10px 20px;border-radius:999px;background:var(--gold);color:#1a1407;font-weight:700}
-.nav__cta:hover{color:#1a1407}
+.nav__cta{padding:9px 20px;border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--ink);letter-spacing:.14em}
+.nav__cta:hover{border-color:var(--gold);color:var(--gold)}
 .nav-toggle{display:none;background:none;border:0;color:var(--ink);font-size:1.5rem}
 @media(max-width:820px){
   .nav{position:fixed;inset:66px 0 auto 0;flex-direction:column;gap:0;
