@@ -29,6 +29,11 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* phones: everything is rem-based, so scaling the root lifts every label/chip/stat to readable size */
+@media(max-width:520px){
+  html{font-size:18px}
+  body{font-size:1rem}
+}
 .dr-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:90;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#4de3ff,#ff5c8a,#7c5cff,#2bd3c6);box-shadow:0 1px 8px rgba(124,92,255,.5);pointer-events:none;will-change:transform}
 @media (prefers-reduced-motion:reduce){.dr-progress{transition:none}}
 body{
