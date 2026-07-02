@@ -254,12 +254,45 @@
     "trust": {
       "type": "trust-strip",
       "blocks": {
-        "t1": { "type": "item", "settings": { "icon": "🔒", "title": "Secure checkout", "text": "Encrypted, handled by Shopify" }},
-        "t2": { "type": "item", "settings": { "icon": "↩️", "title": "7-day guarantee", "text": "Don't feel it? Full refund" }},
-        "t3": { "type": "item", "settings": { "icon": "⚡", "title": "Instant access", "text": "Straight to Day 1, no waiting" }},
-        "t4": { "type": "item", "settings": { "icon": "✅", "title": "Once-off payment", "text": "No subscription, ever" }}
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "🔒",
+            "title": "Secure checkout",
+            "text": "Encrypted, handled by Shopify"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "↩️",
+            "title": "7-day guarantee",
+            "text": "Don't feel it? Full refund"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "⚡",
+            "title": "Instant access",
+            "text": "Straight to Day 1, no waiting"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "✅",
+            "title": "Once-off payment",
+            "text": "No subscription, ever"
+          }
+        }
       },
-      "block_order": ["t1","t2","t3","t4"]
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
     },
     "sticky": {
       "type": "sticky-cta",
@@ -529,13 +562,54 @@
         "reassurance": "One payment · instant access · 7-day money-back guarantee"
       },
       "blocks": {
-        "h1": { "type": "step", "settings": { "when": "Right now", "title": "Tap buy — pay once, securely", "text": "R199, one payment, through Shopify's secure checkout. No subscription, no card tricks, no shipping — it's instant digital access." }},
-        "h2": { "type": "step", "settings": { "when": "10 seconds later", "title": "Land straight on Day 1", "text": "The second your payment clears you're taken right into your member dashboard on Day 1. No email hunting, no access codes, no waiting around." }},
-        "h3": { "type": "step", "settings": { "when": "Every day · 10 min", "title": "Do one simple daily action", "text": "Open the app, do that day's 10-minute action, tick it off. Stuck on a craving? The urge-surfing tools beat it in under 90 seconds." }},
-        "h4": { "type": "step", "settings": { "when": "By about day 3", "title": "Feel the fog start to lift", "text": "Your streak builds, your focus sharpens, and small things start feeling good again. The tracker shows your mood and momentum climbing." }},
-        "h5": { "type": "step", "settings": { "when": "Day 7 & beyond", "title": "Keep your tools for life", "text": "Finish the 7 days a different person — and keep lifetime access to every protocol, the tracker and all future updates to come back to whenever you need a reset." }}
+        "h1": {
+          "type": "step",
+          "settings": {
+            "when": "Right now",
+            "title": "Tap buy — pay once, securely",
+            "text": "R199, one payment, through Shopify's secure checkout. No subscription, no card tricks, no shipping — it's instant digital access."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "when": "10 seconds later",
+            "title": "Land straight on Day 1",
+            "text": "The second your payment clears you're taken right into your member dashboard on Day 1. No email hunting, no access codes, no waiting around."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "when": "Every day · 10 min",
+            "title": "Do one simple daily action",
+            "text": "Open the app, do that day's 10-minute action, tick it off. Stuck on a craving? The urge-surfing tools beat it in under 90 seconds."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "when": "By about day 3",
+            "title": "Feel the fog start to lift",
+            "text": "Your streak builds, your focus sharpens, and small things start feeling good again. The tracker shows your mood and momentum climbing."
+          }
+        },
+        "h5": {
+          "type": "step",
+          "settings": {
+            "when": "Day 7 & beyond",
+            "title": "Keep your tools for life",
+            "text": "Finish the 7 days a different person — and keep lifetime access to every protocol, the tracker and all future updates to come back to whenever you need a reset."
+          }
+        }
       },
-      "block_order": ["h1","h2","h3","h4","h5"]
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5"
+      ]
     },
     "facts": {
       "type": "facts",
@@ -583,10 +657,52 @@
         "k4"
       ],
       "settings": {}
+    },
+    "paths": {
+      "type": "three-paths",
+      "settings": {
+        "eyebrow": "Start here",
+        "heading": "Three ways in. Pick one."
+      },
+      "blocks": {
+        "p1": {
+          "type": "path",
+          "settings": {
+            "title": "Test how fried you are",
+            "text": "4 honest questions, 10 seconds. Find out where your dopamine really is.",
+            "go": "Take the test",
+            "url": "#quiz"
+          }
+        },
+        "p2": {
+          "type": "path",
+          "settings": {
+            "title": "See inside the app",
+            "text": "The dashboard, coach, tracker and challenges — look before you buy.",
+            "go": "Open the preview",
+            "url": "#preview"
+          }
+        },
+        "p3": {
+          "type": "path",
+          "settings": {
+            "title": "Start the 7-day reset",
+            "text": "R199 once. Instant access. Feel the shift by day 3.",
+            "go": "Start now",
+            "url": "#pricing"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
     }
   },
   "order": [
     "hero",
+    "paths",
     "story3d",
     "transformation",
     "benefits",
