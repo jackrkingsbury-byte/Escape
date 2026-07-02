@@ -29,12 +29,20 @@
             "label": "Contact",
             "url": "/pages/contact"
           }
+        },
+        "f4": {
+          "type": "link",
+          "settings": {
+            "label": "Member access",
+            "url": "/pages/start"
+          }
         }
       },
       "block_order": [
         "f1",
         "f2",
-        "f3"
+        "f3",
+        "f4"
       ]
     }
   },

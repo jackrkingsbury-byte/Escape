@@ -169,7 +169,7 @@
           "settings": {
             "icon": "⚡",
             "title": "Instant access",
-            "text": "Pay and you're dropped straight into day 1. No waiting, no email hunting."
+            "text": "Your access button lands in your inbox the second you pay — one tap to Day 1."
           }
         }
       },
@@ -407,7 +407,7 @@
           "type": "qa",
           "settings": {
             "q": "How do I get access after paying?",
-            "a": "The moment Shopify confirms your payment you're auto-redirected straight to Day 1 — no email, no waiting."
+            "a": "The second you pay, your order confirmation email lands with a big 'Open my Dopamine Reset' button — one tap and you're on Day 1. Keep that email: it's your key (and there's a Members link in the site menu too)."
           }
         },
         "a2": {
@@ -575,7 +575,7 @@
           "settings": {
             "when": "10 seconds later",
             "title": "Land straight on Day 1",
-            "text": "The second your payment clears you're taken right into your member dashboard on Day 1. No email hunting, no access codes, no waiting around."
+            "text": "Your order confirmation email arrives instantly with your access button — tap it and you land on Day 1. Lose the email? The Members link in the menu takes you back any time."
           }
         },
         "h3": {

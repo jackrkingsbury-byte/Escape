@@ -38,13 +38,21 @@
             "label": "FAQ",
             "url": "#faq"
           }
+        },
+        "l5": {
+          "type": "link",
+          "settings": {
+            "label": "Members",
+            "url": "/pages/start"
+          }
         }
       },
       "block_order": [
         "l1",
         "l2",
         "l3",
-        "l4"
+        "l4",
+        "l5"
       ]
     }
   },
