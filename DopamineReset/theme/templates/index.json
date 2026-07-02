@@ -698,11 +698,60 @@
         "p2",
         "p3"
       ]
+    },
+    "coach_spot": {
+      "type": "coach-spotlight",
+      "settings": {
+        "tag": "Live from the app · your coach",
+        "eyebrow": "Meet your coach",
+        "heading": "A coach in your corner. <span class=\"hl\">Every single day.</span>",
+        "lead": "Not a PDF. A built-in coach that knows your day, your streak and your mood — and tells you exactly what to do next.",
+        "cta_label": "Get my coach — R199",
+        "cta_url": "#pricing",
+        "note": "Included in the reset · no subscription"
+      },
+      "blocks": {
+        "c1": {
+          "type": "point",
+          "settings": {
+            "icon": "👋",
+            "text": "Checks in every morning and reads how you're doing"
+          }
+        },
+        "c2": {
+          "type": "point",
+          "settings": {
+            "icon": "🌊",
+            "text": "Craving hits? It walks you through a 90-second rescue"
+          }
+        },
+        "c3": {
+          "type": "point",
+          "settings": {
+            "icon": "🎯",
+            "text": "Hands you one clear 10-minute challenge a day"
+          }
+        },
+        "c4": {
+          "type": "point",
+          "settings": {
+            "icon": "📈",
+            "text": "Tracks your streak, XP and mood — and adjusts"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
     }
   },
   "order": [
     "hero",
     "paths",
+    "coach_spot",
     "story3d",
     "transformation",
     "benefits",
