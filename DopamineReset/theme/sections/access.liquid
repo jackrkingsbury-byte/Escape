@@ -227,6 +227,10 @@
   .dr__sheet .body{padding:22px;overflow:auto}.dr__sheet .body h2{margin-bottom:8px}
   .dr__sheet .body .art p{font-size:1.04rem;line-height:1.64;color:#ece9e2;margin:0 0 15px}
   .dr .msec{margin-top:15px;padding-top:13px;border-top:1px solid var(--line)}
+  .dr .mtime{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#8ee7ff;background:rgba(77,227,255,.08);border:1px solid rgba(77,227,255,.25);border-radius:999px;padding:6px 12px;margin:4px 0 2px}
+  .dr .msteps{margin:8px 0 0;padding-left:20px;display:grid;gap:9px}
+  .dr .msteps li{line-height:1.5}
+  .dr .msteps li::marker{color:#4de3ff;font-weight:700}
   .dr .msec b{display:block;margin-bottom:6px;color:var(--amber);font-size:.92rem}.dr .msec p{margin:0;font-size:.94rem;color:var(--soft)}
   .dr .mnote{width:100%;min-height:74px;margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:11px;font:inherit;resize:vertical}
 
@@ -392,7 +396,6 @@
     <button class="dr__nav" data-go="plan"><span class="ic">🗓️</span> The 7 Days</button>
     <button class="dr__nav" data-go="track"><span class="ic">✅</span> Tracker</button>
     <button class="dr__nav" data-go="stats"><span class="ic">📊</span> My Stats</button>
-    <button class="dr__nav" data-go="insights"><span class="ic">📈</span> Insights</button>
     <button class="dr__nav" data-go="missions"><span class="ic">🎯</span> Missions</button>
     <button class="dr__nav" data-go="achv"><span class="ic">🏆</span> Achievements</button>
     <button class="dr__nav" data-go="vision"><span class="ic">🌟</span> Your Why</button>
@@ -400,13 +403,7 @@
     <button class="dr__nav" data-go="games"><span class="ic">🎮</span> Mind Games</button>
     <button class="dr__nav" data-go="articles"><span class="ic">📚</span> Articles</button>
     <button class="dr__nav" data-go="journeys"><span class="ic">💗</span> Mood Help</button>
-    <button class="dr__nav" data-go="quotes"><span class="ic">📜</span> Quotes</button>
-    <button class="dr__nav" data-go="search"><span class="ic">🔎</span> Search</button>
-    <button class="dr__nav" data-go="saved"><span class="ic">🔖</span> Saved</button>
-    <div class="dr__navttl">Unwind</div>
     <button class="dr__nav" data-go="relax"><span class="ic">🧘</span> Time to Relax</button>
-    <button class="dr__nav" data-go="affirm"><span class="ic">💗</span> Affirmations</button>
-    <button class="dr__nav" data-go="wins"><span class="ic">🏅</span> Daily Wins</button>
     <div class="dr__navttl">Tools</div>
     <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
     <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Dopamine Menu</button>
@@ -682,13 +679,13 @@ try{
   var GRADS=['linear-gradient(135deg,#7c5cff,#4de3ff)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#7c5cff)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#7c5cff)'];
   function g(i){return GRADS[((i%GRADS.length)+GRADS.length)%GRADS.length]}
   var DAYS=[
-    {e:"📵",t:"Delete the worst one",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
-    {e:"🌅",t:"Phone-free first hour",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull.",r:"How did the first hour feel without the phone? What did you do instead?"},
-    {e:"🧘",t:"Boredom on purpose",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet.",w:"Boredom is withdrawal — and it's the reset working. Sitting with it teaches your brain it doesn't need constant input to be okay.",r:"What came up in the quiet? Was it as bad as you expected?"},
-    {e:"🔁",t:"Swap one hit",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",w:"You're not removing the urge, you're redirecting it. Every swap is a rep that rewires the reward loop.",r:"How many swaps did you make today? Which one felt best?"},
-    {e:"🏃",t:"Move your body",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good.",r:"What did you do, and how did your head feel after?"},
-    {e:"🤝",t:"One real connection",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal.",r:"Who did you connect with? What did it feel like to be fully present?"},
-    {e:"🧭",t:"Design your normal",a:"Write the 3 rules you're keeping for good. Lock in the version of you you've felt this week.",w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
+    {e:"📵",t:"Delete the worst one",m:"10 min setup",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",s:["Check Screen Time and find the app that eats most of your hours — it's usually the one you'd defend hardest.","Delete it. Not moved to a folder, not hidden — off the phone for 7 days.","Turn off every notification except calls and texts. Do it now, it takes 2 minutes."],w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards.",f:"Expect phantom reaches tonight — your thumb going to where the app was. That's the leak showing itself. It fades by day 3.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
+    {e:"🌅",t:"Phone-free first hour",m:"60 min",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",s:["Tonight: charge your phone across the room — or outside the bedroom completely.","When you wake up, don't touch it for 60 minutes. Water, daylight, movement first.","Put one real thing in the gap: a shower, breakfast, 5 pages of a book, a short walk."],w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull.",f:"The morning feels longer and strangely calm. That's what your baseline feels like without a spike.",r:"How did the first hour feel without the phone? What did you do instead?"},
+    {e:"🧘",t:"Boredom on purpose",m:"10 min",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet.",s:["Sit somewhere with zero input — no phone, no music, no TV.","Set a 10-minute timer (a kitchen clock beats your phone if you have one).","Stay. When the itch to grab something comes, watch it instead of obeying it."],w:"Boredom is withdrawal — and it's the reset working. Sitting with it teaches your brain it doesn't need constant input to be okay.",f:"Minutes 2 to 6 are the worst, then it goes quiet. That quiet is your reward system recalibrating.",r:"What came up in the quiet? Was it as bad as you expected?"},
+    {e:"🔁",t:"Swap one hit",m:"all day",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",s:["Open your Dopamine Menu (in Tools) and pick 3 swaps you'd actually do.","Every scroll-urge today = do one swap instead. Keep a tally.","Tonight, write your count in the day note below."],w:"You're not removing the urge, you're redirecting it. Every swap is a rep that rewires the reward loop.",f:"Each swap feels worse than scrolling for about 2 minutes — then better for an hour. Notice that trade.",r:"How many swaps did you make today? Which one felt best?"},
+    {e:"🏃",t:"Move your body",m:"20 min",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",s:["Pick the easiest option you won't skip: a walk, the gym, dancing, a skate.","Do 20 minutes, breathing hard enough that talking takes effort.","Leave the phone at home or on flight mode — this one's yours."],w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good.",f:"A clean afterglow — clearer head, lighter mood — that lasts for hours. This is what real dopamine feels like.",r:"What did you do, and how did your head feel after?"},
+    {e:"🤝",t:"One real connection",m:"30 min",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",s:["Pick a person, not a group chat.","Call them or meet up. Phone face-down and on silent.","Ask one real question — and actually listen to the whole answer."],w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal.",f:"How different it feels from likes and replies. This is the reward every feed is imitating.",r:"Who did you connect with? What did it feel like to be fully present?"},
+    {e:"🧭",t:"Design your normal",m:"15 min",a:"Write the 3 rules you're keeping for good. Lock in the version of you you've felt this week.",s:["Look back at the week — which day changed the most for you?","Write 3 rules you're keeping, e.g. 'no phone first hour' or 'phone charges outside the bedroom'.","Put them where you'll see them daily: lock screen, mirror, journal."],w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",f:"You're not finishing a detox — you're setting your new default. Rules are what make it permanent.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
   ];
   var URGES=[{e:"🗣️",k:"Name it",v:"Say out loud: \"This is just a dopamine craving.\" Naming it shrinks it instantly."},
     {e:"🌬️",k:"Breathe x10",v:"Stand up, 10 slow breaths. The urge peaks and fades in under 2 minutes."},
@@ -815,7 +812,10 @@ try{
     $('#mTop').style.background=g(i);$('#mEmoji').textContent=d.e;
     $('#mTag').textContent='Day '+(i+1)+' · your mission';$('#mTitle').textContent=d.t;
     $('#mBody').innerHTML='<p style="margin:0 0 4px;color:var(--ink)">'+d.a+'</p>'+
+      (d.m?'<div><span class="mtime">⏱ '+d.m+'</span></div>':'')+
+      (d.s?'<div class="msec"><b>👣 Do it like this</b><ol class="msteps">'+d.s.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol></div>':'')+
       '<div class="msec"><b>🧠 Why this works</b><p>'+d.w+'</p></div>'+
+      (d.f?'<div class="msec"><b>✨ What you\'ll notice</b><p>'+d.f+'</p></div>':'')+
       '<div class="msec"><b>✍️ Reflect</b><p>'+d.r+'</p><textarea class="mnote" id="mNote" placeholder="Write a line for today…">'+(state.notes[i]||'')+'</textarea></div>';
     var done=state.done[i];
     $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mDoneBtn" style="width:100%">'+(done?'Mark not done':'Complete Day '+(i+1)+' · +30 XP ✓')+'</button></div>';
@@ -1170,9 +1170,6 @@ try{
     H+=hblk('📚','linear-gradient(135deg,#2bd3c6,#4f8cff)','The Library','Short premium reads','Two-minute reads that explain what’s happening in your brain and exactly how to win — from doomscrolling to deep work to sleep.',hmini(ARTS.slice(0,3).map(function(a,i){return tcard('data-article="'+i+'"',a.e,g(i+1),a.sub.split('·')[0].trim().toUpperCase(),a.t,'Tap to read','')}).join('')),'articles','Open the library');
     H+=hblk('💗','linear-gradient(135deg,#ff5c8a,#7c5cff)','Mood Help','However you feel','Pick how you feel and get a full path through it — advice, a breathing exercise, a quote, a challenge and a sound to put on.',hmini(JOURNEYS.map(function(j,i){return tcard('data-journey="'+i+'"',j.e,g(i+1),'MOOD',j.n,'Tap your path','')}).join('')),'journeys','Open mood help');
     H+=hblk('🧘','linear-gradient(135deg,#4f8cff,#7c5cff)','Time to Relax','No goals, just calm','Wind down with a bubble pop, a guided body scan, a 2-minute calm timer or an ambient sound mix. Your off-switch.',hmini(RELAX.slice(0,3).map(function(r,i){return tcard('data-relax="'+r.id+'"',r.e,g(i+2),'RELAX',r.t,r.s,'')}).join('')),'relax','Open relax');
-    H+=hblk('📜','linear-gradient(135deg,#ffd24b,#7c5cff)','Quotes','A line to carry','A daily quote plus dozens more to swipe through. Save the ones that hit and re-read them on the hard days.','<div class="qmini" style="margin:0 0 12px">“'+QUOTES[0].t+'”</div>','quotes','Open quotes');
-    H+=hblk('💪','linear-gradient(135deg,#ff5c8a,#a06bff)','Affirmations','Rewrite your story','Short “I am…” lines to read slow and mean. They quietly change the story you tell yourself.','','affirm','Open affirmations');
-    H+=hblk('🏅','linear-gradient(135deg,#4de3ff,#5ad48a)','Daily Wins','Tiny wins compound','Log anything you’re a little proud of. Watch them stack up — proof you’re actually moving.','','wins','Open wins');
     H+=hblk('🌟','linear-gradient(135deg,#4de3ff,#ff5c8a)','Your Why','The reason it sticks','Get honest about what you actually want — money, health, people, who you’re becoming. It’s what pulls you through the hard days.','','vision','Open your why');
     H+=hblk('📊','linear-gradient(135deg,#ff6b6b,#7c5cff)','My Stats','See how far you are','Your focus, energy, sleep and brain-health scores, a mood graph, a calendar of the days you showed up, and where your XP comes from.','','stats','Open stats');
     H+=hblk('🏆','linear-gradient(135deg,#4de3ff,#ffd24b)','Achievements','Unlock badges','Twelve achievements to earn as you go — first step, streaks, scholar, mind gym and more. Each one pops with confetti.','','achv','Open achievements');
@@ -1183,7 +1180,7 @@ try{
   function routeAct(k){
     if(k==='today'){openDay(cur());return}
     if(k==='breathe'){openGame('breathe');return}
-    if(k==='random'){var pool=['games','journeys','articles','relax','quotes','journal','breathe','today'];routeAct(pool[Math.floor(Math.random()*pool.length)]);return}
+    if(k==='random'){var pool=['games','journeys','articles','relax','journal','breathe','today'];routeAct(pool[Math.floor(Math.random()*pool.length)]);return}
     var b=document.querySelector('.dr__nav[data-go="'+k+'"]');if(b)b.click();
   }
   function openQuick(){var q=$('#drQuick');if(q)q.classList.add('on')}
