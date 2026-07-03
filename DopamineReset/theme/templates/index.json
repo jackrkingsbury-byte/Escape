@@ -34,7 +34,7 @@
         "eyebrow": "Your brain is fried. Here's the reset.",
         "heading": "Quit <span class=\"hl\">cheap dopamine</span>. Feel <span class=\"hl2\">good for real</span> — in 7 days.",
         "subheading": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset is a simple 10-min-a-day protocol that rewires your brain to enjoy real life again — starting today.",
-        "cta1_label": "Start the reset — R199",
+        "cta1_label": "Start the reset — R199 · ≈ $11",
         "cta1_url": "#pricing",
         "cta2_label": "Why it works",
         "cta2_url": "#why",
@@ -247,7 +247,7 @@
         "was_price": 774,
         "now_price": 199,
         "note": "One payment. Instant access. 7-day money-back guarantee.",
-        "cta_label": "Get the reset for R199",
+        "cta_label": "Get the reset for R199 · ≈ $11",
         "cta_url": "#pricing"
       }
     },
@@ -299,7 +299,7 @@
       "settings": {
         "title": "Ready to feel good again?",
         "subtitle": "7 days · 10 min a day · money-back guarantee",
-        "cta_label": "Start — R199",
+        "cta_label": "Start — R199 · ≈ $11",
         "cta_url": "#pricing"
       }
     },
@@ -437,7 +437,7 @@
           "type": "qa",
           "settings": {
             "q": "Is it a subscription?",
-            "a": "No — once-off payment. The R299 option adds lifetime top-ups, but even that's a single payment."
+            "a": "No — once-off payment. The R299 (≈ $17) option adds lifetime top-ups, but even that's a single payment."
           }
         }
       },
@@ -458,8 +458,8 @@
       "settings": {
         "eyebrow": "This time next week",
         "heading": "You can keep scrolling. Or you can <span class=\"hl2\">feel good again</span>.",
-        "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R199. Pick.",
-        "cta_label": "Start the reset — R199",
+        "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R199 (≈ $11). Pick.",
+        "cta_label": "Start the reset — R199 · ≈ $11",
         "cta_url": "#pricing"
       }
     },
@@ -528,7 +528,7 @@
         "heading": "This isn’t about your phone. It’s about <span class=\"hl\">your life</span>.",
         "lead": "Cheap dopamine quietly steals your <span class=\"hl\">focus</span>, your <span class=\"hl2\">mood</span> and your <span class=\"hl3\">drive</span>. Get it back, and everything downstream gets better — school, money, health, the people you love.",
         "show_strip": true,
-        "cta_label": "Start the reset — R199",
+        "cta_label": "Start the reset — R199 · ≈ $11",
         "cta_url": "#pricing",
         "note": "Most people feel the shift by day 3."
       }
@@ -559,7 +559,7 @@
         "eyebrow": "From payment to feeling better",
         "heading": "How the reset <span class=\"hl\">actually works</span>",
         "lead": "No app to download, no waiting, no guesswork. Here's exactly what happens from the moment you tap buy.",
-        "cta_label": "Start my reset — R199",
+        "cta_label": "Start my reset — R199 · ≈ $11",
         "cta_url": "#pricing",
         "reassurance": "One payment · instant access · 7-day money-back guarantee"
       },
@@ -569,7 +569,7 @@
           "settings": {
             "when": "Right now",
             "title": "Tap buy — pay once, securely",
-            "text": "R199, one payment, through Shopify's secure checkout. No subscription, no card tricks, no shipping — it's instant digital access."
+            "text": "R199 (about $11 / €10), one payment, through Shopify's secure checkout. No subscription, no card tricks, no shipping — it's instant digital access."
           }
         },
         "h2": {
@@ -689,7 +689,7 @@
           "type": "path",
           "settings": {
             "title": "Start the 7-day reset",
-            "text": "R199 once. Instant access. Feel the shift by day 3.",
+            "text": "R199 (≈ $11) once. Instant access. Feel the shift by day 3.",
             "go": "Start now",
             "url": "#pricing"
           }
@@ -708,7 +708,7 @@
         "eyebrow": "Meet your coach",
         "heading": "A coach in your corner. <span class=\"hl\">Every single day.</span>",
         "lead": "Not a PDF. A built-in coach that knows your day, your streak and your mood — and tells you exactly what to do next.",
-        "cta_label": "Get my coach — R199",
+        "cta_label": "Get my coach — R199 · ≈ $11",
         "cta_url": "#pricing",
         "note": "Included in the reset · no subscription"
       },
