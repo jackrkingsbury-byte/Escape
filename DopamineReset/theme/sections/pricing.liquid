@@ -37,6 +37,7 @@
   #pricing .tier__tag{color:#98a0b5;font-size:.88rem;margin:0 0 18px}
   #pricing .tier__price{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:2.7rem;line-height:1;color:#fff;margin:0 0 20px;letter-spacing:-.02em}
   #pricing .tier__price small{font-family:var(--sans,'Hanken Grotesk',sans-serif);font-weight:500;font-size:.85rem;color:#8b93aa;letter-spacing:0}
+  #pricing .tier__approx{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.74rem;letter-spacing:.06em;color:#9fc4e8;background:rgba(77,227,255,.07);border:1px solid rgba(77,227,255,.2);border-radius:999px;padding:6px 12px;margin:-8px 0 18px}
   #pricing .tier__feats{list-style:none;margin:0 0 24px;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.09);display:grid;gap:10px;flex:1}
   #pricing .tier__feats li{position:relative;padding-left:28px;color:#c9cede;font-size:.94rem;line-height:1.45}
   #pricing .tier__feats li::before{content:"✓";position:absolute;left:0;top:0;width:19px;height:19px;border-radius:6px;display:grid;place-items:center;font-size:.68rem;font-weight:800;color:#041420;background:linear-gradient(135deg,#4de3ff,#7c5cff)}
@@ -90,6 +91,9 @@
             {%- endif -%}
             {%- if block.settings.price_suffix != blank -%}<small> {{ block.settings.price_suffix }}</small>{%- endif -%}
           </div>
+          {%- if block.settings.approx != blank -%}
+            <div class="tier__approx">🌍 {{ block.settings.approx }}</div>
+          {%- endif -%}
 
           <ul class="tier__feats">
             {%- assign feats = block.settings.features | newline_to_br | split: '<br />' -%}
@@ -230,6 +234,7 @@
         { "type": "text", "id": "tagline", "label": "Tagline", "default": "For people ready to commit" },
         { "type": "text", "id": "price", "label": "Price (if no product linked)", "default": "R299" },
         { "type": "text", "id": "price_suffix", "label": "Price suffix", "default": "once-off" },
+        { "type": "text", "id": "approx", "label": "Approx. foreign price", "info": "Shown as a chip under the price, e.g. ≈ $11 · €10" },
         { "type": "textarea", "id": "features", "label": "Features (one per line)", "info": "Add ' | ' after a feature to attach a tap-for-more detail line.", "default": "Everything in Starter\n5 Bonus Kits\nWeekly Review + My Stats\nLetter to Future You\nPriority support" },
         { "type": "checkbox", "id": "featured", "label": "Highlight as most popular", "default": false },
         { "type": "text", "id": "badge", "label": "Badge text", "default": "Most popular" },
