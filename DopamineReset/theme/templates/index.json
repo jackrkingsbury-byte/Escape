@@ -317,7 +317,8 @@
             "featured": true,
             "badge": "Launch price",
             "cta_label": "Start the reset →",
-            "product": "the-reset"
+            "product": "the-reset",
+            "approx": "≈ $11 · €10 — cards worldwide"
           }
         },
         "t2": {
@@ -330,7 +331,8 @@
             "features": "Everything in The Reset | The whole 7-day program, coach, tracker and toolkit — nothing held back.\nMonthly top-up resets (forever) | A fresh mini-reset every month so one bad week never becomes a relapse.\nAdvanced focus protocols | Deep-work sessions and morning routines for life after your reset.\nEvery future update free | New days, games and tools land in your toolkit automatically.",
             "featured": false,
             "cta_label": "Get the full toolkit",
-            "product": "reset-lifetime-toolkit"
+            "product": "reset-lifetime-toolkit",
+            "approx": "≈ $17 · €15 — cards worldwide"
           }
         }
       },
@@ -342,7 +344,7 @@
         "eyebrow": "Start today",
         "heading": "Feel <span class=\"hl\">different</span> by this time next week.",
         "subheading": "Pick your plan. Checkout is instant and secure.",
-        "footnote": "Instant access · secure Shopify checkout · 7-day money-back guarantee."
+        "footnote": "Charged in South African Rand (R) — your bank converts automatically. Instant access · secure checkout · 7-day money-back guarantee."
       }
     },
     "testimonials": {
