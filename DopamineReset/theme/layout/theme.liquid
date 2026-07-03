@@ -7,10 +7,12 @@
   <link rel="canonical" href="{{ canonical_url }}">
   {%- if settings.favicon != blank -%}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">
+  {%- else -%}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
   {%- endif -%}
 
   <title>{{ page_title }}{% unless page_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
-  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  <meta name="description" content="{{ page_description | default: shop.description | default: 'The 7-day program + app to quit cheap dopamine and feel good for real. R199 once-off, instant access.' | escape }}">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ shop.name }}">
@@ -19,10 +21,10 @@
   <meta property="og:url" content="{{ canonical_url }}">
   {%- if settings.share_image != blank -%}
     <meta property="og:image" content="https:{{ settings.share_image | image_url: width: 1200 }}">
-    <meta name="twitter:card" content="summary_large_image">
   {%- else -%}
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="{{ 'hero-sculpt.jpg' | asset_url }}">
   {%- endif -%}
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ page_title | escape }}">
   <meta name="twitter:description" content="{{ page_description | default: shop.description | escape }}">
 
@@ -31,6 +33,7 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  {%- if request.page_type == 'index' -%}<link rel="preload" as="image" href="{{ 'hero-sculpt.jpg' | asset_url }}">{%- endif -%}
 
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}

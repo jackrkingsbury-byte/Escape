@@ -104,9 +104,9 @@
       <span class="hp__etch"></span><span class="hp__etch e2"></span>
       <span class="hp__halo" id="hpHalo"></span>
       {%- if hero_img != blank -%}
-        <img class="hp__img" id="hpImg" src="{{ hero_img | image_url: width: 1400 }}" alt="A person feeling the shift from flat to good">
+        <img class="hp__img" id="hpImg" src="{{ hero_img | image_url: width: 1400 }}" alt="A person feeling the shift from flat to good" fetchpriority="high" decoding="async">
       {%- else -%}
-        <img class="hp__img" id="hpImg" src="{{ 'hero-sculpt.jpg' | asset_url }}" alt="A person feeling the shift from flat to good">
+        <img class="hp__img" id="hpImg" src="{{ 'hero-sculpt.jpg' | asset_url }}" alt="A person feeling the shift from flat to good" fetchpriority="high" decoding="async">
       {%- endif -%}
       <div class="hp__brain" id="hpBrain"><span class="hp__bglow" id="hpBglow"></span><span class="hp__bcore" id="hpBcore"></span></div>
       <span class="hp__cool" id="hpCool"></span>

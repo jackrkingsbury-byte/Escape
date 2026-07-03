@@ -26,7 +26,7 @@
       <div class="fn__body">{{ section.settings.note }}</div>
       <div class="fn__sign">
         <span class="fn__ava">
-          {%- if section.settings.photo != blank -%}<img src="{{ section.settings.photo | image_url: width: 108 }}" alt="{{ section.settings.name }}">{%- else -%}{{ section.settings.initial }}{%- endif -%}
+          {%- if section.settings.photo != blank -%}<img src="{{ section.settings.photo | image_url: width: 108 }}" alt="{{ section.settings.name }}" loading="lazy" decoding="async">{%- else -%}{{ section.settings.initial }}{%- endif -%}
         </span>
         <div class="fn__who"><b>{{ section.settings.name }}</b><span>{{ section.settings.role }}</span></div>
       </div>
