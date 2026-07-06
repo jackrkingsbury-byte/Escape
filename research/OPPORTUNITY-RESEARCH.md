@@ -301,7 +301,22 @@ The through-line: **money leaks (lost jobs, late/no payment, no-shows) hurt far 
 | Salon/barber booking + deposits | 3 | 3 | 3 | 4 | 108 |
 | Property inspection AI report writer | 3 | 3 | 3 | 3 | 81 |
 
-**Winner by EV: Trade quote-to-cash OS (320).** Note the top four all share DNA — they are *stages of the same SME money-OS*. That is the strategic gift: the winner's wedge (quoting + getting paid) naturally annexes #2 (compliance/books) and #3 (WhatsApp commerce) as it grows, compounding defensibility.
+**Winner by EV (original pass): Trade quote-to-cash OS (320).** Note the top four all share DNA — they are *stages of the same SME money-OS*.
+
+### 9b. Revised scoring after the Red-Team Kill Memo (harsher, more honest)
+The original pass over-scored **Founder-Fit** (a 16-year-old selling to offline 45-year-old tradesmen: age is a *trust liability*, plus no entity/PSP/network — F is 2–3, not 5) and **Defensibility** (a portable price book + payment rails you don't own + a funded incumbent aiming at the same product — D is ~3, not 4). Corrected, and adding the found-money "speed-to-lead" wedge that the Kill Memo surfaced:
+
+| Opportunity | P | M | D | F | **EV** | Δ vs original |
+|---|---|---|---|---|---|---|
+| **Speed-to-lead AI agent (found-money wedge)** — *new* | 4 | 4 | 3 | 4 | **192** | new top |
+| SARS-compliance/bookkeeping agent (SA) | 3 | 4 | 4 | 3 | 144 | −96 |
+| Trade quote-to-cash OS (TradeFlow) | 4 | 4 | 3 | 3 | **144** | **−176** |
+| WhatsApp commerce agent | 3 | 5 | 2 | 4 | 120 | −60 (Meta owns rails) |
+| High-ticket proposals + deposits | 4 | 3 | 3 | 3 | 108 | −36 |
+| Salon/barber booking + deposits | 3 | 3 | 3 | 3 | 81 | −27 |
+| AI voice receptionist (local service) | 2 | 4 | 3 | 3 | 72 | −36 (solo voice infra) |
+
+**Revised winner: the found-money "speed-to-lead" wedge (192)** — and even it is provisional until the Kill Memo's 2-week tests pass. TradeFlow's admin loop is not dead, but it is demoted to a **later phase** of the found-money company, not the wedge. Full redesigned recommendation: **`THE-BUSINESS.md`**. Honest caveat: these are still subjective scores; the real arbiter is in-market evidence, not the spreadsheet.
 
 ---
 
