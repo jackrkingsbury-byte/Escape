@@ -31,7 +31,24 @@ npm run dev                  # http://localhost:3000
 3. Add env vars from `.env.example` (public ones now; secrets as features land).
 4. Deploy.
 
+## Supabase setup (Feature 2)
+1. Create a project at supabase.com and copy the Project URL + anon key + service-role key.
+2. Add to `.env.local`:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   SUPABASE_SERVICE_ROLE_KEY=...   # server-only, never exposed
+   ```
+3. Run the schema: paste `supabase/migrations/0001_init.sql` into the Supabase
+   SQL editor (or `supabase db push`).
+4. In Supabase Auth settings, add your app URL + `/auth/callback` to the allowed
+   redirect URLs (e.g. `http://localhost:3000/auth/callback`).
+5. Restart `npm run dev` → sign in at `/login`, land on `/dashboard`.
+
+The app runs fine **without** Supabase configured — auth stays dormant and the
+dashboard shows a "connect Supabase" notice. The marketing site is unaffected.
+
 ## Build order
-See the repo research docs for the feature roadmap (M0–M7). Feature 1
-(this commit) is the project foundation + landing page. Feature 2 is the
-Claude reply-agent core.
+See the repo research docs for the roadmap. Feature 1 = foundation + landing
+page. Feature 2 (this commit) = Supabase schema, RLS, auth, protected
+dashboard. Feature 3 = the Claude reply-agent core.
