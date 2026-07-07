@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/env";
 import { site } from "@/lib/site";
+import TestAgent from "@/components/TestAgent";
 import type { BusinessRow, LeadRow } from "@/lib/supabase/types";
 
 export const dynamic = "force-dynamic";
@@ -119,6 +120,8 @@ export default async function DashboardPage() {
             </section>
           </>
         )}
+
+        <TestAgent />
       </main>
     </div>
   );
