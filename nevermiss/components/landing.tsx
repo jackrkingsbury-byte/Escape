@@ -448,6 +448,84 @@ export function CtaBand() {
   );
 }
 
+/* ----------------------------- trades bar ----------------------------- */
+
+export function TradesBar() {
+  const trades = ["Plumbers", "Electricians", "HVAC", "Mobile mechanics", "Movers", "Roofers", "Handymen"];
+  return (
+    <div className="border-b border-[var(--line)] bg-[var(--bg)] py-6">
+      <div className="container-page">
+        <p className="text-center text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+          Built for South African service businesses
+        </p>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[var(--muted)]">
+          {trades.map((t) => (
+            <span key={t} className="text-sm font-semibold">{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------------------- guarantee ------------------------------- */
+
+export function Guarantee() {
+  return (
+    <Section>
+      <div className="mx-auto max-w-3xl rounded-3xl border border-brand-200 bg-brand-50 p-8 text-center dark:border-brand-800 dark:bg-brand-900/30 sm:p-12">
+        <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-500 text-white">
+          <Icon path={I.check} />
+        </div>
+        <h2 className="mt-5 text-2xl font-bold tracking-tight sm:text-3xl">
+          If it doesn&apos;t catch you a job, you don&apos;t pay.
+        </h2>
+        <p className="mt-3 text-[var(--muted)]">
+          Try {site.name} for your first month. If it doesn&apos;t catch you at
+          least one job you&apos;d have missed, month two is on us. All the upside,
+          none of the risk.
+        </p>
+        <div className="mt-6 flex justify-center"><PrimaryCta>Start risk-free</PrimaryCta></div>
+      </div>
+    </Section>
+  );
+}
+
+/* --------------------------- founder note ----------------------------- */
+
+export function FounderNote() {
+  return (
+    <Section className="bg-[var(--surface)] border-y border-[var(--line)]">
+      <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-500 text-lg font-bold text-white">N</div>
+        <blockquote className="mt-5 text-xl font-medium leading-relaxed">
+          &ldquo;Every tradesperson I spoke to had the same story — a big job that
+          got away because they were on the tools and missed the message. {site.name}
+          exists so that never happens to you again.&rdquo;
+        </blockquote>
+        <p className="mt-4 text-sm font-semibold text-[var(--muted)]">— The {site.name} team, South Africa</p>
+      </div>
+    </Section>
+  );
+}
+
+/* ------------------------- sticky mobile CTA -------------------------- */
+
+export function StickyMobileCta() {
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] bg-[var(--bg)]/95 p-3 backdrop-blur sm:hidden">
+      <div className="flex gap-2">
+        <a href="/demo" className="flex-1 rounded-xl border border-[var(--line)] px-4 py-3 text-center font-semibold">
+          Try it live
+        </a>
+        <a href={whatsappLink()} className="flex-1 rounded-xl bg-brand-500 px-4 py-3 text-center font-semibold text-white">
+          Book a demo
+        </a>
+      </div>
+    </div>
+  );
+}
+
 /* ------------------------------ footer -------------------------------- */
 
 export function Footer() {
