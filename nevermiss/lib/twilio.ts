@@ -46,6 +46,10 @@ export function validateTwilioSignature(
   }
 }
 
+function smsFrom(): string | undefined {
+  return process.env.TWILIO_SMS_FROM; // an SMS-capable Twilio number, e.g. "+27..."
+}
+
 /** Send a WhatsApp message. Returns the message SID, or null on failure/no-config. */
 export async function sendWhatsApp(to: string, body: string): Promise<string | null> {
   const c = client();
@@ -61,4 +65,31 @@ export async function sendWhatsApp(to: string, body: string): Promise<string | n
     console.error("[sendWhatsApp] error:", err instanceof Error ? err.message : err);
     return null;
   }
+}
+
+/** Send an SMS. Returns the message SID, or null on failure/no-config. */
+export async function sendSms(to: string, body: string): Promise<string | null> {
+  const c = client();
+  const from = smsFrom();
+  if (!c || !from || !body.trim()) return null;
+
+  const toAddress = to.replace(/^whatsapp:/, "");
+  try {
+    const msg = await c.messages.create({ from, to: toAddress, body });
+    return msg.sid;
+  } catch (err) {
+    console.error("[sendSms] error:", err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
+export type Channel = "whatsapp" | "sms";
+
+/** Send a message over the given channel. */
+export async function sendByChannel(
+  channel: Channel,
+  to: string,
+  body: string,
+): Promise<string | null> {
+  return channel === "whatsapp" ? sendWhatsApp(to, body) : sendSms(to, body);
 }
