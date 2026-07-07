@@ -13,10 +13,10 @@ function CtaButtons({ compact = false }: { compact?: boolean }) {
       </a>
       {!compact && (
         <a
-          href={mailtoLink()}
+          href="/demo"
           className="inline-flex items-center justify-center rounded-xl border border-[var(--line)] px-5 py-3 font-semibold text-[var(--text)] transition hover:border-brand-400"
         >
-          Email us
+          Try the AI live →
         </a>
       )}
     </div>

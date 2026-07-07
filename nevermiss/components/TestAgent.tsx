@@ -10,7 +10,13 @@ type Msg = { role: "customer" | "business"; text: string; meta?: AgentResult };
  * would send and watch NeverMiss reply, using your real business profile
  * (or a demo profile before onboarding). This is also your demo tool.
  */
-export default function TestAgent() {
+export default function TestAgent({
+  endpoint = "/api/agent/preview",
+  showDemoBadge = true,
+}: {
+  endpoint?: string;
+  showDemoBadge?: boolean;
+} = {}) {
   const [input, setInput] = useState("");
   const [thread, setThread] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
@@ -29,7 +35,7 @@ export default function TestAgent() {
     setInput("");
 
     try {
-      const res = await fetch("/api/agent/preview", {
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, history }),
@@ -53,7 +59,7 @@ export default function TestAgent() {
     <section className="mt-10 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-card">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Test the AI</h2>
-        {demo && (
+        {demo && showDemoBadge && (
           <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 dark:bg-brand-900/40 dark:text-brand-200">
             Using demo profile — finish onboarding for your own
           </span>
