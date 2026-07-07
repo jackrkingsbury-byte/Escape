@@ -2,8 +2,10 @@ import {
   Nav,
   Hero,
   Proof,
+  Problem,
   HowItWorks,
-  Roi,
+  Comparison,
+  DemoBand,
   Pricing,
   Faq,
   CtaBand,
@@ -17,8 +19,10 @@ export default function HomePage() {
       <main>
         <Hero />
         <Proof />
+        <Problem />
         <HowItWorks />
-        <Roi />
+        <Comparison />
+        <DemoBand />
         <Pricing />
         <Faq />
         <CtaBand />

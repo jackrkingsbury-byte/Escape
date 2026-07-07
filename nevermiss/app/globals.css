@@ -24,6 +24,43 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Soft brand glow behind the hero */
+.hero-glow {
+  background-image: radial-gradient(
+    55% 45% at 50% -5%,
+    rgba(15, 160, 99, 0.14),
+    transparent 70%
+  );
+}
+
+/* Subtle dotted texture */
+.dot-grid {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: rgba(120, 140, 130, 0.14);
+}
+
+/* Gradient accent text */
+.text-gradient {
+  background: linear-gradient(120deg, #0fa063, #22c07a 60%, #4fd897);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
