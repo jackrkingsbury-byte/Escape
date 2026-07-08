@@ -239,6 +239,12 @@ export function Problem() {
           <div className="mt-5 rounded-lg bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-600 dark:text-red-400">
             Easily R10,000+ in lost work — in one quiet week.
           </div>
+          <a
+            href="/tools/missed-call-calculator"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:underline"
+          >
+            Work out your own number with the free calculator <span aria-hidden>→</span>
+          </a>
         </div>
       </div>
     </Section>
@@ -537,7 +543,12 @@ export function Footer() {
           {site.name}
         </div>
         <p>© {new Date().getFullYear()} {site.name}. Built in South Africa.</p>
-        <a href={mailtoLink()} className="hover:text-[var(--text)]">{site.email}</a>
+        <div className="flex items-center gap-4">
+          <a href="/tools/missed-call-calculator" className="hover:text-[var(--text)]">
+            Missed-call calculator
+          </a>
+          <a href={mailtoLink()} className="hover:text-[var(--text)]">{site.email}</a>
+        </div>
       </div>
     </footer>
   );
