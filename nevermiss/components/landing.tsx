@@ -360,9 +360,36 @@ export function DemoBand() {
 
 export function Pricing() {
   const tiers = [
-    { name: "Done-for-you", price: "From R750", per: "/mo", tagline: "We run it for you", features: ["We set up & manage your AI front desk", "Perfect while you get started", "Weekly captured-revenue report"], highlighted: false },
-    { name: "Core", price: "R499", per: "/mo", tagline: "Owner-operator", features: ["AI replies to every lead, 24/7", "Qualify, ballpark quote & book", "Daily 'Rand captured' report", "1 WhatsApp number"], highlighted: true },
-    { name: "Pro", price: "R1,299", per: "/mo", tagline: "Small team", features: ["Everything in Core", "Multiple team members", "Calendar & quote ranges", "Priority support"], highlighted: false },
+    {
+      name: "Done-for-you",
+      price: "From R750",
+      per: "/mo",
+      tagline: "We run it for you",
+      features: ["We set up & manage your AI front desk", "Perfect while you get started", "Weekly captured-revenue report"],
+      highlighted: false,
+      buyMessage:
+        "Hi! I want the Done-for-you plan (from R750/month) — please set NeverMiss up for my business. My business is: ",
+    },
+    {
+      name: "Core",
+      price: "R499",
+      per: "/mo",
+      tagline: "Owner-operator",
+      features: ["AI replies to every lead, 24/7", "Qualify, ballpark quote & book", "Daily 'Rand captured' report", "1 WhatsApp number"],
+      highlighted: true,
+      buyMessage:
+        "Hi! I want to start the Core plan (R499/month) for my business. My business is: ",
+    },
+    {
+      name: "Pro",
+      price: "R1,299",
+      per: "/mo",
+      tagline: "Small team",
+      features: ["Everything in Core", "Multiple team members", "Calendar & quote ranges", "Priority support"],
+      highlighted: false,
+      buyMessage:
+        "Hi! I'm interested in the Pro plan (R1,299/month) for my team. My business is: ",
+    },
   ];
   return (
     <Section id="pricing">
@@ -389,8 +416,8 @@ export function Pricing() {
                 </li>
               ))}
             </ul>
-            <a href={whatsappLink()} className={`mt-6 inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold transition ${t.highlighted ? "bg-brand-500 text-white hover:bg-brand-600" : "border border-[var(--line)] hover:border-brand-400"}`}>
-              Get started
+            <a href={whatsappLink(t.buyMessage)} className={`mt-6 inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold transition ${t.highlighted ? "bg-brand-500 text-white hover:bg-brand-600" : "border border-[var(--line)] hover:border-brand-400"}`}>
+              Get started — {t.price}{t.per}
             </a>
           </div>
         ))}
