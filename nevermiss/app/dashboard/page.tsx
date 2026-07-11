@@ -3,6 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/env";
 import { site } from "@/lib/site";
 import TestAgent from "@/components/TestAgent";
+import DraftInbox, { type DraftItem } from "@/components/DraftInbox";
 import type { BusinessRow, LeadRow } from "@/lib/supabase/types";
 
 export const dynamic = "force-dynamic";
@@ -49,6 +50,51 @@ export default async function DashboardPage() {
   const captured = leads.reduce((sum, l) => sum + Number(l.captured_value ?? 0), 0);
   const booked = leads.filter((l) => l.status === "booked" || l.status === "won").length;
 
+  // Pending AI drafts (approve mode / guardrail-flagged) with customer context.
+  let drafts: DraftItem[] = [];
+  if (business) {
+    const { data: outRows } = await supabase
+      .from("messages")
+      .select("id, body, ai_meta, created_at, conversation_id, conversations!inner(business_id)")
+      .eq("direction", "out")
+      .eq("sender", "ai")
+      .order("created_at", { ascending: false })
+      .limit(50);
+
+    const pending = ((outRows as unknown as Array<{
+      id: string;
+      body: string | null;
+      ai_meta: Record<string, unknown> | null;
+      created_at: string;
+      conversation_id: string;
+      conversations: { business_id: string };
+    }> | null) ?? []).filter(
+      (r) => r.ai_meta?.draft === true && r.conversations.business_id === business.id,
+    );
+
+    if (pending.length > 0) {
+      const convIds = Array.from(new Set(pending.map((p) => p.conversation_id)));
+      const { data: inRows } = await supabase
+        .from("messages")
+        .select("conversation_id, body, created_at")
+        .eq("direction", "in")
+        .in("conversation_id", convIds)
+        .order("created_at", { ascending: true });
+      const lastCustomerMsg = new Map<string, string>();
+      for (const r of (inRows as Array<{ conversation_id: string; body: string | null }> | null) ?? []) {
+        if (r.body) lastCustomerMsg.set(r.conversation_id, r.body);
+      }
+
+      drafts = pending.map((p) => ({
+        id: p.id,
+        draft: p.body ?? "",
+        customerMessage: lastCustomerMsg.get(p.conversation_id) ?? null,
+        note: typeof p.ai_meta?.internal_note === "string" ? (p.ai_meta.internal_note as string) : null,
+        when: new Date(p.created_at).toLocaleString("en-ZA", { dateStyle: "medium", timeStyle: "short" }),
+      }));
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <header className="border-b border-[var(--line)] bg-[var(--surface)]">
@@ -93,6 +139,8 @@ export default async function DashboardPage() {
               <Stat label="Leads" value={String(leads.length)} />
               <Stat label="Booked" value={String(booked)} />
             </div>
+
+            <DraftInbox drafts={drafts} />
 
             <section className="mt-10">
               <h2 className="text-lg font-semibold">Recent leads</h2>
