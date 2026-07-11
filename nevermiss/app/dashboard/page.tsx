@@ -75,8 +75,18 @@ export default async function DashboardPage() {
           <EmptyOnboarding />
         ) : (
           <>
-            <h1 className="text-2xl font-bold">{business.name}</h1>
-            <p className="text-[var(--muted)]">Here&apos;s what NeverMiss captured for you.</p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h1 className="text-2xl font-bold">{business.name}</h1>
+                <p className="text-[var(--muted)]">Here&apos;s what NeverMiss captured for you.</p>
+              </div>
+              <a
+                href="/onboarding"
+                className="rounded-lg border border-[var(--line)] px-4 py-2 text-sm font-medium transition hover:border-brand-400"
+              >
+                Edit business info
+              </a>
+            </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-3">
               <Stat label="Rand captured" value={money(captured)} accent />
@@ -151,9 +161,15 @@ function EmptyOnboarding() {
     <div className="mx-auto max-w-lg rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-8 text-center shadow-card">
       <h1 className="text-xl font-semibold">Welcome to {site.name} 👋</h1>
       <p className="mt-2 text-[var(--muted)]">
-        Let&apos;s set up your business so NeverMiss can start answering your
-        WhatsApp leads. The onboarding wizard is coming in the next build step.
+        Tell NeverMiss about your business — your services, prices, and hours —
+        so the AI can answer your customers like you would. Takes ~5 minutes.
       </p>
+      <a
+        href="/onboarding"
+        className="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-500 px-6 py-3 font-semibold text-white transition hover:bg-brand-600"
+      >
+        Set up my business →
+      </a>
     </div>
   );
 }
