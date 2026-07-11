@@ -84,6 +84,9 @@ export function Nav() {
           <a href="#faq" className="hover:text-[var(--text)]">FAQ</a>
         </nav>
         <div className="flex items-center gap-2">
+          <a href="/login" className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--muted)] hover:text-[var(--text)] sm:block">
+            Sign in
+          </a>
           <a href="/demo" className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-[var(--text)] hover:text-brand-600 sm:block">
             Try it live
           </a>
@@ -574,6 +577,7 @@ export function Footer() {
           <a href="/tools/missed-call-calculator" className="hover:text-[var(--text)]">
             Missed-call calculator
           </a>
+          <a href="/login" className="hover:text-[var(--text)]">Sign in</a>
           <a href={mailtoLink()} className="hover:text-[var(--text)]">{site.email}</a>
         </div>
       </div>

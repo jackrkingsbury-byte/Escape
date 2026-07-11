@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { runAgent } from "@/lib/agent/runAgent";
 import { applyGuardrails } from "@/lib/agent/guardrails";
 import { DEMO_PROFILE } from "@/lib/agent/types";
+import { rateLimit, clientIp } from "@/lib/ratelimit";
 import type { ConversationTurn } from "@/lib/agent/types";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +17,18 @@ const MAX_HISTORY = 8;
  * (For higher traffic, add rate limiting keyed on IP.)
  */
 export async function POST(request: NextRequest) {
+  // Protect AI credit: 8 messages/min per visitor, 60/min across everyone.
+  const ip = clientIp(request.headers);
+  const perIp = rateLimit(`demo:${ip}`, 8, 60_000);
+  const global = rateLimit("demo:*", 60, 60_000);
+  if (!perIp.allowed || !global.allowed) {
+    const retry = Math.max(perIp.retryAfterSeconds, global.retryAfterSeconds, 5);
+    return NextResponse.json(
+      { error: "Whoa — the demo is popular right now. Try again in a few seconds." },
+      { status: 429, headers: { "Retry-After": String(retry) } },
+    );
+  }
+
   let body: { message?: string; history?: ConversationTurn[] };
   try {
     body = await request.json();

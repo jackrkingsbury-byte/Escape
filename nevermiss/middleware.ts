@@ -36,7 +36,9 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Run on everything except static assets and image files.
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    // Run on pages only — skip static assets, images, and /api. API routes
+    // (Twilio webhooks, drafts, demo) do their own auth via the server
+    // client; running session refresh on webhook POSTs just adds latency.
+    "/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };
