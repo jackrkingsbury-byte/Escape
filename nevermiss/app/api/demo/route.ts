@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { runAgent } from "@/lib/agent/runAgent";
+import { applyGuardrails } from "@/lib/agent/guardrails";
 import { DEMO_PROFILE } from "@/lib/agent/types";
 import type { ConversationTurn } from "@/lib/agent/types";
 
@@ -44,5 +45,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: outcome.error }, { status: 502 });
   }
 
-  return NextResponse.json({ result: outcome.result, usingDemoProfile: true });
+  const { result, flags } = applyGuardrails(outcome.result, {
+    priceRanges: DEMO_PROFILE.priceRanges,
+    customerMessage: message,
+  });
+
+  return NextResponse.json({ result, guardrails: flags, usingDemoProfile: true });
 }

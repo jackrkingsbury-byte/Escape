@@ -1,6 +1,7 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { sendByChannel, type Channel } from "@/lib/twilio";
 import { runAgent } from "@/lib/agent/runAgent";
+import { applyGuardrails } from "@/lib/agent/guardrails";
 import { profileFromBusiness } from "@/lib/agent/types";
 import type { BusinessRow, ConversationRow, LeadRow, MessageRow } from "@/lib/supabase/types";
 import type { ConversationTurn } from "@/lib/agent/types";
@@ -54,7 +55,19 @@ export async function handleInboundMessage(opts: {
       });
       return;
     }
-    const result = outcome.result;
+    // Deterministic safety layer: verifies prices against the owner's price
+    // book, blocks firm-price/ambiguous/payment/promise replies from auto-send.
+    const { result, flags } = applyGuardrails(outcome.result, {
+      priceRanges: business.price_ranges,
+      customerMessage: opts.body,
+    });
+    if (flags.length > 0) {
+      await admin.from("events").insert({
+        business_id: business.id,
+        type: "guardrails_tripped",
+        payload: { lead_id: lead.id, flags, channel: opts.channel },
+      });
+    }
 
     const nextStatus =
       result.intent === "booking" ? "booked" : lead.status === "new" ? "qualifying" : lead.status;

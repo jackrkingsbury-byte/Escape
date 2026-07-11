@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { runAgent } from "@/lib/agent/runAgent";
+import { applyGuardrails } from "@/lib/agent/guardrails";
 import { profileFromBusiness, DEMO_PROFILE } from "@/lib/agent/types";
 import type { BusinessRow } from "@/lib/supabase/types";
 import type { ConversationTurn } from "@/lib/agent/types";
@@ -53,8 +54,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: outcome.error }, { status: 502 });
   }
 
+  const { result, flags } = applyGuardrails(outcome.result, {
+    priceRanges: profile.priceRanges,
+    customerMessage: message,
+  });
+
   return NextResponse.json({
-    result: outcome.result,
+    result,
+    guardrails: flags,
     usingDemoProfile: !business,
   });
 }
