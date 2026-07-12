@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>ESCAPE THE FEED — the game</title>
+<meta name="theme-color" content="#2347ff">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%232347ff'/><text x='50' y='72' font-size='64' font-family='Georgia,serif' fill='white' text-anchor='middle'>E</text></svg>">
+<meta name="description" content="Escape the feed. Climb out of the endless scroll, dodge the notifications, collect real dopamine. A tiny game from ESCAPE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,900&family=Hanken+Grotesk:wght@500;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f5ef;--surface:#fff;--text:#14161c;--muted:#5f6678;
+  --brand:#2347ff;--brand-deep:#1a38d6;--pop:#ff5630;--zing:#ffd60a;--line:#e4dece;
+  --shadow-lg:0 2px 5px rgba(20,22,28,.05),0 28px 64px rgba(20,22,28,.14);
+}
+html,body{height:100%}
+body{
+  font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  display:flex;flex-direction:column;align-items:center;overflow:hidden;
+  -webkit-font-smoothing:antialiased;touch-action:none;
+}
+header{
+  width:100%;max-width:520px;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px 8px;
+}
+.logo{font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:1.15rem;letter-spacing:-.02em}
+.logo span{color:var(--brand)}
+.hlinks{display:flex;gap:10px;align-items:center}
+.hbtn{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--line);
+  border-radius:100px;padding:7px 14px;cursor:pointer;text-decoration:none;transition:color .2s,border-color .2s;
+}
+.hbtn:hover{color:var(--brand);border-color:var(--brand)}
+#stage{
+  position:relative;flex:1;width:100%;max-width:520px;min-height:0;
+  display:flex;align-items:center;justify-content:center;padding:6px 12px 14px;
+}
+#wrap{position:relative;border-radius:22px;overflow:hidden;box-shadow:var(--shadow-lg);background:#eaf1ff}
+canvas{display:block;width:100%;height:100%}
+.overlay{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:28px;gap:14px;background:rgba(247,245,239,.86);backdrop-filter:blur(10px);
+  transition:opacity .25s;
+}
+.overlay.hidden{opacity:0;pointer-events:none}
+.overlay .label{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--pop);
+}
+.overlay h1{font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:clamp(1.9rem,8vw,2.7rem);line-height:1.02;letter-spacing:-.02em}
+.overlay h1 em{font-style:normal;color:var(--brand)}
+.overlay p{color:var(--muted);font-size:.98rem;max-width:320px;line-height:1.5}
+.bigscore{font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:3.4rem;color:var(--brand);line-height:1}
+.best{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dare{
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 18px;max-width:330px;
+}
+.dare .dlabel{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--pop);margin-bottom:5px}
+.dare .dtext{font-weight:700;font-size:.95rem;line-height:1.35}
+.btn{
+  font-family:inherit;font-weight:800;font-size:1.02rem;padding:15px 34px;border-radius:100px;
+  border:2px solid transparent;cursor:pointer;background:var(--brand);color:#fff;
+  box-shadow:0 12px 26px rgba(35,71,255,.18);transition:transform .16s,background .25s;
+}
+.btn:hover{background:var(--brand-deep);transform:translateY(-2px)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.keys{display:flex;gap:14px;align-items:center;color:var(--muted);font-size:.82rem;flex-wrap:wrap;justify-content:center}
+.keys kbd{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;background:var(--surface);
+  border:1px solid var(--line);border-bottom-width:3px;border-radius:8px;padding:4px 9px;color:var(--text);
+}
+@media (hover:none){.keys.desktop{display:none}}
+@media (hover:hover){.keys.mobile{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ESCAPE<span>·</span>THE<span>·</span>FEED</div>
+  <div class="hlinks">
+    <button class="hbtn" id="muteBtn" aria-label="Toggle sound">Sound: On</button>
+    <a class="hbtn" href="index.html">← Escape</a>
+  </div>
+</header>
+
+<div id="stage">
+  <div id="wrap">
+    <canvas id="game"></canvas>
+
+    <div class="overlay" id="menu">
+      <div class="label">A tiny game from ESCAPE</div>
+      <h1>Escape<br><em>the feed.</em></h1>
+      <p>You've been scrolling for 4 hours. Climb out. Dodge the notifications. Collect the real dopamine <b>⚡</b> on your way up.</p>
+      <button class="btn" id="playBtn">Start climbing</button>
+      <div class="keys desktop"><span><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> to move</span><span><kbd>P</kbd> pause</span></div>
+      <div class="keys mobile"><span>Hold <b>left / right side</b> of the screen to move</span></div>
+    </div>
+
+    <div class="overlay hidden" id="dead">
+      <div class="label" id="deathLine">The feed got you</div>
+      <div class="bigscore" id="finalScore">0m</div>
+      <div class="best" id="bestScore">Best: 0m</div>
+      <div class="dare">
+        <div class="dlabel">Now do a real one — today's dare</div>
+        <div class="dtext" id="dareText"></div>
+      </div>
+      <button class="btn" id="retryBtn">Climb again</button>
+    </div>
+
+    <div class="overlay hidden" id="paused">
+      <h1>Paused</h1>
+      <p>The feed will wait. It always does.</p>
+      <button class="btn" id="resumeBtn">Keep climbing</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ============================================================
+   ESCAPE THE FEED — a vertical climber.
+   World coords are canvas-logical pixels (W×H). The camera never
+   moves: when the player rises above the lock line, everything
+   is shifted down instead, and the shift accumulates into score.
+   ============================================================ */
+const W = 420, H = 700;
+const GRAVITY = 1750;          // px/s²
+const JUMP_V = -830;           // normal bounce
+const SPRING_V = -1450;        // coffee spring
+const JET_V = -2050;           // airplane-mode boost
+const MOVE_A = 3400;           // horizontal acceleration
+const MOVE_MAX = 380;          // max horizontal speed
+const FRICTION = 8;            // horizontal damping (1/s)
+const CAM_LOCK = H * 0.42;     // player above this → world shifts down
+const PLAT_W = 70, PLAT_H = 16;
+
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+
+/* ---------- responsive sizing ---------- */
+const wrap = document.getElementById('wrap');
+function fit() {
+  const stage = document.getElementById('stage');
+  const availW = stage.clientWidth - 24;
+  const availH = stage.clientHeight - 20;
+  const scale = Math.min(availW / W, availH / H);
+  wrap.style.width = (W * scale) + 'px';
+  wrap.style.height = (H * scale) + 'px';
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', fit);
+
+/* ---------- tiny synth ---------- */
+let audioCtx = null, muted = false;
+function beep(freq, dur, type = 'square', vol = 0.05, slide = 0) {
+  if (muted) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq;
+    if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(40, freq + slide), audioCtx.currentTime + dur);
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    o.connect(g).connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+  } catch (e) { /* audio unavailable — play silently */ }
+}
+const sfx = {
+  jump:  () => beep(300, 0.12, 'square', 0.035, 220),
+  spring:() => beep(380, 0.22, 'square', 0.05, 520),
+  jet:   () => beep(200, 0.5, 'sawtooth', 0.05, 700),
+  bolt:  () => { beep(880, 0.07, 'square', 0.05); setTimeout(() => beep(1320, 0.09, 'square', 0.05), 60); },
+  crumble:()=> beep(160, 0.15, 'triangle', 0.06, -80),
+  hit:   () => beep(180, 0.4, 'sawtooth', 0.07, -140),
+  fall:  () => beep(500, 0.7, 'sine', 0.06, -430),
+};
+document.getElementById('muteBtn').addEventListener('click', function () {
+  muted = !muted;
+  this.textContent = muted ? 'Sound: Off' : 'Sound: On';
+});
+
+/* ---------- input ---------- */
+const input = { left: false, right: false };
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') input.left = true;
+  if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') input.right = true;
+  if ((e.key === 'p' || e.key === 'P') && (state === 'play' || state === 'pause')) togglePause();
+  if ((e.key === ' ' || e.key === 'Enter')) {
+    if (state === 'menu') start();
+    else if (state === 'dead' && deadCooldown <= 0) start();
+  }
+});
+window.addEventListener('keyup', e => {
+  if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') input.left = false;
+  if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') input.right = false;
+});
+const touches = new Map();
+function updateTouch() {
+  input.left = input.right = false;
+  const mid = wrap.getBoundingClientRect().left + wrap.clientWidth / 2;
+  for (const x of touches.values()) (x < mid ? input.left = true : input.right = true);
+}
+canvas.addEventListener('touchstart', e => { e.preventDefault(); for (const t of e.changedTouches) touches.set(t.identifier, t.clientX); updateTouch(); }, { passive: false });
+canvas.addEventListener('touchmove',  e => { e.preventDefault(); for (const t of e.changedTouches) touches.set(t.identifier, t.clientX); updateTouch(); }, { passive: false });
+canvas.addEventListener('touchend',   e => { for (const t of e.changedTouches) touches.delete(t.identifier); updateTouch(); });
+canvas.addEventListener('touchcancel',e => { for (const t of e.changedTouches) touches.delete(t.identifier); updateTouch(); });
+
+/* ---------- game state ---------- */
+let state = 'menu'; // menu | play | pause | dead
+let player, platforms, hazards, bolts, particles, floaters;
+let climb, score, best, shakeT, deadCooldown = 0, timeAlive;
+let milestoneIdx;
+best = +(localStorage.getItem('escape_feed_best') || 0);
+
+const MILESTONES = [
+  [60,  'You put the phone face-down'],
+  [150, 'Notifications fading…'],
+  [300, 'You can hear birds again'],
+  [500, 'Fresh air up here'],
+  [750, 'Your attention span is back'],
+  [1000,'The algorithm can\'t see you'],
+  [1500,'Is this… real dopamine?'],
+  [2000,'You forgot your phone exists'],
+  [3000,'Absolute legend. Touch grass champion.'],
+];
+const DARES = [
+  'Take a 10-minute walk. No phone. Just walk.',
+  'Text someone you haven\'t spoken to in 6 months.',
+  'Do 20 push-ups right now. Yes, now.',
+  'Cook one real meal today — no delivery app.',
+  'Give a genuine compliment to a stranger.',
+  'Cold shower. 60 seconds. You\'ll survive.',
+  'Write down 3 things you\'d do if you weren\'t scared.',
+  'Delete one app you doomscroll. Just one.',
+  'Read 10 pages of an actual paper book.',
+  'Sit outside for 15 minutes and do absolutely nothing.',
+  'Ask someone interesting to grab a coffee this week.',
+  'Go to bed 45 minutes earlier tonight. Phone in another room.',
+];
+const DEATH_LINES = [
+  'The feed got you', 'Doomscrolled back to page one', 'The algorithm wins this round',
+  'One more video turned into 40', 'Pulled back into the scroll',
+];
+
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = arr => arr[(Math.random() * arr.length) | 0];
+
+/* platform types: 'solid' | 'move' | 'crumble' */
+function makePlatform(x, y, type) {
+  return { x, y, w: PLAT_W, h: PLAT_H, type, vx: type === 'move' ? (Math.random() < .5 ? -1 : 1) * rand(60, 130) : 0,
+           broken: false, breakT: 0, boost: null, wobble: Math.random() * 6.28 };
+}
+
+function difficulty() { return Math.min(1, climb / 22000); } // 0 → 1 over ~2200 m
+
+function spawnRow(y) {
+  const d = difficulty();
+  const p = makePlatform(rand(10, W - PLAT_W - 10), y,
+    Math.random() < 0.14 + d * 0.22 ? 'move' :
+    Math.random() < (climb > 1500 ? 0.16 + d * 0.1 : 0) ? 'crumble' : 'solid');
+  if (p.type !== 'crumble') {
+    const r = Math.random();
+    if (r < 0.055) p.boost = 'spring';
+    else if (r < 0.055 + 0.014) p.boost = 'jet';
+  }
+  platforms.push(p);
+  if (Math.random() < 0.18) bolts.push({ x: p.x + p.w / 2, y: p.y - rand(30, 60), t: Math.random() * 6.28, taken: false });
+  if (climb > 3500 && Math.random() < 0.05 + d * 0.10) {
+    hazards.push({ x: rand(40, W - 40), y: y - rand(40, 90), r: 17, t: Math.random() * 6.28,
+                   vx: (Math.random() < .5 ? -1 : 1) * rand(30, 90) * (0.5 + d) });
+  }
+  return p;
+}
+
+function start() {
+  player = { x: W / 2, y: H - 120, vx: 0, vy: JUMP_V, r: 16, face: 1, squash: 0, jetT: 0 };
+  platforms = []; hazards = []; bolts = []; particles = []; floaters = [];
+  climb = 0; score = 0; shakeT = 0; timeAlive = 0; milestoneIdx = 0;
+  // guaranteed floor + seeded rows
+  platforms.push(makePlatform(W / 2 - PLAT_W / 2, H - 60, 'solid'));
+  let y = H - 60;
+  while (y > -40) { y -= rand(55, 90); spawnRow(y); }
+  document.getElementById('menu').classList.add('hidden');
+  document.getElementById('dead').classList.add('hidden');
+  document.getElementById('paused').classList.add('hidden');
+  state = 'play';
+  beep(520, 0.1, 'square', 0.04, 200);
+}
+document.getElementById('playBtn').addEventListener('click', start);
+document.getElementById('retryBtn').addEventListener('click', start);
+document.getElementById('resumeBtn').addEventListener('click', togglePause);
+function togglePause() {
+  if (state === 'play') { state = 'pause'; document.getElementById('paused').classList.remove('hidden'); }
+  else if (state === 'pause') { state = 'play'; document.getElementById('paused').classList.add('hidden'); last = performance.now(); }
+}
+window.addEventListener('blur', () => { if (state === 'play') togglePause(); });
+
+function die(reason) {
+  state = 'dead';
+  deadCooldown = 0.8; // block instant restart from mashed keys
+  sfx[reason === 'hazard' ? 'hit' : 'fall']();
+  const s = Math.floor(score);
+  if (s > best) { best = s; localStorage.setItem('escape_feed_best', best); }
+  document.getElementById('deathLine').textContent = pick(DEATH_LINES);
+  document.getElementById('finalScore').textContent = s + 'm';
+  document.getElementById('bestScore').textContent = 'Best: ' + best + 'm' + (s === best && s > 0 ? '  ·  New record!' : '');
+  document.getElementById('dareText').textContent = pick(DARES);
+  document.getElementById('dead').classList.remove('hidden');
+}
+
+/* ---------- update ---------- */
+function update(dt) {
+  timeAlive += dt;
+  const p = player;
+
+  // horizontal
+  if (input.left)  { p.vx -= MOVE_A * dt; p.face = -1; }
+  if (input.right) { p.vx += MOVE_A * dt; p.face = 1; }
+  if (!input.left && !input.right) p.vx -= p.vx * Math.min(1, FRICTION * dt);
+  p.vx = Math.max(-MOVE_MAX, Math.min(MOVE_MAX, p.vx));
+  p.x += p.vx * dt;
+  if (p.x < -p.r) p.x = W + p.r; // wrap
+  if (p.x > W + p.r) p.x = -p.r;
+
+  // vertical
+  const prevY = p.y;
+  p.vy += GRAVITY * dt;
+  if (p.jetT > 0) { p.jetT -= dt; p.vy = Math.min(p.vy, JET_V * 0.75); }
+  p.y += p.vy * dt;
+  p.squash = Math.max(0, p.squash - dt * 4);
+
+  // platform landings (only while falling, swept from previous position)
+  if (p.vy > 0 && p.jetT <= 0) {
+    for (const pl of platforms) {
+      if (pl.broken) continue;
+      const top = pl.y;
+      if (prevY + p.r <= top + 2 && p.y + p.r >= top &&
+          p.x > pl.x - p.r * 0.6 && p.x < pl.x + pl.w + p.r * 0.6) {
+        p.y = top - p.r;
+        if (pl.type === 'crumble') {
+          pl.broken = true; pl.breakT = 0.001;
+          p.vy = JUMP_V * 0.85; sfx.crumble();
+        } else if (pl.boost === 'spring') {
+          p.vy = SPRING_V; sfx.spring(); p.squash = 1;
+        } else if (pl.boost === 'jet') {
+          p.vy = JET_V; p.jetT = 0.55; pl.boost = null; sfx.jet();
+          for (let i = 0; i < 14; i++) particles.push({ x: p.x, y: p.y + 10, vx: rand(-120, 120), vy: rand(60, 260), life: rand(.3, .7), c: '#ffd60a' });
+        } else {
+          p.vy = JUMP_V; sfx.jump(); p.squash = 0.7;
+        }
+        for (let i = 0; i < 5; i++) particles.push({ x: p.x + rand(-12, 12), y: top, vx: rand(-60, 60), vy: rand(-20, 20), life: rand(.2, .4), c: '#c9c2ae' });
+        break;
+      }
+    }
+  }
+
+  // moving / breaking platforms
+  for (const pl of platforms) {
+    if (pl.type === 'move' && !pl.broken) {
+      pl.x += pl.vx * dt;
+      if (pl.x < 6) { pl.x = 6; pl.vx *= -1; }
+      if (pl.x + pl.w > W - 6) { pl.x = W - 6 - pl.w; pl.vx *= -1; }
+    }
+    if (pl.breakT > 0) pl.breakT += dt;
+  }
+
+  // hazards drift
+  for (const hz of hazards) {
+    hz.t += dt;
+    hz.x += hz.vx * dt;
+    if (hz.x < hz.r + 4 || hz.x > W - hz.r - 4) hz.vx *= -1;
+    const dx = p.x - hz.x, dy = p.y - (hz.y + Math.sin(hz.t * 2.4) * 8);
+    if (dx * dx + dy * dy < (p.r + hz.r - 5) ** 2) { shakeT = 0.5; die('hazard'); return; }
+  }
+
+  // bolts
+  for (const b of bolts) {
+    b.t += dt;
+    if (!b.taken) {
+      const dx = p.x - b.x, dy = p.y - b.y;
+      if (dx * dx + dy * dy < (p.r + 16) ** 2) {
+        b.taken = true; score += 25; sfx.bolt();
+        floaters.push({ x: b.x, y: b.y, text: '+25', life: 0.9, c: '#2347ff' });
+        for (let i = 0; i < 8; i++) particles.push({ x: b.x, y: b.y, vx: rand(-140, 140), vy: rand(-140, 140), life: rand(.25, .5), c: '#ffd60a' });
+      }
+    }
+  }
+
+  // camera: shift world down when player is above the lock line
+  if (p.y < CAM_LOCK) {
+    const dy = CAM_LOCK - p.y;
+    p.y = CAM_LOCK;
+    climb += dy;
+    score += dy / 10;
+    for (const pl of platforms) pl.y += dy;
+    for (const hz of hazards) hz.y += dy;
+    for (const b of bolts) b.y += dy;
+    for (const pt of particles) pt.y += dy;
+    for (const f of floaters) f.y += dy;
+  }
+
+  // milestones
+  if (milestoneIdx < MILESTONES.length && score >= MILESTONES[milestoneIdx][0]) {
+    floaters.push({ x: W / 2, y: 150, text: MILESTONES[milestoneIdx][1], life: 2.2, c: '#ff5630', big: true });
+    milestoneIdx++;
+  }
+
+  // spawn above, cull below
+  let highest = Infinity;
+  for (const pl of platforms) if (pl.y < highest) highest = pl.y;
+  const d = difficulty();
+  while (highest > -40) {
+    highest -= rand(58 + d * 30, 92 + d * 46);
+    spawnRow(highest);
+  }
+  platforms = platforms.filter(pl => pl.y < H + 60 && !(pl.broken && pl.breakT > 0.6));
+  hazards = hazards.filter(hz => hz.y < H + 80);
+  bolts = bolts.filter(b => b.y < H + 40 && !b.taken);
+
+  // particles & floaters
+  for (const pt of particles) { pt.x += pt.vx * dt; pt.y += pt.vy * dt; pt.vy += 500 * dt; pt.life -= dt; }
+  particles = particles.filter(pt => pt.life > 0);
+  for (const f of floaters) { f.life -= dt; if (!f.big) f.y -= 40 * dt; }
+  floaters = floaters.filter(f => f.life > 0);
+
+  if (shakeT > 0) shakeT -= dt;
+
+  // fell off the bottom
+  if (p.y - p.r > H + 40) die('fall');
+}
+
+/* ---------- drawing ---------- */
+function lerp(a, b, t) { return a + (b - a) * t; }
+function skyColor() {
+  // feed-gray at the bottom of the climb → warm ESCAPE sky at the top
+  const t = Math.min(1, climb / 14000);
+  const r = Math.round(lerp(226, 234, t));
+  const g = Math.round(lerp(229, 241, t));
+  const b = Math.round(lerp(236, 255, t));
+  return `rgb(${r},${g},${b})`;
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function drawBackground() {
+  ctx.fillStyle = skyColor();
+  ctx.fillRect(0, 0, W, H);
+
+  // ghost feed cards at low altitude (parallax, fade out as you climb)
+  const feedAlpha = Math.max(0, 1 - climb / 5000) * 0.5;
+  if (feedAlpha > 0.01) {
+    ctx.save();
+    ctx.globalAlpha = feedAlpha;
+    const off = (climb * 0.35) % 260;
+    for (let i = -1; i < 4; i++) {
+      const y = i * 260 + off;
+      ctx.fillStyle = '#ffffff';
+      roundRect(46, y, W - 92, 190, 18); ctx.fill();
+      ctx.fillStyle = '#dfe3ea';
+      roundRect(66, y + 20, 44, 44, 22); ctx.fill();          // avatar
+      roundRect(122, y + 26, 150, 12, 6); ctx.fill();          // name line
+      roundRect(122, y + 46, 90, 10, 5); ctx.fill();
+      roundRect(66, y + 82, W - 132, 84, 12); ctx.fill();      // media block
+      ctx.fillStyle = '#ffb3a1';
+      roundRect(66, y + 176, 26, 10, 5); ctx.fill();           // like pill
+    }
+    ctx.restore();
+  }
+
+  // clouds up high
+  const cloudAlpha = Math.min(0.9, Math.max(0, (climb - 2500) / 6000));
+  if (cloudAlpha > 0.01) {
+    ctx.save();
+    ctx.globalAlpha = cloudAlpha;
+    ctx.fillStyle = '#ffffff';
+    const coff = (climb * 0.18) % 500;
+    const blobs = [[70, 90], [300, 240], [160, 420], [340, 560], [40, 640]];
+    for (const [bx, by] of blobs) {
+      const y = ((by + coff) % 760) - 40;
+      ctx.beginPath();
+      ctx.ellipse(bx, y, 52, 18, 0, 0, 6.29);
+      ctx.ellipse(bx + 34, y - 10, 34, 15, 0, 0, 6.29);
+      ctx.ellipse(bx - 30, y - 6, 28, 13, 0, 0, 6.29);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+}
+
+function drawPlatform(pl) {
+  const shakeX = pl.breakT > 0 ? Math.sin(pl.breakT * 60) * 3 : 0;
+  const dropY = pl.breakT > 0 ? pl.breakT * pl.breakT * 900 : 0;
+  const x = pl.x + shakeX, y = pl.y + dropY;
+  ctx.save();
+  if (pl.breakT > 0) ctx.globalAlpha = Math.max(0, 1 - pl.breakT * 1.6);
+  if (pl.type === 'crumble') {
+    ctx.fillStyle = '#f3ede1';
+    roundRect(x, y, pl.w, PLAT_H, 8); ctx.fill();
+    ctx.strokeStyle = '#c9c2ae'; ctx.lineWidth = 2;
+    roundRect(x, y, pl.w, PLAT_H, 8); ctx.stroke();
+    ctx.beginPath(); // crack
+    ctx.moveTo(x + pl.w * 0.35, y + 2); ctx.lineTo(x + pl.w * 0.5, y + 8); ctx.lineTo(x + pl.w * 0.42, y + 14);
+    ctx.stroke();
+  } else if (pl.type === 'move') {
+    ctx.fillStyle = '#2347ff';
+    roundRect(x, y, pl.w, PLAT_H, 8); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.45)';
+    roundRect(x + 6, y + 4, pl.w - 12, 3, 2); ctx.fill();
+  } else {
+    ctx.fillStyle = '#ffffff';
+    roundRect(x, y, pl.w, PLAT_H, 8); ctx.fill();
+    ctx.strokeStyle = '#e4dece'; ctx.lineWidth = 2;
+    roundRect(x, y, pl.w, PLAT_H, 8); ctx.stroke();
+  }
+  if (pl.boost === 'spring' && !pl.broken) {
+    ctx.fillStyle = '#ffd60a';
+    roundRect(x + pl.w / 2 - 11, y - 9, 22, 9, 4); ctx.fill();
+    ctx.strokeStyle = '#d9b000'; ctx.lineWidth = 2;
+    roundRect(x + pl.w / 2 - 11, y - 9, 22, 9, 4); ctx.stroke();
+  }
+  if (pl.boost === 'jet' && !pl.broken) {
+    ctx.font = '16px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('✈️', x + pl.w / 2, y - 6);
+  }
+  ctx.restore();
+}
+
+function drawHazard(hz) {
+  const y = hz.y + Math.sin(hz.t * 2.4) * 8;
+  const pulse = 1 + Math.sin(hz.t * 6) * 0.06;
+  ctx.save();
+  ctx.translate(hz.x, y);
+  ctx.scale(pulse, pulse);
+  // notification bubble
+  ctx.fillStyle = '#ff5630';
+  ctx.beginPath(); ctx.arc(0, 0, hz.r, 0, 6.29); ctx.fill();
+  ctx.beginPath(); // tail
+  ctx.moveTo(-4, hz.r - 3); ctx.lineTo(2, hz.r + 8); ctx.lineTo(7, hz.r - 5); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 17px "Hanken Grotesk",sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('!', 0, 1);
+  ctx.restore();
+}
+
+function drawBolt(b) {
+  const y = b.y + Math.sin(b.t * 3) * 5;
+  ctx.save();
+  ctx.translate(b.x, y);
+  ctx.fillStyle = '#ffd60a';
+  ctx.strokeStyle = '#d9b000';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(2, -12); ctx.lineTo(-6, 2); ctx.lineTo(-1, 2); ctx.lineTo(-2, 12); ctx.lineTo(6, -2); ctx.lineTo(1, -2);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
+
+function drawPlayer() {
+  const p = player;
+  const sq = p.squash;
+  const sx = 1 + sq * 0.25, sy = 1 - sq * 0.25;
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  // jet flame
+  if (p.jetT > 0) {
+    ctx.fillStyle = '#ffd60a';
+    ctx.beginPath();
+    ctx.moveTo(-7, p.r); ctx.lineTo(0, p.r + 18 + Math.random() * 10); ctx.lineTo(7, p.r);
+    ctx.closePath(); ctx.fill();
+  }
+  ctx.scale(sx, sy);
+  // body
+  ctx.fillStyle = '#2347ff';
+  roundRect(-p.r, -p.r, p.r * 2, p.r * 2, 11); ctx.fill();
+  // face
+  const ex = p.face * 3;
+  ctx.fillStyle = '#fff';
+  ctx.beginPath(); ctx.arc(-5 + ex, -4, 4.4, 0, 6.29); ctx.arc(6 + ex, -4, 4.4, 0, 6.29); ctx.fill();
+  ctx.fillStyle = '#14161c';
+  ctx.beginPath(); ctx.arc(-4 + ex * 1.4, -4, 2, 0, 6.29); ctx.arc(7 + ex * 1.4, -4, 2, 0, 6.29); ctx.fill();
+  // mouth: grin going up, worried coming down
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+  ctx.beginPath();
+  if (p.vy < 0) ctx.arc(1 + ex, 4, 5, 0.15, Math.PI - 0.15);
+  else ctx.arc(1 + ex, 9, 4, Math.PI + 0.3, -0.3);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function draw() {
+  ctx.save();
+  if (shakeT > 0) ctx.translate(rand(-1, 1) * shakeT * 14, rand(-1, 1) * shakeT * 14);
+  drawBackground();
+  for (const pl of platforms) drawPlatform(pl);
+  for (const b of bolts) drawBolt(b);
+  for (const hz of hazards) drawHazard(hz);
+  for (const pt of particles) {
+    ctx.globalAlpha = Math.min(1, pt.life * 3);
+    ctx.fillStyle = pt.c;
+    ctx.fillRect(pt.x - 2.5, pt.y - 2.5, 5, 5);
+    ctx.globalAlpha = 1;
+  }
+  if (player && state !== 'menu') drawPlayer();
+  // floaters
+  for (const f of floaters) {
+    ctx.globalAlpha = Math.min(1, f.life * 2);
+    ctx.fillStyle = f.c;
+    ctx.font = (f.big ? '900 21px' : '800 15px') + ' "Hanken Grotesk",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(f.text, f.x, f.y);
+    ctx.globalAlpha = 1;
+  }
+  // HUD
+  if (state === 'play' || state === 'pause' || state === 'dead') {
+    ctx.fillStyle = 'rgba(20,22,28,.78)';
+    ctx.font = '700 13px "JetBrains Mono",monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(Math.floor(score) + 'm', 16, 28);
+    if (best > 0) {
+      ctx.fillStyle = 'rgba(20,22,28,.42)';
+      ctx.textAlign = 'right';
+      ctx.fillText('BEST ' + best + 'm', W - 16, 28);
+    }
+  }
+  ctx.restore();
+}
+
+/* ---------- main loop ---------- */
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(0.033, (now - last) / 1000);
+  last = now;
+  if (deadCooldown > 0) deadCooldown -= dt;
+  if (state === 'play') update(dt);
+  draw();
+  requestAnimationFrame(frame);
+}
+
+fit();
+// idle menu backdrop: pre-seed some platforms so the menu isn't empty
+platforms = []; hazards = []; bolts = []; particles = []; floaters = [];
+climb = 0; score = 0; shakeT = 0;
+{
+  let y = H - 40;
+  while (y > -40) { platforms.push(makePlatform(rand(10, W - PLAT_W - 10), y, 'solid')); y -= rand(70, 110); }
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
