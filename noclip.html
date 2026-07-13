@@ -91,17 +91,57 @@ button{font-family:inherit;cursor:pointer}
 .screen{position:fixed;inset:0;z-index:50;background:rgba(13,11,6,.94);display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:20px;text-align:center;overflow-y:auto}
 .screen.hidden{display:none}
+#titleScr{background:linear-gradient(rgba(13,11,6,.35),rgba(13,11,6,.7) 75%)} /* live 3D drift shows through */
+#titleScr .eyebrow,#titleScr .sub,#titleScr h1{text-shadow:0 2px 14px rgba(0,0,0,.9)}
+.panel{animation:panelIn .55s backwards}
+#lobbyGrid>div>.panel:nth-child(1){animation-delay:.05s}
+#lobbyGrid>div>.panel:nth-child(2){animation-delay:.14s}
+#lobbyGrid>div>.panel:nth-child(3){animation-delay:.23s}
+@keyframes panelIn{from{opacity:0;transform:translateY(14px)}}
+.slot{animation:slotIn .22s backwards}
+@keyframes slotIn{from{opacity:0;transform:translateX(14px)}}
+#toast{animation:none}
+.lbrow{position:relative;overflow:hidden}
+.lbbar{position:absolute;inset:0;background:linear-gradient(90deg,rgba(214,196,118,.14),rgba(214,196,118,.03));
+  transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.lbrow span{position:relative}
 .eyebrow{font-size:11px;letter-spacing:.4em;color:var(--ink-faint);text-transform:uppercase}
-h1.title{font-size:clamp(38px,10vw,64px);color:var(--white);letter-spacing:.06em;line-height:1;margin:10px 0 4px}
+h1.title{font-size:clamp(38px,10vw,64px);color:var(--white);letter-spacing:.06em;line-height:1;margin:10px 0 4px;
+  animation:titleGlitch 4.1s infinite}
 h1.title .cur{animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
+@keyframes titleGlitch{
+  0%,91%,100%{text-shadow:0 0 22px rgba(214,196,118,.25);transform:none}
+  92%{text-shadow:-4px 0 #ff2ec4,4px 0 #4de8ff;transform:translateX(2px) skewX(2deg)}
+  94%{text-shadow:3px 0 #ff2ec4,-3px 0 #4de8ff;transform:translateX(-3px)}
+  96%{text-shadow:-2px 0 #ff2ec4,2px 0 #4de8ff;transform:translateX(1px) skewX(-1deg)}
+  98%{text-shadow:0 0 22px rgba(214,196,118,.25);transform:none}
+}
 .sub{color:var(--ink-dim);font-size:13px;max-width:440px;line-height:1.7;margin:10px 0 22px}
 .bigbtn{background:var(--ink);color:#0d0b06;border:0;font-weight:700;font-size:15px;letter-spacing:.1em;
-  padding:15px 38px;text-transform:uppercase}
-.bigbtn:hover{background:var(--white)}
-.bigbtn:disabled{background:var(--ink-faint);cursor:not-allowed}
-.ghostbtn{background:none;border:1px solid var(--line);color:var(--ink-dim);font-size:12px;padding:10px 18px;letter-spacing:.08em}
-.ghostbtn:hover{border-color:var(--ink);color:var(--ink)}
+  padding:15px 38px;text-transform:uppercase;position:relative;overflow:hidden;
+  transition:transform .16s cubic-bezier(.2,.8,.2,1),background .25s,box-shadow .3s;
+  animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 0 26px rgba(214,196,118,.4)}}
+.bigbtn::after{content:'';position:absolute;top:0;left:-70%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+  animation:sheen 3.2s ease-in-out infinite}
+@keyframes sheen{0%,15%{left:-70%}55%,100%{left:130%}}
+.bigbtn:hover{background:var(--white);transform:translateY(-2px) scale(1.04)}
+.bigbtn:active{transform:translateY(1px) scale(.97)}
+.bigbtn:disabled{background:var(--ink-faint);cursor:not-allowed;animation:none}
+.ghostbtn{background:none;border:1px solid var(--line);color:var(--ink-dim);font-size:12px;padding:10px 18px;letter-spacing:.08em;
+  transition:border-color .2s,color .2s,transform .16s,background .2s}
+.ghostbtn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px);background:rgba(214,196,118,.06)}
+.ghostbtn:active{transform:translateY(1px)}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.shake{animation:shakeX .35s}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.chip{border:1px solid var(--line);background:rgba(20,17,10,.75);padding:6px 12px;font-size:11px;
+  color:var(--ink-dim);letter-spacing:.08em;animation:chipIn .5s backwards}
+.chip b{color:var(--ink)}
+.chip:nth-child(2){animation-delay:.1s}.chip:nth-child(3){animation-delay:.2s}.chip:nth-child(4){animation-delay:.3s}
+@keyframes chipIn{from{opacity:0;transform:translateY(8px)}}
 
 #lobby{justify-content:flex-start;padding:0;text-align:left}
 #lobbyHead{width:100%;border-bottom:1px solid var(--line);padding:14px 18px;display:flex;justify-content:space-between;
@@ -126,8 +166,11 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
 .shoprow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px;border-bottom:1px solid rgba(46,40,26,.6);font-size:12px}
 .shoprow:last-child{border-bottom:0}
 .shoprow .sd{color:var(--ink-faint);font-size:10.5px;margin-top:2px;line-height:1.5}
-.shoprow button{background:none;border:1px solid var(--ink-dim);color:var(--ink);padding:6px 12px;font-size:11px;flex-shrink:0}
-.shoprow button:hover:not(:disabled){background:var(--ink);color:#0d0b06}
+.shoprow button{background:none;border:1px solid var(--ink-dim);color:var(--ink);padding:6px 12px;font-size:11px;flex-shrink:0;
+  transition:background .18s,color .18s,transform .15s,box-shadow .25s}
+.shoprow button:hover:not(:disabled){background:var(--ink);color:#0d0b06;transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(214,196,118,.25)}
+.shoprow button:active:not(:disabled){transform:translateY(1px)}
 .shoprow button:disabled{border-color:var(--line);color:var(--ink-faint);cursor:not-allowed}
 .lbrow{display:flex;justify-content:space-between;font-size:12px;padding:5px 8px}
 .lbrow.you{background:rgba(214,196,118,.08);border:1px solid var(--line)}
@@ -137,8 +180,13 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
 #feed .al{color:var(--alarm)} #feed .ok{color:var(--ok)} #feed .rad{color:var(--c-radiant)} #feed .gl{color:var(--c-glitch)}
 #feed .tme{color:var(--ink-faint)}
 .floorbtn{display:flex;justify-content:space-between;align-items:center;width:100%;background:var(--panel2);
-  border:1px solid var(--line);color:var(--ink);padding:11px 12px;font-size:12px;margin-bottom:7px;text-align:left}
-.floorbtn:hover:not(:disabled){border-color:var(--ink)}
+  border:1px solid var(--line);color:var(--ink);padding:11px 12px;font-size:12px;margin-bottom:7px;text-align:left;
+  transition:border-color .2s,transform .18s,box-shadow .25s,background .2s}
+.floorbtn .fname{display:inline-block;transition:transform .2s}
+.floorbtn:hover:not(:disabled){border-color:var(--ink);transform:translateX(4px);
+  box-shadow:0 0 16px rgba(214,196,118,.12);background:#201b11}
+.floorbtn:hover:not(:disabled) .fname{transform:translateX(3px)}
+.floorbtn:active:not(:disabled){transform:translateX(4px) scale(.99)}
 .floorbtn:disabled{color:var(--ink-faint);cursor:not-allowed}
 .floorbtn .fname{letter-spacing:.06em}
 .floorbtn .fmeta{font-size:10px;color:var(--ink-faint)}
@@ -153,7 +201,7 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
 #pauseScr{z-index:54}
 @media (prefers-reduced-motion: reduce){
   #tickerText{animation:none;padding-left:12px}
-  .t-glitch,#reveal,h1.title .cur{animation:none}
+  .t-glitch,#reveal,h1.title,.bigbtn,.bigbtn::after,.panel,.slot,.chip,h1.title .cur{animation:none}
 }
 </style>
 </head>
@@ -191,6 +239,7 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
     Everything you carry can be lost. Everything you bank can be stolen.<br><br>
     <span style="color:var(--ink-faint)">the lights hum at 60hz. they already know you're here.</span></p>
   <button class="bigbtn" id="wakeBtn">wake up</button>
+  <div class="chips" id="titleChips"></div>
   <p class="sub" style="font-size:11px;margin-top:18px" id="titleHint"></p>
 </div>
 
@@ -611,6 +660,7 @@ function bakeFloorTextures(F, seed){
 function bakeSprites(){
   const ent = bakeTex(48,96,(x,w,h)=>{
     x.clearRect(0,0,w,h);
+    x.fillStyle='rgba(0,0,0,.55)'; x.beginPath(); x.ellipse(w/2,h-4,w*0.34,4,0,0,7); x.fill(); // ground shadow
     x.fillStyle='#0a0a0e';
     x.beginPath(); x.ellipse(w/2, h*0.62, w*0.28, h*0.38, 0, 0, 7); x.fill();   // body
     x.beginPath(); x.arc(w/2, h*0.18, w*0.19, 0, 7); x.fill();                   // head
@@ -620,6 +670,7 @@ function bakeSprites(){
   });
   const entMad = bakeTex(48,96,(x,w,h)=>{
     x.clearRect(0,0,w,h);
+    x.fillStyle='rgba(0,0,0,.55)'; x.beginPath(); x.ellipse(w/2,h-4,w*0.38,4,0,0,7); x.fill();
     x.fillStyle='#160808';
     x.beginPath(); x.ellipse(w/2, h*0.60, w*0.32, h*0.40, 0, 0, 7); x.fill();
     x.beginPath(); x.arc(w/2, h*0.16, w*0.22, 0, 7); x.fill();
@@ -628,6 +679,7 @@ function bakeSprites(){
   });
   const ghost = bakeTex(48,96,(x,w,h)=>{
     x.clearRect(0,0,w,h);
+    x.fillStyle='rgba(0,0,0,.4)'; x.beginPath(); x.ellipse(w/2,h-4,w*0.3,3.5,0,0,7); x.fill();
     x.fillStyle='rgba(20,24,48,.85)';
     x.beginPath(); x.ellipse(w/2, h*0.62, w*0.26, h*0.36, 0, 0, 7); x.fill();
     x.beginPath(); x.arc(w/2, h*0.20, w*0.17, 0, 7); x.fill();
@@ -1206,10 +1258,14 @@ function render3D(now){
     } else {
       for (let x=0;x<IW;x++){
         const cxi = fx|0, cyi = fy|0;
-        const tex = (((cxi*7+cyi*13)>>>0)%4===0) ? paA : ceA;   // every ~4th cell is a light panel
+        const hash = (cxi*7+cyi*13)>>>0;
+        const tex = (hash%4===0) ? paA : ceA;   // every ~4th cell is a light panel
         const tx = ((fx*TEXS)|0)&63, ty = ((fy*TEXS)|0)&63;
         let f2 = sh;
-        if (tex===paA) f2 = Math.min(1, sh*1.9+0.25);            // panels are emissive
+        if (tex===paA){                          // emissive, and some tubes are dying
+          f2 = Math.min(1, sh*1.9+0.25);
+          if (hash%9===0) f2 *= 0.45 + 0.55*Math.abs(Math.sin(t*11 + hash));
+        }
         fb32[row+x] = shadePx(tex[ty*64+tx], f2);
         fx+=stepX; fy+=stepY;
       }
@@ -1248,9 +1304,13 @@ function render3D(now){
     if (sh<=0.004){
       for(let y=y0;y<y1;y++) fb32[y*IW+x]=0xff000000;
     } else {
+      // ambient occlusion strips where wall meets ceiling and floor
+      const aoTop = dS + lineH*0.07, aoBot = dE - lineH*0.09;
       for(let y=y0;y<y1;y++){
         const ty = (texPos|0)&63; texPos+=step;
-        fb32[y*IW+x] = shadePx(texArr[ty*64+texX], sh);
+        let f2 = sh;
+        if (y < aoTop) f2 *= 0.62; else if (y > aoBot) f2 *= 0.72;
+        fb32[y*IW+x] = shadePx(texArr[ty*64+texX], f2);
       }
     }
   }
@@ -1321,8 +1381,40 @@ function render3D(now){
   let shakeX=0, shakeY=0;
   if (mode==='dying'){ shakeX=rand(-8,8); shakeY=rand(-8,8); }
   sctx.drawImage(rcv, (VW-dw)/2+shakeX, (VH-dh)/2+shakeY, dw, dh);
+  if (mode!=='title') drawHand(t);
   if (flashT>0){ sctx.globalAlpha=flashT*1.4; sctx.fillStyle=flashCol; sctx.fillRect(0,0,VW,VH); sctx.globalAlpha=1; }
   drawMinimap();
+}
+/* first-person flashlight hand — bobs with steps, lags behind turns */
+let handTurn = 0, lastA = 0;
+function drawHand(t){
+  const turnV = P.a - lastA; lastA = P.a;
+  handTurn += (clamp(turnV*60, -1.6, 1.6) - handTurn) * 0.12;
+  const bob = Math.sin(P.bobT) * 10, bob2 = Math.abs(Math.cos(P.bobT)) * 7;
+  const hx = VW*0.72 - handTurn*46, hy = VH - VH*0.16 + bob2 + Math.abs(bob)*0.4;
+  const sc = VH/700;
+  sctx.save();
+  sctx.translate(hx, hy);
+  sctx.scale(sc, sc);
+  sctx.rotate(-0.5 + handTurn*0.05 + Math.sin(P.bobT)*0.02);
+  // sleeve
+  sctx.fillStyle='#141109';
+  sctx.beginPath(); sctx.moveTo(-34,190); sctx.lineTo(26,190); sctx.lineTo(20,54); sctx.lineTo(-22,58); sctx.closePath(); sctx.fill();
+  // glove
+  sctx.fillStyle='#8a7f52';
+  sctx.beginPath(); sctx.ellipse(0,44,26,34,0,0,7); sctx.fill();
+  sctx.fillStyle='#6f6640';
+  sctx.beginPath(); sctx.ellipse(-14,30,9,16,-.3,0,7); sctx.fill(); // thumb
+  // flashlight body
+  sctx.fillStyle='#22201a';
+  sctx.fillRect(-12,-38,24,64);
+  sctx.fillStyle='#333026'; sctx.fillRect(-12,-38,24,8);
+  // lens glow
+  const g = sctx.createRadialGradient(0,-44,2,0,-44,26);
+  g.addColorStop(0,'rgba(255,240,190,.95)'); g.addColorStop(.4,'rgba(255,230,160,.35)'); g.addColorStop(1,'rgba(255,230,160,0)');
+  sctx.fillStyle=g; sctx.beginPath(); sctx.arc(0,-44,26,0,7); sctx.fill();
+  sctx.fillStyle='#ffedb0'; sctx.beginPath(); sctx.ellipse(0,-40,10,5,0,0,7); sctx.fill();
+  sctx.restore();
 }
 /* ---------------- minimap ---------------- */
 let mmOn = !isTouch;
@@ -1406,15 +1498,21 @@ function renderLobby(){
     const b = document.createElement('button');
     b.textContent = maxed ? 'MAX' : '$'+fmt(cost);
     b.disabled = maxed || S.cash < cost;
-    b.onclick = ()=>{ if (S.cash>=cost && !maxed){ S.cash-=cost; S.up[u.id]++; SND.buy(); renderLobby(); save(); } else SND.deny(); };
+    b.onclick = ()=>{ if (S.cash>=cost && !maxed){ S.cash-=cost; S.up[u.id]++; SND.buy(); renderLobby(); save(); }
+      else { SND.deny(); row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); } };
     row.appendChild(b); sl.appendChild(row);
   }
   const rows = [ {name:'YOU', worth:netWorth(), you:true}, ...S.rivals ].sort((a,b)=>b.worth-a.worth);
+  const maxW = Math.max(1, rows[0].worth);
   const lb = $('lbList'); lb.innerHTML='';
   rows.forEach((r,i)=>{
     const d = document.createElement('div'); d.className='lbrow'+(r.you?' you':'');
-    d.innerHTML = `<span><span class="rk">#${i+1}</span>${r.you?'<b>YOU</b>':r.name}</span><span class="worth">$${fmt(r.worth)}</span>`;
+    d.innerHTML = `<div class="lbbar" style="transform:scaleX(0)"></div>`+
+      `<span><span class="rk">#${i+1}</span>${r.you?'<b>YOU</b>':r.name}</span><span class="worth">$${fmt(r.worth)}</span>`;
     lb.appendChild(d);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      d.firstChild.style.transform = `scaleX(${(r.worth/maxW).toFixed(3)})`;
+    }));
   });
   const fd = $('feed'); fd.innerHTML='';
   for (const f of S.feed.slice(0,18)) fd.innerHTML += `<div><span class="tme">${f.t}</span> ${f.h}</div>`;
@@ -1468,14 +1566,41 @@ $('wakeBtn').onclick = ()=>{
 const hadSave = load();
 let pendingOffline = hadSave ? offlineReport() : null;
 if (hadSave){
-  $('titleHint').innerHTML = `save found — net worth $${fmt(netWorth())} · ${S.vault.length} artifacts in the vault` +
-    (pendingOffline? ' · <span style="color:var(--alarm)">something happened while you were gone</span>':'');
+  const rank = 1 + S.rivals.filter(r=>r.worth>netWorth()).length;
+  $('titleChips').innerHTML =
+    `<div class="chip">net worth <b>$${fmt(netWorth())}</b></div>`+
+    `<div class="chip">vault <b>${S.vault.length}</b> artifacts</div>`+
+    `<div class="chip">census rank <b>#${rank}</b></div>`+
+    (pendingOffline? `<div class="chip" style="border-color:var(--alarm);color:var(--alarm)">something happened</div>`:'');
+  $('titleHint').textContent = 'the vault kept the lights on for you.';
 } else {
+  $('titleChips').innerHTML =
+    `<div class="chip"><b>5</b> levels down</div>`+
+    `<div class="chip"><b>6</b> rivals scavenging</div>`+
+    `<div class="chip"><b>1</b> elevator out</div>`;
   $('titleHint').textContent = 'no file on record. the floor likes new people.';
 }
 save();
 
 let last = performance.now(), ftAvg = 16, resTier = 0;
+/* title menu: a slow first-person drift through a demo floor */
+let demo = null;
+function updateDemo(dt){
+  if (!demo){
+    world = genFloor(0);
+    P.x = world.spawn.x; P.y = world.spawn.y; P.a = rand(0,6.28); P.bobT = 0; P.fovK = 0;
+    demo = { turn:0 };
+  }
+  // steer away from walls with a feeler ray
+  const ca = Math.cos(P.a), sa = Math.sin(P.a);
+  if (!world.isFloor((P.x+ca*1.2)|0, (P.y+sa*1.2)|0)) demo.turn = rand(0.8, 1.6) * (Math.random()<.5?-1:1);
+  demo.turn *= Math.pow(0.3, dt);
+  P.a += demo.turn*dt + Math.sin(performance.now()/2600)*0.05*dt*10;
+  moveActor(P, ca*0.72*dt, sa*0.72*dt);
+  P.bobT += dt*3.4;
+  world.flick = Math.max(0, world.flick - dt);
+  if (Math.random() < dt*0.35) world.flick = rand(0.06,0.28);
+}
 function frame(now){
   const dt = Math.min(0.05, (now-last)/1000);
   const ft = now-last;
@@ -1488,6 +1613,11 @@ function frame(now){
     dyingT -= dt;
     if (world) render3D(now);
     if (dyingT<=0) finishBlackout();
+  }
+  else if (mode==='title'){
+    updateDemo(dt);
+    render3D(now);
+    $('static').style.opacity = 0; $('redPulse').style.opacity = 0;
   }
   else {
     sctx.fillStyle='#0d0b06'; sctx.fillRect(0,0,VW,VH);
