@@ -27,7 +27,7 @@ body{
   -webkit-font-smoothing:antialiased;touch-action:none;user-select:none;-webkit-user-select:none;
 }
 #app{position:fixed;inset:0;background:#000}
-#cv{display:block;width:100%;height:100%;image-rendering:pixelated;cursor:crosshair}
+#cv{display:block;width:100%;height:100%;cursor:crosshair}
 button{font-family:inherit;cursor:pointer}
 
 #crt{position:fixed;inset:0;pointer-events:none;z-index:60;
@@ -224,7 +224,7 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
 <div id="prompt"><span id="promptText"></span><div class="bar" id="promptBar"><i id="promptFill"></i></div></div>
 <div id="reveal"><div class="rtier" id="revTier"></div><div class="rname" id="revName"></div><div class="rval" id="revVal"></div></div>
 <div id="toast"></div>
-<canvas id="minimap" width="132" height="104"></canvas>
+<canvas id="minimap" width="192" height="152"></canvas>
 <div id="ticker" style="display:none"><span id="tickerText"></span></div>
 <div id="lookZone"></div>
 <div id="stickZone"><div id="stickBase"></div><div id="stickNub"></div></div>
@@ -240,6 +240,7 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
     <span style="color:var(--ink-faint)">the lights hum at 60hz. they already know you're here.</span></p>
   <button class="bigbtn" id="wakeBtn">wake up</button>
   <div class="chips" id="titleChips"></div>
+  <button class="ghostbtn" id="fsBtn" style="margin-top:14px">⛶ fullscreen — F</button>
   <p class="sub" style="font-size:11px;margin-top:18px" id="titleHint"></p>
 </div>
 
@@ -261,7 +262,7 @@ h1.title .cur{animation:blink 1.1s steps(1) infinite}
         <div id="floorList"></div>
         <div class="descend-note">deeper floors roll better artifacts. deeper floors are not empty.<br>
         whatever you carry is not yours until it is in the vault.<br>
-        <span style="color:var(--ink-dim)">WASD move · mouse look · SHIFT sprint · E interact · M map · ESC pause</span></div>
+        <span style="color:var(--ink-dim)">WASD move · mouse look · SHIFT sprint · E interact · M map · F fullscreen · ESC pause</span></div>
       </div>
       <div class="panel">
         <h3>Vault contents — <span id="vCount">0</span> artifacts, $<span id="vWorth">0</span></h3>
@@ -358,26 +359,26 @@ const NAMES = {
 };
 /* palettes as [r,g,b] for the texture baker */
 const FLOORS = [
-  { name:'LEVEL 0 — THE YELLOW ROOMS', cost:0, light:6.4, entN:2, entSpd:2.0, entName:'a Wanderer',
-    loot:[9,12], tierShift:0, valMul:1,
+  { name:'LEVEL 0 — THE YELLOW ROOMS', cost:0, light:11.5, entN:3, entSpd:2.0, entName:'a Wanderer',
+    loot:[16,22], tierShift:0, valMul:1,
     pal:{ wall:[157,138,68], wallDark:[104,90,42], floor:[122,106,52], floorDark:[96,84,40],
-          ceil:[74,66,34], panel:[235,224,170], glow:'#d6c476' } },
-  { name:'LEVEL 1 — THE PARKING GARAGE', cost:2500, light:5.6, entN:3, entSpd:2.35, entName:'a Faceling',
-    loot:[9,13], tierShift:.35, valMul:1.5,
+          ceil:[74,66,34], panel:[235,224,170], glow:'#d6c476', fog:[92,80,44] } },
+  { name:'LEVEL 1 — THE PARKING GARAGE', cost:2500, light:10.5, entN:4, entSpd:2.35, entName:'a Faceling',
+    loot:[17,24], tierShift:.35, valMul:1.5,
     pal:{ wall:[94,100,108], wallDark:[56,60,66], floor:[70,74,80], floorDark:[52,56,62],
-          ceil:[40,43,48], panel:[200,220,235], glow:'#9fb4c8' } },
-  { name:'LEVEL 2 — THE POOLS', cost:12000, light:5.2, entN:3, entSpd:2.65, entName:'the Lifeguard',
-    loot:[10,14], tierShift:.8, valMul:2.4,
+          ceil:[40,43,48], panel:[200,220,235], glow:'#9fb4c8', fog:[52,58,66] } },
+  { name:'LEVEL 2 — THE POOLS', cost:12000, light:10, entN:4, entSpd:2.65, entName:'the Lifeguard',
+    loot:[18,25], tierShift:.8, valMul:2.4,
     pal:{ wall:[92,168,172], wallDark:[42,96,100], floor:[60,130,134], floorDark:[44,104,108],
-          ceil:[30,72,76], panel:[190,245,248], glow:'#8fe3e8' } },
-  { name:'LEVEL 3 — ELECTRICAL STATION', cost:60000, light:4.6, entN:4, entSpd:3.0, entName:'a Live Wire',
-    loot:[10,15], tierShift:1.4, valMul:4,
+          ceil:[30,72,76], panel:[190,245,248], glow:'#8fe3e8', fog:[58,120,124] } },
+  { name:'LEVEL 3 — ELECTRICAL STATION', cost:60000, light:9, entN:5, entSpd:3.0, entName:'a Live Wire',
+    loot:[19,27], tierShift:1.4, valMul:4,
     pal:{ wall:[86,72,64], wallDark:[46,38,34], floor:[58,50,46], floorDark:[44,38,34],
-          ceil:[32,26,24], panel:[255,190,110], glow:'#ffb14d' } },
-  { name:'LEVEL ! — RUN', cost:300000, light:4.0, entN:5, entSpd:3.4, entName:'IT',
-    loot:[12,17], tierShift:2.2, valMul:7,
+          ceil:[32,26,24], panel:[255,190,110], glow:'#ffb14d', fog:[42,32,26] } },
+  { name:'LEVEL ! — RUN', cost:300000, light:8.5, entN:6, entSpd:3.4, entName:'IT',
+    loot:[21,30], tierShift:2.2, valMul:7,
     pal:{ wall:[140,52,52], wallDark:[84,26,26], floor:[104,38,38], floorDark:[82,30,30],
-          ceil:[56,18,18], panel:[255,120,110], glow:'#ff6b5e' } },
+          ceil:[56,18,18], panel:[255,120,110], glow:'#ff6b5e', fog:[66,20,18] } },
 ];
 const UPGRADES = [
   { id:'shoes', name:'Worn Sneakers', max:3, costs:[500,2600,11000],
@@ -577,7 +578,7 @@ const SND = {
    ===================================================================== */
 const cv = $('cv'), sctx = cv.getContext('2d');
 const stCv = $('static'), stCtx = stCv.getContext('2d');
-let IW = 420, IH = 262;              // internal resolution (adaptive)
+let IW = 520, IH = 320;              // internal resolution (adaptive)
 const rcv = document.createElement('canvas');
 let rctx, fb, fb32, zbuf;
 function setInternalRes(w,h){
@@ -724,7 +725,7 @@ const SPR = bakeSprites();
 /* =====================================================================
    WORLD
    ===================================================================== */
-const MW = 40, MH = 32;
+const MW = 88, MH = 68;
 let world = null;
 
 function genFloor(fi){
@@ -733,13 +734,35 @@ function genFloor(fi){
   const rng = mulberry32(seed);
   const grid = new Uint8Array(MW*MH);          // 0 wall, 1 floor
   const wallKind = new Uint8Array(MW*MH);      // texture variant per wall cell
-  let cx = MW>>1, cy = MH>>1, carved = 0;
-  const target = MW*MH*0.44;
-  let dir = 0;
-  while (carved < target){
+  // massive halls: big rectangular rooms joined by wide corridors,
+  // then a drunkard walk melts the edges into backrooms nonsense
+  const carveRect = (x0,y0,x1,y1)=>{
+    for(let y=Math.max(2,y0);y<=Math.min(MH-3,y1);y++)
+      for(let x=Math.max(2,x0);x<=Math.min(MW-3,x1);x++) grid[y*MW+x]=1;
+  };
+  const rooms = [{x:MW>>1, y:MH>>1, w:9, h:7}];
+  carveRect((MW>>1)-4,(MH>>1)-3,(MW>>1)+4,(MH>>1)+3);
+  const nRooms = 9 + (rng()*4|0);
+  for (let i=0;i<nRooms;i++){
+    const w = 6+(rng()*11|0), h = 5+(rng()*8|0);
+    const x = 4+(rng()*(MW-w-8)|0), y = 4+(rng()*(MH-h-8)|0);
+    rooms.push({x:x+(w>>1), y:y+(h>>1), w, h});
+    carveRect(x,y,x+w,y+h);
+    // pillar grid inside big halls — classic backrooms columns
+    if (w>=9 && h>=7) for(let py=y+2;py<y+h-1;py+=4) for(let px=x+2;px<x+w-1;px+=4) grid[py*MW+px]=0;
+  }
+  for (let i=1;i<rooms.length;i++){ // wide L-corridors chaining the halls
+    const a = rooms[i-1], b = rooms[i];
+    const midY = a.y;
+    carveRect(Math.min(a.x,b.x), midY-1, Math.max(a.x,b.x), midY+1);
+    carveRect(b.x-1, Math.min(a.y,b.y), b.x+1, Math.max(a.y,b.y));
+  }
+  let cx = MW>>1, cy = MH>>1, carved = 0, dir = 0;
+  const extra = MW*MH*0.12;
+  while (carved < extra){
     if (grid[cy*MW+cx]===0){ grid[cy*MW+cx]=1; carved++; }
     if (rng() < .34) dir = (rng()*4)|0;
-    if (rng() < .12){
+    if (rng() < .08){
       const rw=2+(rng()*3|0), rh=2+(rng()*2|0);
       for(let y=cy-rh;y<=cy+rh;y++) for(let x=cx-rw;x<=cx+rw;x++)
         if (x>1&&x<MW-2&&y>1&&y<MH-2 && grid[y*MW+x]===0){ grid[y*MW+x]=1; carved++; }
@@ -747,19 +770,19 @@ function genFloor(fi){
     cx = clamp(cx + (dir===0?1:dir===1?-1:0), 2, MW-3);
     cy = clamp(cy + (dir===2?1:dir===3?-1:0), 2, MH-3);
   }
-  for (let i=0;i<22;i++){ const x=2+(rng()*(MW-4)|0), y=2+(rng()*(MH-4)|0); grid[y*MW+x]=0; } // pillars
+  for (let i=0;i<40;i++){ const x=2+(rng()*(MW-4)|0), y=2+(rng()*(MH-4)|0); grid[y*MW+x]=0; } // stray pillars
   for (let i=0;i<MW*MH;i++) wallKind[i] = rng()<0.18 ? 1 : 0;
   const isFloor=(x,y)=> x>=0&&y>=0&&x<MW&&y<MH&&grid[(y|0)*MW+(x|0)]===1;
   const floorCells=[]; for(let y=0;y<MH;y++)for(let x=0;x<MW;x++) if(grid[y*MW+x]===1) floorCells.push({x,y});
   grid[(MH>>1)*MW+(MW>>1)] = 1;
   const spawn = { x:(MW>>1)+0.5, y:(MH>>1)+0.5 };
   const far = (c,minD)=> Math.hypot(c.x+0.5-spawn.x, c.y+0.5-spawn.y) > minD;
-  const farCells = floorCells.filter(c=>far(c,7));
+  const farCells = floorCells.filter(c=>far(c,14));
   const pos = c=>({x:c.x+0.5, y:c.y+0.5});
   const nLoot = irand(F.loot[0], F.loot[1]);
   const loot = [];
   for (let i=0;i<nLoot;i++){
-    const c = pick(floorCells.filter(c=>far(c,2.5)));
+    const c = pick(floorCells.filter(c=>far(c,3.5)));
     loot.push({ ...pos(c), taken:false, bob:rng()*6.28 });
   }
   let luckyIdx = -1;
@@ -772,7 +795,7 @@ function genFloor(fi){
       retarget:0, seen:0, wob:rng()*6.28, growled:false });
   }
   const stashes = [];
-  const nStash = rng() < .75 ? irand(1,2) : 0;
+  const nStash = rng() < .8 ? irand(1,3) : 0;
   for (let i=0;i<nStash;i++){
     const c = pick(farCells);
     stashes.push({ ...pos(c), owner:pick(S.rivals).name, opened:false });
@@ -787,7 +810,7 @@ function genFloor(fi){
 }
 
 /* ---------------- player ---------------- */
-const P = { x:0, y:0, a:0, r:0.22, stam:1, sprint:false, step:0, bobT:0, fovK:0 };
+const P = { x:0, y:0, a:0, r:0.22, vx:0, vy:0, stam:1, sprint:false, step:0, bobT:0, bobAmp:0, fovK:0, roll:0 };
 let mode = 'title';
 let carried = [];
 let holdE = false, holdT = 0;
@@ -795,7 +818,7 @@ let revealQueue = [], revealState = null;
 let toastT = 0, flashT = 0, flashCol = '#fff', slowmo = 0;
 
 function carryCap(){ return 3 + S.up.bag; }
-function speed(){ return 3.3 * (1 + S.up.shoes*0.10); }
+function speed(){ return 3.7 * (1 + S.up.shoes*0.10); }
 
 /* ---------------- input ---------------- */
 const keys = {};
@@ -803,8 +826,13 @@ addEventListener('keydown', e=>{
   keys[e.key.toLowerCase()] = true;
   if (e.key==='Escape' && mode==='pause') setPause(false);
   if ((e.key==='m'||e.key==='M')) mmOn = !mmOn;
+  if ((e.key==='f'||e.key==='F')) toggleFS();
   if (e.key==='e'||e.key==='E') holdE = true;
 });
+function toggleFS(){
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(()=>{});
+}
 addEventListener('keyup', e=>{ keys[e.key.toLowerCase()]=false; if(e.key==='e'||e.key==='E') holdE=false; });
 
 let pointerLocked = false;
@@ -873,7 +901,8 @@ function los(ax,ay,bx,by){
 /* ---------------- run flow ---------------- */
 function startRun(fi){
   world = genFloor(fi);
-  P.x = world.spawn.x; P.y = world.spawn.y; P.a = rand(0,6.28); P.stam = 1; P.bobT=0;
+  P.x = world.spawn.x; P.y = world.spawn.y; P.a = rand(0,6.28); P.stam = 1;
+  P.bobT=0; P.bobAmp=0; P.vx=0; P.vy=0; P.roll=0;
   carried = []; revealQueue = []; revealState = null; holdT = 0;
   S.runs++;
   mode = 'run';
@@ -1023,7 +1052,7 @@ function updateEntities(dt){
     e.wob += dt*3;
     const d = Math.hypot(P.x-e.x, P.y-e.y);
     nearest = Math.min(nearest, d);
-    const canSee = d < 6.5 && los(e.x,e.y,P.x,P.y);
+    const canSee = d < 8 && los(e.x,e.y,P.x,P.y);
     if (canSee && world.exposure > 0){
       if (e.state!=='chase' && !e.growled){ e.growled=true; noiseBurst(.4,.09,0,220); } // it noticed you
       e.state='chase'; e.seen=2.5;
@@ -1047,7 +1076,7 @@ function updateEntities(dt){
     if (d < 0.5 && world.exposure > 0){ blackout(); return; }
   }
   // dread: static, red pulse, heartbeat — closer = louder
-  const prox = clamp(1 - nearest/6.5, 0, 1);
+  const prox = clamp(1 - nearest/8, 0, 1);
   world.dread = prox;
   $('static').style.opacity = prox*0.5;
   $('redPulse').style.opacity = prox>0.55 ? (prox-0.55)*2 : 0;
@@ -1171,7 +1200,7 @@ function crackStash(st){
 function updateRun(dt0){
   const dt = slowmo>0 ? dt0*0.35 : dt0;
   if (slowmo>0) slowmo -= dt0;
-  // movement: WASD relative to facing
+  // movement: momentum glide — velocity eases toward the wish direction
   let f = (keys['w']||keys['arrowup']?1:0) - (keys['s']||keys['arrowdown']?1:0);
   let s = (keys['d']?1:0) - (keys['a']?1:0);
   if (keys['arrowleft']) P.a -= 2.4*dt;
@@ -1180,16 +1209,25 @@ function updateRun(dt0){
   const m = Math.hypot(f,s);
   if (m>1){ f/=m; s/=m; }
   const sprinting = (keys['shift']||P.sprint) && P.stam>0.02 && m>0.1;
-  const sp = speed() * (sprinting?1.6:1);
+  const sp = speed() * (sprinting?1.7:1);
   const ca=Math.cos(P.a), sa=Math.sin(P.a);
-  moveActor(P, (ca*f - sa*s)*sp*dt, (sa*f + ca*s)*sp*dt);
-  if (sprinting) P.stam = Math.max(0, P.stam - dt*0.36);
-  else P.stam = Math.min(1, P.stam + dt*0.22);
+  const wishX = (ca*f - sa*s)*sp, wishY = (sa*f + ca*s)*sp;
+  const ease = 1 - Math.exp(-dt*9);           // accelerates fast, stops with a drift
+  P.vx += (wishX - P.vx)*ease;
+  P.vy += (wishY - P.vy)*ease;
+  moveActor(P, P.vx*dt, P.vy*dt);
+  const vMag = Math.hypot(P.vx, P.vy);
+  // camera roll leans into strafes
+  const lat = (-sa)*P.vx + ca*P.vy;           // lateral velocity (right = +)
+  P.roll += (clamp(lat/sp,-1,1)*0.022 - P.roll) * Math.min(1, dt*7);
+  if (sprinting) P.stam = Math.max(0, P.stam - dt*0.34);
+  else P.stam = Math.min(1, P.stam + dt*0.24);
   P.fovK += ((sprinting?1:0) - P.fovK) * Math.min(1, dt*6);
   $('stamWrap').classList.toggle('show', P.stam<0.995);
   $('stam').style.width = P.stam*100+'%';
-  if (m>0.1){
-    P.bobT += dt * (sprinting?11:7.5);
+  P.bobAmp += (clamp(vMag/speed(),0,1.4) - P.bobAmp) * Math.min(1, dt*8);
+  if (vMag>0.4){
+    P.bobT += dt * (4 + vMag*1.35);
     P.step -= dt; if (P.step<=0){ SND.step(); P.step = sprinting?0.28:0.42; }
   }
   // mark explored for minimap
@@ -1213,20 +1251,28 @@ function updateRun(dt0){
 }
 
 /* ---------------- 3D render ---------------- */
+let fogR=0, fogG=0, fogB=0, fog32=0xff000000;
 function shadePx(c, f){
-  return 0xff000000 | ((((c>>>16)&255)*f|0)<<16) | ((((c>>>8)&255)*f|0)<<8) | ((c&255)*f|0);
+  const g1 = 1-f;
+  return 0xff000000 |
+    (((((c>>>16)&255)*f + fogB*g1)|0)<<16) |
+    (((((c>>>8)&255)*f + fogG*g1)|0)<<8) |
+    (((c&255)*f + fogR*g1)|0);
 }
 function render3D(now){
   const F = world.F;
   const t = now/1000;
-  // light: base range, flicker, lights-out event, dread shrink
-  let flickMul = world.flick>0 ? rand(.86,.98) : 1;
-  if (world.lightsOutT>0) flickMul *= 0.38 + Math.random()*0.06;
+  fogR=F.pal.fog[0]; fogG=F.pal.fog[1]; fogB=F.pal.fog[2];
+  fog32 = 0xff000000 | (fogB<<16) | (fogG<<8) | fogR;
+  // light: base range breathes like the room is asleep, flicker, lights-out, dread
+  let flickMul = world.flick>0 ? rand(.9,.98) : 1;
+  flickMul *= 1 + Math.sin(t*0.5)*0.04;                 // dream breathing
+  if (world.lightsOutT>0) flickMul *= 0.42 + Math.random()*0.06;
   const RANGE = F.light * flickMul;
-  const planeLen = 0.66 + P.fovK*0.12;   // sprint FOV kick
+  const planeLen = (0.66 + P.fovK*0.12) * (1 + Math.sin(t*0.31)*0.008);
   const dirX = Math.cos(P.a), dirY = Math.sin(P.a);
   const plX = -dirY*planeLen, plY = dirX*planeLen;
-  const bob = Math.sin(P.bobT)*3.2;
+  const bob = Math.sin(P.bobT)*3.2*P.bobAmp + Math.sin(t*0.43)*1.6;  // step bob + slow dream sway
   const horizon = (IH>>1) + bob|0;
   const halfH = IH/2;
   // --- floor & ceiling scanlines ---
@@ -1234,14 +1280,14 @@ function render3D(now){
   for (let y=0;y<IH;y++){
     const isFloorRow = y > horizon;
     const p = isFloorRow ? (y - horizon) : (horizon - y);
-    if (p<=0){ // exact horizon: fill dark
-      for(let x=0;x<IW;x++) fb32[y*IW+x]=0xff000000;
+    if (p<=0){ // exact horizon: pure haze
+      for(let x=0;x<IW;x++) fb32[y*IW+x]=fog32;
       continue;
     }
     const rowDist = halfH / p;
     let sh = 1 - rowDist/RANGE; sh = sh<0?0:sh*sh*(3-2*sh); // smoothstep fog
     if (sh<=0.004){
-      for(let x=0;x<IW;x++) fb32[y*IW+x]=0xff000000;
+      for(let x=0;x<IW;x++) fb32[y*IW+x]=fog32;
       continue;
     }
     const stepX = rowDist * (2*plX) / IW;
@@ -1282,7 +1328,7 @@ function render3D(now){
     if (rdx<0){ stepX=-1; sdx=(P.x-mapX)*ddx; } else { stepX=1; sdx=(mapX+1-P.x)*ddx; }
     if (rdy<0){ stepY=-1; sdy=(P.y-mapY)*ddy; } else { stepY=1; sdy=(mapY+1-P.y)*ddy; }
     let side=0, hit=0, guard=0;
-    while(!hit && guard++<64){
+    while(!hit && guard++<220){
       if (sdx<sdy){ sdx+=ddx; mapX+=stepX; side=0; } else { sdy+=ddy; mapY+=stepY; side=1; }
       if (mapX<0||mapY<0||mapX>=MW||mapY>=MH || world.grid[mapY*MW+mapX]===0) hit=1;
     }
@@ -1302,7 +1348,7 @@ function render3D(now){
     const step = TEXS/lineH;
     let texPos = (y0 - dS)*step;
     if (sh<=0.004){
-      for(let y=y0;y<y1;y++) fb32[y*IW+x]=0xff000000;
+      for(let y=y0;y<y1;y++) fb32[y*IW+x]=fog32;
     } else {
       // ambient occlusion strips where wall meets ceiling and floor
       const aoTop = dS + lineH*0.07, aoBot = dE - lineH*0.09;
@@ -1332,7 +1378,7 @@ function render3D(now){
   }
   sprites.sort((a,b)=>b.dist-a.dist);
   for (const sp of sprites){
-    if (sp.ty <= 0.12 || sp.ty > 24) continue;
+    if (sp.ty <= 0.12 || sp.ty > 30) continue;
     const sxc = (IW/2)*(1 + sp.txx/sp.ty) | 0;
     const hPix = (sp.h * IH / sp.ty) | 0;
     const wPix = (sp.w * IH / sp.ty) | 0;
@@ -1355,7 +1401,7 @@ function render3D(now){
       }
     }
     // loot glint: emissive pip visible through darkness — pulls you forward
-    if (sp.glint && sp.ty<20){
+    if (sp.glint && sp.ty<28){
       const gy = bottom - (hPix>>1);
       if (gy>=0&&gy<IH&&sxc>=0&&sxc<IW && sp.ty < zbuf[sxc]+0.5){
         const pulse = (Math.sin(t*5+sp.x*7)*0.5+0.5);
@@ -1380,7 +1426,13 @@ function render3D(now){
   sctx.fillStyle='#000'; sctx.fillRect(0,0,VW,VH);
   let shakeX=0, shakeY=0;
   if (mode==='dying'){ shakeX=rand(-8,8); shakeY=rand(-8,8); }
-  sctx.drawImage(rcv, (VW-dw)/2+shakeX, (VH-dh)/2+shakeY, dw, dh);
+  sctx.save();
+  sctx.imageSmoothingEnabled = true;           // soft upscale: dreamlike, not crunchy
+  sctx.translate(VW/2+shakeX, VH/2+shakeY);
+  sctx.rotate(P.roll);
+  const over = 1.045;                          // overscan hides roll corners
+  sctx.drawImage(rcv, -dw*over/2, -dh*over/2, dw*over, dh*over);
+  sctx.restore();
   if (mode!=='title') drawHand(t);
   if (flashT>0){ sctx.globalAlpha=flashT*1.4; sctx.fillStyle=flashCol; sctx.fillRect(0,0,VW,VH); sctx.globalAlpha=1; }
   drawMinimap();
@@ -1422,16 +1474,17 @@ const mmCv = $('minimap'), mmCtx = mmCv.getContext('2d');
 function drawMinimap(){
   mmCv.style.display = mmOn && mode==='run' ? 'block' : 'none';
   if (!mmOn || !world) return;
-  const s = 3.2;
+  const s = Math.min((mmCv.width-4)/MW, (mmCv.height-4)/MH);
   mmCtx.fillStyle='rgba(13,11,6,.9)'; mmCtx.fillRect(0,0,mmCv.width,mmCv.height);
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
     if (!world.seen[y*MW+x]) continue;
     mmCtx.fillStyle = world.grid[y*MW+x]===1 ? 'rgba(214,196,118,.28)' : 'rgba(214,196,118,.07)';
     mmCtx.fillRect(x*s+2, y*s+2, s, s);
   }
+  // the elevator is always marked — you started there, you know where home is
   const ev=world.elevator;
-  if (world.seen[(ev.y|0)*MW+(ev.x|0)]){ mmCtx.fillStyle='#7bd88f'; mmCtx.fillRect(ev.x*s, ev.y*s, s+1, s+1); }
-  if (world.stairs && world.seen[(world.stairs.y|0)*MW+(world.stairs.x|0)]){ mmCtx.fillStyle='#ffd60a'; mmCtx.fillRect(world.stairs.x*s, world.stairs.y*s, s+1, s+1); }
+  mmCtx.fillStyle='#7bd88f'; mmCtx.fillRect(ev.x*s, ev.y*s, s+1.5, s+1.5);
+  if (world.stairs && world.seen[(world.stairs.y|0)*MW+(world.stairs.x|0)]){ mmCtx.fillStyle='#ffd60a'; mmCtx.fillRect(world.stairs.x*s, world.stairs.y*s, s+1.5, s+1.5); }
   mmCtx.save();
   mmCtx.translate(P.x*s+2, P.y*s+2); mmCtx.rotate(P.a);
   mmCtx.fillStyle='#f2ecd8';
@@ -1554,6 +1607,7 @@ $('wipeBtn').onclick = ()=>{
     localStorage.removeItem(SAVE_KEY); location.reload();
   }
 };
+$('fsBtn').onclick = toggleFS;
 $('wakeBtn').onclick = ()=>{
   ac();
   const rep = pendingOffline;
@@ -1597,7 +1651,7 @@ function updateDemo(dt){
   demo.turn *= Math.pow(0.3, dt);
   P.a += demo.turn*dt + Math.sin(performance.now()/2600)*0.05*dt*10;
   moveActor(P, ca*0.72*dt, sa*0.72*dt);
-  P.bobT += dt*3.4;
+  P.bobT += dt*3.4; P.bobAmp = 0.5; P.roll = 0;
   world.flick = Math.max(0, world.flick - dt);
   if (Math.random() < dt*0.35) world.flick = rand(0.06,0.28);
 }
@@ -1607,7 +1661,7 @@ function frame(now){
   last = now;
   ftAvg += (ft-ftAvg)*0.05;
   // adaptive internal resolution
-  if (ftAvg>24 && resTier<2){ resTier++; setInternalRes([420,340,280][resTier], [262,212,175][resTier]); ftAvg=16; }
+  if (ftAvg>24 && resTier<2){ resTier++; setInternalRes([520,420,330][resTier], [320,260,204][resTier]); ftAvg=16; }
   if (mode==='run'){ updateRun(dt); if (world && (mode==='run'||mode==='dying')) render3D(now); }
   else if (mode==='dying'){
     dyingT -= dt;
