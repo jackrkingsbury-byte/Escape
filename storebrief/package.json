@@ -1,0 +1,19 @@
+{
+  "name": "storebrief",
+  "version": "0.1.0",
+  "private": true,
+  "description": "StoreBrief — your Shopify store, explained in plain English. Portable core: metrics engine + AI brief writer with numeric guardrails.",
+  "type": "module",
+  "scripts": {
+    "test": "tsx tests/metrics.test.ts && tsx tests/writer.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.23.0",
+    "typescript": "5.5.3"
+  }
+}
