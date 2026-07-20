@@ -61,6 +61,19 @@ export function renderBriefText(data: BriefData): string {
   if (data.bestDay) {
     lines.push(`📅 Best day: ${data.bestDay} (${money(data, data.bestDayRevenue)}).`);
   }
+  const streak = data.trendStreak;
+  if (streak.weeks >= 2) {
+    lines.push(
+      streak.direction === "up"
+        ? `📈 Momentum: revenue up ${streak.weeks} weeks in a row.`
+        : `📉 Heads-up: revenue down ${streak.weeks} weeks in a row.`,
+    );
+  }
+  if (data.identifiedOrderCount !== null && data.returningOrderCount !== null) {
+    lines.push(
+      `🔁 Repeat customers: ${data.returningOrderCount} of ${data.identifiedOrderCount} orders.`,
+    );
+  }
   lines.push("");
   lines.push(`👉 This week: ${suggestionText(data.suggestion)}`);
   return lines.join("\n");

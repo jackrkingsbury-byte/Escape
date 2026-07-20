@@ -1,5 +1,11 @@
 import { computeBrief } from "../lib/metrics";
-import { mapShopifyOrders, ordersSinceFilter, type ShopifyOrderNode } from "../lib/shopify";
+import {
+  fetchAllOrders,
+  mapShopifyOrders,
+  ordersSinceFilter,
+  type OrdersPage,
+  type ShopifyOrderNode,
+} from "../lib/shopify";
 
 let failures = 0;
 function eq(name: string, actual: unknown, expected: unknown) {
@@ -57,6 +63,12 @@ const mapped = mapShopifyOrders(mixed);
 eq("only the real order survives", mapped.length, 1);
 eq("money string parsed to number", mapped[0]?.total, 398);
 eq("line item mapped", mapped[0]?.lineItems, [{ title: "The Reset", quantity: 2, price: 199 }]);
+eq("missing customer maps to null id", mapped[0]?.customerId, null);
+
+const withCustomer = mapShopifyOrders([
+  { ...mixed[2]!, customer: { id: "gid://shopify/Customer/42" } },
+]);
+eq("customer id mapped through", withCustomer[0]?.customerId, "gid://shopify/Customer/42");
 
 // Malformed money must not poison the metrics.
 const malformed = mapShopifyOrders([
@@ -76,9 +88,27 @@ const brief = computeBrief(mapped, { now: NOW, shopName: "Escape", currency: "R"
 eq("engine consumes mapped orders", [brief.revenue, brief.orderCount], [398, 1]);
 eq("top product from mapped data", brief.topProducts[0]?.title, "The Reset");
 
-// Window filter covers current + baseline periods.
+// Window filter defaults to 4 windows for the momentum trend.
 const filter = ordersSinceFilter(7, new Date("2026-07-20T00:00:00Z"));
-eq("since-filter spans 14 days", filter, "created_at:>='2026-07-06T00:00:00.000Z'");
+eq("since-filter spans 28 days by default", filter, "created_at:>='2026-06-22T00:00:00.000Z'");
+eq(
+  "since-filter honours explicit window count",
+  ordersSinceFilter(7, new Date("2026-07-20T00:00:00Z"), 2),
+  "created_at:>='2026-07-06T00:00:00.000Z'",
+);
+
+// Pagination drains every page and stops at the last one.
+const pages: OrdersPage[] = [
+  { nodes: [mixed[2]!], pageInfo: { hasNextPage: true, endCursor: "c1" } },
+  { nodes: [mixed[3]!], pageInfo: { hasNextPage: false, endCursor: null } },
+];
+const seenCursors: Array<string | null | undefined> = [];
+const all = await fetchAllOrders(async ({ after }) => {
+  seenCursors.push(after);
+  return pages[seenCursors.length - 1]!;
+});
+eq("pagination collects all pages", all.length, 2);
+eq("pagination passes cursors", seenCursors, [null, "c1"]);
 
 console.log(failures === 0 ? "\nSHOPIFY ADAPTER: ALL TESTS PASSED" : `\nSHOPIFY ADAPTER: ${failures} FAILED`);
 process.exit(failures === 0 ? 0 : 1);

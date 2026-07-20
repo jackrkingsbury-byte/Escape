@@ -49,6 +49,11 @@ export function renderBriefEmailHtml(data: BriefData): string {
   if (data.bestDay) {
     rows.push(statRow("Best day", escapeHtml(data.bestDay), ""));
   }
+  if (data.identifiedOrderCount !== null && data.returningOrderCount !== null) {
+    rows.push(
+      statRow("Repeat customers", `${data.returningOrderCount} of ${data.identifiedOrderCount} orders`, ""),
+    );
+  }
 
   const slumpBlock = slump
     ? `<div style="margin-top:18px;padding:14px 16px;background:#fef2f2;border-radius:8px;font-size:14px;color:#991b1b;">
@@ -56,6 +61,28 @@ export function renderBriefEmailHtml(data: BriefData): string {
         (from ${money(data, slump.previousRevenue)} to ${money(data, slump.revenue)}).
       </div>`
     : "";
+
+  const maxTrend = Math.max(...data.weeklyTrend);
+  const streak = data.trendStreak;
+  const streakLabel =
+    streak.weeks >= 2
+      ? streak.direction === "up"
+        ? `<span style="color:#16a34a;font-weight:bold;">&#9650; up ${streak.weeks} weeks in a row</span>`
+        : `<span style="color:#dc2626;font-weight:bold;">&#9660; down ${streak.weeks} weeks in a row</span>`
+      : "";
+  const trendBlock =
+    maxTrend > 0
+      ? `<div style="margin-top:18px;">
+        <div style="font-size:12px;font-weight:bold;letter-spacing:1px;color:#6b7280;margin-bottom:8px;">4-WEEK TREND&nbsp;&nbsp;${streakLabel}</div>
+        <table style="border-collapse:collapse;"><tr>${data.weeklyTrend
+          .map((v, i) => {
+            const h = Math.max(6, Math.round((v / maxTrend) * 48));
+            const isCurrent = i === data.weeklyTrend.length - 1;
+            return `<td style="vertical-align:bottom;padding-right:8px;"><div style="width:42px;height:${h}px;border-radius:4px 4px 0 0;background:${isCurrent ? "#16a34a" : "#bbf7d0"};"></div></td>`;
+          })
+          .join("")}</tr></table>
+      </div>`
+      : "";
 
   return `<div style="margin:0;padding:24px;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;">
   <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;">
@@ -67,6 +94,7 @@ export function renderBriefEmailHtml(data: BriefData): string {
       <p style="margin:0 0 6px;font-size:20px;color:#111827;"><b>Hi ${escapeHtml(data.shopName)} &#128075;</b></p>
       <p style="margin:0 0 18px;font-size:14px;color:#6b7280;">Your last ${data.windowDays} days, in plain English.</p>
       <table style="width:100%;border-collapse:collapse;border-top:1px solid #e5e7eb;">${rows.join("")}</table>
+      ${trendBlock}
       ${slumpBlock}
       <div style="margin-top:18px;padding:16px 18px;background:#f0fdf4;border-radius:8px;">
         <div style="font-size:12px;font-weight:bold;letter-spacing:1px;color:#16a34a;margin-bottom:6px;">&#128073; THIS WEEK</div>

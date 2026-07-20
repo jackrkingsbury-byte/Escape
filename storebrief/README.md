@@ -30,10 +30,13 @@ forces the deterministic fallback.
 ## Status
 
 - [x] Metrics engine + tests (windows, baselines, slumps, best day, suggestion)
+- [x] 4-week momentum trend + streak detection ("up 3 weeks in a row")
+- [x] Repeat-customer tracking (identified vs returning orders)
 - [x] AI writer + numeric guardrail + no-key fallback
-- [x] Shopify adapter (`ORDERS_QUERY`, test/cancelled exclusion) — validated
-      against real Escape-store data via the Shopify MCP connector
-- [x] Weekly HTML email renderer
+- [x] Shopify adapter (`ORDERS_QUERY`, test/cancelled exclusion, customer ids,
+      cursor pagination) — validated against real Escape-store data via the
+      Shopify MCP connector; fetch 4 windows (`ordersSinceFilter`) for the trend
+- [x] Weekly HTML email renderer (stats, sparkline, slump alert, action)
 - [ ] App shell: OAuth, mandatory GDPR webhooks, Billing API, listing —
       **blocked on a Shopify Partner account** (18+ ToS; guardian-held)
 

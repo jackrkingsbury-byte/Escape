@@ -58,6 +58,10 @@ export function numberWhitelist(data: BriefData): Set<string> {
     addNumberVariants(set, s.previousRevenue);
     addNumberVariants(set, s.dropPercent);
   }
+  for (const v of data.weeklyTrend) addNumberVariants(set, v);
+  addNumberVariants(set, data.trendStreak.weeks);
+  if (data.identifiedOrderCount !== null) addNumberVariants(set, data.identifiedOrderCount);
+  if (data.returningOrderCount !== null) addNumberVariants(set, data.returningOrderCount);
   // Period label day numbers (e.g. "10 – 17 Jul").
   for (const m of data.periodLabel.matchAll(/\d+/g)) set.add(m[0]);
   return set;

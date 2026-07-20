@@ -5,6 +5,7 @@ import type {
   ProductStat,
   SlumpingProduct,
   Suggestion,
+  TrendStreak,
 } from "./types";
 
 /**
@@ -22,6 +23,8 @@ const WEEKDAYS = [
 const SLUMP_BASELINE_REVENUE = 200;
 /** Current revenue at or below this fraction of previous = slumping. */
 const SLUMP_FRACTION = 0.4;
+/** Windows in the momentum trend (current + 3 back). Callers must supply orders covering all of them. */
+export const TREND_WINDOWS = 4;
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
 const round1 = (n: number) => Math.round(n * 10) / 10;
@@ -77,6 +80,37 @@ function pickSuggestion(
     return { code: "push_top_product_on_best_day", productTitle: top.title, bestDay };
   if (top) return { code: "push_top_product", productTitle: top.title };
   return { code: "keep_momentum" };
+}
+
+function computeTrendStreak(trend: number[]): TrendStreak {
+  let up = 0;
+  for (let i = trend.length - 1; i > 0 && (trend[i] ?? 0) > (trend[i - 1] ?? 0); i--) up++;
+  if (up > 0) return { direction: "up", weeks: up };
+  let down = 0;
+  for (let i = trend.length - 1; i > 0 && (trend[i] ?? 0) < (trend[i - 1] ?? 0); i--) down++;
+  if (down > 0) return { direction: "down", weeks: down };
+  return { direction: "flat", weeks: 0 };
+}
+
+/**
+ * "Returning" = this customer has any earlier order (any window). Orders
+ * without a customerId can't be classified and sit outside both counts.
+ */
+function computeReturning(
+  current: Order[],
+  allOrders: Order[],
+): { identified: number | null; returning: number | null } {
+  const identified = current.filter((o) => o.customerId != null);
+  if (identified.length === 0) return { identified: null, returning: null };
+  const returning = identified.filter((o) =>
+    allOrders.some(
+      (p) =>
+        p.id !== o.id &&
+        p.customerId === o.customerId &&
+        new Date(p.createdAt).getTime() < new Date(o.createdAt).getTime(),
+    ),
+  ).length;
+  return { identified: identified.length, returning };
 }
 
 export function computeBrief(orders: Order[], options: BriefOptions = {}): BriefData {
@@ -142,6 +176,18 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
     }
   }
 
+  // Momentum: revenue per window, oldest → newest (last = current window).
+  const weeklyTrend: number[] = [];
+  for (let k = TREND_WINDOWS - 1; k >= 0; k--) {
+    const winEnd = endMs - k * windowDays * DAY_MS;
+    const winStart = winEnd - windowDays * DAY_MS;
+    weeklyTrend.push(
+      round2(orders.filter((o) => inRange(o, winStart, winEnd)).reduce((s, o) => s + o.total, 0)),
+    );
+  }
+  const trendStreak = computeTrendStreak(weeklyTrend);
+  const { identified, returning } = computeReturning(current, orders);
+
   return {
     shopName: options.shopName ?? "your store",
     currency: options.currency ?? "R",
@@ -159,6 +205,10 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
     slumpingProducts,
     bestDay,
     bestDayRevenue,
+    weeklyTrend,
+    trendStreak,
+    identifiedOrderCount: identified,
+    returningOrderCount: returning,
     suggestion: pickSuggestion(orderCount, topProducts, slumpingProducts, bestDay),
   };
 }

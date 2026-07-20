@@ -17,6 +17,7 @@ export interface ShopifyOrderNode {
   createdAt: string;
   test?: boolean;
   cancelledAt?: string | null;
+  customer?: { id: string } | null;
   currentTotalPriceSet: MoneyBag | null;
   lineItems: {
     nodes: Array<{
@@ -32,13 +33,14 @@ export interface ShopifyOrderNode {
  * API. Variables: $first (page size), $query (Shopify search syntax, e.g.
  * "created_at:>=2026-07-06").
  */
-export const ORDERS_QUERY = `query StoreBriefOrders($first: Int!, $query: String) {
-  orders(first: $first, query: $query, sortKey: CREATED_AT, reverse: true) {
+export const ORDERS_QUERY = `query StoreBriefOrders($first: Int!, $query: String, $after: String) {
+  orders(first: $first, query: $query, after: $after, sortKey: CREATED_AT, reverse: true) {
     nodes {
       id
       createdAt
       test
       cancelledAt
+      customer { id }
       currentTotalPriceSet { shopMoney { amount currencyCode } }
       lineItems(first: 50) {
         nodes {
@@ -52,10 +54,39 @@ export const ORDERS_QUERY = `query StoreBriefOrders($first: Int!, $query: String
   }
 }`;
 
-/** Search-syntax filter for "orders created in the last N*2 days" (current + baseline window). */
-export function ordersSinceFilter(windowDays: number, now: Date = new Date()): string {
-  const since = new Date(now.getTime() - windowDays * 2 * 24 * 60 * 60 * 1000);
+/**
+ * Search-syntax filter for "orders created in the last N windows" — default 4
+ * to feed the engine's momentum trend (current window + 3 back).
+ */
+export function ordersSinceFilter(windowDays: number, now: Date = new Date(), windows = 4): string {
+  const since = new Date(now.getTime() - windowDays * windows * 24 * 60 * 60 * 1000);
   return `created_at:>='${since.toISOString()}'`;
+}
+
+export interface OrdersPage {
+  nodes: ShopifyOrderNode[];
+  pageInfo: { hasNextPage: boolean; endCursor: string | null };
+}
+
+/**
+ * Drains all order pages. `runQuery` executes ORDERS_QUERY with the given
+ * variables against whatever transport the caller has (app shell, MCP, tests).
+ */
+export async function fetchAllOrders(
+  runQuery: (variables: { first: number; query?: string; after?: string | null }) => Promise<OrdersPage>,
+  query?: string,
+  pageSize = 50,
+  maxPages = 20,
+): Promise<ShopifyOrderNode[]> {
+  const nodes: ShopifyOrderNode[] = [];
+  let after: string | null = null;
+  for (let i = 0; i < maxPages; i++) {
+    const page = await runQuery({ first: pageSize, query, after });
+    nodes.push(...page.nodes);
+    if (!page.pageInfo.hasNextPage || !page.pageInfo.endCursor) break;
+    after = page.pageInfo.endCursor;
+  }
+  return nodes;
 }
 
 function parseMoney(bag: MoneyBag | null | undefined): number {
@@ -70,6 +101,7 @@ export function mapShopifyOrders(nodes: ShopifyOrderNode[]): Order[] {
       id: n.id,
       createdAt: n.createdAt,
       total: parseMoney(n.currentTotalPriceSet),
+      customerId: n.customer?.id ?? null,
       lineItems: n.lineItems.nodes.map((li) => ({
         title: li.title,
         quantity: li.quantity,

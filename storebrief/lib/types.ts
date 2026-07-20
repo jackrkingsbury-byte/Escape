@@ -14,6 +14,8 @@ export interface Order {
   /** Order total in major currency units, after discounts. */
   total: number;
   lineItems: LineItem[];
+  /** Stable customer identifier when the platform provides one. */
+  customerId?: string | null;
 }
 
 export interface ProductStat {
@@ -41,6 +43,12 @@ export interface Suggestion {
   bestDay?: string;
 }
 
+export interface TrendStreak {
+  direction: "up" | "down" | "flat";
+  /** Consecutive week-over-week moves in `direction`, ending at the current window. */
+  weeks: number;
+}
+
 /** Everything the brief needs — every number here is computed, never guessed. */
 export interface BriefData {
   shopName: string;
@@ -60,6 +68,17 @@ export interface BriefData {
   slumpingProducts: SlumpingProduct[]; // up to 2
   bestDay: string | null; // weekday name with highest revenue
   bestDayRevenue: number;
+  /**
+   * Revenue per window, oldest → newest; last entry is the current window.
+   * Always TREND_WINDOWS entries — callers must supply orders covering all
+   * of them, or the leading entries read as real zero-sales weeks.
+   */
+  weeklyTrend: number[];
+  trendStreak: TrendStreak;
+  /** Current-window orders that carry a customerId; null when none do. */
+  identifiedOrderCount: number | null;
+  /** Of those, orders whose customer had bought before; null when none identified. */
+  returningOrderCount: number | null;
   suggestion: Suggestion;
 }
 

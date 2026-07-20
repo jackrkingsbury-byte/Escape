@@ -10,8 +10,8 @@ function ok(name: string, pass: boolean, extra = "") {
 
 const NOW = new Date("2026-07-17T12:00:00Z");
 const orders: Order[] = [
-  { id: "1", createdAt: "2026-07-12T09:00:00Z", total: 4500, lineItems: [{ title: "Geyser <install>", quantity: 1, price: 4500 }] },
-  { id: "2", createdAt: "2026-07-05T09:00:00Z", total: 1000, lineItems: [{ title: "Geyser <install>", quantity: 1, price: 1000 }] },
+  { id: "1", createdAt: "2026-07-12T09:00:00Z", total: 4500, customerId: "c1", lineItems: [{ title: "Geyser <install>", quantity: 1, price: 4500 }] },
+  { id: "2", createdAt: "2026-07-05T09:00:00Z", total: 1000, customerId: "c1", lineItems: [{ title: "Geyser <install>", quantity: 1, price: 1000 }] },
 ];
 
 const data = computeBrief(orders, { now: NOW, shopName: "Thabo's <Store>", currency: "R" });
@@ -23,6 +23,8 @@ ok("shows revenue", html.includes("R4"));
 ok("shows suggestion block", html.includes("THIS WEEK"));
 ok("no undefined/NaN in output", !html.includes("undefined") && !html.includes("NaN"));
 ok("escapeHtml handles quotes", escapeHtml(`a"b'c`) === "a&quot;b&#39;c");
+ok("shows 4-week trend", html.includes("4-WEEK TREND"));
+ok("shows repeat customers row", html.includes("Repeat customers") && html.includes("1 of 1 orders"));
 
 // Empty store still renders a valid email.
 const empty = renderBriefEmailHtml(computeBrief([], { now: NOW }));

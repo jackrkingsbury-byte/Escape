@@ -65,5 +65,62 @@ const fresh = computeBrief(
 eq("fresh: change % null (no baseline)", fresh.revenueChangePercent, null);
 eq("fresh: suggestion pushes top product", fresh.suggestion.code, "push_top_product_on_best_day");
 
+// --- momentum trend (4 windows back from 17 Jul: 19–26 Jun, 26 Jun–3 Jul, 3–10, 10–17) ---
+// x1 (20 Jun, 9999) lands in the oldest trend bucket.
+eq("trend: 4 buckets oldest→newest", b.weeklyTrend, [9999, 0, 1400, 2200]);
+eq("trend: streak counts rises ending at current window", b.trendStreak, { direction: "up", weeks: 2 });
+const rising = computeBrief(
+  [
+    o("w4", "2026-06-21T09:00:00Z", 100, [["Mug", 1, 100]]),
+    o("w3", "2026-06-28T09:00:00Z", 200, [["Mug", 2, 100]]),
+    o("w2", "2026-07-05T09:00:00Z", 300, [["Mug", 3, 100]]),
+    o("w1", "2026-07-12T09:00:00Z", 400, [["Mug", 4, 100]]),
+  ],
+  { now: NOW },
+);
+eq("trend: full rising streak", rising.trendStreak, { direction: "up", weeks: 3 });
+const falling = computeBrief(
+  [
+    o("w4", "2026-06-21T09:00:00Z", 400, [["Mug", 4, 100]]),
+    o("w3", "2026-06-28T09:00:00Z", 300, [["Mug", 3, 100]]),
+    o("w2", "2026-07-05T09:00:00Z", 200, [["Mug", 2, 100]]),
+    o("w1", "2026-07-12T09:00:00Z", 100, [["Mug", 1, 100]]),
+  ],
+  { now: NOW },
+);
+eq("trend: falling streak", falling.trendStreak, { direction: "down", weeks: 3 });
+eq("trend: empty store is flat", empty.trendStreak, { direction: "flat", weeks: 0 });
+
+// --- returning customers ---
+const wc = (id: string, iso: string, total: number, customerId: string | null): Order => ({
+  ...o(id, iso, total, [["Mug", 1, total]]),
+  customerId,
+});
+const repeat = computeBrief(
+  [
+    wc("r1", "2026-07-15T09:00:00Z", 100, "cust-A"), // returning: bought 1 Jul
+    wc("r2", "2026-07-16T09:00:00Z", 100, "cust-B"), // new
+    wc("r3", "2026-07-16T12:00:00Z", 100, null),     // unidentified
+    wc("r0", "2026-07-01T09:00:00Z", 100, "cust-A"), // history
+  ],
+  { now: NOW },
+);
+eq("returning: identified count", repeat.identifiedOrderCount, 2);
+eq("returning: repeat count", repeat.returningOrderCount, 1);
+const anonymous = computeBrief(
+  [o("a1", "2026-07-15T09:00:00Z", 100, [["Mug", 1, 100]])],
+  { now: NOW },
+);
+eq("returning: null when no customer ids", [anonymous.identifiedOrderCount, anonymous.returningOrderCount], [null, null]);
+// Same customer twice inside one window: second order counts as returning.
+const sameWindow = computeBrief(
+  [
+    wc("s1", "2026-07-14T09:00:00Z", 100, "cust-C"),
+    wc("s2", "2026-07-16T09:00:00Z", 100, "cust-C"),
+  ],
+  { now: NOW },
+);
+eq("returning: repeat within the window counts", sameWindow.returningOrderCount, 1);
+
 console.log(failures === 0 ? "\nMETRICS: ALL TESTS PASSED" : `\nMETRICS: ${failures} FAILED`);
 process.exit(failures === 0 ? 0 : 1);
