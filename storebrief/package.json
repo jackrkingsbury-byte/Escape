@@ -5,7 +5,7 @@
   "description": "StoreBrief — your Shopify store, explained in plain English. Portable core: metrics engine + AI brief writer with numeric guardrails.",
   "type": "module",
   "scripts": {
-    "test": "tsx tests/metrics.test.ts && tsx tests/writer.test.ts",
+    "test": "tsx tests/metrics.test.ts && tsx tests/writer.test.ts && tsx tests/shopify.test.ts && tsx tests/email.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
