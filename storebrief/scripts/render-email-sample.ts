@@ -1,6 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { computeBrief } from "../lib/metrics";
 import { renderBriefEmailHtml } from "../lib/email";
+import { renderWhatsAppText } from "../lib/render";
 import type { Order } from "../lib/types";
 
 // Writes a demo weekly-brief email to the given path (default: ./brief-email.html)
@@ -28,7 +29,10 @@ const data = computeBrief(orders, {
   shopName: "Thabo's Streetwear (demo)",
   currency: "R",
   timezone: "Africa/Johannesburg",
+  inventory: { "Blue Hoodie": 4, Sneakers: 60, Cap: 30 },
 });
 
 writeFileSync(out, renderBriefEmailHtml(data));
-console.log(`wrote ${out}`);
+console.log(`wrote ${out}\n`);
+console.log("--- WhatsApp version ---\n");
+console.log(renderWhatsAppText(data));

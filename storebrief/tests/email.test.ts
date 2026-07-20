@@ -1,5 +1,7 @@
 import { computeBrief } from "../lib/metrics";
 import { renderBriefEmailHtml, escapeHtml } from "../lib/email";
+import { renderWhatsAppText } from "../lib/render";
+import { findUnsupportedNumbers } from "../lib/writer";
 import type { Order } from "../lib/types";
 
 let failures = 0;
@@ -29,6 +31,18 @@ ok("shows repeat customers row", html.includes("Repeat customers") && html.inclu
 // Empty store still renders a valid email.
 const empty = renderBriefEmailHtml(computeBrief([], { now: NOW }));
 ok("empty store email renders", empty.includes("StoreBrief") && !empty.includes("NaN"));
+
+// Why-line and stock alert appear when the data supports them.
+const stocked = computeBrief(orders, { now: NOW, shopName: "Test", currency: "R", inventory: { "Geyser <install>": 2 } });
+const stockedHtml = renderBriefEmailHtml(stocked);
+ok("why line renders", stockedHtml.includes("Why:"));
+ok("stock alert renders escaped", stockedHtml.includes("Geyser &lt;install&gt;") && stockedHtml.includes("Restock now"));
+
+// WhatsApp variant: bold markers, and every number passes the guardrail.
+const wa = renderWhatsAppText(stocked);
+ok("whatsapp: bold markers present", wa.includes("*Test*") || wa.includes("*R"));
+ok("whatsapp: zero unsupported numbers", findUnsupportedNumbers(wa, stocked).length === 0);
+ok("whatsapp: restock line present", wa.includes("Restock"));
 
 console.log(failures === 0 ? "\nEMAIL: ALL TESTS PASSED" : `\nEMAIL: ${failures} FAILED`);
 process.exit(failures === 0 ? 0 : 1);

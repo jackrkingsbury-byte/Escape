@@ -159,5 +159,34 @@ eq("win-back: suggestion fires with count", winBack.suggestion, {
   count: 3,
 });
 
+// --- revenue-change decomposition: effects sum exactly to the change ---
+// b: 2200 vs 1400 (Δ=800); Δorders=1 × prev AOV 466.67 = 466.67; basket effect = 333.33.
+eq("why: orders effect", b.revenueChangeDrivers?.ordersEffect, 466.67);
+eq("why: basket effect is the exact remainder", b.revenueChangeDrivers?.aovEffect, 333.33);
+eq(
+  "why: effects sum to the revenue change",
+  Math.round((b.revenueChangeDrivers!.ordersEffect + b.revenueChangeDrivers!.aovEffect) * 100) / 100,
+  b.revenue - b.previousRevenue,
+);
+eq("why: null without a baseline", fresh.revenueChangeDrivers, null);
+
+// --- stock-out forecast ---
+const stocked = computeBrief(orders, {
+  now: NOW,
+  inventory: { "Blue Hoodie": 4, Sneakers: 100 },
+});
+// Blue Hoodie: 5 sold / 7 days → 4 left = ceil(4 / (5/7)) = 6 days.
+eq("stock: winner flagged with days left", stocked.stockRisks, [
+  { title: "Blue Hoodie", unitsLeft: 4, daysLeft: 6 },
+]);
+eq("stock: restock suggestion outranks slump", stocked.suggestion, {
+  code: "restock_winner",
+  productTitle: "Blue Hoodie",
+  count: 6,
+});
+eq("stock: no inventory input → no risks", b.stockRisks, []);
+const wellStocked = computeBrief(orders, { now: NOW, inventory: { "Blue Hoodie": 500 } });
+eq("stock: healthy inventory not flagged", wellStocked.stockRisks, []);
+
 console.log(failures === 0 ? "\nMETRICS: ALL TESTS PASSED" : `\nMETRICS: ${failures} FAILED`);
 process.exit(failures === 0 ? 0 : 1);

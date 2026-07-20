@@ -63,6 +63,15 @@ export function numberWhitelist(data: BriefData): Set<string> {
   if (data.identifiedOrderCount !== null) addNumberVariants(set, data.identifiedOrderCount);
   if (data.returningOrderCount !== null) addNumberVariants(set, data.returningOrderCount);
   if (data.pastCustomerCount !== null) addNumberVariants(set, data.pastCustomerCount);
+  if (data.revenueChangeDrivers) {
+    addNumberVariants(set, data.revenueChangeDrivers.ordersEffect);
+    addNumberVariants(set, data.revenueChangeDrivers.aovEffect);
+    addNumberVariants(set, data.orderCount - data.previousOrderCount);
+  }
+  for (const r of data.stockRisks) {
+    addNumberVariants(set, r.unitsLeft);
+    addNumberVariants(set, r.daysLeft);
+  }
   // Hour digits from the busiest-time label (e.g. "17:00–20:00" → 17, 00, 20).
   if (data.bestHours) {
     for (const m of data.bestHours.matchAll(/\d+/g)) {

@@ -4,6 +4,7 @@ import type {
   Order,
   ProductStat,
   SlumpingProduct,
+  StockRisk,
   Suggestion,
   TrendStreak,
 } from "./types";
@@ -74,6 +75,7 @@ interface SuggestionInputs {
   returningOrderCount: number | null;
   pastCustomerCount: number | null;
   isBestWeek: boolean;
+  stockRisks: StockRisk[];
 }
 
 /** Minimum past customers before "win them back" beats generic advice. */
@@ -81,6 +83,9 @@ const WIN_BACK_MIN_CUSTOMERS = 3;
 
 function pickSuggestion(s: SuggestionInputs): Suggestion {
   if (s.orderCount === 0) return { code: "no_sales_share_store" };
+  // A winner about to sell out outranks everything — stock-outs kill streaks.
+  const risk = s.stockRisks[0];
+  if (risk) return { code: "restock_winner", productTitle: risk.title, count: risk.daysLeft };
   const slump = s.slumping[0];
   if (slump) return { code: "investigate_slump", productTitle: slump.title };
   const top = s.topProducts[0];
@@ -117,6 +122,29 @@ function localHour(date: Date, timezone: string | undefined): number {
 }
 
 const HOUR_BLOCK = 3;
+
+/** Flag a top seller when it has at most this many days of stock left. */
+const STOCK_RISK_MAX_DAYS = 14;
+
+/**
+ * Days-until-sold-out for top sellers at the current window's pace. Only
+ * meaningful when the caller supplies on-hand units (options.inventory).
+ */
+function computeStockRisks(
+  topProducts: ProductStat[],
+  inventory: Record<string, number> | undefined,
+  windowDays: number,
+): StockRisk[] {
+  if (!inventory) return [];
+  const risks: StockRisk[] = [];
+  for (const p of topProducts) {
+    const unitsLeft = inventory[p.title];
+    if (unitsLeft === undefined || unitsLeft < 0 || p.quantity <= 0) continue;
+    const daysLeft = Math.ceil(unitsLeft / (p.quantity / windowDays));
+    if (daysLeft <= STOCK_RISK_MAX_DAYS) risks.push({ title: p.title, unitsLeft, daysLeft });
+  }
+  return risks.sort((a, b) => a.daysLeft - b.daysLeft).slice(0, 2);
+}
 
 /** Highest-revenue 3-hour local block, requiring ≥2 orders so one sale can't define it. */
 function computeBestHours(current: Order[], timezone: string | undefined): string | null {
@@ -260,6 +288,16 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
   const bestHours = computeBestHours(current, options.timezone);
   const olderMax = Math.max(...weeklyTrend.slice(0, -1));
   const isBestWeek = revenue > 0 && olderMax > 0 && revenue >= olderMax;
+  const stockRisks = computeStockRisks(topProducts, options.inventory, windowDays);
+
+  // Why revenue moved: ΔR = (Δorders × prev AOV) + basket-size remainder.
+  // The remainder assignment keeps the two effects summing exactly to ΔR.
+  let revenueChangeDrivers: BriefData["revenueChangeDrivers"] = null;
+  if (previousOrderCount > 0) {
+    const delta = round2(revenue - previousRevenue);
+    const ordersEffect = round2((orderCount - previousOrderCount) * previousAverageOrderValue);
+    revenueChangeDrivers = { ordersEffect, aovEffect: round2(delta - ordersEffect) };
+  }
 
   return {
     shopName: options.shopName ?? "your store",
@@ -285,6 +323,8 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
     pastCustomerCount,
     bestHours,
     isBestWeek,
+    revenueChangeDrivers,
+    stockRisks,
     suggestion: pickSuggestion({
       orderCount,
       topProducts,
@@ -293,6 +333,7 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
       returningOrderCount: returning,
       pastCustomerCount,
       isBestWeek,
+      stockRisks,
     }),
   };
 }

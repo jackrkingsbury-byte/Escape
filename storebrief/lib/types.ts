@@ -32,6 +32,7 @@ export interface SlumpingProduct extends ProductStat {
 
 export type SuggestionCode =
   | "no_sales_share_store"
+  | "restock_winner"
   | "investigate_slump"
   | "win_back_customers"
   | "celebrate_best_week"
@@ -89,7 +90,21 @@ export interface BriefData {
   bestHours: string | null;
   /** Current window beat every other (non-zero) week in the trend. */
   isBestWeek: boolean;
+  /**
+   * Why revenue moved, in currency: order-count effect + basket-size effect
+   * sum exactly to the revenue change. Null without a previous-window baseline.
+   */
+  revenueChangeDrivers: { ordersEffect: number; aovEffect: number } | null;
+  /** Top sellers on pace to sell out soon (needs options.inventory). */
+  stockRisks: StockRisk[];
   suggestion: Suggestion;
+}
+
+export interface StockRisk {
+  title: string;
+  unitsLeft: number;
+  /** Days until sold out at the current window's sales pace. */
+  daysLeft: number;
 }
 
 export interface BriefOptions {
@@ -99,4 +114,6 @@ export interface BriefOptions {
   currency?: string;
   /** IANA timezone for local-time insights (busiest hours); defaults to UTC. */
   timezone?: string;
+  /** Units on hand by product title, for stock-out forecasting. */
+  inventory?: Record<string, number>;
 }

@@ -1,5 +1,5 @@
 import type { BriefData } from "./types";
-import { money, suggestionText } from "./render";
+import { money, suggestionText, whyText } from "./render";
 
 /**
  * Weekly brief as a self-contained HTML email. Inline styles only, no external
@@ -58,6 +58,18 @@ export function renderBriefEmailHtml(data: BriefData): string {
     );
   }
 
+  const why = whyText(data);
+  const whyBlock = why
+    ? `<div style="margin-top:12px;font-size:13px;color:#6b7280;">&#128161; Why: ${escapeHtml(why)}</div>`
+    : "";
+
+  const risk = data.stockRisks[0];
+  const stockBlock = risk
+    ? `<div style="margin-top:18px;padding:14px 16px;background:#fffbeb;border-radius:8px;font-size:14px;color:#92400e;">
+        &#128230; <b>${escapeHtml(risk.title)}</b> has ${risk.unitsLeft} left — about ${risk.daysLeft} day${risk.daysLeft === 1 ? "" : "s"} of stock at this pace. Restock now.
+      </div>`
+    : "";
+
   const slumpBlock = slump
     ? `<div style="margin-top:18px;padding:14px 16px;background:#fef2f2;border-radius:8px;font-size:14px;color:#991b1b;">
         &#9888;&#65039; <b>${escapeHtml(slump.title)}</b> cooled off — down ${slump.dropPercent}%
@@ -100,7 +112,9 @@ export function renderBriefEmailHtml(data: BriefData): string {
       <p style="margin:0 0 6px;font-size:20px;color:#111827;"><b>Hi ${escapeHtml(data.shopName)} &#128075;</b></p>
       <p style="margin:0 0 18px;font-size:14px;color:#6b7280;">Your last ${data.windowDays} days, in plain English.</p>
       <table style="width:100%;border-collapse:collapse;border-top:1px solid #e5e7eb;">${rows.join("")}</table>
+      ${whyBlock}
       ${trendBlock}
+      ${stockBlock}
       ${slumpBlock}
       <div style="margin-top:18px;padding:16px 18px;background:#f0fdf4;border-radius:8px;">
         <div style="font-size:12px;font-weight:bold;letter-spacing:1px;color:#16a34a;margin-bottom:6px;">&#128073; THIS WEEK</div>

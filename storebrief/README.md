@@ -33,8 +33,13 @@ forces the deterministic fallback.
 - [x] 4-week momentum trend + streak detection ("up 3 weeks in a row")
 - [x] Repeat-customer tracking (identified vs returning orders)
 - [x] Busiest time of day (timezone-aware 3-hour blocks, ≥2 orders)
-- [x] Best-week detection (🏆) + suggestion brain: win-back past customers,
-      celebrate best week, slump, push winner — priority-ordered
+- [x] Best-week detection (🏆) + suggestion brain: restock winner, win-back
+      past customers, celebrate best week, slump, push winner — priority-ordered
+- [x] "Why sales moved" decomposition (order-count vs basket-size effects,
+      summing exactly to the change) — Shopify shows charts, never the why
+- [x] Stock-out forecast (velocity-based days-left on top sellers, via
+      optional `inventory` input)
+- [x] WhatsApp-formatted brief (`renderWhatsAppText`) — guardrail-checked
 - [x] AI writer + numeric guardrail + no-key fallback
 - [x] Shopify adapter (`ORDERS_QUERY`, test/cancelled exclusion, customer ids,
       cursor pagination) — validated against real Escape-store data via the
