@@ -14,7 +14,11 @@ if (!file) {
   process.exit(1);
 }
 
-const orders = JSON.parse(readFileSync(file, "utf8")) as Order[];
+// Shopify marks test-gateway checkouts with test: true and excludes them from
+// its own analytics — a brief that counted them would report money that never
+// existed, so they are dropped here too.
+const orders = (JSON.parse(readFileSync(file, "utf8")) as Array<Order & { test?: boolean }>)
+  .filter((o) => !o.test);
 const windowDays = windowArg ? Number(windowArg) : 7;
 const data = computeBrief(orders, { windowDays, shopName, currency });
 console.log(renderBriefText(data));
