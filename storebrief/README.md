@@ -32,6 +32,9 @@ forces the deterministic fallback.
 - [x] Metrics engine + tests (windows, baselines, slumps, best day, suggestion)
 - [x] 4-week momentum trend + streak detection ("up 3 weeks in a row")
 - [x] Repeat-customer tracking (identified vs returning orders)
+- [x] Busiest time of day (timezone-aware 3-hour blocks, ≥2 orders)
+- [x] Best-week detection (🏆) + suggestion brain: win-back past customers,
+      celebrate best week, slump, push winner — priority-ordered
 - [x] AI writer + numeric guardrail + no-key fallback
 - [x] Shopify adapter (`ORDERS_QUERY`, test/cancelled exclusion, customer ids,
       cursor pagination) — validated against real Escape-store data via the

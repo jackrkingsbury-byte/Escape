@@ -27,6 +27,7 @@ const data = computeBrief(orders, {
   now: new Date("2026-07-17T12:00:00Z"),
   shopName: "Thabo's Streetwear (demo)",
   currency: "R",
+  timezone: "Africa/Johannesburg",
 });
 
 writeFileSync(out, renderBriefEmailHtml(data));

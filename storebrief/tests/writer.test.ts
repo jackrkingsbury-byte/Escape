@@ -39,6 +39,17 @@ ok("re-rounded 347% caught", findUnsupportedNumbers(rerounded, data).length > 0)
 const spaced = `You made R4 500 in sales.`;
 ok("spaced thousands accepted", findUnsupportedNumbers(spaced, data).length === 0);
 
+// 5b. Busiest-hours digits are whitelisted; other times are not.
+const hourly = computeBrief(
+  [
+    { id: "h1", createdAt: "2026-07-14T16:10:00Z", total: 300, lineItems: [{ title: "Mug", quantity: 3, price: 100 }] },
+    { id: "h2", createdAt: "2026-07-16T16:40:00Z", total: 300, lineItems: [{ title: "Mug", quantity: 3, price: 100 }] },
+  ],
+  { now: NOW, shopName: "Test", currency: "R" },
+);
+ok("busiest-time mention passes", findUnsupportedNumbers("Most sales land between 15:00 and 18:00.", hourly).length === 0);
+ok("wrong time is caught", findUnsupportedNumbers("Most sales land around 21:00.", hourly).length > 0);
+
 // 6. Without an API key, writeBrief falls back to the template, flagged.
 delete process.env.ANTHROPIC_API_KEY;
 const result = await writeBrief(data);

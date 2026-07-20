@@ -21,6 +21,10 @@ export function suggestionText(s: Suggestion): string {
       return "No sales this period — share your store link somewhere new this week (a WhatsApp status or a post) to get eyes on it.";
     case "investigate_slump":
       return `"${s.productTitle}" slowed right down — check its stock, price, and photos, or run a small promo to revive it.`;
+    case "win_back_customers":
+      return `${s.count} people have bought from you before but none came back this week — message them (a simple "new stock just landed" works wonders).`;
+    case "celebrate_best_week":
+      return `Best week of the month! Do more of exactly what you did: keep "${s.productTitle}" in stock and repeat this week's posts.`;
     case "push_top_product_on_best_day":
       return `"${s.productTitle}" is your winner and ${s.bestDay} is your best day — schedule a post or promo for it this ${s.bestDay}.`;
     case "push_top_product":
@@ -60,6 +64,12 @@ export function renderBriefText(data: BriefData): string {
   }
   if (data.bestDay) {
     lines.push(`📅 Best day: ${data.bestDay} (${money(data, data.bestDayRevenue)}).`);
+  }
+  if (data.bestHours) {
+    lines.push(`⏰ Busiest time: ${data.bestHours}.`);
+  }
+  if (data.isBestWeek) {
+    lines.push(`🏆 Your best week of the last 4.`);
   }
   const streak = data.trendStreak;
   if (streak.weeks >= 2) {

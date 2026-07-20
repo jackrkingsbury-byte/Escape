@@ -49,6 +49,9 @@ export function renderBriefEmailHtml(data: BriefData): string {
   if (data.bestDay) {
     rows.push(statRow("Best day", escapeHtml(data.bestDay), ""));
   }
+  if (data.bestHours) {
+    rows.push(statRow("Busiest time", escapeHtml(data.bestHours), ""));
+  }
   if (data.identifiedOrderCount !== null && data.returningOrderCount !== null) {
     rows.push(
       statRow("Repeat customers", `${data.returningOrderCount} of ${data.identifiedOrderCount} orders`, ""),
@@ -70,10 +73,13 @@ export function renderBriefEmailHtml(data: BriefData): string {
         ? `<span style="color:#16a34a;font-weight:bold;">&#9650; up ${streak.weeks} weeks in a row</span>`
         : `<span style="color:#dc2626;font-weight:bold;">&#9660; down ${streak.weeks} weeks in a row</span>`
       : "";
+  const bestWeekLabel = data.isBestWeek
+    ? `&nbsp;&nbsp;<span style="color:#b45309;font-weight:bold;">&#127942; best week of the 4</span>`
+    : "";
   const trendBlock =
     maxTrend > 0
       ? `<div style="margin-top:18px;">
-        <div style="font-size:12px;font-weight:bold;letter-spacing:1px;color:#6b7280;margin-bottom:8px;">4-WEEK TREND&nbsp;&nbsp;${streakLabel}</div>
+        <div style="font-size:12px;font-weight:bold;letter-spacing:1px;color:#6b7280;margin-bottom:8px;">4-WEEK TREND&nbsp;&nbsp;${streakLabel}${bestWeekLabel}</div>
         <table style="border-collapse:collapse;"><tr>${data.weeklyTrend
           .map((v, i) => {
             const h = Math.max(6, Math.round((v / maxTrend) * 48));

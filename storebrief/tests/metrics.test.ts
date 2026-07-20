@@ -122,5 +122,42 @@ const sameWindow = computeBrief(
 );
 eq("returning: repeat within the window counts", sameWindow.returningOrderCount, 1);
 
+// --- busiest hours (timezone-aware) ---
+// Two orders at 16:xx UTC: block 15:00–18:00 in UTC, but 18:xx SAST → 18:00–21:00 local.
+const hoursOrders: Order[] = [
+  o("h1", "2026-07-14T16:10:00Z", 300, [["Mug", 3, 100]]),
+  o("h2", "2026-07-16T16:40:00Z", 300, [["Mug", 3, 100]]),
+  o("h3", "2026-07-16T08:00:00Z", 900, [["Mug", 9, 100]]), // big but single order in its block
+];
+const utcHours = computeBrief(hoursOrders, { now: NOW });
+eq("busiest hours: needs ≥2 orders, so 16:xx UTC block wins", utcHours.bestHours, "15:00–18:00");
+const sastHours = computeBrief(hoursOrders, { now: NOW, timezone: "Africa/Johannesburg" });
+eq("busiest hours: SAST shifts 16:xx UTC into the evening block", sastHours.bestHours, "18:00–21:00");
+eq("busiest hours: null when no block has 2 orders", fresh.bestHours, null);
+const badTz = computeBrief(hoursOrders, { now: NOW, timezone: "Not/AZone" });
+eq("busiest hours: invalid timezone falls back to UTC", badTz.bestHours, "15:00–18:00");
+
+// --- best week + celebrate suggestion ---
+eq("best week: rising store flags it", rising.isBestWeek, true);
+eq("best week: celebration suggestion fires", rising.suggestion.code, "celebrate_best_week");
+eq("best week: falling store does not", falling.isBestWeek, false);
+eq("best week: fresh store (no prior weeks) does not", fresh.isBestWeek, false);
+
+// --- win-back suggestion: 3+ past customers, none returned this week ---
+const winBack = computeBrief(
+  [
+    wc("n1", "2026-07-15T09:00:00Z", 100, "cust-new"),
+    wc("h1", "2026-06-25T09:00:00Z", 100, "cust-1"),
+    wc("h2", "2026-06-26T09:00:00Z", 100, "cust-2"),
+    wc("h3", "2026-07-05T09:00:00Z", 100, "cust-3"),
+  ],
+  { now: NOW },
+);
+eq("win-back: past customer count", winBack.pastCustomerCount, 3);
+eq("win-back: suggestion fires with count", winBack.suggestion, {
+  code: "win_back_customers",
+  count: 3,
+});
+
 console.log(failures === 0 ? "\nMETRICS: ALL TESTS PASSED" : `\nMETRICS: ${failures} FAILED`);
 process.exit(failures === 0 ? 0 : 1);

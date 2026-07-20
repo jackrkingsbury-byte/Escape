@@ -33,6 +33,8 @@ export interface SlumpingProduct extends ProductStat {
 export type SuggestionCode =
   | "no_sales_share_store"
   | "investigate_slump"
+  | "win_back_customers"
+  | "celebrate_best_week"
   | "push_top_product_on_best_day"
   | "push_top_product"
   | "keep_momentum";
@@ -41,6 +43,8 @@ export interface Suggestion {
   code: SuggestionCode;
   productTitle?: string;
   bestDay?: string;
+  /** Supporting count (e.g. past customers to win back). */
+  count?: number;
 }
 
 export interface TrendStreak {
@@ -79,6 +83,12 @@ export interface BriefData {
   identifiedOrderCount: number | null;
   /** Of those, orders whose customer had bought before; null when none identified. */
   returningOrderCount: number | null;
+  /** Distinct known customers who bought BEFORE the current window; null when the platform has no ids. */
+  pastCustomerCount: number | null;
+  /** Local-time block with the most revenue (≥2 orders), e.g. "17:00–20:00". */
+  bestHours: string | null;
+  /** Current window beat every other (non-zero) week in the trend. */
+  isBestWeek: boolean;
   suggestion: Suggestion;
 }
 
@@ -87,4 +97,6 @@ export interface BriefOptions {
   now?: Date; // injectable for tests
   shopName?: string;
   currency?: string;
+  /** IANA timezone for local-time insights (busiest hours); defaults to UTC. */
+  timezone?: string;
 }

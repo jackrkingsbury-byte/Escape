@@ -66,20 +66,77 @@ function formatPeriod(startMs: number, endMs: number): string {
   return `${fmt(startMs)} – ${fmt(endMs - 1)}`;
 }
 
-function pickSuggestion(
-  orderCount: number,
-  topProducts: ProductStat[],
-  slumping: SlumpingProduct[],
-  bestDay: string | null,
-): Suggestion {
-  if (orderCount === 0) return { code: "no_sales_share_store" };
-  const slump = slumping[0];
+interface SuggestionInputs {
+  orderCount: number;
+  topProducts: ProductStat[];
+  slumping: SlumpingProduct[];
+  bestDay: string | null;
+  returningOrderCount: number | null;
+  pastCustomerCount: number | null;
+  isBestWeek: boolean;
+}
+
+/** Minimum past customers before "win them back" beats generic advice. */
+const WIN_BACK_MIN_CUSTOMERS = 3;
+
+function pickSuggestion(s: SuggestionInputs): Suggestion {
+  if (s.orderCount === 0) return { code: "no_sales_share_store" };
+  const slump = s.slumping[0];
   if (slump) return { code: "investigate_slump", productTitle: slump.title };
-  const top = topProducts[0];
-  if (top && bestDay)
-    return { code: "push_top_product_on_best_day", productTitle: top.title, bestDay };
+  const top = s.topProducts[0];
+  if (
+    s.returningOrderCount === 0 &&
+    s.pastCustomerCount !== null &&
+    s.pastCustomerCount >= WIN_BACK_MIN_CUSTOMERS
+  ) {
+    return { code: "win_back_customers", count: s.pastCustomerCount };
+  }
+  if (s.isBestWeek && top) {
+    return { code: "celebrate_best_week", productTitle: top.title };
+  }
+  if (top && s.bestDay)
+    return { code: "push_top_product_on_best_day", productTitle: top.title, bestDay: s.bestDay };
   if (top) return { code: "push_top_product", productTitle: top.title };
   return { code: "keep_momentum" };
+}
+
+/** Local hour (0-23) of a date in an IANA timezone; falls back to UTC on bad input. */
+function localHour(date: Date, timezone: string | undefined): number {
+  if (!timezone) return date.getUTCHours();
+  try {
+    const h = new Intl.DateTimeFormat("en-GB", {
+      hour: "numeric",
+      hourCycle: "h23",
+      timeZone: timezone,
+    }).format(date);
+    const n = Number.parseInt(h, 10);
+    return Number.isFinite(n) ? n : date.getUTCHours();
+  } catch {
+    return date.getUTCHours();
+  }
+}
+
+const HOUR_BLOCK = 3;
+
+/** Highest-revenue 3-hour local block, requiring ≥2 orders so one sale can't define it. */
+function computeBestHours(current: Order[], timezone: string | undefined): string | null {
+  const blocks = new Map<number, { revenue: number; orders: number }>();
+  for (const o of current) {
+    const block = Math.floor(localHour(new Date(o.createdAt), timezone) / HOUR_BLOCK);
+    const prev = blocks.get(block) ?? { revenue: 0, orders: 0 };
+    blocks.set(block, { revenue: round2(prev.revenue + o.total), orders: prev.orders + 1 });
+  }
+  let best: number | null = null;
+  let bestRevenue = 0;
+  for (const [block, agg] of blocks) {
+    if (agg.orders >= 2 && agg.revenue > bestRevenue) {
+      bestRevenue = agg.revenue;
+      best = block;
+    }
+  }
+  if (best === null) return null;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(best * HOUR_BLOCK)}:00–${pad((best + 1) * HOUR_BLOCK)}:00`;
 }
 
 function computeTrendStreak(trend: number[]): TrendStreak {
@@ -111,6 +168,18 @@ function computeReturning(
     ),
   ).length;
   return { identified: identified.length, returning };
+}
+
+/** Distinct known customers whose first contact was before the current window. */
+function computePastCustomers(orders: Order[], windowStartMs: number): number | null {
+  if (!orders.some((o) => o.customerId != null)) return null;
+  const past = new Set<string>();
+  for (const o of orders) {
+    if (o.customerId != null && new Date(o.createdAt).getTime() < windowStartMs) {
+      past.add(o.customerId);
+    }
+  }
+  return past.size;
 }
 
 export function computeBrief(orders: Order[], options: BriefOptions = {}): BriefData {
@@ -187,6 +256,10 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
   }
   const trendStreak = computeTrendStreak(weeklyTrend);
   const { identified, returning } = computeReturning(current, orders);
+  const pastCustomerCount = computePastCustomers(orders, startMs);
+  const bestHours = computeBestHours(current, options.timezone);
+  const olderMax = Math.max(...weeklyTrend.slice(0, -1));
+  const isBestWeek = revenue > 0 && olderMax > 0 && revenue >= olderMax;
 
   return {
     shopName: options.shopName ?? "your store",
@@ -209,6 +282,17 @@ export function computeBrief(orders: Order[], options: BriefOptions = {}): Brief
     trendStreak,
     identifiedOrderCount: identified,
     returningOrderCount: returning,
-    suggestion: pickSuggestion(orderCount, topProducts, slumpingProducts, bestDay),
+    pastCustomerCount,
+    bestHours,
+    isBestWeek,
+    suggestion: pickSuggestion({
+      orderCount,
+      topProducts,
+      slumping: slumpingProducts,
+      bestDay,
+      returningOrderCount: returning,
+      pastCustomerCount,
+      isBestWeek,
+    }),
   };
 }

@@ -62,6 +62,14 @@ export function numberWhitelist(data: BriefData): Set<string> {
   addNumberVariants(set, data.trendStreak.weeks);
   if (data.identifiedOrderCount !== null) addNumberVariants(set, data.identifiedOrderCount);
   if (data.returningOrderCount !== null) addNumberVariants(set, data.returningOrderCount);
+  if (data.pastCustomerCount !== null) addNumberVariants(set, data.pastCustomerCount);
+  // Hour digits from the busiest-time label (e.g. "17:00–20:00" → 17, 00, 20).
+  if (data.bestHours) {
+    for (const m of data.bestHours.matchAll(/\d+/g)) {
+      set.add(m[0]);
+      set.add(String(Number(m[0])));
+    }
+  }
   // Period label day numbers (e.g. "10 – 17 Jul").
   for (const m of data.periodLabel.matchAll(/\d+/g)) set.add(m[0]);
   return set;
