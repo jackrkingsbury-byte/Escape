@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "access", "settings": {} }
+  },
+  "order": ["main"]
+}

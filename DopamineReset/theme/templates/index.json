@@ -1,0 +1,777 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-glossy",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "stat": "7 days",
+            "label": "to feel the shift"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "stat": "10 min",
+            "label": "a day"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "stat": "4.9★",
+            "label": "from 1,800+ resets"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "The 7-day program + app to quit scrolling",
+        "heading": "Quit <span class=\"hl\">cheap dopamine</span>. Feel <span class=\"hl2\">good for real</span> — in 7 days.",
+        "subheading": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset is a simple 10-min-a-day protocol that rewires your brain to enjoy real life again — starting today.",
+        "cta1_label": "Start the reset — R199 · ≈ $11",
+        "cta1_url": "#pricing",
+        "cta2_label": "Why it works",
+        "cta2_url": "#why",
+        "scarcity_label": "Only {n} resets left at the R199 launch price",
+        "scarcity_base": 40
+      }
+    },
+    "transformation": {
+      "type": "transformation",
+      "blocks": {
+        "b1": {
+          "type": "before",
+          "settings": {
+            "text": "Wakes up and scrolls before both eyes are even open."
+          }
+        },
+        "b2": {
+          "type": "before",
+          "settings": {
+            "text": "Needs noise, snacks and 3 tabs just to feel normal."
+          }
+        },
+        "b3": {
+          "type": "before",
+          "settings": {
+            "text": "Can't focus for 10 minutes without reaching for the phone."
+          }
+        },
+        "b4": {
+          "type": "before",
+          "settings": {
+            "text": "Everything feels a little flat and grey."
+          }
+        },
+        "a1": {
+          "type": "after",
+          "settings": {
+            "text": "Wakes up clear-headed, phone stays down for the first hour."
+          }
+        },
+        "a2": {
+          "type": "after",
+          "settings": {
+            "text": "Can sit with a coffee and just… be. No itch."
+          }
+        },
+        "a3": {
+          "type": "after",
+          "settings": {
+            "text": "Deep-focuses for hours and actually enjoys it."
+          }
+        },
+        "a4": {
+          "type": "after",
+          "settings": {
+            "text": "Small things feel good again — the colour's back."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
+      "settings": {
+        "eyebrow": "There are two kinds of dopamine",
+        "heading": "Cheap dopamine <span class=\"hl2\">drains</span> you. Real dopamine <span class=\"hl3\">builds</span> you.",
+        "bad_title": "Cheap dopamine",
+        "good_title": "Real dopamine"
+      }
+    },
+    "quiz": {
+      "type": "quiz",
+      "settings": {
+        "eyebrow": "10-second test",
+        "heading": "How <span class=\"hl2\">fried</span> is your dopamine? Find out.",
+        "subheading": "Answer 4 honest questions and find out where you're really at (and what to do about it).",
+        "questions_json": "[{\"q\": \"How many times have you picked up your phone in the last hour?\", \"options\": [{\"label\": \"Lost count, honestly\", \"weight\": \"circle\"}, {\"label\": \"A handful\", \"weight\": \"pro\"}, {\"label\": \"Barely touched it\", \"weight\": \"starter\"}]}, {\"q\": \"How do you feel after an hour of scrolling?\", \"options\": [{\"label\": \"Empty and foggy\", \"weight\": \"circle\"}, {\"label\": \"Kind of meh\", \"weight\": \"pro\"}, {\"label\": \"Fine, I keep it short\", \"weight\": \"starter\"}]}, {\"q\": \"Can you sit and do nothing for 5 minutes?\", \"options\": [{\"label\": \"No chance, I'd reach for my phone\", \"weight\": \"circle\"}, {\"label\": \"It's a struggle\", \"weight\": \"pro\"}, {\"label\": \"Yeah, easily\", \"weight\": \"starter\"}]}, {\"q\": \"Do the things you used to enjoy still feel good?\", \"options\": [{\"label\": \"Nothing really hits anymore\", \"weight\": \"circle\"}, {\"label\": \"A bit dulled\", \"weight\": \"pro\"}, {\"label\": \"They feel great\", \"weight\": \"starter\"}]}]",
+        "results_json": "{\"starter\": {\"title\": \"Lightly fried\", \"blurb\": \"You're doing okay — but a 7-day reset will sharpen your focus and make good things feel good again. Easy win.\", \"cta\": \"Do the 7-day reset\", \"url\": \"#pricing\"}, \"pro\": {\"title\": \"Pretty fried\", \"blurb\": \"Cheap dopamine has dulled your days. The Dopamine Reset rewires that in a week — this is exactly what you need.\", \"cta\": \"Start the reset →\", \"url\": \"#pricing\"}, \"circle\": {\"title\": \"Deep-fried 🍟\", \"blurb\": \"Be honest — you felt that. Your brain is running on cheap hits. The good news: 7 days is all it takes to feel like yourself again.\", \"cta\": \"Reset my brain now →\", \"url\": \"#pricing\"} }"
+      }
+    },
+    "features": {
+      "type": "features",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "🧠",
+            "title": "The 7-day protocol",
+            "text": "One simple action a day that resets your reward system. No willpower needed."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "📵",
+            "title": "The cheap-dopamine fast",
+            "text": "Exactly what to cut, for how long, and how to survive the first 48 hours."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "🌊",
+            "title": "Urge-surfing toolkit",
+            "text": "5 tricks to beat a craving in under 90 seconds when your brain begs to scroll."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "☀️",
+            "title": "The real-dopamine menu",
+            "text": "30 small things that genuinely make you happy — ranked by how fast they work."
+          }
+        },
+        "f5": {
+          "type": "feature",
+          "settings": {
+            "icon": "📈",
+            "title": "Daily tracker",
+            "text": "Tick off each day and watch your focus and mood climb. Streaks make it stick."
+          }
+        },
+        "f6": {
+          "type": "feature",
+          "settings": {
+            "icon": "⚡",
+            "title": "Instant access",
+            "text": "Your access button lands in your inbox the second you pay — one tap to Day 1."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
+      ],
+      "settings": {
+        "eyebrow": "What's inside",
+        "heading": "Everything you need to <span class=\"hl\">feel good again</span>."
+      }
+    },
+    "bonus_stack": {
+      "type": "bonus-stack",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "item": "The 7-Day Dopamine Reset protocol",
+            "value": 299
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "item": "The cheap-dopamine fast guide",
+            "value": 149
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "item": "Urge-surfing toolkit (5 craving-killers)",
+            "value": 99
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "item": "The real-dopamine menu (30 mood-lifters)",
+            "value": 99
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "item": "Daily tracker + streak system",
+            "value": 79
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "item": "Lifetime updates",
+            "value": 49
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "settings": {
+        "eyebrow": "Add it all up",
+        "heading": "Then look at the <span class=\"hl\">launch price</span>.",
+        "subheading": "Everything you get, and what it'd cost you anywhere else.",
+        "was_price": 774,
+        "now_price": 199,
+        "note": "One payment. Instant access. 7-day money-back guarantee.",
+        "cta_label": "Get the reset for R199 · ≈ $11",
+        "cta_url": "#pricing"
+      }
+    },
+    "trust": {
+      "type": "trust-strip",
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "🔒",
+            "title": "Secure checkout",
+            "text": "Encrypted, handled by Shopify"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "↩️",
+            "title": "7-day guarantee",
+            "text": "Don't feel it? Full refund"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "⚡",
+            "title": "Instant access",
+            "text": "Straight to Day 1, no waiting"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "✅",
+            "title": "Once-off payment",
+            "text": "No subscription, ever"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "sticky": {
+      "type": "sticky-cta",
+      "settings": {
+        "title": "Ready to feel good again?",
+        "subtitle": "7 days · 10 min a day · money-back guarantee",
+        "cta_label": "Start — R199 · ≈ $11",
+        "cta_url": "#pricing"
+      }
+    },
+    "pricing": {
+      "type": "pricing",
+      "blocks": {
+        "t1": {
+          "type": "tier",
+          "settings": {
+            "name": "The Reset",
+            "tagline": "Everything you need to rewire",
+            "price": "R199",
+            "price_suffix": "once-off",
+            "features": "The full 7-day protocol | One guided day at a time — read, do the challenge, check in. 10–15 minutes a day.\nCheap-dopamine fast guide | Exactly what to cut (and what you can keep) so it never feels like prison.\nUrge-surfing toolkit | A 90-second technique for the moment a craving hits, plus emergency games to ride it out.\nReal-dopamine menu (30 lifters) | 30 feel-good activities that recharge you instead of draining you.\nDaily tracker + streaks | XP, levels and a streak flame that make staying clean weirdly addictive.\nInstant access | Your access button lands in your email the second you pay.",
+            "featured": true,
+            "badge": "Launch price",
+            "cta_label": "Start the reset →",
+            "product": "the-reset",
+            "approx": "≈ $11 · €10 — cards worldwide"
+          }
+        },
+        "t2": {
+          "type": "tier",
+          "settings": {
+            "name": "Reset + Lifetime Toolkit",
+            "tagline": "For people who want to never go back",
+            "price": "R299",
+            "price_suffix": "once-off",
+            "features": "Everything in The Reset | The whole 7-day program, coach, tracker and toolkit — nothing held back.\nMonthly top-up resets (forever) | A fresh mini-reset every month so one bad week never becomes a relapse.\nAdvanced focus protocols | Deep-work sessions and morning routines for life after your reset.\nEvery future update free | New days, games and tools land in your toolkit automatically.",
+            "featured": false,
+            "cta_label": "Get the full toolkit",
+            "product": "reset-lifetime-toolkit",
+            "approx": "≈ $17 · €15 — cards worldwide"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2"
+      ],
+      "settings": {
+        "eyebrow": "Start today",
+        "heading": "Feel <span class=\"hl\">different</span> by this time next week.",
+        "subheading": "Pick your plan. Checkout is instant and secure.",
+        "footnote": "Charged in South African Rand (R) — your bank converts automatically. Instant access · secure checkout · 7-day money-back guarantee."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "quote": "Day 3 and the fog lifted. I forgot what a clear head even felt like.",
+            "name": "Lerato",
+            "meta": "21 · finished the reset"
+          }
+        },
+        "q2": {
+          "type": "quote",
+          "settings": {
+            "quote": "I can read a whole chapter now without checking my phone. Wild.",
+            "name": "Daniel",
+            "meta": "19 · day 6"
+          }
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Best R199 I've spent. I actually feel happy doing normal stuff again.",
+            "name": "Aisha",
+            "meta": "23 · reset twice"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "eyebrow": "No overnight miracles. Just clearer days.",
+        "heading": "What people actually feel after <span class=\"hl3\">one week</span>."
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "heading": "7 days. If you don't feel the shift, <span class=\"hl\">it's free</span>.",
+        "text": "Do the reset for a week. If your head isn't clearer and your days don't feel better, email us and get every cent back — no forms, no awkward questions. The only risk is staying foggy."
+      }
+    },
+    "founder": {
+      "type": "founder",
+      "settings": {
+        "eyebrow": "Why I made this",
+        "note": "<p>I'm not a doctor or some productivity guru. I'm a normal guy who got tired of waking up and reaching for my phone before I'd even opened both eyes.</p><p>I felt foggy, flat, and weirdly bored of everything — and deep down I knew the scrolling was the reason. So I read everything I could, tested it on myself, and put what <em>actually worked</em> into a simple 7-day plan.</p><p>This is that plan. It's the thing I wish someone had handed me. If it helps you feel a bit more like yourself again, it did its job.</p>",
+        "initial": "J",
+        "name": "Jack",
+        "role": "Founder, Dopamine Reset"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "a1": {
+          "type": "qa",
+          "settings": {
+            "q": "How do I get access after paying?",
+            "a": "The second you pay, your order confirmation email lands with a big 'Open my Dopamine Reset' button — one tap and you're on Day 1. Keep that email: it's your key (and there's a Members link in the site menu too)."
+          }
+        },
+        "a2": {
+          "type": "qa",
+          "settings": {
+            "q": "Is this just 'delete your apps'?",
+            "a": "No. It's a structured 7-day protocol with a daily action, craving tools and a real-dopamine menu. Deleting apps alone doesn't rewire anything — this does."
+          }
+        },
+        "a3": {
+          "type": "qa",
+          "settings": {
+            "q": "How much time per day?",
+            "a": "About 10 minutes. It's built for real life, not a monastery."
+          }
+        },
+        "a4": {
+          "type": "qa",
+          "settings": {
+            "q": "What if it doesn't work for me?",
+            "a": "7-day money-back guarantee, no questions asked. You risk nothing."
+          }
+        },
+        "a5": {
+          "type": "qa",
+          "settings": {
+            "q": "Is it a subscription?",
+            "a": "No — once-off payment. The R299 (≈ $17) option adds lifetime top-ups, but even that's a single payment."
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ],
+      "settings": {
+        "eyebrow": "Good things to know",
+        "heading": "Questions, answered."
+      }
+    },
+    "final_cta": {
+      "type": "final-cta",
+      "settings": {
+        "eyebrow": "This time next week",
+        "heading": "You can keep scrolling. Or you can <span class=\"hl2\">feel good again</span>.",
+        "subheading": "7 days from now you'll either feel clearer, lighter and more like yourself — or exactly the same. R199 (≈ $11). Pick.",
+        "cta_label": "Start the reset — R199 · ≈ $11",
+        "cta_url": "#pricing"
+      }
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "🧠",
+            "title": "Laser focus",
+            "text": "Sit down and get real work done — for hours — without the itch to check your phone."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "😄",
+            "title": "Genuine happiness",
+            "text": "Normal life feels good again — mornings, music, food, people. The colour comes back."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "⚡",
+            "title": "Real energy",
+            "text": "Wake up clear and charged instead of foggy, flat and already tired."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "🚀",
+            "title": "Momentum for your goals",
+            "text": "Show up for school, money, training, your craft — and watch your life actually move."
+          }
+        },
+        "b5": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "❤️",
+            "title": "Real connection",
+            "text": "Be fully there with the people you love. Present — not half-scrolling."
+          }
+        },
+        "b6": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "💪",
+            "title": "Self-respect",
+            "text": "Do the hard thing on purpose. Look in the mirror and like who’s looking back."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ],
+      "settings": {
+        "eyebrow": "Why this matters",
+        "heading": "This isn’t about your phone. It’s about <span class=\"hl\">your life</span>.",
+        "lead": "Cheap dopamine quietly steals your <span class=\"hl\">focus</span>, your <span class=\"hl2\">mood</span> and your <span class=\"hl3\">drive</span>. Get it back, and everything downstream gets better — school, money, health, the people you love.",
+        "show_strip": true,
+        "cta_label": "Start the reset — R199 · ≈ $11",
+        "cta_url": "#pricing",
+        "note": "Most people feel the shift by day 3."
+      }
+    },
+    "game": {
+      "type": "game",
+      "settings": {}
+    },
+    "compare": {
+      "type": "compare",
+      "settings": {}
+    },
+    "story3d": {
+      "type": "story3d",
+      "settings": {}
+    },
+    "preview": {
+      "type": "preview",
+      "settings": {
+        "eyebrow": "See inside before you buy",
+        "heading": "This is what you get <span class=\"hl3\">on day one</span>",
+        "lead": "Not a PDF you'll never open. A real, app-like member space that walks you through every day, tracks your progress and keeps you going."
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "settings": {
+        "eyebrow": "From payment to feeling better",
+        "heading": "How the reset <span class=\"hl\">actually works</span>",
+        "lead": "No app to download, no waiting, no guesswork. Here's exactly what happens from the moment you tap buy.",
+        "cta_label": "Start my reset — R199 · ≈ $11",
+        "cta_url": "#pricing",
+        "reassurance": "One payment · instant access · 7-day money-back guarantee"
+      },
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "when": "Right now",
+            "title": "Tap buy — pay once, securely",
+            "text": "R199 (about $11 / €10), one payment, through Shopify's secure checkout. No subscription, no card tricks, no shipping — it's instant digital access."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "when": "10 seconds later",
+            "title": "Land straight on Day 1",
+            "text": "Your order confirmation email arrives instantly with your access button — tap it and you land on Day 1. Lose the email? The Members link in the menu takes you back any time."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "when": "Every day · 10 min",
+            "title": "Do one simple daily action",
+            "text": "Open the app, do that day's 10-minute action, tick it off. Stuck on a craving? The urge-surfing tools beat it in under 90 seconds."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "when": "By about day 3",
+            "title": "Feel the fog start to lift",
+            "text": "Your streak builds, your focus sharpens, and small things start feeling good again. The tracker shows your mood and momentum climbing."
+          }
+        },
+        "h5": {
+          "type": "step",
+          "settings": {
+            "when": "Day 7 & beyond",
+            "title": "Keep your tools for life",
+            "text": "Finish the 7 days a different person — and keep lifetime access to every protocol, the tracker and all future updates to come back to whenever you need a reset."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5"
+      ]
+    },
+    "facts": {
+      "type": "facts",
+      "blocks": {
+        "k1": {
+          "type": "fact",
+          "settings": {
+            "icon": "🎰",
+            "title": "Built like a slot machine",
+            "text": "Feeds run on unpredictable, variable rewards — the same design that makes gambling hard to put down."
+          }
+        },
+        "k2": {
+          "type": "fact",
+          "settings": {
+            "icon": "🧲",
+            "stat": "≠",
+            "title": "Wanting isn't liking",
+            "text": "Dopamine drives the urge to seek more, not the pleasure itself. That's why you can scroll for an hour and still feel empty."
+          }
+        },
+        "k3": {
+          "type": "fact",
+          "settings": {
+            "icon": "⏱️",
+            "stat": "~23 min",
+            "title": "To refocus after a ping",
+            "text": "Research on attention suggests it takes the average person around 23 minutes to fully refocus after a single distraction."
+          }
+        },
+        "k4": {
+          "type": "fact",
+          "settings": {
+            "icon": "🌱",
+            "stat": "days",
+            "title": "Your brain bounces back",
+            "text": "The reward system is plastic. Lower the flood of stimulation and your baseline starts recovering — often within days."
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4"
+      ],
+      "settings": {}
+    },
+    "paths": {
+      "type": "three-paths",
+      "settings": {
+        "eyebrow": "Start here",
+        "heading": "Three ways in. Pick one."
+      },
+      "blocks": {
+        "p1": {
+          "type": "path",
+          "settings": {
+            "title": "Test how fried you are",
+            "text": "4 honest questions, 10 seconds. Find out where your dopamine really is.",
+            "go": "Take the test",
+            "url": "#quiz"
+          }
+        },
+        "p2": {
+          "type": "path",
+          "settings": {
+            "title": "See inside the app",
+            "text": "The dashboard, coach, tracker and challenges — look before you buy.",
+            "go": "Open the preview",
+            "url": "#preview"
+          }
+        },
+        "p3": {
+          "type": "path",
+          "settings": {
+            "title": "Start the 7-day reset",
+            "text": "R199 (≈ $11) once. Instant access. Feel the shift by day 3.",
+            "go": "Start now",
+            "url": "#pricing"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "coach_spot": {
+      "type": "coach-spotlight",
+      "settings": {
+        "tag": "Live from the app · your coach",
+        "eyebrow": "Meet your coach",
+        "heading": "A coach in your corner. <span class=\"hl\">Every single day.</span>",
+        "lead": "Not a PDF. A built-in coach that knows your day, your streak and your mood — and tells you exactly what to do next.",
+        "cta_label": "Get my coach — R199 · ≈ $11",
+        "cta_url": "#pricing",
+        "note": "Included in the reset · no subscription"
+      },
+      "blocks": {
+        "c1": {
+          "type": "point",
+          "settings": {
+            "icon": "👋",
+            "text": "Checks in every morning and reads how you're doing"
+          }
+        },
+        "c2": {
+          "type": "point",
+          "settings": {
+            "icon": "🌊",
+            "text": "Craving hits? It walks you through a 90-second rescue"
+          }
+        },
+        "c3": {
+          "type": "point",
+          "settings": {
+            "icon": "🎯",
+            "text": "Hands you one clear 10-minute challenge a day"
+          }
+        },
+        "c4": {
+          "type": "point",
+          "settings": {
+            "icon": "📈",
+            "text": "Tracks your streak, XP and mood — and adjusts"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "paths",
+    "coach_spot",
+    "story3d",
+    "transformation",
+    "benefits",
+    "facts",
+    "quiz",
+    "features",
+    "preview",
+    "how",
+    "bonus_stack",
+    "game",
+    "compare",
+    "trust",
+    "pricing",
+    "sticky",
+    "testimonials",
+    "guarantee",
+    "founder",
+    "faq",
+    "final_cta"
+  ]
+}

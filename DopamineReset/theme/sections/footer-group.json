@@ -1,0 +1,52 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "site-footer": {
+      "type": "site-footer",
+      "settings": {
+        "brand": "Dopamine Reset",
+        "tagline": "Quit cheap dopamine. Feel good for real."
+      },
+      "blocks": {
+        "f1": {
+          "type": "link",
+          "settings": {
+            "label": "Terms",
+            "url": "/policies/terms-of-service"
+          }
+        },
+        "f2": {
+          "type": "link",
+          "settings": {
+            "label": "Refunds",
+            "url": "/policies/refund-policy"
+          }
+        },
+        "f3": {
+          "type": "link",
+          "settings": {
+            "label": "Contact",
+            "url": "/pages/contact"
+          }
+        },
+        "f4": {
+          "type": "link",
+          "settings": {
+            "label": "Member access",
+            "url": "/pages/start"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ]
+    }
+  },
+  "order": [
+    "site-footer"
+  ]
+}

@@ -1,0 +1,45 @@
+{%- liquid
+  assign q_json = section.settings.questions_json | default: '[]'
+  assign r_json = section.settings.results_json | default: '{}'
+-%}
+<section class="section" id="quiz">
+  <div class="wrap center">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2 class="reveal">{{ section.settings.heading }}</h2>
+    <p class="lead mx-auto reveal" style="text-align:center">{{ section.settings.subheading }}</p>
+
+    <div class="quiz reveal"
+         data-quiz
+         data-questions='{{ q_json | escape }}'
+         data-results='{{ r_json | escape }}'>
+      <div class="quiz__bar"><i></i></div>
+      <div data-quiz-step class="quiz__hidden" style="display:block">
+        <div class="quiz__q" data-quiz-q>&mdash;</div>
+        <div class="quiz__opts" data-quiz-opts></div>
+      </div>
+      <div class="quiz__result" data-quiz-result style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quiz",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "60 seconds" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Which Escape are you?" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Answer 4 quick questions and we'll point you to the plan that fits where you are right now." },
+    { "type": "header", "content": "Quiz data (advanced)" },
+    { "type": "paragraph", "content": "Edit the JSON below to change questions. Each option's weight must be starter, pro, or circle." },
+    { "type": "textarea", "id": "questions_json", "label": "Questions JSON" },
+    { "type": "textarea", "id": "results_json", "label": "Results JSON" }
+  ],
+  "presets": [{
+    "name": "Quiz",
+    "settings": {
+      "questions_json": "[{\"q\":\"How often do you start something and quit by day 3?\",\"options\":[{\"label\":\"All the time — I need structure\",\"weight\":\"pro\"},{\"label\":\"Sometimes, I just need a nudge\",\"weight\":\"starter\"},{\"label\":\"Rarely — I want to go all in\",\"weight\":\"circle\"}]},{\"q\":\"What's your real goal?\",\"options\":[{\"label\":\"Just stop wasting time\",\"weight\":\"starter\"},{\"label\":\"Build real habits + confidence\",\"weight\":\"pro\"},{\"label\":\"Transform my whole life + grades\",\"weight\":\"circle\"}]},{\"q\":\"How much do you want included?\",\"options\":[{\"label\":\"The essentials\",\"weight\":\"starter\"},{\"label\":\"Bonuses + tracking + support\",\"weight\":\"pro\"},{\"label\":\"Everything, forever\",\"weight\":\"circle\"}]},{\"q\":\"Be honest — how badly do you want this?\",\"options\":[{\"label\":\"Curious, testing the water\",\"weight\":\"starter\"},{\"label\":\"Ready to commit for 90 days\",\"weight\":\"pro\"},{\"label\":\"This is my year, no excuses\",\"weight\":\"circle\"}]}]",
+      "results_json": "{\"starter\":{\"title\":\"ESCAPE Starter\",\"blurb\":\"You want to test the water without overthinking it. Start with the core course and daily dares — upgrade any time.\",\"cta\":\"Start with Starter\",\"url\":\"#pricing\"},\"pro\":{\"title\":\"ESCAPE PRO\",\"blurb\":\"You're ready to commit. PRO gives you the bonus kits, weekly reviews and tracking that turn 90 days into a new identity.\",\"cta\":\"Get ESCAPE PRO\",\"url\":\"#pricing\"},\"circle\":{\"title\":\"Inner Circle\",\"blurb\":\"You're going all in. Inner Circle bundles Grade Forge, lifetime access and every future drop. This is the whole-life upgrade.\",\"cta\":\"Join the Inner Circle\",\"url\":\"#pricing\"}}"
+    }
+  }]
+}
+{% endschema %}

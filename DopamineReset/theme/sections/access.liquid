@@ -1,0 +1,1414 @@
+{% raw %}
+<style>
+  .dr{--bg:#0c0a12;--bg2:#15121d;--bg3:#1b1727;--ink:#f6f4ef;--soft:#b8b4ad;--faint:#7e7a73;
+      --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.05);--amber:#4de3ff;--orange:#7c5cff;
+      --pink:#ff5c8a;--violet:#7c5cff;--blue:#4f8cff;--teal:#2bd3c6;--good:#5ad48a;--r:18px;
+      --serif:'Fraunces',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;}
+  .dr *{box-sizing:border-box}
+  .dr{font-family:var(--sans);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-columns:264px 1fr}
+  .dr a{color:inherit;text-decoration:none}.dr button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+  /* animated 3D backdrop (changes per section) */
+  .dr__fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .dr__fx .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;mix-blend-mode:screen;transition:background 1s ease}
+  .dr__fx .b1{width:48vmax;height:48vmax;top:-14vmax;right:-8vmax;animation:fxd1 24s ease-in-out infinite}
+  .dr__fx .b2{width:42vmax;height:42vmax;bottom:-16vmax;left:-8vmax;animation:fxd2 28s ease-in-out infinite}
+  .dr__fx .b3{width:34vmax;height:34vmax;top:34%;left:42%;animation:fxd1 32s ease-in-out infinite}
+  @keyframes fxd1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5vmax,6vmax) scale(1.14)}}
+  @keyframes fxd2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vmax,-5vmax) scale(1.1)}}
+  .dr__fx .cube{position:absolute;top:20%;right:13%;width:116px;height:116px;transform-style:preserve-3d;animation:fxspin 22s linear infinite;opacity:.18}
+  .dr__fx .cube i{position:absolute;width:116px;height:116px;border:1.5px solid rgba(255,255,255,.6);box-shadow:inset 0 0 24px rgba(124,92,255,.4)}
+  .dr__fx .cube i:nth-child(1){transform:rotateY(0deg) translateZ(58px)}
+  .dr__fx .cube i:nth-child(2){transform:rotateY(90deg) translateZ(58px)}
+  .dr__fx .cube i:nth-child(3){transform:rotateY(180deg) translateZ(58px)}
+  .dr__fx .cube i:nth-child(4){transform:rotateY(-90deg) translateZ(58px)}
+  .dr__fx .cube i:nth-child(5){transform:rotateX(90deg) translateZ(58px)}
+  .dr__fx .cube i:nth-child(6){transform:rotateX(-90deg) translateZ(58px)}
+  .dr__fx .cube--2{top:auto;bottom:14%;left:9%;right:auto;width:80px;height:80px;animation-duration:28s;opacity:.13}
+  .dr__fx .cube--2 i{width:80px;height:80px;box-shadow:inset 0 0 18px rgba(124,92,255,.4)}
+  .dr__fx .cube--2 i:nth-child(1){transform:rotateY(0) translateZ(40px)}.dr__fx .cube--2 i:nth-child(2){transform:rotateY(90deg) translateZ(40px)}.dr__fx .cube--2 i:nth-child(3){transform:rotateY(180deg) translateZ(40px)}.dr__fx .cube--2 i:nth-child(4){transform:rotateY(-90deg) translateZ(40px)}.dr__fx .cube--2 i:nth-child(5){transform:rotateX(90deg) translateZ(40px)}.dr__fx .cube--2 i:nth-child(6){transform:rotateX(-90deg) translateZ(40px)}
+  @keyframes fxspin{to{transform:rotateX(360deg) rotateY(360deg)}}
+  .dr__fx .gly span{position:absolute;opacity:.13;animation:fxgf 16s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,.45))}
+  @keyframes fxgf{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-28px) rotate(12deg)}}
+  @media (prefers-reduced-motion:reduce){.dr__fx .blob,.dr__fx .cube,.dr__fx .gly span{animation:none}}
+
+  /* ===== premium polish pass 1 ===== */
+  .dr .card,.dr .stat,.dr .dial{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.012)),var(--bg2);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 22px 44px -26px rgba(0,0,0,.75)}
+  .dr .doCard,.dr .thumb,.dr .hblk,.dr .ach,.dr .tile{will-change:transform}
+  .dr .doCard,.dr .thumb,.dr .dial{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+  .dr .btn{position:relative;overflow:hidden;transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,filter .2s}
+  .dr .btn--g:hover{filter:saturate(1.08) brightness(1.04)}
+  .dr .rip{position:absolute;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,255,.5),rgba(255,255,255,0) 70%);pointer-events:none;animation:rip .6s ease-out forwards}
+  @keyframes rip{from{width:0;height:0;opacity:.7}to{width:360px;height:360px;opacity:0}}
+  @media (prefers-reduced-motion:reduce){.dr .rip{display:none}}
+  /* missions + treasure + fireworks + rare achievements */
+  .dr .msn{display:grid;gap:10px;margin:8px 0 18px}
+  .dr .msnc{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+  .dr .msnc.done{border-color:rgba(90,212,138,.5);background:linear-gradient(160deg,rgba(90,212,138,.08),var(--bg2))}
+  .dr .msnc .e{font-size:1.6rem;flex:0 0 auto}
+  .dr .msnc .mid{flex:1;min-width:0}
+  .dr .msnc b{display:block;font-size:.96rem;color:#fff}
+  .dr .msnc .pb{height:7px;border-radius:999px;background:var(--bg3);overflow:hidden;margin:6px 0 4px}
+  .dr .msnc .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--pink));transition:width .5s}
+  .dr .msnc .rew{font-family:var(--mono);font-size:.74rem;color:var(--amber)}
+  .dr .msnc .claim{flex:0 0 auto}
+  .dr .chest{display:flex;align-items:center;gap:14px;padding:18px;border-radius:18px;border:1px solid rgba(77,227,255,.4);background:linear-gradient(135deg,rgba(77,227,255,.16),rgba(124,92,255,.12));cursor:pointer;margin:8px 0 16px}
+  .dr .chest .ic{font-size:2.6rem;animation:chestwob 1.6s ease-in-out infinite}
+  .dr .chest b{color:#fff;display:block}
+  @keyframes chestwob{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.08)}}
+  .dr .chest.opened{opacity:.7;cursor:default}.dr .chest.opened .ic{animation:none}
+  .dr .ach.rare.got{border-color:#ffd24b;background:linear-gradient(160deg,rgba(255,210,75,.2),var(--bg2));box-shadow:0 0 22px rgba(255,210,75,.28)}
+  .dr__fw{position:fixed;inset:0;pointer-events:none;z-index:118}
+  .dr__fw span{position:absolute;width:8px;height:8px;border-radius:50%;animation:fw .9s ease-out forwards}
+  @keyframes fw{from{transform:translate(0,0) scale(1.2);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.dr .chest .ic{animation:none}}
+  /* insights: heatmap, trends, records, timeline */
+  .dr .hm{display:flex;gap:3px;overflow-x:auto;padding:4px 0 8px}
+  .dr .hmcol{display:grid;grid-template-rows:repeat(7,1fr);gap:3px}
+  .dr .hmc{width:13px;height:13px;border-radius:3px;background:var(--bg3)}
+  .dr .hmc.l1{background:rgba(77,227,255,.3)}.dr .hmc.l2{background:rgba(77,227,255,.55)}.dr .hmc.l3{background:rgba(124,92,255,.8)}.dr .hmc.l4{background:linear-gradient(135deg,#4de3ff,#ff5c8a)}
+  .dr .trend{display:flex;align-items:flex-end;gap:5px;height:110px;margin:10px 0}
+  .dr .trend .tb{flex:1;display:flex;align-items:flex-end;height:100%}
+  .dr .trend .tbi{width:100%;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--amber),var(--violet));min-height:4px;transition:height .5s}
+  .dr .recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin:10px 0}
+  .dr .rec{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+  .dr .rec .e{font-size:1.3rem}.dr .rec .v{font-family:var(--serif);font-size:1.45rem;color:var(--amber);line-height:1;margin-top:4px}.dr .rec .l{font-size:.72rem;color:var(--faint);margin-top:4px}
+  .dr .tl2{display:grid;margin:10px 0 0}
+  .dr .tl2 .node{display:flex;gap:12px;padding:0 0 14px;position:relative}
+  .dr .tl2 .dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.85rem;flex:0 0 auto;background:var(--bg3);border:1px solid var(--line);z-index:1}
+  .dr .tl2 .node.done .dot{background:linear-gradient(135deg,var(--good),#2bd3c6);color:#06270f;border-color:transparent}
+  .dr .tl2 .node:not(:last-child)::before{content:"";position:absolute;left:14px;top:30px;bottom:0;width:2px;background:var(--line)}
+  .dr .tl2 .node.done:not(:last-child)::before{background:var(--good)}
+  .dr .tl2 .nc b{color:#fff;font-size:.94rem;display:block}.dr .tl2 .nc span{color:var(--faint);font-size:.8rem}
+  /* search results */
+  .dr .sr{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin-bottom:8px;cursor:pointer;transition:.15s}
+  .dr .sr:hover{border-color:var(--amber);transform:translateX(3px)}
+  .dr .sr .e{font-size:1.4rem;flex:0 0 auto}.dr .sr b{display:block;color:#fff;font-size:.95rem}.dr .sr span{color:var(--faint);font-size:.78rem}
+
+  .dr__side{grid-column:1;z-index:3;background:linear-gradient(185deg,#26203a,#181226);border-right:1px solid rgba(255,255,255,.12);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
+  .dr__brand{font-family:var(--serif);font-weight:700;font-size:1.3rem;padding:4px 12px 10px}.dr__brand b{color:var(--amber)}
+  .dr__lvlcard{margin:0 6px 10px;padding:12px;border-radius:14px;background:linear-gradient(135deg,rgba(77,227,255,.14),rgba(124,92,255,.12));border:1px solid var(--line)}
+  .dr__lvlrow{display:flex;align-items:center;gap:10px}
+  .dr__lvlbadge{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:1.3rem;background:linear-gradient(135deg,var(--orange),var(--amber));box-shadow:0 6px 16px rgba(124,92,255,.35);transition:transform .25s}
+  .dr__lvlbadge.pop{transform:scale(1.3) rotate(-8deg)}
+  .dr__lvlt b{display:block;font-family:var(--serif);font-size:.98rem;line-height:1}.dr__lvlt span{font-size:.72rem;color:var(--faint)}
+  .dr__lvlbar{height:7px;border-radius:999px;background:var(--bg3);overflow:hidden;margin-top:9px}
+  .dr__lvlbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--pink),var(--violet));transition:width .6s}
+  .dr__navttl{font-family:var(--mono);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:#b6b0d8;padding:12px 12px 4px}
+  .dr__nav{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;color:#f2f0ea;font-weight:650;font-size:.94rem;width:100%;text-align:left;transition:.15s;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06)}
+  .dr__nav .ic{font-size:1.12rem;width:20px;text-align:center;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+  .dr__nav:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.18);transform:translateX(2px)}
+  .dr__nav.on{background:linear-gradient(135deg,rgba(77,227,255,.34),rgba(255,92,138,.28));color:#fff;border-color:rgba(77,227,255,.5);box-shadow:0 6px 18px rgba(124,92,255,.22)}
+  .dr__foot{margin-top:auto;padding:12px;border-top:1px solid var(--line2);color:var(--faint);font-size:.74rem}
+
+  .dr__main{grid-column:2;position:relative;z-index:1;padding:clamp(16px,4vw,40px);max-width:1060px}
+  .dr__top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+  .dr__pills{display:flex;gap:8px;flex-wrap:wrap}
+  .dr__pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:.8rem;color:var(--soft)}
+  .dr__pill b{color:var(--ink);font-family:var(--mono)}
+  .dr h1{font-family:var(--serif);font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:600;line-height:1.05;margin:4px 0}
+  .dr h2{font-family:var(--serif);font-size:1.3rem;margin:0 0 4px}.dr h3{font-size:1.02rem;margin:0 0 6px}
+  .dr p{color:var(--soft);line-height:1.55;margin:0 0 12px}
+  .dr .eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .dr .panel{display:none;animation:fade .35s ease}.dr .panel.on{display:block}
+  /* scroll reveal */
+  .dr .rv{opacity:0;transform:translateY(24px) scale(.985)}
+  .dr .rv.in{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+  /* colour accents */
+  .dr .card{box-shadow:inset 3px 0 0 rgba(77,227,255,.55)}
+  .dr .panel p b{color:var(--amber)}
+  .dr h1{letter-spacing:-.01em}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .dr .hl{background:linear-gradient(135deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .dr .hl2{background:linear-gradient(135deg,var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+  /* COACH — hero */
+  .dr .coach{position:relative;overflow:hidden;border-radius:24px;padding:26px;margin:6px 0 18px;border:1px solid rgba(77,227,255,.3);background:linear-gradient(135deg,#180f2e,#241a3d 55%,#2a1430)}
+  .dr .coach__bg{position:absolute;inset:0;z-index:0;background:radial-gradient(55% 90% at 88% 6%,rgba(124,92,255,.4),transparent 60%),radial-gradient(50% 80% at 6% 100%,rgba(124,92,255,.36),transparent 60%)}
+  .dr .coach>*{position:relative;z-index:1}
+  .dr .coach__row{display:flex;align-items:center;gap:15px;margin-bottom:6px}
+  .dr .coach__face{width:64px;height:64px;border-radius:50%;flex:0 0 auto;position:relative;background:radial-gradient(circle at 36% 30%,#fff,#8fe0ff 32%,#7c5cff 72%);box-shadow:0 0 0 5px rgba(77,227,255,.16),0 12px 34px rgba(124,92,255,.45);animation:coachpulse 4s ease-in-out infinite}
+  .dr .coach__face .ey{position:absolute;width:7px;height:10px;border-radius:50%;background:#5a2c00;top:42%;animation:blink 5.2s infinite}
+  .dr .coach__face .ey.l{left:38%}.dr .coach__face .ey.r{right:38%}
+  .dr .coach__face .sm{position:absolute;left:50%;top:58%;width:22px;height:11px;transform:translateX(-50%);border:3px solid #5a2c00;border-top:0;border-radius:0 0 22px 22px}
+  @keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+  @keyframes coachpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .dr .coach__hi{font-family:var(--serif);font-size:clamp(1.35rem,3.8vw,2rem);font-weight:600;color:#fff;line-height:1.1}
+  .dr .coach__sub{color:#d9d4ea;font-size:.92rem}
+  .dr .coach__say{font-size:1.08rem;color:#fff;margin:14px 0 0;line-height:1.5;min-height:1.5em}
+  .dr .coach__ask{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:#4de3ff;margin:16px 0 9px}
+  .dr .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .dr .chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:9px 14px;font-size:.86rem;font-weight:600;color:#fff;transition:.15s}
+  .dr .chip:hover,.dr .chip.on{background:rgba(77,227,255,.2);border-color:var(--amber)}
+  .dr .coach__reply{margin-top:14px;padding:16px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.1);display:none}
+  .dr .coach__reply.on{display:block;animation:fade .3s}
+  .dr .coach__reply p{color:#fff;margin:0 0 12px}
+  .dr .coach__quote{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-style:italic;color:#e7e2f5;font-size:.96rem}
+  /* coach chat thread */
+  .dr .cochat{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .dr .cobub{max-width:88%;padding:12px 15px;border-radius:17px;font-size:.98rem;line-height:1.5;color:#fff;animation:fade .3s}
+  .dr .cobub.c{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:6px;align-self:flex-start}
+  .dr .cobub.u{background:linear-gradient(135deg,var(--violet),#5a3ff0);border-bottom-right-radius:6px;align-self:flex-end}
+  .dr .cobub .btn{margin-top:10px}
+  .dr .cotype{display:inline-flex;gap:4px;align-self:flex-start;padding:13px 15px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-radius:17px;border-bottom-left-radius:6px}
+  .dr .cotype i{width:7px;height:7px;border-radius:50%;background:#cfc8e8;animation:cotp 1s infinite}
+  .dr .cotype i:nth-child(2){animation-delay:.15s}.dr .cotype i:nth-child(3){animation-delay:.3s}
+  @keyframes cotp{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+  .dr .coqr{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+  @media (prefers-reduced-motion:reduce){.dr .cotype i{animation:none}}
+
+  .dr .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:999px;padding:13px 22px;background:#fff;color:#041420;transition:transform .15s}
+  .dr .btn:active{transform:scale(.96)}
+  .dr .btn--g{background:linear-gradient(135deg,var(--amber),var(--orange));color:#041420}
+  .dr .btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff}
+  .dr .btn--sm{padding:9px 15px;font-size:.84rem}
+  .dr .btn[disabled]{opacity:.55;pointer-events:none}
+
+  .dr .secttl{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:22px 0 2px}
+  .dr .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;margin:14px 0}
+  .dr .thumb{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4;border:1px solid var(--line);cursor:pointer;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column;justify-content:flex-end}
+  .dr .thumb:hover{transform:translateY(-5px) scale(1.015);box-shadow:0 20px 44px rgba(0,0,0,.5)}
+  .dr .thumb__bg{position:absolute;inset:0;z-index:0;background-size:180% 180%;animation:tgrad 8s ease infinite}
+  @keyframes tgrad{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+  .dr .thumb__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(7,10,22,.72) 100%)}
+  .dr .thumb__emoji{position:absolute;top:14px;left:16px;font-size:2.5rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45));animation:tfloat 5s ease-in-out infinite}
+  @keyframes tfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(7deg)}}
+  .dr .thumb__tag{position:absolute;top:14px;right:14px;z-index:1;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:#fff}
+  .dr .thumb__cap{position:relative;z-index:1;padding:14px}
+  .dr .thumb__cap b{display:block;font-family:var(--serif);font-size:1.04rem;line-height:1.16;color:#fff}
+  .dr .thumb__cap span{font-size:.74rem;color:rgba(255,255,255,.82)}
+  .dr .thumb.done::after{content:"✓ done";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(8,36,15,.5);color:#fff;font-weight:800;font-family:var(--mono);letter-spacing:.1em}
+  .dr .thumb.read::after{content:"✓ read";position:absolute;top:13px;right:13px;z-index:2;background:var(--good);color:#06270f;font-weight:800;border-radius:999px;padding:4px 10px;font-size:.66rem;font-family:var(--mono)}
+  .dr .thumb.locked{cursor:not-allowed}.dr .thumb.locked::after{content:"🔒";position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(0,0,0,.55);font-size:1.6rem}
+
+  .dr .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin:14px 0}
+  .dr .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:12px;margin:14px 0}
+  .dr .stat{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .dr .stat .big{font-family:var(--serif);font-size:1.9rem;color:var(--amber);line-height:1}.dr .stat .lbl{color:var(--faint);font-size:.78rem;margin-top:5px}
+  .dr .bar{height:10px;border-radius:999px;background:var(--bg3);overflow:hidden;margin:8px 0}.dr .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--pink));width:0;transition:width .6s}
+
+  .dr .dials{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+  .dr .dial{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center}
+  .dr .ring{--v:0;width:108px;height:108px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;
+    background:radial-gradient(closest-side,var(--bg2) 70%,transparent 71%),conic-gradient(var(--c,var(--amber)) calc(var(--v)*1%),var(--bg3) 0)}
+  .dr .ring b{font-family:var(--serif);font-size:1.5rem;color:#fff}
+  .dr .dial .nm{font-weight:700;font-size:.95rem}.dr .dial .ds{color:var(--faint);font-size:.78rem}
+  .dr .ring--big{width:150px;height:150px}.dr .ring--big b{font-size:2.1rem}
+
+  .dr .mgraph{display:flex;align-items:flex-end;gap:8px;height:120px;margin:14px 0 6px}
+  .dr .mgraph .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+  .dr .mgraph .bar2{width:100%;max-width:30px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--amber),var(--pink));min-height:6px;transition:height .5s}
+  .dr .mgraph .dl{font-size:.66rem;color:var(--faint);font-family:var(--mono)}
+
+  .dr .achv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:14px 0}
+  .dr .ach{position:relative;border-radius:16px;border:1px solid var(--line);background:var(--bg2);padding:16px;text-align:center;transition:transform .15s}
+  .dr .ach .e{font-size:2rem;filter:grayscale(1) opacity(.4)}
+  .dr .ach.got{border-color:rgba(77,227,255,.5);background:linear-gradient(160deg,rgba(77,227,255,.12),var(--bg2))}
+  .dr .ach.got .e{filter:none}.dr .ach.got:hover{transform:translateY(-3px)}
+  .dr .ach b{display:block;font-size:.86rem;color:#fff;margin-top:8px}.dr .ach span{font-size:.72rem;color:var(--faint)}
+  .dr .ach.got::after{content:"✓";position:absolute;top:9px;right:11px;width:22px;height:22px;border-radius:50%;background:var(--good);color:#06270f;font-weight:800;display:grid;place-items:center;font-size:.8rem}
+
+  .dr .moods{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .dr .moodb{font-size:1.8rem;width:60px;height:60px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:.15s;display:grid;place-items:center}
+  .dr .moodb:hover,.dr .moodb.on{transform:translateY(-3px);border-color:var(--amber);background:var(--bg3)}
+
+  .dr textarea{width:100%;min-height:130px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;color:var(--ink);padding:15px;font:inherit;resize:vertical}
+  .dr .saved{font-size:.8rem;color:var(--good);opacity:0;transition:.3s}.dr .saved.on{opacity:1}
+  .dr ul.tick{list-style:none;padding:0;margin:8px 0}.dr ul.tick li{padding:9px 0 9px 26px;position:relative;color:var(--soft);border-top:1px solid var(--line2)}
+  .dr ul.tick li:first-child{border:0}.dr ul.tick li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
+
+  .dr__modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(5,4,8,.84);backdrop-filter:blur(16px) saturate(.7);-webkit-backdrop-filter:blur(16px) saturate(.7)}
+  .dr__modal.on{display:flex;animation:fade .25s}
+  .dr__sheet{background:#14111c;border:1px solid var(--line);border-radius:22px;max-width:560px;width:100%;overflow:hidden;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);display:flex;flex-direction:column}
+  @media(max-width:640px){
+    .dr__modal{padding:0;align-items:flex-end}
+    .dr__sheet{max-width:none;border-radius:22px 22px 0 0;border-bottom:0;max-height:94vh;max-height:94dvh}
+    .dr__sheet .top{min-height:112px}
+    .dr__sheet .top .e{font-size:2.9rem}
+  }
+  .dr__sheet .top{position:relative;min-height:150px;display:grid;place-items:center;padding:14px}
+  .dr__sheet .top .e{font-size:3.6rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4))}
+  .dr__sheet .x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.4);color:#fff;display:grid;place-items:center;font-size:1.1rem;z-index:2}
+  .dr__prog{height:4px;background:var(--bg3);display:none}.dr__prog.on{display:block}.dr__prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--pink))}
+  .dr__sheet .body{padding:22px;padding-bottom:max(26px,env(safe-area-inset-bottom));overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.dr__sheet .body h2{margin-bottom:8px}
+  .dr__sheet .body .art p{font-size:1.04rem;line-height:1.64;color:#ece9e2;margin:0 0 15px}
+  .dr .msec{margin-top:15px;padding-top:13px;border-top:1px solid var(--line)}
+  .dr .mtime{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#8ee7ff;background:rgba(77,227,255,.08);border:1px solid rgba(77,227,255,.25);border-radius:999px;padding:6px 12px;margin:4px 0 2px}
+  .dr .msteps{margin:8px 0 0;padding-left:20px;display:grid;gap:9px}
+  .dr .msteps li{line-height:1.5}
+  .dr .msteps li::marker{color:#4de3ff;font-weight:700}
+  .dr .aotd{position:relative;display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,rgba(77,227,255,.1),rgba(124,92,255,.08));border:1px solid rgba(124,92,255,.35);border-radius:18px;padding:18px;margin-top:10px;cursor:pointer;transition:transform .2s}
+  .dr .aotd:active{transform:scale(.985)}
+  .dr .aotd .ae{font-size:2.3rem;flex:none}
+  .dr .aotd b{display:block;color:var(--ink);font-size:1.05rem;margin-bottom:2px}
+  .dr .aotd span{color:var(--soft);font-size:.86rem}
+  .dr .aotd .go{margin-left:auto;flex:none;font-size:1.2rem;color:#4de3ff}
+  .dr .qpgrid,.dr .wheelout{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px;width:100%}
+  .dr .qp{display:flex;flex-direction:column;align-items:flex-start;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:15px;padding:13px;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:transform .18s,border-color .2s}
+  .dr .qp:active{transform:scale(.97)}
+  .dr .qp:hover{border-color:rgba(77,227,255,.4)}
+  .dr .qp .qe{font-size:1.5rem}
+  .dr .qp b{font-size:.92rem;line-height:1.25}
+  .dr .qp span{font-size:.7rem;color:var(--faint);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  .dr .wheelbox{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:12px}
+  .dr .wheel{position:relative;width:216px;height:216px}
+  .dr .wheel__disc{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#4de3ff 0 60deg,#7c5cff 0 120deg,#ff5c8a 0 180deg,#2bd3c6 0 240deg,#ffd24b 0 300deg,#5ad48a 0 360deg);border:4px solid rgba(255,255,255,.16);box-shadow:0 22px 60px rgba(0,0,0,.5),inset 0 0 46px rgba(0,0,0,.3);transition:transform 2.8s cubic-bezier(.15,.85,.15,1)}
+  .dr .wheel__ptr{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:1.35rem;z-index:2;filter:drop-shadow(0 4px 8px rgba(0,0,0,.65))}
+  .dr .wheel__spin{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:86px;height:86px;border-radius:50%;border:0;background:#0d0b14;color:#fff;font-weight:800;letter-spacing:.1em;font-size:.95rem;box-shadow:0 0 0 6px rgba(255,255,255,.14),0 10px 30px rgba(0,0,0,.5);cursor:pointer;transition:transform .15s}
+  .dr .wheel__spin:active{transform:translate(-50%,-50%) scale(.94)}
+  .dr .wheelout .qp{animation:qpop .45s cubic-bezier(.2,1.4,.4,1) backwards}
+  @keyframes qpop{from{opacity:0;transform:scale(.7) translateY(12px)}to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.dr .wheel__disc{transition:none}.dr .wheelout .qp{animation:none}}
+  .dr .msec b{display:block;margin-bottom:6px;color:var(--amber);font-size:.92rem}.dr .msec p{margin:0;font-size:.94rem;color:var(--soft)}
+  .dr .mnote{width:100%;min-height:74px;margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:11px;font:inherit;resize:vertical}
+
+  .dr .play{min-height:210px;display:grid;place-items:center;text-align:center;background:var(--bg3);border-radius:16px;margin:6px 0 14px;position:relative;overflow:hidden}
+  .dr .bubble{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;background:radial-gradient(circle,rgba(77,227,255,.5),rgba(124,92,255,.2));border:1px solid rgba(255,255,255,.18);transition:transform 4s ease-in-out}
+  .dr .rt{font-family:var(--serif);font-size:1.6rem;color:#fff}
+  .dr .react{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:1.2rem;color:#fff}
+  .dr .distract{position:absolute;font-size:2.2rem;cursor:pointer;user-select:none}
+  .dr .mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;max-width:300px}
+  .dr .memc{aspect-ratio:1;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-size:1.6rem;display:grid;place-items:center;transition:.15s}
+  .dr .memc.up{background:linear-gradient(135deg,var(--violet),var(--pink))}.dr .memc.done{opacity:.4}
+
+  .dr .qcard{position:relative;border-radius:18px;padding:24px;border:1px solid var(--line);background:linear-gradient(135deg,#1a1330,#211a39);margin:14px 0}
+  .dr .qcard p{font-family:var(--serif);font-size:1.35rem;color:#fff;line-height:1.35;font-style:italic}
+  .dr .qcard .by{color:var(--amber);font-size:.86rem;font-family:var(--mono)}
+  .dr .qrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .dr .qmini{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin:8px 0;color:var(--soft);font-size:.95rem}
+
+  .dr__toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);z-index:120;background:linear-gradient(135deg,var(--amber),var(--orange));color:#041420;font-weight:800;padding:13px 20px;border-radius:999px;box-shadow:0 16px 40px rgba(124,92,255,.45);opacity:0;transition:.35s;display:flex;align-items:center;gap:9px;max-width:90vw}
+  .dr__toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  .dr__cf{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:110}
+  .dr__cf span{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:cf linear forwards}
+  @keyframes cf{to{transform:translateY(105vh) rotate(560deg);opacity:.2}}
+
+  /* quick-actions hub + FAB */
+  .dr .doNow{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin:8px 0 6px}
+  .dr .doCard{position:relative;overflow:hidden;border-radius:18px;padding:16px;min-height:108px;cursor:pointer;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;transition:transform .15s,box-shadow .2s}
+  .dr .doCard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .dr .doCard .bg{position:absolute;inset:0;z-index:0;background-size:170% 170%;animation:tgrad 8s ease infinite}
+  .dr .doCard .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 38%,rgba(7,10,22,.66))}
+  .dr .doCard .e{position:absolute;top:13px;left:15px;font-size:1.9rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45));animation:tfloat 5s ease-in-out infinite}
+  .dr .doCard b{position:relative;z-index:1;color:#fff;font-family:var(--serif);font-size:1.04rem;line-height:1.12}
+  .dr .doCard span{position:relative;z-index:1;color:rgba(255,255,255,.85);font-size:.78rem}
+  .dr__fab{position:fixed;right:18px;bottom:18px;z-index:70;display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:14px 20px;font-size:.96rem;background:linear-gradient(135deg,var(--amber),var(--orange));color:#041420;box-shadow:0 12px 32px rgba(124,92,255,.5);cursor:pointer;border:0;animation:fabpop .4s cubic-bezier(.2,.8,.2,1)}
+  @keyframes fabpop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  @media(min-width:821px){.dr__fab{right:28px;bottom:24px;padding:15px 24px;font-size:1.02rem}}
+  .dr__quick{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;justify-content:center;background:rgba(5,4,8,.74);backdrop-filter:blur(16px) saturate(.7);-webkit-backdrop-filter:blur(16px) saturate(.7)}
+  .dr__quick.on{display:flex;animation:fade .25s}
+  .dr__qsheet{background:var(--bg2);border:1px solid var(--line);border-radius:24px 24px 0 0;width:100%;max-width:580px;padding:22px;max-height:84vh;overflow:auto;animation:qup .3s cubic-bezier(.2,.8,.2,1)}
+  @keyframes qup{from{transform:translateY(40px)}to{transform:none}}
+  @media(min-width:821px){.dr__quick{align-items:center}.dr__qsheet{border-radius:24px}}
+  /* home feed blocks */
+  .dr .hblk{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0}
+  .dr .hblk__top{display:flex;align-items:center;gap:12px}
+  .dr .hblk__ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;flex:0 0 auto;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .dr .hblk h3{margin:0;font-size:1.18rem}
+  .dr .hblk__tag{color:var(--faint);font-size:.78rem;font-family:var(--mono)}
+  .dr .hblk p{margin:10px 0 12px}
+  .dr .hblk__mini{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
+  .dr .hblk__mini .thumb{min-width:128px;width:128px}
+
+  /* calendar + xp source + settings */
+  .dr .cal__head{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+  .dr .cal__head span{text-align:center;font-size:.64rem;color:var(--faint);font-family:var(--mono)}
+  .dr .cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .dr .cal__c{aspect-ratio:1;display:grid;place-items:center;border-radius:9px;font-size:.8rem;color:var(--soft);background:var(--bg3);border:1px solid var(--line2)}
+  .dr .cal__c--e{background:transparent;border:0}
+  .dr .cal__c.on{background:linear-gradient(135deg,var(--good),#2bd3c6);color:#06270f;font-weight:800;border-color:transparent}
+  .dr .cal__c.today{outline:2px solid var(--amber);outline-offset:1px;color:#fff}
+  .dr .xps{display:flex;flex-direction:column;gap:11px;margin-top:6px}
+  .dr .xps__row .l{display:flex;justify-content:space-between;font-size:.84rem;color:var(--soft);margin-bottom:5px}
+  .dr .xps__row .l b{color:#fff;font-family:var(--mono)}
+  .dr .xps__bar{height:9px;border-radius:999px;background:var(--bg3);overflow:hidden}
+  .dr .xps__bar i{display:block;height:100%;border-radius:999px;transition:width .5s}
+  .dr .setsw{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:10px;margin-top:6px}
+  .dr .setsw__s{aspect-ratio:1.3;border-radius:14px;cursor:pointer;border:2px solid transparent;display:flex;align-items:flex-end;padding:8px;font-size:.72rem;font-weight:800;color:#1a1320}
+  .dr .setsw__s.sel{border-color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.4)}
+  .dr .setava{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .dr .setava button{font-size:1.6rem;width:54px;height:54px;border-radius:14px;background:var(--bg3);border:1px solid var(--line);cursor:pointer;transition:.15s}
+  .dr .setava button:hover{transform:translateY(-2px)}
+  .dr .setava button.sel{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber) inset}
+
+  /* onboarding */
+  .dr .coach__face{position:relative}
+  .coach__av{position:absolute;inset:0;display:none;place-items:center;font-size:2.1rem;border-radius:50%}
+  .coach__av.on{display:grid}
+  .dr__onb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(90% 80% at 50% 22%,#16314a 0%,#0c1a2e 45%,#070b14 100%);overflow:auto;font-family:var(--sans)}
+  .dr__onb.on{display:flex;animation:fade .4s}
+  .dr__onb::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(40% 40% at 80% 12%,rgba(92,200,255,.22),transparent 60%),radial-gradient(40% 50% at 12% 90%,rgba(124,92,255,.22),transparent 60%)}
+  .ob{position:relative;z-index:1}
+  .ob{width:100%;max-width:440px;text-align:center;color:#fff;margin:auto}
+  .ob h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,5.5vw,2.3rem);line-height:1.1;margin:0 0 10px}
+  .ob p{color:#cfccc4;margin:0 0 18px;line-height:1.5}
+  .ob__dots{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+  .ob__dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22)}.ob__dot.on{background:var(--amber)}
+  .ob__orb{width:96px;height:96px;border-radius:50%;margin:6px auto 18px;background:radial-gradient(circle at 35% 30%,#fff,#9be0ff 30%,#5c8cff 74%);box-shadow:0 0 0 6px rgba(92,200,255,.18),0 16px 44px rgba(79,140,255,.5);animation:coachpulse 4s ease-in-out infinite}
+  .ob__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  .ob__opt{position:relative;aspect-ratio:1;border-radius:18px;border:1px solid rgba(255,255,255,.12);overflow:hidden;display:grid;place-items:center;font-size:2rem;cursor:pointer;transition:transform .15s,box-shadow .2s;background:#15121d}
+  .ob__opt:hover{transform:translateY(-3px)}.ob__opt.sel{box-shadow:0 0 0 2px var(--amber) inset,0 12px 30px rgba(0,0,0,.4)}
+  .ob__sw{aspect-ratio:1.25;border-radius:16px;cursor:pointer;border:2px solid transparent;display:flex;align-items:flex-end;padding:8px;font-size:.74rem;font-weight:800;color:#1a1320}
+  .ob__sw.sel{border-color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+  .ob__list{display:grid;gap:10px;margin:18px 0;text-align:left}
+  .ob__row{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:#15121d;cursor:pointer;transition:.15s;font-weight:600;color:#fff}
+  .ob__row:hover{transform:translateY(-2px)}.ob__row.sel{border-color:var(--amber);background:rgba(77,227,255,.08)}
+  .ob__row .e{font-size:1.5rem}
+  .ob__faces{display:flex;gap:10px;justify-content:center;margin:18px 0}
+  .ob__face{font-size:2rem;width:62px;height:62px;border-radius:16px;background:#15121d;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.15s}
+  .ob__face:hover,.ob__face.sel{transform:translateY(-3px);border-color:var(--amber)}
+  .ob__bar{height:9px;border-radius:999px;background:#241d31;overflow:hidden;margin:22px 0}
+  .ob__bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--pink),var(--violet));transition:width .5s}
+  .ob__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:15px 32px;font-size:1.04rem;background:linear-gradient(135deg,#5cd0ff,#7c5cff);color:#05121f;cursor:pointer;box-shadow:0 16px 40px rgba(92,140,255,.45)}
+  .dr__onb .ob__dot.on{background:#5cc8ff}
+  .dr__onb .ob__opt.sel{box-shadow:0 0 0 2px #5cc8ff inset,0 12px 30px rgba(0,0,0,.4)}
+  .dr__onb .ob__row.sel{border-color:#5cc8ff;background:rgba(92,200,255,.1)}
+  .dr__onb .ob__face.sel{border-color:#5cc8ff}
+  .dr__onb .ob__bar i{background:linear-gradient(90deg,#5cd0ff,#7c5cff,#ff5c8a)}
+  .ob__skip{display:block;margin:14px auto 0;color:#8b877f;font-size:.84rem;text-decoration:underline;cursor:pointer;background:none}
+  .ob__gen{margin:8px 0;color:#cfccc4;font-size:.95rem;min-height:1.4em}
+  .dr__menu{display:none}
+  .dr__scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85;display:none}.dr__scrim.on{display:block}
+  @media(max-width:820px){
+    .dr{grid-template-columns:1fr}
+    .dr__main{grid-column:1}
+    .dr__side{position:fixed;inset:0 26% 0 0;z-index:90;transform:translateX(-105%);transition:transform .25s}.dr__side.open{transform:none}
+    .dr__menu{display:inline-flex;align-items:center;gap:6px;font-weight:700;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+  }
+  @media (prefers-reduced-motion:reduce){.dr .coach__face,.dr .bubble,.dr .thumb__emoji,.dr .thumb__bg{animation:none}}
+
+  /* ---- premium polish pass ---- */
+  .dr .card,.dr .doCard,.dr .thumb,.dr .ach,.dr .rec,.dr .moodb,.dr .memc{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s}
+  @media (hover:hover){
+    .dr .card:hover,.dr .doCard:hover,.dr .thumb:hover,.dr .ach:hover,.dr .rec:hover{transform:translateY(-4px);box-shadow:0 22px 50px -18px rgba(0,0,0,.72),0 0 0 1px rgba(77,227,255,.2)}
+    .dr__nav:hover{transform:translateX(3px);border-color:rgba(77,227,255,.32);background:rgba(255,255,255,.08)}
+    .dr .sr:hover{transform:translateX(3px);border-color:rgba(77,227,255,.3)}
+    .dr .btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .dr .chip:hover{transform:translateY(-2px)}
+    .dr .moodb:hover{transform:translateY(-3px)}
+  }
+  /* shimmer sweeping across progress bars */
+  .dr__lvlbar i,.dr .bar i,.dr .xps__bar i,.dr .msnc .pb i{position:relative;overflow:hidden}
+  .dr__lvlbar i::after,.dr .bar i::after,.dr .xps__bar i::after,.dr .msnc .pb i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 28%,rgba(255,255,255,.5) 50%,transparent 72%);transform:translateX(-110%);animation:drbar 2.8s ease-in-out infinite}
+  @keyframes drbar{0%{transform:translateX(-110%)}55%,100%{transform:translateX(240%)}}
+  /* smoother panel entrance: fade + slide up */
+  .dr .panel.on{animation:drpanel .42s cubic-bezier(.2,.7,.2,1)}
+  @keyframes drpanel{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  /* focus pop-in: when an overlay opens it zooms into focus while the rest blurs */
+  .dr__modal.on .dr__sheet{animation:drpop .44s cubic-bezier(.2,.8,.2,1)}
+  @keyframes drpop{from{opacity:0;transform:scale(.9) translateY(14px)}to{opacity:1;transform:none}}
+  .dr__quick.on .dr__qsheet{animation:drpopup .44s cubic-bezier(.2,.8,.2,1)}
+  @keyframes drpopup{from{opacity:0;transform:translateY(48px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .dr__lvlbar i::after,.dr .bar i::after,.dr .xps__bar i::after,.dr .msnc .pb i::after{animation:none}
+    .dr .panel.on,.dr__modal.on .dr__sheet,.dr__quick.on .dr__qsheet{animation:none}
+  }
+</style>
+
+<div class="dr" id="drApp">
+  <div class="dr__fx" id="drFx" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cube cube--2"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="gly" id="fxGly"></div>
+  </div>
+  <aside class="dr__side" id="drSide">
+    <div class="dr__brand">Dopamine<b>.</b>Reset</div>
+    <div class="dr__lvlcard">
+      <div class="dr__lvlrow"><div class="dr__lvlbadge" id="lvBadge">🌱</div>
+        <div class="dr__lvlt"><b id="lvName">Level 1</b><span id="lvTitle">Asleep</span></div></div>
+      <div class="dr__lvlbar"><i id="lvBar"></i></div>
+    </div>
+    <div class="dr__navttl">Your reset</div>
+    <button class="dr__nav on" data-go="today"><span class="ic">🤖</span> Coach</button>
+    <button class="dr__nav" data-go="plan"><span class="ic">🗓️</span> The 7 Days</button>
+    <button class="dr__nav" data-go="track"><span class="ic">✅</span> Tracker</button>
+    <button class="dr__nav" data-go="stats"><span class="ic">📊</span> My Stats</button>
+    <button class="dr__nav" data-go="missions"><span class="ic">🎯</span> Missions</button>
+    <button class="dr__nav" data-go="achv"><span class="ic">🏆</span> Achievements</button>
+    <button class="dr__nav" data-go="vision"><span class="ic">🌟</span> Your Why</button>
+    <div class="dr__navttl">Feel good now</div>
+    <button class="dr__nav" data-go="games"><span class="ic">🎮</span> Mind Games</button>
+    <button class="dr__nav" data-go="articles"><span class="ic">📚</span> Articles</button>
+    <button class="dr__nav" data-go="journeys"><span class="ic">💗</span> Mood Help</button>
+    <button class="dr__nav" data-go="relax"><span class="ic">🧘</span> Time to Relax</button>
+    <div class="dr__navttl">Tools</div>
+    <button class="dr__nav" data-go="toolkit"><span class="ic">🌊</span> Urge Toolkit</button>
+    <button class="dr__nav" data-go="menu"><span class="ic">☀️</span> Dopamine Menu</button>
+    <button class="dr__nav" data-go="journal"><span class="ic">📓</span> Journal</button>
+    <button class="dr__nav" data-go="settings"><span class="ic">⚙️</span> Settings</button>
+    <button class="dr__nav" data-go="help"><span class="ic">💬</span> Help</button>
+    <div class="dr__foot">Bookmark this — your home base for 7 days.</div>
+  </aside>
+  <div class="dr__scrim" id="drScrim"></div>
+
+  <main class="dr__main">
+    <div class="dr__top">
+      <button class="dr__menu" id="drBurger">☰ Menu</button>
+      <div class="dr__pills">
+        <span class="dr__pill">⭐ <b id="pXp">0</b> XP</span>
+        <span class="dr__pill">🔥 <b id="pStreak">0</b></span>
+        <span class="dr__pill">Day <b id="pDay">1</b>/7</span>
+      </div>
+    </div>
+
+    <section class="panel on" data-p="today">
+      <div class="coach">
+        <div class="coach__bg"></div>
+        <div class="coach__row"><div class="coach__face"><span class="ey l"></span><span class="ey r"></span><span class="sm"></span><span class="coach__av" id="coAvatar"></span></div>
+          <div><div class="coach__hi" id="coHi">Hey there 👋</div><div class="coach__sub" id="coSub">Your coach is warming up…</div></div></div>
+        <p class="coach__say" id="coSay">Let's get your first win today.</p>
+        <div id="coSuggest" style="margin-top:14px"></div>
+        <div id="coContinue"></div>
+        <div class="coach__cta" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn btn--g" data-open-today>Today's challenge →</button>
+          <button class="btn btn--ghost btn--sm" data-go="games">I need a reset now</button>
+        </div>
+        <div class="coach__ask">What are you struggling with? Tap one →</div>
+        <div class="chips" id="coachChips"></div>
+        <div class="cochat" id="coChat"></div>
+        <div class="coach__quote" id="coQuote"></div>
+      </div>
+      <h3 style="margin:18px 0 2px">What do you want to do right now? 👇</h3>
+      <p style="margin:0 0 8px">Not sure? Just tap one — I'll take you straight there.</p>
+      <div class="doNow" id="doGrid"></div>
+      <div class="stats">
+        <div class="stat"><div class="big" id="t1">0</div><div class="lbl">days done</div></div>
+        <div class="stat"><div class="big" id="t2">0</div><div class="lbl">streak</div></div>
+        <div class="stat"><div class="big" id="t3">0%</div><div class="lbl">complete</div></div>
+        <div class="stat"><div class="big" id="t4">0</div><div class="lbl">cravings beaten</div></div>
+      </div>
+      <h3 style="margin-top:18px">How do you feel right now?</h3>
+      <p>Tap one — your coach adjusts, and you earn XP for checking in.</p>
+      <div class="moods" id="moodBtns"></div>
+      <div id="moodReply" class="card" style="display:none"></div>
+      <h3 style="margin-top:24px">⭐ Activity of the day</h3>
+      <p>One real thing to do today, besides your mission.</p>
+      <div id="aotd"></div>
+      <h3 style="margin-top:24px">⚡ Quick picks</h3>
+      <p>Five one-tap resets. No thinking — just tap one.</p>
+      <div class="qpgrid" id="quickPicks"></div>
+      <h3 style="margin-top:24px">🎡 Can&#39;t choose? Spin.</h3>
+      <p>Spin the wheel — it deals you 3 things to do right now.</p>
+      <div class="wheelbox">
+        <div class="wheel"><span class="wheel__ptr">▼</span><div class="wheel__disc" id="wheelDisc"></div><button type="button" class="wheel__spin" id="spinBtn">SPIN</button></div>
+        <div class="wheelout" id="wheelOut"></div>
+      </div>
+      <h2 style="font-family:var(--serif);margin:26px 0 2px">Everything in your reset 👇</h2>
+      <p>Scroll through it all right here — or jump straight there from the menu.</p>
+      <div id="homeFeed"></div>
+    </section>
+
+    <section class="panel" data-p="plan">
+      <h1>The 7 days</h1>
+      <p>Tap a card to open it. Days unlock one at a time — the order is the point.</p>
+      <div class="feed" id="dayFeed"></div>
+    </section>
+
+    <section class="panel" data-p="track">
+      <h1>Tracker</h1>
+      <p>Tap a day to complete it. Each day is <b>+30 XP</b> and builds your streak.</p>
+      <div class="feed" id="trackFeed"></div>
+      <div class="card"><h3>Streak</h3><div class="bar"><i id="trackBar"></i></div><p id="trackMsg" style="margin:0"></p></div>
+    </section>
+
+    <section class="panel" data-p="stats">
+      <h1>My stats</h1>
+      <div class="dials">
+        <div class="dial"><div class="ring ring--big" id="ringReset" style="--c:var(--amber)"><b id="ringResetN">0%</b></div><div class="nm">Reset progress</div><div class="ds">7-day program</div></div>
+        <div class="dial"><div class="ring" id="ringFocus" style="--c:var(--teal)"><b id="rF">0</b></div><div class="nm">Focus</div><div class="ds">grows as you train</div></div>
+        <div class="dial"><div class="ring" id="ringEnergy" style="--c:var(--orange)"><b id="rE">0</b></div><div class="nm">Energy</div><div class="ds">from days + mood</div></div>
+        <div class="dial"><div class="ring" id="ringSleep" style="--c:var(--violet)"><b id="rS">0</b></div><div class="nm">Sleep</div><div class="ds">build a routine</div></div>
+        <div class="dial"><div class="ring" id="ringBrain" style="--c:var(--pink)"><b id="rB">0</b></div><div class="nm">Brain health</div><div class="ds">your overall score</div></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="big" id="sXp">0</div><div class="lbl">total XP</div></div>
+        <div class="stat"><div class="big" id="sStreak">0</div><div class="lbl">day streak</div></div>
+        <div class="stat"><div class="big" id="sTime">0h</div><div class="lbl">time reclaimed*</div></div>
+        <div class="stat"><div class="big" id="sGames">0</div><div class="lbl">games played</div></div>
+      </div>
+      <div class="card"><h3>Your mood this week</h3><div class="mgraph" id="mgraph"></div><p id="moodMsg" style="margin:8px 0 0"></p></div>
+      <div class="card"><h3>Where your XP comes from</h3><div id="xpSrc"></div></div>
+      <div class="card"><h3>Your calendar 🗓️</h3><div id="cal"></div><p style="color:var(--faint);font-size:.82rem;margin:12px 0 0">Green = a day you showed up. Build the chain.</p></div>
+      <p style="color:var(--faint);font-size:.82rem">*Estimated from completed days — a rough guide, not a tracker.</p>
+    </section>
+
+    <section class="panel" data-p="missions">
+      <h1>Missions</h1>
+      <p>Daily, weekly and monthly goals. Claim the XP when you finish — and watch for the daily treasure chest. 🎁</p>
+      <div id="chestWrap"></div>
+      <h3 style="margin-top:14px">Today</h3><div class="msn" id="msnDaily"></div>
+      <h3>This week</h3><div class="msn" id="msnWeekly"></div>
+      <h3>This month</h3><div class="msn" id="msnMonthly"></div>
+    </section>
+
+    <section class="panel" data-p="insights">
+      <h1>Insights</h1>
+      <p>Your reset, in data. Updates as you go.</p>
+      <div class="card"><h3>Activity heatmap</h3><p style="margin:2px 0 6px">Last 12 weeks — brighter = busier.</p><div class="hm" id="hmGrid"></div></div>
+      <div class="card"><h3>XP growth 📈</h3><div class="trend" id="xpTrend"></div><p style="margin:0;color:var(--faint);font-size:.82rem">Total XP over the last 14 days.</p></div>
+      <div class="card"><h3>Mood trend 💗</h3><div class="trend" id="moodTrend"></div><p style="margin:0;color:var(--faint);font-size:.82rem">Your check-ins over the last 14 days.</p></div>
+      <div id="recap"></div>
+      <h3 style="margin-top:18px">Personal records 🏅</h3>
+      <div class="recs" id="records"></div>
+      <div class="card"><h3>Your journey 🧭</h3><div class="tl2" id="timeline"></div></div>
+    </section>
+
+    <section class="panel" data-p="achv">
+      <h1>Achievements</h1>
+      <p>Unlock these as you go. <b id="achvCount">0</b>/<span id="achvTotal">0</span> earned.</p>
+      <div class="achv" id="achvGrid"></div>
+    </section>
+
+    <section class="panel" data-p="vision">
+      <h1>Your why</h1>
+      <p>The reset is the tool. <span class="hl">This</span> is the reason. Get honest about what you actually want — it's what pulls you through the hard days.</p>
+      <div id="visionRows" style="display:grid;gap:12px;margin:16px 0"></div>
+      <p style="color:var(--faint)">Saved on this device. Re-read it any time you feel like quitting.</p>
+    </section>
+
+    <section class="panel" data-p="games">
+      <h1>Mind games</h1>
+      <p>Craving a hit? Play a 1-minute game instead. Each is <b>+15 XP</b> the first time and genuinely calms the urge.</p>
+      <div class="feed" id="gameFeed"></div>
+    </section>
+
+    <section class="panel" data-p="articles">
+      <h1>The library</h1>
+      <p>Short, premium reads that explain what's happening in your brain — and how to win. Each one read is <b>+20 XP</b>.</p>
+      <div class="feed" id="artFeed"></div>
+      <h3 style="margin-top:20px">Routines 🧭</h3>
+      <p>Copy-and-keep routines for the moments that matter.</p>
+      <div class="feed" id="routineFeed"></div>
+    </section>
+
+    <section class="panel" data-p="journeys">
+      <h1>Mood help</h1>
+      <p>However you feel right now, there's a path through it. Tap your mood.</p>
+      <div class="feed" id="journeyFeed"></div>
+    </section>
+
+    <section class="panel" data-p="quotes">
+      <h1>Quotes</h1>
+      <div class="qcard"><p id="qText">"…"</p><div class="by" id="qBy"></div>
+        <div class="qrow"><button class="btn btn--g btn--sm" id="qSave">❤️ Save</button><button class="btn btn--ghost btn--sm" id="qNext">Next →</button><button class="btn btn--ghost btn--sm" id="qShare">📤 Share</button></div></div>
+      <h3 style="margin-top:18px">Saved <span id="qSavedN" style="color:var(--faint)"></span></h3>
+      <div id="qSaved"></div>
+    </section>
+
+    <section class="panel" data-p="relax">
+      <h1>Time to relax</h1>
+      <p>No goals here. Just calm. Pick something and let your nervous system settle — <b>+5 XP</b> each.</p>
+      <div class="feed" id="relaxFeed"></div>
+    </section>
+
+    <section class="panel" data-p="affirm">
+      <h1>Affirmations</h1>
+      <p>Read it slowly. Say it like you mean it. These rewire the story you tell yourself.</p>
+      <div class="qcard"><p id="afText">"…"</p>
+        <div class="qrow"><button class="btn btn--g btn--sm" id="afSave">❤️ Save</button><button class="btn btn--ghost btn--sm" id="afNext">Next →</button></div></div>
+      <h3 style="margin-top:18px">Saved <span id="afSavedN" style="color:var(--faint)"></span></h3>
+      <div id="afSaved"></div>
+    </section>
+
+    <section class="panel" data-p="wins">
+      <h1>Daily wins</h1>
+      <p>Tiny wins compound. Log one — anything you're a little proud of. <b>+5 XP each.</b></p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="winInput" placeholder="e.g. Didn't scroll in bed last night" style="flex:1;min-width:180px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:13px;font:inherit">
+        <button class="btn btn--g btn--sm" id="winAdd">Add win 🏅</button>
+      </div>
+      <div id="winList" style="margin-top:16px"></div>
+    </section>
+
+    <section class="panel" data-p="search">
+      <h1>Search 🔎</h1>
+      <p>Find anything — articles, routines, quotes, games, moods, sections.</p>
+      <input id="searchInput" type="search" placeholder="Type to search…" style="width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:14px;color:var(--ink);padding:14px;font:inherit;margin-bottom:14px">
+      <div id="searchResults"></div>
+    </section>
+
+    <section class="panel" data-p="saved">
+      <h1>Saved 🔖</h1>
+      <p>Everything you've bookmarked — articles, quotes and affirmations — in one place.</p>
+      <div id="savedBox"></div>
+    </section>
+
+    <section class="panel" data-p="toolkit">
+      <h1>Urge toolkit</h1>
+      <p>Craving to scroll? Tap a tile, do it for 90 seconds, beat the urge — <b>+5 XP</b> each.</p>
+      <div class="feed" id="urgeFeed"></div>
+      <button class="btn btn--g btn--sm" id="craveBtn">I beat a craving 💪</button>
+      <span style="margin-left:10px;color:var(--faint)">Beaten: <b id="craveCount">0</b></span>
+    </section>
+
+    <section class="panel" data-p="menu">
+      <h1>Dopamine menu</h1>
+      <p>Bored? Tap a tile and just do it. Or roll the dice.</p>
+      <button class="btn btn--g" id="rollBtn">🎲 Surprise me</button>
+      <div class="feed" id="menuFeed"></div>
+    </section>
+
+    <section class="panel" data-p="journal">
+      <h1>Journal</h1>
+      <p>One honest line a day. Saves on this device automatically. <b>+10 XP.</b></p>
+      <textarea id="journal" placeholder="Day 1 — didn't touch my phone for the first hour. Felt weird. Good weird."></textarea>
+      <div style="margin-top:10px"><button class="btn btn--g btn--sm" id="jSave">Save</button> <span class="saved" id="jSaved">Saved ✓</span></div>
+    </section>
+
+    <section class="panel" data-p="settings">
+      <h1>Settings</h1>
+      <div class="card"><h3>Theme 🎨</h3><p>Recolour your space anytime — applies instantly.</p><div id="setThemes"></div></div>
+      <div class="card"><h3>Your avatar</h3><p>Pick who you are in here.</p><div id="setAva"></div></div>
+      <div class="card"><h3>Sound effects 🔊</h3><p style="margin:0 0 12px">Little dings on wins and level-ups.</p><button class="btn btn--g btn--sm" id="sndToggle">Sound: On</button></div>
+      <div class="card"><h3>Start over</h3><p style="margin:0 0 12px">Re-run the welcome setup (your progress stays).</p><button class="btn btn--ghost btn--sm" id="replayOnb">Replay welcome ↺</button></div>
+    </section>
+
+    <section class="panel" data-p="help">
+      <h1>The rules &amp; help</h1>
+      <div class="card"><h3>The cheap-dopamine fast</h3>
+        <ul class="tick"><li>No phone for the first hour after waking</li><li>No short-form video for 7 days</li><li>Notifications off except calls &amp; texts</li><li>One "boring on purpose" 10-min block daily</li></ul></div>
+      <div class="card"><h3>Need a hand?</h3><p style="margin:0">Reply to your order confirmation email and we'll help. You've got this. 💪</p></div>
+    </section>
+  </main>
+</div>
+
+<div class="dr__modal" id="drModal"><div class="dr__sheet">
+  <div class="top" id="mTop"><span class="e" id="mEmoji" aria-hidden="true">🔥</span><button class="x" id="mClose" aria-label="Close">✕</button></div>
+  <div class="dr__prog" id="mProg"><i id="mProgBar"></i></div>
+  <div class="body"><div class="eyebrow" id="mTag">Day 1</div><h2 id="mTitle"></h2><div id="mBody"></div><div id="mAction"></div></div>
+</div></div>
+<div class="dr__onb" id="drOnb"><div class="ob" id="obCard"></div></div>
+<button class="dr__fab" id="drFab">✨ What now?</button>
+<div class="dr__quick" id="drQuick"><div class="dr__qsheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h2 style="margin:0">What do you want to do?</h2><button class="btn btn--ghost btn--sm" id="quickClose">✕</button></div>
+  <p>Tap one — I'll take you straight there.</p>
+  <div class="doNow" id="quickGrid"></div>
+</div></div>
+<div class="dr__toast" id="drToast"></div>
+<div class="dr__cf" id="drCf"></div>
+<div class="dr__fw" id="drFw"></div>
+
+<script>
+(function(){
+try{
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var KEY='dr_reset_v3',state=load();
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  if(!state.done)state.done={};if(typeof state.crave!=='number')state.crave=0;if(!state.journal)state.journal='';
+  if(!state.notes)state.notes={};if(!state.moods)state.moods={};if(!state.vision)state.vision={};
+  if(!state.games)state.games={};if(!state.achvSeen)state.achvSeen={};if(!state.savedQ)state.savedQ=[];
+  if(typeof state.qi!=='number')state.qi=0;if(!state.read)state.read={};
+  if(!state.relaxDone)state.relaxDone={};if(!state.wins)state.wins=[];if(!state.savedAff)state.savedAff=[];if(typeof state.afi!=='number')state.afi=0;
+  if(!state.onb)state.onb={done:false};
+  if(!state.dates)state.dates={};if(typeof state.sound!=='boolean')state.sound=true;
+  var _ax=null;
+  function tone(f,s,d,v){var o=_ax.createOscillator(),g=_ax.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+0.01);g.gain.exponentialRampToValueAtTime(0.0001,s+d);o.connect(g);g.connect(_ax.destination);o.start(s);o.stop(s+d)}
+  function snd(t){if(!state.sound)return;try{_ax=_ax||new(window.AudioContext||window.webkitAudioContext)();if(_ax.state==='suspended')_ax.resume();var n=_ax.currentTime;if(t==='level'){tone(523,n,0.18,0.16);tone(659,n+0.09,0.18,0.16);tone(784,n+0.18,0.32,0.18)}else if(t==='win'){tone(660,n,0.12,0.15);tone(990,n+0.08,0.24,0.15)}else{tone(880,n,0.13,0.11)}}catch(e){}}
+  function markToday(){var d=new Date();state.dates[d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()]=true;save()}
+  if(typeof state.bonusXp!=='number')state.bonusXp=0;if(!state.claimed)state.claimed={};if(!state.chest)state.chest={};if(!state.daily)state.daily={};if(typeof state.mclaimCount!=='number')state.mclaimCount=0;
+  function todayKey(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+  function markDaily(a){var k=todayKey();if(!state.daily[k])state.daily[k]={};state.daily[k][a]=true;save()}
+  function dailyHas(a){var k=todayKey();return !!(state.daily[k]&&state.daily[k][a])}
+  if(!state.xpLog)state.xpLog={};if(!state.moodLog)state.moodLog={};if(typeof state.bestStreak!=='number')state.bestStreak=0;
+  if(!state.bookmarks)state.bookmarks={};if(typeof state.last==='undefined')state.last=null;
+  function logDay(){state.xpLog[todayKey()]=xp();var s=streak();if(state.bestStreak<s)state.bestStreak=s;save()}
+  function keyFor(off){var d=new Date();d.setDate(d.getDate()-off);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+
+  var GRADS=['linear-gradient(135deg,#7c5cff,#4de3ff)','linear-gradient(135deg,#ff5c8a,#7c5cff)','linear-gradient(135deg,#2bd3c6,#4f8cff)','linear-gradient(135deg,#5ad48a,#bfe65a)','linear-gradient(135deg,#ff6b6b,#7c5cff)','linear-gradient(135deg,#7c5cff,#ff5c8a)','linear-gradient(135deg,#ffd24b,#7c5cff)'];
+  function g(i){return GRADS[((i%GRADS.length)+GRADS.length)%GRADS.length]}
+  var DAYS=[
+    {e:"📵",t:"Delete the worst one",m:"10 min setup",a:"Delete your single most-used app for the 7 days. Turn notifications off for everything except calls & texts.",s:["Check Screen Time and find the app that eats most of your hours — it's usually the one you'd defend hardest.","Delete it. Not moved to a folder, not hidden — off the phone for 7 days.","Turn off every notification except calls and texts. Do it now, it takes 2 minutes."],w:"That one app is your biggest dopamine leak. Removing the easiest hit forces your brain to look for slower, realer rewards.",f:"Expect phantom reaches tonight — your thumb going to where the app was. That's the leak showing itself. It fades by day 3.",r:"Which app did you delete, and what do you usually open it to avoid feeling?"},
+    {e:"🌅",t:"Phone-free first hour",m:"60 min",a:"Don't touch your phone for the first hour after waking. Leave it across the room overnight.",s:["Tonight: charge your phone across the room — or outside the bedroom completely.","When you wake up, don't touch it for 60 minutes. Water, daylight, movement first.","Put one real thing in the gap: a shower, breakfast, 5 pages of a book, a short walk."],w:"The first thing you feed your brain sets the baseline for the whole day. Start on a hit and everything after feels dull.",f:"The morning feels longer and strangely calm. That's what your baseline feels like without a spike.",r:"How did the first hour feel without the phone? What did you do instead?"},
+    {e:"🧘",t:"Boredom on purpose",m:"10 min",a:"Sit and do nothing for 10 minutes, no phone. Let your brain feel the quiet.",s:["Sit somewhere with zero input — no phone, no music, no TV.","Set a 10-minute timer (a kitchen clock beats your phone if you have one).","Stay. When the itch to grab something comes, watch it instead of obeying it."],w:"Boredom is withdrawal — and it's the reset working. Sitting with it teaches your brain it doesn't need constant input to be okay.",f:"Minutes 2 to 6 are the worst, then it goes quiet. That quiet is your reward system recalibrating.",r:"What came up in the quiet? Was it as bad as you expected?"},
+    {e:"🔁",t:"Swap one hit",m:"all day",a:"Every time you reach to scroll, do one thing off your Dopamine Menu instead. Count how many.",s:["Open your Dopamine Menu (in Tools) and pick 3 swaps you'd actually do.","Every scroll-urge today = do one swap instead. Keep a tally.","Tonight, write your count in the day note below."],w:"You're not removing the urge, you're redirecting it. Every swap is a rep that rewires the reward loop.",f:"Each swap feels worse than scrolling for about 2 minutes — then better for an hour. Notice that trade.",r:"How many swaps did you make today? Which one felt best?"},
+    {e:"🏃",t:"Move your body",m:"20 min",a:"20 minutes of movement — walk, gym, dance, anything that gets you breathing.",s:["Pick the easiest option you won't skip: a walk, the gym, dancing, a skate.","Do 20 minutes, breathing hard enough that talking takes effort.","Leave the phone at home or on flight mode — this one's yours."],w:"Movement is the cleanest dopamine there is, plus endorphins. It proves to your brain that effort feels good.",f:"A clean afterglow — clearer head, lighter mood — that lasts for hours. This is what real dopamine feels like.",r:"What did you do, and how did your head feel after?"},
+    {e:"🤝",t:"One real connection",m:"30 min",a:"Have one genuine, phone-down conversation. Call someone or meet up in person.",s:["Pick a person, not a group chat.","Call them or meet up. Phone face-down and on silent.","Ask one real question — and actually listen to the whole answer."],w:"Real connection is one of the strongest natural rewards we have — and the first thing screens quietly steal.",f:"How different it feels from likes and replies. This is the reward every feed is imitating.",r:"Who did you connect with? What did it feel like to be fully present?"},
+    {e:"🧭",t:"Design your normal",m:"15 min",a:"Write the 3 rules you're keeping for good. Lock in the version of you you've felt this week.",s:["Look back at the week — which day changed the most for you?","Write 3 rules you're keeping, e.g. 'no phone first hour' or 'phone charges outside the bedroom'.","Put them where you'll see them daily: lock screen, mirror, journal."],w:"A reset only lasts if you decide what stays. Three simple rules beat a vague 'I'll do better' every time.",f:"You're not finishing a detox — you're setting your new default. Rules are what make it permanent.",r:"What are your 3 rules — and who are you becoming by keeping them?"}
+  ];
+  var URGES=[{e:"🗣️",k:"Name it",v:"Say out loud: \"This is just a dopamine craving.\" Naming it shrinks it instantly."},
+    {e:"🌬️",k:"Breathe x10",v:"Stand up, 10 slow breaths. The urge peaks and fades in under 2 minutes."},
+    {e:"💧",k:"Cold water",v:"Drink a full glass of water or splash your face. Resets the impulse."},
+    {e:"☀️",k:"60s outside",v:"Step outside for 60 seconds of daylight. Real light beats the screen pull."},
+    {e:"⏳",k:"Do nothing",v:"5-minute timer, do literally nothing. Boredom is the reset, not the enemy."},
+    {e:"✅",k:"Tiny task",v:"Make your bed, wash a cup. One small real action kills the itch."}];
+  var MENU=[
+    {e:"🚶",t:"10-min walk, no phone",v:"Walking without input gives your brain space to settle and sort itself out. Movement plus a tiny bit of boredom is one of the cleanest mood-lifters there is — and it's free."},
+    {e:"💪",t:"20 push-ups or stretch",v:"A short burst of effort floods you with real, earned dopamine and endorphins. It reminds your brain that effort feels good — the exact opposite of cheap scrolling."},
+    {e:"💬",t:"Message a friend something real",v:"Connection is one of the strongest natural rewards we have. One genuine message beats an hour of passive feed-watching every time."},
+    {e:"📖",t:"Read 5 pages",v:"Reading rebuilds the focus muscle that short videos quietly destroy. Just 5 pages retrains your brain to enjoy slower, deeper input."},
+    {e:"🛠️",t:"Make something with your hands",v:"Creating — anything — gives a sense of progress and ownership a feed never can. Your hands busy means your thumb isn't scrolling."},
+    {e:"🧹",t:"Tidy one small corner",v:"Small order outside creates calm inside. A 2-minute tidy gives a quick, visible win that lifts your mood and your space."},
+    {e:"🌳",t:"Step outside, look up 1 min",v:"Daylight and a wide view reset your nervous system and your body clock. One minute of real sky beats the blue glow of a screen."},
+    {e:"✍️",t:"Write one journal line",v:"Naming what you feel shrinks it. One honest line clears mental clutter and helps you spot what's really driving the urge."},
+    {e:"☕",t:"Make a slow coffee/tea",v:"Doing one thing slowly, on purpose, is a mini meditation. The ritual itself is the reward — no notification required."},
+    {e:"⭐",t:"Plan something to look forward to",v:"Anticipation is healthy dopamine. Giving your brain a real thing to look forward to pulls your focus off the endless now of the feed."}];
+  var FACES=[{e:'😭',n:'Terrible',say:"Rough one. That's allowed. Do ONE tiny thing — a game or 3 breaths — and call today a win."},
+    {e:'☹️',n:'Bad',say:"Heavy day. Don't push hard — just don't feed the scroll. Try the Breathing Bubble for 60s."},
+    {e:'😐',n:'Okay',say:"Flat is normal mid-reset. This is the fog lifting. Knock out today's challenge — momentum beats mood."},
+    {e:'🙂',n:'Good',say:"Love that. Ride it — do today's challenge now while you've got lift."},
+    {e:'😀',n:'Amazing',say:"There it is. THIS is the reset working. Bank it — finish today and maybe a bonus game."}];
+  var COACH=[
+    {e:'📱',l:'Doomscrolling',say:"The scroll isn't the problem — it's the escape hatch from a feeling. Next urge, run one Tap-to-Resist round before you open anything.",cta:{t:'game',id:'resist',label:'Play Tap to Resist'}},
+    {e:'🎮',l:'Gaming',say:"Games spike dopamine hard, so real life feels slow afterwards. Swap one session for a Focus Timer block today and feel the gap shrink.",cta:{t:'game',id:'focus',label:'Start a focus block'}},
+    {e:'🔞',l:'Urges',say:"Urges peak then fall in about 2 minutes — every single time. Ride this one out with a breathing round instead of feeding it.",cta:{t:'game',id:'breathe',label:'Breathe for 1 min'}},
+    {e:'💤',l:'Sleep',say:"Screens before bed wreck your reward system overnight. Read the Night Routine, then leave the phone across the room tonight.",cta:{t:'go',id:'articles',label:'Open the library'}},
+    {e:'🎯',l:'Focus',say:"Focus is a muscle and it's weak from constant switching. One 10-minute Focus Timer today starts rebuilding it.",cta:{t:'game',id:'focus',label:'Train focus now'}},
+    {e:'😰',l:'Anxiety',say:"Anxious means your nervous system is stuck 'on'. A long exhale switches it off faster than anything. Let's do one minute.",cta:{t:'game',id:'breathe',label:'Calm down now'}},
+    {e:'🔥',l:'Motivation',say:"Motivation follows action, not the other way round. Do today's 10-minute challenge and the drive shows up mid-way.",cta:{t:'today',id:'',label:"Today's challenge"}},
+    {e:'⏳',l:'Procrastination',say:"Procrastination is fear of starting. Shrink it: just 5 minutes on the thing. Set the Focus Timer to 5 and go.",cta:{t:'game',id:'focus',label:'Start 5 minutes'}},
+    {e:'📲',l:'Social media',say:"Comparison is the joy-thief. Mute 5 accounts that make you feel behind, then log it in your Journal.",cta:{t:'go',id:'journal',label:'Open Journal'}}
+  ];
+  var JOURNEYS=[
+    {e:'😀',n:'Happy',advice:"Don't just enjoy it — anchor it. Notice what got you here so you can repeat it.",breath:"Box breathing: in 4, hold 4, out 4, hold 4.",quote:"\"The little things? The little moments? They aren't little.\" — Jon Kabat-Zinn",challenge:"Message someone and tell them why you appreciate them.",music:"Upbeat indie / feel-good playlist"},
+    {e:'🚀',n:'Motivated',advice:"Motivation is fuel, not a plan. Pour it into ONE action in the next 10 minutes.",breath:"Energising breath: 2 quick in through the nose, 1 long out. x10.",quote:"\"Discipline is choosing between what you want now and what you want most.\"",challenge:"Start the hardest thing on your list for just 5 minutes.",music:"Lo-fi focus / hype beats"},
+    {e:'😰',n:'Anxious',advice:"Anxiety lives in the future. Pull back to now — name 5 things you can see.",breath:"Long exhale: in 4, out 8. The long out switches off fight-or-flight.",quote:"\"You have survived 100% of your worst days. Breathe.\"",challenge:"Write the worry down, then one tiny step you can control.",music:"Calm ambient / piano"},
+    {e:'😢',n:'Sad',advice:"You don't have to fix it. Just don't numb it with a screen. Move your body gently.",breath:"Sigh it out: deep in, then a big audible sigh. x5.",quote:"\"Rock bottom became the solid foundation on which I rebuilt my life.\" — J.K. Rowling",challenge:"10-minute walk outside, even slow. Light helps more than you think.",music:"Warm acoustic / soft soul"},
+    {e:'🤯',n:'Stressed',advice:"Stress means too much at once. Brain-dump everything, then pick ONE.",breath:"Physiological sigh: 2 sniffs in, long out. x6.",quote:"\"You can do anything, but not everything.\"",challenge:"Close 5 tabs / clear one small space. Order calms the mind.",music:"Nature sounds / deep focus"}
+  ];
+  var ARTS=[
+    {e:'🧠',t:'Why dopamine feels broken',sub:'5 min · the science',b:["Dopamine isn't the 'pleasure' chemical — it's the 'go get it' chemical. It spikes in anticipation of a reward, then drops once you have it.","Endless feeds hijack this. Every swipe is a tiny maybe-reward, so your brain keeps firing dopamine in anticipation, all day long.","Over time your baseline drops. Normal life — food, friends, a walk — stops registering, because your brain recalibrated to the firehose.","The fix isn't more willpower. It's lowering the flood so normal rewards feel good again. That's the whole reset.","Give it 7 days of less spiking and your receptors literally start recovering. The colour comes back."]},
+    {e:'📵',t:'How to stop doomscrolling',sub:'4 min · practical',b:["Doomscrolling is an escape from a feeling, not a choice. The first move is to notice the feeling you're avoiding.","Add friction: log out, delete the app off your home screen, use grayscale mode. Every second of friction is a chance to choose differently.","Replace, don't just remove. Keep a 'instead' list ready — a book, a walk, a quick game here. The urge needs somewhere to go.","Use the 2-minute rule: when the urge hits, wait 2 minutes. Urges peak and fade fast. Usually it's gone.","Track wins, not failures. Every resisted scroll is a rep. Reps build the new default."]},
+    {e:'🔁',t:'How habits change your brain',sub:'4 min · the loop',b:["Every habit is a loop: cue → routine → reward. Your phone buzzing (cue) → you check it (routine) → a hit of novelty (reward).","You can't easily delete a loop, but you can swap the routine. Keep the cue, change what you do, keep a reward.","Repetition wires it in. Each rep thickens the neural path until the new routine feels automatic.","This is why streaks matter — they're not vanity, they're physical wiring happening in real time.","Make the good habit obvious, easy and satisfying. Make the bad one invisible, hard and boring."]},
+    {e:'🌅',t:'The morning routine that sets the day',sub:'3 min · routine',b:["The first hour programs your baseline. Start on a screen and you've already spiked and crashed before breakfast.","Win the first hour: no phone, water, light, movement. Even 10 minutes changes the entire day's chemistry.","Sunlight in your eyes early sets your body clock — which later sets your sleep, energy and mood.","Do one 'real' thing before you touch the internet. Make your bed, stretch, write a line. A small win first.","Keep it stupidly simple so you actually do it every day. Consistency beats the perfect routine."]},
+    {e:'🌙',t:'The night routine for deep sleep',sub:'3 min · routine',b:["Sleep is where your brain cleans up and your dopamine system resets. Wreck it and everything else gets harder.","Screens at night are the worst offender: blue light delays sleep, and the content keeps your brain spiking.","Set a 'phone curfew' an hour before bed. Charge it across the room, not next to your pillow.","Wind down on purpose: dim lights, a few pages of a book, slow breathing. Tell your body it's safe to switch off.","Same sleep and wake time daily. A steady clock is worth more than any supplement."]},
+    {e:'💪',t:'The confidence guide',sub:'4 min · identity',b:["Confidence isn't a feeling you wait for — it's evidence you build. Keep small promises to yourself and it grows.","Every time you do the hard thing you said you'd do, you cast a vote for 'I'm someone who follows through.'","Doomscrolling quietly destroys this. Each broken promise to 'just check for a sec' chips away at self-trust.","Start absurdly small. A promise you can't fail. Then keep it. Then make it slightly bigger.","Confidence is the by-product of a stack of kept promises. The reset is a 7-day stack."]},
+    {e:'🎯',t:'Deep work: how to actually focus',sub:'5 min · focus',b:["Focus is the ability to hold one thing in mind without switching. Constant phone-checking trains the opposite.","Every switch costs you — it takes minutes to fully re-focus. Ten switches an hour and you never go deep.","Protect blocks: phone in another room, one tab, a timer. Start with 10 minutes and build.","Boredom is part of it. The urge to switch will scream. Don't obey it — that's the rep.","Deep work feels hard then quietly amazing. It's one of the few clean dopamine sources left."]},
+    {e:'🏆',t:'How successful people focus',sub:'4 min · mindset',b:["High performers aren't more disciplined by birth — they design environments where the right thing is the easy thing.","They remove choices. Same routine, fewer decisions, less willpower spent on small stuff.","They protect their attention like money, because they know it's the real currency.","They use single-tasking. One thing, fully, then the next — not ten things half-done.","They rest on purpose. Recovery isn't lazy; it's what makes the focus possible."]},
+    {e:'🌀',t:'How to stop overthinking',sub:'3 min · calm',b:["Overthinking is your brain trying to control the uncontrollable. It feels productive but it's just spinning.","Get it out of your head and onto paper. Written worries shrink; trapped ones grow.","Separate what you can control from what you can't. Act on the first list, release the second.","Set a 'worry window' — 10 minutes to think it through, then you're done for the day.","Action is the cure. The smallest step forward quiets the loop better than any amount of thinking."]},
+    {e:'😴',t:'Why sleep matters more than you think',sub:'3 min · health',b:["Sleep isn't downtime — it's when your brain repairs, files memories and resets your reward system.","One bad night spikes cravings and tanks willpower the next day. You're not weak, you're under-slept.","Good sleep makes every other habit easier: better focus, calmer mood, fewer urges.","It's the highest-leverage thing you can fix. Nail sleep first and the rest follows.","Protect it like it's the foundation — because it is."]}
+  ];
+  var QUOTES=[
+    {t:"You don't have to be extreme, just consistent.",b:"—"},{t:"The pain of discipline weighs ounces. The pain of regret weighs tonnes.",b:"—"},
+    {t:"Your brain isn't broken. It's just been overfed. Starve the noise.",b:"Dopamine Reset"},{t:"Boredom is the doorway to a calmer mind.",b:"—"},
+    {t:"Every time you resist, you get stronger. Every time you scroll, it does.",b:"—"},{t:"You will never always be motivated. You must learn to be disciplined.",b:"—"},
+    {t:"Small habits don't add up. They compound.",b:"James Clear"},{t:"The person you'll be in a year is built by what you do today.",b:"—"},
+    {t:"Real life is slower than a feed. That's the point.",b:"Dopamine Reset"},{t:"Comparison is the thief of joy.",b:"Theodore Roosevelt"},
+    {t:"Focus is a muscle. You're in the gym right now.",b:"—"},{t:"What you feed grows. Feed the real stuff.",b:"—"},
+    {t:"Discipline is choosing what you want most over what you want now.",b:"—"},{t:"Motivation gets you started. Habit keeps you going.",b:"Jim Ryun"},
+    {t:"You are what you repeatedly do.",b:"Aristotle"},{t:"The cave you fear to enter holds the treasure you seek.",b:"Joseph Campbell"},
+    {t:"Don't watch the clock; do what it does. Keep going.",b:"Sam Levenson"},{t:"A river cuts through rock not by power, but persistence.",b:"—"},
+    {t:"Your future is hidden in your daily routine.",b:"—"},{t:"Fall seven times, stand up eight.",b:"Japanese proverb"},
+    {t:"The best time to start was yesterday. The next best time is now.",b:"—"},{t:"Slow is smooth. Smooth is fast.",b:"—"},
+    {t:"You can't pour from an empty cup. Rest, then rise.",b:"—"},{t:"One day or day one. You decide.",b:"—"},
+    {t:"Be the energy you want to attract.",b:"—"},{t:"Win the morning, win the day.",b:"—"},
+    {t:"Hard choices, easy life. Easy choices, hard life.",b:"Jerzy Gregorek"},{t:"The quieter you become, the more you can hear.",b:"Ram Dass"},
+    {t:"Dopamine is a loan. Sometimes the interest isn't worth it.",b:"—"},{t:"Slow down. Real life is happening at this speed.",b:"—"},
+    {t:"You don't rise to your goals. You fall to your systems.",b:"James Clear"},{t:"Energy flows where attention goes.",b:"—"},
+    {t:"Do something today your future self will thank you for.",b:"—"},{t:"Slay the urge once and it never owns you the same way again.",b:"—"},
+    {t:"You're not behind. You're just early in your reset.",b:"Dopamine Reset"},{t:"Slowly is the fastest way to where you want to be.",b:"—"},
+    {t:"Slay the scroll, save the soul.",b:"—"},{t:"Boring on purpose beats stimulated by accident.",b:"—"},
+    {t:"Tiny steps, every day, become a different life.",b:"—"},{t:"Less input. More life.",b:"Dopamine Reset"}];
+  var LEVELS=[{x:0,n:'Asleep',b:'🌱'},{x:60,n:'Waking up',b:'☕'},{x:140,n:'Clearing',b:'⚡'},{x:240,n:'Locked in',b:'🔥'},{x:360,n:'Glowing',b:'🌟'},{x:500,n:'Golden Mind',b:'💎'}];
+  var GAMES=[{id:'breathe',e:'🫧',t:'Breathing Bubble',s:'Calm an urge in 60s'},{id:'focus',e:'⏳',t:'Focus Timer',s:'Train deep focus'},{id:'resist',e:'🛡️',t:'Tap to Resist',s:'Beat the distractions'},{id:'react',e:'⚡',t:'Reaction Test',s:'Sharpen your mind'},{id:'memory',e:'🧠',t:'Memory Match',s:'Wake up your brain'}];
+  var ACHV=[
+    {id:'first',e:'👣',n:'First step',d:'Finish Day 1',test:function(){return state.done[0]}},
+    {id:'checkin',e:'💗',n:'Tuned in',d:'Log your mood',test:function(){return ck()>0}},
+    {id:'game1',e:'🎮',n:'First game',d:'Play any mind game',test:function(){return gp()>0}},
+    {id:'reader',e:'📚',n:'Bookworm',d:'Read an article',test:function(){return rd()>0}},
+    {id:'crave',e:'💪',n:'Urge crusher',d:'Beat 3 cravings',test:function(){return state.crave>=3}},
+    {id:'s3',e:'🔥',n:'On a roll',d:'3-day streak',test:function(){return streak()>=3}},
+    {id:'why',e:'🧭',n:'Know your why',d:'Fill all 4 Why boxes',test:function(){return vf()>=4}},
+    {id:'mind',e:'🕹️',n:'Mind gym',d:'Play all 5 games',test:function(){return gp()>=5}},
+    {id:'lib',e:'🦉',n:'Scholar',d:'Read 5 articles',test:function(){return rd()>=5}},
+    {id:'zen',e:'🧘',n:'Zen mode',d:'Try a relax activity',test:function(){return Object.keys(state.relaxDone).length>0}},
+    {id:'win1',e:'🏅',n:'First win',d:'Log a daily win',test:function(){return state.wins.length>0}},
+    {id:'journal',e:'📓',n:'Reflective',d:'Write a journal line',test:function(){return (state.journal||'').length>3}},
+    {id:'xp250',e:'⭐',n:'Locked in',d:'Reach 250 XP',test:function(){return xp()>=250}},
+    {id:'reset',e:'🏆',n:'Full reset',d:'Complete all 7 days',test:function(){return dc()>=7}},
+    {id:'level5',e:'👑',n:'Golden Mind',d:'Reach the top level',rare:true,test:function(){return lvl()>=5}},
+    {id:'mmaster',e:'🎯',n:'Mission master',d:'Claim 10 missions',rare:true,test:function(){return (state.mclaimCount||0)>=10}},
+    {id:'treasure',e:'💎',n:'Treasure hunter',d:'???',hidden:true,test:function(){return Object.keys(state.chest||{}).length>0}},
+    {id:'night',e:'🌙',n:'Night owl',d:'???',hidden:true,test:function(){return new Date().getHours()>=22&&xp()>0}},
+    {id:'early',e:'🌅',n:'Early riser',d:'???',hidden:true,test:function(){return new Date().getHours()<7&&ck()>0}}
+  ];
+
+  function dc(){var n=0;for(var i=0;i<7;i++)if(state.done[i])n++;return n}
+  function cur(){for(var i=0;i<7;i++)if(!state.done[i])return i;return 6}
+  function streak(){var s=0;for(var i=0;i<7;i++){if(state.done[i])s++;else break}return s}
+  function pct(){return Math.round(dc()/7*100)}
+  function ck(){return Object.keys(state.moods).length}
+  function gp(){return Object.keys(state.games).length}
+  function rd(){return Object.keys(state.read).length}
+  function vf(){var n=0;for(var i=0;i<4;i++)if((state.vision[i]||'').length>1)n++;return n}
+  function xp(){var x=dc()*30+state.crave*5+ck()*10+gp()*15+rd()*20+vf()*5+state.savedQ.length*2;x+=Object.keys(state.relaxDone).length*5+state.wins.length*5+state.savedAff.length*2;if((state.journal||'').length>3)x+=10;x+=(state.bonusXp||0);return x}
+  function lvl(){var x=xp(),L=0;for(var i=0;i<LEVELS.length;i++)if(x>=LEVELS[i].x)L=i;return L}
+  function clamp(v){return v<0?0:v>100?100:Math.round(v)}
+  function avgMood(){var v=[],k;for(k in state.moods)v.push(state.moods[k]);if(!v.length)return -1;var s=0;for(var i=0;i<v.length;i++)s+=v[i];return s/v.length}
+
+  var cf=$('#drCf'),toastEl=$('#drToast'),toastT;
+  function confetti(){if(!cf)return;var c=['#4de3ff','#ff5c8a','#7c5cff','#5ad48a','#2bd3c6'],h='';for(var i=0;i<28;i++)h+='<span style="left:'+Math.random()*100+'%;background:'+c[i%5]+';animation-duration:'+(1.1+Math.random()*1.2)+'s;animation-delay:'+(Math.random()*.3)+'s"></span>';cf.innerHTML=h;setTimeout(function(){cf.innerHTML=''},2700)}
+  function toast(msg){if(!toastEl)return;toastEl.innerHTML=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},2600)}
+  function fireworks(){var fw=$('#drFw');if(!fw)return;var cols=['#4de3ff','#ff5c8a','#7c5cff','#5ad48a','#2bd3c6','#7c5cff'],h='';for(var b=0;b<4;b++){var cx=15+Math.random()*70,cy=18+Math.random()*44;for(var i=0;i<16;i++){var ang=(i/16)*6.2832,dist=60+Math.random()*70,dx=Math.cos(ang)*dist,dy=Math.sin(ang)*dist;h+='<span style="left:'+cx+'%;top:'+cy+'%;background:'+cols[(b+i)%cols.length]+';--dx:'+dx.toFixed(0)+'px;--dy:'+dy.toFixed(0)+'px;animation-delay:'+(b*0.12).toFixed(2)+'s"></span>'}}fw.innerHTML=h;setTimeout(function(){fw.innerHTML=''},1400)}
+
+  var bodyEl=document.querySelector('#drModal .body');
+  function closeM(){clearGame();$('#drModal').classList.remove('on');$('#mProg').classList.remove('on');if(bodyEl)bodyEl.onscroll=null}
+  var ASOLID=['#1a1430','#0e2220','#241328','#0f1b2e','#201a12','#241221','#12231d','#1c1730'];
+  function setSheetBg(c){var sh=document.querySelector('#drModal .dr__sheet');if(sh)sh.style.background=c||''}
+  function openModal(){setSheetBg('');$('#drModal').classList.add('on')}
+  function openDay(i){
+    if(i>dc())return;var d=DAYS[i];$('#mProg').classList.remove('on');
+    $('#mTop').style.background=g(i);$('#mEmoji').textContent=d.e;
+    $('#mTag').textContent='Day '+(i+1)+' · your mission';$('#mTitle').textContent=d.t;
+    $('#mBody').innerHTML='<p style="margin:0 0 4px;color:var(--ink)">'+d.a+'</p>'+
+      (d.m?'<div><span class="mtime">⏱ '+d.m+'</span></div>':'')+
+      (d.s?'<div class="msec"><b>👣 Do it like this</b><ol class="msteps">'+d.s.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol></div>':'')+
+      '<div class="msec"><b>🧠 Why this works</b><p>'+d.w+'</p></div>'+
+      (d.f?'<div class="msec"><b>✨ What you\'ll notice</b><p>'+d.f+'</p></div>':'')+
+      '<div class="msec"><b>✍️ Reflect</b><p>'+d.r+'</p><textarea class="mnote" id="mNote" placeholder="Write a line for today…">'+(state.notes[i]||'')+'</textarea></div>';
+    var done=state.done[i];
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mDoneBtn" style="width:100%">'+(done?'Mark not done':'Complete Day '+(i+1)+' · +30 XP ✓')+'</button></div>';
+    $('#mDoneBtn').onclick=function(){var n=$('#mNote');if(n)state.notes[i]=n.value;save();toggle(i);closeM()};
+    var nt=$('#mNote');if(nt){var tm;nt.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){state.notes[i]=nt.value;save()},500)})}
+    openModal();
+  }
+  function openTile(o){$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent=o.e;$('#mTag').textContent=o.k?'Urge-surf':'Do it now';$('#mTitle').textContent=o.k||o.t;$('#mBody').innerHTML='<div class="msec" style="border:0;margin:0;padding:0"><b>'+(o.k?'🌊 How to do it':'💡 Why this helps')+'</b><p>'+(o.v||'Go do it now — that’s the whole point.')+'</p></div>';$('#mAction').innerHTML='';openModal()}
+  function openJourney(j){
+    $('#mProg').classList.remove('on');$('#mTop').style.background=j.gr;$('#mEmoji').textContent=j.e;$('#mTag').textContent='Feeling '+j.n;$('#mTitle').textContent='When you feel '+j.n.toLowerCase();
+    $('#mBody').innerHTML='<div class="msec"><b>💡 Advice</b><p>'+j.advice+'</p></div><div class="msec"><b>🫁 Breathe</b><p>'+j.breath+'</p></div><div class="msec"><b>🎯 Try this</b><p>'+j.challenge+'</p></div><div class="msec"><b>📜 Read this</b><p style="font-style:italic">'+j.quote+'</p></div><div class="msec"><b>🎧 Sounds for it</b><p>'+j.music+'</p></div>';
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="jrBreathe" style="width:100%">Do a 1-min breathing reset 🫧</button></div>';
+    $('#jrBreathe').onclick=function(){openGame('breathe')};openModal();
+  }
+  function openArticle(i){
+    var a=ARTS[i];$('#mTop').style.background=g(i+1);$('#mEmoji').textContent=a.e;$('#mTag').textContent=a.sub;$('#mTitle').textContent=a.t;
+    $('#mBody').innerHTML='<div class="art">'+a.b.map(function(p){return '<p>'+p+'</p>'}).join('')+'</div>';
+    var done=state.read[i];
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="mRead" style="width:100%">'+(done?'Read again':'Mark as read · +20 XP ✓')+'</button><button class="btn btn--ghost btn--sm" id="mBook" style="width:100%;margin-top:8px">'+(state.bookmarks['a'+i]?'★ Bookmarked':'☆ Bookmark this')+'</button></div>';
+    $('#mRead').onclick=function(){markDaily('read');if(!state.read[i]){state.read[i]=true;save();celebrate();toast('📚 +20 XP · nice read')}closeM()};
+    $('#mBook').onclick=function(){var bk='a'+i;state.bookmarks[bk]=!state.bookmarks[bk];save();this.textContent=state.bookmarks[bk]?'★ Bookmarked':'☆ Bookmark this';toast(state.bookmarks[bk]?'🔖 Saved':'Removed');renderSaved2()};
+    setLast({type:'article',i:i,label:ARTS[i].t,e:ARTS[i].e});
+    $('#mProg').classList.add('on');$('#mProgBar').style.width='0%';
+    openModal();setSheetBg(ASOLID[i%ASOLID.length]);
+    if(bodyEl)bodyEl.onscroll=function(){var mx=bodyEl.scrollHeight-bodyEl.clientHeight;$('#mProgBar').style.width=(mx>0?Math.min(100,bodyEl.scrollTop/mx*100):100)+'%'};
+  }
+
+  // GAMES
+  var gTimers=[];
+  function clearGame(){for(var i=0;i<gTimers.length;i++){clearTimeout(gTimers[i]);clearInterval(gTimers[i])}gTimers=[]}
+  function gameDone(id,msg){markDaily('game');if(!state.games[id]){state.games[id]=true;save();celebrate();toast('🎮 +15 XP · '+msg)}else{toast(msg)}}
+  function openGame(id){
+    clearGame();$('#mProg').classList.remove('on');var gm=null;for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)gm=GAMES[i];if(!gm)return;
+    $('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--blue))';$('#mEmoji').textContent=gm.e;$('#mTag').textContent='Mind game';$('#mTitle').textContent=gm.t;$('#mAction').innerHTML='';
+    if(id==='breathe'){
+      $('#mBody').innerHTML='<div class="play"><div class="bubble" id="bub">Breathe in</div></div><p style="text-align:center" id="bubMsg">Follow the bubble for 4 rounds.</p>';
+      var bub=$('#bub'),ph=['Breathe in','Hold','Breathe out','Hold'],sz=['scale(1.25)','scale(1.25)','scale(.75)','scale(.75)'],n=0,rounds=0;
+      function step(){bub.textContent=ph[n];bub.style.transform=sz[n];if(n===0)rounds++;n=(n+1)%4;if(rounds>4){bub.textContent='Done 🌿';bub.style.transform='scale(1)';$('#bubMsg').textContent='Nice. Notice how the urge faded.';gameDone('breathe','Calm restored')}else{gTimers.push(setTimeout(step,4000))}}
+      step();
+    } else if(id==='focus'){
+      $('#mBody').innerHTML='<div class="play"><div class="rt" id="ft">Pick a length</div></div><div style="display:flex;gap:8px;justify-content:center" id="ftBtns"><button class="btn btn--g btn--sm" data-m="5">5 min</button><button class="btn btn--ghost btn--sm" data-m="10">10 min</button><button class="btn btn--ghost btn--sm" data-m="25">25 min</button></div><p style="text-align:center;color:var(--faint);margin-top:10px">Put the phone down. Come back when it rings.</p>';
+      $('#ftBtns').addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b)return;var left=+b.getAttribute('data-m')*60;$('#ftBtns').style.display='none';
+        function tick(){var m=Math.floor(left/60),s=left%60;$('#ft').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;if(left<=0){$('#ft').textContent='✓ Done';gameDone('focus','Focus locked in');return}left--;gTimers.push(setTimeout(tick,1000))}tick();});
+    } else if(id==='resist'){
+      $('#mBody').innerHTML='<div class="play" id="rsArea"><div class="rt" id="rsTxt" style="opacity:.6">Tap distractions before they vanish!</div></div><p style="text-align:center" id="rsMsg">20 seconds. Resisted: <b id="rsN">0</b></p>';
+      var area=$('#rsArea'),score=0,left=20,ds=['📱','🎮','📺','🍔','🔔'];
+      function spawn(){if(left<=0)return;var s=document.createElement('div');s.className='distract';s.textContent=ds[Math.floor(Math.random()*ds.length)];s.style.left=(10+Math.random()*72)+'%';s.style.top=(20+Math.random()*58)+'%';area.appendChild(s);gTimers.push(setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},1100));s.addEventListener('click',function(){score++;$('#rsN').textContent=score;if(s.parentNode)s.parentNode.removeChild(s)});gTimers.push(setTimeout(spawn,640+Math.random()*340))}
+      function clock(){if(left<=0){$('#rsMsg').innerHTML='Time! You resisted <b>'+score+'</b>. 🛡️';gameDone('resist','You beat the pull');return}left--;gTimers.push(setTimeout(clock,1000))}
+      spawn();clock();
+    } else if(id==='react'){
+      $('#mBody').innerHTML='<div class="play" id="rcArea" style="cursor:pointer"><div class="react" id="rc" style="background:#3a2330">Wait for green…</div></div><p style="text-align:center;color:var(--faint)">Tap the moment it turns green.</p>';
+      var rc=$('#rc'),area=$('#rcArea'),ready=false,t0=0,armed=false;
+      gTimers.push(setTimeout(function(){rc.style.background='linear-gradient(135deg,#5ad48a,#2bd3c6)';rc.textContent='TAP NOW!';ready=true;t0=Date.now()},1500+Math.random()*2800));
+      area.addEventListener('click',function(){if(armed)return;if(!ready){rc.textContent='Too early! 😅';armed=true;gTimers.push(setTimeout(function(){openGame('react')},900));return}armed=true;var ms=Date.now()-t0;rc.style.background='linear-gradient(135deg,#4de3ff,#7c5cff)';rc.textContent=ms+' ms ⚡';if(!state.react||ms<state.react){state.react=ms;save()}gameDone('react','Sharp reflexes')});
+      if(state.react)$('#rcArea').insertAdjacentHTML('afterend','<p style="text-align:center;color:var(--amber);margin-top:6px">Your best: '+state.react+' ms</p>');
+    } else if(id==='memory'){
+      var emo=['🔥','🌟','⚡','💎','🌱','🎯'],deck=emo.concat(emo);for(var z=deck.length-1;z>0;z--){var r=Math.floor(Math.random()*(z+1)),tmp=deck[z];deck[z]=deck[r];deck[r]=tmp}
+      $('#mBody').innerHTML='<div class="play" style="padding:14px"><div class="mem" id="mem"></div></div><p style="text-align:center" id="memMsg">Match all 6 pairs.</p>';
+      var memEl=$('#mem');memEl.innerHTML=deck.map(function(x,i){return '<button class="memc" data-m="'+i+'"></button>'}).join('');
+      var up=[],matched=0,lock=false;
+      memEl.addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b||lock)return;var i=+b.getAttribute('data-m');if(b.classList.contains('up')||b.classList.contains('done'))return;b.textContent=deck[i];b.classList.add('up');up.push({b:b,i:i});
+        if(up.length===2){lock=true;
+          if(deck[up[0].i]===deck[up[1].i]){up[0].b.classList.add('done');up[1].b.classList.add('done');matched++;up=[];lock=false;if(matched===6){$('#memMsg').textContent='All matched! 🧠';gameDone('memory','Brain warmed up')}}
+          else{var a=up;gTimers.push(setTimeout(function(){a[0].b.classList.remove('up');a[0].b.textContent='';a[1].b.classList.remove('up');a[1].b.textContent='';up=[];lock=false},700))}}});
+    }
+    var GWHY={breathe:"Slow breathing flips your nervous system from 'fight' to 'calm' in about a minute. It physically lowers a craving's grip — the urge peaks, then fades while you breathe.",focus:"Focus is a muscle that constant phone-switching makes weak. A short timed block, phone away, is one clean rep. Start at 5 minutes and build.",resist:"This trains the exact skill the reset is about: noticing a pull and choosing not to follow it. Every tap is a rep that makes resisting real urges easier.",react:"A quick reaction drill snaps a foggy, over-stimulated brain back to sharp. It's a 10-second pattern-break that beats reaching for your phone.",memory:"Holding things in mind without checking a screen rebuilds working memory. It's a tiny, satisfying brain workout — earned focus, not cheap dopamine."};
+    var gb=$('#mBody');if(gb&&GWHY[id])gb.insertAdjacentHTML('afterbegin','<p style="color:var(--soft);margin:0 0 12px"><b style="color:var(--amber)">Why this helps · </b>'+GWHY[id]+'</p>');
+    openModal();
+  }
+
+  function toggle(i){if(!state.done[i]&&i>dc())return;var was=state.done[i];state.done[i]=!state.done[i];if(!state.done[i]){for(var j=i+1;j<7;j++)state.done[j]=false}save();if(!was&&state.done[i]){markDaily('challenge')}if(!was)celebrate();render()}
+
+  function tcard(attr,e,grad,tag,title,sub,cls){return '<div class="thumb'+(cls?' '+cls:'')+'" '+attr+'><div class="thumb__bg" style="background:'+grad+'"></div><span class="thumb__emoji">'+e+'</span><span class="thumb__tag">'+tag+'</span><div class="thumb__cap"><b>'+title+'</b><span>'+sub+'</span></div></div>'}
+  function dayThumb(i){var d=DAYS[i],done=state.done[i],locked=i>dc();return tcard('data-day="'+i+'"',d.e,g(i),'DAY '+(i+1),d.t,(done?'Completed':locked?'Locked':'Tap to open'),(done?'done':'')+(locked?' locked':''))}
+
+  function setRing(id,nid,v){var r=$(id);if(r)r.style.setProperty('--v',v);var n=$(nid);if(n)n.textContent=Math.round(v)}
+  function celebrate(){snd('ding');markToday();logDay();render(true)}
+
+  var lastLvl=lvl();
+  function render(burst){
+    var L=lvl(),lv=LEVELS[L],x=xp();
+    $('#pXp').textContent=x;$('#pStreak').textContent=streak();$('#pDay').textContent=Math.min(dc()+1,7);
+    $('#lvBadge').textContent=lv.b;$('#lvName').textContent='Level '+(L+1);$('#lvTitle').textContent=lv.n;
+    var nx=LEVELS[L+1],into=nx?((x-lv.x)/(nx.x-lv.x)*100):100;$('#lvBar').style.width=Math.min(100,into)+'%';
+    if(burst){var b=$('#lvBadge');b.classList.add('pop');setTimeout(function(){b.classList.remove('pop')},280)}
+    if(L>lastLvl){confetti();toast('🎉 Level up — '+lv.n+'!');snd('level');lastLvl=L}
+
+    var h=new Date().getHours(),greet=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+    $('#coHi').textContent=greet+' 👋';var c=cur();
+    $('#coSub').textContent='Day '+(c+1)+' of 7 · '+pct()+'% through your reset';
+    $('#coSay').textContent=dc()>=7?"You finished the whole reset. Genuinely rare. Now keep one habit alive for good.":
+            streak()>=3?("🔥 "+streak()+" days straight — your brain is already rewiring. Today: "+DAYS[c].t.toLowerCase()+"."):
+            dc()===0?"Let's get your first win. Today takes 10 minutes: "+DAYS[c].t.toLowerCase()+".":
+            ("You're "+pct()+"% in. Next up: "+DAYS[c].t.toLowerCase()+". Small step, big compounding.");
+    var q=QUOTES[(new Date().getDate())%QUOTES.length];$('#coQuote').textContent='“'+q.t+'”';
+    var sg=$('#coSuggest');if(sg&&window.ACTS){var si=(!state.done[cur()])?actIdx('today'):((state.moods[cur()]!=null&&state.moods[cur()]<=1)?actIdx('breathe'):(streak()>=3?actIdx('relax'):actIdx('random')));var sa=window.ACTS[si];sg.innerHTML='<button class="btn btn--g" data-act="'+si+'" style="width:100%">👉 Coach pick: '+sa.t+'</button>'}
+
+    $('#t1').textContent=dc();$('#t2').textContent=streak();$('#t3').textContent=pct()+'%';$('#t4').textContent=state.crave;
+
+    var fh='';for(var i=0;i<7;i++)fh+=dayThumb(i);
+    if($('#dayFeed'))$('#dayFeed').innerHTML=fh;if($('#trackFeed'))$('#trackFeed').innerHTML=fh;
+    if($('#trackBar'))$('#trackBar').style.width=pct()+'%';
+    if($('#trackMsg'))$('#trackMsg').textContent=streak()>=7?"🏆 Full 7-day reset complete. Huge.":streak()>0?("🔥 "+streak()+"-day streak — keep it alive."):"Tap your first day to start the streak.";
+
+    var reset=pct(),am=avgMood(),mood=am<0?0:am/4*100;
+    var focus=clamp(28+dc()*8+gp()*4+streak()*2),energy=clamp(32+dc()*6+mood*.3),sleep=clamp(38+dc()*5+streak()*3),brain=clamp((reset+focus+energy+sleep)/4);
+    setRing('#ringReset','#ringResetN',reset);if($('#ringResetN'))$('#ringResetN').textContent=reset+'%';
+    setRing('#ringFocus','#rF',focus);setRing('#ringEnergy','#rE',energy);setRing('#ringSleep','#rS',sleep);setRing('#ringBrain','#rB',brain);
+    if($('#sXp'))$('#sXp').textContent=x;if($('#sStreak'))$('#sStreak').textContent=streak();
+    if($('#sTime'))$('#sTime').textContent=(Math.round((dc()*0.8+state.crave*0.05)*10)/10)+'h';
+    if($('#sGames'))$('#sGames').textContent=gp();
+
+    var mg=$('#mgraph');if(mg){var hh='';for(var d2=0;d2<7;d2++){var mv=state.moods[d2];var ht=mv==null?6:((mv+1)/5*100);hh+='<div class="col"><div class="bar2" style="height:'+ht+'%"></div><div class="dl">D'+(d2+1)+'</div></div>'}mg.innerHTML=hh;
+      $('#moodMsg').textContent=am<0?'Log your mood each day to see it climb.':(am>=3?'Trending up — the reset is working. 🎉':'Early days. Watch this climb as you go.')}
+
+    var ag=$('#achvGrid');if(ag){var got=0,hh2='';for(var k=0;k<ACHV.length;k++){var ac=ACHV[k],ok=!!ac.test();if(ok)got++;var hide=ac.hidden&&!ok;hh2+='<div class="ach'+(ok?' got':'')+(ac.rare?' rare':'')+'"><div class="e">'+(hide?'❔':ac.e)+'</div><b>'+(hide?'???':ac.n)+'</b><span>'+(hide?'Hidden':ac.d)+'</span></div>'}ag.innerHTML=hh2;$('#achvCount').textContent=got;$('#achvTotal').textContent=ACHV.length;
+      for(var k2=0;k2<ACHV.length;k2++){var a2=ACHV[k2];if(a2.test()&&!state.achvSeen[a2.id]){state.achvSeen[a2.id]=true;save();confetti();toast('🏆 Achievement: '+a2.n);snd('win')}}}
+
+    renderCal();renderXpSrc();renderMissions();renderInsights();if(typeof renderSaved2==='function')renderSaved2();
+    var cc=$('#coContinue');if(cc)cc.innerHTML=state.last?'<button class="btn btn--ghost btn--sm" data-resume="1" style="margin-top:10px">↩ Continue: '+state.last.e+' '+state.last.label+'</button>':'';
+    if($('#artFeed')&&!$('#artFeed').dataset.live){renderArts()}else if($('#artFeed')){renderArts()}
+  }
+
+  function renderArts(){if($('#artFeed'))$('#artFeed').innerHTML=ARTS.map(function(a,i){return tcard('data-article="'+i+'"',a.e,g(i+1),a.sub.split('·')[0].trim().toUpperCase(),a.t,state.read[i]?'Read ✓':'Tap to read',state.read[i]?'read':'')}).join('')}
+
+  // build feeds
+  if($('#gameFeed'))$('#gameFeed').innerHTML=GAMES.map(function(gm,i){return tcard('data-game="'+gm.id+'"',gm.e,g(i*2),state.games[gm.id]?'PLAYED':'GAME',gm.t,gm.s,'')}).join('');
+  if($('#journeyFeed'))$('#journeyFeed').innerHTML=JOURNEYS.map(function(j,i){return tcard('data-journey="'+i+'"',j.e,g(i+1),'MOOD',j.n,'Tap for your path','')}).join('');
+  if($('#urgeFeed'))$('#urgeFeed').innerHTML=URGES.map(function(u,i){return tcard('data-urge="'+i+'"',u.e,g(i+1),'90s',u.k,'Beat the urge','')}).join('');
+  if($('#menuFeed'))$('#menuFeed').innerHTML=MENU.map(function(m,i){return tcard('data-menu="'+i+'"',m.e,g(i),'DO IT',m.t,'Real dopamine','')}).join('');
+  // journey gradients
+  for(var jj=0;jj<JOURNEYS.length;jj++)JOURNEYS[jj].gr=g(jj+1);
+
+  var mb=$('#moodBtns');if(mb){FACES.forEach(function(f,i){var b=document.createElement('button');b.className='moodb';b.title=f.n;b.textContent=f.e;b.setAttribute('data-face',i);mb.appendChild(b)})}
+  // coach chips
+  var chips=$('#coachChips');if(chips){chips.innerHTML=COACH.map(function(c,i){return '<button class="chip" data-coach="'+i+'">'+c.e+' '+c.l+'</button>'}).join('')}
+  // --- coach chat thread ---
+  function coMsg(who,html){var c=$('#coChat');if(!c)return null;var b=document.createElement('div');b.className='cobub '+who;b.innerHTML=html;c.appendChild(b);return b}
+  function coType(fn){var c=$('#coChat');if(!c){fn();return}
+    var tp=document.createElement('div');tp.className='cotype';tp.innerHTML='<i></i><i></i><i></i>';c.appendChild(tp);
+    setTimeout(function(){if(tp.parentNode)tp.parentNode.removeChild(tp);fn();
+      var e=c.lastChild;if(e&&e.scrollIntoView)e.scrollIntoView({behavior:'smooth',block:'nearest'});},650);}
+  function coPlanMsg(){var i=cur(),dn=DAYS[i];var ti=(dn&&dn.t)?dn.t:'your daily action';
+    return "Today's plan: <b>"+ti+"</b> — about 10 minutes. Do it, tick it off, +30 XP. <button class=\"btn btn--g btn--sm\" data-open-today>Open day "+(i+1)+" →</button>";}
+  (function(){var c=$('#coChat');if(!c)return;var d=dc(),s=streak();
+    var m=d===0
+      ?"Quick check-in before anything else 👊 It's day 1 — one 10-minute win is all we need today. How are you feeling?"
+      :"Daily check-in 🙌 You've done "+d+" day"+(d===1?'':'s')+(s>1?" and you're on a "+s+"-day streak 🔥":"")+". How are you feeling right now?";
+    coMsg('c',m);
+    var qr=document.createElement('div');qr.className='coqr';
+    qr.innerHTML='<button class="chip" data-cq="good">Feeling good 💪</button><button class="chip" data-cq="meh">Struggling a bit 😮‍💨</button><button class="chip" data-cq="plan">Give me today\'s plan 🎯</button>';
+    c.appendChild(qr);})();
+
+  var VIS=[{e:'💰',t:'Money & freedom',p:'What would real freedom let you do?'},{e:'💪',t:'Health & body',p:'How do you want to look and feel?'},{e:'❤️',t:'People',p:'Who do you want to be fully there for?'},{e:'🧭',t:'Who you are becoming',p:'A year from now, who are you proud to be?'}];
+  var vr=$('#visionRows');
+  if(vr){vr.innerHTML=VIS.map(function(v,i){return '<div class="card" style="margin:0"><label style="display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px"><span style="font-size:1.5rem">'+v.e+'</span> '+v.t+'</label><textarea data-vis="'+i+'" style="min-height:64px" placeholder="'+v.p+'">'+(state.vision[i]||'')+'</textarea></div>'}).join('');
+    var vt;vr.addEventListener('input',function(e){var t=e.target.closest('[data-vis]');if(t){state.vision[t.getAttribute('data-vis')]=t.value;clearTimeout(vt);vt=setTimeout(function(){save();render()},600)}})}
+
+  function showQuote(){var q=QUOTES[state.qi%QUOTES.length];$('#qText').textContent='“'+q.t+'”';$('#qBy').textContent=q.b||'';renderSaved()}
+  function renderSaved(){var box=$('#qSaved');if(!box)return;$('#qSavedN').textContent='('+state.savedQ.length+')';if(!state.savedQ.length){box.innerHTML='<p style="color:var(--faint)">Tap ❤️ Save to keep the ones that hit.</p>';return}box.innerHTML=state.savedQ.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join('')}
+  if($('#qNext')){showQuote();
+    $('#qNext').addEventListener('click',function(){state.qi=(state.qi+1)%QUOTES.length;save();showQuote()});
+    $('#qSave').addEventListener('click',function(){var q=QUOTES[state.qi%QUOTES.length];if(state.savedQ.indexOf(q.t)<0){state.savedQ.push(q.t);save();toast('❤️ Saved');render()}renderSaved()});
+    $('#qShare').addEventListener('click',function(){var q=QUOTES[state.qi%QUOTES.length];if(navigator.share){navigator.share({text:'“'+q.t+'” — via Dopamine Reset'}).catch(function(){})}else{toast('Copy: “'+q.t+'”')}});
+  }
+
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');if(go){var p=go.getAttribute('data-go');$$('.dr__nav').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-go')===p)});$$('.panel').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-p')===p)});setFx(p);revealPanel(p);if(p!=='today'&&p!=='search'&&p!=='saved')setLast({type:'panel',p:p,label:go.textContent.trim(),e:''});cs();window.scrollTo(0,0);return}
+    if(e.target.closest('[data-open-today]')){openDay(cur());return}
+    var dd=e.target.closest('[data-day]');if(dd){openDay(parseInt(dd.getAttribute('data-day'),10));return}
+    var du=e.target.closest('[data-urge]');if(du){openTile(URGES[+du.getAttribute('data-urge')]);return}
+    var dm=e.target.closest('[data-menu]');if(dm){openTile(MENU[+dm.getAttribute('data-menu')]);return}
+    var dgm=e.target.closest('[data-game]');if(dgm){openGame(dgm.getAttribute('data-game'));return}
+    var dj=e.target.closest('[data-journey]');if(dj){openJourney(JOURNEYS[+dj.getAttribute('data-journey')]);return}
+    var da=e.target.closest('[data-article]');if(da){openArticle(+da.getAttribute('data-article'));return}
+    var df=e.target.closest('[data-face]');if(df){var fi=+df.getAttribute('data-face');state.moods[cur()]=fi;state.moodLog[todayKey()]=fi;markDaily('mood');save();$$('.moodb').forEach(function(x){x.classList.toggle('on',x===df)});var rep=$('#moodReply');if(rep){rep.style.display='block';rep.innerHTML='<h3>'+FACES[fi].e+' '+FACES[fi].n+'</h3><p style="margin:0">'+FACES[fi].say+'</p>'}celebrate();return}
+    var dcq=e.target.closest('[data-cq]');if(dcq){var qk=dcq.getAttribute('data-cq');coMsg('u',dcq.textContent);
+      var qrw=dcq.parentNode;if(qrw&&qrw.parentNode)qrw.parentNode.removeChild(qrw);
+      coType(function(){
+        if(qk==='good')coMsg('c',"Love that. Momentum is the whole game — lock it in while it's easy: today's 10-minute action. <button class=\"btn btn--g btn--sm\" data-open-today>Today's challenge →</button>");
+        else if(qk==='meh')coMsg('c',"That's honest — and completely normal mid-reset. Let's lower the bar: 90 seconds of urge-surfing or one quick game, then you decide. <button class=\"btn btn--g btn--sm\" data-go=\"games\">Reset me now →</button>");
+        else coMsg('c',coPlanMsg());
+      });return}
+    var dco=e.target.closest('[data-coach]');if(dco){var ci=+dco.getAttribute('data-coach'),co=COACH[ci];
+      coMsg('u',dco.textContent);
+      coType(function(){coMsg('c',co.say+' <button class="btn btn--g btn--sm" data-cocta="'+ci+'" style="display:block">'+co.cta.label+' →</button>');});
+      return}
+    var dcc=e.target.closest('[data-cocta]');if(dcc){var co2=COACH[+dcc.getAttribute('data-cocta')].cta;if(co2.t==='game')openGame(co2.id);else if(co2.t==='today')openDay(cur());else if(co2.t==='go'){var btn=document.querySelector('[data-go="'+co2.id+'"]');if(btn)btn.click()}return}
+  });
+  $('#mClose').addEventListener('click',closeM);$('#drModal').addEventListener('click',function(e){if(e.target===this)closeM()});
+  $('#craveBtn').addEventListener('click',function(){state.crave++;markDaily('crave');save();celebrate();var b=this;b.textContent='Another one beaten 💪';toast('💪 +5 XP');setTimeout(function(){b.textContent='I beat a craving 💪'},1100);$('#craveCount').textContent=state.crave});
+  $('#rollBtn').addEventListener('click',function(){openTile(MENU[Math.floor(Math.random()*MENU.length)])});
+  var j=$('#journal');if(j){j.value=state.journal;var js=function(){state.journal=j.value;if((j.value||'').length>3)markDaily('journal');save();var s=$('#jSaved');s.classList.add('on');render();setTimeout(function(){s.classList.remove('on')},1300)};$('#jSave').addEventListener('click',js);var jt;j.addEventListener('input',function(){clearTimeout(jt);jt=setTimeout(js,800)})}
+  function os(){$('#drSide').classList.add('open');$('#drScrim').classList.add('on')}function cs(){$('#drSide').classList.remove('open');$('#drScrim').classList.remove('on')}
+  $('#drBurger').addEventListener('click',os);$('#drScrim').addEventListener('click',cs);
+  if($('#craveCount'))$('#craveCount').textContent=state.crave;
+
+  // ===== UNWIND: Relax / Affirmations / Wins =====
+  var RELAX=[{id:'breathe',e:'🫧',t:'Breathing Bubble',s:'Slow your whole system'},{id:'pop',e:'🫧',t:'Bubble Pop',s:'Pop the stress away'},{id:'scan',e:'🧘',t:'Body Scan',s:'Melt the tension'},{id:'calm',e:'⏳',t:'Calm Timer',s:'Just sit · 2 min'},{id:'sounds',e:'🎧',t:'Calm Sounds',s:'Pick an ambient mix'}];
+  var AFFIRM=["I am building a calmer, sharper mind.","I don't need a screen to feel okay.","I keep the promises I make to myself.","My focus gets stronger every day.","I can sit with discomfort and let it pass.","I am in control of my attention.","Real life is more than enough for me.","I choose what I give my mind to.","Every urge I beat makes me stronger.","I am becoming the person I want to be.","I am allowed to rest without earning it.","Slow and steady is still moving forward.","I am proud of how far I've come.","Calm is my natural state — I'm finding my way back.","Today I choose presence over noise."];
+  var SOUNDS=[{e:'🌧️',n:'Rain on a window'},{e:'🌊',n:'Ocean waves'},{e:'🌲',n:'Forest at dawn'},{e:'🎹',n:'Soft piano / lo-fi'},{e:'🤎',n:'Brown noise'},{e:'☕',n:'Quiet café hum'}];
+  function relaxOk(id,msg){markDaily('relax');if(!state.relaxDone[id]){state.relaxDone[id]=true;save();celebrate();toast('🧘 +5 XP · '+msg)}buildRelax()}
+  function buildRelax(){if($('#relaxFeed'))$('#relaxFeed').innerHTML=RELAX.map(function(r,i){return tcard('data-relax="'+r.id+'"',r.e,g(i+2),'RELAX',r.t,state.relaxDone[r.id]?'Done ✓':r.s,state.relaxDone[r.id]?'read':'')}).join('')}
+
+  function openScan(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--blue))';$('#mEmoji').textContent='🧘';$('#mTag').textContent='Body scan';$('#mTitle').textContent='Melt the tension';
+    var steps=['Settle in. Close your eyes if you can.','Soften your forehead and jaw.','Drop your shoulders away from your ears.','Relax your chest and let the breath slow.','Unclench your hands and arms.','Let your belly go soft.','Release your legs, all the way down.','Feel your whole body held. You can stay as long as you like.'];
+    $('#mBody').innerHTML='<div class="play"><div class="rt" id="scTxt" style="font-size:1.25rem;padding:0 16px"></div></div>';
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="scDone" style="width:100%">I feel calmer ✓</button></div>';
+    var n=0;function sstep(){$('#scTxt').textContent=steps[n];n++;if(n<steps.length)gTimers.push(setTimeout(sstep,4500))}sstep();
+    $('#scDone').onclick=function(){relaxOk('scan','Tension released');closeM()};openModal()}
+  function openCalm(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--violet))';$('#mEmoji').textContent='⏳';$('#mTag').textContent='Calm timer';$('#mTitle').textContent='Just sit · 2 minutes';
+    $('#mBody').innerHTML='<div class="play"><div class="bubble" id="calmB" style="transition:transform 5s ease-in-out">2:00</div></div><p style="text-align:center;color:var(--faint)">Nothing to do. Watch it breathe with you.</p>';
+    var left=120,b=$('#calmB'),big=false;
+    function ct(){var m=Math.floor(left/60),s=left%60;b.textContent=m+':'+(s<10?'0':'')+s;big=!big;b.style.transform=big?'scale(1.18)':'scale(.85)';if(left<=0){b.textContent='Done 🌿';b.style.transform='scale(1)';relaxOk('calm','Two calm minutes');return}left--;gTimers.push(setTimeout(ct,1000))}ct();openModal()}
+  function openSounds(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--blue),var(--teal))';$('#mEmoji').textContent='🎧';$('#mTag').textContent='Calm sounds';$('#mTitle').textContent='Pick an ambient mix';
+    $('#mBody').innerHTML='<p style="color:var(--soft)">Put one of these on in your music app and let it run while you read, breathe or rest.</p>'+SOUNDS.map(function(s){return '<div class="qmini">'+s.e+' <span>'+s.n+'</span></div>'}).join('');
+    $('#mAction').innerHTML='<div class="msec"><button class="btn btn--g" id="snDone" style="width:100%">Got my sound on 🎧</button></div>';
+    $('#snDone').onclick=function(){relaxOk('sounds','Ambient on');closeM()};openModal()}
+  function openPop(){clearGame();$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--violet),var(--pink))';$('#mEmoji').textContent='🫧';$('#mTag').textContent='Bubble pop';$('#mTitle').textContent='Pop the stress away';
+    $('#mBody').innerHTML='<div class="play" id="popArea" style="min-height:240px"></div><p style="text-align:center" id="popMsg">Tap the bubbles. No score, no rush — just pop. <b id="popN">0</b></p>';
+    var area=$('#popArea'),popped=0,left=30;
+    function spawn(){if(left<=0)return;var s=document.createElement('div');s.className='distract';s.textContent='🫧';s.style.fontSize=(1.6+Math.random()*1.8)+'rem';s.style.left=(8+Math.random()*78)+'%';s.style.top=(70+Math.random()*20)+'%';s.style.transition='top 4s linear, opacity .3s';area.appendChild(s);gTimers.push(setTimeout(function(){s.style.top='-10%'},30));gTimers.push(setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},4200));s.addEventListener('click',function(){popped++;$('#popN').textContent=popped;s.style.opacity='0';if(s.parentNode)setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s)},150)});gTimers.push(setTimeout(spawn,520+Math.random()*360))}
+    function clock(){if(left<=0){$('#popMsg').innerHTML='Lovely. You popped <b>'+popped+'</b>. Feel that? 🫧';relaxOk('pop','Stress popped');return}left--;gTimers.push(setTimeout(clock,1000))}
+    spawn();clock();openModal()}
+  function openRelax(id){if(id==='breathe'){openGame('breathe');if(!state.relaxDone.breathe){state.relaxDone.breathe=true;save();buildRelax()}}else if(id==='pop')openPop();else if(id==='scan')openScan();else if(id==='calm')openCalm();else if(id==='sounds')openSounds()}
+  buildRelax();
+
+  // affirmations
+  function showAff(){var a=AFFIRM[state.afi%AFFIRM.length];if($('#afText'))$('#afText').textContent='“'+a+'”';renderAffSaved()}
+  function renderAffSaved(){var box=$('#afSaved');if(!box)return;if($('#afSavedN'))$('#afSavedN').textContent='('+state.savedAff.length+')';box.innerHTML=state.savedAff.length?state.savedAff.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join(''):'<p style="color:var(--faint)">Save the ones that land — re-read them on hard days.</p>'}
+  if($('#afNext')){showAff();
+    $('#afNext').addEventListener('click',function(){state.afi=(state.afi+1)%AFFIRM.length;save();showAff()});
+    $('#afSave').addEventListener('click',function(){var a=AFFIRM[state.afi%AFFIRM.length];if(state.savedAff.indexOf(a)<0){state.savedAff.push(a);save();toast('❤️ Saved');render()}renderAffSaved()})}
+
+  // wins
+  function renderWins(){var box=$('#winList');if(!box)return;box.innerHTML=state.wins.length?state.wins.slice().reverse().map(function(w){return '<div class="qmini">🏅 <span>'+w+'</span></div>'}).join(''):'<p style="color:var(--faint)">No wins logged yet. Even a small one counts.</p>'}
+  function addWin(){var inp=$('#winInput');if(!inp)return;var v=(inp.value||'').trim();if(!v)return;state.wins.push(v);save();inp.value='';renderWins();celebrate();toast('🏅 +5 XP · win logged')}
+  if($('#winAdd')){$('#winAdd').addEventListener('click',addWin);$('#winInput').addEventListener('keydown',function(e){if(e.key==='Enter')addWin()});renderWins()}
+
+  document.addEventListener('click',function(e){var dr=e.target.closest('[data-relax]');if(dr){openRelax(dr.getAttribute('data-relax'))}});
+
+  // ===== animated 3D backdrop, themed per section =====
+  var FXSETS={
+    today:{g:['🤖','⚙️','🔩','📡','🔋','💡','✨','🤖'],c:['#7c5cff','#7c5cff','#2bd3c6']},
+    plan:{g:['🗓️','📆','✅','⭐','🔥','🗓️','📆','⭐'],c:['#4de3ff','#7c5cff','#ff5c8a']},
+    track:{g:['✅','🔥','📈','⭐','✅','🔥','📈','⭐'],c:['#5ad48a','#2bd3c6','#4de3ff']},
+    stats:{g:['📊','📈','⭐','💯','📊','📈','⭐','💯'],c:['#4f8cff','#2bd3c6','#7c5cff']},
+    achv:{g:['🏆','🥇','💎','⭐','🏆','🥇','💎','⭐'],c:['#4de3ff','#7c5cff','#ffd24b']},
+    vision:{g:['🌟','💰','❤️','🧭','🌟','💰','❤️','🧭'],c:['#4de3ff','#5ad48a','#ff5c8a']},
+    games:{g:['🎮','🕹️','🎲','👾','⚡','🎮','🕹️','👾'],c:['#7c5cff','#ff5c8a','#4f8cff']},
+    articles:{g:['📖','📚','✏️','📝','💡','📖','📚','✏️'],c:['#2bd3c6','#4f8cff','#7c5cff']},
+    journeys:{g:['💗','🧠','🌈','🫶','💗','🧠','🌈','🫶'],c:['#ff5c8a','#7c5cff','#4de3ff']},
+    quotes:{g:['📜','✒️','💬','❝','📜','✒️','💬','❝'],c:['#ffd24b','#7c5cff','#7c5cff']},
+    relax:{g:['🫧','🌙','☁️','🌊','🍃','🫧','🌙','☁️'],c:['#2bd3c6','#4f8cff','#7c5cff']},
+    affirm:{g:['💗','🌟','🪞','✨','💗','🌟','🪞','✨'],c:['#ff5c8a','#4de3ff','#7c5cff']},
+    wins:{g:['🏅','🎉','💪','⭐','🏅','🎉','💪','⭐'],c:['#4de3ff','#5ad48a','#7c5cff']},
+    toolkit:{g:['🌊','🛡️','💧','🌬️','🌊','🛡️','💧','🌬️'],c:['#2bd3c6','#4f8cff','#ff5c8a']},
+    menu:{g:['☀️','🚶','📖','☕','☀️','🚶','📖','☕'],c:['#4de3ff','#7c5cff','#5ad48a']},
+    journal:{g:['📓','✍️','🖊️','📓','✍️','🖊️','📓','✍️'],c:['#7c5cff','#4f8cff','#ff5c8a']},
+    help:{g:['💬','📘','🤝','💬','📘','🤝','💬','📘'],c:['#4f8cff','#2bd3c6','#4de3ff']}
+  };
+  var FXG=$('#fxGly'),FXB=$$('#drFx .blob');
+  if(FXG){var gh='';for(var fi=0;fi<8;fi++)gh+='<span style="left:'+(4+Math.random()*88).toFixed(0)+'%;top:'+(6+Math.random()*86).toFixed(0)+'%;animation-delay:'+(Math.random()*8).toFixed(1)+'s;font-size:'+(1.4+Math.random()*1.7).toFixed(1)+'rem"></span>';FXG.innerHTML=gh}
+  function setFx(p){var s=FXSETS[p]||FXSETS.today;if(FXG){var sp=FXG.children;for(var i=0;i<sp.length;i++)sp[i].textContent=s.g[i%s.g.length]}for(var k=0;k<FXB.length;k++)if(FXB[k])FXB[k].style.background='radial-gradient(circle,'+s.c[k%s.c.length]+',transparent 65%)'}
+  setFx('today');
+
+  // ===== scroll reveal + colourful headings =====
+  var _io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');_io.unobserve(en.target)}})},{threshold:.12}):null;
+  function revealPanel(p){var pe=document.querySelector('.panel[data-p="'+p+'"]');if(!pe)return;var els=[].slice.call(pe.querySelectorAll('.thumb,.card,.dial,.stat,.ach,.qcard,.coach,.qmini,.moodc'));els.forEach(function(el,i){if(el.classList.contains('in'))return;el.classList.add('rv');el.style.transitionDelay=Math.min(i,10)*55+'ms';if(_io)_io.observe(el);else el.classList.add('in')})}
+  $$('.dr__main .panel h1').forEach(function(hh,i){hh.classList.add(['hl','hl2','hl3'][i%3])});
+
+  // ===== after-purchase onboarding =====
+  var AVA=['🦊','🐉','🦅','🐺','🦁','🐯','🐸','🦋'];
+  var THM=[{k:'sunset',n:'Sunset',a:'#4de3ff',o:'#7c5cff',p:'#ff5c8a',v:'#7c5cff'},{k:'aurora',n:'Aurora',a:'#ff8ad4',o:'#ff5c8a',p:'#a06bff',v:'#5cc8ff'},{k:'ocean',n:'Ocean',a:'#3fd0c9',o:'#2bd3c6',p:'#4f8cff',v:'#7c5cff'},{k:'forest',n:'Forest',a:'#9be15d',o:'#5ad48a',p:'#2bd3c6',v:'#4f8cff'},{k:'candy',n:'Candy',a:'#ffd24b',o:'#7c5cff',p:'#ff5c8a',v:'#ff7eb3'},{k:'gold',n:'Gold',a:'#7fd7ff',o:'#caa14e',p:'#b88bff',v:'#7c5cff'}];
+  var GOAL=[{e:'🎯',k:'focus',t:'Sharper focus',say:'We’ll rebuild your focus muscle one block at a time.'},{e:'😄',k:'happy',t:'Feel happier',say:'Let’s get real life feeling good again.'},{e:'😴',k:'sleep',t:'Better sleep',say:'We’ll fix the nights first — everything else follows.'},{e:'💪',k:'confidence',t:'More confidence',say:'Every promise you keep this week builds it.'},{e:'📵',k:'screen',t:'Less screen time',say:'We’ll swap cheap hits for real ones, daily.'}];
+  function thmByKey(k){for(var i=0;i<THM.length;i++)if(THM[i].k===k)return THM[i];return THM[0]}
+  function applyTheme(t){var el=document.getElementById('drApp');if(!el||!t)return;el.style.setProperty('--amber',t.a);el.style.setProperty('--orange',t.o);el.style.setProperty('--pink',t.p);el.style.setProperty('--violet',t.v);}
+  function applyAvatar(av){var a=$('#coAvatar');if(a&&av){a.textContent=av;a.classList.add('on')}}
+  function goalObj(){for(var i=0;i<GOAL.length;i++)if(GOAL[i].k===ob.goal)return GOAL[i];return GOAL[1]}
+  var onbEl=$('#drOnb'),obCard=$('#obCard'),ob={avatar:AVA[0],theme:'sunset',goal:'happy',mood:3},obStep=0;
+  function obDots(n){var h='';for(var i=0;i<7;i++)h+='<span class="ob__dot'+(i<=n?' on':'')+'"></span>';return '<div class="ob__dots">'+h+'</div>'}
+  function obGo(n){obStep=n;drawOb()}
+  function drawOb(){
+    var h=obDots(obStep);
+    if(obStep===0){h+='<div class="ob__orb"></div><h2>Welcome to your reset 🎉</h2><p>You’re in. Let’s set it up the way you like — takes 20 seconds.</p><button class="ob__btn" data-ob="go1">Let’s go →</button><button class="ob__skip" data-ob="skip">Skip setup</button>';}
+    else if(obStep===1){h+='<h2>Pick your avatar</h2><p>This is you in here.</p><div class="ob__grid">'+AVA.map(function(a,i){return '<div class="ob__opt'+(ob.avatar===a?' sel':'')+'" data-ava="'+i+'"><span>'+a+'</span></div>'}).join('')+'</div>';}
+    else if(obStep===2){h+='<h2>Choose your vibe</h2><p>Colours for your space.</p><div class="ob__grid">'+THM.map(function(t,i){return '<div class="ob__sw'+(ob.theme===t.k?' sel':'')+'" data-thm="'+i+'" style="background:linear-gradient(135deg,'+t.a+','+t.v+')">'+t.n+'</div>'}).join('')+'</div>';}
+    else if(obStep===3){h+='<h2>What do you want most?</h2><div class="ob__list">'+GOAL.map(function(g,i){return '<div class="ob__row'+(ob.goal===g.k?' sel':'')+'" data-goal="'+i+'"><span class="e">'+g.e+'</span> '+g.t+'</div>'}).join('')+'</div>';}
+    else if(obStep===4){h+='<h2>How do you feel right now?</h2><p>We’ll track it from here.</p><div class="ob__faces">'+FACES.map(function(f,i){return '<button class="ob__face'+(ob.mood===i?' sel':'')+'" data-omood="'+i+'">'+f.e+'</button>'}).join('')+'</div><button class="ob__btn" data-ob="gen">Build my dashboard →</button>';}
+    else if(obStep===5){h+='<div class="ob__orb"></div><h2>Building your dashboard…</h2><div class="ob__bar"><i id="obBar"></i></div><div class="ob__gen" id="obGen"></div>';}
+    else if(obStep===6){h+='<div class="ob__orb"></div><h2>Hey — I’m your coach 👋</h2><p>'+goalObj().say+' I’ll check in daily, keep your streak alive and nudge you when an urge hits. Ready?</p><button class="ob__btn" data-ob="enter">Enter my reset →</button>';}
+    obCard.innerHTML=h;
+    if(obStep===5)runGen();
+  }
+  function runGen(){var steps=['Calibrating your 7-day plan…','Loading your tools & games…','Setting your '+thmByKey(ob.theme).n.toLowerCase()+' theme…','Waking up your coach…'],i=0,bar=$('#obBar'),gen=$('#obGen');
+    function st(){if(i<steps.length){gen.textContent=steps[i];if(bar)bar.style.width=((i+1)/steps.length*100)+'%';i++;setTimeout(st,650)}else{setTimeout(function(){obGo(6)},500)}}st();}
+  function openOnb(){if(!onbEl)return;onbEl.classList.add('on');obGo(0)}
+  function finishOnb(){state.onb={done:true,avatar:ob.avatar,theme:ob.theme,goal:ob.goal};state.moods[cur()]=ob.mood;state.moodLog[todayKey()]=ob.mood;save();applyTheme(thmByKey(ob.theme));applyAvatar(ob.avatar);onbEl.classList.remove('on');confetti();toast('🎉 You’re all set');render();}
+  if(onbEl)onbEl.addEventListener('click',function(e){
+    var o=e.target.closest('[data-ob]');if(o){var k=o.getAttribute('data-ob');if(k==='go1')obGo(1);else if(k==='skip'){finishOnb()}else if(k==='gen')obGo(5);else if(k==='enter')finishOnb();return}
+    var av=e.target.closest('[data-ava]');if(av){ob.avatar=AVA[+av.getAttribute('data-ava')];drawOb();setTimeout(function(){obGo(2)},170);return}
+    var th=e.target.closest('[data-thm]');if(th){ob.theme=THM[+th.getAttribute('data-thm')].k;drawOb();setTimeout(function(){obGo(3)},170);return}
+    var gl=e.target.closest('[data-goal]');if(gl){ob.goal=GOAL[+gl.getAttribute('data-goal')].k;drawOb();setTimeout(function(){obGo(4)},170);return}
+    var om=e.target.closest('[data-omood]');if(om){ob.mood=+om.getAttribute('data-omood');drawOb();return}
+  });
+  if(state.onb&&state.onb.done){applyTheme(thmByKey(state.onb.theme));applyAvatar(state.onb.avatar);}
+
+  // ===== dashboard extras: calendar, xp breakdown, settings =====
+  function renderCal(){var el=$('#cal');if(!el)return;var now=new Date(),y=now.getFullYear(),m=now.getMonth();var first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+    var h='<div class="cal__head">'+['S','M','T','W','T','F','S'].map(function(d){return '<span>'+d+'</span>'}).join('')+'</div><div class="cal__grid">';
+    for(var i=0;i<first;i++)h+='<span class="cal__c cal__c--e"></span>';
+    for(var d=1;d<=days;d++){var on=state.dates[y+'-'+(m+1)+'-'+d];h+='<span class="cal__c'+(on?' on':'')+(d===now.getDate()?' today':'')+'">'+d+'</span>'}
+    el.innerHTML=h+'</div>';}
+  function renderXpSrc(){var el=$('#xpSrc');if(!el)return;var src=[['7-day plan',dc()*30,'var(--amber)'],['Mind games',gp()*15,'var(--teal)'],['Articles',rd()*20,'var(--blue)'],['Check-ins',ck()*10,'var(--pink)'],['Cravings beaten',state.crave*5,'var(--orange)'],['Daily wins',state.wins.length*5,'var(--good)']];
+    var max=1;for(var i=0;i<src.length;i++)if(src[i][1]>max)max=src[i][1];
+    el.innerHTML='<div class="xps">'+src.map(function(s){return '<div class="xps__row"><div class="l"><span>'+s[0]+'</span><b>'+s[1]+' XP</b></div><div class="xps__bar"><i style="width:'+(s[1]/max*100)+'%;background:'+s[2]+'"></i></div></div>'}).join('')+'</div>';}
+  var setThemes=$('#setThemes'),setAva=$('#setAva');
+  if(setThemes)setThemes.innerHTML='<div class="setsw">'+THM.map(function(t){return '<div class="setsw__s'+((state.onb&&state.onb.theme===t.k)?' sel':'')+'" data-settheme="'+t.k+'" style="background:linear-gradient(135deg,'+t.a+','+t.v+')">'+t.n+'</div>'}).join('')+'</div>';
+  if(setAva)setAva.innerHTML='<div class="setava">'+AVA.map(function(a){return '<button data-setava="'+a+'"'+(((state.onb&&state.onb.avatar)===a)?' class="sel"':'')+'>'+a+'</button>'}).join('')+'</div>';
+  function updSnd(){var b=$('#sndToggle');if(b)b.textContent='Sound: '+(state.sound?'On':'Off')}updSnd();
+  document.addEventListener('click',function(e){
+    var st=e.target.closest('[data-settheme]');if(st){var k=st.getAttribute('data-settheme');if(!state.onb)state.onb={done:true};state.onb.theme=k;save();applyTheme(thmByKey(k));$$('[data-settheme]').forEach(function(x){x.classList.toggle('sel',x===st)});toast('🎨 Theme updated');return}
+    var sa=e.target.closest('[data-setava]');if(sa){var av=sa.getAttribute('data-setava');if(!state.onb)state.onb={done:true};state.onb.avatar=av;save();applyAvatar(av);$$('[data-setava]').forEach(function(x){x.classList.toggle('sel',x===sa)});return}
+    if(e.target.closest('#sndToggle')){state.sound=!state.sound;save();updSnd();if(state.sound)snd('win');return}
+    if(e.target.closest('#replayOnb')){openOnb();return}
+  });
+
+  // ===== easy quick-actions hub + floating "What now?" =====
+  var ACTS=[
+    {e:'🔥',k:'today',t:"Today's challenge",s:'Your 10-min win',g:'linear-gradient(135deg,#7c5cff,#4de3ff)'},
+    {e:'🌊',k:'breathe',t:'Calm an urge',s:'Breathe for 60s',g:'linear-gradient(135deg,#2bd3c6,#4f8cff)'},
+    {e:'🎮',k:'games',t:'Play a game',s:'Reset your brain',g:'linear-gradient(135deg,#7c5cff,#ff5c8a)'},
+    {e:'💗',k:'journeys',t:'How I feel',s:'Get the right help',g:'linear-gradient(135deg,#ff5c8a,#7c5cff)'},
+    {e:'📖',k:'articles',t:'Read something',s:'Quick 2-min reads',g:'linear-gradient(135deg,#2bd3c6,#4f8cff)'},
+    {e:'🧘',k:'relax',t:'Help me relax',s:'Wind down',g:'linear-gradient(135deg,#4f8cff,#7c5cff)'},
+    {e:'📜',k:'quotes',t:'Give me a boost',s:'A line to carry',g:'linear-gradient(135deg,#ffd24b,#7c5cff)'},
+    {e:'✍️',k:'journal',t:'Journal it',s:'One honest line',g:'linear-gradient(135deg,#5ad48a,#bfe65a)'},
+    {e:'📊',k:'stats',t:'My progress',s:'See how far you are',g:'linear-gradient(135deg,#ff6b6b,#7c5cff)'},
+    {e:'🎲',k:'random',t:'Surprise me',s:"I'll pick for you",g:'linear-gradient(135deg,#7c5cff,#2bd3c6)'}
+  ];
+  window.ACTS=ACTS;
+  function actIdx(k){for(var i=0;i<ACTS.length;i++)if(ACTS[i].k===k)return i;return 0}
+  function actCard(a,i){return '<div class="doCard" data-act="'+i+'"><div class="bg" style="background:'+a.g+'"></div><span class="e">'+a.e+'</span><b>'+a.t+'</b><span>'+a.s+'</span></div>'}
+  (function(){var h=ACTS.map(actCard).join('');if($('#doGrid'))$('#doGrid').innerHTML=h;if($('#quickGrid'))$('#quickGrid').innerHTML=h;})();
+  // ===== home feed: every section as its own rich block =====
+  function hblk(ic,icbg,title,tag,desc,mn,goKey,btn){return '<div class="hblk"><div class="hblk__top"><div class="hblk__ic" style="background:'+icbg+'">'+ic+'</div><div><h3>'+title+'</h3><div class="hblk__tag">'+tag+'</div></div></div><p>'+desc+'</p>'+(mn||'')+'<div class="hblk__row"><button class="btn btn--g btn--sm" data-go="'+goKey+'">'+btn+' →</button></div></div>'}
+  function hmini(h){return '<div class="hblk__mini">'+h+'</div>'}
+  function buildHome(){var el=$('#homeFeed');if(!el)return;var H='';
+    H+=hblk('🗓️','linear-gradient(135deg,#7c5cff,#4de3ff)','The 7 Days','Your core program','One tiny action a day for 7 days quietly rewires your brain’s reward system. Each day opens its mission, the science behind it, and a line to reflect on.',hmini(dayThumb(0)+dayThumb(1)+dayThumb(2)),'plan','Open the 7 days');
+    H+=hblk('✅','linear-gradient(135deg,#5ad48a,#2bd3c6)','Tracker & streak','Don’t break the chain','Tick off each day and watch your streak climb. Streaks are how a new habit physically wires in — this is how you protect your momentum.','','track','Open tracker');
+    H+=hblk('🎮','linear-gradient(135deg,#7c5cff,#ff5c8a)','Mind Games','Beat a craving in 60s','When the urge to scroll hits, play instead. Each game calms the pull and earns XP — breathing, focus timer, tap-to-resist, reaction and memory.',hmini(GAMES.slice(0,3).map(function(gm,i){return tcard('data-game="'+gm.id+'"',gm.e,g(i*2),'GAME',gm.t,gm.s,'')}).join('')),'games','See all games');
+    H+=hblk('📚','linear-gradient(135deg,#2bd3c6,#4f8cff)','The Library','Short premium reads','Two-minute reads that explain what’s happening in your brain and exactly how to win — from doomscrolling to deep work to sleep.',hmini(ARTS.slice(0,3).map(function(a,i){return tcard('data-article="'+i+'"',a.e,g(i+1),a.sub.split('·')[0].trim().toUpperCase(),a.t,'Tap to read','')}).join('')),'articles','Open the library');
+    H+=hblk('💗','linear-gradient(135deg,#ff5c8a,#7c5cff)','Mood Help','However you feel','Pick how you feel and get a full path through it — advice, a breathing exercise, a quote, a challenge and a sound to put on.',hmini(JOURNEYS.map(function(j,i){return tcard('data-journey="'+i+'"',j.e,g(i+1),'MOOD',j.n,'Tap your path','')}).join('')),'journeys','Open mood help');
+    H+=hblk('🧘','linear-gradient(135deg,#4f8cff,#7c5cff)','Time to Relax','No goals, just calm','Wind down with a bubble pop, a guided body scan, a 2-minute calm timer or an ambient sound mix. Your off-switch.',hmini(RELAX.slice(0,3).map(function(r,i){return tcard('data-relax="'+r.id+'"',r.e,g(i+2),'RELAX',r.t,r.s,'')}).join('')),'relax','Open relax');
+    H+=hblk('🌟','linear-gradient(135deg,#4de3ff,#ff5c8a)','Your Why','The reason it sticks','Get honest about what you actually want — money, health, people, who you’re becoming. It’s what pulls you through the hard days.','','vision','Open your why');
+    H+=hblk('📊','linear-gradient(135deg,#ff6b6b,#7c5cff)','My Stats','See how far you are','Your focus, energy, sleep and brain-health scores, a mood graph, a calendar of the days you showed up, and where your XP comes from.','','stats','Open stats');
+    H+=hblk('🏆','linear-gradient(135deg,#4de3ff,#ffd24b)','Achievements','Unlock badges','Twelve achievements to earn as you go — first step, streaks, scholar, mind gym and more. Each one pops with confetti.','','achv','Open achievements');
+    H+=hblk('📓','linear-gradient(135deg,#7c5cff,#4f8cff)','Journal','One honest line','A line a day, saved on your device. Naming what you feel shrinks it — and shows you your own progress.','','journal','Open journal');
+    el.innerHTML=H;
+  }
+  buildHome();
+  function pickPool(){
+    var P=[];
+    MENU.forEach(function(m){P.push({e:m.e,t:m.t,s:'real dopamine',fn:function(){openTile(m)}})});
+    GAMES.forEach(function(gm){P.push({e:gm.e,t:gm.t,s:'game',fn:function(){openGame(gm.id)}})});
+    URGES.forEach(function(u){P.push({e:u.e,t:u.k,s:'urge-surf',fn:function(){openTile(u)}})});
+    RELAX.forEach(function(r){P.push({e:r.e,t:r.t,s:'relax',fn:function(){openRelax(r.id)}})});
+    ARTS.forEach(function(a,i){P.push({e:a.e,t:a.t,s:'read',fn:function(){openArticle(i)}})});
+    return P;
+  }
+  function qpEl(p){var b=document.createElement('button');b.type='button';b.className='qp';b.innerHTML='<span class="qe">'+p.e+'</span><b>'+p.t+'</b><span>'+p.s+'</span>';b.onclick=p.fn;return b}
+  function buildPicks(){
+    var seed=Math.floor(Date.now()/864e5);
+    var ao=$('#aotd');
+    if(ao){
+      var pool=pickPool(),pk=pool[seed%pool.length];
+      ao.innerHTML='';
+      var card=document.createElement('div');card.className='aotd';
+      card.innerHTML='<span class="ae">'+pk.e+'</span><div><b>'+pk.t+'</b><span>'+pk.s+' · picked for today</span></div><span class="go">→</span>';
+      card.onclick=pk.fn;ao.appendChild(card);
+    }
+    var qp=$('#quickPicks');
+    if(qp){
+      qp.innerHTML='';
+      var cats=[
+        GAMES.map(function(gm){return {e:gm.e,t:gm.t,s:'game',fn:function(){openGame(gm.id)}}}),
+        MENU.map(function(m){return {e:m.e,t:m.t,s:'real dopamine',fn:function(){openTile(m)}}}),
+        URGES.map(function(u){return {e:u.e,t:u.k,s:'urge-surf',fn:function(){openTile(u)}}}),
+        RELAX.map(function(r){return {e:r.e,t:r.t,s:'relax',fn:function(){openRelax(r.id)}}}),
+        ARTS.map(function(a,i){return {e:a.e,t:a.t,s:'read',fn:function(){openArticle(i)}}})
+      ];
+      cats.forEach(function(arr,ci){qp.appendChild(qpEl(arr[(seed+ci)%arr.length]))});
+    }
+    var disc=$('#wheelDisc'),sbtn=$('#spinBtn'),wout=$('#wheelOut');
+    if(disc&&sbtn&&wout){
+      var rot=0,spinning=false;
+      var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function deal(){
+        var pool=pickPool();
+        for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=pool[i];pool[i]=pool[j];pool[j]=tmp}
+        var picks=[],seen={};
+        for(var k=0;k<pool.length&&picks.length<3;k++){if(!seen[pool[k].s]){seen[pool[k].s]=1;picks.push(pool[k])}}
+        wout.innerHTML='';
+        picks.forEach(function(pk,i){var el=qpEl(pk);el.style.animationDelay=(i*.12)+'s';wout.appendChild(el)});
+        if(typeof toast==='function')toast('🎡 The wheel has spoken');
+      }
+      sbtn.onclick=function(){
+        if(spinning)return;
+        if(reduce){deal();return}
+        spinning=true;wout.innerHTML='';
+        rot+=1440+Math.floor(Math.random()*720);
+        disc.style.transform='rotate('+rot+'deg)';
+        setTimeout(function(){spinning=false;deal()},2900);
+      };
+    }
+  }
+  buildPicks();
+  function routeAct(k){
+    if(k==='today'){openDay(cur());return}
+    if(k==='breathe'){openGame('breathe');return}
+    if(k==='random'){var pool=['games','journeys','articles','relax','journal','breathe','today'];routeAct(pool[Math.floor(Math.random()*pool.length)]);return}
+    var b=document.querySelector('.dr__nav[data-go="'+k+'"]');if(b)b.click();
+  }
+  function openQuick(){var q=$('#drQuick');if(q)q.classList.add('on')}
+  function closeQuick(){var q=$('#drQuick');if(q)q.classList.remove('on')}
+  document.addEventListener('click',function(e){
+    var ac=e.target.closest('[data-act]');if(ac){closeQuick();routeAct(ACTS[+ac.getAttribute('data-act')].k);return}
+    if(e.target.closest('#drFab')){openQuick();return}
+    if(e.target.closest('#quickClose')){closeQuick();return}
+    if(e.target.id==='drQuick'){closeQuick();return}
+  });
+
+  // ===== content engine: routines, search, bookmarks, continue =====
+  function setLast(o){state.last=o;save();var cc=$('#coContinue');if(cc&&o)cc.innerHTML='<button class="btn btn--ghost btn--sm" data-resume="1" style="margin-top:10px">↩ Continue: '+o.e+' '+o.label+'</button>'}
+  var ROUTINES=[
+    {e:'🌅',t:'Morning routine',sub:'Win the first hour',steps:['No phone for the first 30–60 minutes','Drink a full glass of water','Get daylight in your eyes — window or outside','Move for 5 minutes: stretch or a short walk','Do one small real task before opening the internet']},
+    {e:'🌙',t:'Night routine',sub:'Set up real sleep',steps:['Phone on charge across the room, an hour before bed','Dim the lights, screens off','Write tomorrow’s top 1 task so your mind can let go','In bed: 5 slow breaths — in 4, out 8','Same sleep and wake time every day']},
+    {e:'🎯',t:'Deep focus block',sub:'Train your attention',steps:['Phone in another room','One tab, one task','Set a timer — start with 10 minutes','When the urge to switch hits, don’t. That’s the rep.','Finish, then a real break: move, water, look far away']},
+    {e:'😰',t:'Anxiety reset',sub:'Calm in 3 minutes',steps:['Name it: “this is just anxiety, and it passes”','Long-exhale breathing: in 4, out 8 — x6','Look around and name 5 things you can see','Write the worry + one tiny step you control','Do that one small step now']}
+  ];
+  function openRoutine(i){var rt=ROUTINES[i];if(!rt)return;$('#mProg').classList.remove('on');$('#mTop').style.background='linear-gradient(135deg,var(--teal),var(--violet))';$('#mEmoji').textContent=rt.e;$('#mTag').textContent='Routine';$('#mTitle').textContent=rt.t;
+    $('#mBody').innerHTML='<p style="color:var(--soft);margin:0 0 10px">'+rt.sub+'</p>'+rt.steps.map(function(s,n){return '<div style="display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--line2)"><b style="color:var(--amber);flex:0 0 auto">'+(n+1)+'</b><p style="margin:0;color:var(--soft)">'+s+'</p></div>'}).join('');
+    $('#mAction').innerHTML='';openModal();setLast({type:'routine',i:i,label:rt.t,e:rt.e})}
+  if($('#routineFeed'))$('#routineFeed').innerHTML=ROUTINES.map(function(r,i){return tcard('data-routine="'+i+'"',r.e,g(i*2+1),'ROUTINE',r.t,r.sub,'')}).join('');
+
+  var INDEX=[];
+  ARTS.forEach(function(a,i){INDEX.push({e:a.e,t:a.t,s:'Article · '+a.sub,fn:function(){openArticle(i)}})});
+  ROUTINES.forEach(function(r,i){INDEX.push({e:r.e,t:r.t,s:'Routine · '+r.sub,fn:function(){openRoutine(i)}})});
+  GAMES.forEach(function(gm){INDEX.push({e:gm.e,t:gm.t,s:'Game · '+gm.s,fn:function(){openGame(gm.id)}})});
+  JOURNEYS.forEach(function(j){INDEX.push({e:j.e,t:j.n,s:'Mood help',fn:function(){openJourney(j)}})});
+  RELAX.forEach(function(r){INDEX.push({e:r.e,t:r.t,s:'Relax · '+r.s,fn:function(){openRelax(r.id)}})});
+  QUOTES.forEach(function(q){INDEX.push({e:'📜',t:q.t,s:'Quote',fn:function(){var b=document.querySelector('.dr__nav[data-go="quotes"]');if(b)b.click()}})});
+  [['🗓️','The 7 Days','plan'],['📊','My Stats','stats'],['📈','Insights','insights'],['🎯','Missions','missions'],['🏆','Achievements','achv'],['🌟','Your Why','vision'],['🏅','Daily Wins','wins'],['📓','Journal','journal'],['🧘','Time to Relax','relax'],['💗','Affirmations','affirm']].forEach(function(n){INDEX.push({e:n[0],t:n[1],s:'Section',fn:function(){var b=document.querySelector('.dr__nav[data-go="'+n[2]+'"]');if(b)b.click()}})});
+  var sInput=$('#searchInput');
+  function runSearch(){var box=$('#searchResults');if(!box)return;var q=(sInput.value||'').toLowerCase().trim();if(!q){box.innerHTML='<p style="color:var(--faint)">Start typing to search across everything.</p>';return}
+    var res=[];for(var i=0;i<INDEX.length&&res.length<30;i++){if((INDEX[i].t+' '+INDEX[i].s).toLowerCase().indexOf(q)>-1)res.push(i)}
+    box.innerHTML=res.length?res.map(function(ix){var x=INDEX[ix];return '<div class="sr" data-si="'+ix+'"><span class="e">'+x.e+'</span><div><b>'+x.t+'</b><span>'+x.s+'</span></div></div>'}).join(''):'<p style="color:var(--faint)">Nothing found for “'+q+'”.</p>'}
+  if(sInput){sInput.addEventListener('input',runSearch);runSearch()}
+  function renderSaved2(){var box=$('#savedBox');if(!box)return;var h='',bk=Object.keys(state.bookmarks).filter(function(k){return state.bookmarks[k]&&k.charAt(0)==='a'});
+    if(bk.length){h+='<h3>Bookmarked articles</h3><div class="feed">'+bk.map(function(k){var i=+k.slice(1),a=ARTS[i];return a?tcard('data-article="'+i+'"',a.e,g(i+1),'SAVED',a.t,'Tap to read',(state.read[i]?'read':'')):''}).join('')+'</div>'}
+    if(state.savedQ&&state.savedQ.length){h+='<h3 style="margin-top:16px">Saved quotes</h3>'+state.savedQ.map(function(t){return '<div class="qmini">❤️ <span>'+t+'</span></div>'}).join('')}
+    if(state.savedAff&&state.savedAff.length){h+='<h3 style="margin-top:16px">Saved affirmations</h3>'+state.savedAff.map(function(t){return '<div class="qmini">💗 <span>'+t+'</span></div>'}).join('')}
+    box.innerHTML=h||'<p style="color:var(--faint)">Nothing saved yet. Bookmark an article ☆, or save quotes & affirmations.</p>'}
+  document.addEventListener('click',function(e){
+    var dr2=e.target.closest('[data-routine]');if(dr2){openRoutine(+dr2.getAttribute('data-routine'));return}
+    var srx=e.target.closest('[data-si]');if(srx){var ix=+srx.getAttribute('data-si');if(INDEX[ix])INDEX[ix].fn();return}
+    if(e.target.closest('[data-resume]')){var L=state.last;if(L){if(L.type==='article')openArticle(L.i);else if(L.type==='routine')openRoutine(L.i);else if(L.type==='panel'){var b=document.querySelector('.dr__nav[data-go="'+L.p+'"]');if(b)b.click()}}return}
+  });
+
+  // ===== missions + treasure chest =====
+  var DPOOL=[
+    {a:'challenge',e:'🔥',t:'Do today’s challenge',xp:20},
+    {a:'mood',e:'💗',t:'Log your mood',xp:10},
+    {a:'game',e:'🎮',t:'Play a mind game',xp:15},
+    {a:'crave',e:'💪',t:'Beat a craving',xp:10},
+    {a:'read',e:'📚',t:'Read an article',xp:15},
+    {a:'journal',e:'📓',t:'Journal a line',xp:10},
+    {a:'relax',e:'🧘',t:'Do a relax activity',xp:10}
+  ];
+  function dailyMissions(){var d=new Date(),s=d.getFullYear()*366+d.getMonth()*31+d.getDate(),a=[],i;for(i=0;i<DPOOL.length;i++)a.push(i);var picks=[];for(i=0;i<3;i++){s=(s*9301+49297)%233280;var j=s%a.length;picks.push(DPOOL[a.splice(j,1)[0]])}return picks}
+  function weeklyM(){return [{id:'w_days',e:'📅',t:'Complete 5 days total',xp:50,cur:dc(),target:5},{id:'w_games',e:'🕹️',t:'Play 4 different games',xp:40,cur:gp(),target:4},{id:'w_read',e:'🦉',t:'Read 3 articles',xp:40,cur:rd(),target:3}]}
+  function monthlyM(){return [{id:'m_reset',e:'🏆',t:'Finish the full 7-day reset',xp:120,cur:dc(),target:7},{id:'m_level',e:'💎',t:'Reach Level 5',xp:100,cur:lvl()+1,target:5}]}
+  function msnCard(e,t,cur,target,xp,key){var done=cur>=target,claimed=!!state.claimed[key],pct=Math.min(100,Math.round(cur/target*100));
+    var right=claimed?'<span class="rew">Claimed ✓</span>':(done?'<button class="btn btn--g btn--sm claim" data-claim="'+key+'" data-cxp="'+xp+'">Claim +'+xp+'</button>':'<span class="rew">+'+xp+' XP</span>');
+    return '<div class="msnc'+(done?' done':'')+'"><span class="e">'+e+'</span><div class="mid"><b>'+t+'</b><div class="pb"><i style="width:'+pct+'%"></i></div><span class="rew">'+Math.min(cur,target)+'/'+target+'</span></div>'+right+'</div>';}
+  function renderMissions(){
+    var dl=$('#msnDaily');if(!dl)return;var tk=todayKey();
+    dl.innerHTML=dailyMissions().map(function(m){return msnCard(m.e,m.t,dailyHas(m.a)?1:0,1,m.xp,'d:'+tk+':'+m.a)}).join('');
+    $('#msnWeekly').innerHTML=weeklyM().map(function(m){return msnCard(m.e,m.t,m.cur,m.target,m.xp,m.id)}).join('');
+    $('#msnMonthly').innerHTML=monthlyM().map(function(m){return msnCard(m.e,m.t,m.cur,m.target,m.xp,m.id)}).join('');
+    var allD=dailyMissions().every(function(m){return dailyHas(m.a)}),cw=$('#chestWrap');
+    if(cw){if(state.chest[tk]){cw.innerHTML='<div class="chest opened"><span class="ic">📦</span><div><b>Chest opened — +'+state.chest[tk]+' XP</b><span style="color:var(--soft);font-size:.85rem">Come back tomorrow for another</span></div></div>';}
+      else if(allD){cw.innerHTML='<div class="chest" data-chest="1"><span class="ic">🎁</span><div><b>Daily chest unlocked!</b><span style="color:var(--soft);font-size:.85rem">Tap to open your mystery reward</span></div></div>';}
+      else{cw.innerHTML='<div class="chest opened" style="cursor:default"><span class="ic">🔒</span><div><b>Daily chest</b><span style="color:var(--soft);font-size:.85rem">Finish all 3 daily missions to unlock</span></div></div>';}}
+  }
+  document.addEventListener('click',function(e){
+    var cl=e.target.closest('[data-claim]');if(cl){var key=cl.getAttribute('data-claim'),cxp=+cl.getAttribute('data-cxp');if(!state.claimed[key]){state.claimed[key]=true;state.bonusXp+=cxp;state.mclaimCount=(state.mclaimCount||0)+1;save();fireworks();snd('win');toast('🎯 Mission complete · +'+cxp+' XP');render()}return}
+    var ch=e.target.closest('[data-chest]');if(ch){var tk=todayKey();if(!state.chest[tk]){var rew=10+Math.floor(Math.random()*31);state.chest[tk]=rew;state.bonusXp+=rew;save();fireworks();snd('level');toast('🎁 Mystery reward · +'+rew+' XP!');render()}return}
+  });
+
+  // ===== insights / analytics =====
+  function actLvl(k){var c=state.daily[k]?Object.keys(state.daily[k]).length:(state.dates[k]?1:0);return c<=0?0:c<=2?1:c<=4?2:c<=6?3:4}
+  function cumAt(off){var known=0;for(var j=120;j>=off;j--){var k=keyFor(j);if(state.xpLog[k]!=null)known=state.xpLog[k]}return known}
+  function renderInsights(){
+    if(!$('#hmGrid'))return;
+    var hm='',w,r,i;for(w=0;w<12;w++){hm+='<div class="hmcol">';for(r=0;r<7;r++){var off=83-(w*7+r);if(off<0){hm+='<span class="hmc"></span>';continue}var lv=actLvl(keyFor(off));hm+='<span class="hmc'+(lv?' l'+lv:'')+'"></span>'}hm+='</div>'}$('#hmGrid').innerHTML=hm;
+    var known=0,xs=[];for(i=13;i>=0;i--){var k=keyFor(i);if(state.xpLog[k]!=null)known=state.xpLog[k];xs.push(known)}var xmax=1;xs.forEach(function(v){if(v>xmax)xmax=v});
+    $('#xpTrend').innerHTML=xs.map(function(v){return '<div class="tb"><div class="tbi" style="height:'+Math.max(4,Math.round(v/xmax*100))+'%"></div></div>'}).join('');
+    var ms=[];for(i=13;i>=0;i--){var mk=keyFor(i);ms.push(state.moodLog[mk]!=null?state.moodLog[mk]:null)}
+    $('#moodTrend').innerHTML=ms.map(function(mv){var h=mv==null?5:Math.round((mv+1)/5*100);var bg=mv==null?'var(--bg3)':'linear-gradient(180deg,#4de3ff,#ff5c8a)';return '<div class="tb"><div class="tbi" style="height:'+h+'%;background:'+bg+'"></div></div>'}).join('');
+    var got=0;for(i=0;i<ACHV.length;i++)if(ACHV[i].test())got++;
+    var activeWk=0;for(i=0;i<7;i++)if(state.dates[keyFor(i)])activeWk++;
+    var xpWk=Math.max(0,cumAt(0)-cumAt(7));
+    $('#recap').innerHTML='<div class="card"><h3>This week ✨</h3><p style="margin:0">You showed up <b>'+activeWk+'</b> day'+(activeWk===1?'':'s')+' and earned <b>'+xpWk+' XP</b>. '+(activeWk>=4?'Strong week — keep it rolling. 🔥':activeWk>0?'Nice start. Stack a few more.':'Fresh week. Let’s get day one.')+'</p></div>';
+    var recs=[['🔥',(state.bestStreak||streak()),'Best streak'],['📅',dc(),'Days done'],['⭐',xp(),'Total XP'],['🏅',lvl()+1,'Level'],['⚡',(state.react?state.react+'ms':'—'),'Fastest reaction'],['🎯',(state.mclaimCount||0),'Missions'],['🎁',Object.keys(state.chest||{}).length,'Chests'],['📚',rd(),'Articles']];
+    $('#records').innerHTML=recs.map(function(x){return '<div class="rec"><div class="e">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="l">'+x[2]+'</div></div>'}).join('');
+    var tl='';for(i=0;i<7;i++){var done=state.done[i];tl+='<div class="node'+(done?' done':'')+'"><div class="dot">'+(done?'✓':(i+1))+'</div><div class="nc"><b>Day '+(i+1)+' · '+DAYS[i].t+'</b><span>'+(done?'Completed':(i<=dc()?'Unlocked':'Locked'))+'</span></div></div>'}
+    tl+='<div class="node'+(dc()>=7?' done':'')+'"><div class="dot">'+LEVELS[lvl()].b+'</div><div class="nc"><b>You · Level '+(lvl()+1)+' '+LEVELS[lvl()].n+'</b><span>'+got+' achievements earned</span></div></div>';
+    $('#timeline').innerHTML=tl;
+  }
+
+  logDay();
+  render();renderArts();revealPanel('today');
+  if(!state.onb||!state.onb.done)openOnb();
+
+  // ===== premium interactions: ripple (all), tilt + magnetic (desktop) =====
+  (function(){
+    var fine=window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    document.addEventListener('pointerdown',function(e){if(reduce)return;var b=e.target.closest('.dr .btn');if(!b)return;var r=document.createElement('span');r.className='rip';var rc=b.getBoundingClientRect();r.style.left=(e.clientX-rc.left)+'px';r.style.top=(e.clientY-rc.top)+'px';b.appendChild(r);setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r)},640)});
+    if(!fine||reduce)return;
+    var curT=null,curB=null,lx=0,ly=0,tick=false;
+    function reset(el){if(el)el.style.transform=''}
+    window.addEventListener('pointermove',function(e){lx=e.clientX;ly=e.clientY;if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;
+      var el=document.elementFromPoint(lx,ly);if(!el||!el.closest){reset(curT);curT=null;reset(curB);curB=null;return}
+      var t=el.closest('.doCard,.hblk,.thumb,.dial');
+      if(t!==curT){reset(curT);curT=t}
+      if(t){var r=t.getBoundingClientRect();var px=(lx-r.left)/r.width-0.5,py=(ly-r.top)/r.height-0.5;t.style.transform='perspective(720px) rotateX('+(-py*6).toFixed(2)+'deg) rotateY('+(px*8).toFixed(2)+'deg) translateY(-5px)'}
+      var b=el.closest('.btn');
+      if(b!==curB){reset(curB);curB=b}
+      if(b){var br=b.getBoundingClientRect();var mx=lx-(br.left+br.width/2),my=ly-(br.top+br.height/2);b.style.transform='translate('+(mx*0.16).toFixed(1)+'px,'+(my*0.3).toFixed(1)+'px)'}
+    })});
+  })();
+}catch(err){
+  try{var m=document.querySelector('.dr__main');if(m)m.insertAdjacentHTML('afterbegin','<div style="background:#15121d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:14px;color:#f6f4ef"><b>Your reset is loaded.</b><p style="color:#b8b4ad;margin:6px 0 0">A small visual hiccup happened — tap a menu item on the left to jump in.</p></div>')}catch(e){}
+}
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{
+  "name": "Access page",
+  "settings": [],
+  "presets": [{ "name": "Access page" }]
+}
+{% endschema %}

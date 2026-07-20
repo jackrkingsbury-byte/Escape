@@ -1,0 +1,49 @@
+<section class="section hero" id="top">
+  <div class="wrap hero__inner">
+    {%- if section.settings.scarcity_label != blank -%}
+      <div class="scarcity"><i></i><span data-scarcity="{{ section.settings.scarcity_base }}" data-label="{{ section.settings.scarcity_label }}">{{ section.settings.scarcity_label }}</span></div>
+    {%- endif -%}
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1 class="reveal">{{ section.settings.heading }}</h1>
+    <p class="lead reveal">{{ section.settings.subheading }}</p>
+    <div class="hero__cta reveal">
+      <a class="btn btn--gold btn--lg" href="{{ section.settings.cta1_url | default: '#quiz' }}">{{ section.settings.cta1_label }}</a>
+      <a class="btn btn--ghost btn--lg" href="{{ section.settings.cta2_url | default: '#pricing' }}">{{ section.settings.cta2_label }}</a>
+    </div>
+    <div class="hero__trust reveal">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}><b>{{ block.settings.stat }}</b> {{ block.settings.label }}</div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Most people scroll through life" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Build a life you don't need to escape from." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "A 90-day system of daily dares, habits and bonus kits that turns scrolling into momentum. Join in 60 seconds — your first win unlocks instantly." },
+    { "type": "text", "id": "cta1_label", "label": "Primary CTA label", "default": "Take the 60-second quiz" },
+    { "type": "url", "id": "cta1_url", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary CTA label", "default": "See the plans" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary CTA link" },
+    { "type": "header", "content": "Scarcity badge" },
+    { "type": "text", "id": "scarcity_label", "label": "Scarcity text ({n} = number)", "default": "Only {n} spots left in this cohort" },
+    { "type": "number", "id": "scarcity_base", "label": "Starting number", "default": 30 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Trust stat",
+      "settings": [
+        { "type": "text", "id": "stat", "label": "Number", "default": "2,400+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "members" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

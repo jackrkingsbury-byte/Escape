@@ -1,0 +1,17 @@
+<section class="section">
+  <div class="wrap">
+    <div class="page-head"><p class="eyebrow">Browse</p><h1>Collections</h1></div>
+    <div class="coll-grid">
+      {%- for collection in collections -%}
+        <a class="card" href="{{ collection.url }}">
+          <div class="card__img">{%- if collection.featured_image -%}<img src="{{ collection.featured_image | image_url: width: 460 }}" alt="{{ collection.title | escape }}">{%- else -%}{{ collection.title | slice: 0 }}{%- endif -%}</div>
+          <div class="card__body"><b>{{ collection.title }}</b><span>{{ collection.products_count }} items</span></div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "List collections", "settings": [] }
+{% endschema %}

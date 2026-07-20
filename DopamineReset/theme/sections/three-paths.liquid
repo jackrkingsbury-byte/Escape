@@ -1,0 +1,66 @@
+{% raw %}
+<style>
+  .tp{position:relative;padding:clamp(64px,9vw,110px) 0;background:#060913}
+  .tp__wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+  .tp__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:#4de3ff;margin:0 0 14px;text-align:center}
+  .tp__title{font-family:var(--serif,'Fraunces',serif);font-weight:500;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.06;letter-spacing:-.02em;color:#fff;margin:0 0 clamp(34px,5vw,54px);text-align:center}
+  .tp__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.tp__grid{grid-template-columns:1fr}}
+  .tp__card{position:relative;display:block;border-radius:22px;padding:28px 26px 26px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+    transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s;overflow:hidden}
+  .tp__card::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 0%,rgba(77,227,255,.1),transparent 70%);opacity:0;transition:opacity .3s}
+  .tp__card:hover{transform:translateY(-5px);border-color:rgba(77,227,255,.35);background:rgba(255,255,255,.055)}
+  .tp__card:hover::after{opacity:1}
+  .tp__num{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.68rem;letter-spacing:.26em;color:#5f6b85;display:block;margin-bottom:18px}
+  .tp__ct{font-family:var(--serif,'Fraunces',serif);font-weight:500;font-size:1.4rem;color:#fff;margin:0 0 9px;line-height:1.15}
+  .tp__cx{color:#98a0b5;font-size:.94rem;line-height:1.6;margin:0 0 22px}
+  .tp__go{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#4de3ff}
+  .tp__go i{display:inline-block;font-style:normal;transition:transform .25s}
+  .tp__card:hover .tp__go i{transform:translateX(5px)}
+  .tp .reveal:nth-child(1){transition-delay:.05s}
+  .tp .reveal:nth-child(2){transition-delay:.15s}
+  .tp .reveal:nth-child(3){transition-delay:.25s}
+</style>
+{% endraw %}
+<section class="tp" id="paths">
+  <div class="tp__wrap">
+    <p class="tp__eye reveal">{{ section.settings.eyebrow }}</p>
+    <h2 class="tp__title reveal">{{ section.settings.heading }}</h2>
+    <div class="tp__grid">
+      {%- for block in section.blocks -%}
+        <a class="tp__card reveal" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+          <span class="tp__num">0{{ forloop.index }}</span>
+          <h3 class="tp__ct">{{ block.settings.title }}</h3>
+          <p class="tp__cx">{{ block.settings.text }}</p>
+          <span class="tp__go">{{ block.settings.go }} <i>→</i></span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Three paths",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Start here" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three ways in. Pick one." }
+  ],
+  "blocks": [
+    { "type": "path", "name": "Path", "settings": [
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Text" },
+      { "type": "text", "id": "go", "label": "Link label", "default": "Go" },
+      { "type": "url", "id": "url", "label": "Link" }
+    ]}
+  ],
+  "max_blocks": 3,
+  "presets": [{
+    "name": "Three paths",
+    "blocks": [
+      { "type": "path", "settings": { "title": "Test how fried you are", "text": "4 honest questions, 10 seconds. Find out where your dopamine really is.", "go": "Take the test" }},
+      { "type": "path", "settings": { "title": "See inside the app", "text": "The dashboard, coach, tracker and challenges — look before you buy.", "go": "Open the preview" }},
+      { "type": "path", "settings": { "title": "Start the 7-day reset", "text": "R199 once. Instant access. Feel the shift by day 3.", "go": "Start now" }}
+    ]
+  }]
+}
+{% endschema %}
