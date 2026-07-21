@@ -136,7 +136,7 @@
     cursor: pointer; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
     white-space: nowrap;
   }
-  .btn-primary { background: var(--primary); color: var(--primary-ink); box-shadow: 0 6px 18px -6px var(--primary); }
+  .btn-primary { background: linear-gradient(120deg, var(--primary), var(--primary-2)); color: var(--primary-ink); box-shadow: 0 6px 18px -6px var(--primary); }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -8px var(--primary); }
   .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
   .btn-ghost:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
@@ -162,7 +162,33 @@
   @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
 
   /* ---------- hero ---------- */
-  .hero { padding: clamp(48px, 7vw, 92px) 0 clamp(30px, 4vw, 48px); }
+  .hero { padding: clamp(48px, 7vw, 92px) 0 clamp(30px, 4vw, 48px); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; top: -34%; right: -12%; width: 780px; height: 780px;
+    border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, color-mix(in srgb, var(--primary) 20%, transparent) 0%, transparent 62%);
+  }
+  .hero::after {
+    content: ""; position: absolute; bottom: -45%; left: -15%; width: 640px; height: 640px;
+    border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, color-mix(in srgb, var(--primary) 10%, transparent) 0%, transparent 60%);
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .moneygrad {
+    font-style: normal;
+    background: linear-gradient(105deg, var(--primary) 10%, var(--primary-2) 55%, var(--primary) 95%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .anchor-pill {
+    margin-top: 22px; display: inline-flex; align-items: center; gap: 12px;
+    padding: 0.6em 1.1em; border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    font-family: var(--mono); font-size: 0.92rem; font-variant-numeric: tabular-nums;
+  }
+  .anchor-pill s { color: var(--ink-faint); }
+  .anchor-pill .arr { color: var(--primary); font-weight: 700; }
+  .anchor-pill b { color: var(--primary); }
   .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 60px); align-items: center; }
   @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
   .hero h1 { margin-top: 22px; }
@@ -439,14 +465,15 @@
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow">Your store's personal AI</span>
-        <h1>It watches your store — and tells you how to <em>make more money</em>.</h1>
-        <p class="lede">Every Monday your AI reads your sales and sends the money moves: what to restock, who to win back, when to post. Overseas apps charge thousands a month for this. Yours starts at R0.</p>
+        <h1>It watches your store — and tells you how to <em class="moneygrad">make more money</em>.</h1>
+        <p class="lede">Every Monday your AI reads your sales and sends the money moves: what to restock, who to win back, when to post.</p>
+        <div class="anchor-pill"><s>R2,700/mo overseas</s><span class="arr">→</span><b>4 weeks free here</b></div>
         <div class="cta-row">
           <a class="btn btn-primary" href="#pricing">See plans &amp; pricing</a>
           <a class="btn btn-ghost" href="#demo">See it on a store like yours</a>
         </div>
         <div class="trust">
-          <span><span class="tick">✓</span> Starts at R0 — not thousands</span>
+          <span><span class="tick">✓</span> 4 weeks free — no card</span>
           <span><span class="tick">✓</span> Read-only &amp; safe</span>
           <span><span class="tick">✓</span> Set up in 30 seconds</span>
         </div>
@@ -655,7 +682,7 @@
             <tr><th scope="row">Warns before a stock-out</th><td class="c us"><span class="yes">✓</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="yes">some</span></td></tr>
             <tr><th scope="row">Delivered on WhatsApp</th><td class="c us"><span class="yes">✓</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
             <tr><th scope="row">Needs zero setup or reading charts</th><td class="c us"><span class="yes">✓</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
-            <tr><th scope="row">Free forever tier</th><td class="c us"><span class="yes">✓</span></td><td class="c"><span class="yes">✓</span></td><td class="c"><span class="no">R150–R2,700/mo</span></td></tr>
+            <tr><th scope="row">Full free trial, no card</th><td class="c us"><span class="yes">4 weeks</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">±14 days + card</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -694,21 +721,22 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Pricing</span>
-        <h2>Free to start. Founding rates while we launch.</h2>
-        <p class="sub">Profit apps overseas charge up to R2,700 a month. Your weekly brief is free forever — and Pro is a once-off founding rate, not a subscription.</p>
+        <h2>Try it free. Keep it for a founding rate.</h2>
+        <p class="sub">Profit apps overseas charge up to R2,700 a month. Here: try everything free for 4 weeks, then a once-off founding rate — not a subscription.</p>
       </div>
       <div class="price-grid">
         <div class="plan reveal">
-          <span class="tag">Free forever</span>
-          <div class="pname">Weekly Brief</div>
-          <div class="cost"><span class="amt">R0</span></div>
+          <span class="tag">Free trial</span>
+          <div class="pname">4 weeks of Pro</div>
+          <div class="cost"><span class="amt">R0</span><span class="per">no card</span></div>
+          <div class="save">Every Pro feature, 4 Monday briefs, zero risk</div>
           <ul>
-            <li><span class="tick">✓</span> Plain-English brief, every Monday by email</li>
-            <li><span class="tick">✓</span> Sales, orders &amp; average basket vs last week</li>
-            <li><span class="tick">✓</span> Your top seller and best day</li>
-            <li><span class="tick">✓</span> One clear action for the week</li>
+            <li><span class="tick">✓</span> The full brief — sales, why, top seller, best day</li>
+            <li><span class="tick">✓</span> Restock radar &amp; win-back nudges</li>
+            <li><span class="tick">✓</span> Delivered on WhatsApp or email</li>
+            <li><span class="tick">✓</span> Ends on its own — you can never be charged by surprise</li>
           </ul>
-          <a class="btn btn-ghost" href="#get">Start free</a>
+          <a class="btn btn-ghost" href="#get">Start free trial</a>
         </div>
         <div class="plan reveal">
           <span class="tag">Founding member</span>
@@ -716,7 +744,7 @@
           <div class="cost"><span class="amt">R150</span><span class="per">once</span></div>
           <div class="save">Just R25 / month</div>
           <ul>
-            <li><span class="tick">✓</span> Everything in Free, plus:</li>
+            <li><span class="tick">✓</span> Keep everything from your trial, plus:</li>
             <li><span class="tick">✓</span> Delivered on <b>WhatsApp</b>, every morning if you like</li>
             <li><span class="tick">✓</span> <b>Restock radar</b> — sell-out warnings before they hit</li>
             <li><span class="tick">✓</span> <b>Why-it-moved</b> breakdown &amp; win-back lists</li>
@@ -766,8 +794,8 @@
           <div class="ans">You still get a brief — an honest one. "No sales this week — here's one thing to try." No fake cheerfulness, no hiding it. Knowing is better than guessing.</div>
         </details>
         <details>
-          <summary>Can I cancel anytime?</summary>
-          <div class="ans">Yes, in one click, and you drop straight back to the free plan — you never lose the weekly brief. No lock-in, no "call us to cancel".</div>
+          <summary>What happens when the free trial ends?</summary>
+          <div class="ans">It simply stops — nothing to cancel, and since there's no card on file you can never be charged by surprise. If the briefs made you money, you grab a founding plan and they keep coming.</div>
         </details>
       </div>
     </div>
@@ -797,14 +825,14 @@
   <section class="final" id="get">
     <div class="wrap">
       <div class="final-card">
-        <h2>Know your store by heart.</h2>
-        <p class="sub">Drop your email and get your first free weekly brief. No dashboard, no card, no jargon.</p>
+        <h2>Start your 4 free weeks.</h2>
+        <p class="sub">Drop your email — your first brief lands Monday. No card, no dashboard, no jargon.</p>
         <form class="signup" id="signupForm" novalidate>
           <input type="email" id="signupEmail" placeholder="you@yourstore.com" required autocomplete="email" aria-label="Your email address">
           <button class="btn btn-primary" type="submit">Get my free brief</button>
         </form>
-        <p class="signup-done" id="signupDone">✓ You're on the list — your first brief is on its way. 📊</p>
-        <p class="status">Free forever · No card · Unsubscribe anytime</p>
+        <p class="signup-done" id="signupDone">✓ You're in — your 4 free weeks start Monday. 📊</p>
+        <p class="status">4 weeks free · No card · Ends on its own, no surprise charges</p>
       </div>
     </div>
   </section>
