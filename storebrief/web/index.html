@@ -351,6 +351,57 @@
   /* Reveal is purely additive: content is visible by default, and only the
      hidden pre-animation state is applied when JS is active — so a failed
      observer or disabled JS can never hide content. */
+  /* ---------- WhatsApp showcase ---------- */
+  .wa-section { background: var(--surface-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 64px); align-items: center; }
+  @media (max-width: 860px) { .wa-grid { grid-template-columns: 1fr; } .wa-grid .phone-wrap { order: -1; } }
+  .wa-copy h2 { margin-top: 14px; }
+  .wa-copy .sub { margin-top: 16px; color: var(--ink-soft); font-size: var(--step-1); line-height: 1.5; max-width: 40ch; }
+  .wa-points { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; padding: 0; list-style: none; }
+  .wa-points li { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; }
+  .wa-points .k { flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: color-mix(in srgb, var(--primary) 15%, var(--surface)); color: var(--primary); font-family: var(--mono); font-weight: 700; font-size: 0.9rem; }
+  .wa-points b { display: block; }
+  .wa-points span { color: var(--ink-soft); font-size: 0.92rem; }
+  .wa-copy .btn { margin-top: 28px; }
+
+  /* Phone mockup — deliberately committed to WhatsApp's own look so it reads
+     instantly as "this arrives in WhatsApp", regardless of page theme. */
+  .phone-wrap { display: flex; justify-content: center; }
+  .phone {
+    width: 320px; max-width: 100%; border-radius: 40px; padding: 12px;
+    background: linear-gradient(160deg, #2b3a34, #10201a);
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(0,0,0,.15) inset;
+  }
+  .phone-screen { border-radius: 30px; overflow: hidden; background: #e5ddd5; position: relative; }
+  .wa-topbar { background: #075e54; color: #fff; padding: 12px 14px 12px; display: flex; align-items: center; gap: 10px; }
+  .wa-topbar .back { font-size: 1.3rem; line-height: 1; opacity: .9; }
+  .wa-topbar .ava { width: 38px; height: 38px; border-radius: 50%; background: #cfe9cf; display: grid; place-items: center; font-size: 1.15rem; flex: none; }
+  .wa-topbar .who { line-height: 1.2; flex: 1; min-width: 0; }
+  .wa-topbar .who b { font-size: 0.98rem; font-weight: 600; }
+  .wa-topbar .who span { font-size: 0.72rem; opacity: .82; display: block; }
+  .wa-topbar .icons { font-size: 1.05rem; opacity: .9; letter-spacing: 3px; }
+  .wa-chat {
+    padding: 14px 12px 16px; min-height: 300px;
+    background-color: #e5ddd5;
+    background-image: radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px);
+    background-size: 16px 16px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .wa-daychip { align-self: center; background: #dbe9d9; color: #4a6b5a; font-size: 0.64rem; font-weight: 700; letter-spacing: .1em; padding: 4px 12px; border-radius: 8px; text-transform: uppercase; }
+  .wa-in {
+    align-self: flex-start; background: #fff; color: #0b1f16; border-radius: 10px 10px 10px 2px;
+    padding: 9px 11px 7px; font-size: 0.82rem; line-height: 1.5; max-width: 90%;
+    box-shadow: 0 1px .5px rgba(0,0,0,.13); white-space: pre-wrap; word-break: break-word;
+    font-family: var(--sans);
+  }
+  .wa-in b { font-weight: 700; }
+  .wa-in .stamp { display: block; text-align: right; font-size: 0.6rem; color: #7c9488; margin-top: 3px; font-family: var(--mono); }
+  .wa-note { align-self: flex-start; background: #d9fdd3; color: #0b1f16; border-radius: 10px 10px 10px 2px; padding: 8px 11px; font-size: 0.8rem; box-shadow: 0 1px .5px rgba(0,0,0,.13); max-width: 90%; }
+  .wa-note .stamp { display:block; text-align:right; font-size:0.6rem; color:#4a6b5a; margin-top:3px; font-family: var(--mono); }
+  .wa-inputbar { background: #f0f0f0; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+  .wa-inputbar .box { flex: 1; background: #fff; border-radius: 18px; padding: 8px 12px; font-size: 0.78rem; color: #98a29c; }
+  .wa-inputbar .send { width: 34px; height: 34px; border-radius: 50%; background: #075e54; color: #fff; display: grid; place-items: center; font-size: 1rem; flex: none; }
+
   .reveal { opacity: 1; transform: none; }
   .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
   .js .reveal.in { opacity: 1; transform: none; }
@@ -363,8 +414,8 @@
   <div class="wrap nav-in">
     <a class="brand" href="#top"><span class="dot"></span>Store<b>Brief</b></a>
     <nav class="nav-links" aria-label="Primary">
+      <a href="#whatsapp" class="hide-sm">WhatsApp</a>
       <a href="#demo" class="hide-sm">Live demo</a>
-      <a href="#features" class="hide-sm">Features</a>
       <a href="#pricing" class="hide-sm">Pricing</a>
       <a class="btn btn-primary" href="#get">Get StoreBrief</a>
     </nav>
@@ -406,6 +457,44 @@
             </div>
           </div>
           <div class="brief-foot">Every number is computed from your orders — never guessed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHATSAPP SHOWCASE ===================== -->
+  <section class="wa-section" id="whatsapp">
+    <div class="wrap wa-grid">
+      <div class="wa-copy">
+        <span class="eyebrow">The part Shopify can't copy</span>
+        <h2>Your whole store — in the app you already open every morning.</h2>
+        <p class="sub">Shopify makes you log in and read charts. StoreBrief sends the answer straight to WhatsApp, Monday at 8am. No dashboard, no login, no jargon.</p>
+        <ul class="wa-points">
+          <li><span class="k">✓</span><div><b>Zero effort</b><span>It arrives on its own. You just read it while the kettle boils.</span></div></li>
+          <li><span class="k">✓</span><div><b>Where you already are</b><span>Not another tab to remember — the app you check 50 times a day.</span></div></li>
+          <li><span class="k">✓</span><div><b>The full brief</b><span>Sales, the why, restock warnings, the one move for the week — all of it.</span></div></li>
+        </ul>
+        <a class="btn btn-primary" href="#pricing">Get it on WhatsApp — Pro</a>
+      </div>
+      <div class="phone-wrap reveal">
+        <div class="phone" role="img" aria-label="A WhatsApp chat showing the StoreBrief weekly message arriving from StoreBrief.">
+          <div class="phone-screen">
+            <div class="wa-topbar">
+              <span class="back" aria-hidden="true">‹</span>
+              <span class="ava" aria-hidden="true">📊</span>
+              <span class="who"><b>StoreBrief</b><span>business account</span></span>
+              <span class="icons" aria-hidden="true">⠇</span>
+            </div>
+            <div class="wa-chat">
+              <div class="wa-daychip">Monday</div>
+              <div class="wa-in" id="phoneMsg"></div>
+              <div class="wa-note">Reply <b>STOP</b> to pause, <b>DAILY</b> for every morning.<span class="stamp">08:00</span></div>
+            </div>
+            <div class="wa-inputbar">
+              <span class="box" aria-hidden="true">Message</span>
+              <span class="send" aria-hidden="true">➤</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -937,6 +1026,13 @@
   // Hero card lines (static, animated once).
   const heroData = computeBrief(Object.assign({ period:"10 Jul – 17 Jul" }, PRESETS.growing));
   renderLines(el("heroLines"), briefLines(heroData), true);
+
+  // WhatsApp phone mockup — real engine output, with a delivered stamp.
+  const phoneMsg = el("phoneMsg");
+  if (phoneMsg) {
+    phoneMsg.innerHTML = whatsappText(heroData).replace(/\n/g, "<br>") +
+      '<span class="stamp">08:00 ✓✓</span>';
+  }
 
   // Initial demo render.
   renderDemo(true);

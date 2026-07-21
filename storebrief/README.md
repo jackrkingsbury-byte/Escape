@@ -40,6 +40,9 @@ forces the deterministic fallback.
 - [x] Stock-out forecast (velocity-based days-left on top sellers, via
       optional `inventory` input)
 - [x] WhatsApp-formatted brief (`renderWhatsAppText`) — guardrail-checked
+- [x] WhatsApp delivery module (`lib/whatsapp.ts`, Twilio) — handles the Meta
+      24-hour-window rule (proactive sends are template-gated); injectable
+      transport so tests verify the payload without the network
 - [x] AI writer + numeric guardrail + no-key fallback
 - [x] Shopify adapter (`ORDERS_QUERY`, test/cancelled exclusion, customer ids,
       cursor pagination) — validated against real Escape-store data via the
