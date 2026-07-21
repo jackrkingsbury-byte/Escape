@@ -45,8 +45,19 @@ forces the deterministic fallback.
       cursor pagination) — validated against real Escape-store data via the
       Shopify MCP connector; fetch 4 windows (`ordersSinceFilter`) for the trend
 - [x] Weekly HTML email renderer (stats, sparkline, slump alert, action)
+- [x] Marketing landing page (`web/index.html`) — self-contained, both themes,
+      with a live in-browser demo that runs a JS port of the engine
 - [ ] App shell: OAuth, mandatory GDPR webhooks, Billing API, listing —
       **blocked on a Shopify Partner account** (18+ ToS; guardian-held)
+
+## Landing page
+
+`web/index.html` is a complete, self-contained sales page (no build step, no
+external assets). The `<!-- ARTIFACT-BODY-START/END -->` markers bracket the
+inner body for publishing as a Claude Artifact; the file also serves as-is from
+any static host. The live demo ports `computeBrief` / `renderBriefText` /
+`renderWhatsAppText` to vanilla JS so the numbers on the page are computed, not
+mocked.
 
 ## Running
 
