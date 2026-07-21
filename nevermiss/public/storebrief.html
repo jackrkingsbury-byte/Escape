@@ -343,6 +343,14 @@
   .final-card .btn-ghost { color: #fff; border-color: rgba(255,255,255,.35); }
   .final-card .btn-ghost:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.08); }
   .final-card .status { margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,.6); font-family: var(--mono); }
+  .signup { margin: 28px auto 0; max-width: 460px; display: flex; gap: 10px; }
+  .signup input { flex: 1; min-width: 0; padding: 0.85em 1.15em; border-radius: 999px; border: 1px solid rgba(255,255,255,.32); background: rgba(255,255,255,.08); color: #fff; font-size: 1rem; font-family: var(--sans); }
+  .signup input::placeholder { color: rgba(255,255,255,.55); }
+  .signup input:focus-visible { outline: 3px solid var(--primary-2); outline-offset: 2px; }
+  .signup .btn { flex: none; }
+  @media (max-width: 520px) { .signup { flex-direction: column; } .signup .btn { width: 100%; justify-content: center; } }
+  .signup-done { margin: 28px auto 0; max-width: 460px; color: #fff; font-size: 1.1rem; font-weight: 600; display: none; }
+  .signup-done.show { display: block; }
 
   /* ---------- footer ---------- */
   footer.foot { border-top: 1px solid var(--line-soft); padding: 32px 0 44px; }
@@ -700,7 +708,7 @@
             <li><span class="tick">✓</span> Your top seller and best day</li>
             <li><span class="tick">✓</span> One clear action for the week</li>
           </ul>
-          <a class="btn btn-ghost" href="#demo">Start free</a>
+          <a class="btn btn-ghost" href="#get">Start free</a>
         </div>
         <div class="plan reveal">
           <span class="tag">Founding member</span>
@@ -790,12 +798,13 @@
     <div class="wrap">
       <div class="final-card">
         <h2>Know your store by heart.</h2>
-        <p class="sub">Start with the free weekly brief. Add WhatsApp and the restock radar whenever you're ready.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#demo">Try the live demo</a>
-          <a class="btn btn-ghost" href="mailto:jackrkingsbury2@gmail.com?subject=Notify%20me%20when%20StoreBrief%20launches&body=Hi%20Jack%2C%20please%20let%20me%20know%20when%20StoreBrief%20is%20live%20on%20the%20Shopify%20App%20Store.">Notify me at launch</a>
-        </div>
-        <p class="status">◷ Launching on the Shopify App Store soon.</p>
+        <p class="sub">Drop your email and get your first free weekly brief. No dashboard, no card, no jargon.</p>
+        <form class="signup" id="signupForm" novalidate>
+          <input type="email" id="signupEmail" placeholder="you@yourstore.com" required autocomplete="email" aria-label="Your email address">
+          <button class="btn btn-primary" type="submit">Get my free brief</button>
+        </form>
+        <p class="signup-done" id="signupDone">✓ You're on the list — your first brief is on its way. 📊</p>
+        <p class="status">Free forever · No card · Unsubscribe anytime</p>
       </div>
     </div>
   </section>
@@ -810,6 +819,15 @@
 
 <script>
   "use strict";
+
+  /* ---------------------------------------------------------
+     Free-brief signup. Paste your Make.com (or any) webhook URL
+     below to collect emails. Until then, the button falls back
+     to an email straight to the founder, so no signup is lost.
+     --------------------------------------------------------- */
+  const SIGNUP_WEBHOOK = ""; // ← paste your Make webhook URL here
+  const FOUNDER_EMAIL = "jackrkingsbury2@gmail.com";
+
   /* =========================================================
      StoreBrief engine — vanilla-JS port of the real lib.
      Same formulas the tested TypeScript uses, so the demo
@@ -1052,6 +1070,32 @@
 
   // Initial demo render.
   renderDemo(true);
+
+  /* ---------- free-brief signup ---------- */
+  const signupForm = el("signupForm");
+  if (signupForm) {
+    signupForm.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const email = el("signupEmail").value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { el("signupEmail").focus(); return; }
+      const record = { email, source: "storebrief-landing", ts: new Date().toISOString() };
+      if (SIGNUP_WEBHOOK) {
+        // Fire-and-forget to the Make webhook (static-site friendly).
+        fetch(SIGNUP_WEBHOOK, {
+          method: "POST", mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(record),
+        }).catch(() => {});
+      } else {
+        // No webhook set yet — never lose the lead: email the founder.
+        window.location.href = "mailto:" + FOUNDER_EMAIL +
+          "?subject=" + encodeURIComponent("Free StoreBrief signup") +
+          "&body=" + encodeURIComponent("I'd like the free weekly brief.\nMy email: " + email + "\nMy store: ");
+      }
+      signupForm.style.display = "none";
+      el("signupDone").classList.add("show");
+    });
+  }
 
   /* ---------- scroll reveal (progressive enhancement) ---------- */
   if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
