@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to StoreBrief 🎉</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    background: #0f1512; color: #eaf1ec; padding: 24px;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .card {
+    max-width: 520px; width: 100%; background: #161e1a; border: 1px solid rgba(234,241,236,.14);
+    border-radius: 22px; padding: clamp(28px, 6vw, 48px); box-shadow: 0 24px 60px rgba(0,0,0,.5); text-align: center;
+  }
+  .tick { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center;
+    background: linear-gradient(120deg, #17624a, #2e9b6e); font-size: 2rem; }
+  h1 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: clamp(1.7rem, 5vw, 2.3rem); margin: 0 0 12px; letter-spacing: -.02em; }
+  p { color: #9db0a6; line-height: 1.6; margin: 0 0 14px; font-size: 1.02rem; }
+  .steps { text-align: left; margin: 24px 0 8px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .steps li { display: flex; gap: 12px; align-items: flex-start; color: #cdd8d2; font-size: .98rem; }
+  .steps .n { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+    background: rgba(79,214,156,.15); color: #4fd69c; font-weight: 700; font-family: ui-monospace, monospace; font-size: .85rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5em; margin-top: 22px; padding: .85em 1.5em; border-radius: 999px;
+    background: linear-gradient(120deg, #17624a, #2e9b6e); color: #fff; text-decoration: none; font-weight: 600; }
+  .fine { margin-top: 20px; font-size: .82rem; color: #6f8177; }
+  a.plain { color: #4fd69c; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="tick">✓</div>
+    <h1>You're a Founder. 🎉</h1>
+    <p>Payment received — thank you for backing StoreBrief early. Here's exactly what happens next:</p>
+    <ol class="steps">
+      <li><span class="n">1</span><div><b>Reply to the WhatsApp / email you'll get shortly</b> with your store link, so the AI can start reading your sales.</div></li>
+      <li><span class="n">2</span><div><b>Your first brief lands next Monday</b> — sales, what moved, and the one move for the week, in plain English.</div></li>
+      <li><span class="n">3</span><div><b>Founding rate locked.</b> You're in before launch, at a price that won't come back.</div></li>
+    </ol>
+    <a class="btn" href="https://wa.me/27826118749?text=Hi%21%20I%20just%20became%20a%20StoreBrief%20Founder.%20My%20store%20is%3A%20">Send my store link on WhatsApp</a>
+    <p class="fine">Didn't mean to pay, or something looks off? Message us and we'll sort it — <a class="plain" href="mailto:jackrkingsbury2@gmail.com">jackrkingsbury2@gmail.com</a>.</p>
+  </div>
+</body>
+</html>
