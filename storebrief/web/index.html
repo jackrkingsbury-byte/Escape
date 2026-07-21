@@ -299,8 +299,10 @@
   .step p { margin-top: 8px; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
 
   /* ---------- pricing ---------- */
-  .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
-  @media (max-width: 720px) { .price-grid { grid-template-columns: 1fr; } }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; align-items: start; }
+  @media (max-width: 940px) { .price-grid { grid-template-columns: 1fr; max-width: 460px; } }
+  .plan .save { margin-top: 6px; font-size: 0.82rem; color: var(--primary); font-weight: 600; }
+  .plan .once { color: var(--ink-faint); font-size: 0.95rem; }
   .plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
   .plan.pro { border-color: color-mix(in srgb, var(--primary) 45%, transparent); box-shadow: var(--shadow-lg); position: relative; }
   .plan .tag { align-self: flex-start; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); background: color-mix(in srgb, var(--primary) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); padding: 0.35em 0.7em; border-radius: 999px; }
@@ -684,26 +686,27 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Pricing</span>
-        <h2>Free to start. Pro when you're hooked.</h2>
-        <p class="sub">The free brief is genuinely useful forever — no trial that expires, no card to start.</p>
+        <h2>Free to start. Founding rates while we launch.</h2>
+        <p class="sub">The weekly brief is free forever. Pro is launching on the Shopify App Store — back it now at a founding rate and pay once, no monthly sign-up.</p>
       </div>
       <div class="price-grid">
         <div class="plan reveal">
           <span class="tag">Free forever</span>
           <div class="pname">Weekly Brief</div>
-          <div class="cost"><span class="amt">R0</span><span class="per">/ month</span></div>
+          <div class="cost"><span class="amt">R0</span></div>
           <ul>
             <li><span class="tick">✓</span> Plain-English brief, every Monday by email</li>
             <li><span class="tick">✓</span> Sales, orders &amp; average basket vs last week</li>
             <li><span class="tick">✓</span> Your top seller and best day</li>
             <li><span class="tick">✓</span> One clear action for the week</li>
           </ul>
-          <a class="btn btn-ghost" href="#get">Start free</a>
+          <a class="btn btn-ghost" href="#demo">Start free</a>
         </div>
-        <div class="plan pro reveal">
-          <span class="tag">Pro</span>
-          <div class="pname">Brief + Radar</div>
-          <div class="cost"><span class="amt">R99</span><span class="per">/ month</span></div>
+        <div class="plan reveal">
+          <span class="tag">Founding member</span>
+          <div class="pname">Pro · 6 months</div>
+          <div class="cost"><span class="amt">R150</span><span class="per">once</span></div>
+          <div class="save">Just R25 / month</div>
           <ul>
             <li><span class="tick">✓</span> Everything in Free, plus:</li>
             <li><span class="tick">✓</span> Delivered on <b>WhatsApp</b>, every morning if you like</li>
@@ -711,7 +714,20 @@
             <li><span class="tick">✓</span> <b>Why-it-moved</b> breakdown &amp; win-back lists</li>
             <li><span class="tick">✓</span> Busiest-hours &amp; 4-week momentum</li>
           </ul>
-          <a class="btn btn-primary" href="#get">Go Pro</a>
+          <a class="btn btn-ghost" href="https://wa.me/27826118749?text=Hi%21%20I%27d%20like%20the%20StoreBrief%20Founding%20plan%20%28R150%20-%206%20months%20of%20Pro%29.%20My%20store%20is%3A%20">Become a Founder</a>
+        </div>
+        <div class="plan pro reveal">
+          <span class="tag">Best value</span>
+          <div class="pname">Pro · 1 year</div>
+          <div class="cost"><span class="amt">R299</span><span class="per">once</span></div>
+          <div class="save">A full year + your founding rate locked for life</div>
+          <ul>
+            <li><span class="tick">✓</span> Everything in the 6-month plan</li>
+            <li><span class="tick">✓</span> <b>12 months</b> of Pro, one payment</li>
+            <li><span class="tick">✓</span> Your <b>R25/month founding rate, locked forever</b></li>
+            <li><span class="tick">✓</span> First to get every new feature</li>
+          </ul>
+          <a class="btn btn-primary" href="https://wa.me/27826118749?text=Hi%21%20I%27d%20like%20the%20StoreBrief%20Founding%20Year%20%28R299%20-%2012%20months%20of%20Pro%29.%20My%20store%20is%3A%20">Become a Founder</a>
         </div>
       </div>
     </div>
