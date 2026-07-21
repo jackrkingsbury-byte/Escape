@@ -387,6 +387,21 @@
   /* Reveal is purely additive: content is visible by default, and only the
      hidden pre-animation state is applied when JS is active — so a failed
      observer or disabled JS can never hide content. */
+  /* ---------- store scan ---------- */
+  .scanbar { margin-top: 30px; display: flex; gap: 10px; max-width: 640px; }
+  .scanbar input {
+    flex: 1; min-width: 0; padding: 0.85em 1.15em; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    font-size: 1rem; font-family: var(--mono);
+  }
+  .scanbar input:focus-visible { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent); }
+  @media (max-width: 560px) { .scanbar { flex-direction: column; } .scanbar .btn { width: 100%; justify-content: center; } }
+  .scan-note { margin-top: 14px; font-size: 0.92rem; color: var(--ink-soft); }
+  .scan-note a { color: var(--primary); font-weight: 600; }
+  .scan-error { margin-top: 14px; font-size: 0.95rem; color: var(--rose); }
+  .scan-result { margin-top: 26px; max-width: 720px; }
+  .scan-cta { margin-top: 18px; }
+
   /* ---------- WhatsApp showcase ---------- */
   .wa-section { background: var(--surface-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
   .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 64px); align-items: center; }
@@ -494,6 +509,43 @@
             </div>
           </div>
           <div class="brief-foot">Every number is computed from your orders — never guessed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LIVE STORE SCAN ===================== -->
+  <section id="scan">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Watch it read YOUR store</span>
+        <h2>Paste your store link. The AI reads it — right now.</h2>
+        <p class="sub">No signup, no install. It reads your public storefront live and hands you your first money moves in seconds.</p>
+      </div>
+      <form class="scanbar" id="scanForm" novalidate>
+        <input type="text" id="scanUrl" placeholder="yourstore.co.za or yourstore.myshopify.com" aria-label="Your store link" autocomplete="url">
+        <button class="btn btn-primary" type="submit" id="scanBtn">Read my store</button>
+      </form>
+      <p class="scan-note" id="scanNote" hidden></p>
+      <p class="scan-error" id="scanError" hidden></p>
+      <div class="scan-result" id="scanResult" hidden>
+        <div class="brief-card">
+          <div class="brief-head">
+            <span class="bh-brand">StoreBrief</span>
+            <span class="bh-period num">live scan</span>
+          </div>
+          <div class="brief-body">
+            <div class="brief-hello" id="scanHello">Your storefront, read by the AI</div>
+            <div class="brief-lines" id="scanLines"></div>
+            <div class="brief-action">
+              <div class="lbl">Do this first</div>
+              <div class="txt" id="scanAction"></div>
+            </div>
+          </div>
+          <div class="brief-foot">This scan reads only your public storefront. Your sales data needs your say-so — that's the free trial.</div>
+        </div>
+        <div class="scan-cta">
+          <a class="btn btn-primary" href="#get">Now read my sales — start 4 free weeks</a>
         </div>
       </div>
     </div>
@@ -1098,6 +1150,65 @@
 
   // Initial demo render.
   renderDemo(true);
+
+  /* ---------- live store scan ---------- */
+  const LIVE_SITE = "https://escape-nevermiss3.vercel.app/storebrief.html";
+  const scanForm = el("scanForm");
+  if (scanForm) {
+    const canScanHere = /^https?:$/.test(location.protocol) &&
+      (/\.vercel\.app$/.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1");
+    const scanBtn = el("scanBtn"), scanErr = el("scanError"), scanNote = el("scanNote"), scanRes = el("scanResult");
+
+    function showScan(report) {
+      el("scanHello").textContent = "Hi " + report.shopHost + " 👋";
+      const box = el("scanLines");
+      box.innerHTML = "";
+      report.lines.forEach((line, i) => {
+        const row = document.createElement("div");
+        row.className = "brief-line";
+        row.style.animationDelay = (i * 80) + "ms";
+        row.innerHTML = '<span class="tx"></span>';
+        row.querySelector(".tx").textContent = line;
+        box.appendChild(row);
+      });
+      el("scanAction").textContent = report.action;
+      scanRes.hidden = false;
+      scanRes.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    async function runScan(value) {
+      scanErr.hidden = true; scanNote.hidden = true; scanRes.hidden = true;
+      if (!value.trim()) { el("scanUrl").focus(); return; }
+      if (!canScanHere) {
+        scanNote.innerHTML = 'The live scanner runs on the real site — <a href="' + LIVE_SITE +
+          "?scan=" + encodeURIComponent(value.trim()) + '">open it there</a> and it will read your store instantly.';
+        scanNote.hidden = false;
+        return;
+      }
+      scanBtn.disabled = true;
+      const oldLabel = scanBtn.textContent;
+      scanBtn.textContent = "Reading your store…";
+      try {
+        const res = await fetch("/api/storescan?url=" + encodeURIComponent(value.trim()));
+        const json = await res.json().catch(() => ({}));
+        if (json && json.ok && json.report) {
+          showScan(json.report);
+        } else {
+          scanErr.textContent = (json && json.error) || "Couldn't read that store — check the link and try again.";
+          scanErr.hidden = false;
+        }
+      } catch {
+        scanErr.textContent = "Couldn't reach the scanner — check your connection and try again.";
+        scanErr.hidden = false;
+      }
+      scanBtn.disabled = false;
+      scanBtn.textContent = oldLabel;
+    }
+
+    scanForm.addEventListener("submit", (ev) => { ev.preventDefault(); runScan(el("scanUrl").value); });
+    const preset = new URLSearchParams(location.search).get("scan");
+    if (preset) { el("scanUrl").value = preset; runScan(preset); }
+  }
 
   /* ---------- free-brief signup ---------- */
   const signupForm = el("signupForm");
