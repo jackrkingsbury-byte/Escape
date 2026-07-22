@@ -402,6 +402,19 @@
   .scan-result { margin-top: 26px; max-width: 720px; }
   .scan-cta { margin-top: 18px; }
 
+  /* ---------- connect (real sales) ---------- */
+  .connect-form { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; max-width: 780px; }
+  @media (max-width: 680px) { .connect-form { grid-template-columns: 1fr; } .connect-form .btn { width: 100%; justify-content: center; } }
+  .connect-form input {
+    min-width: 0; padding: 0.85em 1.15em; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 1rem; font-family: var(--mono);
+  }
+  .connect-form input:focus-visible { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent); }
+  .conn-how { margin-top: 16px; max-width: 780px; }
+  .conn-how ol { margin: 4px 0 4px 1.1em; padding: 0; color: var(--ink-soft); line-height: 1.7; font-size: 0.95rem; }
+  .conn-safe { margin-top: 14px; font-size: 0.86rem; color: var(--ink-faint); display: flex; gap: 8px; align-items: baseline; max-width: 780px; }
+  .conn-safe .lock { color: var(--primary); }
+
   /* ---------- WhatsApp showcase ---------- */
   .wa-section { background: var(--surface-2); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
   .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 64px); align-items: center; }
@@ -546,6 +559,58 @@
         </div>
         <div class="scan-cta">
           <a class="btn btn-primary" href="#get">Now read my sales — start 4 free weeks</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONNECT (REAL SALES) ===================== -->
+  <section id="connect" class="demo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">See your REAL sales</span>
+        <h2>Connect your store — read-only — and see your actual numbers.</h2>
+        <p class="sub">Your sales are private, so Shopify needs your say-so — no app or website can read them from a link alone. Paste your store and a read-only key you make in 2 minutes, and the AI reads your real revenue, top seller and best day, live.</p>
+      </div>
+      <form class="connect-form" id="connectForm" novalidate>
+        <input type="text" id="connShop" placeholder="yourstore.myshopify.com" aria-label="Your myshopify.com address" autocomplete="off">
+        <input type="password" id="connToken" placeholder="Read-only key (shpat_…)" aria-label="Admin API access token" autocomplete="off">
+        <button class="btn btn-primary" type="submit" id="connBtn">Read my real numbers</button>
+      </form>
+      <details class="conn-how">
+        <summary>How to get your read-only key (2 minutes, free)</summary>
+        <div class="ans">
+          <ol>
+            <li>In your Shopify admin: <b>Settings → Apps and sales channels → Develop apps</b>.</li>
+            <li><b>Create an app</b> → name it "StoreBrief".</li>
+            <li><b>Configure Admin API scopes</b> → tick <b>read_orders</b> and <b>read_products</b> → Save.</li>
+            <li><b>Install app</b> → then <b>Reveal token once</b> and copy it (starts <code>shpat_</code>).</li>
+            <li>Paste it above with your store address. That's it.</li>
+          </ol>
+        </div>
+      </details>
+      <p class="conn-safe"><span class="lock">🔒</span><span>Read-only: it can look at your orders, never change anything, never touch your password or money. Your key is used once to read your numbers and is never stored.</span></p>
+      <p class="scan-error" id="connError" hidden></p>
+      <p class="scan-note" id="connNote" hidden></p>
+      <div class="scan-result" id="connResult" hidden>
+        <div class="brief-card">
+          <div class="brief-head">
+            <span class="bh-brand">StoreBrief</span>
+            <span class="bh-period num">your real numbers</span>
+          </div>
+          <div class="brief-body">
+            <div class="brief-hello" id="connHello">Your store, read by the AI</div>
+            <div class="brief-sub">Last 30 days, straight from your orders.</div>
+            <div class="brief-lines" id="connLines"></div>
+            <div class="brief-action">
+              <div class="lbl">This week</div>
+              <div class="txt" id="connAction"></div>
+            </div>
+          </div>
+          <div class="brief-foot">This is your real sales data — now imagine it every Monday, in plain English, on WhatsApp.</div>
+        </div>
+        <div class="scan-cta">
+          <a class="btn btn-primary" href="#get">Get this every Monday — start 4 free weeks</a>
         </div>
       </div>
     </div>
@@ -1208,6 +1273,65 @@
     scanForm.addEventListener("submit", (ev) => { ev.preventDefault(); runScan(el("scanUrl").value); });
     const preset = new URLSearchParams(location.search).get("scan");
     if (preset) { el("scanUrl").value = preset; runScan(preset); }
+  }
+
+  /* ---------- connect: real sales via merchant token ---------- */
+  const connectForm = el("connectForm");
+  if (connectForm) {
+    const canPostHere = /^https?:$/.test(location.protocol) &&
+      (/\.vercel\.app$/.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1");
+    const connBtn = el("connBtn"), connErr = el("connError"), connNote = el("connNote"), connRes = el("connResult");
+
+    connectForm.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      connErr.hidden = true; connNote.hidden = true; connRes.hidden = true;
+      const shop = el("connShop").value.trim();
+      const token = el("connToken").value.trim();
+      if (!shop || !token) { el(shop ? "connToken" : "connShop").focus(); return; }
+      if (!canPostHere) {
+        connNote.innerHTML = 'For your security this runs only on the real site — open <a href="' + LIVE_SITE + '#connect">' +
+          "the live page</a> and connect there. (Never paste a key into a preview or a page you don't trust.)";
+        connNote.hidden = false;
+        return;
+      }
+      connBtn.disabled = true;
+      const oldLabel = connBtn.textContent;
+      connBtn.textContent = "Reading your sales…";
+      try {
+        const res = await fetch("/api/connect", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ shop, token }),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (json && json.ok && json.brief) {
+          const b = json.brief;
+          el("connHello").textContent = "Hi " + b.shopHost + " 👋";
+          const box = el("connLines");
+          box.innerHTML = "";
+          b.lines.forEach((line, i) => {
+            const row = document.createElement("div");
+            row.className = "brief-line";
+            row.style.animationDelay = (i * 80) + "ms";
+            row.innerHTML = '<span class="tx"></span>';
+            row.querySelector(".tx").textContent = line;
+            box.appendChild(row);
+          });
+          el("connAction").textContent = b.action;
+          el("connToken").value = ""; // clear the key from the field immediately
+          connRes.hidden = false;
+          connRes.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          connErr.textContent = (json && json.error) || "Couldn't read your store — check the details and try again.";
+          connErr.hidden = false;
+        }
+      } catch {
+        connErr.textContent = "Couldn't reach the reader — check your connection and try again.";
+        connErr.hidden = false;
+      }
+      connBtn.disabled = false;
+      connBtn.textContent = oldLabel;
+    });
   }
 
   /* ---------- free-brief signup ---------- */
