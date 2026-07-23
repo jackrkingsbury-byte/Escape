@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grove — Watch, Do & Grow (15-year tracker)</title>
+<meta name="theme-color" content="#2347ff">
+<meta name="description" content="Plan the videos you want to watch and the things you want to do — and feed a tree that grows over 15 years every time you show up." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2317a34a'/><text x='50' y='74' font-size='60' text-anchor='middle'>🌱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f7f4;--surface:#fff;--surface-2:#eef2ec;--text:#14201a;--muted:#5c6b62;
+  --brand:#17a34a;--brand-deep:#0f7a37;--brand-soft:#dcf5e6;
+  --pop:#2347ff;--pop-soft:#e5eaff;--zing:#f5b301;--line:#e2e8de;
+  --danger:#e0463b;
+  --shadow:0 1px 2px rgba(20,32,26,.05),0 10px 30px rgba(20,32,26,.07);
+  --shadow-lg:0 2px 5px rgba(20,32,26,.06),0 28px 64px rgba(20,32,26,.14);
+  --ring:rgba(23,163,74,.2);--radius:20px;--radius-sm:13px;--maxw:1040px;
+}
+[data-theme="dark"]{
+  --bg:#0a0f0c;--surface:#111813;--surface-2:#17201a;--text:#e8f0ea;--muted:#8fa096;
+  --brand:#3ecf7a;--brand-deep:#2fb466;--brand-soft:#123322;--pop:#6480ff;--pop-soft:#182042;--zing:#f5c542;--line:#233029;--danger:#f0685d;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.4);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.45),0 34px 76px rgba(0,0,0,.55);--ring:rgba(62,207,122,.28);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;padding-bottom:60px}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.05;letter-spacing:-.02em}
+button{font-family:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:64px}
+.logo{display:flex;align-items:center;gap:9px;font-family:'Fraunces';font-weight:700;font-size:1.25rem}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--brand);display:grid;place-items:center;font-size:1.1rem;box-shadow:0 6px 16px var(--ring)}
+.spacer{flex:1}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;font-size:1.1rem;display:grid;place-items:center;transition:transform .15s,background .2s}
+.icon-btn:hover{transform:translateY(-2px);background:var(--surface-2)}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;background:var(--surface-2);padding:5px;border-radius:100px;border:1px solid var(--line)}
+.tab{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:.92rem;padding:9px 18px;border-radius:100px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+
+.view{display:none;padding-top:34px;animation:fade .35s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.hero-h{font-size:clamp(2rem,5vw,3rem);font-weight:600;margin-bottom:8px}
+.hero-h .accent{color:var(--brand)}
+.sub{color:var(--muted);font-size:1.05rem;max-width:640px;margin-bottom:28px}
+
+/* Composer */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.composer{padding:18px;margin-bottom:22px}
+.composer .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=text],input[type=url],input[type=date],select,textarea{font-family:inherit;font-size:1rem;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;transition:border .2s,box-shadow .2s;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
+.type-toggle{display:flex;gap:6px;background:var(--surface-2);border:1px solid var(--line);padding:4px;border-radius:12px}
+.type-toggle button{border:0;background:transparent;color:var(--muted);font-weight:700;padding:8px 15px;border-radius:9px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .18s;font-size:.9rem}
+.type-toggle button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.grow-1{flex:1;min-width:180px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:1rem;padding:12px 22px;border-radius:100px;border:2px solid transparent;cursor:pointer;transition:transform .16s,box-shadow .25s,background .2s}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 10px 22px var(--ring)}
+.btn-primary:hover{background:var(--brand-deep);transform:translateY(-2px)}
+.btn-ghost{background:var(--surface-2);color:var(--text)}
+.btn-ghost:hover{background:var(--line)}
+
+/* Filters + stats */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);font-weight:700;font-size:.85rem;padding:7px 14px;border-radius:100px;cursor:pointer;transition:all .18s}
+.chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.stat-line{color:var(--muted);font-size:.9rem}
+.stat-line b{color:var(--text)}
+
+/* List */
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:flex;gap:14px;align-items:flex-start;padding:15px 17px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow);transition:transform .15s,box-shadow .2s}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.item.done{opacity:.55}
+.item.done .title{text-decoration:line-through}
+.check{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);background:transparent;cursor:pointer;display:grid;place-items:center;transition:all .18s;margin-top:2px;color:#fff;font-size:.9rem}
+.check:hover{border-color:var(--brand)}
+.check.on{background:var(--brand);border-color:var(--brand)}
+.item-body{flex:1;min-width:0}
+.title{font-weight:700;word-break:break-word}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:5px}
+.tag{font-family:'JetBrains Mono';font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+.tag.watch{background:var(--pop-soft);color:var(--pop)}
+.tag.do{background:var(--brand-soft);color:var(--brand-deep)}
+.item-link{font-size:.85rem;color:var(--pop);word-break:break-all}
+.item-note{font-size:.9rem;color:var(--muted);margin-top:4px}
+.del{flex:none;background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:1.05rem;padding:4px 6px;border-radius:8px;transition:all .18s;opacity:.5}
+.del:hover{color:var(--danger);background:var(--surface-2);opacity:1}
+.empty{text-align:center;padding:56px 20px;color:var(--muted)}
+.empty .big{font-size:2.6rem;margin-bottom:10px}
+
+/* Grow view */
+.grove-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:820px){.grove-grid{grid-template-columns:1.15fr .85fr}}
+.tree-card{padding:26px;text-align:center;position:relative;overflow:hidden}
+.sky{position:absolute;inset:0;background:linear-gradient(180deg,var(--surface) 0%,var(--brand-soft) 100%);opacity:.5;z-index:0}
+.tree-inner{position:relative;z-index:1}
+.tree{font-size:clamp(4rem,20vw,8rem);line-height:1;filter:drop-shadow(0 12px 20px rgba(23,163,74,.25));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.tree:hover{transform:scale(1.06) rotate(-2deg)}
+.stage-name{font-family:'Fraunces';font-weight:700;font-size:1.4rem;margin-top:8px}
+.stage-sub{color:var(--muted);font-size:.92rem;margin-top:2px}
+
+.years-bar-wrap{margin-top:22px}
+.years-bar{height:16px;border-radius:100px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;position:relative}
+.years-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--zing));border-radius:100px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.years-labels{display:flex;justify-content:space-between;margin-top:7px;font-family:'JetBrains Mono';font-size:.72rem;color:var(--muted)}
+
+.big-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
+.bstat{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px}
+.bstat .n{font-family:'Fraunces';font-weight:700;font-size:1.9rem;line-height:1}
+.bstat .l{color:var(--muted);font-size:.82rem;margin-top:4px}
+
+.today-card{padding:22px}
+.today-card h3{font-size:1.3rem;margin-bottom:4px}
+.nutrients{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+.nutrient{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:all .18s;user-select:none}
+.nutrient:hover{border-color:var(--brand)}
+.nutrient.on{background:var(--brand-soft);border-color:var(--brand)}
+.nutrient .emoji{font-size:1.4rem}
+.nutrient .nm{font-weight:700;flex:1}
+.nutrient .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;color:#fff;font-size:.8rem;transition:all .18s}
+.nutrient.on .box{background:var(--brand);border-color:var(--brand)}
+.log-note{text-align:center;color:var(--muted);font-size:.88rem;margin-top:16px}
+.log-note b{color:var(--brand)}
+
+/* Calendar heat */
+.heat-card{padding:22px;margin-top:20px;grid-column:1/-1}
+.heat-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.heat{display:flex;flex-wrap:wrap;gap:3px}
+.cell{width:13px;height:13px;border-radius:3px;background:var(--surface-2);border:1px solid var(--line)}
+.cell.l1{background:var(--brand-soft)}
+.cell.l2{background:color-mix(in srgb,var(--brand) 55%,var(--surface))}
+.cell.l3{background:var(--brand)}
+.legend{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);margin-top:12px}
+.legend .cell{width:11px;height:11px}
+
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
+
+/* toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--text);color:var(--bg);padding:12px 22px;border-radius:100px;font-weight:700;box-shadow:var(--shadow-lg);z-index:50;transition:transform .35s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+#toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><span class="mark">🌱</span> Grove</div>
+    <div class="spacer"></div>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-view="plan">📺 Watch &amp; Do</button>
+      <button class="tab" data-view="grow">🌳 15-Yr Growth</button>
+    </div>
+    <button class="icon-btn" id="theme" title="Toggle dark mode">🌙</button>
+  </div>
+</header>
+
+<!-- ============ PLAN VIEW ============ -->
+<main class="wrap">
+<section class="view on" id="view-plan">
+  <h1 class="hero-h">Your <span class="accent">watch &amp; do</span> list.</h1>
+  <p class="sub">Drop in a video you want to watch or a thing you want to do. Check it off when it's done — every finished item is a little win.</p>
+
+  <div class="card composer">
+    <div class="row" style="margin-bottom:10px">
+      <div class="type-toggle" id="typeToggle">
+        <button class="on" data-type="watch">📺 Watch</button>
+        <button data-type="do">✅ Do</button>
+      </div>
+      <input type="text" id="titleInput" class="grow-1" placeholder="What do you want to watch or do?" autocomplete="off">
+      <button class="btn btn-primary" id="addBtn">Add</button>
+    </div>
+    <div class="row">
+      <input type="url" id="linkInput" class="grow-1" placeholder="Optional link (video URL, etc.)">
+      <input type="text" id="noteInput" class="grow-1" placeholder="Optional note">
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="chips" id="filters">
+      <button class="chip on" data-filter="all">All</button>
+      <button class="chip" data-filter="watch">📺 To watch</button>
+      <button class="chip" data-filter="do">✅ To do</button>
+      <button class="chip" data-filter="done">✔ Done</button>
+    </div>
+    <div class="spacer" style="flex:1"></div>
+    <div class="stat-line" id="planStats"></div>
+  </div>
+
+  <div class="list" id="list"></div>
+</section>
+
+<!-- ============ GROW VIEW ============ -->
+<section class="view" id="view-grow">
+  <h1 class="hero-h">Feed your tree for <span class="accent">15 years</span>.</h1>
+  <p class="sub">Every day you log your nutrients, your tree grows. It's a slow game — 15 years, one day at a time. Show up, and watch what you become.</p>
+
+  <div class="grove-grid">
+    <div class="card tree-card">
+      <div class="sky"></div>
+      <div class="tree-inner">
+        <div class="tree" id="treeEmoji">🌱</div>
+        <div class="stage-name" id="stageName">A tiny sprout</div>
+        <div class="stage-sub" id="stageSub">Day 0 of your 15-year grove</div>
+
+        <div class="years-bar-wrap">
+          <div class="years-bar"><div class="years-fill" id="yearsFill" style="width:0%"></div></div>
+          <div class="years-labels"><span>Year 0</span><span id="yearNow">0.0 yrs</span><span>Year 15</span></div>
+        </div>
+
+        <div class="big-stats">
+          <div class="bstat"><div class="n" id="stStreak">0</div><div class="l">🔥 Day streak</div></div>
+          <div class="bstat"><div class="n" id="stFed">0</div><div class="l">🌿 Days fed</div></div>
+          <div class="bstat"><div class="n" id="stPoints">0</div><div class="l">✨ Growth points</div></div>
+          <div class="bstat"><div class="n" id="stLeft">5,479</div><div class="l">📅 Days to go</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card today-card">
+      <h3 id="todayTitle">Today's nutrients</h3>
+      <div class="stage-sub" id="todayDate"></div>
+      <div class="nutrients" id="nutrients"></div>
+      <div class="log-note" id="logNote">Tap each nutrient you gave your tree today.</div>
+    </div>
+
+    <div class="card heat-card">
+      <div class="heat-head">
+        <h3 style="font-size:1.2rem">Your last 12 months</h3>
+        <span class="stat-line" id="heatStat"></span>
+      </div>
+      <div class="heat" id="heat"></div>
+      <div class="legend">Less <span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell l3"></span> More</div>
+    </div>
+  </div>
+
+  <footer>
+    Grove keeps everything on this device (in your browser). Started your grove?
+    <a href="#" id="resetGrove" style="color:var(--danger);font-weight:700">Reset the 15-year clock</a>.
+  </footer>
+</section>
+</main>
+
+<div id="toast"></div>
+
+<script>
+/* ---------------- storage helpers ---------------- */
+const KEY='grove.v1';
+const DAY=86400000;
+const TOTAL_DAYS=15*365; // ~5475 days across 15 years
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}};
+const save=s=>localStorage.setItem(KEY,JSON.stringify(s));
+const todayKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const parseKey=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)};
+
+let state=load();
+state.items ??= [];              // {id,type:'watch'|'do',title,link,note,done,created}
+state.log ??= {};                // 'YYYY-MM-DD': [nutrientIds]
+state.start ??= todayKey();      // grove start date
+state.points ??= 0;
+save(state);
+
+const NUTRIENTS=[
+  {id:'water',  emoji:'💧', name:'Water — moved my body / hydrated'},
+  {id:'light',  emoji:'☀️', name:'Sunlight — went outside'},
+  {id:'food',   emoji:'🥗', name:'Nutrients — ate something real'},
+  {id:'rest',   emoji:'😴', name:'Rest — slept enough'},
+  {id:'mind',   emoji:'📚', name:'Mind — learned / read / created'},
+];
+
+/* ---------------- toast ---------------- */
+let toastT;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1900)}
+
+/* ---------------- tabs ---------------- */
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===b));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('view-'+b.dataset.view).classList.add('on');
+  if(b.dataset.view==='grow')renderGrow();
+});
+
+/* ---------------- theme ---------------- */
+const themeBtn=document.getElementById('theme');
+if(state.theme)document.documentElement.dataset.theme=state.theme;
+themeBtn.textContent=document.documentElement.dataset.theme==='dark'?'☀️':'🌙';
+themeBtn.addEventListener('click',()=>{
+  const next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=next;themeBtn.textContent=next==='dark'?'☀️':'🌙';
+  state.theme=next;save(state);
+});
+
+/* ================= PLAN ================= */
+let curType='watch', curFilter='all';
+const titleInput=document.getElementById('titleInput');
+
+document.getElementById('typeToggle').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;curType=b.dataset.type;
+  document.querySelectorAll('#typeToggle button').forEach(x=>x.classList.toggle('on',x===b));
+  titleInput.placeholder=curType==='watch'?'What do you want to watch?':'What do you want to do?';
+});
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;curFilter=b.dataset.filter;
+  document.querySelectorAll('#filters .chip').forEach(x=>x.classList.toggle('on',x===b));
+  renderPlan();
+});
+
+function addItem(){
+  const title=titleInput.value.trim();
+  if(!title){toast('Add a title first ✍️');titleInput.focus();return}
+  state.items.unshift({
+    id:Date.now()+''+Math.random().toString(36).slice(2,6),
+    type:curType,title,
+    link:document.getElementById('linkInput').value.trim(),
+    note:document.getElementById('noteInput').value.trim(),
+    done:false,created:Date.now()
+  });
+  save(state);
+  titleInput.value='';document.getElementById('linkInput').value='';document.getElementById('noteInput').value='';
+  titleInput.focus();
+  renderPlan();
+  toast(curType==='watch'?'Added to your watchlist 📺':'Added to your to-do ✅');
+}
+document.getElementById('addBtn').addEventListener('click',addItem);
+titleInput.addEventListener('keydown',e=>{if(e.key==='Enter')addItem()});
+
+function toggleDone(id){
+  const it=state.items.find(i=>i.id===id);if(!it)return;
+  it.done=!it.done;save(state);renderPlan();
+  if(it.done)toast('Nice — one down 🎉');
+}
+function delItem(id){state.items=state.items.filter(i=>i.id!==id);save(state);renderPlan()}
+
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function niceLink(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
+
+function renderPlan(){
+  const list=document.getElementById('list');
+  let items=state.items.filter(i=>{
+    if(curFilter==='all')return true;
+    if(curFilter==='done')return i.done;
+    return i.type===curFilter && !i.done;
+  });
+  const total=state.items.length, done=state.items.filter(i=>i.done).length;
+  const watch=state.items.filter(i=>i.type==='watch'&&!i.done).length;
+  const todo=state.items.filter(i=>i.type==='do'&&!i.done).length;
+  document.getElementById('planStats').innerHTML=`<b>${watch}</b> to watch · <b>${todo}</b> to do · <b>${done}</b> done`;
+
+  if(!items.length){
+    list.innerHTML=`<div class="empty"><div class="big">${curFilter==='done'?'🌟':'🍿'}</div>${
+      total===0?'Nothing here yet. Add your first video or task above!':
+      curFilter==='done'?'No finished items yet — go check something off!':'Nothing in this filter. Add something above!'}</div>`;
+    return;
+  }
+  list.innerHTML=items.map(i=>`
+    <div class="item ${i.done?'done':''}">
+      <button class="check ${i.done?'on':''}" data-id="${i.id}" title="Mark ${i.done?'undone':'done'}">${i.done?'✓':''}</button>
+      <div class="item-body">
+        <div class="title">${esc(i.title)}</div>
+        <div class="meta">
+          <span class="tag ${i.type}">${i.type==='watch'?'📺 Watch':'✅ Do'}</span>
+          ${i.link?`<a class="item-link" href="${esc(i.link)}" target="_blank" rel="noopener">🔗 ${esc(niceLink(i.link))}</a>`:''}
+        </div>
+        ${i.note?`<div class="item-note">${esc(i.note)}</div>`:''}
+      </div>
+      <button class="del" data-del="${i.id}" title="Delete">✕</button>
+    </div>`).join('');
+  list.querySelectorAll('.check').forEach(b=>b.onclick=()=>toggleDone(b.dataset.id));
+  list.querySelectorAll('.del').forEach(b=>b.onclick=()=>delItem(b.dataset.del));
+}
+
+/* ================= GROW ================= */
+const STAGES=[
+  {t:0.0, e:'🌱', n:'A tiny sprout',        s:'Just broke through the soil'},
+  {t:0.5, e:'🌿', n:'A little seedling',    s:'Leaves reaching for the light'},
+  {t:1.5, e:'☘️', n:'A young shoot',        s:'Roots taking hold'},
+  {t:3,   e:'🪴', n:'A potted plant',       s:'Steady, everyday growth'},
+  {t:5,   e:'🌳', n:'A real tree',          s:'Casting your first shade'},
+  {t:8,   e:'🌲', n:'A tall evergreen',     s:'Standing through every season'},
+  {t:11,  e:'🎋', n:'A flourishing grove',  s:'Others can grow beside you'},
+  {t:15,  e:'🌴', n:'A landmark',           s:'Fifteen years. Look what you grew.'},
+];
+
+function daysSinceStart(){
+  const start=parseKey(state.start); start.setHours(0,0,0,0);
+  const now=new Date(); now.setHours(0,0,0,0);
+  return Math.max(0,Math.round((now-start)/DAY));
+}
+function computeStreak(){
+  let streak=0;const d=new Date();d.setHours(0,0,0,0);
+  // if today not logged, start counting from yesterday
+  if(!(state.log[todayKey()]&&state.log[todayKey()].length)) d.setTime(d.getTime()-DAY);
+  while(true){
+    const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if(state.log[k]&&state.log[k].length){streak++;d.setTime(d.getTime()-DAY)}else break;
+  }
+  return streak;
+}
+function stageFor(years){let cur=STAGES[0];for(const s of STAGES){if(years>=s.t)cur=s}return cur}
+
+function renderGrow(){
+  // today's nutrients
+  const tk=todayKey();
+  state.log[tk] ??= [];
+  const nEl=document.getElementById('nutrients');
+  nEl.innerHTML=NUTRIENTS.map(n=>{
+    const on=state.log[tk].includes(n.id);
+    return `<div class="nutrient ${on?'on':''}" data-n="${n.id}">
+      <span class="emoji">${n.emoji}</span><span class="nm">${n.name}</span>
+      <span class="box">${on?'✓':''}</span></div>`;
+  }).join('');
+  nEl.querySelectorAll('.nutrient').forEach(el=>el.onclick=()=>toggleNutrient(el.dataset.n));
+  document.getElementById('todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const loggedToday=state.log[tk].length;
+  document.getElementById('logNote').innerHTML=loggedToday
+    ? `You fed your tree <b>${loggedToday}/${NUTRIENTS.length}</b> nutrients today 🌿`
+    : `Tap each nutrient you gave your tree today.`;
+
+  // stats
+  const days=daysSinceStart();
+  const years=days/365;
+  const stage=stageFor(years);
+  document.getElementById('treeEmoji').textContent=stage.e;
+  document.getElementById('stageName').textContent=stage.n;
+  document.getElementById('stageSub').textContent=stage.s+` · Day ${days.toLocaleString()} of your 15-year grove`;
+
+  const pct=Math.min(100,years/15*100);
+  document.getElementById('yearsFill').style.width=pct+'%';
+  document.getElementById('yearNow').textContent=years.toFixed(1)+' yrs';
+
+  const fedDays=Object.values(state.log).filter(a=>a&&a.length).length;
+  const points=Object.values(state.log).reduce((s,a)=>s+(a?a.length:0),0);
+  const left=Math.max(0,TOTAL_DAYS-days);
+  document.getElementById('stStreak').textContent=computeStreak();
+  document.getElementById('stFed').textContent=fedDays.toLocaleString();
+  document.getElementById('stPoints').textContent=points.toLocaleString();
+  document.getElementById('stLeft').textContent=left.toLocaleString();
+
+  renderHeat();
+}
+
+function toggleNutrient(id){
+  const tk=todayKey();state.log[tk] ??= [];
+  const i=state.log[tk].indexOf(id);
+  if(i>=0)state.log[tk].splice(i,1);else{state.log[tk].push(id);toast('Fed 🌱 +1 growth point')}
+  if(!state.log[tk].length)delete state.log[tk];
+  save(state);renderGrow();
+}
+
+function renderHeat(){
+  const heat=document.getElementById('heat');
+  const days=365;const cells=[];const end=new Date();end.setHours(0,0,0,0);
+  let active=0;
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(end.getTime()-i*DAY);
+    const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const c=(state.log[k]||[]).length;if(c)active++;
+    const lvl=c===0?'':c<=2?'l1':c<=3?'l2':'l3';
+    cells.push(`<div class="cell ${lvl}" title="${d.toLocaleDateString()} — ${c} nutrient${c===1?'':'s'}"></div>`);
+  }
+  heat.innerHTML=cells.join('');
+  document.getElementById('heatStat').textContent=`${active} active day${active===1?'':'s'} this year`;
+}
+
+document.getElementById('resetGrove').addEventListener('click',e=>{
+  e.preventDefault();
+  if(confirm('Reset the 15-year clock and clear all nutrient logs? Your watch & do list stays.')){
+    state.log={};state.start=todayKey();save(state);renderGrow();toast('Fresh soil. Day 0. 🌱');
+  }
+});
+
+/* init */
+renderPlan();
+</script>
+</body>
+</html>
