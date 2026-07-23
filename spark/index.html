@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<!-- SPARK — feel off? research-backed jolts of energy & focus, guided in real time -->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SPARK — Feel off? Spark yourself back. Real research, guided in real time.</title>
+<meta name="theme-color" content="#ff5a1f">
+<meta name="description" content="You feel drained, foggy, wired or can't start. SPARK matches how you feel to a research-backed booster and walks you through it live — 30 seconds to 20 minutes. Every jolt cites the real study behind it.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23ff5a1f'/><path d='M56 14 30 56h18l-6 30 30-46H52z' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fbf6ee;--surface:#fff;--surface-2:#f3ecdf;--text:#181410;--muted:#6b6355;
+  --energy:#ff5a1f;--energy-deep:#e34400;--energy-soft:#ffe6d8;
+  --focus:#2f52ff;--focus-deep:#1e3ce0;--focus-soft:#e2e7ff;
+  --calm:#0fae86;--calm-deep:#0a8a6b;--calm-soft:#d6f4ea;
+  --zing:#ffca10;--line:#eadfcd;
+  --shadow:0 1px 2px rgba(24,20,16,.05),0 10px 30px rgba(24,20,16,.07);
+  --shadow-lg:0 2px 5px rgba(24,20,16,.06),0 30px 66px rgba(24,20,16,.15);
+  --ring:rgba(255,90,31,.2);--radius:22px;--radius-sm:14px;--maxw:1120px;
+}
+[data-theme="dark"]{
+  --bg:#0c0a08;--surface:#161310;--surface-2:#1e1a15;--text:#f1ede6;--muted:#a29a8b;
+  --energy:#ff7a45;--energy-deep:#ff5a1f;--energy-soft:#2c1810;
+  --focus:#6f88ff;--focus-deep:#4f6bff;--focus-soft:#151a30;
+  --calm:#37d3a8;--calm-deep:#18b98a;--calm-soft:#0d2620;
+  --zing:#ffca10;--line:#282219;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 34px rgba(0,0,0,.45);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.5),0 36px 78px rgba(0,0,0,.6);--ring:rgba(255,122,69,.3);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;min-height:100vh}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.04;letter-spacing:-.02em}
+a{color:inherit}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.label{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--energy)}
+.label.focus{color:var(--focus)}.label.calm{color:var(--calm)}.label.muted{color:var(--muted)}
+.goal-dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle}
+.g-energy{color:var(--energy)}.g-focus{color:var(--focus)}.g-calm{color:var(--calm)}
+.bg-energy{background:var(--energy)}.bg-focus{background:var(--focus)}.bg-calm{background:var(--calm)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-weight:800;font-size:.96rem;padding:13px 22px;border-radius:100px;border:2px solid transparent;cursor:pointer;transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s,border-color .25s;white-space:nowrap;text-decoration:none}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:var(--energy);color:#fff;box-shadow:0 12px 26px var(--ring)}
+.btn-primary:hover{background:var(--energy-deep);transform:translateY(-2px);box-shadow:0 18px 38px var(--ring)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--energy);color:var(--energy)}
+.btn-sm{padding:9px 15px;font-size:.85rem}
+.btn-lg{padding:16px 30px;font-size:1.06rem}
+
+/* header */
+header.nav{position:sticky;top:0;z-index:60;backdrop-filter:saturate(160%) blur(14px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;gap:14px;height:66px;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;letter-spacing:.01em}
+.brand .mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--energy),var(--zing));color:#fff;box-shadow:0 6px 16px var(--ring)}
+.brand .mark svg{width:19px;height:19px;display:block}
+.brand small{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;font-weight:600;display:block;margin-top:-2px}
+.nav-spacer{flex:1}
+.tabs{display:flex;gap:3px;background:var(--surface-2);padding:5px;border-radius:100px}
+.tab{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:.9rem;color:var(--muted);padding:9px 15px;border-radius:100px;cursor:pointer;transition:.2s}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--surface);color:var(--energy);box-shadow:var(--shadow)}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:2px solid var(--line);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;transition:.2s;font-size:1.05rem}
+.icon-btn:hover{border-color:var(--energy);color:var(--energy)}
+
+main{padding:34px 0 100px}
+.view{display:none;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);background:
+  radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--energy) 16%,transparent),transparent 55%),
+  radial-gradient(120% 130% at 0% 100%,color-mix(in srgb,var(--focus) 12%,transparent),transparent 55%),
+  var(--surface);box-shadow:var(--shadow);padding:34px 30px;margin-bottom:26px}
+.hero h1{font-size:clamp(2.1rem,5.2vw,3.5rem);font-weight:600;margin:12px 0 8px;max-width:15ch}
+.hero .kick{font-family:'Fraunces',serif;font-style:italic;color:var(--energy)}
+.hero p.sub{color:var(--muted);font-size:1.08rem;max-width:52ch}
+.hero .timenote{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px}
+.hero .timenote b{color:var(--text)}
+
+/* state picker */
+.picker-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 14px}
+.states{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px}
+.state{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:var(--radius-sm);padding:16px 15px;cursor:pointer;transition:transform .16s,border-color .2s,box-shadow .25s;font-family:inherit}
+.state:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--text)}
+.state.on{border-color:var(--energy);box-shadow:0 0 0 4px var(--ring);background:color-mix(in srgb,var(--energy-soft) 55%,var(--surface))}
+.state .em{font-size:1.7rem;line-height:1;display:block;margin-bottom:9px}
+.state .t{font-weight:800;font-size:1.02rem}
+.state .d{color:var(--muted);font-size:.84rem;margin-top:2px}
+
+.quickrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* recommendation strip */
+#recWrap{margin-top:26px;scroll-margin-top:86px}
+.rec-lead{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.rec-lead h2{font-size:1.5rem;font-weight:600}
+.pill{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+
+/* booster cards */
+.boosters{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:16px}
+.boost{position:relative;display:flex;flex-direction:column;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;transition:transform .16s,box-shadow .25s,border-color .2s;overflow:hidden}
+.boost::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--energy)}
+.boost.f-focus::before{background:var(--focus)}.boost.f-calm::before{background:var(--calm)}
+.boost:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.boost.top{border-color:var(--energy);box-shadow:0 0 0 3px var(--ring),var(--shadow)}
+.boost .btitle{display:flex;align-items:flex-start;gap:12px}
+.boost .bem{font-size:1.75rem;line-height:1;flex-shrink:0}
+.boost h3{font-size:1.22rem;font-weight:600;line-height:1.12}
+.boost .meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.tagpill{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--muted)}
+.tagpill.energy{background:var(--energy-soft);color:var(--energy-deep)}
+.tagpill.focus{background:var(--focus-soft);color:var(--focus-deep)}
+.tagpill.calm{background:var(--calm-soft);color:var(--calm-deep)}
+.boost .pitch{color:var(--muted);font-size:.94rem;flex:1}
+.boost .bfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:2px}
+.boost .cite{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);cursor:pointer;border-bottom:1px dotted var(--muted);padding-bottom:1px;transition:.15s}
+.boost .cite:hover{color:var(--energy);border-color:var(--energy)}
+.topflag{position:absolute;top:0;right:0;font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--energy);color:#fff;padding:5px 11px;border-bottom-left-radius:12px}
+
+/* library toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+.filterset{display:inline-flex;background:var(--surface-2);border-radius:100px;padding:4px;gap:3px;flex-wrap:wrap}
+.filterset button{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:.84rem;color:var(--muted);padding:8px 15px;border-radius:100px;cursor:pointer;transition:.16s}
+.filterset button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.filterset button.on[data-g="energy"]{color:var(--energy)}
+.filterset button.on[data-g="focus"]{color:var(--focus)}
+.filterset button.on[data-g="calm"]{color:var(--calm)}
+
+.page-head{max-width:640px;margin-bottom:22px}
+.page-head h1{font-size:clamp(1.9rem,4.4vw,2.9rem);font-weight:600;margin:8px 0}
+.page-head p{color:var(--muted);font-size:1.04rem}
+
+/* research */
+.research{display:grid;gap:16px}
+.rcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.rcard .rem{font-size:2rem;line-height:1;width:56px;height:56px;display:grid;place-items:center;border-radius:15px;background:var(--surface-2)}
+.rcard h3{font-size:1.2rem;font-weight:600}
+.rcard .finding{margin:9px 0 6px;font-size:.99rem}
+.rcard .takeaway{font-size:.94rem;color:var(--muted);border-left:3px solid var(--energy);padding-left:12px;margin:10px 0}
+.rcard.f-focus .takeaway{border-color:var(--focus)}.rcard.f-calm .takeaway{border-color:var(--calm)}
+.rcard .cit{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);margin-top:10px;line-height:1.5}
+.rcard .cit a{color:var(--energy);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+.rcard .cit a:hover{border-color:var(--energy)}
+.rcard .rstart{margin-top:14px}
+.evidence-note{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px;font-size:.9rem;color:var(--muted);margin-bottom:22px}
+.evidence-note b{color:var(--text)}
+
+/* track */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px;box-shadow:var(--shadow)}
+.stat .n{font-family:'Fraunces',serif;font-size:2.1rem;font-weight:600;line-height:1;letter-spacing:-.02em}
+.stat .k{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-top:8px;font-weight:600}
+.stat.energy .n{color:var(--energy)}.stat.focus .n{color:var(--focus)}.stat.calm .n{color:var(--calm)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.panel h3{font-size:1.18rem;font-weight:600;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+.rank{display:flex;flex-direction:column;gap:10px}
+.rankrow{display:flex;align-items:center;gap:12px}
+.rankrow .rn{font-size:1.35rem;width:34px;text-align:center;flex-shrink:0}
+.rankrow .rt{flex:1;min-width:0}
+.rankrow .rt b{font-weight:700}
+.rankrow .rt .c{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted)}
+.bar{height:9px;border-radius:100px;background:var(--surface-2);overflow:hidden;flex:1;max-width:180px}
+.bar span{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--energy),var(--zing))}
+.loglist{display:flex;flex-direction:column;gap:2px;max-height:340px;overflow:auto}
+.logrow{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line)}
+.logrow:last-child{border-bottom:none}
+.logrow .le{font-size:1.3rem;flex-shrink:0}
+.logrow .lt{flex:1;min-width:0}
+.logrow .lt b{font-weight:700;font-size:.96rem}
+.logrow .lt .lm{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted)}
+.helpbadge{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:100px}
+.help-2{background:var(--calm-soft);color:var(--calm-deep)}
+.help-1{background:var(--energy-soft);color:var(--energy-deep)}
+.help-0{background:var(--surface-2);color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:40px 20px}
+.empty .bem{font-size:2.4rem;display:block;margin-bottom:10px}
+
+/* modal / session */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(12,10,8,.62);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;animation:fade .25s ease}
+.overlay.on{display:flex}
+.session{position:relative;width:100%;max-width:560px;max-height:94vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-lg)}
+.session-top{display:flex;align-items:center;gap:12px;padding:20px 22px 0}
+.session-top .stag{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.session-top .sem{font-size:1.6rem}
+.session-top h2{font-size:1.3rem;font-weight:600;line-height:1.1}
+.session-top .sgoal{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.xbtn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;font-size:1.15rem;display:grid;place-items:center;flex-shrink:0;transition:.18s}
+.xbtn:hover{color:var(--energy);border-color:var(--energy)}
+.session-body{padding:14px 22px 24px;text-align:center}
+
+/* breathing orb */
+.stage{display:grid;place-items:center;padding:14px 0 6px;min-height:290px}
+.orb-wrap{position:relative;width:250px;height:250px;display:grid;place-items:center}
+.orb-ring{position:absolute;inset:0;border-radius:50%;border:2px dashed var(--line)}
+.orb{width:250px;height:250px;border-radius:50%;display:grid;place-items:center;transform:scale(.28);
+  background:radial-gradient(circle at 38% 32%,color-mix(in srgb,var(--energy) 30%,var(--surface)),var(--energy));
+  box-shadow:0 20px 60px var(--ring);transition:transform linear;will-change:transform}
+.orb.calm{background:radial-gradient(circle at 38% 32%,color-mix(in srgb,var(--calm) 26%,var(--surface)),var(--calm));box-shadow:0 20px 60px rgba(15,174,134,.28)}
+.orb .phase{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:#fff;letter-spacing:.01em}
+.breath-sub{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+
+/* timer ring */
+.ring-wrap{position:relative;width:250px;height:250px;margin:6px auto}
+.ring-wrap svg{transform:rotate(-90deg);width:250px;height:250px}
+.ring-bg{fill:none;stroke:var(--surface-2);stroke-width:12}
+.ring-fg{fill:none;stroke:var(--energy);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.ring-fg.focus{stroke:var(--focus)}.ring-fg.calm{stroke:var(--calm)}
+.ring-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring-center .clock{font-family:'Fraunces',serif;font-weight:600;font-size:3rem;letter-spacing:-.02em;line-height:1}
+.ring-center .rlab{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.prompt{min-height:48px;margin:16px auto 0;max-width:40ch;font-size:1.02rem;font-weight:600;transition:opacity .3s}
+.prompt.flash{color:var(--energy)}
+
+/* action steps */
+.steps{text-align:left;max-width:420px;margin:6px auto 0;display:flex;flex-direction:column;gap:12px}
+.stepline{display:flex;gap:13px;align-items:flex-start}
+.stepline .sn{flex-shrink:0;width:28px;height:28px;border-radius:9px;background:var(--surface-2);color:var(--energy);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.82rem;display:grid;place-items:center}
+.stepline .sx{font-size:.98rem}
+.bigcount{font-family:'Fraunces',serif;font-weight:600;font-size:3.6rem;color:var(--energy);margin:8px 0}
+
+/* session controls */
+.duration-row{display:inline-flex;gap:6px;background:var(--surface-2);border-radius:100px;padding:5px;margin:2px auto 6px}
+.duration-row button{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:.86rem;color:var(--muted);padding:8px 16px;border-radius:100px;cursor:pointer;transition:.16s}
+.duration-row button.on{background:var(--surface);color:var(--energy);box-shadow:var(--shadow)}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.why{margin-top:22px;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px}
+.why .label{margin-bottom:6px}
+.why p{font-size:.92rem}
+.why .cit{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);margin-top:10px;line-height:1.5}
+.why .cit a{color:var(--energy);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+.why .cit a:hover{border-color:var(--energy)}
+
+/* end / rating */
+.rate-wrap{text-align:center;padding:8px 0}
+.rate-wrap h3{font-size:1.5rem;font-weight:600;margin-bottom:4px}
+.rate-wrap p{color:var(--muted);margin-bottom:20px}
+.rate-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.rate-btn{border:2px solid var(--line);background:var(--surface);border-radius:16px;padding:16px 20px;cursor:pointer;font-family:inherit;transition:.18s;min-width:110px}
+.rate-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.rate-btn .re{font-size:1.7rem;display:block;margin-bottom:6px}
+.rate-btn .rl{font-weight:800;font-size:.92rem}
+.rate-btn[data-h="2"]:hover{border-color:var(--calm)}
+.rate-btn[data-h="1"]:hover{border-color:var(--energy)}
+.rate-btn[data-h="0"]:hover{border-color:var(--muted)}
+.streakbanner{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-weight:700;font-size:.95rem;color:var(--energy)}
+
+/* misc */
+.foot{text-align:center;color:var(--muted);font-size:.86rem;margin-top:46px;line-height:1.7}
+.foot a{color:var(--energy);text-decoration:none;font-weight:600}
+.disclaimer{max-width:60ch;margin:14px auto 0;font-size:.78rem;color:var(--muted);opacity:.85}
+.hidden{display:none!important}
+@media(max-width:560px){
+  .tabs .tlabel{display:none}.tab{padding:9px 12px}
+  .rcard{grid-template-columns:1fr}.rcard .rem{width:48px;height:48px;font-size:1.6rem}
+  .hero{padding:26px 20px}
+  .orb,.orb-wrap,.ring-wrap,.ring-wrap svg{width:210px;height:210px}
+}
+@media(prefers-reduced-motion:reduce){.orb{transition:none!important}*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="mark"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M56 14 30 56h18l-6 30 30-46H52z" fill="currentColor"/></svg></span>
+      <span>SPARK<small>energy · focus · research</small></span>
+    </div>
+    <div class="nav-spacer"></div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-view="boost">⚡ <span class="tlabel">Boost</span></button>
+      <button class="tab" data-view="library">🗂 <span class="tlabel">Boosters</span></button>
+      <button class="tab" data-view="research">🔬 <span class="tlabel">Research</span></button>
+      <button class="tab" data-view="track">📈 <span class="tlabel">Track</span></button>
+    </nav>
+    <button class="icon-btn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main class="container">
+  <!-- ═══════ BOOST (home) ═══════ -->
+  <section class="view active" id="view-boost">
+    <div class="hero">
+      <span class="label">Feel off? Start here.</span>
+      <h1>You feel off. <span class="kick">Spark yourself back.</span></h1>
+      <p class="sub">Tell SPARK how you feel right now. It matches you to a booster proven in real research and walks you through it live — from a 30-second reset to a 20-minute recharge.</p>
+      <div class="timenote" id="timeNote"></div>
+    </div>
+
+    <div class="picker-head">
+      <h2 style="font-size:1.5rem;font-weight:600">How do you feel right now?</h2>
+      <span class="pill" id="pickHint">Tap one →</span>
+    </div>
+    <div class="states" id="states"></div>
+
+    <div class="quickrow">
+      <button class="btn btn-primary" id="sparkMe">⚡ Just spark me (30s)</button>
+      <button class="btn btn-ghost" id="surprise">🎲 Surprise me</button>
+    </div>
+
+    <div id="recWrap" class="hidden">
+      <div class="rec-lead">
+        <h2 id="recTitle">Your quickest wins</h2>
+        <span class="pill" id="recPill"></span>
+      </div>
+      <div class="boosters" id="recBoosters"></div>
+    </div>
+  </section>
+
+  <!-- ═══════ LIBRARY ═══════ -->
+  <section class="view" id="view-library">
+    <div class="page-head">
+      <span class="label">The full toolkit</span>
+      <h1>Every booster, ready to run</h1>
+      <p>Filter by what you need and how long you've got. Tap any card to start a guided session — the study behind it travels with it.</p>
+    </div>
+    <div class="toolbar">
+      <div class="filterset" id="goalFilter" role="group" aria-label="Filter by goal">
+        <button class="on" data-g="all">All</button>
+        <button data-g="energy">⚡ Energy</button>
+        <button data-g="focus">🎯 Focus</button>
+        <button data-g="calm">🌊 Calm</button>
+      </div>
+      <div class="filterset" id="timeFilter" role="group" aria-label="Filter by time">
+        <button class="on" data-t="all">Any time</button>
+        <button data-t="1">≤ 1 min</button>
+        <button data-t="5">≤ 5 min</button>
+        <button data-t="20">≤ 20 min</button>
+      </div>
+    </div>
+    <div class="boosters" id="libBoosters"></div>
+  </section>
+
+  <!-- ═══════ RESEARCH ═══════ -->
+  <section class="view" id="view-research">
+    <div class="page-head">
+      <span class="label">The evidence</span>
+      <h1>Real studies. Real journals.</h1>
+      <p>Every booster in SPARK is here because a peer-reviewed study found it moves energy, focus or calm. Here's each one — what it found, what it means for you, and where to read it.</p>
+    </div>
+    <div class="evidence-note">
+      <b>How to read this.</b> These are real, published, peer-reviewed studies — most are small, short-term lab studies, so treat effects as reliable nudges, not miracles. Individuals vary, so the <b>Track</b> tab lets you learn which ones actually work for <i>you</i>. Nothing here is medical advice; persistent fatigue or brain fog deserves a doctor, not a breathing app.
+    </div>
+    <div class="research" id="researchList"></div>
+    <p class="disclaimer">Citations are provided so you can verify every claim at the source. SPARK stores nothing about you on any server — your history lives only in this browser.</p>
+  </section>
+
+  <!-- ═══════ TRACK ═══════ -->
+  <section class="view" id="view-track">
+    <div class="page-head">
+      <span class="label">What works for you</span>
+      <h1>Your spark log</h1>
+      <p>Research tells you what works on average. This tells you what works for <i>you</i>. Every finished session logs a quick "did it help?" — patterns emerge fast.</p>
+    </div>
+    <div class="stats" id="trackStats"></div>
+    <div class="panel">
+      <h3>What sparks you best</h3>
+      <p class="sub">Ranked by how often each booster gave you a lift.</p>
+      <div id="rankList"><div class="empty"><span class="bem">📊</span>Finish a session and mark whether it helped — your personal ranking builds here.</div></div>
+    </div>
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+        <div><h3 style="margin:0">Recent sessions</h3></div>
+        <button class="btn btn-ghost btn-sm" id="clearLog">Clear log</button>
+      </div>
+      <div id="logList"></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p><b>SPARK</b> — a tiny, private, single-file tool. No account, no server, no tracking. Your data stays in this browser.</p>
+    <p class="disclaimer">Not medical advice. If you're persistently exhausted, unable to focus, or low, please talk to a healthcare professional.</p>
+  </div>
+</main>
+
+<!-- ═══════ SESSION OVERLAY ═══════ -->
+<div class="overlay" id="overlay">
+  <div class="session" id="session" role="dialog" aria-modal="true" aria-label="Guided booster session">
+    <div class="session-top">
+      <div class="stag">
+        <span class="sem" id="sSem">⚡</span>
+        <div>
+          <h2 id="sTitle">Booster</h2>
+          <span class="sgoal" id="sGoal"></span>
+        </div>
+      </div>
+      <button class="xbtn" id="sClose" aria-label="Close">✕</button>
+    </div>
+    <div class="session-body" id="sBody"></div>
+  </div>
+</div>
+
+<!-- soft chime -->
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   DATA — every booster is backed by a real, cited study.
+   ══════════════════════════════════════════════════════════════════ */
+const BOOSTERS = [
+  {
+    id:"sigh", name:"Physiological sigh", emoji:"😮‍💨", goal:"calm",
+    mins:5, durations:[1,3,5], timeLabel:"1–5 min", tags:["stressed","wired","fog"],
+    pitch:"Two inhales, one long exhale. The fastest evidence-based way to drop stress and steady yourself.",
+    steps:["Inhale through your nose","Sip in a little more air on top","Slow, long exhale through your mouth","Repeat — let the exhales get longer"],
+    session:{ kind:"breathing", tone:"calm",
+      pattern:[
+        {label:"Inhale", secs:2.6, scale:0.78},
+        {label:"Sip more", secs:1.1, scale:1.0},
+        {label:"Long exhale", secs:7.0, scale:0.28}
+      ]},
+    study:{ authors:"Balban et al.", year:2023, title:"Brief structured respiration practices enhance mood and reduce physiological arousal",
+      journal:"Cell Reports Medicine",
+      finding:"In a month-long randomized trial, 5 minutes a day of cyclic sighing — emphasizing long exhales — improved mood and slowed breathing rate more than mindfulness meditation. Exhale-focused breathing beat the other patterns.",
+      takeaway:"A single physiological sigh calms you in seconds; a few minutes resets a stressed, scattered state better than sitting still and trying to relax.",
+      url:"https://www.cell.com/cell-reports-medicine/fulltext/S2666-3791(22)00474-8" }
+  },
+  {
+    id:"box", name:"Box breathing", emoji:"🟦", goal:"calm",
+    mins:4, durations:[2,4,5], timeLabel:"2–5 min", tags:["stressed","wired"],
+    pitch:"Inhale 4, hold 4, exhale 4, hold 4. A steady square that settles a racing, wired mind.",
+    steps:["Inhale for 4 counts","Hold for 4","Exhale for 4","Hold empty for 4 — repeat the square"],
+    session:{ kind:"breathing", tone:"calm",
+      pattern:[
+        {label:"Inhale", secs:4, scale:1.0},
+        {label:"Hold", secs:4, scale:1.0},
+        {label:"Exhale", secs:4, scale:0.3},
+        {label:"Hold", secs:4, scale:0.3}
+      ]},
+    study:{ authors:"Balban et al.", year:2023, title:"Brief structured respiration practices enhance mood and reduce physiological arousal",
+      journal:"Cell Reports Medicine",
+      finding:"Box breathing was one of three structured breathing practices tested; all improved mood and lowered physiological arousal versus baseline, though the exhale-emphasized 'cyclic sighing' produced the largest mood gains.",
+      takeaway:"When you're wired and need a predictable rhythm to grab onto, the even square of box breathing is easy to follow and reliably down-shifts arousal.",
+      url:"https://www.cell.com/cell-reports-medicine/fulltext/S2666-3791(22)00474-8" }
+  },
+  {
+    id:"stairs", name:"Stair / movement snack", emoji:"🪜", goal:"energy",
+    mins:10, durations:[3,5,10], timeLabel:"3–10 min", tags:["tired","crash","cantstart"],
+    pitch:"Ten minutes of stairs beat a coffee for a quick energy lift — no crash attached.",
+    steps:["Find stairs, or march / walk briskly on the spot","Keep it low-to-moderate — you can still talk","Climb or move steadily for the timer","Shake out your arms; sit back down energized"],
+    session:{ kind:"timer", tone:"energy",
+      prompts:[
+        {at:0, text:"Get moving — up the stairs or brisk on the spot."},
+        {at:0.25, text:"Keep the pace easy but steady. You should be able to talk."},
+        {at:0.5, text:"Halfway. Swing your arms, stand tall."},
+        {at:0.8, text:"Final stretch — pick the pace up a touch."},
+        {at:1, text:"Done. Notice the lift."}
+      ]},
+    study:{ authors:"Randolph & O'Connor", year:2017, title:"Stair walking is more energizing than low dose caffeine in sleep deprived young women",
+      journal:"Physiology & Behavior",
+      finding:"In sleep-deprived young women, 10 minutes of low-to-moderate stair walking produced a bigger boost in felt energy than 50 mg of caffeine — with no crash afterward.",
+      takeaway:"When you're wiped and reaching for coffee, a short bout of stairs or brisk movement is a faster, cleaner pick-me-up.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/28302573/" }
+  },
+  {
+    id:"walk", name:"The 10-minute walk", emoji:"🚶", goal:"energy",
+    mins:10, durations:[5,10], timeLabel:"5–10 min", tags:["tired","crash","stressed"],
+    pitch:"A brisk 10-minute walk lifts energy and cuts tension for up to two hours — a sugar snack does the opposite.",
+    steps:["Head outside or down a hallway","Walk briskly — a little faster than a stroll","Let your shoulders drop, look up and out","Come back with more energy and less tension"],
+    session:{ kind:"timer", tone:"energy",
+      prompts:[
+        {at:0, text:"Start walking — a touch brisker than usual."},
+        {at:0.3, text:"Unclench your jaw, drop your shoulders."},
+        {at:0.6, text:"Look up and into the distance as you move."},
+        {at:1, text:"That's it — energy up, tension down."}
+      ]},
+    study:{ authors:"Thayer", year:1987, title:"Energy, tiredness, and tension effects of a sugar snack versus moderate exercise",
+      journal:"Journal of Personality and Social Psychology",
+      finding:"A brisk 10-minute walk raised self-rated energy and lowered tension for up to 2 hours. A sugar snack gave a brief lift, then left people more tired and more tense an hour later.",
+      takeaway:"Reach for a walk, not a snack. The walk's boost lasts; the snack's rebounds into a slump.",
+      url:"https://psycnet.apa.org/record/1987-14509-001" }
+  },
+  {
+    id:"nature", name:"Nature reset", emoji:"🌳", goal:"focus",
+    mins:10, durations:[3,5,10], timeLabel:"3–10 min", tags:["fog","stressed","cantstart"],
+    pitch:"A short dose of nature restores the exact 'directed attention' that a hard task drains.",
+    steps:["Step outside toward trees, sky or green if you can","No green nearby? Look at nature photos or out a window","Let your gaze wander — don't force focus","Return and notice your concentration is sharper"],
+    session:{ kind:"timer", tone:"focus",
+      prompts:[
+        {at:0, text:"Find some green — outside, a window, or nature images."},
+        {at:0.3, text:"Let your attention drift softly. No effort."},
+        {at:0.6, text:"Notice small details: light, movement, texture."},
+        {at:1, text:"Come back — your focus tank is topped up."}
+      ]},
+    study:{ authors:"Berman, Jonides & Kaplan", year:2008, title:"The cognitive benefits of interacting with nature",
+      journal:"Psychological Science",
+      finding:"Walking in nature — and even just viewing nature images — improved performance on demanding attention and working-memory tasks far more than an urban walk did, supporting Attention Restoration Theory.",
+      takeaway:"Foggy and can't concentrate? Nature gently replenishes directed attention. A window view or photos help when you can't get outside.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/19121124/" }
+  },
+  {
+    id:"nap", name:"10-minute power nap", emoji:"😴", goal:"energy",
+    mins:10, durations:[10,20], timeLabel:"10–20 min", tags:["tired","crash"],
+    pitch:"The sweet-spot nap: 10 minutes gives the quickest, longest alertness boost with almost no grogginess.",
+    steps:["Set yourself somewhere you can rest, eyes closed","Keep it to ~10 minutes so you don't sink too deep","Don't worry about 'really sleeping' — resting counts","Get up on the chime and move a little"],
+    session:{ kind:"timer", tone:"energy", quiet:true,
+      prompts:[
+        {at:0, text:"Close your eyes. Let your body go heavy."},
+        {at:0.5, text:"No pressure to sleep. Just rest."},
+        {at:1, text:"Time to rise — stand up and stretch."}
+      ]},
+    study:{ authors:"Brooks & Lack", year:2006, title:"A brief afternoon nap following nocturnal sleep restriction: which nap duration is most recuperative?",
+      journal:"Sleep",
+      finding:"Comparing 5-, 10-, 20- and 30-minute naps, the 10-minute nap produced the fastest and longest-lasting improvements in alertness and performance — benefits held for up to ~155 minutes — with little post-nap grogginess.",
+      takeaway:"If you can lie down, a ~10-minute nap is the efficient recharge. Longer naps risk waking up groggier.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/16796222/" }
+  },
+  {
+    id:"caffeinenap", name:"Caffeine nap", emoji:"☕", goal:"energy",
+    mins:20, durations:[20], timeLabel:"20 min", tags:["crash","tired"],
+    pitch:"Down a coffee fast, then nap 20 minutes. You wake as the caffeine kicks in — a double hit.",
+    steps:["Drink a coffee (or ~200 mg caffeine) quickly — now","Immediately lie down and close your eyes","Rest ~20 min; caffeine takes about that long to land","Wake up as it hits — nap + caffeine beat either alone"],
+    session:{ kind:"timer", tone:"energy", quiet:true, precheck:"Drink your coffee now, then tap Start.",
+      prompts:[
+        {at:0, text:"Coffee down? Close your eyes and rest."},
+        {at:0.5, text:"The caffeine is on its way. Keep resting."},
+        {at:1, text:"Rise — caffeine landing, sleep pressure cleared."}
+      ]},
+    study:{ authors:"Reyner & Horne", year:1997, title:"Suppression of sleepiness in drivers: combination of caffeine with a short nap",
+      journal:"Psychophysiology",
+      finding:"200 mg of caffeine taken immediately before a short (~15-minute) nap suppressed sleepiness and driving errors more than caffeine alone or a nap alone.",
+      takeaway:"For a deep slump when you must perform, the 'nappuccino' stacks two effects: the nap clears sleep pressure while the caffeine ramps up right as you wake.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/9401419/" }
+  },
+  {
+    id:"hydrate", name:"Hydrate now", emoji:"💧", goal:"focus",
+    mins:1, durations:null, timeLabel:"30 sec", tags:["fog","tired"],
+    pitch:"Even mild dehydration drags down mood, energy and concentration. Fix the cheapest cause first.",
+    steps:["Get a full glass of water — right now","Drink it down, don't sip over 20 minutes","Refill and keep it in sight","Notice: foggy heads are often just thirsty ones"],
+    session:{ kind:"action", tone:"focus", confirm:"I drank a full glass 💧"},
+    study:{ authors:"Armstrong, Ganio et al.", year:2012, title:"Mild dehydration affects mood in healthy young women",
+      journal:"The Journal of Nutrition",
+      finding:"A body-water loss of only ~1.5% — mild enough to barely register as thirst — worsened mood, increased fatigue and impaired concentration and vigilance in healthy young adults.",
+      takeaway:"Before anything fancier, drink water. A surprising share of afternoon fog is low-grade dehydration.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/22190027/" }
+  },
+  {
+    id:"sprint", name:"Focus sprint", emoji:"🎯", goal:"focus",
+    mins:25, durations:[15,25,50], timeLabel:"15–50 min", tags:["cantstart","fog"],
+    pitch:"Can't start? Commit to one block. Brief goal check-ins keep your focus from fading.",
+    steps:["Pick ONE task. Name it out loud.","Start the timer and begin — badly is fine","When a check-in pops, re-state your goal in your head","At the chime, take a real break, then decide on another"],
+    session:{ kind:"timer", tone:"focus",
+      prompts:[
+        {at:0, text:"Name your one task and begin. Rough is fine."},
+        {at:0.25, text:"10-sec reset: look up, restate your goal, dive back."},
+        {at:0.5, text:"Halfway. Re-anchor: what are you actually doing?"},
+        {at:0.75, text:"Quick reset again — goal in mind, keep going."},
+        {at:1, text:"Block done. Stand, breathe, then choose the next."}
+      ]},
+    study:{ authors:"Ariga & Lleras", year:2011, title:"Brief and rare mental 'breaks' keep you focused: deactivation and reactivation of task goals preempt vigilance decrements",
+      journal:"Cognition",
+      finding:"Briefly re-activating your task goal during a long task prevented the usual decline in focus over time — challenging the idea that attention is simply a fuel that runs out.",
+      takeaway:"Focus fades when the goal goes stale, not just when you're 'tired'. Periodically re-stating what you're doing keeps concentration alive across a work block.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/21211793/" }
+  },
+  {
+    id:"gum", name:"Chew gum", emoji:"🫧", goal:"focus",
+    mins:1, durations:null, timeLabel:"instant", tags:["fog","cantstart"],
+    pitch:"A stick of gum reliably nudges alertness and sustained attention up — most on hard, boring tasks.",
+    steps:["Pop a piece of gum (mint is fine)","Start chewing as you begin the task","Keep chewing through the boring, effortful stretch","Notice steadier alertness and reaction time"],
+    session:{ kind:"action", tone:"focus", confirm:"Chewing — let's go 🫧"},
+    study:{ authors:"Smith", year:2010, title:"Effects of chewing gum on cognitive function, mood and physiology in stressed and non-stressed volunteers",
+      journal:"Nutritional Neuroscience",
+      finding:"Chewing gum increased alertness and improved sustained attention and reaction time, with the benefit growing as the task got harder and longer.",
+      takeaway:"A tiny, weird-but-real trick for grinding through a dull task: the act of chewing keeps you in a state of 'action' that props up attention.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/19846739/" }
+  },
+  {
+    id:"light", name:"Bright light hit", emoji:"🔆", goal:"energy",
+    mins:5, durations:[2,5,10], timeLabel:"2–10 min", tags:["fog","crash","tired"],
+    pitch:"Get to the brightest light you can. It lifts alertness most exactly when you're mentally fatigued.",
+    steps:["Go to the brightest spot — a sunny window or outside","Face the light (don't stare at the sun)","Let it hit your eyes and skin for a few minutes","Best in daytime; it also helps set your body clock"],
+    session:{ kind:"timer", tone:"energy",
+      prompts:[
+        {at:0, text:"Get to the brightest light around — window or outdoors."},
+        {at:0.4, text:"Face toward the light. Soften your gaze."},
+        {at:1, text:"Alertness up. Daylight also steadies your rhythm."}
+      ]},
+    study:{ authors:"Smolders & de Kort", year:2013, title:"Bright light and mental fatigue: effects on alertness, vitality, performance and physiological arousal",
+      journal:"Journal of Environmental Psychology",
+      finding:"Exposure to bright light raised subjective alertness, vitality and physiological arousal — with the clearest boost when people were already mentally fatigued. (Daytime light effects are real but modest and vary between people.)",
+      takeaway:"When you're flagging in a dim room, move toward bright light — ideally daylight. It nudges you awake and helps keep your body clock on track.",
+      url:"https://www.sciencedirect.com/science/article/abs/pii/S0272494413001060" }
+  },
+  {
+    id:"cold", name:"Cold splash", emoji:"🧊", goal:"energy",
+    mins:1, durations:null, timeLabel:"1 min", tags:["crash","wired","cantstart"],
+    pitch:"Cold water on the face gives an immediate, if short, jolt of alertness. Perfect for the post-lunch dip.",
+    steps:["Head to a sink (or grab cold water)","Splash cold water on your face and wrists","Let the shock snap you awake","Ride the alertness straight into your task"],
+    session:{ kind:"action", tone:"energy", confirm:"Done — I'm awake ❄️",
+      hold:{secs:20, label:"Brace… then splash"}},
+    study:{ authors:"Hayashi et al.", year:2003, title:"The alerting effects of caffeine, bright light and face washing after a short daytime nap",
+      journal:"Clinical Neurophysiology",
+      finding:"Washing the face with cold water produced a mild, immediate drop in sleepiness. The effect was real but short-lived compared with caffeine or bright light.",
+      takeaway:"A cold splash is the emergency button: instant, brief alertness. Use it to break a slump, then follow with something longer-lasting like movement or light.",
+      url:"https://pubmed.ncbi.nlm.nih.gov/14652086/" }
+  }
+];
+
+/* how-you-feel states → ranked booster ids */
+const STATES = [
+  { id:"tired",     em:"🔋", t:"Drained",        d:"No energy, running low",       recs:["stairs","walk","nap","light","hydrate","caffeinenap"] },
+  { id:"fog",       em:"🌫️", t:"Foggy",          d:"Can't think straight",         recs:["hydrate","nature","stairs","gum","light","sigh"] },
+  { id:"wired",     em:"⚡", t:"Wired but tired", d:"Restless, can't settle",       recs:["sigh","box","walk","cold"] },
+  { id:"cantstart", em:"🧊", t:"Can't start",     d:"Stuck, procrastinating",       recs:["sprint","cold","stairs","gum"] },
+  { id:"crash",     em:"📉", t:"Afternoon crash", d:"That 2–4pm slump",             recs:["stairs","cold","light","nap","caffeinenap","walk"] },
+  { id:"stressed",  em:"🌀", t:"Stressed",        d:"Scattered, tense, buzzing",    recs:["sigh","box","nature","walk"] }
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   STATE / STORAGE
+   ══════════════════════════════════════════════════════════════════ */
+const LS_KEY = "spark_v1";
+const store = loadStore();
+function loadStore(){
+  try{ const s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && typeof s==="object") return Object.assign({log:[],sound:true,theme:null,lastState:null}, s); }catch(e){}
+  return { log:[], sound:true, theme:null, lastState:null };
+}
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(store)); }catch(e){} }
+const boosterById = id => BOOSTERS.find(b=>b.id===id);
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* ══════════════════════════════════════════════════════════════════
+   THEME
+   ══════════════════════════════════════════════════════════════════ */
+function applyTheme(t){ document.documentElement.setAttribute("data-theme", t); store.theme=t; save(); }
+(function initTheme(){
+  const t = store.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  applyTheme(t);
+})();
+$("#themeBtn").onclick = ()=> applyTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light":"dark");
+
+/* ══════════════════════════════════════════════════════════════════
+   TABS
+   ══════════════════════════════════════════════════════════════════ */
+$("#tabs").addEventListener("click", e=>{
+  const b = e.target.closest(".tab"); if(!b) return;
+  switchTo(b.dataset.view);
+});
+function switchTo(view){
+  $$(".tab").forEach(t=>t.classList.toggle("active", t.dataset.view===view));
+  $$(".view").forEach(v=>v.classList.toggle("active", v.id==="view-"+view));
+  if(view==="track") renderTrack();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TIME-OF-DAY NOTE
+   ══════════════════════════════════════════════════════════════════ */
+(function timeNote(){
+  const h = new Date().getHours();
+  let msg, suggest;
+  if(h>=5 && h<11){ msg="Morning."; suggest="Light + a little movement wakes your body clock up fast."; }
+  else if(h>=13 && h<16){ msg="Early afternoon."; suggest="This is the classic energy dip — most people crash right about now."; }
+  else if(h>=16 && h<19){ msg="Late afternoon."; suggest="Fading focus is normal here — a short reset goes a long way."; }
+  else if(h>=19 || h<5){ msg="Evening / night."; suggest="Go easy on caffeine and bright light now so you can still sleep."; }
+  else { msg="Late morning."; suggest="A quick booster keeps momentum into the afternoon."; }
+  $("#timeNote").innerHTML = `<b>${msg}</b> ${suggest}`;
+})();
+
+/* ══════════════════════════════════════════════════════════════════
+   BOOST TAB — state picker + recommendations
+   ══════════════════════════════════════════════════════════════════ */
+function renderStates(){
+  $("#states").innerHTML = STATES.map(s=>`
+    <button class="state" data-s="${s.id}">
+      <span class="em">${s.em}</span>
+      <span class="t">${s.t}</span>
+      <span class="d">${s.d}</span>
+    </button>`).join("");
+}
+renderStates();
+
+$("#states").addEventListener("click", e=>{
+  const b = e.target.closest(".state"); if(!b) return;
+  $$(".state").forEach(s=>s.classList.toggle("on", s===b));
+  const st = STATES.find(x=>x.id===b.dataset.s);
+  store.lastState = st.id; save();
+  showRecs(st);
+});
+
+function showRecs(state){
+  const wrap = $("#recWrap");
+  $("#recTitle").textContent = `For "${state.t.toLowerCase()}" — start here`;
+  $("#recPill").textContent = `${state.recs.length} matched`;
+  const ids = state.recs;
+  $("#recBoosters").innerHTML = ids.map((id,i)=> boosterCard(boosterById(id), i===0)).join("");
+  wrap.classList.remove("hidden");
+  wireCards($("#recBoosters"));
+  requestAnimationFrame(()=> wrap.scrollIntoView({behavior:"smooth", block:"start"}));
+}
+
+/* restore last state selection */
+if(store.lastState){
+  const b = $(`.state[data-s="${store.lastState}"]`);
+  const st = STATES.find(x=>x.id===store.lastState);
+  if(b && st){ b.classList.add("on"); showRecs(st); }
+}
+
+$("#sparkMe").onclick = ()=> openSession("sigh", {quick:true});
+$("#surprise").onclick = ()=>{
+  const pick = BOOSTERS[Math.floor(Math.random()*BOOSTERS.length)];
+  openSession(pick.id);
+};
+
+/* ══════════════════════════════════════════════════════════════════
+   BOOSTER CARD
+   ══════════════════════════════════════════════════════════════════ */
+function goalWord(g){ return g==="energy"?"Energy":g==="focus"?"Focus":"Calm"; }
+function boosterCard(b, isTop){
+  return `<article class="boost f-${b.goal} ${isTop?"top":""}" data-id="${b.id}">
+    ${isTop?'<span class="topflag">Top pick</span>':""}
+    <div class="btitle">
+      <span class="bem">${b.emoji}</span>
+      <div>
+        <h3>${b.name}</h3>
+        <div class="meta">
+          <span class="tagpill ${b.goal}">${goalWord(b.goal)}</span>
+          <span class="tagpill">⏱ ${b.timeLabel}</span>
+        </div>
+      </div>
+    </div>
+    <p class="pitch">${b.pitch}</p>
+    <div class="bfoot">
+      <button class="btn btn-primary btn-sm b-start">Start →</button>
+      <span class="cite b-cite">${b.study.authors} ${b.study.year}</span>
+    </div>
+  </article>`;
+}
+function wireCards(root){
+  root.querySelectorAll(".boost").forEach(card=>{
+    const id = card.dataset.id;
+    card.querySelector(".b-start").onclick = ()=> openSession(id);
+    card.querySelector(".b-cite").onclick = ()=>{ switchTo("research"); setTimeout(()=>{
+      const el = document.getElementById("r-"+id);
+      if(el){ el.scrollIntoView({behavior:"smooth",block:"center"}); el.animate([{boxShadow:"0 0 0 3px var(--ring)"},{boxShadow:"var(--shadow)"}],{duration:1400}); }
+    },260); };
+    // click card body (not buttons) also starts
+    card.addEventListener("click", e=>{ if(e.target.closest(".b-start")||e.target.closest(".b-cite"))return; openSession(id); });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   LIBRARY TAB
+   ══════════════════════════════════════════════════════════════════ */
+let libGoal="all", libTime="all";
+function renderLibrary(){
+  const list = BOOSTERS.filter(b=>{
+    if(libGoal!=="all" && b.goal!==libGoal) return false;
+    if(libTime!=="all" && b.mins> Number(libTime)) return false;
+    return true;
+  });
+  const el = $("#libBoosters");
+  el.innerHTML = list.length ? list.map(b=>boosterCard(b,false)).join("")
+    : `<div class="empty" style="grid-column:1/-1"><span class="bem">🔎</span>No boosters that short in that category. Try a longer time.</div>`;
+  wireCards(el);
+}
+$("#goalFilter").addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b)return;
+  libGoal=b.dataset.g; $$("#goalFilter button").forEach(x=>x.classList.toggle("on",x===b)); renderLibrary(); });
+$("#timeFilter").addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b)return;
+  libTime=b.dataset.t; $$("#timeFilter button").forEach(x=>x.classList.toggle("on",x===b)); renderLibrary(); });
+renderLibrary();
+
+/* ══════════════════════════════════════════════════════════════════
+   RESEARCH TAB
+   ══════════════════════════════════════════════════════════════════ */
+function renderResearch(){
+  $("#researchList").innerHTML = BOOSTERS.map(b=>`
+    <div class="rcard f-${b.goal}" id="r-${b.id}">
+      <div class="rem">${b.emoji}</div>
+      <div>
+        <span class="label ${b.goal==='focus'?'focus':b.goal==='calm'?'calm':''}">${goalWord(b.goal)} · ${b.name}</span>
+        <h3>${b.study.title}</h3>
+        <p class="finding">${b.study.finding}</p>
+        <p class="takeaway"><b>What it means for you:</b> ${b.study.takeaway}</p>
+        <p class="cit">${b.study.authors} (${b.study.year}). <i>${b.study.journal}.</i> &nbsp;<a href="${b.study.url}" target="_blank" rel="noopener">Read the study ↗</a></p>
+        <div class="rstart"><button class="btn btn-ghost btn-sm" data-id="${b.id}">Try this booster →</button></div>
+      </div>
+    </div>`).join("");
+  $("#researchList").querySelectorAll("button[data-id]").forEach(btn=> btn.onclick=()=>openSession(btn.dataset.id));
+}
+renderResearch();
+
+/* ══════════════════════════════════════════════════════════════════
+   AUDIO CUE
+   ══════════════════════════════════════════════════════════════════ */
+let audioCtx=null;
+function chime(freq=660, dur=0.16, type="sine", vol=0.14){
+  if(!store.sound) return;
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type=type; o.frequency.value=freq; o.connect(g); g.connect(audioCtx.destination);
+    const t=audioCtx.currentTime;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.start(t); o.stop(t+dur+0.02);
+  }catch(e){}
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SESSION ENGINE
+   ══════════════════════════════════════════════════════════════════ */
+let S = null; // active session state
+const overlay = $("#overlay");
+
+function openSession(id, opts={}){
+  const b = boosterById(id); if(!b) return;
+  clearSession();
+  const durations = b.durations;
+  let mins = opts.quick ? Math.min(...(durations||[b.mins])) : b.mins;
+  if(opts.quick && id==="sigh") mins = 1;
+  S = { b, mins, opts, timers:[], phase:"setup" };
+  $("#sSem").textContent = b.emoji;
+  $("#sTitle").textContent = b.name;
+  $("#sGoal").textContent = goalWord(b.goal) + " · " + b.timeLabel;
+  overlay.classList.add("on");
+  document.body.style.overflow="hidden";
+  renderSetup();
+}
+
+function renderSetup(){
+  const b = S.b;
+  const durHtml = b.durations ? `
+    <div class="duration-row" id="durRow">
+      ${b.durations.map(d=>`<button data-d="${d}" class="${d===S.mins?"on":""}">${d} min</button>`).join("")}
+    </div>` : "";
+  const stepsHtml = `<div class="steps">${b.steps.map((s,i)=>`
+      <div class="stepline"><span class="sn">${i+1}</span><span class="sx">${s}</span></div>`).join("")}</div>`;
+  const pre = b.session.precheck ? `<p class="prompt" style="min-height:auto;color:var(--energy)">${b.session.precheck}</p>` : "";
+  $("#sBody").innerHTML = `
+    <p class="prompt" style="min-height:auto;margin-top:2px">${b.pitch}</p>
+    ${durHtml}
+    ${stepsHtml}
+    ${pre}
+    <div class="controls">
+      <button class="btn btn-primary btn-lg" id="goBtn">${startVerb(b)} ▶</button>
+      <button class="btn btn-ghost" id="soundBtn">${store.sound?"🔊 Sound on":"🔇 Sound off"}</button>
+    </div>
+    ${whyBlock(b)}`;
+  if(b.durations){
+    $("#durRow").addEventListener("click", e=>{ const d=e.target.closest("button"); if(!d)return;
+      S.mins=Number(d.dataset.d); $$("#durRow button").forEach(x=>x.classList.toggle("on",x===d)); });
+  }
+  $("#soundBtn").onclick=()=>{ store.sound=!store.sound; save(); $("#soundBtn").textContent=store.sound?"🔊 Sound on":"🔇 Sound off"; if(store.sound) chime(); };
+  $("#goBtn").onclick=()=> startSession();
+}
+function startVerb(b){ return b.session.kind==="breathing"?"Start breathing" : b.session.kind==="action"?"Let's do it":"Start"; }
+function whyBlock(b){
+  return `<div class="why">
+    <span class="label ${b.goal==='focus'?'focus':b.goal==='calm'?'calm':''}">Why this works</span>
+    <p>${b.study.finding}</p>
+    <p class="cit">${b.study.authors} (${b.study.year}). <i>${b.study.journal}.</i> <a href="${b.study.url}" target="_blank" rel="noopener">Read it ↗</a></p>
+  </div>`;
+}
+
+function startSession(){
+  const b=S.b; S.phase="run";
+  if(b.session.kind==="breathing") runBreathing();
+  else if(b.session.kind==="timer") runTimer();
+  else runAction();
+}
+
+/* ── breathing ── */
+function runBreathing(){
+  const b=S.b, pat=b.session.pattern, tone=b.session.tone;
+  const total = Math.round(S.mins*60);
+  S.endAt = Date.now()+total*1000;
+  $("#sBody").innerHTML = `
+    <div class="stage">
+      <div class="orb-wrap">
+        <div class="orb-ring"></div>
+        <div class="orb ${tone==='calm'?'calm':''}" id="orb"><span class="phase" id="phase">Ready</span></div>
+      </div>
+    </div>
+    <div class="breath-sub" id="bsub">Follow the orb · <span id="bclock"></span> left</div>
+    <div class="controls">
+      <button class="btn btn-ghost" id="endBtn">I'm done</button>
+    </div>
+    ${whyBlock(b)}`;
+  $("#endBtn").onclick=()=> finishSession();
+  const orb=$("#orb"), phase=$("#phase");
+  let i=0;
+  function step(){
+    if(Date.now()>=S.endAt){ finishSession(); return; }
+    const ph=pat[i%pat.length];
+    orb.style.transitionDuration = ph.secs+"s";
+    orb.style.transform = "scale("+ph.scale+")";
+    phase.textContent = ph.label;
+    if(/inhale|sip/i.test(ph.label)) chime(600,0.12);
+    else if(/exhale/i.test(ph.label)) chime(400,0.2);
+    i++;
+    S.timers.push(setTimeout(step, ph.secs*1000));
+  }
+  step();
+  S.tick = setInterval(updateBreathClock, 250);
+  updateBreathClock();
+}
+function updateBreathClock(){
+  const el=$("#bclock"); if(!el){ return; }
+  el.textContent = fmt(Math.max(0, Math.round((S.endAt-Date.now())/1000)));
+}
+
+/* ── timer ── */
+function runTimer(){
+  const b=S.b, tone=b.session.tone, prompts=b.session.prompts||[];
+  const total=Math.round(S.mins*60);
+  S.endAt=Date.now()+total*1000; S.total=total;
+  const R=118, C=2*Math.PI*R;
+  $("#sBody").innerHTML=`
+    <div class="ring-wrap">
+      <svg viewBox="0 0 250 250">
+        <circle class="ring-bg" cx="125" cy="125" r="${R}"></circle>
+        <circle class="ring-fg ${tone}" id="ringFg" cx="125" cy="125" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="0"></circle>
+      </svg>
+      <div class="ring-center">
+        <div class="clock" id="clock">${fmt(total)}</div>
+        <div class="rlab">remaining</div>
+      </div>
+    </div>
+    <p class="prompt" id="prompt"></p>
+    <div class="controls">
+      <button class="btn btn-primary" id="doneBtn">Done ✓</button>
+      <button class="btn btn-ghost" id="endBtn">End early</button>
+    </div>
+    ${whyBlock(b)}`;
+  $("#doneBtn").onclick=()=> finishSession();
+  $("#endBtn").onclick=()=> finishSession();
+  S.shownPrompts=new Set();
+  S.ring={el:$("#ringFg"), C};
+  tickTimer(prompts);
+  S.tick=setInterval(()=>tickTimer(prompts),250);
+}
+function tickTimer(prompts){
+  const remain=Math.max(0,(S.endAt-Date.now())/1000);
+  const elapsedRatio=1-remain/S.total;
+  const clock=$("#clock"); if(clock) clock.textContent=fmt(Math.ceil(remain));
+  if(S.ring&&S.ring.el) S.ring.el.style.strokeDashoffset = (S.ring.C*elapsedRatio).toFixed(1);
+  // prompts
+  for(const p of prompts){
+    if(elapsedRatio>=p.at && !S.shownPrompts.has(p.at)){
+      S.shownPrompts.add(p.at);
+      const pe=$("#prompt");
+      if(pe){ pe.textContent=p.text; pe.classList.add("flash"); setTimeout(()=>pe&&pe.classList.remove("flash"),700); }
+      if(p.at>0 && p.at<1 && !S.b.session.quiet) chime(560,0.12);
+    }
+  }
+  if(remain<=0){
+    clearInterval(S.tick);
+    chime(720,0.4,"sine",0.18); setTimeout(()=>chime(920,0.4),180);
+    finishSession();
+  }
+}
+
+/* ── action ── */
+function runAction(){
+  const b=S.b;
+  if(b.session.hold){
+    const secs=b.session.hold.secs; S.endAt=Date.now()+secs*1000;
+    $("#sBody").innerHTML=`
+      <div class="stage" style="min-height:200px">
+        <div><div class="bigcount" id="bc">${secs}</div>
+        <div class="breath-sub">${b.session.hold.label}</div></div>
+      </div>
+      <div class="controls"><button class="btn btn-ghost" id="skipHold">Skip →</button></div>
+      ${whyBlock(b)}`;
+    $("#skipHold").onclick=()=> actionConfirm();
+    S.tick=setInterval(()=>{
+      const left=Math.ceil((S.endAt-Date.now())/1000);
+      const bc=$("#bc"); if(bc) bc.textContent=Math.max(0,left);
+      if(left<=0){ clearInterval(S.tick); chime(700,0.3); actionConfirm(); }
+    },200);
+  } else {
+    actionConfirm();
+  }
+}
+function actionConfirm(){
+  clearInterval(S.tick);
+  const b=S.b;
+  $("#sBody").innerHTML=`
+    <div class="steps" style="margin-top:6px">${b.steps.map((s,i)=>`
+      <div class="stepline"><span class="sn">${i+1}</span><span class="sx">${s}</span></div>`).join("")}</div>
+    <div class="controls">
+      <button class="btn btn-primary btn-lg" id="doneBtn">${b.session.confirm||"Done ✓"}</button>
+    </div>
+    ${whyBlock(b)}`;
+  $("#doneBtn").onclick=()=> finishSession();
+}
+
+/* ── finish + rate ── */
+function finishSession(){
+  clearTimersOnly();
+  const b=S.b;
+  $("#sSem").textContent="✨";
+  $("#sTitle").textContent="Nice — you did it";
+  $("#sGoal").textContent=b.name;
+  $("#sBody").innerHTML=`
+    <div class="rate-wrap">
+      <h3>How do you feel now?</h3>
+      <p>One tap — it teaches SPARK what works for <i>you</i>.</p>
+      <div class="rate-btns">
+        <button class="rate-btn" data-h="2"><span class="re">🚀</span><span class="rl">Big lift</span></button>
+        <button class="rate-btn" data-h="1"><span class="re">🙂</span><span class="rl">A little</span></button>
+        <button class="rate-btn" data-h="0"><span class="re">😐</span><span class="rl">Not really</span></button>
+      </div>
+      <div id="postRate"></div>
+    </div>`;
+  $("#sBody").querySelectorAll(".rate-btn").forEach(btn=>btn.onclick=()=>logSession(b.id, Number(btn.dataset.h)));
+}
+function logSession(id, help){
+  store.log.unshift({ ts:Date.now(), id, help });
+  if(store.log.length>400) store.log.length=400;
+  save();
+  const streak = currentStreak();
+  $("#postRate").innerHTML = `
+    <div class="streakbanner">🔥 ${streak}-day streak · ${store.log.length} spark${store.log.length===1?"":"s"} logged</div>
+    <div class="controls" style="margin-top:16px">
+      <button class="btn btn-primary" id="againBtn">Another booster</button>
+      <button class="btn btn-ghost" id="closeAfter">Done for now</button>
+    </div>`;
+  chime(880,0.18);
+  $("#againBtn").onclick=()=>{ closeOverlay(); switchTo("boost"); };
+  $("#closeAfter").onclick=()=>{ closeOverlay(); };
+}
+
+/* ── teardown ── */
+function clearTimersOnly(){
+  if(!S) return;
+  if(S.tick) clearInterval(S.tick);
+  (S.timers||[]).forEach(clearTimeout);
+  S.timers=[];
+}
+function clearSession(){ clearTimersOnly(); }
+function closeOverlay(){
+  clearTimersOnly();
+  overlay.classList.remove("on");
+  document.body.style.overflow="";
+  S=null;
+  if($("#view-track").classList.contains("active")) renderTrack();
+}
+$("#sClose").onclick=closeOverlay;
+overlay.addEventListener("click", e=>{ if(e.target===overlay) closeOverlay(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && overlay.classList.contains("on")) closeOverlay(); });
+
+/* ══════════════════════════════════════════════════════════════════
+   HELPERS
+   ══════════════════════════════════════════════════════════════════ */
+function fmt(sec){ sec=Math.max(0,sec|0); const m=Math.floor(sec/60), s=sec%60; return m+":"+String(s).padStart(2,"0"); }
+function sameDay(a,b){ const x=new Date(a),y=new Date(b); return x.getFullYear()===y.getFullYear()&&x.getMonth()===y.getMonth()&&x.getDate()===y.getDate(); }
+function currentStreak(){
+  if(!store.log.length) return 0;
+  const days=[...new Set(store.log.map(l=> new Date(l.ts).toDateString()))].map(d=>new Date(d).getTime()).sort((a,b)=>b-a);
+  let streak=0; let cursor=new Date(); cursor.setHours(0,0,0,0);
+  const todayHas = days.some(d=> sameDay(d, cursor.getTime()));
+  if(!todayHas){ cursor.setDate(cursor.getDate()-1); if(!days.some(d=>sameDay(d,cursor.getTime()))) return 0; }
+  for(;;){
+    if(days.some(d=> sameDay(d, cursor.getTime()))){ streak++; cursor.setDate(cursor.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TRACK TAB
+   ══════════════════════════════════════════════════════════════════ */
+function renderTrack(){
+  const log=store.log;
+  const total=log.length;
+  const lifts=log.filter(l=>l.help>=1).length;
+  const rate= total? Math.round(lifts/total*100):0;
+  const streak=currentStreak();
+  $("#trackStats").innerHTML=`
+    <div class="stat energy"><div class="n">${total}</div><div class="k">Sessions done</div></div>
+    <div class="stat calm"><div class="n">${streak}</div><div class="k">Day streak 🔥</div></div>
+    <div class="stat focus"><div class="n">${rate}%</div><div class="k">Gave a lift</div></div>
+    <div class="stat"><div class="n">${new Set(log.map(l=>l.id)).size}</div><div class="k">Boosters tried</div></div>`;
+
+  // ranking by avg help
+  const agg={};
+  log.forEach(l=>{ (agg[l.id]=agg[l.id]||{sum:0,n:0}).sum+=l.help; agg[l.id].n++; });
+  const ranked=Object.entries(agg).map(([id,v])=>({id, avg:v.sum/v.n, n:v.n}))
+    .sort((a,b)=> b.avg-a.avg || b.n-a.n);
+  const rl=$("#rankList");
+  if(!ranked.length){
+    rl.innerHTML=`<div class="empty"><span class="bem">📊</span>Finish a session and mark whether it helped — your personal ranking builds here.</div>`;
+  } else {
+    const maxAvg=2;
+    rl.innerHTML=`<div class="rank">`+ranked.map((r,i)=>{
+      const b=boosterById(r.id); if(!b) return"";
+      const pct=Math.round(r.avg/maxAvg*100);
+      const medal=["🥇","🥈","🥉"][i]||`${i+1}`;
+      return `<div class="rankrow">
+        <span class="rn">${medal}</span>
+        <span style="font-size:1.3rem">${b.emoji}</span>
+        <div class="rt"><b>${b.name}</b> <span class="c">· ${r.n} time${r.n===1?"":"s"} · avg lift ${r.avg.toFixed(1)}/2</span></div>
+        <div class="bar"><span style="width:${pct}%"></span></div>
+      </div>`;
+    }).join("")+`</div>`;
+  }
+
+  // recent log
+  const ll=$("#logList");
+  if(!log.length){
+    ll.innerHTML=`<div class="empty"><span class="bem">🌱</span>No sessions yet. Head to <b>Boost</b> and spark yourself.</div>`;
+  } else {
+    ll.innerHTML=`<div class="loglist">`+log.slice(0,60).map(l=>{
+      const b=boosterById(l.id)||{emoji:"⚡",name:l.id};
+      const hb=["help-0","help-1","help-2"][l.help];
+      const ht=["No lift","A little","Big lift"][l.help];
+      return `<div class="logrow">
+        <span class="le">${b.emoji}</span>
+        <div class="lt"><b>${b.name}</b><div class="lm">${timeAgo(l.ts)}</div></div>
+        <span class="helpbadge ${hb}">${ht}</span>
+      </div>`;
+    }).join("")+`</div>`;
+  }
+}
+function timeAgo(ts){
+  const s=Math.round((Date.now()-ts)/1000);
+  if(s<60) return "just now";
+  const m=Math.round(s/60); if(m<60) return m+" min ago";
+  const h=Math.round(m/60); if(h<24) return h+" hr ago";
+  const d=Math.round(h/24); if(d<7) return d+" day"+(d===1?"":"s")+" ago";
+  return new Date(ts).toLocaleDateString(undefined,{month:"short",day:"numeric"});
+}
+$("#clearLog").onclick=()=>{
+  if(!store.log.length) return;
+  if(confirm("Clear your entire spark log? This can't be undone.")){ store.log=[]; save(); renderTrack(); }
+};
+
+/* keyboard: number keys switch tabs, / to boost */
+document.addEventListener("keydown", e=>{
+  if(overlay.classList.contains("on")) return;
+  if(e.target.matches("input,textarea")) return;
+  const map={"1":"boost","2":"library","3":"research","4":"track"};
+  if(map[e.key]) switchTo(map[e.key]);
+});
+</script>
+</body>
+</html>
