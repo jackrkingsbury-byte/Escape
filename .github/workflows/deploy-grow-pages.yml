@@ -1,0 +1,46 @@
+name: Deploy GROW to GitHub Pages
+
+# Publishes ONLY the grow/ folder as the Pages site.
+# The app becomes the site root, e.g. https://<owner>.github.io/<repo>/
+# Nothing else in the repo is uploaded, so private files stay private.
+
+on:
+  push:
+    branches:
+      - claude/video-planner-nutrient-tracker-6vmm7j
+    paths:
+      - "grow/**"
+      - ".github/workflows/deploy-grow-pages.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; newer runs supersede in-progress ones.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload grow/ as the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: grow
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
