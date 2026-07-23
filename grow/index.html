@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<!-- GROW — idea planner + 15-year nutrient growth helper -->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GROW — Plan what you watch &amp; do. Feed your 15-year growth.</title>
+<meta name="theme-color" content="#2347ff">
+<meta name="description" content="A tiny planner for the videos you want to watch and the things you want to do — plus a nutrient growth helper that turns every one into fuel for a 15-year plan.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%232347ff'/><text x='50' y='73' font-size='60' font-family='Georgia,serif' fill='white' text-anchor='middle'>G</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f5ef;--surface:#fff;--surface-2:#efe9dd;--text:#14161c;--muted:#5f6678;
+  --brand:#2347ff;--brand-deep:#1a38d6;--brand-soft:#e7eaff;
+  --pop:#ff5630;--pop-soft:#ffe7e0;--zing:#ffd60a;--line:#e4dece;
+  --good:#1f9d67;--good-soft:#dcf3e8;
+  --shadow:0 1px 2px rgba(20,22,28,.04),0 10px 30px rgba(20,22,28,.07);
+  --shadow-lg:0 2px 5px rgba(20,22,28,.05),0 28px 64px rgba(20,22,28,.14);
+  --ring:rgba(35,71,255,.18);--radius:20px;--radius-sm:13px;--maxw:1140px;
+}
+[data-theme="dark"]{
+  --bg:#0a0c11;--surface:#11141b;--surface-2:#161a23;--text:#ececea;--muted:#9097a6;
+  --brand:#6480ff;--brand-deep:#4d6bff;--brand-soft:#1a2340;--pop:#ff6f4d;--pop-soft:#2a1712;--zing:#ffd60a;--line:#232938;
+  --good:#43e0a0;--good-soft:#132a20;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.4);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.45),0 34px 76px rgba(0,0,0,.55);--ring:rgba(100,128,255,.28);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;min-height:100vh}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.label{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.label.pop{color:var(--pop)}.label.good{color:var(--good)}.label.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:800;font-size:.95rem;padding:12px 20px;border-radius:100px;border:2px solid transparent;cursor:pointer;transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s,border-color .25s;white-space:nowrap}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 12px 26px var(--ring)}
+.btn-primary:hover{background:var(--brand-deep);transform:translateY(-2px);box-shadow:0 18px 36px var(--ring)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-sm{padding:8px 14px;font-size:.85rem}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:11px}
+
+/* ── header ── */
+header.nav{position:sticky;top:0;z-index:60;backdrop-filter:saturate(160%) blur(14px);background:color-mix(in srgb,var(--bg) 84%,transparent);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;gap:14px;height:66px;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-weight:700;font-size:1.28rem;letter-spacing:.02em}
+.brand .mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--brand);color:#fff;font-weight:900;box-shadow:0 6px 16px var(--ring)}
+.brand small{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;font-weight:600;display:block;margin-top:-2px}
+.nav-spacer{flex:1}
+.tabs{display:flex;gap:4px;background:var(--surface-2);padding:5px;border-radius:100px}
+.tab{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:.9rem;color:var(--muted);padding:9px 18px;border-radius:100px;cursor:pointer;transition:.2s}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:2px solid var(--line);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;transition:.2s;font-size:1.05rem}
+.icon-btn:hover{border-color:var(--brand);color:var(--brand)}
+
+/* ── layout ── */
+main{padding:34px 0 90px}
+.view{display:none;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.page-head{max-width:640px;margin-bottom:26px}
+.page-head h1{font-size:clamp(2rem,4.6vw,3.1rem);font-weight:600;margin:8px 0}
+.page-head p{color:var(--muted);font-size:1.05rem}
+.grid{display:grid;gap:16px}
+
+/* ── cards / panels ── */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.panel h3{font-size:1.15rem;font-weight:600}
+
+/* ── stat strip ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px;box-shadow:var(--shadow)}
+.stat .n{font-family:'Fraunces',serif;font-size:2.1rem;font-weight:600;line-height:1;letter-spacing:-.02em}
+.stat .k{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;font-weight:600}
+.stat.brand .n{color:var(--brand)}.stat.pop .n{color:var(--pop)}.stat.good .n{color:var(--good)}
+
+/* ── add form ── */
+.addbar{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:22px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+input,select,textarea{font-family:inherit;font-size:.95rem;color:var(--text);background:var(--bg);border:2px solid var(--line);border-radius:11px;padding:11px 13px;width:100%;transition:.18s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
+textarea{resize:vertical;min-height:52px}
+.form-row{display:grid;grid-template-columns:1fr;gap:14px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:11px;padding:4px;gap:4px}
+.seg button{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:.88rem;color:var(--muted);padding:8px 16px;border-radius:8px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.seg button.on[data-t="watch"]{color:var(--pop)}
+.seg button.on[data-t="do"]{color:var(--brand)}
+
+/* ── filters ── */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+.chip{border:2px solid var(--line);background:var(--surface);color:var(--muted);font-family:inherit;font-weight:700;font-size:.82rem;padding:7px 14px;border-radius:100px;cursor:pointer;transition:.18s}
+.chip:hover{color:var(--text);border-color:var(--text)}
+.chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.chip .ct{font-family:'JetBrains Mono',monospace;font-size:.72em;opacity:.7;margin-left:5px}
+
+/* ── idea cards ── */
+.ideas{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.idea{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:10px;position:relative;transition:transform .16s,box-shadow .25s,border-color .2s}
+.idea:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.idea.done{opacity:.62}
+.idea.done .idea-title{text-decoration:line-through}
+.idea-top{display:flex;align-items:flex-start;gap:10px}
+.type-badge{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1rem}
+.type-badge.watch{background:var(--pop-soft);color:var(--pop)}
+.type-badge.do{background:var(--brand-soft);color:var(--brand)}
+.idea-title{font-weight:700;font-size:1.02rem;line-height:1.25;word-break:break-word}
+.idea-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--muted)}
+.tag.pri-high{background:var(--pop-soft);color:var(--pop)}
+.tag.pri-med{background:var(--brand-soft);color:var(--brand)}
+.tag.feeds{background:var(--good-soft);color:var(--good)}
+.idea-notes{font-size:.9rem;color:var(--muted);line-height:1.5;word-break:break-word}
+.idea-link{font-size:.85rem;color:var(--brand);font-weight:700;text-decoration:none;word-break:break-all;display:inline-flex;align-items:center;gap:5px}
+.idea-link:hover{text-decoration:underline}
+.idea-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.mini{border:1px solid var(--line);background:var(--surface);color:var(--muted);font-family:inherit;font-weight:700;font-size:.76rem;padding:6px 10px;border-radius:8px;cursor:pointer;transition:.16s;display:inline-flex;align-items:center;gap:4px}
+.mini:hover{border-color:var(--brand);color:var(--brand)}
+.mini.go:hover{border-color:var(--good);color:var(--good)}
+.mini.del:hover{border-color:var(--pop);color:var(--pop)}
+.status-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.st-idea{background:var(--muted)}.st-planned{background:var(--zing)}.st-active{background:var(--brand)}.st-done{background:var(--good)}
+
+/* ── growth timeline ── */
+.track{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.track-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.track-swatch{width:14px;height:14px;border-radius:5px;flex:none}
+.track-name{font-weight:700;font-size:1.08rem}
+.track-sub{font-size:.85rem;color:var(--muted)}
+.track-spacer{flex:1}
+.prog{height:10px;background:var(--surface-2);border-radius:100px;overflow:hidden;margin:4px 0 12px}
+.prog span{display:block;height:100%;border-radius:100px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.years{display:grid;grid-template-columns:repeat(15,1fr);gap:5px}
+.yr{aspect-ratio:1;border-radius:7px;background:var(--surface-2);position:relative;cursor:default;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;color:var(--muted);transition:transform .14s}
+.yr:hover{transform:scale(1.12);z-index:2}
+.yr.now{outline:2px solid var(--text);outline-offset:1px}
+.yr .yv{position:absolute;bottom:2px;right:3px;font-size:.5rem;opacity:.85}
+.yr-axis{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;margin-top:6px}
+.yr-axis span{text-align:center;font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--text-dim,var(--muted));opacity:.7}
+.track-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.nutebar{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.nutebar .field{min-width:90px}
+
+/* ── empty ── */
+.empty{text-align:center;padding:52px 20px;color:var(--muted)}
+.empty .big{font-size:2.4rem;margin-bottom:10px}
+.empty h3{font-size:1.3rem;color:var(--text);margin-bottom:6px}
+
+/* ── about ── */
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.about-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:20px;box-shadow:var(--shadow)}
+.about-card .ic{font-size:1.6rem;margin-bottom:10px}
+.about-card h4{font-size:1.05rem;margin-bottom:6px}
+.about-card p{color:var(--muted);font-size:.92rem}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(120%);background:var(--text);color:var(--bg);padding:13px 22px;border-radius:100px;font-weight:700;font-size:.92rem;box-shadow:var(--shadow-lg);z-index:200;transition:transform .3s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:760px){
+  .tabs{order:3;width:100%}
+  .nav-inner{flex-wrap:wrap;height:auto;padding:12px 22px;gap:10px}
+  .nav-spacer{display:none}
+  .brand{flex:1}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="mark">G</span>
+      <span>GROW<small>watch · do · grow</small></span>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-view="plan" role="tab">📋 Planner</button>
+      <button class="tab" data-view="grow" role="tab">🌱 15-Year Growth</button>
+      <button class="tab" data-view="about" role="tab">About</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ══════════ PLANNER ══════════ -->
+  <section class="view active" id="view-plan">
+    <div class="page-head">
+      <span class="label pop">The idea planner</span>
+      <h1>Everything you want to <em>watch</em> &amp; <em>do</em>.</h1>
+      <p>Capture a video to watch or a thing to do before it slips away. Point each one at a growth area, and finishing it feeds your 15-year plan.</p>
+    </div>
+
+    <div class="stats" id="planStats"></div>
+
+    <!-- add -->
+    <form class="addbar" id="ideaForm" autocomplete="off">
+      <div class="form-row" style="margin-bottom:14px">
+        <div class="field">
+          <label>What's the idea?</label>
+          <input id="f-title" placeholder="e.g. Watch 'How solar panels work' · Repot the tomatoes · Learn keyboard shortcuts" required maxlength="140">
+        </div>
+      </div>
+      <div class="form-grid" style="align-items:end">
+        <div class="field">
+          <label>Type</label>
+          <div class="seg" id="typeSeg">
+            <button type="button" data-t="watch" class="on">📺 Watch</button>
+            <button type="button" data-t="do">✅ Do</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Link (optional)</label>
+          <input id="f-link" placeholder="https://…" maxlength="500">
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <input id="f-cat" placeholder="e.g. Health, Skills" maxlength="30" list="catList">
+          <datalist id="catList"></datalist>
+        </div>
+        <div class="field">
+          <label>Priority</label>
+          <select id="f-pri">
+            <option value="low">Low</option>
+            <option value="med" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Feeds growth area</label>
+          <select id="f-feeds"><option value="">— none —</option></select>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:14px">
+        <div class="field">
+          <label>Notes (optional)</label>
+          <textarea id="f-notes" placeholder="Why it matters, what to look for, next step…" maxlength="400"></textarea>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-primary" type="submit">＋ Add to planner</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="seedBtn">Load example data</button>
+      </div>
+    </form>
+
+    <!-- filters -->
+    <div class="filters" id="filters"></div>
+
+    <!-- ideas -->
+    <div id="ideaList"></div>
+  </section>
+
+  <!-- ══════════ GROWTH ══════════ -->
+  <section class="view" id="view-grow">
+    <div class="page-head">
+      <span class="label good">The nutrient growth helper</span>
+      <h1>A <em>15-year</em> plan, fed one nutrient at a time.</h1>
+      <p>Pick a few things you want to grow. Every video watched and thing done is a <strong>nutrient</strong> — log it and watch the years fill in. Small inputs, compounded over 15 years.</p>
+    </div>
+
+    <div class="stats" id="growStats"></div>
+
+    <div class="panel" style="margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+        <div>
+          <h3>Start a growth area</h3>
+          <p style="color:var(--muted);font-size:.9rem;margin-top:2px">A track you'll nurture across the whole 15-year window.</p>
+        </div>
+        <div class="field" style="max-width:170px">
+          <label>Journey starts</label>
+          <select id="startYear"></select>
+        </div>
+      </div>
+      <form id="trackForm" class="form-grid" style="align-items:end">
+        <div class="field">
+          <label>Name</label>
+          <input id="t-name" placeholder="e.g. Fitness · A fruit tree · Spanish" required maxlength="40">
+        </div>
+        <div class="field">
+          <label>15-year target (nutrients)</label>
+          <input id="t-target" type="number" min="1" max="100000" value="150" required>
+        </div>
+        <div class="field">
+          <label>Colour</label>
+          <select id="t-color">
+            <option value="#1f9d67">Green</option>
+            <option value="#2347ff">Blue</option>
+            <option value="#ff5630">Orange</option>
+            <option value="#b87eff">Purple</option>
+            <option value="#e6a400">Amber</option>
+            <option value="#2dd4bf">Teal</option>
+          </select>
+        </div>
+        <div class="field" style="align-self:end">
+          <button class="btn btn-primary" type="submit" style="width:100%">＋ Add growth area</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="trackList"></div>
+  </section>
+
+  <!-- ══════════ ABOUT ══════════ -->
+  <section class="view" id="view-about">
+    <div class="page-head">
+      <span class="label">How it works</span>
+      <h1>One loop: <em>watch, do, grow.</em></h1>
+      <p>GROW is a tiny, private, offline planner. Everything lives in this browser — no account, no server. It pairs a fast idea planner with a long-horizon growth tracker so today's small actions visibly build something over 15 years.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card"><div class="ic">📺</div><h4>1 · Capture</h4><p>Drop in a video to watch or a thing to do. Tag it, prioritise it, and point it at a growth area it feeds.</p></div>
+      <div class="about-card"><div class="ic">✅</div><h4>2 · Finish</h4><p>Mark it done. If it feeds a growth area, GROW automatically logs a nutrient for you — the planner and the tracker stay in sync.</p></div>
+      <div class="about-card"><div class="ic">🌱</div><h4>3 · Feed</h4><p>Each growth area is a 15-year grid. Every nutrient darkens the current year's cell and pushes you toward your target.</p></div>
+      <div class="about-card"><div class="ic">📈</div><h4>4 · Compound</h4><p>You can't sprint 15 years — but you can add one nutrient today. The grid shows the streak of years you kept showing up.</p></div>
+    </div>
+    <div class="panel" style="margin-top:20px">
+      <h3>Your data</h3>
+      <p style="color:var(--muted);font-size:.92rem;margin:8px 0 16px">Stored only in this browser (localStorage). Export a backup or clear everything below.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" id="exportBtn">⬇ Export backup (.json)</button>
+        <button class="btn btn-ghost btn-sm" id="importBtn">⬆ Import backup</button>
+        <input type="file" id="importFile" accept="application/json" hidden>
+        <button class="btn btn-ghost btn-sm" id="clearBtn" style="color:var(--pop);border-color:var(--pop)">🗑 Clear all data</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ───────────────────── storage ───────────────────── */
+const KEY="grow_v1";
+const store={
+  get(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},
+  set(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+};
+const HORIZON=15;
+const nowYear=new Date().getFullYear();
+
+let state=store.get()||{
+  ideas:[],
+  tracks:[],
+  nutrients:[],           // {id,trackId,amount,note,date}
+  settings:{startYear:nowYear},
+  ui:{filter:"all"}
+};
+// migrate / defaults
+state.settings=state.settings||{startYear:nowYear};
+state.ui=state.ui||{filter:"all"};
+function save(){store.set(state)}
+
+/* ───────────────────── helpers ───────────────────── */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todayISO=()=>new Date().toISOString().slice(0,10);
+let toastT;
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2100)}
+function safeURL(u){if(!u)return"";try{const x=new URL(u);return(x.protocol==="http:"||x.protocol==="https:")?x.href:""}catch(e){return""}}
+
+const STATUS=[["idea","Idea"],["planned","Planned"],["active","In progress"],["done","Done"]];
+const nextStatus=s=>{const i=STATUS.findIndex(x=>x[0]===s);return STATUS[Math.min(i+1,STATUS.length-1)][0]};
+const statusLabel=s=>(STATUS.find(x=>x[0]===s)||["","?"])[1];
+
+/* ───────────────────── tabs ───────────────────── */
+$$(".tab").forEach(t=>t.addEventListener("click",()=>{
+  $$(".tab").forEach(x=>x.classList.remove("active"));
+  t.classList.add("active");
+  $$(".view").forEach(v=>v.classList.remove("active"));
+  $("#view-"+t.dataset.view).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+
+/* theme */
+const themeBtn=$("#themeBtn");
+(function initTheme(){const saved=localStorage.getItem("grow_theme");if(saved)document.documentElement.dataset.theme=saved})();
+themeBtn.addEventListener("click",()=>{
+  const d=document.documentElement;const next=d.dataset.theme==="dark"?"light":"dark";
+  d.dataset.theme=next;localStorage.setItem("grow_theme",next);
+});
+
+/* ───────────────────── PLANNER ───────────────────── */
+let curType="watch";
+const typeSeg=$("#typeSeg");
+typeSeg.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  curType=b.dataset.t;
+  $$("#typeSeg button").forEach(x=>x.classList.toggle("on",x===b));
+});
+
+$("#ideaForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const title=$("#f-title").value.trim();if(!title)return;
+  state.ideas.unshift({
+    id:uid(),title,type:curType,
+    link:safeURL($("#f-link").value.trim()),
+    category:$("#f-cat").value.trim(),
+    priority:$("#f-pri").value,
+    notes:$("#f-notes").value.trim(),
+    feedsTrackId:$("#f-feeds").value||"",
+    status:"idea",createdAt:Date.now(),doneAt:null
+  });
+  save();
+  e.target.reset();
+  // keep type selection
+  $$("#typeSeg button").forEach(x=>x.classList.toggle("on",x.dataset.t===curType));
+  renderPlanner();
+  toast("Added to planner ✓");
+});
+
+function planCounts(){
+  const c={all:state.ideas.length,watch:0,do:0,idea:0,planned:0,active:0,done:0};
+  state.ideas.forEach(i=>{c[i.type]++;c[i.status]++});
+  return c;
+}
+
+function renderPlanStats(){
+  const c=planCounts();
+  const open=c.idea+c.planned+c.active;
+  const rate=c.all?Math.round(c.done/c.all*100):0;
+  $("#planStats").innerHTML=`
+    ${stat(c.all,"total ideas","brand")}
+    ${stat(c.watch,"to watch","pop")}
+    ${stat(c.do,"to do","")}
+    ${stat(open,"still open","")}
+    ${stat(rate+"%","completed","good")}`;
+}
+const stat=(n,k,cls="")=>`<div class="stat ${cls}"><div class="n">${n}</div><div class="k">${k}</div></div>`;
+
+function renderFilters(){
+  const c=planCounts();
+  const defs=[["all","All",c.all],["watch","📺 Watch",c.watch],["do","✅ Do",c.do],
+    ["idea","Idea",c.idea],["planned","Planned",c.planned],["active","In progress",c.active],["done","Done",c.done]];
+  $("#filters").innerHTML=defs.map(([k,l,n])=>
+    `<button class="chip ${state.ui.filter===k?"on":""}" data-f="${k}">${l}<span class="ct">${n}</span></button>`).join("");
+  $$("#filters .chip").forEach(ch=>ch.addEventListener("click",()=>{
+    state.ui.filter=ch.dataset.f;save();renderFilters();renderIdeas();
+  }));
+}
+
+function renderIdeas(){
+  const f=state.ui.filter;
+  let list=state.ideas.filter(i=>{
+    if(f==="all")return true;
+    if(f==="watch"||f==="do")return i.type===f;
+    return i.status===f;
+  });
+  // sort: open first, then priority, then newest
+  const priRank={high:0,med:1,low:2};
+  list=list.slice().sort((a,b)=>{
+    if((a.status==="done")!==(b.status==="done"))return a.status==="done"?1:-1;
+    if(priRank[a.priority]!==priRank[b.priority])return priRank[a.priority]-priRank[b.priority];
+    return b.createdAt-a.createdAt;
+  });
+  const el=$("#ideaList");
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><div class="big">🗒️</div><h3>Nothing here yet</h3><p>Add a video to watch or a thing to do above${f!=="all"?", or switch filters":""}.</p></div>`;
+    return;
+  }
+  el.innerHTML=`<div class="ideas">`+list.map(ideaCard).join("")+`</div>`;
+  $$("#ideaList .idea").forEach(card=>{
+    const id=card.dataset.id;
+    card.querySelector("[data-a=adv]")?.addEventListener("click",()=>advance(id));
+    card.querySelector("[data-a=done]")?.addEventListener("click",()=>toggleDone(id));
+    card.querySelector("[data-a=del]")?.addEventListener("click",()=>delIdea(id));
+  });
+}
+
+function ideaCard(i){
+  const t=state.tracks.find(t=>t.id===i.feedsTrackId);
+  const link=safeURL(i.link);
+  return `<div class="idea ${i.status==="done"?"done":""}" data-id="${i.id}">
+    <div class="idea-top">
+      <div class="type-badge ${i.type}">${i.type==="watch"?"📺":"✅"}</div>
+      <div style="flex:1;min-width:0">
+        <div class="idea-title">${esc(i.title)}</div>
+        <div class="idea-meta" style="margin-top:6px">
+          <span class="tag"><span class="status-dot st-${i.status}"></span>&nbsp;${statusLabel(i.status)}</span>
+          ${i.priority!=="low"?`<span class="tag pri-${i.priority}">${i.priority==="high"?"High":"Med"} priority</span>`:""}
+          ${i.category?`<span class="tag">${esc(i.category)}</span>`:""}
+          ${t?`<span class="tag feeds">🌱 ${esc(t.name)}</span>`:""}
+        </div>
+      </div>
+    </div>
+    ${i.notes?`<div class="idea-notes">${esc(i.notes)}</div>`:""}
+    ${link?`<a class="idea-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer">🔗 Open link</a>`:""}
+    <div class="idea-actions">
+      ${i.status!=="done"?`<button class="mini" data-a="adv">→ ${statusLabel(nextStatus(i.status))}</button>`:""}
+      <button class="mini go" data-a="done">${i.status==="done"?"↩ Reopen":"✓ Done"}</button>
+      <button class="mini del" data-a="del">🗑</button>
+    </div>
+  </div>`;
+}
+
+function advance(id){
+  const i=state.ideas.find(x=>x.id===id);if(!i)return;
+  i.status=nextStatus(i.status);
+  if(i.status==="done")completeIdea(i);
+  save();renderPlanner();
+}
+function toggleDone(id){
+  const i=state.ideas.find(x=>x.id===id);if(!i)return;
+  if(i.status==="done"){i.status="active";i.doneAt=null;}
+  else{i.status="done";completeIdea(i);}
+  save();renderPlanner();renderGrowth();
+}
+function completeIdea(i){
+  if(i.doneAt)return; // already counted
+  i.doneAt=Date.now();
+  if(i.feedsTrackId && state.tracks.some(t=>t.id===i.feedsTrackId)){
+    state.nutrients.push({id:uid(),trackId:i.feedsTrackId,amount:1,note:i.title,date:todayISO(),fromIdea:i.id});
+    toast("Done ✓ +1 nutrient logged 🌱");
+  }else{
+    toast("Done ✓");
+  }
+}
+function delIdea(id){
+  state.ideas=state.ideas.filter(x=>x.id!==id);
+  save();renderPlanner();
+}
+
+function renderCatList(){
+  const cats=[...new Set(state.ideas.map(i=>i.category).filter(Boolean))];
+  $("#catList").innerHTML=cats.map(c=>`<option value="${esc(c)}">`).join("");
+}
+function renderFeedsSelect(){
+  const sel=$("#f-feeds");const cur=sel.value;
+  sel.innerHTML=`<option value="">— none —</option>`+state.tracks.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join("");
+  sel.value=cur;
+}
+
+function renderPlanner(){renderPlanStats();renderFilters();renderIdeas();renderCatList();renderFeedsSelect();}
+
+/* ───────────────────── GROWTH ───────────────────── */
+function initStartYear(){
+  const sel=$("#startYear");
+  const opts=[];
+  for(let y=nowYear-5;y<=nowYear+1;y++)opts.push(y);
+  if(!opts.includes(state.settings.startYear))state.settings.startYear=nowYear;
+  sel.innerHTML=opts.map(y=>`<option value="${y}">${y} → ${y+HORIZON-1}</option>`).join("");
+  sel.value=state.settings.startYear;
+  sel.addEventListener("change",()=>{state.settings.startYear=+sel.value;save();renderGrowth();});
+}
+
+$("#trackForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("#t-name").value.trim();if(!name)return;
+  state.tracks.push({
+    id:uid(),name,
+    target:Math.max(1,parseInt($("#t-target").value)||1),
+    color:$("#t-color").value,createdAt:Date.now()
+  });
+  save();e.target.reset();$("#t-target").value=150;
+  renderGrowth();renderFeedsSelect();
+  toast("Growth area started 🌱");
+});
+
+function yearMatrix(trackId){
+  const start=state.settings.startYear;
+  const arr=new Array(HORIZON).fill(0);
+  state.nutrients.filter(n=>n.trackId===trackId).forEach(n=>{
+    const y=new Date(n.date).getFullYear();
+    const idx=y-start;
+    if(idx>=0&&idx<HORIZON)arr[idx]+=n.amount;
+  });
+  return arr;
+}
+function trackTotal(trackId){return state.nutrients.filter(n=>n.trackId===trackId).reduce((s,n)=>s+n.amount,0)}
+
+function renderGrowStats(){
+  const start=state.settings.startYear;
+  const yearInto=Math.min(HORIZON,Math.max(1,nowYear-start+1));
+  const totalNute=state.nutrients.reduce((s,n)=>s+n.amount,0);
+  const activeYears=new Set(state.nutrients.map(n=>new Date(n.date).getFullYear())).size;
+  const yrsLeft=Math.max(0,start+HORIZON-1-nowYear);
+  $("#growStats").innerHTML=`
+    ${stat(state.tracks.length,"growth areas","brand")}
+    ${stat(totalNute,"nutrients fed","good")}
+    ${stat("Yr "+yearInto+"/"+HORIZON,"of the journey","")}
+    ${stat(activeYears,"years active","pop")}
+    ${stat(yrsLeft,"years remaining","")}`;
+}
+
+function renderTracks(){
+  const el=$("#trackList");
+  if(!state.tracks.length){
+    el.innerHTML=`<div class="empty"><div class="big">🌱</div><h3>No growth areas yet</h3><p>Start one above. Try "Fitness", "A fruit tree", or a language you want to speak in 15 years.</p></div>`;
+    return;
+  }
+  const start=state.settings.startYear;
+  el.innerHTML=state.tracks.map(t=>{
+    const m=yearMatrix(t.id);
+    const max=Math.max(1,...m);
+    const total=trackTotal(t.id);
+    const pct=Math.min(100,Math.round(total/t.target*100));
+    const cells=m.map((v,idx)=>{
+      const yr=start+idx;
+      const intensity=v?(.18+.82*(v/max)):0;
+      const bg=v?`background:${hexA(t.color,intensity)}`:"";
+      const now=yr===nowYear?"now":"";
+      return `<div class="yr ${now}" title="${yr}: ${v} nutrient${v===1?"":"s"}" style="${bg}${v?`;color:${intensity>.55?'#fff':'var(--text)'}`:""}">
+        <span>'${String(yr).slice(2)}</span>${v?`<span class="yv">${v}</span>`:""}</div>`;
+    }).join("");
+    return `<div class="track" data-id="${t.id}">
+      <div class="track-head">
+        <span class="track-swatch" style="background:${t.color}"></span>
+        <div>
+          <div class="track-name">${esc(t.name)}</div>
+          <div class="track-sub">${total} / ${t.target} nutrients · ${start}–${start+HORIZON-1}</div>
+        </div>
+        <div class="track-spacer"></div>
+        <div style="font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;color:${t.color}">${pct}%</div>
+      </div>
+      <div class="prog"><span style="width:${pct}%;background:${t.color}"></span></div>
+      <div class="years">${cells}</div>
+      <div class="track-foot">
+        <form class="nutebar" data-track="${t.id}">
+          <div class="field"><label>Add nutrient</label><input type="number" class="n-amt" min="1" max="9999" value="1" style="width:90px"></div>
+          <div class="field" style="flex:1;min-width:130px"><label>Note (optional)</label><input class="n-note" placeholder="what you fed it" maxlength="80"></div>
+          <div class="field"><label>Date</label><input type="date" class="n-date" value="${todayISO()}"></div>
+          <button class="btn btn-primary btn-sm" type="submit">＋ Feed</button>
+        </form>
+        <button class="mini del" data-del="${t.id}">🗑 Remove area</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  $$("#trackList .nutebar").forEach(f=>f.addEventListener("submit",e=>{
+    e.preventDefault();
+    const tid=f.dataset.track;
+    const amt=Math.max(1,parseInt(f.querySelector(".n-amt").value)||1);
+    const note=f.querySelector(".n-note").value.trim();
+    const date=f.querySelector(".n-date").value||todayISO();
+    state.nutrients.push({id:uid(),trackId:tid,amount:amt,note,date});
+    save();renderGrowth();renderPlanStats();
+    toast("+"+amt+" nutrient"+(amt===1?"":"s")+" fed 🌱");
+  }));
+  $$("#trackList [data-del]").forEach(b=>b.addEventListener("click",()=>{
+    const tid=b.dataset.del;
+    const t=state.tracks.find(x=>x.id===tid);
+    if(!confirm(`Remove "${t?t.name:"this area"}" and its logged nutrients? This can't be undone.`))return;
+    state.tracks=state.tracks.filter(x=>x.id!==tid);
+    state.nutrients=state.nutrients.filter(n=>n.trackId!==tid);
+    state.ideas.forEach(i=>{if(i.feedsTrackId===tid)i.feedsTrackId=""});
+    save();renderGrowth();renderPlanner();
+  }));
+}
+// hex + alpha -> rgba
+function hexA(hex,a){const h=hex.replace("#","");const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return `rgba(${r},${g},${b},${a.toFixed(3)})`}
+
+function renderGrowth(){renderGrowStats();renderTracks();$("#startYear").value=state.settings.startYear;}
+
+/* ───────────────────── example data ───────────────────── */
+$("#seedBtn").addEventListener("click",()=>{
+  if(state.ideas.length||state.tracks.length){
+    if(!confirm("Load example data alongside what you already have?"))return;
+  }
+  const tHealth={id:uid(),name:"Fitness",target:200,color:"#1f9d67",createdAt:Date.now()};
+  const tSkill={id:uid(),name:"Learn Spanish",target:150,color:"#2347ff",createdAt:Date.now()};
+  const tGarden={id:uid(),name:"The fruit tree",target:60,color:"#e6a400",createdAt:Date.now()};
+  state.tracks.push(tHealth,tSkill,tGarden);
+  const start=state.settings.startYear;
+  const yr=(off)=>`${start+off}-06-15`;
+  [[tHealth.id,12,yr(0)],[tHealth.id,9,yr(1)],[tSkill.id,20,yr(0)],[tSkill.id,14,yr(1)],[tGarden.id,4,yr(0)]]
+    .forEach(([tid,a,d])=>state.nutrients.push({id:uid(),trackId:tid,amount:a,note:"",date:d}));
+  state.ideas.unshift(
+    {id:uid(),title:"Watch 'Learn Spanish in 30 days' playlist",type:"watch",link:"",category:"Skills",priority:"high",notes:"20 min/day, shadow the audio.",feedsTrackId:tSkill.id,status:"active",createdAt:Date.now(),doneAt:null},
+    {id:uid(),title:"Do 20-min morning mobility routine",type:"do",link:"",category:"Health",priority:"med",notes:"",feedsTrackId:tHealth.id,status:"planned",createdAt:Date.now()-1,doneAt:null},
+    {id:uid(),title:"Watch pruning tutorial for young fruit trees",type:"watch",link:"",category:"Garden",priority:"low",notes:"Best in late winter.",feedsTrackId:tGarden.id,status:"idea",createdAt:Date.now()-2,doneAt:null},
+    {id:uid(),title:"Repot the tomatoes",type:"do",link:"",category:"Garden",priority:"med",notes:"",feedsTrackId:"",status:"done",createdAt:Date.now()-3,doneAt:Date.now()-3}
+  );
+  save();renderPlanner();renderGrowth();
+  toast("Example data loaded ✓");
+});
+
+/* ───────────────────── data mgmt ───────────────────── */
+$("#exportBtn").addEventListener("click",()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="grow-backup-"+todayISO()+".json";
+  a.click();URL.revokeObjectURL(a.href);
+  toast("Backup downloaded ✓");
+});
+$("#importBtn").addEventListener("click",()=>$("#importFile").click());
+$("#importFile").addEventListener("change",e=>{
+  const file=e.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      if(!d||!Array.isArray(d.ideas)||!Array.isArray(d.tracks))throw 0;
+      state=Object.assign({ideas:[],tracks:[],nutrients:[],settings:{startYear:nowYear},ui:{filter:"all"}},d);
+      state.nutrients=state.nutrients||[];
+      state.settings=state.settings||{startYear:nowYear};
+      state.ui=state.ui||{filter:"all"};
+      save();initStartYear();renderPlanner();renderGrowth();
+      toast("Backup imported ✓");
+    }catch(err){toast("Couldn't read that file")}
+  };
+  r.readAsText(file);
+  e.target.value="";
+});
+$("#clearBtn").addEventListener("click",()=>{
+  if(!confirm("Delete ALL ideas, growth areas and nutrients? This can't be undone."))return;
+  state={ideas:[],tracks:[],nutrients:[],settings:{startYear:nowYear},ui:{filter:"all"}};
+  save();initStartYear();renderPlanner();renderGrowth();
+  toast("All data cleared");
+});
+
+/* ───────────────────── boot ───────────────────── */
+initStartYear();
+renderPlanner();
+renderGrowth();
+</script>
+</body>
+</html>
