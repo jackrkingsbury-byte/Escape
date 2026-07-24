@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<!-- MoodWave — mood-based playlist planner that connects to Spotify -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MoodWave — Turn a mood + your favourite artists into a full playlist</title>
+<meta name="theme-color" content="#7c3aed">
+<meta name="description" content="Pick a mood, drop in artists like Travis Scott, and MoodWave builds a full playlist and saves it straight to your Spotify. Try it free — no signup.">
+<meta property="og:title" content="MoodWave — mood → playlist, straight to Spotify">
+<meta property="og:description" content="Pick a mood + your favourite artists. Get a full playlist saved to Spotify in seconds.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%237c3aed'/><g fill='white'><rect x='27' y='42' width='7' height='16' rx='3.5'/><rect x='40' y='30' width='7' height='40' rx='3.5'/><rect x='53' y='22' width='7' height='56' rx='3.5'/><rect x='66' y='38' width='7' height='24' rx='3.5'/></g></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f4fb;--surface:#ffffff;--surface-2:#efeaf9;--text:#160f26;--muted:#5f5872;
+  --brand:#7c3aed;--brand-deep:#6425d8;--brand-soft:#efe7ff;
+  --pop:#ff477e;--pop-soft:#ffe3ec;--zing:#12d6a0;--zing-soft:#d7f8ee;
+  --line:#e6e0f2;--good:#12b981;--good-soft:#d7f6ea;--warn:#e6a400;--warn-soft:#fbeecb;
+  --spotify:#1db954;
+  --shadow:0 1px 2px rgba(22,15,38,.05),0 12px 30px rgba(22,15,38,.08);
+  --shadow-lg:0 2px 6px rgba(22,15,38,.06),0 30px 70px rgba(22,15,38,.16);
+  --ring:rgba(124,58,237,.22);--radius:20px;--radius-sm:13px;--maxw:1160px;
+}
+[data-theme="dark"]{
+  --bg:#0a0714;--surface:#140e24;--surface-2:#1c1436;--text:#efeafc;--muted:#a79fc0;
+  --brand:#a577ff;--brand-deep:#8b53ff;--brand-soft:#241a44;
+  --pop:#ff6b98;--pop-soft:#2c1522;--zing:#2ee6b0;--zing-soft:#0f2c24;
+  --line:#271d43;--good:#2ee6a0;--good-soft:#0f2c22;--warn:#ffc44d;--warn-soft:#2a2110;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 14px 40px rgba(0,0,0,.5);
+  --shadow-lg:0 2px 8px rgba(0,0,0,.5),0 40px 90px rgba(0,0,0,.6);--ring:rgba(165,119,255,.32);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.04;letter-spacing:-.02em;font-weight:600}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.label{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
+.label.pop{color:var(--pop)}.label.muted{color:var(--muted)}
+button{font-family:inherit}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-weight:800;font-size:.95rem;padding:13px 22px;border-radius:100px;border:2px solid transparent;cursor:pointer;transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s,border-color .25s;white-space:nowrap;color:#fff;background:var(--brand)}
+.btn:hover{background:var(--brand-deep);box-shadow:0 10px 26px var(--ring)}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{background:var(--surface-2);border-color:var(--brand);box-shadow:none}
+.btn.spotify{background:var(--spotify)}.btn.spotify:hover{background:#159c45;box-shadow:0 10px 26px rgba(29,185,84,.3)}
+.btn.sm{padding:9px 15px;font-size:.85rem;gap:6px}
+.btn.big{padding:17px 32px;font-size:1.08rem}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:100px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:.9rem;cursor:pointer;transition:all .16s;color:var(--text)}
+.chip:hover{border-color:var(--brand);transform:translateY(-1px)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.chip .x{opacity:.7;font-weight:800}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces';font-weight:700;font-size:1.28rem;letter-spacing:-.02em}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--pop));display:grid;place-items:center;flex:none;box-shadow:0 4px 14px var(--ring)}
+.logo-mark svg{width:20px;height:20px}
+.nav-links{display:flex;gap:26px;margin-left:14px}
+.nav-links a{font-weight:600;font-size:.94rem;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:1.1rem;transition:all .16s;color:var(--text)}
+.icon-btn:hover{border-color:var(--brand);background:var(--surface-2)}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* HERO */
+.hero{position:relative;padding:70px 0 40px;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(circle at 30% 30%,var(--brand-soft),transparent 60%),radial-gradient(circle at 70% 60%,var(--pop-soft),transparent 55%);filter:blur(20px);opacity:.7;z-index:-1}
+.hero h1{font-size:clamp(2.5rem,6vw,4.4rem);max-width:14ch;margin:18px 0}
+.hero h1 em{font-style:italic;color:var(--brand);font-weight:500}
+.hero .sub{font-size:1.2rem;color:var(--muted);max-width:52ch;line-height:1.5}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;align-items:center}
+.trust{display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;color:var(--muted);font-size:.9rem;font-weight:600}
+.trust span{display:inline-flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--zing)}
+
+/* SECTIONS */
+section{padding:56px 0}
+.sec-head{max-width:60ch;margin-bottom:34px}
+.sec-head h2{font-size:clamp(2rem,4vw,2.9rem);margin:12px 0}
+.sec-head p{color:var(--muted);font-size:1.1rem}
+
+/* THE TOOL */
+#studio{scroll-margin-top:80px}
+.studio-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+@media(max-width:900px){.studio-wrap{grid-template-columns:1fr}}
+.panel{padding:26px}
+.step-tag{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--brand-soft);color:var(--brand);font-family:'JetBrains Mono';font-weight:700;font-size:.85rem;margin-right:9px}
+.step-title{display:flex;align-items:center;font-weight:800;font-size:1.05rem;margin:26px 0 14px}
+.step-title:first-of-type{margin-top:0}
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.mood{border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:13px 11px;cursor:pointer;transition:all .16s;background:var(--surface);text-align:left;position:relative;overflow:hidden}
+.mood:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:var(--shadow)}
+.mood.on{border-color:var(--brand);background:var(--brand-soft)}
+.mood.on::after{content:"✓";position:absolute;top:8px;right:10px;color:var(--brand);font-weight:800;font-size:.9rem}
+.mood .emo{font-size:1.5rem;display:block;margin-bottom:4px}
+.mood .nm{font-weight:800;font-size:.92rem}
+.mood .desc{font-size:.72rem;color:var(--muted);margin-top:2px;line-height:1.3}
+.artist-input{display:flex;gap:8px;margin-bottom:12px}
+.artist-input input{flex:1;padding:12px 15px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--text);font-family:inherit;font-size:.95rem;font-weight:600}
+.artist-input input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
+.chips-row{display:flex;flex-wrap:wrap;gap:8px}
+.preset-note{font-size:.8rem;color:var(--muted);margin:10px 0 8px}
+.opts{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.opt label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+.opt input,.opt select{padding:11px 13px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--surface);color:var(--text);font-family:inherit;font-weight:600;font-size:.95rem}
+.opt input:focus,.opt select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:100px;padding:4px;gap:2px}
+.seg button{border:none;background:transparent;padding:8px 15px;border-radius:100px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--muted);transition:all .16s}
+.seg button.on{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
+[data-theme="dark"] .seg button.on{background:var(--brand);color:#fff}
+.gen-btn{width:100%;margin-top:22px}
+
+/* RESULT PANEL */
+.result-panel{position:sticky;top:80px}
+.pl-head{padding:22px 22px 16px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--brand-soft),transparent)}
+.pl-cover{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--brand),var(--pop));display:grid;place-items:center;margin-bottom:16px;position:relative;overflow:hidden}
+.pl-cover .eq{display:flex;gap:5px;align-items:flex-end;height:56px}
+.pl-cover .eq i{width:8px;background:rgba(255,255,255,.92);border-radius:5px;animation:eq 1s ease-in-out infinite}
+@keyframes eq{0%,100%{height:16px}50%{height:52px}}
+.pl-cover .em{position:absolute;font-size:3.2rem;opacity:.9}
+.pl-title{font-size:1.35rem;font-weight:700;margin-bottom:3px}
+.pl-meta{font-size:.85rem;color:var(--muted);font-weight:600}
+.pl-why{font-size:.86rem;color:var(--muted);padding:14px 22px;border-bottom:1px solid var(--line);line-height:1.5}
+.pl-why b{color:var(--text)}
+.tracks{max-height:340px;overflow-y:auto}
+.track{display:flex;align-items:center;gap:12px;padding:11px 22px;border-bottom:1px solid var(--line);transition:background .15s}
+.track:hover{background:var(--surface-2)}
+.track .n{font-family:'JetBrains Mono';font-size:.8rem;color:var(--muted);width:20px;flex:none;text-align:right}
+.track .info{min-width:0;flex:1}
+.track .t{font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track .a{font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track .d{font-family:'JetBrains Mono';font-size:.78rem;color:var(--muted);flex:none}
+.track .ex{font-size:.6rem;font-weight:800;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 4px;flex:none}
+.pl-actions{padding:16px 22px;display:flex;flex-direction:column;gap:9px}
+.pl-actions .row{display:flex;gap:9px}
+.pl-actions .row .btn{flex:1}
+.empty-state{padding:50px 26px;text-align:center;color:var(--muted)}
+.empty-state .big-emo{font-size:3rem;margin-bottom:12px;opacity:.6}
+
+/* HOW / FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.feat{padding:26px}
+.feat .fi{width:48px;height:48px;border-radius:14px;background:var(--brand-soft);display:grid;place-items:center;font-size:1.5rem;margin-bottom:14px}
+.feat h3{font-size:1.25rem;margin-bottom:8px}
+.feat p{color:var(--muted);font-size:.95rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.stp{padding:26px;position:relative}
+.stp .num{font-family:'Fraunces';font-size:2.6rem;color:var(--brand);font-weight:700;line-height:1;margin-bottom:10px}
+.stp h3{font-size:1.2rem;margin-bottom:7px}
+.stp p{color:var(--muted);font-size:.94rem}
+
+/* PRICING */
+#pricing{scroll-margin-top:70px}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+@media(max-width:820px){.price-grid{grid-template-columns:1fr}}
+.price{padding:30px;display:flex;flex-direction:column;position:relative}
+.price.feature{border:2px solid var(--brand);box-shadow:var(--shadow-lg)}
+.price .tier{font-family:'JetBrains Mono';font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.74rem;color:var(--muted)}
+.price .amt{font-family:'Fraunces';font-size:2.9rem;font-weight:700;margin:8px 0 2px}
+.price .amt span{font-size:1rem;color:var(--muted);font-weight:500}
+.price .blurb{color:var(--muted);font-size:.92rem;margin-bottom:18px}
+.price ul{list-style:none;margin-bottom:22px;flex:1}
+.price li{display:flex;gap:9px;padding:7px 0;font-size:.94rem;font-weight:600}
+.price li::before{content:"✓";color:var(--good);font-weight:800;flex:none}
+.price li.no{color:var(--muted);font-weight:500}
+.price li.no::before{content:"—";color:var(--muted)}
+.pop-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;font-family:'JetBrains Mono';font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px}
+
+/* FAQ */
+.faq{max-width:800px;margin:0 auto}
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{font-weight:700;font-size:1.08rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--brand);font-weight:800;font-size:1.4rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin-top:12px;font-size:.98rem;line-height:1.6}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:40px 0;margin-top:20px}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:.9rem}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(10,7,20,.6);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px}
+.modal h3{font-size:1.5rem;margin-bottom:6px}
+.modal .close{position:absolute;top:16px;right:18px;font-size:1.5rem;cursor:pointer;color:var(--muted);background:none;border:none}
+.modal p{color:var(--muted);font-size:.94rem;margin-bottom:14px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:700;font-size:.85rem;margin-bottom:6px}
+.field input{width:100%;padding:12px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--bg);color:var(--text);font-family:'JetBrains Mono';font-size:.9rem}
+.field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
+.callout{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px;font-size:.88rem;margin-bottom:14px}
+.callout code{font-family:'JetBrains Mono';background:var(--bg);padding:2px 6px;border-radius:5px;font-size:.82rem;word-break:break-all;color:var(--brand);font-weight:700}
+.callout ol{margin:8px 0 0 18px}.callout li{margin:4px 0}
+
+/* TOAST */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--text);color:var(--bg);padding:13px 22px;border-radius:100px;font-weight:700;font-size:.92rem;box-shadow:var(--shadow-lg);z-index:200;transition:transform .35s cubic-bezier(.2,.9,.2,1);max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+.conn-pill{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;font-weight:700;padding:7px 13px;border-radius:100px;border:1.5px solid var(--line)}
+.conn-pill .dot2{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.conn-pill.live{border-color:var(--spotify);color:var(--spotify)}
+.conn-pill.live .dot2{background:var(--spotify);box-shadow:0 0 0 3px rgba(29,185,84,.2)}
+.spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hidden{display:none!important}
+.saved-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.saved-item .sw{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--pop));display:grid;place-items:center;font-size:1.1rem;flex:none}
+.saved-item .si{flex:1;min-width:0}
+.saved-item .st{font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.saved-item .sm{font-size:.78rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-in">
+    <a href="#top" class="brand">
+      <span class="logo-mark"><svg viewBox="0 0 24 24" fill="white"><rect x="3" y="9" width="3" height="6" rx="1.5"/><rect x="8" y="5" width="3" height="14" rx="1.5"/><rect x="13" y="2" width="3" height="20" rx="1.5"/><rect x="18" y="7" width="3" height="10" rx="1.5"/></svg></span>
+      MoodWave
+    </a>
+    <div class="nav-links">
+      <a href="#studio">Studio</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <span id="connPill" class="conn-pill"><span class="dot2"></span><span id="connText">Not connected</span></span>
+      <button class="icon-btn" id="themeBtn" title="Toggle theme">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<a id="top"></a>
+<header class="hero">
+  <div class="container">
+    <span class="label">Mood → playlist, in seconds</span>
+    <h1>Feel the vibe. <em>We'll build the playlist.</em></h1>
+    <p class="sub">Pick a mood, drop in the artists you love — Travis Scott, SZA, whoever — and MoodWave turns it into a full playlist and saves it straight to your Spotify. No digging. No dead air.</p>
+    <div class="hero-cta">
+      <a href="#studio" class="btn big">🎧 Build a playlist free</a>
+      <button class="btn ghost big" id="heroConnect">Connect Spotify</button>
+    </div>
+    <div class="trust">
+      <span><span class="dot"></span> Works instantly — no signup</span>
+      <span><span class="dot"></span> Saves to your real Spotify</span>
+      <span><span class="dot"></span> Any artist, any mood</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THE STUDIO (core tool) ============ -->
+<section id="studio">
+  <div class="container">
+    <div class="sec-head">
+      <span class="label pop">The Studio</span>
+      <h2>Plan a playlist</h2>
+      <p>Set the mood, add your artists, hit generate. Try it right now — it works in demo mode without connecting anything.</p>
+    </div>
+
+    <div class="studio-wrap">
+      <!-- LEFT: controls -->
+      <div class="card panel">
+        <div class="step-title"><span class="step-tag">1</span> What's the mood?</div>
+        <div class="mood-grid" id="moodGrid"></div>
+
+        <div class="step-title"><span class="step-tag">2</span> Which artists?</div>
+        <div class="artist-input">
+          <input id="artistInput" type="text" placeholder="Type any artist — e.g. Travis Scott" autocomplete="off">
+          <button class="btn sm" id="addArtistBtn">Add</button>
+        </div>
+        <div class="chips-row" id="artistChips"></div>
+        <div class="preset-note">Or tap a popular pick:</div>
+        <div class="chips-row" id="presetArtists"></div>
+
+        <div class="step-title"><span class="step-tag">3</span> Fine-tune</div>
+        <div class="opts">
+          <div class="opt">
+            <label>Playlist length</label>
+            <div class="seg" id="lenSeg">
+              <button data-len="12">12</button>
+              <button data-len="20" class="on">20</button>
+              <button data-len="30">30</button>
+              <button data-len="50">50</button>
+            </div>
+          </div>
+          <div class="opt">
+            <label>Explicit</label>
+            <div class="seg" id="explicitSeg">
+              <button data-ex="allow" class="on">Allow</button>
+              <button data-ex="clean">Clean only</button>
+            </div>
+          </div>
+        </div>
+        <div class="opt" style="margin-top:14px">
+          <label>Playlist name</label>
+          <input id="plNameInput" type="text" placeholder="Auto-generated from your mood" style="width:100%">
+        </div>
+
+        <button class="btn big gen-btn" id="genBtn">✨ Generate playlist</button>
+      </div>
+
+      <!-- RIGHT: result -->
+      <div class="card result-panel" id="resultPanel">
+        <div class="empty-state" id="emptyState">
+          <div class="big-emo">🎶</div>
+          <p><b>Your playlist shows up here.</b><br>Pick a mood and an artist or two, then hit generate.</p>
+        </div>
+        <div id="playlistView" class="hidden"></div>
+      </div>
+    </div>
+
+    <!-- Saved playlists -->
+    <div class="card panel" id="savedWrap" style="margin-top:22px;display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div class="step-title" style="margin:0"><span class="step-tag">♪</span> Your saved playlists</div>
+        <button class="btn ghost sm" id="clearSaved">Clear</button>
+      </div>
+      <div id="savedList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" style="background:var(--surface-2)">
+  <div class="container">
+    <div class="sec-head">
+      <span class="label">How it works</span>
+      <h2>Three taps to a playlist that fits the moment</h2>
+    </div>
+    <div class="steps">
+      <div class="card stp"><div class="num">1</div><h3>Set the mood</h3><p>Hype, heartbreak, late night, focus, workout — pick one or stack a few. MoodWave translates the feeling into energy, tempo and vibe.</p></div>
+      <div class="card stp"><div class="num">2</div><h3>Add your artists</h3><p>Type any artist or tap a preset. We anchor the playlist around who you love and pull in tracks that match the mood around them.</p></div>
+      <div class="card stp"><div class="num">3</div><h3>Save to Spotify</h3><p>One tap creates the playlist right in your Spotify account — ready to press play. Or copy the tracklist anywhere.</p></div>
+    </div>
+
+    <div class="feat-grid" style="margin-top:22px">
+      <div class="card feat"><div class="fi">🎯</div><h3>Mood-tuned</h3><p>Every mood maps to real audio traits — energy, positivity, tempo — so the playlist actually feels the way you asked for.</p></div>
+      <div class="card feat"><div class="fi">🟢</div><h3>Real Spotify</h3><p>Secure connection (PKCE OAuth). We never see a password and never post without you tapping save.</p></div>
+      <div class="card feat"><div class="fi">🎨</div><h3>Yours to sell</h3><p>White-label ready. Swap the name, colours and pricing — it's a single file you fully own.</p></div>
+      <div class="card feat"><div class="fi">⚡</div><h3>No dead air</h3><p>Diversity controls keep any single artist from taking over, so the flow stays fresh start to finish.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing">
+  <div class="container">
+    <div class="sec-head" style="text-align:center;margin:0 auto 34px">
+      <span class="label pop">Pricing</span>
+      <h2>Start free. Upgrade when you're hooked.</h2>
+      <p>Sell it as-is or make it yours. These tiers are wired into the app — flip a plan and the limits change live.</p>
+    </div>
+    <div class="price-grid">
+      <div class="card price">
+        <div class="tier">Free</div>
+        <div class="amt">$0</div>
+        <div class="blurb">For trying it out and the odd playlist.</div>
+        <ul>
+          <li>Unlimited demo playlists</li>
+          <li>All moods & artists</li>
+          <li>Copy tracklist anywhere</li>
+          <li class="no">Save straight to Spotify</li>
+          <li class="no">Save playlist history</li>
+        </ul>
+        <button class="btn ghost" data-plan="free">Current plan</button>
+      </div>
+      <div class="card price feature">
+        <span class="pop-badge">Most popular</span>
+        <div class="tier">Pro</div>
+        <div class="amt">$6<span>/mo</span></div>
+        <div class="blurb">For people who live in their playlists.</div>
+        <ul>
+          <li>Everything in Free</li>
+          <li><b>Save straight to Spotify</b></li>
+          <li>Unlimited saved history</li>
+          <li>Longer playlists (up to 50)</li>
+          <li>Priority mood engine</li>
+        </ul>
+        <button class="btn" data-plan="pro">Unlock Pro</button>
+      </div>
+      <div class="card price">
+        <div class="tier">Studio</div>
+        <div class="amt">$29<span>/mo</span></div>
+        <div class="blurb">For creators & small brands who resell.</div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>White-label & rebrand</li>
+          <li>Custom mood packs</li>
+          <li>Embed on your site</li>
+          <li>Commercial license</li>
+        </ul>
+        <button class="btn ghost" data-plan="studio">Talk to us</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" style="background:var(--surface-2)">
+  <div class="container">
+    <div class="sec-head" style="text-align:center;margin:0 auto 30px">
+      <span class="label">FAQ</span>
+      <h2>Good questions</h2>
+    </div>
+    <div class="faq">
+      <details open><summary>Do I need a Spotify account?</summary><p>No — the Studio works in demo mode with zero setup, so you can plan playlists straight away. You only connect Spotify when you want to save a playlist to your real account and press play.</p></details>
+      <details><summary>How does "mood" actually work?</summary><p>Each mood is mapped to a target for energy, positivity (valence) and tempo, plus a set of genre and keyword cues. MoodWave scores tracks against that target and against the artists you picked, then orders them so the playlist flows — building or winding down to match the feeling.</p></details>
+      <details><summary>Can I use any artist, like Travis Scott?</summary><p>Yes. Tap a preset or type any artist name. When you're connected to Spotify we pull that artist's real catalogue live; in demo mode we use a built-in library of popular artists so you can see how it feels.</p></details>
+      <details><summary>Is my Spotify login safe?</summary><p>Completely. We use Spotify's official PKCE login — the same standard big apps use. You log in on Spotify's own page, we never see your password, and nothing is ever posted to your account unless you tap Save.</p></details>
+      <details><summary>I want to sell this. Can I?</summary><p>That's the idea. It's a single self-contained file you own outright. Rename it, restyle it, plug in your own payment link on the pricing buttons, add your own Spotify app credentials, and ship it. The README walks through going live.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot-in">
+    <div class="brand" style="font-size:1.1rem"><span class="logo-mark" style="width:28px;height:28px"><svg viewBox="0 0 24 24" fill="white"><rect x="3" y="9" width="3" height="6" rx="1.5"/><rect x="8" y="5" width="3" height="14" rx="1.5"/><rect x="13" y="2" width="3" height="20" rx="1.5"/><rect x="18" y="7" width="3" height="10" rx="1.5"/></svg></span> MoodWave</div>
+    <div>Mood → playlist, straight to Spotify. Built to be sold.</div>
+    <button class="btn ghost sm" id="settingsBtn">⚙ Spotify setup</button>
+  </div>
+</footer>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-bg" id="settingsModal">
+  <div class="modal" style="position:relative">
+    <button class="close" data-close>&times;</button>
+    <h3>Connect Spotify</h3>
+    <p>To save playlists to a real Spotify account, MoodWave needs a free Spotify app Client ID. It takes 2 minutes and you only do it once.</p>
+    <div class="callout">
+      <b>Set it up:</b>
+      <ol>
+        <li>Go to <code>developer.spotify.com/dashboard</code> and click <b>Create app</b>.</li>
+        <li>Add this exact Redirect URI:<br><code id="redirectUri">—</code></li>
+        <li>Tick the <b>Web API</b>, save, then copy the <b>Client ID</b>.</li>
+        <li>Paste it below and connect.</li>
+      </ol>
+    </div>
+    <div class="field">
+      <label>Spotify Client ID</label>
+      <input id="clientIdInput" type="text" placeholder="e.g. 3a9c1f...">
+    </div>
+    <div style="display:flex;gap:9px">
+      <button class="btn spotify" id="connectBtn" style="flex:1">🟢 Connect Spotify</button>
+      <button class="btn ghost" id="disconnectBtn">Disconnect</button>
+    </div>
+    <p style="margin-top:14px;font-size:.82rem">No Client ID? No problem — the Studio still builds playlists in demo mode.</p>
+  </div>
+</div>
+
+<!-- PRO MODAL -->
+<div class="modal-bg" id="proModal">
+  <div class="modal" style="position:relative">
+    <button class="close" data-close>&times;</button>
+    <h3>Unlock Pro 🚀</h3>
+    <p>Pro lets you save playlists straight to Spotify and keeps your history forever. This is a demo unlock — wire the button to your own payment link (Stripe, Gumroad, Yoco…) before you go live.</p>
+    <div class="callout">Selling this app? Replace this modal's unlock action with your checkout, then flip the user to Pro on success. See the README.</div>
+    <button class="btn big" id="unlockProBtn" style="width:100%">Unlock Pro (demo)</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+/* ========================================================================
+   MoodWave — single-file mood → playlist app with Spotify (PKCE) support
+   ======================================================================== */
+
+/* ---------- Mood definitions ---------- */
+const MOODS = [
+  {id:"hype",     name:"Hype",       emo:"🔥", desc:"Loud, hard, turnt",      energy:.92, valence:.62, tempo:[130,160], genres:["hip-hop","trap","rap"],  keys:["hype","hard","turnt","rage","gas"]},
+  {id:"chill",    name:"Chill",      emo:"🌊", desc:"Laid back & smooth",     energy:.34, valence:.55, tempo:[70,100],  genres:["r&b","lo-fi","soul"],    keys:["chill","mellow","smooth","easy","vibe"]},
+  {id:"focus",    name:"Focus",      emo:"🎯", desc:"In the zone",            energy:.42, valence:.5,  tempo:[80,110],  genres:["lo-fi","instrumental"],  keys:["focus","study","flow","deep"]},
+  {id:"sad",      name:"Heartbreak", emo:"💔", desc:"In your feelings",       energy:.3,  valence:.2,  tempo:[65,95],   genres:["r&b","rap","soul"],      keys:["sad","hurt","alone","cry","pain","miss"]},
+  {id:"romance",  name:"Romance",    emo:"💘", desc:"Slow & tender",          energy:.44, valence:.8,  tempo:[70,100],  genres:["r&b","soul"],            keys:["love","tonight","baby","kiss","slow"]},
+  {id:"workout",  name:"Workout",    emo:"💪", desc:"Push harder",            energy:.95, valence:.66, tempo:[135,175], genres:["hip-hop","edm","trap"],  keys:["gym","pump","run","hard","beast"]},
+  {id:"party",    name:"Party",      emo:"🎉", desc:"Turn up",                energy:.86, valence:.85, tempo:[118,135], genres:["pop","hip-hop","dance"], keys:["party","dance","club","night","lit"]},
+  {id:"latenight",name:"Late Night", emo:"🌙", desc:"3am moody",              energy:.4,  valence:.34, tempo:[75,105],  genres:["r&b","trap"],            keys:["night","late","moody","alone","dark"]},
+  {id:"confident",name:"Confident",  emo:"😎", desc:"Boss mode",              energy:.8,  valence:.75, tempo:[100,135], genres:["hip-hop","rap"],         keys:["boss","flex","rich","win","top"]},
+  {id:"sleep",    name:"Sleep",      emo:"😴", desc:"Wind all the way down",  energy:.14, valence:.4,  tempo:[55,80],   genres:["ambient","lo-fi"],       keys:["sleep","calm","soft","dream","quiet"]},
+  {id:"roadtrip", name:"Road Trip",  emo:"🚗", desc:"Windows down",           energy:.68, valence:.78, tempo:[95,125],  genres:["pop","rap","rock"],      keys:["drive","road","free","ride","sing"]},
+  {id:"feelgood", name:"Feel Good",  emo:"☀️", desc:"Pure serotonin",         energy:.72, valence:.92, tempo:[100,128], genres:["pop","funk","soul"],     keys:["happy","good","sun","smile","joy"]},
+];
+
+/* ---------- Preset artists ---------- */
+const PRESET_ARTISTS = ["Travis Scott","Drake","The Weeknd","SZA","Kendrick Lamar","Frank Ocean","Rod Wave","Playboi Carti","Future","Don Toliver","Metro Boomin","Doja Cat","Billie Eilish","Tyler, The Creator","Brent Faiyaz","21 Savage","Steve Lacy","Kanye West"];
+
+/* ---------- Demo catalogue (for instant, no-connection results) ---------- */
+/* attrs: e=energy 0-1, v=valence 0-1, bpm, x=explicit, dur seconds, m=mood tags */
+const CATALOG = [
+  {a:"Travis Scott",t:"SICKO MODE",e:.88,v:.6,bpm:155,x:1,dur:312,m:["hype","workout","confident","party"]},
+  {a:"Travis Scott",t:"goosebumps",e:.75,v:.5,bpm:130,x:1,dur:243,m:["latenight","chill","hype"]},
+  {a:"Travis Scott",t:"HIGHEST IN THE ROOM",e:.62,v:.35,bpm:76,x:1,dur:175,m:["latenight","sad","chill"]},
+  {a:"Travis Scott",t:"STARGAZING",e:.8,v:.55,bpm:110,x:1,dur:270,m:["hype","confident","roadtrip"]},
+  {a:"Travis Scott",t:"BUTTERFLY EFFECT",e:.7,v:.5,bpm:143,x:1,dur:190,m:["chill","latenight","confident"]},
+  {a:"Travis Scott",t:"FE!N",e:.94,v:.55,bpm:148,x:1,dur:191,m:["hype","workout","party"]},
+  {a:"Drake",t:"God's Plan",e:.66,v:.62,bpm:77,x:1,dur:198,m:["confident","feelgood","roadtrip"]},
+  {a:"Drake",t:"Passionfruit",e:.5,v:.55,bpm:112,x:0,dur:298,m:["chill","romance","latenight"]},
+  {a:"Drake",t:"Marvins Room",e:.34,v:.15,bpm:60,x:1,dur:350,m:["sad","latenight","heartbreak"]},
+  {a:"Drake",t:"Nonstop",e:.82,v:.5,bpm:154,x:1,dur:238,m:["hype","confident","workout"]},
+  {a:"Drake",t:"Hold On, We're Going Home",e:.55,v:.7,bpm:100,x:0,dur:227,m:["romance","feelgood","roadtrip"]},
+  {a:"The Weeknd",t:"Blinding Lights",e:.9,v:.72,bpm:171,x:0,dur:200,m:["party","workout","feelgood","roadtrip"]},
+  {a:"The Weeknd",t:"After Hours",e:.5,v:.25,bpm:108,x:1,dur:361,m:["latenight","sad","chill"]},
+  {a:"The Weeknd",t:"Save Your Tears",e:.72,v:.6,bpm:118,x:0,dur:215,m:["feelgood","party","roadtrip"]},
+  {a:"The Weeknd",t:"Call Out My Name",e:.55,v:.2,bpm:134,x:1,dur:228,m:["sad","heartbreak","latenight"]},
+  {a:"The Weeknd",t:"Die For You",e:.5,v:.45,bpm:134,x:0,dur:260,m:["romance","latenight","chill"]},
+  {a:"SZA",t:"Kill Bill",e:.55,v:.5,bpm:89,x:1,dur:154,m:["chill","sad","latenight"]},
+  {a:"SZA",t:"Good Days",e:.5,v:.6,bpm:122,x:1,dur:279,m:["chill","feelgood","focus"]},
+  {a:"SZA",t:"Snooze",e:.45,v:.55,bpm:87,x:1,dur:201,m:["romance","chill","latenight"]},
+  {a:"SZA",t:"The Weekend",e:.5,v:.5,bpm:138,x:1,dur:263,m:["romance","latenight","chill"]},
+  {a:"SZA",t:"Nobody Gets Me",e:.3,v:.25,bpm:120,x:1,dur:180,m:["sad","heartbreak","latenight"]},
+  {a:"Kendrick Lamar",t:"HUMBLE.",e:.9,v:.5,bpm:150,x:1,dur:177,m:["hype","confident","workout"]},
+  {a:"Kendrick Lamar",t:"DNA.",e:.92,v:.45,bpm:140,x:1,dur:186,m:["hype","workout","confident"]},
+  {a:"Kendrick Lamar",t:"Money Trees",e:.5,v:.45,bpm:145,x:1,dur:386,m:["chill","latenight","confident"]},
+  {a:"Kendrick Lamar",t:"LOVE.",e:.55,v:.7,bpm:125,x:1,dur:214,m:["romance","feelgood","chill"]},
+  {a:"Frank Ocean",t:"Thinkin Bout You",e:.35,v:.4,bpm:132,x:0,dur:200,m:["romance","sad","latenight"]},
+  {a:"Frank Ocean",t:"Pink + White",e:.45,v:.65,bpm:80,x:0,dur:184,m:["chill","feelgood","romance"]},
+  {a:"Frank Ocean",t:"Nights",e:.55,v:.4,bpm:87,x:1,dur:307,m:["latenight","chill","focus"]},
+  {a:"Frank Ocean",t:"Ivy",e:.4,v:.5,bpm:120,x:1,dur:249,m:["chill","sad","romance"]},
+  {a:"Rod Wave",t:"Heart On Ice",e:.4,v:.25,bpm:80,x:1,dur:174,m:["sad","heartbreak","latenight"]},
+  {a:"Rod Wave",t:"Tombstone",e:.42,v:.3,bpm:150,x:1,dur:181,m:["sad","latenight","confident"]},
+  {a:"Rod Wave",t:"Street Runner",e:.45,v:.3,bpm:96,x:1,dur:184,m:["sad","confident","latenight"]},
+  {a:"Playboi Carti",t:"Sky",e:.7,v:.55,bpm:130,x:1,dur:236,m:["hype","chill","party"]},
+  {a:"Playboi Carti",t:"Magnolia",e:.85,v:.55,bpm:155,x:1,dur:181,m:["hype","party","workout"]},
+  {a:"Playboi Carti",t:"Shoota",e:.8,v:.6,bpm:75,x:1,dur:200,m:["hype","party","confident"]},
+  {a:"Future",t:"Mask Off",e:.75,v:.28,bpm:150,x:1,dur:204,m:["confident","hype","latenight"]},
+  {a:"Future",t:"Life Is Good",e:.82,v:.5,bpm:142,x:1,dur:237,m:["hype","confident","workout"]},
+  {a:"Don Toliver",t:"No Idea",e:.65,v:.4,bpm:114,x:1,dur:154,m:["latenight","chill","hype"]},
+  {a:"Don Toliver",t:"After Party",e:.6,v:.45,bpm:107,x:1,dur:172,m:["party","latenight","chill"]},
+  {a:"Metro Boomin",t:"Creepin'",e:.55,v:.35,bpm:98,x:1,dur:222,m:["latenight","sad","chill"]},
+  {a:"Doja Cat",t:"Say So",e:.75,v:.82,bpm:111,x:0,dur:237,m:["party","feelgood","roadtrip"]},
+  {a:"Doja Cat",t:"Woman",e:.72,v:.8,bpm:107,x:1,dur:172,m:["confident","party","feelgood"]},
+  {a:"Doja Cat",t:"Streets",e:.45,v:.5,bpm:90,x:1,dur:227,m:["latenight","romance","chill"]},
+  {a:"Billie Eilish",t:"bad guy",e:.6,v:.55,bpm:135,x:1,dur:194,m:["confident","party","hype"]},
+  {a:"Billie Eilish",t:"ocean eyes",e:.3,v:.4,bpm:82,x:0,dur:200,m:["romance","sad","sleep"]},
+  {a:"Billie Eilish",t:"lovely",e:.25,v:.2,bpm:115,x:0,dur:200,m:["sad","sleep","heartbreak"]},
+  {a:"Billie Eilish",t:"Happier Than Ever",e:.6,v:.35,bpm:81,x:1,dur:298,m:["sad","confident","latenight"]},
+  {a:"Tyler, The Creator",t:"EARFQUAKE",e:.6,v:.6,bpm:80,x:1,dur:190,m:["chill","romance","feelgood"]},
+  {a:"Tyler, The Creator",t:"See You Again",e:.55,v:.65,bpm:79,x:1,dur:180,m:["romance","chill","feelgood"]},
+  {a:"Tyler, The Creator",t:"NEW MAGIC WAND",e:.85,v:.4,bpm:150,x:1,dur:196,m:["hype","workout","confident"]},
+  {a:"Brent Faiyaz",t:"Dead Man Walking",e:.5,v:.4,bpm:135,x:1,dur:165,m:["latenight","confident","chill"]},
+  {a:"Brent Faiyaz",t:"Trust",e:.45,v:.35,bpm:120,x:1,dur:171,m:["latenight","sad","romance"]},
+  {a:"21 Savage",t:"a lot",e:.6,v:.4,bpm:145,x:1,dur:288,m:["confident","chill","latenight"]},
+  {a:"21 Savage",t:"Bank Account",e:.7,v:.4,bpm:75,x:1,dur:220,m:["confident","hype","workout"]},
+  {a:"Steve Lacy",t:"Bad Habit",e:.55,v:.7,bpm:169,x:1,dur:232,m:["feelgood","chill","roadtrip"]},
+  {a:"Steve Lacy",t:"Dark Red",e:.45,v:.45,bpm:120,x:0,dur:172,m:["chill","romance","latenight"]},
+  {a:"Kanye West",t:"Stronger",e:.9,v:.7,bpm:104,x:1,dur:311,m:["workout","hype","confident","party"]},
+  {a:"Kanye West",t:"Flashing Lights",e:.7,v:.55,bpm:90,x:1,dur:238,m:["confident","roadtrip","latenight"]},
+  {a:"Kanye West",t:"Runaway",e:.55,v:.3,bpm:112,x:1,dur:548,m:["sad","latenight","confident"]},
+  {a:"Kanye West",t:"Good Life",e:.75,v:.85,bpm:100,x:1,dur:207,m:["feelgood","party","roadtrip"]},
+  {a:"Lil Baby",t:"Drip Too Hard",e:.7,v:.5,bpm:145,x:1,dur:145,m:["confident","hype","workout"]},
+  {a:"Lil Baby",t:"Yes Indeed",e:.65,v:.55,bpm:120,x:1,dur:141,m:["confident","hype","party"]},
+  {a:"J. Cole",t:"No Role Modelz",e:.6,v:.45,bpm:100,x:1,dur:293,m:["confident","chill","roadtrip"]},
+  {a:"J. Cole",t:"Middle Child",e:.68,v:.55,bpm:123,x:1,dur:213,m:["confident","hype","focus"]},
+];
+
+/* ---------- State ---------- */
+const LS = "moodwave_v1";
+let state = load();
+function load(){
+  try{ return Object.assign(defState(), JSON.parse(localStorage.getItem(LS)||"{}")); }
+  catch(e){ return defState(); }
+}
+function defState(){ return {artists:[], moods:[], len:20, explicit:"allow", plName:"", saved:[], plan:"free", clientId:"", theme:"dark"}; }
+function save(){ localStorage.setItem(LS, JSON.stringify(state)); }
+
+/* Spotify auth tokens kept separately */
+const TOK = "moodwave_tok";
+let auth = JSON.parse(localStorage.getItem(TOK)||"null");
+function saveAuth(){ localStorage.setItem(TOK, JSON.stringify(auth)); }
+
+let currentPlaylist = null; // last generated
+
+/* ---------- DOM helpers ---------- */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2600); }
+function fmtDur(s){ const m=Math.floor(s/60), ss=Math.round(s%60); return m+":"+String(ss).padStart(2,"0"); }
+function fmtTotal(s){ const m=Math.round(s/60); if(m<60)return m+" min"; const h=Math.floor(m/60); return h+"h "+(m%60)+"m"; }
+
+/* ========================================================================
+   THEME
+   ======================================================================== */
+function applyTheme(){
+  document.documentElement.setAttribute("data-theme", state.theme);
+  $("#themeBtn").textContent = state.theme==="dark" ? "☀️" : "🌙";
+}
+$("#themeBtn").onclick = ()=>{ state.theme = state.theme==="dark"?"light":"dark"; save(); applyTheme(); };
+
+/* ========================================================================
+   RENDER: mood grid, artist chips, presets
+   ======================================================================== */
+function renderMoods(){
+  const g=$("#moodGrid"); g.innerHTML="";
+  MOODS.forEach(m=>{
+    const on = state.moods.includes(m.id);
+    const b=el("button", "mood"+(on?" on":""),
+      `<span class="emo">${m.emo}</span><span class="nm">${m.name}</span><span class="desc">${m.desc}</span>`);
+    b.onclick=()=>{
+      if(state.moods.includes(m.id)) state.moods=state.moods.filter(x=>x!==m.id);
+      else state.moods.push(m.id);
+      save(); renderMoods(); refreshName();
+    };
+    g.appendChild(b);
+  });
+}
+function renderArtists(){
+  const c=$("#artistChips"); c.innerHTML="";
+  if(!state.artists.length){ c.appendChild(el("span","preset-note","No artists yet — add one below 👇")); }
+  state.artists.forEach(a=>{
+    const chip=el("span","chip on", `${a} <span class="x">✕</span>`);
+    chip.querySelector(".x").onclick=()=>{ state.artists=state.artists.filter(x=>x!==a); save(); renderArtists(); renderPresets(); };
+    c.appendChild(chip);
+  });
+}
+function renderPresets(){
+  const p=$("#presetArtists"); p.innerHTML="";
+  PRESET_ARTISTS.forEach(a=>{
+    if(state.artists.includes(a)) return;
+    const chip=el("span","chip", `+ ${a}`);
+    chip.onclick=()=>{ addArtist(a); };
+    p.appendChild(chip);
+  });
+}
+function addArtist(name){
+  name=(name||"").trim();
+  if(!name) return;
+  if(state.artists.some(a=>a.toLowerCase()===name.toLowerCase())){ toast("Already added"); return; }
+  if(state.artists.length>=8){ toast("Keep it to 8 artists"); return; }
+  state.artists.push(name); save(); renderArtists(); renderPresets();
+}
+$("#addArtistBtn").onclick=()=>{ addArtist($("#artistInput").value); $("#artistInput").value=""; $("#artistInput").focus(); };
+$("#artistInput").addEventListener("keydown", e=>{ if(e.key==="Enter"){ addArtist($("#artistInput").value); $("#artistInput").value=""; }});
+
+/* length + explicit segments */
+$$("#lenSeg button").forEach(b=>b.onclick=()=>{
+  $$("#lenSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  state.len=+b.dataset.len; save();
+});
+$$("#explicitSeg button").forEach(b=>b.onclick=()=>{
+  $$("#explicitSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  state.explicit=b.dataset.ex; save();
+});
+$("#plNameInput").addEventListener("input", e=>{ state.plName=e.target.value; save(); });
+
+function refreshName(){
+  if(state.plName) return; // user set their own
+  $("#plNameInput").placeholder = suggestName();
+}
+function suggestName(){
+  const ms=state.moods.map(id=>MOODS.find(m=>m.id===id)).filter(Boolean);
+  const emo = ms[0]?.emo || "🎧";
+  const moodPart = ms.length? ms.map(m=>m.name).join(" · ") : "MoodWave";
+  const artistPart = state.artists.length? " — "+state.artists.slice(0,2).join(", ") : "";
+  return `${emo} ${moodPart}${artistPart}`;
+}
+
+/* ========================================================================
+   MOOD ENGINE (demo-catalogue generation)
+   ======================================================================== */
+function scoreTrack(tr, moodDefs, artistSet){
+  let s=0;
+  // mood tag matches
+  moodDefs.forEach(md=>{
+    if(tr.m.includes(md.id)) s += 5;
+    // audio-attribute closeness
+    s += (1 - Math.abs(tr.e - md.energy)) * 1.6;
+    s += (1 - Math.abs(tr.v - md.valence)) * 1.4;
+    if(tr.bpm>=md.tempo[0]-12 && tr.bpm<=md.tempo[1]+12) s += 1.2;
+  });
+  // artist emphasis
+  if(artistSet.has(tr.a.toLowerCase())) s += 6;
+  // small jitter for variety
+  s += Math.random()*1.4;
+  return s;
+}
+function generateDemo(){
+  const moodDefs = state.moods.map(id=>MOODS.find(m=>m.id===id)).filter(Boolean);
+  const artistSet = new Set(state.artists.map(a=>a.toLowerCase()));
+  let pool = CATALOG.filter(t=> state.explicit==="allow" || !t.x);
+
+  // If moods chosen, require at least loose relevance; otherwise keep all
+  if(moodDefs.length){
+    const ids = moodDefs.map(m=>m.id);
+    // keep tracks that match a mood tag OR are by a chosen artist
+    pool = pool.filter(t => t.m.some(x=>ids.includes(x)) || artistSet.has(t.a.toLowerCase()));
+  }
+  // score & sort
+  let scored = pool.map(t=>({t, s:scoreTrack(t, moodDefs, artistSet)})).sort((a,b)=>b.s-a.s);
+
+  // enforce artist diversity: max 4 per artist unless it's a picked artist (then up to 6)
+  const perArtist={}; const picked=[];
+  for(const {t} of scored){
+    const key=t.a.toLowerCase();
+    const cap = artistSet.has(key)?6:3;
+    perArtist[key]=(perArtist[key]||0);
+    if(perArtist[key]>=cap) continue;
+    perArtist[key]++; picked.push(t);
+    if(picked.length>=state.len) break;
+  }
+  // if we couldn't fill (small catalog), loosen and top up
+  if(picked.length < state.len){
+    for(const {t} of scored){ if(!picked.includes(t)){ picked.push(t); if(picked.length>=state.len)break; } }
+  }
+  // Order for flow: build/settle based on first mood's energy target
+  const targetE = moodDefs.length? moodDefs.reduce((a,m)=>a+m.energy,0)/moodDefs.length : .6;
+  picked.sort((a,b)=> Math.abs(a.e-targetE) - Math.abs(b.e-targetE)); // hero tracks first
+  // gentle wave: interleave so it's not monotone
+  const wave = weave(picked);
+
+  return wave.map(t=>({title:t.t, artist:t.a, dur:t.dur, explicit:t.x, uri:null}));
+}
+function weave(arr){
+  // split into high/low energy and alternate for a natural rise/fall
+  const hi=arr.filter(t=>t.e>=.6), lo=arr.filter(t=>t.e<.6), out=[];
+  let i=0,j=0;
+  while(i<hi.length||j<lo.length){
+    if(i<hi.length){ out.push(hi[i++]); }
+    if(j<lo.length){ out.push(lo[j++]); }
+  }
+  return out;
+}
+
+/* ========================================================================
+   GENERATE (routes to demo or live)
+   ======================================================================== */
+$("#genBtn").onclick = generate;
+async function generate(){
+  if(!state.moods.length && !state.artists.length){ toast("Pick a mood or add an artist first"); return; }
+  const btn=$("#genBtn"); btn.disabled=true; const orig=btn.innerHTML;
+  btn.innerHTML='<span class="spin"></span> Building your playlist…';
+
+  try{
+    let tracks;
+    let mode="demo";
+    if(isConnected()){
+      try{ tracks = await generateLive(); mode="live"; }
+      catch(err){ console.warn("live gen failed, falling back:", err); tracks = generateDemo(); toast("Used demo mix (Spotify search hiccup)"); }
+    } else {
+      tracks = generateDemo();
+    }
+    if(!tracks.length){ toast("Couldn't find tracks — try another mood/artist"); return; }
+
+    const name = (state.plName || suggestName()).trim();
+    currentPlaylist = {
+      name, tracks, mode,
+      moods:[...state.moods], artists:[...state.artists],
+      total: tracks.reduce((a,t)=>a+(t.dur||210),0),
+      created: Date.now()
+    };
+    renderPlaylist(currentPlaylist);
+  } finally {
+    btn.disabled=false; btn.innerHTML=orig;
+  }
+}
+
+/* ========================================================================
+   RESULT RENDER
+   ======================================================================== */
+function renderPlaylist(pl){
+  $("#emptyState").classList.add("hidden");
+  const v=$("#playlistView"); v.classList.remove("hidden");
+  const ms=pl.moods.map(id=>MOODS.find(m=>m.id===id)).filter(Boolean);
+  const emo = ms[0]?.emo || "🎧";
+  const why = buildWhy(pl, ms);
+
+  v.innerHTML = `
+    <div class="pl-head">
+      <div class="pl-cover">
+        <div class="eq">${[0,1,2,3,4].map(i=>`<i style="animation-delay:${i*0.12}s"></i>`).join("")}</div>
+        <span class="em" style="left:14px;top:12px">${emo}</span>
+      </div>
+      <div class="pl-title">${escapeHtml(pl.name)}</div>
+      <div class="pl-meta">${pl.tracks.length} tracks · ${fmtTotal(pl.total)} · ${pl.mode==="live"?'🟢 Live from Spotify':'✨ Demo mix'}</div>
+    </div>
+    <div class="pl-why">${why}</div>
+    <div class="tracks">
+      ${pl.tracks.map((t,i)=>`
+        <div class="track">
+          <span class="n">${i+1}</span>
+          <div class="info"><div class="t">${escapeHtml(t.title)}</div><div class="a">${escapeHtml(t.artist)}</div></div>
+          ${t.explicit?'<span class="ex">E</span>':''}
+          <span class="d">${fmtDur(t.dur||210)}</span>
+        </div>`).join("")}
+    </div>
+    <div class="pl-actions">
+      <button class="btn spotify" id="saveSpotify">🟢 Save to Spotify</button>
+      <div class="row">
+        <button class="btn ghost sm" id="copyList">📋 Copy</button>
+        <button class="btn ghost sm" id="saveLocal">💾 Save</button>
+        <button class="btn ghost sm" id="regen">🔄 Remix</button>
+      </div>
+    </div>`;
+
+  $("#saveSpotify").onclick = saveToSpotify;
+  $("#copyList").onclick = ()=>{
+    const txt = pl.name+"\n\n"+pl.tracks.map((t,i)=>`${i+1}. ${t.title} — ${t.artist}`).join("\n");
+    navigator.clipboard.writeText(txt).then(()=>toast("Tracklist copied ✓"));
+  };
+  $("#saveLocal").onclick = ()=>saveLocal(pl);
+  $("#regen").onclick = generate;
+}
+function buildWhy(pl, ms){
+  const moodTxt = ms.length? ms.map(m=>`<b>${m.name}</b>`).join(" + ") : "your picks";
+  const artTxt = pl.artists.length? ` anchored around <b>${pl.artists.slice(0,3).map(escapeHtml).join(", ")}</b>` : "";
+  const feel = ms.length? describeFeel(ms) : "a balanced flow";
+  return `Tuned for ${moodTxt}${artTxt} — ${feel}. Tracks are ordered to ${ms[0]&&ms[0].energy>.6?"build the energy":"keep the vibe steady"}.`;
+}
+function describeFeel(ms){
+  const e = ms.reduce((a,m)=>a+m.energy,0)/ms.length;
+  const v = ms.reduce((a,m)=>a+m.valence,0)/ms.length;
+  const eW = e>.7?"high-energy":e<.4?"low-key":"mid-tempo";
+  const vW = v>.65?"bright":v<.35?"moody":"balanced";
+  return `${eW}, ${vW}`;
+}
+
+/* ========================================================================
+   SPOTIFY — PKCE auth + API
+   ======================================================================== */
+const SCOPES = "playlist-modify-public playlist-modify-private";
+function redirectUri(){ return location.origin + location.pathname; }
+function isConnected(){ return !!(auth && auth.access_token && auth.expires_at > Date.now()); }
+function hasRefresh(){ return !!(auth && auth.refresh_token); }
+
+function b64url(bytes){ return btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+function randStr(n){ const arr=new Uint8Array(n); crypto.getRandomValues(arr); return Array.from(arr,b=>("0"+(b&0xff).toString(16)).slice(-2)).join(""); }
+async function sha256(str){ return crypto.subtle.digest("SHA-256", new TextEncoder().encode(str)); }
+
+async function beginAuth(){
+  if(!state.clientId){ openModal("#settingsModal"); toast("Add your Spotify Client ID first"); return; }
+  const verifier = randStr(48);
+  const challenge = b64url(await sha256(verifier));
+  const stateTok = randStr(8);
+  sessionStorage.setItem("mw_verifier", verifier);
+  sessionStorage.setItem("mw_state", stateTok);
+  const p = new URLSearchParams({
+    client_id: state.clientId,
+    response_type: "code",
+    redirect_uri: redirectUri(),
+    scope: SCOPES,
+    code_challenge_method: "S256",
+    code_challenge: challenge,
+    state: stateTok
+  });
+  location.href = "https://accounts.spotify.com/authorize?"+p.toString();
+}
+
+async function handleRedirect(){
+  const q = new URLSearchParams(location.search);
+  const code = q.get("code"); const st = q.get("state"); const err = q.get("error");
+  if(err){ toast("Spotify: "+err); cleanUrl(); return; }
+  if(!code) return;
+  if(st !== sessionStorage.getItem("mw_state")){ toast("Auth state mismatch — try again"); cleanUrl(); return; }
+  const verifier = sessionStorage.getItem("mw_verifier");
+  if(!verifier){ cleanUrl(); return; }
+  toast("Connecting to Spotify…");
+  try{
+    const body = new URLSearchParams({
+      client_id: state.clientId,
+      grant_type: "authorization_code",
+      code, redirect_uri: redirectUri(), code_verifier: verifier
+    });
+    const r = await fetch("https://accounts.spotify.com/api/token", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body});
+    const d = await r.json();
+    if(d.error){ throw new Error(d.error_description||d.error); }
+    setTokens(d);
+    await fetchMe();
+    toast("Spotify connected ✓ You can save playlists now");
+  }catch(e){ toast("Connect failed: "+e.message); }
+  cleanUrl();
+  updateConn();
+}
+function setTokens(d){
+  auth = auth||{};
+  auth.access_token = d.access_token;
+  if(d.refresh_token) auth.refresh_token = d.refresh_token;
+  auth.expires_at = Date.now() + (d.expires_in-60)*1000;
+  saveAuth();
+}
+async function refreshToken(){
+  if(!hasRefresh()) throw new Error("no refresh token");
+  const body = new URLSearchParams({ client_id: state.clientId, grant_type:"refresh_token", refresh_token: auth.refresh_token });
+  const r = await fetch("https://accounts.spotify.com/api/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body});
+  const d = await r.json();
+  if(d.error) throw new Error(d.error_description||d.error);
+  setTokens(d);
+}
+async function api(path, opts={}){
+  if(!isConnected() && hasRefresh()){ await refreshToken(); }
+  const doFetch = async ()=>fetch("https://api.spotify.com/v1"+path, Object.assign({}, opts, {
+    headers: Object.assign({Authorization:"Bearer "+auth.access_token, "Content-Type":"application/json"}, opts.headers||{})
+  }));
+  let r = await doFetch();
+  if(r.status===401 && hasRefresh()){ await refreshToken(); r = await doFetch(); }
+  if(r.status===429){ throw new Error("Spotify rate limit — wait a moment"); }
+  if(!r.ok){ const t=await r.text(); throw new Error("Spotify "+r.status+": "+t.slice(0,120)); }
+  return r.status===204? null : r.json();
+}
+async function fetchMe(){
+  try{ const me=await api("/me"); auth.user_id=me.id; auth.display=me.display_name||me.id; saveAuth(); }catch(e){ console.warn(e); }
+}
+
+/* live generation: artist top tracks + mood-keyword search */
+async function generateLive(){
+  const moodDefs = state.moods.map(id=>MOODS.find(m=>m.id===id)).filter(Boolean);
+  const wantExplicit = state.explicit==="allow";
+  const pool=[]; const seen=new Set();
+  const push=(tr, boost=0)=>{
+    if(!tr || !tr.uri || seen.has(tr.id)) return;
+    if(!wantExplicit && tr.explicit) return;
+    seen.add(tr.id);
+    pool.push({id:tr.id, uri:tr.uri, title:tr.name, artist:(tr.artists||[]).map(a=>a.name).join(", "),
+      artistIds:(tr.artists||[]).map(a=>a.id), dur:Math.round((tr.duration_ms||210000)/1000),
+      explicit:tr.explicit, pop:tr.popularity||0, boost});
+  };
+
+  // 1) artist top tracks
+  for(const name of state.artists){
+    try{
+      const s = await api("/search?type=artist&limit=1&q="+encodeURIComponent(name));
+      const artist = s.artists?.items?.[0];
+      if(artist){
+        const tt = await api(`/artists/${artist.id}/top-tracks?market=from_token`).catch(()=>api(`/artists/${artist.id}/top-tracks?market=US`));
+        (tt.tracks||[]).forEach(t=>push(t, 8));
+      }
+    }catch(e){ console.warn("artist lookup", name, e); }
+  }
+  // 2) mood keyword search (broadens the pool)
+  const queries = buildQueries(moodDefs);
+  for(const q of queries.slice(0,4)){
+    try{
+      const s = await api("/search?type=track&limit=12&q="+encodeURIComponent(q));
+      (s.tracks?.items||[]).forEach(t=>push(t, 0));
+    }catch(e){ console.warn("mood search", q, e); }
+  }
+  // 3) artist + mood combo search for tighter fit
+  if(state.artists.length && moodDefs.length){
+    const kw = moodDefs[0].keys[0];
+    for(const name of state.artists.slice(0,3)){
+      try{
+        const s = await api("/search?type=track&limit=6&q="+encodeURIComponent(`${name} ${kw}`));
+        (s.tracks?.items||[]).forEach(t=>push(t, 3));
+      }catch(e){}
+    }
+  }
+
+  if(!pool.length) throw new Error("empty pool");
+
+  // rank
+  const artistSet = new Set(state.artists.map(a=>a.toLowerCase()));
+  pool.forEach(p=>{
+    let sc = p.boost + p.pop/25;
+    if(artistSet.has(p.artist.split(",")[0].trim().toLowerCase())) sc += 4;
+    sc += Math.random()*2;
+    p.score=sc;
+  });
+  pool.sort((a,b)=>b.score-a.score);
+
+  // diversity: cap per lead artist
+  const perArtist={}; const picked=[];
+  for(const p of pool){
+    const key=p.artist.split(",")[0].trim().toLowerCase();
+    const cap = artistSet.has(key)?6:3;
+    perArtist[key]=perArtist[key]||0;
+    if(perArtist[key]>=cap) continue;
+    perArtist[key]++; picked.push(p);
+    if(picked.length>=state.len) break;
+  }
+  if(picked.length<state.len){ for(const p of pool){ if(!picked.includes(p)){ picked.push(p); if(picked.length>=state.len)break; } } }
+
+  return picked.map(p=>({title:p.title, artist:p.artist, dur:p.dur, explicit:p.explicit, uri:p.uri}));
+}
+function buildQueries(moodDefs){
+  const out=[];
+  moodDefs.forEach(md=>{
+    const g = md.genres[0];
+    out.push(`${md.keys[0]} ${g}`);
+    out.push(`${md.name.toLowerCase()} ${g}`);
+  });
+  if(!out.length) out.push("popular hits");
+  return out;
+}
+
+/* save current playlist to spotify */
+async function saveToSpotify(){
+  if(!currentPlaylist){ return; }
+  if(state.plan==="free"){ openModal("#proModal"); return; }
+  if(!isConnected() && !hasRefresh()){ openModal("#settingsModal"); toast("Connect Spotify to save"); return; }
+
+  const btn=$("#saveSpotify"); const orig=btn.innerHTML; btn.disabled=true;
+  btn.innerHTML='<span class="spin"></span> Saving to Spotify…';
+  try{
+    if(!auth.user_id) await fetchMe();
+    // resolve URIs: some tracks (demo) have none — search to match
+    let uris = currentPlaylist.tracks.map(t=>t.uri).filter(Boolean);
+    if(uris.length < currentPlaylist.tracks.length){
+      const need = currentPlaylist.tracks.filter(t=>!t.uri);
+      for(const t of need){
+        try{
+          const s=await api("/search?type=track&limit=1&q="+encodeURIComponent(`track:${t.title} artist:${t.artist}`));
+          const hit=s.tracks?.items?.[0]; if(hit) uris.push(hit.uri);
+        }catch(e){}
+      }
+    }
+    if(!uris.length) throw new Error("no matchable tracks");
+
+    const pl = await api(`/users/${auth.user_id}/playlists`, {method:"POST", body:JSON.stringify({
+      name: currentPlaylist.name, public:false,
+      description:`Made with MoodWave · ${currentPlaylist.moods.map(id=>MOODS.find(m=>m.id===id)?.name).filter(Boolean).join(", ")}`
+    })});
+    // add in batches of 100
+    for(let i=0;i<uris.length;i+=100){
+      await api(`/playlists/${pl.id}/tracks`, {method:"POST", body:JSON.stringify({uris:uris.slice(i,i+100)})});
+    }
+    currentPlaylist.spotifyUrl = pl.external_urls?.spotify;
+    saveLocal(currentPlaylist, true);
+    btn.innerHTML="✓ Saved — open in Spotify";
+    btn.onclick=()=>window.open(pl.external_urls?.spotify,"_blank");
+    toast("Playlist saved to your Spotify ✓");
+  }catch(e){
+    toast("Save failed: "+e.message);
+    btn.innerHTML=orig; btn.disabled=false; btn.onclick=saveToSpotify;
+  }finally{
+    btn.disabled=false;
+  }
+}
+
+/* ========================================================================
+   SAVED PLAYLISTS (local history)
+   ======================================================================== */
+function saveLocal(pl, silent){
+  if(state.plan==="free"){ if(!silent){ openModal("#proModal"); } return; }
+  const rec = {name:pl.name, count:pl.tracks.length, total:pl.total, mood:pl.moods[0]||"", created:pl.created||Date.now(), url:pl.spotifyUrl||null, tracks:pl.tracks};
+  state.saved.unshift(rec);
+  state.saved = state.saved.slice(0,30);
+  save(); renderSaved();
+  if(!silent) toast("Saved to your history ✓");
+}
+function renderSaved(){
+  const wrap=$("#savedWrap"), list=$("#savedList");
+  if(!state.saved.length){ wrap.style.display="none"; return; }
+  wrap.style.display="block"; list.innerHTML="";
+  state.saved.forEach((s,idx)=>{
+    const emo = MOODS.find(m=>m.id===s.mood)?.emo || "🎧";
+    const item=el("div","saved-item",
+      `<div class="sw">${emo}</div>
+       <div class="si"><div class="st">${escapeHtml(s.name)}</div><div class="sm">${s.count} tracks · ${fmtTotal(s.total)} · ${new Date(s.created).toLocaleDateString()}</div></div>`);
+    const actions=el("div"); actions.style.display="flex"; actions.style.gap="6px";
+    if(s.url){ const o=el("button","btn ghost sm","▶ Open"); o.onclick=()=>window.open(s.url,"_blank"); actions.appendChild(o); }
+    const del=el("button","icon-btn","✕"); del.style.width="34px"; del.style.height="34px"; del.title="Delete";
+    del.onclick=()=>{ state.saved.splice(idx,1); save(); renderSaved(); };
+    actions.appendChild(del);
+    item.appendChild(actions);
+    list.appendChild(item);
+  });
+}
+$("#clearSaved").onclick=()=>{ if(confirm("Clear all saved playlists?")){ state.saved=[]; save(); renderSaved(); } };
+
+/* ========================================================================
+   PLANS / PRICING
+   ======================================================================== */
+$$("[data-plan]").forEach(b=>b.onclick=()=>{
+  const p=b.dataset.plan;
+  if(p==="pro"){ openModal("#proModal"); }
+  else if(p==="studio"){ toast("Studio: email hello@moodwave.app to set up white-label"); }
+  else { toast("You're on Free — Pro unlocks Spotify saving"); }
+});
+$("#unlockProBtn").onclick=()=>{
+  // DEMO unlock. Replace with your real checkout success handler.
+  state.plan="pro"; save(); updatePlanUI(); closeModals();
+  toast("Pro unlocked 🚀 You can save to Spotify & keep history");
+};
+function updatePlanUI(){
+  $$("[data-plan]").forEach(b=>{
+    if(b.dataset.plan===state.plan){ b.textContent="✓ Your plan"; b.classList.add("ghost"); }
+  });
+  renderSaved();
+}
+
+/* ========================================================================
+   CONNECTION UI
+   ======================================================================== */
+function updateConn(){
+  const pill=$("#connPill"), txt=$("#connText");
+  if(isConnected() || hasRefresh()){
+    pill.classList.add("live");
+    txt.textContent = auth.display? auth.display : "Spotify connected";
+  } else {
+    pill.classList.remove("live");
+    txt.textContent="Not connected";
+  }
+}
+$("#connPill").onclick=()=>openModal("#settingsModal");
+$("#heroConnect").onclick=()=>openModal("#settingsModal");
+$("#settingsBtn").onclick=()=>openModal("#settingsModal");
+$("#connectBtn").onclick=()=>{ state.clientId=$("#clientIdInput").value.trim(); save(); beginAuth(); };
+$("#disconnectBtn").onclick=()=>{ auth=null; localStorage.removeItem(TOK); updateConn(); toast("Disconnected"); };
+
+/* ========================================================================
+   MODALS
+   ======================================================================== */
+function openModal(sel){
+  if(sel==="#settingsModal"){
+    $("#redirectUri").textContent = redirectUri();
+    $("#clientIdInput").value = state.clientId||"";
+  }
+  $(sel).classList.add("show");
+}
+function closeModals(){ $$(".modal-bg").forEach(m=>m.classList.remove("show")); }
+$$("[data-close]").forEach(b=>b.onclick=closeModals);
+$$(".modal-bg").forEach(m=>m.onclick=e=>{ if(e.target===m) closeModals(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModals(); });
+
+/* ========================================================================
+   UTIL
+   ======================================================================== */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function cleanUrl(){ history.replaceState({}, document.title, location.pathname); }
+
+/* ========================================================================
+   INIT
+   ======================================================================== */
+function restoreSegs(){
+  $$("#lenSeg button").forEach(b=>b.classList.toggle("on", +b.dataset.len===state.len));
+  $$("#explicitSeg button").forEach(b=>b.classList.toggle("on", b.dataset.ex===state.explicit));
+  $("#plNameInput").value = state.plName||"";
+}
+async function init(){
+  applyTheme();
+  renderMoods(); renderArtists(); renderPresets(); restoreSegs(); refreshName();
+  renderSaved(); updatePlanUI();
+  await handleRedirect();
+  if((isConnected()||hasRefresh()) && !auth.display){ await fetchMe(); }
+  updateConn();
+}
+init();
+</script>
+</body>
+</html>
