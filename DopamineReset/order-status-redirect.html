@@ -1,0 +1,48 @@
+<!--
+  ZERO-CLICK AUTO-REDIRECT AFTER PAYMENT
+  ======================================
+  Paste this into:  Shopify Admin → Settings → Checkout
+                    → "Order status page" → Additional scripts → Save.
+
+  What it does: the instant Shopify confirms payment and shows the order-status
+  page, it auto-redirects the buyer to your access URL. A visible button + a
+  short countdown are shown as a fallback (in case a browser blocks the jump).
+
+  1. Replace ACCESS_URL below with the page your product lives on.
+  2. (Optional) It appends ?order={order_number} so your access page can
+     verify / personalise if you want. Remove it if you don't need it.
+-->
+<style>
+  #dr-redirect{font-family:'Hanken Grotesk',system-ui,sans-serif;text-align:center;padding:28px;margin:18px 0;border:1px solid #ffe2a8;border-radius:16px;background:#fff8ec}
+  #dr-redirect h2{font-family:'Fraunces',Georgia,serif;margin:0 0 8px;color:#1b1206}
+  #dr-redirect p{color:#6b5a3a;margin:0 0 16px}
+  #dr-redirect a{display:inline-block;background:linear-gradient(135deg,#ffc24b,#ff8a3d);color:#2a1400;font-weight:800;padding:14px 30px;border-radius:999px;text-decoration:none}
+  #dr-redirect small{display:block;margin-top:12px;color:#a08a5e}
+</style>
+
+<div id="dr-redirect">
+  <h2>You're in. Taking you to Day 1…</h2>
+  <p>Your payment went through. We're opening your Dopamine Reset now.</p>
+  <a id="dr-link" href="#">Open my reset now →</a>
+  <small>Redirecting automatically in <span id="dr-count">3</span>s…</small>
+</div>
+
+<script>
+  (function () {
+    // 1) SET YOUR ACCESS URL HERE
+    var ACCESS_URL = "https://escape-10081.myshopify.com/pages/start";
+
+    // optional: pass the order number through
+    var orderNo = "{{ order_number }}"; // Shopify fills this in on the order-status page
+    var target = ACCESS_URL + (ACCESS_URL.indexOf("?") > -1 ? "&" : "?") + "order=" + encodeURIComponent(orderNo);
+
+    var link = document.getElementById("dr-link");
+    if (link) link.href = target;
+
+    var n = 3, el = document.getElementById("dr-count");
+    var t = setInterval(function () {
+      n--; if (el) el.textContent = n;
+      if (n <= 0) { clearInterval(t); window.location.href = target; }
+    }, 1000);
+  })();
+</script>

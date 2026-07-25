@@ -1,0 +1,53 @@
+<section class="section">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="{{ routes.root_url }}">Home</a> / {{ product.title }}</div>
+    <div class="product">
+      <div class="product__media">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}" width="900" height="1125">
+        {%- else -%}
+          <div class="ph">Dopamine&nbsp;Reset</div>
+        {%- endif -%}
+      </div>
+      <div class="product__info">
+        <p class="eyebrow">{{ product.type | default: 'Dopamine Reset' }}</p>
+        <h1>{{ product.title }}</h1>
+        <div class="product__price">
+          {{ product.price | money }}
+          {%- if product.compare_at_price > product.price -%}
+            <span class="compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="product__desc rte">{{ product.description }}</div>
+
+        {%- form 'product', product, class: 'product__form' -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <label style="display:block;margin:10px 0 6px;color:var(--ink-soft)">{{ option.name }}</label>
+              <select name="options[{{ option.name | escape }}]" style="padding:12px 16px;border-radius:12px;background:var(--bg-2);color:var(--ink);border:1px solid var(--line);width:100%;max-width:340px">
+                {%- for value in option.values -%}<option value="{{ value | escape }}">{{ value }}</option>{%- endfor -%}
+              </select>
+            {%- endfor -%}
+          {%- endunless -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <div style="margin-top:18px">
+            <button type="submit" name="add" class="btn btn--gold btn--lg" {% unless product.available %}disabled{% endunless %}>
+              {%- if product.available -%}Get this plan — {{ product.price | money }}{%- else -%}Cohort full{%- endif -%}
+            </button>
+          </div>
+        {%- endform -%}
+
+        <ul class="product__perks">
+          <li>Unique access code emailed instantly after checkout</li>
+          <li>7-day money-back guarantee</li>
+          <li>Secure Shopify checkout</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Product", "settings": [] }
+{% endschema %}

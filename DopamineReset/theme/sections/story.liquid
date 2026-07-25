@@ -1,0 +1,76 @@
+{% raw %}
+<style>
+  .sty{position:relative;background:#0c0a12}
+  .sty__stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center;z-index:0}
+  .sty__bg{position:absolute;inset:0;transition:background 1.1s ease;background:radial-gradient(70% 80% at 60% 40%,#1a1330,#0c0a12 70%)}
+  .sty__ring{position:absolute;width:min(64vw,520px);height:min(64vw,520px);border-radius:50%;border:1.5px dashed rgba(255,255,255,.16);animation:styspin 26s linear infinite}
+  .sty__halo{position:absolute;width:min(46vw,360px);height:min(46vw,360px);border-radius:50%;filter:blur(40px);opacity:.6;transition:background 1.1s ease;background:radial-gradient(circle,#7c5cff,transparent 65%)}
+  .sty__viz{position:relative;z-index:1;font-size:clamp(4rem,14vw,9rem);line-height:1;filter:drop-shadow(0 16px 30px rgba(0,0,0,.5));animation:styfloat 6s ease-in-out infinite;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+  @keyframes styfloat{0%,100%{transform:translateY(0) rotateZ(0)}50%{transform:translateY(-18px) rotateZ(4deg)}}
+  @keyframes styspin{to{transform:rotate(360deg)}}
+  .sty__beats{position:relative;z-index:2;margin-top:-100vh}
+  .beat{min-height:100vh;display:flex;align-items:center;padding:0 8vw}
+  .beat__in{max-width:560px;opacity:0;transform:translateY(46px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .beat.in .beat__in{opacity:1;transform:none}
+  .beat__k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:#4de3ff;display:block;margin-bottom:14px}
+  .beat h2{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(2rem,6vw,3.6rem);line-height:1.04;letter-spacing:-.02em;color:#fff;margin:0 0 14px}
+  .beat p{color:#cfccc4;font-size:clamp(1.05rem,2.2vw,1.35rem);line-height:1.55;margin:0;max-width:30ch}
+  .beat__btn{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.06rem;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 16px 40px rgba(124,92,255,.36)}
+  @media (prefers-reduced-motion:reduce){.sty__ring,.sty__viz{animation:none}.beat__in{opacity:1;transform:none}}
+</style>
+{% endraw %}
+
+<section class="sty" id="story">
+  <div class="sty__stage">
+    <div class="sty__bg" id="styBg"></div>
+    <div class="sty__halo" id="styHalo"></div>
+    <div class="sty__ring"></div>
+    <div class="sty__viz" id="styViz">📱</div>
+  </div>
+  <div class="sty__beats">
+    <div class="beat" data-emoji="📱" data-bg="radial-gradient(70% 80% at 55% 40%,#241a2e,#0c0a12 70%)" data-halo="#7c5cff">
+      <div class="beat__in"><span class="beat__k">It starts small</span><h2>Just one more video.</h2><p>One scroll becomes an hour. Every single day. You barely notice it happening.</p></div>
+    </div>
+    <div class="beat" data-emoji="🌫️" data-bg="radial-gradient(70% 80% at 55% 40%,#1b1b22,#0c0a12 70%)" data-halo="#4b4b5a">
+      <div class="beat__in"><span class="beat__k">Then it goes grey</span><h2>Nothing really hits anymore.</h2><p>Food, music, the people you love — it all feels a little flat. You're foggy, tired, and you don't know why.</p></div>
+    </div>
+    <div class="beat" data-emoji="💭" data-bg="radial-gradient(70% 80% at 55% 40%,#2a2036,#0c0a12 70%)" data-halo="#ff5c8a">
+      <div class="beat__in"><span class="beat__k">But deep down</span><h2>You know you're built for more.</h2><p>You just can't seem to start. That's not a willpower problem — it's a fried reward system. And it's fixable.</p></div>
+    </div>
+    <div class="beat" data-emoji="🔄" data-bg="radial-gradient(70% 80% at 55% 40%,#2e2233,#0c0a12 70%)" data-halo="#7c5cff">
+      <div class="beat__in"><span class="beat__k">7 days</span><h2>Rewire the wiring.</h2><p>One small action a day quietly resets your brain's reward system. No willpower marathon. Just 10 minutes.</p></div>
+    </div>
+    <div class="beat" data-emoji="☀️" data-bg="radial-gradient(70% 80% at 55% 40%,#3a2a1c,#0c0a12 70%)" data-halo="#4de3ff">
+      <div class="beat__in"><span class="beat__k">And then</span><h2>The colour comes back.</h2><p>Focus. Energy. Drive. Real happiness. The things that were always yours — you just get them back.</p></div>
+    </div>
+    <div class="beat" data-emoji="🚀" data-bg="radial-gradient(70% 80% at 55% 40%,#3a1f2e,#0c0a12 70%)" data-halo="#ff5c8a">
+      <div class="beat__in"><span class="beat__k">Your turn</span><h2>Feel good for real — in 7 days.</h2><p>R199. 10 minutes a day. 7-day money-back guarantee.</p><a class="beat__btn" href="#pricing">Start the reset →</a></div>
+    </div>
+  </div>
+</section>
+
+{% raw %}
+<script>
+(function(){
+  var viz=document.getElementById('styViz'),bg=document.getElementById('styBg'),halo=document.getElementById('styHalo');
+  var beats=[].slice.call(document.querySelectorAll('.sty .beat'));
+  if(!viz||!beats.length) return;
+  function setBeat(b){
+    var e=b.getAttribute('data-emoji');if(viz.textContent!==e){viz.style.transform='scale(.5)';setTimeout(function(){viz.textContent=e;viz.style.transform='';},180);}
+    bg.style.background=b.getAttribute('data-bg');
+    halo.style.background='radial-gradient(circle,'+b.getAttribute('data-halo')+',transparent 65%)';
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); if(en.intersectionRatio>0.5) setBeat(en.target); } });
+    },{threshold:[0.15,0.55]});
+    beats.forEach(function(b){io.observe(b)});
+  } else { beats.forEach(function(b){b.classList.add('in')}); }
+  setBeat(beats[0]);
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{ "name": "Story (scroll)", "settings": [], "presets": [{ "name": "Story (scroll)" }] }
+{% endschema %}

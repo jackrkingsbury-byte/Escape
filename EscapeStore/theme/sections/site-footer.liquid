@@ -1,0 +1,31 @@
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div>© {{ 'now' | date: '%Y' }} {{ section.settings.brand | default: settings.brand_name }}. {{ section.settings.tagline }}</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+      {%- endfor -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Brand", "default": "ESCAPE" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Build a life you don't need to escape from." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Footer link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
+  ],
+  "max_blocks": 6
+}
+{% endschema %}

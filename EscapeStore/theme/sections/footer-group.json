@@ -1,0 +1,20 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "site-footer": {
+      "type": "site-footer",
+      "settings": {
+        "brand": "ESCAPE",
+        "tagline": "Build a life you don't need to escape from."
+      },
+      "blocks": {
+        "f1": { "type": "link", "settings": { "label": "Terms", "url": "/policies/terms-of-service" } },
+        "f2": { "type": "link", "settings": { "label": "Refunds", "url": "/policies/refund-policy" } },
+        "f3": { "type": "link", "settings": { "label": "Contact", "url": "/pages/contact" } }
+      },
+      "block_order": ["f1", "f2", "f3"]
+    }
+  },
+  "order": ["site-footer"]
+}

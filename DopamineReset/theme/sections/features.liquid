@@ -1,0 +1,47 @@
+<section class="section" id="features">
+  <div class="wrap">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2 class="reveal">{{ section.settings.heading }}</h2>
+    <div class="grid">
+      {%- for block in section.blocks -%}
+        <div class="feature reveal" {{ block.shopify_attributes }}>
+          <div class="feature__ic">{{ block.settings.icon }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feature grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What's inside" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything you need to actually change." }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🔥" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Daily dares" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "One small brave action every day. Momentum without motivation." }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Feature grid",
+    "blocks": [
+      { "type": "feature", "settings": { "icon": "🔥", "title": "Daily dares", "text": "One small brave action a day. Momentum without willpower." } },
+      { "type": "feature", "settings": { "icon": "📈", "title": "Habit tracker", "text": "Streaks and stats that make consistency addictive." } },
+      { "type": "feature", "settings": { "icon": "🎁", "title": "5 Bonus Kits", "text": "Plug-and-play kits for confidence, focus, money and more." } },
+      { "type": "feature", "settings": { "icon": "📓", "title": "Your notebook", "text": "Letter to Future You, 10 things you want, weekly reviews." } },
+      { "type": "feature", "settings": { "icon": "🏅", "title": "Certificate", "text": "Finish the 90 days and earn proof you actually did it." } },
+      { "type": "feature", "settings": { "icon": "⚡", "title": "Instant access", "text": "Pay, get your code, unlock your first win in 60 seconds." } }
+    ]
+  }]
+}
+{% endschema %}

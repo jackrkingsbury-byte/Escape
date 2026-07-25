@@ -1,0 +1,76 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Dopamine Reset",
+    "theme_version": "1.0.0",
+    "theme_author": "Dopamine Reset",
+    "theme_documentation_url": "https://github.com/jackrkingsbury-byte/escape",
+    "theme_support_url": "https://github.com/jackrkingsbury-byte/escape"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Social share image",
+        "info": "Shown when your store link is shared (1200×630 recommended)."
+      },
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand name",
+        "default": "Dopamine Reset"
+      },
+      {
+        "type": "url",
+        "id": "course_url",
+        "label": "Access URL (where buyers land after paying)",
+        "info": "Where buyers enter their access code after purchase."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background",
+        "default": "#070a16"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Text",
+        "default": "#f5f4f0"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Accent (gold)",
+        "default": "#7fd7ff"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (purple)",
+        "default": "#7c5cff"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Fonts (Fraunces / Hanken Grotesk / JetBrains Mono) are loaded in the theme layout."
+      }
+    ]
+  }
+]

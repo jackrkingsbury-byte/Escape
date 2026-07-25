@@ -1,0 +1,17 @@
+<section class="section">
+  <div class="wrap">
+    <div class="page-head"><p class="eyebrow">{{ blog.title }}</p><h1>{{ blog.title }}</h1></div>
+    <div class="coll-grid">
+      {%- for article in blog.articles -%}
+        <a class="card" href="{{ article.url }}">
+          <div class="card__img">{%- if article.image -%}<img src="{{ article.image | image_url: width: 460 }}" alt="">{%- else -%}Reset{%- endif -%}</div>
+          <div class="card__body"><b>{{ article.title }}</b><span>{{ article.published_at | date: '%d %b %Y' }}</span></div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Blog", "settings": [] }
+{% endschema %}

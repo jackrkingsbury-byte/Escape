@@ -1,0 +1,115 @@
+{%- liquid
+  assign grads = "linear-gradient(135deg,#7c5cff,#4de3ff)|linear-gradient(135deg,#ff5c8a,#7c5cff)|linear-gradient(135deg,#2bd3c6,#4f8cff)|linear-gradient(135deg,#5ad48a,#bfe65a)|linear-gradient(135deg,#7c5cff,#ff5c8a)|linear-gradient(135deg,#ffd24b,#ff6b6b)" | split: "|"
+-%}
+{% raw %}
+<style>
+  .bn{padding:clamp(56px,9vw,110px) 0;position:relative;overflow:hidden}
+  .bn__wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+  .bn__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#4de3ff;margin-bottom:14px}
+  .bn h2{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(1.9rem,4.6vw,3.2rem);line-height:1.04;letter-spacing:-.01em;margin:0 0 14px;max-width:20ch;color:#fff}
+  .bn__lead{color:#cfccc4;font-size:clamp(1.05rem,2vw,1.25rem);max-width:54ch;margin:0 0 8px;line-height:1.55}
+  .bn__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:42px;perspective:1200px}
+  .bn__card{position:relative;border-radius:22px;overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:24px;border:1px solid rgba(255,255,255,.1);transform-style:preserve-3d;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
+  .bn__card:hover{transform:rotateX(7deg) rotateY(-8deg) translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
+  .bn__bg{position:absolute;inset:0;z-index:0;background-size:220% 220%;animation:bngrad 9s ease infinite;opacity:.95}
+  .bn__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 30%,rgba(7,10,22,.78) 100%)}
+  @keyframes bngrad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .bn__stage{position:absolute;top:18px;left:0;right:0;height:140px;z-index:1;display:grid;place-items:center;transform-style:preserve-3d}
+  .bn__halo{position:absolute;width:104px;height:104px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.3),transparent 62%);animation:bnpulse 4.2s ease-in-out infinite}
+  .bn__ring{position:absolute;width:120px;height:120px;border-radius:50%;border:1.5px dashed rgba(255,255,255,.35);animation:bnspin 14s linear infinite}
+  .bn__obj{position:relative;font-size:3.6rem;line-height:1;filter:drop-shadow(0 12px 16px rgba(0,0,0,.45));animation:bnfloat 5.5s ease-in-out infinite;will-change:transform}
+  @keyframes bnfloat{0%,100%{transform:translateY(0) rotateY(0deg)}50%{transform:translateY(-14px) rotateY(24deg)}}
+  @keyframes bnpulse{0%,100%{transform:scale(.82);opacity:.5}50%{transform:scale(1.12);opacity:.9}}
+  @keyframes bnspin{to{transform:rotate(360deg)}}
+  .bn__txt{position:relative;z-index:2}
+  .bn__txt b{display:block;font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:1.35rem;color:#fff;line-height:1.12;margin-bottom:7px}
+  .bn__txt span{color:rgba(255,255,255,.92);font-size:.98rem;line-height:1.5;display:block}
+  @media (prefers-reduced-motion:reduce){.bn__obj,.bn__halo,.bn__ring,.bn__bg{animation:none}}
+  .bn__strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+  .bn__chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:9px 16px;font-size:.9rem;color:#e8e6e0}
+  .bn__chip b{color:#4de3ff}
+  .bn__cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .bn__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.05rem;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 16px 40px rgba(124,92,255,.34);transition:transform .15s}
+  .bn__btn:hover{transform:translateY(-2px)}
+  .bn__note{color:#8b877f;font-size:.92rem}
+</style>
+{% endraw %}
+
+<section class="bn" id="why">
+  <div class="orbs"><span class="orb orb--a" style="top:-50px;left:6%"></span><span class="orb orb--b" style="bottom:-70px;right:5%"></span><span class="orb orb--c" style="top:34%;right:28%"></span></div>
+  <div class="bn__wrap">
+    <p class="bn__eye">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.heading }}</h2>
+    <p class="bn__lead">{{ section.settings.lead }}</p>
+
+    <div class="bn__grid">
+      {%- for block in section.blocks -%}
+        {%- assign gi = forloop.index0 | modulo: 6 -%}
+        {%- assign g = grads[gi] -%}
+        <article class="bn__card" {{ block.shopify_attributes }}>
+          <div class="bn__bg" style="background-image:{{ g }}"></div>
+          <div class="bn__stage">
+            <span class="bn__ring"></span>
+            <span class="bn__halo"></span>
+            <span class="bn__obj">{{ block.settings.emoji }}</span>
+          </div>
+          <div class="bn__txt"><b>{{ block.settings.title }}</b><span>{{ block.settings.text }}</span></div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_strip -%}
+    <div class="bn__strip">
+      <span class="bn__chip">⏱️ <b>~10 min</b> a day</span>
+      <span class="bn__chip">📅 <b>7 days</b> to feel it</span>
+      <span class="bn__chip">🛡️ <b>7-day</b> money-back</span>
+      <span class="bn__chip">⚡ <b>Instant</b> access</span>
+    </div>
+    {%- endif -%}
+
+    <div class="bn__cta">
+      <a class="bn__btn" href="{{ section.settings.cta_url | default: '#pricing' }}">{{ section.settings.cta_label }}</a>
+      <span class="bn__note">{{ section.settings.note }}</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits / Why",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why this matters" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This isn’t about your phone. It’s about your life." },
+    { "type": "textarea", "id": "lead", "label": "Lead", "default": "Cheap dopamine quietly steals your focus, your mood and your drive. Win them back and everything downstream lifts — school, money, health, the people you love." },
+    { "type": "checkbox", "id": "show_strip", "label": "Show the chips row", "default": true },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Start the reset — R199" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" },
+    { "type": "text", "id": "note", "label": "Note", "default": "Most people feel the shift by day 3." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🧠" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Laser focus" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Sit down and actually get things done — for hours, without the itch to check your phone." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{
+    "name": "Benefits / Why",
+    "blocks": [
+      { "type": "benefit", "settings": { "emoji": "🧠", "title": "Laser focus", "text": "Sit down and get real work done — for hours — without the itch to check your phone." } },
+      { "type": "benefit", "settings": { "emoji": "😄", "title": "Genuine happiness", "text": "Normal life feels good again — mornings, music, food, people. The colour comes back." } },
+      { "type": "benefit", "settings": { "emoji": "⚡", "title": "Real energy", "text": "Wake up clear and charged instead of foggy, flat and already tired." } },
+      { "type": "benefit", "settings": { "emoji": "🚀", "title": "Momentum for your goals", "text": "Show up for school, money, training, your craft — and watch your life actually move." } },
+      { "type": "benefit", "settings": { "emoji": "❤️", "title": "Real connection", "text": "Be fully there with the people you love. Present — not half-scrolling." } },
+      { "type": "benefit", "settings": { "emoji": "💪", "title": "Self-respect", "text": "Do the hard thing on purpose. Look in the mirror and like who’s looking back." } }
+    ]
+  }]
+}
+{% endschema %}

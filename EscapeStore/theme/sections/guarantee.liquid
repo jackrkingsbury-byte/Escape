@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="wrap">
+    <div class="guarantee reveal">
+      <div class="seal">7-DAY<br>GUARANTEE</div>
+      <h2>{{ section.settings.heading }}</h2>
+      <p style="max-width:48ch;margin:14px auto 0">{{ section.settings.text }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Guarantee",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Try it for a week. On us." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Go through ESCAPE for 7 days. If it doesn't light a fire under you, email us and get every cent back — no forms, no guilt. The only risk is staying exactly where you are." }
+  ],
+  "presets": [{ "name": "Guarantee" }]
+}
+{% endschema %}

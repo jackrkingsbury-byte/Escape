@@ -1,0 +1,265 @@
+{% raw %}
+<style>
+  .pv{position:relative;padding:clamp(72px,11vw,128px) 0;background:radial-gradient(110% 80% at 20% 10%,#171024 0%,#080d1c 62%);overflow:hidden}
+  .pv__glow{position:absolute;width:42vmax;height:42vmax;border-radius:50%;filter:blur(95px);opacity:.3;pointer-events:none}
+  .pv__glow.g1{background:radial-gradient(circle,#2bd3c6,transparent 65%);top:-12vmax;right:-8vmax}
+  .pv__glow.g2{background:radial-gradient(circle,#7c5cff,transparent 65%);bottom:-14vmax;left:-10vmax}
+  .pv__wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 22px}
+  .pv__head{text-align:center;max-width:720px;margin:0 auto clamp(34px,4.5vw,52px)}
+  .pv__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#2bd3c6;margin:0 0 14px}
+  .pv__title{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(2rem,5vw,3.3rem);line-height:1.05;letter-spacing:-.02em;color:#fff;margin:0 0 16px}
+  .pv__lead{color:#cfccc4;font-size:clamp(1rem,1.7vw,1.18rem);line-height:1.6;margin:0}
+
+  .pv__layout{display:grid;grid-template-columns:1fr minmax(300px,360px);gap:clamp(26px,4vw,56px);align-items:center}
+  @media(max-width:880px){.pv__layout{grid-template-columns:1fr;gap:30px}}
+
+  /* tab list */
+  .pv__tabs{display:flex;flex-direction:column;gap:12px;order:2}
+  @media(max-width:880px){.pv__tabs{flex-direction:row;flex-wrap:wrap;justify-content:center;order:2}}
+  .pv__tab{display:flex;align-items:center;gap:13px;width:100%;text-align:left;cursor:pointer;
+    background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:15px 17px;color:#cfccc4;font:inherit;transition:transform .2s,border-color .2s,background .2s}
+  .pv__tab:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18)}
+  .pv__tab.on{background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(43,211,198,.12));border-color:rgba(124,92,255,.5);color:#fff;box-shadow:0 10px 30px rgba(124,92,255,.2)}
+  @media(max-width:880px){.pv__tab{width:auto;padding:10px 14px}.pv__tab .pv__td{display:none}}
+  .pv__ti{font-size:1.3rem;width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.06)}
+  .pv__tab.on .pv__ti{background:rgba(255,255,255,.12)}
+  .pv__tt{font-weight:700;font-size:.98rem;display:block}
+  .pv__td{font-size:.8rem;color:#8b877f;display:block;margin-top:2px}
+  .pv__tab.on .pv__td{color:#bdb9b1}
+
+  /* phone */
+  .pv__phonewrap{order:1;display:flex;justify-content:center}
+  .pv__phone{position:relative;width:300px;max-width:88vw;aspect-ratio:300/620;border-radius:42px;padding:13px;
+    background:linear-gradient(160deg,#2a2438,#13101c);box-shadow:0 40px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.12),0 0 0 1px rgba(255,255,255,.06);animation:pvfloat 6s ease-in-out infinite}
+  @keyframes pvfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @media(max-width:520px){.pv__phone{width:340px;max-width:92vw}}
+  .pv__notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#080d1c;border-radius:0 0 16px 16px;z-index:6}
+  .pv__screen{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;background:radial-gradient(120% 70% at 70% 0%,#1a1330,#0c0a14);color:#f3f1ea}
+  .pv__sbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 6px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.66rem;color:#9b97a8}
+  .pv__view{position:absolute;inset:0;top:30px;padding:14px 16px 16px;overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s;pointer-events:none}
+  .pv__view.on{opacity:1;transform:none;pointer-events:auto}
+
+  .pv__vh{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:1.18rem;margin:0 0 2px}
+  .pv__vs{font-size:.74rem;color:#9b97a8;margin:0 0 14px}
+
+  /* dashboard bits */
+  .pv__ring{position:relative;width:108px;height:108px;margin:6px auto 14px}
+  .pv__ring svg{transform:rotate(-90deg)}
+  .pv__ringtxt{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+  .pv__ringtxt b{display:block;font-family:var(--serif,'Fraunces',serif);font-size:1.5rem;line-height:1}
+  .pv__ringtxt span{font-size:.6rem;color:#9b97a8;text-transform:uppercase;letter-spacing:.12em}
+  .pv__stat{display:flex;gap:8px}
+  .pv__stat>div{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px;text-align:center}
+  .pv__stat b{display:block;font-family:var(--serif,'Fraunces',serif);font-size:1.15rem}
+  .pv__stat span{font-size:.6rem;color:#9b97a8;text-transform:uppercase;letter-spacing:.1em}
+  .pv__xpbar{height:8px;border-radius:99px;background:rgba(255,255,255,.1);margin:14px 0 5px;overflow:hidden}
+  .pv__xpbar i{display:block;height:100%;width:64%;border-radius:99px;background:linear-gradient(90deg,#7c5cff,#2bd3c6)}
+  .pv__xpl{display:flex;justify-content:space-between;font-size:.62rem;color:#9b97a8}
+
+  /* generic card */
+  .pv__c{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 13px;margin-bottom:10px}
+  .pv__pill{display:inline-block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#4de3ff;background:rgba(77,227,255,.12);border-radius:99px;padding:3px 9px;margin-bottom:8px}
+  .pv__ch{font-weight:700;font-size:.95rem;margin:0 0 4px}
+  .pv__cx{font-size:.78rem;color:#bdb9b1;line-height:1.45;margin:0}
+  .pv__btn{display:block;text-align:center;margin-top:10px;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;font-weight:800;font-size:.82rem;border-radius:11px;padding:9px}
+
+  /* habit rows */
+  .pv__habit{display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:8px;font-size:.84rem}
+  .pv__chk{width:20px;height:20px;border-radius:6px;border:2px solid rgba(255,255,255,.25);flex:none;display:grid;place-items:center;font-size:.7rem;color:#0a1f1c}
+  .pv__habit.done{color:#9b97a8}
+  .pv__habit.done .pv__chk{background:linear-gradient(135deg,#2bd3c6,#5ad48a);border-color:transparent}
+  .pv__habit.done .pv__hn{text-decoration:line-through}
+
+  /* achievements */
+  .pv__badges{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .pv__badge{text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:11px 6px}
+  .pv__badge.lock{opacity:.4}
+  .pv__bi{font-size:1.5rem;display:block;margin-bottom:4px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4))}
+  .pv__bn{font-size:.62rem;color:#cfccc4;line-height:1.2}
+
+  /* coach chat */
+  .pv__msg{max-width:82%;padding:9px 12px;border-radius:15px;font-size:.8rem;line-height:1.4;margin-bottom:8px}
+  .pv__msg.bot{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:5px}
+  .pv__msg.me{margin-left:auto;background:linear-gradient(135deg,#7c5cff,#5a3ff0);color:#fff;border-bottom-right-radius:5px}
+  .pv__quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .pv__quick span{font-size:.72rem;border:1px solid rgba(124,92,255,.5);color:#cbbcff;border-radius:99px;padding:5px 10px}
+
+  /* mood */
+  .pv__moods{display:flex;justify-content:space-between;margin-bottom:14px}
+  .pv__moods button{font-size:1.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px;width:44px;height:44px;cursor:pointer;transition:transform .15s}
+  .pv__moods button.sel{transform:scale(1.12);border-color:#4de3ff;background:rgba(77,227,255,.14)}
+  .pv__chart{display:flex;align-items:flex-end;gap:7px;height:96px;padding:8px 4px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .pv__bar{flex:1;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#2bd3c6,#7c5cff);opacity:.9}
+  .pv__days{display:flex;justify-content:space-between;font-size:.58rem;color:#9b97a8;margin-top:6px}
+
+  .pv__hint{text-align:center;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:#8b877f;margin:20px 0 0}
+  .pv__hint.hide{opacity:0}
+
+  @media (prefers-reduced-motion:reduce){.pv__phone{animation:none}}
+</style>
+{% endraw %}
+
+<section class="pv" id="preview">
+  <span class="pv__glow g1"></span><span class="pv__glow g2"></span>
+  <div class="pv__wrap">
+    <div class="pv__head reveal">
+      <p class="pv__eye">{{ section.settings.eyebrow }}</p>
+      <h2 class="pv__title">{{ section.settings.heading }}</h2>
+      <p class="pv__lead">{{ section.settings.lead }}</p>
+    </div>
+
+    {% raw %}
+    <div class="pv__layout reveal">
+      <div class="pv__phonewrap">
+        <div class="pv__phone">
+          <span class="pv__notch"></span>
+          <div class="pv__screen" id="pvScreen">
+            <div class="pv__sbar"><span>9:41</span><span>Dopamine Reset</span><span>▲ 100%</span></div>
+
+            <!-- DASHBOARD -->
+            <div class="pv__view on" data-v="dash">
+              <h3 class="pv__vh">Day 4 of 7 🔥</h3>
+              <p class="pv__vs">You're clearing the fog. Keep going.</p>
+              <div class="pv__ring">
+                <svg width="108" height="108" viewBox="0 0 108 108">
+                  <circle cx="54" cy="54" r="46" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="9"/>
+                  <circle cx="54" cy="54" r="46" fill="none" stroke="#2bd3c6" stroke-width="9" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="124"/>
+                </svg>
+                <div class="pv__ringtxt"><b>57%</b><span>complete</span></div>
+              </div>
+              <div class="pv__stat">
+                <div><b>4</b><span>day streak</span></div>
+                <div><b>Lv 3</b><span>focus</span></div>
+                <div><b>820</b><span>XP</span></div>
+              </div>
+              <div class="pv__xpbar"><i></i></div>
+              <div class="pv__xpl"><span>Level 3</span><span>180 XP to Lv 4</span></div>
+            </div>
+
+            <!-- DAILY CHALLENGE -->
+            <div class="pv__view" data-v="daily">
+              <h3 class="pv__vh">Today's challenge</h3>
+              <p class="pv__vs">One small action. 10 minutes.</p>
+              <div class="pv__c">
+                <span class="pv__pill">Day 4 · Focus</span>
+                <p class="pv__ch">Take a 10-minute "boredom walk"</p>
+                <p class="pv__cx">No phone, no music. Let your mind get bored — that's your reward system recalibrating in real time.</p>
+                <span class="pv__btn">Mark as done +60 XP</span>
+              </div>
+              <div class="pv__c">
+                <span class="pv__pill">Bonus</span>
+                <p class="pv__ch">Replace one scroll session</p>
+                <p class="pv__cx">Swap a scroll for something on your real-dopamine menu. Log how it felt.</p>
+              </div>
+            </div>
+
+            <!-- HABITS -->
+            <div class="pv__view" data-v="habits">
+              <h3 class="pv__vh">Habit system</h3>
+              <p class="pv__vs">Tick them off. Build the streak.</p>
+              <div class="pv__habit done"><span class="pv__chk">✓</span><span class="pv__hn">Phone out of the bedroom</span></div>
+              <div class="pv__habit done"><span class="pv__chk">✓</span><span class="pv__hn">No scroll before noon</span></div>
+              <div class="pv__habit done"><span class="pv__chk">✓</span><span class="pv__hn">10 min boredom walk</span></div>
+              <div class="pv__habit"><span class="pv__chk"></span><span class="pv__hn">One real-dopamine swap</span></div>
+              <div class="pv__habit"><span class="pv__chk"></span><span class="pv__hn">Lights off by 11pm</span></div>
+            </div>
+
+            <!-- ACHIEVEMENTS -->
+            <div class="pv__view" data-v="achv">
+              <h3 class="pv__vh">Achievements</h3>
+              <p class="pv__vs">4 of 9 unlocked</p>
+              <div class="pv__badges">
+                <div class="pv__badge"><span class="pv__bi">🌅</span><span class="pv__bn">First morning</span></div>
+                <div class="pv__badge"><span class="pv__bi">🔥</span><span class="pv__bn">3-day streak</span></div>
+                <div class="pv__badge"><span class="pv__bi">🧠</span><span class="pv__bn">Fog lifter</span></div>
+                <div class="pv__badge"><span class="pv__bi">🌊</span><span class="pv__bn">Urge surfer</span></div>
+                <div class="pv__badge lock"><span class="pv__bi">🏆</span><span class="pv__bn">Full 7 days</span></div>
+                <div class="pv__badge lock"><span class="pv__bi">💎</span><span class="pv__bn">Reset master</span></div>
+              </div>
+            </div>
+
+            <!-- COACH -->
+            <div class="pv__view" data-v="coach">
+              <h3 class="pv__vh">Your coach</h3>
+              <p class="pv__vs">In your corner, every day.</p>
+              <div class="pv__msg bot">Morning 👋 Day 4. How's the head feeling today?</div>
+              <div class="pv__msg me">Honestly? Itching to scroll already.</div>
+              <div class="pv__msg bot">That's the old wiring talking — totally normal on day 4. Let's beat it: try a 90-second urge-surf, then your boredom walk. Want me to start the timer?</div>
+              <div class="pv__quick"><span>Start timer</span><span>Why does this work?</span></div>
+            </div>
+
+            <!-- MOOD -->
+            <div class="pv__view" data-v="mood">
+              <h3 class="pv__vh">How do you feel?</h3>
+              <p class="pv__vs">Log it daily — watch the trend.</p>
+              <div class="pv__moods">
+                <button>😔</button><button>😐</button><button class="sel">🙂</button><button>😄</button><button>🤩</button>
+              </div>
+              <div class="pv__chart">
+                <span class="pv__bar" style="height:38%"></span>
+                <span class="pv__bar" style="height:34%"></span>
+                <span class="pv__bar" style="height:52%"></span>
+                <span class="pv__bar" style="height:66%"></span>
+                <span class="pv__bar" style="height:72%"></span>
+                <span class="pv__bar" style="height:84%"></span>
+                <span class="pv__bar" style="height:92%"></span>
+              </div>
+              <div class="pv__days"><span>D1</span><span>D2</span><span>D3</span><span>D4</span><span>D5</span><span>D6</span><span>D7</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pv__tabs" id="pvTabs">
+        <button class="pv__tab on" data-t="dash"><span class="pv__ti">📊</span><span><span class="pv__tt">Your dashboard</span><span class="pv__td">Streak, level & progress at a glance</span></span></button>
+        <button class="pv__tab" data-t="daily"><span class="pv__ti">🎯</span><span><span class="pv__tt">Daily challenge</span><span class="pv__td">One 10-min action, every day</span></span></button>
+        <button class="pv__tab" data-t="habits"><span class="pv__ti">✅</span><span><span class="pv__tt">Habit tracker</span><span class="pv__td">Tick off habits, build the streak</span></span></button>
+        <button class="pv__tab" data-t="achv"><span class="pv__ti">🏆</span><span><span class="pv__tt">Achievements</span><span class="pv__td">Unlock badges as you progress</span></span></button>
+        <button class="pv__tab" data-t="coach"><span class="pv__ti">💬</span><span><span class="pv__tt">Your coach</span><span class="pv__td">Daily guidance & craving rescue</span></span></button>
+        <button class="pv__tab" data-t="mood"><span class="pv__ti">🌈</span><span><span class="pv__tt">Mood tracker</span><span class="pv__td">Log how you feel, see it climb</span></span></button>
+      </div>
+    </div>
+    <p class="pv__hint" id="pvHint">Tap a feature to look inside</p>
+    {% endraw %}
+  </div>
+</section>
+
+{% raw %}
+<script>
+(function(){
+  var tabs=document.getElementById('pvTabs'),screen=document.getElementById('pvScreen'),hint=document.getElementById('pvHint');
+  if(!tabs||!screen)return;
+  var btns=tabs.querySelectorAll('.pv__tab'),views=screen.querySelectorAll('.pv__view');
+  var order=['dash','daily','habits','achv','coach','mood'],idx=0,touched=false,timer;
+  function show(key){
+    for(var i=0;i<btns.length;i++)btns[i].classList.toggle('on',btns[i].getAttribute('data-t')===key);
+    for(var j=0;j<views.length;j++)views[j].classList.toggle('on',views[j].getAttribute('data-v')===key);
+    idx=order.indexOf(key);
+  }
+  for(var i=0;i<btns.length;i++){(function(b){b.addEventListener('click',function(){touched=true;if(hint)hint.classList.add('hide');if(timer)clearInterval(timer);show(b.getAttribute('data-t'));});})(btns[i]);}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function startAuto(){
+    if(reduce)return;
+    timer=setInterval(function(){if(touched){clearInterval(timer);return;}idx=(idx+1)%order.length;show(order[idx]);},3200);
+  }
+  // only auto-cycle once the section is on screen
+  if('IntersectionObserver' in window){
+    var sec=document.getElementById('preview');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!touched&&!timer){startAuto();}});},{threshold:.3});
+    if(sec)io.observe(sec);
+  }else{startAuto();}
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{
+  "name": "Product preview",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "See inside before you buy" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This is what you get on day one" },
+    { "type": "textarea", "id": "lead", "label": "Lead", "default": "Not a PDF you'll never open. A real, app-like member space that walks you through every day, tracks your progress and keeps you going." }
+  ],
+  "presets": [{ "name": "Product preview" }]
+}
+{% endschema %}

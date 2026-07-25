@@ -1,0 +1,24 @@
+<section class="section">
+  <div class="wrap">
+    <div class="page-head"><p class="eyebrow">Search</p><h1>Find what you need</h1></div>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search…" aria-label="Search">
+      <button type="submit" class="btn btn--gold">Search</button>
+    </form>
+    {%- if search.performed -%}
+      <p style="color:var(--ink-faint)">{{ search.results_count }} result(s) for "{{ search.terms }}"</p>
+      <div class="coll-grid">
+        {%- for item in search.results -%}
+          <a class="card" href="{{ item.url }}">
+            <div class="card__img">{%- if item.featured_image -%}<img src="{{ item.featured_image | image_url: width: 460 }}" alt="">{%- else -%}ESCAPE{%- endif -%}</div>
+            <div class="card__body"><b>{{ item.title }}</b></div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}
