@@ -54,6 +54,9 @@ forces the deterministic fallback.
       100 and a share code; `/s/<code>` is a public scorecard page whose link
       unfurls with the score in WhatsApp and X. Engine, share codes and tests
       live in `../nevermiss/lib/scorecard.ts` (it ships with the scan API)
+- [x] Head-to-head — scan a competitor's storefront (as public as your own) and
+      get `/vs/<you>.<them>`: both scores, the per-category gap, and a preview
+      image with both numbers on it
 - [ ] App shell: OAuth, mandatory GDPR webhooks, Billing API, listing —
       **blocked on a Shopify Partner account** (18+ ToS; guardian-held)
 

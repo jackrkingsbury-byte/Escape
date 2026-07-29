@@ -8,12 +8,15 @@
  */
 import {
   buildScorecard,
+  buildVersus,
   decodeFacts,
   encodeFacts,
+  encodeVersus,
   gradeFor,
   readFacts,
   scoreStorefront,
   scorecardFromCode,
+  versusFromCodes,
   type StoreFacts,
 } from "../lib/scorecard";
 import type { PublicProduct } from "../lib/storescan";
@@ -227,6 +230,53 @@ function eq(name: string, actual: unknown, expected: unknown) {
   const { scorecard } = scoreStorefront([product(), product({ images: [] })], "explain.co.za", NOW);
   const allExplained = scorecard.categories.every((c) => c.explain.trim().length > 0 && c.verdict.trim().length > 0);
   check("every category shows its working and a plain-English verdict", allExplained);
+}
+
+// --- unit: head-to-head ---
+{
+  const strong = scoreStorefront(Array.from({ length: 12 }, () => product()), "strong.co.za", NOW);
+  const weak = scoreStorefront(
+    Array.from({ length: 4 }, () => product({ images: [], body_html: "<p>x</p>", published_at: daysAgo(300) })),
+    "weak.co.za",
+    NOW,
+  );
+
+  const ahead = buildVersus(strong.scorecard, weak.scorecard);
+  eq("lead is your score minus theirs", ahead.lead, strong.scorecard.score - weak.scorecard.score);
+  check("a big lead reads as well ahead", /well ahead\.$/.test(ahead.headline), ahead.headline);
+
+  const behind = buildVersus(weak.scorecard, strong.scorecard);
+  eq("the mirror match has the opposite lead", behind.lead, -ahead.lead);
+  check("being behind names the other store", behind.headline.startsWith("strong.co.za"), behind.headline);
+
+  const tied = buildVersus(strong.scorecard, strong.scorecard);
+  eq("equal scores are a dead heat", tied.headline, "Dead heat.");
+  eq("a tie has no lead", tied.lead, 0);
+
+  check(
+    "gaps cover every category, biggest difference first",
+    ahead.gaps.length === strong.scorecard.categories.length &&
+      ahead.gaps.every((g, i, all) =>
+        i === 0 || Math.abs(all[i - 1].you - all[i - 1].them) >= Math.abs(g.you - g.them),
+      ),
+    ahead.gaps.map((g) => `${g.label} ${g.you}-${g.them}`).join(", "),
+  );
+
+  const codes = encodeVersus(strong.facts, weak.facts);
+  const rebuilt = versusFromCodes(codes);
+  eq("versus codes round-trip the lead", rebuilt?.lead, ahead.lead);
+  eq("versus codes round-trip the headline", rebuilt?.headline, ahead.headline);
+  eq("versus keeps the two stores in order", rebuilt?.you.shopHost, "strong.co.za");
+  check("versus codes are URL-safe", /^[A-Za-z0-9_.-]+$/.test(codes), `${codes.length} chars`);
+
+  const badPairs = [
+    "",
+    codes.split(".")[0], // one code only
+    `${codes}.${codes}`, // three or more
+    `${codes.split(".")[0]}.garbage!!`,
+    "a".repeat(1000),
+  ];
+  check("malformed versus codes are all rejected", badPairs.every((c) => versusFromCodes(c) === null));
 }
 
 console.log(failures === 0 ? "\nAll scorecard tests passed." : `\n${failures} test(s) FAILED.`);

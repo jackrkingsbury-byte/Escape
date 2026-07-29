@@ -9,13 +9,33 @@ import { useState } from "react";
  * else sees the number, scans theirs. WhatsApp is first because that's where
  * South African business chat actually happens.
  */
-export function ShareRow({ url, host, score }: { url: string; host: string; score: number }) {
+export function ShareRow({
+  url,
+  host,
+  score,
+  versus,
+  versusScore,
+}: {
+  url: string;
+  host: string;
+  score: number;
+  /** Set for a head-to-head: the other store's host and score. */
+  versus?: string;
+  versusScore?: number;
+}) {
   const [copied, setCopied] = useState(false);
 
-  const brag =
-    score >= 80
-      ? `My store scored ${score}/100 on StoreBrief 💪`
-      : `My store scored ${score}/100 on StoreBrief. Fixing it this week — what does yours get?`;
+  let brag: string;
+  if (versus && typeof versusScore === "number") {
+    brag =
+      score >= versusScore
+        ? `Scored my store against ${versus} on StoreBrief: ${score} — ${versusScore}.`
+        : `${versus} beats my store ${versusScore} — ${score} on StoreBrief. Fixing that this week.`;
+  } else if (score >= 80) {
+    brag = `My store scored ${score}/100 on StoreBrief 💪`;
+  } else {
+    brag = `My store scored ${score}/100 on StoreBrief. Fixing it this week — what does yours get?`;
+  }
   const message = `${brag}\n${url}`;
 
   async function copy() {
@@ -34,9 +54,13 @@ export function ShareRow({ url, host, score }: { url: string; host: string; scor
 
   return (
     <section className="mt-6 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-card">
-      <h2 className="text-center text-base font-extrabold">Share this score</h2>
+      <h2 className="text-center text-base font-extrabold">
+        {versus ? "Share this matchup" : "Share this score"}
+      </h2>
       <p className="mx-auto mt-1 max-w-sm text-center text-sm text-ink-soft">
-        Post it and dare another store owner to beat it — {host} set the bar at {score}.
+        {versus
+          ? `The link unfurls with both scores on it — ${host} ${score}, ${versus} ${versusScore}.`
+          : `Post it and dare another store owner to beat it — ${host} set the bar at ${score}.`}
       </p>
 
       <div className="mt-5 flex flex-wrap justify-center gap-2.5">

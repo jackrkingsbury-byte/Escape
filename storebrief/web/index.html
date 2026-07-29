@@ -432,6 +432,37 @@
   .score-bar .track { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
   .score-bar .track i { display: block; height: 100%; border-radius: 999px; background: var(--primary); transition: width .8s cubic-bezier(.2,.8,.2,1); }
   .score-bar .pts { font-family: var(--mono); color: var(--ink-faint); font-size: 0.78rem; }
+  /* ---------- head-to-head ---------- */
+  .vs-box {
+    margin-top: 18px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: clamp(18px, 3.5vw, 26px); box-shadow: var(--shadow);
+  }
+  .vs-box h4 { font-family: var(--serif); font-size: var(--step-1); margin-bottom: 4px; }
+  .vs-box .vs-sub { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.5; }
+  .vs-form { margin-top: 14px; display: flex; gap: 10px; }
+  .vs-form input {
+    flex: 1; min-width: 0; padding: 0.8em 1.1em; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    font-size: 0.98rem; font-family: var(--mono);
+  }
+  .vs-form input:focus-visible { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent); }
+  @media (max-width: 560px) { .vs-form { flex-direction: column; } .vs-form .btn { width: 100%; justify-content: center; } }
+  .vs-error { margin-top: 12px; font-size: 0.92rem; color: var(--rose); }
+  .vs-result { margin-top: 18px; }
+  .vs-heads { display: flex; align-items: flex-start; gap: 14px; }
+  .vs-side { flex: 1; min-width: 0; }
+  .vs-side.right { text-align: right; }
+  .vs-side b { display: block; font-size: clamp(2.2rem, 8vw, 3rem); line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink-faint); }
+  .vs-side.lead b { color: var(--primary); }
+  .vs-side span { display: block; margin-top: 6px; font-size: 0.84rem; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vs-mid { padding-top: 12px; font-family: var(--mono); font-size: 0.8rem; color: var(--ink-faint); letter-spacing: .1em; }
+  .vs-verdict { margin-top: 16px; font-family: var(--serif); font-size: var(--step-1); text-align: center; line-height: 1.2; }
+  .vs-gaps { margin-top: 16px; display: grid; gap: 8px; }
+  .vs-gap { display: grid; grid-template-columns: 34px 1fr 34px; align-items: center; gap: 10px; font-size: 0.82rem; }
+  .vs-gap .mine { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .vs-gap .theirs { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+  .vs-gap .name { text-align: center; color: var(--ink-soft); }
+
   .scan-share { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .scan-share .btn-wa { background: #25D366; color: #062e17; font-weight: 700; }
   .scan-share .btn-wa:hover { transform: translateY(-2px); }
@@ -611,6 +642,24 @@
             </div>
           </div>
           <div class="brief-foot">This scan reads only your public storefront. Your sales data needs your say-so — that's the free trial.</div>
+        </div>
+        <div class="vs-box" id="vsBox" hidden>
+          <h4>Now scan a competitor.</h4>
+          <p class="vs-sub">Their storefront is as public as yours, so no permission is needed — you both get scored the same way, on the pages any shopper can already load.</p>
+          <form class="vs-form" id="vsForm" novalidate>
+            <input type="text" id="vsUrl" placeholder="theirstore.co.za" aria-label="A competitor's store link" autocomplete="off">
+            <button class="btn btn-primary" type="submit" id="vsBtn">Compare us</button>
+          </form>
+          <p class="vs-error" id="vsError" hidden></p>
+          <div class="vs-result" id="vsResult" hidden>
+            <div class="vs-heads">
+              <div class="vs-side" id="vsYou"><b>0</b><span></span></div>
+              <div class="vs-mid">VS</div>
+              <div class="vs-side right" id="vsThem"><b>0</b><span></span></div>
+            </div>
+            <p class="vs-verdict" id="vsVerdict"></p>
+            <div class="vs-gaps" id="vsGaps"></div>
+          </div>
         </div>
         <div class="scan-share" id="scanShare" hidden>
           <a class="btn btn-wa" id="shareWa" href="#" target="_blank" rel="noopener">Share my score on WhatsApp</a>
@@ -1285,6 +1334,31 @@
       (/\.vercel\.app$/.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1");
     const scanBtn = el("scanBtn"), scanErr = el("scanError"), scanNote = el("scanNote"), scanRes = el("scanResult");
 
+    // Remembers the first scan so a competitor can be compared against it.
+    let myScan = null;
+
+    // Wires the share row to whatever is currently on screen — a single score,
+    // or the head-to-head once one exists.
+    function wireShare(path, text) {
+      const shareBox = el("scanShare");
+      if (!shareBox || !path) return;
+      const url = location.origin + path;
+      el("shareWa").href = "https://wa.me/?text=" + encodeURIComponent(text + "\n" + url);
+      el("shareOpen").href = path;
+      const copyBtn = el("shareCopy");
+      copyBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(text + "\n" + url);
+          const old = copyBtn.textContent;
+          copyBtn.textContent = "Copied ✓";
+          setTimeout(() => { copyBtn.textContent = old; }, 2200);
+        } catch {
+          el("shareNote").textContent = "Copy didn't work in this browser — tap “Open my scorecard” and share from there.";
+        }
+      };
+      shareBox.hidden = false;
+    }
+
     // The score is the shareable half of the scan: a number people post.
     function showScore(card, share) {
       const box = el("scoreCard");
@@ -1327,26 +1401,86 @@
         arc.style.strokeDasharray = filled + " " + (circumference - filled);
       });
 
-      const shareBox = el("scanShare");
-      if (!shareBox || !share || !share.path) return;
-      const url = location.origin + share.path;
-      const brag = card.score >= 80
+      if (!share || !share.code || !share.path) return;
+      myScan = { code: share.code, card: card };
+      wireShare(share.path, card.score >= 80
         ? "My store scored " + card.score + "/100 on StoreBrief 💪"
-        : "My store scored " + card.score + "/100 on StoreBrief. Fixing it this week — what does yours get?";
-      el("shareWa").href = "https://wa.me/?text=" + encodeURIComponent(brag + "\n" + url);
-      el("shareOpen").href = share.path;
-      const copyBtn = el("shareCopy");
-      copyBtn.onclick = async () => {
+        : "My store scored " + card.score + "/100 on StoreBrief. Fixing it this week — what does yours get?");
+      el("vsBox").hidden = false;
+    }
+
+    /* ---------- head-to-head ----------
+       Mirrors buildVersus() in nevermiss/lib/scorecard.ts — same wording rules,
+       so the inline result reads the same as the /vs/ page it links to. */
+    function showVersus(theirCard, theirCode) {
+      const you = myScan.card, them = theirCard;
+      const lead = you.score - them.score, size = Math.abs(lead);
+
+      const youBox = el("vsYou"), themBox = el("vsThem");
+      youBox.querySelector("b").textContent = you.score;
+      youBox.querySelector("span").textContent = you.shopHost;
+      themBox.querySelector("b").textContent = them.score;
+      themBox.querySelector("span").textContent = them.shopHost;
+      youBox.classList.toggle("lead", lead >= 0);
+      themBox.classList.toggle("lead", lead <= 0);
+
+      let verdict;
+      if (lead > 0) verdict = size >= 15 ? you.shopHost + " is well ahead." : you.shopHost + " is ahead by " + size + ".";
+      else if (lead < 0) verdict = size >= 15 ? them.shopHost + " is well ahead — for now." : them.shopHost + " leads by " + size + ". That's one afternoon of work.";
+      else verdict = "Dead heat.";
+      el("vsVerdict").textContent = verdict;
+
+      const gaps = el("vsGaps");
+      gaps.innerHTML = "";
+      you.categories.forEach((mine) => {
+        const theirs = (them.categories || []).find((c) => c.key === mine.key);
+        const row = document.createElement("div");
+        row.className = "vs-gap";
+        const a = document.createElement("span"); a.className = "mine"; a.textContent = mine.points;
+        const n = document.createElement("span"); n.className = "name"; n.textContent = mine.label;
+        const b = document.createElement("span"); b.className = "theirs"; b.textContent = theirs ? theirs.points : 0;
+        row.append(a, n, b);
+        gaps.appendChild(row);
+      });
+
+      el("vsResult").hidden = false;
+
+      // The matchup is the more shareable artifact, so it takes over the row.
+      const path = "/vs/" + myScan.code + "." + theirCode;
+      wireShare(path, lead >= 0
+        ? "Scored my store against " + them.shopHost + " on StoreBrief: " + you.score + " — " + them.score + "."
+        : them.shopHost + " beats my store " + them.score + " — " + you.score + " on StoreBrief. Fixing that this week.");
+      el("shareWa").textContent = "Share the matchup on WhatsApp";
+      el("shareOpen").textContent = "Open the head-to-head";
+    }
+
+    const vsForm = el("vsForm");
+    if (vsForm) {
+      vsForm.addEventListener("submit", async (ev) => {
+        ev.preventDefault();
+        const value = el("vsUrl").value.trim();
+        const vsErr = el("vsError"), vsBtn = el("vsBtn");
+        vsErr.hidden = true;
+        if (!value || !myScan) { el("vsUrl").focus(); return; }
+        vsBtn.disabled = true;
+        const oldLabel = vsBtn.textContent;
+        vsBtn.textContent = "Reading their store…";
         try {
-          await navigator.clipboard.writeText(brag + "\n" + url);
-          const old = copyBtn.textContent;
-          copyBtn.textContent = "Copied ✓";
-          setTimeout(() => { copyBtn.textContent = old; }, 2200);
+          const res = await fetch("/api/storescan?url=" + encodeURIComponent(value));
+          const json = await res.json().catch(() => ({}));
+          if (json && json.ok && json.scorecard && json.share) {
+            showVersus(json.scorecard, json.share.code);
+          } else {
+            vsErr.textContent = (json && json.error) || "Couldn't read that store — check the link and try again.";
+            vsErr.hidden = false;
+          }
         } catch {
-          el("shareNote").textContent = "Copy didn't work in this browser — tap “Open my scorecard” and share from there.";
+          vsErr.textContent = "Couldn't reach the scanner — check your connection and try again.";
+          vsErr.hidden = false;
         }
-      };
-      shareBox.hidden = false;
+        vsBtn.disabled = false;
+        vsBtn.textContent = oldLabel;
+      });
     }
 
     function showScan(report) {
@@ -1369,6 +1503,7 @@
     async function runScan(value) {
       scanErr.hidden = true; scanNote.hidden = true; scanRes.hidden = true;
       el("scoreCard").hidden = true; el("scanShare").hidden = true;
+      el("vsBox").hidden = true; el("vsResult").hidden = true; el("vsError").hidden = true;
       if (!value.trim()) { el("scanUrl").focus(); return; }
       if (!canScanHere) {
         scanNote.innerHTML = 'The live scanner runs on the real site — <a href="' + LIVE_SITE +

@@ -512,3 +512,72 @@ export function scorecardFromCode(code: string): Scorecard | null {
 export function daysSinceScan(scannedDay: number, now: Date = new Date()): number {
   return Math.max(0, Math.floor(now.getTime() / EPOCH_DAY_MS) - scannedDay);
 }
+
+/* ------------------------------------------------------------------ *
+ * Head-to-head — one store against another.
+ *
+ * A rival's storefront is as public as your own, so a comparison needs no
+ * permission and no data either side hasn't already published. Two share codes
+ * joined by a dot: `/vs/<you>.<them>`. Dots never appear in base64url, so the
+ * separator can't collide with a code.
+ * ------------------------------------------------------------------ */
+
+export interface Versus {
+  you: Scorecard;
+  them: Scorecard;
+  /** Your score minus theirs. Positive means you're ahead. */
+  lead: number;
+  headline: string;
+  /** Where the gap actually is, strongest difference first. */
+  gaps: { label: string; you: number; them: number; max: number }[];
+}
+
+export function encodeVersus(you: StoreFacts, them: StoreFacts): string {
+  return `${encodeFacts(you)}.${encodeFacts(them)}`;
+}
+
+export function buildVersus(you: Scorecard, them: Scorecard): Versus {
+  const lead = you.score - them.score;
+  const size = Math.abs(lead);
+
+  let headline: string;
+  if (lead > 0) {
+    headline =
+      size >= 15
+        ? `${you.shopHost} is well ahead.`
+        : `${you.shopHost} is ahead by ${size}.`;
+  } else if (lead < 0) {
+    headline =
+      size >= 15
+        ? `${them.shopHost} is well ahead — for now.`
+        : `${them.shopHost} leads by ${size}. That's one afternoon of work.`;
+  } else {
+    headline = "Dead heat.";
+  }
+
+  // Pair categories by key so a future category can't silently misalign them.
+  const gaps = you.categories
+    .map((mine) => {
+      const theirs = them.categories.find((c) => c.key === mine.key);
+      return {
+        label: mine.label,
+        you: mine.points,
+        them: theirs ? theirs.points : 0,
+        max: mine.max,
+      };
+    })
+    .sort((a, b) => Math.abs(b.you - b.them) - Math.abs(a.you - a.them));
+
+  return { you, them, lead, headline, gaps };
+}
+
+/** Rebuild a head-to-head from a `<you>.<them>` code pair. Null when junk. */
+export function versusFromCodes(codes: string): Versus | null {
+  if (!codes || codes.length > 900) return null;
+  const parts = codes.split(".");
+  if (parts.length !== 2) return null;
+  const you = scorecardFromCode(parts[0]);
+  const them = scorecardFromCode(parts[1]);
+  if (!you || !them) return null;
+  return buildVersus(you, them);
+}

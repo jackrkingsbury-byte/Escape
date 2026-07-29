@@ -6,12 +6,13 @@
  * largest thing on the canvas; everything else is context.
  */
 import { ImageResponse } from "next/og";
-import { scorecardFromCode } from "@/lib/scorecard";
+import { buildVersus, scorecardFromCode, type Scorecard } from "@/lib/scorecard";
 
 export const runtime = "edge";
 
 const WIDTH = 1200;
 const HEIGHT = 630;
+const IMMUTABLE = { "cache-control": "public, max-age=31536000, immutable" };
 
 function toneFor(score: number): string {
   if (score >= 80) return "#0fa063";
@@ -20,8 +21,107 @@ function toneFor(score: number): string {
   return "#dc2626";
 }
 
+/** Head-to-head preview: two scores, the gap, and who's ahead. */
+function versusImage(you: Scorecard, them: Scorecard) {
+  const vs = buildVersus(you, them);
+  const side = (card: Scorecard, winning: boolean) => (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1 }}>
+      <div
+        style={{
+          display: "flex",
+          fontSize: 156,
+          fontWeight: 800,
+          lineHeight: 1,
+          color: winning ? toneFor(card.score) : "#8a97a2",
+        }}
+      >
+        {card.score}
+      </div>
+      <div style={{ display: "flex", fontSize: 26, fontWeight: 700, color: "#4a5568", marginTop: 12, letterSpacing: 2 }}>
+        GRADE {card.grade}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          fontSize: 26,
+          color: "#0b1220",
+          marginTop: 10,
+          maxWidth: 420,
+          overflow: "hidden",
+        }}
+      >
+        {card.shopHost.length > 30 ? `${card.shopHost.slice(0, 29)}…` : card.shopHost}
+      </div>
+    </div>
+  );
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        background: "#f7faf9",
+        padding: "56px 64px",
+        fontFamily: "sans-serif",
+        color: "#0b1220",
+      }}
+    >
+      <div style={{ display: "flex", fontSize: 26, fontWeight: 700, letterSpacing: 2, color: "#0a7f4f" }}>
+        STOREBRIEF · HEAD-TO-HEAD
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+        {side(you, vs.lead >= 0)}
+        <div style={{ display: "flex", fontSize: 40, fontWeight: 800, color: "#8a97a2", padding: "0 24px" }}>vs</div>
+        {side(them, vs.lead <= 0)}
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", fontSize: 44, fontWeight: 800, justifyContent: "center" }}>
+          {vs.headline.length > 60 ? `${vs.headline.slice(0, 57)}…` : vs.headline}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderTop: "2px solid #e3e9e6",
+            marginTop: 24,
+            paddingTop: 22,
+            fontSize: 26,
+            color: "#4a5568",
+          }}
+        >
+          <div style={{ display: "flex" }}>Both scored on their public storefronts</div>
+          <div style={{ display: "flex", fontWeight: 700, color: "#0b1220" }}>Compare yours free →</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function GET(req: Request) {
-  const code = new URL(req.url).searchParams.get("c") ?? "";
+  const params = new URL(req.url).searchParams;
+
+  // Head-to-head takes precedence when both codes are present and valid.
+  const a = params.get("a");
+  const b = params.get("b");
+  if (a && b) {
+    const you = scorecardFromCode(a);
+    const them = scorecardFromCode(b);
+    if (you && them) {
+      return new ImageResponse(versusImage(you, them), {
+        width: WIDTH,
+        height: HEIGHT,
+        headers: IMMUTABLE,
+      });
+    }
+  }
+
+  const code = params.get("c") ?? "";
   const card = scorecardFromCode(code);
 
   if (!card) {
@@ -157,13 +257,7 @@ export function GET(req: Request) {
         </div>
       </div>
     ),
-    {
-      width: WIDTH,
-      height: HEIGHT,
-      headers: {
-        // Codes are immutable, so the render is too.
-        "cache-control": "public, max-age=31536000, immutable",
-      },
-    },
+    // Codes are immutable, so the render is too.
+    { width: WIDTH, height: HEIGHT, headers: IMMUTABLE },
   );
 }

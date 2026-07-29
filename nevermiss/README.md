@@ -38,6 +38,9 @@ paste store link → /api/storescan → score /100 + share code
                         /s/<code>  ◀────┘   public page, no login
                              │
                         /api/og?c=<code>    1200×630 preview WhatsApp unfurls
+
+  + scan a rival     → /vs/<you>.<them>     head-to-head, both scores
+                        /api/og?a=&b=       preview with both numbers on it
 ```
 
 - `lib/scorecard.ts` — scoring engine. Five categories (photos 30, descriptions
@@ -49,8 +52,14 @@ paste store link → /api/storescan → score /100 + share code
   renders statically. Codes are untrusted input: counts are clamped to the
   catalogue they describe, and a tampered or truncated code renders the
   "can't read this" page rather than a fake score.
+- **Head-to-head.** A rival's storefront is as public as your own, so comparing
+  needs no permission and exposes nothing either owner hasn't published. Two
+  share codes joined by a dot (`/vs/<you>.<them>`); dots never occur in
+  base64url, so the separator can't collide with a code. The page stays factual
+  — two scores and where the gap is, no jeering.
 - `scripts/scorecard.test.ts` proves the score equals the sum of its parts,
-  codes round-trip exactly, and junk codes fail closed.
+  codes round-trip exactly, head-to-head leads mirror correctly, and junk codes
+  fail closed.
 
 Set `NEXT_PUBLIC_SITE_URL` in production. Without it, share links fall back to
 Vercel's per-deployment URL, which changes on every deploy and would break
