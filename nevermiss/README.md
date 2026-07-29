@@ -24,6 +24,37 @@ npm run dev                  # http://localhost:3000
 - `npm run start` — run the production build
 - `npm run lint` — ESLint
 - `npm run typecheck` — TypeScript, no emit
+- `npm test` — guardrails + scorecard suites (no network, no keys)
+
+## Store Scorecard (the distribution loop)
+
+`research/WHAT-PEOPLE-ACTUALLY-BUY.md` concluded that the bottleneck is
+distribution, not product — and that tools producing a **shareable public
+output** pull users in without ad spend. The scorecard is that output.
+
+```
+paste store link → /api/storescan → score /100 + share code
+                                        │
+                        /s/<code>  ◀────┘   public page, no login
+                             │
+                        /api/og?c=<code>    1200×630 preview WhatsApp unfurls
+```
+
+- `lib/scorecard.ts` — scoring engine. Five categories (photos 30, descriptions
+  25, freshness 20, in-stock 15, range 10) summing to 100. Every point is
+  arithmetic on the public storefront and each category ships its own `explain`
+  string, so the score is never a black box.
+- **The whole card travels in the URL.** A share code is base64url over the raw
+  facts plus a checksum — no database, links never expire, and `/s/[code]`
+  renders statically. Codes are untrusted input: counts are clamped to the
+  catalogue they describe, and a tampered or truncated code renders the
+  "can't read this" page rather than a fake score.
+- `scripts/scorecard.test.ts` proves the score equals the sum of its parts,
+  codes round-trip exactly, and junk codes fail closed.
+
+Set `NEXT_PUBLIC_SITE_URL` in production. Without it, share links fall back to
+Vercel's per-deployment URL, which changes on every deploy and would break
+scorecards people have already posted.
 
 ## Deployment (Vercel)
 1. Import the GitHub repo into Vercel.

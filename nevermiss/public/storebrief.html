@@ -402,6 +402,45 @@
   .scan-result { margin-top: 26px; max-width: 720px; }
   .scan-cta { margin-top: 18px; }
 
+  /* ---------- store score (the shareable bit) ---------- */
+  .score-card {
+    display: flex; align-items: flex-start; gap: clamp(18px, 4vw, 32px); flex-wrap: wrap;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: clamp(20px, 4vw, 30px); box-shadow: var(--shadow); margin-bottom: 18px;
+  }
+  .score-ring { position: relative; flex: none; width: 132px; height: 132px; }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring .track { stroke: var(--surface-2); }
+  .score-ring .fill { stroke: var(--primary); transition: stroke-dasharray .9s cubic-bezier(.2,.8,.2,1); }
+  .score-ring .num {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2px;
+  }
+  .score-ring .num b { font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; color: var(--primary); }
+  .score-ring .num span { font-size: 0.62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); font-family: var(--mono); }
+  .score-meta { flex: 1; min-width: 220px; }
+  .score-grade {
+    display: inline-block; background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary); font-weight: 700; font-size: 0.86rem;
+    padding: 4px 12px; border-radius: 999px;
+  }
+  .score-meta h3 { font-family: var(--serif); font-size: var(--step-2); margin: 10px 0 6px; line-height: 1.15; }
+  .score-meta p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.5; }
+  .score-bars { margin-top: 16px; display: grid; gap: 9px; }
+  .score-bar { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 10px; font-size: 0.84rem; }
+  .score-bar .lbl { color: var(--ink-soft); }
+  .score-bar .track { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+  .score-bar .track i { display: block; height: 100%; border-radius: 999px; background: var(--primary); transition: width .8s cubic-bezier(.2,.8,.2,1); }
+  .score-bar .pts { font-family: var(--mono); color: var(--ink-faint); font-size: 0.78rem; }
+  .scan-share { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .scan-share .btn-wa { background: #25D366; color: #062e17; font-weight: 700; }
+  .scan-share .btn-wa:hover { transform: translateY(-2px); }
+  .scan-share-note { width: 100%; font-size: 0.86rem; color: var(--ink-faint); }
+  @media (max-width: 520px) {
+    .score-bar { grid-template-columns: 80px 1fr auto; }
+    .scan-share .btn { flex: 1; justify-content: center; }
+  }
+
   /* ---------- connect (real sales) ---------- */
   .connect-form { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; max-width: 780px; }
   @media (max-width: 680px) { .connect-form { grid-template-columns: 1fr; } .connect-form .btn { width: 100%; justify-content: center; } }
@@ -532,16 +571,32 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Watch it read YOUR store</span>
-        <h2>Paste your store link. The AI reads it — right now.</h2>
-        <p class="sub">No signup, no install. It reads your public storefront live and hands you your first money moves in seconds.</p>
+        <h2>What does your store score out of 100?</h2>
+        <p class="sub">No signup, no install. Paste your link — the AI reads your public storefront live, scores it, and hands you your first money moves in seconds. Then share the score and dare another store owner to beat it.</p>
       </div>
       <form class="scanbar" id="scanForm" novalidate>
         <input type="text" id="scanUrl" placeholder="yourstore.co.za or yourstore.myshopify.com" aria-label="Your store link" autocomplete="url">
-        <button class="btn btn-primary" type="submit" id="scanBtn">Read my store</button>
+        <button class="btn btn-primary" type="submit" id="scanBtn">Score my store</button>
       </form>
       <p class="scan-note" id="scanNote" hidden></p>
       <p class="scan-error" id="scanError" hidden></p>
       <div class="scan-result" id="scanResult" hidden>
+        <div class="score-card" id="scoreCard" hidden>
+          <div class="score-ring">
+            <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
+              <circle class="track" cx="66" cy="66" r="58" fill="none" stroke-width="12"></circle>
+              <circle class="fill" id="scoreArc" cx="66" cy="66" r="58" fill="none" stroke-width="12"
+                      stroke-linecap="round" stroke-dasharray="0 999"></circle>
+            </svg>
+            <div class="num"><b id="scoreNum">0</b><span>out of 100</span></div>
+          </div>
+          <div class="score-meta">
+            <span class="score-grade" id="scoreGrade">Grade —</span>
+            <h3 id="scoreHeadline">Reading your store…</h3>
+            <p id="scoreSubhead"></p>
+            <div class="score-bars" id="scoreBars"></div>
+          </div>
+        </div>
         <div class="brief-card">
           <div class="brief-head">
             <span class="bh-brand">StoreBrief</span>
@@ -556,6 +611,12 @@
             </div>
           </div>
           <div class="brief-foot">This scan reads only your public storefront. Your sales data needs your say-so — that's the free trial.</div>
+        </div>
+        <div class="scan-share" id="scanShare" hidden>
+          <a class="btn btn-wa" id="shareWa" href="#" target="_blank" rel="noopener">Share my score on WhatsApp</a>
+          <button class="btn btn-ghost" type="button" id="shareCopy">Copy my scorecard link</button>
+          <a class="btn btn-ghost" id="shareOpen" href="#" target="_blank" rel="noopener">Open my scorecard</a>
+          <p class="scan-share-note" id="shareNote">Your scorecard is a public link — it only ever shows what any visitor to your storefront can see.</p>
         </div>
         <div class="scan-cta">
           <a class="btn btn-primary" href="#get">Now read my sales — start 4 free weeks</a>
@@ -1224,6 +1285,70 @@
       (/\.vercel\.app$/.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1");
     const scanBtn = el("scanBtn"), scanErr = el("scanError"), scanNote = el("scanNote"), scanRes = el("scanResult");
 
+    // The score is the shareable half of the scan: a number people post.
+    function showScore(card, share) {
+      const box = el("scoreCard");
+      if (!box || !card) return;
+      el("scoreNum").textContent = card.score;
+      el("scoreGrade").textContent = "Grade " + card.grade;
+      el("scoreHeadline").textContent = card.headline;
+      el("scoreSubhead").textContent = card.subhead;
+
+      const bars = el("scoreBars");
+      bars.innerHTML = "";
+      (card.categories || []).forEach((c) => {
+        const row = document.createElement("div");
+        row.className = "score-bar";
+        const lbl = document.createElement("span");
+        lbl.className = "lbl";
+        lbl.textContent = c.label;
+        const track = document.createElement("div");
+        track.className = "track";
+        const fill = document.createElement("i");
+        fill.style.width = "0%";
+        track.appendChild(fill);
+        const pts = document.createElement("span");
+        pts.className = "pts";
+        pts.textContent = c.points + "/" + c.max;
+        row.append(lbl, track, pts);
+        bars.appendChild(row);
+        requestAnimationFrame(() => {
+          fill.style.width = (c.max ? Math.round((c.points / c.max) * 100) : 0) + "%";
+        });
+      });
+
+      box.hidden = false;
+      // Animate the ring after paint so the dasharray transition actually runs.
+      const arc = el("scoreArc");
+      const circumference = 2 * Math.PI * 58;
+      arc.style.strokeDasharray = "0 " + circumference;
+      requestAnimationFrame(() => {
+        const filled = (card.score / 100) * circumference;
+        arc.style.strokeDasharray = filled + " " + (circumference - filled);
+      });
+
+      const shareBox = el("scanShare");
+      if (!shareBox || !share || !share.path) return;
+      const url = location.origin + share.path;
+      const brag = card.score >= 80
+        ? "My store scored " + card.score + "/100 on StoreBrief 💪"
+        : "My store scored " + card.score + "/100 on StoreBrief. Fixing it this week — what does yours get?";
+      el("shareWa").href = "https://wa.me/?text=" + encodeURIComponent(brag + "\n" + url);
+      el("shareOpen").href = share.path;
+      const copyBtn = el("shareCopy");
+      copyBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(brag + "\n" + url);
+          const old = copyBtn.textContent;
+          copyBtn.textContent = "Copied ✓";
+          setTimeout(() => { copyBtn.textContent = old; }, 2200);
+        } catch {
+          el("shareNote").textContent = "Copy didn't work in this browser — tap “Open my scorecard” and share from there.";
+        }
+      };
+      shareBox.hidden = false;
+    }
+
     function showScan(report) {
       el("scanHello").textContent = "Hi " + report.shopHost + " 👋";
       const box = el("scanLines");
@@ -1243,6 +1368,7 @@
 
     async function runScan(value) {
       scanErr.hidden = true; scanNote.hidden = true; scanRes.hidden = true;
+      el("scoreCard").hidden = true; el("scanShare").hidden = true;
       if (!value.trim()) { el("scanUrl").focus(); return; }
       if (!canScanHere) {
         scanNote.innerHTML = 'The live scanner runs on the real site — <a href="' + LIVE_SITE +
@@ -1258,6 +1384,7 @@
         const json = await res.json().catch(() => ({}));
         if (json && json.ok && json.report) {
           showScan(json.report);
+          showScore(json.scorecard, json.share);
         } else {
           scanErr.textContent = (json && json.error) || "Couldn't read that store — check the link and try again.";
           scanErr.hidden = false;

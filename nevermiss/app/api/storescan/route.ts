@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildScan, normalizeStoreUrl, type PublicProduct } from "@/lib/storescan";
+import { encodeFacts, scoreStorefront } from "@/lib/scorecard";
 import { clientIp, rateLimit } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
@@ -68,7 +69,15 @@ export async function GET(req: NextRequest) {
     }
 
     const report = buildScan(products, url.hostname);
-    return NextResponse.json({ ok: true, report });
+    const { facts, scorecard } = scoreStorefront(products, url.hostname);
+    // The whole card travels in the code, so a shared link needs no database.
+    const shareCode = encodeFacts(facts);
+    return NextResponse.json({
+      ok: true,
+      report,
+      scorecard,
+      share: { code: shareCode, path: `/s/${shareCode}` },
+    });
   } catch {
     return NextResponse.json(
       { ok: false, error: "Couldn't reach that store — check the link and try again." },

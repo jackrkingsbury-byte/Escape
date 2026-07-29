@@ -50,6 +50,10 @@ forces the deterministic fallback.
 - [x] Weekly HTML email renderer (stats, sparkline, slump alert, action)
 - [x] Marketing landing page (`web/index.html`) — self-contained, both themes,
       with a live in-browser demo that runs a JS port of the engine
+- [x] Shareable Store Scorecard — the public scan now returns a score out of
+      100 and a share code; `/s/<code>` is a public scorecard page whose link
+      unfurls with the score in WhatsApp and X. Engine, share codes and tests
+      live in `../nevermiss/lib/scorecard.ts` (it ships with the scan API)
 - [ ] App shell: OAuth, mandatory GDPR webhooks, Billing API, listing —
       **blocked on a Shopify Partner account** (18+ ToS; guardian-held)
 

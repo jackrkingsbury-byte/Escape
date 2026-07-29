@@ -26,3 +26,20 @@ export function whatsappLink(message: string = site.demoMessage): string {
 export function mailtoLink(subject = "NeverMiss demo"): string {
   return `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
 }
+
+/**
+ * Absolute origin for links that leave the page — share URLs and OG image tags
+ * must be absolute or WhatsApp, X and iMessage won't render the preview.
+ * Set NEXT_PUBLIC_SITE_URL in production; Vercel's own URL is the fallback.
+ */
+export function siteOrigin(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return explicit.replace(/\/+$/, "");
+  const vercel = process.env.NEXT_PUBLIC_VERCEL_URL ?? process.env.VERCEL_URL;
+  if (vercel) return `https://${vercel.replace(/^https?:\/\//, "").replace(/\/+$/, "")}`;
+  return "http://localhost:3000";
+}
+
+export function absoluteUrl(path: string): string {
+  return `${siteOrigin()}${path.startsWith("/") ? path : `/${path}`}`;
+}
