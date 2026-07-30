@@ -123,8 +123,15 @@
   }
   .type-chip b{display:block;font-size:11px;letter-spacing:.06em;}
   .card-body{display:flex;gap:13px;padding:11px 14px 12px;flex:1;}
+  .photowrap{display:flex;flex-direction:column;width:212px;flex-shrink:0;align-self:flex-start;}
+  .photocap{
+    font-family:var(--mono);font-size:7.5px;line-height:1.5;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--concrete);background:#EAE7DE;
+    border:1px solid var(--rule);border-top:none;padding:5px 6px;text-align:center;
+  }
+  .photocap b{color:var(--signal);}
   .photo{
-    width:212px;flex-shrink:0;background:#DEDBD3;border:1px solid var(--rule);
+    width:100%;background:#DEDBD3;border:1px solid var(--rule);
     position:relative;display:flex;align-items:center;justify-content:center;
     align-self:flex-start;overflow:hidden;
   }
@@ -242,7 +249,7 @@
     <div>Teacher</div><div>Date submitted</div>
   </div>
 
-  <div class="runfoot"><span>Berlin Wall — Source Evidence Pack</span><span>Page 1 of 11</span></div>
+  <div class="runfoot"><span>Berlin Wall — Source Evidence Pack</span><span>Page 1 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 2 — DEFINITIONS ============================ -->
@@ -312,7 +319,7 @@
         after the Wall opened.</dd></div>
   </dl>
 
-  <div class="runfoot"><span>Definitions</span><span>Page 2 of 11</span></div>
+  <div class="runfoot"><span>Definitions</span><span>Page 2 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 3 — SOURCES 1 & 2 ============================ -->
@@ -335,9 +342,12 @@
         <div class="type-chip">Type<b>Photograph</b>Intelligence file</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:150px;">
-          <div class="ph-note"><span>Photo — Source 01</span><span>CIA, 13 Aug 1961</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/East_German_Tanks_-_Flickr_-_The_Central_Intelligence_Agency_%281%29.jpg" alt="East German tanks lined up along the Warschauer Bridge in Berlin, 13 August 1961">
+        <div class="photowrap">
+          <div class="photo" style="height:150px;">
+            <div class="ph-note"><span>Drop photo 01 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/East_German_Tanks_-_Flickr_-_The_Central_Intelligence_Agency_%281%29.jpg" alt="East German tanks lined up along the Warschauer Bridge in Berlin, 13 August 1961">
+          </div>
+          <div class="photocap"><b>Photo 01</b> — CIA, 13 Aug 1961<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -367,9 +377,12 @@
         <div class="type-chip">Type<b>Photograph</b>State archive</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:150px;">
-          <div class="ph-note"><span>Photo — Source 02</span><span>Bundesarchiv, 13 Aug 1961</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Bundesarchiv_Bild_183-85458-0002%2C_Berlin%2C_Mauerbau%2C_Kampfgruppen_am_Brandenburger_Tor.jpg" alt="Armed East German workers' militia standing in front of the Brandenburg Gate on 13 August 1961, with water cannon vehicles behind them">
+        <div class="photowrap">
+          <div class="photo" style="height:150px;">
+            <div class="ph-note"><span>Drop photo 02 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Bundesarchiv_Bild_183-85458-0002%2C_Berlin%2C_Mauerbau%2C_Kampfgruppen_am_Brandenburger_Tor.jpg" alt="Armed East German workers' militia standing in front of the Brandenburg Gate on 13 August 1961, with water cannon vehicles behind them">
+          </div>
+          <div class="photocap"><b>Photo 02</b> — Bundesarchiv, 13 Aug 1961<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -389,7 +402,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Evidence — Sources 01 &amp; 02</span><span>Page 3 of 11</span></div>
+  <div class="runfoot"><span>Evidence — Sources 01 &amp; 02</span><span>Page 3 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 4 — SOURCES 3 & 4 ============================ -->
@@ -412,9 +425,12 @@
         <div class="type-chip">Type<b>Newspaper</b>British press</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:146px;">
-          <div class="ph-note"><span>Photo — Source 03</span><span>CIA, 13 Aug 1961</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/West_Berliners_-_Flickr_-_The_Central_Intelligence_Agency_%287%29.jpg" alt="Crowds of West Berliners shouting and shaking fists in protest at the closing of the border, 13 August 1961">
+        <div class="photowrap">
+          <div class="photo" style="height:146px;">
+            <div class="ph-note"><span>Drop photo 03 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/West_Berliners_-_Flickr_-_The_Central_Intelligence_Agency_%287%29.jpg" alt="Crowds of West Berliners shouting and shaking fists in protest at the closing of the border, 13 August 1961">
+          </div>
+          <div class="photocap"><b>Photo 03</b> — CIA, 13 Aug 1961<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -444,9 +460,12 @@
         <div class="type-chip">Type<b>Newspaper</b>Neutral country</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:146px;">
-          <div class="ph-note"><span>Photo — Source 04</span><span>CIA, 14 Aug 1961</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/West_Berlin_Police_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="West Berlin police pushing back a jeering crowd at the border on 14 August 1961, with the Soviet War Memorial behind">
+        <div class="photowrap">
+          <div class="photo" style="height:146px;">
+            <div class="ph-note"><span>Drop photo 04 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/West_Berlin_Police_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="West Berlin police pushing back a jeering crowd at the border on 14 August 1961, with the Soviet War Memorial behind">
+          </div>
+          <div class="photocap"><b>Photo 04</b> — CIA, 14 Aug 1961<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -467,7 +486,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Evidence — Sources 03 &amp; 04</span><span>Page 4 of 11</span></div>
+  <div class="runfoot"><span>Evidence — Sources 03 &amp; 04</span><span>Page 4 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 5 — SOURCES 5 & 6 ============================ -->
@@ -487,9 +506,12 @@
         <div class="type-chip">Type<b>News agency</b>Wire report</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:132px;">
-          <div class="ph-note"><span>Photo — Source 05</span><span>CIA, Aug 1961</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Leipziger_Strasse_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="East German tanks lined up on Leipziger Strasse near the West Berlin border, late August 1961">
+        <div class="photowrap">
+          <div class="photo" style="height:132px;">
+            <div class="ph-note"><span>Drop photo 05 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Leipziger_Strasse_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="East German tanks lined up on Leipziger Strasse near the West Berlin border, late August 1961">
+          </div>
+          <div class="photocap"><b>Photo 05</b> — CIA, Aug 1961<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -519,9 +541,12 @@
         <div class="type-chip">Type<b>Photograph</b>Intelligence file</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:132px;">
-          <div class="ph-note"><span>Photo — Source 06</span><span>CIA, 25 Oct 1961</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/06_Friedrichstrasse%2C_Berlin_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="American tanks positioned on Friedrichstrasse facing East Berlin at Checkpoint Charlie, 25 October 1961">
+        <div class="photowrap">
+          <div class="photo" style="height:132px;">
+            <div class="ph-note"><span>Drop photo 06 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/06_Friedrichstrasse%2C_Berlin_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="American tanks positioned on Friedrichstrasse facing East Berlin at Checkpoint Charlie, 25 October 1961">
+          </div>
+          <div class="photocap"><b>Photo 06</b> — CIA, 25 Oct 1961<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -539,7 +564,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Evidence — Sources 05 &amp; 06</span><span>Page 5 of 11</span></div>
+  <div class="runfoot"><span>Evidence — Sources 05 &amp; 06</span><span>Page 5 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 6 — SOURCES 7 & 8 ============================ -->
@@ -559,9 +584,12 @@
         <div class="type-chip">Type<b>Speech</b>Film archive</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:138px;">
-          <div class="ph-note"><span>Photo — Source 07</span><span>JFK Library, 26 Jun 1963</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/President_John_F._Kennedy_Speaks_at_Rudolph_Wilde_Platz_in_Berlin%2C_Germany_JFKWHP-KN-C29248.jpg" alt="President John F. Kennedy speaking from a platform to a huge crowd at Rudolph Wilde Platz, West Berlin, 26 June 1963">
+        <div class="photowrap">
+          <div class="photo" style="height:138px;">
+            <div class="ph-note"><span>Drop photo 07 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/President_John_F._Kennedy_Speaks_at_Rudolph_Wilde_Platz_in_Berlin%2C_Germany_JFKWHP-KN-C29248.jpg" alt="President John F. Kennedy speaking from a platform to a huge crowd at Rudolph Wilde Platz, West Berlin, 26 June 1963">
+          </div>
+          <div class="photocap"><b>Photo 07</b> — JFK Library, 26 Jun 1963<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -591,9 +619,12 @@
         <div class="type-chip">Type<b>Photograph</b>Art / culture</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:138px;">
-          <div class="ph-note"><span>Photo — Source 08</span><span>Thierry Noir, 1986</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Berlinermauer.jpg" alt="A section of the Berlin Wall in Kreuzberg painted with large cartoon-like heads by the artist Thierry Noir in 1986">
+        <div class="photowrap">
+          <div class="photo" style="height:138px;">
+            <div class="ph-note"><span>Drop photo 08 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Berlinermauer.jpg" alt="A section of the Berlin Wall in Kreuzberg painted with large cartoon-like heads by the artist Thierry Noir in 1986">
+          </div>
+          <div class="photocap"><b>Photo 08</b> — Thierry Noir, 1986<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -612,7 +643,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Evidence — Sources 07 &amp; 08</span><span>Page 6 of 11</span></div>
+  <div class="runfoot"><span>Evidence — Sources 07 &amp; 08</span><span>Page 6 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 7 — SOURCES 9 & 10 ============================ -->
@@ -632,9 +663,12 @@
         <div class="type-chip">Type<b>Speech</b>Government photo</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:134px;">
-          <div class="ph-note"><span>Photo — Source 09</span><span>NARA, 12 Jun 1987</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Photograph_of_President_Reagan_giving_a_speech_at_the_Berlin_Wall%2C_Brandenburg_Gate%2C_Federal_Republic_of_Germany_-_NARA_-_198585.jpg" alt="President Ronald Reagan giving his speech at the Berlin Wall in front of the Brandenburg Gate, 12 June 1987">
+        <div class="photowrap">
+          <div class="photo" style="height:134px;">
+            <div class="ph-note"><span>Drop photo 09 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Photograph_of_President_Reagan_giving_a_speech_at_the_Berlin_Wall%2C_Brandenburg_Gate%2C_Federal_Republic_of_Germany_-_NARA_-_198585.jpg" alt="President Ronald Reagan giving his speech at the Berlin Wall in front of the Brandenburg Gate, 12 June 1987">
+          </div>
+          <div class="photocap"><b>Photo 09</b> — NARA, 12 Jun 1987<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -664,9 +698,12 @@
         <div class="type-chip">Type<b>Transcript</b>Press conference</div>
       </div>
       <div class="card-body">
-        <div class="photo" style="height:134px;">
-          <div class="ph-note"><span>Photo — Source 10</span><span>Brandenburg Gate, Nov 1989</span></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg" alt="Crowds of West and East Germans standing on and around the Berlin Wall at the Brandenburg Gate in November 1989">
+        <div class="photowrap">
+          <div class="photo" style="height:134px;">
+            <div class="ph-note"><span>Drop photo 10 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg" alt="Crowds of West and East Germans standing on and around the Berlin Wall at the Brandenburg Gate in November 1989">
+          </div>
+          <div class="photocap"><b>Photo 10</b> — Brandenburg Gate, Nov 1989<br>Download list: page 12</div>
         </div>
         <div class="card-text">
           <div class="meta">
@@ -686,7 +723,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Evidence — Sources 09 &amp; 10</span><span>Page 7 of 11</span></div>
+  <div class="runfoot"><span>Evidence — Sources 09 &amp; 10</span><span>Page 7 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 8 — SOURCES 11 & 12 ============================ -->
@@ -764,7 +801,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Evidence — Sources 11 &amp; 12</span><span>Page 8 of 11</span></div>
+  <div class="runfoot"><span>Evidence — Sources 11 &amp; 12</span><span>Page 8 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 9 — BOOKS ============================ -->
@@ -815,7 +852,7 @@
     </article>
   </div>
 
-  <div class="runfoot"><span>Book sources</span><span>Page 9 of 11</span></div>
+  <div class="runfoot"><span>Book sources</span><span>Page 9 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 10 — THE CHART ============================ -->
@@ -921,7 +958,7 @@
     </tbody>
   </table>
 
-  <div class="runfoot"><span>Source chart</span><span>Page 10 of 11</span></div>
+  <div class="runfoot"><span>Source chart</span><span>Page 10 of 12</span></div>
 </section>
 
 <!-- ============================ PAGE 11 — TIMELINE + BIBLIOGRAPHY ============================ -->
@@ -960,6 +997,7 @@
   <div class="howto">
     <p style="font-family:var(--sans);font-weight:700;font-size:12.5px;">How to use this pack on your chart</p>
     <ol>
+      <li><b>Do the photos first.</b> Follow page 12: download the ten pictures, add them to your Canva uploads, then click each grey photo frame and choose the matching one. Do not print before this.</li>
       <li>Print pages 3–8. Cut along the dashed lines — each card is one complete piece of evidence.</li>
       <li>Glue the cards down the middle of the chart, oldest at the top, so the years run 1961 → 1989.</li>
       <li>Cut the definitions from page 2 into a column down one side.</li>
@@ -986,7 +1024,56 @@
     </ol>
   </div>
 
-  <div class="runfoot"><span>Timeline, method &amp; bibliography</span><span>Page 11 of 11</span></div>
+  <div class="runfoot"><span>Timeline, method &amp; bibliography</span><span>Page 11 of 12</span></div>
 </section>
+<!-- ============================ PAGE 12 — PHOTO LIST ============================ -->
+<section class="page" data-document-role="page" data-label="Photo download list">
+  <div class="runhead"><div class="eyebrow">Section 6</div><div class="eyebrow">Photographs</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">The ten photographs — where to download each one</h2>
+
+  <div class="howto" style="margin-top:12px;">
+    <p style="font-family:var(--sans);font-weight:700;font-size:12.5px;">Do this before you print</p>
+    <p style="margin-top:5px;">Each grey frame in the pack is waiting for one picture. Open the link,
+      click <i>Download the original file</i>, then in Canva go to <b>Uploads → Upload files</b>, add all
+      ten, and click each frame to drop the matching photo in.</p>
+    <p style="margin-top:6px;"><b>Faster alternative:</b> the design called
+      <i>“SOURCE — CIA and NARA, A City Torn Apart”</i> in your Canva account is the original 1961
+      photo booklet from the US National Archives. Photos 01, 03, 04, 05 and 06 are all inside it —
+      copy them straight across.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:26px;">#</th>
+        <th style="width:196px;">Photograph</th>
+        <th style="width:172px;">Credit — you must keep this</th>
+        <th>Where to get it</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="yr">01</td><td><b>East German tanks along the Warschauer Bridge</b><br><span style="color:var(--concrete);">13 August 1961</span></td><td style="font-size:9.5px;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:East_German_Tanks_-_Flickr_-_The_Central_Intelligence_Agency_(1).jpg</td></tr>
+      <tr><td class="yr">02</td><td><b>Workers' militia at the Brandenburg Gate</b><br><span style="color:var(--concrete);">13 August 1961</span></td><td style="font-size:9.5px;">Bundesarchiv, Bild 183-85458-0002 / Junge, Peter Heinz / CC BY-SA 3.0 DE</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-85458-0002,_Berlin,_Mauerbau,_Kampfgruppen_am_Brandenburger_Tor.jpg</td></tr>
+      <tr><td class="yr">03</td><td><b>West Berliners protesting at the border</b><br><span style="color:var(--concrete);">13 August 1961</span></td><td style="font-size:9.5px;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:West_Berliners_-_Flickr_-_The_Central_Intelligence_Agency_(7).jpg</td></tr>
+      <tr><td class="yr">04</td><td><b>West Berlin police holding back the crowd</b><br><span style="color:var(--concrete);">14 August 1961</span></td><td style="font-size:9.5px;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:West_Berlin_Police_-_Flickr_-_The_Central_Intelligence_Agency.jpg</td></tr>
+      <tr><td class="yr">05</td><td><b>East German tanks on Leipziger Strasse</b><br><span style="color:var(--concrete);">late August 1961</span></td><td style="font-size:9.5px;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Leipziger_Strasse_-_Flickr_-_The_Central_Intelligence_Agency.jpg</td></tr>
+      <tr><td class="yr">06</td><td><b>American tanks facing East Berlin, Friedrichstrasse</b><br><span style="color:var(--concrete);">25 October 1961</span></td><td style="font-size:9.5px;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:06_Friedrichstrasse,_Berlin_-_Flickr_-_The_Central_Intelligence_Agency.jpg</td></tr>
+      <tr><td class="yr">07</td><td><b>Kennedy speaking at Rudolph Wilde Platz</b><br><span style="color:var(--concrete);">26 June 1963</span></td><td style="font-size:9.5px;">Cecil W. Stoughton, White House / JFK Presidential Library — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:President_John_F._Kennedy_Speaks_at_Rudolph_Wilde_Platz_in_Berlin,_Germany_JFKWHP-KN-C29248.jpg</td></tr>
+      <tr><td class="yr">08</td><td><b>The painted Wall at Bethaniendamm</b><br><span style="color:var(--concrete);">1986</span></td><td style="font-size:9.5px;">Thierry Noir / CC BY-SA 3.0</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Berlinermauer.jpg</td></tr>
+      <tr><td class="yr">09</td><td><b>Reagan speaking at the Brandenburg Gate</b><br><span style="color:var(--concrete);">12 June 1987</span></td><td style="font-size:9.5px;">Reagan White House Photographic Office / US National Archives 198585 — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Photograph_of_President_Reagan_giving_a_speech_at_the_Berlin_Wall,_Brandenburg_Gate,_Federal_Republic_of_Germany_-_NARA_-_198585.jpg</td></tr>
+      <tr><td class="yr">10</td><td><b>Crowds at the Brandenburg Gate as the Wall opens</b><br><span style="color:var(--concrete);">November 1989</span></td><td style="font-size:9.5px;">Lear 21 / CC BY-SA 3.0</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:11px;line-height:1.45;margin-top:12px;color:var(--ink-soft);">
+    <b>About the credits.</b> Photos marked <i>public domain</i> are free to use because they were made
+    by US government staff at work. The three marked <b>CC BY-SA</b> are free to use
+    <i>only if you name the creator</i> — that is why the credit line is printed on every card. Copying
+    the picture without the credit would be plagiarism, so leave those lines on when you cut the cards out.</p>
+
+  <div class="runfoot"><span>Photograph list &amp; credits</span><span>Page 12 of 12</span></div>
+</section>
+
 </body>
 </html>
