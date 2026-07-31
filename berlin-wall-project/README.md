@@ -9,8 +9,9 @@ address.
 
 | File | What it is |
 |---|---|
-| **`berlin-wall-sources.pdf`** | **Start here.** 10 pages, A4, ready to print and cut out. |
-| **`photo-sheet.html`** | Open in a browser to load the 8 photographs, then print and cut them out. |
+| **`berlin-wall-photos.html`** | **The photographs.** Open in a browser: 11 archive photos, each with the explanation underneath. Print it as-is. |
+| `berlin-wall-sources.pdf` | The fuller pack — 10 pages, A4, definitions and source cards to cut out. |
+| `photo-sheet.html` | The 8 photos sized to cut out and glue into the source-card slots. |
 | `berlin-wall-sources.docx` | The same content in Word, if you want to edit the wording. |
 | `berlin-wall-sources.html` | The source file the PDF is built from. |
 | `make_docx.py` | Regenerates the .docx. |
