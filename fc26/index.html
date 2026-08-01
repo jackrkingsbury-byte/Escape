@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<!-- SBC AUTOPILOT — paste an SBC, paste your club, get the cheapest squad that passes.
+     Unofficial fan-made tool. Not affiliated with, endorsed by, or connected to EA Sports. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SBC Autopilot — paste an SBC, get the squad</title>
+<meta name="theme-color" content="#05070c">
+<meta name="description" content="Paste the requirements of any FC 26 Squad Building Challenge, paste your club, and get the cheapest squad that meets every requirement — rating, chemistry, leagues, nations, clubs.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2305070c'/><path d='M20 74 L50 20 L80 74 Z' fill='none' stroke='%2300e07a' stroke-width='9' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05070c;--bg-2:#080b12;--surface:#0d1119;--surface-2:#131926;--surface-3:#1a2233;
+  --text:#eef2f8;--muted:#8d97ab;--faint:#5d6779;
+  --line:#1e2735;--line-2:#2b3648;
+  --acc:#00e07a;--acc-deep:#00b863;--acc-soft:#07281c;
+  --gold:#f5c451;--gold-soft:#2a2210;
+  --bad:#ff5a5a;--bad-soft:#2b1216;--warn:#ffb020;--warn-soft:#2b2010;
+  --radius:16px;--radius-sm:10px;--maxw:1240px;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 40px rgba(0,0,0,.45);
+}
+[data-theme="light"]{
+  --bg:#f4f6fa;--bg-2:#eceff6;--surface:#fff;--surface-2:#f3f5fa;--surface-3:#e7ebf3;
+  --text:#0d1119;--muted:#5b6676;--faint:#828d9e;
+  --line:#e0e5ef;--line-2:#cdd5e3;
+  --acc:#00a35c;--acc-deep:#008a4e;--acc-soft:#e0f7ec;
+  --gold:#a97a10;--gold-soft:#fbf1d8;
+  --bad:#d63c3c;--bad-soft:#fce8e8;--warn:#a86a00;--warn-soft:#fdf1dc;
+  --shadow:0 1px 2px rgba(13,17,25,.05),0 14px 36px rgba(13,17,25,.09);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(760px 420px at 12% -6%,rgba(0,224,122,.10),transparent 62%),radial-gradient(680px 400px at 92% 4%,rgba(90,140,255,.09),transparent 60%)}
+h1,h2,h3{font-family:'Barlow Condensed','Inter',sans-serif;text-transform:uppercase;letter-spacing:.01em;line-height:1.02;font-weight:800}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px;position:relative;z-index:1}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+.eyebrow.m{color:var(--muted)}
+a{color:var(--acc)}
+
+/* header */
+header.top{position:sticky;top:0;z-index:70;backdrop-filter:blur(14px) saturate(150%);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:14px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em}
+.brand .mk{width:32px;height:32px;border-radius:9px;background:linear-gradient(150deg,var(--acc),#0a8f56);display:grid;place-items:center;color:#04150d;font-weight:800;font-size:1rem}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.16em;color:var(--muted);font-weight:600;margin-top:-3px;text-transform:uppercase}
+.sp{flex:1}
+.icon-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;font-size:.95rem;transition:.18s}
+.icon-btn:hover{border-color:var(--acc);color:var(--acc)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:700;font-size:.92rem;padding:11px 18px;border-radius:11px;border:1px solid transparent;cursor:pointer;transition:.18s;white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--acc);color:#04150d;box-shadow:0 10px 26px rgba(0,224,122,.18)}
+.btn-primary:hover:not(:disabled){background:var(--acc-deep);transform:translateY(-1px)}
+.btn-ghost{background:var(--surface-2);color:var(--text);border-color:var(--line-2)}
+.btn-ghost:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
+.btn-sm{padding:7px 12px;font-size:.8rem;border-radius:9px}
+.btn-xl{padding:15px 30px;font-size:1.05rem;border-radius:13px}
+.btn-danger{background:transparent;color:var(--bad);border-color:var(--line-2)}
+.btn-danger:hover{border-color:var(--bad)}
+
+/* hero */
+.hero{padding:54px 0 26px}
+.hero h1{font-size:clamp(2.4rem,6.4vw,4.4rem);max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero p.lede{margin-top:16px;font-size:1.06rem;color:var(--muted);max-width:60ch}
+.flow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.flow span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:7px 12px;border-radius:100px}
+.flow span b{color:var(--acc)}
+
+/* cards / steps */
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.step-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.step-n{width:34px;height:34px;flex:0 0 34px;border-radius:10px;background:var(--surface-3);color:var(--acc);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.9rem;border:1px solid var(--line-2)}
+.step-t{flex:1;min-width:220px}
+.step-t h2{font-size:1.5rem}
+.step-t p{color:var(--muted);font-size:.9rem;margin-top:3px}
+.step-act{display:flex;gap:8px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:940px){.grid2{grid-template-columns:1fr}}
+
+textarea,input,select{font-family:inherit;font-size:.9rem;color:var(--text);background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--radius-sm);padding:10px 12px;width:100%;transition:.16s}
+textarea{font-family:'JetBrains Mono',monospace;font-size:.79rem;line-height:1.65;min-height:190px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,224,122,.13)}
+textarea::placeholder{color:var(--faint)}
+select{cursor:pointer;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 16px) calc(50% + 1px),calc(100% - 11px) calc(50% + 1px);background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
+label.fld{display:block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.hint{font-size:.78rem;color:var(--faint);margin-top:8px;line-height:1.5}
+.hint code{font-family:'JetBrains Mono',monospace;background:var(--surface-2);border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:.72rem;color:var(--muted)}
+
+/* status pills */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:600;padding:6px 11px;border-radius:100px;background:var(--surface-2);border:1px solid var(--line-2);color:var(--muted)}
+.pill b{color:var(--text);font-family:'JetBrains Mono',monospace}
+.pill.ok{background:var(--acc-soft);border-color:color-mix(in srgb,var(--acc) 34%,transparent);color:var(--acc)}
+.pill.bad{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 34%,transparent);color:var(--bad)}
+.pill.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 34%,transparent);color:var(--warn)}
+
+/* requirement rows */
+.reqs{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.req{display:grid;grid-template-columns:1.35fr 1.15fr .75fr .62fr 34px;gap:8px;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px}
+.req.auto{border-left:3px solid var(--acc)}
+.req input,.req select{background:var(--surface);font-size:.83rem;padding:8px 10px}
+.req .x{width:32px;height:32px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--faint);cursor:pointer;font-size:1rem;line-height:1;transition:.16s}
+.req .x:hover{color:var(--bad);border-color:var(--bad)}
+.req .na{visibility:hidden}
+@media(max-width:720px){.req{grid-template-columns:1fr 1fr;grid-auto-rows:auto}.req .x{grid-column:2;justify-self:end}.req .na{display:none}}
+.empty{color:var(--faint);font-size:.85rem;padding:16px;text-align:center;border:1px dashed var(--line-2);border-radius:var(--radius-sm)}
+
+/* options */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px}
+.check{display:flex;align-items:flex-start;gap:9px;cursor:pointer;font-size:.85rem;color:var(--muted);user-select:none}
+.check input{width:17px;height:17px;flex:0 0 17px;margin-top:2px;accent-color:var(--acc);cursor:pointer}
+.check b{color:var(--text);font-weight:600}
+
+/* solve bar */
+.solvebar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.prog{flex:1;min-width:200px;height:8px;background:var(--surface-3);border-radius:100px;overflow:hidden;display:none}
+.prog.on{display:block}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc-deep),var(--acc));transition:width .12s linear}
+.solve-note{font-size:.8rem;color:var(--muted)}
+
+/* pitch */
+.result{display:none}
+.result.on{display:block}
+.scoreline{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px}
+.score{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 15px}
+.score .k{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score .v{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;line-height:1.1;margin-top:2px}
+.score .s{font-size:.72rem;color:var(--faint)}
+.score.good .v{color:var(--acc)}.score.bad .v{color:var(--bad)}
+.pitch{background:linear-gradient(178deg,#0a1f16,#071711);border:1px solid var(--line-2);border-radius:var(--radius);padding:22px 14px;position:relative;overflow:hidden}
+[data-theme="light"] .pitch{background:linear-gradient(178deg,#e8f6ee,#dcf0e5)}
+.pitch::before{content:'';position:absolute;inset:14px;border:1px solid rgba(255,255,255,.09);border-radius:9px;pointer-events:none}
+[data-theme="light"] .pitch::before{border-color:rgba(0,0,0,.09)}
+.prow{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;position:relative}
+.prow:last-child{margin-bottom:0}
+.card{width:126px;background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:9px;text-align:center;position:relative;transition:.16s}
+.card:hover{border-color:var(--acc);transform:translateY(-2px)}
+.card .slot{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:.08em;background:var(--surface-3);border:1px solid var(--line-2);color:var(--muted);padding:2px 7px;border-radius:100px}
+.card.oop .slot{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.card .ovr{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;line-height:1;color:var(--gold);margin-top:6px}
+.card .nm{font-size:.76rem;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .meta{font-size:.62rem;color:var(--faint);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .chem{display:flex;justify-content:center;gap:3px;margin-top:6px}
+.card .chem i{width:12px;height:4px;border-radius:2px;background:var(--surface-3)}
+.card .chem i.on{background:var(--acc)}
+.card .prc{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--muted);margin-top:5px}
+.card .prc.free{color:var(--acc)}
+
+/* checklist */
+.checklist{display:flex;flex-direction:column;gap:6px;margin-top:16px}
+.cl{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-left-width:3px;border-radius:9px;padding:9px 12px;font-size:.86rem}
+.cl.pass{border-left-color:var(--acc)}
+.cl.fail{border-left-color:var(--bad)}
+.cl .mk{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem}
+.cl.pass .mk{color:var(--acc)}.cl.fail .mk{color:var(--bad)}
+.cl .lbl{flex:1}
+.cl .val{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:.8rem}
+
+table.tbl{width:100%;border-collapse:collapse;font-size:.82rem}
+table.tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--line-2)}
+table.tbl td{padding:8px 10px;border-bottom:1px solid var(--line)}
+table.tbl tr:last-child td{border-bottom:none}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--radius-sm);max-height:330px;overflow-y:auto}
+
+details.info{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-2);padding:12px 14px;margin-top:12px}
+details.info summary{cursor:pointer;font-weight:700;font-size:.86rem;list-style:none}
+details.info summary::-webkit-details-marker{display:none}
+details.info summary::before{content:'▸ ';color:var(--acc)}
+details.info[open] summary::before{content:'▾ '}
+details.info .body{margin-top:10px;font-size:.85rem;color:var(--muted);line-height:1.65}
+details.info .body ul{margin:8px 0 8px 18px}
+details.info .body li{margin-bottom:5px}
+details.info .body code{font-family:'JetBrains Mono',monospace;background:var(--surface);border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:.76rem;color:var(--text)}
+
+footer{border-top:1px solid var(--line);margin-top:46px;padding:26px 0 44px;color:var(--faint);font-size:.8rem}
+footer p{max-width:70ch}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--surface-3);border:1px solid var(--line-2);color:var(--text);padding:11px 18px;border-radius:100px;font-size:.86rem;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.22s;z-index:100}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><span class="mk">▲</span><span>SBC Autopilot<small>FC 26 · unofficial</small></span></div>
+    <span class="sp"></span>
+    <button class="btn btn-ghost btn-sm" id="demoBtn" type="button">Load demo</button>
+    <button class="icon-btn" id="themeBtn" type="button" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <p class="eyebrow">Squad building challenges, solved</p>
+    <h1>Paste the SBC. <em>Get the squad.</em></h1>
+    <p class="lede">Copy the requirements straight off the challenge screen and paste them in. Paste your club underneath. Autopilot reads both, then searches for the <strong>cheapest 11</strong> that hits every requirement — rating, chemistry, leagues, nations, clubs, the lot.</p>
+    <div class="flow">
+      <span><b>1</b> &nbsp;Paste your club</span>
+      <span><b>2</b> &nbsp;Paste the SBC</span>
+      <span><b>3</b> &nbsp;Solve</span>
+      <span><b>4</b> &nbsp;Build it in game</span>
+    </div>
+  </section>
+
+  <section class="wrap">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-n">1</div>
+        <div class="step-t">
+          <h2>Your club</h2>
+          <p>Paste your players — one per line. Any sane format works: CSV, tab-separated, pipes, or just spaced out.</p>
+        </div>
+        <div class="step-act">
+          <button class="btn btn-ghost btn-sm" id="sampleClubBtn" type="button">Demo club</button>
+          <button class="btn btn-danger btn-sm" id="clearClubBtn" type="button">Clear</button>
+        </div>
+      </div>
+      <textarea id="clubIn" spellcheck="false" placeholder="Name, Rating, Positions, Nation, League, Club, Price, tags
+
+R. Okafor, 84, ST, Nigeria, Premier League, Arsenal, 0, untradeable
+L. Moreau  86  CM,CAM  France  Ligue 1  Paris  74000
+D. Vasquez | 83 | CB | Spain | LALIGA | Sevilla | 1900 | rare"></textarea>
+      <div class="hint">Tags understood anywhere on the line: <code>untradeable</code> / <code>ut</code>, <code>rare</code>, <code>totw</code>, <code>icon</code>, <code>hero</code>. Prices accept <code>12k</code>, <code>1.4m</code> or plain numbers. A header row (<code>name,rating,pos,...</code>) is used if present. Your club is saved in this browser only.</div>
+      <div class="pills" id="clubPills"></div>
+      <details class="info" id="clubDetails" style="display:none">
+        <summary>Parsed players</summary>
+        <div class="body">
+          <div class="scroller"><table class="tbl" id="clubTable"></table></div>
+          <div id="clubSkipped"></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-n">2</div>
+        <div class="step-t">
+          <h2>The SBC</h2>
+          <p>Paste the challenge requirements exactly as they appear. Autopilot parses them into rules you can edit.</p>
+        </div>
+        <div class="step-act">
+          <button class="btn btn-ghost btn-sm" id="sampleSbcBtn" type="button">Example SBC</button>
+          <button class="btn btn-ghost btn-sm" id="addReqBtn" type="button">+ Rule</button>
+        </div>
+      </div>
+      <div class="grid2">
+        <div>
+          <label class="fld" for="sbcIn">Pasted requirements</label>
+          <textarea id="sbcIn" spellcheck="false" placeholder="Squad Rating: Min. 84
+Team Chemistry: Min. 26
+Same League Count: Min. 4
+Same Nation Count: Min. 2
+Rare: Min. 5
+Number of players in the Squad: 11"></textarea>
+          <div class="hint">Reads EA's usual phrasings — <code>Min.</code> / <code>Max.</code> / <code>Exactly</code>, <code>Same League Count</code>, <code>Player Quality</code>, <code>85+ OVR</code>, plus named leagues, nations and clubs it can find in your club.</div>
+        </div>
+        <div>
+          <label class="fld">Rules Autopilot will enforce</label>
+          <div class="reqs" id="reqList"></div>
+          <div class="hint" id="reqUnparsed"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-n">3</div>
+        <div class="step-t">
+          <h2>Search settings</h2>
+          <p>Chemistry depends on the formation, so pick the one you'll actually build.</p>
+        </div>
+      </div>
+      <div class="opts">
+        <div>
+          <label class="fld" for="formationSel">Formation</label>
+          <select id="formationSel"></select>
+        </div>
+        <div>
+          <label class="fld" for="effortSel">Search effort</label>
+          <select id="effortSel">
+            <option value="fast">Fast — a second</option>
+            <option value="deep" selected>Deep — a few seconds</option>
+            <option value="max">Exhaustive — slower</option>
+          </select>
+        </div>
+        <div>
+          <label class="fld" for="untradeSel">Value untradeables at</label>
+          <select id="untradeSel">
+            <option value="0" selected>0 — spend them freely</option>
+            <option value="0.5">Half price — mild preference to keep</option>
+            <option value="1">Full price — treat like coins</option>
+          </select>
+        </div>
+        <div>
+          <label class="fld">Rules of thumb</label>
+          <label class="check"><input type="checkbox" id="relPosChk" checked><span><b>Allow related positions</b> — LM↔LW, CM↔CAM, RB↔RWB and so on count as in-position.</span></label>
+        </div>
+        <div>
+          <label class="fld">Safety</label>
+          <label class="check"><input type="checkbox" id="safeChk"><span><b>Rating safety margin</b> — only accept squads that clear the rating target by 0.5, in case EA rounds differently.</span></label>
+        </div>
+        <div>
+          <label class="fld">Reuse</label>
+          <label class="check"><input type="checkbox" id="lockChk"><span><b>Exclude icons &amp; heroes</b> — leave them out of the solution.</span></label>
+        </div>
+      </div>
+      <div class="solvebar">
+        <button class="btn btn-primary btn-xl" id="solveBtn" type="button">Build my squad</button>
+        <div class="prog" id="prog"><i></i></div>
+        <div class="solve-note" id="solveNote">Paste a club and an SBC to start.</div>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="step result" id="result">
+      <div class="step-head">
+        <div class="step-n">4</div>
+        <div class="step-t">
+          <h2>Your squad</h2>
+          <p id="resultSub">Cheapest passing 11 Autopilot could find.</p>
+        </div>
+        <div class="step-act">
+          <button class="btn btn-ghost btn-sm" id="copyBtn" type="button">Copy list</button>
+          <button class="btn btn-ghost btn-sm" id="againBtn" type="button">Search again</button>
+        </div>
+      </div>
+      <div class="scoreline" id="scoreline"></div>
+      <div class="pitch" id="pitch"></div>
+      <div class="checklist" id="checklist"></div>
+    </div>
+
+    <details class="info">
+      <summary>How the maths works (and where to double-check it)</summary>
+      <div class="body">
+        <p><strong>Squad rating.</strong> Sum the 11 ratings, take the average, add up how far each player sits <em>above</em> that average, add that excess to the sum, divide by 11, round down. Autopilot shows the exact decimal so you can see how tight a squad is — anything landing on <code>.0x</code> is worth double-checking in game, or tick the safety margin option.</p>
+        <p><strong>Chemistry.</strong> Modern rules: a player earns points only when played in a position he's listed for, and points come from how many squadmates share his club, league and nation — capped at 3 per player, 33 for the squad.</p>
+        <ul>
+          <li>Club: 2 players → 1, 4 → 2, 7 → 3</li>
+          <li>League: 3 players → 1, 5 → 2, 8 → 3</li>
+          <li>Nation: 2 players → 1, 5 → 2, 8 → 3</li>
+          <li>Icons: 3 chemistry in position, and count double toward their nation.</li>
+          <li>Heroes: 3 chemistry in position, and count double toward their league.</li>
+        </ul>
+        <p>Out-of-position players still count toward everyone else's club, league and nation tallies — they just earn nothing themselves.</p>
+        <p><strong>Card quality</strong> is read from rating: bronze under 65, silver 65–74, gold 75+.</p>
+        <p><strong>The search</strong> is a randomised swap search with restarts, not an exhaustive proof. It finds cheap passing squads fast, but a cheaper one may exist — raise the effort setting and run it again if the price looks high.</p>
+      </div>
+    </details>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><strong>Unofficial fan-made tool.</strong> Not affiliated with, endorsed by, or connected to EA Sports or the FC series. Nothing is uploaded — your club stays in this browser. Always sanity-check a squad in game before you submit it.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ══════════════════ helpers ══════════════════ */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const norm=s=>String(s||'').toLowerCase().replace(/[._''`-]/g,' ').replace(/\s+/g,' ').trim();
+const titled=s=>String(s||'').trim();
+let toastT;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2200);}
+function coins(n){
+  n=Math.round(n||0);
+  if(n===0)return '0';
+  if(n>=1e6)return (n/1e6).toFixed(n>=1e7?1:2).replace(/\.?0+$/,'')+'M';
+  if(n>=1e4)return Math.round(n/1e3)+'K';
+  return n.toLocaleString('en-US');
+}
+function parsePrice(tok){
+  const m=String(tok).replace(/[, ]/g,'').match(/^([\d.]+)\s*([km])?$/i);
+  if(!m)return null;
+  let v=parseFloat(m[1]); if(!isFinite(v))return null;
+  const u=(m[2]||'').toLowerCase();
+  if(u==='k')v*=1e3; else if(u==='m')v*=1e6;
+  return Math.round(v);
+}
+
+/* ══════════════════ football reference data ══════════════════ */
+const POSITIONS=['GK','RB','RWB','CB','LB','LWB','CDM','CM','CAM','RM','LM','RW','LW','CF','ST'];
+const POS_SET=new Set(POSITIONS);
+const RELATED={
+  GK:['GK'],
+  CB:['CB'],
+  RB:['RB','RWB'], RWB:['RWB','RB'],
+  LB:['LB','LWB'], LWB:['LWB','LB'],
+  CDM:['CDM','CM'], CM:['CM','CDM','CAM'], CAM:['CAM','CM','CF'],
+  RM:['RM','RW'], RW:['RW','RM'],
+  LM:['LM','LW'], LW:['LW','LM'],
+  CF:['CF','ST','CAM'], ST:['ST','CF']
+};
+const FORMATIONS=[
+  {name:'4-4-2',      rows:[['GK'],['LB','CB','CB','RB'],['LM','CM','CM','RM'],['ST','ST']]},
+  {name:'4-3-3',      rows:[['GK'],['LB','CB','CB','RB'],['CM','CM','CM'],['LW','ST','RW']]},
+  {name:'4-2-3-1',    rows:[['GK'],['LB','CB','CB','RB'],['CDM','CDM'],['LM','CAM','RM'],['ST']]},
+  {name:'4-1-2-1-2',  rows:[['GK'],['LB','CB','CB','RB'],['CDM'],['CM','CM'],['CAM'],['ST','ST']]},
+  {name:'4-3-2-1',    rows:[['GK'],['LB','CB','CB','RB'],['CM','CM','CM'],['CF','CF'],['ST']]},
+  {name:'3-5-2',      rows:[['GK'],['CB','CB','CB'],['LM','CM','CM','CM','RM'],['ST','ST']]},
+  {name:'5-3-2',      rows:[['GK'],['LWB','CB','CB','CB','RWB'],['CM','CM','CM'],['ST','ST']]},
+  {name:'4-4-1-1',    rows:[['GK'],['LB','CB','CB','RB'],['LM','CM','CM','RM'],['CF'],['ST']]},
+  {name:'4-2-2-2',    rows:[['GK'],['LB','CB','CB','RB'],['CDM','CDM'],['CAM','CAM'],['ST','ST']]},
+  {name:'3-4-3',      rows:[['GK'],['CB','CB','CB'],['LM','CM','CM','RM'],['LW','ST','RW']]}
+];
+const NATIONS=['england','france','spain','germany','italy','portugal','brazil','argentina','netherlands','belgium','croatia','uruguay','colombia','norway','sweden','denmark','poland','morocco','senegal','nigeria','ghana','ivory coast','cameroon','egypt','algeria','japan','south korea','australia','united states','usa','canada','mexico','chile','ecuador','peru','paraguay','serbia','switzerland','austria','scotland','wales','ireland','republic of ireland','northern ireland','turkey','greece','ukraine','russia','czech republic','czechia','slovakia','slovenia','hungary','romania','bulgaria','finland','iceland','albania','bosnia and herzegovina','north macedonia','montenegro','georgia','armenia','israel','iran','iraq','saudi arabia','qatar','united arab emirates','tunisia','mali','burkina faso','guinea','gabon','congo','dr congo','zambia','south africa','jamaica','costa rica','honduras','panama','venezuela','bolivia','china pr','china','new zealand','kosovo','luxembourg','cyprus','moldova','belarus','lithuania','latvia','estonia','uzbekistan'];
+const NATION_SET=new Set(NATIONS);
+const LEAGUE_ALIASES={
+  'premier league':'Premier League','epl':'Premier League','english premier league':'Premier League','pl':'Premier League',
+  'laliga':'LALIGA','la liga':'LALIGA','laliga ea sports':'LALIGA','spanish la liga':'LALIGA','laliga santander':'LALIGA',
+  'serie a':'Serie A','italian serie a':'Serie A','serie a tim':'Serie A',
+  'bundesliga':'Bundesliga','german bundesliga':'Bundesliga','1 bundesliga':'Bundesliga',
+  'ligue 1':'Ligue 1','french ligue 1':'Ligue 1','ligue 1 uber eats':'Ligue 1',
+  'eredivisie':'Eredivisie','dutch eredivisie':'Eredivisie',
+  'liga portugal':'Liga Portugal','primeira liga':'Liga Portugal','portuguese liga':'Liga Portugal',
+  'mls':'MLS','major league soccer':'MLS',
+  'saudi pro league':'Saudi Pro League','roshn saudi league':'Saudi Pro League',
+  'efl championship':'EFL Championship','championship':'EFL Championship',
+  'liga mx':'Liga MX','turkish super lig':'Süper Lig','super lig':'Süper Lig','süper lig':'Süper Lig',
+  'scottish premiership':'Scottish Premiership','belgian pro league':'Belgian Pro League',
+  'liga profesional de futbol':'Liga Profesional','brasileirao':'Brasileirão','brasileirão':'Brasileirão','serie a brazil':'Brasileirão',
+  'austrian bundesliga':'Austrian Bundesliga','swiss super league':'Swiss Super League',
+  'danish superliga':'Superliga','allsvenskan':'Allsvenskan','eliteserien':'Eliteserien',
+  'k league 1':'K League 1','j1 league':'J1 League','a league':'A-League','a-league':'A-League',
+  'women s super league':"Women's Super League",'wsl':"Women's Super League",
+  'icons':'Icons','icon':'Icons','heroes':'Heroes','hero':'Heroes'
+};
+
+/* ══════════════════ state ══════════════════ */
+const LS_CLUB='sbcpilot.club.v1', LS_SBC='sbcpilot.sbc.v1', LS_THEME='sbcpilot.theme';
+let club=[];            // parsed players
+let skipped=[];         // unparsed club lines
+let reqs=[];            // requirement objects
+let unparsedReqLines=[];
+let lastSolution=null;
+let solving=false;
+let reqId=0;
+
+/* ══════════════════ club parsing ══════════════════ */
+const HEADER_MAP={
+  name:['name','player','playername','player name'],
+  rating:['rating','ovr','overall','rat','score'],
+  pos:['pos','position','positions','pref pos','preferred position'],
+  nation:['nation','nationality','country'],
+  league:['league','comp','competition'],
+  club:['club','team'],
+  price:['price','value','cost','coins','buy now','bin'],
+  tags:['tags','tag','notes','type','quality']
+};
+function headerKind(cell){
+  const n=norm(cell);
+  for(const k in HEADER_MAP) if(HEADER_MAP[k].includes(n)) return k;
+  return null;
+}
+function splitFields(line){
+  if(line.includes('\t')) return line.split('\t');
+  if(line.includes('|'))  return line.split('|');
+  if(line.includes(';'))  return line.split(';');
+  // A comma can be a field separator OR just joining positions ("CM,CAM"). Whichever
+  // split yields more fields is the one actually being used as the separator.
+  const byComma=line.includes(',')?line.split(','):[line];
+  const bySpace=line.split(/\s{2,}/);
+  return bySpace.filter(s=>s.trim()).length>byComma.filter(s=>s.trim()).length?bySpace:byComma;
+}
+function posTokens(cell){
+  const parts=String(cell).split(/[\/,\s]+/).map(p=>p.trim().toUpperCase()).filter(Boolean);
+  if(!parts.length) return null;
+  return parts.every(p=>POS_SET.has(p)) ? [...new Set(parts)] : null;
+}
+const TAGWORDS={
+  untradeable:['untradeable','untradable','ut','unt','u','loan','loaned'],
+  rare:['rare','r'],
+  special:['totw','if','sif','mif','special','tots','toty','promo','inform'],
+  icon:['icon','icons'],
+  hero:['hero','heroes','fut hero']
+};
+function tagKind(tok){
+  const n=norm(tok);
+  for(const k in TAGWORDS) if(TAGWORDS[k].includes(n)) return k;
+  return null;
+}
+function leagueCanon(cell){
+  const n=norm(cell);
+  if(LEAGUE_ALIASES[n]) return LEAGUE_ALIASES[n];
+  return null;
+}
+function parseClub(text){
+  const out=[],bad=[];
+  const lines=String(text||'').split(/\r?\n/).map(l=>l.trim()).filter(l=>l && !/^[-=_#*]+$/.test(l));
+  if(!lines.length) return {players:[],bad:[]};
+
+  // header?
+  let map=null, start=0;
+  const h=splitFields(lines[0]).map(c=>c.trim());
+  const kinds=h.map(headerKind);
+  if(kinds.filter(Boolean).length>=3){
+    map={}; kinds.forEach((k,i)=>{ if(k&&map[k]===undefined) map[k]=i; });
+    start=1;
+  }
+
+  for(let li=start;li<lines.length;li++){
+    const raw=lines[li];
+    const cells=splitFields(raw).map(c=>c.trim());
+    if(!cells.some(Boolean)){bad.push(raw);continue;}
+    const p={name:'',rating:0,pos:[],nation:'',league:'',club:'',price:0,untradeable:false,rare:false,special:false,icon:false,hero:false};
+
+    if(map){
+      const g=k=>map[k]!==undefined?String(cells[map[k]]||'').trim():'';
+      p.name=g('name');
+      p.rating=parseInt(g('rating'),10)||0;
+      p.pos=posTokens(g('pos'))||[];
+      p.nation=titled(g('nation'));
+      p.league=leagueCanon(g('league'))||titled(g('league'));
+      p.club=titled(g('club'));
+      const pr=parsePrice(g('price')); p.price=pr===null?0:pr;
+      const tagcell=(g('tags')+' '+g('price')).split(/[\s,\/]+/);
+      tagcell.forEach(t=>{const k=tagKind(t); if(k){ if(k==='untradeable')p.untradeable=true; else p[k]=true; }});
+    } else {
+      const left=[];
+      cells.forEach(cell=>{
+        const c=cell.trim(); if(!c) return;
+        const k=tagKind(c);
+        if(k){ if(k==='untradeable')p.untradeable=true; else p[k]=true; return; }
+        if(!p.rating){
+          const r=parseInt(c,10);
+          if(String(r)===c.replace(/^0+(?=\d)/,'') && r>=40 && r<=99){ p.rating=r; return; }
+        }
+        const pt=posTokens(c);
+        if(pt && !p.pos.length){ p.pos=pt; return; }
+        const lg=leagueCanon(c);
+        if(lg && !p.league){ p.league=lg; return; }
+        if(NATION_SET.has(norm(c)) && !p.nation){ p.nation=titled(c); return; }
+        const pr=parsePrice(c);
+        if(pr!==null && !p._pricedone){ p.price=pr; p._pricedone=true; return; }
+        left.push(c);
+      });
+      if(left.length){ p.name=left.shift(); }
+      // remaining unknowns: fill league → club → nation in that order of likelihood
+      left.forEach(v=>{
+        if(!p.nation && NATION_SET.has(norm(v))) p.nation=titled(v);
+        else if(!p.club) p.club=titled(v);
+        else if(!p.league) p.league=titled(v);
+        else if(!p.nation) p.nation=titled(v);
+      });
+    }
+    delete p._pricedone;
+    if(!p.name || !p.rating){ bad.push(raw); continue; }
+    if(!p.pos.length) p.pos=['CM'];
+    if(p.icon||p.hero) p.rare=true;
+    if(p.special) p.rare=true; // specials count as rare for SBC purposes
+    p.id=out.length;
+    p.key=norm(p.name)+'|'+p.rating;
+    out.push(p);
+  }
+  return {players:out,bad};
+}
+function quality(r){ return r>=75?'gold':(r>=65?'silver':'bronze'); }
+
+/* ══════════════════ requirement parsing ══════════════════ */
+/* kinds:
+   rating, chem, size, sameClub, sameLeague, sameNation,
+   distinctClubs, distinctLeagues, distinctNations,
+   rare, special, quality(param bronze|silver|gold), ovr(param=minOvr),
+   namedLeague/namedNation/namedClub (param=name)               */
+const KIND_LABEL={
+  rating:'Squad rating', chem:'Team chemistry', size:'Players in squad',
+  sameClub:'Same club count', sameLeague:'Same league count', sameNation:'Same nation count',
+  distinctClubs:'Different clubs', distinctLeagues:'Different leagues', distinctNations:'Different nations',
+  rare:'Rare players', special:'Special / TOTW players', quality:'Players of quality', ovr:'Players rated OVR+',
+  namedLeague:'Players from league', namedNation:'Players from nation', namedClub:'Players from club'
+};
+const NEEDS_PARAM={quality:1,ovr:1,namedLeague:1,namedNation:1,namedClub:1};
+
+function newReq(kind,op,value,param,auto){
+  return {id:++reqId,kind,op:op||'min',value:Number(value)||0,param:param||'',auto:!!auto};
+}
+function opFrom(text){
+  const t=norm(text);
+  if(/\bmax(imum)?\b|\bno more than\b|\bup to\b/.test(t)) return 'max';
+  if(/\bexact(ly)?\b/.test(t)) return 'exactly';
+  return 'min';
+}
+/* find a named league / nation / club mentioned in a line, using the club as a lexicon */
+function lexicon(){
+  const L=new Map(),N=new Map(),C=new Map();
+  club.forEach(p=>{
+    if(p.league) L.set(norm(p.league),p.league);
+    if(p.nation) N.set(norm(p.nation),p.nation);
+    if(p.club)   C.set(norm(p.club),p.club);
+  });
+  Object.entries(LEAGUE_ALIASES).forEach(([k,v])=>{ if(!L.has(k)) L.set(k,v); });
+  NATIONS.forEach(n=>{ if(!N.has(n)) N.set(n,n.replace(/\b\w/g,c=>c.toUpperCase())); });
+  return {L,N,C};
+}
+function findNamed(line){
+  const n=norm(line), lex=lexicon();
+  let best=null;
+  const scan=(map,kind)=>{
+    for(const [k,v] of map){
+      if(k.length<3) continue;
+      if(n.includes(k) && (!best||k.length>best.key.length)) best={kind,key:k,value:v};
+    }
+  };
+  scan(lex.L,'namedLeague'); scan(lex.N,'namedNation'); scan(lex.C,'namedClub');
+  return best;
+}
+function numbersIn(line){
+  const m=String(line).match(/\d+/g);
+  return m?m.map(Number):[];
+}
+function parseSbc(text){
+  const found=[],unparsed=[];
+  const lines=String(text||'').split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  for(const raw of lines){
+    // a line may hold several requirements separated by bullets/semicolons
+    const chunks=raw.split(/\s*[•·;]\s*|\s{3,}(?=[A-Z])/).map(c=>c.trim()).filter(Boolean);
+    let anyChunk=false;
+    for(const line of chunks){
+      const r=parseReqLine(line);
+      if(r){ found.push(...r); anyChunk=true; }
+      else if(/\d/.test(line) && line.length>3) unparsed.push(line);
+    }
+    if(!anyChunk && !/\d/.test(raw) && raw.length>3){ /* headings — ignore silently */ }
+  }
+  // de-dupe on kind+param, keeping the later one
+  const seen=new Map();
+  found.forEach(r=>seen.set(r.kind+'|'+norm(r.param)+'|'+r.op,r));
+  return {reqs:[...seen.values()],unparsed};
+}
+function parseReqLine(line){
+  const t=norm(line);
+  // quality lines carry no number of their own ("Player Quality: Exactly Gold")
+  if(!/\d/.test(t) && !/\b(gold|silver|bronze)\b/.test(t)) return null;
+  const nums=numbersIn(t);
+  const op=opFrom(t);
+  const first=nums.length?nums[nums.length-1]:0; // EA puts the number last: "Squad Rating: Min. 84"
+
+  // squad rating
+  if(/\b(squad|team)\s*(overall|rating|ovr)\b|\brating\s*(of the squad)?\b/.test(t) && !/chem/.test(t)){
+    const v=nums.find(n=>n>=40&&n<=99);
+    if(v) return [newReq('rating',op,v,'',true)];
+  }
+  // chemistry
+  if(/chem/.test(t)){
+    const v=nums.find(n=>n>=0&&n<=33) ?? first;
+    return [newReq('chem',op,v,'',true)];
+  }
+  // squad size
+  if(/(number of players|players in (the )?squad|squad size|# of players)/.test(t)){
+    const v=nums.find(n=>n>=1&&n<=11)||11;
+    return [newReq('size','exactly',v,'',true)];
+  }
+  // "same X count" — max/min size of the biggest shared group
+  if(/same\s+club/.test(t))   return [newReq('sameClub',op,first,'',true)];
+  if(/same\s+league/.test(t)) return [newReq('sameLeague',op,first,'',true)];
+  if(/same\s+(nation|country)/.test(t)) return [newReq('sameNation',op,first,'',true)];
+  // distinct counts: "Clubs: Min. 5" / "Number of Leagues: Max 3"
+  if(/^(number of\s+)?(different\s+|unique\s+)?clubs?\b/.test(t)&&!/players/.test(t))   return [newReq('distinctClubs',op,first,'',true)];
+  if(/^(number of\s+)?(different\s+|unique\s+)?leagues?\b/.test(t)&&!/players/.test(t)) return [newReq('distinctLeagues',op,first,'',true)];
+  if(/^(number of\s+)?(different\s+|unique\s+)?(nations?|nationalities|countries)\b/.test(t)&&!/players/.test(t)) return [newReq('distinctNations',op,first,'',true)];
+  // rating buckets: "85+ OVR: Min 2", "Players with OVR 84 or higher: 3"
+  const ovrM=t.match(/(\d{2})\s*\+?\s*(ovr|rated|rating|overall)/)||t.match(/(ovr|rated|rating|overall)\s*(\d{2})\s*\+/);
+  if(ovrM){
+    const bucket=Number(ovrM[1].match(/\d+/)?ovrM[1]:ovrM[2]);
+    const rest=nums.filter(n=>n!==bucket);
+    const cnt=rest.length?rest[rest.length-1]:1;
+    if(bucket>=40&&bucket<=99) return [newReq('ovr',op,cnt,String(bucket),true)];
+  }
+  // quality
+  if(/quality/.test(t)||/\b(gold|silver|bronze)\b/.test(t)){
+    const q=(t.match(/\b(gold|silver|bronze)\b/)||[])[1];
+    if(q){
+      const cnt=nums.find(n=>n>=1&&n<=11)||11;
+      return [newReq('quality',op==='max'?'max':'min',cnt,q,true)];
+    }
+  }
+  // rare / special
+  if(/\brare\b/.test(t))  return [newReq('rare',op,first||1,'',true)];
+  if(/\b(totw|team of the week|inform|in ?form|special)\b/.test(t)) return [newReq('special',op,first||1,'',true)];
+  // named league / nation / club: "Premier League Players: Min. 3", "Nationality: Brazil Min 1"
+  const named=findNamed(line);
+  if(named){
+    const cnt=nums.find(n=>n>=1&&n<=11)||1;
+    return [newReq(named.kind,op,cnt,named.value,true)];
+  }
+  // generic "Nationality: Min. 2" / "League: Min 3"  → treat as same-X count
+  if(/^(nationality|nations?)\b/.test(t)) return [newReq('sameNation',op,first,'',true)];
+  if(/^leagues?\b/.test(t)) return [newReq('sameLeague',op,first,'',true)];
+  if(/^clubs?\b/.test(t))   return [newReq('sameClub',op,first,'',true)];
+  return null;
+}
+
+/* ══════════════════ squad maths ══════════════════ */
+function squadRating(ratings){
+  const n=ratings.length||1;
+  let sum=0; for(const r of ratings) sum+=r;
+  const avg=sum/n;
+  let excess=0; for(const r of ratings) if(r>avg) excess+=r-avg;
+  const exact=(sum+excess)/n;
+  return {exact,rating:Math.floor(exact+1e-9)};
+}
+const CLUB_T=[[7,3],[4,2],[2,1]], LEAGUE_T=[[8,3],[5,2],[3,1]], NATION_T=[[8,3],[5,2],[2,1]];
+function tier(count,table){ for(const [need,pts] of table) if(count>=need) return pts; return 0; }
+
+/* Eligibility is fixed for a given formation + position rule, so compute it once
+   per player per solve instead of once per candidate squad (this sits in the hot loop). */
+function prepareEligibility(players,formation,relPos){
+  const slots=formation.rows.flat();
+  const key=formation.name+'|'+(relPos?'rel':'strict');
+  for(const p of players){
+    if(p._eligKey===key) continue;
+    const allowed=new Set();
+    p.pos.forEach(pp=>{ (relPos?(RELATED[pp]||[pp]):[pp]).forEach(x=>allowed.add(x)); });
+    p._elig=slots.map(s=>allowed.has(s));
+    p._eligKey=key;
+  }
+  return slots;
+}
+/* assign players to formation slots, maximising chemistry earned */
+function assignSlots(players,slots){
+  const n=players.length, S=slots.length;
+  const elig=players.map(p=>p._elig);
+  // how many of these 11 can play each slot — scarce slots get filled first
+  const demand=new Array(S).fill(0);
+  for(let s=0;s<S;s++) for(let i=0;i<n;i++) if(elig[i][s]) demand[s]++;
+  const order=players.map((p,i)=>i).sort((a,b)=>players[b]._pot-players[a]._pot);
+  const slotTaken=new Array(S).fill(-1);
+  const assign=new Array(n).fill(-1);
+  for(const i of order){
+    let best=-1,bestDemand=1e9;
+    for(let s=0;s<S;s++){
+      if(slotTaken[s]!==-1||!elig[i][s]) continue;
+      if(demand[s]<bestDemand){bestDemand=demand[s];best=s;}
+    }
+    if(best>=0){ slotTaken[best]=i; assign[i]=best; }
+  }
+  // whoever is left goes wherever is free — they simply earn nothing
+  const free=[]; for(let s=0;s<S;s++) if(slotTaken[s]===-1) free.push(s);
+  for(let i=0;i<n;i++) if(assign[i]===-1){ const s=free.pop(); if(s!==undefined){assign[i]=s;slotTaken[s]=i;} }
+  // pairwise swap improvement — a swap only changes those two players, so score the delta directly
+  const got=(i,s)=> (s>=0&&elig[i][s])?players[i]._pot:0;
+  for(let pass=0;pass<2;pass++){
+    let improved=false;
+    for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){
+      const si=assign[i],sj=assign[j];
+      if(si===sj) continue;
+      const delta=(got(i,sj)+got(j,si))-(got(i,si)+got(j,sj));
+      if(delta>0){ assign[i]=sj; assign[j]=si; improved=true; }
+    }
+    if(!improved) break;
+  }
+  return assign;
+}
+function chemistry(players,formation,relPos){
+  const slots=prepareEligibility(players,formation,relPos);
+  const cCount={},lCount={},nCount={};
+  players.forEach(p=>{
+    const c=norm(p.club),l=norm(p.league),nt=norm(p.nation);
+    if(c) cCount[c]=(cCount[c]||0)+1;
+    if(l) lCount[l]=(lCount[l]||0)+(p.hero?2:1);
+    if(nt) nCount[nt]=(nCount[nt]||0)+(p.icon?2:1);
+  });
+  players.forEach(p=>{
+    if(p.icon||p.hero){ p._pot=3; return; }
+    const pts=tier(cCount[norm(p.club)]||0,CLUB_T)+tier(lCount[norm(p.league)]||0,LEAGUE_T)+tier(nCount[norm(p.nation)]||0,NATION_T);
+    p._pot=Math.min(3,pts);
+  });
+  const assign=assignSlots(players,slots);
+  let total=0; const detail=[];
+  players.forEach((p,i)=>{
+    const s=assign[i], slot=s>=0?slots[s]:'—';
+    const inPos=s>=0&&!!p._elig[s];
+    const got=inPos?p._pot:0;
+    total+=got;
+    detail.push({player:p,slot,slotIndex:s,inPos,chem:got});
+  });
+  return {total:Math.min(33,total),detail};
+}
+
+/* ══════════════════ requirement evaluation ══════════════════ */
+function groupMax(players,field){
+  const m={}; let best=0;
+  players.forEach(p=>{ const k=norm(p[field]); if(!k)return; m[k]=(m[k]||0)+1; if(m[k]>best)best=m[k]; });
+  return best;
+}
+function distinct(players,field){
+  const s=new Set(); players.forEach(p=>{const k=norm(p[field]); if(k)s.add(k);}); return s.size;
+}
+function reqActual(r,ctx){
+  const P=ctx.players;
+  switch(r.kind){
+    case 'rating': return ctx.rating.rating;
+    case 'chem':   return ctx.chem.total;
+    case 'size':   return P.length;
+    case 'sameClub':   return groupMax(P,'club');
+    case 'sameLeague': return groupMax(P,'league');
+    case 'sameNation': return groupMax(P,'nation');
+    case 'distinctClubs':   return distinct(P,'club');
+    case 'distinctLeagues': return distinct(P,'league');
+    case 'distinctNations': return distinct(P,'nation');
+    case 'rare':    return P.filter(p=>p.rare).length;
+    case 'special': return P.filter(p=>p.special).length;
+    case 'quality': return P.filter(p=>quality(p.rating)===r.param).length;
+    case 'ovr':     return P.filter(p=>p.rating>=Number(r.param||0)).length;
+    case 'namedLeague': return P.filter(p=>norm(p.league)===norm(r.param)).length;
+    case 'namedNation': return P.filter(p=>norm(p.nation)===norm(r.param)).length;
+    case 'namedClub':   return P.filter(p=>norm(p.club)===norm(r.param)).length;
+  }
+  return 0;
+}
+function reqShortfall(r,actual,ctx){
+  if(r.op==='min')     return Math.max(0,r.value-actual);
+  if(r.op==='max')     return Math.max(0,actual-r.value);
+  return Math.abs(actual-r.value);
+}
+function reqLabel(r){
+  const base=KIND_LABEL[r.kind]||r.kind;
+  const opw=r.op==='min'?'at least':(r.op==='max'?'at most':'exactly');
+  if(r.kind==='rating'||r.kind==='chem'||r.kind==='size') return `${base} ${opw} ${r.value}`;
+  if(r.kind==='ovr') return `${opw} ${r.value} player(s) rated ${r.param}+`;
+  if(r.kind==='quality') return `${opw} ${r.value} ${r.param} player(s)`;
+  if(NEEDS_PARAM[r.kind]) return `${opw} ${r.value} from ${r.param}`;
+  if(r.kind.startsWith('distinct')) return `${base}: ${opw} ${r.value}`;
+  return `${base} ${opw} ${r.value}`;
+}
+function evaluate(players,formation,opts){
+  const rating=squadRating(players.map(p=>p.rating));
+  const chem=chemistry(players,formation,opts.relPos);
+  const ctx={players,rating,chem};
+  let violation=0; const checks=[];
+  for(const r of reqs){
+    if(r.kind==='size') continue; // squad size is structural
+    const actual=reqActual(r,ctx);
+    let short=reqShortfall(r,actual,ctx);
+    if(r.kind==='rating'&&r.op==='min'&&opts.safe&&short===0&&rating.exact<r.value+0.5) short=0.5;
+    // relative difficulty only — the search scales this so *any* violation
+    // outranks *any* price difference, otherwise it would happily buy a cheap failing squad
+    const weight=(r.kind==='rating')?1:(r.kind==='chem'?0.35:0.8);
+    violation+=short*weight;
+    checks.push({req:r,actual,pass:short===0});
+  }
+  return {rating,chem,checks,violation,ctx};
+}
+function squadCost(players,untradeMul){
+  let c=0; for(const p of players) c+=p.untradeable?p.price*untradeMul:p.price;
+  return c;
+}
+
+/* ══════════════════ the search ══════════════════ */
+function buildPool(formation,opts){
+  let pool=club.filter(p=>p.rating>0);
+  if(opts.excludeIcons) pool=pool.filter(p=>!p.icon&&!p.hero);
+  // keep it tractable: prefer cheap + useful. Cap the pool but always keep top-rated & cheapest.
+  const CAP=260;
+  if(pool.length>CAP){
+    const byCost=[...pool].sort((a,b)=>effCost(a,opts)-effCost(b,opts)).slice(0,CAP-90);
+    const byRating=[...pool].sort((a,b)=>b.rating-a.rating).slice(0,90);
+    pool=[...new Set([...byCost,...byRating])];
+  }
+  return pool;
+}
+function effCost(p,opts){ return p.untradeable?p.price*opts.untradeMul:p.price; }
+
+function solveAsync(formation,opts,onProgress,onDone){
+  const pool=buildPool(formation,opts);
+  const size=(reqs.find(r=>r.kind==='size')||{value:11}).value||11;
+  if(pool.length<size){ onDone({error:`Only ${pool.length} usable player(s) in your club — need ${size}.`}); return; }
+
+  const budget={fast:26000,deep:90000,max:260000}[opts.effort]||90000;
+  const restarts={fast:6,deep:16,max:34}[opts.effort]||16;
+  const perRun=Math.max(1200,Math.floor(budget/restarts));
+
+  // Feasibility must always beat thrift: BIG is bigger than the most expensive
+  // squad you could possibly field, so one unmet rule costs more than any 11 players.
+  const sortedCost=pool.map(p=>effCost(p,opts)).sort((a,b)=>b-a);
+  const maxSquadCost=sortedCost.slice(0,size).reduce((a,b)=>a+b,0);
+  const BIG=Math.max(1e6,(maxSquadCost+1)*4);
+
+  let bestValid=null, bestAny=null, run=0;
+  const gk=pool.filter(p=>p.pos.includes('GK'));
+  const outfield=pool.filter(p=>!p.pos.includes('GK'));
+  const needsGK=formation.rows.flat().includes('GK');
+
+  function seed(){
+    const picked=[];
+    const usedIds=new Set();
+    if(needsGK&&gk.length){
+      const g=gk[Math.floor(Math.random()*Math.min(gk.length,6))]||gk[0];
+      picked.push(g); usedIds.add(g.id);
+    }
+    // bias toward high rating early (rating is the hardest constraint), then cheap
+    const wantRating=reqs.some(r=>r.kind==='rating'&&r.op==='min');
+    const candidates=(needsGK?outfield:pool).filter(p=>!usedIds.has(p.id));
+    const sorted=[...candidates].sort((a,b)=> wantRating ? (b.rating-a.rating)||(effCost(a,opts)-effCost(b,opts)) : (effCost(a,opts)-effCost(b,opts))||(b.rating-a.rating));
+    const window=wantRating?Math.max(size+6,18):Math.max(size*3,26);
+    while(picked.length<size&&sorted.length){
+      const w=Math.min(window,sorted.length);
+      const i=Math.floor(Math.random()*w);
+      const p=sorted[i];
+      if(!usedIds.has(p.id)){picked.push(p);usedIds.add(p.id);}
+      sorted.splice(i,1);
+    }
+    return picked.length===size?picked:null;
+  }
+  function score(sq){
+    const ev=evaluate(sq,formation,opts);
+    const cost=squadCost(sq,opts.untradeMul);
+    return {ev,cost,total:ev.violation*BIG+cost};
+  }
+  function propose(sq){
+    const i=Math.floor(Math.random()*size);
+    const outP=sq[i];
+    // don't swap away the only keeper for an outfielder
+    const isOnlyGK=needsGK&&outP.pos.includes('GK')&&sq.filter(p=>p.pos.includes('GK')).length<2;
+    const src=isOnlyGK?(gk.length?gk:pool):pool;
+    const inP=src[Math.floor(Math.random()*src.length)];
+    if(!inP||sq.some(p=>p.id===inP.id)) return null;
+    const trial=sq.slice(); trial[i]=inP;
+    return trial;
+  }
+  function record(sq,sc){
+    if(sc.ev.violation===0){
+      if(!bestValid||sc.cost<bestValid.cost) bestValid={squad:sq.slice(),ev:sc.ev,cost:sc.cost};
+    } else if(!bestAny||sc.total<bestAny.total){
+      bestAny={squad:sq.slice(),ev:sc.ev,cost:sc.cost,total:sc.total,__partial:true};
+    }
+  }
+
+  function runOne(){
+    let sq=seed(); if(!sq) return;
+    let cur=score(sq); record(sq,cur);
+
+    // Phase 1 — satisfy the rules. Cost is only a tie-breaker here.
+    const repair=Math.floor(perRun*0.45);
+    for(let it=0;it<repair;it++){
+      const trial=propose(sq); if(!trial) continue;
+      const sc=score(trial);
+      const delta=sc.total-cur.total;
+      const T=BIG*0.5*(1-it/repair)+1;
+      if(delta<0||Math.random()<Math.exp(-delta/T)){ sq=trial; cur=sc; record(sq,cur); }
+    }
+    // Phase 2 — now get it cheap, refusing anything that breaks a rule.
+    const trim=perRun-repair;
+    const scale=Math.max(1,maxSquadCost*0.12);
+    for(let it=0;it<trim;it++){
+      const trial=propose(sq); if(!trial) continue;
+      const sc=score(trial);
+      if(cur.ev.violation===0&&sc.ev.violation>0) continue; // never give up a legal squad
+      const delta=sc.total-cur.total;
+      const T=scale*(1-it/trim)+1;
+      if(delta<0||Math.random()<Math.exp(-delta/T)){ sq=trial; cur=sc; record(sq,cur); }
+    }
+  }
+
+  function step(){
+    const chunk=Math.max(1,Math.round(restarts/8));
+    for(let k=0;k<chunk&&run<restarts;k++,run++) runOne();
+    onProgress(run/restarts,bestValid);
+    if(run<restarts) setTimeout(step,0);
+    else {
+      const out=bestValid||bestAny;
+      onDone(out?{best:out}:{error:'No squad found. Loosen a rule or add players.'});
+    }
+  }
+  setTimeout(step,0);
+}
+
+/* ══════════════════ rendering ══════════════════ */
+function renderClub(){
+  const pills=$('#clubPills');
+  if(!club.length){ pills.innerHTML=''; $('#clubDetails').style.display='none'; updateSolveNote(); return; }
+  const tradeable=club.filter(p=>!p.untradeable).length;
+  const val=club.reduce((a,p)=>a+(p.untradeable?0:p.price),0);
+  const top=Math.max(...club.map(p=>p.rating));
+  const missing=club.filter(p=>!p.nation||!p.league||!p.club).length;
+  pills.innerHTML=[
+    `<span class="pill ok">✓ <b>${club.length}</b> players</span>`,
+    `<span class="pill"><b>${tradeable}</b> tradeable</span>`,
+    `<span class="pill"><b>${coins(val)}</b> listed value</span>`,
+    `<span class="pill">top rated <b>${top}</b></span>`,
+    missing?`<span class="pill warn">⚠ <b>${missing}</b> missing club/league/nation — chemistry will be off</span>`:'',
+    skipped.length?`<span class="pill bad">✕ <b>${skipped.length}</b> line(s) skipped</span>`:''
+  ].join('');
+  $('#clubDetails').style.display='';
+  const rows=club.map(p=>`<tr>
+    <td><strong>${esc(p.name)}</strong></td><td class="mono">${p.rating}</td>
+    <td class="mono">${esc(p.pos.join('/'))}</td><td>${esc(p.nation||'—')}</td>
+    <td>${esc(p.league||'—')}</td><td>${esc(p.club||'—')}</td>
+    <td class="mono">${p.untradeable?'UT':coins(p.price)}</td>
+    <td class="mono">${[p.icon?'ICON':'',p.hero?'HERO':'',p.special?'TOTW':'',p.rare?'R':''].filter(Boolean).join(' ')||'—'}</td></tr>`).join('');
+  $('#clubTable').innerHTML=`<thead><tr><th>Name</th><th>OVR</th><th>Pos</th><th>Nation</th><th>League</th><th>Club</th><th>Price</th><th>Tags</th></tr></thead><tbody>${rows}</tbody>`;
+  $('#clubSkipped').innerHTML=skipped.length?`<p style="margin-top:10px;color:var(--bad);font-size:.8rem">Couldn't read: ${skipped.slice(0,6).map(esc).join(' · ')}${skipped.length>6?` (+${skipped.length-6} more)`:''}</p>`:'';
+  updateSolveNote();
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderReqs(){
+  const el=$('#reqList');
+  if(!reqs.length){ el.innerHTML=`<div class="empty">No rules yet — paste an SBC on the left, or add one by hand.</div>`; updateSolveNote(); return; }
+  el.innerHTML=reqs.map(r=>{
+    const needsP=NEEDS_PARAM[r.kind];
+    const paramField = r.kind==='quality'
+      ? `<select data-f="param" data-id="${r.id}"><option value="gold"${r.param==='gold'?' selected':''}>Gold</option><option value="silver"${r.param==='silver'?' selected':''}>Silver</option><option value="bronze"${r.param==='bronze'?' selected':''}>Bronze</option></select>`
+      : `<input data-f="param" data-id="${r.id}" value="${esc(r.param)}" placeholder="${r.kind==='ovr'?'e.g. 85':'name'}"${needsP?'':' class="na"'} ${needsP?'':'tabindex="-1"'}>`;
+    return `<div class="req${r.auto?' auto':''}">
+      <select data-f="kind" data-id="${r.id}">
+        ${Object.keys(KIND_LABEL).map(k=>`<option value="${k}"${k===r.kind?' selected':''}>${KIND_LABEL[k]}</option>`).join('')}
+      </select>
+      ${paramField}
+      <select data-f="op" data-id="${r.id}">
+        <option value="min"${r.op==='min'?' selected':''}>Min</option>
+        <option value="max"${r.op==='max'?' selected':''}>Max</option>
+        <option value="exactly"${r.op==='exactly'?' selected':''}>Exactly</option>
+      </select>
+      <input data-f="value" data-id="${r.id}" type="number" value="${r.value}" min="0">
+      <button class="x" data-del="${r.id}" title="Remove" aria-label="Remove rule">×</button>
+    </div>`;
+  }).join('');
+  $('#reqUnparsed').innerHTML=unparsedReqLines.length
+    ? `<strong style="color:var(--warn)">Couldn't read ${unparsedReqLines.length} line(s):</strong> ${unparsedReqLines.slice(0,4).map(esc).join(' · ')} — add them by hand if they matter.`
+    : (reqs.length?`<span style="color:var(--acc)">✓ ${reqs.length} rule(s) ready.</span> Edit anything that looks wrong.`:'');
+  updateSolveNote();
+}
+function updateSolveNote(){
+  const n=$('#solveNote'); if(solving) return;
+  const size=(reqs.find(r=>r.kind==='size')||{value:11}).value||11;
+  if(!club.length){ n.textContent='Paste a club to start.'; $('#solveBtn').disabled=true; return; }
+  if(club.length<size){ n.textContent=`Need at least ${size} players — you have ${club.length}.`; $('#solveBtn').disabled=true; return; }
+  if(!reqs.length){ n.textContent='No rules set — Autopilot will just find the 11 cheapest.'; }
+  else n.textContent=`${club.length} players · ${reqs.length} rule(s) · ${size}-man squad.`;
+  $('#solveBtn').disabled=false;
+}
+
+function renderResult(res,formation,opts){
+  const {squad,ev,cost}=res;
+  lastSolution={squad,ev,cost,formation};
+  const R=$('#result'); R.classList.add('on');
+  const passAll=ev.checks.every(c=>c.pass);
+  const tight=ev.rating.exact-Math.floor(ev.rating.exact)<0.08;
+  $('#resultSub').textContent=passAll?'Meets every rule. Build it exactly as shown.':'Closest squad found — some rules are still short.';
+  $('#scoreline').innerHTML=`
+    <div class="score ${passAll?'good':'bad'}"><div class="k">Cost</div><div class="v">${coins(cost)}</div><div class="s">${squad.filter(p=>p.untradeable).length} untradeable used</div></div>
+    <div class="score"><div class="k">Rating</div><div class="v">${ev.rating.rating}</div><div class="s mono">${ev.rating.exact.toFixed(2)}${tight?' · tight':''}</div></div>
+    <div class="score"><div class="k">Chemistry</div><div class="v">${ev.chem.total}</div><div class="s">of 33</div></div>
+    <div class="score"><div class="k">Formation</div><div class="v" style="font-size:1.5rem">${formation.name}</div><div class="s">${ev.chem.detail.filter(d=>!d.inPos).length} out of position</div></div>
+    <div class="score ${passAll?'good':'bad'}"><div class="k">Rules</div><div class="v">${ev.checks.filter(c=>c.pass).length}/${ev.checks.length}</div><div class="s">${passAll?'all passed':'not all met'}</div></div>`;
+
+  // pitch: rebuild rows from slot indices
+  const slots=formation.rows.flat();
+  const bySlot=new Array(slots.length).fill(null);
+  ev.chem.detail.forEach(d=>{ if(d.slotIndex>=0) bySlot[d.slotIndex]=d; });
+  let html='';
+  for(let r=formation.rows.length-1;r>=0;r--){
+    const row=formation.rows[r];
+    const start=formation.rows.slice(0,r).reduce((a,x)=>a+x.length,0);
+    html+='<div class="prow">'+row.map((slot,i)=>{
+      const d=bySlot[start+i];
+      if(!d) return `<div class="card"><span class="slot">${slot}</span><div class="ovr">—</div></div>`;
+      const p=d.player;
+      return `<div class="card${d.inPos?'':' oop'}">
+        <span class="slot">${slot}${d.inPos?'':' ⚠'}</span>
+        <div class="ovr">${p.rating}</div>
+        <div class="nm" title="${esc(p.name)}">${esc(p.name)}</div>
+        <div class="meta" title="${esc([p.club,p.league,p.nation].filter(Boolean).join(' · '))}">${esc([p.club,p.nation].filter(Boolean).join(' · ')||'—')}</div>
+        <div class="chem">${[0,1,2].map(i=>`<i class="${i<d.chem?'on':''}"></i>`).join('')}</div>
+        <div class="prc ${p.untradeable?'free':''}">${p.untradeable?'UNTRADEABLE':coins(p.price)}</div>
+      </div>`;
+    }).join('')+'</div>';
+  }
+  $('#pitch').innerHTML=html;
+
+  $('#checklist').innerHTML=ev.checks.length?ev.checks.map(c=>`
+    <div class="cl ${c.pass?'pass':'fail'}">
+      <span class="mk">${c.pass?'PASS':'FAIL'}</span>
+      <span class="lbl">${esc(reqLabel(c.req))}</span>
+      <span class="val">you have ${c.actual}</span>
+    </div>`).join('')
+    : `<div class="cl pass"><span class="mk">—</span><span class="lbl">No rules set; this is simply your cheapest ${squad.length}.</span><span class="val"></span></div>`;
+  R.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ══════════════════ wiring ══════════════════ */
+function readOpts(){
+  return {
+    relPos:$('#relPosChk').checked,
+    safe:$('#safeChk').checked,
+    excludeIcons:$('#lockChk').checked,
+    untradeMul:parseFloat($('#untradeSel').value),
+    effort:$('#effortSel').value
+  };
+}
+function refreshClub(){
+  const {players,bad}=parseClub($('#clubIn').value);
+  club=players; skipped=bad;
+  localStorage.setItem(LS_CLUB,$('#clubIn').value);
+  renderClub();
+  refreshSbc(); // named-league/nation detection depends on the club lexicon
+}
+function refreshSbc(){
+  const manual=reqs.filter(r=>!r.auto);
+  const {reqs:auto,unparsed}=parseSbc($('#sbcIn').value);
+  const keys=new Set(auto.map(r=>r.kind+'|'+norm(r.param)));
+  reqs=[...auto,...manual.filter(r=>!keys.has(r.kind+'|'+norm(r.param)))];
+  unparsedReqLines=unparsed;
+  localStorage.setItem(LS_SBC,$('#sbcIn').value);
+  renderReqs();
+}
+let clubT,sbcT;
+$('#clubIn').addEventListener('input',()=>{clearTimeout(clubT);clubT=setTimeout(refreshClub,260);});
+$('#sbcIn').addEventListener('input',()=>{clearTimeout(sbcT);sbcT=setTimeout(refreshSbc,220);});
+
+$('#reqList').addEventListener('change',e=>{
+  const t=e.target, id=Number(t.dataset.id);
+  if(!id) return;
+  const r=reqs.find(x=>x.id===id); if(!r) return;
+  const f=t.dataset.f;
+  if(f==='value') r.value=Number(t.value)||0;
+  else if(f==='kind'){ r.kind=t.value; r.auto=false; if(!NEEDS_PARAM[r.kind]) r.param=''; }
+  else if(f==='op') r.op=t.value;
+  else if(f==='param') r.param=t.value;
+  r.auto=false;
+  renderReqs();
+});
+$('#reqList').addEventListener('click',e=>{
+  const id=Number(e.target.dataset.del); if(!id) return;
+  reqs=reqs.filter(r=>r.id!==id); renderReqs();
+});
+$('#addReqBtn').addEventListener('click',()=>{ reqs.push(newReq('rating','min',84,'',false)); renderReqs(); });
+
+$('#clearClubBtn').addEventListener('click',()=>{ $('#clubIn').value=''; refreshClub(); toast('Club cleared'); });
+
+$('#solveBtn').addEventListener('click',()=>{
+  if(solving) return;
+  const formation=FORMATIONS[Number($('#formationSel').value)]||FORMATIONS[0];
+  const opts=readOpts();
+  solving=true;
+  $('#solveBtn').disabled=true;
+  $('#prog').classList.add('on');
+  $('#prog i').style.width='0%';
+  $('#solveNote').textContent='Searching…';
+  solveAsync(formation,opts,
+    (pct,best)=>{
+      $('#prog i').style.width=Math.round(pct*100)+'%';
+      $('#solveNote').textContent=best&&!best.__partial?`Best so far: ${coins(best.cost)}`:'Searching…';
+    },
+    out=>{
+      solving=false;
+      $('#solveBtn').disabled=false;
+      $('#prog').classList.remove('on');
+      if(out.error){ $('#solveNote').textContent=out.error; toast(out.error); return; }
+      const res=out.best;
+      renderResult(res,formation,opts);
+      $('#solveNote').textContent=res.__partial?'No fully passing squad — showing the closest.':`Done — ${coins(res.cost)}.`;
+      if(res.__partial) toast('No squad passes every rule yet');
+    });
+});
+$('#againBtn').addEventListener('click',()=>$('#solveBtn').click());
+$('#copyBtn').addEventListener('click',()=>{
+  if(!lastSolution) return;
+  const {squad,ev,cost,formation}=lastSolution;
+  const lines=ev.chem.detail
+    .slice().sort((a,b)=>a.slotIndex-b.slotIndex)
+    .map(d=>`${String(d.slot).padEnd(4)} ${String(d.player.rating).padEnd(3)} ${d.player.name}  (${[d.player.club,d.player.nation].filter(Boolean).join(', ')})  ${d.player.untradeable?'untradeable':coins(d.player.price)}${d.inPos?'':'  ⚠ out of position'}`);
+  const txt=[`SBC squad — ${formation.name}`,`Rating ${ev.rating.rating} (${ev.rating.exact.toFixed(2)})  ·  Chemistry ${ev.chem.total}/33  ·  Cost ${coins(cost)}`,''].concat(lines).join('\n');
+  navigator.clipboard?.writeText(txt).then(()=>toast('Squad copied'),()=>toast('Copy failed'));
+});
+
+/* theme */
+function setTheme(t){ document.documentElement.dataset.theme=t; localStorage.setItem(LS_THEME,t); }
+$('#themeBtn').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+
+/* formations */
+$('#formationSel').innerHTML=FORMATIONS.map((f,i)=>`<option value="${i}"${f.name==='4-3-3'?' selected':''}>${f.name}</option>`).join('');
+
+/* ══════════════════ demo data ══════════════════ */
+const DEMO_CLUB=`Name, Rating, Positions, Nation, League, Club, Price, Tags
+K. Oduya, 88, ST, Nigeria, Premier League, Arsenal, 0, untradeable rare
+L. Moreau, 87, CAM/CM, France, Ligue 1, Paris, 0, untradeable rare
+D. Vasquez, 86, CB, Spain, LALIGA, Sevilla, 168000, rare
+M. Halvorsen, 86, ST, Norway, Bundesliga, Dortmund, 154000, rare
+T. Bianchi, 85, CM, Italy, Serie A, Napoli, 96000, rare
+A. Ferreira, 85, RW, Brazil, LALIGA, Real Betis, 88000, rare
+S. Nakamura, 85, CDM, Japan, Serie A, Lazio, 74000, rare
+J. Okonkwo, 84, CB, Nigeria, Premier League, Chelsea, 21000, rare
+P. Lindqvist, 84, GK, Sweden, Premier League, Everton, 19500, rare
+R. Delgado, 84, LB, Argentina, Serie A, Inter, 18800, rare
+C. Whitfield, 84, RB, England, Premier League, Arsenal, 22000, rare
+N. Boateng, 84, CM, Ghana, Bundesliga, Leverkusen, 17400, rare
+E. Kovacs, 84, LW, Croatia, Ligue 1, Marseille, 16900, rare
+V. Sorokin, 84, ST, Ukraine, LALIGA, Villarreal, 20100, rare
+H. Aziz, 83, CDM, Morocco, Ligue 1, Lyon, 4200, rare
+B. Adeyemi, 83, RM, Nigeria, Premier League, Brighton, 3900, rare
+F. Rossi, 83, CB, Italy, Serie A, Roma, 3600, rare
+G. Mensah, 83, LB, Ghana, Premier League, Arsenal, 4100, rare
+I. Duarte, 83, GK, Portugal, Liga Portugal, Benfica, 3400, rare
+O. Lindberg, 83, CM, Denmark, Bundesliga, Frankfurt, 3300
+Q. Martins, 83, ST, Brazil, Liga Portugal, Porto, 5100, rare
+W. Achebe, 82, CB, Nigeria, LALIGA, Valencia, 1500
+Y. Tanaka, 82, RB, Japan, Bundesliga, Stuttgart, 1400
+Z. Petrov, 82, LM, Bulgaria, Serie A, Atalanta, 1350
+A. Mbeki, 82, CAM, South Africa, Premier League, Fulham, 1900, rare
+B. Sorensen, 82, GK, Denmark, Eredivisie, Ajax, 1250
+C. Nwosu, 82, ST, Nigeria, Ligue 1, Nice, 2200, rare
+D. Keller, 82, CM, Germany, Bundesliga, Wolfsburg, 1300
+E. Silva, 81, CB, Brazil, Ligue 1, Rennes, 800
+F. Oyelaran, 81, RW, Nigeria, Eredivisie, PSV, 950, rare
+G. Novak, 81, CDM, Czech Republic, Serie A, Torino, 780
+H. Bakker, 81, LB, Netherlands, Eredivisie, Feyenoord, 760
+I. Costa, 81, ST, Portugal, Liga Portugal, Sporting, 1100, rare
+J. Fischer, 81, GK, Germany, Bundesliga, Union Berlin, 750
+K. Adebayo, 80, CB, Nigeria, EFL Championship, Leeds, 700, rare
+L. Hansen, 80, RM, Norway, Eredivisie, AZ, 650
+M. Ricci, 80, CM, Italy, Serie A, Bologna, 640
+N. Diallo, 80, LW, Senegal, Ligue 1, Lens, 690
+O. Byrne, 80, RB, Republic of Ireland, Premier League, Wolves, 700
+P. Estrada, 80, ST, Mexico, LALIGA, Girona, 720
+Q. Nilsen, 79, CB, Norway, Eredivisie, Twente, 550
+R. Ibe, 79, CDM, Nigeria, Liga Portugal, Braga, 600, rare
+S. Wagner, 79, LM, Germany, Bundesliga, Mainz, 540
+T. Moreno, 79, CAM, Spain, LALIGA, Osasuna, 580
+U. Kalu, 78, GK, Nigeria, Premier League, Brentford, 500`;
+
+const DEMO_SBC=`Squad Rating: Min. 84
+Team Chemistry: Min. 26
+Same League Count: Min. 4
+Same Nation Count: Min. 2
+Rare: Min. 5
+Number of players in the Squad: 11`;
+
+$('#sampleClubBtn').addEventListener('click',()=>{ $('#clubIn').value=DEMO_CLUB; refreshClub(); toast('Demo club loaded (fictional players)'); });
+$('#sampleSbcBtn').addEventListener('click',()=>{ $('#sbcIn').value=DEMO_SBC; refreshSbc(); toast('Example SBC loaded'); });
+$('#demoBtn').addEventListener('click',()=>{
+  $('#clubIn').value=DEMO_CLUB; $('#sbcIn').value=DEMO_SBC;
+  refreshClub();
+  toast('Demo loaded — hit Build my squad');
+  document.querySelector('.step').scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+/* ══════════════════ boot ══════════════════ */
+setTheme(localStorage.getItem(LS_THEME)||'dark');
+const savedClub=localStorage.getItem(LS_CLUB), savedSbc=localStorage.getItem(LS_SBC);
+if(savedClub) $('#clubIn').value=savedClub;
+if(savedSbc)  $('#sbcIn').value=savedSbc;
+refreshClub();
+})();
+</script>
+</body>
+</html>
