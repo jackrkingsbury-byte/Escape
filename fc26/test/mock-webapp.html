@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Deliberately unhelpful stand-in for the FUT Web App, used to test the bookmarklet's
+     page reading. Obfuscated class names, a virtualised player list that only keeps a
+     window of tiles in the DOM, split label/value requirement rows, and decoy numbers
+     scattered about. Passing this proves the harvest → parse → solve pipeline works on
+     DOM shaped like the real thing; it is NOT proof it works on the live web app, which
+     needs an EA login none of this has. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mock Web App</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#1b1f2a;color:#fff}
+.hdr{display:flex;gap:18px;padding:10px 16px;background:#111}
+.pane{display:flex;gap:16px;padding:16px}
+.sbc{width:320px;background:#232838;padding:14px;border-radius:8px}
+.r7f{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #333}
+#vp{flex:1;height:520px;overflow:auto;background:#1e2331;border-radius:8px}
+#spacer{position:relative}
+.k2p{position:absolute;left:0;right:0;height:104px;display:flex;gap:10px;align-items:center;padding:8px;border-bottom:1px solid #2a3040}
+.a9{width:54px;text-align:center}
+.b3{font-size:22px;font-weight:700}
+.c1{font-size:11px;color:#9aa}
+.d8{flex:1}
+.e4{font-weight:600}
+.f2{display:flex;gap:6px;margin-top:6px}
+.f2 img{width:20px;height:20px}
+</style>
+</head>
+<body>
+<!-- decoys: numbers in the rating range that are not players -->
+<div class="hdr"><span>Coins <b>1,284,300</b></span><span>Level <b>84</b></span><span>Draft <b>91</b></span><span>Squad Battles rank <b>77</b></span></div>
+<div class="pane">
+  <div class="sbc" id="sbc">
+    <h3>Marquee Matchups</h3>
+    <div class="r7f"><span>Squad Rating: Min.</span><span>84</span></div>
+    <div class="r7f"><span>Team Chemistry: Min.</span><span>26</span></div>
+    <div class="r7f"><span>Same League Count: Min.</span><span>4</span></div>
+    <div class="r7f"><span>Same Nation Count: Min.</span><span>2</span></div>
+    <div class="r7f"><span>Rare: Min.</span><span>5</span></div>
+    <div class="r7f"><span>Number of players in the Squad:</span><span>11</span></div>
+    <p style="color:#9aa;font-size:12px">Formation: 4-3-3 · Reward: Premium Gold Pack</p>
+  </div>
+  <div id="vp"><div id="spacer"></div></div>
+</div>
+<script>
+const NATIONS = { 14: 'England', 18: 'France', 45: 'Spain', 54: 'Germany', 27: 'Italy', 38: 'Brazil', 52: 'Nigeria', 36: 'Norway', 21: 'Japan', 46: 'Sweden' };
+const LEAGUES = { 13: 'Premier League', 53: 'Ligue 1', 53100: 'LALIGA', 31: 'Serie A', 19: 'Bundesliga', 10: 'Eredivisie' };
+const CLUBS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const POS = ['GK', 'CB', 'LB', 'RB', 'CDM', 'CM', 'CAM', 'LM', 'RM', 'LW', 'RW', 'ST'];
+
+// 64 players, seeded so every run is identical
+let s = 20260801;
+const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+const pick = a => a[Math.floor(rnd() * a.length)];
+const PLAYERS = [];
+for (let i = 0; i < 64; i++) {
+  // a workable spread: a handful of high ratings, a long tail of fodder
+  const rating = i < 4 ? 88 - i : i < 14 ? 86 - Math.floor((i - 4) / 3) : i < 30 ? 84 - Math.floor((i - 14) / 4) : 82 - Math.floor((i - 30) / 5);
+  const nat = pick(Object.keys(NATIONS)), lg = pick(Object.keys(LEAGUES));
+  PLAYERS.push({
+    name: `Player ${String.fromCharCode(65 + (i % 26))}${i}`,
+    rating: Math.max(72, rating),
+    pos: rnd() < 0.12 ? 'GK' : pick(POS.slice(1)),
+    alt: rnd() < 0.3 ? pick(POS.slice(1)) : null,
+    club: pick(CLUBS), league: lg, nation: nat,
+    rare: rnd() < 0.55,
+  });
+}
+window.__PLAYERS = PLAYERS;
+
+// a 1x1 gif so the <img> elements are real without needing the network
+const PX = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+const vp = document.getElementById('vp'), spacer = document.getElementById('spacer');
+const ROW = 104, WINDOW = 14;
+spacer.style.height = PLAYERS.length * ROW + 'px';
+
+// virtualised: only the visible window exists in the DOM, exactly like the real list
+function draw() {
+  const first = Math.max(0, Math.floor(vp.scrollTop / ROW) - 1);
+  const last = Math.min(PLAYERS.length, first + WINDOW);
+  let html = '';
+  for (let i = first; i < last; i++) {
+    const p = PLAYERS[i];
+    html += `<div class="k2p _${(i * 7919) % 9973}" style="top:${i * ROW}px">
+      <div class="a9"><span class="b3">${p.rating}</span><div class="c1">${p.pos}${p.alt ? ' ' + p.alt : ''}</div></div>
+      <div class="d8">
+        <div class="e4">${p.name}</div>
+        <div class="f2">
+          <img src="${PX}" data-x="https://cdn.example/fut/24/clubs/dark/${p.club}.png" alt="">
+          <img src="${PX}" data-x="https://cdn.example/fut/24/leagues/${p.league}.png" alt="">
+          <img src="${PX}" data-x="https://cdn.example/fut/24/flags/card/${p.nation}.png" alt="">
+        </div>
+        <div class="c1">${p.rare ? 'Rare' : 'Common'} · Gold</div>
+      </div>
+    </div>`;
+  }
+  spacer.innerHTML = html;
+  // real crest URLs live on the element; swap them onto src so no network is needed
+  spacer.querySelectorAll('img[data-x]').forEach(im => { im.__realSrc = im.dataset.x; });
+}
+vp.addEventListener('scroll', draw);
+draw();
+
+// The harvester reads img.currentSrc/src. Point those at the CDN-shaped URLs without
+// actually loading them, so URL classification is exercised for real.
+Object.defineProperty(HTMLImageElement.prototype, 'src', {
+  get() { return this.__realSrc || this.getAttribute('src') || ''; },
+  set(v) { this.setAttribute('src', v); },
+  configurable: true,
+});
+</script>
+</body>
+</html>
