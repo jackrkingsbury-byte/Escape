@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- GENERATED from install.template.html by build.mjs — edit the template, not install.html -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SBC Autopilot — install the bookmarklet</title>
+<meta name="theme-color" content="#05070c">
+<meta name="description" content="Drag one link to your bookmarks bar. It reads your club and the SBC on screen in the FUT Web App and works out the squad that passes.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2305070c'/><path d='M20 74 L50 20 L80 74 Z' fill='none' stroke='%2300e07a' stroke-width='9' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#05070c;--surface:#0d1119;--surface-2:#131926;--surface-3:#1a2233;--text:#eef2f8;--muted:#8d97ab;--faint:#5d6779;
+  --line:#1e2735;--line-2:#2b3648;--acc:#00e07a;--acc-deep:#00b863;--acc-soft:#07281c;--bad:#ff5a5a;--bad-soft:#2b1216;
+  --warn:#ffb020;--warn-soft:#2b2010;--radius:16px;--shadow:0 1px 2px rgba(0,0,0,.5),0 14px 40px rgba(0,0,0,.45)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(760px 420px at 12% -6%,rgba(0,224,122,.10),transparent 62%)}
+h1,h2,h3{font-family:'Barlow Condensed','Inter',sans-serif;text-transform:uppercase;line-height:1.04;font-weight:800}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+a{color:var(--acc)}
+header.top{border-bottom:1px solid var(--line);background:rgba(5,7,12,.9)}
+.top-in{display:flex;align-items:center;gap:12px;height:60px;max-width:840px;margin:0 auto;padding:0 20px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.35rem;text-transform:uppercase}
+.brand .mk{width:30px;height:30px;border-radius:9px;background:linear-gradient(150deg,var(--acc),#0a8f56);display:grid;place-items:center;color:#04150d;font-weight:800}
+.sp{flex:1}
+.hero{padding:48px 0 10px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);margin-top:10px}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{color:var(--muted);font-size:1.05rem;margin-top:14px;max-width:62ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:18px 0;box-shadow:var(--shadow)}
+.card h2{font-size:1.35rem;margin-bottom:6px}
+.card h3{font-size:1.05rem;margin:18px 0 6px}
+.card p{color:var(--muted)}
+.card p+p{margin-top:9px}
+.drag{display:block;text-align:center;margin:20px 0 12px;padding:20px;border:2px dashed var(--line-2);border-radius:var(--radius);background:var(--surface-2)}
+.drag .grab{display:inline-flex;align-items:center;gap:9px;background:var(--acc);color:#04150d;font-weight:800;font-size:1.1rem;padding:14px 26px;border-radius:12px;text-decoration:none;cursor:grab;box-shadow:0 10px 26px rgba(0,224,122,.2)}
+.drag .grab:active{cursor:grabbing}
+.drag small{display:block;margin-top:12px;color:var(--faint);font-size:.82rem}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:700;font-size:.9rem;padding:10px 16px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--text);cursor:pointer;text-decoration:none;transition:.16s}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn-primary{background:var(--acc);color:#04150d;border-color:transparent}
+.btn-primary:hover{background:var(--acc-deep);color:#04150d}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+ol,ul{margin:10px 0 0 20px;color:var(--muted)}
+li{margin-bottom:7px}
+li b,p b{color:var(--text)}
+code{font-family:'JetBrains Mono',monospace;background:var(--surface-2);border:1px solid var(--line);padding:2px 6px;border-radius:5px;font-size:.82rem;color:var(--text)}
+textarea{width:100%;min-height:90px;background:#080b12;color:var(--muted);border:1px solid var(--line-2);border-radius:10px;padding:10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;line-height:1.5;resize:vertical;margin-top:12px}
+.callout{border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:0 10px 10px 0;padding:14px 16px;margin:16px 0}
+.callout.no{border-left-color:var(--bad);background:var(--bad-soft)}
+.callout.yes{border-left-color:var(--acc);background:var(--acc-soft)}
+.callout b{display:block;margin-bottom:4px;color:var(--text)}
+.callout p{color:var(--muted);font-size:.92rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.mini{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:16px}
+.mini h4{font-size:.78rem;font-family:'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:7px}
+.mini p{font-size:.88rem}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0 44px;color:var(--faint);font-size:.82rem}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--surface-3);border:1px solid var(--line-2);padding:11px 18px;border-radius:100px;font-size:.88rem;font-weight:600;opacity:0;pointer-events:none;transition:.22s;z-index:100}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="brand"><span class="mk">▲</span>SBC Autopilot</div><span class="sp"></span>
+  <a class="btn" href="./">Solver page</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">Bookmarklet · FUT Web App</p>
+    <h1>One link in your <em>bookmarks bar.</em></h1>
+    <p class="lede">Drag the green button below onto your bookmarks bar. Open the FUT Web App, go to an SBC, click the bookmark — a panel opens that reads your club, reads the challenge, and works out which players to put in.</p>
+  </section>
+
+  <div class="card">
+    <h2>Install</h2>
+    <div class="drag">
+      <a class="grab" href="__BOOKMARKLET_HREF__" onclick="return false;">▲ SBC Autopilot</a>
+      <small>Drag me to the bookmarks bar &nbsp;·&nbsp; __SIZE__ &nbsp;·&nbsp; clicking here does nothing, dragging is the point</small>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" id="copyBtn" type="button">Copy the code instead</button>
+      <a class="btn" href="./sbc-autopilot.user.js">Tampermonkey userscript</a>
+    </div>
+    <h3>If dragging doesn't work</h3>
+    <ol>
+      <li>Hit <b>Copy the code instead</b>.</li>
+      <li>Right-click your bookmarks bar → <b>Add page</b> (Chrome) or <b>Add bookmark</b> (Firefox).</li>
+      <li>Name it <code>SBC Autopilot</code> and paste the code into the <b>URL</b> field.</li>
+    </ol>
+    <p style="margin-top:12px">Bookmarks bar hidden? <code>Ctrl/Cmd + Shift + B</code>.</p>
+    <h3>Or run it as a userscript</h3>
+    <p>If you already use Tampermonkey or Violentmonkey, the userscript above is the sturdier install — it loads itself on the web app every time, so there's no bookmark to click and no length limit to worry about.</p>
+    <textarea id="code" readonly spellcheck="false"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Using it</h2>
+    <ol>
+      <li>Open the FUT Web App and log in as normal.</li>
+      <li>Click the bookmark. A panel appears in the top right — drag it anywhere.</li>
+      <li>Hit <b>Start harvesting</b>, then go to your club and <b>scroll through your players</b>. The web app only draws what's on screen, so it can only read what you've scrolled past. The counter climbs as you go.</li>
+      <li>Open the SBC you want to do and hit <b>Read requirements</b>. Check what it picked up — the box is editable, so fix anything it got wrong.</li>
+      <li>Pick the formation and hit <b>Solve</b>. You get the eleven players, which slot each one goes in, and a pass/fail line for every requirement.</li>
+      <li>Build it yourself in the app.</li>
+    </ol>
+    <div class="callout yes">
+      <b>Also useful: Copy club</b>
+      <p>Dumps everything harvested as a table you can paste straight into the <a href="./">solver page</a> — handy for planning several SBCs without re-scrolling your club, or for adding real market prices by hand.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>What it does and doesn't do</h2>
+    <div class="two">
+      <div class="mini">
+        <h4>It does</h4>
+        <p>Read the page you're already looking at, do the maths, and show you the answer. Everything runs in your browser and stays there.</p>
+      </div>
+      <div class="mini">
+        <h4>It doesn't</h4>
+        <p>Click, drag, submit, buy, sell, or automate anything. It makes no network calls — nothing is uploaded, and no third-party price site is contacted.</p>
+      </div>
+    </div>
+    <div class="callout no">
+      <b>EA's terms ban third-party FUT tools</b>
+      <p>That applies to this one. Using it is at your own risk, and the risk lands on your account. It was built read-only partly for that reason: it never acts for you, so there are no automated actions to look like a bot. Your judgement, your call.</p>
+    </div>
+    <div class="callout">
+      <b>Two honest limitations</b>
+      <p><b>Prices are estimated from rating.</b> The club list shows no market values and this tool won't call out to a price site, so "cost" is a rating-based proxy for how painful a player is to spend — not coins. Paste your club into the solver page if you want to work with real prices.</p>
+      <p><b>Reading the page is best-effort.</b> It finds players by shape — a rating, a position, a crest — rather than by EA's class names, so it survives redesigns better than most. But it has not been verified against the live web app, which needs an EA login. If the panel says chemistry data is patchy, believe it, and check the squad in game before you submit.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="wrap">
+  <p><strong>Unofficial fan-made tool.</strong> Not affiliated with, endorsed by, or connected to EA Sports or the FC series. Source: <code>fc26/engine.js</code> and <code>fc26/pilot.src.js</code>.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script>
+var BM = __BOOKMARKLET_JSON__;
+document.getElementById('code').value = BM;
+document.getElementById('copyBtn').addEventListener('click', function(){
+  var t = document.getElementById('toast');
+  function done(msg){ t.textContent = msg; t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); }, 2200); }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(BM).then(function(){ done('Copied — paste it as a bookmark URL'); }, sel);
+  else sel();
+  function sel(){ var c = document.getElementById('code'); c.focus(); c.select(); done('Selected — press Ctrl/Cmd + C'); }
+});
+</script>
+</body>
+</html>
