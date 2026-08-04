@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "tsx scripts/guardrails.test.ts"
+    "test": "tsx scripts/guardrails.test.ts && tsx scripts/pipeline.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

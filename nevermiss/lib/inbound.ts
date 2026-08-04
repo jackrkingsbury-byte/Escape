@@ -37,15 +37,23 @@ export async function handleInboundMessage(opts: {
     const lead = await findOrCreateLead(admin, business.id, customer, "whatsapp_or_sms");
     const conversation = await findOrCreateConversation(admin, business.id, lead.id, convKey);
 
-    await admin.from("messages").insert({
-      conversation_id: conversation.id,
-      direction: "in",
-      sender: "customer",
-      body: opts.body,
-      wa_message_id: opts.messageId,
-    });
+    const { data: insertedIn } = await admin
+      .from("messages")
+      .insert({
+        conversation_id: conversation.id,
+        direction: "in",
+        sender: "customer",
+        body: opts.body,
+        wa_message_id: opts.messageId,
+      })
+      .select("id")
+      .single();
 
-    const history = await loadHistory(admin, conversation.id);
+    const history = await loadHistory(
+      admin,
+      conversation.id,
+      (insertedIn as { id: string } | null)?.id ?? null,
+    );
     const outcome = await runAgent(profileFromBusiness(business), history, opts.body);
     if (!outcome.ok) {
       await admin.from("events").insert({
@@ -232,18 +240,61 @@ async function findOrCreateConversation(
   return created as ConversationRow;
 }
 
-async function loadHistory(admin: Admin, conversationId: string): Promise<ConversationTurn[]> {
+/** How many prior turns the agent sees. Bounds prompt cost. */
+const HISTORY_TURNS = 12;
+
+/**
+ * The most recent `HISTORY_TURNS` turns before the message being answered,
+ * oldest first (the order the agent reads them in).
+ *
+ * Ordering must be DESCENDING here. Ascending + limit returns the *first*
+ * turns of the conversation, so past turn 12 the agent re-read the opening
+ * of the thread on every reply and never saw what the customer just said —
+ * it would re-ask for details already given and lose the thread mid-job.
+ *
+ * `excludeMessageId` drops the row we inserted a moment ago, which is passed
+ * separately as the incoming message. Excluding it by id rather than by
+ * position is what makes this correct at any conversation length.
+ */
+export type HistoryRow = Pick<MessageRow, "id" | "direction" | "body">;
+
+/**
+ * Pure half of `loadHistory`: newest-first rows → chronological turns.
+ * Split out from the query so the windowing rules are directly testable.
+ */
+export function selectHistoryWindow(
+  rowsNewestFirst: HistoryRow[],
+  excludeMessageId: string | null,
+): ConversationTurn[] {
+  const priorTurns = excludeMessageId
+    ? rowsNewestFirst.filter((m) => m.id !== excludeMessageId)
+    : rowsNewestFirst.slice(1); // newest row is the message we just inserted
+
+  return priorTurns
+    .slice(0, HISTORY_TURNS)
+    .reverse() // newest-first query order → chronological for the prompt
+    .filter((m) => m.body)
+    .map((m) => ({
+      role: m.direction === "in" ? "customer" : "business",
+      text: m.body as string,
+    }));
+}
+
+async function loadHistory(
+  admin: Admin,
+  conversationId: string,
+  excludeMessageId: string | null,
+): Promise<ConversationTurn[]> {
   const { data } = await admin
     .from("messages")
-    .select("direction, body")
+    .select("id, direction, body")
     .eq("conversation_id", conversationId)
-    .order("created_at", { ascending: true })
-    .limit(12);
-  return (data ?? [])
-    .slice(0, -1) // exclude the just-inserted incoming message
-    .filter((m) => (m as Pick<MessageRow, "body">).body)
-    .map((m) => ({
-      role: (m as Pick<MessageRow, "direction">).direction === "in" ? "customer" : "business",
-      text: (m as Pick<MessageRow, "body">).body as string,
-    }));
+    .order("created_at", { ascending: false })
+    // Tie-break so rows sharing a created_at can't shuffle between reads.
+    .order("id", { ascending: false })
+    // Fetch one spare: if the insert didn't return an id we still have enough
+    // rows to drop the newest and keep a full window.
+    .limit(HISTORY_TURNS + 1);
+
+  return selectHistoryWindow((data ?? []) as HistoryRow[], excludeMessageId);
 }

@@ -28,8 +28,15 @@ function client() {
 
 /**
  * Validate an inbound Twilio webhook signature.
- * If no auth token is set (early dev), returns true so testing isn't blocked —
- * tighten this once Twilio is live in production.
+ *
+ * An unsigned request to these webhooks is not harmless: it writes rows as any
+ * business, spends Anthropic credit, and makes us send real SMS to any number
+ * an attacker supplies. So a missing auth token fails CLOSED in production —
+ * unauthenticated callers are rejected rather than trusted.
+ *
+ * Outside production the check is skipped so local curl/ngrok testing works.
+ * That costs nothing in reach: without a token the app cannot send messages
+ * anyway, since the Twilio client needs the same credential.
  */
 export function validateTwilioSignature(
   signature: string | null,
@@ -37,7 +44,15 @@ export function validateTwilioSignature(
   params: Record<string, string>,
 ): boolean {
   const token = authToken();
-  if (!token) return true;
+  if (!token) {
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        "[validateTwilioSignature] rejecting webhook: TWILIO_AUTH_TOKEN is not set in production",
+      );
+      return false;
+    }
+    return true;
+  }
   if (!signature) return false;
   try {
     return twilio.validateRequest(token, signature, url, params);
