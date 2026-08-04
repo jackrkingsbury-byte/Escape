@@ -50,8 +50,36 @@ from the numeric ids in crest/flag URLs — chemistry only needs identity, not n
 to image `alt` text when the app provides it. Requirements are scoped to the ancestor shared by
 the most requirement-shaped lines, which keeps the club list and reward text out of the rules.
 
-**EA's terms ban third-party FUT tools**, including this one. It was built read-only partly for
-that reason: it never acts for you, so there are no automated actions. Risk is on your account.
+## Why this is built read-only
+
+Bans in FUT follow *actions*, not analysis: talking to EA's servers on your behalf, clicking for
+you, submitting a squad, opening packs, sniping the market. This tool does none of it. It reads
+the page you opened yourself and does maths on what it read — the same thing you could do by
+reading your screen and using a calculator, minus the tedium.
+
+That is a property to be enforced, not a promise to be trusted, so `test/no-automation.test.mjs`
+holds the line two ways:
+
+| | |
+|---|---|
+| **Static** | Greps every in-page file for `fetch`, `XMLHttpRequest`, `WebSocket`, `sendBeacon`, `submit()`, `eval`, `new Function`, and any `.click()` aimed at the host page rather than our own panel. Also checks the userscript grants no privileged APIs and declares no `@connect` hosts. |
+| **Runtime** | Injects the real payload into the mock web app, harvests and solves, then asserts **zero** network requests left the page and **zero** synthetic clicks reached it — and that `<body>`, the club list and every input are exactly as they were found. |
+
+It also verifies the shipped bookmarklet was built from these exact sources, because auditing the
+source proves nothing if the artifact people install was built from something else.
+
+The suite is checked against deliberately sabotaged copies — add a `fetch` or an auto-click and it
+fails, naming the file and the reason. If you are adding a feature and this suite goes red, the
+feature is the problem.
+
+**What it still does not buy you.** EA's terms ban third-party FUT tools as a category, this one
+included, regardless of how passive it is. Read-only removes the behaviour that actually gets
+accounts actioned — automated activity — but it is not a guarantee, and nobody can honestly give
+you one. Risk is on your account.
+
+**Things that would break this, so they are not here:** signing in to an EA account, embedding or
+proxying the web app, auto-opening packs, auto-submitting SBCs, and anything touching the transfer
+market.
 
 ## Known limitations
 
@@ -100,6 +128,7 @@ node fc26/test/options.test.mjs   options, repeatability, formations, persistenc
 node fc26/test/pilot.test.mjs     bookmarklet against the mock web app
 node fc26/test/hq.test.mjs        Club HQ logic, in Node — no browser
 node fc26/test/hq.page.test.mjs   Club HQ page: every tab, persistence, mobile
+node fc26/test/no-automation.test.mjs   proves the in-page payload is read-only
 ```
 
 Real Chromium via Playwright. The solve tests recompute rating and chemistry independently from
