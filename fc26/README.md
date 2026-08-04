@@ -5,16 +5,23 @@ Solve FC 26 Squad Building Challenges from your own club. Two front ends over on
 | | |
 |---|---|
 | **`/fc26/`** | Solver page. Paste your club and the SBC as text. |
+| **`/fc26/hq.html`** | Club HQ. Plans the club: report, best XI for a budget, multi-SBC plan, gap analysis, evolutions, collection. |
 | **`/fc26/install.html`** | Bookmarklet. Runs inside the FUT Web App, reads your club and the SBC on screen, solves it there. |
 
 No build step for the pages, no backend, no dependencies. `build.mjs` exists only to pack the
 bookmarklet.
 
+The solver and Club HQ share one club: both read and write `sbcpilot.club.v1` in localStorage,
+so you paste your club once and both pages have it.
+
 ## Files
 
 ```
 engine.js            shared core — parsing, rating, chemistry, search. No DOM.
+hq.js                planning core on top of engine.js — report, best XI, planner, gaps. No DOM.
+app.css              shared stylesheet for index.html and hq.html
 index.html           solver page (loads engine.js)
+hq.html              Club HQ page (loads engine.js + hq.js)
 pilot.src.js         bookmarklet payload: harvester + panel UI
 build.mjs            engine.js + pilot.src.js → install.html + sbc-autopilot.user.js
 install.template.html  source for install.html — edit this, not install.html
@@ -91,11 +98,19 @@ and run it again if the price looks high.
 node fc26/test/page.test.mjs      solver page: parsing, phrasings, solve, verification
 node fc26/test/options.test.mjs   options, repeatability, formations, persistence, mobile
 node fc26/test/pilot.test.mjs     bookmarklet against the mock web app
+node fc26/test/hq.test.mjs        Club HQ logic, in Node — no browser
+node fc26/test/hq.page.test.mjs   Club HQ page: every tab, persistence, mobile
 ```
 
 Real Chromium via Playwright. The solve tests recompute rating and chemistry independently from
 the rendered squad rather than trusting the tool's own numbers, and an unsatisfiable SBC is
 checked to fail loudly instead of faking a pass.
+
+`hq.test.mjs` runs `engine.js` and `hq.js` straight in Node — they are plain IIFEs, so the suite
+evaluates them into the global context and calls them directly. Its expectations are counted by
+hand off a fixed 45-player fixture, so they check the maths rather than restating it. The page
+suite asserts rendered geometry, not just markup: a squad that is in the DOM but `display:none`,
+or a progress bar whose fill has no width, has to fail.
 
 `test/mock-webapp.html` is a deliberately unhelpful stand-in for the FUT Web App: obfuscated class
 names, a virtualised list that only keeps a window of tiles in the DOM, requirement rows split
