@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<!-- CLUB HQ — the planning half of the FC 26 toolkit. The solver answers
+     "what is the cheapest squad for this SBC"; this answers everything you ask
+     *before* that: what's in my club, what's the best XI I can field, which SBCs
+     can I actually do, and what am I missing for the ones I can't.
+     Unofficial fan-made tool. Not affiliated with, endorsed by, or connected to EA Sports. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Club HQ — plan your FC 26 club</title>
+<meta name="theme-color" content="#05070c">
+<meta name="description" content="Read your FC 26 club and plan it: club report, best XI for a budget, a multi-SBC plan that never spends the same player twice, and exactly what you're missing for the SBCs you can't complete yet.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2305070c'/><path d='M20 74 L50 20 L80 74 Z' fill='none' stroke='%2300e07a' stroke-width='9' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+/* ── Club HQ additions on top of the shared sheet ── */
+.tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);margin-bottom:20px}
+.tab{flex:none;font-family:inherit;font-size:.85rem;font-weight:700;padding:9px 14px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;transition:.16s}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{background:var(--surface);border-color:var(--line-2);color:var(--acc)}
+.panel[hidden]{display:none}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 15px}
+.tile .k{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:800;line-height:1.1;margin-top:3px}
+.tile .s{font-size:.72rem;color:var(--faint);margin-top:1px}
+.tile.acc .v{color:var(--acc)}
+
+/* horizontal bar rows — rating bands, league depth, collection progress */
+.bars{display:flex;flex-direction:column;gap:6px}
+.barrow{display:grid;grid-template-columns:minmax(72px,132px) 1fr auto;gap:10px;align-items:center;font-size:.82rem}
+.barrow .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.barrow .track{display:block;background:var(--surface-3);border-radius:100px;height:9px;overflow:hidden;min-width:0}
+/* must be block: width/height are ignored on an inline span, so the bar would
+   render as an empty track no matter what percentage we set. */
+.barrow .fill{display:block;height:100%;background:var(--acc);border-radius:100px}
+.barrow .fill.part{background:var(--gold)}
+.barrow .n{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);min-width:44px;text-align:right}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.sub{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+
+/* planner steps */
+.pstep{border:1px solid var(--line);border-left-width:3px;border-radius:var(--radius-sm);background:var(--surface-2);padding:13px 15px;margin-bottom:10px}
+.pstep.ok{border-left-color:var(--acc)}
+.pstep.no{border-left-color:var(--bad)}
+.pstep .ph{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pstep .pt{font-weight:700;flex:1;min-width:0}
+.pstep .pc{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--muted)}
+.pstep .pr{font-size:.83rem;color:var(--faint);margin-top:6px}
+.pstep .names{font-size:.78rem;color:var(--muted);margin-top:8px;line-height:1.6}
+
+.gaprow{display:flex;align-items:flex-start;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-left-width:3px;border-radius:9px;padding:10px 13px;margin-bottom:7px;font-size:.86rem}
+.gaprow.ok{border-left-color:var(--acc)}
+.gaprow.no{border-left-color:var(--bad)}
+.gaprow .mk{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.75rem;flex:none;margin-top:2px}
+.gaprow.ok .mk{color:var(--acc)}.gaprow.no .mk{color:var(--bad)}
+.gaprow .txt{flex:1;min-width:0}
+.gaprow .adv{color:var(--faint);font-size:.8rem;margin-top:3px}
+
+.verdict{border-radius:var(--radius-sm);padding:13px 15px;font-size:.9rem;margin-bottom:14px;border:1px solid var(--line)}
+.verdict.ok{background:var(--acc-soft);border-color:var(--acc)}
+.verdict.no{background:var(--bad-soft);border-color:var(--bad)}
+
+.evogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;align-items:start}
+input[type=text],input[type=number]{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--line-2);border-radius:var(--radius-sm);padding:11px 13px;font-family:inherit;font-size:.9rem}
+input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--acc)}
+
+@media(max-width:600px){
+  .barrow{grid-template-columns:minmax(64px,96px) 1fr auto;font-size:.78rem}
+  .tile .v{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><span class="mk">▲</span><span>Club HQ<small>FC 26 · unofficial</small></span></div>
+    <span class="sp"></span>
+    <a class="btn btn-ghost btn-sm nav-secondary" href="./index.html">SBC solver</a>
+    <button class="btn btn-ghost btn-sm" id="demoBtn" type="button">Load demo</button>
+    <button class="icon-btn" id="themeBtn" type="button" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <p class="eyebrow">Your club, planned</p>
+    <h1>Know what you have. <em>Know what to do with it.</em></h1>
+    <p class="lede">Paste your club once. Club HQ tells you what's in it, the <strong>best XI</strong> you can field for a budget, which SBCs you can actually complete, and — for the ones you can't — <strong>exactly what you're missing</strong>.</p>
+    <p class="lede" style="margin-top:18px;font-size:.95rem">Already using the <a href="./index.html">SBC solver</a>? Your club is shared between both pages. The <a href="./install.html">bookmarklet</a> reads it straight off the FUT Web App.</p>
+  </section>
+
+  <section class="wrap">
+
+    <!-- ── club intake ── -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-n">1</div>
+        <div class="step-t">
+          <h2>Your club</h2>
+          <p>One player per line. CSV, tabs, pipes or plain spacing — all fine. Saved in this browser only, and shared with the solver page.</p>
+        </div>
+        <div class="step-act">
+          <button class="btn btn-ghost btn-sm" id="sampleClubBtn" type="button">Demo club</button>
+          <button class="btn btn-danger btn-sm" id="clearClubBtn" type="button">Clear</button>
+        </div>
+      </div>
+      <textarea id="clubIn" spellcheck="false" placeholder="Name, Rating, Positions, Nation, League, Club, Price, tags
+
+R. Okafor, 84, ST, Nigeria, Premier League, Arsenal, 0, untradeable
+L. Moreau  86  CM,CAM  France  Ligue 1  Paris  74000"></textarea>
+      <div class="pills" id="clubPills"></div>
+    </div>
+
+    <!-- ── tools ── -->
+    <div class="tabs" role="tablist" id="tabs">
+      <button class="tab" role="tab" id="tab-report"     data-panel="report"     aria-selected="true">Club report</button>
+      <button class="tab" role="tab" id="tab-squad"      data-panel="squad"      aria-selected="false">Best XI</button>
+      <button class="tab" role="tab" id="tab-planner"    data-panel="planner"    aria-selected="false">SBC plan</button>
+      <button class="tab" role="tab" id="tab-gaps"       data-panel="gaps"       aria-selected="false">What am I missing?</button>
+      <button class="tab" role="tab" id="tab-evo"        data-panel="evo"        aria-selected="false">Evolutions</button>
+      <button class="tab" role="tab" id="tab-collection" data-panel="collection" aria-selected="false">Collection</button>
+    </div>
+
+    <!-- ── REPORT ── -->
+    <div class="step panel" id="panel-report" role="tabpanel">
+      <div class="step-head"><div class="step-t"><h2>Club report</h2><p>What you own, what it's worth, and how deep it runs.</p></div></div>
+      <div id="repEmpty" class="empty">Paste your club above to see the report.</div>
+      <div id="repBody" hidden>
+        <div class="tiles" id="repTiles"></div>
+        <div class="cols" style="margin-top:22px">
+          <div>
+            <p class="sub">Rating depth — how many at each level or better</p>
+            <div class="bars" id="repBands"></div>
+          </div>
+          <div>
+            <p class="sub">Deepest leagues</p>
+            <div class="bars" id="repLeagues"></div>
+            <p class="sub" style="margin-top:18px">Deepest nations</p>
+            <div class="bars" id="repNations"></div>
+          </div>
+        </div>
+        <div id="repDupesWrap" style="margin-top:22px" hidden>
+          <p class="sub">Duplicate cards</p>
+          <div class="bars" id="repDupes"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BEST XI ── -->
+    <div class="step panel" id="panel-squad" role="tabpanel" hidden>
+      <div class="step-head"><div class="step-t"><h2>Best XI for a budget</h2><p>The strongest team you can field for the money — the opposite question to the solver's.</p></div></div>
+      <div class="opts">
+        <div><label class="fld" for="formationSel">Formation</label><select id="formationSel"></select></div>
+        <div><label class="fld" for="budgetIn">Budget</label><input type="text" id="budgetIn" value="100k" spellcheck="false"><div class="hint">Accepts <code>75k</code>, <code>1.2m</code> or a plain number.</div></div>
+        <div><label class="fld" for="objectiveSel">Optimise for</label><select id="objectiveSel">
+          <option value="balanced" selected>Balanced — rating first, chemistry close behind</option>
+          <option value="rating">Highest rating</option>
+          <option value="chem">Highest chemistry</option>
+        </select></div>
+        <div><label class="fld" for="untradeSel">Value untradeables at</label><select id="untradeSel">
+          <option value="0" selected>0 — spend them freely</option>
+          <option value="0.5">Half price</option>
+          <option value="1">Full price</option>
+        </select></div>
+        <div><label class="fld">Rules of thumb</label><label class="check"><input type="checkbox" id="relPosChk" checked><span><b>Allow related positions</b> — LM↔LW, CM↔CAM and so on count as in-position.</span></label></div>
+        <div><label class="fld">Reuse</label><label class="check"><input type="checkbox" id="excludeChk"><span><b>Exclude icons &amp; heroes</b></span></label></div>
+      </div>
+      <div class="solvebar">
+        <button class="btn btn-primary btn-xl" id="buildBtn" type="button">Build my best XI</button>
+        <div class="prog" id="buildProg"><i></i></div>
+      </div>
+      <div id="squadOut"></div>
+    </div>
+
+    <!-- ── PLANNER ── -->
+    <div class="step panel" id="panel-planner" role="tabpanel" hidden>
+      <div class="step-head"><div class="step-t"><h2>SBC plan</h2><p>Several SBCs, one club. Solved in order, each one spending only what the last left behind — so the plan is one you can actually build.</p></div></div>
+      <label class="fld" for="planIn">Your SBCs — separate each one with a blank line</label>
+      <textarea id="planIn" spellcheck="false" placeholder="Squad Rating: Min. 82
+Same League Count: Min. 4
+Number of players in the Squad: 11
+
+Squad Rating: Min. 81
+Same Nation Count: Min. 2
+Number of players in the Squad: 11"></textarea>
+      <div class="hint">Name an SBC by putting its name on the first line, e.g. <code># Marquee Matchups</code>.</div>
+      <div class="solvebar">
+        <button class="btn btn-primary btn-xl" id="planBtn" type="button">Plan them</button>
+        <button class="btn btn-ghost btn-sm" id="samplePlanBtn" type="button">Example</button>
+        <div class="prog" id="planProg"><i></i></div>
+      </div>
+      <div id="planOut"></div>
+    </div>
+
+    <!-- ── GAPS ── -->
+    <div class="step panel" id="panel-gaps" role="tabpanel" hidden>
+      <div class="step-head"><div class="step-t"><h2>What am I missing?</h2><p>Paste an SBC you can't complete. This checks each requirement against your whole club and tells you what you'd have to get.</p></div></div>
+      <label class="fld" for="gapIn">SBC requirements</label>
+      <textarea id="gapIn" spellcheck="false" placeholder="Squad Rating: Min. 86
+Players rated 85 OVR or higher: Min. 10
+Number of players in the Squad: 11"></textarea>
+      <div class="solvebar">
+        <button class="btn btn-primary btn-xl" id="gapBtn" type="button">Check it</button>
+        <button class="btn btn-ghost btn-sm" id="sampleGapBtn" type="button">Example</button>
+      </div>
+      <div id="gapOut"></div>
+    </div>
+
+    <!-- ── EVOLUTIONS ── -->
+    <div class="step panel" id="panel-evo" role="tabpanel" hidden>
+      <div class="step-head"><div class="step-t"><h2>Evolutions</h2><p>See what a card becomes, and whether it unlocks an SBC you're currently short for. Rating and positions only — we don't guess at stats we have no data for.</p></div></div>
+      <div id="evoEmpty" class="empty">Paste your club above to pick a player.</div>
+      <div id="evoBody" hidden>
+        <div class="evogrid">
+          <div><label class="fld" for="evoPlayerSel">Player</label><select id="evoPlayerSel"></select></div>
+          <div><label class="fld" for="evoSel">Evolution</label><select id="evoSel"></select></div>
+        </div>
+        <div id="evoOut" style="margin-top:18px"></div>
+      </div>
+    </div>
+
+    <!-- ── COLLECTION ── -->
+    <div class="step panel" id="panel-collection" role="tabpanel" hidden>
+      <div class="step-head"><div class="step-t"><h2>Collection</h2><p>How close each league, nation and club is to the counts SBCs and chemistry keep asking for.</p></div></div>
+      <div id="colEmpty" class="empty">Paste your club above to see your collection.</div>
+      <div id="colBody" hidden>
+        <div class="tiles" id="colTiles"></div>
+        <div class="cols" style="margin-top:22px">
+          <div><p class="sub">Leagues — 8 links a full league bonus</p><div class="bars" id="colLeagues"></div></div>
+          <div><p class="sub">Nations — 8 links a full nation bonus</p><div class="bars" id="colNations"></div></div>
+          <div><p class="sub">Clubs — 7 links a full club bonus</p><div class="bars" id="colClubs"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="wrap" style="padding-bottom:60px">
+    <p class="hint">Club HQ is an unofficial fan-made planning tool. It reads a club you paste in and does maths on it — it never signs in to your EA account, never touches the transfer market, and never plays the game for you. Not affiliated with, endorsed by, or connected to EA Sports.</p>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="engine.js"></script>
+<script src="hq.js"></script>
+<script>
+"use strict";
+const E = window.SBCEngine, HQ = window.ClubHQ;
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const coins = E.coins;
+
+const LS_CLUB = 'sbcpilot.club.v1', LS_THEME = 'sbcpilot.theme';   // shared with the solver page
+
+let club = [];          // parsed players
+let toastTimer = null;
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('on'), 2600);
+}
+
+/* ══════════════════ club intake ══════════════════ */
+
+function refreshClub() {
+  const { players, bad } = E.parseClub($('#clubIn').value);
+  club = players;
+  const pills = [];
+  pills.push(`<span class="pill${players.length ? ' on' : ''}">${players.length} player${players.length === 1 ? '' : 's'}</span>`);
+  if (players.length) {
+    const rep = HQ.clubReport(players);
+    pills.push(`<span class="pill">top ${rep.topRating}</span>`);
+    pills.push(`<span class="pill">${rep.atLeast[84] || 0} rated 84+</span>`);
+    pills.push(`<span class="pill">${coins(rep.value)} value</span>`);
+  }
+  if (bad.length) pills.push(`<span class="pill warn">${bad.length} line${bad.length === 1 ? '' : 's'} skipped</span>`);
+  $('#clubPills').innerHTML = pills.join('');
+  try { localStorage.setItem(LS_CLUB, $('#clubIn').value); } catch (e) { /* private mode */ }
+  renderAll();
+}
+
+/* ══════════════════ shared render helpers ══════════════════ */
+
+function bar(label, value, max, note, partial) {
+  const pct = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 0;
+  return `<div class="barrow">
+    <span class="lbl" title="${esc(label)}">${esc(label)}</span>
+    <span class="track"><span class="fill${partial ? ' part' : ''}" style="width:${pct}%"></span></span>
+    <span class="n">${esc(note == null ? String(value) : note)}</span>
+  </div>`;
+}
+
+function tile(k, v, s, acc) {
+  return `<div class="tile${acc ? ' acc' : ''}"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="s">${esc(s || '')}</div></div>`;
+}
+
+/* the pitch renderer, shared by Best XI and the planner's solved steps */
+function pitchHtml(detail, formation) {
+  const slots = formation.rows.flat();
+  const bySlot = new Array(slots.length).fill(null);
+  detail.forEach((d) => { if (d.slotIndex >= 0) bySlot[d.slotIndex] = d; });
+  let html = '';
+  for (let r = formation.rows.length - 1; r >= 0; r--) {
+    const row = formation.rows[r];
+    const start = formation.rows.slice(0, r).reduce((a, x) => a + x.length, 0);
+    html += '<div class="prow">' + row.map((slot, i) => {
+      const d = bySlot[start + i];
+      if (!d) return `<div class="card"><span class="slot">${slot}</span><div class="ovr">—</div></div>`;
+      const p = d.player;
+      return `<div class="card${d.inPos ? '' : ' oop'}">
+        <span class="slot">${slot}${d.inPos ? '' : ' ⚠'}</span>
+        <div class="ovr">${p.rating}</div>
+        <div class="nm" title="${esc(p.name)}">${esc(p.name)}</div>
+        <div class="meta">${esc([p.club, p.nation].filter(Boolean).join(' · ') || '—')}</div>
+        <div class="chem">${[0, 1, 2].map((k) => `<i class="${k < d.chem ? 'on' : ''}"></i>`).join('')}</div>
+        <div class="prc ${p.untradeable ? 'free' : ''}">${p.untradeable ? 'UNTRADEABLE' : coins(p.price)}</div>
+      </div>`;
+    }).join('') + '</div>';
+  }
+  return html;
+}
+
+/* ══════════════════ tab: club report ══════════════════ */
+
+function renderReport() {
+  const has = club.length > 0;
+  $('#repEmpty').hidden = has;
+  $('#repBody').hidden = !has;
+  if (!has) return;
+
+  const rep = HQ.clubReport(club, { untradeMul: untradeMul() });
+  $('#repTiles').innerHTML = [
+    tile('Players', rep.size, `${rep.untradeables} untradeable`),
+    tile('Club value', coins(rep.value), `${coins(rep.tradeableValue)} tradeable`, true),
+    tile('Top rated', rep.topRating, `median ${rep.medianRating}`),
+    tile('Rated 85+', rep.atLeast[85] || 0, `${rep.atLeast[84] || 0} rated 84+`),
+    tile('Rare', rep.rares, `${rep.specials} special`),
+    tile('Icons & heroes', rep.icons, rep.icons ? 'excluded on request' : 'none'),
+  ].join('');
+
+  // rating depth, from the top card down to 10 below it — the range SBCs live in
+  const top = rep.topRating;
+  const bands = [];
+  for (let r = top; r >= Math.max(75, top - 10); r--) {
+    const n = rep.atLeast[r] || 0;
+    if (!n) continue;
+    bands.push(bar(`${r}+`, n, rep.size, `${n}`));
+  }
+  $('#repBands').innerHTML = bands.join('') || '<div class="empty">No gold-rated players yet.</div>';
+
+  const depth = (rows, target) => rows.slice(0, 6)
+    .map((t) => bar(t.key, t.count, target, `${t.count}`, t.count < target)).join('') || '<div class="empty">—</div>';
+  $('#repLeagues').innerHTML = depth(rep.leagues, 8);
+  $('#repNations').innerHTML = depth(rep.nations, 8);
+
+  $('#repDupesWrap').hidden = rep.duplicates.length === 0;
+  if (rep.duplicates.length) {
+    $('#repDupes').innerHTML = rep.duplicates.slice(0, 8)
+      .map((d) => bar(d.name, d.count, rep.duplicates[0].count, `×${d.count}`)).join('');
+  }
+}
+
+/* ══════════════════ tab: best XI ══════════════════ */
+
+const untradeMul = () => parseFloat($('#untradeSel').value) || 0;
+const formation = () => E.FORMATIONS.find((f) => f.name === $('#formationSel').value) || E.FORMATIONS[0];
+
+let building = false;
+function buildSquad() {
+  if (building) return;
+  if (!club.length) { toast('Paste your club first'); return; }
+  const budget = E.parsePrice($('#budgetIn').value.trim());
+  if (budget === null) { toast('Budget should look like 75k, 1.2m or a plain number'); return; }
+
+  building = true;
+  const btn = $('#buildBtn');
+  btn.disabled = true;
+  btn.textContent = 'Building…';
+  const prog = $('#buildProg');
+  prog.style.display = 'block';
+  prog.firstElementChild.style.width = '0%';
+
+  const form = formation();
+  HQ.buildBestSquad(club, form, {
+    budget,
+    relPos: $('#relPosChk').checked,
+    excludeIcons: $('#excludeChk').checked,
+    untradeMul: untradeMul(),
+    objective: $('#objectiveSel').value,
+    effort: 'deep',
+  }, (frac) => {
+    prog.firstElementChild.style.width = Math.round(frac * 100) + '%';
+  }, (res) => {
+    building = false;
+    btn.disabled = false;
+    btn.textContent = 'Build my best XI';
+    prog.style.display = 'none';
+    if (res.error) {
+      $('#squadOut').innerHTML = `<div class="verdict no">${esc(res.error)}</div>`;
+      return;
+    }
+    const b = res.best;
+    $('#squadOut').innerHTML = `
+      <div class="result on">
+        <div class="scoreline">
+          <div class="score"><div class="k">Cost</div><div class="v">${coins(b.cost)}</div><div class="s">of ${coins(budget)}</div></div>
+          <div class="score good"><div class="k">Rating</div><div class="v">${b.rating.rating}</div><div class="s">${b.rating.exact.toFixed(2)} exact</div></div>
+          <div class="score"><div class="k">Chemistry</div><div class="v">${b.chem.total}</div><div class="s">of 33</div></div>
+          <div class="score"><div class="k">Formation</div><div class="v" style="font-size:1.5rem">${esc(form.name)}</div><div class="s">${b.outOfPos} out of position</div></div>
+        </div>
+        <div class="pitch">${pitchHtml(b.chem.detail, form)}</div>
+      </div>`;
+  });
+}
+
+/* ══════════════════ tab: SBC planner ══════════════════ */
+
+/* Split the textarea into one block per SBC. A blank line starts a new SBC; a
+   leading "# Name" line names it. */
+function parsePlanInput(text) {
+  const blocks = String(text || '').split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
+  return blocks.map((block, i) => {
+    const lines = block.split('\n');
+    let name = `SBC ${i + 1}`;
+    if (/^#\s*/.test(lines[0])) name = lines.shift().replace(/^#\s*/, '').trim() || name;
+    const parsed = E.parseSbc(lines.join('\n'), club);
+    return { name, reqs: parsed.reqs, unparsed: parsed.unparsed };
+  });
+}
+
+let planning = false;
+function runPlan() {
+  if (planning) return;
+  if (!club.length) { toast('Paste your club first'); return; }
+  const sbcs = parsePlanInput($('#planIn').value);
+  if (!sbcs.length) { toast('Paste at least one SBC'); return; }
+  if (sbcs.every((s) => !s.reqs.length)) { toast('Could not read any requirements from that'); return; }
+
+  planning = true;
+  const btn = $('#planBtn');
+  btn.disabled = true;
+  btn.textContent = 'Planning…';
+  const prog = $('#planProg');
+  prog.style.display = 'block';
+  prog.firstElementChild.style.width = '0%';
+
+  HQ.planSbcs(club, sbcs, formation(), {
+    relPos: $('#relPosChk').checked,
+    excludeIcons: $('#excludeChk').checked,
+    untradeMul: untradeMul(),
+    effort: 'deep',
+  }, (frac) => {
+    prog.firstElementChild.style.width = Math.round(frac * 100) + '%';
+  }, (plan) => {
+    planning = false;
+    btn.disabled = false;
+    btn.textContent = 'Plan them';
+    prog.style.display = 'none';
+
+    const head = `<div class="verdict ${plan.failed ? 'no' : 'ok'}">
+      Solved <b>${plan.solved}</b> of <b>${plan.steps.length}</b> for <b>${coins(plan.totalCost)}</b>.
+      ${plan.leftover} player${plan.leftover === 1 ? '' : 's'} left in the club afterwards.
+      ${plan.failed ? ' The unsolved ones are explained below.' : ''}
+    </div>`;
+
+    const steps = plan.steps.map((s, i) => {
+      if (!s.solved) {
+        const advice = s.gap && s.gap.blocking.length
+          ? `<div class="names">${s.gap.blocking.map((b) => esc(b.advice || b.label)).join('<br>')}</div>` : '';
+        return `<div class="pstep no">
+          <div class="ph"><span class="pt">${i + 1}. ${esc(s.name)}</span><span class="pc">not possible</span></div>
+          <div class="pr">${esc(s.reason || '')}</div>${advice}
+        </div>`;
+      }
+      return `<div class="pstep ok">
+        <div class="ph"><span class="pt">${i + 1}. ${esc(s.name)}</span><span class="pc">${coins(s.cost)}</span></div>
+        <div class="names">${s.squad.map((p) => `${esc(p.name)} <span class="mono">${p.rating}</span>`).join(' · ')}</div>
+      </div>`;
+    }).join('');
+
+    $('#planOut').innerHTML = head + steps;
+  });
+}
+
+/* ══════════════════ tab: what am I missing ══════════════════ */
+
+function runGap() {
+  if (!club.length) { toast('Paste your club first'); return; }
+  const parsed = E.parseSbc($('#gapIn').value, club);
+  if (!parsed.reqs.length) { toast('Could not read any requirements from that'); return; }
+
+  const gap = HQ.explainGap(club, parsed.reqs, { excludeIcons: $('#excludeChk').checked });
+  const blocked = gap.blocking.length > 0 || gap.tooFewPlayers;
+
+  const rows = gap.rows.map((r) => {
+    if (r.best === null) {
+      return `<div class="gaprow ok"><span class="mk">—</span><div class="txt">${esc(r.label)}
+        <div class="adv">Depends on which XI you pick — run the solver to find out.</div></div></div>`;
+    }
+    return `<div class="gaprow ${r.blocking ? 'no' : 'ok'}">
+      <span class="mk">${r.blocking ? 'SHORT' : 'OK'}</span>
+      <div class="txt">${esc(r.label)}
+        <div class="adv">${esc(r.blocking ? r.advice : `Your club can reach ${r.best}.`)}</div>
+      </div></div>`;
+  }).join('');
+
+  $('#gapOut').innerHTML = `<div class="verdict ${blocked ? 'no' : 'ok'}">${esc(gap.verdict)}</div>${rows}`;
+}
+
+/* ══════════════════ tab: evolutions ══════════════════ */
+
+function renderEvoPickers() {
+  const has = club.length > 0;
+  $('#evoEmpty').hidden = has;
+  $('#evoBody').hidden = !has;
+  if (!has) return;
+
+  const sel = $('#evoPlayerSel');
+  const keep = sel.value;
+  sel.innerHTML = club.slice()
+    .sort((a, b) => b.rating - a.rating || a.name.localeCompare(b.name))
+    .map((p) => `<option value="${p.id}">${esc(p.name)} — ${p.rating} ${esc(p.pos.join('/'))}</option>`)
+    .join('');
+  if (keep && club.some((p) => String(p.id) === keep)) sel.value = keep;
+  renderEvo();
+}
+
+function renderEvo() {
+  const p = club.find((x) => String(x.id) === $('#evoPlayerSel').value);
+  if (!p) { $('#evoOut').innerHTML = ''; return; }
+  const evo = HQ.EVO_PRESETS.find((e) => e.id === $('#evoSel').value) || HQ.EVO_PRESETS[0];
+  const after = HQ.applyEvo(p, evo);
+  const rep = HQ.clubReport(club);
+  const repAfter = HQ.clubReport(club.map((x) => (x.id === p.id ? after : x)));
+
+  const gained = [];
+  for (let r = 99; r >= 75; r--) {
+    const d = (repAfter.atLeast[r] || 0) - (rep.atLeast[r] || 0);
+    if (d > 0) { gained.push(`one more card rated <b>${r}+</b>`); break; }
+  }
+  const newPos = after.pos.filter((x) => !p.pos.includes(x));
+
+  $('#evoOut').innerHTML = `
+    <div class="scoreline">
+      <div class="score"><div class="k">Before</div><div class="v">${p.rating}</div><div class="s">${esc(p.pos.join('/'))}</div></div>
+      <div class="score ${after.rating > p.rating ? 'good' : ''}"><div class="k">After</div><div class="v">${after.rating}</div><div class="s">${esc(after.pos.join('/'))}</div></div>
+      <div class="score"><div class="k">Rating gain</div><div class="v">+${after.rating - p.rating}</div><div class="s">${newPos.length ? 'new: ' + esc(newPos.join('/')) : 'no new position'}</div></div>
+    </div>
+    <div class="verdict ${after.rating > p.rating || newPos.length ? 'ok' : ''}">
+      ${after.rating === p.rating && !newPos.length
+        ? 'This evolution changes nothing that affects SBC eligibility.'
+        : `You gain ${gained.length ? gained.join(', ') : 'a higher-rated card'}${newPos.length ? `, and ${esc(p.name)} can now play ${esc(newPos.join('/'))}` : ''}. Evolved cards become untradeable.`}
+    </div>`;
+}
+
+/* ══════════════════ tab: collection ══════════════════ */
+
+function renderCollection() {
+  const has = club.length > 0;
+  $('#colEmpty').hidden = has;
+  $('#colBody').hidden = !has;
+  if (!has) return;
+
+  const col = HQ.collectionStats(club);
+  $('#colTiles').innerHTML = [
+    tile('Leagues linked', col.completeLeagues, `of ${col.leagues.length} present`, col.completeLeagues > 0),
+    tile('Nations linked', col.completeNations, `of ${col.nations.length} present`, col.completeNations > 0),
+    tile('Clubs linked', col.completeClubs, `of ${col.clubs.length} present`, col.completeClubs > 0),
+  ].join('');
+
+  const rows = (list) => list.slice(0, 10)
+    .map((t) => bar(t.key, t.count, t.target, `${t.count}/${t.target}`, !t.complete)).join('') || '<div class="empty">—</div>';
+  $('#colLeagues').innerHTML = rows(col.leagues);
+  $('#colNations').innerHTML = rows(col.nations);
+  $('#colClubs').innerHTML = rows(col.clubs);
+}
+
+/* ══════════════════ wiring ══════════════════ */
+
+function renderAll() {
+  renderReport();
+  renderEvoPickers();
+  renderCollection();
+}
+
+function selectTab(name) {
+  $$('.tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.panel === name)));
+  $$('.panel').forEach((p) => { p.hidden = p.id !== 'panel-' + name; });
+}
+
+$('#tabs').addEventListener('click', (e) => {
+  const t = e.target.closest('.tab');
+  if (t) selectTab(t.dataset.panel);
+});
+
+$('#clubIn').addEventListener('input', refreshClub);
+$('#clearClubBtn').addEventListener('click', () => { $('#clubIn').value = ''; refreshClub(); toast('Club cleared'); });
+$('#buildBtn').addEventListener('click', buildSquad);
+$('#planBtn').addEventListener('click', runPlan);
+$('#gapBtn').addEventListener('click', runGap);
+$('#evoPlayerSel').addEventListener('change', renderEvo);
+$('#evoSel').addEventListener('change', renderEvo);
+$('#untradeSel').addEventListener('change', renderReport);
+
+function setTheme(t) { document.documentElement.dataset.theme = t; try { localStorage.setItem(LS_THEME, t); } catch (e) {} }
+$('#themeBtn').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+/* populate the static selects */
+$('#formationSel').innerHTML = E.FORMATIONS.map((f, i) => `<option value="${f.name}"${i === 1 ? ' selected' : ''}>${f.name}</option>`).join('');
+$('#evoSel').innerHTML = HQ.EVO_PRESETS.map((e) => `<option value="${e.id}">${esc(e.name)}</option>`).join('');
+
+const DEMO_CLUB = `Name, Rating, Positions, Nation, League, Club, Price, Tags
+K. Oduya, 88, ST, Nigeria, Premier League, Arsenal, 0, untradeable rare
+L. Moreau, 87, CAM/CM, France, Ligue 1, Paris, 0, untradeable rare
+D. Vasquez, 86, CB, Spain, LALIGA, Sevilla, 168000, rare
+M. Halvorsen, 86, ST, Norway, Bundesliga, Dortmund, 154000, rare
+T. Bianchi, 85, CM, Italy, Serie A, Napoli, 96000, rare
+A. Ferreira, 85, RW, Brazil, LALIGA, Real Betis, 88000, rare
+S. Nakamura, 85, CDM, Japan, Serie A, Lazio, 74000, rare
+J. Okonkwo, 84, CB, Nigeria, Premier League, Chelsea, 21000, rare
+P. Lindqvist, 84, GK, Sweden, Premier League, Everton, 19500, rare
+R. Delgado, 84, LB, Argentina, Serie A, Inter, 18800, rare
+C. Whitfield, 84, RB, England, Premier League, Arsenal, 22000, rare
+N. Boateng, 84, CM, Ghana, Bundesliga, Leverkusen, 17400, rare
+E. Kovacs, 84, LW, Croatia, Ligue 1, Marseille, 16900, rare
+V. Sorokin, 84, ST, Ukraine, LALIGA, Villarreal, 20100, rare
+H. Aziz, 83, CDM, Morocco, Ligue 1, Lyon, 4200, rare
+B. Adeyemi, 83, RM, Nigeria, Premier League, Brighton, 3900, rare
+F. Rossi, 83, CB, Italy, Serie A, Roma, 3600, rare
+G. Mensah, 83, LB, Ghana, Premier League, Arsenal, 4100, rare
+I. Duarte, 83, GK, Portugal, Liga Portugal, Benfica, 3400, rare
+O. Lindberg, 83, CM, Denmark, Bundesliga, Frankfurt, 3300
+Q. Martins, 83, ST, Brazil, Liga Portugal, Porto, 5100, rare
+W. Achebe, 82, CB, Nigeria, LALIGA, Valencia, 1500
+Y. Tanaka, 82, RB, Japan, Bundesliga, Stuttgart, 1400
+Z. Petrov, 82, LM, Bulgaria, Serie A, Atalanta, 1350
+A. Mbeki, 82, CAM, South Africa, Premier League, Fulham, 1900, rare
+B. Sorensen, 82, GK, Denmark, Eredivisie, Ajax, 1250
+C. Nwosu, 82, ST, Nigeria, Ligue 1, Nice, 2200, rare
+D. Keller, 82, CM, Germany, Bundesliga, Wolfsburg, 1300
+E. Silva, 81, CB, Brazil, Ligue 1, Rennes, 800
+F. Oyelaran, 81, RW, Nigeria, Eredivisie, PSV, 950, rare
+G. Novak, 81, CDM, Czech Republic, Serie A, Torino, 780
+H. Bakker, 81, LB, Netherlands, Eredivisie, Feyenoord, 760
+I. Costa, 81, ST, Portugal, Liga Portugal, Sporting, 1100, rare
+J. Fischer, 81, GK, Germany, Bundesliga, Union Berlin, 750
+K. Adebayo, 80, CB, Nigeria, EFL Championship, Leeds, 700, rare
+L. Hansen, 80, RM, Norway, Eredivisie, AZ, 650
+M. Ricci, 80, CM, Italy, Serie A, Bologna, 640
+N. Diallo, 80, LW, Senegal, Ligue 1, Lens, 690
+O. Byrne, 80, RB, Republic of Ireland, Premier League, Wolves, 700
+P. Estrada, 80, ST, Mexico, LALIGA, Girona, 720
+Q. Nilsen, 79, CB, Norway, Eredivisie, Twente, 550
+R. Ibe, 79, CDM, Nigeria, Liga Portugal, Braga, 600, rare
+S. Wagner, 79, LM, Germany, Bundesliga, Mainz, 540
+T. Moreno, 79, CAM, Spain, LALIGA, Osasuna, 580
+U. Kalu, 78, GK, Nigeria, Premier League, Brentford, 500`;
+
+const DEMO_PLAN = `# League Starter
+Squad Rating: Min. 82
+Same League Count: Min. 4
+Number of players in the Squad: 11
+
+# Nation Builder
+Squad Rating: Min. 81
+Same Nation Count: Min. 2
+Number of players in the Squad: 11`;
+
+const DEMO_GAP = `Squad Rating: Min. 86
+Players rated 85 OVR or higher: Min. 10
+Number of players in the Squad: 11`;
+
+$('#sampleClubBtn').addEventListener('click', () => { $('#clubIn').value = DEMO_CLUB; refreshClub(); toast('Demo club loaded (fictional players)'); });
+$('#samplePlanBtn').addEventListener('click', () => { $('#planIn').value = DEMO_PLAN; toast('Example plan loaded'); });
+$('#sampleGapBtn').addEventListener('click', () => { $('#gapIn').value = DEMO_GAP; toast('Example SBC loaded'); });
+$('#demoBtn').addEventListener('click', () => {
+  $('#clubIn').value = DEMO_CLUB;
+  $('#planIn').value = DEMO_PLAN;
+  $('#gapIn').value = DEMO_GAP;
+  refreshClub();
+  toast('Demo loaded — try any tab');
+});
+
+/* boot */
+setTheme(localStorage.getItem(LS_THEME) || 'dark');
+try {
+  const saved = localStorage.getItem(LS_CLUB);
+  if (saved) $('#clubIn').value = saved;
+} catch (e) { /* private mode */ }
+refreshClub();
+selectTab('report');
+</script>
+</body>
+</html>
