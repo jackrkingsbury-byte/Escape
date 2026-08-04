@@ -46,13 +46,26 @@ a{color:var(--acc)}
 
 /* header */
 header.top{position:sticky;top:0;z-index:70;backdrop-filter:blur(14px) saturate(150%);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
-.top-in{display:flex;align-items:center;gap:14px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 20px}
-.brand{display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em}
-.brand .mk{width:32px;height:32px;border-radius:9px;background:linear-gradient(150deg,var(--acc),#0a8f56);display:grid;place-items:center;color:#04150d;font-weight:800;font-size:1rem}
-.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.16em;color:var(--muted);font-weight:600;margin-top:-3px;text-transform:uppercase}
-.sp{flex:1}
-.icon-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;font-size:.95rem;transition:.18s}
+.top-in{display:flex;align-items:center;gap:14px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 20px;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em;min-width:0}
+.brand .mk{width:32px;height:32px;border-radius:9px;background:linear-gradient(150deg,var(--acc),#0a8f56);display:grid;place-items:center;color:#04150d;font-weight:800;font-size:1rem;flex:0 0 auto}
+/* The wordmark is the one header item that may shrink. Without min-width:0 a
+   flex item refuses to shrink below its text width, so the row pushed past
+   the viewport on narrow phones instead of truncating. */
+.brand>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.16em;color:var(--muted);font-weight:600;margin-top:-3px;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis}
+.sp{flex:1;min-width:0}
+.icon-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;font-size:.95rem;transition:.18s;flex:0 0 auto}
 .icon-btn:hover{border-color:var(--acc);color:var(--acc)}
+/* Phone widths: tighten the header so the brand keeps its full name and the
+   actions stay reachable rather than being pushed off-screen. */
+@media(max-width:560px){
+  .top-in{gap:8px;padding:0 12px;height:56px}
+  .brand{font-size:1.05rem;gap:7px}
+  .brand .mk{width:27px;height:27px;border-radius:8px;font-size:.85rem}
+  .top-in .btn-sm{padding:6px 9px;font-size:.72rem}
+  .icon-btn{width:31px;height:31px}
+}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:700;font-size:.92rem;padding:11px 18px;border-radius:11px;border:1px solid transparent;cursor:pointer;transition:.18s;white-space:nowrap}
