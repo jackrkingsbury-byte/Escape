@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escape Clause — find the trap in your contract, then leave</title>
+<meta name="description" content="Paste any contract. See the clauses that cost you money, quoted from your own document. Get the date you must cancel by, and the letter that does it. Nothing leaves your browser.">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="brand">
+    <h1>Escape Clause</h1>
+    <span class="tag">reads the small print</span>
+  </div>
+  <p class="lede">
+    Paste a contract — a gym membership, a lease, a phone plan, a freelance agreement.
+    It finds the clauses that <strong>cost you money or trap you</strong>, quotes each one from your own
+    document, works out <strong>the last day you can cancel</strong>, and writes the letter that does it.
+  </p>
+  <p class="privacy"><span class="dot"></span> Runs entirely in this browser. Your contract is never uploaded, stored or sent anywhere.</p>
+</header>
+
+<div id="sharedBanner" class="panel" hidden style="border-color:#3a424e">
+  <strong>Someone shared a contract verdict with you.</strong>
+  <p class="hint" id="sharedText" style="margin:8px 0 0"></p>
+  <p class="hint" style="margin:10px 0 0">The contract itself was never shared — only the score. Paste your own below.</p>
+</div>
+
+<h2 class="section">1 — The contract</h2>
+<div class="panel">
+  <textarea id="src" spellcheck="false" placeholder="Paste the full text of the contract here.
+
+Copy it from the PDF, the email, the terms page — whatever you have. The more you paste, the more it can find. It reads only what you give it."></textarea>
+  <div class="controls">
+    <button id="scanBtn" class="primary">Scan the contract</button>
+    <button id="clearBtn" class="ghost">Clear</button>
+    <span class="hint" id="count"></span>
+  </div>
+  <div class="samples">
+    <span class="lbl">Or try one:</span>
+    <span id="sampleBtns"></span>
+  </div>
+  <div class="err" id="err" hidden></div>
+</div>
+
+<section id="results" hidden>
+
+  <h2 class="section">2 — The verdict</h2>
+  <div class="panel">
+    <div class="verdict">
+      <div class="dial">
+        <svg width="128" height="128" viewBox="0 0 128 128">
+          <circle cx="64" cy="64" r="56" fill="none" stroke="#262c35" stroke-width="10"></circle>
+          <circle id="arc" cx="64" cy="64" r="56" fill="none" stroke="#f0b429" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="351.86" stroke-dashoffset="351.86"></circle>
+        </svg>
+        <div class="num"><b id="score">—</b><span>out of 100</span></div>
+      </div>
+      <div class="verdict-body">
+        <p class="band" id="band">—<small id="bandNote"></small></p>
+        <div class="tally" id="tally"></div>
+      </div>
+    </div>
+    <div class="numbers" id="numbers"></div>
+  </div>
+
+  <h2 class="section">3 — What it found</h2>
+  <div id="findings"></div>
+
+  <div id="creditsWrap" hidden>
+    <h2 class="section">In your favour</h2>
+    <div class="panel"><div class="rows" id="credits"></div></div>
+  </div>
+
+  <div id="gapsWrap" hidden>
+    <h2 class="section">What it does not say</h2>
+    <div class="panel">
+      <p class="hint" style="margin:0 0 4px">Absence of a clause in the text you pasted is not proof it is absent from the full contract. Treat these as questions to ask in writing.</p>
+      <div class="rows" id="gaps"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:18px">
+    <details class="calc" style="border:0;margin:0;padding:0">
+      <summary>How the score was worked out — every point, itemised</summary>
+      <div class="rows" id="breakdown"></div>
+    </details>
+  </div>
+
+  <h2 class="section">4 — Your way out</h2>
+  <div class="panel" id="plan">
+    <p class="hint" style="margin:0 0 16px">
+      Fill in what you know. The deadline is arithmetic on the notice period found above — change it if your contract says otherwise.
+    </p>
+    <div class="grid2">
+      <div><label class="f" for="theirName">Company</label><input class="f" id="theirName" placeholder="Who you are writing to"></div>
+      <div><label class="f" for="yourName">Your name</label><input class="f" id="yourName" placeholder="How you sign it"></div>
+      <div><label class="f" for="ref">Account / reference</label><input class="f" id="ref" placeholder="Membership or account number"></div>
+      <div><label class="f" for="renewal">Next renewal date</label><input class="f" id="renewal" type="date"></div>
+      <div><label class="f" for="noticeDays">Notice period (days)</label><input class="f" id="noticeDays" type="number" min="0" max="730" step="1"></div>
+      <div><label class="f" for="letterKind">Letter</label>
+        <select class="f" id="letterKind">
+          <option value="cancel">Cancel the contract</option>
+          <option value="object_increase">Object to a price increase</option>
+          <option value="dispute_fee">Dispute a cancellation charge</option>
+          <option value="request_terms">Demand the full terms</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="deadline" id="deadline" hidden>
+      <div class="d1" id="dl1">Deadline</div>
+      <div class="d2" id="dl2"></div>
+      <div class="d3" id="dl3"></div>
+    </div>
+
+    <pre class="letter" id="letterOut"></pre>
+    <ul class="notes" id="letterNotes"></ul>
+    <div class="controls">
+      <button id="copyBtn" class="primary">Copy the letter</button>
+      <button id="downloadBtn">Download as .txt</button>
+      <button id="printBtn" class="ghost">Print / save as PDF</button>
+      <span class="hint" id="copyMsg"></span>
+    </div>
+  </div>
+
+  <h2 class="section">5 — Show someone</h2>
+  <div class="panel">
+    <p class="hint" style="margin:0">
+      A card with the score and the clause count — no contract text, no names, nothing private.
+      Most people have no idea what is in the thing they signed. This is how they find out.
+    </p>
+    <div id="cardWrap"><canvas id="card" width="1040" height="546"></canvas></div>
+    <div class="controls">
+      <button id="cardBtn" class="primary">Download the card</button>
+      <button id="linkBtn">Copy a share link</button>
+      <span class="hint" id="shareMsg"></span>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <p><strong>What this is.</strong> A pattern scanner, not a lawyer. It finds clause types that commonly cost people money and shows you the sentence each one came from, so you can check it yourself against your document.</p>
+  <p><strong>What it is not.</strong> It is not legal advice, and it does not know your circumstances or your country's consumer law. It can miss things — especially in a document you have pasted only part of. Every finding quotes your own text, so verify each one before you rely on it. For anything large, expensive or already in dispute, get a professional to read it.</p>
+  <p><strong>Privacy.</strong> There is no server. The contract never leaves this page — the scan, the letter and the card are all built in your browser. The share link contains only the score and the list of clause types found.</p>
+</footer>
+
+</div>
+
+<script src="engine.js"></script>
+<script src="letter.js"></script>
+<script src="samples.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  var BAND_COLOR = { 'Fair': '#46a758', 'Watch it': '#f0b429', 'Loaded': '#f76b15', 'Trap': '#e5484d' };
+  var BAND_NOTE = {
+    'Fair': 'Nothing here is designed to catch you out. Read it once and keep a copy.',
+    'Watch it': 'Ordinary, but it has edges. Know where they are before you sign.',
+    'Loaded': 'This is written for them. Several clauses only run one way.',
+    'Trap': 'Almost every clause here moves risk or money onto you. Do not sign without changing it.'
+  };
+  var COST_LABEL = { money: 'costs money', freedom: 'limits you', risk: 'moves risk to you', privacy: 'your data' };
+
+  var state = { scan: null, deadline: null, letter: null };
+
+  /* ── samples ── */
+  var samples = window.EscapeSamples || [];
+  var sampleBox = $('sampleBtns');
+  samples.forEach(function (s) {
+    var b = document.createElement('button');
+    b.className = 'chip';
+    b.textContent = s.label;
+    b.title = s.hint;
+    b.setAttribute('data-sample', s.id);
+    b.addEventListener('click', function () {
+      $('src').value = s.text;
+      $('theirName').value = s.counterparty || '';
+      $('ref').value = s.reference || '';
+      updateCount();
+      run();
+    });
+    sampleBox.appendChild(b);
+  });
+
+  function updateCount() {
+    var t = $('src').value.trim();
+    var w = t ? t.split(/\s+/).length : 0;
+    $('count').textContent = w ? w.toLocaleString() + ' words' : '';
+  }
+  $('src').addEventListener('input', updateCount);
+
+  $('clearBtn').addEventListener('click', function () {
+    $('src').value = '';
+    $('results').hidden = true;
+    $('err').hidden = true;
+    updateCount();
+  });
+
+  $('scanBtn').addEventListener('click', run);
+
+  function run() {
+    var text = $('src').value;
+    var scan = window.EscapeEngine.scan(text);
+    if (!scan.ok) {
+      $('results').hidden = true;
+      $('err').hidden = false;
+      $('err').textContent = scan.reason === 'empty'
+        ? 'Paste the contract text above first.'
+        : 'That is too short to scan — about ' + scan.words + ' words. Paste the whole contract, or at least the sections on payment, term and cancellation.';
+      return;
+    }
+    $('err').hidden = true;
+    state.scan = scan;
+    render(scan);
+    $('results').hidden = false;
+    if (scan.terms.noticeDays && !$('noticeDays').value) $('noticeDays').value = scan.terms.noticeDays;
+    buildPlan();
+    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── render the verdict ── */
+  function render(scan) {
+    var colour = BAND_COLOR[scan.band] || '#f0b429';
+    $('score').textContent = scan.score;
+    $('score').style.color = colour;
+    $('band').firstChild.nodeValue = scan.band;
+    $('bandNote').textContent = BAND_NOTE[scan.band] + ' Read as a ' + scan.type.label.toLowerCase() + '.';
+    var C = 351.86;
+    $('arc').setAttribute('stroke', colour);
+    $('arc').setAttribute('stroke-dashoffset', String(C * (1 - scan.score / 100)));
+
+    var a = scan.asymmetry;
+    $('tally').innerHTML =
+      tile(scan.findings.length, 'clauses flagged') +
+      tile(a.you, 'bind you') +
+      tile(a.them, 'bind them') +
+      (a.unclear ? tile(a.unclear, 'unclear') : '') +
+      tile(scan.credits.length, 'in your favour');
+
+    $('numbers').innerHTML = headlineNumbers(scan);
+
+    $('findings').innerHTML = scan.findings.length
+      ? scan.findings.map(findingHTML).join('')
+      : '<div class="panel"><strong>No trap clauses matched.</strong><p class="hint" style="margin:6px 0 0">That is a good sign, but it is not a guarantee — it means none of the patterns this tool looks for appeared in the text you pasted.</p></div>';
+
+    $('creditsWrap').hidden = !scan.credits.length;
+    $('credits').innerHTML = scan.credits.map(function (c) {
+      return '<div class="row"><div class="rt">' + esc(c.title) + '<small>' + esc(c.plain) + '</small></div><div class="rv plus">+' + c.credit + '</div></div>';
+    }).join('');
+
+    $('gapsWrap').hidden = !scan.missing.length;
+    $('gaps').innerHTML = scan.missing.map(function (m) {
+      return '<div class="row"><div class="rt">' + esc(m.title) + '<small>' + esc(m.note) + '</small></div></div>';
+    }).join('');
+
+    $('breakdown').innerHTML =
+      '<div class="row"><div class="rt">Starting score</div><div class="rv">100</div></div>' +
+      scan.breakdown.map(function (b) {
+        var cls = b.delta >= 0 ? 'plus' : 'minus';
+        return '<div class="row"><div class="rt">' + esc(b.title) + (b.note ? '<small>' + esc(b.note) + '</small>' : '') +
+          '</div><div class="rv ' + cls + '">' + (b.delta >= 0 ? '+' : '') + b.delta + '</div></div>';
+      }).join('') +
+      '<div class="row"><div class="rt"><strong>Final</strong></div><div class="rv"><strong>' + scan.score + '</strong></div></div>';
+
+    drawCard(scan);
+  }
+
+  function tile(n, label) {
+    return '<div><b>' + n + '</b><span>' + esc(label) + '</span></div>';
+  }
+
+  function headlineNumbers(scan) {
+    var out = [];
+    var t = scan.terms;
+    var fee = pick(scan, 'early_termination_fee');
+    if (t.noticeDays) out.push(num('Notice to cancel', fmtDays(t.noticeDays), t.noticeText ? 'contract says "' + t.noticeText + '"' : ''));
+    if (fee && fee.detail.exitFee) out.push(num('Cost of leaving early', fee.detail.exitFee.currency + fmtNum(fee.detail.exitFee.value), 'stated in the contract'));
+    var esc_ = pick(scan, 'price_escalation');
+    if (esc_ && esc_.detail.increasePercent) {
+      var p = esc_.detail.increasePercent;
+      out.push(num('Price rises by', p.value === null ? 'CPI' : p.value + '% a year', p.value === null ? 'linked to inflation' : 'every year, compounding'));
+    }
+    if (t.minTermDays) out.push(num('Locked in for', fmtDays(t.minTermDays), 'minimum term'));
+    var late = pick(scan, 'late_fees');
+    if (late && late.detail.latePercent && late.detail.latePercent.value !== null) {
+      out.push(num('Late payment interest', late.detail.latePercent.value + '%', 'on overdue amounts'));
+    }
+    return out.join('');
+  }
+
+  function num(k, v, s) {
+    return '<div class="n"><div class="k">' + esc(k) + '</div><div class="v">' + esc(v) + '</div>' + (s ? '<div class="s">' + esc(s) + '</div>' : '') + '</div>';
+  }
+  function fmtNum(v) { return v.toLocaleString('en-ZA', { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 }); }
+  function fmtDays(d) {
+    if (d % 365 === 0 && d >= 365) return (d / 365) + (d === 365 ? ' year' : ' years');
+    if (d % 30 === 0 && d >= 60) return (d / 30) + ' months';
+    if (d === 30) return '1 month';
+    return d + ' days';
+  }
+  function pick(scan, id) {
+    for (var i = 0; i < scan.findings.length; i++) if (scan.findings[i].id === id) return scan.findings[i];
+    return null;
+  }
+
+  function findingHTML(f) {
+    var partyLabel = f.party === 'you' ? 'binds you' : f.party === 'them' ? 'binds them' : f.party === 'both' ? 'both sides' : 'unclear who';
+    var partyClass = f.party === 'you' ? 'you' : f.party === 'them' ? 'them' : 'both';
+    return '<details class="finding s' + f.severity + '" data-id="' + esc(f.id) + '">' +
+      '<summary class="head">' +
+        '<span class="caret">▶</span>' +
+        '<span class="t">' +
+          '<h3>' + esc(f.title) + '</h3>' +
+          '<p>' + esc(f.plain) + '</p>' +
+          '<span class="meta">' +
+            '<span class="pill ' + partyClass + '">' + partyLabel + '</span>' +
+            '<span class="pill money">' + esc(COST_LABEL[f.costs] || f.costs) + '</span>' +
+            (f.clause ? '<span class="pill">clause ' + esc(f.clause) + '</span>' : '') +
+            (f.occurrences > 1 ? '<span class="pill">' + f.occurrences + ' mentions</span>' : '') +
+          '</span>' +
+        '</span>' +
+      '</summary>' +
+      '<div class="body">' +
+        '<p class="why">' + esc(f.why) + '</p>' +
+        '<blockquote class="ev">' + esc(f.quote) +
+          '<span class="src">Your document' + (f.clause ? ', clause ' + esc(f.clause) : '') + '. Check this sentence against your copy — if it is not there, ignore this finding.</span>' +
+        '</blockquote>' +
+      '</div>' +
+    '</details>';
+  }
+
+  /* ── the escape plan ── */
+  ['theirName', 'yourName', 'ref', 'renewal', 'noticeDays', 'letterKind'].forEach(function (id) {
+    $(id).addEventListener('input', buildPlan);
+    $(id).addEventListener('change', buildPlan);
+  });
+
+  function buildPlan() {
+    if (!state.scan) return;
+    var notice = $('noticeDays').value === '' ? null : Number($('noticeDays').value);
+    var dl = window.EscapeLetter.deadline({
+      noticeDays: notice,
+      renewalDate: $('renewal').value || null,
+      today: new Date()
+    });
+    state.deadline = dl.ok ? dl : null;
+
+    var box = $('deadline');
+    if (dl.ok && (dl.mode === 'renewal' || dl.mode === 'from_today')) {
+      box.hidden = false;
+      box.className = 'deadline ' + (dl.status || 'ok');
+      if (dl.mode === 'renewal') {
+        $('dl1').textContent = dl.status === 'missed' ? 'Window closed' : 'Send your notice by';
+        $('dl2').textContent = dl.lastSafeSendLong;
+        $('dl3').textContent = dl.message + ' (Renewal ' + dl.renewalDateLong + ', ' + dl.noticeDays + ' days notice, plus a ' + dl.deliveryBuffer + '-day margin for delivery.)';
+      } else {
+        $('dl1').textContent = 'If you send it today';
+        $('dl2').textContent = 'Ends ' + dl.effectiveDateLong;
+        $('dl3').textContent = dl.message + ' Add the renewal date above to see the real deadline.';
+      }
+    } else if (dl.ok) {
+      box.hidden = false;
+      box.className = 'deadline';
+      $('dl1').textContent = 'Not enough information';
+      $('dl2').textContent = '—';
+      $('dl3').textContent = dl.message;
+    } else {
+      box.hidden = true;
+    }
+
+    var lt = window.EscapeLetter.letter({
+      kind: $('letterKind').value,
+      scan: state.scan,
+      yourName: $('yourName').value,
+      theirName: $('theirName').value,
+      reference: $('ref').value,
+      today: new Date(),
+      deadline: state.deadline
+    });
+    state.letter = lt;
+    $('letterOut').textContent = lt.text;
+    $('letterNotes').innerHTML = lt.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('');
+  }
+
+  $('copyBtn').addEventListener('click', function () {
+    copy(state.letter ? state.letter.text : '', $('copyMsg'), 'Letter copied.');
+  });
+  $('downloadBtn').addEventListener('click', function () {
+    if (!state.letter) return;
+    var blob = new Blob([state.letter.text], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'notice-' + state.letter.date + '.txt';
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $('printBtn').addEventListener('click', function () { window.print(); });
+
+  function copy(text, msgEl, okMsg) {
+    if (!text) return;
+    var done = function () { msgEl.textContent = okMsg; setTimeout(function () { msgEl.textContent = ''; }, 2600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+    } else fallback();
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); }
+      catch (e) { msgEl.textContent = 'Select the text and copy it manually.'; }
+      document.body.removeChild(ta);
+    }
+  }
+
+  /* ── the share card ── */
+  function drawCard(scan) {
+    var c = $('card'), ctx = c.getContext('2d');
+    var W = c.width, H = c.height;
+    var colour = BAND_COLOR[scan.band] || '#f0b429';
+
+    ctx.fillStyle = '#0d0f12'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#262c35'; ctx.lineWidth = 2; ctx.strokeRect(1, 1, W - 2, H - 2);
+    ctx.fillStyle = colour; ctx.fillRect(0, 0, 8, H);
+
+    ctx.fillStyle = '#6f7885';
+    ctx.font = '500 20px ui-monospace, Menlo, Consolas, monospace';
+    ctx.fillText('ESCAPE CLAUSE', 56, 66);
+
+    ctx.fillStyle = '#e8eaed';
+    ctx.font = '650 46px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillText('I read the contract I signed.', 56, 140);
+
+    // score block
+    ctx.fillStyle = colour;
+    ctx.font = '650 132px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillText(String(scan.score), 56, 286);
+    var w = ctx.measureText(String(scan.score)).width;
+    ctx.fillStyle = '#6f7885';
+    ctx.font = '400 26px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillText('/100', 56 + w + 12, 286);
+    ctx.fillStyle = colour;
+    ctx.font = '650 34px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillText(scan.band.toUpperCase(), 56 + w + 12, 240);
+
+    // counts
+    var stats = [
+      [String(scan.findings.length), 'clauses flagged'],
+      [String(scan.asymmetry.you), 'bind me'],
+      [String(scan.asymmetry.them), 'bind them']
+    ];
+    var x = 560;
+    stats.forEach(function (s) {
+      ctx.fillStyle = '#e8eaed';
+      ctx.font = '650 52px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+      ctx.fillText(s[0], x, 240);
+      ctx.fillStyle = '#6f7885';
+      ctx.font = '400 17px ui-monospace, Menlo, Consolas, monospace';
+      ctx.fillText(s[1], x, 272);
+      x += 160;
+    });
+
+    // top findings
+    ctx.fillStyle = '#262c35'; ctx.fillRect(56, 336, W - 112, 1);
+    var top = scan.findings.slice(0, 3);
+    var y = 382;
+    top.forEach(function (f) {
+      ctx.fillStyle = f.severity >= 4 ? '#e5484d' : f.severity === 3 ? '#f76b15' : '#f0b429';
+      ctx.fillRect(56, y - 15, 5, 20);
+      ctx.fillStyle = '#a3aab6';
+      ctx.font = '400 25px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+      ctx.fillText(f.title, 76, y);
+      y += 44;
+    });
+    if (!top.length) {
+      ctx.fillStyle = '#46a758';
+      ctx.font = '400 25px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+      ctx.fillText('Nothing designed to catch me out.', 56, y);
+    }
+
+    ctx.fillStyle = '#6f7885';
+    ctx.font = '400 19px ui-monospace, Menlo, Consolas, monospace';
+    ctx.fillText('Scan yours — it never leaves your browser', 56, H - 40);
+  }
+
+  $('cardBtn').addEventListener('click', function () {
+    var a = document.createElement('a');
+    a.href = $('card').toDataURL('image/png');
+    a.download = 'contract-verdict.png';
+    a.click();
+  });
+
+  $('linkBtn').addEventListener('click', function () {
+    if (!state.scan) return;
+    var s = state.scan;
+    var payload = { s: s.score, b: s.band, t: s.type.id, n: s.findings.length, y: s.asymmetry.you, f: s.findings.slice(0, 6).map(function (x) { return x.id; }) };
+    var enc = btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replace(/=+$/, '');
+    var url = location.href.split('#')[0] + '#v=' + enc;
+    copy(url, $('shareMsg'), 'Link copied — it carries the score only, never the contract.');
+  });
+
+  /* A shared link shows the verdict summary, never any contract text.
+     Runs on load and on hashchange, so pasting a link into the address bar of
+     an already-open page works too — that navigation never reloads the script. */
+  function readHash() {
+    var m = (location.hash || '').match(/[#&]v=([A-Za-z0-9+/=_-]+)/);
+    if (!m) { $('sharedBanner').hidden = true; return; }
+    try {
+      var p = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
+      if (typeof p.s !== 'number') { $('sharedBanner').hidden = true; return; }
+      $('sharedBanner').hidden = false;
+      $('sharedText').textContent = 'Their contract scored ' + p.s + '/100 — "' + String(p.b || '') + '". ' +
+        (p.n || 0) + ' clauses flagged, ' + (p.y || 0) + ' of them binding only the person who signed.';
+    } catch (e) {
+      $('sharedBanner').hidden = true; /* a malformed link is simply ignored */
+    }
+  }
+  window.addEventListener('hashchange', readHash);
+  readHash();
+
+  updateCount();
+})();
+</script>
+</body>
+</html>
