@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- Same Room — chat that only unlocks when you're actually at the event. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Same Room — the chat only opens when you're there</title>
+<meta name="theme-color" content="#07070c" />
+<meta name="description" content="A room chat for an event that only unlocks while you are physically inside the venue. Walk in and it opens, walk out and it closes. Connect with someone and that thread stays open wherever you both go." />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%237c5cff'/><circle cx='50' cy='50' r='26' fill='none' stroke='white' stroke-width='7'/><circle cx='50' cy='50' r='7' fill='white'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand" id="brandHome" role="button" tabindex="0" title="Home">
+      <span class="mk">◎</span>
+      <span>Same Room<small>you had to be there</small></span>
+    </div>
+    <span class="sp"></span>
+    <button class="icon-btn" id="btnThreads" title="Your connections">✉</button>
+    <button class="icon-btn" id="btnTheme" title="Light / dark">◐</button>
+    <button class="icon-btn" id="btnSettings" title="You &amp; settings">⚙</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" id="view"><!-- every screen renders in here --></div>
+</main>
+
+<div id="composerSlot"></div>
+<div id="toasts"></div>
+<div id="sheetSlot"></div>
+
+<script src="core.js"></script>
+<script src="store.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
