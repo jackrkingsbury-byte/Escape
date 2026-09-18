@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="wrap" style="max-width:760px">
+    <div class="page-head"><div class="breadcrumb"><a href="{{ blog.url }}">{{ blog.title }}</a></div><h1>{{ article.title }}</h1>
+      <p style="color:var(--ink-faint);margin-top:10px">{{ article.published_at | date: '%d %B %Y' }}{% if article.author %} · {{ article.author }}{% endif %}</p></div>
+    {%- if article.image -%}<img src="{{ article.image | image_url: width: 1200 }}" alt="" style="border-radius:var(--radius);margin:24px 0">{%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

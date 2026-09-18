@@ -1,0 +1,168 @@
+{% raw %}
+<style>
+  .hr{position:relative;overflow:hidden;min-height:clamp(580px,92vh,860px);display:flex;align-items:center;background:radial-gradient(85% 90% at 72% 24%,#1a1330 0%,#0c0a12 58%)}
+  .hr__orbs{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .hr__orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;mix-blend-mode:screen;animation:hro 14s ease-in-out infinite}
+  .hr__orb.o1{width:34vmax;height:34vmax;background:radial-gradient(circle,#7c5cff,transparent 65%);top:-8vmax;right:2vmax}
+  .hr__orb.o2{width:30vmax;height:30vmax;background:radial-gradient(circle,#7c5cff,transparent 65%);bottom:-10vmax;right:24vmax;animation-duration:18s}
+  .hr__orb.o3{width:24vmax;height:24vmax;background:radial-gradient(circle,#ff5c8a,transparent 65%);top:30%;right:40%;animation-duration:20s}
+  @keyframes hro{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-3vmax,3vmax) scale(1.12)}}
+
+  .hr__stage{position:absolute;top:0;right:0;bottom:0;width:58%;z-index:1}
+  .hr__canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .8s ease}
+  .hr__canvas.on{opacity:1}
+  .hr__fallback{position:absolute;inset:0;display:grid;place-items:center;z-index:0}
+  .hr__figure{font-size:clamp(5rem,17vw,11rem);line-height:1;filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));animation:hrfloat 5.5s ease-in-out infinite}
+  .hr__halo{position:absolute;width:46%;aspect-ratio:1;border-radius:50%;filter:blur(34px);background:radial-gradient(circle,rgba(77,227,255,.42),rgba(124,92,255,.16) 50%,transparent 68%);animation:hrpulse 5s ease-in-out infinite}
+  @keyframes hrfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(4deg)}}
+  @keyframes hrpulse{0%,100%{transform:scale(.85);opacity:.6}50%{transform:scale(1.08);opacity:.95}}
+  .hr__load{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--mono,monospace);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);z-index:2}
+
+  .hr__scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(7,10,22,.94) 0%,rgba(7,10,22,.72) 40%,rgba(7,10,22,.12) 70%,transparent 100%)}
+  .hr__wrap{position:relative;z-index:3;max-width:1120px;margin:0 auto;padding:0 22px;width:100%}
+  .hr__in{max-width:600px}
+  .hr__scar{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.78rem;color:#4de3ff;border:1px solid rgba(77,227,255,.4);border-radius:999px;padding:7px 15px;margin-bottom:18px;background:rgba(77,227,255,.05)}
+  .hr__scar i{width:8px;height:8px;border-radius:50%;background:#5ad48a;box-shadow:0 0 0 0 rgba(90,212,138,.6);animation:hrp 2s infinite}
+  @keyframes hrp{70%{box-shadow:0 0 0 9px rgba(90,212,138,0)}100%{box-shadow:0 0 0 0 rgba(90,212,138,0)}}
+  .hr__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#4de3ff;margin:0 0 14px}
+  .hr h1{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(2.3rem,6.4vw,4.4rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 18px;color:#fff}
+  .hr__sub{color:#cfccc4;font-size:clamp(1.05rem,2.1vw,1.32rem);line-height:1.55;max-width:46ch;margin:0 0 30px}
+  .hr__cta{display:flex;gap:13px;flex-wrap:wrap}
+  .hr__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.06rem;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 16px 40px rgba(124,92,255,.36);transition:transform .15s}
+  .hr__btn:hover{transform:translateY(-2px)}
+  .hr__btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.22);color:#fff;box-shadow:none}
+  .hr__btn--ghost:hover{border-color:#4de3ff;color:#4de3ff}
+  .hr__trust{display:flex;gap:24px;flex-wrap:wrap;margin-top:34px;color:#8b877f;font-size:.9rem}
+  .hr__trust b{color:#fff;font-family:var(--serif,'Fraunces',serif);font-size:1.05rem}
+  @media(max-width:820px){
+    .hr{min-height:auto;padding:90px 0 40px}
+    .hr__stage{position:relative;width:100%;height:46vh;order:-1}
+    .hr__scrim{background:linear-gradient(180deg,transparent 0%,rgba(7,10,22,.4) 50%,#0c0a12 100%)}
+    .hr__in{max-width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){.hr__figure,.hr__halo,.hr__orb{animation:none}}
+</style>
+{% endraw %}
+
+<section class="hr" id="heroRpm">
+  <div class="hr__orbs"><span class="hr__orb o1"></span><span class="hr__orb o2"></span><span class="hr__orb o3"></span></div>
+  <div class="hr__stage" id="hrStage" data-avatar="{{ section.settings.avatar_url }}">
+    <canvas class="hr__canvas" id="hrCanvas"></canvas>
+    <div class="hr__fallback" id="hrFallback"><span class="hr__halo"></span><span class="hr__figure" id="hrFig">😮‍💨</span></div>
+    <div class="hr__load" id="hrLoad">Loading your 3D guide…</div>
+  </div>
+  <div class="hr__scrim"></div>
+  <div class="hr__wrap"><div class="hr__in">
+    {%- if section.settings.scarcity_label != blank -%}
+      {%- assign ph = '{' | append: 'n' | append: '}' -%}
+      <div class="hr__scar"><i></i> {{ section.settings.scarcity_label | replace: ph, section.settings.scarcity_base }}</div>
+    {%- endif -%}
+    <p class="hr__eye">{{ section.settings.eyebrow }}</p>
+    <h1>{{ section.settings.heading }}</h1>
+    <p class="hr__sub">{{ section.settings.subheading }}</p>
+    <div class="hr__cta">
+      <a class="hr__btn" href="{{ section.settings.cta1_url | default: '#pricing' }}">{{ section.settings.cta1_label }}</a>
+      <a class="hr__btn hr__btn--ghost" href="{{ section.settings.cta2_url | default: '#why' }}">{{ section.settings.cta2_label }}</a>
+    </div>
+    <div class="hr__trust">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}><b>{{ block.settings.stat }}</b> {{ block.settings.label }}</div>
+      {%- endfor -%}
+    </div>
+  </div></div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+{% raw %}
+<script>
+(function(){
+  var stage=document.getElementById('hrStage'),cv=document.getElementById('hrCanvas'),fb=document.getElementById('hrFallback'),fig=document.getElementById('hrFig'),loadEl=document.getElementById('hrLoad'),sec=document.getElementById('heroRpm');
+  if(!stage||!fig)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // fallback figure cycles emotions tired -> happy
+  var faces=['😮‍💨','😕','🙂','😌','😄'],fi=0;
+  var faceTimer=setInterval(function(){fi=(fi+1)%faces.length;fig.textContent=faces[fi]},1400);
+
+  var THREE=window.THREE;
+  function noGo(msg){if(loadEl)loadEl.style.display='none';}
+  if(!THREE||!THREE.GLTFLoader){noGo();return;}
+  // webgl support
+  try{var tc=document.createElement('canvas');if(!(tc.getContext('webgl')||tc.getContext('experimental-webgl'))){noGo();return;}}catch(e){noGo();return;}
+  var url=(stage.getAttribute('data-avatar')||'').trim();
+  if(!url){noGo();return;}
+
+  var renderer;try{renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});}catch(e){noGo();return;}
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  if(renderer.outputEncoding!==undefined)renderer.outputEncoding=THREE.sRGBEncoding;
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(28,1,0.1,100);camera.position.set(0,1.5,1.35);camera.lookAt(0,1.5,0);
+  scene.add(new THREE.AmbientLight(0xffffff,0.9));
+  var key=new THREE.DirectionalLight(0xffffff,1.5);key.position.set(1,3,2.4);scene.add(key);
+  var rimA=new THREE.PointLight(0xff8a3d,7,12);rimA.position.set(-1.6,2.2,-1);scene.add(rimA);
+  var rimB=new THREE.PointLight(0x7c5cff,6,12);rimB.position.set(2,1,-1.4);scene.add(rimB);
+
+  function size(){var w=stage.clientWidth||1,h=stage.clientHeight||1;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  window.addEventListener('resize',size);size();
+
+  var model=null,heads=[],loaded=false,autoP=0,blinkT=1.4,blinking=false,blinkP=0;
+  function setMorph(name,val){for(var i=0;i<heads.length;i++){var d=heads[i].morphTargetDictionary;if(d&&d[name]!==undefined)heads[i].morphTargetInfluences[d[name]]=val}}
+  function clamp01(v){return v<0?0:v>1?1:v}
+  function prog(){var r=sec.getBoundingClientRect();var p=(-r.top)/(window.innerHeight*0.85);return clamp01(p)}
+
+  var loader=new THREE.GLTFLoader();var timeout=setTimeout(function(){if(!loaded)noGo();},9000);
+  loader.load(url,function(gltf){
+    loaded=true;clearTimeout(timeout);model=gltf.scene;
+    model.traverse(function(o){if(o.isMesh){o.frustumCulled=false;if(o.morphTargetDictionary&&o.morphTargetInfluences)heads.push(o)}});
+    scene.add(model);
+    if(loadEl)loadEl.style.display='none';if(fb)fb.style.display='none';clearInterval(faceTimer);
+    cv.classList.add('on');
+  },function(xhr){},function(err){clearTimeout(timeout);noGo();/* keep fallback emoji */});
+
+  var t0=Date.now(),last=t0;
+  function frame(){
+    requestAnimationFrame(frame);
+    var now=Date.now(),dt=Math.min((now-last)/1000,0.05);last=now;var t=(now-t0)/1000;
+    if(model){
+      if(autoP<0.62)autoP+=dt*0.18;
+      var p=Math.max(prog(),autoP);
+      model.rotation.y=(1-p)*0.42 + (reduce?0:Math.sin(t*0.4)*0.08);
+      model.position.y=reduce?0:Math.sin(t*1.4)*0.012;
+      setMorph('mouthSmileLeft',p);setMorph('mouthSmileRight',p);
+      setMorph('mouthFrownLeft',(1-p)*0.35);setMorph('mouthFrownRight',(1-p)*0.35);
+      setMorph('browInnerUp',(1-p)*0.45);
+      if(!reduce){blinkT-=dt;if(blinkT<=0&&!blinking){blinking=true;blinkP=0;blinkT=2.2+Math.random()*3}
+        if(blinking){blinkP+=dt*11;var bv=blinkP<1?blinkP:(blinkP<2?2-blinkP:0);setMorph('eyeBlinkLeft',bv);setMorph('eyeBlinkRight',bv);if(blinkP>=2)blinking=false}}
+    }
+    renderer.render(scene,camera);
+  }
+  frame();
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{
+  "name": "Hero 3D Avatar",
+  "settings": [
+    { "type": "text", "id": "avatar_url", "label": "Ready Player Me avatar .glb URL", "info": "Create a free avatar at readyplayer.me, copy its .glb link, paste here. Falls back to an animated figure if it can't load.", "default": "https://models.readyplayer.me/638df693d72bffc6fa17943c.glb?morphTargets=ARKit&textureSizeLimit=512" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your brain is fried. Here's the reset." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Quit cheap dopamine. Feel good for real — in 7 days." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset rewires it in a week — 10 minutes a day." },
+    { "type": "text", "id": "cta1_label", "label": "Primary CTA", "default": "Start the reset — R199" },
+    { "type": "url", "id": "cta1_url", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary CTA", "default": "Why it works" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary CTA link" },
+    { "type": "text", "id": "scarcity_label", "label": "Scarcity text (n = number)", "default": "Only {n} resets left at the R199 launch price" },
+    { "type": "number", "id": "scarcity_base", "label": "Number", "default": 40 }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Trust stat", "settings": [
+      { "type": "text", "id": "stat", "label": "Number", "default": "7 days" },
+      { "type": "text", "id": "label", "label": "Label", "default": "to feel it" }
+    ]}
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Hero 3D Avatar" }]
+}
+{% endschema %}

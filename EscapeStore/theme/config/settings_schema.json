@@ -1,0 +1,33 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "ESCAPE",
+    "theme_version": "1.0.0",
+    "theme_author": "ESCAPE",
+    "theme_documentation_url": "https://github.com/jackrkingsbury-byte/escape",
+    "theme_support_url": "https://github.com/jackrkingsbury-byte/escape"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "ESCAPE" },
+      { "type": "url", "id": "course_url", "label": "Existing ESCAPE course site (unlock page)", "info": "Where buyers enter their access code after purchase." }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_bg", "label": "Background", "default": "#0b0b0f" },
+      { "type": "color", "id": "color_ink", "label": "Text", "default": "#f5f4f0" },
+      { "type": "color", "id": "color_gold", "label": "Accent (gold)", "default": "#e8c87a" },
+      { "type": "color", "id": "color_accent", "label": "Accent (purple)", "default": "#7c5cff" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "paragraph", "content": "Fonts (Fraunces / Hanken Grotesk / JetBrains Mono) are loaded in the theme layout to match the ESCAPE course site." }
+    ]
+  }
+]

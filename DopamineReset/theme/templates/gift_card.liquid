@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ shop.name }} gift card</title>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  <section class="section center" style="min-height:100vh;display:grid;place-items:center">
+    <div class="wrap" style="max-width:520px">
+      <p class="eyebrow">Gift card</p>
+      <h1>{{ gift_card.balance | money }}</h1>
+      <p class="lead mx-auto" style="text-align:center">A gift to escape autopilot. Redeem at checkout.</p>
+      <div class="stack" style="margin-top:26px">
+        <div class="stack__row"><span>Code</span><span>{{ gift_card.code | format_code }}</span></div>
+      </div>
+      <div style="margin-top:24px"><a class="btn btn--gold btn--lg" href="{{ shop.url }}">Start your escape →</a></div>
+    </div>
+  </section>
+</body>
+</html>

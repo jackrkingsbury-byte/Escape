@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "stat": "2,400+", "label": "members" } },
+        "s2": { "type": "stat", "settings": { "stat": "90", "label": "day system" } },
+        "s3": { "type": "stat", "settings": { "stat": "4.9★", "label": "average rating" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {}
+    },
+    "transformation": { "type": "transformation", "settings": {} },
+    "quiz": { "type": "quiz", "settings": {} },
+    "features": { "type": "features", "settings": {} },
+    "bonus_stack": { "type": "bonus-stack", "settings": {} },
+    "pricing": { "type": "pricing", "settings": {} },
+    "testimonials": { "type": "testimonials", "settings": {} },
+    "guarantee": { "type": "guarantee", "settings": {} },
+    "faq": { "type": "faq", "settings": {} },
+    "final_cta": { "type": "final-cta", "settings": {} }
+  },
+  "order": [
+    "hero",
+    "transformation",
+    "quiz",
+    "features",
+    "bonus_stack",
+    "pricing",
+    "testimonials",
+    "guarantee",
+    "faq",
+    "final_cta"
+  ]
+}

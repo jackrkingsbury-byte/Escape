@@ -1,0 +1,75 @@
+{% raw %}
+<style>
+  .sc{position:fixed;left:0;right:0;bottom:0;z-index:60;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+  .sc.show{transform:translateY(0);pointer-events:auto}
+  .sc__in{max-width:680px;margin:0 auto;margin-bottom:max(12px,env(safe-area-inset-bottom));padding:11px 12px 11px 18px;display:flex;align-items:center;gap:14px;
+    background:rgba(16,12,24,.86);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  @media(max-width:720px){.sc__in{margin-left:12px;margin-right:12px}}
+  .sc__txt{flex:1;min-width:0}
+  .sc__t{font-weight:700;font-size:.96rem;color:#fff;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sc__s{font-size:.74rem;color:#9b97a8;margin:2px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sc__btnwrap{position:relative;flex:none}
+  .sc__btnwrap::before{content:"";position:absolute;inset:-3px;border-radius:999px;background:linear-gradient(135deg,#4de3ff,#7c5cff);filter:blur(11px);opacity:.5;z-index:-1;animation:scglow 2.6s ease-in-out infinite}
+  @keyframes scglow{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:.7;transform:scale(1.05)}}
+  .sc__btn{display:inline-flex;align-items:center;white-space:nowrap;font-weight:800;font-size:.95rem;border-radius:999px;padding:13px 22px;background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 10px 26px rgba(124,92,255,.35);transition:transform .15s}
+  .sc__btn:hover{transform:translateY(-2px)}
+  .sc__x{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;color:#9b97a8;font-size:1rem;line-height:1;cursor:pointer}
+  .sc__x:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+  @media(max-width:480px){.sc__s{display:none}}
+  @media (prefers-reduced-motion:reduce){.sc{transition:none}.sc__btnwrap::before{animation:none}}
+</style>
+{% endraw %}
+<div class="sc" id="stickyCta" aria-hidden="true">
+  <div class="sc__in">
+    <div class="sc__txt">
+      <p class="sc__t">{{ section.settings.title }}</p>
+      <p class="sc__s">{{ section.settings.subtitle }}</p>
+    </div>
+    <span class="sc__btnwrap"><a class="sc__btn" href="{{ section.settings.cta_url | default: '#pricing' }}">{{ section.settings.cta_label }}</a></span>
+    <button class="sc__x" id="stickyX" aria-label="Dismiss">&times;</button>
+  </div>
+</div>
+{% raw %}
+<script>
+(function(){
+  var bar=document.getElementById('stickyCta'),x=document.getElementById('stickyX');
+  if(!bar)return;
+  var dismissed=false;
+  try{dismissed=sessionStorage.getItem('dr_sticky_x')==='1';}catch(e){}
+  if(x)x.addEventListener('click',function(){dismissed=true;bar.classList.remove('show');bar.setAttribute('aria-hidden','true');try{sessionStorage.setItem('dr_sticky_x','1');}catch(e){}});
+  // hide while a real buy section is on screen, so the bar never competes with it
+  var nearBuy=false,vis=[];
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var i=vis.indexOf(e.target);
+        if(e.isIntersecting){if(i<0)vis.push(e.target);}else if(i>=0){vis.splice(i,1);}
+      });
+      nearBuy=vis.length>0;update();
+    },{threshold:.18});
+    ['pricing','stack','trust','shopify-section-pricing','shopify-section-bonus_stack','shopify-section-final_cta'].forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
+  }
+  var past=false;
+  function onScroll(){past=(window.pageYOffset||document.documentElement.scrollTop)>640;update();}
+  function update(){
+    var on=past&&!nearBuy&&!dismissed;
+    bar.classList.toggle('show',on);
+    bar.setAttribute('aria-hidden',on?'false':'true');
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);onScroll();
+})();
+</script>
+{% endraw %}
+{% schema %}
+{
+  "name": "Sticky CTA bar",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Ready to feel good again?" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "7 days · 10 min a day · money-back guarantee" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Start — R199" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "presets": [{ "name": "Sticky CTA bar" }]
+}
+{% endschema %}

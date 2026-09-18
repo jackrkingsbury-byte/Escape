@@ -1,0 +1,140 @@
+{% raw %}
+<style>
+  .hx{position:relative;overflow:hidden;min-height:clamp(560px,90vh,820px);display:flex;align-items:center;
+      background:radial-gradient(80% 90% at 70% 20%,#1a1330 0%,#0c0a12 55%)}
+  .hx__c{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%}
+  .hx__glow{position:absolute;inset:0;z-index:1;pointer-events:none;
+      background:radial-gradient(45% 55% at 72% 42%,rgba(124,92,255,.18),transparent 60%),radial-gradient(40% 50% at 60% 60%,rgba(255,92,138,.16),transparent 60%)}
+  .hx__scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
+      background:linear-gradient(90deg,rgba(7,10,22,.92) 0%,rgba(7,10,22,.7) 38%,rgba(7,10,22,.15) 70%,transparent 100%)}
+  .hx__wrap{position:relative;z-index:3;max-width:1120px;margin:0 auto;padding:0 22px;width:100%}
+  .hx__in{max-width:620px}
+  .hx__scar{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:.78rem;
+      color:#4de3ff;border:1px solid rgba(77,227,255,.4);border-radius:999px;padding:7px 15px;margin-bottom:18px;background:rgba(77,227,255,.05)}
+  .hx__scar i{width:8px;height:8px;border-radius:50%;background:#5ad48a;box-shadow:0 0 0 0 rgba(90,212,138,.6);animation:hxp 2s infinite}
+  @keyframes hxp{70%{box-shadow:0 0 0 9px rgba(90,212,138,0)}100%{box-shadow:0 0 0 0 rgba(90,212,138,0)}}
+  .hx__eye{font-family:var(--mono,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#4de3ff;margin:0 0 14px}
+  .hx h1{font-family:var(--serif,'Fraunces',serif);font-weight:600;font-size:clamp(2.3rem,6.4vw,4.4rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 18px;color:#fff}
+  .hx__sub{color:#cfccc4;font-size:clamp(1.05rem,2.1vw,1.32rem);line-height:1.55;max-width:46ch;margin:0 0 30px}
+  .hx__cta{display:flex;gap:13px;flex-wrap:wrap}
+  .hx__btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;border-radius:999px;padding:16px 32px;font-size:1.06rem;
+      background:linear-gradient(135deg,#4de3ff,#7c5cff);color:#041420;box-shadow:0 16px 40px rgba(124,92,255,.36);transition:transform .15s}
+  .hx__btn:hover{transform:translateY(-2px)}
+  .hx__btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.22);color:#fff;box-shadow:none}
+  .hx__btn--ghost:hover{border-color:#4de3ff;color:#4de3ff}
+  .hx__trust{display:flex;gap:24px;flex-wrap:wrap;margin-top:34px;color:#8b877f;font-size:.9rem}
+  .hx__trust b{color:#fff;font-family:var(--serif,'Fraunces',serif);font-size:1.05rem}
+  @media(max-width:760px){.hx__scrim{background:linear-gradient(180deg,rgba(7,10,22,.55) 0%,rgba(7,10,22,.82) 55%,#0c0a12 100%)}}
+</style>
+{% endraw %}
+
+<section class="hx">
+  <canvas class="hx__c" id="hx3d"></canvas>
+  <div class="hx__glow"></div>
+  <div class="hx__scrim"></div>
+  <div class="hx__wrap"><div class="hx__in">
+    {%- if section.settings.scarcity_label != blank -%}
+      {%- assign ph = '{' | append: 'n' | append: '}' -%}
+      <div class="hx__scar"><i></i> {{ section.settings.scarcity_label | replace: ph, section.settings.scarcity_base }}</div>
+    {%- endif -%}
+    <p class="hx__eye">{{ section.settings.eyebrow }}</p>
+    <h1>{{ section.settings.heading }}</h1>
+    <p class="hx__sub">{{ section.settings.subheading }}</p>
+    <div class="hx__cta">
+      <a class="hx__btn" href="{{ section.settings.cta1_url | default: '#pricing' }}">{{ section.settings.cta1_label }}</a>
+      <a class="hx__btn hx__btn--ghost" href="{{ section.settings.cta2_url | default: '#why' }}">{{ section.settings.cta2_label }}</a>
+    </div>
+    <div class="hx__trust">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}><b>{{ block.settings.stat }}</b> {{ block.settings.label }}</div>
+      {%- endfor -%}
+    </div>
+  </div></div>
+</section>
+
+{% raw %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var cv=document.getElementById('hx3d');
+  if(!cv||!window.THREE) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(60,1,0.1,100);camera.position.z=15;
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});}catch(e){return;}
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+
+  // particle "energy core" on a fibonacci sphere
+  var N=2600,R=6.2;
+  var pos=new Float32Array(N*3),col=new Float32Array(N*3),base=new Float32Array(N*3),rnd=new Float32Array(N);
+  var cA=new THREE.Color(0xffc24b),cB=new THREE.Color(0xff5c8a),cC=new THREE.Color(0x7c5cff);
+  for(var i=0;i<N;i++){
+    var t=i/N, inc=Math.acos(1-2*t), az=Math.PI*(1+Math.sqrt(5))*i;
+    var x=Math.sin(inc)*Math.cos(az), y=Math.sin(inc)*Math.sin(az), z=Math.cos(inc);
+    base[i*3]=x*R;base[i*3+1]=y*R;base[i*3+2]=z*R;
+    pos[i*3]=x*R;pos[i*3+1]=y*R;pos[i*3+2]=z*R;rnd[i]=Math.random()*6.28;
+    var m=cA.clone().lerp(cB,(y+1)/2).lerp(cC,(x+1)/4);
+    col[i*3]=m.r;col[i*3+1]=m.g;col[i*3+2]=m.b;
+  }
+  var geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  var mat=new THREE.PointsMaterial({size:0.13,vertexColors:true,transparent:true,opacity:0.95,
+    blending:THREE.AdditiveBlending,depthWrite:false});
+  var pts=new THREE.Points(geo,mat);scene.add(pts);
+  // faint inner core
+  var core=new THREE.Mesh(new THREE.SphereGeometry(2.4,32,32),
+    new THREE.MeshBasicMaterial({color:0xff8a3d,transparent:true,opacity:0.06}));
+  scene.add(core);
+
+  var mx=0,my=0,tx=0,ty=0;
+  window.addEventListener('pointermove',function(e){tx=(e.clientX/window.innerWidth-0.5);ty=(e.clientY/window.innerHeight-0.5);});
+
+  function size(){var w=cv.clientWidth||window.innerWidth,h=cv.clientHeight||window.innerHeight;
+    renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  window.addEventListener('resize',size);size();
+
+  var clock=new THREE.Clock(),pa=geo.attributes.position.array;
+  function frame(){
+    var tEl=reduce?0:clock.getElapsedTime();
+    for(var i=0;i<N;i++){
+      var k=1+0.12*Math.sin(tEl*1.2+rnd[i])+0.05*Math.sin(tEl*0.5+i*0.05);
+      pa[i*3]=base[i*3]*k;pa[i*3+1]=base[i*3+1]*k;pa[i*3+2]=base[i*3+2]*k;
+    }
+    geo.attributes.position.needsUpdate=true;
+    pts.rotation.y+=reduce?0:0.0016;pts.rotation.x=(-0.2+ -ty*0.3);
+    mx+=(tx-mx)*0.05;my+=(ty-my)*0.05;
+    camera.position.x=mx*4;camera.position.y=-my*3;camera.lookAt(0,0,0);
+    core.scale.setScalar(1+0.06*Math.sin(tEl*1.6));
+    renderer.render(scene,camera);requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+{% endraw %}
+
+{% schema %}
+{
+  "name": "Hero 3D",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your brain is fried. Here's the reset." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Quit cheap dopamine. Feel good for real — in 7 days." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Endless scrolling fried your reward system, so nothing feels good anymore. The Dopamine Reset rewires it in a week — 10 minutes a day." },
+    { "type": "text", "id": "cta1_label", "label": "Primary CTA", "default": "Start the reset — R199" },
+    { "type": "url", "id": "cta1_url", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary CTA", "default": "Why it works" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary CTA link" },
+    { "type": "text", "id": "scarcity_label", "label": "Scarcity text (n = number)", "default": "Only {n} resets left at the R199 launch price" },
+    { "type": "number", "id": "scarcity_base", "label": "Number", "default": 40 }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Trust stat", "settings": [
+      { "type": "text", "id": "stat", "label": "Number", "default": "7 days" },
+      { "type": "text", "id": "label", "label": "Label", "default": "to feel it" }
+    ]}
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Hero 3D" }]
+}
+{% endschema %}
