@@ -137,9 +137,11 @@ async function main() {
     const w = await rpc(A, 'stt_world');
     const bots = w.players.filter((p) => p.is_bot);
     eq(bots.length, 12);
-    assert(bots.every((b) => b.items.length > 0), 'every bot shows items');
-    const ghost = bots.find((b) => b.username === 'TechGhost');
-    assert(ghost.items.some((i) => i.item_id === 'quantum-120-void-oled'), 'TechGhost owns the VOID OLED');
+    // (NPCs may already have robbed each other on the first tick, so allow a little churn.)
+    assert(bots.filter((b) => b.items.length > 0).length >= 10, 'bots show items');
+    const ghost = await one(`select count(*)::int as n from game.player_items pi join game.profiles p on p.id = pi.owner_id
+                             where pi.item_id = 'quantum-120-void-oled' and p.is_bot`);
+    assert(ghost.n === 1, 'an NPC owns the VOID OLED from day one');
     const h = await one(`select count(*)::int as n, min(ts) as oldest from game.market_history`);
     assert(h.n > 5000, 'history rows ' + h.n);
     assert(Date.now() - new Date(h.oldest).getTime() > 29 * 86400e3, 'history reaches back 30 days');
@@ -629,6 +631,31 @@ async function main() {
     eq(ev.n, 1, 'an event started');
     const s = await rpc(A, 'stt_sync', { since: 0 });
     assert(s.event && s.event.title, 'event visible in sync');
+  });
+  await test('economy: reselling drop pulls can never beat the drop price', async () => {
+    // After the market has moved for a while, the expected resale value of every drop
+    // (sold to an NPC at <=95% of market, minus the 5% fee) must stay below its price.
+    // Measured outside events: events are *meant* to create short-lived opportunities.
+    await su(`delete from game.events`);
+    for (let i = 0; i < 30; i++) {
+      await su(`update game.world set last_tick_at = now() - interval '5 minutes'`);
+      await su('select game._tick_market(300)');
+    }
+    const drops = await su(`select id, price, weights from game.drop_types where not event_only`);
+    for (const d of drops) {
+      let total = 0;
+      let ev = 0;
+      for (const w of Object.values(d.weights)) total += Number(w);
+      for (const [rarity, w] of Object.entries(d.weights)) {
+        const row = await one(
+          `select avg(ms.price)::float as p from game.items i join game.market_state ms on ms.item_id = i.id
+           where i.rarity = $1 and i.droppable`, [rarity]);
+        ev += (Number(w) / total) * row.p;
+      }
+      const resale = ev * 0.95 * 0.95;
+      assert(resale < d.price, `${d.id}: expected resale ${Math.round(resale)} >= price ${d.price}`);
+      assert(ev * 0.6 < d.price, `${d.id}: quick-sell EV too high`);
+    }
   });
   await test('an NPC raid on an active human warns them and resolves on time', async () => {
     await su(`update game.profiles set level = 8, tutorial_step = 99, last_seen_at = now() where id = $1`, [A]);

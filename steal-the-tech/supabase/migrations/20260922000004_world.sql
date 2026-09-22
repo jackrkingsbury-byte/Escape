@@ -95,7 +95,7 @@ end $$;
 create or replace function game._tick_market(p_dt double precision) returns void
 language plpgsql set search_path = pg_catalog, game, pg_temp as $$
 declare ev record; m record; k double precision; newd double precision; tdemand double precision;
-        exp_sup double precision; sf double precision; df double precision; lp double precision;
+        sf double precision; df double precision; lp double precision;
         em double precision; target double precision; newp double precision; old1h bigint; alerted boolean := false;
         chg double precision;
 begin
@@ -105,13 +105,18 @@ begin
     with sup as (select item_id, count(*)::int as c from player_items group by item_id),
          lst as (select item_id, count(*)::int as c from market_listings where status = 'active' group by item_id),
          vol as (select item_id, count(*)::int as c from market_sales
-                 where kind = 'listing' and created_at > now() - interval '24 hours' group by item_id)
+                 where kind = 'listing' and created_at > now() - interval '24 hours' group by item_id),
+         peer as (select i2.rarity, avg(coalesce(s2.c, 0))::double precision as a
+                  from items i2 left join sup s2 on s2.item_id = i2.id
+                  where i2.droppable or i2.event_only group by i2.rarity)
     select ms.item_id, ms.price, ms.demand, ms.last_alert_at, i.base_value, i.category, i.name, i.rarity,
-           i.max_supply, ra.expected_supply, ra.tier,
+           i.max_supply, ra.tier, coalesce(peer.a, 0) as peer_sup, coalesce(ls.minted, 0) as minted,
            coalesce(sup.c, 0) as sup, coalesce(lst.c, 0) as lst, coalesce(vol.c, 0) as vol
     from market_state ms
     join items i on i.id = ms.item_id
     join rarities ra on ra.id = i.rarity
+    left join peer on peer.rarity = i.rarity
+    left join limited_item_supply ls on ls.item_id = ms.item_id
     left join sup on sup.item_id = ms.item_id
     left join lst on lst.item_id = ms.item_id
     left join vol on vol.item_id = ms.item_id
@@ -119,8 +124,13 @@ begin
     tdemand := 50 + case when ev.category is not null and m.category = ev.category then ev.demand_boost else 0 end;
     newd := m.demand + (tdemand - m.demand) * (1 - exp(-p_dt / 240.0)) + (random() - 0.5) * 4 * sqrt(p_dt / 10.0);
     newd := greatest(0, least(100, newd));
-    exp_sup := case when m.max_supply is not null then m.max_supply * 0.5 else m.expected_supply end;
-    sf := power(greatest(0.4, least(2.5, (exp_sup + 5.0) / (m.sup + 5.0))), 0.35);
+    -- Scarcity is relative: an item is pricier when fewer exist than its same-rarity peers.
+    -- Numbered runs (limited/secret) get pricier as they sell out.
+    if m.max_supply is not null then
+      sf := 0.9 + 0.5 * (m.minted::double precision / m.max_supply);
+    else
+      sf := power(greatest(0.6, least(1.6, (m.peer_sup + 3.0) / (m.sup + 3.0))), 0.4);
+    end if;
     df := 0.6 + 0.8 * newd / 100.0;
     lp := 1 - least(0.15, m.lst::double precision / (m.sup + 1) * 0.3);
     em := case when ev.category is not null and m.category = ev.category then ev.price_mult else 1 end;
@@ -270,7 +280,7 @@ begin
     select ml.id, ml.price into l
     from market_listings ml join market_state ms on ms.item_id = ml.item_id
     join profiles s on s.id = ml.seller_id
-    where ml.status = 'active' and ml.seller_id <> p_bot and ml.price <= ms.price * 0.98
+    where ml.status = 'active' and ml.seller_id <> p_bot and ml.price <= ms.price * 0.95
       and ml.price * 2 <= b.cash and ml.created_at < now() - interval '20 seconds'
     order by s.is_bot, ml.price::numeric / ms.price, random() limit 1;
     if found then
@@ -288,8 +298,9 @@ begin
   -- List a spare item (or occasionally a displayed one) at a markup.
   select count(*) into nlist from market_listings where seller_id = p_bot and status = 'active';
   if nlist < 3 then
-    select p.id, p.item_id into pi from player_items p
+    select p.id, p.item_id into pi from player_items p join items i on i.id = p.item_id
     where p.owner_id = p_bot and p.location in ('inventory', 'display') and not p.soulbound
+      and i.rarity not in ('secret', 'limited')  -- NPCs keep their trophies on show
       and (p.hot_until is null or p.hot_until < now())
       and not exists (select 1 from raids r where r.player_item_id = p.id and r.status = 'active')
     order by (p.location = 'inventory') desc, random() limit 1;

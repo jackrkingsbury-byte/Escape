@@ -784,7 +784,7 @@ begin
   dur := game._raid_seconds(pi.owner_id, pi.item_id, p_revenge);
   if coalesce((d.bot->>'tutorial')::boolean, false) and a.tutorial_step between 7 and 11
      and not coalesce((a.tutorial_flags->>'tutorial_raid')::boolean, false) then
-    tut := true; v_chance := 0.97; dur := 6;
+    tut := true; v_chance := 1.0; dur := 6;  -- the one-time beginner raid always works
   end if;
   if not a.is_bot and not d.is_bot then
     dur := greatest(dur, 10);  -- a real owner always gets a chance to react

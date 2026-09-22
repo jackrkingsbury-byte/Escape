@@ -360,12 +360,12 @@ insert into game.market_state (item_id, price, demand) values
 on conflict (item_id) do nothing;
 
 insert into game.drop_types (id, name, price, min_level, requires_key, event_only, weights, xp, sort, description) values
-  ('basic', 'BASIC DROP', 840, 1, false, false, '{"common":70,"uncommon":24,"rare":5.2,"epic":0.7,"legendary":0.1}'::jsonb, 12, 0, 'Cheap and cheerful. Mostly Common & Uncommon.'),
-  ('premium', 'PREMIUM DROP', 8300, 3, false, false, '{"common":8,"uncommon":42,"rare":38,"epic":10.5,"legendary":1.4,"mythic":0.1}'::jsonb, 30, 1, 'Better odds of Rare and Epic tech.'),
-  ('elite', 'ELITE DROP', 230000, 8, false, false, '{"rare":20,"epic":45,"legendary":28,"mythic":6,"ultra":0.9,"limited":0.1}'::jsonb, 80, 2, 'Serious odds of Legendary and Mythic.'),
-  ('ultra', 'ULTRA DROP', 3300000, 15, false, false, '{"legendary":35,"mythic":45,"ultra":16,"limited":2.8,"secret":1.2}'::jsonb, 200, 3, 'Where Ultra items live. Secrets have been seen.'),
-  ('event', 'EVENT DROP', 51000, 3, false, true, '{"uncommon":20,"rare":40,"epic":28,"legendary":10,"mythic":2}'::jsonb, 60, 4, 'Only during live events. Themed items + event exclusives.'),
-  ('secret', 'SECRET DROP', 15000000, 20, true, false, '{"mythic":30,"ultra":50,"limited":8,"secret":12}'::jsonb, 600, 5, 'Requires a Secret Key. The best odds in the game.')
+  ('basic', 'BASIC DROP', 890, 1, false, false, '{"common":70,"uncommon":24,"rare":5.2,"epic":0.7,"legendary":0.1}'::jsonb, 12, 0, 'Cheap and cheerful. Mostly Common & Uncommon.'),
+  ('premium', 'PREMIUM DROP', 8800, 3, false, false, '{"common":8,"uncommon":42,"rare":38,"epic":10.5,"legendary":1.4,"mythic":0.1}'::jsonb, 30, 1, 'Better odds of Rare and Epic tech.'),
+  ('elite', 'ELITE DROP', 250000, 8, false, false, '{"rare":20,"epic":45,"legendary":28,"mythic":6,"ultra":0.9,"limited":0.1}'::jsonb, 80, 2, 'Serious odds of Legendary and Mythic.'),
+  ('ultra', 'ULTRA DROP', 3500000, 15, false, false, '{"legendary":35,"mythic":45,"ultra":16,"limited":2.8,"secret":1.2}'::jsonb, 200, 3, 'Where Ultra items live. Secrets have been seen.'),
+  ('event', 'EVENT DROP', 54000, 3, false, true, '{"uncommon":20,"rare":40,"epic":28,"legendary":10,"mythic":2}'::jsonb, 60, 4, 'Only during live events. Themed items + event exclusives.'),
+  ('secret', 'SECRET DROP', 16000000, 20, true, false, '{"mythic":30,"ultra":50,"limited":8,"secret":12}'::jsonb, 600, 5, 'Requires a Secret Key. The best odds in the game.')
 on conflict (id) do update set name = excluded.name, price = excluded.price, min_level = excluded.min_level, requires_key = excluded.requires_key, event_only = excluded.event_only, weights = excluded.weights, xp = excluded.xp, sort = excluded.sort, description = excluded.description;
 
 insert into game.upgrade_levels (kind, level, cost, value, name) values

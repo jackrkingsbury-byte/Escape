@@ -222,22 +222,22 @@ export const ITEMS = [
 // Drop machines. Weights are percentages per rarity. Price is derived from the
 // catalog's expected value (see gen-catalog.mjs) so resale can never out-earn the price.
 export const DROPS = [
-  { id: 'basic',   name: 'BASIC DROP',   minLevel: 1,  requiresKey: false, eventOnly: false, xp: 12,  priceFactor: 1.00,
+  { id: 'basic',   name: 'BASIC DROP',   minLevel: 1,  requiresKey: false, eventOnly: false, xp: 12,  priceFactor: 1.06,
     description: 'Cheap and cheerful. Mostly Common & Uncommon.',
     weights: { common: 70, uncommon: 24, rare: 5.2, epic: 0.7, legendary: 0.1 } },
-  { id: 'premium', name: 'PREMIUM DROP', minLevel: 3,  requiresKey: false, eventOnly: false, xp: 30,  priceFactor: 1.00,
+  { id: 'premium', name: 'PREMIUM DROP', minLevel: 3,  requiresKey: false, eventOnly: false, xp: 30,  priceFactor: 1.06,
     description: 'Better odds of Rare and Epic tech.',
     weights: { common: 8, uncommon: 42, rare: 38, epic: 10.5, legendary: 1.4, mythic: 0.1 } },
-  { id: 'elite',   name: 'ELITE DROP',   minLevel: 8,  requiresKey: false, eventOnly: false, xp: 80,  priceFactor: 1.00,
+  { id: 'elite',   name: 'ELITE DROP',   minLevel: 8,  requiresKey: false, eventOnly: false, xp: 80,  priceFactor: 1.06,
     description: 'Serious odds of Legendary and Mythic.',
     weights: { rare: 20, epic: 45, legendary: 28, mythic: 6, ultra: 0.9, limited: 0.1 } },
-  { id: 'ultra',   name: 'ULTRA DROP',   minLevel: 15, requiresKey: false, eventOnly: false, xp: 200, priceFactor: 1.00,
+  { id: 'ultra',   name: 'ULTRA DROP',   minLevel: 15, requiresKey: false, eventOnly: false, xp: 200, priceFactor: 1.06,
     description: 'Where Ultra items live. Secrets have been seen.',
     weights: { legendary: 35, mythic: 45, ultra: 16, limited: 2.8, secret: 1.2 } },
-  { id: 'event',   name: 'EVENT DROP',   minLevel: 3,  requiresKey: false, eventOnly: true,  xp: 60,  priceFactor: 1.00,
+  { id: 'event',   name: 'EVENT DROP',   minLevel: 3,  requiresKey: false, eventOnly: true,  xp: 60,  priceFactor: 1.06,
     description: 'Only during live events. Themed items + event exclusives.',
     weights: { uncommon: 20, rare: 40, epic: 28, legendary: 10, mythic: 2 } },
-  { id: 'secret',  name: 'SECRET DROP',  minLevel: 20, requiresKey: true,  eventOnly: false, xp: 600, priceFactor: 1.00,
+  { id: 'secret',  name: 'SECRET DROP',  minLevel: 20, requiresKey: true,  eventOnly: false, xp: 600, priceFactor: 1.06,
     description: 'Requires a Secret Key. The best odds in the game.',
     weights: { mythic: 30, ultra: 50, limited: 8, secret: 12 } },
 ];
