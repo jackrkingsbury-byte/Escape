@@ -429,8 +429,8 @@ export interface Backend {
   upgradeGuest?(email: string, password: string): Promise<void>;
   signOut(): Promise<void>;
   rpc<T = any>(fn: string, p?: Record<string, unknown>): Promise<T>;
-  /** Called whenever the server pushes something relevant (online mode). */
-  onPush?(cb: () => void): () => void;
+  /** Called with each live-feed row the server pushes (online mode). */
+  onPush?(cb: (row: { target_id: string | null; kind: string }) => void): () => void;
   presence?: {
     start(me: Omit<PeerState, 't'>): void;
     update(me: Omit<PeerState, 't'>): void;

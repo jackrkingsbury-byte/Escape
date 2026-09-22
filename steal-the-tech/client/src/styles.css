@@ -374,3 +374,9 @@ table.tbl tr.click:hover td { background: rgba(148, 163, 184, 0.06); }
 }
 .emote-bar { position: absolute; left: 12px; bottom: calc(96px + var(--safe-b)); z-index: 26; }
 @media (pointer: coarse), (max-width: 760px) { .emote-bar { left: auto; right: 12px; bottom: calc(84px + var(--safe-b)); } }
+.prompt .btn { max-width: calc(100vw - 24px); overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 760px) {
+  .prompt { bottom: calc(80px + var(--safe-b)); }
+  .prompt .btn.big { min-height: 50px; font-size: 16px; padding: 0 18px; }
+}
+@media (pointer: coarse), (max-width: 760px) { .emote-bar { bottom: calc(146px + var(--safe-b)); } }

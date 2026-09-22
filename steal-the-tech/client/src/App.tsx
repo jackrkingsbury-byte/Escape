@@ -21,6 +21,7 @@ function World() {
     setEngine(e);
     (window as any).__stt_engine = e;
     (window as any).__stt_state = () => useGame.getState();
+    (window as any).__stt_store = useGame; // client-side view state only (tests/devtools); grants nothing on the server
     return () => {
       e.destroy();
       setEngine(null);

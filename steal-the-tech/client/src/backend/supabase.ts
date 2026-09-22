@@ -12,7 +12,7 @@ export class SupabaseBackend implements Backend {
   private mail: string | null = null;
   private feed: RealtimeChannel | null = null;
   private world: RealtimeChannel | null = null;
-  private pushSubs = new Set<() => void>();
+  private pushSubs = new Set<(row: { target_id: string | null; kind: string }) => void>();
   private peerMap = new Map<string, PeerState>();
   private lastSent = 0;
 
@@ -49,8 +49,9 @@ export class SupabaseBackend implements Backend {
     // RLS makes Realtime deliver only global rows and rows addressed to us.
     this.feed = this.sb
       .channel('stt-feed-' + this.uid)
-      .on('postgres_changes', { event: 'INSERT', schema: 'game', table: 'server_events' }, () => {
-        for (const cb of this.pushSubs) cb();
+      .on('postgres_changes', { event: 'INSERT', schema: 'game', table: 'server_events' }, (payload) => {
+        const row = (payload.new || {}) as { target_id: string | null; kind: string };
+        for (const cb of this.pushSubs) cb(row);
       })
       .subscribe();
   }
@@ -104,7 +105,7 @@ export class SupabaseBackend implements Backend {
     return data as T;
   }
 
-  onPush(cb: () => void) {
+  onPush(cb: (row: { target_id: string | null; kind: string }) => void) {
     this.pushSubs.add(cb);
     return () => this.pushSubs.delete(cb);
   }

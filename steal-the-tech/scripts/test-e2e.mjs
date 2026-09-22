@@ -149,6 +149,73 @@ async function run(viewport, label, mobile = false) {
     await page.waitForTimeout(900);
     await shot('17-world-market');
   });
+  const hold = async (loc, ms = 1300) => {
+    const box = await loc.boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.waitForTimeout(ms);
+    await page.mouse.up();
+  };
+  await step('daily reward can be claimed once', async () => {
+    if (mobile) return;
+    await click('button[title="Missions & daily reward"]');
+    await page.getByTestId('claim-daily').click();
+    await page.getByText('CLAIMED — COME BACK TOMORROW').waitFor({ timeout: 8000 });
+    await shot('18-quests');
+    await page.keyboard.press('Escape');
+  });
+  await step('list an item on the market, then cancel it', async () => {
+    if (mobile) return;
+    await click('[data-testid=nav-base]');
+    const card = page.locator('.icard').filter({ hasNotText: 'Starter' }).filter({ hasNotText: 'SLOT' }).first();
+    await card.click();
+    await page.getByRole('button', { name: '🏷️ SELL' }).click();
+    await page.getByRole('button', { name: 'MARKET', exact: true }).click();
+    await page.getByRole('button', { name: /^LIST FOR/ }).click();
+    await page.getByText('Listed on the market').first().waitFor({ timeout: 8000 });
+    await click('[data-testid=nav-market]');
+    await page.getByRole('tab', { name: 'My listings' }).click();
+    await page.getByRole('button', { name: 'CANCEL' }).first().waitFor({ timeout: 8000 });
+    await shot('19-my-listings');
+    await page.getByRole('button', { name: 'CANCEL' }).first().click();
+    await page.getByText('You have no active listings').waitFor({ timeout: 8000 });
+    await page.keyboard.press('Escape');
+  });
+  await step('trade with an NPC: two confirmations, NPC answers by itself', async () => {
+    if (mobile) return;
+    await click('[data-testid=nav-trade]');
+    await page.getByRole('tab', { name: 'New trade' }).click();
+    await page.locator('.li.click').filter({ hasText: 'PixelPip' }).first().click();
+    await page.locator('.icard').nth(0).waitFor();
+    // request their cheapest displayed item and offer 3x its value in cash
+    const theirs = page.locator('h3:has-text("You request") + .grid .icard').first();
+    await theirs.click();
+    const val = await theirs.locator('.val').innerText();
+    const n = Number(val.replace(/[^0-9.KMB]/g, '').replace('K', 'e3').replace('M', 'e6')) || 1000;
+    const me = await page.evaluate(() => window.__stt_state().me.cash);
+    await page.getByPlaceholder(/\+ cash \(you have/).fill(String(Math.min(me, Math.ceil(Number(n) * 3))));
+    await page.getByRole('button', { name: 'REVIEW OFFER' }).click();
+    await page.getByText('FINAL CONFIRMATION').waitFor();
+    await shot('20-trade-confirm');
+    await hold(page.getByRole('button', { name: 'HOLD TO SEND OFFER' }));
+    await page.getByText('Offer sent').first().waitFor({ timeout: 8000 });
+    await page.getByRole('tab', { name: 'History' }).click();
+    await page.locator('.card .tag', { hasText: /accepted|declined/ }).first().waitFor({ timeout: 40000 });
+    await shot('21-trade-history');
+    await page.keyboard.press('Escape');
+  });
+  await step('raid alarm renders with DEFEND / VAULT buttons', async () => {
+    await page.evaluate(() => {
+      const st = window.__stt_state();
+      const pi = st.myItems.find((i) => i.location === 'display' && !i.soulbound) || st.myItems[0];
+      const now = Date.now() + st.serverOffset;
+      window.__stt_store.setState({ last: { ...st.last, incoming_raids: [{ id: '00000000-0000-4000-8000-00000000abcd', attacker: 'ChromeCobra', attacker_id: 'x', attacker_bot: true, item_id: pi.item_id, player_item_id: pi.id, started_at: new Date(now).toISOString(), ends_at: new Date(now + 12000).toISOString(), defended: false, revenge: false }] } });
+    });
+    await page.getByTestId('raid-alarm').waitFor();
+    await page.waitForTimeout(600);
+    await shot('22-raid-alarm');
+    await page.evaluate(() => { const st = window.__stt_state(); window.__stt_store.setState({ last: { ...st.last, incoming_raids: [] } }); });
+  });
   await step('progress survives a reload (IndexedDB save)', async () => {
     const before = await page.evaluate(() => ({ items: window.__stt_state().myItems.length, name: window.__stt_state().me.username }));
     await page.reload();

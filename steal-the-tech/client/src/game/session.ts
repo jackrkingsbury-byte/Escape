@@ -4,6 +4,7 @@ import { G, setG, toast, openPanel, item } from './store';
 import { play, reveal, setMusic, setMuted, setVolume } from './sound';
 import { money } from './format';
 import { RARITY } from './rarity';
+import { SPAWN } from '../world/layout';
 
 let syncTimer: number | null = null;
 let worldTimer: number | null = null;
@@ -82,7 +83,10 @@ function start() {
   syncTimer = window.setInterval(() => syncNow(), online ? 3000 : 2000);
   worldTimer = window.setInterval(() => refreshWorld(), 12000);
   marketTimer = window.setInterval(() => refreshMarket(), 15000);
-  if (b.onPush) unPush = b.onPush(() => syncNow());
+  // Realtime: react instantly to events addressed to me (raids on my base, offers, sales…).
+  // Global events arrive with the regular poll so one big event doesn't stampede every client.
+  if (b.onPush) unPush = b.onPush((row) => { if (row.target_id && row.target_id === G().me?.id) syncNow(); });
+  if (b.presence) b.presence.start({ id: me.id, name: me.username, x: SPAWN.x, y: SPAWN.y, dir: 1, moving: false, trail: me.cosmetics?.trail });
   document.addEventListener('visibilitychange', onVisible);
 }
 
