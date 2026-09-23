@@ -398,9 +398,13 @@ insert into game.quests (id, period, title, metric, target, reward, sort) values
   ('d_sell1', 'daily', 'Sell an item', 'sell_item', 1, '{"cash":2500,"income_secs":120,"xp":80}'::jsonb, 3),
   ('d_rare', 'daily', 'Find a Rare', 'find_rare', 1, '{"cash":3000,"income_secs":180,"xp":100}'::jsonb, 4),
   ('d_legend', 'daily', 'Find a Legendary', 'find_legendary', 1, '{"cash":20000,"income_secs":600,"xp":400,"tokens":{"premium":1}}'::jsonb, 5),
-  ('w_mythic', 'weekly', 'Find a Mythic', 'find_mythic', 1, '{"cash":250000,"income_secs":1800,"xp":2000,"secret_keys":1}'::jsonb, 6),
-  ('w_trades20', 'weekly', 'Complete 20 trades (direct or market)', 'complete_trades', 20, '{"cash":150000,"income_secs":1800,"xp":1500,"tokens":{"elite":1}}'::jsonb, 7),
-  ('w_tvs10', 'weekly', 'Collect 10 different TVs', 'collect_tvs', 10, '{"cash":100000,"income_secs":1200,"xp":1200,"tokens":{"premium":2},"cosmetic":"plat-screenwall"}'::jsonb, 8)
+  ('d_belt5', 'daily', 'Buy 5 items off the Tech Belt', 'belt_buys', 5, '{"cash":3000,"income_secs":180,"xp":120}'::jsonb, 6),
+  ('d_collect20', 'daily', 'Collect podium cash 20 times', 'collects', 20, '{"cash":2500,"income_secs":240,"xp":100}'::jsonb, 7),
+  ('d_lock3', 'daily', 'Lock your base 3 times', 'lock_base', 3, '{"cash":2000,"income_secs":120,"xp":80}'::jsonb, 8),
+  ('w_mythic', 'weekly', 'Find a Mythic', 'find_mythic', 1, '{"cash":250000,"income_secs":1800,"xp":2000,"secret_keys":1}'::jsonb, 9),
+  ('w_trades20', 'weekly', 'Complete 20 trades (direct or market)', 'complete_trades', 20, '{"cash":150000,"income_secs":1800,"xp":1500,"tokens":{"elite":1}}'::jsonb, 10),
+  ('w_mutant', 'weekly', 'Get 3 mutated items', 'mutations', 3, '{"cash":120000,"income_secs":1500,"xp":1500,"tokens":{"premium":2}}'::jsonb, 11),
+  ('w_tvs10', 'weekly', 'Collect 10 different TVs', 'collect_tvs', 10, '{"cash":100000,"income_secs":1200,"xp":1200,"tokens":{"premium":2},"cosmetic":"plat-screenwall"}'::jsonb, 12)
 on conflict (id) do update set period = excluded.period, title = excluded.title, metric = excluded.metric, target = excluded.target, reward = excluded.reward, sort = excluded.sort;
 
 insert into game.achievements (id, title, description, icon, xp, reward_cash, sort) values
@@ -432,7 +436,11 @@ insert into game.achievements (id, title, description, icon, xp, reward_cash, so
   ('level_10', 'Trader', 'Reach Level 10', '🔟', 0, 50000, 25),
   ('level_25', 'Mastermind', 'Reach Level 25', '🧠', 0, 2500000, 26),
   ('prestige_1', 'Reborn', 'Prestige for the first time', '✨', 0, 0, 27),
-  ('streak_7', 'Seven Day Streak', 'Claim 7 daily rewards in a row', '📅', 500, 25000, 28)
+  ('streak_7', 'Seven Day Streak', 'Claim 7 daily rewards in a row', '📅', 500, 25000, 28),
+  ('first_mutation', 'Mutant', 'Get a mutated item (GOLD or better)', '🧬', 150, 5000, 29),
+  ('rainbow', 'Taste the Rainbow', 'Own a RAINBOW item', '🌈', 3000, 500000, 30),
+  ('belt_sniper', 'Belt Sniper', 'Buy a Legendary or better off the Tech Belt', '🎯', 400, 25000, 31),
+  ('tagger', 'Tag, You''re It', 'Catch a thief red-handed', '🫵', 200, 5000, 32)
 on conflict (id) do update set title = excluded.title, description = excluded.description, icon = excluded.icon, xp = excluded.xp, reward_cash = excluded.reward_cash, sort = excluded.sort;
 
 insert into game.cosmetics (id, slot, name, price, unlock, data, sort) values

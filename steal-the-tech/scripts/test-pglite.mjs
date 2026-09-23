@@ -64,8 +64,24 @@ async function main() {
     const r = await rpc(me, 'stt_start_steal', { player_item_id: base.items[0].id });
     eq(r.tutorial, true);
     await db.exec(`update game.raids set ends_at = now() - interval '1 second', chance = 1 where id = '${r.raid_id}'`);
-    const res = await rpc(me, 'stt_finish_steal', { raid_id: r.raid_id });
+    const grab = await rpc(me, 'stt_finish_steal', { raid_id: r.raid_id });
+    eq(grab.phase, 'carry');
+    await db.exec(`update game.raids set deliver_after = now() - interval '1 second' where id = '${r.raid_id}'`);
+    const res = await rpc(me, 'stt_deliver_steal', { raid_id: r.raid_id });
     eq(res.status, 'success');
+  });
+  await test('tech belt: stocked, buyable, collect podium cash', async () => {
+    const b = await rpc(me, 'stt_belt');
+    assert(b.items.length >= 10, 'belt stocked');
+    const now = Date.now();
+    const cheap = b.items.filter((i) => !i.sold_to && new Date(i.spawned_at) <= now && new Date(i.ends_at) > now + 2000)
+      .sort((x, y) => x.price - y.price)[0];
+    await db.exec(`update game.profiles set cash = ${cheap.price + 10} where id = '${me}'`);
+    const r = await rpc(me, 'stt_buy_belt', { belt_id: cheap.id });
+    eq(r.item_id, cheap.item_id);
+    await db.exec(`update game.player_items set accrued_at = now() - interval '30 seconds' where owner_id = '${me}'`);
+    const c = await rpc(me, 'stt_collect', {});
+    assert(c.collected > 0, 'collected');
   });
   await test('market item history + leaderboard', async () => {
     const d = await rpc(me, 'stt_market_item', { item_id: 'phantom-tv', range: '30D' });

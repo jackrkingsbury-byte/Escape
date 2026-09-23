@@ -280,8 +280,12 @@ export const QUESTS = [
   ['d_sell1', 'daily', 'Sell an item', 'sell_item', 1, { cash: 2500, income_secs: 120, xp: 80 }],
   ['d_rare', 'daily', 'Find a Rare', 'find_rare', 1, { cash: 3000, income_secs: 180, xp: 100 }],
   ['d_legend', 'daily', 'Find a Legendary', 'find_legendary', 1, { cash: 20000, income_secs: 600, xp: 400, tokens: { premium: 1 } }],
+  ['d_belt5', 'daily', 'Buy 5 items off the Tech Belt', 'belt_buys', 5, { cash: 3000, income_secs: 180, xp: 120 }],
+  ['d_collect20', 'daily', 'Collect podium cash 20 times', 'collects', 20, { cash: 2500, income_secs: 240, xp: 100 }],
+  ['d_lock3', 'daily', 'Lock your base 3 times', 'lock_base', 3, { cash: 2000, income_secs: 120, xp: 80 }],
   ['w_mythic', 'weekly', 'Find a Mythic', 'find_mythic', 1, { cash: 250000, income_secs: 1800, xp: 2000, secret_keys: 1 }],
   ['w_trades20', 'weekly', 'Complete 20 trades (direct or market)', 'complete_trades', 20, { cash: 150000, income_secs: 1800, xp: 1500, tokens: { elite: 1 } }],
+  ['w_mutant', 'weekly', 'Get 3 mutated items', 'mutations', 3, { cash: 120000, income_secs: 1500, xp: 1500, tokens: { premium: 2 } }],
   ['w_tvs10', 'weekly', 'Collect 10 different TVs', 'collect_tvs', 10, { cash: 100000, income_secs: 1200, xp: 1200, tokens: { premium: 2 }, cosmetic: 'plat-screenwall' }],
 ];
 
@@ -316,6 +320,10 @@ export const ACHIEVEMENTS = [
   ['level_25', 'Mastermind', 'Reach Level 25', '🧠', 0, 2500000],
   ['prestige_1', 'Reborn', 'Prestige for the first time', '✨', 0, 0],
   ['streak_7', 'Seven Day Streak', 'Claim 7 daily rewards in a row', '📅', 500, 25000],
+  ['first_mutation', 'Mutant', 'Get a mutated item (GOLD or better)', '🧬', 150, 5000],
+  ['rainbow', 'Taste the Rainbow', 'Own a RAINBOW item', '🌈', 3000, 500000],
+  ['belt_sniper', 'Belt Sniper', 'Buy a Legendary or better off the Tech Belt', '🎯', 400, 25000],
+  ['tagger', 'Tag, You\'re It', 'Catch a thief red-handed', '🫵', 200, 5000],
 ];
 
 // Cosmetics never change stats.

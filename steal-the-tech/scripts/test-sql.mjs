@@ -170,13 +170,17 @@ async function main() {
   });
 
   console.log('\nDrops');
-  await test('tutorial step 5 grants exactly one Basic Drop worth of cash, once', async () => {
+  await test('tutorial grants $600 for the belt (step 4) and one Basic Drop (step 7), once each', async () => {
     const basic = (await one(`select price from game.drop_types where id = 'basic'`)).price;
     const before = await cash(A);
+    await rpc(A, 'stt_tutorial', { step: 4 });
+    eq(await cash(A), before + 600, 'belt cash');
     await rpc(A, 'stt_tutorial', { step: 5 });
-    eq(await cash(A), before + basic);
-    await rpc(A, 'stt_tutorial', { step: 6 });
-    eq(await cash(A), before + basic, 'no double grant');
+    eq(await cash(A), before + 600, 'no double grant');
+    await rpc(A, 'stt_tutorial', { step: 7 });
+    eq(await cash(A), before + 600 + basic, 'drop cash');
+    await rpc(A, 'stt_tutorial', { step: 8 });
+    eq(await cash(A), before + 600 + basic, 'no double grant');
   });
   await test('opening a drop charges the server price and grants a real item', async () => {
     const price = (await one(`select price from game.drop_types where id = 'basic'`)).price;
@@ -235,16 +239,40 @@ async function main() {
   });
 
   console.log('\nBase, vault & income');
-  await test('passive income accrues server-side from displayed items', async () => {
-    await su(`update game.profiles set cash = 1000, income_remainder = 0, last_income_at = now() - interval '100 seconds' where id = $1`, [B]);
-    const s = await rpc(B, 'stt_sync');
+  await test('podium cash piles up server-side and is banked by collecting', async () => {
+    await su(`select game._check_achievements($1)`, [B]); // settle one-off rewards from test setup first
+    await su(`update game.profiles set cash = 1000 where id = $1`, [B]);
+    await su(`update game.player_items set accrued_at = now() - interval '100 seconds' where owner_id = $1 and location = 'display'`, [B]);
+    let s = await rpc(B, 'stt_sync');
+    eq(s.me.cash, 1000, 'income waits on the podium');
     const rate = s.me.income;
-    assert(Math.abs(s.me.cash - (1000 + rate * 100)) <= 1, `cash ${s.me.cash} vs expected ${1000 + rate * 100}`);
+    assert(Math.abs(s.me.pending - rate * 100) <= 2, `pending ${s.me.pending} vs ${rate * 100}`);
+    const starter = s.items.find((i) => i.soulbound);
+    const one1 = await rpc(B, 'stt_collect', { player_item_id: starter.id });
+    assert(one1.collected > 0 && one1.items.length === 1, 'collect one podium');
+    const all = await rpc(B, 'stt_collect', {});
+    s = await rpc(B, 'stt_sync');
+    assert(Math.abs(s.me.cash - (1000 + one1.collected + all.collected)) <= 1, `banked: cash ${s.me.cash}, collected ${one1.collected}+${all.collected}`);
+    assert(Math.abs(one1.collected + all.collected - rate * 100) <= 3, 'banked everything once');
+    const again = await rpc(B, 'stt_collect', {});
+    assert(again.collected <= rate * 2 + 2, 'nothing left to double-collect');
+    await rejects(rpc(B, 'stt_collect', { player_item_id: 'nope' }), /Invalid/);
   });
-  await test('offline income is capped at 12 hours', async () => {
-    await su(`update game.profiles set cash = 0, income_remainder = 0, last_income_at = now() - interval '3 days' where id = $1`, [B]);
+  await test('offline income is capped at 12 hours per podium', async () => {
+    await su(`update game.player_items set accrued_at = now() - interval '3 days' where owner_id = $1 and location = 'display'`, [B]);
     const s = await rpc(B, 'stt_sync');
-    assert(s.me.cash <= s.me.income * 43200 + 1, 'capped');
+    assert(s.me.pending <= s.me.income * 43200 + 5, 'capped');
+    assert(s.me.pending >= s.me.income * 43200 - 5, 'full 12h');
+  });
+  await test('an item leaving its podium banks its cash for the owner', async () => {
+    const id = await giveItem(B, 'nova-55-4k-tv');
+    await su(`update game.player_items set accrued_at = now() - interval '60 seconds' where id = $1`, [id]);
+    const before = await cash(B);
+    await rpc(B, 'stt_store', { player_item_id: id });
+    const inc = (await one(`select base_income from game.items where id = 'nova-55-4k-tv'`)).base_income;
+    const got = (await cash(B)) - before;
+    assert(got >= inc * 59 && got <= inc * 62, 'auto-banked ' + got);
+    await rpc(B, 'stt_quick_sell', { player_item_id: id });
   });
   let bobItem;
   await test('place / store / vault / auto-arrange', async () => {
@@ -292,6 +320,96 @@ async function main() {
     await rejects(rpc(C, 'stt_quick_sell', { player_item_id: starter }), /starter/);
   });
 
+  console.log('\nTech Belt & mutations');
+  await test('the belt is stocked ahead of time with fairly priced items', async () => {
+    const b = await rpc(C, 'stt_belt');
+    eq(b.seconds, 36);
+    assert(b.items.length >= 10, 'belt stocked: ' + b.items.length);
+    const now = Date.now();
+    assert(b.items.some((i) => new Date(i.spawned_at) > now), 'items scheduled ahead');
+    assert(b.items.some((i) => new Date(i.spawned_at) <= now && new Date(i.ends_at) > now), 'items on the belt now');
+    // Fresh rows are priced at market × mutation × 1.05, so buying and reselling can never profit.
+    await su(`update game.world set belt_next_at = now()`);
+    await su(`select game._belt_fill()`);
+    const rows = await su(`select b.price, ms.price as m, game._mut_mult(b.mutation)::float as mult from game.belt b
+                           join game.market_state ms on ms.item_id = b.item_id where b.spawned_at >= now() - interval '1 second'`);
+    assert(rows.length > 3, 'new rows');
+    for (const r of rows) eq(r.price, Math.ceil(r.m * r.mult * 1.05), 'belt price');
+  });
+  await test('buying off the belt: one buyer wins, it lands on your podium, mutation included', async () => {
+    const row = await one(`insert into game.belt (item_id, mutation, price, spawned_at, ends_at)
+                           values ('nova-55-4k-tv', 'gold', 777, now() - interval '5 seconds', now() + interval '30 seconds') returning id`);
+    await su(`update game.profiles set cash = 5000 where id in ($1, $2)`, [B, C]);
+    const before = await cash(C);
+    const results = await Promise.allSettled([
+      rpc(B, 'stt_buy_belt', { belt_id: row.id }),
+      rpc(C, 'stt_buy_belt', { belt_id: row.id }),
+    ]);
+    const won = results.filter((r) => r.status === 'fulfilled');
+    eq(won.length, 1, 'exactly one buyer');
+    assert(/Too slow/.test(results.find((r) => r.status === 'rejected').reason.message), 'loser told');
+    const r = won[0].value;
+    eq(r.mutation, 'gold');
+    eq(r.price, 777);
+    const pi = await one('select owner_id, mutation, location from game.player_items where id = $1', [r.player_item.id]);
+    eq(pi.mutation, 'gold');
+    const winner = pi.owner_id;
+    eq((await one('select sold_to from game.belt where id = $1', [row.id])).sold_to, winner);
+    if (winner === C) eq(await cash(C), before - 777);
+    const view = await rpc(A, 'stt_belt');
+    const sold = view.items.find((i) => i.id === row.id);
+    assert(sold && sold.sold_to === winner && sold.buyer, 'others see who bought it');
+    await rpc(winner, 'stt_quick_sell', { player_item_id: r.player_item.id }).catch(() => {});
+  });
+  await test('belt purchases are validated: timing, cash, sold out', async () => {
+    const fut = await one(`insert into game.belt (item_id, price, spawned_at, ends_at)
+                           values ('volt-pocket-phone', 100, now() + interval '10 seconds', now() + interval '46 seconds') returning id`);
+    await rejects(rpc(C, 'stt_buy_belt', { belt_id: fut.id }), /hasn't rolled/);
+    const gone = await one(`insert into game.belt (item_id, price, spawned_at, ends_at)
+                            values ('volt-pocket-phone', 100, now() - interval '50 seconds', now() - interval '14 seconds') returning id`);
+    await rejects(rpc(C, 'stt_buy_belt', { belt_id: gone.id }), /left the belt/);
+    const pricey = await one(`insert into game.belt (item_id, price, spawned_at, ends_at)
+                              values ('volt-pocket-phone', 999999999, now() - interval '1 second', now() + interval '30 seconds') returning id`);
+    const c0 = await cash(C);
+    await rejects(rpc(C, 'stt_buy_belt', { belt_id: pricey.id }), /Not enough cash/);
+    eq(await cash(C), c0, 'nothing charged');
+    await su(`update game.limited_item_supply set minted = max_supply where item_id = 'phantom-tv'`);
+    const lim = await one(`insert into game.belt (item_id, price, spawned_at, ends_at)
+                           values ('phantom-tv', 10, now() - interval '1 second', now() + interval '30 seconds') returning id`);
+    await rejects(rpc(C, 'stt_buy_belt', { belt_id: lim.id }), /sold out/);
+    eq(await cash(C), c0, 'refunded atomically');
+    await rejects(rpc(C, 'stt_buy_belt', { belt_id: 'x' }), /Invalid/);
+  });
+  await test('mutations multiply income and value', async () => {
+    const id = await giveItem(C, 'orbit-air-laptop');
+    const s0 = await rpc(C, 'stt_sync');
+    await su(`update game.player_items set mutation = 'rainbow' where id = $1`, [id]);
+    const s1 = await rpc(C, 'stt_sync');
+    const it = await one(`select base_income from game.items where id = 'orbit-air-laptop'`);
+    const m = (await one(`select price from game.market_state where item_id = 'orbit-air-laptop'`)).price;
+    assert(Math.abs(s1.me.income - s0.me.income - it.base_income * 9) < 0.5, 'income ×10');
+    assert(Math.abs(s1.me.base_value - s0.me.base_value - m * 9) <= 2, 'value ×10');
+    eq(s1.items.find((i) => i.id === id).mutation, 'rainbow');
+    const q = await rpc(C, 'stt_quick_sell', { player_item_id: id });
+    eq(q.price, Math.floor(m * 10 * 0.6), 'quick sell pays the mutated value');
+  });
+  await test('NPCs shop the belt, but only after humans had first pick', async () => {
+    await su(`update game.profiles set cash = 400000000 where is_bot`);
+    await su(`update game.belt set sold_to = $1, sold_at = now() where sold_to is null`, [A]);
+    const fresh = await one(`insert into game.belt (item_id, price, spawned_at, ends_at)
+                             values ('zenith-tourbillon', 1000, now() - interval '2 seconds', now() + interval '34 seconds') returning id`);
+    for (let i = 0; i < 20; i++) await su('select game._bot_belt()');
+    eq((await one('select sold_to from game.belt where id = $1', [fresh.id])).sold_to, null, 'humans get first pick');
+    await su(`update game.belt set spawned_at = now() - interval '20 seconds' where id = $1`, [fresh.id]);
+    for (let i = 0; i < 40; i++) {
+      await su('select game._bot_belt()');
+      if ((await one('select sold_to from game.belt where id = $1', [fresh.id])).sold_to) break;
+    }
+    const buyer = (await one('select sold_to from game.belt where id = $1', [fresh.id])).sold_to;
+    assert(buyer, 'an NPC bought it');
+    assert((await one('select is_bot from game.profiles where id = $1', [buyer])).is_bot, 'buyer is an NPC');
+  });
+
   console.log('\nRaids');
   let aItem;
   await test('new players are protected; self-steal and starter-steal are rejected', async () => {
@@ -308,9 +426,11 @@ async function main() {
     await su(`update game.profiles set level = 5 where id = $1`, [B]);
     const r = await rpc(B, 'stt_start_steal', { player_item_id: aItem });
     raidId = r.raid_id;
-    assert(r.duration >= 10, 'humans get ≥10s to react');
+    assert(r.duration >= 6, 'humans get ≥6s to react');
+    eq(r.phase, 'grab');
     assert(r.chance > 0 && r.chance < 1, 'chance');
-    await rejects(rpc(B, 'stt_finish_steal', { raid_id: raidId }), /Still stealing/);
+    await rejects(rpc(B, 'stt_finish_steal', { raid_id: raidId }), /Still grabbing/);
+    await rejects(rpc(B, 'stt_deliver_steal', { raid_id: raidId }), /Grab it first/);
     await rejects(rpc(B, 'stt_start_steal', { player_item_id: aItem }), /already in the middle/);
     await rejects(rpc(C, 'stt_start_steal', { player_item_id: aItem }), /new-player protection|already stealing/);
   });
@@ -323,10 +443,22 @@ async function main() {
     await rpc(A, 'stt_defend', { raid_id: raidId });
     eq((await one('select defended from game.raids where id = $1', [raidId])).defended, true);
   });
-  await test('a successful steal moves ownership, shields the victim, enables revenge', async () => {
+  await test('grab → carry → deliver moves ownership, shields the victim, enables revenge', async () => {
     await su(`update game.raids set chance = 1, defended = false where id = $1`, [raidId]);
     await expireRaid(raidId);
-    const r = await rpc(B, 'stt_finish_steal', { raid_id: raidId });
+    const g = await rpc(B, 'stt_finish_steal', { raid_id: raidId });
+    eq(g.status, 'active');
+    eq(g.phase, 'carry', 'grabbed — now carrying');
+    eq(await ownerOf(aItem), A, 'not theirs until they get home');
+    let s0 = await rpc(A, 'stt_sync', { since: 0 });
+    eq(s0.incoming_raids[0].phase, 'carry');
+    assert(s0.feed.some((e) => e.kind === 'raid_grabbed'), 'owner told to chase');
+    await rejects(rpc(A, 'stt_vault', { player_item_id: aItem }), /out the door/);
+    await rejects(rpc(A, 'stt_store', { player_item_id: aItem }), /chase them/);
+    await rejects(rpc(A, 'stt_defend', { raid_id: raidId }), /catch them/);
+    await rejects(rpc(B, 'stt_deliver_steal', { raid_id: raidId }), /Keep running/);
+    await su(`update game.raids set deliver_after = now() - interval '1 second' where id = $1`, [raidId]);
+    const r = await rpc(B, 'stt_deliver_steal', { raid_id: raidId });
     eq(r.status, 'success');
     eq(await ownerOf(aItem), B);
     const it = await one('select hot_until, stolen_from from game.player_items where id = $1', [aItem]);
@@ -373,7 +505,68 @@ async function main() {
     eq(await ownerOf(target.id), B);
     await rejects(rpc(C, 'stt_start_steal', { player_item_id: target.id }), /laying low/);
   });
-  await test('vaulting the item mid-raid blocks the theft', async () => {
+  await test('the owner can tag a thief who is running off with their item', async () => {
+    await su(`update game.profiles set raid_cooldown_until = null, cash = 100000 where id = $1`, [C]);
+    const id = await giveItem(B, 'nexus-gaming-laptop');
+    const r = await rpc(C, 'stt_start_steal', { player_item_id: id });
+    await su(`update game.raids set chance = 1 where id = $1`, [r.raid_id]);
+    await expireRaid(r.raid_id);
+    eq((await rpc(C, 'stt_finish_steal', { raid_id: r.raid_id })).phase, 'carry');
+    const bBefore = await cash(B);
+    const t = await rpc(B, 'stt_defend', { raid_id: r.raid_id, tag: true });
+    eq(t.tagged, true);
+    eq(t.status, 'failed');
+    assert(t.fine > 0, 'thief fined');
+    assert((await cash(B)) >= bBefore + t.fine, 'owner paid the bounty');
+    eq(await ownerOf(id), B, 'item stays home');
+    await rejects(rpc(C, 'stt_deliver_steal', { raid_id: r.raid_id }).then((x) => { if (x.status !== 'success') throw new Error('over'); }), /over/);
+    await rpc(B, 'stt_quick_sell', { player_item_id: id });
+  });
+  await test('taking too long to carry it home snaps the item back', async () => {
+    await su(`update game.profiles set raid_cooldown_until = null where id = $1`, [C]);
+    const id = await giveItem(B, 'kryo-rgb-keyboard');
+    const r = await rpc(C, 'stt_start_steal', { player_item_id: id });
+    await su(`update game.raids set chance = 1 where id = $1`, [r.raid_id]);
+    await expireRaid(r.raid_id);
+    await rpc(C, 'stt_finish_steal', { raid_id: r.raid_id });
+    await su(`update game.raids set carry_until = now() - interval '10 seconds' where id = $1`, [r.raid_id]);
+    await su(`update game.world set last_tick_at = now() - interval '60 seconds'`);
+    await su(`select game.world_tick(true)`);
+    const row = await one('select status, fine from game.raids where id = $1', [r.raid_id]);
+    eq(row.status, 'failed');
+    eq(row.fine, 0, 'no fine for being slow');
+    eq(await ownerOf(id), B);
+    await su(`update game.profiles set raid_cooldown_until = null where id = $1`, [C]);
+    const r2 = await rpc(C, 'stt_start_steal', { player_item_id: id });
+    const ab = await rpc(C, 'stt_abort_steal', { raid_id: r2.raid_id });
+    eq(ab.status, 'failed');
+    eq(ab.fine, 0, 'backing off is free');
+    await su(`update game.profiles set raid_cooldown_until = null where id = $1`, [C]);
+    const r3 = await rpc(C, 'stt_start_steal', { player_item_id: id });
+    const caught = await rpc(C, 'stt_abort_steal', { raid_id: r3.raid_id, reason: 'caught' });
+    eq(caught.status, 'failed');
+    eq(caught.defended, true);
+    await rpc(B, 'stt_quick_sell', { player_item_id: id });
+  });
+  await test('locking a base blocks raids, then needs a recharge', async () => {
+    await su(`update game.profiles set raid_cooldown_until = null where id = $1`, [C]);
+    await su(`update game.bases set shield_until = null, lock_until = null where player_id = $1`, [B]);
+    const id = await giveItem(B, 'volt-pocket-phone');
+    const l = await rpc(B, 'stt_lock_base');
+    const sec = (await one('select security_level from game.bases where player_id = $1', [B])).security_level;
+    eq(l.seconds, 30 + 10 * sec);
+    await rejects(rpc(C, 'stt_start_steal', { player_item_id: id }), /LOCKED/);
+    await rejects(rpc(B, 'stt_lock_base'), /Already locked/);
+    await su(`update game.bases set lock_until = now() - interval '3 seconds' where player_id = $1`, [B]);
+    await rejects(rpc(B, 'stt_lock_base'), /recharging/);
+    const w = await rpc(C, 'stt_world');
+    assert('lock_until' in w.players.find((p) => p.id === B), 'lock visible to others');
+    const r = await rpc(C, 'stt_start_steal', { player_item_id: id });
+    await rpc(C, 'stt_abort_steal', { raid_id: r.raid_id });
+    await su(`update game.profiles set raid_cooldown_until = null where id = $1`, [C]);
+    await rpc(B, 'stt_quick_sell', { player_item_id: id });
+  });
+  await test('vaulting the item mid-grab blocks the theft', async () => {
     await su(`update game.profiles set raid_cooldown_until = null where id = $1`, [C]);
     const id = await giveItem(B, 'nexus-gaming-laptop');
     const r = await rpc(C, 'stt_start_steal', { player_item_id: id });
@@ -391,8 +584,15 @@ async function main() {
     const r = await rpc(C, 'stt_start_steal', { player_item_id: id });
     await su(`update game.raids set ends_at = now() - interval '20 seconds' where id = $1`, [r.raid_id]);
     await su(`select game.world_tick(true)`);
-    const st = (await one('select status from game.raids where id = $1', [r.raid_id])).status;
-    assert(st !== 'active', 'resolved: ' + st);
+    let row = await one('select status, phase from game.raids where id = $1', [r.raid_id]);
+    assert(row.status !== 'active' || row.phase === 'carry', 'grab resolved: ' + row.status);
+    // a thief who grabbed it and then vanished drops it when the carry window closes
+    await su(`update game.raids set carry_until = now() - interval '10 seconds' where id = $1`, [r.raid_id]);
+    await su(`update game.world set last_tick_at = now() - interval '60 seconds'`);
+    await su(`select game.world_tick(true)`);
+    row = await one('select status from game.raids where id = $1', [r.raid_id]);
+    assert(row.status !== 'active', 'resolved: ' + row.status);
+    eq(await ownerOf(id), B);
   });
   await test('the beginner raid in the tutorial is near-certain', async () => {
     await su(`update game.profiles set tutorial_step = 9, raid_cooldown_until = null where id = $1`, [C]);
@@ -402,6 +602,14 @@ async function main() {
     const r = await rpc(C, 'stt_start_steal', { player_item_id: base.items[0].id });
     eq(r.tutorial, true);
     assert(r.chance >= 0.95, 'chance');
+    eq(Number(r.duration), 3, 'quick grab');
+    await expireRaid(r.raid_id);
+    const g = await rpc(C, 'stt_finish_steal', { raid_id: r.raid_id });
+    eq(g.phase, 'carry');
+    await su(`update game.raids set deliver_after = now() - interval '1 second' where id = $1`, [r.raid_id]);
+    eq((await rpc(C, 'stt_deliver_steal', { raid_id: r.raid_id })).status, 'success');
+    const flags = (await one('select tutorial_flags from game.profiles where id = $1', [C])).tutorial_flags;
+    eq(flags.tutorial_raid, true);
   });
 
   console.log('\nMarket');
@@ -642,6 +850,9 @@ async function main() {
       await su('select game._tick_market(300)');
     }
     const drops = await su(`select id, price, weights from game.drop_types where not event_only`);
+    // drops come out mutated 3% of the time, which multiplies value
+    const mutAvg = (await one(`select (sum(weight * mult) / sum(weight))::float as m from game.mutations`)).m;
+    const mutEV = 0.97 + 0.03 * mutAvg;
     for (const d of drops) {
       let total = 0;
       let ev = 0;
@@ -652,6 +863,7 @@ async function main() {
            where i.rarity = $1 and i.droppable`, [rarity]);
         ev += (Number(w) / total) * row.p;
       }
+      ev *= mutEV;
       const resale = ev * 0.95 * 0.95;
       assert(resale < d.price, `${d.id}: expected resale ${Math.round(resale)} >= price ${d.price}`);
       assert(ev * 0.6 < d.price, `${d.id}: quick-sell EV too high`);
@@ -667,11 +879,39 @@ async function main() {
     eq(s.incoming_raids.length, 1, 'incoming raid');
     assert(s.incoming_raids[0].attacker_bot, 'from a bot');
     const secs = (new Date(s.incoming_raids[0].ends_at) - new Date(s.incoming_raids[0].started_at)) / 1000;
-    assert(secs >= 12, 'at least 12s to respond: ' + secs);
-    await su(`update game.raids set ends_at = now() - interval '1 second' where id = $1`, [s.incoming_raids[0].id]);
+    assert(secs >= 8, 'at least 8s to respond: ' + secs);
+    const rid = s.incoming_raids[0].id;
+    await su(`update game.raids set ends_at = now() - interval '1 second', chance = 1 where id = $1`, [rid]);
+    s = await rpc(A, 'stt_sync', { since: 0 });
+    eq(s.incoming_raids.length, 1, 'still running with it');
+    eq(s.incoming_raids[0].phase, 'carry');
+    const carrySecs = (new Date(s.incoming_raids[0].deliver_after) - new Date(s.incoming_raids[0].grabbed_at)) / 1000;
+    assert(carrySecs >= 9, 'time to chase the NPC: ' + carrySecs);
+    await su(`update game.raids set deliver_after = now() - interval '1 second' where id = $1`, [rid]);
     s = await rpc(A, 'stt_sync', { since: 0 });
     eq(s.incoming_raids.length, 0, 'resolved during sync');
     assert(s.feed.some((e) => e.kind === 'item_stolen' || e.kind === 'raid_over'), 'result delivered');
+    // Tag an NPC thief mid-run: the item comes home.
+    await su(`delete from game.raids where defender_id = $1 and status = 'active'`, [A]);
+    await su(`update game.bases set shield_until = null, lock_until = null where player_id = $1`, [A]);
+    await su(`update game.profiles set raid_cooldown_until = null where is_bot`);
+    await su(`delete from game.raids where defender_id = $1`, [A]);
+    await su('select game._bot_raid_human()');
+    s = await rpc(A, 'stt_sync', { since: 0 });
+    const r2 = s.incoming_raids[0];
+    await su(`update game.raids set ends_at = now() - interval '1 second', chance = 1 where id = $1`, [r2.id]);
+    s = await rpc(A, 'stt_sync', { since: 0 });
+    eq(s.incoming_raids[0].phase, 'carry');
+    const t = await rpc(A, 'stt_defend', { raid_id: r2.id, tag: true });
+    eq(t.status, 'failed');
+    eq(await ownerOf(r2.player_item_id), A, 'tagged the NPC, item back home');
+    // A locked base keeps NPC raiders out.
+    await su(`update game.profiles set raid_cooldown_until = null where is_bot`);
+    await su(`delete from game.raids where defender_id = $1`, [A]);
+    await su(`update game.bases set lock_until = now() + interval '60 seconds' where player_id = $1`, [A]);
+    for (let i = 0; i < 5; i++) await su('select game._bot_raid_human()');
+    eq((await one(`select count(*)::int as n from game.raids where defender_id = $1 and status = 'active'`, [A])).n, 0, 'locked out');
+    await su(`update game.bases set lock_until = null where player_id = $1`, [A]);
   });
   await test('bots trade on the market and propose trades to players', async () => {
     for (let i = 0; i < 10; i++) {
