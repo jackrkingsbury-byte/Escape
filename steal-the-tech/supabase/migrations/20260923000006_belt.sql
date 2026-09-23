@@ -870,7 +870,7 @@ begin
     perform game._cash(r.attacker_id, -v_fine, 'raid_fine', jsonb_build_object('raid_id', p_raid));
     perform game._cash(r.defender_id, v_fine, 'raid_bounty', jsonb_build_object('raid_id', p_raid));
   end if;
-  update profiles set raid_cooldown_until = now() + case when p_defended then interval '60 seconds' else interval '40 seconds' end
+  update profiles set raid_cooldown_until = now() + case when p_defended then interval '30 seconds' else interval '20 seconds' end
   where id = r.attacker_id;
   update player_stats set steals_failed = steals_failed + 1 where player_id = r.attacker_id;
   if p_defended then
@@ -912,7 +912,7 @@ begin
   perform game._transfer(r.player_item_id, r.attacker_id, 'steal', null, interval '5 minutes');
   update bases set shield_until = now() + case when d.is_bot then interval '45 seconds' else interval '10 minutes' end
   where player_id = r.defender_id;
-  update profiles set raid_cooldown_until = now() + interval '20 seconds' where id = r.attacker_id;
+  update profiles set raid_cooldown_until = now() + interval '12 seconds' where id = r.attacker_id;
   update player_stats set steals_won = steals_won + 1, best_item_value = greatest(best_item_value, mprice)
   where player_id = r.attacker_id;
   update player_stats set times_robbed = times_robbed + 1 where player_id = r.defender_id;

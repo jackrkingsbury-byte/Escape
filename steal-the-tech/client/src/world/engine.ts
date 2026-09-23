@@ -51,6 +51,9 @@ interface PodiumView {
   mutation: string | null;
   tier: number;
   hidden: boolean;
+  baseScale: number;
+  popT: number | null;
+  awaiting: boolean;
 }
 
 interface PlotView {
@@ -79,6 +82,7 @@ interface BeltView {
   leave: null | { from: THREE.Vector3; to: THREE.Vector3; t0: number; dur: number; fly: boolean };
   done: boolean;
   phase: number;
+  preAnnounced: boolean;
 }
 
 interface Walker {
@@ -198,6 +202,10 @@ export class WorldEngine {
 
   // gameplay bookkeeping
   private localAccrued = new Map<string, number>();
+  private arriving = new Map<string, { beltId: number; until: number }>();
+  private flyers: { obj: THREE.Object3D; from: THREE.Vector3; to: THREE.Vector3; t: number; dur: number; arc: number; spin: number; onDone?: () => void }[] = [];
+  private coinStacks: THREE.InstancedMesh;
+  private coinsAt = 0;
   private plateCooldown = new Map<string, number>();
   private onPlate: string | null = null;
   private onColPad = false;
@@ -269,6 +277,10 @@ export class WorldEngine {
     this.facing = 0; // face into my base
     this.buildShopkeepers();
     this.buildZoneLabels();
+    this.coinStacks = new THREE.InstancedMesh(gCyl(0.15, 0.15, 0.045, 14), std('#fbbf24', { metal: 1, rough: 0.28, emissive: '#5a3a00', ei: 0.5 }), 600);
+    this.coinStacks.count = 0;
+    this.coinStacks.frustumCulled = false;
+    this.scene.add(this.coinStacks);
 
     this.applyQuality(true);
     this.resize();
@@ -544,6 +556,11 @@ export class WorldEngine {
     this.updatePeers(dt);
     this.updateShopkeepers(dt, now);
     this.updateInteractions(dt);
+    this.updateFlyers(dt);
+    if (now - this.coinsAt > 200) {
+      this.coinsAt = now;
+      this.updateCoinStacks();
+    }
     this.fx.update(dt);
     this.scenery.update(this.t, dt);
     for (const m of this.scenery.machines) m.crate.position.y = 2.35 + Math.sin(this.t * 2 + m.pos.z) * 0.12;
@@ -821,7 +838,7 @@ export class WorldEngine {
       g.add(pod.root);
       pod.plate.position.set(pp.x - sp.x, 0.0, pp.z - sp.z);
       pod.plate.visible = mine;
-      podiums.push({ slot: i, pod, pos: new THREE.Vector3(sp.x, 0.62, sp.z), plate: new THREE.Vector3(pp.x, 0, pp.z), size: sp.size, sig: '', model: null, beam: null, piid: null, itemId: null, mutation: null, tier: 0, hidden: false });
+      podiums.push({ slot: i, pod, pos: new THREE.Vector3(sp.x, 0.62, sp.z), plate: new THREE.Vector3(pp.x, 0, pp.z), size: sp.size, sig: '', model: null, beam: null, piid: null, itemId: null, mutation: null, tier: 0, hidden: false, baseScale: 1, popT: null, awaiting: false });
     }
     const pv: PlotView = { def, owner, mine, group: g, podiums, slots: owner.slots, themeSig, lasers, shield, gate: doorGate(def), sec, secLevel: owner.security_level };
     return pv;
@@ -860,7 +877,7 @@ export class WorldEngine {
   private setPodiumItem(pv: PlotView, pod: PodiumView, it: { piid: string; itemId: string; mutation: string | null; hidden: boolean } | null) {
     const sig = it ? `${it.piid}|${it.itemId}|${it.mutation}` : '';
     if (sig === pod.sig) {
-      if (pod.model) pod.model.root.visible = !(it?.hidden ?? false);
+      if (pod.model) pod.model.root.visible = !(it?.hidden ?? false) && !pod.awaiting;
       pod.hidden = !!it?.hidden;
       return;
     }
@@ -893,14 +910,24 @@ export class WorldEngine {
     const m = buildItem(cat, it.mutation);
     const sc = Math.max(0.42, Math.min(1.05, (pod.size * 1.25) / Math.max(0.8, m.width)));
     m.root.scale.setScalar(sc);
+    pod.baseScale = sc;
+    pod.popT = null;
+    const arr = this.arriving.get(it.piid);
+    pod.awaiting = !!arr && arr.until > Date.now();
     m.root.position.copy(pod.pos);
     m.root.position.y = 0.62;
     m.root.rotation.y = pv.def.side > 0 ? Math.PI : 0; // face the door
     m.root.userData = { pick: 'podium', plot: pv.def.index, slot: pod.slot, piid: it.piid, itemId: it.itemId, ownerId: pv.owner.id, ownerName: pv.owner.username, mine: pv.mine, mutation: it.mutation };
-    m.root.visible = !it.hidden;
+    m.root.visible = !it.hidden && !pod.awaiting;
     pod.hidden = it.hidden;
     pv.group.add(m.root);
     pod.model = m;
+    if (pod.awaiting) {
+      m.root.scale.setScalar(0.01);
+    } else if (pv.mine && this.lastWorldAt > 0 && Date.now() - this.bootAt > 4000) {
+      // anything new on my podiums (drops, stolen loot, trades) pops in
+      this.popIn(pod);
+    }
     if (tier >= 5 || it.mutation === 'rainbow' || it.mutation === 'glitch') {
       const beam = rarityBeam(it.mutation ? MUTATION_COLORS[it.mutation] || col : col, tier >= 7 ? 14 : 9, pod.size * 0.45);
       beam.position.x = pod.pos.x;
@@ -909,6 +936,20 @@ export class WorldEngine {
       pv.group.add(beam);
       pod.beam = beam;
     }
+  }
+
+  private bootAt = Date.now();
+
+  private popIn(pod: PodiumView) {
+    if (!pod.model) return;
+    pod.awaiting = false;
+    pod.model.root.visible = !pod.hidden;
+    pod.popT = 0;
+    const cat = pod.itemId ? G().itemsById[pod.itemId] : null;
+    const col = pod.mutation ? MUTATION_COLORS[pod.mutation] : cat ? RARITY[cat.rarity].color : '#4ade80';
+    this.fx.spark(pod.pos.clone().setY(1.2), { n: 40, color: col, speed: 5, rainbow: pod.mutation === 'rainbow' });
+    this.fx.ring(pod.pos.clone().setY(0.5), col, 3.5);
+    if (pod.pos.distanceTo(this.pos) < 30) play('pop');
   }
 
   private rebuildPickables() {
@@ -940,6 +981,20 @@ export class WorldEngine {
       const near = inPlot(pv.def, this.pos.x, this.pos.z, 4) || this.pos.distanceTo(tmpV.set(pv.def.cx, 0, pv.def.side * 18)) < 26;
       for (const pod of pv.podiums) {
         if (!pod.model) continue;
+        if (pod.awaiting && pod.piid) {
+          const a = this.arriving.get(pod.piid);
+          if (!a || a.until < Date.now()) {
+            this.arriving.delete(pod.piid);
+            this.popIn(pod);
+          }
+        }
+        if (pod.popT != null) {
+          pod.popT += dt;
+          const k = Math.min(1, pod.popT / 0.45);
+          const back = 1 + 2.7 * Math.pow(k - 1, 3) + 1.7 * Math.pow(k - 1, 2);
+          pod.model.root.scale.setScalar(pod.baseScale * Math.max(0.01, back));
+          if (k >= 1) pod.popT = null;
+        }
         const b = pod.model.body;
         b.rotation.y = Math.sin(this.t * 0.6 + pod.slot) * 0.35;
         b.position.y = Math.sin(this.t * 1.6 + pod.slot) * 0.05;
@@ -996,6 +1051,55 @@ export class WorldEngine {
     }
   }
 
+  private updateFlyers(dt: number) {
+    this.flyers = this.flyers.filter((f) => {
+      f.t += dt;
+      const k = Math.min(1, f.t / f.dur);
+      const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      f.obj.position.lerpVectors(f.from, f.to, e);
+      f.obj.position.y += Math.sin(k * Math.PI) * f.arc;
+      f.obj.rotation.y += dt * f.spin;
+      if (k >= 1) {
+        f.onDone?.();
+        return false;
+      }
+      return true;
+    });
+  }
+
+  /** Little stacks of gold coins growing on my collect plates. */
+  private updateCoinStacks() {
+    const pv = this.plots.get(0);
+    const s = G();
+    let n = 0;
+    const m4 = new THREE.Matrix4();
+    const q = new THREE.Quaternion();
+    const sc = new THREE.Vector3(1, 1, 1);
+    const p = new THREE.Vector3();
+    if (pv) {
+      for (const pod of pv.podiums) {
+        if (!pod.piid || pod.hidden) continue;
+        const pi = s.myItems.find((x) => x.id === pod.piid);
+        if (!pi) continue;
+        const amt = pendingOf(pi, this.localAccrued.get(pi.id));
+        if (amt < 1) continue;
+        const rate = Math.max(0.1, itemRate(pi.item_id, pi.mutation));
+        const coins = Math.max(1, Math.min(12, Math.ceil(Math.log2(1 + amt / (rate * 4)) * 2)));
+        for (let i = 0; i < coins && n < 600; i++) {
+          const jx = Math.sin(i * 12.9898 + pod.slot) * 0.06;
+          const jz = Math.cos(i * 78.233 + pod.slot) * 0.06;
+          const col = i % 2 ? -0.14 : 0.14;
+          p.set(pod.plate.x + col + jx, 0.08 + Math.floor(i / 2) * 0.05, pod.plate.z + jz);
+          q.setFromAxisAngle(tmpV2.set(0, 1, 0), i * 0.7);
+          m4.compose(p, q, sc);
+          this.coinStacks.setMatrixAt(n++, m4);
+        }
+      }
+    }
+    this.coinStacks.count = n;
+    this.coinStacks.instanceMatrix.needsUpdate = true;
+  }
+
   private totalPending(): number {
     let t = 0;
     for (const pi of G().myItems) if (pi.location === 'display') t += pendingOf(pi, this.localAccrued.get(pi.id));
@@ -1036,7 +1140,7 @@ export class WorldEngine {
           beam = rarityBeam(row.mutation ? MUTATION_COLORS[row.mutation] : it.rarity === 'ultra' ? '#e879f9' : RARITY[it.rarity].color, tier >= 7 ? 22 : 12, 0.9);
           model.root.add(beam);
         }
-        bv = { row, it, model, spawnedAt: toClient(row.spawned_at), endsAt: toClient(row.ends_at), beam, announced: false, leave: null, done: false, phase: Math.random() * 6 };
+        bv = { row, it, model, spawnedAt: toClient(row.spawned_at), endsAt: toClient(row.ends_at), beam, announced: false, leave: null, done: false, phase: Math.random() * 6, preAnnounced: false };
         this.belt.set(row.id, bv);
       }
       bv.row = row;
@@ -1079,6 +1183,12 @@ export class WorldEngine {
             bv.done = true;
             this.fx.spark(r.position.clone().setY(1), { n: 30, color: RARITY[bv.it.rarity].color, speed: 4 });
             this.fx.ring(r.position.clone().setY(0.2), RARITY[bv.it.rarity].color, 3);
+            for (const [piid, a] of this.arriving) {
+              if (a.beltId !== id) continue;
+              this.arriving.delete(piid);
+              const pod = this.plots.get(0)?.podiums.find((p) => p.piid === piid);
+              if (pod) this.popIn(pod);
+            }
             if (bv.row.sold_to === me?.id) play('pop');
           }
           this.removeBelt(id);
@@ -1092,6 +1202,13 @@ export class WorldEngine {
       const tt = (now - bv.spawnedAt) / Math.max(1, bv.endsAt - bv.spawnedAt);
       if (tt < 0) {
         r.visible = false;
+        const tier = RARITY[bv.it.rarity]?.tier ?? 1;
+        const left = bv.spawnedAt - now;
+        if (!bv.preAnnounced && left < 12000 && (tier >= 7 || bv.row.mutation === 'rainbow')) {
+          bv.preAnnounced = true;
+          play('alarm');
+          banner({ kind: tier >= 8 ? 'secret' : 'epic', title: `⚠️ INCOMING: ${bv.row.mutation ? (mutationDef(bv.row.mutation)?.label ?? '') + ' ' : ''}${RARITY[bv.it.rarity].label}`, sub: `${bv.it.name} rolls out of the Tech Factory in ${Math.ceil(left / 1000)}s — get to the belt!`, itemId: bv.it.id, mutation: bv.row.mutation, ttl: 3600 });
+        }
         continue;
       }
       if (tt > 1.02) {
@@ -1223,6 +1340,16 @@ export class WorldEngine {
     this.pops.at(this.camera, this.w, this.h, tmpV.copy(bv.model.root.position).setY(2.2), '-' + shortMoney(bv.row.price), 'spend', 1);
     buyBelt(id).then((r) => {
       if (r) {
+        if (r.placed) {
+          this.arriving.set(r.player_item.id, { beltId: id, until: Date.now() + 9000 });
+          const b2 = this.belt.get(id);
+          const myPlot = this.plots.get(0);
+          const pod = r.slot != null ? myPlot?.podiums.find((p) => p.slot === r.slot) : null;
+          if (b2?.leave && pod) {
+            b2.leave.to = pod.pos.clone().setY(0.6);
+            b2.leave.dur = Math.max(900, (b2.leave.from.distanceTo(b2.leave.to) / 9) * 1000);
+          }
+        }
         const tier = RARITY[r.rarity]?.tier ?? 1;
         if (tier >= 5 || r.mutation) {
           this.fx.confetti(this.pos.clone().setY(2), tier >= 7 ? 200 : 90);
@@ -1548,7 +1675,7 @@ export class WorldEngine {
       const ok = st.result.status === 'success';
       this.stopChase();
       if (ok) {
-        this.dropCarry();
+        this.slamLoot();
         const tier = RARITY[G().itemsById[st.itemId]?.rarity || 'common'].tier;
         this.fx.confetti(this.pos.clone().setY(2.2), 160 + tier * 20);
         this.fx.coinsBurst(this.pos.clone().setY(1.5), 30);
@@ -1577,6 +1704,41 @@ export class WorldEngine {
         this.startChase();
       }
     }
+  }
+
+  /** Throw the carried loot from over your head onto a free podium: SLAM. */
+  private slamLoot() {
+    const m = this.carryModel;
+    if (!m) return;
+    this.carryModel = null;
+    const from = new THREE.Vector3();
+    m.root.getWorldPosition(from);
+    this.rig.hold.remove(m.root);
+    m.root.position.copy(from);
+    m.root.scale.setScalar(0.8);
+    this.scene.add(m.root);
+    const myPlot = this.plots.get(0);
+    const free = myPlot?.podiums.find((p) => !p.piid);
+    const to = free ? free.pos.clone() : myPlot ? new THREE.Vector3(myPlot.def.cx, 0.6, myPlot.def.side * 14) : this.pos.clone();
+    const st = G().steal;
+    if (st) this.arriving.set(st.playerItemId, { beltId: -1, until: Date.now() + 2500 });
+    this.flyers.push({
+      obj: m.root, from, to, t: 0, dur: 0.75, arc: 3, spin: 12,
+      onDone: () => {
+        this.scene.remove(m.root);
+        this.fx.ring(to.clone().setY(0.3), '#fde047', 6);
+        this.fx.spark(to.clone().setY(1), { n: 70, color: '#fde047', speed: 7 });
+        this.fx.coinsBurst(to.clone().setY(1), 20);
+        this.shake = Math.max(this.shake, 0.6);
+        play('land');
+        const sid = st?.playerItemId;
+        if (sid) {
+          this.arriving.delete(sid);
+          const pod = this.plots.get(0)?.podiums.find((p) => p.piid === sid);
+          if (pod) this.popIn(pod);
+        }
+      },
+    });
   }
 
   private dropCarry() {

@@ -497,7 +497,7 @@ table.tbl tr.click:hover td { background: rgba(148, 163, 184, 0.06); }
 .prompt.k-carry .btn { animation: throb 0.7s ease-in-out infinite; }
 .prompt.k-belt .btn.good { box-shadow: 0 0 30px rgba(74, 222, 128, 0.55); }
 .prompt.k-steal .btn.hot, .prompt.k-tag .btn.hot { box-shadow: 0 0 30px rgba(244, 63, 94, 0.6); }
-.touch-actions { position: absolute; right: 14px; bottom: calc(150px + var(--safe-b)); z-index: 26; display: flex; flex-direction: column; gap: 10px; }
+.touch-actions { position: absolute; right: 14px; bottom: calc(206px + var(--safe-b)); z-index: 26; display: flex; flex-direction: column; gap: 10px; }
 .touch-actions .round { width: 62px; height: 62px; border-radius: 50%; border: 2px solid rgba(148, 163, 184, 0.5); background: rgba(15, 23, 42, 0.65); color: #fff; font-size: 26px; font-weight: 900; touch-action: none; }
 .touch-actions .round:active { background: rgba(34, 211, 238, 0.4); }
 

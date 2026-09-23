@@ -15,5 +15,11 @@ export default defineConfig({
     emptyOutDir: true,
     target: 'es2020',
     chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        // three.js changes rarely: its own long-lived chunk
+        manualChunks: (id) => (id.includes('node_modules/three/') ? 'three' : undefined),
+      },
+    },
   },
 });
