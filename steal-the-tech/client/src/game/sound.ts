@@ -4,7 +4,8 @@ import type { Rarity } from '../backend/types';
 
 type SoundName =
   | 'click' | 'coin' | 'cash' | 'error' | 'open' | 'shake' | 'whoosh' | 'levelup' | 'notify'
-  | 'alarm' | 'steal_ok' | 'steal_fail' | 'defend' | 'trade' | 'buy' | 'tick' | 'step';
+  | 'alarm' | 'steal_ok' | 'steal_fail' | 'defend' | 'trade' | 'buy' | 'tick' | 'step'
+  | 'zap' | 'grab' | 'jump' | 'land' | 'laser' | 'spawn' | 'hype' | 'pop' | 'tag' | 'run' | 'mutation';
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
@@ -103,7 +104,34 @@ export function play(name: SoundName) {
     case 'defend': return chord([330, 440, 660], 0.3, 'square', 0.08, 0.04);
     case 'trade': return chord([523, 784, 1047], 0.3, 'triangle', 0.1, 0.1);
     case 'buy': return chord([659, 880], 0.2, 'square', 0.06, 0.06);
+    case 'zap':
+      noise(0.5, { gain: 0.22, freq: 4200 });
+      tone(1400, 0.35, { type: 'sawtooth', gain: 0.09, slide: 0.15 });
+      return tone(90, 0.4, { type: 'square', gain: 0.1, delay: 0.05 });
+    case 'grab': tone(300, 0.12, { type: 'square', gain: 0.06, slide: 2 }); return noise(0.1, { gain: 0.08, freq: 900 });
+    case 'jump': return tone(330, 0.16, { type: 'square', gain: 0.05, slide: 2.2 });
+    case 'land': return noise(0.08, { gain: 0.06, freq: 300 });
+    case 'laser':
+      for (let i = 0; i < 3; i++) tone(1600 - i * 300, 0.18, { type: 'sawtooth', gain: 0.05, slide: 0.3, delay: i * 0.08 });
+      return;
+    case 'spawn': return chord([784, 1047, 1319], 0.22, 'triangle', 0.08, 0.05);
+    case 'hype':
+      chord([392, 523, 659, 784, 1047, 1319], 0.6, 'sawtooth', 0.06, 0.06);
+      return noise(0.9, { gain: 0.07, freq: 6000, delay: 0.1 });
+    case 'pop': return tone(900, 0.07, { type: 'triangle', gain: 0.08, slide: 1.8 });
+    case 'tag': chord([220, 440], 0.15, 'square', 0.12, 0.02); return noise(0.2, { gain: 0.2, freq: 800 });
+    case 'run': return chord([523, 659, 784], 0.14, 'square', 0.06, 0.03);
+    case 'mutation': chord([659, 831, 988, 1319, 1661], 0.45, 'triangle', 0.09, 0.05); return noise(0.6, { gain: 0.06, freq: 7000, delay: 0.1 });
   }
+}
+
+/** Cha-ching whose pitch climbs with your collect combo. */
+export function coinCombo(n: number) {
+  const k = Math.min(12, n);
+  const f = 880 * Math.pow(2, k / 12);
+  tone(f, 0.07, { type: 'square', gain: 0.06 });
+  tone(f * 1.335, 0.2, { type: 'square', gain: 0.06, delay: 0.06 });
+  if (n >= 3) tone(f * 2, 0.12, { type: 'triangle', gain: 0.04, delay: 0.12 });
 }
 
 // Rarity-scaled reveal fanfare.

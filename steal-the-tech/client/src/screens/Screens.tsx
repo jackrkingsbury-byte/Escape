@@ -4,7 +4,7 @@ import { boot, enter, join } from '../game/session';
 import { onlineAvailable } from '../backend';
 import { unlockAudio, play } from '../game/sound';
 
-const LOOP = ['FIND', 'COLLECT', 'DISPLAY', 'EARN', 'PROTECT', 'RAID', 'STEAL', 'TRADE', 'SELL', 'UPGRADE', 'REPEAT'];
+const LOOP = ['BUY OFF THE BELT', 'DISPLAY', 'COLLECT', 'LOCK', 'GRAB', 'RUN', 'STEAL', 'TRADE', 'SELL', 'UPGRADE', 'REPEAT'];
 
 export function Title() {
   const online = onlineAvailable();
@@ -19,7 +19,7 @@ export function Title() {
         STEAL<br />THE TECH
         <small>TECH CITY</small>
       </div>
-      <div className="tagline">Collect insane tech. Show it off. Protect it. Take what you want from everyone else.</div>
+      <div className="tagline">Grab gadgets off the Tech Belt, stack cash on your podiums, lock your base — then sneak into everyone else's and RUN with their best stuff.</div>
       <div className="loop">{LOOP.map((l) => <span key={l}>{l}</span>)}</div>
       <div className="col" style={{ width: 'min(420px, 90vw)' }}>
         {online ? (

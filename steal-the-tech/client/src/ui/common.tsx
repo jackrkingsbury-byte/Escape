@@ -1,15 +1,22 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { CatalogItem, Rarity } from '../backend/types';
 import { itemUrl } from '../art/items';
-import { useGame, openPanel, item as catItem, price as mprice } from '../game/store';
+import { useGame, openPanel, item as catItem, price as mprice, mutationDef } from '../game/store';
 import { RARITY } from '../game/rarity';
 import { money, perSec, shortMoney } from '../game/format';
 import { play } from '../game/sound';
 
-export function ItemIcon({ id, size = 40, className = '' }: { id: string; size?: number; className?: string }) {
+export function ItemIcon({ id, size = 40, className = '', mutation }: { id: string; size?: number; className?: string; mutation?: string | null }) {
   const it = useGame((s) => s.itemsById[id]);
   if (!it) return <span style={{ width: size, height: size, display: 'inline-block' }} />;
-  return <img className={'item-icon ' + className} src={itemUrl(it, size > 80 ? 160 : 96)} width={size} height={size} alt={it.name} draggable={false} />;
+  return <img className={'item-icon ' + className + (mutation ? ' mutf-' + mutation : '')} src={itemUrl(it, size > 80 ? 160 : 96)} width={size} height={size} alt={it.name} draggable={false} />;
+}
+
+/** GOLD / DIAMOND / … RAINBOW pill. */
+export function MutBadge({ m, mult = true }: { m: string | null | undefined; mult?: boolean }) {
+  const d = mutationDef(m);
+  if (!m || !d) return null;
+  return <span className={'mut m-' + m}>{d.label}{mult ? ` ×${d.mult}` : ''}</span>;
 }
 
 export function RarityLabel({ r }: { r: Rarity }) {
@@ -27,9 +34,10 @@ export function SupplyBadge({ it }: { it: CatalogItem }) {
 }
 
 export function ItemCard({
-  id, serial, onClick, selected, unknown, footer, badge, showIncome = true,
+  id, serial, onClick, selected, unknown, footer, badge, showIncome = true, mutation,
 }: {
   id: string;
+  mutation?: string | null;
   serial?: number | null;
   onClick?: () => void;
   selected?: boolean;
@@ -40,13 +48,14 @@ export function ItemCard({
 }) {
   const it = useGame((s) => s.itemsById[id]);
   const p = useGame((s) => s.market[id]?.price);
+  const mult = useGame((s) => (mutation ? s.catalog?.mutations?.find((m) => m.id === mutation)?.mult ?? 1 : 1));
   if (!it) return null;
   const r = it.rarity as Rarity;
   return (
-    <div className={`icard r-${r} ${selected ? 'sel' : ''} ${unknown ? 'unknown' : ''}`} onClick={onClick} role={onClick ? 'button' : undefined}>
-      <div className="corner">{badge}</div>
+    <div className={`icard r-${r} ${selected ? 'sel' : ''} ${unknown ? 'unknown' : ''} ${mutation ? 'mutated m-' + mutation : ''}`} onClick={onClick} role={onClick ? 'button' : undefined}>
+      <div className="corner">{badge}{mutation && <MutBadge m={mutation} />}</div>
       <div className="corner-r">{!unknown && it.max_supply ? <SupplyBadge it={it} /> : null}</div>
-      <img className="art" src={itemUrl(it, 160)} alt={unknown ? 'Unknown item' : it.name} draggable={false} />
+      <img className={'art' + (mutation ? ' mutf-' + mutation : '')} src={itemUrl(it, 160)} alt={unknown ? 'Unknown item' : it.name} draggable={false} />
       <div className="nm">{unknown ? '???' : it.name}</div>
       <div style={{ margin: '4px 0' }}>
         <RarityLabel r={r} />
@@ -54,8 +63,8 @@ export function ItemCard({
       </div>
       {!unknown && (
         <>
-          <div className="val">{shortMoney(p ?? it.base_value)}</div>
-          {showIncome && <div className="inc">+{perSec(it.base_income)}</div>}
+          <div className="val">{shortMoney((p ?? it.base_value) * mult)}</div>
+          {showIncome && <div className="inc">+{perSec(it.base_income * mult)}</div>}
         </>
       )}
       {footer}

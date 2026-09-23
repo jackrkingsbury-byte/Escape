@@ -208,7 +208,7 @@ export function SettingsPanel() {
         <b>🎨 Graphics</b>
         <div className="row wrap">
           {(['high', 'low'] as const).map((q) => (
-            <button key={q} className={'btn small ' + (s.quality === q ? 'primary' : '')} onClick={() => { updateSettings({ quality: q }); window.dispatchEvent(new Event('resize')); }}>{q === 'high' ? 'High (glow, particles)' : 'Battery saver'}</button>
+            <button key={q} className={'btn small ' + (s.quality === q ? 'primary' : '')} onClick={() => { updateSettings({ quality: q }); window.dispatchEvent(new Event('resize')); }}>{q === 'high' ? 'High (bloom, shadows)' : 'Battery saver'}</button>
           ))}
         </div>
         <label className="row"><input type="checkbox" checked={s.reduceMotion} onChange={(e) => updateSettings({ reduceMotion: e.target.checked })} /> Reduce motion & screen shake</label>
@@ -217,8 +217,9 @@ export function SettingsPanel() {
       <div className="card col">
         <b>🎮 Controls</b>
         <div className="muted" style={{ fontWeight: 700, lineHeight: 1.5 }}>
-          Desktop: <b>WASD / arrows</b> to walk, <b>click</b> the ground to walk there, <b>click</b> buildings or items, <b>E</b> to enter, <b>scroll</b> to zoom.<br />
-          Mobile: drag anywhere on the <b>left side</b> for the joystick, <b>tap</b> to walk / pick items, big button to enter.
+          Desktop: <b>WASD / arrows</b> to run, <b>Shift</b> to sprint, <b>Space</b> to jump, <b>drag</b> to look around, <b>scroll</b> to zoom, <b>E</b> for the big action button (buy · steal · tag · enter). <b>Click</b> the ground to walk there, or an item for details.<br />
+          Mobile: <b>left side</b> is the joystick, drag the <b>right side</b> to look around, pinch to zoom, <b>⤒</b> jump, <b>⚡</b> sprint, and the big button does the action.<br />
+          Walk over the <b>green plates</b> to collect cash. The <b>red pad</b> at your door locks your base.
         </div>
         <div className="row wrap">
           <button className="btn small" onClick={() => { engine?.travelHome(); openPanel(null); }}>🏠 Teleport home</button>

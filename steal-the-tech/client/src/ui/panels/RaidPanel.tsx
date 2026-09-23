@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGame, G, openPanel, toClient, setG, item as catItem, price } from '../../game/store';
 import { money, shortMoney, duration, ago, perSec } from '../../game/format';
 import { startSteal, visit } from '../../game/actions';
+import { engine } from '../../world/engine';
 import { Panel, Tabs, ItemIcon, RarityLabel, ItemCard, PlayerName, useNow, Stat } from '../common';
 import type { BaseView, RaidTarget, Rarity } from '../../backend/types';
 
@@ -66,7 +67,7 @@ function Targets() {
                   </div>
                   {t.top_item && (
                     <div className="t2 row" style={{ gap: 6 }}>
-                      <ItemIcon id={t.top_item.item_id} size={26} /> Top item: {catItem(t.top_item.item_id)?.name} ({shortMoney(t.top_item.price)})
+                      <ItemIcon id={t.top_item.item_id} size={26} mutation={t.top_item.mutation} /> Top item: {catItem(t.top_item.item_id)?.name} ({shortMoney(t.top_item.price)})
                     </div>
                   )}
                   {t.protected && <div className="t2">🐣 New-player protection</div>}
@@ -199,6 +200,7 @@ export function VisitPanel() {
               <ItemCard
                 key={pi.id}
                 id={pi.item_id}
+                mutation={pi.mutation}
                 serial={pi.serial}
                 badge={pi.under_raid ? <span className="tag">🚨 BEING STOLEN</span> : pi.soulbound ? <span className="tag">★ SAFE</span> : null}
                 footer={
@@ -213,7 +215,9 @@ export function VisitPanel() {
                         data-testid="steal"
                         onClick={(e) => {
                           e.stopPropagation();
-                          startSteal(pi.id, revenge).catch(() => {});
+                          openPanel(null);
+                          if (engine) engine.stealFromPanel(b.id, pi.id, revenge);
+                          else startSteal(pi.id, revenge).catch(() => {});
                         }}
                       >
                         🥷 STEAL
@@ -226,7 +230,7 @@ export function VisitPanel() {
           })}
         </div>
       )}
-      <div className="dim" style={{ fontSize: 13 }}>Odds shown are before the owner reacts. An alarm cuts them by 70%.</div>
+      <div className="dim" style={{ fontSize: 13 }}>Odds are for beating the lasers during the GRAB. Then you still have to carry it home — the owner can tag you on the way.</div>
     </Panel>
   );
 }

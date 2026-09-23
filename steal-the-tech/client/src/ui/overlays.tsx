@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useGame, setG, G, openPanel, toClient, item as catItem, price } from '../game/store';
+import { useGame, setG, G, openPanel, toClient, item as catItem, price, mutationDef, mutMult } from '../game/store';
 import { RARITY, RARITY_ORDER } from '../game/rarity';
 import { money, perSec, duration } from '../game/format';
 import { play, reveal } from '../game/sound';
-import { openDrop, finishSteal, defend, vault, tutorial, visit } from '../game/actions';
+import { openDrop, finishSteal, defend, vault, tutorial, abortSteal } from '../game/actions';
 import { itemUrl } from '../art/items';
-import { drawCrate } from '../world/draw';
-import { ItemIcon, RarityLabel, useNow, ItemCard, HoldButton } from './common';
+import { drawCrate } from '../art/crate';
+import { ItemIcon, RarityLabel, useNow, ItemCard, HoldButton, MutBadge } from './common';
 import { engine } from '../world/engine';
 import type { Rarity } from '../backend/types';
 
@@ -84,6 +84,7 @@ export function DropOverlay() {
   if (phase === 'reveal' && r && revealed.current !== r.player_item.id) {
     revealed.current = r.player_item.id;
     reveal(r.rarity);
+    if (r.mutation) play('mutation');
     if (navigator.vibrate && tier >= 5) navigator.vibrate(tier >= 7 ? [100, 50, 100, 50, 300] : 120);
   }
   const it = r ? catItem(r.item_id) : null;
@@ -121,14 +122,15 @@ export function DropOverlay() {
           {tier >= 5 && <Confetti n={tier >= 7 ? 140 : 70} colors={tier === 9 ? ['#c084fc', '#fff', '#7c3aed'] : undefined} />}
           {r.is_new && <span className="new-badge">NEW DISCOVERY!</span>}
           <div className="reveal-item">
-            <img src={itemUrl(it, 256)} alt={it.name} />
+            <img src={itemUrl(it, 256)} alt={it.name} className={r.mutation ? 'mutf-' + r.mutation : ''} />
           </div>
+          {r.mutation && <div className="reveal-mut"><MutBadge m={r.mutation} /> MUTATION!</div>}
           <div className="reveal-rarity">{RARITY[r.rarity].label}</div>
           <div className="reveal-name">{it.name}</div>
           {r.serial && it.max_supply && <div className="supply" style={{ fontSize: 14, marginTop: 6 }}>SERIAL #{r.serial} / {it.max_supply}</div>}
           <div className="row" style={{ justifyContent: 'center', gap: 18, marginTop: 10, fontWeight: 900, fontSize: 18 }}>
-            <span className="good-t">{money(price(it.id))}</span>
-            <span className="muted">+{perSec(it.base_income)}</span>
+            <span className="good-t">{money(price(it.id, r.mutation))}</span>
+            <span className="muted">+{perSec(it.base_income * mutMult(r.mutation))}</span>
             <span className="gold-t">+{r.xp} XP</span>
           </div>
           <div className="muted" style={{ fontWeight: 700, marginTop: 4 }}>
@@ -144,13 +146,13 @@ export function DropOverlay() {
   );
 }
 
-// ── Stealing (attacker) ──────────────────────────────────────────────────
+// ── Stealing (attacker): GRAB bar, then the result ───────────────────────
 export function StealOverlay() {
   const st = useGame((s) => s.steal);
   const now = useNow(100);
   const fired = useRef<string | null>(null);
   useEffect(() => {
-    if (st && !st.result && now >= st.endsAt && fired.current !== st.raidId) {
+    if (st && !st.result && st.phase === 'grab' && now >= st.endsAt && fired.current !== st.raidId) {
       fired.current = st.raidId;
       finishSteal();
     }
@@ -161,40 +163,49 @@ export function StealOverlay() {
   const prog = Math.max(0, Math.min(1, (now - st.startedAt) / total));
   const close = () => setG({ steal: null });
   if (!st.result) {
+    if (st.phase === 'carry') return null; // CarryHud takes over
     return (
       <div className="steal-box" data-testid="steal-box">
         <div className="row between">
-          <div className="big">STEALING…</div>
+          <div className="big">GRABBING…</div>
           <div className="display" style={{ fontSize: 22 }}>{duration(st.endsAt - now)}</div>
         </div>
         <div className="row" style={{ margin: '8px 0' }}>
-          <ItemIcon id={st.itemId} size={56} />
+          <ItemIcon id={st.itemId} size={56} mutation={st.mutation} />
           <div className="grow">
-            <div style={{ fontWeight: 900 }}>{it?.name}</div>
+            <div style={{ fontWeight: 900 }}>{it?.name} <MutBadge m={st.mutation} /></div>
             <div className="muted" style={{ fontWeight: 700 }}>
-              from {st.defender} · {Math.round(st.chance * (st.defended ? 0.3 : 1) * 100)}% chance{st.revenge ? ' · REVENGE BONUS' : ''}{st.tutorial ? ' · beginner raid' : ''}
+              from {st.defender} · {Math.round(st.chance * (st.defended ? 0.3 : 1) * 100)}% to beat the lasers{st.revenge ? ' · REVENGE BONUS' : ''}{st.tutorial ? ' · beginner raid' : ''}
             </div>
           </div>
         </div>
         <div className="steal-bar"><i style={{ width: prog * 100 + '%' }} /></div>
         {st.defended && <div className="bad-t" style={{ fontWeight: 900, marginTop: 8 }}>🚨 THE OWNER HIT THE ALARM! Your odds collapsed.</div>}
-        {st.finishing && <div className="muted" style={{ marginTop: 6, fontWeight: 700 }}>Making a run for it…</div>}
+        {st.finishing ? (
+          <div className="muted" style={{ marginTop: 6, fontWeight: 700 }}>Cracking the lasers…</div>
+        ) : (
+          <div className="row" style={{ marginTop: 8, justifyContent: 'space-between' }}>
+            <span className="muted" style={{ fontWeight: 700 }}>Then RUN it home — the owner can tag you.</span>
+            <button className="btn small ghost" onClick={() => abortSteal('abort')}>BACK OFF</button>
+          </div>
+        )}
       </div>
     );
   }
   const ok = st.result.status === 'success';
   const blocked = st.result.status === 'blocked';
+  const title = ok ? 'ITEM STOLEN!' : blocked ? 'BLOCKED!' : st.result.caught ? 'CAUGHT!' : /Too slow/i.test(st.result.note || '') ? 'TOO SLOW!' : 'ZAPPED!';
   return (
     <div className="overlay" onClick={close}>
-      <div className="modal center" onClick={(e) => e.stopPropagation()} data-testid="steal-result">
-        {ok && <Confetti n={60} />}
-        <div style={{ fontSize: 56 }}>{ok ? '🔥' : blocked ? '🔒' : '🚨'}</div>
-        <h2 className={ok ? 'good-t' : 'bad-t'} style={{ fontSize: 30 }}>{ok ? 'ITEM STOLEN!' : blocked ? 'BLOCKED!' : 'RAID FAILED'}</h2>
+      <div className={'modal center result ' + (ok ? 'win' : 'lose')} onClick={(e) => e.stopPropagation()} data-testid="steal-result">
+        {ok && <Confetti n={90} />}
+        <div className="result-icon">{ok ? '🔥' : blocked ? '🔒' : st.result.caught ? '🫵' : '⚡'}</div>
+        <h2 className={'result-title ' + (ok ? 'good-t' : 'bad-t')}>{title}</h2>
         <div style={{ maxWidth: 180, margin: '10px auto' }}>
-          <ItemCard id={st.itemId} />
+          <ItemCard id={st.itemId} mutation={st.mutation} />
         </div>
         {ok ? (
-          <p className="muted" style={{ fontWeight: 700 }}>It's yours now. It's <b className="bad-t">🔥 HOT</b> for 5 minutes — it can't be sold or traded yet, and {st.defender} can try to take it back with REVENGE.</p>
+          <p className="muted" style={{ fontWeight: 700 }}>It's on your podium now, earning for you. It's <b className="bad-t">🔥 HOT</b> for 5 minutes — no selling yet, and {st.defender} can take REVENGE.</p>
         ) : (
           <p className="muted" style={{ fontWeight: 700 }}>
             {st.result.note || 'You got caught.'} {st.result.fine > 0 && <>You paid a <b className="bad-t">{money(st.result.fine)}</b> fine to {st.defender}.</>} Lay low for a moment before your next raid.
@@ -214,38 +225,65 @@ export function RaidAlarm() {
   const raid = useGame((s) => s.last?.incoming_raids[0]);
   const me = useGame((s) => s.me);
   const vaultUsed = useGame((s) => s.myItems.filter((i) => i.location === 'vault').length);
+  const mutation = useGame((s) => (raid ? s.myItems.find((i) => i.id === raid.player_item_id)?.mutation ?? null : null));
   const now = useNow(100);
   const [busy, setBusy] = useState(false);
   if (!raid || !me) return null;
   const it = catItem(raid.item_id);
-  const end = toClient(raid.ends_at);
-  const start = toClient(raid.started_at);
+  const carry = raid.phase === 'carry';
+  const end = carry ? toClient(raid.deliver_after) : toClient(raid.ends_at);
+  const start = carry ? toClient(raid.grabbed_at) : toClient(raid.started_at);
   const left = end - now;
   const prog = Math.max(0, Math.min(1, (now - start) / Math.max(1, end - start)));
   const canVault = vaultUsed < me.vault_capacity;
   return (
-    <div className="alarm" role="alert" data-testid="raid-alarm">
+    <div className={'alarm' + (carry ? ' carry' : '')} role="alert" data-testid="raid-alarm">
       <div className="row between">
-        <h3>🚨 WARNING — YOU'RE BEING ROBBED</h3>
+        <h3>{carry ? '🏃 THEY GRABBED IT — TAG THEM!' : "🚨 YOU'RE BEING ROBBED"}</h3>
         <b className="display" style={{ fontSize: 22, color: '#fecaca' }}>{left > 0 ? duration(left) : '…'}</b>
       </div>
       <div className="row" style={{ margin: '8px 0' }}>
-        <ItemIcon id={raid.item_id} size={56} />
+        <ItemIcon id={raid.item_id} size={56} mutation={mutation} />
         <div className="grow">
-          <div style={{ fontWeight: 900, color: '#fff' }}>{raid.attacker}{raid.attacker_bot ? ' 🤖' : ''} is stealing your</div>
-          <div style={{ fontWeight: 900, fontSize: 18 }}>{it && <RarityLabel r={it.rarity as Rarity} />} {it?.name}</div>
+          <div style={{ fontWeight: 900, color: '#fff' }}>{raid.attacker}{raid.attacker_bot ? ' 🤖' : ''} {carry ? 'is running off with your' : 'is grabbing your'}</div>
+          <div style={{ fontWeight: 900, fontSize: 18 }}>{it && <RarityLabel r={it.rarity as Rarity} />} <MutBadge m={mutation} /> {it?.name}</div>
         </div>
       </div>
       <div className="steal-bar" style={{ marginBottom: 10 }}><i style={{ width: prog * 100 + '%' }} /></div>
-      <div className="row">
-        <button className="btn hot grow big" disabled={raid.defended || busy || left <= 0} data-testid="defend" onClick={async () => { setBusy(true); try { await defend(raid.id); } finally { setBusy(false); } }}>
-          {raid.defended ? '🚨 ALARM ACTIVE' : '🚨 SOUND ALARM'}
-        </button>
-        <button className="btn good grow big" disabled={!canVault || busy || left <= 0} onClick={async () => { setBusy(true); try { await vault(raid.player_item_id); } finally { setBusy(false); } }}>
-          🔒 VAULT IT {canVault ? '' : '(FULL)'}
-        </button>
+      {carry ? (
+        <div className="row">
+          <button className="btn hot grow big" onClick={() => engine?.chase(raid.attacker_id)} data-testid="chase">👊 CHASE & TAG</button>
+        </div>
+      ) : (
+        <div className="row">
+          <button className="btn hot grow big" disabled={raid.defended || busy || left <= 0} data-testid="defend" onClick={async () => { setBusy(true); try { await defend(raid.id); } finally { setBusy(false); } }}>
+            {raid.defended ? '🚨 ALARM ON' : '🚨 ALARM'}
+          </button>
+          <button className="btn good grow big" disabled={!canVault || busy || left <= 0} onClick={async () => { setBusy(true); try { await vault(raid.player_item_id); } finally { setBusy(false); } }}>
+            🔒 VAULT {canVault ? '' : '(FULL)'}
+          </button>
+          <button className="btn grow big" onClick={() => engine?.chase(raid.attacker_id)}>👊 TAG</button>
+        </div>
+      )}
+      <div style={{ color: '#fecaca', fontSize: 13, fontWeight: 700, marginTop: 6 }}>
+        {carry ? 'Run into them to tag them — they drop your item and pay you a bounty.' : 'Alarm cuts their odds by 70%. Vault = theft fails. Or run over and tag them!'}
       </div>
-      <div style={{ color: '#fecaca', fontSize: 13, fontWeight: 700, marginTop: 6 }}>Alarm cuts their odds by 70%. Vaulting makes the theft fail outright.</div>
+    </div>
+  );
+}
+
+// ── Big centre-screen banners (rare spawns, GOT IT, TAGGED…) ─────────────
+export function Banner() {
+  const b = useGame((s) => s.banner);
+  if (!b) return null;
+  const m = mutationDef(b.mutation);
+  return (
+    <div key={b.id} className={'banner k-' + b.kind} style={{ ['--bc' as any]: b.color || (m ? m.color : undefined), ['--ttl' as any]: b.ttl + 'ms' }} data-testid="banner">
+      {b.itemId && <ItemIcon id={b.itemId} size={64} mutation={b.mutation} />}
+      <div>
+        <div className={'bt' + (b.mutation === 'rainbow' ? ' rainbow-text' : '')}>{b.title}</div>
+        {b.sub && <div className="bs">{b.sub}</div>}
+      </div>
     </div>
   );
 }
@@ -280,21 +318,19 @@ export function BigReveal() {
 
 export function LevelUp() {
   const l = useGame((s) => s.levelUp);
+  const blocking = useGame((s) => !!s.drop || !!s.steal?.result);
   useEffect(() => {
-    if (!l) return;
-    const t = window.setTimeout(() => setG({ levelUp: null }), 4000);
+    if (!l || blocking) return;
+    const t = window.setTimeout(() => setG({ levelUp: null }), 3200);
     return () => clearTimeout(t);
-  }, [l]);
-  if (!l) return null;
+  }, [l, blocking]);
+  if (!l || blocking) return null; // waits politely behind drop reveals and steal results
   return (
-    <div className="overlay" onClick={() => setG({ levelUp: null })}>
-      <div className="modal center">
-        <Confetti n={50} colors={['#fde047', '#f59e0b', '#fff']} />
-        <div className="display gold-t" style={{ fontSize: 18, letterSpacing: '0.3em' }}>LEVEL UP</div>
-        <div className="display" style={{ fontSize: 72, fontWeight: 900, color: '#fde047', textShadow: '0 0 30px rgba(250,204,21,0.6)' }}>{l.level}</div>
-        <div style={{ fontSize: 24, fontWeight: 900 }}>{l.title}</div>
-        {l.cash > 0 && <div className="good-t" style={{ fontSize: 22, fontWeight: 900, marginTop: 6 }}>+{money(l.cash)}</div>}
-      </div>
+    <div className="levelup" onClick={() => setG({ levelUp: null })} data-testid="level-up">
+      <Confetti n={40} colors={['#fde047', '#f59e0b', '#fff']} />
+      <div className="lu-k">LEVEL UP</div>
+      <div className="lu-n">{l.level}</div>
+      <div className="lu-t">{l.title}{l.cash > 0 && <b className="good-t"> · +{money(l.cash)}</b>}</div>
     </div>
   );
 }
@@ -328,15 +364,26 @@ export function confirmAction(p: { title: string; body: string; confirmLabel: st
 }
 
 // ── Tutorial ────────────────────────────────────────────────────────────
+type Wait = 'collect' | 'belt' | 'lock' | 'drop' | 'grab' | 'steal';
 interface Step {
   title: string;
   body: string;
   button?: string;
   onEnter?: () => void;
   onButton?: () => void;
-  waitFor?: 'drop' | 'steal';
+  waitFor?: Wait;
   item?: string;
+  hint?: string;
 }
+
+const WAIT_TEXT: Record<Wait, string> = {
+  collect: 'walk onto the green plate',
+  belt: 'buy something off the belt',
+  lock: 'step on the red LOCK pad',
+  drop: 'open the drop',
+  grab: 'grab an item',
+  steal: 'get it home',
+};
 
 export function Tutorial() {
   const open = useGame((s) => s.tutorialOpen);
@@ -349,20 +396,21 @@ export function Tutorial() {
   const entered = useRef(0);
   const rick = world.find((p) => p.username === 'RookieRick');
   const basicPrice = useGame((s) => s.catalog?.drops.find((d) => d.id === 'basic')?.price ?? 0);
+  useNow(500);
 
   const steps: Record<number, Step> = {
-    1: { title: '👋 Welcome to STEAL THE TECH', body: 'Tech City is packed with collectors. Find tech, show it off in your base, earn money every second — and steal what you can\'t find.', button: "LET'S GO" },
-    2: { title: '📺 Your first TV', body: 'This NOVA 32" Starter TV is yours forever. It\'s soulbound, so nobody can ever steal it.', item: 'nova-starter-tv', button: 'NICE' },
-    3: { title: '🏠 This is your base', body: 'Everything you put on display here physically appears in your base. You start with 4 display slots — upgrade to unlock more.', button: 'NEXT', onEnter: () => { engine?.travelHome(); } },
-    4: { title: '💸 Passive income', body: 'Displayed items earn money every second, even when you\'re away (up to 12 hours). Watch the cash counter at the top climb.', button: 'NEXT' },
-    5: { title: '📦 Your first drop — on us', body: `We just sent you ${money(basicPrice)}. That's exactly one BASIC DROP. Head to the drop machines!`, button: 'OPEN DROPS', onButton: () => { openPanel('drops'); } },
-    6: { title: '🎰 Open the BASIC DROP', body: 'Hit OPEN on the Basic Drop. Every drop is paid for with in-game cash you earn — never real money.', waitFor: 'drop' },
-    7: { title: '🌈 Rarities', body: 'COMMON → UNCOMMON → RARE → EPIC → LEGENDARY → MYTHIC → ULTRA → SECRET. LIMITED items have a hard supply cap. Rarer = more valuable, more income, more people who want it.', button: 'GOT IT' },
-    8: { title: '🏚️ Meet your neighbour', body: `This is ${rick?.username ?? 'RookieRick'}'s base. Other players' bases are all over Tech City, and you can walk right in.`, button: 'NEXT', onEnter: () => { if (rick) setG({ focusPlot: rick.id }); } },
-    9: { title: '🥷 Stealing', body: 'Tap any item in someone\'s base and hit STEAL. It takes a few seconds — and the owner gets a warning and can fight back. Security upgrades and your vault protect you from the same.', button: 'TRY IT' },
-    10: { title: '🎯 Beginner raid', body: `Steal something from ${rick?.username ?? 'RookieRick'}. His security is basic — this one's nearly guaranteed.`, waitFor: 'steal', onEnter: () => { if (rick) visit(rick.id); } },
-    11: { title: '📈 The market', body: 'Every item has a live price driven by supply and demand. List items for other players to buy, snap up bargains, and watch prices react to events.', button: 'OPEN MARKET', onButton: () => openPanel('market') },
-    12: { title: '🚀 Go build an empire', body: 'Daily rewards, missions, upgrades, trades and raids are all waiting. Protect your best items — people WILL come for them. Here\'s a free Basic Drop to start.', button: 'FINISH' },
+    1: { title: '👋 Welcome to STEAL THE TECH', body: 'Buy gadgets off the TECH BELT, show them off in your base, collect the cash they make — and STEAL what you can\'t afford.', button: "LET'S GO" },
+    2: { title: '🏠 This is your base', body: 'Your NOVA Starter TV sits on a podium and piles up cash every second — even while you\'re away. It\'s soulbound: nobody can steal it.', item: 'nova-starter-tv', button: 'NICE', onEnter: () => engine?.travelHome() },
+    3: { title: '💰 Collect your cash', body: 'Walk onto the glowing GREEN plate in front of your TV. Cha-ching!', waitFor: 'collect', hint: 'WASD / arrows or the joystick to move · drag to look around', onEnter: () => engine?.lookAtMyBase() },
+    4: { title: '🛒 The Tech Belt', body: 'Gadgets walk along the belt through the middle of the city. We sent you $600 — walk up to one and BUY it. Anyone can buy what\'s on the belt, so be quick!', waitFor: 'belt', onEnter: () => engine?.lookAtBelt() },
+    5: { title: '🌈 Rarities & mutations', body: 'COMMON → UNCOMMON → RARE → EPIC → LEGENDARY → MYTHIC → ULTRA → SECRET. GOLD, DIAMOND, NEON, HOLO, GLITCH and RAINBOW mutations multiply income and value up to 10×. When a Legendary+ hits the belt, the whole city hears about it — run!', button: 'GOT IT' },
+    6: { title: '🔒 Lock your base', body: 'Thieves can walk right in. Step on the red LOCK pad by your door: lasers keep everyone out for a while. Re-lock when they switch off!', waitFor: 'lock', onEnter: () => engine?.travelHome() },
+    7: { title: '📦 Mystery drops', body: `We also sent you ${money(basicPrice)} — one BASIC DROP. The Drop Zone is at the west end of the belt. 3% of pulls come out MUTATED.`, button: 'OPEN DROPS', onButton: () => openPanel('drops'), waitFor: 'drop' },
+    8: { title: '🏚️ Meet your neighbour', body: `This is ${rick?.username ?? 'RookieRick'}'s base. Every base in Tech City is open for business…`, button: 'NEXT', onEnter: () => { if (rick) setG({ focusPlot: rick.id }); } },
+    9: { title: '🥷 Grab something', body: 'Walk up to any item on his podiums and press STEAL. Stay close while you GRAB it — his security is basic, this one always works.', waitFor: 'grab' },
+    10: { title: '🏃 RUN HOME!', body: 'It\'s not yours until it\'s inside YOUR base. Follow the arrow! (Owners can tag you on the way — Rick\'s just a rookie.)', waitFor: 'steal' },
+    11: { title: '📈 The market', body: 'Every item has a live price driven by supply and demand. List items for others to buy, snap up bargains, and watch events move prices.', button: 'OPEN MARKET', onButton: () => openPanel('market') },
+    12: { title: '🚀 Go build an empire', body: 'Collect often, lock up when you leave, watch the belt for rare drops — and people WILL come for your best stuff. Here\'s a free Basic Drop to start.', button: 'FINISH' },
   };
 
   const cur = steps[step];
@@ -377,8 +425,14 @@ export function Tutorial() {
   // automatic progress for action steps
   useEffect(() => {
     if (!open || !me) return;
-    if (step === 6 && me.stats.drops_opened > 0 && !drop) setStep(7);
-    if (step === 10 && (me.stats.steals_won > 0 || me.tutorial_flags?.tutorial_raid) && !steal) setStep(11);
+    const st = me.stats || {};
+    const stole = (st.steals_won || 0) > 0 || !!me.tutorial_flags?.tutorial_raid;
+    if (step === 3 && (st.collects || 0) > 0) setStep(4);
+    if (step === 4 && (st.belt_buys || 0) > 0) setStep(5);
+    if (step === 6 && me.lock_until && toClient(me.lock_until) > Date.now()) setStep(7);
+    if (step === 7 && (st.drops_opened || 0) > 0 && !drop) setStep(8);
+    if (step === 9 && ((steal && !steal.result && steal.phase === 'carry') || stole)) setStep(10);
+    if (step === 10 && stole && (!steal || steal.result)) setStep(11);
   }, [me, drop, steal, step, open]);
 
   if (!open || !me || !cur) return null;
@@ -386,6 +440,7 @@ export function Tutorial() {
   const advance = () => {
     play('click');
     cur.onButton?.();
+    if (cur.waitFor) return; // the action itself moves us on
     if (step >= 12) {
       tutorial(12).catch(() => {});
       setG({ tutorialOpen: false });
@@ -410,10 +465,12 @@ export function Tutorial() {
         {cur.item && <ItemIcon id={cur.item} size={72} />}
         <p className="grow">{cur.body}</p>
       </div>
-      {cur.button ? (
+      {cur.hint && <div className="muted" style={{ fontWeight: 700, fontSize: 13, marginBottom: 6 }}>{cur.hint}</div>}
+      {cur.button && (
         <button className="btn primary block big" onClick={advance} data-testid="tutorial-next">{cur.button}</button>
-      ) : (
-        <div className="muted" style={{ fontWeight: 800 }}>⏳ Waiting for you to {cur.waitFor === 'drop' ? 'open the drop' : 'pull off the steal'}…</div>
+      )}
+      {cur.waitFor && (
+        <div className="muted tut-wait" style={{ fontWeight: 800 }}>⏳ Waiting for you to {WAIT_TEXT[cur.waitFor]}…</div>
       )}
     </div>
   );

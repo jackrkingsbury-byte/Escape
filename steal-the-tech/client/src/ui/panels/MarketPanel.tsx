@@ -4,7 +4,7 @@ import { EMPTY } from '../../game/store';
 import { money, shortMoney, pct, ago, demandLabel, perSec } from '../../game/format';
 import { buyListing, cancelListing } from '../../game/actions';
 import { RARITY, RARITY_ORDER, CATEGORY_ICON } from '../../game/rarity';
-import { Panel, Tabs, ItemIcon, RarityLabel, PriceChart, Stat, HoldButton, PlayerName } from '../common';
+import { Panel, Tabs, ItemIcon, RarityLabel, PriceChart, Stat, HoldButton, PlayerName, MutBadge } from '../common';
 import { ItemActions } from './BasePanel';
 import type { Listing, MarketItemDetail, Rarity } from '../../backend/types';
 
@@ -127,7 +127,7 @@ function Deals({ onPick }: { onPick: (id: string) => void }) {
           <div key={l.id} className="li">
             <ItemIcon id={it.id} size={48} />
             <div className="grow" style={{ cursor: 'pointer' }} onClick={() => onPick(it.id)}>
-              <div className="t1">{it.name}{l.serial ? ` #${l.serial}` : ''}</div>
+              <div className="t1">{it.name}{l.serial ? ` #${l.serial}` : ''} <MutBadge m={l.mutation} /></div>
               <div className="t2">
                 <RarityLabel r={it.rarity as Rarity} /> by {l.seller}{l.seller_bot ? ' 🤖' : ''} · {ratio < 0.97 ? <span className="good-t">{Math.round((1 - ratio) * 100)}% under market</span> : ratio > 1.03 ? <span className="bad-t">{Math.round((ratio - 1) * 100)}% over market</span> : 'at market'}
               </div>
@@ -231,7 +231,7 @@ function ItemMarket({ id, onBack }: { id: string; onBack: () => void }) {
           {d.listings.map((l) => (
             <div key={l.id} className="li">
               <div className="grow">
-                <div className="t1">{money(l.price)} {l.serial ? <span className="supply">#{l.serial}</span> : null}</div>
+                <div className="t1">{money(l.price)} {l.serial ? <span className="supply">#{l.serial}</span> : null} <MutBadge m={l.mutation} /></div>
                 <div className="t2">
                   <PlayerName id={l.seller_id} name={l.seller} bot={l.seller_bot} /> · {ago(l.created_at)}
                 </div>

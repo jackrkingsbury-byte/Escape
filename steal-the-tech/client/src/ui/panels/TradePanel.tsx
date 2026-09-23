@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useGame, G, toClient, price, item as catItem } from '../../game/store';
 import { money, shortMoney, ago } from '../../game/format';
 import { proposeTrade, respondTrade, cancelTrade } from '../../game/actions';
-import { Panel, Tabs, ItemIcon, ItemCard, HoldButton, PlayerName, useNow } from '../common';
+import { Panel, Tabs, ItemIcon, ItemCard, HoldButton, PlayerName, useNow, MutBadge } from '../common';
 import type { BaseView, RaidTarget, Trade } from '../../backend/types';
 
 type Tab = 'incoming' | 'outgoing' | 'new' | 'history';
@@ -43,15 +43,16 @@ export function TradePanel() {
   );
 }
 
-function Side({ title, items, cash }: { title: string; items: { id: string; item_id: string; serial: number | null; available?: boolean }[]; cash: number }) {
+function Side({ title, items, cash }: { title: string; items: { id: string; item_id: string; serial: number | null; available?: boolean; mutation?: string | null }[]; cash: number }) {
   return (
     <div className="card tight grow" style={{ minWidth: 0 }}>
       <div className="muted" style={{ fontWeight: 900, fontSize: 12, letterSpacing: '0.1em' }}>{title}</div>
       <div className="row wrap" style={{ gap: 6, marginTop: 6 }}>
         {items.map((i) => (
           <div key={i.id} title={catItem(i.item_id)?.name} style={{ opacity: i.available === false ? 0.35 : 1, textAlign: 'center', width: 64 }}>
-            <ItemIcon id={i.item_id} size={52} />
+            <ItemIcon id={i.item_id} size={52} mutation={i.mutation} />
             <div style={{ fontSize: 11, fontWeight: 800, lineHeight: 1.05 }}>{catItem(i.item_id)?.name.slice(0, 18)}</div>
+            <MutBadge m={i.mutation} mult={false} />
           </div>
         ))}
         {cash > 0 && <div className="good-t" style={{ fontWeight: 900, fontSize: 18 }}>+ {money(cash)}</div>}
@@ -219,14 +220,14 @@ function Builder({ initialWith, onSent }: { initialWith?: string; onSent: () => 
       <h3>You offer</h3>
       {tradeable.length === 0 ? <div className="muted">You have nothing tradeable yet.</div> : (
         <div className="grid items">
-          {tradeable.map((p) => <ItemCard key={p.id} id={p.item_id} serial={p.serial} selected={give.includes(p.id)} onClick={() => toggle(give, setGive, p.id)} showIncome={false} badge={p.location === 'vault' ? <span className="tag">🔒</span> : null} />)}
+          {tradeable.map((p) => <ItemCard key={p.id} id={p.item_id} mutation={p.mutation} serial={p.serial} selected={give.includes(p.id)} onClick={() => toggle(give, setGive, p.id)} showIncome={false} badge={p.location === 'vault' ? <span className="tag">🔒</span> : null} />)}
         </div>
       )}
       <input className="field" inputMode="numeric" placeholder={`+ cash (you have ${money(me.cash)})`} value={giveCash} onChange={(e) => setGiveCash(e.target.value.replace(/[^0-9]/g, ''))} />
       <h3>You request</h3>
       {!base ? <div className="empty">Loading their base…</div> : base.items.filter((p) => !p.soulbound).length === 0 ? <div className="muted">They have nothing on display to trade.</div> : (
         <div className="grid items">
-          {base.items.filter((p) => !p.soulbound).map((p) => <ItemCard key={p.id} id={p.item_id} serial={p.serial} selected={get.includes(p.id)} onClick={() => toggle(get, setGet, p.id)} showIncome={false} />)}
+          {base.items.filter((p) => !p.soulbound).map((p) => <ItemCard key={p.id} id={p.item_id} mutation={p.mutation} serial={p.serial} selected={get.includes(p.id)} onClick={() => toggle(get, setGet, p.id)} showIncome={false} />)}
         </div>
       )}
       <input className="field" inputMode="numeric" placeholder="+ cash you want from them" value={getCash} onChange={(e) => setGetCash(e.target.value.replace(/[^0-9]/g, ''))} />

@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
-import { useGame, openPanel, toClient, price, item as catItem } from '../../game/store';
+import { useGame, openPanel, toClient, price, item as catItem, pendingOf } from '../../game/store';
+import { useWorldUI } from '../../world/ui';
+import { engine } from '../../world/engine';
 import { EMPTY } from '../../game/store';
 import { money, perSec, shortMoney, duration } from '../../game/format';
 import { place, store, vault, autoArrange, quickSell, upgrade, list } from '../../game/actions';
@@ -31,9 +33,15 @@ export function BasePanel() {
   const nextUp = (kind: 'base' | 'security' | 'vault', lvl: number) => upgrades.find((u) => u.kind === kind && u.level === lvl + 1);
   const curUp = (kind: 'base' | 'security' | 'vault', lvl: number) => upgrades.find((u) => u.kind === kind && u.level === lvl);
   const shieldLeft = me.shield_until ? toClient(me.shield_until) - now : 0;
+  const atHome = !!useWorldUI((s) => s.here?.mine);
+  const pendingTotal = items.reduce((a, pi) => a + pendingOf(pi), 0);
 
   return (
     <Panel title="MY BASE" icon="🏠" head={<button className="btn small" onClick={() => autoArrange()}>✨ AUTO-FILL</button>}>
+      <div className="card tight collect-tip">
+        💰 <b>{shortMoney(pendingTotal)}</b> waiting on your podiums — walk over the green plates (or the 💰 pad at your door) to collect.
+        {!atHome && <button className="btn small good" style={{ marginLeft: 8 }} onClick={() => { engine?.travelHome(); openPanel(null); }}>GO HOME</button>}
+      </div>
       <div className="stats">
         <Stat k="Base value" v={money(me.base_value)} cls="good-t" />
         <Stat k="Income" v={'+' + perSec(me.income)} cls="good-t" />
@@ -73,7 +81,7 @@ export function BasePanel() {
                     <div className="muted" style={{ fontWeight: 800 }}>SLOT {i + 1}</div>
                   </div>
                 );
-              return <ItemCard key={pi.id} id={pi.item_id} serial={pi.serial} selected={sel === pi.id} onClick={() => setSel(pi.id)} badge={pi.soulbound ? <span className="tag">★</span> : pi.hot_until && toClient(pi.hot_until) > now ? <span className="tag">🔥</span> : null} />;
+              return <ItemCard key={pi.id} id={pi.item_id} mutation={pi.mutation} serial={pi.serial} selected={sel === pi.id} onClick={() => setSel(pi.id)} badge={pi.soulbound ? <span className="tag">★</span> : pi.hot_until && toClient(pi.hot_until) > now ? <span className="tag">🔥</span> : null} />;
             })}
           </div>
           {pickSlot !== null && (
@@ -87,7 +95,7 @@ export function BasePanel() {
               ) : (
                 <div className="grid items" style={{ marginTop: 8 }}>
                   {[...storage, ...vaulted].sort(byValue).map((pi) => (
-                    <ItemCard key={pi.id} id={pi.item_id} serial={pi.serial} badge={pi.location === 'vault' ? <span className="tag">🔒</span> : null} onClick={() => { place(pi.id, pickSlot).catch(() => {}); setPickSlot(null); }} />
+                    <ItemCard key={pi.id} id={pi.item_id} mutation={pi.mutation} serial={pi.serial} badge={pi.location === 'vault' ? <span className="tag">🔒</span> : null} onClick={() => { place(pi.id, pickSlot).catch(() => {}); setPickSlot(null); }} />
                   ))}
                 </div>
               )}
@@ -104,11 +112,11 @@ export function BasePanel() {
           ) : (
             <div className="grid items">
               {storage.sort(byValue).map((pi) => (
-                <ItemCard key={pi.id} id={pi.item_id} serial={pi.serial} selected={sel === pi.id} onClick={() => setSel(pi.id)} badge={pi.hot_until && toClient(pi.hot_until) > now ? <span className="tag">🔥 HOT</span> : null} />
+                <ItemCard key={pi.id} id={pi.item_id} mutation={pi.mutation} serial={pi.serial} selected={sel === pi.id} onClick={() => setSel(pi.id)} badge={pi.hot_until && toClient(pi.hot_until) > now ? <span className="tag">🔥 HOT</span> : null} />
               ))}
               {listed.map((pi) => {
                 const l = listings.find((x) => x.player_item_id === pi.id);
-                return <ItemCard key={pi.id} id={pi.item_id} serial={pi.serial} onClick={() => openPanel('market', { tab: 'mine' })} badge={<span className="tag">🏷️ {l ? shortMoney(l.price) : 'LISTED'}</span>} />;
+                return <ItemCard key={pi.id} id={pi.item_id} mutation={pi.mutation} serial={pi.serial} onClick={() => openPanel('market', { tab: 'mine' })} badge={<span className="tag">🏷️ {l ? shortMoney(l.price) : 'LISTED'}</span>} />;
               })}
             </div>
           )}
@@ -126,7 +134,7 @@ export function BasePanel() {
           ) : (
             <div className="grid items">
               {vaulted.sort(byValue).map((pi) => (
-                <ItemCard key={pi.id} id={pi.item_id} serial={pi.serial} selected={sel === pi.id} onClick={() => setSel(pi.id)} />
+                <ItemCard key={pi.id} id={pi.item_id} mutation={pi.mutation} serial={pi.serial} selected={sel === pi.id} onClick={() => setSel(pi.id)} />
               ))}
             </div>
           )}
@@ -185,9 +193,10 @@ export function ItemActions({ pi, onDone }: { pi: PlayerItem; onDone?: () => voi
   const vaultUsed = useGame((s) => s.myItems.filter((i) => i.location === 'vault').length);
   const rules = useGame((s) => s.catalog?.rules);
   const m = useGame((s) => s.market[pi.item_id]);
+  const mult = useGame((s) => (pi.mutation ? s.catalog?.mutations?.find((x) => x.id === pi.mutation)?.mult ?? 1 : 1));
   const [listing, setListing] = useState(false);
   const it = catItem(pi.item_id)!;
-  const mp = m?.price ?? it.base_value;
+  const mp = Math.round((m?.price ?? it.base_value) * mult);
   const [lp, setLp] = useState(String(Math.round(mp * 1.05)));
   const hot = !!pi.hot_until && toClient(pi.hot_until) > Date.now();
   const quick = Math.floor(mp * (rules?.quick_sell_rate ?? 0.6));

@@ -1,9 +1,11 @@
 // Every button in the game goes through these wrappers: call the server, give
 // feedback (sound/toast), then re-sync. The client never decides outcomes.
-import { G, setG, toast, toClient, item, openPanel, type OpenDropResult } from './store';
-import { syncNow, refreshWorld, refreshMarket } from './session';
+import { G, setG, toast, toClient, item, openPanel, banner, mutationDef, type OpenDropResult } from './store';
+import { syncNow, refreshWorld, refreshMarket, refreshBelt } from './session';
 import { play, reveal } from './sound';
-import { money } from './format';
+import { money, shortMoney } from './format';
+import { RARITY } from './rarity';
+import type { BaseView, PlayerItem, Rarity } from '../backend/types';
 
 export async function call<T = any>(fn: string, p: Record<string, unknown> = {}, opts: { quiet?: boolean; sync?: boolean } = {}): Promise<T> {
   const b = G().backend;
@@ -78,14 +80,14 @@ export async function upgrade(kind: 'base' | 'security' | 'vault') {
   refreshWorld();
 }
 
-// ── Stealing ─────────────────────────────────────────────────────────────
+// ── Stealing: GRAB at the podium, then CARRY it home ─────────────────────
 export async function startSteal(playerItemId: string, revenge = false) {
   if (G().steal && !G().steal!.result) {
     toast({ kind: 'bad', icon: '🥷', title: 'Finish your current raid first.' });
     return;
   }
   const r = await call<any>('stt_start_steal', { player_item_id: playerItemId, revenge });
-  play('whoosh');
+  play('grab');
   setG({
     steal: {
       raidId: r.raid_id,
@@ -99,35 +101,195 @@ export async function startSteal(playerItemId: string, revenge = false) {
       tutorial: r.tutorial,
       revenge: r.revenge,
       defended: false,
+      phase: 'grab',
+      grabbedAt: 0,
+      carryUntil: 0,
+      deliverAfter: 0,
+      mutation: r.mutation ?? null,
       result: null,
       finishing: false,
     },
   });
 }
 
+function applyRaidResult(r: any) {
+  const st = G().steal;
+  if (!st) return;
+  if (r.status === 'active' && r.phase === 'carry') {
+    setG({
+      steal: {
+        ...st,
+        finishing: false,
+        defended: !!r.defended,
+        phase: 'carry',
+        grabbedAt: toClient(r.grabbed_at),
+        carryUntil: toClient(r.carry_until),
+        deliverAfter: toClient(r.deliver_after),
+      },
+    });
+    play('run');
+    banner({ kind: 'good', title: 'GOT IT! RUN!', sub: `Get it back to your base before ${st.defender} catches you`, itemId: st.itemId, mutation: st.mutation, ttl: 2200 });
+    return;
+  }
+  const caught = /caught|Tagged/i.test(r.note || '');
+  setG({ steal: { ...st, finishing: false, defended: !!r.defended, result: { status: r.status, fine: r.fine, note: r.note, caught } } });
+  if (r.status === 'success') {
+    play('steal_ok');
+    reveal((item(st.itemId)?.rarity as Rarity) || 'common');
+  } else {
+    play(r.status === 'blocked' ? 'defend' : 'zap');
+  }
+  refreshWorld();
+}
+
+/** Grab time is up: the server rolls the security check. */
 export async function finishSteal() {
   const st = G().steal;
-  if (!st || st.finishing || st.result) return;
+  if (!st || st.finishing || st.result || st.phase !== 'grab') return;
   setG({ steal: { ...st, finishing: true } });
   try {
     const r = await call<any>('stt_finish_steal', { raid_id: st.raidId }, { quiet: true });
-    setG({ steal: { ...G().steal!, finishing: false, defended: r.defended, result: { status: r.status, fine: r.fine, note: r.note } } });
-    play(r.status === 'success' ? 'steal_ok' : 'steal_fail');
-    if (r.status === 'success') reveal(item(st.itemId)?.rarity || 'common');
-    refreshWorld();
+    applyRaidResult(r);
   } catch (e: any) {
-    // Too early (clock skew) — retry shortly.
     setG({ steal: { ...G().steal!, finishing: false } });
-    if (/Still stealing/.test(e.message)) window.setTimeout(finishSteal, 800);
+    if (/Still grabbing/.test(e.message)) window.setTimeout(finishSteal, 700); // clock skew
     else toast({ kind: 'bad', icon: '⛔', title: e.message });
   }
 }
 
-export async function defend(raidId: string) {
-  await call('stt_defend', { raid_id: raidId });
-  play('defend');
-  toast({ kind: 'good', icon: '🚨', title: 'ALARM SOUNDED!', body: 'The thief\'s odds just collapsed.' });
+/** Made it home with the loot. */
+export async function deliverSteal() {
+  const st = G().steal;
+  if (!st || st.finishing || st.result || st.phase !== 'carry') return;
+  setG({ steal: { ...st, finishing: true } });
+  try {
+    const r = await call<any>('stt_deliver_steal', { raid_id: st.raidId }, { quiet: true });
+    applyRaidResult(r);
+  } catch (e: any) {
+    setG({ steal: { ...G().steal!, finishing: false } });
+    if (!/Keep running/.test(e.message)) toast({ kind: 'bad', icon: '⛔', title: e.message });
+  }
 }
+
+/** Back off (free) or report that the owner's security caught you. */
+export async function abortSteal(reason: 'abort' | 'caught') {
+  const st = G().steal;
+  if (!st || st.finishing || st.result) return;
+  setG({ steal: { ...st, finishing: true } });
+  try {
+    const r = await call<any>('stt_abort_steal', { raid_id: st.raidId, reason }, { quiet: true });
+    if (reason === 'abort') {
+      setG({ steal: null });
+      toast({ kind: 'info', icon: '🫥', title: 'You backed off', body: 'No harm done — lay low for a few seconds.' });
+      refreshWorld();
+      return;
+    }
+    applyRaidResult(r);
+  } catch {
+    setG({ steal: { ...G().steal!, finishing: false } });
+  }
+}
+
+/** Owner fights back. `tag` = you caught the thief in person. */
+export async function defend(raidId: string, tag = false) {
+  const r = await call<any>('stt_defend', { raid_id: raidId, tag });
+  if (tag) {
+    play('tag');
+    banner({ kind: 'good', title: 'TAGGED!', sub: r.fine ? `They dropped it and paid you ${money(r.fine)}` : 'They dropped your item', itemId: r.item_id });
+    refreshWorld();
+  } else {
+    play('defend');
+    toast({ kind: 'good', icon: '🚨', title: 'ALARM SOUNDED!', body: 'Their odds just collapsed — now go catch them!' });
+  }
+  return r;
+}
+
+// ── The Tech Belt ────────────────────────────────────────────────────────
+export interface BeltBuyResult {
+  player_item: PlayerItem;
+  item_id: string;
+  rarity: Rarity;
+  mutation: string | null;
+  is_new: boolean;
+  placed: boolean;
+  slot: number | null;
+  price: number;
+  cash: number;
+}
+
+export async function buyBelt(beltId: number): Promise<BeltBuyResult | null> {
+  const s = G();
+  const row = s.belt.find((b) => b.id === beltId);
+  if (!row) return null;
+  if (s.me && s.me.cash < row.price) {
+    play('error');
+    toast({ kind: 'bad', icon: '💸', itemId: row.item_id, title: `Need ${money(row.price - s.me.cash)} more`, body: 'Walk over your podiums to collect your cash.' });
+    return null;
+  }
+  // Optimistic: it hops off the belt right away; the server has the final word.
+  setG({ belt: s.belt.map((b) => (b.id === beltId ? { ...b, sold_to: s.me?.id ?? null, buyer: s.me?.username ?? null, sold_at: new Date(Date.now() + G().serverOffset).toISOString(), mine: true } : b)), beltAt: Date.now() });
+  try {
+    const r = await call<BeltBuyResult>('stt_buy_belt', { belt_id: beltId }, { quiet: true });
+    const it = item(r.item_id);
+    const tier = RARITY[r.rarity]?.tier ?? 1;
+    if (s.me) setG({ me: { ...G().me!, cash: r.cash } });
+    play('buy');
+    if (r.mutation) {
+      play('mutation');
+      const m = mutationDef(r.mutation);
+      banner({ kind: 'epic', title: `${m?.label ?? r.mutation} ${it?.name ?? ''}!`, sub: `${m?.mult ?? ''}× income & value`, itemId: r.item_id, mutation: r.mutation });
+    } else if (tier >= 5) {
+      reveal(r.rarity);
+      banner({ kind: 'epic', title: `${RARITY[r.rarity].label}!`, sub: it?.name, itemId: r.item_id });
+    }
+    if (!r.placed) toast({ kind: 'info', icon: '📦', itemId: r.item_id, title: 'Base full — sent to storage', body: 'Upgrade your base or swap it in from BASE.' });
+    if (r.is_new) toast({ kind: 'good', icon: '✨', itemId: r.item_id, title: 'NEW DISCOVERY!', body: it?.name });
+    refreshWorld();
+    return r;
+  } catch (e: any) {
+    play('error');
+    toast({ kind: 'bad', icon: /Too slow/.test(e.message) ? '🐌' : '⛔', itemId: row.item_id, title: e.message });
+    refreshBelt();
+    return null;
+  }
+}
+
+// ── Podium cash ──────────────────────────────────────────────────────────
+export async function collect(playerItemId: string | null): Promise<number> {
+  try {
+    const r = await call<{ collected: number; cash: number }>('stt_collect', playerItemId ? { player_item_id: playerItemId } : {}, { quiet: true, sync: false });
+    if (G().me) setG({ me: { ...G().me!, cash: r.cash, pending: Math.max(0, (G().me!.pending || 0) - r.collected) } });
+    syncNow();
+    return r.collected;
+  } catch {
+    return 0;
+  }
+}
+
+// ── Base lock ────────────────────────────────────────────────────────────
+export async function lockBase(): Promise<boolean> {
+  try {
+    const r = await call<{ lock_until: string; seconds: number }>('stt_lock_base', {}, { quiet: true });
+    if (G().me) setG({ me: { ...G().me!, lock_until: r.lock_until } });
+    play('laser');
+    banner({ kind: 'info', title: '🔒 BASE LOCKED', sub: `Lasers up for ${r.seconds}s — nobody gets in`, color: '#f43f5e', ttl: 1800 });
+    return true;
+  } catch (e: any) {
+    toast({ kind: 'info', icon: '🔒', title: e.message });
+    return false;
+  }
+}
+
+// ── Reads the 3D world needs ─────────────────────────────────────────────
+export async function fetchBase(playerId: string): Promise<BaseView | null> {
+  try {
+    return await call<BaseView>('stt_base', { player_id: playerId }, { quiet: true, sync: false });
+  } catch {
+    return null;
+  }
+}
+
+export const priceTag = (n: number) => shortMoney(n);
 
 // ── Market ───────────────────────────────────────────────────────────────
 export async function list(playerItemId: string, priceValue: number) {

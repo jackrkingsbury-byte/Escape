@@ -1,6 +1,6 @@
 import { createBackend } from '../backend';
-import type { Backend, Catalog, FeedEvent, MarketRow, SyncResult, WorldPlayer } from '../backend/types';
-import { G, setG, toast, openPanel, item } from './store';
+import type { Backend, BeltItem, Catalog, FeedEvent, MarketRow, SyncResult, WorldPlayer } from '../backend/types';
+import { G, setG, toast, openPanel, item, banner } from './store';
 import { play, reveal, setMusic, setMuted, setVolume } from './sound';
 import { money } from './format';
 import { RARITY } from './rarity';
@@ -9,6 +9,7 @@ import { SPAWN } from '../world/layout';
 let syncTimer: number | null = null;
 let worldTimer: number | null = null;
 let marketTimer: number | null = null;
+let beltTimer: number | null = null;
 let syncing = false;
 let syncAgain = false;
 let unPush: (() => void) | null = null;
@@ -58,7 +59,7 @@ export async function enter() {
       return;
     }
     applySync(s, true);
-    await Promise.all([refreshMarket(), refreshWorld()]);
+    await Promise.all([refreshMarket(), refreshWorld(), refreshBelt()]);
     start();
   } catch (e: any) {
     setG({ phase: 'error', fatal: String(e?.message || e) });
@@ -69,7 +70,7 @@ export async function join(username: string) {
   const b = G().backend!;
   const s = await b.rpc<SyncResult>('stt_join', { username });
   applySync(s, true);
-  await Promise.all([refreshMarket(), refreshWorld()]);
+  await Promise.all([refreshMarket(), refreshWorld(), refreshBelt()]);
   start();
 }
 
@@ -83,10 +84,13 @@ function start() {
   syncTimer = window.setInterval(() => syncNow(), online ? 3000 : 2000);
   worldTimer = window.setInterval(() => refreshWorld(), 12000);
   marketTimer = window.setInterval(() => refreshMarket(), 15000);
+  beltTimer = window.setInterval(() => {
+    if (document.visibilityState === 'visible') refreshBelt();
+  }, online ? 2000 : 1500);
   // Realtime: react instantly to events addressed to me (raids on my base, offers, sales…).
   // Global events arrive with the regular poll so one big event doesn't stampede every client.
   if (b.onPush) unPush = b.onPush((row) => { if (row.target_id && row.target_id === G().me?.id) syncNow(); });
-  if (b.presence) b.presence.start({ id: me.id, name: me.username, x: SPAWN.x, y: SPAWN.y, dir: 1, moving: false, trail: me.cosmetics?.trail });
+  if (b.presence) b.presence.start({ id: me.id, name: me.username, x: SPAWN.x, y: SPAWN.z, dir: 0, moving: false, plot: null, trail: me.cosmetics?.trail });
   document.addEventListener('visibilitychange', onVisible);
 }
 
@@ -101,7 +105,8 @@ export function stop() {
   if (syncTimer) clearInterval(syncTimer);
   if (worldTimer) clearInterval(worldTimer);
   if (marketTimer) clearInterval(marketTimer);
-  syncTimer = worldTimer = marketTimer = null;
+  if (beltTimer) clearInterval(beltTimer);
+  syncTimer = worldTimer = marketTimer = beltTimer = null;
   unPush?.();
   unPush = null;
   document.removeEventListener('visibilitychange', onVisible);
@@ -180,6 +185,24 @@ export async function refreshMarket() {
   }
 }
 
+let beltBusy = false;
+export async function refreshBelt() {
+  const b = G().backend;
+  if (!b || beltBusy) return;
+  beltBusy = true;
+  try {
+    const r = await b.rpc<{ items: BeltItem[]; server_time: number }>('stt_belt');
+    // keep our optimistic "sold to me" rows until the server agrees or they leave
+    const mine = new Map(G().belt.filter((x) => x.mine && x.sold_to).map((x) => [x.id, x]));
+    const items = r.items.map((x) => (mine.has(x.id) && !x.sold_to ? mine.get(x.id)! : x));
+    setG({ belt: items, beltAt: Date.now() });
+  } catch (e) {
+    console.warn('belt failed', e);
+  } finally {
+    beltBusy = false;
+  }
+}
+
 export async function refreshWorld() {
   const b = G().backend;
   if (!b) return;
@@ -237,6 +260,17 @@ function handleEvent(e: FeedEvent) {
     case 'raid_warning':
       // the alarm overlay is driven by incoming_raids
       break;
+    case 'raid_grabbed':
+      if (mine) {
+        play('alarm');
+        banner({ kind: 'bad', title: 'THEY GRABBED IT!', sub: `${p.attacker} is running off with your ${itemName(p.item_id)} — CATCH THEM!`, itemId: p.item_id, ttl: 3200 });
+        if (navigator.vibrate) navigator.vibrate([300, 100, 300]);
+      }
+      break;
+    case 'belt_buy':
+      if (!byMe)
+        toast({ kind: 'epic', icon: '🛒', itemId: p.item_id, title: `${p.player}${p.is_bot ? ' 🤖' : ''} grabbed ${p.mutation ? String(p.mutation).toUpperCase() + ' ' : ''}${p.item}`, body: `straight off the Tech Belt for ${money(p.price)}` });
+      break;
     case 'item_stolen':
       if (mine) {
         play('steal_fail');
@@ -268,6 +302,13 @@ function handleEvent(e: FeedEvent) {
       break;
     case 'raid_result': {
       const st = G().steal;
+      if (mine && st && st.raidId === p.raid_id && !st.result && !st.finishing) {
+        // resolved on the server side (tagged by the owner, took too long, …)
+        const caught = /caught|Tagged/i.test(p.note || '');
+        setG({ steal: { ...st, result: { status: p.status, fine: p.fine, note: p.note, caught } } });
+        play(p.status === 'success' ? 'steal_ok' : 'zap');
+        break;
+      }
       if (mine && (!st || st.raidId !== p.raid_id)) {
         toast({
           kind: p.status === 'success' ? 'good' : 'bad',
@@ -345,6 +386,8 @@ export function feedLine(e: FeedEvent): { icon: string; text: string; tone: stri
     case 'prestige': return { icon: '✨', text: `${p.player} prestiged (P${p.prestige})`, tone: 'epic' };
     case 'big_trade': return { icon: '🤝', text: `${p.a} ⇄ ${p.b}: ${money(p.value)} trade`, tone: 'info' };
     case 'big_sale': return { icon: '💸', text: `${p.buyer} bought ${p.item} for ${money(p.price)}`, tone: 'good' };
+    case 'belt_buy': return { icon: '🛒', text: `${p.player} grabbed ${p.mutation ? String(p.mutation).toUpperCase() + ' ' : ''}${p.item} off the belt`, tone: String(p.rarity) };
+    case 'raid_grabbed': return { icon: '🏃', text: `${p.attacker} grabbed your ${p.item || 'item'}`, tone: 'bad' };
     case 'upgrade': return { icon: '🏗️', text: `${p.player} upgraded to ${p.name}`, tone: 'info' };
     case 'item_stolen': return { icon: '🚨', text: `${p.attacker} stole your ${p.item}`, tone: 'bad' };
     case 'raid_over': return { icon: '🛡️', text: `You stopped ${p.attacker}`, tone: 'good' };

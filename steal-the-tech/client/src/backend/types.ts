@@ -96,9 +96,18 @@ export interface EventTypeDef {
   category: string | null;
 }
 
+export interface MutationDef {
+  id: string;
+  label: string;
+  mult: number;
+  color: string;
+  weight: number;
+}
+
 export interface Catalog {
   items: CatalogItem[];
   rarities: RarityDef[];
+  mutations: MutationDef[];
   drops: DropDef[];
   upgrades: UpgradeDef[];
   quests: QuestDef[];
@@ -117,6 +126,12 @@ export interface Catalog {
     shield_minutes: number;
     hot_minutes: number;
     offline_cap_hours: number;
+    belt_seconds: number;
+    belt_markup: number;
+    carry_seconds: number;
+    lock_base_seconds: number;
+    lock_per_security: number;
+    lock_recharge: number;
   };
 }
 
@@ -131,6 +146,8 @@ export interface PlayerItem {
   acquired_via: string;
   acquired_at: string;
   stolen_from: string | null;
+  mutation: string | null;
+  accrued_at: string;
 }
 
 export interface Me {
@@ -138,6 +155,7 @@ export interface Me {
   username: string;
   cash: number;
   income: number;
+  pending: number;
   base_value: number;
   xp: number;
   level: number;
@@ -162,6 +180,8 @@ export interface Me {
   vault_level: number;
   vault_capacity: number;
   shield_until: string | null;
+  lock_until: string | null;
+  lock_seconds: number;
   stats: Record<string, number>;
   daily: { can_claim: boolean; streak: number; next_day: number; resets_at: string };
   collection_count: number;
@@ -188,6 +208,10 @@ export interface IncomingRaid {
   ends_at: string;
   defended: boolean;
   revenge: boolean;
+  phase: 'grab' | 'carry';
+  grabbed_at: string | null;
+  carry_until: string | null;
+  deliver_after: string | null;
 }
 
 export interface OutgoingRaid {
@@ -202,6 +226,10 @@ export interface OutgoingRaid {
   chance: number;
   revenge: boolean;
   tutorial: boolean;
+  phase: 'grab' | 'carry';
+  grabbed_at: string | null;
+  carry_until: string | null;
+  deliver_after: string | null;
 }
 
 export interface LiveEvent {
@@ -242,6 +270,18 @@ export interface PlotItem {
   soulbound: boolean;
   hot_until: string | null;
   under_raid: boolean;
+  mutation: string | null;
+  raid: null | {
+    id: string;
+    phase: 'grab' | 'carry';
+    attacker_id: string;
+    attacker: string;
+    started_at: string;
+    ends_at: string;
+    grabbed_at: string | null;
+    deliver_after: string | null;
+    carry_until: string | null;
+  };
   chance?: number;
   seconds?: number;
 }
@@ -262,6 +302,7 @@ export interface WorldPlayer {
   cosmetics: Record<string, string>;
   base_value: number;
   shield_until: string | null;
+  lock_until: string | null;
   protected: boolean;
   online: boolean;
   items: PlotItem[];
@@ -315,6 +356,7 @@ export interface Listing {
   serial: number | null;
   created_at: string;
   mine: boolean;
+  mutation?: string | null;
 }
 
 export interface Trade {
@@ -333,8 +375,8 @@ export interface Trade {
   created_at: string;
   resolved_at: string | null;
   incoming: boolean;
-  offer_items: { id: string; item_id: string; serial: number | null; available: boolean }[];
-  request_items: { id: string; item_id: string; serial: number | null; available: boolean }[];
+  offer_items: { id: string; item_id: string; serial: number | null; available: boolean; mutation?: string | null }[];
+  request_items: { id: string; item_id: string; serial: number | null; available: boolean; mutation?: string | null }[];
   offer_value: number;
   request_value: number;
 }
@@ -352,7 +394,8 @@ export interface RaidTarget {
   online: boolean;
   base_value: number;
   shown: number;
-  top_item: { item_id: string; price: number; serial: number | null } | null;
+  top_item: { item_id: string; price: number; serial: number | null; mutation?: string | null } | null;
+  lock_until?: string | null;
   revenge: boolean;
 }
 
@@ -400,7 +443,23 @@ export interface LeaderRow {
   me: boolean;
 }
 
+// The Tech Belt: items rolling through the middle of the city.
+export interface BeltItem {
+  id: number;
+  item_id: string;
+  mutation: string | null;
+  price: number;
+  spawned_at: string;
+  ends_at: string;
+  sold_to: string | null;
+  buyer: string | null;
+  sold_at: string | null;
+  mine: boolean | null;
+}
+
 // Presence (online mode only): other avatars walking around the world.
+// Inside a base, positions are relative to that base (`plot` = owner id), because
+// every client lays the city out around its own base.
 export interface PeerState {
   id: string;
   name: string;
@@ -408,6 +467,8 @@ export interface PeerState {
   y: number;
   dir: number;
   moving: boolean;
+  plot?: string | null;
+  carry?: string | null;
   emote?: string | null;
   emoteAt?: number;
   trail?: string;

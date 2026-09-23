@@ -3,8 +3,8 @@ import { useGame } from './game/store';
 import { WorldEngine, setEngine } from './world/engine';
 import { useWorldUI } from './world/ui';
 import { Title, Loading, ErrorScreen, Auth, Join } from './screens/Screens';
-import { Hud, NavBar, Ticker, Toasts, ZonePrompt, HoverTip, ItemPopover, Joystick, EmoteBar } from './ui/hud';
-import { DropOverlay, StealOverlay, RaidAlarm, BigReveal, LevelUp, ConfirmDialog, Tutorial } from './ui/overlays';
+import { Hud, NavBar, Ticker, Toasts, ZonePrompt, HoverTip, ItemPopover, Joystick, EmoteBar, CarryHud } from './ui/hud';
+import { DropOverlay, StealOverlay, RaidAlarm, BigReveal, LevelUp, ConfirmDialog, Tutorial, Banner } from './ui/overlays';
 import { BasePanel } from './ui/panels/BasePanel';
 import { DropsPanel, CollectionPanel } from './ui/panels/DropsPanel';
 import { MarketPanel } from './ui/panels/MarketPanel';
@@ -16,8 +16,9 @@ import { openPanel } from './game/store';
 
 function World() {
   const ref = useRef<HTMLCanvasElement>(null);
+  const over = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const e = new WorldEngine(ref.current!);
+    const e = new WorldEngine(ref.current!, over.current!);
     setEngine(e);
     (window as any).__stt_engine = e;
     (window as any).__stt_state = () => useGame.getState();
@@ -31,6 +32,7 @@ function World() {
   return (
     <>
       <canvas ref={ref} className="world-canvas" data-testid="world" />
+      <div ref={over} className="world-overlay" />
       <div className="fade" style={{ opacity: fade }} />
     </>
   );
@@ -108,6 +110,7 @@ function Game() {
       <Hud />
       <Ticker />
       <ZonePrompt />
+      <CarryHud />
       <HoverTip />
       <ItemPopover />
       <Joystick />
@@ -115,6 +118,7 @@ function Game() {
       <NavBar />
       <Guard name="panel"><PanelHost /></Guard>
       <Guard name="overlays">
+        <Banner />
         <RaidAlarm />
         <StealOverlay />
         <Tutorial />

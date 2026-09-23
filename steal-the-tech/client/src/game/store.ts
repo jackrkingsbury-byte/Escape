@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type {
-  Backend, Catalog, CatalogItem, FeedEvent, MarketRow, Me, PlayerItem, SyncResult, WorldPlayer, Rarity,
+  Backend, BeltItem, Catalog, CatalogItem, FeedEvent, MarketRow, Me, PlayerItem, SyncResult, WorldPlayer, Rarity,
 } from '../backend/types';
 
 export type PanelId =
@@ -23,6 +23,7 @@ export interface OpenDropResult {
   player_item: PlayerItem;
   item_id: string;
   rarity: Rarity;
+  mutation: string | null;
   serial: number | null;
   is_new: boolean;
   placed: boolean;
@@ -51,8 +52,24 @@ export interface StealState {
   tutorial: boolean;
   revenge: boolean;
   defended: boolean;
-  result: null | { status: string; fine: number; note: string | null };
+  phase: 'grab' | 'carry';
+  grabbedAt: number;
+  carryUntil: number;
+  deliverAfter: number;
+  mutation: string | null;
+  result: null | { status: string; fine: number; note: string | null; caught?: boolean };
   finishing: boolean;
+}
+
+export interface Banner {
+  id: number;
+  kind: 'good' | 'bad' | 'epic' | 'secret' | 'info';
+  title: string;
+  sub?: string;
+  itemId?: string;
+  mutation?: string | null;
+  color?: string;
+  ttl: number;
 }
 
 export interface Settings {
@@ -82,7 +99,9 @@ function loadSettings(): Settings {
   } catch {
     /* ignore */
   }
-  return defaultSettings;
+  // Phones start on the lighter renderer (no bloom/shadows); switch any time in Settings.
+  const coarse = typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)').matches;
+  return { ...defaultSettings, quality: coarse ? 'low' : 'high' };
 }
 
 export interface GameState {
@@ -107,6 +126,8 @@ export interface GameState {
   marketAt: number;
   world: WorldPlayer[];
   worldAt: number;
+  belt: BeltItem[];
+  beltAt: number;
 
   panel: PanelId | null;
   panelArg: any;
@@ -114,6 +135,7 @@ export interface GameState {
   drop: DropAnim | null;
   steal: StealState | null;
   bigReveal: FeedEvent | null;
+  banner: Banner | null;
   levelUp: { level: number; title: string; cash: number } | null;
   confirm: null | { title: string; body: string; confirmLabel: string; danger?: boolean; hold?: boolean; onConfirm: () => void };
   settings: Settings;
@@ -140,12 +162,15 @@ export const useGame = create<GameState>(() => ({
   marketAt: 0,
   world: [],
   worldAt: 0,
+  belt: [],
+  beltAt: 0,
   panel: null,
   panelArg: null,
   toasts: [],
   drop: null,
   steal: null,
   bigReveal: null,
+  banner: null,
   levelUp: null,
   confirm: null,
   settings: loadSettings(),
@@ -184,17 +209,50 @@ export function updateSettings(p: Partial<Settings>) {
   }
 }
 
-/** Cash as the player sees it: the server balance plus income since the last sync (display only). */
+/** Cash in the bank (income waits on your podiums until you collect it). */
 export function liveCash(): number {
-  const { me, syncedAt } = G();
-  if (!me) return 0;
-  return me.cash + Math.floor((me.income * Math.max(0, Date.now() - syncedAt)) / 1000);
+  return G().me?.cash ?? 0;
+}
+
+let bannerSeq = 0;
+export function banner(b: Omit<Banner, 'id' | 'ttl'> & { ttl?: number }) {
+  const id = ++bannerSeq;
+  setG({ banner: { ttl: 2600, ...b, id } });
+  window.setTimeout(() => {
+    if (G().banner?.id === id) setG({ banner: null });
+  }, b.ttl ?? 2600);
+}
+
+export function mutationDef(id: string | null | undefined) {
+  if (!id) return null;
+  return G().catalog?.mutations?.find((m) => m.id === id) ?? null;
+}
+
+export const mutMult = (id: string | null | undefined) => mutationDef(id)?.mult ?? 1;
+
+/** Income/s of one displayed item of mine right now (mirrors the server's formula). */
+export function itemRate(itemId: string, mutation: string | null | undefined): number {
+  const s = G();
+  const it = s.itemsById[itemId];
+  if (!it) return 0;
+  const ev = s.last?.event;
+  const evMult = ev && ev.category && ev.category === it.category ? ev.income_mult : 1;
+  return it.base_income * mutMult(mutation) * evMult * (1 + (s.me?.income_bonus || 0));
+}
+
+/** Cash waiting on one of my podiums (client estimate; the server decides). */
+export function pendingOf(pi: PlayerItem, override?: number): number {
+  if (pi.location !== 'display') return 0;
+  const since = override ?? toClient(pi.accrued_at);
+  const secs = Math.min(43200, Math.max(0, (Date.now() - since) / 1000));
+  return Math.floor(itemRate(pi.item_id, pi.mutation) * secs);
 }
 
 export function item(id: string): CatalogItem | undefined {
   return G().itemsById[id];
 }
 
-export function price(id: string): number {
-  return G().market[id]?.price ?? G().itemsById[id]?.base_value ?? 0;
+export function price(id: string, mutation?: string | null): number {
+  const base = G().market[id]?.price ?? G().itemsById[id]?.base_value ?? 0;
+  return mutation ? Math.round(base * mutMult(mutation)) : base;
 }
