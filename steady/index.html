@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<!-- STEADY — practical tools for anger, anxiety and discipline -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steady Under Pressure</title>
+<meta name="description" content="Practical, evidence-based tools to cool anger before it turns into aggression, quiet anxiety, and build the discipline to keep your word to yourself. Private: everything stays on your device.">
+<meta name="theme-color" content="#14202a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2314202a'/%3E%3Ccircle cx='50' cy='50' r='27' fill='none' stroke='%23fbfcfb' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='11' fill='%23fbfcfb'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one calm reading column; tool panels break out into a two-up grid.
+   Colour carries meaning: each track owns one hue (ember = anger, tide = anxiety,
+   moss = discipline). Everything else is ink on cool paper. */
+:root{
+  --paper:#f1f4f4; --surface:#fbfcfb; --sunk:#e7ecee; --ink:#14202a; --muted:#56616b;
+  --line:#d6dee2; --line-strong:#b3bfc6; --scrim:rgba(14,22,28,.55);
+  --ember:#b5381a; --ember-ink:#a3311a; --ember-soft:#f8e6df;
+  --tide:#3b5fd0;  --tide-ink:#2f4fb3;  --tide-soft:#e4eafa;
+  --moss:#169c7f;  --moss-ink:#0b6b56;  --moss-soft:#dbf0e9;
+  --on-t:#ffffff;
+  --ok:#2e7d43; --ok-soft:#e0f1e4; --warn:#b06f0a; --warn-soft:#fbeed6;
+  --bad:#c0392b; --bad-soft:#fae3df; --danger:#8e1b12; --danger-soft:#f3d6d2;
+  --orb-hi:#e3eaf3; --orb-lo:#bccadb;
+  --shadow:0 1px 2px rgba(20,32,42,.05),0 10px 28px rgba(20,32,42,.07);
+  --f-display:'Bricolage Grotesque','Avenir Next','Segoe UI',system-ui,sans-serif;
+  --f-body:'Atkinson Hyperlegible','Segoe UI',system-ui,-apple-system,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:16px; --r-sm:10px; --maxw:1120px;
+  --t:var(--ink); --t-ink:var(--ink); --t-soft:var(--sunk);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0c1316; --surface:#131d21; --sunk:#1a262b; --ink:#e3eaec; --muted:#97a5ab;
+    --line:#243238; --line-strong:#3a4c54; --scrim:rgba(0,0,0,.65);
+    --ember:#e0643a; --ember-ink:#f28d66; --ember-soft:#2d1a13;
+    --tide:#6f8ff0;  --tide-ink:#98b0ff;  --tide-soft:#172139;
+    --moss:#26a884;  --moss-ink:#55d2ad;  --moss-soft:#0f2a23;
+    --on-t:#0c1316;
+    --ok:#5cc47e; --ok-soft:#14291b; --warn:#e9b04d; --warn-soft:#2e2412;
+    --bad:#ff6f61; --bad-soft:#341815; --danger:#ff9d92; --danger-soft:#3d1512;
+    --orb-hi:#2c3d47; --orb-lo:#1a272e;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0c1316; --surface:#131d21; --sunk:#1a262b; --ink:#e3eaec; --muted:#97a5ab;
+  --line:#243238; --line-strong:#3a4c54; --scrim:rgba(0,0,0,.65);
+  --ember:#e0643a; --ember-ink:#f28d66; --ember-soft:#2d1a13;
+  --tide:#6f8ff0;  --tide-ink:#98b0ff;  --tide-soft:#172139;
+  --moss:#26a884;  --moss-ink:#55d2ad;  --moss-soft:#0f2a23;
+  --on-t:#0c1316;
+  --ok:#5cc47e; --ok-soft:#14291b; --warn:#e9b04d; --warn-soft:#2e2412;
+  --bad:#ff6f61; --bad-soft:#341815; --danger:#ff9d92; --danger-soft:#3d1512;
+  --orb-hi:#2c3d47; --orb-lo:#1a272e;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+[data-track="ember"]{--t:var(--ember);--t-ink:var(--ember-ink);--t-soft:var(--ember-soft)}
+[data-track="tide"]{--t:var(--tide);--t-ink:var(--tide-ink);--t-soft:var(--tide-soft)}
+[data-track="moss"]{--t:var(--moss);--t-ink:var(--moss-ink);--t-soft:var(--moss-soft)}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.62 var(--f-body);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:700;line-height:1.08;letter-spacing:-.018em;margin:0;text-wrap:balance}
+p,ul,ol,figure{margin:0}
+ul,ol{padding-left:1.2em}
+a{color:inherit;text-underline-offset:3px}
+em{font-style:italic}
+q{quotes:"“" "”"}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(16px,4vw,32px)}
+.eyebrow{font:600 .72rem/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+:focus-visible{outline:3px solid var(--tide);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 .95rem/1 var(--f-body);padding:12px 18px;border-radius:999px;border:1.5px solid transparent;background:var(--ink);color:var(--paper);cursor:pointer;transition:transform .15s,background .2s,border-color .2s,color .2s;text-decoration:none;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn.t{background:var(--t-ink);color:var(--on-t)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.sm{padding:8px 14px;font-size:.86rem}
+.icon-btn{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font:700 .95rem var(--f-body)}
+.icon-btn:hover{border-color:var(--ink)}
+.icon-btn[aria-pressed="true"]{background:var(--t-ink);border-color:var(--t-ink);color:var(--on-t)}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--t-ink);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* form controls */
+.field{display:grid;gap:6px;min-width:0}
+.flabel,.field>label{font:600 .7rem/1.25 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+input[type=text],input[type=number],input[type=time],input[type=date],textarea,select{font:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;width:100%;min-width:0;transition:border-color .15s,box-shadow .15s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--t-ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--t) 22%,transparent)}
+textarea{resize:vertical;min-height:76px;line-height:1.5}
+input[type=range]{width:100%;accent-color:var(--t-ink);margin:6px 0}
+input[type=checkbox]{accent-color:var(--t-ink);width:18px;height:18px;margin:0;flex:none}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}}
+.rangehead{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.rangehead output{font:600 .95rem var(--f-mono);font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:600 .88rem/1.2 var(--f-body);padding:8px 13px;border-radius:999px;cursor:pointer;transition:background .15s,border-color .15s;text-align:left}
+.chip:hover{border-color:var(--line-strong)}
+.chip[aria-pressed="true"]{background:var(--t-soft);border-color:var(--t)}
+.chip[aria-pressed="true"]::before{content:"✓ ";font-weight:700;color:var(--t-ink)}
+.tag{display:inline-block;font:600 .64rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 7px;border-radius:6px;background:var(--t-soft);color:var(--t-ink);vertical-align:middle}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(150%) blur(12px);-webkit-backdrop-filter:saturate(150%) blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:800 1rem/1 var(--f-display);letter-spacing:.16em;text-decoration:none;flex:none}
+.brand svg{width:28px;height:28px;color:var(--ink)}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;mask-image:linear-gradient(90deg,#000 85%,transparent)}
+.nav::-webkit-scrollbar{display:none}
+.nav a{display:flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--sunk)}
+.nav a[data-track]::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--t)}
+.theme-btn{flex:none}
+@media (max-width:520px){.brand span{display:none}}
+
+/* hero */
+.hero{padding-block:clamp(36px,6vw,72px) clamp(40px,6vw,64px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(28px,5vw,56px);align-items:center}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.75rem,7vw,4.9rem);font-weight:800;letter-spacing:-.03em;margin-block:14px 18px}
+.lede{font-size:1.17rem;color:var(--muted);max-width:58ch}
+.sos-q{font-size:1.15rem;margin-top:30px}
+.sos-btns{display:grid;gap:10px;margin-top:12px;max-width:560px}
+.sos-btn{display:flex;align-items:center;gap:14px;text-align:left;padding:14px 18px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;box-shadow:var(--shadow)}
+.sos-btn:hover{border-color:var(--t);background:var(--t-soft);transform:translateY(-1px)}
+.sos-btn .sw{width:14px;height:14px;border-radius:50%;background:var(--t);flex:none;box-shadow:0 0 0 4px var(--t-soft)}
+.sos-btn strong{display:block;font-size:1.06rem}
+.sos-btn .sub{display:block;color:var(--muted);font-size:.88rem}
+.sos-btn .arrow{margin-left:auto;font-weight:700;color:var(--t-ink);font-size:1.2rem}
+.hero-note{margin-top:18px;color:var(--muted);font-size:.95rem;max-width:56ch}
+
+/* breathing pacer */
+.breath{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,26px);box-shadow:var(--shadow);display:grid;gap:16px;justify-items:center;text-align:center}
+.breath h2{font-size:1.25rem}
+.orb-wrap{position:relative;width:min(300px,100%);aspect-ratio:1;max-width:100%}
+.pacer.compact .orb-wrap{width:min(200px,100%)}
+.orb-wrap svg{position:absolute;inset:0;width:100%;height:100%;color:var(--line-strong)}
+.orb{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--orb-hi),var(--orb-lo));transform:scale(.5);will-change:transform;box-shadow:inset 0 -10px 30px rgba(0,0,0,.06)}
+.orb.settle{transition:transform .9s ease}
+.orb-text{position:absolute;inset:0;display:grid;place-content:center;gap:4px;text-align:center}
+.orb-text .phase{font:700 1.3rem/1.1 var(--f-display)}
+.pacer.compact .orb-text .phase{font-size:1.1rem}
+.orb-text .count{font:500 .95rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.seg{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:4px;background:var(--sunk);padding:4px;border-radius:999px;max-width:100%}
+.seg button{border:0;background:transparent;font:700 .86rem/1 var(--f-body);color:var(--muted);padding:9px 13px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.pacer-desc{font-size:.92rem;color:var(--muted);max-width:40ch}
+.pacer-controls{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+.cycles{font:500 .85rem var(--f-mono);color:var(--muted)}
+
+/* track sections */
+.track{padding-block:clamp(56px,8vw,88px);border-top:1px solid var(--line)}
+.track-head{display:grid;gap:14px;max-width:760px;margin-bottom:clamp(28px,4vw,44px)}
+.track-head .eyebrow{color:var(--t-ink);display:flex;align-items:center;gap:10px}
+.track-head .eyebrow::before{content:"";width:26px;height:3px;border-radius:2px;background:var(--t)}
+.track-head h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.025em}
+.track-head .lede{color:var(--ink);opacity:.86}
+.understand{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,44px);align-items:start;margin-bottom:clamp(36px,5vw,56px)}
+@media (max-width:900px){.understand{grid-template-columns:1fr}}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(14px,2.4vw,22px)}
+.diagram svg{display:block;width:100%;height:auto;color:var(--ink);overflow:visible}
+.diagram figcaption{font-size:.9rem;color:var(--muted);margin-top:12px}
+.dg-axis{stroke:currentColor;stroke-opacity:.35;stroke-width:1}
+.dg-text{fill:currentColor;font:500 14px var(--f-body)}
+.dg-text.b{font-weight:700}
+.dg-text.m{fill:var(--muted)}
+.dg-mono{fill:var(--muted);font:500 12px var(--f-mono);letter-spacing:.06em}
+.dg-curve{fill:none;stroke:var(--t);stroke-width:3;stroke-linecap:round}
+.dg-alt{fill:none;stroke:currentColor;stroke-opacity:.55;stroke-width:2;stroke-dasharray:6 5;stroke-linecap:round}
+.dg-band{fill:var(--t-soft)}
+.dg-dash{stroke:currentColor;stroke-opacity:.45;stroke-width:1.2;stroke-dasharray:4 4}
+.dg-dot{fill:var(--t);stroke:var(--surface);stroke-width:2}
+.dg-dot.alt{fill:var(--muted)}
+.dg-range{fill:var(--t-soft)}
+.dg-mark{stroke:var(--t);stroke-width:3;stroke-linecap:round}
+.ideas{display:grid;gap:22px}
+.idea h3{font-size:1.18rem;margin-bottom:6px}
+.idea p{max-width:62ch}
+.cite{color:var(--muted);font-size:.9em;white-space:nowrap}
+
+.tools-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.tools-head h3{font-size:1.5rem}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+@media (max-width:820px){.tools{grid-template-columns:1fr}}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,2.6vw,24px);display:grid;gap:14px;align-content:start;min-width:0}
+.tool.wide{grid-column:1/-1}
+.tool-h{display:grid;gap:4px}
+.tool-h h4{font-size:1.32rem}
+.tool-h p{color:var(--muted);font-size:.95rem;max-width:66ch}
+.saved{font:500 .78rem var(--f-mono);color:var(--muted)}
+
+.longgame{margin-top:clamp(36px,5vw,52px);padding-top:28px;border-top:1px dashed var(--line-strong)}
+.longgame>h3{font-size:1.5rem;margin-bottom:20px}
+.lg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 34px}
+@media (max-width:860px){.lg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:540px){.lg-grid{grid-template-columns:1fr}}
+.lg-item h4{font-size:1.04rem;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.lg-item h4::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--t);flex:none}
+.lg-item p{font-size:.95rem;color:var(--muted)}
+
+/* thermometer */
+.thermo{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+.thermo svg{width:84px;height:auto;display:block;color:var(--ink)}
+.th-tube{fill:var(--sunk);stroke:var(--line-strong);stroke-width:1.5}
+.th-fill{transition:y .3s ease,height .3s ease,fill .3s}
+.z-ok{fill:var(--ok)} .z-warn{fill:var(--warn)} .z-bad{fill:var(--bad)} .z-danger{fill:var(--danger)}
+.th-tick{stroke:currentColor;stroke-opacity:.4}
+.th-num{fill:var(--muted);font:500 11px var(--f-mono)}
+.zone{display:grid;gap:8px;padding:14px;border-radius:12px;background:var(--zsoft,var(--sunk))}
+.zone-name{display:flex;align-items:center;gap:8px;font-weight:700}
+.zone-name::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--zc,var(--muted))}
+.zone[data-z="ok"]{--zc:var(--ok);--zsoft:var(--ok-soft)}
+.zone[data-z="warn"]{--zc:var(--warn);--zsoft:var(--warn-soft)}
+.zone[data-z="bad"]{--zc:var(--bad);--zsoft:var(--bad-soft)}
+.zone[data-z="danger"]{--zc:var(--danger);--zsoft:var(--danger-soft)}
+.zone p{font-size:.95rem}
+
+.sign-group{display:grid;gap:8px}
+.callout{padding:12px 14px;border-radius:12px;background:var(--t-soft);font-size:.95rem}
+
+/* say it straight */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.three{grid-template-columns:1fr}}
+.way{border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.way .flabel{display:flex;align-items:center;gap:8px}
+.way.good{border-color:var(--t);background:var(--t-soft)}
+.way p{font-size:.98rem}
+.quote-out{padding:16px 18px;border-radius:12px;border:1.5px dashed var(--t);font-size:1.08rem;line-height:1.5;min-width:0;overflow-wrap:anywhere}
+
+/* grounding */
+.ground{display:grid;gap:14px;justify-items:start}
+.g-num{font:800 3.4rem/1 var(--f-display);color:var(--t-ink)}
+.g-prompt{font:700 1.2rem/1.25 var(--f-display)}
+.g-dots{display:flex;gap:10px;flex-wrap:wrap}
+.g-dot{width:44px;height:44px;border-radius:50%;border:2px solid var(--t);background:transparent;cursor:pointer;transition:background .2s,transform .15s}
+.g-dot[aria-pressed="true"]{background:var(--t);transform:scale(.92)}
+.g-steps{display:flex;gap:6px}
+.g-steps i{width:28px;height:4px;border-radius:2px;background:var(--line)}
+.g-steps i.on{background:var(--t)}
+
+/* worry sorter */
+.qbox{display:grid;gap:10px;padding:14px;border-radius:12px;background:var(--sunk)}
+.qbox p{font-weight:700}
+.list{list-style:none;padding:0;display:grid;gap:8px}
+.list li{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.list li .grow{flex:1;min-width:0;overflow-wrap:anywhere}
+.list li .sub{display:block;color:var(--muted);font-size:.88rem}
+.list li.done .grow{text-decoration:line-through;color:var(--muted)}
+.list .empty{justify-content:center;color:var(--muted);font-size:.92rem;border-style:dashed;background:transparent}
+
+/* thought check */
+.traps-help{font-size:.92rem}
+.traps-help summary{cursor:pointer;font-weight:700;color:var(--t-ink)}
+.traps-help dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 14px;margin:10px 0 0}
+.traps-help dt{font-weight:700}
+.traps-help dd{margin:0;color:var(--muted)}
+@media (max-width:520px){.traps-help dl{grid-template-columns:1fr}.traps-help dd{margin-bottom:6px}}
+.drop{font:600 .85rem var(--f-mono);white-space:nowrap;padding:3px 8px;border-radius:6px;background:var(--t-soft);color:var(--t-ink)}
+
+/* fear ladder */
+.ladder{list-style:none;padding:0;display:grid;gap:6px;position:relative}
+.rung{display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--paper)}
+.rung.next{border-color:var(--t);background:var(--t-soft)}
+.rung.done .rung-text{color:var(--muted);text-decoration:line-through}
+.rung-fear{display:grid;gap:4px;justify-items:center;font:600 .9rem var(--f-mono)}
+.meter{width:36px;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--t)}
+.rung-text{overflow-wrap:anywhere}
+.rung-empty{padding:12px;border:1px dashed var(--line-strong);border-radius:12px;text-align:center;color:var(--muted);font-size:.92rem}
+
+/* habit */
+.habit-card{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px;background:var(--paper)}
+.habit-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.habit-top .grow{min-width:0}
+.habit-sent{font:700 1.08rem/1.35 var(--f-display);overflow-wrap:anywhere}
+.habit-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.9rem;color:var(--muted)}
+.habit-meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+.status{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;padding:6px 10px;border-radius:8px;background:var(--sunk)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.status[data-s="ok"]{background:var(--ok-soft)} .status[data-s="ok"]::before{background:var(--ok)}
+.status[data-s="warn"]{background:var(--warn-soft)} .status[data-s="warn"]::before{background:var(--warn)}
+.status[data-s="bad"]{background:var(--bad-soft)} .status[data-s="bad"]::before{background:var(--bad)}
+.hgrid{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:4px;max-width:460px}
+.hcell{aspect-ratio:1;border-radius:5px;border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:0;max-width:100%}
+.hcell.done{background:var(--t);border-color:var(--t)}
+.hcell.miss{background:var(--sunk)}
+.hcell.today{outline:2px solid var(--ink);outline-offset:1px}
+.hcell:disabled{cursor:default;opacity:.45}
+.hlegend{display:flex;flex-wrap:wrap;gap:14px;font-size:.82rem;color:var(--muted)}
+.hlegend span{display:inline-flex;align-items:center;gap:6px}
+.hlegend i{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);display:inline-block}
+.preview{padding:12px 14px;border-radius:12px;background:var(--t-soft);font-weight:700;overflow-wrap:anywhere}
+
+/* urge surfing */
+.wave{width:100%;height:140px;display:block;border-radius:12px;background:var(--t-soft)}
+.urge-prompt{font:700 1.08rem/1.4 var(--f-display);min-height:3em}
+.clock{font:600 1.5rem var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* friction */
+.checks{list-style:none;padding:0;display:grid;gap:8px}
+.checks label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:.97rem}
+.checks input{margin-top:3px}
+
+/* timer */
+.timer{position:relative;width:150px;aspect-ratio:1}
+.timer svg{width:100%;height:100%}
+.tr-track{fill:none;stroke:var(--line);stroke-width:8}
+.tr-bar{fill:none;stroke:var(--t);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.tread{position:absolute;inset:0;display:grid;place-items:center;font:600 1.6rem var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* check-in */
+.checkin-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:18px;align-items:start}
+@media (max-width:900px){.checkin-grid{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat .v{font:700 1.9rem/1 var(--f-body)}
+.stat .k{font-size:.86rem;color:var(--muted);margin-top:6px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.88rem;color:var(--ink)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.key{width:16px;height:0;border-top:2.5px solid var(--muted);border-radius:2px;display:inline-block}
+.key.ember{border-color:var(--ember)} .key.tide{border-color:var(--tide)} .key.moss{border-color:var(--moss)}
+.banner{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--warn-soft);font-size:.9rem}
+.banner::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--warn);flex:none}
+.chart-box{position:relative;outline-offset:4px}
+.chart-box svg{display:block;width:100%;height:auto}
+.c-grid{stroke:var(--line);stroke-width:1}
+.c-tick{fill:var(--muted);font:500 11px var(--f-mono);font-variant-numeric:tabular-nums}
+.c-line{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-line.ember{stroke:var(--ember)} .c-line.tide{stroke:var(--tide)} .c-line.moss{stroke:var(--moss)}
+.c-dot{stroke:var(--surface);stroke-width:2}
+.c-dot.ember{fill:var(--ember)} .c-dot.tide{fill:var(--tide)} .c-dot.moss{fill:var(--moss)}
+.c-lab{fill:var(--ink);font:600 12px var(--f-body)}
+.c-cross{stroke:var(--line-strong);stroke-width:1}
+.c-tip{position:absolute;top:0;left:0;pointer-events:none;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:9px 11px;box-shadow:var(--shadow);font-size:.85rem;min-width:156px;display:grid;gap:4px;z-index:2}
+.c-tip .d{font:600 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.c-tip .r{display:flex;align-items:center;gap:8px}
+.c-tip .r b{font-variant-numeric:tabular-nums;min-width:2.2ch}
+.c-tip .r span{color:var(--muted)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 .7rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums}
+.insights{display:grid;gap:10px}
+.insight{padding:12px 14px;border-radius:12px;background:var(--sunk);font-size:.95rem}
+.toggle,.field>label.toggle{display:flex;align-items:center;gap:10px;font:700 .95rem/1.3 var(--f-body);letter-spacing:0;text-transform:none;color:var(--ink);cursor:pointer;min-height:44px}
+
+/* help */
+.help-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:820px){.help-grid{grid-template-columns:1fr}}
+.urgent{border:2px solid var(--bad);background:var(--bad-soft)}
+.lines{list-style:none;padding:0;display:grid;gap:10px}
+.lines li{display:grid;gap:2px}
+.lines .num{font:600 1.05rem var(--f-mono);user-select:all}
+.sources{font-size:.92rem;color:var(--muted);display:grid;gap:8px;padding-left:1.2em}
+.sources i{color:var(--ink)}
+
+/* footer / data */
+.foot{border-top:1px solid var(--line);padding-block:40px 56px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+@media (max-width:820px){.foot-grid{grid-template-columns:1fr}}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:var(--scrim)}
+.modal-card{width:min(640px,100%);max-height:calc(100dvh - 32px);background:var(--surface);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.35);display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden}
+@media (max-width:560px){.modal{padding:0}.modal-card{max-height:none;height:100%;border-radius:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}}
+.modal-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:20px 22px 10px}
+.modal-head .eyebrow{color:var(--t-ink)}
+.modal-head h2{font-size:1.5rem;margin-top:4px}
+.progress{display:flex;gap:6px;padding:0 22px 6px}
+.progress i{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.progress i.on{background:var(--t)}
+.modal-body{overflow:auto;padding:14px 22px 22px;display:grid;gap:14px;align-content:start}
+.modal-body h3{font-size:1.45rem}
+.modal-body .step-p{display:grid;gap:10px;font-size:1.06rem}
+.step-n{font:600 .72rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.step-w{display:grid;gap:12px}
+.modal-foot{display:flex;justify-content:space-between;gap:10px;padding:14px 22px;border-top:1px solid var(--line);background:var(--surface)}
+.defuse-out{display:grid;gap:8px}
+.defuse-out p{padding:10px 12px;border-radius:10px;background:var(--t-soft)}
+.defuse-out p:nth-child(2){margin-left:14px;opacity:.85}
+.defuse-out p:nth-child(3){margin-left:28px;opacity:.7}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:200;background:var(--ink);color:var(--paper);padding:11px 18px;border-radius:999px;font-weight:700;font-size:.92rem;box-shadow:var(--shadow);max-width:calc(100% - 32px);text-align:center}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#now" aria-label="Steady, back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".45"/><circle cx="16" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="3.5" fill="currentColor"/></svg>
+      <span>STEADY</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#anger" data-track="ember">Anger</a>
+      <a href="#anxiety" data-track="tide">Anxiety</a>
+      <a href="#discipline" data-track="moss">Discipline</a>
+      <a href="#checkin">Check-in</a>
+      <a href="#help">Get help</a>
+    </nav>
+    <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Switch light or dark theme" title="Switch theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9A7 7 0 0 1 12 3z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<!-- ───────────── HERO ───────────── -->
+<section class="hero" id="now">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Anger · Anxiety · Discipline</p>
+      <h1>Steady under pressure.</h1>
+      <p class="lede">Practical tools for three things that wreck good days: anger that boils over, anxiety that won’t switch off, and discipline that fades by Wednesday.</p>
+      <h2 class="sos-q" id="sosQ">What’s happening right now?</h2>
+      <div class="sos-btns" role="group" aria-labelledby="sosQ">
+        <button class="sos-btn" type="button" data-track="ember" data-sos="anger"><span class="sw"></span><span><strong>I’m about to lose my temper</strong><span class="sub">6 steps · about 4 minutes</span></span><span class="arrow" aria-hidden="true">→</span></button>
+        <button class="sos-btn" type="button" data-track="tide" data-sos="anxiety"><span class="sw"></span><span><strong>I’m anxious or panicking</strong><span class="sub">5 steps · about 4 minutes</span></span><span class="arrow" aria-hidden="true">→</span></button>
+        <button class="sos-btn" type="button" data-track="moss" data-sos="stuck"><span class="sw"></span><span><strong>I can’t make myself start</strong><span class="sub">4 steps · about 7 minutes</span></span><span class="arrow" aria-hidden="true">→</span></button>
+      </div>
+      <p class="hero-note">Use these when it’s happening. Read the rest of the page when it isn’t: the skills you practise while calm are the ones you can reach for under pressure.</p>
+    </div>
+
+    <aside class="breath pacer" id="heroPacer" aria-labelledby="pacerTitle">
+      <h2 id="pacerTitle">Breathe with the circle</h2>
+      <div class="orb-wrap">
+        <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/><circle cx="100" cy="100" r="50" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4"/></svg>
+        <div class="orb"></div>
+        <div class="orb-text"><span class="phase" aria-live="polite">Ready</span><span class="count">Tap start</span></div>
+      </div>
+      <div class="seg" role="group" aria-label="Breathing pattern">
+        <button type="button" data-p="exhale" aria-pressed="true">Long exhale</button>
+        <button type="button" data-p="sigh" aria-pressed="false">Double sigh</button>
+        <button type="button" data-p="box" aria-pressed="false">Box</button>
+      </div>
+      <p class="pacer-desc"></p>
+      <div class="pacer-controls"><button class="btn pacer-go" type="button" aria-pressed="false">Start</button><span class="cycles">0 breaths</span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- ───────────── ANGER ───────────── -->
+<section class="track" id="anger" data-track="ember">
+  <div class="wrap">
+    <header class="track-head">
+      <p class="eyebrow">Anger &amp; aggression</p>
+      <h2>Cool the fire</h2>
+      <p class="lede">Anger is a normal emotion. It tells you a line has been crossed or something you need is blocked. Aggression is what you do with it: shouting, threatening, breaking things, hitting, cutting someone down. You can’t stop the feeling arriving. You can widen the gap between feeling it and acting on it.</p>
+    </header>
+
+    <div class="understand">
+      <figure class="diagram">
+        <svg viewBox="0 0 460 250" role="img" aria-label="Anger rises from a trigger through a build-up to a peak, then takes a long time to cool down. The build-up is the easiest place to change course.">
+          <rect class="dg-band" x="60" y="20" width="92" height="185" rx="6"/>
+          <line class="dg-axis" x1="28" y1="205" x2="452" y2="205"/>
+          <line class="dg-axis" x1="28" y1="20" x2="28" y2="205"/>
+          <line class="dg-dash" x1="28" y1="88" x2="452" y2="88"/>
+          <text class="dg-text m" x="448" y="80" text-anchor="end">Thinking narrows</text>
+          <path class="dg-curve" d="M28,192 L60,192 C95,190 110,155 138,130 C166,105 205,38 236,38 C267,38 286,85 314,106 C342,127 400,148 448,152"/>
+          <circle class="dg-dot" cx="60" cy="192" r="5"/>
+          <text class="dg-text b" x="106" y="44" text-anchor="middle">Act early</text>
+          <text class="dg-text" x="106" y="61" text-anchor="middle">easiest to stop</text>
+          <text class="dg-text" x="360" y="180" text-anchor="middle">Still primed:</text>
+          <text class="dg-text" x="360" y="196" text-anchor="middle">small things re-ignite it</text>
+          <text class="dg-mono" x="60" y="226" text-anchor="middle">TRIGGER</text>
+          <text class="dg-mono" x="150" y="226" text-anchor="middle">BUILD-UP</text>
+          <text class="dg-mono" x="236" y="226" text-anchor="middle">PEAK</text>
+          <text class="dg-mono" x="370" y="226" text-anchor="middle">COOL-DOWN</text>
+          <text class="dg-mono" x="34" y="16">INTENSITY</text>
+          <text class="dg-mono" x="452" y="244" text-anchor="end">TIME →</text>
+        </svg>
+        <figcaption>The anger cycle used in cognitive-behavioural anger management. Everything on this page works best in the shaded build-up. Near the peak, the only good move is to leave.</figcaption>
+      </figure>
+      <div class="ideas">
+        <div class="idea"><h3>Catch it early</h3><p>Anger builds in steps. In the build-up you can still think, so that’s where every technique works. Learn your early warning signs so you notice at 4 out of 10, not 9.</p></div>
+        <div class="idea"><h3>Venting doesn’t drain it</h3><p>People who hit a punch bag while thinking about the person who angered them were <em>more</em> aggressive afterwards than people who sat quietly <span class="cite">(Bushman, 2002)</span>. Calming the body and changing the story work better.</p></div>
+        <div class="idea"><h3>The story is the fuel</h3><p>“They did it on purpose” and “they always do this” keep anger burning long after the moment. Checking the story is a core skill in anger-management therapy, which helps most people who try it <span class="cite">(Beck &amp; Fernandez, 1998)</span>.</p></div>
+        <div class="idea"><h3>Cooling down takes time</h3><p>After a flare-up your body stays primed and small things set it off again. When you’re flooded, take at least 20 minutes before you try to talk, as couples researcher John Gottman recommends.</p></div>
+      </div>
+    </div>
+
+    <div class="tools-head"><h3>Tools to practise</h3><p class="eyebrow">Your answers save on this device</p></div>
+    <div class="tools">
+      <article class="tool" aria-labelledby="thermoH">
+        <div class="tool-h"><h4 id="thermoH">Anger thermometer</h4><p>Rate how angry you are. Each level has a different right move.</p></div>
+        <div class="thermo">
+          <svg viewBox="0 0 84 262" aria-hidden="true">
+            <defs><clipPath id="tubeClip"><rect x="30" y="10" width="20" height="230" rx="10"/><circle cx="40" cy="236" r="20"/></clipPath></defs>
+            <rect x="16" y="140" width="5" height="70" rx="2" class="z-ok"/>
+            <rect x="16" y="80" width="5" height="58" rx="2" class="z-warn"/>
+            <rect x="16" y="40" width="5" height="38" rx="2" class="z-bad"/>
+            <rect x="16" y="10" width="5" height="28" rx="2" class="z-danger"/>
+            <rect class="th-tube" x="30" y="10" width="20" height="230" rx="10"/>
+            <circle class="th-tube" cx="40" cy="236" r="20"/>
+            <g clip-path="url(#tubeClip)"><rect id="thFill" class="th-fill z-warn" x="28" y="110" width="24" height="152"/></g>
+            <g id="thTicks"></g>
+          </svg>
+          <div class="field" style="gap:12px">
+            <div class="rangehead"><label class="flabel" for="thermoRange">How angry, 0 to 10?</label><output id="thermoOut" for="thermoRange">5</output></div>
+            <input type="range" id="thermoRange" min="0" max="10" step="1" value="5">
+            <div class="zone" id="zoneBox" aria-live="polite"><span class="zone-name" id="zoneName"></span><p id="zoneText"></p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tool" aria-labelledby="signsH">
+        <div class="tool-h"><h4 id="signsH">My early warning signs</h4><p>Tap the ones you recognise in yourself. These are your cue to pause.</p></div>
+        <div id="signsBox" class="ideas" style="gap:14px"></div>
+        <p class="callout" id="signsSum"></p>
+      </article>
+
+      <article class="tool" aria-labelledby="toH">
+        <div class="tool-h"><h4 id="toH">My time-out plan</h4><p>A time-out is the core move in anger management. Plan it while calm and agree it with the people you live with, so leaving isn’t mistaken for walking out.</p></div>
+        <div class="field"><label for="toSignal">What I’ll say</label><input type="text" id="toSignal" data-to="signal" placeholder="I’m getting too heated. I’m taking 20 minutes and I’ll come back."></div>
+        <div class="grid2">
+          <div class="field"><label for="toWhere">Where I’ll go</label><input type="text" id="toWhere" data-to="where" placeholder="A walk round the block"></div>
+          <div class="field"><label for="toBack">When I’ll come back</label><input type="text" id="toBack" data-to="back" placeholder="After 20 minutes, or when I’m below 4"></div>
+        </div>
+        <div class="field"><label for="toDo">What I’ll do there</label><input type="text" id="toDo" data-to="do" placeholder="Walk, breathe out slowly, cold water on my face"></div>
+        <p class="small muted">Not allowed during a time-out: replaying the argument, rehearsing comebacks, alcohol, driving.</p>
+        <span class="saved" id="toSaved">Saves as you type</span>
+      </article>
+
+      <article class="tool" aria-labelledby="storyH">
+        <div class="tool-h"><h4 id="storyH">Check the story</h4><p>Separate what happened from the story you’re telling about it. Then find other explanations.</p></div>
+        <div class="field"><label for="stFacts">What happened (only what a camera would record)</label><input type="text" id="stFacts" placeholder="He didn’t reply to my message for six hours"></div>
+        <div class="field"><label for="stStory">The story I’m telling myself</label><input type="text" id="stStory" placeholder="He’s ignoring me because he doesn’t respect me"></div>
+        <div class="field"><span class="flabel">Three other explanations</span>
+          <input type="text" id="stAlt1" placeholder="He was at work and couldn’t check his phone" aria-label="Other explanation 1">
+          <input type="text" id="stAlt2" placeholder="He saw it and forgot to answer" aria-label="Other explanation 2">
+          <input type="text" id="stAlt3" placeholder="His phone died" aria-label="Other explanation 3">
+        </div>
+        <div class="field"><div class="rangehead"><label class="flabel" for="stBelief">How sure am I of my first story now?</label><output id="stBeliefOut" for="stBelief">50%</output></div><input type="range" id="stBelief" min="0" max="100" step="5" value="50"></div>
+      </article>
+
+      <article class="tool wide" aria-labelledby="isH">
+        <div class="tool-h"><h4 id="isH">Say it straight</h4><p>Assertive means saying what you need clearly and respectfully. It gets you heard more often than either swallowing it or attacking.</p></div>
+        <div class="three">
+          <div class="way"><span class="flabel">Passive</span><p>“It’s fine. Whatever.”</p><p class="small muted">The need goes unsaid and the resentment builds.</p></div>
+          <div class="way"><span class="flabel">Aggressive</span><p>“You never listen. You’re so selfish.”</p><p class="small muted">An attack on the person. They defend instead of hearing you.</p></div>
+          <div class="way good"><span class="flabel">Assertive</span><p>“When you look at your phone while I’m talking, I feel brushed off. Could we put phones away for ten minutes?”</p><p class="small muted">Names the behaviour, the feeling and a fair request.</p></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="isWhen">When you… (the specific behaviour)</label><input type="text" id="isWhen" placeholder="cancel plans on the day"></div>
+          <div class="field"><label for="isFeel">I feel…</label><input type="text" id="isFeel" placeholder="let down"></div>
+          <div class="field"><label for="isWhy">because…</label><input type="text" id="isWhy" placeholder="I’d kept the evening free"></div>
+          <div class="field"><label for="isAsk">Could we… (a request, not a demand)</label><input type="text" id="isAsk" placeholder="agree to give a day’s notice"></div>
+        </div>
+        <p class="quote-out" id="isOut" aria-live="polite"></p>
+        <div class="row"><button class="btn t sm" type="button" id="isCopy">Copy sentence</button><span class="small muted">Say it in a low, slow voice, once you’re below 4 out of 10.</span></div>
+      </article>
+    </div>
+
+    <div class="longgame">
+      <h3>The long game</h3>
+      <div class="lg-grid">
+        <div class="lg-item"><h4>Sleep</h4><p>Short sleep makes everyone more irritable and quicker to read threat into neutral faces. Protect 7 to 9 hours.</p></div>
+        <div class="lg-item"><h4>Watch the alcohol</h4><p>Alcohol weakens the brakes you need most when you’re angry. If arguments tend to happen after drinking, that’s the pattern to break first.</p></div>
+        <div class="lg-item"><h4>Move every day</h4><p>Exercise burns off stress arousal and lowers your baseline tension, so it takes more to tip you over.</p></div>
+        <div class="lg-item"><h4>Check HALT</h4><p>Before a hard conversation, ask: am I hungry, angry, lonely or tired? If yes, deal with that first.</p></div>
+        <div class="lg-item"><h4>Fix repeat triggers</h4><p>If the same thing sets you off every week, solve it at a calm time instead of gritting your teeth through it again.</p></div>
+        <div class="lg-item"><h4>Get trained</h4><p>Anger-management courses based on CBT work for most people. If your anger has frightened or hurt someone, see <a href="#help">Get help</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── ANXIETY ───────────── -->
+<section class="track" id="anxiety" data-track="tide">
+  <div class="wrap">
+    <header class="track-head">
+      <p class="eyebrow">Anxiety &amp; worry</p>
+      <h2>Quiet the alarm</h2>
+      <p class="lede">Anxiety is your body’s threat alarm going off when there’s no fire. A racing heart, tight chest and churning stomach are built to protect you. They feel awful but they aren’t dangerous, and they always pass. The aim isn’t to never feel anxious. It’s to stop letting the alarm make your decisions.</p>
+    </header>
+
+    <div class="understand">
+      <figure class="diagram">
+        <svg viewBox="0 0 460 250" role="img" aria-label="Two curves of anxiety over time. Escaping makes anxiety drop fast but teaches the brain to fear the situation more. Staying lets anxiety peak and fall on its own and teaches the brain you can cope.">
+          <line class="dg-axis" x1="28" y1="205" x2="452" y2="205"/>
+          <line class="dg-axis" x1="28" y1="20" x2="28" y2="205"/>
+          <path class="dg-curve" d="M28,190 C70,188 95,110 140,62 C160,44 180,40 200,42 C260,48 300,140 448,175"/>
+          <path class="dg-alt" d="M28,190 C70,188 95,110 128,74 C140,62 146,150 170,186 L232,190"/>
+          <circle class="dg-dot alt" cx="128" cy="74" r="5"/>
+          <text class="dg-text" x="118" y="62" text-anchor="end">You leave</text>
+          <text class="dg-text b" x="448" y="70" text-anchor="end">Stay, and it peaks,</text>
+          <text class="dg-text b" x="448" y="87" text-anchor="end">then falls on its own</text>
+          <text class="dg-text" x="240" y="176">Escape: fast relief,</text>
+          <text class="dg-text" x="240" y="192">but the fear grows</text>
+          <text class="dg-mono" x="34" y="16">ANXIETY</text>
+          <text class="dg-mono" x="452" y="226" text-anchor="end">TIME →</text>
+        </svg>
+        <figcaption>Why avoidance backfires. Escaping teaches your brain the situation was dangerous. Staying (in small, planned steps) teaches it you can cope. This is how exposure therapy works <span class="cite">(Craske et al., 2014)</span>.</figcaption>
+      </figure>
+      <div class="ideas">
+        <div class="idea"><h3>It’s a false alarm, not a fault</h3><p>A panic attack peaks within minutes and then passes, even if you do nothing. Saying “this is anxiety, and it will pass” takes away some of its power.</p></div>
+        <div class="idea"><h3>Avoidance feeds it</h3><p>Every escape brings relief, and the relief teaches you to escape again. Approaching what you fear in small steps is the most reliable way to shrink it.</p></div>
+        <div class="idea"><h3>Worry feels useful, rarely is</h3><p>Solve what you can act on. Park the rest for a short daily worry slot. Postponing worry this way reduces how much time you spend worrying <span class="cite">(McGowan &amp; Behar, 2013)</span>.</p></div>
+        <div class="idea"><h3>Breathe out longer</h3><p>A long exhale slows the heart. Five minutes a day of “cyclic sighing” lifted mood and lowered breathing rate more than mindfulness meditation in one trial <span class="cite">(Balban et al., 2023)</span>.</p></div>
+      </div>
+    </div>
+
+    <div class="tools-head"><h3>Tools to practise</h3><p class="eyebrow">Your answers save on this device</p></div>
+    <div class="tools">
+      <article class="tool" aria-labelledby="groundH">
+        <div class="tool-h"><h4 id="groundH">5-4-3-2-1 grounding</h4><p>Pull your attention out of your head and into the room. Tap a dot for each thing you notice.</p></div>
+        <div id="groundTool"></div>
+      </article>
+
+      <article class="tool" aria-labelledby="worryH">
+        <div class="tool-h"><h4 id="worryH">Worry sorter</h4><p>Sort a worry into something to act on or something to park. Either way, it stops circling.</p></div>
+        <div class="field"><label for="worryIn">What’s the worry?</label><input type="text" id="worryIn" placeholder="What if I mess up the interview on Friday?"></div>
+        <div class="row"><button class="btn t sm" type="button" id="worrySort">Sort it</button></div>
+        <div id="worryFlow"></div>
+        <div class="field"><span class="flabel">To act on</span><ul class="list" id="actList"></ul></div>
+        <div class="field">
+          <div class="rangehead"><span class="flabel">Parked for worry time</span><label class="small muted" for="worryTime">Daily at <input type="time" id="worryTime" value="18:00" style="width:auto;padding:4px 8px;display:inline-block"></label></div>
+          <ul class="list" id="parkList"></ul>
+          <p class="small muted" id="worryTimeNote"></p>
+        </div>
+      </article>
+
+      <article class="tool wide" aria-labelledby="tcH">
+        <div class="tool-h"><h4 id="tcH">Thought check</h4><p>The classic CBT thought record. Catch the anxious (or angry) thought, spot the thinking trap, weigh the evidence, then write a more balanced version.</p></div>
+        <form id="tcForm" class="ideas" style="gap:14px" autocomplete="off">
+          <div class="grid2">
+            <div class="field"><label for="tcSit">Situation</label><input type="text" id="tcSit" placeholder="Boss asked to ‘have a quick chat’ tomorrow"></div>
+            <div class="field"><label for="tcEmo">Feeling</label><input type="text" id="tcEmo" placeholder="Dread"></div>
+          </div>
+          <div class="field"><label for="tcThought">The thought that came up</label><input type="text" id="tcThought" placeholder="I’m going to be fired" required></div>
+          <div class="field"><div class="rangehead"><label class="flabel" for="tcBefore">How strong is the feeling?</label><output id="tcBeforeOut" for="tcBefore">70</output></div><input type="range" id="tcBefore" min="0" max="100" step="5" value="70"></div>
+          <div class="field"><span class="flabel">Thinking traps I spot</span><div class="chips" id="trapChips"></div>
+            <details class="traps-help"><summary>What do these mean?</summary><dl id="trapDefs"></dl></details>
+          </div>
+          <div class="grid2">
+            <div class="field"><label for="tcFor">Evidence for the thought</label><textarea id="tcFor" placeholder="She sounded serious"></textarea></div>
+            <div class="field"><label for="tcAgainst">Evidence against it</label><textarea id="tcAgainst" placeholder="My last review was good. She has quick chats with everyone."></textarea></div>
+          </div>
+          <div class="field"><label for="tcBalanced">A more balanced thought</label><input type="text" id="tcBalanced" placeholder="I don’t know what it’s about. It’s more likely to be routine than bad."></div>
+          <div class="field"><div class="rangehead"><label class="flabel" for="tcAfter">How strong is the feeling now?</label><output id="tcAfterOut" for="tcAfter">40</output></div><input type="range" id="tcAfter" min="0" max="100" step="5" value="40"></div>
+          <div class="row"><button class="btn t" type="submit">Save thought check</button><span class="small muted">Saved checks appear below.</span></div>
+        </form>
+        <ul class="list" id="tcList"></ul>
+      </article>
+
+      <article class="tool wide" aria-labelledby="ladH">
+        <div class="tool-h"><h4 id="ladH">Fear ladder</h4><p>List situations you avoid and rate how scary each is, 0 to 10. Start near 3 or 4. Stay in the situation until the anxiety drops or you’ve learned your prediction was wrong. Repeat until it feels easy, then climb.</p></div>
+        <div class="callout" id="ladderEx" hidden>This is an example ladder for social anxiety. <button class="linkbtn" type="button" id="ladderClear">Clear it and build mine</button></div>
+        <ol class="ladder" id="ladderList" aria-label="Fear ladder, hardest at the top"></ol>
+        <form id="ladderForm" class="grid2" autocomplete="off">
+          <div class="field"><label for="ladText">Add a step</label><input type="text" id="ladText" placeholder="Eat lunch alone in a busy café" required></div>
+          <div class="field"><div class="rangehead"><label class="flabel" for="ladFear">Fear, 0 to 10</label><output id="ladFearOut" for="ladFear">5</output></div><div class="row" style="flex-wrap:nowrap"><input type="range" id="ladFear" min="0" max="10" value="5"><button class="btn t sm" type="submit">Add</button></div></div>
+        </form>
+      </article>
+    </div>
+
+    <div class="longgame">
+      <h3>The long game</h3>
+      <div class="lg-grid">
+        <div class="lg-item"><h4>Move your body</h4><p>Regular aerobic exercise reduces anxiety symptoms, and a racing heart from exercise teaches you that the sensation itself is safe.</p></div>
+        <div class="lg-item"><h4>Cut the caffeine</h4><p>Caffeine produces the same jitters and racing heart as anxiety. Try a week with less and see what changes.</p></div>
+        <div class="lg-item"><h4>Drop safety habits</h4><p>Constant checking, seeking reassurance and over-preparing bring short relief but keep the alarm sensitive. Cut them back one at a time.</p></div>
+        <div class="lg-item"><h4>Practise while calm</h4><p>Breathing and grounding are skills. Two minutes a day when you’re fine makes them available when you’re not.</p></div>
+        <div class="lg-item"><h4>Protect sleep</h4><p>Poor sleep and anxiety feed each other. A fixed wake-up time is the single most useful sleep habit.</p></div>
+        <div class="lg-item"><h4>Get help if it’s running your life</h4><p>CBT is the recommended first treatment for anxiety disorders <span class="cite">(NICE, 2011)</span>, and medication is an option to discuss with a doctor.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── DISCIPLINE ───────────── -->
+<section class="track" id="discipline" data-track="moss">
+  <div class="wrap">
+    <header class="track-head">
+      <p class="eyebrow">Discipline &amp; self-control</p>
+      <h2>Keep your word to yourself</h2>
+      <p class="lede">Discipline isn’t a trait you either have or don’t. It’s mostly design: a few decisions made in advance, surroundings that make the right thing easy, and a plan for getting back on track after you slip. Willpower is the backup, not the engine.</p>
+    </header>
+
+    <div class="understand">
+      <figure class="diagram">
+        <svg viewBox="0 0 460 112" role="img" aria-label="In a study of habit formation, a daily habit took between 18 and 254 days to become automatic. The median was 66 days.">
+          <line class="dg-axis" x1="20" y1="64" x2="440" y2="64"/>
+          <rect class="dg-range" x="49" y="54" width="381" height="20" rx="10"/>
+          <line class="dg-mark" x1="127" y1="44" x2="127" y2="84"/>
+          <text class="dg-text b" x="127" y="34" text-anchor="middle">Median: 66 days</text>
+          <text class="dg-text" x="49" y="102" text-anchor="middle">18</text>
+          <text class="dg-text" x="430" y="102" text-anchor="middle">254</text>
+          <text class="dg-mono" x="240" y="102" text-anchor="middle">DAYS UNTIL AUTOMATIC</text>
+        </svg>
+        <figcaption>How long a new daily habit took to feel automatic <span class="cite">(Lally et al., 2010)</span>. Expect about two months, not 21 days. Missing a single day didn’t set people back, which is why the rule here is “never miss twice”.</figcaption>
+      </figure>
+      <div class="ideas">
+        <div class="idea"><h3>Disciplined people resist less</h3><p>People with high self-control report <em>fewer</em> temptations, not more battles won <span class="cite">(Hofmann et al., 2012)</span>. Their routines do the work, so they rarely need willpower at all <span class="cite">(Galla &amp; Duckworth, 2015)</span>.</p></div>
+        <div class="idea"><h3>Decide once, in advance</h3><p>“When it’s 7am and the kettle’s on, I’ll do ten push-ups.” Across 94 studies, if-then plans like this had a medium-to-large effect on reaching goals <span class="cite">(Gollwitzer &amp; Sheeran, 2006)</span>.</p></div>
+        <div class="idea"><h3>Make it tiny</h3><p>Start with a version so small it’s hard to skip: one push-up, one line, one page. A habit has to exist before it can grow.</p></div>
+        <div class="idea"><h3>Be kind after a slip</h3><p>People who met a failure with self-compassion were more motivated to improve than those who beat themselves up <span class="cite">(Breines &amp; Chen, 2012)</span>. Harsh self-talk tends to end in “I’ve blown it anyway”.</p></div>
+      </div>
+    </div>
+
+    <div class="tools-head"><h3>Tools to practise</h3><p class="eyebrow">Your answers save on this device</p></div>
+    <div class="tools">
+      <article class="tool wide" id="habits" aria-labelledby="hbH">
+        <div class="tool-h"><h4 id="hbH">Habit builder</h4><p>Anchor a tiny new action to something you already do every day, then tick off each day. The grid covers the 66-day median.</p></div>
+        <form id="hbForm" class="ideas" style="gap:12px" autocomplete="off">
+          <div class="grid2">
+            <div class="field"><label for="hbCue">After I… (something you already do daily)</label><input type="text" id="hbCue" placeholder="brush my teeth at night" required></div>
+            <div class="field"><label for="hbAction">I will… (the two-minute version)</label><input type="text" id="hbAction" placeholder="read one page of a book" required></div>
+            <div class="field"><label for="hbPlace">Where</label><input type="text" id="hbPlace" placeholder="in bed"></div>
+            <div class="field"><label for="hbEasy">To make it easier, I’ll…</label><input type="text" id="hbEasy" placeholder="leave the book on my pillow"></div>
+          </div>
+          <p class="preview" id="hbPreview" aria-live="polite"></p>
+          <div class="row"><button class="btn t" type="submit">Start this habit today</button></div>
+        </form>
+        <div id="habitList" class="ideas" style="gap:14px"></div>
+      </article>
+
+      <article class="tool" aria-labelledby="usH">
+        <div class="tool-h"><h4 id="usH">Urge surfing</h4><p>For the pull to scroll, snack, snap at someone or quit. Don’t fight the urge or obey it. Watch it rise, crest and fall like a wave.</p></div>
+        <canvas class="wave" id="waveCanvas" aria-hidden="true"></canvas>
+        <p class="urge-prompt" id="urgePrompt" aria-live="polite">When an urge hits, name it, rate it and press start.</p>
+        <div id="urgeSetup" class="ideas" style="gap:12px">
+          <div class="field"><label for="urgeWhat">The urge</label><input type="text" id="urgeWhat" placeholder="Check my phone"></div>
+          <div class="field"><div class="rangehead"><label class="flabel" for="urgeBefore">Strength now</label><output id="urgeBeforeOut" for="urgeBefore">7</output></div><input type="range" id="urgeBefore" min="0" max="10" value="7"></div>
+          <div class="row"><div class="seg" role="group" aria-label="Length" id="urgeLen"><button type="button" data-m="5" aria-pressed="false">5 min</button><button type="button" data-m="10" aria-pressed="true">10 min</button><button type="button" data-m="15" aria-pressed="false">15 min</button></div></div>
+        </div>
+        <div class="row"><button class="btn t" type="button" id="urgeGo">Start surfing</button><span class="clock" id="urgeClock">10:00</span></div>
+        <div id="urgeAfter" class="ideas" style="gap:10px" hidden>
+          <div class="field"><div class="rangehead"><label class="flabel" for="urgeNow">How strong is it now?</label><output id="urgeNowOut" for="urgeNow">4</output></div><input type="range" id="urgeNow" min="0" max="10" value="4"></div>
+          <div class="row"><button class="btn t sm" type="button" id="urgeSave">Log it</button></div>
+        </div>
+        <p class="small muted" id="urgeStats"></p>
+      </article>
+
+      <article class="tool" aria-labelledby="frH">
+        <div class="tool-h"><h4 id="frH">Friction audit</h4><p>Make the good habit easier to start and the bad one harder to reach. Tick what you’ve set up.</p></div>
+        <div class="field"><span class="flabel">Make the good habit easy</span><ul class="checks" id="frGood"></ul></div>
+        <div class="field"><span class="flabel">Make the bad habit hard</span><ul class="checks" id="frBad"></ul></div>
+        <p class="callout" id="frSum"></p>
+      </article>
+    </div>
+
+    <div class="longgame">
+      <h3>The long game</h3>
+      <div class="lg-grid">
+        <div class="lg-item"><h4>Never miss twice</h4><p>One missed day is noise. Two is the start of a new habit. After a miss, do the two-minute version the next day, whatever happens.</p></div>
+        <div class="lg-item"><h4>Pair it with a treat</h4><p>Only listen to your favourite podcast at the gym. “Temptation bundling” like this raised gym visits in a field study <span class="cite">(Milkman et al., 2014)</span>.</p></div>
+        <div class="lg-item"><h4>Become the person</h4><p>Frame habits as identity: “I’m someone who trains” rather than “I’m trying to get fit”. Each repetition is a vote for that person.</p></div>
+        <div class="lg-item"><h4>Guard the basics</h4><p>Sleep, food and movement are what self-control runs on. When those slip, everything feels harder. That’s not a character flaw.</p></div>
+        <div class="lg-item"><h4>One thing at a time</h4><p>Pick one habit until it’s automatic, then add the next. Five changes at once is how New Year’s resolutions die.</p></div>
+        <div class="lg-item"><h4>Make it visible</h4><p>A ticked grid or a streak on the fridge turns invisible progress into something you don’t want to break.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── CHECK-IN ───────────── -->
+<section class="track" id="checkin">
+  <div class="wrap">
+    <header class="track-head">
+      <p class="eyebrow">Daily check-in</p>
+      <h2>Watch the pattern, not the day</h2>
+      <p class="lede">Thirty seconds each evening. After a week or two you’ll see what actually moves your temper, your nerves and your follow-through.</p>
+    </header>
+    <div class="stats" id="stats"></div>
+    <div class="checkin-grid">
+      <form class="tool" id="ciForm" autocomplete="off" aria-labelledby="ciH">
+        <div class="tool-h"><h4 id="ciH">How was today?</h4></div>
+        <div class="field"><label for="ciDate">Day</label><input type="date" id="ciDate"></div>
+        <div class="field" data-track="ember"><div class="rangehead"><label class="flabel" for="ciAnger">Peak anger, 0 to 10</label><output id="ciAngerOut" for="ciAnger">3</output></div><input type="range" id="ciAnger" min="0" max="10" value="3"></div>
+        <div class="field" data-track="tide"><div class="rangehead"><label class="flabel" for="ciAnx">Peak anxiety, 0 to 10</label><output id="ciAnxOut" for="ciAnx">3</output></div><input type="range" id="ciAnx" min="0" max="10" value="3"></div>
+        <div class="field" data-track="moss"><div class="rangehead"><label class="flabel" for="ciFollow">Did what I said I’d do, 0 to 10</label><output id="ciFollowOut" for="ciFollow">5</output></div><input type="range" id="ciFollow" min="0" max="10" value="5"></div>
+        <div class="grid2">
+          <div class="field"><label for="ciSleep">Hours slept last night</label><input type="number" id="ciSleep" min="0" max="16" step="0.5" placeholder="7.5"></div>
+          <div class="field"><span class="flabel">Exercise</span><label class="toggle" for="ciMoved"><input type="checkbox" id="ciMoved"> I moved my body today</label></div>
+        </div>
+        <div class="field"><label for="ciNote">One line about today</label><input type="text" id="ciNote" placeholder="Tense meeting, but I took a walk instead of snapping"></div>
+        <div class="row"><button class="btn" type="submit" id="ciSave">Save today</button></div>
+      </form>
+
+      <div class="tool" aria-labelledby="chartH">
+        <div class="tool-h"><h4 id="chartH">Last 14 days</h4><p>Each line is scored 0 to 10. Hover or use the arrow keys for a day’s numbers.</p></div>
+        <p class="banner" id="exBanner" hidden>Example data. Your own check-ins replace it once you’ve saved two.</p>
+        <div class="legend" id="legend"><span><i class="key ember"></i>Anger</span><span><i class="key tide"></i>Anxiety</span><span><i class="key moss"></i>Follow-through</span></div>
+        <div class="chart-box" id="chartBox" tabindex="0" role="img" aria-label="Line chart of anger, anxiety and follow-through over the last 14 days"></div>
+        <div class="row"><button class="btn ghost sm" type="button" id="tblBtn" aria-expanded="false">Show as a table</button></div>
+        <div class="tbl-wrap" id="tblWrap" hidden></div>
+        <div class="field"><span class="flabel">Patterns</span><div class="insights" id="insights"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── HELP ───────────── -->
+<section class="track" id="help">
+  <div class="wrap">
+    <header class="track-head">
+      <p class="eyebrow">Get help</p>
+      <h2>You don’t have to do this alone</h2>
+      <p class="lede">This site is a self-help toolkit. It isn’t therapy or a diagnosis. The tools here come from proven treatments, and a trained professional can tailor them to you.</p>
+    </header>
+    <div class="help-grid">
+      <article class="tool urgent" aria-labelledby="nowH">
+        <div class="tool-h"><h4 id="nowH">Get help now if…</h4></div>
+        <ul>
+          <li>you’re thinking about hurting yourself or someone else</li>
+          <li>you feel out of control or unsafe</li>
+          <li>someone is in danger right now</li>
+        </ul>
+        <ul class="lines">
+          <li><strong>Emergency services</strong><span class="num">112 (EU and much of the world) · 999 (UK) · 911 (US, Canada)</span></li>
+          <li><strong>US: Suicide &amp; Crisis Lifeline</strong><span class="num">Call or text 988</span></li>
+          <li><strong>UK &amp; Ireland: Samaritans, 24/7</strong><span class="num">116 123</span></li>
+          <li><strong>Anywhere else</strong><span>Find a free helpline in your country at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a></span></li>
+        </ul>
+      </article>
+      <article class="tool" aria-labelledby="proH">
+        <div class="tool-h"><h4 id="proH">See a professional if…</h4></div>
+        <ul style="display:grid;gap:6px">
+          <li>anger or anxiety has been getting in the way of work, school, sleep or relationships for weeks</li>
+          <li>your anger has frightened, threatened or hurt someone, or you’ve broken things</li>
+          <li>you’re having panic attacks, or avoiding more and more places and people</li>
+          <li>you’re using alcohol, drugs, gaming or food to cope</li>
+        </ul>
+        <p>A family doctor is a good first stop. Ask about <strong>CBT</strong> (for anxiety and anger), <strong>DBT skills groups</strong> (for intense emotions) and <strong>anger-management programmes</strong>. If your anger is aimed at a partner or family, specialist programmes exist to help you stop, and your doctor or a helpline can point you to one.</p>
+      </article>
+    </div>
+
+    <details class="longgame" style="border-top-style:solid">
+      <summary class="flabel" style="cursor:pointer;font-size:.8rem">Sources</summary>
+      <ol class="sources" style="margin-top:14px">
+        <li>Balban, M. Y., et al. (2023). Brief structured respiration practices enhance mood and reduce physiological arousal. <i>Cell Reports Medicine, 4</i>(1), 100895.</li>
+        <li>Beck, R., &amp; Fernandez, E. (1998). Cognitive-behavioral therapy in the treatment of anger: A meta-analysis. <i>Cognitive Therapy and Research, 22</i>(1), 63–74.</li>
+        <li>Breines, J. G., &amp; Chen, S. (2012). Self-compassion increases self-improvement motivation. <i>Personality and Social Psychology Bulletin, 38</i>(9), 1133–1143.</li>
+        <li>Bushman, B. J. (2002). Does venting anger feed or extinguish the flame? <i>Personality and Social Psychology Bulletin, 28</i>(6), 724–731.</li>
+        <li>Craske, M. G., et al. (2014). Maximizing exposure therapy: An inhibitory learning approach. <i>Behaviour Research and Therapy, 58</i>, 10–23.</li>
+        <li>Galla, B. M., &amp; Duckworth, A. L. (2015). More than resisting temptation: Beneficial habits mediate the relationship between self-control and positive life outcomes. <i>Journal of Personality and Social Psychology, 109</i>(3), 508–525.</li>
+        <li>Gollwitzer, P. M., &amp; Sheeran, P. (2006). Implementation intentions and goal achievement: A meta-analysis of effects and processes. <i>Advances in Experimental Social Psychology, 38</i>, 69–119.</li>
+        <li>Gottman, J. M., &amp; Silver, N. (1999). <i>The Seven Principles for Making Marriage Work.</i> Crown.</li>
+        <li>Hofmann, W., Baumeister, R. F., Förster, G., &amp; Vohs, K. D. (2012). Everyday temptations: An experience sampling study of desire, conflict, and self-control. <i>Journal of Personality and Social Psychology, 102</i>(6), 1318–1335.</li>
+        <li>Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., &amp; Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. <i>European Journal of Social Psychology, 40</i>(6), 998–1009.</li>
+        <li>Lieberman, M. D., et al. (2007). Putting feelings into words: Affect labeling disrupts amygdala activity in response to affective stimuli. <i>Psychological Science, 18</i>(5), 421–428.</li>
+        <li>McGowan, S. K., &amp; Behar, E. (2013). A preliminary investigation of stimulus control training for worry. <i>Behavior Modification, 37</i>(1), 90–112.</li>
+        <li>Milkman, K. L., Minson, J. A., &amp; Volpp, K. G. M. (2014). Holding the Hunger Games hostage at the gym: An evaluation of temptation bundling. <i>Management Science, 60</i>(2), 283–299.</li>
+        <li>NICE (2011). <i>Generalised anxiety disorder and panic disorder in adults: management</i> (CG113).</li>
+        <li>SAMHSA (2019). <i>Anger Management for Substance Use Disorder and Mental Health Clients: A Cognitive–Behavioral Therapy Manual.</i></li>
+      </ol>
+    </details>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="ideas" style="gap:10px">
+      <a class="brand" href="#now"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".45"/><circle cx="16" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="3.5" fill="currentColor"/></svg>STEADY</a>
+      <p class="muted small">Everything you type stays in this browser on this device. Nothing is sent anywhere, and there’s no account. Clearing your browser data clears it, so copy a backup now and then.</p>
+    </div>
+    <div class="ideas" style="gap:10px">
+      <div class="row"><button class="btn ghost sm" type="button" id="bkCopy">Copy backup</button><button class="btn ghost sm" type="button" id="bkShow" aria-expanded="false">Restore a backup</button><button class="btn ghost sm" type="button" id="bkClear">Delete all my data</button></div>
+      <div id="bkRestore" class="ideas" style="gap:8px" hidden>
+        <label class="flabel" for="bkText">Paste a backup</label>
+        <textarea id="bkText" rows="3" placeholder='{"checkins":{…}}'></textarea>
+        <div class="row"><button class="btn sm" type="button" id="bkApply">Restore</button></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SOS guided flow -->
+<div class="modal" id="sos" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="sosTitle">
+    <div class="modal-head">
+      <div><p class="eyebrow" id="sosEyebrow"></p><h2 id="sosTitle"></h2></div>
+      <button class="icon-btn" type="button" id="sosClose" aria-label="Close">✕</button>
+    </div>
+    <div class="progress" id="sosProgress" aria-hidden="true"></div>
+    <div class="modal-body" id="sosBody"></div>
+    <div class="modal-foot"><button class="btn ghost" type="button" id="sosBack">Back</button><button class="btn t" type="button" id="sosNext">Next</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const pad = n => String(n).padStart(2, '0');
+const dkey = (d = new Date()) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseKey = k => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const dayDiff = (a, b) => Math.round((parseKey(b) - parseKey(a)) / 864e5);
+const isKey = k => typeof k === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(k);
+const fmtDay = k => isKey(k) ? parseKey(k).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '';
+const clampN = (v, lo, hi) => { const n = Number(v); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : null; };
+const lowerFirst = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+const trimEnd = s => String(s || '').trim().replace(/[.!?]+$/, '');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── storage ── */
+const KEY = 'steady_v1';
+const DEFAULTS = () => ({ signs: [], timeout: {}, worries: [], worryTime: '18:00', thoughts: [], ladder: null, habits: null, urges: [], starts: [], friction: [], checkins: {} });
+let S;
+try { S = Object.assign(DEFAULTS(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEFAULTS(); }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.hidden = false;
+  clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; }, 2600);
+}
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); toast('Copied'); }
+  catch (e) {
+    const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (_) {}
+    ta.remove(); toast(ok ? 'Copied' : 'Copy didn’t work here. Select the text and copy it by hand.');
+  }
+}
+/* two-tap confirm for destructive buttons (no confirm() dialogs) */
+function confirmTap(btn, label, fn) {
+  if (btn.dataset.armed) { delete btn.dataset.armed; btn.textContent = btn.dataset.orig; fn(); return; }
+  btn.dataset.orig = btn.textContent; btn.dataset.armed = '1'; btn.textContent = label;
+  setTimeout(() => { if (btn.isConnected && btn.dataset.armed) { delete btn.dataset.armed; btn.textContent = btn.dataset.orig; } }, 3500);
+}
+
+/* ── theme ── */
+const root = document.documentElement;
+let theme = null; try { theme = localStorage.getItem('steady_theme'); } catch (e) {}
+if (theme === 'light' || theme === 'dark') root.setAttribute('data-theme', theme);
+$('#themeBtn').addEventListener('click', () => {
+  const isDark = root.getAttribute('data-theme') === 'dark' || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+  const next = isDark ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('steady_theme', next); } catch (e) {}
+  drawWave();
+});
+
+/* ── breathing pacer ── */
+const PATTERNS = {
+  exhale: { steps: [['in', 4], ['out', 6]], desc: 'In for 4, out for 6. A longer out-breath nudges your heart rate down.' },
+  sigh:   { steps: [['in', 2.5], ['top', 1], ['out', 6]], desc: 'Breathe in through the nose, take a short second sip of air on top, then let it all out slowly through the mouth.' },
+  box:    { steps: [['in', 4], ['hold', 4], ['out', 4], ['hold', 4]], desc: 'In 4, hold 4, out 4, hold 4. Even and easy to count when your mind is busy.' }
+};
+const PHASE = { in: 'Breathe in', top: 'Sip more air', hold: 'Hold', out: 'Breathe out' };
+function pacerMarkup(pattern, compact) {
+  return `<div class="pacer ${compact ? 'compact' : ''}" style="display:grid;gap:14px;justify-items:center;text-align:center">
+    <div class="orb-wrap"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/><circle cx="100" cy="100" r="50" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4"/></svg>
+    <div class="orb"></div><div class="orb-text"><span class="phase" aria-live="polite">Ready</span><span class="count">Tap start</span></div></div>
+    <div class="pacer-controls"><button class="btn t pacer-go" type="button" aria-pressed="false">Start</button><span class="cycles">0 breaths</span></div></div>`;
+}
+function makePacer(el, opts = {}) {
+  const orb = $('.orb', el), phaseEl = $('.phase', el), countEl = $('.count', el), cycEl = $('.cycles', el), go = $('.pacer-go', el), descEl = $('.pacer-desc', el);
+  const MIN = reduceMotion ? .82 : .5, MAX = 1, TOP = reduceMotion ? 1.03 : 1.1;
+  let pat = opts.pattern || 'exhale', running = false, raf = 0, idx = 0, stepStart = 0, from = MIN, cur = MIN, n = 0, lastPhase = '', lastCount = '';
+  const ease = t => .5 - .5 * Math.cos(Math.PI * t);
+  const setScale = s => { cur = s; orb.style.transform = `scale(${s})`; };
+  const setText = (p, c) => { if (p !== lastPhase) { phaseEl.textContent = p; lastPhase = p; } if (c !== lastCount) { countEl.textContent = c; lastCount = c; } };
+  const showDesc = () => { if (descEl) descEl.textContent = PATTERNS[pat].desc; };
+  function frame(now) {
+    const steps = PATTERNS[pat].steps, [k, dur] = steps[idx];
+    const t = Math.min(1, (now - stepStart) / (dur * 1000));
+    const to = k === 'in' ? MAX : k === 'top' ? TOP : k === 'out' ? MIN : from;
+    setScale(from + (to - from) * ease(t));
+    setText(PHASE[k], String(Math.max(1, Math.ceil(dur - (now - stepStart) / 1000))));
+    if (t >= 1) {
+      from = to; idx++; stepStart = now;
+      if (idx >= steps.length) {
+        idx = 0; n++; cycEl.textContent = `${n} breath${n === 1 ? '' : 's'}`;
+        if (opts.cycles && n >= opts.cycles) { stop(true); return; }
+      }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function start() {
+    if (running) return;
+    running = true; idx = 0; n = 0; cycEl.textContent = '0 breaths';
+    orb.classList.remove('settle'); from = cur; stepStart = performance.now();
+    go.textContent = 'Stop'; go.setAttribute('aria-pressed', 'true');
+    raf = requestAnimationFrame(frame);
+  }
+  function stop(finished) {
+    if (!running) return;
+    running = false; cancelAnimationFrame(raf);
+    orb.classList.add('settle'); setScale(MIN); from = MIN;
+    go.textContent = finished ? 'Again' : 'Start'; go.setAttribute('aria-pressed', 'false');
+    setText(finished ? 'Well done' : 'Ready', finished ? `${n} slow breaths` : 'Tap start');
+  }
+  go.addEventListener('click', () => running ? stop(false) : start());
+  $$('.seg button[data-p]', el).forEach(b => b.addEventListener('click', () => {
+    pat = b.dataset.p; $$('.seg button[data-p]', el).forEach(x => x.setAttribute('aria-pressed', String(x === b))); showDesc();
+    if (running) { idx = 0; from = cur; stepStart = performance.now(); }
+  }));
+  setScale(MIN); showDesc();
+  return { stop: () => stop(false) };
+}
+makePacer($('#heroPacer'));
+
+/* ── timer widget ── */
+function makeTimer(el, secs, onDone) {
+  el.innerHTML = `<div class="timer"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="tr-track" cx="60" cy="60" r="52"/><circle class="tr-bar" cx="60" cy="60" r="52" pathLength="100" stroke-dasharray="100" stroke-dashoffset="0" transform="rotate(-90 60 60)"/></svg><div class="tread" role="timer" aria-live="off"></div></div>
+    <div class="row"><button class="btn t sm tgo" type="button">Start</button><button class="btn ghost sm treset" type="button">Reset</button></div><p class="small muted tmsg" aria-live="polite"></p>`;
+  const bar = $('.tr-bar', el), read = $('.tread', el), go = $('.tgo', el), msg = $('.tmsg', el);
+  let left = secs, iv = 0, end = 0;
+  const show = () => { read.textContent = `${Math.floor(left / 60)}:${pad(left % 60)}`; bar.setAttribute('stroke-dashoffset', String(100 * (1 - left / secs))); };
+  const halt = () => { clearInterval(iv); iv = 0; go.textContent = left > 0 && left < secs ? 'Resume' : 'Start'; };
+  function tick() {
+    left = Math.max(0, Math.round((end - Date.now()) / 1000)); show();
+    if (left <= 0) { halt(); go.textContent = 'Start'; left = secs; msg.textContent = 'Time. Keep going if you want to, or stop. Either way, you started.'; if (onDone) onDone(); }
+  }
+  go.addEventListener('click', () => {
+    if (iv) { halt(); return; }
+    if (left === secs) msg.textContent = '';
+    end = Date.now() + left * 1000; iv = setInterval(tick, 250); go.textContent = 'Pause';
+  });
+  $('.treset', el).addEventListener('click', () => { halt(); left = secs; go.textContent = 'Start'; msg.textContent = ''; show(); });
+  show();
+  return () => clearInterval(iv);
+}
+
+/* ── grounding widget ── */
+const GROUND = [
+  { n: 5, p: 'things you can see', h: 'A colour, a shadow, a crack in the ceiling. Look for small details.' },
+  { n: 4, p: 'things you can feel', h: 'Your feet on the floor, the chair at your back, air on your skin.' },
+  { n: 3, p: 'things you can hear', h: 'Traffic, a fridge humming, your own breath.' },
+  { n: 2, p: 'things you can smell', h: 'If nothing, find something: soap, coffee, your sleeve.' },
+  { n: 1, p: 'thing you can taste', h: 'Or take a sip of water and really notice it.' }
+];
+function makeGround(el) {
+  let i = 0, timer = 0;
+  function render() {
+    clearTimeout(timer);
+    if (i >= GROUND.length) {
+      el.innerHTML = `<div class="ground"><p class="g-prompt">You’re here, in this room, right now.</p><p>Notice your breathing. It has probably slowed down a little.</p><button class="btn ghost sm" type="button">Go again</button></div>`;
+      $('button', el).addEventListener('click', () => { i = 0; render(); });
+      return;
+    }
+    const g = GROUND[i];
+    el.innerHTML = `<div class="ground"><div class="g-steps">${GROUND.map((_, j) => `<i class="${j <= i ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="row" style="gap:14px;flex-wrap:nowrap"><span class="g-num">${g.n}</span><span class="g-prompt">${g.p.charAt(0).toUpperCase() + g.p.slice(1)}</span></div>
+      <p class="small muted">${g.h}</p>
+      <div class="g-dots">${Array.from({ length: g.n }, (_, j) => `<button class="g-dot" type="button" aria-pressed="false" aria-label="Noticed ${j + 1} of ${g.n}"></button>`).join('')}</div>
+      <button class="btn ghost sm g-next" type="button">Next</button></div>`;
+    const dots = $$('.g-dot', el);
+    dots.forEach(d => d.addEventListener('click', () => {
+      d.setAttribute('aria-pressed', d.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      if (dots.every(x => x.getAttribute('aria-pressed') === 'true')) timer = setTimeout(() => { i++; render(); }, 650);
+    }));
+    $('.g-next', el).addEventListener('click', () => { i++; render(); });
+  }
+  render();
+  return () => clearTimeout(timer);
+}
+makeGround($('#groundTool'));
+
+/* ── SOS guided flows ── */
+const FLOWS = {
+  anger: { track: 'ember', eyebrow: 'Right now · Anger', title: 'Cool down before you act', steps: [
+    { h: 'Stop. Hands still, mouth closed.', p: '<p>For the next few minutes, don’t send, say or hit anything. Nothing that needs saying has to be said in the next five minutes.</p><p>If someone’s with you, say: <q>I need a few minutes. I’ll come back.</q></p>' },
+    { h: 'Put some distance in.', p: '<p>Leave the room, step outside, or put the phone face down and walk away from it. Unclench your jaw and your hands. Let your shoulders drop.</p>' },
+    { h: 'Slow your body down.', p: '<p>Breathe out for longer than you breathe in. Five rounds. If you can, splash cold water on your face or hold something cold: cold on the face triggers a reflex that slows the heart.</p>', w: 'pacer:exhale:5' },
+    { h: 'Name what you feel.', p: '<p>Putting a feeling into words turns down the brain’s alarm response. Anger often sits on top of something softer.</p>', w: 'name' },
+    { h: 'Check the story.', p: '<p>Anger runs on a story about why this happened. Is there another explanation? Will this matter in a week? In a year?</p>', w: 'story' },
+    { h: 'Choose your move.', p: '<p>With a cooler head, pick one. If you’re still above 6 out of 10, take a full 20-minute break before anything else.</p>', w: 'move' }
+  ]},
+  anxiety: { track: 'tide', eyebrow: 'Right now · Anxiety', title: 'Come back to the present', steps: [
+    { h: 'Name it.', p: '<p>This is anxiety. It’s uncomfortable, not dangerous. It rises, peaks and falls, even if you do nothing.</p><p>Say it to yourself: <q>This is anxiety, and it will pass.</q></p>' },
+    { h: 'Breathe out slowly.', p: '<p>In through the nose, a short extra sip of air on top, then a long, slow breath out through the mouth. Five rounds.</p>', w: 'pacer:sigh:5' },
+    { h: 'Find five, four, three, two, one.', p: '<p>Pull your attention out of your head and into the room. Tap a dot for each thing you notice.</p>', w: 'ground' },
+    { h: 'Unhook from the thought.', p: '<p>Write down what your mind is telling you, then read it back with a few words in front. A thought is something happening in your mind, not a fact about the world.</p>', w: 'defuse' },
+    { h: 'One next step.', p: '<p>Can you do anything about this in the next hour? If yes, choose the smallest step. If not, park it for your worry time and come back to it then.</p>', w: 'nextstep' }
+  ]},
+  stuck: { track: 'moss', eyebrow: 'Right now · Discipline', title: 'Get moving in five minutes', steps: [
+    { h: 'Shrink it.', p: '<p>What’s the two-minute version? Not “write the essay” but “open the document and write one rough sentence”. Not “go to the gym” but “put your trainers on”.</p>', w: 'shrink' },
+    { h: 'Clear one obstacle.', p: '<p>Make starting easier than not starting. Pick at least one.</p>', w: 'obstacles' },
+    { h: 'Do five minutes.', p: '<p>Promise yourself five minutes, no more. You’re allowed to stop when the timer ends. Often you’ll want to keep going.</p>', w: 'timer:300' },
+    { h: 'Count it.', p: '<p>You started, and that counts. Log it so the win is visible. A record of small wins is what turns into a habit.</p>', w: 'markwin' }
+  ]}
+};
+
+const modal = $('#sos'), body = $('#sosBody');
+let flow = null, stepI = 0, cleanups = [], lastFocus = null, ctx = {};
+const runCleanups = () => { cleanups.forEach(f => { try { f(); } catch (e) {} }); cleanups = []; };
+
+function chipToggle(container) {
+  $$('.chip', container).forEach(c => c.addEventListener('click', () => c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')));
+}
+function miniStatement(el) {
+  el.insertAdjacentHTML('beforeend', `<div class="field"><label for="msWhen">When you…</label><input type="text" id="msWhen" placeholder="raise your voice at me"></div>
+    <div class="field"><label for="msFeel">I feel…</label><input type="text" id="msFeel" placeholder="defensive and small"></div>
+    <div class="field"><label for="msAsk">Could we…</label><input type="text" id="msAsk" placeholder="take a break and talk at eight"></div>
+    <p class="quote-out" id="msOut" aria-live="polite"></p>`);
+  const upd = () => { $('#msOut', el).textContent = statement($('#msWhen', el).value, $('#msFeel', el).value, '', $('#msAsk', el).value); };
+  $$('input', el).forEach(i => i.addEventListener('input', upd)); upd();
+}
+function statement(when, feel, why, ask) {
+  const w = trimEnd(when) || '___', f = trimEnd(feel) || '___', y = trimEnd(why), a = trimEnd(ask) || '___';
+  return `When you ${w}, I feel ${f}${y ? ` because ${y}` : ''}. Could we ${a}?`;
+}
+
+function mountWidget(spec, el) {
+  const [type, a, b] = spec.split(':');
+  if (type === 'pacer') {
+    el.innerHTML = pacerMarkup(a, true);
+    const p = makePacer(el, { pattern: a, cycles: Number(b) || 0 });
+    return p.stop;
+  }
+  if (type === 'timer') return makeTimer(el, Number(a) || 300);
+  if (type === 'ground') return makeGround(el);
+  if (type === 'name') {
+    el.innerHTML = `<div class="field"><label for="snWhy">I’m angry because…</label><input type="text" id="snWhy" placeholder="they cancelled on me again"></div>
+      <div class="field"><span class="flabel">Underneath, I also feel…</span><div class="chips">${['hurt', 'disrespected', 'embarrassed', 'scared', 'ignored', 'powerless', 'exhausted', 'let down'].map(x => `<button class="chip" type="button" aria-pressed="false">${x}</button>`).join('')}</div></div>
+      <div class="field"><label for="snNeed">What I actually need is…</label><input type="text" id="snNeed" placeholder="to be able to count on plans"></div>`;
+    chipToggle(el); return null;
+  }
+  if (type === 'story') {
+    el.innerHTML = `<div class="field"><label for="ssAlt">Another way to see it</label><textarea id="ssAlt" placeholder="Maybe they’re overwhelmed too. Maybe they didn’t realise how much it mattered to me."></textarea></div>`;
+    return null;
+  }
+  if (type === 'move') {
+    el.innerHTML = `<div class="chips" role="group" aria-label="Your move"><button class="chip" type="button" data-m="let" aria-pressed="false">Let it go</button><button class="chip" type="button" data-m="later" aria-pressed="false">Deal with it later</button><button class="chip" type="button" data-m="say" aria-pressed="false">Say it straight</button></div><div class="step-w" id="moveOut"></div>`;
+    const out = $('#moveOut', el);
+    $$('.chip', el).forEach(c => c.addEventListener('click', () => {
+      $$('.chip', el).forEach(x => x.setAttribute('aria-pressed', String(x === c)));
+      const m = c.dataset.m;
+      if (m === 'let') out.innerHTML = '<p>Decide it isn’t worth your peace, then actually drop it: no replaying, no rehearsing what you should have said. If it comes back, you can choose again.</p>';
+      if (m === 'later') out.innerHTML = '<div class="field"><label for="mvWhen">When will you raise it, when you’re both calm?</label><input type="text" id="mvWhen" placeholder="Tonight after dinner"></div><p class="small muted">Tell them you want to talk and when. Then stick to it.</p>';
+      if (m === 'say') { out.innerHTML = ''; miniStatement(out); }
+    }));
+    return null;
+  }
+  if (type === 'defuse') {
+    el.innerHTML = `<div class="field"><label for="dfIn">My mind is telling me…</label><input type="text" id="dfIn" placeholder="I’m going to embarrass myself"></div><div class="defuse-out" id="dfOut" aria-live="polite"></div>`;
+    const inp = $('#dfIn', el), out = $('#dfOut', el);
+    if (ctx.worry) inp.value = ctx.worry;
+    const upd = () => {
+      const v = trimEnd(inp.value); ctx.worry = v;
+      out.innerHTML = v ? `<p>${esc(v)}.</p><p>I’m having the thought that ${esc(lowerFirst(v))}.</p><p>I notice I’m having the thought that ${esc(lowerFirst(v))}.</p>` : '';
+    };
+    inp.addEventListener('input', upd); upd();
+    return null;
+  }
+  if (type === 'nextstep') {
+    el.innerHTML = `<div class="field"><label for="nsStep">The smallest step I can take in the next hour</label><input type="text" id="nsStep" placeholder="Write down one question to ask"></div>
+      <div class="row"><button class="btn t sm" type="button" id="nsAdd">Add to my action list</button><button class="btn ghost sm" type="button" id="nsPark">Park this worry instead</button></div><p class="small" id="nsMsg" aria-live="polite"></p>`;
+    $('#nsAdd', el).addEventListener('click', () => {
+      const step = $('#nsStep', el).value.trim(), msg = $('#nsMsg', el);
+      if (!step) { $('#nsStep', el).focus(); msg.textContent = 'Write the step first.'; return; }
+      S.worries.push({ id: uid(), text: ctx.worry || 'From a check-in', step, when: 'Within the hour', type: 'act', d: dkey() }); save(); renderWorries();
+      msg.textContent = 'Added to your action list in the Worry sorter.';
+      $('#nsAdd', el).disabled = true; $('#nsPark', el).disabled = true;
+    });
+    $('#nsPark', el).addEventListener('click', () => {
+      const msg = $('#nsMsg', el);
+      if (!ctx.worry) { msg.textContent = 'Write the worry in the previous step first, or use the Worry sorter on the page.'; return; }
+      S.worries.push({ id: uid(), text: ctx.worry, type: 'park', d: dkey() }); save(); renderWorries();
+      msg.textContent = `Parked. It’ll be waiting for you at ${S.worryTime}.`;
+      $('#nsPark', el).disabled = true; $('#nsAdd', el).disabled = true;
+    });
+    return null;
+  }
+  if (type === 'shrink') {
+    el.innerHTML = `<div class="field"><label for="skIn">The two-minute version is…</label><input type="text" id="skIn" placeholder="Open the doc and write one rough sentence"></div>`;
+    const inp = $('#skIn', el); if (ctx.tiny) inp.value = ctx.tiny;
+    inp.addEventListener('input', () => { ctx.tiny = inp.value.trim(); });
+    return null;
+  }
+  if (type === 'obstacles') {
+    el.innerHTML = `<div class="chips">${['Phone in another room', 'Notifications off', 'Opened what I need', 'Water within reach', 'Told someone I’m starting', 'Closed the other tabs'].map(x => `<button class="chip" type="button" aria-pressed="false">${x}</button>`).join('')}</div>`;
+    chipToggle(el); return null;
+  }
+  if (type === 'markwin') {
+    el.innerHTML = `<div class="row"><button class="btn t" type="button" id="winBtn">Log this start</button></div><p class="small" id="winMsg" aria-live="polite"></p><p class="small"><button class="linkbtn" type="button" id="winHabit">Turn it into a daily habit</button></p>`;
+    $('#winBtn', el).addEventListener('click', e => {
+      S.starts.push(dkey()); save(); renderStats();
+      const since = dkey(addDays(new Date(), -6));
+      const n = S.starts.filter(d => d >= since).length;
+      $('#winMsg', el).textContent = `Logged. That’s ${n} start${n === 1 ? '' : 's'} in the last 7 days.`;
+      e.currentTarget.disabled = true;
+    });
+    $('#winHabit', el).addEventListener('click', () => {
+      const tiny = ctx.tiny; closeSOS(false);
+      if (tiny) { $('#hbAction').value = tiny; updateHabitPreview(); }
+      $('#habits').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+      setTimeout(() => $('#hbCue').focus({ preventScroll: true }), 400);
+    });
+    return null;
+  }
+  return null;
+}
+
+function openSOS(key) {
+  flow = FLOWS[key]; stepI = 0; ctx = {}; lastFocus = document.activeElement;
+  modal.dataset.track = flow.track;
+  $('#sosEyebrow').textContent = flow.eyebrow; $('#sosTitle').textContent = flow.title;
+  modal.hidden = false; document.body.classList.add('locked');
+  renderStep(); $('#sosNext').focus();
+}
+function closeSOS(restoreFocus = true) {
+  runCleanups(); modal.hidden = true; document.body.classList.remove('locked');
+  if (restoreFocus && lastFocus) lastFocus.focus();
+}
+function renderStep() {
+  runCleanups();
+  const s = flow.steps[stepI], last = stepI === flow.steps.length - 1;
+  $('#sosProgress').innerHTML = flow.steps.map((_, j) => `<i class="${j <= stepI ? 'on' : ''}"></i>`).join('');
+  body.innerHTML = `<p class="step-n">Step ${stepI + 1} of ${flow.steps.length}</p><h3>${s.h}</h3><div class="step-p">${s.p}</div><div class="step-w"></div>`;
+  if (s.w) { const c = mountWidget(s.w, $('.step-w', body)); if (c) cleanups.push(c); }
+  $('#sosBack').disabled = stepI === 0;
+  $('#sosNext').textContent = last ? 'Finish' : 'Next';
+  body.scrollTop = 0;
+}
+$$('[data-sos]').forEach(b => b.addEventListener('click', () => openSOS(b.dataset.sos)));
+$('#sosClose').addEventListener('click', () => closeSOS());
+$('#sosBack').addEventListener('click', () => { if (stepI > 0) { stepI--; renderStep(); } });
+$('#sosNext').addEventListener('click', () => {
+  if (stepI < flow.steps.length - 1) { stepI++; renderStep(); return; }
+  closeSOS(); toast('Well done. Come back any time.');
+});
+modal.addEventListener('click', e => { if (e.target === modal) closeSOS(); });
+document.addEventListener('keydown', e => {
+  if (modal.hidden) return;
+  if (e.key === 'Escape') { closeSOS(); return; }
+  if (e.key === 'Tab') {
+    const f = $$('button:not([disabled]), input, textarea, select, a[href]', modal).filter(x => x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], lastEl = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
+    else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
+  }
+});
+
+/* ── anger: thermometer ── */
+const ZONES = [
+  { max: 3, z: 'ok', name: 'Green: annoyed', txt: 'You can still think clearly. This is the time to talk it through, set a boundary or solve the problem.' },
+  { max: 6, z: 'warn', name: 'Amber: heated', txt: 'Your body is gearing up. Pause before you reply. Breathe out slowly, name what you feel and check the story. Keep your voice low and slow.' },
+  { max: 8, z: 'bad', name: 'Red: hot', txt: 'Thinking narrows and words get sharp. Take a time-out now: say you’ll come back, leave, and cool your body down. Don’t send messages.' },
+  { max: 10, z: 'danger', name: 'Danger: boiling', txt: 'You could say or do something you can’t take back. Leave safely, right now. Don’t drive. If anyone could get hurt, call emergency services.' }
+];
+(function initThermo() {
+  const ticks = $('#thTicks'); let h = '';
+  for (let v = 0; v <= 10; v++) {
+    const y = 210 - v * 20;
+    h += `<line class="th-tick" x1="54" x2="${v % 5 === 0 ? 62 : 58}" y1="${y}" y2="${y}"/>`;
+    if (v % 2 === 0) h += `<text class="th-num" x="66" y="${y + 4}">${v}</text>`;
+  }
+  ticks.innerHTML = h;
+  const range = $('#thermoRange'), fill = $('#thFill');
+  const upd = () => {
+    const v = Number(range.value), zone = ZONES.find(z => v <= z.max), y = 210 - v * 20;
+    $('#thermoOut').textContent = v;
+    fill.setAttribute('y', String(y)); fill.setAttribute('height', String(262 - y));
+    fill.setAttribute('class', `th-fill z-${zone.z}`);
+    $('#zoneBox').dataset.z = zone.z; $('#zoneName').textContent = zone.name; $('#zoneText').textContent = zone.txt;
+  };
+  range.addEventListener('input', upd); upd();
+})();
+
+/* ── anger: warning signs ── */
+const SIGNS = {
+  Body: ['Jaw or fists clench', 'Face gets hot', 'Heart pounds', 'Fast, shallow breathing', 'Shoulders tense', 'Voice gets louder'],
+  Thoughts: ['“They did it on purpose”', '“Always” and “never”', 'Replaying what they said', 'Planning a comeback', '“I don’t care any more”'],
+  Actions: ['Pacing or fidgeting', 'Interrupting', 'Swearing', 'Slamming things', 'Going cold and silent', 'Typing fast replies']
+};
+function renderSigns() {
+  $('#signsBox').innerHTML = Object.entries(SIGNS).map(([g, list]) => `<div class="sign-group"><span class="flabel">${g}</span><div class="chips">${list.map(s => `<button class="chip" type="button" data-sign="${esc(s)}" aria-pressed="${S.signs.includes(s)}">${esc(s)}</button>`).join('')}</div></div>`).join('');
+  const n = S.signs.length;
+  $('#signsSum').textContent = n ? `You’ve picked ${n} sign${n === 1 ? '' : 's'}. When you notice two of them together, you’re probably at 4 or more. That’s your cue to pause.` : 'Tap the signs you recognise in yourself. Most people have three or four reliable ones.';
+}
+$('#signsBox').addEventListener('click', e => {
+  const c = e.target.closest('[data-sign]'); if (!c) return;
+  const s = c.dataset.sign;
+  S.signs = S.signs.includes(s) ? S.signs.filter(x => x !== s) : [...S.signs, s];
+  save(); renderSigns();
+  const again = $(`[data-sign="${CSS.escape(s)}"]`); if (again) again.focus();
+});
+
+/* ── anger: time-out plan (autosave) ── */
+function loadTimeout() { $$('[data-to]').forEach(i => { i.value = S.timeout[i.dataset.to] || ''; }); }
+let toTimer = 0;
+$$('[data-to]').forEach(i => i.addEventListener('input', () => {
+  S.timeout[i.dataset.to] = i.value; clearTimeout(toTimer);
+  toTimer = setTimeout(() => { save(); $('#toSaved').textContent = 'Saved on this device'; }, 400);
+}));
+
+/* ── anger: story ── */
+$('#stBelief').addEventListener('input', e => { $('#stBeliefOut').textContent = `${e.target.value}%`; });
+
+/* ── anger: say it straight ── */
+const isFields = ['#isWhen', '#isFeel', '#isWhy', '#isAsk'];
+const updIs = () => { $('#isOut').textContent = statement(...isFields.map(f => $(f).value)); };
+isFields.forEach(f => $(f).addEventListener('input', updIs)); updIs();
+$('#isCopy').addEventListener('click', () => copyText($('#isOut').textContent));
+
+/* ── anxiety: worry sorter ── */
+function renderWorries() {
+  const acts = S.worries.filter(w => w.type === 'act'), parked = S.worries.filter(w => w.type === 'park');
+  $('#actList').innerHTML = acts.length ? acts.map(w => `<li class="${w.done ? 'done' : ''}"><input type="checkbox" data-wdone="${w.id}" ${w.done ? 'checked' : ''} aria-label="Done"><span class="grow">${esc(w.step || w.text)}${w.step ? `<span class="sub">${esc(w.text)}${w.when ? ` · ${esc(w.when)}` : ''}</span>` : ''}</span><button class="icon-btn" type="button" data-wdel="${w.id}" aria-label="Remove">✕</button></li>`).join('') : '<li class="empty">Nothing yet. Worries you can act on land here as a first step.</li>';
+  $('#parkList').innerHTML = parked.length ? parked.map(w => `<li><span class="grow">${esc(w.text)}</span><button class="btn ghost sm" type="button" data-wdel="${w.id}">Let it go</button></li>`).join('') : '<li class="empty">No parked worries.</li>';
+  $('#worryTime').value = S.worryTime;
+  $('#worryTimeNote').textContent = `Spend 15 minutes on these at ${S.worryTime}, same place each day. When one pops up earlier, tell yourself: not now, at ${S.worryTime}. By then, many won’t feel worth the time.`;
+}
+$('#worryTime').addEventListener('change', e => { S.worryTime = e.target.value || '18:00'; save(); renderWorries(); });
+['#actList', '#parkList'].forEach(sel => $(sel).addEventListener('click', e => {
+  const del = e.target.closest('[data-wdel]'), done = e.target.closest('[data-wdone]');
+  if (del) { S.worries = S.worries.filter(w => w.id !== del.dataset.wdel); save(); renderWorries(); }
+  if (done) { const w = S.worries.find(x => x.id === done.dataset.wdone); if (w) { w.done = done.checked; save(); renderWorries(); } }
+}));
+$('#worrySort').addEventListener('click', () => {
+  const text = $('#worryIn').value.trim(), box = $('#worryFlow');
+  if (!text) { $('#worryIn').focus(); return; }
+  const q2 = kind => {
+    box.innerHTML = `<div class="qbox"><p>Can you do anything about it?</p><div class="row"><button class="btn ghost sm" type="button" data-a="yes">Yes, something</button><button class="btn ghost sm" type="button" data-a="no">No, not really</button></div></div>`;
+    $$('[data-a]', box).forEach(b => b.addEventListener('click', () => b.dataset.a === 'yes' ? act() : park(kind)));
+  };
+  const act = () => {
+    box.innerHTML = `<div class="qbox"><p>Then it’s a problem to solve, not a worry to circle.</p><div class="field"><label for="wStep">First small step</label><input type="text" id="wStep" placeholder="Write three answers to likely questions"></div><div class="field"><label for="wWhen">When</label><input type="text" id="wWhen" placeholder="Tomorrow, 8pm"></div><div class="row"><button class="btn t sm" type="button" id="wAdd">Add to my list</button></div></div>`;
+    $('#wStep').focus();
+    $('#wAdd').addEventListener('click', () => {
+      S.worries.push({ id: uid(), text, step: $('#wStep').value.trim(), when: $('#wWhen').value.trim(), type: 'act', d: dkey() });
+      save(); renderWorries(); box.innerHTML = ''; $('#worryIn').value = ''; toast('Added to your list');
+    });
+  };
+  const park = kind => {
+    box.innerHTML = `<div class="qbox"><p>${kind === 'whatif' ? 'A “what if” you can’t act on. Solving it isn’t possible, so circling it won’t help.' : 'Something you can’t change right now.'}</p><p style="font-weight:400">Park it for worry time. In between, when it shows up, notice it, name it as a worry and bring your attention back to what you’re doing.</p><div class="row"><button class="btn t sm" type="button" id="wPark">Park it</button></div></div>`;
+    $('#wPark').addEventListener('click', () => {
+      S.worries.push({ id: uid(), text, type: 'park', d: dkey() });
+      save(); renderWorries(); box.innerHTML = ''; $('#worryIn').value = ''; toast(`Parked until ${S.worryTime}`);
+    });
+  };
+  box.innerHTML = `<div class="qbox"><p>Is this a problem happening now, or a “what if” about the future?</p><div class="row"><button class="btn ghost sm" type="button" data-k="now">Happening now</button><button class="btn ghost sm" type="button" data-k="whatif">A “what if”</button></div></div>`;
+  $$('[data-k]', box).forEach(b => b.addEventListener('click', () => q2(b.dataset.k)));
+});
+
+/* ── anxiety: thought check ── */
+const TRAPS = [
+  ['All-or-nothing', '“If it’s not perfect, it’s a failure.”'],
+  ['Catastrophising', '“This is going to be a disaster.”'],
+  ['Fortune telling', '“I just know it’ll go badly.”'],
+  ['Mind reading', '“They think I’m an idiot.”'],
+  ['Overgeneralising', '“This always happens. I never get it right.”'],
+  ['Labelling', '“I’m useless.” “He’s an idiot.”'],
+  ['Should statements', '“They should know better.” “I must not mess up.”'],
+  ['Blaming', '“It’s all my fault.” or “It’s all their fault.”'],
+  ['Emotional reasoning', '“I feel scared, so it must be dangerous.”'],
+  ['Mental filter', 'Seeing only the one bad thing in a good day.'],
+  ['Discounting positives', '“That didn’t count. Anyone could have done it.”']
+];
+$('#trapChips').innerHTML = TRAPS.map(([n, ex]) => `<button class="chip" type="button" data-trap="${esc(n)}" aria-pressed="false" title="${esc(ex)}">${esc(n)}</button>`).join('');
+$('#trapDefs').innerHTML = TRAPS.map(([n, ex]) => `<dt>${esc(n)}</dt><dd>${esc(ex)}</dd>`).join('');
+chipToggle($('#trapChips'));
+[['#tcBefore', '#tcBeforeOut'], ['#tcAfter', '#tcAfterOut'], ['#ladFear', '#ladFearOut'], ['#urgeBefore', '#urgeBeforeOut'], ['#urgeNow', '#urgeNowOut']].forEach(([i, o]) => $(i).addEventListener('input', e => { $(o).textContent = e.target.value; }));
+function renderThoughts() {
+  $('#tcList').innerHTML = S.thoughts.length ? S.thoughts.slice().reverse().map(t => `<li><span class="grow"><strong>${esc(t.thought)}</strong>${t.balanced ? `<span class="sub">→ ${esc(t.balanced)}</span>` : ''}<span class="sub">${esc(fmtDay(t.d))}${t.traps.length ? ` · ${esc(t.traps.join(', '))}` : ''}</span></span><span class="drop" title="Feeling strength before and after">${Number(t.before) || 0} → ${Number(t.after) || 0}</span><button class="icon-btn" type="button" data-tdel="${t.id}" aria-label="Delete">✕</button></li>`).join('') : '<li class="empty">Your saved thought checks will appear here.</li>';
+}
+$('#tcList').addEventListener('click', e => { const b = e.target.closest('[data-tdel]'); if (!b) return; S.thoughts = S.thoughts.filter(t => t.id !== b.dataset.tdel); save(); renderThoughts(); renderStats(); });
+$('#tcForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const thought = $('#tcThought').value.trim(); if (!thought) return;
+  S.thoughts.push({ id: uid(), d: dkey(), situation: $('#tcSit').value.trim(), emotion: $('#tcEmo').value.trim(), thought,
+    before: Number($('#tcBefore').value), after: Number($('#tcAfter').value),
+    traps: $$('#trapChips .chip[aria-pressed="true"]').map(c => c.dataset.trap),
+    forE: $('#tcFor').value.trim(), againstE: $('#tcAgainst').value.trim(), balanced: $('#tcBalanced').value.trim() });
+  save(); renderThoughts(); renderStats();
+  e.target.reset(); $$('#trapChips .chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+  $('#tcBeforeOut').textContent = '70'; $('#tcAfterOut').textContent = '40';
+  toast('Thought check saved');
+});
+
+/* ── anxiety: fear ladder ── */
+if (!Array.isArray(S.ladder)) {
+  S.ladder = [['Say good morning to a neighbour', 2], ['Ask a shop assistant where something is', 3], ['Phone to book an appointment instead of booking online', 5], ['Ask a question in a meeting or class', 6], ['Start a conversation with someone new at an event', 8], ['Give a short toast or presentation', 9]]
+    .map(([text, fear]) => ({ id: uid(), text, fear, done: false, example: true }));
+}
+function renderLadder() {
+  const items = [...S.ladder].sort((a, b) => b.fear - a.fear);
+  const next = [...items].reverse().find(i => !i.done);
+  $('#ladderEx').hidden = !S.ladder.some(i => i.example);
+  $('#ladderList').innerHTML = items.length ? items.map(i => {
+    const isNext = next && i.id === next.id;
+    return `<li class="rung ${i.done ? 'done' : ''} ${isNext ? 'next' : ''}"><span class="rung-fear" title="Fear ${i.fear} out of 10">${i.fear}<span class="meter"><i style="width:${i.fear * 10}%"></i></span></span><span class="rung-text">${esc(i.text)} ${isNext ? '<span class="tag">Next step</span>' : ''}</span><button class="icon-btn" type="button" data-lact="done" data-id="${i.id}" aria-pressed="${!!i.done}" aria-label="Mark done">✓</button><button class="icon-btn" type="button" data-lact="del" data-id="${i.id}" aria-label="Remove step">✕</button></li>`;
+  }).join('') : '<li class="rung-empty">Add the first step below. Aim for 6 to 10 steps from easy to hard.</li>';
+}
+$('#ladderList').addEventListener('click', e => {
+  const b = e.target.closest('[data-lact]'); if (!b) return;
+  if (b.dataset.lact === 'del') S.ladder = S.ladder.filter(i => i.id !== b.dataset.id);
+  else { const it = S.ladder.find(i => i.id === b.dataset.id); if (it) it.done = !it.done; }
+  save(); renderLadder();
+});
+$('#ladderClear').addEventListener('click', () => { S.ladder = S.ladder.filter(i => !i.example); save(); renderLadder(); $('#ladText').focus(); });
+$('#ladderForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = $('#ladText').value.trim(); if (!text) return;
+  S.ladder.push({ id: uid(), text, fear: Number($('#ladFear').value), done: false });
+  save(); renderLadder(); $('#ladText').value = ''; $('#ladText').focus();
+});
+
+/* ── discipline: habits ── */
+// The example habit is rebuilt on every load so it always reads as "two weeks in", whatever today is.
+function exampleHabit() {
+  const start = dkey(addDays(new Date(), -13)), days = {};
+  [0, 1, 2, 3, 5, 6, 7, 8, 9, 11, 12].forEach(i => { days[dkey(addDays(parseKey(start), i))] = 1; });
+  return { id: 'example', cue: 'pour my morning coffee', action: 'write three lines in a journal', place: 'at the kitchen table', easier: 'Leave the notebook and pen next to the kettle.', start, days, example: true };
+}
+if (!Array.isArray(S.habits)) S.habits = [exampleHabit()];
+else S.habits = S.habits.map(h => h.example ? exampleHabit() : h);
+const habitSentence = (cue, action, place) => `After I ${trimEnd(cue) || '___'}, I will ${trimEnd(action) || '___'}${trimEnd(place) ? ` ${trimEnd(place)}` : ''}.`;
+function updateHabitPreview() { $('#hbPreview').textContent = habitSentence($('#hbCue').value, $('#hbAction').value, $('#hbPlace').value); }
+['#hbCue', '#hbAction', '#hbPlace'].forEach(s => $(s).addEventListener('input', updateHabitPreview)); updateHabitPreview();
+function habitStats(h) {
+  const today = dkey(), y1 = dkey(addDays(new Date(), -1)), y2 = dkey(addDays(new Date(), -2));
+  let streak = 0, d = h.days[today] ? new Date() : addDays(new Date(), -1);
+  while (dkey(d) >= h.start && h.days[dkey(d)]) { streak++; d = addDays(d, -1); }
+  const total = Object.keys(h.days).filter(k => k >= h.start && k <= today).length;
+  const dayN = dayDiff(h.start, today) + 1;
+  let st;
+  if (h.days[today]) st = ['ok', 'Done today'];
+  else if (y2 >= h.start && !h.days[y1] && !h.days[y2]) st = ['bad', 'Missed two days. Restart today with the two-minute version.'];
+  else if (y1 >= h.start && !h.days[y1]) st = ['warn', 'Missed yesterday. Never miss twice: do it today.'];
+  else st = ['idle', 'Not done yet today'];
+  return { streak, total, dayN, st };
+}
+function renderHabits() {
+  const today = dkey();
+  $('#habitList').innerHTML = S.habits.map(h => {
+    const { streak, total, dayN, st } = habitStats(h);
+    const cells = Math.max(66, Math.ceil(dayN / 11) * 11);
+    let grid = '';
+    for (let i = 0; i < cells; i++) {
+      const k = dkey(addDays(parseKey(h.start), i)), future = k > today, done = !!h.days[k];
+      const cls = [done ? 'done' : (!future && k !== today ? 'miss' : ''), k === today ? 'today' : ''].join(' ');
+      grid += `<button class="hcell ${cls}" type="button" data-h="${h.id}" data-k="${k}" ${future ? 'disabled' : ''} aria-pressed="${done}" aria-label="Day ${i + 1}, ${fmtDay(k)}${done ? ', done' : ''}" title="Day ${i + 1} · ${fmtDay(k)}"></button>`;
+    }
+    return `<div class="habit-card"><div class="habit-top"><div class="grow"><p class="habit-sent">${esc(habitSentence(h.cue, h.action, h.place))} ${h.example ? '<span class="tag">Example</span>' : ''}</p>${h.easier ? `<p class="small muted">${esc(h.easier)}</p>` : ''}</div><button class="btn ghost sm" type="button" data-hdel="${h.id}">Delete</button></div>
+      <div class="row" style="justify-content:space-between"><span class="status" data-s="${st[0]}">${st[1]}</span><button class="btn t sm" type="button" data-htoday="${h.id}" aria-pressed="${!!h.days[today]}">${h.days[today] ? 'Undo today' : 'Mark today done'}</button></div>
+      <div class="habit-meta"><span>Day <b>${dayN}</b> of 66</span><span>Current streak <b>${streak}</b></span><span>Days done <b>${total}</b> of ${dayN}</span></div>
+      <div class="hgrid">${grid}</div>
+      <div class="hlegend"><span><i style="background:var(--t);border-color:var(--t)"></i>Done</span><span><i style="background:var(--sunk)"></i>Missed</span><span><i style="outline:2px solid var(--ink);outline-offset:1px"></i>Today</span></div></div>`;
+  }).join('') || '<p class="muted small">No habits yet. Write one above and start today.</p>';
+}
+$('#habitList').addEventListener('click', e => {
+  const cell = e.target.closest('[data-k]'), tod = e.target.closest('[data-htoday]'), del = e.target.closest('[data-hdel]');
+  const toggle = (id, k) => { const h = S.habits.find(x => x.id === id); if (!h) return; if (h.days[k]) delete h.days[k]; else h.days[k] = 1; save(); renderHabits(); };
+  if (cell) { toggle(cell.dataset.h, cell.dataset.k); const again = $(`[data-h="${cell.dataset.h}"][data-k="${cell.dataset.k}"]`); if (again) again.focus(); }
+  if (tod) { toggle(tod.dataset.htoday, dkey()); const again = $(`[data-htoday="${tod.dataset.htoday}"]`); if (again) again.focus(); }
+  if (del) confirmTap(del, 'Tap again to delete', () => { S.habits = S.habits.filter(h => h.id !== del.dataset.hdel); save(); renderHabits(); });
+});
+$('#hbForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const cue = $('#hbCue').value.trim(), action = $('#hbAction').value.trim(); if (!cue || !action) return;
+  S.habits = S.habits.filter(h => !h.example);
+  S.habits.unshift({ id: uid(), cue, action, place: $('#hbPlace').value.trim(), easier: $('#hbEasy').value.trim(), start: dkey(), days: {} });
+  save(); renderHabits(); e.target.reset(); updateHabitPreview(); toast('Habit started. Day 1 is today.');
+});
+
+/* ── discipline: urge surfing ── */
+const URGE_PROMPTS = [
+  'Notice the urge. Where is it in your body: chest, hands, stomach, mouth?',
+  'Describe it like a scientist. Tight, hot, buzzing, pulling?',
+  'Breathe into that spot. You don’t have to do anything about it.',
+  'Is the wave rising, cresting or falling right now?',
+  'Urges are temporary. Every one you ride out makes the next one weaker.',
+  'Still here, still choosing. Keep watching it.',
+  'Notice any thoughts that say “just this once”. Let them pass by too.'
+];
+const canvas = $('#waveCanvas'), cx = canvas.getContext('2d');
+let urge = { running: false, start: 0, dur: 600, raf: 0, iv: 0, len: 10 };
+function drawWave(now = performance.now()) {
+  const dpr = Math.min(2, window.devicePixelRatio || 1), w = canvas.clientWidth, h = canvas.clientHeight;
+  if (!w || !h) return;
+  if (canvas.width !== Math.round(w * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+  cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, w, h);
+  const css = getComputedStyle(document.documentElement), col = css.getPropertyValue('--moss').trim() || '#169c7f';
+  const p = urge.running ? Math.min(1, (Date.now() - urge.start) / (urge.dur * 1000)) : 0;
+  const pp = p < .35 ? p / .35 * .5 : .5 + (p - .35) / .65 * .5;
+  const amp = urge.running ? 8 + 40 * Math.sin(Math.PI * pp) : 10;
+  const phase = reduceMotion ? 0 : now / 900;
+  [[.35, 1.4, 0], [.6, 1, 1.7], [1, .8, 3.1]].forEach(([alpha, k, off], li) => {
+    cx.beginPath();
+    for (let x = 0; x <= w; x += 4) {
+      const y = h * .62 - amp * (li === 2 ? 1 : .7) * Math.sin(x / w * Math.PI * 2 * k + phase + off) * Math.sin(Math.PI * Math.min(1, Math.max(0, x / w)));
+      x === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+    }
+    cx.lineTo(w, h); cx.lineTo(0, h); cx.closePath();
+    cx.globalAlpha = alpha * .35; cx.fillStyle = col; cx.fill();
+    cx.globalAlpha = alpha; cx.strokeStyle = col; cx.lineWidth = li === 2 ? 2 : 1.25; cx.stroke();
+  });
+  cx.globalAlpha = 1;
+  if (urge.running) {
+    const x = Math.max(6, Math.min(w - 6, p * w));
+    const y = h * .62 - amp * Math.sin(x / w * Math.PI * 2 * .8 + phase + 3.1) * Math.sin(Math.PI * (x / w));
+    cx.beginPath(); cx.arc(x, y, 6, 0, Math.PI * 2); cx.fillStyle = col; cx.fill();
+    cx.lineWidth = 2; cx.strokeStyle = css.getPropertyValue('--surface').trim() || '#fff'; cx.stroke();
+  }
+}
+function urgeLoop(now) { drawWave(now); if (urge.running) urge.raf = requestAnimationFrame(urgeLoop); }
+function urgeClock() {
+  const left = urge.running ? Math.max(0, urge.dur - Math.floor((Date.now() - urge.start) / 1000)) : urge.len * 60;
+  $('#urgeClock').textContent = `${Math.floor(left / 60)}:${pad(left % 60)}`;
+  return left;
+}
+function urgeTick() {
+  const left = urgeClock(), el = Math.floor((Date.now() - urge.start) / 1000);
+  const idx = Math.min(URGE_PROMPTS.length - 1, Math.floor(el / Math.max(30, urge.dur / URGE_PROMPTS.length)));
+  if ($('#urgePrompt').textContent !== URGE_PROMPTS[idx]) $('#urgePrompt').textContent = URGE_PROMPTS[idx];
+  if (left <= 0) urgeEnd(true);
+}
+function urgeEnd(finished) {
+  urge.running = false; cancelAnimationFrame(urge.raf); clearInterval(urge.iv);
+  $('#urgeGo').textContent = 'Start surfing'; urgeClock(); drawWave();
+  $('#urgeSetup').hidden = false;
+  if (finished) { $('#urgePrompt').textContent = 'You rode it out. How strong is the urge now?'; $('#urgeAfter').hidden = false; }
+  else $('#urgePrompt').textContent = 'Stopped. Any time you watched it without acting still counts.';
+}
+$$('#urgeLen button').forEach(b => b.addEventListener('click', () => {
+  $$('#urgeLen button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  urge.len = Number(b.dataset.m); urgeClock();
+}));
+$('#urgeGo').addEventListener('click', () => {
+  if (urge.running) { urgeEnd(false); return; }
+  urge.running = true; urge.start = Date.now(); urge.dur = urge.len * 60;
+  $('#urgeAfter').hidden = true; $('#urgeSetup').hidden = true; $('#urgeGo').textContent = 'Stop';
+  urgeTick(); urge.iv = setInterval(urgeTick, 500); urge.raf = requestAnimationFrame(urgeLoop);
+});
+$('#urgeSave').addEventListener('click', () => {
+  S.urges.push({ d: dkey(), what: $('#urgeWhat').value.trim(), before: Number($('#urgeBefore').value), after: Number($('#urgeNow').value) });
+  save(); renderUrgeStats(); renderStats(); $('#urgeAfter').hidden = true;
+  $('#urgePrompt').textContent = 'Logged. When an urge hits, name it, rate it and press start.';
+});
+function renderUrgeStats() {
+  const n = S.urges.length;
+  if (!n) { $('#urgeStats').textContent = 'Urges you ride out are logged here.'; return; }
+  const drop = S.urges.reduce((s, u) => s + ((Number(u.before) || 0) - (Number(u.after) || 0)), 0) / n;
+  $('#urgeStats').textContent = `${n} urge${n === 1 ? '' : 's'} ridden out. On average the urge dropped ${drop.toFixed(1)} points by the end.`;
+}
+new ResizeObserver(() => drawWave()).observe(canvas);
+
+/* ── discipline: friction audit ── */
+const FRICTION = {
+  good: ['Lay out what you need the night before', 'Keep it where you’ll see it', 'Shrink the first step to under two minutes', 'Pair it with something you enjoy', 'Do it straight after something you already do daily'],
+  bad: ['Phone charges outside the bedroom', 'Log out of, or delete, the tempting app', 'Don’t keep it in the house', 'Turn off non-essential notifications', 'Use a site blocker during focus hours', 'Tell someone your plan']
+};
+function renderFriction() {
+  const li = (list, g) => list.map((t, i) => { const id = `${g}${i}`; return `<li><label><input type="checkbox" data-fr="${id}" ${S.friction.includes(id) ? 'checked' : ''}><span>${esc(t)}</span></label></li>`; }).join('');
+  $('#frGood').innerHTML = li(FRICTION.good, 'g'); $('#frBad').innerHTML = li(FRICTION.bad, 'b');
+  const total = FRICTION.good.length + FRICTION.bad.length, n = S.friction.length;
+  $('#frSum').textContent = n ? `${n} of ${total} in place. Every bit of friction you remove from the good habit, or add to the bad one, is a decision you won’t have to fight later.` : 'Start with one from each list. Small changes to your surroundings beat big promises.';
+}
+$('#discipline').addEventListener('change', e => {
+  const c = e.target.closest('[data-fr]'); if (!c) return;
+  S.friction = c.checked ? [...new Set([...S.friction, c.dataset.fr])] : S.friction.filter(x => x !== c.dataset.fr);
+  save(); renderFriction(); const again = $(`[data-fr="${c.dataset.fr}"]`); if (again) again.focus();
+});
+
+/* ── check-in ── */
+const ciDate = $('#ciDate');
+ciDate.max = dkey();
+const ciRanges = [['#ciAnger', '#ciAngerOut', 'anger', 3], ['#ciAnx', '#ciAnxOut', 'anxiety', 3], ['#ciFollow', '#ciFollowOut', 'follow', 5]];
+ciRanges.forEach(([i, o]) => $(i).addEventListener('input', e => { $(o).textContent = e.target.value; }));
+function loadCheckin() {
+  if (!ciDate.value) ciDate.value = dkey();
+  const e = S.checkins[ciDate.value];
+  ciRanges.forEach(([i, o, k, def]) => { const v = e && e[k] != null ? e[k] : def; $(i).value = v; $(o).textContent = v; });
+  $('#ciSleep').value = e && e.sleep != null ? e.sleep : '';
+  $('#ciMoved').checked = !!(e && e.moved);
+  $('#ciNote').value = e && e.note ? e.note : '';
+  $('#ciSave').textContent = e ? 'Update this day' : (ciDate.value === dkey() ? 'Save today' : 'Save this day');
+}
+ciDate.addEventListener('change', () => { if (ciDate.value > dkey()) ciDate.value = dkey(); loadCheckin(); });
+$('#ciForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const k = ciDate.value || dkey(), sl = $('#ciSleep').value;
+  S.checkins[k] = { anger: Number($('#ciAnger').value), anxiety: Number($('#ciAnx').value), follow: Number($('#ciFollow').value), sleep: sl === '' ? null : clampN(sl, 0, 16), moved: $('#ciMoved').checked, note: $('#ciNote').value.trim() };
+  save(); loadCheckin(); renderChart(); renderInsights(); renderStats();
+  toast(k === dkey() ? 'Today saved' : `${fmtDay(k)} saved`);
+});
+
+const SERIES = [{ k: 'anger', name: 'Anger', c: 'ember' }, { k: 'anxiety', name: 'Anxiety', c: 'tide' }, { k: 'follow', name: 'Follow-through', c: 'moss' }];
+const EX = { anger: [3, 5, 4, 6, 2, 3, 7, 4, 3, 2, 4, 3, 2, 3], anxiety: [6, 5, 6, 7, 5, 4, 6, 5, 4, 4, 5, 3, 4, 3], follow: [4, 5, 5, 3, 6, 6, 4, 6, 7, 7, 6, 8, 7, 8], sleep: [6, 7, 6.5, 5.5, 8, 7.5, 5, 7, 7.5, 8, 6.5, 7.5, 8, 7.5], moved: [0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1] };
+function chartRows() {
+  const days = Array.from({ length: 14 }, (_, i) => dkey(addDays(new Date(), i - 13)));
+  const example = Object.keys(S.checkins).length < 2;
+  const rows = days.map((k, i) => example ? { k, anger: EX.anger[i], anxiety: EX.anxiety[i], follow: EX.follow[i], sleep: EX.sleep[i], moved: !!EX.moved[i] } : Object.assign({ k }, S.checkins[k] || {}));
+  return { rows, example };
+}
+let chartState = null;
+function renderChart() {
+  const box = $('#chartBox'), { rows, example } = chartRows();
+  $('#exBanner').hidden = !example;
+  const W = Math.max(280, Math.round(box.clientWidth || 600)), narrow = W < 480, H = narrow ? 210 : 240;
+  const m = { l: 26, r: narrow ? 12 : 104, t: 12, b: 26 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const x = i => m.l + i * iw / 13, y = v => m.t + (10 - v) * ih / 10;
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">`;
+  [0, 5, 10].forEach(v => { s += `<line class="c-grid" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}"/><text class="c-tick" x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`; });
+  const step = narrow ? 4 : 2;
+  rows.forEach((r, i) => { if ((13 - i) % step === 0) s += `<text class="c-tick" x="${x(i)}" y="${H - 6}" text-anchor="middle">${i === 13 ? 'Today' : esc(fmtDay(r.k))}</text>`; });
+  const ends = [];
+  SERIES.forEach(se => {
+    let d = '', pen = false, last = null;
+    rows.forEach((r, i) => {
+      const v = clampN(r[se.k], 0, 10);
+      if (v == null) { pen = false; return; }
+      d += `${pen ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`; pen = true; last = { i, v };
+    });
+    if (d) s += `<path class="c-line ${se.c}" d="${d}"/>`;
+    // isolated points (no neighbour on either side) need a dot to be visible
+    rows.forEach((r, i) => {
+      const v = clampN(r[se.k], 0, 10); if (v == null) return;
+      const prev = i > 0 ? clampN(rows[i - 1][se.k], 0, 10) : null, nxt = i < 13 ? clampN(rows[i + 1][se.k], 0, 10) : null;
+      if (prev == null && nxt == null && !(last && last.i === i)) s += `<circle class="c-dot ${se.c}" cx="${x(i)}" cy="${y(v)}" r="3.5"/>`;
+    });
+    if (last) { s += `<circle class="c-dot ${se.c}" cx="${x(last.i)}" cy="${y(last.v)}" r="4.5"/>`; ends.push({ se, y: y(last.v), x: x(last.i) }); }
+  });
+  // direct end labels only when they don't collide; legend always present
+  const ys = ends.map(e => e.y).sort((a, b) => a - b);
+  const clash = ys.some((v, i) => i && v - ys[i - 1] < 15);
+  if (!narrow && !clash) ends.forEach(e => { s += `<text class="c-lab" x="${e.x + 10}" y="${e.y + 4}">${e.se.name}</text>`; });
+  s += `<line class="c-cross" id="cCross" x1="0" x2="0" y1="${m.t}" y2="${H - m.b}" visibility="hidden"/>`;
+  s += `<rect id="cHit" x="${m.l - 10}" y="0" width="${iw + 20}" height="${H}" fill="transparent"/></svg><div class="c-tip" id="cTip" hidden></div>`;
+  box.innerHTML = s;
+  chartState = { rows, x, W, H, m, idx: null };
+  renderTable(rows);
+}
+function showTip(i) {
+  if (!chartState) return;
+  const { rows, x, W, m } = chartState, r = rows[i], tip = $('#cTip'), cross = $('#cCross');
+  chartState.idx = i;
+  cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i)); cross.setAttribute('visibility', 'visible');
+  tip.innerHTML = '';
+  const d = document.createElement('div'); d.className = 'd'; d.textContent = i === 13 ? `Today · ${fmtDay(r.k)}` : fmtDay(r.k); tip.appendChild(d);
+  SERIES.forEach(se => {
+    const row = document.createElement('div'); row.className = 'r';
+    const v = clampN(r[se.k], 0, 10);
+    row.innerHTML = `<i class="key ${se.c}"></i>`;
+    const b = document.createElement('b'); b.textContent = v == null ? '–' : String(v);
+    const n = document.createElement('span'); n.textContent = se.name;
+    row.append(b, n); tip.appendChild(row);
+  });
+  if (r.sleep != null || r.moved) { const ex = document.createElement('div'); ex.className = 'd'; ex.style.marginTop = '2px'; ex.textContent = [r.sleep != null ? `${r.sleep}h sleep` : '', r.moved ? 'moved' : ''].filter(Boolean).join(' · '); tip.appendChild(ex); }
+  tip.hidden = false;
+  const box = $('#chartBox'), scale = box.clientWidth / W, tw = tip.offsetWidth;
+  let left = x(i) * scale + 14; if (left + tw > box.clientWidth) left = x(i) * scale - tw - 14;
+  tip.style.transform = `translate(${Math.max(0, left)}px, ${m.t * scale + 4}px)`;
+}
+function hideTip() { const t = $('#cTip'), c = $('#cCross'); if (t) t.hidden = true; if (c) c.setAttribute('visibility', 'hidden'); }
+const chartBox = $('#chartBox');
+chartBox.addEventListener('pointermove', e => {
+  if (!chartState) return;
+  const svg = $('svg', chartBox), rect = svg.getBoundingClientRect(), { W, m } = chartState;
+  const px = (e.clientX - rect.left) * (W / rect.width);
+  const i = Math.round((px - m.l) / ((W - m.l - m.r) / 13));
+  if (i >= 0 && i <= 13) showTip(i); else hideTip();
+});
+chartBox.addEventListener('pointerleave', hideTip);
+chartBox.addEventListener('focus', () => showTip(chartState && chartState.idx != null ? chartState.idx : 13));
+chartBox.addEventListener('blur', hideTip);
+chartBox.addEventListener('keydown', e => {
+  if (!chartState) return;
+  const cur = chartState.idx == null ? 13 : chartState.idx;
+  if (e.key === 'ArrowLeft') { e.preventDefault(); showTip(Math.max(0, cur - 1)); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); showTip(Math.min(13, cur + 1)); }
+  if (e.key === 'Escape') hideTip();
+});
+let rzRaf = 0, lastW = 0;
+new ResizeObserver(() => { const w = chartBox.clientWidth; if (Math.abs(w - lastW) < 2) return; lastW = w; cancelAnimationFrame(rzRaf); rzRaf = requestAnimationFrame(renderChart); }).observe(chartBox);
+function renderTable(rows) {
+  const cell = v => v == null ? '–' : esc(String(v));
+  $('#tblWrap').innerHTML = `<table><thead><tr><th>Day</th><th>Anger</th><th>Anxiety</th><th>Follow-through</th><th>Sleep</th><th>Moved</th></tr></thead><tbody>${rows.slice().reverse().map(r => `<tr><td>${esc(fmtDay(r.k))}</td><td class="n">${cell(clampN(r.anger, 0, 10))}</td><td class="n">${cell(clampN(r.anxiety, 0, 10))}</td><td class="n">${cell(clampN(r.follow, 0, 10))}</td><td class="n">${r.sleep != null ? cell(clampN(r.sleep, 0, 16)) + 'h' : '–'}</td><td>${r.moved ? 'Yes' : (r.anger != null ? 'No' : '–')}</td></tr>`).join('')}</tbody></table>`;
+}
+$('#tblBtn').addEventListener('click', e => {
+  const w = $('#tblWrap'); w.hidden = !w.hidden;
+  e.currentTarget.textContent = w.hidden ? 'Show as a table' : 'Hide the table';
+  e.currentTarget.setAttribute('aria-expanded', String(!w.hidden));
+});
+function renderInsights() {
+  const entries = Object.values(S.checkins), out = [];
+  const avg = (arr, k) => arr.reduce((s, e) => s + (Number(e[k]) || 0), 0) / arr.length;
+  if (entries.length < 5) {
+    $('#insights').innerHTML = `<p class="insight">Log ${5 - entries.length} more day${5 - entries.length === 1 ? '' : 's'} to see patterns here, like how sleep affects your temper or exercise affects your nerves.</p>`;
+    return;
+  }
+  const slept = entries.filter(e => e.sleep != null), short = slept.filter(e => e.sleep < 7), long = slept.filter(e => e.sleep >= 7);
+  if (short.length >= 2 && long.length >= 2) out.push(`After under 7 hours’ sleep your anger averaged <b>${avg(short, 'anger').toFixed(1)}</b>. After 7 or more: <b>${avg(long, 'anger').toFixed(1)}</b>.`);
+  const moved = entries.filter(e => e.moved), still = entries.filter(e => !e.moved);
+  if (moved.length >= 2 && still.length >= 2) out.push(`On days you exercised, anxiety averaged <b>${avg(moved, 'anxiety').toFixed(1)}</b>, against <b>${avg(still, 'anxiety').toFixed(1)}</b> on days you didn’t.`);
+  const keys = Object.keys(S.checkins).sort(), recent = keys.filter(k => k > dkey(addDays(new Date(), -7))), prior = keys.filter(k => k <= dkey(addDays(new Date(), -7)) && k > dkey(addDays(new Date(), -14)));
+  if (recent.length >= 3 && prior.length >= 3) {
+    const a = avg(recent.map(k => S.checkins[k]), 'follow'), b = avg(prior.map(k => S.checkins[k]), 'follow');
+    out.push(`Follow-through this week: <b>${a.toFixed(1)}</b>, ${a >= b ? 'up' : 'down'} from <b>${b.toFixed(1)}</b> the week before.`);
+  }
+  if (!out.length) out.push('Keep logging sleep and exercise as well as your scores. Patterns appear once there’s a mix of good and bad days to compare.');
+  $('#insights').innerHTML = out.map(t => `<p class="insight">${t}</p>`).join('');
+}
+function renderStats() {
+  const since = dkey(addDays(new Date(), -29));
+  const tiles = [
+    [Object.keys(S.checkins).filter(k => k >= since).length, 'Check-ins in the last 30 days'],
+    [S.thoughts.length, 'Thought checks done'],
+    [S.urges.length, 'Urges ridden out'],
+    [S.starts.length, 'Five-minute starts']
+  ];
+  $('#stats').innerHTML = tiles.map(([v, k]) => `<div class="stat"><div class="v">${Number(v).toLocaleString()}</div><div class="k">${k}</div></div>`).join('');
+}
+
+/* ── backup / restore / clear ── */
+$('#bkCopy').addEventListener('click', () => copyText(JSON.stringify(S)));
+$('#bkShow').addEventListener('click', e => { const r = $('#bkRestore'); r.hidden = !r.hidden; e.currentTarget.setAttribute('aria-expanded', String(!r.hidden)); if (!r.hidden) $('#bkText').focus(); });
+$('#bkApply').addEventListener('click', () => {
+  let data;
+  try { data = JSON.parse($('#bkText').value); } catch (e) { toast('That doesn’t look like a Steady backup. Paste the whole text you copied.'); return; }
+  if (!data || typeof data !== 'object' || Array.isArray(data)) { toast('That doesn’t look like a Steady backup.'); return; }
+  const next = Object.assign(DEFAULTS(), data);
+  ['signs', 'worries', 'thoughts', 'urges', 'starts', 'friction'].forEach(k => { if (!Array.isArray(next[k])) next[k] = []; });
+  if (!Array.isArray(next.ladder)) next.ladder = [];
+  if (!Array.isArray(next.habits)) next.habits = [];
+  if (typeof next.timeout !== 'object' || !next.timeout) next.timeout = {};
+  const ck = {};
+  if (next.checkins && typeof next.checkins === 'object') Object.entries(next.checkins).forEach(([k, v]) => {
+    if (!isKey(k) || !v || typeof v !== 'object') return;
+    ck[k] = { anger: clampN(v.anger, 0, 10), anxiety: clampN(v.anxiety, 0, 10), follow: clampN(v.follow, 0, 10), sleep: v.sleep == null ? null : clampN(v.sleep, 0, 16), moved: !!v.moved, note: String(v.note || '') };
+  });
+  next.checkins = ck;
+  next.habits = next.habits.filter(h => h && isKey(h.start)).map(h => Object.assign({}, h, { id: String(h.id || uid()), days: h.days && typeof h.days === 'object' ? h.days : {} }));
+  next.ladder = next.ladder.filter(i => i && typeof i === 'object').map(i => Object.assign({}, i, { id: String(i.id || uid()), fear: clampN(i.fear, 0, 10) ?? 5 }));
+  next.thoughts = next.thoughts.filter(t => t && typeof t === 'object').map(t => Object.assign({}, t, { id: String(t.id || uid()), traps: Array.isArray(t.traps) ? t.traps.map(String) : [] }));
+  next.worries = next.worries.filter(w => w && typeof w === 'object').map(w => Object.assign({}, w, { id: String(w.id || uid()) }));
+  S = next; save(); renderAll(); $('#bkRestore').hidden = true; $('#bkText').value = ''; toast('Backup restored');
+});
+$('#bkClear').addEventListener('click', e => confirmTap(e.currentTarget, 'Tap again to delete everything', () => {
+  S = DEFAULTS(); S.ladder = []; S.habits = []; save(); renderAll(); toast('All your data on this device is deleted');
+}));
+
+function renderAll() {
+  renderSigns(); loadTimeout(); renderWorries(); renderThoughts(); renderLadder(); renderHabits();
+  renderUrgeStats(); renderFriction(); loadCheckin(); renderChart(); renderInsights(); renderStats();
+}
+renderAll(); drawWave(); urgeClock();
+})();
+</script>
+</body>
+</html>
