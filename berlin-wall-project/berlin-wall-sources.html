@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Berlin Wall 1961-1989 - Source Evidence Pack</title>
+<style>
+  @page { size: A4; margin: 9mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:#1a1a1a; --ink2:#4a4a4a; --ink3:#767676;
+    --paper:#ffffff; --rule:#c9c4bb; --cut:#a8a29a;
+    --red:#a8231f; --red-bg:#fbeceb;
+    --blue:#1f4e79; --blue-bg:#e9f0f7;
+    --amber:#8a5a00; --amber-bg:#fbf1de;
+    --purple:#5b3a86; --purple-bg:#f0eaf8;
+    --teal:#14625e; --teal-bg:#e4f2f1;
+    --slate:#3f4a55; --slate-bg:#eceff2;
+    --olive:#4f5a25; --olive-bg:#f0f2e2;
+  }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink); background: var(--paper);
+    font-size: 9.4pt; line-height: 1.4;
+  }
+  .sheet { page-break-after: always; height: 279mm; display:flex; flex-direction:column; }
+  .sheet:last-child { page-break-after: auto; }
+
+  /* ---------- shared ---------- */
+  .kicker { font-size:7pt; letter-spacing:.16em; text-transform:uppercase; color:var(--ink3); font-weight:700; }
+  .rule { height:2px; background:var(--ink); }
+  .hair { height:1px; background:var(--rule); }
+  h1,h2,h3,h4 { font-weight:700; line-height:1.15; }
+
+  /* ---------- cover ---------- */
+  .cover { justify-content:space-between; }
+  .cover-top { border-bottom:3px solid var(--ink); padding-bottom:5mm; }
+  .cover h1 { font-size:33pt; letter-spacing:-.02em; margin:3mm 0 2mm; }
+  .cover h1 span { color:var(--red); }
+  .cover .sub { font-size:11.5pt; color:var(--ink2); max-width:150mm; line-height:1.45; }
+  .dateline { font-size:8pt; color:var(--ink3); margin-top:3mm; }
+
+  .howto { display:grid; grid-template-columns:repeat(2,1fr); gap:5mm; margin:6mm 0; }
+  .step { border:1px solid var(--rule); border-left:4px solid var(--red); padding:4mm 4.5mm; background:#fdfcfa; }
+  .step .n { font-size:7pt; letter-spacing:.14em; color:var(--red); font-weight:700; text-transform:uppercase; }
+  .step h4 { font-size:10.5pt; margin:1.5mm 0 1.5mm; }
+  .step p { font-size:8.6pt; color:var(--ink2); line-height:1.45; }
+
+  .contents { border-top:2px solid var(--ink); padding-top:4mm; }
+  .contents h3 { font-size:9pt; letter-spacing:.14em; text-transform:uppercase; margin-bottom:3mm; }
+  .toc { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2mm 8mm; font-size:8.8pt; }
+  .toc div { display:flex; justify-content:space-between; border-bottom:1px dotted var(--rule); padding-bottom:1mm; }
+  .toc b { font-weight:600; }
+  .toc span { color:var(--ink3); }
+
+  .warnbox { border:1px solid var(--amber); background:var(--amber-bg); padding:4mm 4.5mm; font-size:8.4pt; color:#5c3d00; line-height:1.45; }
+  .warnbox b { color:#3d2900; }
+
+  /* ---------- definitions ---------- */
+  .pagehead { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2.5px solid var(--ink); padding-bottom:2.5mm; margin-bottom:4.5mm; }
+  .pagehead h2 { font-size:17pt; letter-spacing:-.01em; }
+  .pagehead .tag { font-size:7pt; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); font-weight:700; }
+  .intro-line { font-size:8.6pt; color:var(--ink2); margin-bottom:4mm; max-width:170mm; }
+
+  .defgrid { display:grid; grid-template-columns:repeat(2,1fr); gap:3.2mm; }
+  .def { border:1px dashed var(--cut); padding:3.2mm 3.6mm; background:#fff; }
+  .def h4 { font-size:9.8pt; color:var(--red); margin-bottom:1.2mm; }
+  .def p { font-size:8.2pt; color:var(--ink2); line-height:1.42; }
+  .def .eg { display:block; margin-top:1.5mm; padding-top:1.5mm; border-top:1px solid #ebe7e1; font-size:7.6pt; color:var(--ink3); }
+  .def .eg b { color:var(--ink2); font-weight:600; }
+
+  /* ---------- source cards ---------- */
+  .cards { display:flex; flex-direction:column; gap:4mm; flex:1; }
+  .card {
+    border:1.5px dashed var(--cut); padding:4mm 4.5mm;
+    display:grid; grid-template-columns:1fr 44mm; gap:4.5mm;
+    flex:1; background:#fff;
+  }
+  .card-main { display:flex; flex-direction:column; min-width:0; }
+  .badges { display:flex; gap:2mm; align-items:center; margin-bottom:2.2mm; flex-wrap:wrap; }
+  .sid { background:var(--ink); color:#fff; font-size:8.5pt; font-weight:700; padding:.7mm 2.2mm; letter-spacing:.04em; }
+  .btype { font-size:7pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.9mm 2.2mm; border:1px solid; }
+  .byear { font-size:7pt; font-weight:700; letter-spacing:.1em; padding:.9mm 2.2mm; background:#f0ede8; color:var(--ink2); border:1px solid var(--rule); }
+  .bside { font-size:7pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.9mm 2.2mm; border:1px solid var(--rule); color:var(--ink2); }
+
+  .t-speech  { color:var(--blue);   border-color:var(--blue);   background:var(--blue-bg); }
+  .t-gov     { color:var(--purple); border-color:var(--purple); background:var(--purple-bg); }
+  .t-news    { color:var(--amber);  border-color:var(--amber);  background:var(--amber-bg); }
+  .t-prop    { color:var(--red);    border-color:var(--red);    background:var(--red-bg); }
+  .t-report  { color:var(--olive);  border-color:var(--olive);  background:var(--olive-bg); }
+  .t-stats   { color:var(--teal);   border-color:var(--teal);   background:var(--teal-bg); }
+  .t-photo   { color:var(--slate);  border-color:var(--slate);  background:var(--slate-bg); }
+
+  .card h3 { font-size:11.4pt; line-height:1.2; margin-bottom:1.2mm; }
+  .origin { font-size:7.8pt; color:var(--ink3); margin-bottom:2.6mm; line-height:1.35; }
+  .origin b { color:var(--ink2); font-weight:600; }
+
+  .lbl { font-size:6.6pt; letter-spacing:.15em; text-transform:uppercase; font-weight:700; color:var(--ink3); margin-bottom:1mm; }
+  .evidence {
+    border-left:3px solid var(--red); background:#fdf7f6;
+    padding:2.4mm 3mm; margin-bottom:2.4mm;
+  }
+  .evidence .q {
+    font-family:Georgia,"Times New Roman",serif; font-size:9pt;
+    line-height:1.42; color:#2a1c1b;
+  }
+  .evidence .q em { font-style:italic; }
+  .trans { font-size:7.4pt; color:var(--ink3); margin-top:1.4mm; font-style:italic; }
+
+  .twocol { display:grid; grid-template-columns:1fr 1fr; gap:3.5mm; padding-top:.5mm; }
+  .mini p { font-size:7.9pt; color:var(--ink2); line-height:1.4; }
+  .mini.limits p { color:#6b4a12; }
+  .mini.limits .lbl { color:var(--amber); }
+
+  .cite { border-top:1px solid var(--rule); margin-top:auto; padding-top:1.8mm; font-size:6.9pt; color:var(--ink3); line-height:1.35; word-break:break-word; }
+  .cite b { color:var(--ink2); font-weight:600; }
+
+  /* photo slot */
+  .slot { display:flex; flex-direction:column; }
+  .slot-box {
+    flex:1; border:1.5px dashed var(--cut); background:
+      repeating-linear-gradient(45deg,#fafafa,#fafafa 4px,#f4f3f1 4px,#f4f3f1 8px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:3mm; min-height:34mm;
+  }
+  .slot-box .pid { font-size:13pt; font-weight:700; color:var(--slate); letter-spacing:.04em; }
+  .slot-box .glue { font-size:6.6pt; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); font-weight:700; margin-top:1.2mm; }
+  .slot-cap { font-size:6.9pt; color:var(--ink3); line-height:1.35; margin-top:1.8mm; }
+  .slot-cap b { display:block; color:var(--ink2); font-size:7.4pt; font-weight:600; margin-bottom:.6mm; }
+
+  /* diagram inside slot */
+  .slot-fig { flex:1; border:1px solid var(--rule); background:#fbfaf8; padding:2.5mm; display:flex; align-items:center; justify-content:center; min-height:34mm; }
+  .slot-fig svg { width:100%; height:auto; }
+
+  /* ---------- diagram pages ---------- */
+  .figblock { border:1px solid var(--rule); padding:4.5mm; background:#fdfcfa; margin-bottom:4.5mm; }
+  .figblock h3 { font-size:11.5pt; margin-bottom:1mm; }
+  .figblock .figsub { font-size:8pt; color:var(--ink3); margin-bottom:3.5mm; }
+  .figblock .figsrc { font-size:6.9pt; color:var(--ink3); margin-top:3mm; padding-top:2mm; border-top:1px solid var(--rule); }
+  .figblock svg { width:100%; height:auto; display:block; }
+
+  .numgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:3mm; margin-top:3.5mm; }
+  .num { border:1px solid var(--rule); padding:2.6mm 3mm; background:#fff; }
+  .num .v { font-size:15pt; font-weight:700; color:var(--red); line-height:1; }
+  .num .k { font-size:7pt; color:var(--ink2); margin-top:1.2mm; line-height:1.3; }
+
+  /* ---------- master chart ---------- */
+  table.chart { width:100%; border-collapse:collapse; font-size:7.6pt; }
+  table.chart th {
+    background:var(--ink); color:#fff; text-align:left; padding:2.2mm 2mm;
+    font-size:6.8pt; letter-spacing:.11em; text-transform:uppercase; font-weight:700;
+  }
+  table.chart td { padding:2.1mm 2mm; border-bottom:1px solid var(--rule); vertical-align:top; line-height:1.34; }
+  table.chart tr:nth-child(even) td { background:#faf9f7; }
+  table.chart .c-id { font-weight:700; width:8mm; }
+  table.chart .c-yr { font-weight:700; width:13mm; white-space:nowrap; }
+  .pill { display:inline-block; font-size:6.4pt; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:.5mm 1.4mm; border:1px solid; white-space:nowrap; }
+
+  /* ---------- bibliography ---------- */
+  ol.bib { list-style:none; counter-reset:b; }
+  ol.bib li { counter-increment:b; position:relative; padding-left:9mm; margin-bottom:3.2mm; font-size:8.1pt; line-height:1.45; color:var(--ink2); }
+  ol.bib li::before {
+    content:"S" counter(b); position:absolute; left:0; top:0;
+    font-weight:700; color:#fff; background:var(--ink); font-size:7pt;
+    padding:.5mm 1.6mm; letter-spacing:.03em;
+  }
+  ol.bib b { color:var(--ink); }
+  ol.bib .url { color:var(--blue); word-break:break-all; font-size:7.4pt; display:block; margin-top:.8mm; }
+
+  .footnote { margin-top:auto; padding-top:3mm; border-top:1px solid var(--rule); font-size:7pt; color:var(--ink3); line-height:1.4; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="sheet cover">
+  <div>
+    <div class="cover-top">
+      <div class="kicker">History &mdash; Source Evidence Pack</div>
+      <h1>The Berlin Wall<br><span>1961 &ndash; 1989</span></h1>
+      <div class="sub">Ten real primary and secondary sources, with the evidence quoted from each, what it proves, how reliable it is, and where it came from. Built to be printed, cut out and stuck onto your chart.</div>
+      <div class="dateline">Every source below is a genuine, checkable document held in a named archive. Full web addresses are on the last page.</div>
+    </div>
+
+    <div class="howto">
+      <div class="step">
+        <div class="n">Step 1</div>
+        <h4>Print it</h4>
+        <p>Print all pages on A4. Use colour if you can &mdash; the coloured badges are what let you sort the sources by type on your chart.</p>
+      </div>
+      <div class="step">
+        <div class="n">Step 2</div>
+        <h4>Cut along the dashed lines</h4>
+        <p>Every dashed box is designed to be cut out: the ten source cards, the definition boxes and the diagrams.</p>
+      </div>
+      <div class="step">
+        <div class="n">Step 3</div>
+        <h4>Add the photos</h4>
+        <p>Each card has a grey slot marked <b>P1</b>&ndash;<b>P8</b>. Open <b>photo-sheet.html</b>, print it, cut out the matching photo and glue it into the slot.</p>
+      </div>
+      <div class="step">
+        <div class="n">Step 4</div>
+        <h4>Lay out your chart</h4>
+        <p>Use the master chart on page&nbsp;9 as your plan. Group the cards by <b>source type</b> and run them left-to-right by <b>year</b>.</p>
+      </div>
+    </div>
+
+    <div class="contents">
+      <h3>What is in this pack</h3>
+      <div class="toc">
+        <div><b>Page 2</b> <span>Definitions to cut out</span></div>
+        <div><b>Page 3&ndash;7</b> <span>The ten source cards</span></div>
+        <div><b>Page 8</b> <span>Diagrams: the border strip &amp; divided Berlin</span></div>
+        <div><b>Page 9</b> <span>Escape figures, timeline &amp; master chart</span></div>
+        <div><b>Page 10</b> <span>Full source list with web addresses</span></div>
+        <div><b>Separate file</b> <span>photo-sheet.html &mdash; the 8 photographs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warnbox">
+    <b>About the photographs.</b> The photographs are not printed inside this PDF, because they are held on archive websites and have to be loaded from there. They are all real, and they are all free to reuse for schoolwork. Open the file <b>photo-sheet.html</b> in any web browser: the eight photographs load straight from the Wikimedia Commons archive, with the photographer, date and copyright licence printed under each one. Print that page and glue the photos into the slots. If your teacher asks where a photo came from, the answer is printed under it.
+  </div>
+</section>
+
+
+<!-- ============ DEFINITIONS ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>Definitions</h2>
+    <div class="tag">Cut these out &mdash; page 2</div>
+  </div>
+  <div class="intro-line">The first eight boxes are the words you need to <b>analyse</b> a source. The last six are the words you need to <b>understand the Berlin Wall</b>. Cut them out and put them down the side of your chart.</div>
+
+  <div class="defgrid">
+    <div class="def">
+      <h4>Primary source</h4>
+      <p>Evidence created at the time by someone who was there. It has not been filtered through a later writer.</p>
+      <span class="eg"><b>In this pack:</b> S1, S2, S3, S4, S5, S6, S8, S9</span>
+    </div>
+    <div class="def">
+      <h4>Secondary source</h4>
+      <p>Evidence made later by someone studying the event, usually by gathering and checking many primary sources.</p>
+      <span class="eg"><b>In this pack:</b> S7 and S10 &mdash; both compiled by historians after 1990.</span>
+    </div>
+    <div class="def">
+      <h4>Provenance</h4>
+      <p>Where a source came from: who made it, when, for whom, and why. You judge a source by its provenance before you judge its content.</p>
+      <span class="eg"><b>Example:</b> S5 was written by the officer whose own men did the shooting &mdash; that changes how you read it.</span>
+    </div>
+    <div class="def">
+      <h4>Bias</h4>
+      <p>When a source leans one way because of who made it. Bias does not make a source useless &mdash; it makes it useful evidence of what that side wanted people to believe.</p>
+      <span class="eg"><b>Example:</b> S4 is pure propaganda, and that is exactly why it is good evidence.</span>
+    </div>
+    <div class="def">
+      <h4>Reliability</h4>
+      <p>How far you can trust what a source says actually happened. A source can be unreliable about facts but still reliable about attitudes.</p>
+      <span class="eg"><b>Test it:</b> does anything else independently say the same thing?</span>
+    </div>
+    <div class="def">
+      <h4>Corroboration</h4>
+      <p>Checking one source against another. Two sources from opposite sides that agree on a fact make that fact very strong.</p>
+      <span class="eg"><b>Example:</b> S1 and S2 are both East German &mdash; and they flatly contradict each other.</span>
+    </div>
+    <div class="def">
+      <h4>Utility</h4>
+      <p>How useful a source is for the specific question you are answering. A source can be biased and still be highly useful.</p>
+      <span class="eg"><b>Ask:</b> useful for <i>what</i>? Always name the question.</span>
+    </div>
+    <div class="def">
+      <h4>Propaganda</h4>
+      <p>Information published deliberately to make people support a government or cause, whether or not it is true.</p>
+      <span class="eg"><b>In this pack:</b> S3 and S4 are both official East German propaganda.</span>
+    </div>
+
+    <div class="def">
+      <h4>GDR / DDR (East Germany)</h4>
+      <p>The German Democratic Republic, 1949&ndash;1990. A communist one-party state allied to the Soviet Union. It built the Wall.</p>
+      <span class="eg"><b>Ruled by:</b> the SED &mdash; the Socialist Unity Party.</span>
+    </div>
+    <div class="def">
+      <h4>FRG / BRD (West Germany)</h4>
+      <p>The Federal Republic of Germany, the democratic, capitalist state allied to the USA, Britain and France. West Berlin was tied to it.</p>
+      <span class="eg"><b>Key point:</b> West Berlin sat 160&nbsp;km <i>inside</i> East Germany.</span>
+    </div>
+    <div class="def">
+      <h4>Republikflucht</h4>
+      <p>&ldquo;Flight from the republic&rdquo; &mdash; the East German legal term for leaving without permission. It was a crime.</p>
+      <span class="eg"><b>Scale:</b> about 2.7&ndash;3.5 million people left before 1961.</span>
+    </div>
+    <div class="def">
+      <h4>Antifaschistischer Schutzwall</h4>
+      <p>&ldquo;Anti-fascist protection rampart&rdquo; &mdash; the official East German name for the Wall. It claimed the Wall kept fascists <i>out</i>, not citizens <i>in</i>.</p>
+      <span class="eg"><b>Reality:</b> ordinary East Germans never used the phrase.</span>
+    </div>
+    <div class="def">
+      <h4>The death strip</h4>
+      <p>The cleared ground behind the outer wall: raked sand, floodlights, dog runs, trip-wire fences, anti-vehicle trenches and watchtowers.</p>
+      <span class="eg"><b>See:</b> the cross-section diagram on page 8.</span>
+    </div>
+    <div class="def">
+      <h4>Checkpoint Charlie</h4>
+      <p>The crossing point on Friedrichstra&szlig;e used by Allied staff and foreigners. In October 1961 US and Soviet tanks faced each other here.</p>
+      <span class="eg"><b>Nearby:</b> Peter Fechter was shot 200&nbsp;m away (S5).</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ CARDS 1-2 ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>The sources</h2>
+    <div class="tag">Cards 1 &amp; 2 &mdash; page 3</div>
+  </div>
+  <div class="cards">
+
+    <!-- S1 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S1</span>
+          <span class="btype t-speech">Press conference</span>
+          <span class="byear">15 JUNE 1961</span>
+          <span class="bside">East Germany</span>
+        </div>
+        <h3>&ldquo;Nobody intends to put up a wall&rdquo;</h3>
+        <div class="origin"><b>Walter Ulbricht</b>, leader of East Germany, answering a West German journalist at an international press conference in the House of Ministries, East Berlin. Printed in the party newspaper <i>Neues Deutschland</i> the next day.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;Ich verstehe Ihre Frage so, da&szlig; es in Westdeutschland Menschen gibt, die w&uuml;nschen, da&szlig; wir die Bauarbeiter der DDR dazu mobilisieren eine Mauer aufzurichten. Mir ist nicht bekannt, da&szlig; eine solche Absicht besteht. <em>Niemand hat die Absicht, eine Mauer zu errichten.</em>&rdquo;</div>
+          <div class="trans">&ldquo;I understand your question to mean that there are people in West Germany who wish that we would mobilise the construction workers of the GDR to put up a wall. I am not aware that any such intention exists. Nobody intends to put up a wall.&rdquo;</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The East German leader publicly denied any plan for a wall <b>59 days before he built one</b>. It proves the decision was kept secret &mdash; and it is the single most famous lie of the Cold War.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Completely reliable as a record of <i>what was said</i> &mdash; it was public and recorded. Completely unreliable as a statement of fact. Note that Ulbricht was the first to say the word &ldquo;wall&rdquo;.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> Walter Ulbricht, international press conference, East Berlin, 15 June 1961; transcript in <i>Neues Deutschland</i>, 16 June 1961. Reproduced by German History in Documents and Images (GHDI) and Berlin-Geschichte.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P1</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>Conrad Schumann's leap</b>Border guard Conrad Schumann jumps the barbed wire into West Berlin, 15 August 1961 &mdash; two months after this denial. Photo: CIA collection (public domain).</div>
+      </div>
+    </article>
+
+    <!-- S2 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S2</span>
+          <span class="btype t-gov">Secret government record</span>
+          <span class="byear">1 AUG 1961</span>
+          <span class="bside">USSR &amp; East Germany</span>
+        </div>
+        <h3>Khrushchev and Ulbricht plan the border closure</h3>
+        <div class="origin">Notes of a private conversation between <b>Nikita Khrushchev</b> (Soviet leader) and <b>Walter Ulbricht</b>, taken twelve days before the Wall went up. Secret at the time; declassified after 1990 and published by the Wilson Center Digital Archive.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">Khrushchev, on East Germany's problem: &ldquo;<em>Many engineers have fled the GDR.</em> You should consider &mdash; shouldn't we send you perhaps some engineers from the Soviet Union? <em>They won't run away.</em> [&hellip;] But something must be done.&rdquo;</div>
+          <div class="trans">Ulbricht presses for economic help from the other communist states in case the West retaliates once the border is shut.</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>Behind closed doors the real reason was <b>economic collapse through emigration</b> &mdash; skilled workers leaving &mdash; not fascism or Western attack. It also shows Moscow, not just East Berlin, was in on the decision.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Very high. It was never meant to be read by the public, so there was no reason to spin it. This is the source that flatly contradicts S1, S3 and S4.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> &ldquo;Notes on the Conversation of Comrade N. S. Khrushchev with Comrade W. Ulbricht on 1 August 1961&rdquo;, Wilson Center Digital Archive, International History Declassified.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P2</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>Building the Wall</b>East German workers under armed guard building the barrier, Berlin, August 1961. Photo: CIA collection (public domain).</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ============ CARDS 3-4 ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>The sources</h2>
+    <div class="tag">Cards 3 &amp; 4 &mdash; page 4</div>
+  </div>
+  <div class="cards">
+
+    <!-- S3 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S3</span>
+          <span class="btype t-news">Newspaper article</span>
+          <span class="byear">14 AUG 1961</span>
+          <span class="bside">East Germany</span>
+        </div>
+        <h3>&ldquo;Measures to protect peace&rdquo; &mdash; the front page</h3>
+        <div class="origin">Front page of <b><i>Neues Deutschland</i></b>, the official daily newspaper of the SED (the East German ruling party), published the morning after the border was sealed. This is a state-controlled newspaper, not a free press.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;Zur Unterbindung der feindlichen T&auml;tigkeit der revanchistischen und militaristischen Kr&auml;fte Westdeutschlands und Westberlins wird eine solche Kontrolle an den Grenzen der Deutschen Demokratischen Republik &hellip; eingef&uuml;hrt, <em>wie sie an den Grenzen jedes souver&auml;nen Staates &uuml;blich ist.</em>&rdquo;</div>
+          <div class="trans">&ldquo;To stop the hostile activity of the revanchist and militarist forces of West Germany and West Berlin, controls are being introduced at the borders of the German Democratic Republic &hellip; such as are normal at the borders of any sovereign state.&rdquo;</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The official public justification: the Wall was <b>defensive</b> and <b>normal</b>. The paper also claims most Berliners approved &mdash; useful evidence of how the state managed the news.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Low as fact &mdash; every East German newspaper was censored by the party. High as evidence of the <b>official line</b>. Compare it directly with S2, written thirteen days earlier in private.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> &ldquo;Ma&szlig;nahmen zum Schutz des Friedens und zur Sicherung der Deutschen Demokratischen Republik in Kraft&rdquo;, <i>Neues Deutschland</i>, 14 August 1961, p.&nbsp;1. Reproduced by GHDI; full run at ND-Archiv.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P3</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>Reading the news</b>People in Leipzig read an <i>Extrablatt</i> (special edition) about the building of the Wall, August 1961. Photo: German Federal Archive (Bundesarchiv), CC&nbsp;BY-SA.</div>
+      </div>
+    </article>
+
+    <!-- S4 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S4</span>
+          <span class="btype t-prop">Propaganda pamphlet</span>
+          <span class="byear">1961</span>
+          <span class="bside">East Germany</span>
+        </div>
+        <h3>&ldquo;In praise of the Berlin Wall&rdquo;</h3>
+        <div class="origin">A 48-page illustrated pamphlet issued by the <b>SED</b> within weeks of 13 August 1961, produced by the &ldquo;Fighting Group Berlin-Mitte&rdquo; and Berlin publishing houses. Handed out to workers and party members.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;On 13 August 1961 peace-loving Berliners <em>won a battle for peace</em>. The battle groups of Berlin's working class &hellip; put an end to subversive activity against the GDR by <em>spies, slave-traders, and Revanchist organizations</em> based in West Berlin.&rdquo;</div>
+          <div class="trans">The back cover reads: &ldquo;West German militarism has been frustrated by the building of the Berlin Wall.&rdquo;</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>How the state sold the Wall to its own people: as a <b>victory</b>, not a restriction. The language &mdash; &ldquo;spies&rdquo;, &ldquo;slave-traders&rdquo; &mdash; shows the enemy being invented to justify the barrier.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Worthless as a factual account. Excellent as evidence of <b>propaganda technique</b>. Notice it never mentions the 2.7 million people who had already left (see S7).</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> SED pamphlet, 1961, translated as &ldquo;In Praise of the Berlin Wall&rdquo;, German Propaganda Archive, Calvin University (ed. Randall Bytwerk).</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P4</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>The Wall at the Brandenburg Gate</b>The barrier sealing off Berlin's most famous landmark, 1961. Photo: German Federal Archive (Bundesarchiv), CC&nbsp;BY-SA.</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ============ CARDS 5-6 ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>The sources</h2>
+    <div class="tag">Cards 5 &amp; 6 &mdash; page 5</div>
+  </div>
+  <div class="cards">
+
+    <!-- S5 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S5</span>
+          <span class="btype t-report">Military report (secret)</span>
+          <span class="byear">17 AUG 1962</span>
+          <span class="bside">East Germany</span>
+        </div>
+        <h3>The border commander's report on the shooting of Peter Fechter</h3>
+        <div class="origin">Internal report by the commander of the <b>1st Border Brigade</b> on the day 18-year-old bricklayer <b>Peter Fechter</b> was shot climbing the Wall near Checkpoint Charlie. Classified; now held at the German Federal Archive.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;Die zweite Person wurde beim Anspringen an die Mauer getroffen &hellip; <em>die Person brach daraufhin an der Mauer zusammen und schrie um Hilfe.</em>&rdquo; &mdash; Later: a smoke screen was laid from the windows of the ruin at Zimmerstra&szlig;e 72&ndash;74, under cover of which the wounded man was recovered.</div>
+          <div class="trans">&ldquo;The second person was hit as he jumped up at the Wall &hellip; the person then collapsed at the Wall and screamed for help.&rdquo; Four guards fired 35 shots. Fechter bled to death over roughly an hour while both sides refused to cross. He was declared dead at 17:00.</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The shoot-to-kill order in practice, described by the army itself. The report's conclusions are about <b>plugging the gap</b> and bricking up windows &mdash; not about the death of a teenager.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Written by the side that did the shooting, to protect itself &mdash; it claims warning shots were fired, which the later trial disputed. But it is a secret internal document, so the basic facts are strong.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> &ldquo;Bericht des Kommandeurs der 1. Grenzbrigade &uuml;ber den Fluchtversuch und die Erschie&szlig;ung von Peter Fechter&rdquo;, 17 August 1962. BArch, VA-07/16930, Bl. 2&ndash;5. Via Chronik der Mauer.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P5</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>Armed border guards</b>East German border troops on duty at the Wall. Photo: CIA collection (public domain). <i>The photograph of Fechter himself is under copyright &mdash; see the source list.</i></div>
+      </div>
+    </article>
+
+    <!-- S6 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S6</span>
+          <span class="btype t-speech">Political speech</span>
+          <span class="byear">26 JUNE 1963</span>
+          <span class="bside">USA / West</span>
+        </div>
+        <h3>Kennedy: &ldquo;Ich bin ein Berliner&rdquo;</h3>
+        <div class="origin">Speech by US President <b>John F. Kennedy</b> to a crowd of several hundred thousand at the Rudolph Wilde Platz, West Berlin. Filmed, broadcast and transcribed; the record is held by the US National Archives.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;Freedom has many difficulties and democracy is not perfect, but <em>we have never had to put a wall up to keep our people in</em>, to prevent them from leaving us. &hellip; While the wall is the most obvious and vivid demonstration of the failures of the Communist system, for all the world to see, we take no satisfaction in it, for it is &hellip; <em>an offense not only against history but an offense against humanity</em>.&rdquo;</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The Western argument in one line: a state that has to <b>lock its people in</b> has already lost the argument. It also shows the Wall being used as a propaganda weapon by <i>both</i> sides.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Reliable as a record of what was said. But it is a political speech to a friendly crowd &mdash; designed to reassure West Berliners, not to analyse. Kennedy did not act to remove the Wall.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> John F. Kennedy, Remarks at the Rudolph Wilde Platz, Berlin, 26 June 1963. US National Archives; transcript via the Miller Center and the JFK Presidential Library.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P6</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>A family divided</b>West Berliners hold children up so relatives on the eastern side can see them over the Wall. Photo: CIA collection (public domain).</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ============ CARDS 7-8 ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>The sources</h2>
+    <div class="tag">Cards 7 &amp; 8 &mdash; page 6</div>
+  </div>
+  <div class="cards">
+
+    <!-- S7 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S7</span>
+          <span class="btype t-stats">Statistics</span>
+          <span class="byear">1949&ndash;1990</span>
+          <span class="bside">Secondary / research</span>
+        </div>
+        <h3>Migration figures: East to West Germany</h3>
+        <div class="origin">Official migration statistics compiled from <b>West German and East German government records</b>, published as a data table by German History in Documents and Images (GHDI), a project of the German Historical Institute.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">People moving to West Germany, by year:<br>
+          <b>1953:</b> 331,390 &nbsp;&middot;&nbsp; <b>1960:</b> 199,188 &nbsp;&middot;&nbsp; <b>1961:</b> 207,026<br>
+          <b>1962:</b> <em>21,365</em> &nbsp;&middot;&nbsp; <b>1963:</b> 42,622 &nbsp;&middot;&nbsp; <b>1988:</b> 39,832 &nbsp;&middot;&nbsp; <b>1989:</b> <em>343,854</em></div>
+          <div class="trans">Around 2.7 million people left between 1949 and August 1961. After the Wall went up, the number fell by roughly 90% in a single year.</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>Hard proof that <b>the Wall worked</b>, and proof of <i>why</i> it was built. The 1989 spike shows the system failing again the moment the border reopened.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>High &mdash; two governments counted independently and the totals broadly agree. But numbers alone hide the human reason people left; pair this with S5 and S10.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> &ldquo;East-West German Immigration Statistics (1949&ndash;1990)&rdquo; and &ldquo;Refugee Movement (1950&ndash;1963)&rdquo;, German History in Documents and Images, German Historical Institute.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-fig">
+          <svg viewBox="0 0 200 150" role="img" aria-label="Bar chart of migration from East to West Germany">
+            <text x="0" y="8" font-size="7.5" font-weight="700" fill="#1a1a1a">People leaving for the West</text>
+            <text x="0" y="16" font-size="5.5" fill="#767676">Thousands per year, 1949&ndash;1989</text>
+            <line x1="0" y1="118" x2="200" y2="118" stroke="#1a1a1a" stroke-width="1"/>
+            <line x1="0" y1="26" x2="200" y2="26" stroke="#e5e2dc" stroke-width=".5"/>
+            <line x1="0" y1="72" x2="200" y2="72" stroke="#e5e2dc" stroke-width=".5"/>
+            <text x="0" y="24" font-size="4.5" fill="#a8a29a">350k</text>
+            <g fill="#a8231f">
+              <rect x="1"   y="80.7" width="3.6" height="37.3"/>
+              <rect x="5.7" y="61.0" width="3.6" height="57.0"/>
+              <rect x="10.4" y="70.3" width="3.6" height="47.7"/>
+              <rect x="15.1" y="65.4" width="3.6" height="52.6"/>
+              <rect x="19.8" y="22.5" width="3.6" height="95.5"/>
+              <rect x="24.5" y="64.9" width="3.6" height="53.1"/>
+              <rect x="29.2" y="45.1" width="3.6" height="72.9"/>
+              <rect x="33.9" y="37.5" width="3.6" height="80.5"/>
+              <rect x="38.6" y="42.6" width="3.6" height="75.4"/>
+              <rect x="43.3" y="59.2" width="3.6" height="58.8"/>
+              <rect x="48.0" y="76.5" width="3.6" height="41.5"/>
+              <rect x="52.7" y="60.6" width="3.6" height="57.4"/>
+              <rect x="57.4" y="58.3" width="3.6" height="59.7"/>
+            </g>
+            <g fill="#8f8a82">
+              <rect x="62.1" y="111.8" width="3.6" height="6.2"/>
+              <rect x="66.8" y="105.7" width="3.6" height="12.3"/>
+              <rect x="71.5" y="105.9" width="3.6" height="12.1"/>
+              <rect x="76.2" y="109.5" width="3.6" height="8.5"/>
+              <rect x="80.9" y="111.0" width="3.6" height="7.0"/>
+              <rect x="85.6" y="112.4" width="3.6" height="5.6"/>
+              <rect x="90.3" y="113.4" width="3.6" height="4.6"/>
+              <rect x="95.0" y="113.1" width="3.6" height="4.9"/>
+              <rect x="99.7" y="112.9" width="3.6" height="5.1"/>
+              <rect x="104.4" y="113.0" width="3.6" height="5.0"/>
+              <rect x="109.1" y="113.0" width="3.6" height="5.0"/>
+              <rect x="113.8" y="113.6" width="3.6" height="4.4"/>
+              <rect x="118.5" y="114.2" width="3.6" height="3.8"/>
+              <rect x="123.2" y="113.3" width="3.6" height="4.7"/>
+              <rect x="127.9" y="114.5" width="3.6" height="3.5"/>
+              <rect x="132.6" y="114.5" width="3.6" height="3.5"/>
+              <rect x="137.3" y="114.4" width="3.6" height="3.6"/>
+              <rect x="142.0" y="114.4" width="3.6" height="3.6"/>
+              <rect x="146.7" y="113.6" width="3.6" height="4.4"/>
+              <rect x="151.4" y="114.2" width="3.6" height="3.8"/>
+              <rect x="156.1" y="114.9" width="3.6" height="3.1"/>
+              <rect x="160.8" y="106.8" width="3.6" height="11.2"/>
+              <rect x="165.5" y="111.2" width="3.6" height="6.8"/>
+              <rect x="170.2" y="110.8" width="3.6" height="7.2"/>
+              <rect x="174.9" y="112.8" width="3.6" height="5.2"/>
+              <rect x="179.6" y="107.1" width="3.6" height="10.9"/>
+            </g>
+            <rect x="184.3" y="24.1" width="3.6" height="93.9" fill="#1f4e79"/>
+            <line x1="60.5" y1="20" x2="60.5" y2="118" stroke="#1a1a1a" stroke-width=".7" stroke-dasharray="2 1.5"/>
+            <text x="62" y="34" font-size="5" font-weight="700" fill="#1a1a1a">Wall built</text>
+            <text x="62" y="40" font-size="4.5" fill="#4a4a4a">13 Aug 1961</text>
+            <text x="176" y="20" font-size="5" font-weight="700" fill="#1f4e79">1989</text>
+            <text x="0" y="126" font-size="4.5" fill="#767676">1949</text>
+            <text x="52" y="126" font-size="4.5" fill="#767676">1961</text>
+            <text x="118" y="126" font-size="4.5" fill="#767676">1975</text>
+            <text x="178" y="126" font-size="4.5" fill="#767676">1989</text>
+            <text x="0" y="137" font-size="4.6" fill="#4a4a4a">1961: 207,026 &#8594; 1962: 21,365</text>
+            <text x="0" y="144" font-size="4.6" fill="#767676">Source: GHDI / German Historical Institute</text>
+          </svg>
+        </div>
+        <div class="slot-cap">Chart drawn from the figures in S7. You can cut this out and use it as your graph.</div>
+      </div>
+    </article>
+
+    <!-- S8 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S8</span>
+          <span class="btype t-speech">Political speech</span>
+          <span class="byear">12 JUNE 1987</span>
+          <span class="bside">USA / West</span>
+        </div>
+        <h3>Reagan: &ldquo;Mr. Gorbachev, tear down this wall!&rdquo;</h3>
+        <div class="origin">Speech by US President <b>Ronald Reagan</b> at the Brandenburg Gate, West Berlin, delivered behind bulletproof glass and amplified so it could be heard on the eastern side. Official text held by the Reagan Presidential Library.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;General Secretary Gorbachev, if you seek peace, if you seek prosperity for the Soviet Union and Eastern Europe, if you seek liberalization: Come here to this gate! Mr. Gorbachev, open this gate! <em>Mr. Gorbachev, tear down this wall!</em>&rdquo;</div>
+          <div class="trans">Earlier in the same speech: &ldquo;Every man is a Berliner, forced to look upon a scar.&rdquo;</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The Wall still standing 26 years on, and the West using it as a public challenge. Reagan's own State Department tried to cut the line &mdash; evidence of a <b>split in Western policy</b>.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>Reliable text, but treat the popular claim that this speech <i>caused</i> the Wall to fall with caution. The Wall fell 29 months later for reasons largely inside the Eastern bloc (see S9).</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> Ronald Reagan, &ldquo;Remarks on East-West Relations at the Brandenburg Gate in West Berlin&rdquo;, 12 June 1987. Ronald Reagan Presidential Library &amp; US National Archives.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P7</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>Checkpoint Charlie from the air</b>The crossing point on Friedrichstra&szlig;e where US and Soviet tanks faced off in October 1961. Photo: CIA collection (public domain).</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ============ CARDS 9-10 ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>The sources</h2>
+    <div class="tag">Cards 9 &amp; 10 &mdash; page 7</div>
+  </div>
+  <div class="cards">
+
+    <!-- S9 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S9</span>
+          <span class="btype t-gov">Government decree</span>
+          <span class="byear">9 NOV 1989</span>
+          <span class="bside">East Germany</span>
+        </div>
+        <h3>&ldquo;Schabowski's note&rdquo; &mdash; the order that opened the Wall</h3>
+        <div class="origin">The draft decision of the <b>GDR Council of Ministers</b> on travel and permanent exit, circulated on 9 November 1989. Marked <i>Vertrauliche Verschlu&szlig;sache</i> (confidential). These were the notes G&uuml;nter Schabowski read out, unprepared, at a live press conference that evening.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;<em>Privatreisen nach dem Ausland k&ouml;nnen ohne Vorliegen von Voraussetzungen</em> (Reiseanl&auml;sse und Verwandtschaftsverh&auml;ltnisse) <em>beantragt werden.</em> &hellip; St&auml;ndige Ausreisen k&ouml;nnen &uuml;ber alle Grenz&uuml;bergangsstellen der DDR zur BRD bzw. zu Berlin (West) erfolgen.&rdquo;</div>
+          <div class="trans">&ldquo;Private trips abroad may be applied for without preconditions (reasons for travel or family relationships) &hellip; Permanent exit may take place via all GDR border crossings to the FRG or to Berlin (West).&rdquo; The document says the press release was to be published <b>the next day</b>, 10 November.</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The Wall opened partly <b>by accident</b>. The decree was meant to control emigration, not end it &mdash; and to start a day later. Asked when it applied, Schabowski said immediately, and crowds went to the crossings.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>An official internal document &mdash; very reliable for what was <i>decided</i>. It cannot tell you what Schabowski actually said on air; for that you need the press conference recording.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> &ldquo;Zeitweilige &Uuml;bergangsregelung f&uuml;r Reisen und st&auml;ndige Ausreise aus der DDR&rdquo;, 9 November 1989. BStU, MfS, Arbeitsbereich Neiber Nr. 553, Bl. 15&ndash;19. Via Chronik der Mauer.</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-box">
+          <div class="pid">P8</div>
+          <div class="glue">Glue photo here</div>
+        </div>
+        <div class="slot-cap"><b>Anti-tank defences</b>Concrete and steel obstacles inside the border strip. Photo: CIA collection (public domain).</div>
+      </div>
+    </article>
+
+    <!-- S10 -->
+    <article class="card">
+      <div class="card-main">
+        <div class="badges">
+          <span class="sid">S10</span>
+          <span class="btype t-stats">Research database</span>
+          <span class="byear">Published 2017&ndash;19</span>
+          <span class="bside">Secondary / academic</span>
+        </div>
+        <h3>Victims at the Wall: the official death toll</h3>
+        <div class="origin">A joint research project by the <b>Berlin Wall Foundation</b> and the <b>Centre for Contemporary History (ZZF) Potsdam</b>, funded by the German federal government. Researchers went through border-troop and Stasi files, 1990s trial records, and interviewed families.</div>
+
+        <div class="evidence">
+          <div class="lbl">The evidence</div>
+          <div class="q">&ldquo;Between 1961 and 1989, <em>at least 140 people were killed at the Berlin Wall</em> or died under circumstances directly connected with the GDR border regime. In addition, at least 251 people from East and West died before, during or after controls at Berlin border crossings while travelling.&rdquo;</div>
+          <div class="trans">Altogether 576 cases were recorded and checked. Earlier counts had ranged from 78 to over 200, depending on the criteria used &mdash; this project set a clear definition and tested every case.</div>
+        </div>
+
+        <div class="twocol">
+          <div class="mini">
+            <div class="lbl">What it shows</div>
+            <p>The human cost, established by evidence rather than by either side's propaganda. It also shows <b>how history gets settled</b>: by defining terms and checking records.</p>
+          </div>
+          <div class="mini limits">
+            <div class="lbl">Reliability</div>
+            <p>The most reliable source in this pack. But note it is <b>secondary</b> and it says &ldquo;at least&rdquo; &mdash; it excludes people who died of grief, and figures depend on the definition chosen.</p>
+          </div>
+        </div>
+
+        <div class="cite"><b>Cite as:</b> Hans-Hermann Hertle &amp; Maria Nooke (eds.), <i>The Victims at the Berlin Wall, 1961&ndash;1989: A Biographical Handbook</i>, ZZF Potsdam &amp; Berlin Wall Foundation; database at Chronik der Mauer (figures as of 9 August 2017; 3rd rev. edn., Berlin 2019).</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-fig">
+          <svg viewBox="0 0 200 150" role="img" aria-label="Breakdown of the 140 deaths at the Berlin Wall">
+            <text x="0" y="8" font-size="7.5" font-weight="700" fill="#1a1a1a">140 deaths at the Wall</text>
+            <text x="0" y="16" font-size="5.5" fill="#767676">1961&ndash;1989, by category</text>
+
+            <rect x="0" y="24" width="200" height="13" fill="#a8231f"/>
+            <text x="4" y="33" font-size="6" font-weight="700" fill="#fff">101</text>
+            <text x="20" y="33" font-size="5.2" fill="#fff">Killed or died while trying to escape</text>
+
+            <rect x="0" y="40" width="59.4" height="13" fill="#c25a52"/>
+            <text x="4" y="49" font-size="6" font-weight="700" fill="#fff">30</text>
+            <text x="16" y="49" font-size="5.2" fill="#fff">Not escaping</text>
+
+            <rect x="61.4" y="40" width="15.8" height="13" fill="#4f5a25"/>
+            <text x="64" y="49" font-size="6" font-weight="700" fill="#fff">8</text>
+
+            <rect x="79.2" y="40" width="2" height="13" fill="#3f4a55"/>
+
+            <text x="0" y="62" font-size="5" fill="#4a4a4a"><tspan font-weight="700">8</tspan> on-duty GDR border soldiers &nbsp;&middot;&nbsp; <tspan font-weight="700">1</tspan> Soviet soldier</text>
+
+            <line x1="0" y1="70" x2="200" y2="70" stroke="#c9c4bb" stroke-width=".6"/>
+
+            <text x="0" y="80" font-size="6.5" font-weight="700" fill="#1a1a1a">Also recorded</text>
+            <text x="0" y="89" font-size="5.4" fill="#4a4a4a"><tspan font-weight="700" fill="#a8231f">251</tspan> died at border crossing controls</text>
+            <text x="0" y="97" font-size="5.4" fill="#4a4a4a"><tspan font-weight="700">576</tspan> total cases investigated and checked</text>
+
+            <line x1="0" y1="104" x2="200" y2="104" stroke="#c9c4bb" stroke-width=".6"/>
+
+            <text x="0" y="114" font-size="6.5" font-weight="700" fill="#1a1a1a">Two of the victims</text>
+            <text x="0" y="123" font-size="5.2" fill="#4a4a4a"><tspan font-weight="700">Peter Fechter</tspan>, 18 &mdash; shot 17 Aug 1962 (see S5)</text>
+            <text x="0" y="131" font-size="5.2" fill="#4a4a4a"><tspan font-weight="700">Chris Gueffroy</tspan>, 20 &mdash; shot 5 Feb 1989,</text>
+            <text x="0" y="138" font-size="5.2" fill="#4a4a4a">the last person shot dead at the Wall</text>
+            <text x="0" y="147" font-size="4.6" fill="#767676">Source: Berlin Wall Foundation / ZZF Potsdam</text>
+          </svg>
+        </div>
+        <div class="slot-cap">Breakdown drawn from the figures in S10.</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ============ DIAGRAMS ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>Diagrams</h2>
+    <div class="tag">Cut these out &mdash; page 8</div>
+  </div>
+
+  <div class="figblock">
+    <h3>What &ldquo;the Wall&rdquo; actually was</h3>
+    <div class="figsub">People imagine one wall. It was a system roughly 30&ndash;100&nbsp;m deep, designed so that anyone who got past the first fence could still be seen, tracked and shot before reaching the last one. East is on the left; freedom is on the right.</div>
+
+    <svg viewBox="0 0 560 175" role="img" aria-label="Cross-section of the Berlin Wall border strip">
+      <rect x="0" y="112" width="560" height="30" fill="#efece6"/>
+      <rect x="0" y="142" width="560" height="4" fill="#1a1a1a"/>
+
+      <!-- East label -->
+      <text x="4" y="14" font-size="10" font-weight="700" fill="#a8231f">EAST BERLIN (GDR)</text>
+      <text x="556" y="14" font-size="10" font-weight="700" fill="#1f4e79" text-anchor="end">WEST BERLIN</text>
+
+      <!-- hinterland wall -->
+      <rect x="30" y="72" width="7" height="40" fill="#8f8a82"/>
+      <text x="33" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">Hinterland</text>
+      <text x="33" y="169" font-size="7" fill="#4a4a4a" text-anchor="middle">wall</text>
+
+      <!-- signal fence -->
+      <line x1="86" y1="66" x2="86" y2="112" stroke="#5a5a5a" stroke-width="2"/>
+      <g stroke="#8f8a82" stroke-width=".8">
+        <line x1="78" y1="74" x2="94" y2="74"/><line x1="78" y1="84" x2="94" y2="84"/>
+        <line x1="78" y1="94" x2="94" y2="94"/><line x1="78" y1="104" x2="94" y2="104"/>
+      </g>
+      <text x="86" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">Signal fence</text>
+      <text x="86" y="169" font-size="7" fill="#767676" text-anchor="middle">127.5 km</text>
+
+      <!-- dog run -->
+      <rect x="112" y="100" width="46" height="12" fill="#e2ddd3"/>
+      <text x="135" y="94" font-size="7" fill="#4a4a4a" text-anchor="middle">Dog run</text>
+      <text x="135" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">Guard dogs</text>
+
+      <!-- watchtower -->
+      <rect x="176" y="46" width="16" height="66" fill="#6f6a62"/>
+      <rect x="169" y="34" width="30" height="14" fill="#4a4a4a"/>
+      <circle cx="205" cy="41" r="4" fill="#d8b23a"/>
+      <line x1="199" y1="41" x2="232" y2="30" stroke="#d8b23a" stroke-width="1.2" stroke-dasharray="3 2"/>
+      <text x="184" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">Watchtower</text>
+      <text x="184" y="169" font-size="7" fill="#767676" text-anchor="middle">302 of them</text>
+
+      <!-- patrol road -->
+      <rect x="222" y="104" width="70" height="8" fill="#c9c4bb"/>
+      <g stroke="#fff" stroke-width="1.2">
+        <line x1="230" y1="108" x2="240" y2="108"/><line x1="250" y1="108" x2="260" y2="108"/>
+        <line x1="270" y1="108" x2="280" y2="108"/>
+      </g>
+      <text x="257" y="98" font-size="7" fill="#4a4a4a" text-anchor="middle">Patrol road (Kolonnenweg)</text>
+      <text x="257" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">124.3 km, 7 m wide</text>
+
+      <!-- floodlights -->
+      <rect x="308" y="60" width="4" height="52" fill="#6f6a62"/>
+      <rect x="302" y="55" width="16" height="6" fill="#4a4a4a"/>
+      <path d="M302 61 L286 112 L334 112 Z" fill="#f5eeca" opacity=".65"/>
+      <text x="310" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">Floodlights</text>
+
+      <!-- anti vehicle trench -->
+      <path d="M348 112 L358 132 L386 132 L396 112 Z" fill="#d6d0c4"/>
+      <text x="372" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">Anti-vehicle</text>
+      <text x="372" y="169" font-size="7" fill="#4a4a4a" text-anchor="middle">trench &mdash; 105.5 km</text>
+
+      <!-- raked sand -->
+      <rect x="410" y="104" width="60" height="8" fill="#efe6d2"/>
+      <g stroke="#d8cdb2" stroke-width=".7">
+        <line x1="416" y1="104" x2="416" y2="112"/><line x1="426" y1="104" x2="426" y2="112"/>
+        <line x1="436" y1="104" x2="436" y2="112"/><line x1="446" y1="104" x2="446" y2="112"/>
+        <line x1="456" y1="104" x2="456" y2="112"/><line x1="466" y1="104" x2="466" y2="112"/>
+      </g>
+      <text x="440" y="98" font-size="7" fill="#4a4a4a" text-anchor="middle">Raked sand &mdash; shows footprints</text>
+      <text x="440" y="160" font-size="7" fill="#4a4a4a" text-anchor="middle">&ldquo;Death strip&rdquo;</text>
+
+      <!-- outer wall -->
+      <rect x="496" y="58" width="12" height="54" fill="#3f4a55"/>
+      <ellipse cx="502" cy="58" rx="9" ry="4" fill="#6b7784"/>
+      <text x="492" y="46" font-size="7" fill="#1a1a1a" text-anchor="end">3.6 m high</text>
+      <text x="492" y="55" font-size="7" fill="#767676" text-anchor="end">smooth pipe on top</text>
+      <text x="502" y="160" font-size="7" font-weight="700" fill="#1a1a1a" text-anchor="middle">The Wall</text>
+      <text x="502" y="169" font-size="7" fill="#767676" text-anchor="middle">106 km of concrete</text>
+
+      <!-- graffiti hint on west face -->
+      <g fill="#a8231f" opacity=".5">
+        <rect x="508" y="66" width="2" height="12"/><rect x="508" y="82" width="2" height="9"/>
+      </g>
+    </svg>
+
+    <div class="numgrid">
+      <div class="num"><div class="v">155 km</div><div class="k">Total border around West Berlin</div></div>
+      <div class="num"><div class="v">43.1 km</div><div class="k">Running through the city itself</div></div>
+      <div class="num"><div class="v">302</div><div class="k">Watchtowers</div></div>
+      <div class="num"><div class="v">28 yrs</div><div class="k">1961&ndash;1989</div></div>
+    </div>
+    <div class="figsrc"><b>Source for the measurements:</b> Berlin Wall Foundation (Stiftung Berliner Mauer) border-installation figures, as summarised in the Berlin Wall reference data. Diagram drawn for this project &mdash; it is a labelled diagram, not a photograph.</div>
+  </div>
+
+  <div class="figblock">
+    <h3>Why West Berlin was the problem</h3>
+    <div class="figsub">Berlin was split into four occupation sectors in 1945. The three Western sectors became West Berlin &mdash; an island of the West sitting about 160&nbsp;km inside communist East Germany. Until 1961 anyone in East Germany could travel to East Berlin, walk across a street, and be in the West.</div>
+
+    <svg viewBox="0 0 560 132" role="img" aria-label="Map of divided Berlin inside East Germany">
+      <rect x="0" y="0" width="230" height="132" fill="#f2efe9" stroke="#c9c4bb"/>
+      <text x="10" y="16" font-size="9" font-weight="700" fill="#4a4a4a">EAST GERMANY (GDR)</text>
+      <text x="10" y="27" font-size="7" fill="#767676">West Berlin lay ~160 km inside it</text>
+      <circle cx="150" cy="72" r="30" fill="#fff" stroke="#a8231f" stroke-width="2"/>
+      <text x="150" y="70" font-size="7" font-weight="700" fill="#a8231f" text-anchor="middle">BERLIN</text>
+      <text x="150" y="80" font-size="6" fill="#4a4a4a" text-anchor="middle">(enlarged &rarr;)</text>
+      <path d="M60 110 L120 90" stroke="#8f8a82" stroke-width="1" stroke-dasharray="3 2"/>
+      <text x="18" y="118" font-size="6.5" fill="#767676">Hamburg / Bonn &larr; 160 km</text>
+
+      <line x1="245" y1="8" x2="245" y2="124" stroke="#c9c4bb" stroke-width="1"/>
+
+      <!-- enlarged berlin -->
+      <g transform="translate(262,6)">
+        <rect x="0" y="0" width="290" height="120" fill="#fdfcfa" stroke="#c9c4bb"/>
+        <!-- east sector -->
+        <path d="M150 0 L290 0 L290 120 L150 120 Z" fill="#f7e4e3"/>
+        <!-- west sectors -->
+        <path d="M0 0 L150 0 L150 40 L0 40 Z" fill="#e9f0f7"/>
+        <path d="M0 40 L150 40 L150 80 L0 80 Z" fill="#eef4fa"/>
+        <path d="M0 80 L150 80 L150 120 L0 120 Z" fill="#e4edf6"/>
+
+        <text x="52" y="24" font-size="7.5" font-weight="700" fill="#1f4e79">FRENCH SECTOR</text>
+        <text x="52" y="64" font-size="7.5" font-weight="700" fill="#1f4e79">BRITISH SECTOR</text>
+        <text x="52" y="104" font-size="7.5" font-weight="700" fill="#1f4e79">US SECTOR</text>
+        <text x="196" y="24" font-size="7.5" font-weight="700" fill="#a8231f">SOVIET SECTOR</text>
+        <text x="196" y="35" font-size="7" fill="#a8231f">(East Berlin)</text>
+
+        <text x="10" y="115" font-size="7" font-weight="700" fill="#1f4e79">WEST BERLIN</text>
+
+        <!-- the wall -->
+        <line x1="150" y1="0" x2="150" y2="120" stroke="#1a1a1a" stroke-width="3.5"/>
+        <g fill="#1a1a1a">
+          <rect x="145" y="10" width="10" height="3"/><rect x="145" y="40" width="10" height="3"/>
+          <rect x="145" y="70" width="10" height="3"/><rect x="145" y="100" width="10" height="3"/>
+        </g>
+        <text x="156" y="58" font-size="7" font-weight="700" fill="#1a1a1a">THE WALL</text>
+        <text x="156" y="67" font-size="6.5" fill="#4a4a4a">from 13 Aug 1961</text>
+
+        <!-- landmarks -->
+        <circle cx="150" cy="46" r="3" fill="#d8b23a" stroke="#1a1a1a" stroke-width=".8"/>
+        <text x="100" y="49" font-size="6.5" fill="#4a4a4a" text-anchor="end">Brandenburg Gate</text>
+        <line x1="103" y1="46" x2="146" y2="46" stroke="#8f8a82" stroke-width=".6"/>
+
+        <circle cx="150" cy="88" r="3" fill="#fff" stroke="#a8231f" stroke-width="1.2"/>
+        <text x="100" y="91" font-size="6.5" fill="#4a4a4a" text-anchor="end">Checkpoint Charlie</text>
+        <line x1="103" y1="88" x2="146" y2="88" stroke="#8f8a82" stroke-width=".6"/>
+      </g>
+    </svg>
+    <div class="figsrc"><b>Note:</b> a simplified schematic to show the political structure, not an accurate street map. The real Wall ran a winding 43.1&nbsp;km through the city and then a further 111.9&nbsp;km around West Berlin's outer edge.</div>
+  </div>
+</section>
+
+
+<!-- ============ TIMELINE + MASTER CHART ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>Timeline &amp; master chart</h2>
+    <div class="tag">Your plan &mdash; page 9</div>
+  </div>
+
+  <div class="figblock" style="margin-bottom:5mm;">
+    <h3>Where each source sits in the story</h3>
+    <div class="figsub">The numbers show where each of your ten sources falls on the timeline.</div>
+    <svg viewBox="0 0 560 96" role="img" aria-label="Timeline of the Berlin Wall with source positions">
+      <line x1="10" y1="52" x2="550" y2="52" stroke="#1a1a1a" stroke-width="1.5"/>
+      <g font-size="7" fill="#4a4a4a" text-anchor="middle">
+        <g stroke="#1a1a1a" stroke-width="1">
+          <line x1="26" y1="48" x2="26" y2="56"/>
+          <line x1="108" y1="48" x2="108" y2="56"/>
+          <line x1="150" y1="48" x2="150" y2="56"/>
+          <line x1="196" y1="48" x2="196" y2="56"/>
+          <line x1="330" y1="48" x2="330" y2="56"/>
+          <line x1="466" y1="48" x2="466" y2="56"/>
+          <line x1="516" y1="48" x2="516" y2="56"/>
+          <line x1="546" y1="48" x2="546" y2="56"/>
+        </g>
+        <text x="26" y="68">1945</text>
+        <text x="108" y="68">Jun 1961</text>
+        <text x="150" y="68">13 Aug 1961</text>
+        <text x="196" y="68">1962</text>
+        <text x="330" y="68">1963</text>
+        <text x="466" y="68">1987</text>
+        <text x="516" y="68">9 Nov 1989</text>
+        <text x="546" y="68">1990</text>
+      </g>
+      <g font-size="6.5" fill="#1a1a1a" text-anchor="middle">
+        <text x="26" y="80">Berlin split</text>
+        <text x="26" y="88">into 4 sectors</text>
+        <text x="150" y="80" font-weight="700" fill="#a8231f">WALL BUILT</text>
+        <text x="516" y="80" font-weight="700" fill="#1f4e79">WALL OPENS</text>
+        <text x="546" y="88">Reunification</text>
+      </g>
+      <!-- source markers -->
+      <g font-size="6.5" font-weight="700" fill="#fff" text-anchor="middle">
+        <rect x="96" y="26" width="13" height="11" fill="#1f4e79"/><text x="102.5" y="34">S1</text>
+        <rect x="124" y="26" width="13" height="11" fill="#5b3a86"/><text x="130.5" y="34">S2</text>
+        <rect x="152" y="26" width="13" height="11" fill="#8a5a00"/><text x="158.5" y="34">S3</text>
+        <rect x="168" y="12" width="13" height="11" fill="#a8231f"/><text x="174.5" y="20">S4</text>
+        <rect x="196" y="26" width="13" height="11" fill="#4f5a25"/><text x="202.5" y="34">S5</text>
+        <rect x="324" y="26" width="13" height="11" fill="#1f4e79"/><text x="330.5" y="34">S6</text>
+        <rect x="460" y="26" width="13" height="11" fill="#1f4e79"/><text x="466.5" y="34">S8</text>
+        <rect x="510" y="26" width="13" height="11" fill="#5b3a86"/><text x="516.5" y="34">S9</text>
+      </g>
+      <g font-size="6.5" font-weight="700" fill="#fff" text-anchor="middle">
+        <rect x="255" y="6" width="13" height="11" fill="#14625e"/><text x="261.5" y="14">S7</text>
+        <rect x="271" y="6" width="13" height="11" fill="#14625e"/><text x="277.5" y="14">S10</text>
+      </g>
+      <text x="289" y="15" font-size="6" fill="#767676">= cover the whole period (written later)</text>
+    </svg>
+  </div>
+
+  <div class="kicker" style="margin-bottom:2mm;">The master chart &mdash; use this as your layout plan</div>
+  <table class="chart">
+    <thead>
+      <tr>
+        <th>#</th><th>Source type</th><th>Year</th><th>Whose side</th><th>What it proves</th><th>P / S</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="c-id">S1</td><td><span class="pill t-speech">Press conference</span></td><td class="c-yr">15 Jun 1961</td><td>East Germany</td><td>The leader publicly denied a wall was planned &mdash; 59 days before building one.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S2</td><td><span class="pill t-gov">Secret record</span></td><td class="c-yr">1 Aug 1961</td><td>USSR / GDR</td><td>The real motive in private: skilled workers were fleeing and the economy was failing.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S3</td><td><span class="pill t-news">Newspaper</span></td><td class="c-yr">14 Aug 1961</td><td>East Germany</td><td>The official public story: the Wall was a normal, defensive border control.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S4</td><td><span class="pill t-prop">Propaganda</span></td><td class="c-yr">1961</td><td>East Germany</td><td>How the state sold the Wall to its own people &mdash; as a victory over &ldquo;spies&rdquo;.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S5</td><td><span class="pill t-report">Military report</span></td><td class="c-yr">17 Aug 1962</td><td>East Germany</td><td>The shoot-to-kill order in practice: 35 shots, an 18-year-old left to die.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S6</td><td><span class="pill t-speech">Speech</span></td><td class="c-yr">26 Jun 1963</td><td>USA / West</td><td>The Western argument: a state that must lock people in has already lost.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S7</td><td><span class="pill t-stats">Statistics</span></td><td class="c-yr">1949&ndash;90</td><td>Neutral / research</td><td>The Wall worked: emigration fell about 90% in one year, 1961 to 1962.</td><td>Secondary</td></tr>
+      <tr><td class="c-id">S8</td><td><span class="pill t-speech">Speech</span></td><td class="c-yr">12 Jun 1987</td><td>USA / West</td><td>26 years on, the Wall was still a public weapon in the Cold War argument.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S9</td><td><span class="pill t-gov">Government decree</span></td><td class="c-yr">9 Nov 1989</td><td>East Germany</td><td>The Wall opened partly by accident &mdash; the decree was meant to start a day later.</td><td>Primary</td></tr>
+      <tr><td class="c-id">S10</td><td><span class="pill t-stats">Research database</span></td><td class="c-yr">2017&ndash;19</td><td>Neutral / research</td><td>The human cost, established by evidence: at least 140 people killed at the Wall.</td><td>Secondary</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footnote">
+    <b>A good line to finish your chart with:</b> the strongest thing about this set of sources is that S1 and S2 are <i>both East German</i> &mdash; and they contradict each other. What a government said in public (S1, S3, S4) and what it said in private (S2, S5, S9) are two different histories. That contrast is the argument your chart can make.
+  </div>
+</section>
+
+
+<!-- ============ BIBLIOGRAPHY ============ -->
+<section class="sheet">
+  <div class="pagehead">
+    <h2>Where every source came from</h2>
+    <div class="tag">Full source list &mdash; page 10</div>
+  </div>
+  <div class="intro-line">Every one of these is a real, publicly accessible document. Type the address into a browser to see the original for yourself.</div>
+
+  <ol class="bib">
+    <li><b>Ulbricht press conference, 15 June 1961.</b> Transcript printed in <i>Neues Deutschland</i>, 16 June 1961.
+      <span class="url">germanhistorydocs.org/en/two-germanies-1961-1989/walter-ulbrichts-speech-on-the-berlin-question-june-15-1961</span>
+      <span class="url">berlingeschichte.de/bms/bmstxt01/0106dokb.htm &nbsp;(German transcript of the exchange)</span></li>
+
+    <li><b>Khrushchev&ndash;Ulbricht conversation, 1 August 1961.</b> Wilson Center Digital Archive, International History Declassified.
+      <span class="url">digitalarchive.wilsoncenter.org/document/notes-conversation-comrade-ns-khrushchev-comrade-w-ulbricht-1-august-1961</span></li>
+
+    <li><b><i>Neues Deutschland</i> front page, 14 August 1961.</b> German History in Documents and Images.
+      <span class="url">germanhistorydocs.org/de/zwei-deutsche-staaten-1961-1989/kommunistische-rechtfertigung-der-teilung-berlins-14-august-1961</span>
+      <span class="url">nd-archiv.de/ausgabe/1961-08-14 &nbsp;(scanned original newspaper)</span></li>
+
+    <li><b>SED pamphlet, 1961 &mdash; &ldquo;In Praise of the Berlin Wall&rdquo;.</b> German Propaganda Archive, Calvin University.
+      <span class="url">research.calvin.edu/german-propaganda-archive/schlugs13.htm</span></li>
+
+    <li><b>Border brigade commander's report on Peter Fechter, 17 August 1962.</b> BArch, VA-07/16930. Chronik der Mauer.
+      <span class="url">chronik-der-mauer.de/todesopfer/171497/</span>
+      <span class="url">chronik-der-mauer.de/en/victims/180502/fechter-peter &nbsp;(full account in English)</span></li>
+
+    <li><b>Kennedy, Rudolph Wilde Platz, 26 June 1963.</b> US National Archives; transcript at the Miller Center; audio at the JFK Library.
+      <span class="url">millercenter.org/the-presidency/presidential-speeches/june-26-1963-ich-bin-ein-berliner-speech</span>
+      <span class="url">jfklibrary.org/archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626</span></li>
+
+    <li><b>East&ndash;West German migration statistics, 1949&ndash;1990.</b> German History in Documents and Images.
+      <span class="url">germanhistorydocs.org/en/two-germanies-1961-1989/east-west-german-immigration-statistics-1961-1990</span>
+      <span class="url">germanhistorydocs.org/en/occupation-and-the-emergence-of-two-states-1945-1961/refugee-movement-1950-1963</span></li>
+
+    <li><b>Reagan, Brandenburg Gate, 12 June 1987.</b> Ronald Reagan Presidential Library; also National Archives <i>Prologue</i>.
+      <span class="url">reaganlibrary.gov/archives/speech/remarks-east-west-relations-brandenburg-gate-west-berlin</span>
+      <span class="url">archives.gov/publications/prologue/2007/summer/berlin.html</span></li>
+
+    <li><b>GDR Council of Ministers travel decree, 9 November 1989 (&ldquo;Schabowski's note&rdquo;).</b> BStU, MfS, Arbeitsbereich Neiber Nr. 553. Chronik der Mauer.
+      <span class="url">chronik-der-mauer.de/en/material/180400/press-conference-with-guenter-schabowski-9-november-1989</span></li>
+
+    <li><b>Victims at the Berlin Wall, 1961&ndash;1989.</b> Hertle &amp; Nooke (eds.), ZZF Potsdam &amp; Berlin Wall Foundation.
+      <span class="url">chronik-der-mauer.de/en/victims/</span>
+      <span class="url">stiftung-berliner-mauer.de/en/topics/victims-berlin-wall</span></li>
+  </ol>
+
+  <div class="hair" style="margin:3mm 0;"></div>
+  <div class="kicker" style="margin-bottom:2mm;">Photographs</div>
+  <div style="font-size:8.1pt; color:var(--ink2); line-height:1.45;">
+    All eight photographs in <b>photo-sheet.html</b> come from <b>Wikimedia Commons</b>, which lists the photographer, date and copyright licence for each one. They are either <b>public domain</b> (the CIA photographs &mdash; works of the US federal government) or <b>CC&nbsp;BY-SA</b> (the German Federal Archive / Bundesarchiv photographs, which must be credited). The photographer and licence are printed under each photo on the sheet, so you can copy them straight onto your chart.
+    <br><br>
+    <b>One photo you may have seen that is not included:</b> the famous image of Peter Fechter dying in the border strip is held by the Berlin police historical collection and is still in copyright, so it cannot be reproduced here. You can view it on the Chronik der Mauer page listed under S5.
+  </div>
+
+  <div class="footnote">
+    Compiled 2026. Every quotation in this pack was checked against the archive page listed above. German quotations are given in the original with an English translation underneath, so you can show your teacher you worked from the original document.
+  </div>
+</section>
+
+</body>
+</html>
