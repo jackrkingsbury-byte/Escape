@@ -1,0 +1,86 @@
+{
+  "name": "StormIsle",
+  "tree": {
+    "$className": "DataModel",
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Installer": {
+        "$className": "Script",
+        "$path": "src/server/Installer.server.lua"
+      },
+      "GameManager": {
+        "$className": "Script",
+        "$path": "src/server/GameManager.server.lua"
+      },
+      "PlayerManager": {
+        "$className": "Script",
+        "$path": "src/server/PlayerManager.server.lua"
+      },
+      "MonetizationService": {
+        "$className": "Script",
+        "$path": "src/server/MonetizationService.server.lua"
+      },
+      "StormManager": {
+        "$className": "Script",
+        "$path": "src/server/StormManager.server.lua"
+      },
+      "CombatSystem": {
+        "$className": "Script",
+        "$path": "src/server/CombatSystem.server.lua"
+      },
+      "ResourceSpawner": {
+        "$className": "Script",
+        "$path": "src/server/ResourceSpawner.server.lua"
+      }
+    },
+
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Shared": {
+        "$className": "Folder",
+        "GameConfig": {
+          "$className": "ModuleScript",
+          "$path": "src/shared/GameConfig.lua"
+        },
+        "ItemData": {
+          "$className": "ModuleScript",
+          "$path": "src/shared/ItemData.lua"
+        }
+      },
+      "Remotes": {
+        "$className": "Folder",
+        "UpdateHUD": { "$className": "RemoteEvent" },
+        "GamePhaseChanged": { "$className": "RemoteEvent" },
+        "StormUpdate": { "$className": "RemoteEvent" },
+        "ShowNotification": { "$className": "RemoteEvent" },
+        "UpdateInventory": { "$className": "RemoteEvent" },
+        "CraftItem": { "$className": "RemoteEvent" },
+        "OpenShop": { "$className": "RemoteEvent" },
+        "PlayerDied": { "$className": "RemoteEvent" },
+        "PlayerWon": { "$className": "RemoteEvent" },
+        "UpdateLeaderboard": { "$className": "RemoteEvent" },
+        "PurchaseProduct": { "$className": "RemoteFunction" }
+      }
+    },
+
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "HUD": {
+          "$className": "LocalScript",
+          "$path": "src/client/HUD.client.lua"
+        },
+        "CraftingGui": {
+          "$className": "LocalScript",
+          "$path": "src/client/CraftingGui.client.lua"
+        },
+        "ShopGui": {
+          "$className": "LocalScript",
+          "$path": "src/client/ShopGui.client.lua"
+        }
+      }
+    }
+  }
+}
