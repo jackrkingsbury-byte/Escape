@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Printable source evidence pack on the Berlin Wall, 1961-1989: twelve cited primary and secondary sources with archive photographs, definitions and a source-type chart.">
+<meta name="hz:slide-selector" content=".page">
+<title>The Berlin Wall 1961–1989 — Source Evidence Pack</title>
+<style>
+  :root{
+    --paper:#F2F1EC;
+    --card:#FBFAF7;
+    --ink:#1A1B1E;
+    --ink-soft:#4A4C51;
+    --concrete:#6E7076;
+    --rule:#C7C4BB;
+    --signal:#A82D1C;
+    --stamp:#2B4A69;
+    --ochre:#8A6A24;
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#5C5E63;}
+  .page{
+    width:794px;height:1123px;margin:0 auto 24px;padding:46px 50px;
+    background:var(--paper);color:var(--ink);
+    font-family:var(--serif);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+
+  /* ---------- shared type ---------- */
+  .eyebrow{
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--concrete);
+  }
+  .rule{height:2px;background:var(--ink);}
+  .rule-thin{height:1px;background:var(--rule);}
+  h2.sect{
+    font-family:var(--sans);font-size:22px;font-weight:700;letter-spacing:-.01em;
+    margin:0;text-wrap:balance;
+  }
+  p{margin:0;line-height:1.5;}
+
+  /* ---------- running header / footer ---------- */
+  .runhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .runfoot{
+    margin-top:auto;padding-top:10px;border-top:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--concrete);
+    text-transform:uppercase;
+  }
+
+  /* ---------- cover ---------- */
+  .cover{justify-content:space-between;}
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .stamp-box{
+    border:2px solid var(--signal);color:var(--signal);
+    font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 10px;line-height:1.5;text-align:right;
+  }
+  .cover-title{
+    font-family:var(--sans);font-weight:700;font-size:76px;line-height:.92;
+    letter-spacing:-.035em;margin:0;text-wrap:balance;
+  }
+  .cover-years{
+    font-family:var(--mono);font-size:34px;letter-spacing:.14em;color:var(--signal);
+    margin-top:14px;
+  }
+  .cover-sub{
+    font-size:17px;line-height:1.5;color:var(--ink-soft);max-width:56ch;margin-top:20px;
+  }
+  .divider-wall{display:flex;gap:3px;margin:26px 0;}
+  .divider-wall span{height:26px;flex:1;background:var(--concrete);opacity:.5;}
+  .divider-wall span:nth-child(3n){opacity:.28;}
+  .divider-wall span:nth-child(4n){opacity:.66;}
+  .keyfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .kf{border-top:2px solid var(--ink);padding-top:9px;}
+  .kf .n{
+    font-family:var(--sans);font-weight:700;font-size:29px;letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums;line-height:1;
+  }
+  .kf .l{font-family:var(--mono);font-size:9px;line-height:1.45;color:var(--concrete);
+    text-transform:uppercase;letter-spacing:.08em;margin-top:7px;}
+  .namebox{
+    border:1px solid var(--ink);padding:14px 16px;display:grid;
+    grid-template-columns:1fr 1fr;gap:8px 26px;
+  }
+  .namebox div{
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--concrete);border-bottom:1px solid var(--rule);padding-bottom:15px;
+  }
+
+  /* ---------- definitions ---------- */
+  .defgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px 20px;margin-top:16px;}
+  .def{border-left:3px solid var(--concrete);padding:2px 0 2px 11px;}
+  .def dt{
+    font-family:var(--sans);font-weight:700;font-size:13.5px;letter-spacing:-.005em;
+  }
+  .def .ger{font-family:var(--mono);font-size:9.5px;color:var(--signal);letter-spacing:.06em;}
+  .def dd{margin:4px 0 0;font-size:12.5px;line-height:1.44;color:var(--ink-soft);}
+
+  /* ---------- evidence cards ---------- */
+  .cards{display:flex;flex-direction:column;gap:16px;margin-top:14px;flex:1;}
+  .card{
+    background:var(--card);border:1px solid var(--rule);
+    display:flex;flex-direction:column;flex:1;
+    border-top:3px solid var(--ink);
+  }
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;
+    gap:14px;padding:11px 14px 9px;border-bottom:1px solid var(--rule);}
+  .card-no{
+    font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--signal);
+    text-transform:uppercase;
+  }
+  .card-title{font-family:var(--sans);font-weight:700;font-size:15.5px;line-height:1.24;
+    margin-top:5px;text-wrap:balance;}
+  .type-chip{
+    font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid var(--stamp);color:var(--stamp);padding:4px 7px;white-space:nowrap;
+    text-align:center;line-height:1.5;flex-shrink:0;
+  }
+  .type-chip b{display:block;font-size:11px;letter-spacing:.06em;}
+  .card-body{display:flex;gap:13px;padding:11px 14px 12px;flex:1;}
+  .photowrap{display:flex;flex-direction:column;width:212px;flex-shrink:0;align-self:flex-start;}
+  .photocap{
+    font-family:var(--mono);font-size:7.5px;line-height:1.5;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--concrete);background:#EAE7DE;
+    border:1px solid var(--rule);border-top:none;padding:5px 6px;text-align:center;
+  }
+  .photocap b{color:var(--signal);}
+  .photo{
+    width:100%;background:#DEDBD3;border:1px solid var(--rule);
+    position:relative;display:flex;align-items:center;justify-content:center;
+    align-self:flex-start;overflow:hidden;
+  }
+  .photo .ph-note{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:5px;padding:12px;text-align:center;
+    font-family:var(--mono);font-size:8.5px;line-height:1.5;color:var(--concrete);
+    letter-spacing:.06em;text-transform:uppercase;
+  }
+  .photo img{position:relative;width:100%;display:block;}
+  .card-text{flex:1;display:flex;flex-direction:column;gap:8px;}
+  .meta{font-family:var(--mono);font-size:9px;line-height:1.6;color:var(--ink-soft);}
+  .meta b{color:var(--ink);font-weight:400;}
+  .meta .lbl{color:var(--concrete);letter-spacing:.06em;}
+  .quote{
+    border-left:2px solid var(--signal);padding-left:9px;font-size:12px;line-height:1.42;
+    font-style:italic;color:var(--ink);
+  }
+  .analysis{font-size:12px;line-height:1.44;}
+  .analysis b{background:#EBE6D2;padding:0 2px;}
+  .link{
+    font-family:var(--mono);font-size:8.5px;line-height:1.5;color:var(--stamp);
+    word-break:break-all;border-top:1px dotted var(--rule);padding-top:6px;margin-top:auto;
+  }
+  .cutline{border-top:1px dashed var(--concrete);opacity:.55;}
+
+  /* ---------- books ---------- */
+  .bookgrid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:14px;flex:1;}
+  .book{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--ochre);
+    padding:12px 13px;display:flex;flex-direction:column;gap:9px;}
+  .bookslot{
+    border:2px dashed var(--concrete);height:132px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;text-align:center;padding:10px;
+    font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--concrete);line-height:1.5;background:#EFEDE6;
+  }
+  .bookslot .big{font-size:19px;color:var(--ochre);}
+  .cite{font-size:11.5px;line-height:1.4;}
+  .cite i{font-style:italic;}
+
+  /* ---------- chart ---------- */
+  table{border-collapse:collapse;width:100%;margin-top:12px;}
+  th{
+    font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+    text-align:left;padding:8px 6px;border-bottom:2px solid var(--ink);color:var(--ink);
+    vertical-align:bottom;
+  }
+  td{
+    font-size:10.5px;line-height:1.36;padding:7px 6px;border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  td.yr{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.02em;white-space:nowrap;}
+  td.ty{font-family:var(--mono);font-size:9px;line-height:1.4;}
+  .ps{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;
+    padding:2px 5px;white-space:nowrap;display:inline-block;}
+  .ps.p{border:1px solid var(--signal);color:var(--signal);}
+  .ps.s{border:1px solid var(--stamp);color:var(--stamp);}
+  tbody tr:nth-child(even){background:rgba(0,0,0,.022);}
+
+  /* ---------- timeline ---------- */
+  .tl{display:flex;flex-direction:column;margin-top:12px;}
+  .tl-row{display:flex;gap:14px;padding:7px 0;border-bottom:1px solid var(--rule);}
+  .tl-date{font-family:var(--mono);font-size:10px;color:var(--signal);width:112px;
+    flex-shrink:0;letter-spacing:.04em;padding-top:1px;}
+  .tl-body{font-size:11.5px;line-height:1.42;}
+  .tl-body b{font-family:var(--sans);font-size:11.5px;}
+  .biblio{margin-top:14px;}
+  .biblio li{font-size:10.5px;line-height:1.44;margin-bottom:6px;padding-left:2px;}
+  .biblio ol{margin:8px 0 0;padding-left:18px;}
+  .howto{border:1px solid var(--ink);background:#EBE6D2;padding:12px 14px;margin-top:14px;}
+  .howto p{font-size:11.5px;line-height:1.46;}
+  .howto ol{margin:7px 0 0;padding-left:17px;}
+  .howto li{font-size:11.5px;line-height:1.46;margin-bottom:4px;}
+
+  @page{size:A4;margin:0;}
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;page-break-after:always;}
+  }
+</style>
+</head>
+<body>
+<!-- ============================ PAGE 1 — COVER ============================ -->
+<section class="page cover" data-document-role="page" data-label="Cover">
+  <div class="cover-top">
+    <div class="eyebrow">History — Source Evidence Pack</div>
+    <div class="stamp-box">
+      12 sources · 4 books<br>8 source types<br>All links verified
+    </div>
+  </div>
+
+  <div>
+    <h1 class="cover-title">The Berlin<br>Wall</h1>
+    <div class="cover-years">1961 — 1989</div>
+    <p class="cover-sub">Photographs, newspaper reports, speeches, government files, statistics
+      and a research database — every source below is a real, findable document with the web
+      address printed on it, so each piece of evidence can be checked.</p>
+  </div>
+
+  <div class="divider-wall">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="keyfacts">
+    <div class="kf"><div class="n">2.7m</div><div class="l">Left East Germany<br>1949–1961</div></div>
+    <div class="kf"><div class="n">140</div><div class="l">Killed at the Wall<br>1961–1989</div></div>
+    <div class="kf"><div class="n">28</div><div class="l">Years the city<br>stayed divided</div></div>
+    <div class="kf"><div class="n">155</div><div class="l">Kilometres of<br>barrier around<br>West Berlin</div></div>
+  </div>
+
+  <div class="namebox">
+    <div>Name</div><div>Class</div>
+    <div>Teacher</div><div>Date submitted</div>
+  </div>
+
+  <div class="runfoot"><span>Berlin Wall — Source Evidence Pack</span><span>Page 1 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 2 — DEFINITIONS ============================ -->
+<section class="page" data-document-role="page" data-label="Key words and definitions">
+  <div class="runhead"><div class="eyebrow">Section 1</div><div class="eyebrow">Definitions</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:14px;">Key words you need to use</h2>
+  <p style="font-size:12.5px;color:var(--ink-soft);margin-top:7px;max-width:62ch;">
+    Cut these out and place them down the side of your chart, or keep them as a glossary box.
+    The German term is given where the German word is the one historians actually use.</p>
+
+  <dl class="defgrid">
+    <div class="def"><dt>Berlin Wall <span class="ger">Berliner Mauer</span></dt>
+      <dd>The barrier built by East Germany from 13 August 1961 that sealed West Berlin off from
+        East Berlin and the surrounding East German countryside. About 155 km long in total.</dd></div>
+
+    <div class="def"><dt>East Germany <span class="ger">GDR / DDR</span></dt>
+      <dd>The German Democratic Republic, 1949–1990. A communist state allied to the Soviet Union
+        and run by the SED party.</dd></div>
+
+    <div class="def"><dt>West Germany <span class="ger">FRG / BRD</span></dt>
+      <dd>The Federal Republic of Germany, 1949–1990. A capitalist democracy allied to the USA,
+        Britain and France.</dd></div>
+
+    <div class="def"><dt>Cold War</dt>
+      <dd>The hostility between the Soviet bloc and the Western allies from 1947 to 1991 — fought
+        through spying, propaganda, arms races and proxy wars rather than direct battle.</dd></div>
+
+    <div class="def"><dt>Iron Curtain</dt>
+      <dd>Churchill's 1946 phrase for the closed frontier dividing communist Eastern Europe from
+        the West. The Berlin Wall became its most visible section.</dd></div>
+
+    <div class="def"><dt>Fleeing the republic <span class="ger">Republikflucht</span></dt>
+      <dd>The East German term for leaving the country without permission. Treated as a crime
+        against the state, not as emigration.</dd></div>
+
+    <div class="def"><dt>Checkpoint Charlie</dt>
+      <dd>The crossing point on Friedrichstrasse used by Allied soldiers, diplomats and foreigners.
+        Site of the October 1961 tank stand-off.</dd></div>
+
+    <div class="def"><dt>Death strip <span class="ger">Todesstreifen</span></dt>
+      <dd>The cleared, floodlit ground between the two walls: raked sand, patrol road, watchtowers
+        and guards with orders to shoot.</dd></div>
+
+    <div class="def"><dt>Order to fire <span class="ger">Schießbefehl</span></dt>
+      <dd>The standing instruction to East German border guards to use firearms to stop people
+        crossing. Denied by the GDR at the time; proved from its own files afterwards.</dd></div>
+
+    <div class="def"><dt>Ruling party <span class="ger">SED</span></dt>
+      <dd>The Socialist Unity Party — the only party that really held power in East Germany.
+        Led by Walter Ulbricht, then Erich Honecker.</dd></div>
+
+    <div class="def"><dt>Peaceful Revolution <span class="ger">Die Wende</span></dt>
+      <dd>The mass protests across East Germany in autumn 1989 that forced the government to give
+        way — without the army firing on the crowds.</dd></div>
+
+    <div class="def"><dt>Primary source</dt>
+      <dd>Evidence made <i>at the time</i> by someone who was there — a photograph, a newspaper of
+        that date, a speech, an official file.</dd></div>
+
+    <div class="def"><dt>Secondary source</dt>
+      <dd>Something written <i>later</i> that studies the primary evidence — a history book,
+        a museum database, a documentary.</dd></div>
+
+    <div class="def"><dt>Reunification</dt>
+      <dd>The joining of East and West Germany into one country on 3 October 1990, eleven months
+        after the Wall opened.</dd></div>
+  </dl>
+
+  <div class="runfoot"><span>Definitions</span><span>Page 2 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 3 — SOURCES 1 & 2 ============================ -->
+<section class="page" data-document-role="page" data-label="Sources 1-2: the same morning, two sides">
+  <div class="runhead"><div class="eyebrow">Section 2 — Evidence</div><div class="eyebrow">13 August 1961</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">One morning, photographed by both sides</h2>
+  <p style="font-size:12px;color:var(--ink-soft);margin-top:6px;">
+    Sources 1 and 2 show the <i>same event on the same day</i> — but one was taken for American
+    intelligence and one by the East German state. Compare what each chose to show.</p>
+
+  <div class="cards">
+    <!-- SOURCE 1 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 01</div>
+          <div class="card-title">East German tanks at the Warschauer Bridge</div>
+        </div>
+        <div class="type-chip">Type<b>Photograph</b>Intelligence file</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:150px;">
+            <div class="ph-note"><span>Drop photo 01 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/East_German_Tanks_-_Flickr_-_The_Central_Intelligence_Agency_%281%29.jpg" alt="East German tanks lined up along the Warschauer Bridge in Berlin, 13 August 1961">
+          </div>
+          <div class="photocap"><b>Photo 01</b> — CIA, 13 Aug 1961<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1961</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>13 August</b><br>
+            <span class="lbl">SOURCE</span> <b>CIA / US National Archives</b><br>
+            <span class="lbl">FROM</span> <b>“A City Torn Apart: Building of the Berlin Wall”</b>
+          </div>
+          <p class="analysis">Taken on the first morning of the closure. The GDR sent <b>tanks</b>,
+            not only police — evidence that the government expected resistance and was ready to use
+            military force against its own citizens. But this is an American intelligence photograph,
+            chosen for a US publication: it was selected to show communist aggression, so it is
+            reliable for <i>what happened</i> and less reliable for <i>how it felt</i> to Berliners.</p>
+          <div class="link">archives.gov/files/research/foreign-policy/cold-war/1961-berlin-crisis/berlin-publication.pdf</div>
+        </div>
+      </div>
+    </article>
+
+    <div class="cutline"></div>
+
+    <!-- SOURCE 2 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 02</div>
+          <div class="card-title">Workers' militia sealing the Brandenburg Gate</div>
+        </div>
+        <div class="type-chip">Type<b>Photograph</b>State archive</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:150px;">
+            <div class="ph-note"><span>Drop photo 02 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Bundesarchiv_Bild_183-85458-0002%2C_Berlin%2C_Mauerbau%2C_Kampfgruppen_am_Brandenburger_Tor.jpg" alt="Armed East German workers' militia standing in front of the Brandenburg Gate on 13 August 1961, with water cannon vehicles behind them">
+          </div>
+          <div class="photocap"><b>Photo 02</b> — Bundesarchiv, 13 Aug 1961<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1961</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>13 August</b><br>
+            <span class="lbl">SOURCE</span> <b>German Federal Archives (Bundesarchiv)</b><br>
+            <span class="lbl">REF</span> <b>Bild 183-85458-0002</b> · Photo: Peter Heinz Junge
+          </div>
+          <p class="analysis">An <b>official East German photograph</b>. It shows the armed
+            “combat groups of the working class” with water cannon waiting behind them. Its value is
+            that it comes from the communist side: it shows how the GDR wanted the operation to
+            look — orderly, defensive, and carried out by <i>workers</i> rather than by soldiers.
+            Set against Source 01, it proves that the same event can be photographed to mean two
+            opposite things.</p>
+          <div class="link">commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-85458-0002,_Berlin,_Mauerbau,_Kampfgruppen_am_Brandenburger_Tor.jpg</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Evidence — Sources 01 &amp; 02</span><span>Page 3 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 4 — SOURCES 3 & 4 ============================ -->
+<section class="page" data-document-role="page" data-label="Sources 3-4: newspapers">
+  <div class="runhead"><div class="eyebrow">Section 2 — Evidence</div><div class="eyebrow">Newspapers</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">What the newspapers printed that week</h2>
+  <p style="font-size:12px;color:var(--ink-soft);margin-top:6px;">
+    Two papers from two countries, written before anybody knew a permanent wall would follow.
+    Notice that neither of them uses the word “wall”.</p>
+
+  <div class="cards">
+    <!-- SOURCE 3 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 03</div>
+          <div class="card-title">“Berlin border closed” — <i>The Observer</i></div>
+        </div>
+        <div class="type-chip">Type<b>Newspaper</b>British press</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:146px;">
+            <div class="ph-note"><span>Drop photo 03 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/West_Berliners_-_Flickr_-_The_Central_Intelligence_Agency_%287%29.jpg" alt="Crowds of West Berliners shouting and shaking fists in protest at the closing of the border, 13 August 1961">
+          </div>
+          <div class="photocap"><b>Photo 03</b> — CIA, 13 Aug 1961<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1961</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>13 August</b><br>
+            <span class="lbl">SOURCE</span> <b>The Observer</b>, republished in the Guardian archive
+          </div>
+          <p class="quote">“The East-West Berlin border was closed early to-day. Lorryloads of
+            troops were seen taking up positions along the border near the Brandenburg Gate…”</p>
+          <p class="analysis">Written <b>the same day</b>, in the present tense, by a reporter who
+            did not yet know what he was watching. That is exactly why it is useful: it captures the
+            event as “a border closing”, not as “the Berlin Wall”. The photograph beside it shows the
+            West Berlin reaction the paper describes.</p>
+          <div class="link">theguardian.com/world/from-the-archive-blog/2021/aug/12/berliners-wake-to-a-divided-city-wall-1961</div>
+        </div>
+      </div>
+    </article>
+
+    <div class="cutline"></div>
+
+    <!-- SOURCE 4 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 04</div>
+          <div class="card-title">A neutral country reports — <i>Neue Zürcher Zeitung</i></div>
+        </div>
+        <div class="type-chip">Type<b>Newspaper</b>Neutral country</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:146px;">
+            <div class="ph-note"><span>Drop photo 04 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/West_Berlin_Police_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="West Berlin police pushing back a jeering crowd at the border on 14 August 1961, with the Soviet War Memorial behind">
+          </div>
+          <div class="photocap"><b>Photo 04</b> — CIA, 14 Aug 1961<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1961</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>14 August</b><br>
+            <span class="lbl">SOURCE</span> <b>Neue Zürcher Zeitung</b> (Zurich, Switzerland)<br>
+            <span class="lbl">VIA</span> <b>German History in Documents and Images</b>
+          </div>
+          <p class="quote">“Between Potsdamer Platz and Brandenburg Gate the street was torn up and
+            a stone wall was erected.”</p>
+          <p class="analysis">Switzerland was <b>neutral</b> in the Cold War, so this paper had no
+            government line to follow — which normally makes it more trustworthy. Yet it still calls
+            the closure a “despotic act” and East Germany “Ulbricht's prison state”. Useful proof
+            that <i>neutral does not mean neither side</i>: you should still check the language a
+            source uses.</p>
+          <div class="link">germanhistorydocs.org/en/two-germanies-1961-1989/a-neutrals-description-of-the-building-of-the-wall-august-14-1961</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Evidence — Sources 03 &amp; 04</span><span>Page 4 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 5 — SOURCES 5 & 6 ============================ -->
+<section class="page" data-document-role="page" data-label="Sources 5-6: wire report and Checkpoint Charlie">
+  <div class="runhead"><div class="eyebrow">Section 2 — Evidence</div><div class="eyebrow">1961</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">When sources disagree, and when they nearly fired</h2>
+
+  <div class="cards">
+    <!-- SOURCE 5 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 05</div>
+          <div class="card-title">UPI wire report: “W. Berlins jeer, E. Germans fire tear gas”</div>
+        </div>
+        <div class="type-chip">Type<b>News agency</b>Wire report</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:132px;">
+            <div class="ph-note"><span>Drop photo 05 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Leipziger_Strasse_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="East German tanks lined up on Leipziger Strasse near the West Berlin border, late August 1961">
+          </div>
+          <div class="photocap"><b>Photo 05</b> — CIA, Aug 1961<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1961</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>14 August</b><br>
+            <span class="lbl">SOURCE</span> <b>United Press International</b> · Joseph R. Fleming
+          </div>
+          <p class="analysis">A reporter filing within hours. He records that the crossing points were
+            cut <b>from 80 to 12</b> and that <b>50,000</b> East Berliners lost their jobs in the West.
+            But the <i>Neue Zürcher Zeitung</i> (Source 04) says <b>60,000</b> commuters, and UPI's own
+            follow-up says 87 crossings were sealed leaving 13. <b>The numbers do not match.</b>
+            That is not a mistake in your research — it is the evidence itself telling you that
+            first reports are counted in a hurry and must be checked against later records.</p>
+          <div class="link">upi.com/Archives/1961/08/14/W-Berlins-jeer-E-Germans-fire-tear-gas/9541408882533/</div>
+        </div>
+      </div>
+    </article>
+
+    <div class="cutline"></div>
+
+    <!-- SOURCE 6 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 06</div>
+          <div class="card-title">American tanks facing East Berlin, Friedrichstrasse</div>
+        </div>
+        <div class="type-chip">Type<b>Photograph</b>Intelligence file</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:132px;">
+            <div class="ph-note"><span>Drop photo 06 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/06_Friedrichstrasse%2C_Berlin_-_Flickr_-_The_Central_Intelligence_Agency.jpg" alt="American tanks positioned on Friedrichstrasse facing East Berlin at Checkpoint Charlie, 25 October 1961">
+          </div>
+          <div class="photocap"><b>Photo 06</b> — CIA, 25 Oct 1961<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1961</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>25 October</b><br>
+            <span class="lbl">SOURCE</span> <b>CIA / US National Archives</b><br>
+            <span class="lbl">PLACE</span> <b>Checkpoint Charlie, Friedrichstrasse</b>
+          </div>
+          <p class="analysis">Ten weeks after the border closed, American and Soviet tanks stood
+            <b>gun barrel to gun barrel</b> for sixteen hours over whether US officials could enter
+            East Berlin. This is the strongest evidence that the Wall was not only a German problem:
+            it was a point where the Cold War came closest to becoming a shooting war in Europe.</p>
+          <div class="link">archives.gov/files/research/foreign-policy/cold-war/1961-berlin-crisis/berlin-publication.pdf</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Evidence — Sources 05 &amp; 06</span><span>Page 5 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 6 — SOURCES 7 & 8 ============================ -->
+<section class="page" data-document-role="page" data-label="Sources 7-8: Kennedy and the painted Wall">
+  <div class="runhead"><div class="eyebrow">Section 2 — Evidence</div><div class="eyebrow">1963 · 1986</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">Living with the Wall</h2>
+
+  <div class="cards">
+    <!-- SOURCE 7 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 07</div>
+          <div class="card-title">President Kennedy: “Ich bin ein Berliner”</div>
+        </div>
+        <div class="type-chip">Type<b>Speech</b>Film archive</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:138px;">
+            <div class="ph-note"><span>Drop photo 07 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/President_John_F._Kennedy_Speaks_at_Rudolph_Wilde_Platz_in_Berlin%2C_Germany_JFKWHP-KN-C29248.jpg" alt="President John F. Kennedy speaking from a platform to a huge crowd at Rudolph Wilde Platz, West Berlin, 26 June 1963">
+          </div>
+          <div class="photocap"><b>Photo 07</b> — JFK Library, 26 Jun 1963<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1963</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>26 June</b><br>
+            <span class="lbl">SOURCE</span> <b>John F. Kennedy Presidential Library</b><br>
+            <span class="lbl">REF</span> <b>USG-2B-1</b> · Rathaus Schöneberg, West Berlin
+          </div>
+          <p class="quote">“Freedom is indivisible, and when one man is enslaved, all are not free.”</p>
+          <p class="analysis">Delivered two years after the Wall went up, to a crowd of hundreds of
+            thousands. Remember what kind of source this is: a <b>political speech</b>, written to
+            reassure West Berliners and to warn Moscow. It is strong evidence of <i>Western policy
+            and morale</i> — it tells you almost nothing about daily life in the East.</p>
+          <div class="link">jfklibrary.org/learn/about-jfk/historic-speeches/remarks-at-the-rudolph-wilde-platz-berlin</div>
+        </div>
+      </div>
+    </article>
+
+    <div class="cutline"></div>
+
+    <!-- SOURCE 8 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 08</div>
+          <div class="card-title">The painted Wall — Thierry Noir at Bethaniendamm</div>
+        </div>
+        <div class="type-chip">Type<b>Photograph</b>Art / culture</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:138px;">
+            <div class="ph-note"><span>Drop photo 08 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Berlinermauer.jpg" alt="A section of the Berlin Wall in Kreuzberg painted with large cartoon-like heads by the artist Thierry Noir in 1986">
+          </div>
+          <div class="photocap"><b>Photo 08</b> — Thierry Noir, 1986<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1986</b><br>
+            <span class="lbl">SOURCE</span> <b>Photograph by Thierry Noir</b>, the artist<br>
+            <span class="lbl">PLACE</span> <b>Bethaniendamm, Berlin-Kreuzberg</b>
+          </div>
+          <p class="analysis">By the 1980s the western face of the Wall was covered in paint. The
+            detail that matters for your argument: <b>only the western side could be painted.</b>
+            West Berliners could walk right up and touch it; anyone approaching from the East faced
+            the death strip and the guards. The graffiti is therefore evidence in itself of
+            <i>which side had freedom of movement</i>.</p>
+          <div class="link">commons.wikimedia.org/wiki/File:Berlinermauer.jpg</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Evidence — Sources 07 &amp; 08</span><span>Page 6 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 7 — SOURCES 9 & 10 ============================ -->
+<section class="page" data-document-role="page" data-label="Sources 9-10: 1987 and the night it opened">
+  <div class="runhead"><div class="eyebrow">Section 2 — Evidence</div><div class="eyebrow">1987 · 1989</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">The end — demanded, then announced by mistake</h2>
+
+  <div class="cards">
+    <!-- SOURCE 9 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 09</div>
+          <div class="card-title">President Reagan at the Brandenburg Gate</div>
+        </div>
+        <div class="type-chip">Type<b>Speech</b>Government photo</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:134px;">
+            <div class="ph-note"><span>Drop photo 09 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Photograph_of_President_Reagan_giving_a_speech_at_the_Berlin_Wall%2C_Brandenburg_Gate%2C_Federal_Republic_of_Germany_-_NARA_-_198585.jpg" alt="President Ronald Reagan giving his speech at the Berlin Wall in front of the Brandenburg Gate, 12 June 1987">
+          </div>
+          <div class="photocap"><b>Photo 09</b> — NARA, 12 Jun 1987<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1987</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>12 June</b><br>
+            <span class="lbl">SOURCE</span> <b>US National Archives</b> · NARA ID 198585<br>
+            <span class="lbl">PHOTO</span> <b>Reagan White House Photographic Office</b>
+          </div>
+          <p class="quote">“Mr Gorbachev, tear down this wall!”</p>
+          <p class="analysis">Spoken two and a half years before the Wall opened. Be careful with
+            this one: it is <b>famous, but historians disagree about how much it changed anything</b>.
+            Most argue the decisive pressure came from East Germans themselves in 1989. A useful
+            source for showing that <i>a memorable quotation is not the same as a cause</i>.</p>
+          <div class="link">commons.wikimedia.org/wiki/File:Photograph_of_President_Reagan_giving_a_speech_at_the_Berlin_Wall,_Brandenburg_Gate,_Federal_Republic_of_Germany_-_NARA_-_198585.jpg</div>
+        </div>
+      </div>
+    </article>
+
+    <div class="cutline"></div>
+
+    <!-- SOURCE 10 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 10</div>
+          <div class="card-title">Schabowski's press conference — “immediately, without delay”</div>
+        </div>
+        <div class="type-chip">Type<b>Transcript</b>Press conference</div>
+      </div>
+      <div class="card-body">
+        <div class="photowrap">
+          <div class="photo" style="height:134px;">
+            <div class="ph-note"><span>Drop photo 10 here</span></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg" alt="Crowds of West and East Germans standing on and around the Berlin Wall at the Brandenburg Gate in November 1989">
+          </div>
+          <div class="photocap"><b>Photo 10</b> — Brandenburg Gate, Nov 1989<br>Download list: page 12</div>
+        </div>
+        <div class="card-text">
+          <div class="meta">
+            <span class="lbl">YEAR</span> <b>1989</b> &nbsp;·&nbsp; <span class="lbl">DATE</span> <b>9 November, 18:53</b><br>
+            <span class="lbl">SOURCE</span> <b>Chronik der Mauer</b> (Federal Agency for Civic Education)<br>
+            <span class="lbl">RECORD</span> <b>Verbatim transcript</b>, from H.-H. Hertle
+          </div>
+          <p class="quote">Journalist: “When does that come into force?” — Schabowski: “That takes
+            effect, as far as I know … that is immediately, without delay.”</p>
+          <p class="analysis">A word-for-word transcript, keeping every “er…” and the sound of him
+            shuffling his papers. It shows the opening of the Wall was <b>announced by accident</b>
+            by a spokesman reading a note he had not been briefed on. Set it against Erich Honecker
+            on 18 January 1989, who said the Wall would “still exist in 50 and even in 100 years”.</p>
+          <div class="link">chronik-der-mauer.de/material/184399/hans-hermann-hertle-9-november-1989-18-00-uhr-schabowskis-auftritt</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Evidence — Sources 09 &amp; 10</span><span>Page 7 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 8 — SOURCES 11 & 12 ============================ -->
+<section class="page" data-document-role="page" data-label="Sources 11-12: numbers">
+  <div class="runhead"><div class="eyebrow">Section 2 — Evidence</div><div class="eyebrow">Statistics</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">The evidence that is counted, not photographed</h2>
+  <p style="font-size:12px;color:var(--ink-soft);margin-top:6px;">
+    Numbers are a source type too — and like every other source, they were produced by someone,
+    for a reason, using a definition they chose.</p>
+
+  <div class="cards">
+    <!-- SOURCE 11 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 11</div>
+          <div class="card-title">East-to-West migration figures, 1949–1990</div>
+        </div>
+        <div class="type-chip">Type<b>Statistics</b>Official table</div>
+      </div>
+      <div class="card-body" style="flex-direction:column;gap:9px;">
+        <div class="meta">
+          <span class="lbl">COVERS</span> <b>1949–1990</b> &nbsp;·&nbsp;
+          <span class="lbl">SOURCE</span> <b>German History in Documents and Images</b>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;">
+          <div style="border-top:2px solid var(--ink);padding-top:6px;">
+            <div style="font-family:var(--sans);font-weight:700;font-size:19px;font-variant-numeric:tabular-nums;">331,390</div>
+            <div style="font-family:var(--mono);font-size:8px;color:var(--concrete);margin-top:3px;letter-spacing:.06em;">1953 — PEAK YEAR</div></div>
+          <div style="border-top:2px solid var(--ink);padding-top:6px;">
+            <div style="font-family:var(--sans);font-weight:700;font-size:19px;font-variant-numeric:tabular-nums;">207,026</div>
+            <div style="font-family:var(--mono);font-size:8px;color:var(--concrete);margin-top:3px;letter-spacing:.06em;">1961 — WALL BUILT</div></div>
+          <div style="border-top:2px solid var(--signal);padding-top:6px;">
+            <div style="font-family:var(--sans);font-weight:700;font-size:19px;font-variant-numeric:tabular-nums;color:var(--signal);">21,365</div>
+            <div style="font-family:var(--mono);font-size:8px;color:var(--concrete);margin-top:3px;letter-spacing:.06em;">1962 — FIRST FULL YEAR</div></div>
+          <div style="border-top:2px solid var(--ink);padding-top:6px;">
+            <div style="font-family:var(--sans);font-weight:700;font-size:19px;font-variant-numeric:tabular-nums;">343,854</div>
+            <div style="font-family:var(--mono);font-size:8px;color:var(--concrete);margin-top:3px;letter-spacing:.06em;">1989 — COLLAPSE</div></div>
+        </div>
+        <p class="analysis">This is the single most powerful piece of evidence in the pack. The fall
+          from <b>207,026 in 1961 to 21,365 in 1962</b> is the Wall's effect expressed as one number:
+          measured against what it was built to do, <i>it worked</i>. The 1989 figure shows the
+          system collapsing <b>before</b> the Wall was opened, not because of it.</p>
+        <div class="link">germanhistorydocs.org/en/two-germanies-1961-1989/east-west-german-immigration-statistics-1961-1990</div>
+      </div>
+    </article>
+
+    <div class="cutline"></div>
+
+    <!-- SOURCE 12 -->
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-no">Source 12</div>
+          <div class="card-title">Victims at the Berlin Wall — the research database</div>
+        </div>
+        <div class="type-chip">Type<b>Database</b>Museum research</div>
+      </div>
+      <div class="card-body" style="flex-direction:column;gap:9px;">
+        <div class="meta">
+          <span class="lbl">COVERS</span> <b>1961–1989</b> &nbsp;·&nbsp;
+          <span class="lbl">PUBLISHED</span> <b>2017 / 2019</b><br>
+          <span class="lbl">SOURCE</span> <b>Chronik der Mauer</b> — Berlin Wall Foundation &amp;
+          Centre for Contemporary History (ZZF), Potsdam
+        </div>
+        <p class="analysis">At least <b>140 people</b> were killed at the Wall: 101 who died trying
+          to cross, 30 who were not fleeing plus one Soviet soldier, and 8 border guards. A further
+          <b>251 travellers</b> died at checkpoints. The team examined <b>576 cases</b> and names
+          every victim. Crucially, earlier counts ranged from <b>78 to over 200</b> — because each
+          organisation counted different things. Use this to argue that even a hard number depends
+          on the definition behind it.</p>
+        <div class="link">chronik-der-mauer.de/en/victims/ &nbsp;·&nbsp; stiftung-berliner-mauer.de/en/topics/victims-berlin-wall</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Evidence — Sources 11 &amp; 12</span><span>Page 8 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 9 — BOOKS ============================ -->
+<section class="page" data-document-role="page" data-label="Book sources - add your own photos">
+  <div class="runhead"><div class="eyebrow">Section 3 — Evidence</div><div class="eyebrow">Books</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">Book sources — stick your own photographs here</h2>
+  <p style="font-size:12px;color:var(--ink-soft);margin-top:6px;max-width:64ch;">
+    These four are the standard works on the Wall. Photograph the cover (and the title page, which
+    shows the publisher and year) and put your picture in the dashed box. The citation underneath is
+    already written out correctly — you only need to add the page number you quote from.</p>
+
+  <div class="bookgrid">
+    <article class="book">
+      <div class="bookslot"><div class="big">+</div><span>Your photo of the book</span><span>Cover or title page</span></div>
+      <div class="meta"><span class="lbl">TYPE</span> <b>Book — narrative history</b> · <span class="lbl">YEAR</span> <b>2006</b></div>
+      <p class="cite">Taylor, Frederick. <i>The Berlin Wall: 13 August 1961 – 9 November 1989.</i>
+        London: Bloomsbury, 2006, p. ___.</p>
+      <p class="analysis" style="font-size:11px;">The most readable full account. Secondary — written
+        45 years later, using archives that were closed at the time.</p>
+    </article>
+
+    <article class="book">
+      <div class="bookslot"><div class="big">+</div><span>Your photo of the book</span><span>Cover or title page</span></div>
+      <div class="meta"><span class="lbl">TYPE</span> <b>Book — academic study</b> · <span class="lbl">YEAR</span> <b>2003</b></div>
+      <p class="cite">Harrison, Hope M. <i>Driving the Soviets up the Wall: Soviet–East German
+        Relations, 1953–1961.</i> Princeton: Princeton University Press, 2003, p. ___.</p>
+      <p class="analysis" style="font-size:11px;">Uses Soviet and East German files to argue Ulbricht
+        pushed Moscow into the Wall — not the other way round.</p>
+    </article>
+
+    <article class="book">
+      <div class="bookslot"><div class="big">+</div><span>Your photo of the book</span><span>Cover or title page</span></div>
+      <div class="meta"><span class="lbl">TYPE</span> <b>Book — reference handbook</b> · <span class="lbl">YEAR</span> <b>2011</b></div>
+      <p class="cite">Hertle, Hans-Hermann and Maria Nooke (eds.). <i>The Victims at the Berlin Wall,
+        1961–1989: A Biographical Handbook.</i> Berlin: Berlin Wall Foundation, 2011, p. ___.</p>
+      <p class="analysis" style="font-size:11px;">The book behind Source 12 — pair the two to show a
+        database and its printed source agreeing.</p>
+    </article>
+
+    <article class="book">
+      <div class="bookslot"><div class="big">+</div><span>Your photo of the book</span><span>Cover or title page</span></div>
+      <div class="meta"><span class="lbl">TYPE</span> <b>Book — narrative history</b> · <span class="lbl">YEAR</span> <b>2014</b></div>
+      <p class="cite">Sarotte, Mary Elise. <i>The Collapse: The Accidental Opening of the Berlin
+        Wall.</i> New York: Basic Books, 2014, p. ___.</p>
+      <p class="analysis" style="font-size:11px;">Reconstructs 9 November 1989 hour by hour — the
+        best partner for the Schabowski transcript in Source 10.</p>
+    </article>
+  </div>
+
+  <div class="runfoot"><span>Book sources</span><span>Page 9 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 10 — THE CHART ============================ -->
+<section class="page" data-document-role="page" data-label="Source chart: type and year">
+  <div class="runhead"><div class="eyebrow">Section 4</div><div class="eyebrow">The source chart</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">Source chart — type, year and what each one proves</h2>
+  <p style="font-size:12px;color:var(--ink-soft);margin-top:6px;">
+    This is the table for your chart. In the P/S column, P means primary (made at the time)
+    and S means secondary (written later).</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:22px;">#</th>
+        <th style="width:150px;">Source</th>
+        <th style="width:92px;">Type of source</th>
+        <th style="width:62px;">Year</th>
+        <th style="width:30px;">P/S</th>
+        <th>What it proves · and its limitation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="yr">01</td><td>East German tanks, Warschauer Bridge — CIA / US National Archives</td>
+        <td class="ty">Photograph<br>(intelligence file)</td><td class="yr">1961</td>
+        <td><span class="ps p">P</span></td>
+        <td>Military force was used from hour one. Chosen for a US publication, so the framing is not neutral.</td></tr>
+
+      <tr><td class="yr">02</td><td>Workers' militia at the Brandenburg Gate — Bundesarchiv</td>
+        <td class="ty">Photograph<br>(state archive)</td><td class="yr">1961</td>
+        <td><span class="ps p">P</span></td>
+        <td>How the GDR wanted the operation to look. Official image — it shows the intended impression, not the full scene.</td></tr>
+
+      <tr><td class="yr">03</td><td>“Berlin border closed” — The Observer</td>
+        <td class="ty">Newspaper<br>(British press)</td><td class="yr">1961</td>
+        <td><span class="ps p">P</span></td>
+        <td>How the event was understood as it happened. Written in hours, so detail is thin.</td></tr>
+
+      <tr><td class="yr">04</td><td>“Abriegelung der DDR gegen den Westen” — Neue Zürcher Zeitung</td>
+        <td class="ty">Newspaper<br>(neutral country)</td><td class="yr">1961</td>
+        <td><span class="ps p">P</span></td>
+        <td>A non-aligned account of the same days. Neutral country, but still strongly worded language.</td></tr>
+
+      <tr><td class="yr">05</td><td>“W. Berlins jeer, E. Germans fire tear gas” — UPI</td>
+        <td class="ty">News agency<br>(wire report)</td><td class="yr">1961</td>
+        <td><span class="ps p">P</span></td>
+        <td>Immediate figures for closures and lost jobs. Its numbers contradict other reports — proof early counts are unreliable.</td></tr>
+
+      <tr><td class="yr">06</td><td>US tanks at Checkpoint Charlie — CIA / US National Archives</td>
+        <td class="ty">Photograph<br>(intelligence file)</td><td class="yr">1961</td>
+        <td><span class="ps p">P</span></td>
+        <td>The crisis nearly became a shooting war. A single moment — it cannot show the negotiations behind it.</td></tr>
+
+      <tr><td class="yr">07</td><td>“Ich bin ein Berliner” — John F. Kennedy Presidential Library</td>
+        <td class="ty">Speech<br>(film archive)</td><td class="yr">1963</td>
+        <td><span class="ps p">P</span></td>
+        <td>Western policy and West Berlin morale. It is persuasion, so it says nothing about life in the East.</td></tr>
+
+      <tr><td class="yr">08</td><td>The painted Wall at Bethaniendamm — Thierry Noir</td>
+        <td class="ty">Photograph<br>(art / culture)</td><td class="yr">1986</td>
+        <td><span class="ps p">P</span></td>
+        <td>Only the western face could be reached and painted. Shows West Berlin's relationship with the Wall, not the East's.</td></tr>
+
+      <tr><td class="yr">09</td><td>“Tear down this wall” at the Brandenburg Gate — US National Archives</td>
+        <td class="ty">Speech<br>(government photo)</td><td class="yr">1987</td>
+        <td><span class="ps p">P</span></td>
+        <td>Western pressure in the late Cold War. Famous, but historians dispute how far it caused anything.</td></tr>
+
+      <tr><td class="yr">10</td><td>Schabowski press conference — Chronik der Mauer</td>
+        <td class="ty">Transcript<br>(press conference)</td><td class="yr">1989</td>
+        <td><span class="ps p">P</span></td>
+        <td>The Wall was opened by an announcement made in error. A transcript of words only — it cannot show what was decided beforehand.</td></tr>
+
+      <tr><td class="yr">11</td><td>East–West migration figures — German History in Documents and Images</td>
+        <td class="ty">Statistics<br>(official table)</td><td class="yr">1949–90</td>
+        <td><span class="ps p">P</span></td>
+        <td>The Wall cut escapes by roughly 90% in one year. Governments collected these, so definitions and gaps vary.</td></tr>
+
+      <tr><td class="yr">12</td><td>Victims at the Berlin Wall — Berlin Wall Foundation &amp; ZZF Potsdam</td>
+        <td class="ty">Database<br>(museum research)</td><td class="yr">2017/19<br>(covers 1961–89)</td>
+        <td><span class="ps s">S</span></td>
+        <td>Names all 140 people killed. Built from primary files, but the total depends on which deaths are counted.</td></tr>
+
+      <tr><td class="yr">13</td><td>Taylor, <i>The Berlin Wall</i></td>
+        <td class="ty">Book<br>(narrative history)</td><td class="yr">2006</td>
+        <td><span class="ps s">S</span></td>
+        <td>The full story in one volume. Written for a general reader, so it simplifies debates.</td></tr>
+
+      <tr><td class="yr">14</td><td>Harrison, <i>Driving the Soviets up the Wall</i></td>
+        <td class="ty">Book<br>(academic study)</td><td class="yr">2003</td>
+        <td><span class="ps s">S</span></td>
+        <td>Argues Ulbricht pushed Moscow, not the reverse. One historian's interpretation — others disagree.</td></tr>
+
+      <tr><td class="yr">15</td><td>Hertle &amp; Nooke, <i>The Victims at the Berlin Wall</i></td>
+        <td class="ty">Book<br>(reference handbook)</td><td class="yr">2011</td>
+        <td><span class="ps s">S</span></td>
+        <td>The evidence base for the death toll. A reference work — it lists rather than argues.</td></tr>
+
+      <tr><td class="yr">16</td><td>Sarotte, <i>The Collapse</i></td>
+        <td class="ty">Book<br>(narrative history)</td><td class="yr">2014</td>
+        <td><span class="ps s">S</span></td>
+        <td>9 November 1989 hour by hour. Focused on a few days, so it cannot explain the whole 28 years.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="runfoot"><span>Source chart</span><span>Page 10 of 12</span></div>
+</section>
+
+<!-- ============================ PAGE 11 — TIMELINE + BIBLIOGRAPHY ============================ -->
+<section class="page" data-document-role="page" data-label="Timeline and bibliography">
+  <div class="runhead"><div class="eyebrow">Section 5</div><div class="eyebrow">Timeline &amp; references</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">Timeline</h2>
+
+  <div class="tl">
+    <div class="tl-row"><div class="tl-date">1949–1961</div><div class="tl-body">
+      <b>About 2.7 million people</b> leave East Germany for the West — roughly one in six of the population.</div></div>
+    <div class="tl-row"><div class="tl-date">12–13 Aug 1961</div><div class="tl-body">
+      <b>“Barbed Wire Sunday.”</b> Just after midnight, troops seal the border with wire and posts. Berlin wakes divided.</div></div>
+    <div class="tl-row"><div class="tl-date">14 Aug 1961</div><div class="tl-body">
+      The <b>Brandenburg Gate is closed.</b> It stays shut until 22 December 1989.</div></div>
+    <div class="tl-row"><div class="tl-date">15 Aug 1961</div><div class="tl-body">
+      Border guard <b>Conrad Schumann</b> jumps the wire into West Berlin — the escape becomes the most reproduced image of the Wall.</div></div>
+    <div class="tl-row"><div class="tl-date">22 Aug 1961</div><div class="tl-body">
+      <b>Ida Siekmann</b> dies jumping from her window on Bernauer Strasse — the first death at the Wall.</div></div>
+    <div class="tl-row"><div class="tl-date">Oct 1961</div><div class="tl-body">
+      <b>Checkpoint Charlie stand-off.</b> American and Soviet tanks face each other for sixteen hours.</div></div>
+    <div class="tl-row"><div class="tl-date">26 Jun 1963</div><div class="tl-body">
+      Kennedy tells a vast West Berlin crowd <b>“Ich bin ein Berliner.”</b></div></div>
+    <div class="tl-row"><div class="tl-date">12 Jun 1987</div><div class="tl-body">
+      Reagan at the Brandenburg Gate: <b>“Mr Gorbachev, tear down this wall!”</b></div></div>
+    <div class="tl-row"><div class="tl-date">18 Jan 1989</div><div class="tl-body">
+      Honecker predicts the Wall <b>“will still exist in 50 and even in 100 years.”</b></div></div>
+    <div class="tl-row"><div class="tl-date">Autumn 1989</div><div class="tl-body">
+      Mass Monday demonstrations across East Germany. <b>343,854</b> people leave for the West that year.</div></div>
+    <div class="tl-row"><div class="tl-date">9 Nov 1989</div><div class="tl-body">
+      At 18:53 Schabowski says the new travel rules apply <b>“immediately, without delay.”</b> Crowds force the crossings open that night.</div></div>
+    <div class="tl-row"><div class="tl-date">3 Oct 1990</div><div class="tl-body">
+      <b>Germany is reunified</b>, eleven months after the Wall opened.</div></div>
+  </div>
+
+  <div class="howto">
+    <p style="font-family:var(--sans);font-weight:700;font-size:12.5px;">How to use this pack on your chart</p>
+    <ol>
+      <li><b>Do the photos first.</b> Follow page 12: download the ten pictures, add them to your Canva uploads, then click each grey photo frame and choose the matching one. Do not print before this.</li>
+      <li>Print pages 3–8. Cut along the dashed lines — each card is one complete piece of evidence.</li>
+      <li>Glue the cards down the middle of the chart, oldest at the top, so the years run 1961 → 1989.</li>
+      <li>Cut the definitions from page 2 into a column down one side.</li>
+      <li>Put the source chart (page 10) at the bottom — that is the part showing source type and year.</li>
+      <li>Add your own book photographs to page 9 before printing it, and write in the page numbers you quoted.</li>
+    </ol>
+  </div>
+
+  <div class="biblio">
+    <p style="font-family:var(--sans);font-weight:700;font-size:12.5px;">Bibliography — full web addresses</p>
+    <ol>
+      <li>Central Intelligence Agency and National Archives and Records Administration. <i>A City Torn Apart: Building of the Berlin Wall.</i> Washington DC, 2011. archives.gov/files/research/foreign-policy/cold-war/1961-berlin-crisis/berlin-publication.pdf</li>
+      <li>German Federal Archives (Bundesarchiv), Bild 183-85458-0002, photograph by Peter Heinz Junge, 13 August 1961. commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-85458-0002,_Berlin,_Mauerbau,_Kampfgruppen_am_Brandenburger_Tor.jpg</li>
+      <li>“Berliners wake to a divided city — archive, 1961.” <i>The Guardian</i>, reprinting <i>The Observer</i>, 13 August 1961. theguardian.com/world/from-the-archive-blog/2021/aug/12/berliners-wake-to-a-divided-city-wall-1961</li>
+      <li>“A Neutral's Description of the Building of the Wall,” <i>Neue Zürcher Zeitung</i>, 14 August 1961. germanhistorydocs.org/en/two-germanies-1961-1989/a-neutrals-description-of-the-building-of-the-wall-august-14-1961</li>
+      <li>Fleming, Joseph R. “W. Berlins jeer, E. Germans fire tear gas.” United Press International, 14 August 1961. upi.com/Archives/1961/08/14/W-Berlins-jeer-E-Germans-fire-tear-gas/9541408882533/</li>
+      <li>John F. Kennedy Presidential Library. “Remarks at the Rudolph Wilde Platz, Berlin,” 26 June 1963, USG-2B-1. jfklibrary.org/learn/about-jfk/historic-speeches/remarks-at-the-rudolph-wilde-platz-berlin</li>
+      <li>Noir, Thierry. Photograph of the Berlin Wall at Bethaniendamm, 1986. commons.wikimedia.org/wiki/File:Berlinermauer.jpg</li>
+      <li>National Archives and Records Administration. President Reagan at the Brandenburg Gate, 12 June 1987, NARA ID 198585.</li>
+      <li>Hertle, Hans-Hermann. “9. November 1989, 18.00 Uhr: Schabowskis Auftritt,” <i>Chronik der Mauer.</i> chronik-der-mauer.de/material/184399/hans-hermann-hertle-9-november-1989-18-00-uhr-schabowskis-auftritt</li>
+      <li>“East–West German Immigration Statistics (1962–1990),” <i>German History in Documents and Images.</i> germanhistorydocs.org/en/two-germanies-1961-1989/east-west-german-immigration-statistics-1961-1990</li>
+      <li>“Victims at the Wall,” <i>Chronik der Mauer</i>, Berlin Wall Foundation and Centre for Contemporary History Potsdam. chronik-der-mauer.de/en/victims/</li>
+      <li>Books as cited on page 9: Taylor (2006), Harrison (2003), Hertle &amp; Nooke (2011), Sarotte (2014).</li>
+    </ol>
+  </div>
+
+  <div class="runfoot"><span>Timeline, method &amp; bibliography</span><span>Page 11 of 12</span></div>
+</section>
+<!-- ============================ PAGE 12 — PHOTO LIST ============================ -->
+<section class="page" data-document-role="page" data-label="Photo download list">
+  <div class="runhead"><div class="eyebrow">Section 6</div><div class="eyebrow">Photographs</div></div>
+  <div class="rule"></div>
+  <h2 class="sect" style="margin-top:13px;">The ten photographs — where to download each one</h2>
+
+  <div class="howto" style="margin-top:12px;">
+    <p style="font-family:var(--sans);font-weight:700;font-size:12.5px;">Do this before you print</p>
+    <p style="margin-top:5px;">Every grey frame is waiting for one picture. Open the link, click
+      <i>Download the original file</i>, then in Canva use <b>Uploads → Upload files</b> and click each
+      frame to drop the matching photo in.</p>
+    <p style="margin-top:6px;"><b>Quicker:</b> the design <i>“SOURCE — CIA and NARA, A City Torn Apart”</i>
+      in your Canva account is the original 1961 booklet from the US National Archives. Photos 01, 03,
+      04, 05 and 06 are all inside it — copy them straight across.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:22px;">#</th>
+        <th style="width:172px;">Photograph</th>
+        <th style="width:196px;">Credit — you must keep this</th>
+        <th>Where to get it</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="yr">01</td><td><b>East German tanks along the Warschauer Bridge</b><br><span style="color:var(--concrete);">13 August 1961</span></td><td style="font-size:9.5px;word-break:break-word;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:East_German_Tanks_-_Flickr_-_The_Central_Intelligence_Agency_(1).jpg</td></tr>
+      <tr><td class="yr">02</td><td><b>Workers' militia at the Brandenburg Gate</b><br><span style="color:var(--concrete);">13 August 1961</span></td><td style="font-size:9.5px;word-break:break-word;">Bundesarchiv, Bild 183-85458-0002 / Junge, Peter Heinz / CC BY-SA 3.0 DE</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-85458-0002,_Berlin,_Mauerbau,_Kampfgruppen_am_Brandenburger_Tor.jpg</td></tr>
+      <tr><td class="yr">03</td><td><b>West Berliners protesting at the border</b><br><span style="color:var(--concrete);">13 August 1961</span></td><td style="font-size:9.5px;word-break:break-word;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:West_Berliners_-_Flickr_-_The_Central_Intelligence_Agency_(7).jpg</td></tr>
+      <tr><td class="yr">04</td><td><b>West Berlin police holding back the crowd</b><br><span style="color:var(--concrete);">14 August 1961</span></td><td style="font-size:9.5px;word-break:break-word;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:West_Berlin_Police_-_Flickr_-_The_Central_Intelligence_Agency.jpg</td></tr>
+      <tr><td class="yr">05</td><td><b>East German tanks on Leipziger Strasse</b><br><span style="color:var(--concrete);">late August 1961</span></td><td style="font-size:9.5px;word-break:break-word;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Leipziger_Strasse_-_Flickr_-_The_Central_Intelligence_Agency.jpg</td></tr>
+      <tr><td class="yr">06</td><td><b>American tanks facing East Berlin, Friedrichstrasse</b><br><span style="color:var(--concrete);">25 October 1961</span></td><td style="font-size:9.5px;word-break:break-word;">Central Intelligence Agency — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:06_Friedrichstrasse,_Berlin_-_Flickr_-_The_Central_Intelligence_Agency.jpg</td></tr>
+      <tr><td class="yr">07</td><td><b>Kennedy speaking at Rudolph Wilde Platz</b><br><span style="color:var(--concrete);">26 June 1963</span></td><td style="font-size:9.5px;word-break:break-word;">Cecil W. Stoughton, White House / JFK Presidential Library — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:President_John_F._Kennedy_Speaks_at_Rudolph_Wilde_Platz_in_Berlin,_Germany_JFKWHP-KN-C29248.jpg</td></tr>
+      <tr><td class="yr">08</td><td><b>The painted Wall at Bethaniendamm</b><br><span style="color:var(--concrete);">1986</span></td><td style="font-size:9.5px;word-break:break-word;">Thierry Noir / CC BY-SA 3.0</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Berlinermauer.jpg</td></tr>
+      <tr><td class="yr">09</td><td><b>Reagan speaking at the Brandenburg Gate</b><br><span style="color:var(--concrete);">12 June 1987</span></td><td style="font-size:9.5px;word-break:break-word;">Reagan White House Photographic Office / US National Archives 198585 — public domain</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:Photograph_of_President_Reagan_giving_a_speech_at_the_Berlin_Wall,_Brandenburg_Gate,_Federal_Republic_of_Germany_-_NARA_-_198585.jpg</td></tr>
+      <tr><td class="yr">10</td><td><b>Crowds at the Brandenburg Gate as the Wall opens</b><br><span style="color:var(--concrete);">November 1989</span></td><td style="font-size:9.5px;word-break:break-word;">Lear 21 / CC BY-SA 3.0</td><td class="ty" style="font-size:8px;word-break:break-all;color:var(--stamp);">commons.wikimedia.org/wiki/File:West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:11px;line-height:1.45;margin-top:12px;color:var(--ink-soft);">
+    <b>About the credits.</b> Photos marked <i>public domain</i> are free to use because they were made
+    by US government staff at work. The three marked <b>CC BY-SA</b> are free to use
+    <i>only if you name the creator</i> — that is why the credit line is printed on every card. Copying
+    the picture without the credit would be plagiarism, so leave those lines on when you cut the cards out.</p>
+
+  <div class="runfoot"><span>Photograph list &amp; credits</span><span>Page 12 of 12</span></div>
+</section>
+
+</body>
+</html>
