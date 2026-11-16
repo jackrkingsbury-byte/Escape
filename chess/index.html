@@ -133,6 +133,7 @@ code{font:12px var(--mono);background:var(--panel-2);padding:1px 4px;border-radi
       Chess Lens
     </div>
     <div class="spacer"></div>
+    <a class="chip" href="play.html" style="text-decoration:none;color:var(--text);border-color:var(--accent)">♞ Play vs Stockfish</a>
     <button class="chip" id="installBtn" hidden>Install app</button>
     <span class="chip" id="engineChip" title="Engine status">Engine: loading…</span>
   </header>
@@ -207,6 +208,7 @@ code{font:12px var(--mono);background:var(--panel-2);padding:1px 4px;border-radi
         <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready.</span></div>
         <div class="links" id="links" hidden>
           <button id="copyFen">Copy FEN</button>
+          <a id="playLink">Play from here vs Stockfish</a>
           <a id="lichessLink" target="_blank" rel="noopener">Open in Lichess analysis ↗</a>
         </div>
       </div>

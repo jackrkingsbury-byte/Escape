@@ -299,6 +299,7 @@ async function analyse() {
   renderAnalysis();
   $('links').hidden = false;
   $('lichessLink').href = 'https://lichess.org/analysis/standard/' + fen.replace(/ /g, '_');
+  $('playLink').href = 'play.html?fen=' + encodeURIComponent(fen);
   if (!chk.ok) {
     S.engine.latest = -1;
     S.engine.stop();

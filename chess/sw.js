@@ -1,7 +1,8 @@
 // Chess Lens service worker: offline app shell + engine, and the Android share target.
-const VERSION = 'chesslens-v3';
+const VERSION = 'chesslens-v4';
 const SHELL = [
   './', 'index.html', 'app.js', 'vision.js', 'engine.js', 'pieces.js', 'vendor/chess.js', 'model.bin',
+  'play.html', 'play.js', 'board.js',
   'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png',
   'engine/stockfish-17.1-lite-single-03e3232.js', 'engine/stockfish-17.1-lite-single-03e3232.wasm',
 ];
