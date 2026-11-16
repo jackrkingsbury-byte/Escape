@@ -88,6 +88,22 @@ function updateScanLabel() {
 
 async function grabFrame() {
   const track = S.stream.getVideoTracks()[0];
+  // Sharing the whole screen can include this window: hide our own boards for a moment so
+  // the scan can't pick them up instead of the real one.
+  const whole = (track.getSettings().displaySurface || 'monitor') === 'monitor';
+  if (whole) {
+    document.body.classList.add('capturing');
+    await nextFrame(); await nextFrame();
+    await new Promise((r) => setTimeout(r, 150));
+  }
+  try {
+    return await grabFrameNow(track);
+  } finally {
+    document.body.classList.remove('capturing');
+  }
+}
+
+async function grabFrameNow(track) {
   if ('ImageCapture' in window) {
     try {
       const bmp = await new ImageCapture(track).grabFrame();

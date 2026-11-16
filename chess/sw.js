@@ -31,8 +31,9 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
-  // Network first for the app shell (fresh updates), cache fallback offline; cache first for the big engine files.
-  const big = /\.(wasm|bin)$/.test(url.pathname) || url.pathname.includes('/engine/');
+  // Network first for the app shell and model (fresh updates), cache fallback offline.
+  // Engine files have a content hash in their name, so they're served cache first.
+  const big = url.pathname.includes('/engine/');
   e.respondWith((async () => {
     const cache = await caches.open(VERSION);
     if (big) {

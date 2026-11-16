@@ -187,6 +187,22 @@ const CASES = [
       if (!ok) failed++;
       await app.close();
     }
+
+    // Installable app: the service worker caches everything, so a reload works offline.
+    {
+      const ctx = await browser.newContext();
+      const app = await ctx.newPage();
+      await app.goto(base + '/index.html');
+      await app.evaluate(async () => { await navigator.serviceWorker.ready; });
+      await app.waitForFunction(async () => (await (await caches.open('chesslens-v1')).keys()).length >= 14, null, { timeout: 60000 });
+      await ctx.setOffline(true);
+      await app.reload();
+      const ok = await app.waitForFunction(() => document.getElementById('engineChip').textContent.includes('ready'), null, { timeout: 60000 }).then(() => true, () => false);
+      const manifest = await app.evaluate(async () => (await fetch('manifest.webmanifest')).json()).catch(() => null);
+      console.log(`${ok && manifest ? 'PASS' : 'FAIL'} offline reload: engine ${ok ? 'ready' : 'missing'}, manifest ${manifest ? manifest.short_name : 'missing'}`);
+      if (!ok || !manifest) failed++;
+      await ctx.close();
+    }
   } finally {
     await browser.close();
     srv.close();
