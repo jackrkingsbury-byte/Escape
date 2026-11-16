@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Play vs Stockfish — Chess Lens</title>
+<meta name="description" content="Play Stockfish at any strength, from beginner to full power, with hints and a coach that rates every move. Runs on your device.">
+<meta name="theme-color" content="#16181d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+:root{
+  --bg:#16181d;--panel:#1f2229;--panel-2:#272b34;--line:#323743;--text:#eceef2;--muted:#9aa1b0;
+  --accent:#6fbf4a;--accent-ink:#0f1a09;--accent-soft:rgba(111,191,74,.16);--warn:#f2b33d;--bad:#ef6a5a;--info:#4a90d9;
+  --radius:14px;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f3f2ee;--panel:#ffffff;--panel-2:#f1efe9;--line:#e1ded5;--text:#17191e;--muted:#5d6472;
+    --accent:#3f8a22;--accent-ink:#ffffff;--accent-soft:rgba(63,138,34,.12);
+  }
+}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit}
+a{color:inherit}
+.app{max-width:1180px;margin:0 auto;padding:16px 16px 40px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:750;font-size:19px;letter-spacing:-.01em;white-space:nowrap;text-decoration:none}
+.logo svg{width:30px;height:30px}
+nav{display:flex;gap:6px;margin-left:auto}
+nav a{font-size:14px;text-decoration:none;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--panel)}
+nav a[aria-current="page"]{color:var(--text);border-color:var(--accent);background:var(--accent-soft)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:1fr}}
+
+.player{display:flex;align-items:center;gap:10px;padding:6px 2px 8px 22px;font-weight:650}
+.player .tag{font:600 12px var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.player .think{color:var(--muted);font-weight:500;font-size:13px}
+.player .think::after{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:6px;vertical-align:middle;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.board-wrap{display:flex;gap:8px;align-items:stretch}
+.evalbar{width:14px;border-radius:7px;overflow:hidden;background:#3a3d44;position:relative;flex:none}
+.evalbar .fill{position:absolute;left:0;right:0;bottom:0;background:#f4f4f2;transition:height .35s ease}
+.evalbar.flipped .fill{top:0;bottom:auto}
+.evalbar.off{visibility:hidden}
+.cl-board{position:relative;flex:1;aspect-ratio:1;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25);user-select:none;-webkit-user-select:none;touch-action:none;cursor:pointer}
+.cl-board svg{display:block;width:100%;height:100%}
+.cl-drag{position:fixed;left:0;top:0;pointer-events:none;z-index:40;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.cl-promo{position:absolute;width:12.5%;height:50%;display:grid;grid-template-rows:repeat(4,1fr);background:var(--panel);box-shadow:0 8px 24px rgba(0,0,0,.45);border-radius:8px;overflow:hidden;z-index:10}
+.cl-promo button{border:0;background:none;padding:6%;cursor:pointer}
+.cl-promo button:hover{background:var(--accent-soft)}
+.cl-promo img{width:100%;height:100%}
+.result{position:absolute;inset:auto 8% 36%;background:rgba(22,24,29,.92);color:#fff;border-radius:14px;padding:16px;text-align:center;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.result b{display:block;font-size:22px;margin-bottom:4px}
+.result .row{justify-content:center;margin-top:12px}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:650}
+.status{font-size:18px;font-weight:700;margin-bottom:10px}
+.status small{display:block;font-size:13px;font-weight:500;color:var(--muted)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row + .row{margin-top:10px}
+.btn{border:1px solid var(--line);background:var(--panel-2);border-radius:10px;padding:9px 13px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--muted)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;font-weight:700}
+.btn.hint{border-color:var(--info)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:8px 11px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--text);font-weight:600}
+.label{color:var(--muted);font-size:13px;min-width:70px}
+.level{flex:1;display:grid;gap:4px}
+.level input{width:100%;accent-color:var(--accent)}
+.level .name{font-weight:650}
+.level .name span{color:var(--muted);font-weight:500;font-family:var(--mono);font-size:13px;margin-left:6px}
+.coach{display:flex;gap:10px;align-items:flex-start;min-height:44px}
+.badge{flex:none;font:700 12px var(--mono);padding:3px 7px;border-radius:7px;background:var(--panel-2)}
+.q-best{background:rgba(111,191,74,.2);color:#8fd36a}
+.q-excellent{background:rgba(111,191,74,.14);color:#8fd36a}
+.q-good{background:rgba(154,161,176,.18);color:var(--muted)}
+.q-inaccuracy{background:rgba(242,179,61,.18);color:var(--warn)}
+.q-mistake{background:rgba(239,140,60,.2);color:#ef8c3c}
+.q-blunder{background:rgba(239,106,90,.2);color:var(--bad)}
+.hint-text{color:var(--info);font-weight:600;min-height:21px;margin-top:8px}
+.moves{display:grid;grid-template-columns:36px 1fr 1fr;gap:2px 8px;font:14px var(--mono);max-height:260px;overflow:auto}
+.moves .n{color:var(--muted)}
+.moves .m{display:flex;gap:4px;align-items:center}
+.moves .m i{font-style:normal;font-size:11px;font-weight:700}
+.moves .m.last{background:var(--accent-soft);border-radius:5px;padding:0 4px;margin:0 -4px}
+.muted{color:var(--muted);font-size:13px}
+footer{margin-top:22px;color:var(--muted);font-size:12.5px;line-height:1.6}
+.toggle{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+.toggle input{accent-color:var(--accent);width:18px;height:18px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <a class="logo" href="./">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#739552"/><path d="M0 8h8v8H0zM16 8h8v8h-8zM8 16h8v8H8zM24 16h8v8h-8zM8 0h8v8H8zM24 0h8v8h-8zM0 24h8v8H0zM16 24h8v8h-8z" fill="#ebecd0"/><circle cx="16" cy="16" r="9.5" fill="none" stroke="#16181d" stroke-width="3"/><path d="M23 23l5.5 5.5" stroke="#16181d" stroke-width="3.5" stroke-linecap="round"/></svg>
+      Chess Lens
+    </a>
+    <nav><a href="./">Scan a board</a><a href="play.html" aria-current="page">Play vs Stockfish</a></nav>
+  </header>
+
+  <div class="layout">
+    <section>
+      <div class="player" id="topPlayer"></div>
+      <div class="board-wrap">
+        <div class="evalbar" id="evalbar" aria-hidden="true"><div class="fill" id="evalfill" style="height:50%"></div></div>
+        <div id="board"></div>
+      </div>
+      <div class="player" id="bottomPlayer"></div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <div class="status" id="status">Loading Stockfish…</div>
+        <div class="row">
+          <button class="btn hint" id="hintBtn" title="Hint (H)">💡 Hint</button>
+          <button class="btn" id="undoBtn" title="Take back (U)">↶ Take back</button>
+          <button class="btn" id="flipBtn" title="Flip board (F)">⇅ Flip</button>
+          <button class="btn" id="resignBtn">⚑ Resign</button>
+        </div>
+        <div class="hint-text" id="hintText"></div>
+      </div>
+
+      <div class="card">
+        <h2>Coach</h2>
+        <div class="coach" id="coach"><span class="muted">Play a move — the coach rates every one of yours: Best, Excellent, Good, Inaccuracy, Mistake or Blunder.</span></div>
+        <div class="row" style="margin-top:10px">
+          <label class="toggle"><input type="checkbox" id="coachToggle" checked> Rate my moves</label>
+          <label class="toggle"><input type="checkbox" id="evalToggle" checked> Eval bar</label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Moves</h2>
+        <div class="moves" id="moves"></div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn" id="copyPgn">Copy PGN</button>
+          <a class="btn" id="lichessLink" target="_blank" rel="noopener" style="text-decoration:none">Review on Lichess ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>New game</h2>
+        <div class="row"><span class="label">You play</span>
+          <div class="seg" id="colorSeg"><button data-v="w">White</button><button data-v="random">Random</button><button data-v="b">Black</button></div></div>
+        <div class="row"><span class="label">Strength</span>
+          <div class="level"><div class="name" id="levelName"></div><input type="range" id="level" min="1" max="10" step="1"></div></div>
+        <div class="row"><button class="btn primary" id="newBtn" style="flex:1;justify-content:center">Start new game</button></div>
+        <p class="muted" style="margin:10px 0 0">You can change the strength mid-game too — it applies from Stockfish's next move.</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>Stockfish 17.1 runs on your device in two workers: one plays at the strength you pick, the other is your coach at full strength (hints, eval bar, move ratings). Ratings are approximate.</p>
+    <p>Shortcuts: <b>H</b> hint · <b>U</b> take back · <b>F</b> flip · <b>N</b> new game.</p>
+  </footer>
+</div>
+<script type="module" src="play.js"></script>
+</body>
+</html>

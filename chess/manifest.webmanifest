@@ -12,6 +12,10 @@
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
   ],
+  "shortcuts": [
+    { "name": "Play vs Stockfish", "short_name": "Play", "url": "./play.html", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Scan a board", "short_name": "Scan", "url": "./", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ],
   "share_target": {
     "action": "./share-target",
     "method": "POST",

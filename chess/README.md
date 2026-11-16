@@ -39,6 +39,44 @@ Settings (think time 1/3/8 s, lines, side, voice) are saved in the browser.
 > **Fair play:** use it for puzzles, studying, bot games and reviewing finished games. Engine help in
 > live games against other people breaks every chess site's rules and gets accounts closed.
 
+## Play vs Stockfish (`play.html`)
+
+Play a full game against Stockfish at any of 10 strengths. The ratings are rough.
+
+| Level | Name | Rating |
+|---|---|---|
+| 1 | Beginner | ≈400 |
+| 2 | Novice | ≈700 |
+| 3 | Casual | ≈1000 |
+| 4 | Club player | 1350 |
+| 5 | Strong club | 1600 |
+| 6 | Expert | 1850 |
+| 7 | Candidate master | 2100 |
+| 8 | Master | 2400 |
+| 9 | Grandmaster | 2700 |
+| 10 | Stockfish | full strength |
+
+Levels 4–9 use Stockfish's own rating limit. Levels 1–3 sit below its 1320 floor, so they use
+Skill Level plus a shallow search.
+
+- **Moving:** drag pieces or tap-tap. Legal moves show as dots, and promotion opens a piece picker.
+  Check, checkmate, stalemate, repetition, the 50-move rule and insufficient material are all
+  handled.
+- **💡 Hint (H):** the first press shows which piece to move. The second press shows the move as
+  an arrow. Hints used are counted.
+- **Coach:** a second Stockfish at full strength rates every one of your moves. It uses lichess's
+  winning-chance thresholds: Best, Excellent, Good, Inaccuracy, Mistake or Blunder. It also says
+  what was better, e.g. "Kf2 costs you (+10.4 → −M8). Better was Qxd5." The move list marks each
+  rating, the game-over card sums them up, and the eval bar can be turned on or off.
+- **Game controls:** **Take back (U)**, **Flip (F)**, **Resign**, and **New game (N)** as White,
+  Black or random. You can change the strength mid-game.
+- **Saving and review:** the game is saved and resumes after a reload. **Copy PGN** and **Review on
+  Lichess** work at any time.
+- **Play from a scan:** after a scan, **Play from here vs Stockfish** starts a game from the scanned
+  position, with you as the side to move.
+- **Code:** `board.js` is the interactive board and `play.js` is the game logic. `engine.js` takes
+  per-search UCI options.
+
 ## Phones
 
 Websites can't record the screen on phones, so on a phone, Chess Lens reaches into other apps in
@@ -159,6 +197,7 @@ california). The shipped model is then retrained on all 32 sets.
 node test/detect.test.mjs <fixtures_dir> [model.bin]   # board finding (+ piece accuracy)
 python3 test/make_fixtures.py png boards <fixtures_dir> 40 7 merida,staunty,companion,cooke,california
 node test/app.e2e.cjs                                  # Playwright: fake chess site → app → Stockfish
+node test/play.e2e.cjs                                 # Play vs Stockfish: moves, hints, coach, take back, mate, promotion, resume
 node test/android-bridge.e2e.cjs                       # the Android app's server + floating-scan protocol, on a desktop JVM
 ```
 

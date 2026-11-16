@@ -61,7 +61,7 @@ export class Engine {
   }
 
   /**
-   * Analyse a FEN. opts: { movetime (ms) | depth, multipv }.
+   * Analyse a FEN. opts: { movetime (ms) | depth, multipv, options: { 'UCI option name': value } }.
    * Returns a promise (with .id set synchronously) that resolves when the search ends.
    * Starting a new analysis supersedes any pending one; superseded calls resolve with stale: true.
    */
@@ -74,6 +74,7 @@ export class Engine {
       if (id !== this.latest) return { id, stale: true, bestmove: null, lines: [] };
       this._send('ucinewgame');
       this._send(`setoption name MultiPV value ${opts.multipv || 3}`);
+      for (const [k, v] of Object.entries(opts.options || {})) this._send(`setoption name ${k} value ${v}`);
       this._send(`position fen ${fen}`);
       await this._waitFor('isready', 'readyok');
       if (id !== this.latest) return { id, stale: true, bestmove: null, lines: [] };

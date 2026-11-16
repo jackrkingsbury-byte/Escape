@@ -17,7 +17,7 @@ rm -rf "$OUT"
 mkdir -p "$OUT/assets/www/vendor" "$OUT/assets/www/engine" "$OUT/classes"
 
 # 1. the web app, exactly as published
-for f in index.html app.js vision.js engine.js pieces.js model.bin manifest.webmanifest icon.svg icon-192.png icon-512.png; do
+for f in index.html app.js vision.js engine.js pieces.js model.bin manifest.webmanifest icon.svg icon-192.png icon-512.png play.html play.js board.js; do
   cp "$WEB/$f" "$OUT/assets/www/"
 done
 cp "$WEB/vendor/chess.js" "$OUT/assets/www/vendor/"
