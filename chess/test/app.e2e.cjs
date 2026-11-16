@@ -194,7 +194,7 @@ const CASES = [
       const app = await ctx.newPage();
       await app.goto(base + '/index.html');
       await app.evaluate(async () => { await navigator.serviceWorker.ready; });
-      await app.waitForFunction(async () => (await (await caches.open('chesslens-v1')).keys()).length >= 14, null, { timeout: 60000 });
+      await app.waitForFunction(async () => (await (await caches.open('chesslens-v2')).keys()).length >= 14, null, { timeout: 60000 });
       await ctx.setOffline(true);
       await app.reload();
       const ok = await app.waitForFunction(() => document.getElementById('engineChip').textContent.includes('ready'), null, { timeout: 60000 }).then(() => true, () => false);

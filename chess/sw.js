@@ -1,5 +1,5 @@
 // Chess Lens service worker: offline app shell + engine, and the Android share target.
-const VERSION = 'chesslens-v1';
+const VERSION = 'chesslens-v2';
 const SHELL = [
   './', 'index.html', 'app.js', 'vision.js', 'engine.js', 'pieces.js', 'vendor/chess.js', 'model.bin',
   'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png',
