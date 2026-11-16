@@ -40,7 +40,7 @@ header .spacer{flex:1}
   aside{display:contents}
   #captureCard{order:-1}
   .layout>section{order:0}
-  #resultCard{order:1} #shotCard{order:2} #settingsCard{order:3}
+  #resultCard{order:1} #shotCard{order:2} #phoneCard{order:3} #settingsCard{order:4}
   .tools{padding-left:0}
 }
 
@@ -116,6 +116,12 @@ footer p{margin:4px 0}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60}
 .toast.on{opacity:1}
 body.capturing .board svg,body.capturing .shot{visibility:hidden}
+details{border-top:1px solid var(--line);padding:10px 0}
+details:first-of-type{border-top:0;padding-top:0}
+summary{cursor:pointer;font-size:14px;list-style-position:outside}
+details ol{margin:8px 0 0;padding-left:20px;font-size:14px;display:grid;gap:5px}
+details a{color:var(--accent)}
+code{font:12px var(--mono);background:var(--panel-2);padding:1px 4px;border-radius:4px;word-break:break-all}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
@@ -162,7 +168,35 @@ body.capturing .board svg,body.capturing .shot{visibility:hidden}
         </div>
         <input type="file" id="fileInput" accept="image/*" hidden>
         <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+        <button class="scan" id="pasteNow" hidden style="margin-bottom:10px">Read screenshot</button>
         <p class="hint" id="scanHint">First scan asks which screen, window or tab to share — pick the one with the chessboard. After that, <b>Scan</b> (or <b>S</b>) reads it again instantly.</p>
+      </div>
+
+      <div class="card" id="phoneCard" hidden>
+        <h2>Chess apps on your phone</h2>
+        <div id="androidApp" hidden>
+          <button class="btn" id="overlayBtn" style="width:100%;justify-content:center;padding:13px">Start the floating Scan button</button>
+          <p class="hint">A small ♞ button floats over every app. Open your chess app, tap it, and the best move pops up right there. Android asks once to allow “Display over other apps” and to share your screen.</p>
+        </div>
+        <div id="phoneHelp" hidden>
+          <details id="androidHelp"><summary><b>Android</b> — a floating Scan button over any app</summary>
+            <ol>
+              <li><a href="android/ChessLens.apk" download>Download the Chess Lens app</a> (APK).</li>
+              <li>Open the download. If Android asks, allow your browser to install apps.</li>
+              <li>In the app tap <b>Start the floating Scan button</b>, allow <b>Display over other apps</b>, then <b>Start now</b> to share the screen.</li>
+              <li>Open your chess app and tap the ♞ button. The best move pops up on top.</li>
+            </ol>
+            <p class="hint">Without installing: take a screenshot, then use <b>Open image</b> here.</p>
+          </details>
+          <details id="iosHelp"><summary><b>iPhone</b> — double-tap the back of your phone</summary>
+            <p class="hint">Apple doesn't let any app read another app's screen, so Chess Lens uses a shortcut: a double-tap screenshots your chess app and opens Chess Lens.</p>
+            <ol>
+              <li>Open the <b>Shortcuts</b> app, tap <b>+</b> and add 3 actions: <b>Take Screenshot</b>, <b>Copy to Clipboard</b>, <b>Open URLs</b> with <code id="pasteUrl"></code>. Name it “Chess Lens”.</li>
+              <li>Settings → Accessibility → Touch → <b>Back Tap</b> → <b>Double Tap</b> → pick “Chess Lens”.</li>
+              <li>In your chess app, double-tap the back of the phone. In Chess Lens tap <b>Read screenshot</b>, then <b>Paste</b>.</li>
+            </ol>
+          </details>
+        </div>
       </div>
 
       <div class="card" id="resultCard">
@@ -208,7 +242,7 @@ body.capturing .board svg,body.capturing .shot{visibility:hidden}
 </div>
 <div class="drop" id="drop">Drop the screenshot</div>
 <div class="toast" id="toast" role="status"></div>
-<video id="video" muted playsinline hidden></video>
+<video id="video" muted playsinline aria-hidden="true" style="position:fixed;left:0;top:0;width:2px;height:2px;opacity:0;pointer-events:none"></video>
 <script type="module" src="app.js"></script>
 </body>
 </html>

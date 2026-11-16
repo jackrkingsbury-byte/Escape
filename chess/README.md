@@ -16,6 +16,8 @@ Live (once merged to `main`): `https://<user>.github.io/Escape/chess/`
 | **Open image** / drag & drop | Reads a saved screenshot. |
 | **Photo** (phone) | Opens the camera. A straight-on photo works best. Drag the corners if needed. |
 | Share → Chess Lens (Android, installed) | Send a screenshot straight from your gallery. |
+| **Android app:** floating ♞ button | Works over **any app** (Chess.com app, Lichess app, …). Tap ♞ and the best move pops up in a card at the top of the screen. See [Phones](#phones). |
+| **iPhone:** double-tap the back | A Shortcut screenshots your chess app and opens Chess Lens, then one tap reads it. See [Phones](#phones). |
 
 What you get back:
 
@@ -36,6 +38,59 @@ Settings (think time 1/3/8 s, lines, side, voice) are saved in the browser.
 
 > **Fair play:** use it for puzzles, studying, bot games and reviewing finished games. Engine help in
 > live games against other people breaks every chess site's rules and gets accounts closed.
+
+## Phones
+
+Websites can't record the screen on phones, so on a phone, Chess Lens reaches into other apps in
+these ways.
+
+**Android: the Chess Lens app** (`android/`). It has a floating ♞ button that sits over every app.
+
+1. Download [`android/ChessLens.apk`](android/ChessLens.apk) on the phone and open it. Android asks
+   you to allow your browser to install apps. The app isn't on the Play Store.
+2. Open **Chess Lens** and tap **Start the floating Scan button**.
+   1. Allow **Display over other apps**, then come back.
+   2. Tap **Start now** on Android's screen-sharing prompt. Pick **Entire screen**, or pick your chess app.
+3. Open your chess app and tap ♞. A card at the top shows:
+   - the best move and eval
+   - a plain-English description
+   - the top lines
+   - buttons for **Other side to move**, **Flip board** and **Fix in app**
+4. Drag ♞ anywhere you like. To stop, use **Stop** in the notification or the button in the app.
+
+How the app works:
+
+- It's a small Java shell around the exact same web app. `AssetServer` serves the bundled files on
+  `127.0.0.1`, so the recognition code, Stockfish worker and WASM run unchanged.
+- `ScanService` keeps one MediaProjection screen-capture session. It shows the ♞ button and the
+  result card as overlay windows.
+- On each tap it hides its own views and grabs the newest frame as a JPEG. It then gives the frame
+  to a hidden 1 px WebView running the page in `?overlay=1` mode, through
+  `window.chessLensScan(url)`. Results come back through `ChessLensAndroid.onResult(json)`: live
+  updates while Stockfish thinks, then the final move.
+- Pieces you correct in the app are remembered for floating scans too, because both pages share
+  the same storage.
+
+Build it with plain SDK tools, no Gradle. You need a JDK and an Android SDK with
+`platforms;android-34` and `build-tools;34.0.0`:
+
+```bash
+ANDROID_HOME=/path/to/sdk CHESSLENS_KEYSTORE=~/chesslens.jks android/build.sh   # → android/ChessLens.apk
+```
+
+The signing key isn't in the repo. An APK built with a different key won't install over an
+existing one: uninstall the old app first.
+
+**iPhone: Back Tap shortcut.** Apple doesn't let any app outside the App Store read another app's
+screen. So:
+
+1. In **Shortcuts**, make a shortcut with three actions:
+   - **Take Screenshot**
+   - **Copy to Clipboard**
+   - **Open URLs** → `…/chess/?paste=1`
+2. Go to Settings → Accessibility → Touch → **Back Tap** → **Double Tap**, and pick that shortcut.
+3. In your chess app, double-tap the back of the phone. Chess Lens opens with a big **Read
+   screenshot** button: tap it, then **Paste**.
 
 ## How it works
 
@@ -104,6 +159,7 @@ california). The shipped model is then retrained on all 32 sets.
 node test/detect.test.mjs <fixtures_dir> [model.bin]   # board finding (+ piece accuracy)
 python3 test/make_fixtures.py png boards <fixtures_dir> 40 7 merida,staunty,companion,cooke,california
 node test/app.e2e.cjs                                  # Playwright: fake chess site → app → Stockfish
+node test/android-bridge.e2e.cjs                       # the Android app's server + floating-scan protocol, on a desktop JVM
 ```
 
 The end-to-end test screenshots a fake chess site (lichess-style and chess.com-style colours, a
@@ -114,6 +170,19 @@ flipped board, coordinates, side panels) and feeds it to the app three ways:
 - rapid side-to-move toggling
 
 It then checks the exact position read and that Stockfish finds the mate.
+
+`android-bridge.e2e.cjs` runs the app's Java `AssetServer` on a desktop JVM and drives the hidden
+scanner page the way `ScanService` does. It checks:
+
+- the screenshot is read and the best move comes back
+- live updates arrive while Stockfish thinks
+- a new screenshot is picked up
+- **Other side to move** and **Flip board** work
+- "no board found" is reported
+- **Fix in app** reopens the screenshot
+- WASM is served as `application/wasm`
+
+The Android-only parts weren't run on a device: the MediaProjection capture and the overlay windows.
 
 ## Credits & licences
 

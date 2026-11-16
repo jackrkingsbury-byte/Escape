@@ -20,32 +20,7 @@ function serve() {
   return new Promise((r) => srv.listen(0, () => r(srv)));
 }
 
-// A page that looks like a chess site: dark UI, side panels, a board with a highlighted last move.
-const SITE = (fen, flip, theme, hl = []) => `<!doctype html><html><head><title>FakeChessSite</title></head>
-<body style="margin:0;background:#302e2b;font:14px sans-serif;color:#ccc">
-<div style="position:absolute;left:0;top:0;width:180px;height:100%;background:#262421">Play · Puzzles · Learn</div>
-<div style="position:absolute;left:230px;top:18px">Opponent (1612)</div>
-<canvas id=c width=640 height=640 style="position:absolute;left:230px;top:44px"></canvas>
-<div style="position:absolute;left:230px;top:692px">You (1590)</div>
-<div style="position:absolute;left:900px;top:44px;width:300px;height:640px;background:#262421;padding:12px">1. e4 e5 2. Bc4 Nc6 3. Qh5 Nf6??</div>
-<script type=module>
-import { PIECE_SVG } from '/pieces.js';
-const fen = ${JSON.stringify(fen)}, flip = ${flip}, [L, D] = ${JSON.stringify(theme)}, hl = ${JSON.stringify(hl)};
-const ctx = document.getElementById('c').getContext('2d');
-const s = 80;
-for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { ctx.fillStyle = (x + y) % 2 ? D : L; ctx.fillRect(x * s, y * s, s, s); }
-for (const sq of hl) { const f = 'abcdefgh'.indexOf(sq[0]), r = 8 - +sq[1]; const [x, y] = flip ? [7 - f, 7 - r] : [f, r]; ctx.fillStyle = 'rgba(255,255,51,0.5)'; ctx.fillRect(x * s, y * s, s, s); }
-const rows = fen.split(' ')[0].split('/');
-const jobs = [];
-rows.forEach((row, r) => { let f = 0; for (const ch of row) { if (/\\d/.test(ch)) { f += +ch; continue; }
-  const [x, y] = flip ? [7 - f, 7 - r] : [f, r];
-  const img = new Image(); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(PIECE_SVG[ch]);
-  jobs.push(img.decode().then(() => ctx.drawImage(img, x * s, y * s, s, s))); f++; } });
-// coordinates like real sites
-ctx.font = 'bold 14px sans-serif';
-for (let i = 0; i < 8; i++) { ctx.fillStyle = i % 2 ? L : D; ctx.fillText('abcdefgh'[flip ? 7 - i : i], i * s + 68, 636); ctx.fillText(String(flip ? i + 1 : 8 - i), 3, i * s + 15); }
-Promise.all(jobs).then(() => { document.title = 'ready'; });
-</script></body></html>`;
+const { SITE } = require('./fake-site.cjs');
 
 const CASES = [
   // scholar's mate threat: white to move mates with Qxf7#
@@ -126,11 +101,14 @@ const CASES = [
         };
         let calls = 0;
         window.__captureCalls = () => calls;
+        // On a still screen Chrome may never deliver "the next frame": make grabFrame() hang like that.
+        window.ImageCapture = class { grabFrame() { return new Promise(() => {}); } };
         navigator.mediaDevices.getDisplayMedia = async () => {
           calls++;
           const st = cv.captureStream(10);
-          // keep frames flowing like a real screen
-          setInterval(() => { const c = cv.getContext('2d'); const d = c.getImageData(0, 0, 1, 1); c.putImageData(d, 0, 0); }, 100);
+          // Like a real screen share: the current picture once at the start, then a new frame only when
+          // the picture changes — nothing at all while the screen is still.
+          setTimeout(() => { const c = cv.getContext('2d'); c.drawImage(cv, 0, 0); }, 50);
           return st;
         };
       });
@@ -142,7 +120,8 @@ const CASES = [
         await app.waitForTimeout(300);
         await app.evaluate(() => { window.__chessLens.S.analysis = null; document.getElementById('statusText').textContent = ''; });
         await app.click('#scanBtn');
-        await app.waitForFunction(() => /Depth \d+/.test(document.getElementById('statusText').textContent), null, { timeout: 60000 });
+        await app.waitForFunction(() => /Depth \d+/.test(document.getElementById('statusText').textContent), null, { timeout: 60000 })
+          .catch(async (e) => { console.log('scan stuck: ' + await app.textContent('#statusText')); throw e; });
         return app.evaluate(() => ({ best: document.getElementById('bestMove').textContent, label: document.getElementById('scanLabel').textContent, calls: window.__captureCalls() }));
       };
       const a = await scanAndRead(shots[0]);
@@ -188,13 +167,44 @@ const CASES = [
       await app.close();
     }
 
+    // iPhone shortcut flow: Back Tap → Take Screenshot → Copy to Clipboard → open ?paste=1 → one tap.
+    {
+      const tc = CASES[0];
+      const site = await browser.newPage({ viewport: { width: 1280, height: 760 } });
+      await site.route('**/site.html', (r) => r.fulfill({ contentType: 'text/html', body: SITE(tc.fen, tc.flip, tc.theme, tc.hl) }));
+      await site.goto(base + '/site.html');
+      await site.waitForFunction(() => document.title === 'ready');
+      const shot = (await site.screenshot()).toString('base64');
+      await site.close();
+      const ctx = await browser.newContext({
+        viewport: { width: 390, height: 844 },
+        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+        permissions: ['clipboard-read', 'clipboard-write'],
+      });
+      const app = await ctx.newPage();
+      await app.goto(base + '/index.html?paste=1');
+      await app.waitForFunction(() => document.getElementById('engineChip').textContent.includes('ready'), null, { timeout: 60000 });
+      const before = await app.evaluate(() => ({ btn: !document.getElementById('pasteNow').hidden, ios: document.getElementById('iosHelp').open, url: document.getElementById('pasteUrl').textContent }));
+      await app.evaluate(async (b64) => {
+        const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': new Blob([bytes], { type: 'image/png' }) })]);
+      }, shot);
+      await app.click('#pasteNow');
+      await app.waitForFunction(() => /Depth \d+/.test(document.getElementById('statusText').textContent), null, { timeout: 60000 });
+      const best = await app.textContent('#bestMove');
+      const ok = before.btn && before.ios && before.url.endsWith('/index.html?paste=1') && best === tc.best;
+      console.log(`${ok ? 'PASS' : 'FAIL'} iPhone shortcut: “Read screenshot” shown ${before.btn}, iPhone steps open ${before.ios}, pasted → ${best}`);
+      if (!ok) failed++;
+      await ctx.close();
+    }
+
     // Installable app: the service worker caches everything, so a reload works offline.
     {
       const ctx = await browser.newContext();
       const app = await ctx.newPage();
       await app.goto(base + '/index.html');
       await app.evaluate(async () => { await navigator.serviceWorker.ready; });
-      await app.waitForFunction(async () => (await (await caches.open('chesslens-v2')).keys()).length >= 14, null, { timeout: 60000 });
+      await app.waitForFunction(async () => (await (await caches.open('chesslens-v3')).keys()).length >= 14, null, { timeout: 60000 });
       await ctx.setOffline(true);
       await app.reload();
       const ok = await app.waitForFunction(() => document.getElementById('engineChip').textContent.includes('ready'), null, { timeout: 60000 }).then(() => true, () => false);

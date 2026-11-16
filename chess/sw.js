@@ -1,5 +1,5 @@
 // Chess Lens service worker: offline app shell + engine, and the Android share target.
-const VERSION = 'chesslens-v2';
+const VERSION = 'chesslens-v3';
 const SHELL = [
   './', 'index.html', 'app.js', 'vision.js', 'engine.js', 'pieces.js', 'vendor/chess.js', 'model.bin',
   'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png',
@@ -31,6 +31,7 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+  if (url.pathname.endsWith('.apk')) return; // the Android download goes straight to the network
   // Network first for the app shell and model (fresh updates), cache fallback offline.
   // Engine files have a content hash in their name, so they're served cache first.
   const big = url.pathname.includes('/engine/');

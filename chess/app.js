@@ -51,7 +51,7 @@ S.engine.on((m) => {
   if (m.type === 'info' && S.analysis && m.id === S.analysis.id) { S.analysis.lines = m.lines; renderAnalysis(); }
 });
 
-if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+if ('serviceWorker' in navigator && location.protocol !== 'file:' && !window.ChessLensAndroid) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 let installEvt = null;
@@ -61,6 +61,33 @@ $('installBtn').onclick = async () => { if (!installEvt) return; installEvt.prom
 /* --------------------------------------------------------------- capture */
 
 const canCapture = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia);
+
+/* ------------------------------------------------- phones: Android app + iPhone shortcut */
+// Inside the Android app the page talks to native code through window.ChessLensAndroid.
+// The app's floating "Scan" button runs a hidden copy of this page with ?overlay=1:
+// native code calls window.chessLensScan(url) with a fresh screenshot and gets results
+// back through ChessLensAndroid.onResult(json).
+const PARAMS = new URLSearchParams(location.search);
+const bridge = window.ChessLensAndroid || null;
+const OVERLAY = PARAMS.has('overlay') && !!bridge;
+const IN_ANDROID_APP = !!bridge;
+const IS_ANDROID = /Android/i.test(navigator.userAgent);
+const IS_IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+function report(obj) {
+  if (!bridge || !bridge.onResult) return;
+  try { bridge.onResult(JSON.stringify(obj)); } catch { /* native side gone */ }
+}
+
+window.chessLensScan = async (url) => {
+  try {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('screenshot ' + res.status);
+    await processImage(await blobToImageData(await res.blob()));
+  } catch (e) {
+    report({ type: 'error', message: String(e && e.message || e) });
+  }
+};
 if (!canCapture) {
   $('scanLabel').textContent = 'Open screenshot';
   $('scanHint').innerHTML = 'Screen capture isn\'t available in this browser. Take a screenshot, then <b>Open image</b> or <b>Paste</b> it here.';
@@ -103,16 +130,26 @@ async function grabFrame() {
   }
 }
 
+// Take the current picture of the shared screen. A screen share only sends a new frame when
+// something changes, so never wait for one: give a fresh frame a moment to arrive, then use the
+// latest frame the video element is already showing.
 async function grabFrameNow(track) {
-  if ('ImageCapture' in window) {
-    try {
-      const bmp = await new ImageCapture(track).grabFrame();
-      return bitmapToImageData(bmp);
-    } catch { /* fall back to the video element */ }
-  }
   const v = $('video');
-  await new Promise((r) => (v.requestVideoFrameCallback ? v.requestVideoFrameCallback(() => r()) : setTimeout(r, 120)));
-  return bitmapToImageData(v, v.videoWidth, v.videoHeight);
+  if (v.paused) { try { await v.play(); } catch { /* keeps last frame */ } }
+  await new Promise((r) => {
+    const t = setTimeout(r, 300);
+    if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(() => { clearTimeout(t); r(); });
+  });
+  if (v.videoWidth) return bitmapToImageData(v, v.videoWidth, v.videoHeight);
+  // video not ready yet (very first scan): ask the track directly, but don't hang on a still screen
+  if ('ImageCapture' in window) {
+    const bmp = await Promise.race([
+      new ImageCapture(track).grabFrame().catch(() => null),
+      new Promise((r) => setTimeout(() => r(null), 3000)),
+    ]);
+    if (bmp) return bitmapToImageData(bmp);
+  }
+  throw new Error('the shared screen has not sent a picture yet — try again');
 }
 
 function bitmapToImageData(src, w = src.width, h = src.height) {
@@ -142,7 +179,13 @@ async function scanScreen() {
     return;
   }
   setStatus('Capturing…', 'busy');
-  const img = await grabFrame();
+  let img;
+  try {
+    img = await grabFrame();
+  } catch (e) {
+    setStatus('Could not read the shared screen: ' + (e && e.message), 'warn');
+    return;
+  }
   await processImage(img);
 }
 
@@ -160,6 +203,7 @@ async function processImage(img, quad = null) {
       S.quad = [[(img.width - s) / 2, (img.height - s) / 2], [(img.width + s) / 2, (img.height - s) / 2], [(img.width + s) / 2, (img.height + s) / 2], [(img.width - s) / 2, (img.height + s) / 2]];
       showShot();
       setStatus('No chessboard found. Drag the green corners onto the board, or try a closer screenshot.', 'warn');
+      report({ type: 'noboard' });
       return;
     }
     quad = det.quad;
@@ -259,6 +303,7 @@ async function analyse() {
     S.engine.latest = -1;
     S.engine.stop();
     setStatus(`That position isn't legal (${chk.why || 'check the pieces'}). Tap “Fix squares” and correct the highlighted ones.`, 'bad');
+    report({ type: 'illegal', why: chk.why || 'check the pieces', fen });
     return;
   }
   const g = chk.game;
@@ -268,6 +313,7 @@ async function analyse() {
     $('bestMove').textContent = g.isCheckmate() ? 'Checkmate' : 'Draw';
     $('bestSub').textContent = g.isCheckmate() ? `${S.turn === 'w' ? 'White' : 'Black'} is mated.` : 'No legal moves — stalemate or a dead position.';
     setStatus('Game over in this position.', '');
+    report({ type: 'gameover', text: $('bestMove').textContent + ' — ' + $('bestSub').textContent, fen });
     return;
   }
   const doubt = countDoubtful();
@@ -286,6 +332,7 @@ async function analyse() {
   if (S.recalled) msg.push(`${S.recalled} square${S.recalled > 1 ? 's' : ''} read using your earlier fixes.`);
   if (doubt) msg.push(`${doubt} square${doubt > 1 ? 's' : ''} looked unclear (outlined) — check them.`);
   setStatus(msg.join(' '), doubt ? 'warn' : '');
+  if (top) report(resultPayload('done'));
   if (S.settings.voice === 'on' && top) speak(top);
 }
 
@@ -415,10 +462,9 @@ function describe(m) {
   return s;
 }
 
-function speak(line) {
-  if (!('speechSynthesis' in window)) return;
+function spokenText(line) {
   const [m] = sanLine(S.analysis.fen, line.pv, 1);
-  if (!m) return;
+  if (!m) return '';
   let s;
   if (m.san.startsWith('O-O-O')) s = 'Castle queen side';
   else if (m.san.startsWith('O-O')) s = 'Castle king side';
@@ -426,8 +472,41 @@ function speak(line) {
   if (m.promotion) s += `, promote to ${NAMES[m.promotion]}`;
   if (m.san.endsWith('#')) s += ', checkmate';
   else if (m.san.endsWith('+')) s += ', check';
+  return s;
+}
+
+function speak(line) {
+  const s = spokenText(line);
+  if (!s) return;
+  if (bridge && bridge.speak) { try { bridge.speak(s); } catch { /* ignore */ } return; }
+  if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   speechSynthesis.speak(new SpeechSynthesisUtterance(s));
+}
+
+// Compact result for the Android floating card.
+function resultPayload(type) {
+  const a = S.analysis;
+  const top = a && a.lines[0];
+  if (!top) return { type };
+  const [m] = sanLine(a.fen, top.pv, 1);
+  const lines = a.lines.filter(Boolean).map((l) => {
+    const ms = sanLine(a.fen, l.pv, 6);
+    return `${fmtScore(l.score, S.turn)}  ${ms.map((x) => x.san).join(' ')}`;
+  });
+  return {
+    type,
+    best: m ? m.san : '',
+    desc: m ? describe(m) : '',
+    eval: fmtScore(top.score, S.turn),
+    depth: top.depth,
+    turn: S.turn,
+    turnWhy: S.turnWhy,
+    lines,
+    fen: a.fen,
+    doubt: countDoubtful(),
+    fixes: (S.fixes || []).length,
+  };
 }
 
 /* --------------------------------------------------------------- render */
@@ -509,8 +588,13 @@ function renderTurn() {
   $('turnB').setAttribute('aria-pressed', S.turn === 'b');
 }
 
+let lastReport = 0;
 function renderAnalysis() {
   const a = S.analysis;
+  if (OVERLAY && a && a.lines.length && !a.done && performance.now() - lastReport > 250) {
+    lastReport = performance.now();
+    report(resultPayload('info'));
+  }
   const ul = $('lines');
   ul.innerHTML = '';
   if (!a || !a.lines.length) {
@@ -810,9 +894,50 @@ async function takeShared() {
 
 $('forgetBtn').onclick = () => { S.memory = []; saveMemory(); toast('Forgot learned pieces'); };
 
+function setupPhones() {
+  if (IN_ANDROID_APP) {
+    $('phoneCard').hidden = false;
+    $('androidApp').hidden = false;
+    const btn = $('overlayBtn');
+    const refresh = () => {
+      const on = bridge.isOverlayRunning && bridge.isOverlayRunning();
+      btn.textContent = on ? 'Stop the floating Scan button' : 'Start the floating Scan button';
+      btn.classList.toggle('scan', !on);
+    };
+    btn.onclick = () => { bridge.toggleOverlay(); setTimeout(refresh, 600); };
+    addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    refresh();
+    // "Fix in app" from the floating card: open the screenshot it just read.
+    if (PARAMS.has('shot')) {
+      history.replaceState(null, '', location.pathname);
+      window.chessLensScan('/shot.jpg?t=' + Date.now());
+    }
+    return;
+  }
+  // In a normal browser: explain how to use Chess Lens with chess apps on a phone.
+  $('phoneCard').hidden = false;
+  $('phoneHelp').hidden = false;
+  $('pasteUrl').textContent = location.origin + location.pathname + '?paste=1';
+  if (IS_IOS) $('iosHelp').open = true;
+  else if (IS_ANDROID) $('androidHelp').open = true;
+  if (PARAMS.has('paste')) {
+    // Opened by the iPhone shortcut: the screenshot is on the clipboard, one tap reads it.
+    history.replaceState(null, '', location.pathname);
+    const b = $('pasteNow');
+    b.hidden = false;
+    b.onclick = async () => { b.hidden = true; await $('pasteBtn').onclick(); };
+    b.scrollIntoView({ block: 'center' });
+  }
+}
+
 renderSettings();
+if (!OVERLAY) setupPhones();
 render();
 takeShared();
+if (OVERLAY) report({ type: 'ready' });
 
 // test hook
 window.__chessLens = { S, processImage, analyse };
+window.chessLensToggleTurn = () => { if (S.board) setTurn(S.turn === 'w' ? 'b' : 'w'); };
+window.chessLensFlip = () => { if (S.board) flip(); };
