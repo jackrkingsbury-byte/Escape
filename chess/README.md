@@ -83,13 +83,20 @@ python3 train/gen.py png boards tr_0.npz 1100 200 <comma,separated,sets>   # ×N
 ARCH=24,48,96,128 python3 train/train.py model.bin 6 - tr_*.npz
 ```
 
-Accuracy measured on piece sets **held out of training**:
+Accuracy, measured with 5 piece sets **held out of training** (merida, staunty, companion, cooke and
+california). The shipped model is then retrained on all 32 sets.
 
-- before re-tinting augmentation: 96.9% of squares
-- with it: see the PR description
+| | Per square |
+|---|---|
+| Unseen sets, first recipe (narrower net, no re-tinting) | 96.9% |
+| Unseen sets, current recipe | 97.0–97.5% |
+| Boards drawn entirely in one unseen set | 95.7% |
+| Same boards after teaching from one corrected board (*Fix squares*, kNN on CNN features) | 97.9% |
 
-Unfamiliar sets mostly cause queen/king and pawn/knight confusions, which the repair step and
-**Fix squares** handle.
+- **Common misses on unfamiliar sets:** queen ↔ king, and pawn ↔ bishop/knight. The repair step
+  catches most king mix-ups, and **Fix squares** plus learning handles the rest.
+- **Sets in training,** like lichess's default `cburnett`, are read exactly in the end-to-end tests.
+- **Speed in Node:** about 0.2 s to find the board and 0.35 s to read a crowded board.
 
 ## Tests
 
