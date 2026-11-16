@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chess Lens — screenshot to best move</title>
+<meta name="description" content="Scan your screen or a screenshot of any chessboard and get Stockfish's best move. Runs entirely on your device.">
+<meta name="theme-color" content="#16181d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+:root{
+  --bg:#16181d;--panel:#1f2229;--panel-2:#272b34;--line:#323743;--text:#eceef2;--muted:#9aa1b0;
+  --accent:#6fbf4a;--accent-ink:#0f1a09;--accent-soft:rgba(111,191,74,.16);--warn:#f2b33d;--bad:#ef6a5a;
+  --light-sq:#ebecd0;--dark-sq:#739552;--radius:14px;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f3f2ee;--panel:#ffffff;--panel-2:#f1efe9;--line:#e1ded5;--text:#17191e;--muted:#5d6472;
+    --accent:#3f8a22;--accent-ink:#ffffff;--accent-soft:rgba(63,138,34,.12);
+  }
+}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit}
+.app{max-width:1180px;margin:0 auto;padding:16px 16px 40px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:750;font-size:19px;letter-spacing:-.01em;white-space:nowrap}
+.logo svg{width:30px;height:30px}
+header .spacer{flex:1}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:13px;color:var(--muted);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.chip:hover{color:var(--text)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;gap:0}
+  .layout>section{margin-bottom:14px}
+  aside{display:contents}
+  #captureCard{order:-1}
+  .layout>section{order:0}
+  #resultCard{order:1} #shotCard{order:2} #settingsCard{order:3}
+  .tools{padding-left:0}
+}
+
+/* board */
+.board-wrap{display:flex;gap:8px;align-items:stretch}
+.evalbar{width:14px;border-radius:7px;overflow:hidden;background:#3a3d44;position:relative;flex:none}
+.evalbar .fill{position:absolute;left:0;right:0;bottom:0;background:#f4f4f2;transition:height .35s ease}
+.evalbar.flipped .fill{top:0;bottom:auto}
+.board{position:relative;flex:1;aspect-ratio:1;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25);user-select:none;touch-action:manipulation}
+.board svg{display:block;width:100%;height:100%}
+.board.editing{outline:3px solid var(--warn);outline-offset:3px}
+.board .empty-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:rgba(15,16,20,.55);color:#fff;font-weight:600;font-size:17px;backdrop-filter:blur(1px)}
+.board .empty-msg small{display:block;font-weight:400;font-size:14px;opacity:.85;margin-top:6px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-left:22px}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:1.2}
+.btn:hover{border-color:var(--muted)}
+.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
+.btn kbd{font:11px var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+@media (pointer:coarse){.btn kbd{display:none}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:8px 11px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--text);font-weight:600}
+
+/* side column */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:650}
+.scan{width:100%;border:0;border-radius:12px;padding:15px 16px;background:var(--accent);color:var(--accent-ink);font-weight:750;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+.scan:hover{filter:brightness(1.06)}
+.scan:disabled{opacity:.6;cursor:wait}
+.scan svg{width:22px;height:22px}
+.src-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.src-row .btn{justify-content:center}
+.hint{color:var(--muted);font-size:13px;margin:10px 0 0}
+.hint b{color:var(--text);font-weight:600}
+.drop{position:fixed;inset:0;background:rgba(111,191,74,.18);border:3px dashed var(--accent);display:none;place-items:center;font-size:22px;font-weight:700;z-index:50}
+.drop.on{display:grid}
+
+.best{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.best .move{font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.best .eval{font:600 18px var(--mono);padding:3px 8px;border-radius:8px;background:var(--panel-2)}
+.best-sub{color:var(--muted);margin-top:4px;min-height:21px}
+.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin-top:10px;min-height:20px}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.status.busy .dot{background:var(--accent);animation:pulse 1s infinite}
+.status.warn{color:var(--warn)} .status.warn .dot{background:var(--warn)}
+.status.bad{color:var(--bad)} .status.bad .dot{background:var(--bad)}
+@keyframes pulse{50%{opacity:.3}}
+.lines{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.lines li{display:grid;grid-template-columns:62px 1fr;gap:8px;align-items:baseline;padding:7px 9px;border-radius:9px;background:var(--panel-2);font-size:14px;cursor:pointer}
+.lines li:hover{outline:1px solid var(--line)}
+.lines .sc{font:600 13px var(--mono)}
+.lines .pv{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lines .pv b{color:var(--text)}
+
+.shot{position:relative;border-radius:10px;background:#0d0e11;touch-action:none;width:fit-content;max-width:100%;margin:0 auto}
+.shot canvas{display:block;max-width:100%;max-height:60vh;width:auto;height:auto;border-radius:10px}
+.shot .handle{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:grab;touch-action:none}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row + .row{margin-top:10px}
+.label{color:var(--muted);font-size:13px;min-width:78px}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.links a,.links button{font-size:13px;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:5px 9px;background:none;cursor:pointer}
+.links a:hover,.links button:hover{color:var(--text)}
+
+.picker{position:absolute;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;display:grid;grid-template-columns:repeat(7,40px);gap:4px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.picker button{width:40px;height:40px;border-radius:8px;border:1px solid transparent;background:var(--panel-2);cursor:pointer;padding:3px}
+.picker button:hover{border-color:var(--accent)}
+.picker button svg{width:100%;height:100%}
+.picker .clear{font-size:18px;color:var(--muted)}
+
+footer{margin-top:22px;color:var(--muted);font-size:12.5px;line-height:1.6}
+footer p{margin:4px 0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60}
+.toast.on{opacity:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#739552"/><path d="M0 8h8v8H0zM16 8h8v8h-8zM8 16h8v8H8zM24 16h8v8h-8zM8 0h8v8H8zM24 0h8v8h-8zM0 24h8v8H0zM16 24h8v8h-8z" fill="#ebecd0"/><circle cx="16" cy="16" r="9.5" fill="none" stroke="#16181d" stroke-width="3"/><path d="M23 23l5.5 5.5" stroke="#16181d" stroke-width="3.5" stroke-linecap="round"/></svg>
+      Chess Lens
+    </div>
+    <div class="spacer"></div>
+    <button class="chip" id="installBtn" hidden>Install app</button>
+    <span class="chip" id="engineChip" title="Engine status">Engine: loading…</span>
+  </header>
+
+  <div class="layout">
+    <section>
+      <div class="board-wrap">
+        <div class="evalbar" id="evalbar" aria-hidden="true"><div class="fill" id="evalfill" style="height:50%"></div></div>
+        <div class="board" id="board">
+          <div class="empty-msg" id="emptyMsg"><div>Scan a board to get the best move<small>Screen capture, a pasted screenshot, a saved image or a photo — Chess Lens finds the board and asks Stockfish.</small></div></div>
+        </div>
+      </div>
+      <div class="tools">
+        <div class="seg" role="group" aria-label="Side to move">
+          <button id="turnW" aria-pressed="true">White to move</button>
+          <button id="turnB" aria-pressed="false">Black to move</button>
+        </div>
+        <button class="btn" id="flipBtn" title="Flip board (F)">⇅ Flip <kbd>F</kbd></button>
+        <button class="btn" id="editBtn" aria-pressed="false" title="Fix squares (E)">✎ Fix squares <kbd>E</kbd></button>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card" id="captureCard">
+        <button class="scan" id="scanBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><circle cx="12" cy="12" r="3.5"/></svg>
+          <span id="scanLabel">Scan screen</span>
+        </button>
+        <div class="src-row">
+          <button class="btn" id="pasteBtn" title="Paste a screenshot (Ctrl+V)">Paste</button>
+          <button class="btn" id="fileBtn">Open image</button>
+          <button class="btn" id="cameraBtn">Photo</button>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" hidden>
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+        <p class="hint" id="scanHint">First scan asks which screen, window or tab to share — pick the one with the chessboard. After that, <b>Scan</b> (or <b>S</b>) reads it again instantly.</p>
+      </div>
+
+      <div class="card" id="resultCard">
+        <h2>Best move</h2>
+        <div class="best"><div class="move" id="bestMove">—</div><div class="eval" id="bestEval" hidden></div></div>
+        <div class="best-sub" id="bestSub">Waiting for a position.</div>
+        <ol class="lines" id="lines"></ol>
+        <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready.</span></div>
+        <div class="links" id="links" hidden>
+          <button id="copyFen">Copy FEN</button>
+          <a id="lichessLink" target="_blank" rel="noopener">Open in Lichess analysis ↗</a>
+        </div>
+      </div>
+
+      <div class="card" id="shotCard" hidden>
+        <h2>Screenshot</h2>
+        <div class="shot" id="shot"><canvas id="shotCanvas"></canvas></div>
+        <p class="hint">Board outline wrong? Drag the green corners onto the board's corners.</p>
+      </div>
+
+      <div class="card" id="settingsCard">
+        <h2>Settings</h2>
+        <div class="row"><span class="label">Think time</span>
+          <div class="seg" id="timeSeg"><button data-v="1000">1s</button><button data-v="3000">3s</button><button data-v="8000">8s</button></div></div>
+        <div class="row"><span class="label">Lines</span>
+          <div class="seg" id="pvSeg"><button data-v="1">1</button><button data-v="3">3</button><button data-v="5">5</button></div></div>
+        <div class="row"><span class="label">I play</span>
+          <div class="seg" id="sideSeg"><button data-v="auto">Auto</button><button data-v="white">White</button><button data-v="black">Black</button></div></div>
+        <div class="row"><span class="label">Speak move</span>
+          <div class="seg" id="voiceSeg"><button data-v="off">Off</button><button data-v="on">On</button></div></div>
+        <div class="row"><span class="label">Learning</span>
+          <span class="hint" id="memText" style="margin:0;flex:1"></span>
+          <button class="btn" id="forgetBtn" hidden>Forget</button></div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>Everything runs on your device: board recognition in the page, <a href="https://stockfishchess.org" style="color:inherit">Stockfish 17.1</a> (lite NNUE, WebAssembly) in a worker. Nothing is uploaded.</p>
+    <p>Made for studying, puzzles, bot games and analysing finished games. Using engine help in live games against people breaks the fair-play rules of chess sites and gets accounts closed.</p>
+    <p>Shortcuts: <b>S</b> scan · <b>Ctrl+V</b> paste · <b>F</b> flip · <b>T</b> switch side to move · <b>E</b> fix squares.</p>
+  </footer>
+</div>
+<div class="drop" id="drop">Drop the screenshot</div>
+<div class="toast" id="toast" role="status"></div>
+<video id="video" muted playsinline hidden></video>
+<script type="module" src="app.js"></script>
+</body>
+</html>
