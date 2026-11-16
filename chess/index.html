@@ -242,7 +242,7 @@ code{font:12px var(--mono);background:var(--panel-2);padding:1px 4px;border-radi
 </div>
 <div class="drop" id="drop">Drop the screenshot</div>
 <div class="toast" id="toast" role="status"></div>
-<video id="video" muted playsinline hidden></video>
+<video id="video" muted playsinline aria-hidden="true" style="position:fixed;left:0;top:0;width:2px;height:2px;opacity:0;pointer-events:none"></video>
 <script type="module" src="app.js"></script>
 </body>
 </html>

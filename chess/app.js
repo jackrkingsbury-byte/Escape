@@ -130,16 +130,26 @@ async function grabFrame() {
   }
 }
 
+// Take the current picture of the shared screen. A screen share only sends a new frame when
+// something changes, so never wait for one: give a fresh frame a moment to arrive, then use the
+// latest frame the video element is already showing.
 async function grabFrameNow(track) {
-  if ('ImageCapture' in window) {
-    try {
-      const bmp = await new ImageCapture(track).grabFrame();
-      return bitmapToImageData(bmp);
-    } catch { /* fall back to the video element */ }
-  }
   const v = $('video');
-  await new Promise((r) => (v.requestVideoFrameCallback ? v.requestVideoFrameCallback(() => r()) : setTimeout(r, 120)));
-  return bitmapToImageData(v, v.videoWidth, v.videoHeight);
+  if (v.paused) { try { await v.play(); } catch { /* keeps last frame */ } }
+  await new Promise((r) => {
+    const t = setTimeout(r, 300);
+    if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(() => { clearTimeout(t); r(); });
+  });
+  if (v.videoWidth) return bitmapToImageData(v, v.videoWidth, v.videoHeight);
+  // video not ready yet (very first scan): ask the track directly, but don't hang on a still screen
+  if ('ImageCapture' in window) {
+    const bmp = await Promise.race([
+      new ImageCapture(track).grabFrame().catch(() => null),
+      new Promise((r) => setTimeout(() => r(null), 3000)),
+    ]);
+    if (bmp) return bitmapToImageData(bmp);
+  }
+  throw new Error('the shared screen has not sent a picture yet — try again');
 }
 
 function bitmapToImageData(src, w = src.width, h = src.height) {
@@ -169,7 +179,13 @@ async function scanScreen() {
     return;
   }
   setStatus('Capturing…', 'busy');
-  const img = await grabFrame();
+  let img;
+  try {
+    img = await grabFrame();
+  } catch (e) {
+    setStatus('Could not read the shared screen: ' + (e && e.message), 'warn');
+    return;
+  }
   await processImage(img);
 }
 

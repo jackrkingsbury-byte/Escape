@@ -101,11 +101,14 @@ const CASES = [
         };
         let calls = 0;
         window.__captureCalls = () => calls;
+        // On a still screen Chrome may never deliver "the next frame": make grabFrame() hang like that.
+        window.ImageCapture = class { grabFrame() { return new Promise(() => {}); } };
         navigator.mediaDevices.getDisplayMedia = async () => {
           calls++;
           const st = cv.captureStream(10);
-          // keep frames flowing like a real screen
-          setInterval(() => { const c = cv.getContext('2d'); const d = c.getImageData(0, 0, 1, 1); c.putImageData(d, 0, 0); }, 100);
+          // Like a real screen share: the current picture once at the start, then a new frame only when
+          // the picture changes — nothing at all while the screen is still.
+          setTimeout(() => { const c = cv.getContext('2d'); c.drawImage(cv, 0, 0); }, 50);
           return st;
         };
       });
@@ -117,7 +120,8 @@ const CASES = [
         await app.waitForTimeout(300);
         await app.evaluate(() => { window.__chessLens.S.analysis = null; document.getElementById('statusText').textContent = ''; });
         await app.click('#scanBtn');
-        await app.waitForFunction(() => /Depth \d+/.test(document.getElementById('statusText').textContent), null, { timeout: 60000 });
+        await app.waitForFunction(() => /Depth \d+/.test(document.getElementById('statusText').textContent), null, { timeout: 60000 })
+          .catch(async (e) => { console.log('scan stuck: ' + await app.textContent('#statusText')); throw e; });
         return app.evaluate(() => ({ best: document.getElementById('bestMove').textContent, label: document.getElementById('scanLabel').textContent, calls: window.__captureCalls() }));
       };
       const a = await scanAndRead(shots[0]);
