@@ -97,6 +97,49 @@ const VIEWS = {
   anchors_park: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => ({ pos: P(s, 'park.table', [-1.2, 1.3, 3.6]), look: P(s, 'park.table', [0, -0.1, 0]), fov: 44 }) },
   anchors_room: { set: 'room', lighting: 'day', opts: { window: 'day' }, cam: (s) => ({ pos: P(s, 'room.chair', [-1.6, 1.6, -1.2]), look: P(s, 'room.chair', [0, 0.8, 0.4]), fov: 50 }) },
 };
+// ── the director's framings from src/shots.js (frame f(x,y,z): +x = the anchor's left, +z = its facing)
+function fr(s, name, extraYaw = 0, dy = 0) {
+  const a = s.anchors[name]; a.updateWorldMatrix(true, false);
+  const o = new THREE.Vector3().setFromMatrixPosition(a.matrixWorld); o.y += dy;
+  const e = new THREE.Euler().setFromQuaternion(new THREE.Quaternion().setFromRotationMatrix(a.matrixWorld), 'YXZ');
+  const yaw = e.y + extraYaw, fwd = V(Math.sin(yaw), 0, Math.cos(yaw)), left = V(Math.cos(yaw), 0, -Math.sin(yaw));
+  return (x, y, z) => o.clone().addScaledVector(left, x).addScaledVector(fwd, z).add(V(0, y, 0));
+}
+function frYaw(s, name, yawFrom, dy = 0) {   // origin of `name`, yaw of `yawFrom`
+  const a = s.anchors[name], b = s.anchors[yawFrom]; a.updateWorldMatrix(true, false); b.updateWorldMatrix(true, false);
+  const o = new THREE.Vector3().setFromMatrixPosition(a.matrixWorld); o.y += dy;
+  const yaw = new THREE.Euler().setFromQuaternion(new THREE.Quaternion().setFromRotationMatrix(b.matrixWorld), 'YXZ').y;
+  const fwd = V(Math.sin(yaw), 0, Math.cos(yaw)), left = V(Math.cos(yaw), 0, -Math.sin(yaw));
+  return (x, y, z) => o.clone().addScaledVector(left, x).addScaledVector(fwd, z).add(V(0, y, 0));
+}
+const QUIET = { windowGlow: (h, w) => (((h * 3 + w * 5) % 7) < 5 ? 1 : 0.06) };
+Object.assign(VIEWS, {
+  s_crane0: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: (s) => ({ pos: P(s, 'street.camHigh'), look: P(s, 'street.center', [0, 0.5, 0]), fov: 50 }) },
+  s_crane1: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: (s) => { const c = P(s, 'street.center'), hi = P(s, 'street.camHigh'); const d = V(hi.x - c.x, 0, hi.z - c.z).normalize(); return { pos: c.clone().addScaledVector(d, 9).add(V(0, 3.2, 0)), look: P(s, 'street.crowdA', [0, 1.2, 0]), fov: 42 }; } },
+  s_truck: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'street.crowdB'); return { pos: F(-5, 2.2, 7.5), look: F(-1, 1.3, 0), fov: 45 }; } },
+  s_marcus: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'street.crowdA'); return { pos: F(1.2, 1.6, 6.0), look: F(0, 1.3, 2.2), fov: 40 }; } },
+  s_brenda: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'pool.edge1'); return { pos: F(-1.0, 1.4, -3.6), look: F(0, 1.35, 0), fov: 40 }; } },
+  s_grandad: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'street.crowdB'); return { pos: F(-1, 2.6, 5.2), look: F(0, 2.0, 0), fov: 42 }; } },
+  s_birthday: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'park.table'); return { pos: F(0.4, 1.4, 2.6), look: F(0, 0.35, -0.3), fov: 44 }; } },
+  s_sq_est0: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const c = P(s, 'square.center'), cm = P(s, 'square.cam1'); const d = V(cm.x - c.x, 0, cm.z - c.z).normalize(); return { pos: c.clone().addScaledVector(d, 30).add(V(0, 16, 0)), look: c.clone().add(V(0, 1, 0)), fov: 44 }; } },
+  s_sq_est1: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.cam1'), look: P(s, 'square.center', [0, 1.5, 0]), fov: 46 }) },
+  s_stands: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const F = fr(s, 'square.standA'); return { pos: F(-4, 2.4, 6.5), look: F(-2, 1.8, 0), fov: 44 }; } },
+  s_sits: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const F = fr(s, 'square.chairA'); return { pos: F(1.6, 1.9, 3.4), look: F(0, 1.1, 0.4), fov: 42 }; } },
+  s_mayor: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const F = fr(s, 'square.chairB'); return { pos: F(-0.9, 1.5, 2.9), look: F(0, 1.3, 0.1), fov: 40 }; } },
+  s_four: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const B = frYaw(s, 'square.table', 'square.chairA'); return { pos: B(2.6, 1.3, 0.2), look: B(0, 0.45, 0), fov: 42 }; } },
+  s_silence: { set: 'town', lighting: 'dusk', opts: { crowdMotion: 0 }, cam: (s) => { const F = fr(s, 'square.standA'); return { pos: F(0, 2.3, 7.5), look: F(0, 2.0, 0), fov: 44 }; } },
+  s_quietwalk: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: 0.06 }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(1.6, 1.9, 3.7), look: F(0, 1.3, -0.5), fov: 44 }; } },
+  s_nolights: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: 0.06 }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 1.6, 4), look: F(0, 6, -6), fov: 50 }; } },
+  s_nothing: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: 0.06 }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 9, 16), look: F(0, 0.5, 0), fov: 44 }; } },
+  s_windows1: { set: 'town', lighting: 'quiet_night', opts: QUIET, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(-2, 2.2, 6), look: F(3, 3, -2), fov: 52 }; } },
+  s_windows2: { set: 'town', lighting: 'quiet_night', opts: QUIET, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 7, 14), look: F(0, 2.5, -4), fov: 52 }; } },
+  s_grinding: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 6, 12), look: F(0, 1, 0), fov: 46 }; } },
+  s_park: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = frYaw(s, 'park.table', 'park.stool1', -0.78); return { pos: F(1.5, 1.6, -3.0), look: F(0, 0.9, 0), fov: 42 }; } },
+  s_winning: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = frYaw(s, 'park.table', 'park.stool1', -0.78); return { pos: F(-1.6, 1.6, 0.6), look: F(0, 0.95, 0), fov: 44 }; } },
+  s_nook: { set: 'room', lighting: 'night', opts: { window: 'party' }, cam: (s) => ({ pos: V(0, 1.55, 1.65).add(V(0.75, 0, 0)), look: V(0, 1.25, 0), fov: 40 }) },
+});
+const SHOTS_SHEET = ['s_crane0', 's_crane1', 's_truck', 's_marcus', 's_brenda', 's_grandad', 's_birthday', 's_sq_est0', 's_sq_est1', 's_stands', 's_sits', 's_mayor',
+  's_four', 's_silence', 's_quietwalk', 's_nolights', 's_nothing', 's_windows1', 's_windows2', 's_grinding', 's_park', 's_winning', 's_nook', 'banner'];
 const SHEET = ['overview_party', 'street', 'pool', 'foam', 'square_dusk', 'quiet_street', 'park_day', 'room_night', 'room_marcus', 'room_grandad', 'stage', 'banner'];
 
 // ── anchor test boxes (2 units tall, nose = +Z)
@@ -185,6 +228,16 @@ async function main() {
         noSky: hide((o) => ['sky', 'stars', 'clouds', 'hills'].includes(o.name)),
         noLines: hide((o) => o.isLineSegments || o.isLine),
       };
+      const partyVariants = {
+        base: () => {},
+        noBulbs: hide((o) => o.name === 'bulbs'),
+        noBulbHalo: hide((o) => o.name === 'bulbHalos'),
+        noFlags: hide((o) => o.name === 'bunting'),
+        noBalloons: hide((o) => o.name === 'balloons'),
+        noPStatic: hide((o) => o.name === 'partyStatic' || o.name === 'partyGloss'),
+        noWires: hide((o) => o.name === 'wires'),
+        noParty: hide((o) => o.name === 'partyProps'),
+      };
       const variants0 = {
         base: () => {},
         twoLights: () => lights.forEach((l) => { l.visible = l.isHemisphereLight || l.castShadow; }),
@@ -196,7 +249,7 @@ async function main() {
         aniso1: () => { for (const [o, m] of stdMeshes) { if (m.map) { if (!lamb.has('a1' + m.uuid)) { const c = m.clone(); c.map = m.map.clone(); c.map.anisotropy = 1; c.map.needsUpdate = true; lamb.set('a1' + m.uuid, c); } o.material = lamb.get('a1' + m.uuid); } } },
         noRecv: () => { s.root.traverse((o) => { if (o.isMesh || o.isInstancedMesh) { o.userData._rs ??= o.receiveShadow; o.receiveShadow = false; } }); },
       };
-      const variants = Q.get('ab') === 'cat' ? catVariants : variants0;
+      const variants = Q.get('ab') === 'cat' ? catVariants : Q.get('ab') === 'party' ? partyVariants : variants0;
       const res = {}; for (const k in variants) res[k] = [];
       const n = +(Q.get('n') || 4);
       for (let i = -1; i < n; i++) for (const [k, f] of Object.entries(variants)) {
@@ -223,8 +276,8 @@ async function main() {
     } else stats.textContent = info + (s.info ? '\n' + JSON.stringify(s.info) : '');
     console.log(info);
   } else {
-    const list = Q.get('sheet') === 'all' ? Object.keys(VIEWS) : SHEET;
-    const cols = list.length > 12 ? 5 : 4, rows = Math.ceil(list.length / cols);
+    const list = Q.get('sheet') === 'all' ? Object.keys(VIEWS) : Q.get('sheet') === 'shots' ? SHOTS_SHEET : SHEET;
+    const cols = list.length > 12 ? 6 : 4, rows = Math.ceil(list.length / cols);
     const cw = Math.floor(W / cols), chh = Math.floor(H / rows);
     renderer.setScissorTest(true);
     renderer.setClearColor('#111318'); renderer.clear();

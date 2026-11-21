@@ -116,8 +116,7 @@ if (VIEW === 'all') {
   if (hero) {
     hero.me.root.position.set(0, 0, -0.62); hero.me.pose('sitIdle', 1.0); hero.me.face('sweat', 1.0); S.add(hero.me.root);
     hero.me.root.updateMatrixWorld(true);
-    const hp = hero.me.joints.head.getWorldPosition(new THREE.Vector3());
-    drop.position.set(hp.x + 0.36, hp.y + 0.42, hp.z + 0.05);
+    void 0;
   }
 
   // cake corner
@@ -135,6 +134,7 @@ if (VIEW === 'all') {
   const plate = makePlate(); plate.root.position.set(1.66, 0.78, 1.2); plate.root.rotation.y = 0.3; S.add(plate.root);
   const burst = makeImpactBurst(); burst.root.position.set(1.9, 0.782, 1.05); burst.update(0.22); S.add(burst.root);
   const ch3 = makeChair(); ch3.position.set(1.75, 0, 0.6); S.add(ch3);
+  drop.position.set(1.5, 0.98, 1.1); drop.rotation.z = 0.25;
 
   // speaker + confetti
   const spk = makeSpeaker(); spk.root.position.set(1.8, 0, -1.5); spk.root.rotation.y = -0.5; spk.update(0.02); S.add(spk.root);
@@ -145,17 +145,17 @@ if (VIEW === 'all') {
 
   const draw = () => {
     const hA = Math.round(H * 540 / 960);
-    view(S, cam(34, W / hA, [1.3, 1.55, 0.42], [-0.08, 0.86, -0.02]), 0, 0, W, hA);
+    view(S, cam(36, W / hA, [1.5, 1.72, 0.62], [-0.1, 0.92, -0.14]), 0, 0, W, hA);
     const pw = Math.round(W / 2), ph = Math.round(H * 210 / 960), y1 = Math.round(H * 540 / 960), y2 = y1 + ph;
     view(S, cam(44, pw / ph, [-0.95, 1.25, 2.6], [-1.72, 0.8, 1.05]), 0, y1, pw, ph);
     view(S, cam(34, pw / ph, [1.25, 1.35, 1.85], [1.75, 0.8, 1.1]), pw, y1, W - pw, ph);
-    view(S, cam(46, pw / ph, [0.2, 1.25, 0.1], [1.35, 0.7, -1.25]), 0, y2, pw, H - y2);
+    view(S, cam(46, pw / ph, [0.65, 1.2, 0.25], [1.4, 0.68, -1.3]), 0, y2, pw, H - y2);
     view(S, cam(46, pw / ph, [-0.45, 1.75, -0.05], [-1.65, 0.4, -1.6]), pw, y2, W - pw, H - y2);
   };
   draw(); renders.push(draw);
   const ph = Math.round(H * 210 / 960), y1 = Math.round(H * 540 / 960);
-  label('chess set (knight mid-move, king toppled, highlights) · clock · chair · table · sweat drop', 8, 8);
-  label('cake · balloons · hat', 6, y1 + 6); label('plate · impact burst', W / 2 + 6, y1 + 6);
+  label('chess set (knight mid-move, king toppled, highlights) · clock · chair · table', 8, 8);
+  label('cake · balloons · hat', 6, y1 + 6); label('plate · impact burst · sweat drop', W / 2 + 6, y1 + 6);
   label('speaker · confetti', 6, y1 + ph + 6); label('bed', W / 2 + 6, y1 + ph + 6);
 } else if (VIEW === 'chess' || VIEW === 'film') {
   const st = studio({ bg: '#f3b27a', floor: '#c98d5e', sun: [-1.6, 1.6, 2.2], sunColor: '#ffd2a0', sunI: 3.0, hemi: 0.75, shadowSize: 1.2 });
@@ -221,6 +221,36 @@ if (VIEW === 'all') {
   const draw = () => us.forEach((u, i) => { bursts.forEach((b, j) => { b.root.visible = j === i; b.update(us[j]); }); view(st.scene, cam(38, hw / hh, [0.45, 1.05, -0.62], [0.0, 0.84, -0.1]), (i % 2) * hw, Math.floor(i / 2) * hh, hw, hh); });
   draw(); renders.push(draw);
   us.forEach((u, i) => label(`burst u=${u}`, (i % 2) * hw + 6, Math.floor(i / 2) * hh + 6));
+} else if (VIEW === 'test') {
+  // purity / determinism checks (results in window.__test and the console)
+  const st = studio();
+  const A = makeChessSet(), B = makeChessSet();
+  st.scene.add(A.root, B.root);
+  const snap = (cs) => cs.root.children[0].children.find((c) => c.name === 'pieces').children
+    .map((g) => g.visible ? [...g.position.toArray(), ...g.quaternion.toArray(), ...g.scale.toArray()].map((x) => x.toFixed(6)).join(',') : 'hidden').sort().join('|');
+  const res = {};
+  const same = (name, f1, f2) => { f1(A); f2(B); res[name] = snap(A) === snap(B); };
+  same('move twice = once', (c) => { c.reset(); c.move('e2', 'e4', 0.5); c.move('e2', 'e4', 0.5); }, (c) => { c.reset(); c.move('e2', 'e4', 0.5); });
+  same('move u order irrelevant', (c) => { c.reset(); c.move('g1', 'f3', 0.9); c.move('g1', 'f3', 0.3); }, (c) => { c.reset(); c.move('g1', 'f3', 0.3); });
+  same('move u=1 == setFEN after', (c) => { c.reset(); c.move('e2', 'e4', 1); }, (c) => { c.setFEN('rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR'); });
+  same('slam end == rest', (c) => { c.setFEN('rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR'); c.slam('e4', 0.4); c.slam('e4', 1); }, (c) => { c.setFEN('rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR'); });
+  same('topple pure', (c) => { c.setFEN(MATE); c.topple('e8', 1); c.topple('e8', 0.4); }, (c) => { c.setFEN(MATE); c.topple('e8', 0.4); });
+  same('knockAll decreasing u', (c) => { c.reset(); c.knockAll(0.9, 7); c.knockAll(0.3, 7); }, (c) => { c.reset(); c.knockAll(0.3, 7); });
+  same('knockAll repeat', (c) => { c.reset(); c.knockAll(0.6, 7); c.knockAll(0.6, 7); }, (c) => { c.reset(); c.knockAll(0.6, 7); });
+  same('capture hidden at 0.85', (c) => { c.setFEN('r1bqk2r/pppp1ppp/2n2n2/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR'); c.move('h5', 'f7', 0.86); }, (c) => { c.setFEN('r1bqk2r/pppp1ppp/2n2n2/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR'); c.move('h5', 'f7', 0.86); });
+  A.setFEN('r1bqk2r/pppp1ppp/2n2n2/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR');
+  A.move('h5', 'f7', 0.86); res['captured piece hidden'] = !A.pieceAt('f7').visible;
+  A.reset(); res['squareToLocal e4'] = A.squareToLocal('e4').toArray().map((x) => +x.toFixed(4)).join(',');
+  res['a1 at -X,-Z'] = A.squareToLocal('a1').x < 0 && A.squareToLocal('a1').z < 0;
+  res['pieceAt e1 is K'] = A.pieceInfo('e1')?.code === 'K';
+  res['thickness'] = +A.thickness.toFixed(4);
+  const c1 = makeConfetti({ count: 50, t0: 1 }), c2 = makeConfetti({ count: 50, t0: 1 });
+  c1.update(3); c1.update(1.7); c2.update(1.7);
+  const ma = c1.mesh.instanceMatrix.array, mb = c2.mesh.instanceMatrix.array; let ok = true; for (let i = 0; i < ma.length; i++) if (Math.abs(ma[i] - mb[i]) > 1e-9) ok = false;
+  res['confetti pure'] = ok;
+  window.__test = res; console.log('TEST', JSON.stringify(res));
+  const draw = () => view(st.scene, cam(40, W / H, [0.5, 0.7, -0.6], [0, 0, 0]), 0, 0, W, H);
+  draw(); renders.push(draw);
 } else if (VIEW === 'clock') {
   const st = studio({ shadowSize: 1.0 });
   const { clk, chess } = chessTable(st.scene, { fen: null, chairs: false });
@@ -228,7 +258,7 @@ if (VIEW === 'all') {
   clk.root.rotation.y = 0; clk.root.position.set(0, 0.78, -0.3);
   clk.setTimes(185, 3); clk.press('L', U(0.5));
   const p = clk.root.position;
-  const c = cam(30, W / H, [p.x + 0.08, p.y + 0.22, p.z + 0.5], [p.x, p.y + 0.06, p.z]);
+  const c = cam(32, W / H, [p.x + 0.12, p.y + 0.3, p.z + 0.62], [p.x, p.y + 0.06, p.z]);
   const draw = () => view(st.scene, c, 0, 0, W, H);
   draw(); renders.push(draw);
   label('chess clock — press("L", u)', 8, 8);

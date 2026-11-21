@@ -597,7 +597,7 @@ const L = {
   square: { x0: 30, x1: 62, z0: -18, z1: 18 },
   stage: { x: 53, z: 0, w: 7, d: 12.4, h: 0.8 },   // w along X (depth of the stage), d along Z
   table: { x: 52.2, z: 0 },
-  pool: { x: -3, z: -25.5, w: 7.5, d: 4.0 },
+  pool: { x: -3, z: -27.0, w: 7.5, d: 4.0 },
   park: { x0: -62, x1: -45.5, z0: -32, z1: 8 },
   parkTable: { x: -53, z: -10 },
 };
@@ -924,7 +924,7 @@ function buildStreetscape(T) {
     const tl = f(-spec.w / 2 - 1.3, 0, d / 2 + 1.4);
     if (i < 11) addTree(T, tl[0], tl[2], 0.8 + hash(i * 1.7) * 0.35, hash(i * 2.9) > 0.3 ? 'round' : 'pine');
     const tb = f(spec.w * 0.2, 0, -d / 2 - 4 - hash(i) * 3);
-    const inPoolYard = tb[0] > -11.5 && tb[0] < 5.5 && tb[2] < -17 && tb[2] > -33.5;
+    const inPoolYard = tb[0] > -11.5 && tb[0] < 5.5 && tb[2] < -17 && tb[2] > -35;
     if (!inPoolYard) addTree(T, tb[0], tb[2], 1.0 + hash(i * 0.9) * 0.5, hash(i * 4.1) > 0.5 ? 'round' : 'pine');
     // bunting across the upper floor of each street-facing house
     if (i < 9) {
@@ -1340,7 +1340,7 @@ function waterMaterial() {
 function buildPool(T) {
   const P = T.m.pool, A = T.anchors, root = T.root, pl = L.pool;
   const wx0 = pl.x - pl.w / 2, wx1 = pl.x + pl.w / 2, wz0 = pl.z - pl.d / 2, wz1 = pl.z + pl.d / 2;
-  const dx0 = -10.2, dx1 = 4.2, dz0 = -31.2, dz1 = -19.6, dy = 0.12;
+  const dx0 = -10.2, dx1 = 4.2, dz0 = -32.7, dz1 = -20.4, dy = 0.12;
   const deck = '#c9a273';
   // deck around the hole
   P.box(deck, (dx0 + wx0) / 2, dy / 2, (dz0 + dz1) / 2, wx0 - dx0, dy, dz1 - dz0);
@@ -1386,7 +1386,7 @@ function buildPool(T) {
     T.m.trim.box(PAL.trim, (x0 + x1) / 2, 0.75, (z0 + z1) / 2, len, 0.07, 0.04, yaw);
     T.m.trim.box(PAL.trim, (x0 + x1) / 2, 0.3, (z0 + z1) / 2, len, 0.07, 0.04, yaw);
   };
-  fenceRun(-11, -17.6, -11, -33); fenceRun(5, -17.6, 5, -33); fenceRun(-11, -33, 5, -33);
+  fenceRun(-11, -17.6, -11, -34.5); fenceRun(5, -17.6, 5, -34.5); fenceRun(-11, -34.5, 5, -34.5);
   // poles + string lights + bunting
   const poles = [[dx0 + 0.2, dz0 + 0.2], [dx1 - 0.2, dz0 + 0.2], [dx0 + 0.2, dz1 - 0.1], [dx1 - 0.2, dz1 - 0.1]];
   for (const [x, z] of poles) P.cyl('#6d4a30', x, 1.7, z, 0.06, 3.4, 'cyl6');
@@ -1394,6 +1394,10 @@ function buildPool(T) {
   addStringLights(T, pt[0], pt[3], { sag: 0.7, offset: 1 }); addStringLights(T, pt[1], pt[2], { sag: 0.7, offset: 3 });
   addStringLights(T, pt[0], pt[1], { sag: 0.6, offset: 5 }); addStringLights(T, pt[2], pt[3], { sag: 0.6, offset: 2 });
   addStringLights(T, [-7.5, 2.95, -17.6], pt[2], { sag: 0.4 }); addStringLights(T, [1.5, 2.95, -17.6], pt[3], { sag: 0.4, offset: 4 });
+  addStringLights(T, [-7.6, 2.75, -17.45], [1.6, 2.75, -17.45], { sag: 0.35, offset: 2 });
+  addBunting(T, [-7.4, 5.5, -17.4], [1.4, 5.5, -17.4], { sag: 0.4, offset: 3, size: 0.32 });
+  addBalloonCluster(T, -6.2, 0.95, -18.0, 5, { spread: 0.3, height: 1.3 });
+  addBalloonCluster(T, 0.2, 0.95, -18.0, 5, { spread: 0.3, height: 1.3 });
   addBunting(T, [pt[2][0], 2.9, pt[2][2]], [pt[1][0], 2.9, pt[1][2]], { sag: 0.6, offset: 1 });
   addBunting(T, [pt[3][0], 2.9, pt[3][2]], [pt[0][0], 2.9, pt[0][2]], { sag: 0.6, offset: 3 });
   buildSpeakerStack(T, dx0 + 0.9, dy, dz1 - 1.2, PI * 0.75, 1);
@@ -1407,7 +1411,7 @@ function buildPool(T) {
   mkAnchor(A, root, 'pool.edge2', pl.x, dy, wz0 - 2.4, PI);
   mkAnchor(A, root, 'pool.edge3', wx0 - 1.8, dy, pl.z, -PI / 2);
   mkAnchor(A, root, 'pool.edge4', wx1 + 1.8, dy, pl.z, PI / 2);
-  mkAnchor(A, root, 'pool.cam', 6.2, 5.4, -34.2, yawTo(6.2, -34.2, pl.x, pl.z));
+  mkAnchor(A, root, 'pool.cam', 6.4, 5.4, -35.8, yawTo(6.4, -35.8, pl.x, pl.z));
 }
 
 // ── foam street
@@ -1415,20 +1419,19 @@ function buildFoam(T) {
   const A = T.anchors, root = T.root, Pm = T.m.party, Fs = L.foamSt;
   const cx = Fs.x, cz = 24;
   // the cannon on its trailer (south end, pointing north)
-  const kz = 35.2;
-  Pm.rbox('#2f4d8a', cx, 0.62, kz, 2.0, 0.36, 2.8, 0.06);
-  for (const s of [-1, 1]) for (const zz of [-0.8, 0.8]) Pm.add(G.cyl, '#1b1b1f', M(cx + s * 1.05, 0.34, kz + zz, 0, 0.66, 0.24, 0.66, 0, PI / 2));
-  Pm.rbox('#ffd23f', cx, 1.15, kz + 0.5, 1.2, 0.7, 1.2, 0.08);                 // tank
-  Pm.cyl('#d9dde3', cx, 1.45, kz - 0.3, 0.12, 0.8, 'cyl8');                    // mount
-  const tilt = 0.42, bl = 2.2;
-  const by = 1.95, bz = kz - 0.5;
-  Pm.add(G.cyl, '#ff4fa3', M(cx, by, bz, 0, 0.9, bl, 0.9, -PI / 2 + tilt, 0));  // barrel (points −Z, up)
-  const mz = bz - Math.cos(tilt) * bl / 2, my = by + Math.sin(tilt) * bl / 2;
-  Pm.add(G.cone, '#ffd23f', M(cx, my + Math.sin(tilt) * 0.25, mz - Math.cos(tilt) * 0.25, 0, 1.15, 0.55, 1.15, PI / 2 + tilt, 0));
-  for (let i = 0; i < 3; i++) Pm.add(G.cyl, '#fbf6ec', M(cx, by + Math.sin(tilt) * (i - 1) * 0.6, bz - Math.cos(tilt) * (i - 1) * 0.6, 0, 0.96, 0.08, 0.96, -PI / 2 + tilt, 0));
-  const muzzle = [cx, my + Math.sin(tilt) * 0.5, mz - Math.cos(tilt) * 0.5];
-  T.foamCannon = { muzzle, target: [cx, 1.4, cz + 2.5] };
-  mkAnchor(A, root, 'foam.cannon', muzzle[0], muzzle[1], muzzle[2], PI);
+  const kf = frameXZ(cx + 4.7, cz + 2.5, -PI / 2);      // trailer on the east pavement, facing west
+  const KP = (x, y, z) => kf(x, y, z), kyaw = -PI / 2;
+  { const p = KP(0, 0.62, 0); Pm.rbox('#2f4d8a', p[0], p[1], p[2], 2.0, 0.36, 2.8, 0.06, kyaw); }
+  for (const sx of [-1, 1]) for (const zz of [-0.8, 0.8]) { const p = KP(sx * 1.05, 0.34, zz); Pm.add(G.cyl, '#1b1b1f', M(p[0], p[1], p[2], kyaw, 0.66, 0.24, 0.66, 0, PI / 2)); }
+  { const p = KP(0, 1.15, -0.5); Pm.rbox('#ffd23f', p[0], p[1], p[2], 1.2, 0.7, 1.2, 0.08, kyaw); }
+  { const p = KP(0, 1.45, 0.3); Pm.cyl('#d9dde3', p[0], p[1], p[2], 0.12, 0.8, 'cyl8'); }
+  const tilt = 0.42, bl = 2.2, by = 1.95, bzl = 0.5;
+  { const p = KP(0, by, bzl); Pm.add(G.cyl, '#ff4fa3', M(p[0], p[1], p[2], kyaw, 0.9, bl, 0.9, PI / 2 - tilt, 0)); }
+  for (let i = 0; i < 3; i++) { const p = KP(0, by + Math.sin(tilt) * (i - 1) * 0.6, bzl + Math.cos(tilt) * (i - 1) * 0.6); Pm.add(G.cyl, '#fbf6ec', M(p[0], p[1], p[2], kyaw, 0.96, 0.08, 0.96, PI / 2 - tilt, 0)); }
+  { const p = KP(0, by + Math.sin(tilt) * (bl / 2 + 0.25), bzl + Math.cos(tilt) * (bl / 2 + 0.25)); Pm.add(G.cone, '#ffd23f', M(p[0], p[1], p[2], kyaw, 1.15, 0.55, 1.15, -PI / 2 - tilt, 0)); }
+  const muzzle = KP(0, by + Math.sin(tilt) * (bl / 2 + 0.5), bzl + Math.cos(tilt) * (bl / 2 + 0.5));
+  T.foamCannon = { muzzle, target: [cx - 1.5, 1.3, cz + 1.2] };
+  mkAnchor(A, root, 'foam.cannon', muzzle[0], muzzle[1], muzzle[2], -PI / 2);
   mkAnchor(A, root, 'foam.center', cx, 0, cz, PI);
   mkAnchor(A, root, 'foam.cam', cx + 0.6, 3.4, cz - 9.5, yawTo(cx + 0.6, cz - 9.5, cx, cz));
   // string lights zig-zag + bunting across the side street
@@ -1507,8 +1510,9 @@ function buildPark(T) {
   addLamp(T, -57, -26, 0); addLamp(T, -57, 2, 0); addLamp(T, -47.3, -6.2, 0);
   // birthday decorations (party props): bunting from the tree to the lamp, balloons on the stools, lights in the crown
   addBunting(T, [treeX + 0.3, 3.3, treeZ + 0.2], [pt.x + 2.4, 4.4, pt.z - 2.2], { sag: 0.5, offset: 2 });
-  addBalloonCluster(T, pt.x + 1.05, 0.5, pt.z + 0.35, 3, { spread: 0.15, height: 1.0, s: 0.85 });
-  addBalloonCluster(T, pt.x - 1.05, 0.5, pt.z + 0.35, 3, { spread: 0.15, height: 1.0, s: 0.85 });
+  addBalloonCluster(T, pt.x + 0.85, 0.5, pt.z - 0.25, 3, { spread: 0.15, height: 1.1, s: 0.85 });
+  addBalloonCluster(T, pt.x - 0.85, 0.5, pt.z - 0.25, 3, { spread: 0.15, height: 1.1, s: 0.85 });
+  T.bdayBanner = { x: (treeX + pt.x + 2.4) / 2, y: 2.05, z: (treeZ + pt.z - 2.2) / 2 - 0.1, a: [treeX + 0.25, 2.9, treeZ + 0.2], b: [pt.x + 2.4, 2.9, pt.z - 2.2] };
   for (let i = 0; i < 3; i++) {
     const a0 = i * 2.1, r = 2.3, y = 4.2 + i * 0.5;
     addStringLights(T, [treeX + Math.cos(a0) * r, y, treeZ + Math.sin(a0) * r], [treeX + Math.cos(a0 + 2.0) * r, y + 0.3, treeZ + Math.sin(a0 + 2.0) * r], { sag: 0.6, offset: i, wire: false });
@@ -1600,13 +1604,13 @@ export const TOWN_PRESETS = {
     water: { deep: '#0a4c8a', shallow: '#33cbef', glow: 0.55, spark: 0.45 }, banner: 0.45, sign: 1.3,
   },
   quiet_night: {
-    sky: { zenith: '#02040d', mid: '#0a1124', horizon: '#1a2c3f', ground: '#05080e', sunDir: MOON_DIR, sunColor: '#1a2540', sunGlow: 5, glowAmt: 0 },
-    fog: ['#13222f', 22, 170], bg: '#13222f', stars: 0.75, moon: 1, clouds: 0,
-    hemi: ['#34507a', '#161c26', 0.95], key: ['#a3bbe6', 0.75, MOON_DIR],
-    front: ['#bccbe8', 0.62], rimL: ['#000000', 0], rimR: ['#4fb3c0', 0.22], flicker: 0,
+    sky: { zenith: '#050a1c', mid: '#12213f', horizon: '#2e5068', ground: '#070b12', sunDir: MOON_DIR, sunColor: '#2a3a60', sunGlow: 5, glowAmt: 0 },
+    fog: ['#1d3242', 28, 190], bg: '#1d3242', stars: 0.8, moon: 1, clouds: 0,
+    hemi: ['#4d6c96', '#1a2230', 1.2], key: ['#b8ccf2', 1.05, MOON_DIR],
+    front: ['#c4d2ee', 0.72], rimL: ['#000000', 0], rimR: ['#5fc3d0', 0.3], flicker: 0,
     win: { dark: '#0d121d', lit: ['#e4ecff', '#d8e4ff', '#eef3ff', '#dce6ff'], mul: 1.55, halo: 0.6, tv: false },
-    lamp: { core: '#cfd8ea', mul: 1.15, pool: '#9fb3d8', poolA: 0.2, halo: '#a8bcdc', haloI: 0.35, haloS: 1.5 },
-    bulbs: { mul: 0.13, halo: 0, size: 0.4, twinkle: 0, off: true }, porch: 0.25, stage: 0.12, clock: 0.55, beams: 0, eq: 0,
+    lamp: { core: '#d6e0f0', mul: 1.35, pool: '#a8bcdf', poolA: 0.34, halo: '#b0c4e4', haloI: 0.45, haloS: 1.4 },
+    bulbs: { mul: 0.16, halo: 0, size: 0.4, twinkle: 0, off: true }, porch: 0.25, stage: 0.12, clock: 0.55, beams: 0, eq: 0,
     water: { deep: '#06263f', shallow: '#0f4f6c', glow: 0.08, spark: 0.12 }, banner: 0.03, sign: 0.25,
   },
   dusk: {
@@ -1684,6 +1688,22 @@ function finalizeTown(T) {
     W.map((w) => ({ m: M(w.x + Math.sin(w.yaw) * 0.04, w.y, w.z + Math.cos(w.yaw) * 0.04, w.yaw, w.w * 1.9, w.h * 1.75, 1), c: '#000000' })), { cast: false, receive: false, name: 'windowHalos' });
   D.winHalo.renderOrder = 4; root.add(D.winHalo);
 
+  // ── pigeon birthday banner in the park (party prop)
+  if (T.bdayBanner) {
+    const bb = T.bdayBanner, bw = 2.9, bh = 0.66;
+    const tex = cachedTex('bday', 768, 176, (g, w, h) => {
+      g.fillStyle = '#fff4c2'; g.fillRect(0, 0, w, h);
+      for (let i = 0; i < 24; i++) { g.fillStyle = PAL.party[i % 6]; g.beginPath(); g.moveTo(i * w / 24, 0); g.lineTo((i + 1) * w / 24, 0); g.lineTo((i + 0.5) * w / 24, 26); g.fill(); }
+      const F = DISPLAY();
+      const fs = fitFont(g, 'HAPPY BIRTHDAY!', F, w - 60, 104);
+      outlinedText(g, 'HAPPY BIRTHDAY!', w / 2, h * 0.6, `${fs}px ${F}`, '#ff4fa3', '#1d1d22', 12);
+      drawStar(g, 34, h * 0.62, 18, '#ffd23f'); drawStar(g, w - 34, h * 0.62, 18, '#3ee0c8');
+    });
+    const ban = new THREE.Mesh(G.plane, new THREE.MeshLambertMaterial({ map: tex, side: THREE.DoubleSide, emissive: '#ffffff', emissiveMap: tex, emissiveIntensity: 0.25 }));
+    ban.position.set(bb.x, bb.y, bb.z); ban.scale.set(bw, bh, 1); ban.name = 'birthdayBanner';
+    party.add(ban);
+    T.wires.push(...bb.a, bb.x - bw / 2, bb.y + bh / 2, bb.z, ...bb.b, bb.x + bw / 2, bb.y + bh / 2, bb.z);
+  }
   // ── string lights: wires, bulbs, halos (all party props)
   const wg = new THREE.BufferGeometry(); wg.setAttribute('position', new THREE.Float32BufferAttribute(T.wires, 3));
   const wires = new THREE.LineSegments(wg, new THREE.LineBasicMaterial({ color: '#1a1a20' })); wires.name = 'wires';

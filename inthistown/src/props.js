@@ -42,7 +42,8 @@
 // makeBalloon(color, { string=0.85 })  origin = bottom end of the string, balloon floats above it.
 // makeConfetti({ origin=[0,0,0], t0=0, count=120, speed=5.5, spread=0.75, dir=[0,1,0], groundY=0,
 //                size=1, life=Infinity, seed=1, colors })   pieces land and lie flat on groundY.
-// makeImpactBurst({ size=0.22 }) lies on the XZ plane (put it on the table top), update(u) u∈[0,1].
+// makeImpactBurst({ size=0.22, overlay=true }) put root ON the table top at the impact point; update(u) u∈[0,1].
+//   A camera-facing comic star (drawn on top of everything when overlay=true) + a shock ring + impact lines.
 // makeSweatDrop({ size=0.12 }) origin at the drop centre, outlined so it reads at phone size.
 // makeTable({ w=1.2, d=0.75, h=0.78, wood }) .userData.top = h.   makeChair({ wood }) seat 0.55, faces +Z.
 // makeBed({ w=1.0, l=2.05, blanket }) long axis along Z, headboard at −Z.
@@ -712,7 +713,7 @@ export function makeChessSet(opts = {}) {
     P.group.scale.set(s * sxz, s * sy, s * sxz);
     // neighbours rattle (pure: from rest + offsets)
     const f0 = i % 8, r0 = Math.floor(i / 8);
-    const env = Math.exp(-5 * u);
+    const env = Math.exp(-5 * u) * (1 - u);
     for (let j = 0; j < 64; j++) {
       const Q = base[j];
       if (!Q || Q === P || Q.animated || !Q.group.visible || landed[j] === P) continue;
@@ -790,7 +791,8 @@ export function makeChessSet(opts = {}) {
     const maxX = o.maxX ?? size * 0.66, maxZ = o.maxZ ?? size * 0.56;
     for (let i = 0; i < 64; i++) {
       const P = base[i];
-      if (!P || u <= 0) continue;
+      if (!P) continue;
+      if (u <= 0) { rest(P); continue; }
       const r = rng(seed * 977 + i * 31 + 7);
       const p0 = sqPos(i);
       const ax = p0.x - org[0], az = p0.z - org[1], dO = Math.hypot(ax, az);
@@ -807,7 +809,7 @@ export function makeChessSet(opts = {}) {
       const L = s * (1.4 + r() * 3.2);
       const tipPush = s * (0.4 + r() * 0.8);
       const v = clamp((u - delay) / dur, 0, 1);
-      if (v <= 0) continue;
+      if (v <= 0) { rest(P); continue; }
       P.animated = true;
       const dx = Math.cos(ang), dz = Math.sin(ang);
       const v2 = clamp((u - delay - dur) / 0.22, 0, 1);
@@ -1428,62 +1430,78 @@ export function makeSweatDrop(opts = {}) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════════ impact burst
+let _burstTex = null;
+function burstTexture() {
+  return (_burstTex ??= canvasTexture(256, 256, (g, W) => {
+    const c = W / 2;
+    const star = (n, ro, ri, seed, rot = 0) => {
+      const r = rng(seed); g.beginPath();
+      for (let i = 0; i < n * 2; i++) {
+        const a = (i / (n * 2)) * TAU + rot;
+        const rr = i % 2 === 0 ? ro * (0.78 + 0.3 * r()) : ri * (0.85 + 0.3 * r());
+        const x = c + Math.cos(a) * rr, y = c + Math.sin(a) * rr;
+        if (i) g.lineTo(x, y); else g.moveTo(x, y);
+      }
+      g.closePath();
+    };
+    g.lineJoin = 'round';
+    star(12, c * 0.97, c * 0.5, 3, 0.1); g.fillStyle = '#ff7a2f'; g.fill(); g.lineWidth = 7; g.strokeStyle = '#3a1606'; g.stroke();
+    star(12, c * 0.74, c * 0.4, 3, 0.1); g.fillStyle = '#ffe14a'; g.fill();
+    star(9, c * 0.42, c * 0.24, 8, 0.35); g.fillStyle = '#ffffff'; g.fill();
+  }));
+}
 export function makeImpactBurst(opts = {}) {
   const R = opts.size ?? 0.22;
+  const overlay = opts.overlay ?? true;
   const root = new THREE.Group(); root.name = 'ImpactBurst';
   const inner = new THREE.Group(); root.add(inner);
   const bm = (color) => new THREE.MeshBasicMaterial({ color, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
-  const star = (n, ro, ri, seed) => {
-    const r = rng(seed), pts = [];
-    for (let i = 0; i < n * 2; i++) {
-      const a = (i / (n * 2)) * TAU + 0.15;
-      const rr = i % 2 === 0 ? ro * (0.8 + 0.35 * r()) : ri * (0.85 + 0.3 * r());
-      pts.push(new V2(Math.cos(a) * rr, Math.sin(a) * rr));
-    }
-    return new THREE.ShapeGeometry(new THREE.Shape(pts)).rotateX(-Math.PI / 2);
-  };
-  const mOut = bm('#ff7a2f'), mMid = bm('#ffe14a'), mIn = bm('#ffffff'), mRing = bm('#ffffff'), mSpk = bm('#ffffff'), mSpk2 = bm('#ffe14a');
-  const sOut = new THREE.Mesh(star(11, 1.0, 0.46, 3), mOut); sOut.position.y = 0.001;
-  const sMid = new THREE.Mesh(star(11, 0.8, 0.4, 3), mMid); sMid.position.y = 0.002;
-  const sIn = new THREE.Mesh(star(9, 0.42, 0.24, 8), mIn); sIn.position.y = 0.003;
-  const ring = new THREE.Mesh(new THREE.RingGeometry(0.9, 1.0, 48).rotateX(-Math.PI / 2), mRing); ring.position.y = 0.0015;
-  const flat = new THREE.Group(); flat.add(sOut, sMid, sIn, ring);
-  inner.add(flat);
-  // 3D speed spikes radiating out and up (crossed quads so they read from any side)
+  // comic star: a sprite, so it always faces the camera
+  const sMat = new THREE.SpriteMaterial({ map: burstTexture(), transparent: true, depthWrite: false, depthTest: !overlay, toneMapped: false });
+  const star = new THREE.Sprite(sMat);
+  star.renderOrder = 10;
+  inner.add(star);
+  // shock ring on the table
+  const mRing = bm('#ffffff');
+  const ring = new THREE.Mesh(new THREE.RingGeometry(0.86, 1.0, 48).rotateX(-Math.PI / 2), mRing); ring.position.y = 0.002;
+  inner.add(ring);
+  // impact lines radiating low over the table (crossed quads so they read from any side)
   const diamond = new THREE.BufferGeometry();
   diamond.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0.5, 0.5, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0.5, -0.5, 0, 0, 0, 0, 0.5, 0, 0.5, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0.5, 0, -0.5], 3));
-  diamond.computeVertexNormals();
+  const mSpk = bm('#ffffff'), mSpk2 = bm('#ffe14a');
   const spikes = [];
   const rs = rng(17);
-  for (let i = 0; i < 10; i++) {
-    const a = (i / 10) * TAU + rs() * 0.4, el = 0.35 + rs() * 0.5;
+  for (let i = 0; i < 9; i++) {
+    const a = (i / 9) * TAU + rs() * 0.35, el = 0.12 + rs() * 0.4;
     const pivot = new THREE.Group();
     pivot.rotation.set(0, a, el, 'YXZ');
+    pivot.position.y = 0.06;
     const sp = new THREE.Mesh(diamond, i % 2 ? mSpk : mSpk2);
     pivot.add(sp); inner.add(pivot);
-    spikes.push({ sp, len: 0.9 + rs() * 0.5, w: 0.05 + rs() * 0.03, delay: rs() * 0.06 });
+    spikes.push({ sp, len: 0.55 + rs() * 0.35, w: 0.045 + rs() * 0.02, delay: rs() * 0.05 });
   }
+  const rot0 = rs() * TAU;
   inner.scale.setScalar(R);
   function update(u) {
     inner.visible = u > 0 && u < 1;
     if (!inner.visible) return;
-    const pop = u < 0.15 ? ease.outBack(u / 0.15) : 1;
-    const fade = 1 - smooth((u - 0.4) / 0.4);
-    sOut.scale.setScalar(0.3 + 0.75 * pop); sMid.scale.setScalar(0.3 + 0.72 * pop); sIn.scale.setScalar(0.35 + 0.7 * pop * (1 - 0.3 * u));
-    sOut.rotation.y = sMid.rotation.y = 0.25 * u; sIn.rotation.y = -0.3 * u;
-    mOut.opacity = mMid.opacity = fade; mIn.opacity = fade * (1 - 0.5 * u);
-    const ru = ease.outCubic(u);
-    ring.scale.setScalar(0.25 + 1.25 * ru);
-    mRing.opacity = Math.pow(1 - u, 1.5) * 0.9;
+    const pop = u < 0.12 ? ease.outBack(u / 0.12) : 1 + 0.12 * (u - 0.12);
+    const sz = 0.82 * pop;
+    star.scale.set(sz, sz, 1);
+    star.position.y = 0.3 + 0.12 * u;
+    sMat.rotation = rot0 + 0.25 * u;
+    sMat.opacity = 1 - smooth((u - 0.35) / 0.4);
+    ring.scale.setScalar(0.3 + 1.3 * ease.outCubic(u));
+    mRing.opacity = Math.pow(1 - u, 1.6) * 0.85;
     for (const s of spikes) {
       const v = clamp((u - s.delay) / (1 - s.delay), 0, 1);
-      const ro = (0.2 + 1.15 * ease.outCubic(Math.min(1, v / 0.4))) * s.len;
-      const ri = (0.12 + 1.2 * ease.inOutQuad(Math.max(0, (v - 0.18) / 0.82))) * s.len;
-      const L = Math.max(0.0001, ro - ri);
-      s.sp.position.x = ri; s.sp.scale.set(L, s.w * (1 - 0.6 * v) + 0.0001, s.w * (1 - 0.6 * v) + 0.0001);
+      const ro = (0.25 + 1.05 * ease.outCubic(Math.min(1, v / 0.35))) * s.len;
+      const ri = (0.2 + 1.1 * ease.inOutQuad(Math.max(0, (v - 0.15) / 0.85))) * s.len;
+      const L = Math.max(0.0001, ro - ri), w = s.w * (1 - 0.6 * v) + 0.0001;
+      s.sp.position.x = ri; s.sp.scale.set(L, w, w);
       s.sp.visible = v > 0;
     }
-    mSpk.opacity = mSpk2.opacity = 1 - smooth((u - 0.55) / 0.45);
+    mSpk.opacity = mSpk2.opacity = 1 - smooth((u - 0.5) / 0.4);
   }
   update(0.0001); inner.visible = false;
   return { root, update };
