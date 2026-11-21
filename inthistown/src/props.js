@@ -202,6 +202,7 @@ const PIECE_ROUGH = 0.35;
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 const JIT = { p: 0.5, r: 0.5, n: 0.09, b: 0.35, q: 0.4, k: 0.09 };
 const TYPE_CODE = { p: 1, r: 2, n: 3, b: 4, q: 5, k: 6 };
+const KNIGHT_TURN = 0.95;   // knights face 54° toward the board's middle files
 
 /** Common Staunton base: chamfered foot, rounded top edge, a ledge and a bead ring. Ends at the stem. */
 function baseProfile(R) {
@@ -351,10 +352,50 @@ function bishopMat(white) {
     g.strokeStyle = white ? '#c9b994' : '#4e4646'; g.lineWidth = 14; g.beginPath(); g.moveTo(x0, y0 + 3); g.lineTo(x1, y1 + 3); g.stroke();   // lit lower lip
     g.strokeStyle = white ? '#6e5f45' : '#0b0909'; g.lineWidth = 10; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();         // groove
   });
-  _slitMat[key] = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex, roughness: PIECE_ROUGH, metalness: 0 });
+  _slitMat[key] = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex, roughness: PIECE_ROUGH, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS[key] * GLOSS.k });
   return _slitMat[key];
 }
-const pieceMat = (white) => mat(white ? IVORY : EBONY, { roughness: PIECE_ROUGH });
+// A small procedural "studio" cube map used ONLY by chess materials, so the glossy pieces get readable
+// highlights in any set (dark surroundings, a couple of soft boxes → low ambient lift, crisp reflections).
+let _env = null;
+function chessEnv() {
+  if (_env) return _env;
+  const S = 128;
+  const face = (draw) => { const c = document.createElement('canvas'); c.width = c.height = S; draw(c.getContext('2d')); return c; };
+  const soft = (g, x, y, w, h, col = '#ffffff', blur = 5) => { g.save(); g.filter = `blur(${blur}px)`; g.fillStyle = col; g.fillRect(x, y, w, h); g.restore(); };
+  const side = (boxes) => face((g) => {
+    const gr = g.createLinearGradient(0, 0, 0, S);
+    gr.addColorStop(0, '#4a4b52'); gr.addColorStop(0.48, '#26262b'); gr.addColorStop(0.56, '#1f1b18'); gr.addColorStop(1, '#14110f');
+    g.fillStyle = gr; g.fillRect(0, 0, S, S);
+    for (const b of boxes) soft(g, ...b);
+  });
+  const imgs = [
+    side([[70, 18, 26, 70, '#fff6ea']]),                        // +X: tall key strip
+    side([[30, 30, 36, 40, '#b8c6dc']]),                        // -X: cool fill
+    face((g) => { g.fillStyle = '#3a3b42'; g.fillRect(0, 0, S, S); soft(g, 28, 34, 72, 60, '#ffffff', 8); }),   // +Y: big top softbox
+    face((g) => { g.fillStyle = '#1a1512'; g.fillRect(0, 0, S, S); }),                                          // -Y: dark table
+    side([[16, 26, 22, 64, '#ffffff'], [92, 40, 16, 40, '#ffe2bf']]),                                           // +Z
+    side([[52, 24, 30, 60, '#ffffff']]),                        // -Z
+  ];
+  _env = new THREE.CubeTexture(imgs);
+  _env.colorSpace = THREE.SRGBColorSpace;
+  _env.needsUpdate = true;
+  return _env;
+}
+const GLOSS = { w: 0.55, b: 1.0, board: 0.3, k: 1 };
+const _pmat = {};
+function pieceMat(white) {
+  const key = white ? 'w' : 'b';
+  return (_pmat[key] ??= new THREE.MeshStandardMaterial({ color: white ? IVORY : EBONY, roughness: PIECE_ROUGH, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS[key] * GLOSS.k }));
+}
+const _glossMats = [];   // [material, baseIntensity]
+/** Scale the studio reflections on all chess pieces/boards (1 = default, 0 = off). Call any time. */
+export function setChessGloss(k = 1) {
+  GLOSS.k = k;
+  for (const key of ['w', 'b']) if (_pmat[key]) _pmat[key].envMapIntensity = GLOSS[key] * k;
+  for (const key of ['w', 'b']) if (_slitMat[key]) _slitMat[key].envMapIntensity = GLOSS[key] * k;
+  for (const [m, b] of _glossMats) m.envMapIntensity = b * k;
+}
 const eyeMat = (white) => mat(white ? '#1c1818' : '#f5efe0', { roughness: 0.25 });
 
 function createPiece(code) {
@@ -466,9 +507,10 @@ function buildBoard(size, playW, frameW, T, lip, bev, fileSign) {
   const g = new THREE.Group();
   g.name = 'board';
   const tex = boardTextures(size, playW, frameW, fileSign);
-  const frameMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.frame, roughness: 0.42, metalness: 0 });
+  const frameMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.frame, roughness: 0.4, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS.board * GLOSS.k });
   const sideMat = mat('#4a2a16', { roughness: 0.6 });
-  const checkerMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.checker, roughness: 0.48, metalness: 0 });
+  const checkerMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.checker, roughness: 0.46, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS.board * GLOSS.k });
+  _glossMats.push([frameMat, GLOSS.board], [checkerMat, GLOSS.board]);
   // frame ring: extruded square with a square hole and bevels on all edges
   const ho = size / 2 - bev, hi = playW / 2 + bev;
   const shape = new THREE.Shape([new V2(-ho, -ho), new V2(ho, -ho), new V2(ho, ho), new V2(-ho, ho)]);
@@ -520,7 +562,11 @@ export function makeChessSet(opts = {}) {
     return f >= 0 && f < 8 && r >= 0 && r < 8 ? r * 8 + f : -1;
   };
   const sqPos = (i) => new V3(((i % 8) - 3.5) * s * fileSign, 0, (Math.floor(i / 8) - 3.5) * s);
-  const restYaw = (P, i) => (P.white ? 0 : Math.PI) + (hash(i * 7.13 + TYPE_CODE[P.type] * 1.71 + (P.white ? 0 : 0.37)) - 0.5) * 2 * JIT[P.type];
+  const restYaw = (P, i) => {
+    let y = (P.white ? 0 : Math.PI) + (hash(i * 7.13 + TYPE_CODE[P.type] * 1.71 + (P.white ? 0 : 0.37)) - 0.5) * 2 * JIT[P.type];
+    if (P.type === 'n') y += (i % 8 < 4 ? 1 : -1) * fileSign * (P.white ? 1 : -1) * KNIGHT_TURN;
+    return y;
+  };
   const onBoard = (x, z, m = 0) => Math.abs(x) < size / 2 - m && Math.abs(z) < size / 2 - m;
 
   function getPiece(code, n) {

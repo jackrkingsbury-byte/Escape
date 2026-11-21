@@ -290,7 +290,7 @@ const GLOW_FS = /* glsl */`
   }`;
 const _vp = new THREE.Vector4();
 /** Additive camera-facing glows. atten=true: size in world metres; false: size in pixels at 1280 px height. */
-function makeGlowPoints(count, { atten = true, core = 0.6, name = 'glow', renderOrder = 5, maxPx = 70 } = {}) {
+function makeGlowPoints(count, { atten = true, core = 0.6, name = 'glow', renderOrder = 5, maxPx = 52 } = {}) {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
   geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
@@ -421,45 +421,45 @@ function fitFont(g, text, family, maxW, size) {
 }
 
 // ───────────────────────────────────────────────────────────────────────────── sky dome
+// Sky dome: all colour math (gradient, glows, ACES tone mapping, sRGB encode) runs per VERTEX on a finely
+// tessellated sphere; the fragment shader only outputs the interpolated colour (cheap on SwiftShader).
 const SKY_VS = /* glsl */`
-  varying vec3 vDir;
+  uniform vec3 uZenith, uMid, uHorizon, uGround, uSunDir, uSunColor, uGlowDir, uGlowColor;
+  uniform float uSunGlow, uGlowAmt;
+  varying vec3 vCol;
+  vec3 RRTAndODTFit(vec3 v) { vec3 a = v * (v + 0.0245786) - 0.000090537; vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081; return a / b; }
+  vec3 aces(vec3 c) {
+    const mat3 IM = mat3(vec3(0.59719, 0.07600, 0.02840), vec3(0.35458, 0.90834, 0.13383), vec3(0.04823, 0.01566, 0.83777));
+    const mat3 OM = mat3(vec3(1.60475, -0.10208, -0.00327), vec3(-0.53108, 1.10813, -0.07276), vec3(-0.07367, -0.00605, 1.07602));
+    c *= 1.0 / 0.6; c = IM * c; c = RRTAndODTFit(c); c = OM * c; return clamp(c, 0.0, 1.0);
+  }
+  vec3 toSRGB(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c)); }
   void main() {
-    vDir = normalize(position);
+    vec3 d = normalize(position);
+    float h = d.y;
+    vec3 c;
+    if (h >= 0.0) { c = mix(uHorizon, uMid, smoothstep(0.0, 0.22, h)); c = mix(c, uZenith, smoothstep(0.18, 0.85, h)); }
+    else c = mix(uHorizon, uGround, smoothstep(0.0, -0.12, h));
+    float sd = max(dot(d, uSunDir), 0.0);
+    c += uSunColor * (pow(sd, uSunGlow) * 0.55 + pow(sd, uSunGlow * 8.0) * 0.6);
+    vec3 gd = normalize(vec3(uGlowDir.x, 0.0, uGlowDir.z));
+    float gh = max(dot(normalize(vec3(d.x, 0.0, d.z) + 1e-5), gd), 0.0);
+    c += uGlowColor * uGlowAmt * pow(gh, 3.0) * exp(-max(h, 0.0) * 9.0) * step(-0.02, h);
+    vCol = toSRGB(aces(c));
     vec4 p = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     gl_Position = p.xyww;
   }`;
 const SKY_FS = /* glsl */`
-  uniform vec3 uZenith, uMid, uHorizon, uGround, uSunDir, uSunColor, uGlowDir, uGlowColor;
-  uniform float uSunSize, uSunGlow, uGlowAmt, uSunDisc;
-  varying vec3 vDir;
-  void main() {
-    vec3 d = normalize(vDir);
-    float h = d.y;
-    vec3 c;
-    if (h >= 0.0) {
-      c = mix(uHorizon, uMid, smoothstep(0.0, 0.22, h));
-      c = mix(c, uZenith, smoothstep(0.18, 0.85, h));
-    } else {
-      c = mix(uHorizon, uGround, smoothstep(0.0, -0.12, h));
-    }
-    float sd = max(dot(d, uSunDir), 0.0);
-    c += uSunColor * (pow(sd, uSunGlow) * 0.55 + pow(sd, uSunGlow * 8.0) * 0.6);
-    c += uSunColor * smoothstep(1.0 - uSunSize, 1.0 - uSunSize * 0.6, sd) * uSunDisc;
-    vec3 gd = normalize(vec3(uGlowDir.x, 0.0, uGlowDir.z));
-    float gh = max(dot(normalize(vec3(d.x, 0.0, d.z)), gd), 0.0);
-    c += uGlowColor * uGlowAmt * pow(gh, 3.0) * exp(-max(h, 0.0) * 9.0) * step(-0.02, h);
-    gl_FragColor = vec4(c, 1.0);
-    #include <tonemapping_fragment>
-    #include <colorspace_fragment>
-  }`;
+  varying vec3 vCol;
+  void main() { gl_FragColor = vec4(vCol, 1.0); }`;
 function makeSky(radius = 450) {
   const u = {
     uZenith: { value: C('#070a24') }, uMid: { value: C('#151a3a') }, uHorizon: { value: C('#2b2f6b') }, uGround: { value: C('#0b0d1c') },
     uSunDir: { value: V3(0, 1, 0) }, uSunColor: { value: C('#000000') }, uSunSize: { value: 0.0 }, uSunGlow: { value: 8 }, uSunDisc: { value: 0 },
     uGlowDir: { value: V3(1, 0, 0) }, uGlowColor: { value: C('#ff4fa3') }, uGlowAmt: { value: 0 },
   };
-  const mat = new THREE.ShaderMaterial({ uniforms: u, vertexShader: SKY_VS, fragmentShader: SKY_FS, side: THREE.BackSide, depthWrite: false, fog: false });
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 32, 16), mat);
+  const mat = new THREE.ShaderMaterial({ uniforms: u, vertexShader: SKY_VS, fragmentShader: SKY_FS, side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 64, 40), mat);
   mesh.name = 'sky'; mesh.frustumCulled = false; mesh.renderOrder = 2;   // after opaque scenery (cheap fill)
   return mesh;
 }
@@ -607,7 +607,9 @@ function townCtx(seed) {
     R: rng(seed * 13 + 1), seed,
     root: null, party: null, anchors: {},
     m: {
-      ground: new Merger(), street: new Merger(), houses: new Merger(), roofs: new Merger(), trim: new Merger(),
+      ground: new Merger(), street: new Merger(), trim: new Merger(),
+      housesN: new Merger(), housesS: new Merger(), housesF: new Merger(), housesQ: new Merger(),
+      roofsN: new Merger(), roofsS: new Merger(), roofsF: new Merger(), roofsQ: new Merger(),
       square: new Merger(), stands: new Merger(), park: new Merger(), pool: new Merger(), foam: new Merger(),
       gloss: new Merger(), party: new Merger(), partyGloss: new Merger(), hills: new Merger(),
     },
@@ -737,7 +739,8 @@ function buildGround(T) {
 // ── houses
 /** h: { index, x, z, yaw, w, d, wall, roof, trim, door, kind:'side'|'front', shutters, flowerBox, chimney } */
 function buildHouse(T, h) {
-  const Hm = T.m.houses, Rf = T.m.roofs, Tr = T.m.trim;
+  const reg = h.index < 5 ? 'N' : h.index < 9 ? 'S' : h.index < 11 ? 'F' : 'Q';
+  const Hm = T.m['houses' + reg], Rf = T.m['roofs' + reg], Tr = T.m.trim;
   const f = frameXZ(h.x, h.z, h.yaw);
   const w = h.w, d = h.d, H1 = 3.0, H = 5.8;
   const yaw = h.yaw;
@@ -1593,7 +1596,7 @@ export const TOWN_PRESETS = {
     front: ['#ffd8b0', 0.95], rimL: ['#ff4fa3', 1.4], rimR: ['#3ee0c8', 1.15], flicker: 0.25,
     win: { dark: '#151b36', lit: ['#ffd27a', '#ffc265', '#ffe2a2', '#ffb46a'], mul: 1.75, halo: 0.6, tv: true },
     lamp: { core: '#ffe4ad', mul: 2.4, pool: '#ffc880', poolA: 0.62, halo: '#ffcf8a', haloI: 1.0, haloS: 1.5 },
-    bulbs: { mul: 2.3, halo: 1.0, size: 0.4, twinkle: 0.35 }, porch: 2.0, stage: 2.0, clock: 1.6, beams: 0.12, eq: 1.0,
+    bulbs: { mul: 2.3, halo: 1.1, size: 0.34, twinkle: 0.35 }, porch: 2.0, stage: 2.0, clock: 1.6, beams: 0.12, eq: 1.0,
     water: { deep: '#0a4c8a', shallow: '#33cbef', glow: 0.55, spark: 0.45 }, banner: 0.45, sign: 1.3,
   },
   quiet_night: {
@@ -1635,8 +1638,12 @@ function finalizeTown(T) {
   const add = (mesh, parent = root) => { if (mesh) parent.add(mesh); return mesh; };
   // shadow policy (SwiftShader budget): only things that matter cast; only walkable surfaces receive
   add(T.m.street.build(MAT.lam, 'streets', { cast: false, receive: true }));
-  add(T.m.houses.build(MAT.lam, 'houses', { cast: true, receive: false }));
-  add(T.m.roofs.build(MAT.lamFlat, 'roofs', { cast: true, receive: false }));
+  D.bigCasters = [];
+  for (const r of ['N', 'S', 'F', 'Q']) {
+    const hm = add(T.m['houses' + r].build(MAT.lam, 'houses', { cast: true, receive: false }));
+    const rm = add(T.m['roofs' + r].build(MAT.lamFlat, 'roofs', { cast: true, receive: false }));
+    for (const m of [hm, rm]) if (m) { m.geometry.computeBoundingSphere(); D.bigCasters.push(m); }
+  }
   add(T.m.trim.build(MAT.lam, 'trim', { cast: false, receive: false }));
   add(T.m.square.build(MAT.vc, 'square', { cast: true, receive: true }));
   add(T.m.stands.build(MAT.vc, 'stands', { cast: true, receive: true }));
@@ -1681,7 +1688,7 @@ function finalizeTown(T) {
   const wg = new THREE.BufferGeometry(); wg.setAttribute('position', new THREE.Float32BufferAttribute(T.wires, 3));
   const wires = new THREE.LineSegments(wg, new THREE.LineBasicMaterial({ color: '#1a1a20' })); wires.name = 'wires';
   party.add(wires);
-  D.bulbs = instanced(G.octa, new THREE.MeshBasicMaterial({ color: '#ffffff' }),
+  D.bulbs = instanced(G.blob, new THREE.MeshBasicMaterial({ color: '#ffffff' }),
     T.bulbs.map((b) => ({ m: M(b.x, b.y, b.z, 0, 0.1, 0.13, 0.1), c: '#ffffff' })), { cast: false, receive: false, name: 'bulbs' });
   party.add(D.bulbs);
   D.bulbHalo = makeGlowPoints(T.bulbs.length, { name: 'bulbHalos', core: 0.5 });
@@ -1691,12 +1698,12 @@ function finalizeTown(T) {
   D.bulbCols = PAL.party.map((h) => C(h));
 
   // ── bunting flags (party, gentle sway in update)
-  D.flags = instanced(G.flag, new THREE.MeshStandardMaterial({ roughness: 0.75, side: THREE.DoubleSide }),
+  D.flags = instanced(G.flag, new THREE.MeshLambertMaterial({ side: THREE.DoubleSide }),
     T.flags.map((f) => ({ m: M(f.x, f.y, f.z, f.yaw, f.s * 0.8, f.s, 1), c: PAL.party[f.c] })), { cast: false, receive: false, name: 'bunting' });
   party.add(D.flags);
 
   // ── balloons + strings (party, bobbing)
-  D.balloons = instanced(G.balloon, new THREE.MeshStandardMaterial({ roughness: 0.32, metalness: 0 }),
+  D.balloons = instanced(G.balloon, new THREE.MeshLambertMaterial({}),
     T.balloons.map((b) => ({ m: M(b.x, b.y, b.z, 0, 0.36 * b.s, 0.44 * b.s, 0.36 * b.s), c: PAL.party[b.c] })), { cast: false, receive: false, name: 'balloons' });
   party.add(D.balloons);
   const bsg = new THREE.BufferGeometry(); bsg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(T.balloons.length * 6), 3));
@@ -1704,23 +1711,32 @@ function finalizeTown(T) {
   party.add(D.balloonStrings);
 
   // ── trees
-  const trunks = [], crowns = [], pines = [];
+  const trunks = [], crowns = [], pines = [], fTrunks = [], fCrowns = [], fPines = [];
   const crownCols = ['#4caf50', '#3c8f45', '#5cbf5a', '#43a047', '#6cc35a'];
   T.trees.forEach((t, i) => {
+    const far = Math.abs(t.z) > 35 || t.x > 63 || t.x < -59.5;
+    const trunks_ = far ? fTrunks : trunks, crowns_ = far ? fCrowns : crowns, pines_ = far ? fPines : pines;
     const s = t.s, c0 = C(t.c || crownCols[i % crownCols.length]);
     if (t.kind === 'pine') {
-      trunks.push({ m: M(t.x, 0.6 * s, t.z, 0, 0.28 * s, 1.2 * s, 0.28 * s) });
-      for (let k = 0; k < 3; k++) pines.push({ m: M(t.x, (1.3 + k * 1.05) * s, t.z, i + k, (2.6 - k * 0.65) * s, (1.9 - k * 0.2) * s, (2.6 - k * 0.65) * s), c: c0.clone().multiplyScalar(0.85 + k * 0.07) });
+      trunks_.push({ m: M(t.x, 0.6 * s, t.z, 0, 0.28 * s, 1.2 * s, 0.28 * s) });
+      for (let k = 0; k < 3; k++) pines_.push({ m: M(t.x, (1.3 + k * 1.05) * s, t.z, i + k, (2.6 - k * 0.65) * s, (1.9 - k * 0.2) * s, (2.6 - k * 0.65) * s), c: c0.clone().multiplyScalar(0.85 + k * 0.07) });
     } else {
-      trunks.push({ m: M(t.x, 1.0 * s, t.z, 0, 0.34 * s, 2.0 * s, 0.34 * s) });
-      crowns.push({ m: M(t.x, 3.0 * s, t.z, i, 3.0 * s, 2.7 * s, 3.0 * s), c: c0 });
-      crowns.push({ m: M(t.x + 0.75 * s, 2.55 * s, t.z + 0.35 * s, i * 2, 1.9 * s, 1.7 * s, 1.9 * s), c: c0.clone().multiplyScalar(0.9) });
-      crowns.push({ m: M(t.x - 0.6 * s, 3.6 * s, t.z - 0.45 * s, i * 3, 1.7 * s, 1.5 * s, 1.7 * s), c: c0.clone().multiplyScalar(1.08) });
+      trunks_.push({ m: M(t.x, 1.0 * s, t.z, 0, 0.34 * s, 2.0 * s, 0.34 * s) });
+      crowns_.push({ m: M(t.x, 3.0 * s, t.z, i, 3.0 * s, 2.7 * s, 3.0 * s), c: c0 });
+      crowns_.push({ m: M(t.x + 0.75 * s, 2.55 * s, t.z + 0.35 * s, i * 2, 1.9 * s, 1.7 * s, 1.9 * s), c: c0.clone().multiplyScalar(0.9) });
+      crowns_.push({ m: M(t.x - 0.6 * s, 3.6 * s, t.z - 0.45 * s, i * 3, 1.7 * s, 1.5 * s, 1.7 * s), c: c0.clone().multiplyScalar(1.08) });
     }
   });
-  root.add(instanced(G.cyl6, new THREE.MeshLambertMaterial({ color: '#7d5232' }), trunks, { name: 'trunks', cast: true, receive: false }));
-  root.add(instanced(G.ico, new THREE.MeshLambertMaterial({ flatShading: true }), crowns, { name: 'crowns', cast: true, receive: false }));
-  root.add(instanced(G.cone6, new THREE.MeshLambertMaterial({ flatShading: true }), pines, { name: 'pines', cast: true, receive: false }));
+  const trunkMat = new THREE.MeshLambertMaterial({ color: '#7d5232' }), crownMat = new THREE.MeshLambertMaterial({ flatShading: true });
+  D.treeMeshes = [
+    instanced(G.cyl6, trunkMat, trunks, { name: 'trunks', cast: true, receive: false }),
+    instanced(G.ico, crownMat, crowns, { name: 'crowns', cast: true, receive: false }),
+    instanced(G.cone6, crownMat, pines, { name: 'pines', cast: true, receive: false }),
+  ];
+  root.add(...D.treeMeshes);
+  root.add(instanced(G.cyl6, trunkMat, fTrunks, { name: 'trunks', cast: false, receive: false }),
+    instanced(G.ico, crownMat, fCrowns, { name: 'crowns', cast: false, receive: false }),
+    instanced(G.cone6, crownMat, fPines, { name: 'pines', cast: false, receive: false }));
 
   // ── emissive bits (porch lights, stage lenses) — one InstancedMesh per geometry
   D.glows = [];
@@ -1753,7 +1769,7 @@ function finalizeTown(T) {
   }
 
   // ── confetti on the plaza (party)
-  party.add(instanced(PLANE_FLAT, new THREE.MeshStandardMaterial({ roughness: 0.7, side: THREE.DoubleSide }),
+  party.add(instanced(PLANE_FLAT, new THREE.MeshLambertMaterial({}),
     T.confettiFloor.map((c) => ({ m: M(c.x, 0.012, c.z, c.ry, 0.13, 1, 0.08), c: PAL.party[c.c] })), { cast: false, receive: false, name: 'confettiFloor' }));
 
   // ── foam heap + stream
@@ -1838,6 +1854,8 @@ function finalizeTown(T) {
   const moonHalo = new THREE.Mesh(G.plane, new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
   moonHalo.position.copy(MOON_DIR).multiplyScalar(332); moonHalo.scale.setScalar(110); moonHalo.lookAt(0, 0, 0); moonHalo.renderOrder = 3;
   root.add(moon, moonHalo); D.moon = moon; D.moonHalo = moonHalo;
+  const sun = new THREE.Mesh(G.plane, new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+  sun.renderOrder = 3; sun.name = 'sunDisc'; root.add(sun); D.sun = sun;
   const cm = new Merger(); const RC = rng(T.seed + 71);
   for (let i = 0; i < 10; i++) {
     const a = (i / 10) * PI * 2 + RC() * 0.4, r = 280 + RC() * 50, y = 62 + RC() * 40;
@@ -2015,6 +2033,11 @@ export function buildTown(opts = {}) {
     D.stars.visible = P.stars > 0; D.stars.material.uniforms.uOpacity.value = P.stars;
     D.moon.visible = D.moonHalo.visible = P.moon > 0;
     D.moon.material.opacity = P.moon; D.moonHalo.material.opacity = P.moon * 0.3;
+    D.sun.visible = (P.sky.sunDisc || 0) > 0;
+    if (D.sun.visible) {
+      D.sun.position.copy(P.sky.sunDir).normalize().multiplyScalar(340); D.sun.lookAt(0, 0, 0);
+      D.sun.scale.setScalar(name === 'dusk' ? 60 : 40); D.sun.material.color.set(P.sky.sunColor).multiplyScalar(name === 'dusk' ? 1.6 : 1.3);
+    }
     if (D.clouds) {
       D.clouds.visible = P.clouds > 0;
       D.clouds.material.emissive.set(name === 'dusk' ? '#ff9a8a' : '#ffffff');
@@ -2031,6 +2054,9 @@ export function buildTown(opts = {}) {
     if (T.vsSign) T.vsSign.material.color.setScalar(P.sign);
     for (const b of D.beams) b.visible = P.beams > 0;
     if (D.fillerGroup) D.fillerGroup.visible = fillerVisible();
+    const bigCast = name === 'day' || name === 'dusk';
+    for (const m of D.bigCasters) m.castShadow = bigCast;
+    for (const m of D.treeMeshes) m.castShadow = bigCast;
     applyWindows(); applyLamps(); applyGlows();
     updateDynamic(lastT);
   }
