@@ -1,0 +1,11 @@
+node_modules/
+out/frames/
+out/preview/
+out/*.wav
+cache/
+models/
+*.log
+audio/stems/
+audio/mix.wav
+out/
+__pycache__/
