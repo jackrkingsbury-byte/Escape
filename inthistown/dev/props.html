@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Module C — props</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1d26; }
+  canvas { display: block; }
+  .lbl { position: absolute; color: #fff; font: 700 12px/1.1 system-ui, sans-serif; text-shadow: 0 1px 2px #000, 0 0 4px #000;
+         pointer-events: none; white-space: nowrap; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { makeChessSet, makeChessClock, makePartyHat, makeCake, makeTable, makeChair, makeBed, makePlate, makeSpeaker,
+  makeBalloon, makeConfetti, makeSweatDrop, makeImpactBurst } from '/src/props.js';
+import { rbox, mat } from '/src/lib/util.js';
+
+// Views: ?view=all (default contact sheet) · chess (low close-up on the toppled king) · knock (knockAll) ·
+//        pieces (piece line-up) · clock · slam · film (the director's checkmate camera)
+// Params: &u=0..1 (animation for chess/knock/slam/clock) · &chars=0 (skip the seated hero) · &bench=N (time N renders)
+const Q = new URLSearchParams(location.search);
+const VIEW = Q.get('view') || 'all';
+const W = window.innerWidth, H = window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+
+function studio({ bg = '#c9d6e3', floor = '#ddd5c8', shadowSize = 3, sun = [2.5, 5, 3], sunColor = '#fff1dc', sunI = 2.4, hemi = 1.15 } = {}) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(bg);
+  scene.add(new THREE.HemisphereLight('#eef4ff', '#8a7660', hemi));
+  const d = new THREE.DirectionalLight(sunColor, sunI);
+  d.position.set(...sun); d.castShadow = true;
+  d.shadow.mapSize.set(2048, 2048);
+  const sc = d.shadow.camera; sc.left = -shadowSize; sc.right = shadowSize; sc.top = shadowSize; sc.bottom = -shadowSize; sc.near = 0.5; sc.far = 20;
+  d.shadow.bias = -0.0003; d.shadow.normalBias = 0.01;
+  scene.add(d); scene.add(d.target);
+  const fill = new THREE.DirectionalLight('#d6e4ff', 0.6); fill.position.set(-4, 3, -2); scene.add(fill);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: floor, roughness: 0.92 }));
+  fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; scene.add(fl);
+  return { scene, sun: d };
+}
+function cam(fov, aspect, pos, look) {
+  const c = new THREE.PerspectiveCamera(fov, aspect, 0.01, 60);
+  c.position.set(...pos); c.lookAt(new THREE.Vector3(...look)); return c;
+}
+function view(scene, camera, x, y, w, h) {
+  renderer.setViewport(x, H - y - h, w, h); renderer.setScissor(x, H - y - h, w, h);
+  renderer.render(scene, camera);
+}
+function label(text, x, y) {
+  const d = document.createElement('div'); d.className = 'lbl'; d.textContent = text;
+  d.style.left = x + 'px'; d.style.top = y + 'px'; document.body.appendChild(d);
+}
+const U = (def) => (Q.has('u') ? parseFloat(Q.get('u')) : def);
+
+// a table with a chess set on it (board sits ON the table: root at top + thickness)
+function chessTable(scene, { fen = null, x = 0, z = 0, clock = true, chairs = true } = {}) {
+  const table = makeTable({ w: 0.95, d: 0.8 }); table.position.set(x, 0, z); scene.add(table);
+  const chess = makeChessSet({ size: 0.62 });
+  chess.root.position.set(x, 0.78 + chess.thickness, z); scene.add(chess.root);
+  if (fen) chess.setFEN(fen);
+  let clk = null;
+  if (clock) { clk = makeChessClock(); clk.root.position.set(x - 0.4, 0.78, z + 0.02); clk.root.rotation.y = Math.PI / 2; scene.add(clk.root); }
+  if (chairs) {
+    const a = makeChair(); a.position.set(x, 0, z - 0.62); scene.add(a);
+    const b = makeChair(); b.position.set(x, 0, z + 0.62); b.rotation.y = Math.PI; scene.add(b);
+  }
+  return { table, chess, clk };
+}
+const MATE = 'r1bqk2r/pppp1Qpp/2n2n2/2b1p3/2B1P3/8/PPPP1PPP/RNB1K1NR';   // after Qxf7#
+
+async function maybeHero() {
+  if (Q.get('chars') === '0') return null;
+  try {
+    const C = await import('/src/characters.js');
+    const me = C.makeCharacter({ id: 'me', skin: '#f1c7a1', hair: { style: 'fade', color: '#2b1d14' },
+      top: { style: 'hoodie', color: '#1d1d22', accent: '#ffffff', emblem: 'knight' }, bottom: { style: 'pants', color: '#55575e' },
+      shoes: '#f2f2f2', accessories: ['headphones'] });
+    let pigeon = null;
+    try { pigeon = C.makeCreature('pigeon', { id: 'pigeon', accessories: ['partyHat'], partyHatColor: '#3ee0c8' }); } catch (e) { /* optional */ }
+    return { me, pigeon };
+  } catch (e) { console.log('characters.js not available:', e.message); return null; }
+}
+
+const renders = [];   // functions that draw the current view (for bench)
+const t0 = performance.now();
+
+// ───────────────────────────────────────────────────────────────────────────────────── views
+if (VIEW === 'all') {
+  const st = studio({ shadowSize: 3.2 });
+  const S = st.scene;
+  const { chess, clk } = chessTable(S, { fen: MATE });
+  chess.move('g1', 'f3', 0.5);            // a knight mid-move
+  chess.topple('e8', 1);                  // the black king has fallen
+  chess.highlight('f7', '#ff4f6a'); chess.highlight('g1', '#ffd23f'); chess.highlight('f3', '#ffd23f');
+  clk.setTimes(212, 4); clk.press('L', 0.5);
+  const hat = makePartyHat('#3ee0c8'); hat.position.set(0.36, 0.78, -0.27); hat.rotation.set(0, 0.4, 0); S.add(hat);
+  const hero = await maybeHero();
+  if (hero) { hero.me.root.position.set(0, 0, -0.62); hero.me.pose('sitIdle', 1.0); hero.me.face('smug', 1.0); S.add(hero.me.root); }
+  const drop = makeSweatDrop(); drop.position.set(0.3, 1.82, -0.5); S.add(drop);
+
+  // cake corner
+  const ped = new THREE.Mesh(rbox(0.6, 0.5, 0.6, 0.04), mat('#f2a7c8', { roughness: 0.8 })); ped.position.set(-1.7, 0.25, 1.1); ped.castShadow = ped.receiveShadow = true; S.add(ped);
+  const cake = makeCake(); cake.root.position.set(-1.72, 0.5, 1.1); cake.update(1.37); S.add(cake.root);
+  if (hero?.pigeon) { hero.pigeon.root.position.set(-1.45, 0.5, 1.3); hero.pigeon.root.rotation.y = -0.6; hero.pigeon.pose('idle', 0.4); hero.pigeon.face?.('smile', 0.4); S.add(hero.pigeon.root); }
+  [['#ff4fa3', -2.05, 0.95, 0.9], ['#ffd23f', -1.85, 0.85, 0.75], ['#4fb3ff', -2.0, 1.25, 1.05], ['#8a5cff', -1.4, 0.82, 0.8]].forEach(([c, x, z, sl], i) => {
+    const b = makeBalloon(c, { string: sl }); b.position.set(x, 0.5, z); b.rotation.y = i * 1.3; S.add(b);
+  });
+  const hat2 = makePartyHat('#ff4fa3'); hat2.position.set(-1.5, 0.5, 0.92); hat2.rotation.z = 0.15; S.add(hat2);
+
+  // breakfast table
+  const t2 = makeTable({ w: 0.7, d: 0.6 }); t2.position.set(1.75, 0, 1.15); S.add(t2);
+  const plate = makePlate(); plate.root.position.set(1.66, 0.78, 1.2); plate.root.rotation.y = 0.3; S.add(plate.root);
+  const burst = makeImpactBurst(); burst.root.position.set(1.9, 0.782, 1.05); burst.update(0.22); S.add(burst.root);
+  const ch3 = makeChair(); ch3.position.set(1.75, 0, 0.6); S.add(ch3);
+
+  // speaker + confetti
+  const spk = makeSpeaker(); spk.root.position.set(1.8, 0, -1.5); spk.root.rotation.y = -0.5; spk.update(0.02); S.add(spk.root);
+  const conf = makeConfetti({ origin: [1.25, 0.0, -1.0], t0: 0, count: 160, speed: 6.5, spread: 0.65 }); conf.update(0.62); S.add(conf.root);
+
+  // bedroom corner
+  const bed = makeBed(); bed.position.set(-1.7, 0, -1.6); bed.rotation.y = Math.PI / 2; S.add(bed);
+
+  const draw = () => {
+    const hA = Math.round(H * 540 / 960);
+    view(S, cam(36, W / hA, [1.0, 1.55, -1.25], [-0.05, 0.86, 0.0]), 0, 0, W, hA);
+    const pw = Math.round(W / 2), ph = Math.round(H * 210 / 960), y1 = Math.round(H * 540 / 960), y2 = y1 + ph;
+    view(S, cam(40, pw / ph, [-0.95, 1.25, 2.55], [-1.75, 0.85, 1.0]), 0, y1, pw, ph);
+    view(S, cam(34, pw / ph, [1.25, 1.35, 1.85], [1.75, 0.8, 1.1]), pw, y1, W - pw, ph);
+    view(S, cam(42, pw / ph, [0.35, 1.3, 0.3], [1.5, 0.75, -1.35]), 0, y2, pw, H - y2);
+    view(S, cam(42, pw / ph, [0.1, 1.9, -0.2], [-1.7, 0.5, -1.6]), pw, y2, W - pw, H - y2);
+  };
+  draw(); renders.push(draw);
+  const ph = Math.round(H * 210 / 960), y1 = Math.round(H * 540 / 960);
+  label('chess set · clock · chair · table · party hat · sweat drop', 8, 8);
+  label('cake · balloons · hat', 6, y1 + 6); label('plate · impact burst', W / 2 + 6, y1 + 6);
+  label('speaker · confetti', 6, y1 + ph + 6); label('bed', W / 2 + 6, y1 + ph + 6);
+} else if (VIEW === 'chess' || VIEW === 'film') {
+  const st = studio({ bg: '#f3b27a', floor: '#c98d5e', sun: [-1.6, 1.6, 2.2], sunColor: '#ffd2a0', sunI: 3.0, hemi: 0.75, shadowSize: 1.2 });
+  const { chess, clk } = chessTable(st.scene, { fen: MATE });
+  clk.setTimes(212, 4);
+  chess.topple('e8', U(1));
+  const k = chess.root.localToWorld(chess.squareToLocal('e8'));
+  let c;
+  if (VIEW === 'film') c = cam(32, W / H, [k.x + 0.2, k.y + 0.12, k.z - 0.35], [k.x, k.y + 0.05, k.z]);
+  else c = cam(30, W / H, [k.x + 0.24, k.y + 0.035, k.z - 0.33], [k.x - 0.02, k.y + 0.04, k.z - 0.02]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(VIEW === 'film' ? 'checkmate — director camera' : 'checkmate — low close-up', 8, 8);
+} else if (VIEW === 'knock') {
+  const st = studio({ shadowSize: 1.5 });
+  const { chess } = chessTable(st.scene, { chairs: true });
+  chess.reset();
+  const u = U(0.6);
+  chess.knockAll(u, 7);
+  const c = cam(40, W / H, [0.7, 1.45, -0.85], [0, 0.8, 0.02]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`knockAll(u=${u}, seed=7)`, 8, 8);
+} else if (VIEW === 'pieces') {
+  const st = studio({ shadowSize: 1.2, sun: [1.5, 3, -2.5] });
+  const { chess } = chessTable(st.scene, { fen: '8/8/8/8/2kqbnrp/8/2KQBNRP/8', clock: false, chairs: false });
+  const a = chess.root.localToWorld(new THREE.Vector3(0.05, 0.02, -0.1));
+  const c = cam(30, W / H, [a.x + 0.05, a.y + 0.13, a.z - 0.5], [a.x + 0.03, a.y + 0.03, a.z + 0.1]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label('K Q B N R P — ivory front, ebony back', 8, 8);
+} else if (VIEW === 'clock') {
+  const st = studio({ shadowSize: 1.0 });
+  const { clk } = chessTable(st.scene, { fen: null, chairs: false });
+  clk.root.rotation.y = 0; clk.root.position.set(0, 0.78, -0.42);
+  clk.setTimes(185, 3); clk.press('L', U(0.5));
+  const p = clk.root.position;
+  const c = cam(30, W / H, [p.x + 0.08, p.y + 0.22, p.z + 0.5], [p.x, p.y + 0.06, p.z]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label('chess clock — press("L", u)', 8, 8);
+} else if (VIEW === 'slam') {
+  const st = studio({ shadowSize: 1.2 });
+  const { chess } = chessTable(st.scene, { fen: 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR' });
+  const u = U(0.12);
+  chess.slam('e4', u);
+  const burst = makeImpactBurst({ size: 0.2 });
+  const bp = chess.root.localToWorld(new THREE.Vector3(0, 0, -0.44));
+  burst.root.position.set(bp.x, 0.782, bp.z); burst.update(u + 0.1); st.scene.add(burst.root);
+  const e4 = chess.root.localToWorld(chess.squareToLocal('e4'));
+  const c = cam(36, W / H, [e4.x + 0.35, e4.y + 0.3, e4.z - 0.6], [e4.x, e4.y + 0.03, e4.z - 0.1]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`slam("e4", u=${u}) + impact burst`, 8, 8);
+}
+
+const benchN = parseInt(Q.get('bench') || '0', 10);
+if (benchN > 0) {
+  const gl = renderer.getContext(); const px = new Uint8Array(4);
+  renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  const b0 = performance.now();
+  for (let i = 0; i < benchN; i++) { renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); }
+  window.__bench = (performance.now() - b0) / benchN;
+  window.__info = renderer.info.render;
+  console.log('bench ms/frame', window.__bench.toFixed(1), 'calls', renderer.info.render.calls, 'tris', renderer.info.render.triangles);
+}
+window.__setupMs = performance.now() - t0;
+window.__ready = true;
+</script>
+</body>
+</html>

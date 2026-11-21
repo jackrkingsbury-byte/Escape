@@ -172,8 +172,20 @@ async function main() {
       const stdMeshes = []; s.root.traverse((o) => { if (o.isMesh && o.material && o.material.isMeshStandardMaterial) stdMeshes.push([o, o.material]); });
       const lamb = new Map();
       const toLambert = (on) => { for (const [o, m] of stdMeshes) { if (on) { if (!lamb.has(m)) lamb.set(m, new THREE.MeshLambertMaterial({ color: m.color, map: m.map, vertexColors: m.vertexColors, emissive: m.emissive, emissiveIntensity: m.emissiveIntensity, flatShading: m.flatShading, side: m.side })); o.material = lamb.get(m); } else o.material = m; } };
-      const reset = () => { s.root.traverse((o) => { if (o.userData._rs !== undefined) o.receiveShadow = o.userData._rs; }); renderer.shadowMap.enabled = true; lights.forEach((l) => (l.visible = true)); toLambert(false); scene.overrideMaterial = null; renderer.shadowMap.needsUpdate = true; };
-      const variants = {
+      const reset = () => { renderer.shadowMap.autoUpdate = true; s.root.traverse((o) => { if (o.userData._rs !== undefined) o.receiveShadow = o.userData._rs; if (o.userData._vis !== undefined) { o.visible = o.userData._vis; delete o.userData._vis; } }); renderer.shadowMap.enabled = true; lights.forEach((l) => (l.visible = true)); toLambert(false); scene.overrideMaterial = null; renderer.shadowMap.needsUpdate = true; };
+      const hide = (pred) => () => s.root.traverse((o) => { if (pred(o)) { o.userData._vis ??= o.visible; o.visible = false; } });
+      const catVariants = {
+        base: () => {},
+        noPoints: hide((o) => o.isPoints),
+        noTransp: hide((o) => (o.isMesh || o.isInstancedMesh) && o.material && o.material.transparent),
+        noParty: hide((o) => o.name === 'partyProps'),
+        noShadowPass: () => { renderer.shadowMap.autoUpdate = false; },
+        noHouses: hide((o) => ['houses', 'roofs', 'trim', 'windows', 'windowHalos'].includes(o.name)),
+        noTrees: hide((o) => ['trunks', 'crowns', 'pines'].includes(o.name)),
+        noSky: hide((o) => ['sky', 'stars', 'clouds', 'hills'].includes(o.name)),
+        noLines: hide((o) => o.isLineSegments || o.isLine),
+      };
+      const variants0 = {
         base: () => {},
         twoLights: () => lights.forEach((l) => { l.visible = l.isHemisphereLight || l.castShadow; }),
         noShadow: () => { renderer.shadowMap.enabled = false; },
@@ -184,6 +196,7 @@ async function main() {
         aniso1: () => { for (const [o, m] of stdMeshes) { if (m.map) { if (!lamb.has('a1' + m.uuid)) { const c = m.clone(); c.map = m.map.clone(); c.map.anisotropy = 1; c.map.needsUpdate = true; lamb.set('a1' + m.uuid, c); } o.material = lamb.get('a1' + m.uuid); } } },
         noRecv: () => { s.root.traverse((o) => { if (o.isMesh || o.isInstancedMesh) { o.userData._rs ??= o.receiveShadow; o.receiveShadow = false; } }); },
       };
+      const variants = Q.get('ab') === 'cat' ? catVariants : variants0;
       const res = {}; for (const k in variants) res[k] = [];
       const n = +(Q.get('n') || 4);
       for (let i = -1; i < n; i++) for (const [k, f] of Object.entries(variants)) {
