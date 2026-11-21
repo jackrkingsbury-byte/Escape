@@ -17,9 +17,8 @@
    "id": "b03",
    "kind": "huss",
    "speaker": "me",
-   "text": "HUSS! HUSS! HUSS! HUSS!",
-   "n": 4,
-   "gap": 0.34
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
   },
   {
    "id": "b04",
@@ -74,8 +73,7 @@
    "kind": "huss",
    "speaker": "me",
    "text": "HUSS! HUSS! HUSS!",
-   "n": 3,
-   "gap": 0.36
+   "n": 3
   },
   {
    "id": "b13",
@@ -111,9 +109,8 @@
    "id": "b18",
    "kind": "huss",
    "speaker": "me",
-   "text": "HUSS! HUSS! HUSS! HUSS!",
-   "n": 4,
-   "gap": 0.34
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
   },
   {
    "id": "b19",
@@ -162,9 +159,8 @@
    "id": "b26",
    "kind": "huss",
    "speaker": "me",
-   "text": "HUSS! HUSS! HUSS! HUSS!",
-   "n": 4,
-   "gap": 0.27
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
   },
   {
    "id": "b27",
@@ -225,9 +221,8 @@
    "id": "b36",
    "kind": "huss",
    "speaker": "town",
-   "text": "HUSS! HUSS! HUSS! HUSS! HUSS!",
-   "n": 5,
-   "gap": 0.38
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
   },
   {
    "id": "b37",
@@ -287,9 +282,8 @@
    "id": "b46",
    "kind": "huss",
    "speaker": "pigeon",
-   "text": "HUSS!",
-   "n": 1,
-   "gap": 0.3
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
   }
  ]
 }

@@ -95,7 +95,7 @@ function practiceTrack(ctx, beatId, whiteMoves, blackMoves) {
   const moves = [];
   hs.forEach((h, i) => {
     if (whiteMoves[i]) moves.push({ from: whiteMoves[i][0], to: whiteMoves[i][1], at: h + 0.03, dur: 0.16 });
-    if (blackMoves[i]) moves.push({ from: blackMoves[i][0], to: blackMoves[i][1], at: h + 0.2, dur: 0.08, noSlam: true });
+    if (blackMoves[i]) moves.push({ from: blackMoves[i][0], to: blackMoves[i][1], at: h + 0.12, dur: 0.05, noSlam: true });
   });
   return { track: moveTrack(moves), hits: hs.map((h) => h + 0.03) };
 }
@@ -181,17 +181,17 @@ export const shots = [
       ctx.cam.move(cams.wide, cams.med, u, ease.inOutQuad);
     },
   },
-  // ── b03 HUSS ×4 — four fast angles
-  ...['board', 'face', 'boardLow', 'med'].map((camName, i) => ({
-    name: `huss b03 #${i + 1}`, start: `b03.h${i}-0.12`, set: 'room',
+  // ── b03 HUSS ×6 (two tight triplets) — cut on every HUSS
+  ...['board', 'face', 'boardLow', 'med', 'faceL', 'board'].map((camName, i) => ({
+    name: `huss b03 #${i + 1}`, start: i === 0 ? 'b03.h0-0.12' : `b03.h${i}-0.03`, set: 'room',
     setup(ctx) {
       ctx.store = roomNook(ctx); ctx.store.cams = nookCams(ctx.store.F);
-      ctx.store.practice = practiceTrack(ctx, 'b03', [['e2', 'e4'], ['g1', 'f3'], ['f1', 'c4'], ['e1', 'g1']],
-        [['e7', 'e5'], ['b8', 'c6'], ['g8', 'f6'], null]);
+      ctx.store.practice = practiceTrack(ctx, 'b03', [['e2', 'e4'], ['g1', 'f3'], ['f1', 'c4'], ['c2', 'c3'], ['d2', 'd4'], ['e1', 'g1']],
+        [['e7', 'e5'], ['b8', 'c6'], ['f8', 'c5'], ['g8', 'f6'], ['e5', 'd4'], null]);
     },
     update(ctx, lt) {
       slamUpdate(ctx, ctx.store, ctx.store.practice);
-      pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.15));
+      pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.09));
       const c = ctx.store.cams[camName];
       ctx.cam.set(c); ctx.cam.shake(0.08, ctx.t, i);
     },
@@ -358,14 +358,14 @@ export const shots = [
   },
   // ── b12 HUSS ×3
   ...['faceL', 'board', 'face'].map((camName, i) => ({
-    name: `huss b12 #${i + 1}`, start: `b12.h${i}-0.12`, set: 'room',
+    name: `huss b12 #${i + 1}`, start: i === 0 ? 'b12.h0-0.12' : `b12.h${i}-0.03`, set: 'room',
     setup(ctx) {
       ctx.store = roomNook(ctx); ctx.store.cams = nookCams(ctx.store.F);
       ctx.store.practice = practiceTrack(ctx, 'b12', [['d2', 'd4'], ['c2', 'c4'], ['b1', 'c3']], [['d7', 'd5'], ['e7', 'e6'], null]);
     },
     update(ctx) {
       slamUpdate(ctx, ctx.store, ctx.store.practice);
-      pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.15));
+      pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.09));
       ctx.cam.set(ctx.store.cams[camName]); ctx.cam.shake(0.08, ctx.t, 10 + i);
     },
   })),
@@ -495,18 +495,19 @@ export const shots = [
       ctx.cam.move(cams.wide, cams.med, u);
     },
   },
-  // ── b18 HUSS ×4 montage (different times of day)
-  ...['face', 'board', 'faceL', 'wide'].map((camName, i) => ({
-    name: `huss b18 #${i + 1}`, start: `b18.h${i}-0.12`, set: 'room',
+  // ── b18 HUSS ×6 montage (a different time of day on every hit)
+  ...['face', 'board', 'faceL', 'wide', 'boardLow', 'face'].map((camName, i) => ({
+    name: `huss b18 #${i + 1}`, start: i === 0 ? 'b18.h0-0.12' : `b18.h${i}-0.03`, set: 'room',
     setup(ctx) {
-      ctx.store = roomNook(ctx, 'me', { lighting: ['night', 'day', 'dawn', 'night'][i] });
-      ctx.set.set?.('window', ['party', 'day', 'sunrise', 'party'][i]);
+      ctx.store = roomNook(ctx, 'me', { lighting: ['night', 'day', 'dawn', 'night', 'day', 'dawn'][i] });
+      ctx.set.set?.('window', ['party', 'day', 'sunrise', 'party', 'day', 'sunrise'][i]);
       ctx.store.cams = nookCams(ctx.store.F);
-      ctx.store.practice = practiceTrack(ctx, 'b18', [['e2', 'e4'], ['d2', 'd4'], ['b1', 'c3'], ['c1', 'g5']], [['c7', 'c5'], ['c5', 'd4'], ['g8', 'f6'], null]);
+      ctx.store.practice = practiceTrack(ctx, 'b18', [['e2', 'e4'], ['g1', 'f3'], ['d2', 'd4'], ['f3', 'd4'], ['b1', 'c3'], ['c1', 'e3']],
+        [['c7', 'c5'], ['d7', 'd6'], ['c5', 'd4'], ['g8', 'f6'], ['a7', 'a6'], null]);
     },
     update(ctx) {
       slamUpdate(ctx, ctx.store, ctx.store.practice);
-      pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.15));
+      pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.09));
       ctx.cam.set(ctx.store.cams[camName]); ctx.cam.shake(0.09, ctx.t, 20 + i);
     },
   })),
@@ -626,9 +627,9 @@ export const shots = [
       ctx.cam.move({ pos: B(0.55, 0.35, -0.55), look: B(0.05, 0.05, -0.15), fov: 36 }, { pos: B(0.35, 0.2, -0.4), look: B(0.07, 0.04, -0.15), fov: 30 }, u, ease.inOutSine);
     },
   },
-  // ── b26 HUSS ×4: scholar's mate in four slams
-  ...[0, 1, 2, 3].map((i) => ({
-    name: `match huss #${i + 1}`, start: `b26.h${i}-0.12`, set: 'town',
+  // ── b26 HUSS ×6: scholar's mate — moves land on HUSS 1,3,4,6, the clock gets slammed on 2 and 5
+  ...[0, 2, 3, 5].map((hi, i) => ({
+    name: `match huss #${i + 1}`, start: i === 0 ? 'b26.h0-0.12' : `b26.h${hi}-0.03`, set: 'town',
     setup(ctx) { tourney(ctx, { hero: true, mayor: true, board: true }); },
     update(ctx, lt) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked' });
@@ -636,11 +637,12 @@ export const shots = [
       const hits = ctx.hussTimes('b26').map((h) => h + 0.03);
       me.pose('sitSlam', ctx.t, { hits });
       const hit = lastBefore(hits, ctx.t);
-      me.face(hit != null && ctx.t - hit < 0.2 ? 'huss' : 'determined', ctx.t);
+      me.face(hit != null && ctx.t - hit < 0.16 ? 'huss' : 'determined', ctx.t);
       m.pose('sitIdle', ctx.t); m.face(i >= 2 ? 'sweat' : 'shocked', ctx.t);
       pigeonOnShoulder(ctx);
       ctx.store.match.play(ctx.props.chess, ctx.t);
-      ctx.cam.punch(hits, ctx.t, 0.12, 0.2);
+      pressClock(ctx, [hits[1], hits[4]]);
+      ctx.cam.punch(hits, ctx.t, 0.12, 0.18);
       const B = ctx.store.FBoard, FA = ctx.store.FA, FB = ctx.store.FB;
       if (hit != null) burstAt(ctx, B(0, 0.02, 0), ctx.t, hit);
       if (i === 0) ctx.cam.set({ pos: B(0.45, 0.32, -0.6), look: B(0.0, 0.03, -0.05), fov: 36 });
@@ -821,7 +823,7 @@ export const shots = [
     update(ctx) {
       const hs = ctx.hussTimes('b36');
       const n = hs.filter((h) => h <= ctx.t + 0.02).length;
-      ctx.set.set?.('windowGlow', (hi, wi) => (((hi * 3 + wi * 5) % 7) < n + (n >= 4 ? 3 : 0) ? 1 : 0.06));
+      ctx.set.set?.('windowGlow', (hi, wi) => (((hi * 3 + wi * 5) % 7) < n + (n >= 5 ? 2 : 0) ? 1 : 0.06));
       const F = ctx.store.F;
       ctx.cam.punch(hs, ctx.t, 0.07, 0.25);
       if (part === 0) ctx.cam.move({ pos: F(-2, 2.2, 6), look: F(3, 3, -2), fov: 52 }, { pos: F(-1.4, 2.4, 5.2), look: F(3, 3.2, -2), fov: 50 }, ctx.progress('b36.h0', 'b36.h3'));
@@ -959,12 +961,13 @@ export const shots = [
       const pg = ctx.cast.pigeon, F = ctx.store.FT;
       ctx.props.chess.reset(); ctx.props.chess.knockAll(1, 7);
       pg.root.position.copy(F(0.0, TABLE_TOP, 0.05)); pg.root.rotation.set(0, F.yaw + Math.PI, 0);
-      const h = ctx.time('b46.h0');
-      pg.pose(ctx.t > h - 0.05 ? 'huss' : 'idle', ctx.t); pg.face(ctx.t > h - 0.05 ? 'huss' : 'smug', ctx.t);
+      const hs = ctx.hussTimes('b46'), h = hs[0];
+      const last = lastBefore(hs, ctx.t + 0.05);
+      pg.pose(last != null ? 'huss' : 'idle', ctx.t, { hits: hs }); pg.face(last != null && ctx.t - last < 0.17 ? 'huss' : 'smug', ctx.t);
       const pp = pg.root.position.clone().add(V(0, 0.22, 0));
       const back = V().copy(F.fwd).multiplyScalar(-1);
       ctx.cam.set({ pos: pp.clone().addScaledVector(back, 0.75).add(V(0, 0.05, 0)), look: pp, fov: 34 });
-      ctx.cam.punch([h], ctx.t, 0.16, 0.35);
+      ctx.cam.punch(hs, ctx.t, 0.14, 0.2);
     },
   },
 ];
@@ -1044,11 +1047,12 @@ function tourney(ctx, { hero = false, mayor = false, board = false, standing = f
     ctx.add(chess.root); chess.root.position.copy(rel(tbl, [0, ctx.props.boardThick, 0])); chess.root.rotation.set(0, yawOf(ca), 0);
     chess.reset();
     ctx.add(ctx.props.clock.root); ctx.props.clock.root.position.copy(st.FBoard(-0.48, 0, 0)); ctx.props.clock.root.rotation.set(0, yawOf(ca) + Math.PI / 2, 0);
-    const hs = ctx.hussTimes('b26').map((h) => h + 0.03);
+    const all = ctx.hussTimes('b26').map((h) => h + 0.03);
+    const hs = [all[0], all[2], all[3], all[5]];
     const W = [['e2', 'e4'], ['d1', 'h5'], ['f1', 'c4'], ['h5', 'f7']];
     const Bk = [['e7', 'e5'], ['b8', 'c6'], ['g8', 'f6']];
     const moves = [];
-    hs.forEach((h, i) => { moves.push({ from: W[i][0], to: W[i][1], at: h, dur: 0.15 }); if (Bk[i]) moves.push({ from: Bk[i][0], to: Bk[i][1], at: h + 0.16, dur: 0.07, noSlam: true }); });
+    hs.forEach((h, i) => { moves.push({ from: W[i][0], to: W[i][1], at: h, dur: 0.14 }); if (Bk[i]) moves.push({ from: Bk[i][0], to: Bk[i][1], at: h + 0.12, dur: 0.05, noSlam: true }); });
     st.match = moveTrack(moves);
   }
 }

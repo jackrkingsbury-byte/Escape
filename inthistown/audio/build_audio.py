@@ -28,13 +28,19 @@ def style(*mix):
     return sum(K.get_voice_style(v) * w for v, w in mix)
 
 
-NARRATOR = style(('am_michael', 0.6), ('am_puck', 0.4))
-VOICES = {  # speaker → (voice style or name, speed, lang)
-    'narr': (NARRATOR, 1.08, 'en-us'),
-    'me': (NARRATOR, 1.0, 'en-us'),
-    'heckler': ('bm_george', 1.1, 'en-gb'),
-    'marcus': ('am_liam', 1.04, 'en-us'),
+# Narrator = the hero: a young, bright, expressive voice (matched to the user's reference clip:
+# F0 ≈ 200 Hz, ~13 semitone range). Kokoro has no young male voice, so we take am_fenrir and
+# youthify it with the WORLD vocoder (pitch ×1.45, vocal tract ×1.12, contour ×1.1).
+VOICES = {  # speaker → (voice style or name, speed, lang, youth=(f0_scale, formant, expr) | None)
+    'narr': ('am_fenrir', 1.0, 'en-us', (1.45, 1.12, 1.1)),
+    'me': ('am_fenrir', 0.97, 'en-us', (1.45, 1.12, 1.12)),
+    'heckler': ('bm_george', 1.1, 'en-gb', None),
+    'marcus': ('am_liam', 1.04, 'en-us', (1.3, 1.07, 1.1)),
 }
+HERO_HUSS = ('am_fenrir', (1.45, 1.12, 1.0))
+# HUSS rhythm from the reference: tight triplets (0, .21, .40 s), next triplet starts .98 s later.
+TRIPLET = (0.0, 0.21, 0.40)
+TRIPLET_PERIOD = 0.98
 
 # Extra silence AFTER each beat (seconds). Default 0.30.
 GAP_AFTER = {
@@ -69,10 +75,16 @@ def _cached(key, fn):
     return a
 
 
+from youth import youthify  # noqa: E402
+
+
 def tts(text, speaker):
-    v, speed, lang = VOICES[speaker]
+    v, speed, lang, yo = VOICES[speaker]
     vkey = v if isinstance(v, str) else f'blend{float(np.asarray(v).sum()):.4f}'
-    return _cached(f'{text}|{vkey}|{speed}|{lang}', lambda: K.create(text, voice=v, speed=speed, lang=lang)[0])
+    raw = _cached(f'{text}|{vkey}|{speed}|{lang}', lambda: K.create(text, voice=v, speed=speed, lang=lang)[0])
+    if not yo:
+        return raw
+    return _cached(f'Y|{text}|{vkey}|{speed}|{lang}|{yo}', lambda: youthify(raw, TSR, *yo))
 
 
 def tts_voice(text, voice, speed=1.0, lang='en-us', phonemes=False):
@@ -124,14 +136,17 @@ def display(word):
 _HUSS_CACHE = {}
 
 
-def make_huss(voice='am_fenrir', pitch=1.0, seed=0, grit=1.0):
-    key = (voice, round(pitch, 3), seed, grit)
+def make_huss(voice='am_fenrir', pitch=1.0, seed=0, grit=1.0, youth=None):
+    key = (voice, round(pitch, 3), seed, grit, youth)
     if key in _HUSS_CACHE:
         return _HUSS_CACHE[key]
     rng = np.random.default_rng(100 + seed)
-    v = trim(up(tts_voice('hˈʌs!', voice, speed=1.2, phonemes=True)), thr=0.02)
+    raw = tts_voice('hˈʌs!', voice, speed=1.2, phonemes=True)
+    if voice == HERO_HUSS[0] and youth:
+        raw = _cached(f'YH|{voice}|{youth}', lambda: youthify(raw, TSR, *youth))
+    v = trim(up(raw), thr=0.02)
     # tighten: keep at most 0.26 s of the TTS syllable
-    v = v[: int(0.26 * SR)]
+    v = v[: int(0.22 * SR)]
     v[-int(0.03 * SR):] *= np.linspace(1, 0, int(0.03 * SR))
     if pitch != 1.0:
         n = int(len(v) / pitch)
@@ -141,9 +156,9 @@ def make_huss(voice='am_fenrir', pitch=1.0, seed=0, grit=1.0):
     # breathy attack
     hb = S.bp(rng.standard_normal(int(0.05 * SR)).astype(np.float32), 700, 3200)
     hb *= np.minimum(1, np.arange(len(hb)) / (0.006 * SR)) * S.env_exp(len(hb), 0.025)
-    out[: len(hb)] += hb * 0.25 * grit
+    out[: len(hb)] += hb * 0.15 * grit
     vv = v / (np.abs(v).max() + 1e-9)
-    out[int(0.008 * SR): int(0.008 * SR) + len(vv)] += vv * 0.9
+    out[int(0.008 * SR): int(0.008 * SR) + len(vv)] += vv * 1.25
     # short 'ss' tail (kept subtle: the reference HUSS is mostly a voiced, breathy bark)
     sl = int(0.09 * SR)
     ss = S.bp(rng.standard_normal(sl).astype(np.float32), 3500, 8000) * S.env_exp(sl, 0.03)
@@ -151,12 +166,17 @@ def make_huss(voice='am_fenrir', pitch=1.0, seed=0, grit=1.0):
     st = int(0.008 * SR) + int(len(vv) * 0.6)
     out[st: st + sl] += ss[: len(out) - st] * 0.2 * grit
     # chest thump for impact
-    th = S.thump(0.16) * 0.45
+    th = S.thump(0.2) * 0.85      # the reference HUSS carries a heavy low-end hit
     out[: len(th)] += th
     out = np.tanh(out * 1.8) / np.tanh(1.8)
-    out = out[: int(0.25 * SR)]
-    out[-int(0.04 * SR):] *= np.linspace(1, 0, int(0.04 * SR))
-    out = S.reverb(out, room=0.12, wet=0.06, seed=7 + seed)
+    # crisp bark like the reference: ~60 ms body then a fast decay, gone by 150 ms
+    n = int(0.15 * SR)
+    out = out[:n] if len(out) >= n else np.pad(out, (0, n - len(out)))
+    env = np.ones(n, np.float32)
+    h = int(0.06 * SR)
+    env[h:] = np.exp(-np.arange(n - h) / (0.03 * SR))
+    out *= env
+    out = S.reverb(out, room=0.08, wet=0.04, seed=7 + seed)
     out /= np.abs(out).max() + 1e-9
     _HUSS_CACHE[key] = out.astype(np.float32)
     return _HUSS_CACHE[key]
@@ -195,7 +215,7 @@ def main():
         words_out = []
         if b['kind'] == 'huss':
             n = b['n']
-            gap = b.get('gap', 0.34)
+            onsets = [(i // 3) * TRIPLET_PERIOD + TRIPLET[i % 3] for i in range(n)]
             for i in range(n):
                 if b['speaker'] == 'town':
                     vlist = ['am_liam', 'af_bella', 'bm_daniel', 'am_onyx', 'am_fenrir']
@@ -203,14 +223,14 @@ def main():
                     h = S.lp(h, 2600) * 0.75
                     h = S.reverb(h, 0.7, 0.4, 20 + i)
                 elif b['speaker'] == 'pigeon':
-                    h = make_huss('am_puck', pitch=1.75, seed=99)
+                    h = make_huss('am_puck', pitch=[1.75, 1.85, 1.7][i % 3], seed=99 + i)
                 else:
-                    h = make_huss('am_fenrir', pitch=[1.0, 1.04, 0.97, 1.06][i % 4], seed=i)
-                th = t + i * gap
+                    h = make_huss(HERO_HUSS[0], pitch=[1.0, 1.03, 0.98][i % 3], seed=i, youth=HERO_HUSS[1])
+                th = t + onsets[i]
                 voice_track.append((th, h))
                 words_out.append({'text': 'HUSS!', 'start': round(th, 3), 'end': round(th + 0.26, 3)})
                 huss_events.append((th, bid, i, b['speaker']))
-            t = t + (n - 1) * gap + 0.3
+            t = t + onsets[-1] + 0.3
         else:
             phrases = split_phrases(b['text'])
             for pi, ph in enumerate(phrases):
@@ -243,6 +263,7 @@ def main():
     voice = np.zeros(N, np.float32)
     for at, a in voice_track:
         S.place(voice, a, at, 0.9)
+    voice = voice + 0.35 * S.bp(voice, 2200, 6500)   # presence: crisp phone-speaker narration
 
     # ------------------------------------------------------------------------------------ sfx bus
     sfx = np.zeros((N, 2), np.float32)
@@ -255,7 +276,7 @@ def main():
 
     for (th, bid, i, spk) in huss_events:
         if bid in ('b03', 'b12', 'b18', 'b26'):
-            put(S.wood_knock(seed=i, pitch=1 + 0.05 * (i % 3)), th + 0.03, 0.55, 0.45 + 0.1 * (i % 2))
+            put(S.wood_knock(seed=i, pitch=1 + 0.05 * (i % 3))[: int(0.09 * SR)] * np.exp(-np.arange(int(0.09 * SR)) / (0.025 * SR)), th + 0.02, 0.5, 0.45 + 0.1 * (i % 2))
         if bid == 'b26':
             put(S.clock_click(), th + 0.17, 0.5, 0.65)
         if bid == 'b36':
@@ -303,6 +324,16 @@ def main():
     venv = signal.lfilter([1 - alpha], [1, -alpha], venv).astype(np.float32)
     duck = 1 - 0.45 * np.clip(venv * 3, 0, 1)
     music *= duck[:, None]
+    # the reference drops the music out completely for each HUSS run (hard, punchy)
+    gate = np.ones(N, np.float32)
+    for bid in ('b03', 'b12', 'b18', 'b26'):
+        ws = beat[bid]['words']
+        t0, t1 = ws[0]['start'] - 0.12, ws[-1]['end'] + 0.12
+        gate *= 1 - ramp(t0, t1, 0.04)
+        hold = S.organ((69, 76, 81, 84), dur=t1 - t0 + 0.6)          # bright sustained A-minor chord under the HUSSes
+        hold[: int(0.03 * SR)] *= np.linspace(0, 1, int(0.03 * SR))
+        put(np.stack([hold, hold], 1), t0, 0.3)
+    music *= gate[:, None]
     music += amb[:N] * g_amb[:, None]
 
     mix = music + sfx + np.stack([voice, voice], 1)

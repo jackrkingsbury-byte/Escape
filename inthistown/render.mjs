@@ -6,8 +6,11 @@
 //   extras:         [--preset medium] [--capture dataurl|cdp|screenshot] [--quality 92] [--audio path|none]
 //                   [--bench 40]   measure capture methods (1 worker) and exit
 //                   [--times 1.5,3,12.25]  with --preview: render exactly these times instead of every N s
+//                   [--check-determinism]  render probe times in scrambled orders + sequentially in a 2nd process,
+//                                  require byte-identical frames (use --times to choose probes), then exit
 //                   [--strict]     abort on the first page error     [--keep] keep segment files
 //                   [--aa 0]       disable MSAA                       [--timeout 300] page-ready timeout (s)
+//                   [--query "composite=gpu&debug=1"]  extra index.html query params
 //
 // Every frame i (0 ≤ i < N, N = round((to-from)·fps)) is rendered at t = from + i/fps, so the video is exactly
 // N/fps seconds. --workers N splits [0, N) into N contiguous chunks rendered by N separate Chromium processes
@@ -53,12 +56,14 @@ const opt = {
   quality: A.quality != null ? +A.quality : 92,
   audio: A.audio ?? null,
   bench: A.bench != null ? (A.bench === true ? 40 : +A.bench) : 0,
+  det: !!A['check-determinism'],
   strict: !!A.strict,
   keep: !!A.keep,
   aa: A.aa != null ? String(A.aa) !== '0' : true,
   timeout: (A.timeout != null ? +A.timeout : 300) * 1000,
+  query: typeof A.query === 'string' ? A.query : '',
 };
-if (opt.times && opt.preview == null) opt.preview = 0;
+if (opt.times && opt.preview == null && !A['check-determinism']) opt.preview = 0;
 const rel = (p) => path.resolve(ROOT, p);
 const fmtT = (s) => { s = Math.max(0, Math.round(s)); const m = Math.floor(s / 60); return m ? `${m}m${String(s % 60).padStart(2, '0')}s` : `${s}s`; };
 const log = (...m) => console.log('[render]', ...m);
@@ -99,10 +104,15 @@ async function openWorker(k) {
     if (n <= 2) console.log(`[w${k} ${kind}] ${text}${n === 2 ? '  (repeats suppressed)' : ''}`);
     if (kind === 'error' || kind === 'pageerror') { pageErrors++; if (opt.strict) { console.error('[render] --strict: aborting on page error'); cleanup().then(() => process.exit(2)); } }
   };
-  page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') onMsg(m.type(), m.text()); });
+  page.on('console', (m) => {
+    if (m.type() !== 'error' && m.type() !== 'warning') return;
+    const loc = m.location && m.location();
+    onMsg(m.type(), m.text() + (/Failed to load resource/.test(m.text()) && loc && loc.url ? ` — ${loc.url.replace(server.url, '')}` : ''));
+  });
   page.on('pageerror', (e) => onMsg('pageerror', e.message));
   const q = new URLSearchParams({ render: '1', timeline: opt.timeline, shotsModule: opt.shots, scale: String(opt.scale) });
   if (!opt.aa) q.set('aa', '0');
+  if (opt.query) for (const [k, v] of new URLSearchParams(opt.query)) q.set(k, v);
   q.set('t', String(opt.from));
   await page.goto(`${server.url}/index.html?${q}`);
   await page.waitForFunction('window.__ready === true', null, { timeout: opt.timeout, polling: 100 });
@@ -180,6 +190,47 @@ async function bench(w, info) {
   for (const r of res) console.log(`  ${r.method.padEnd(28)} ${r.ms.toFixed(1).padStart(8)}   ${(r.ms - base).toFixed(1).padStart(16)}   ${r.kb.toFixed(0).padStart(8)}`);
   const best = res.slice(1).sort((a, b) => a.ms - b.ms)[0];
   log(`fastest capture: ${best.method}`);
+}
+
+// Random-access determinism check: page A renders the probe times in a scrambled order (twice, different orders),
+// page B (a separate Chromium process) renders each probe time after its 3 preceding frames, like a sequential
+// render. All three PNGs of every probe time must be byte-identical. Mismatches are saved to out/preview/det_*.png.
+async function determinism(workers, info) {
+  const fps = opt.fps || info.fps, dur = opt.to ?? info.duration;
+  const snap = (x) => Math.round(x * fps) / fps;
+  let probes = opt.times && opt.times.length ? opt.times.map(snap) : null;
+  if (!probes) {
+    const s = new Set();
+    for (const sh of info.shots) { s.add(snap(sh.start)); s.add(snap(Math.min(sh.end - 1 / fps, sh.start + 0.5 * (sh.end - sh.start)))); }
+    for (let i = 1; i <= 4; i++) s.add(snap(dur * (i / 5) + 0.123));
+    probes = [...s].filter((t) => t >= 0 && t < dur);
+  }
+  probes.sort((a, b) => a - b);
+  const grab = async (w, t) => {
+    const b64 = await w.page.evaluate(async (tt) => { await window.__engine.renderAt(tt); const s = window.__engine.frameDataURL('image/png'); return s.slice(s.indexOf(',') + 1); }, t);
+    return { b64, h: (await import('node:crypto')).createHash('sha1').update(b64).digest('hex').slice(0, 12) };
+  };
+  const [A, B] = workers;
+  const order1 = probes.slice().reverse();
+  const order2 = probes.map((_, i) => probes[(i * 7 + 3) % probes.length]).filter((t, i, a) => a.indexOf(t) === i);
+  for (const t of probes) if (!order2.includes(t)) order2.push(t);
+  const ra1 = {}, ra2 = {}, seq = {};
+  for (const t of order1) ra1[t] = await grab(A, t);
+  for (const t of order2) ra2[t] = await grab(A, t);
+  for (const t of probes) { for (let k = 3; k >= 1; k--) if (t - k / fps >= 0) await grab(B, t - k / fps); seq[t] = await grab(B, t); }
+  let bad = 0;
+  const dir = rel('out/preview'); fs.mkdirSync(dir, { recursive: true });
+  for (const t of probes) {
+    const ok = ra1[t].h === ra2[t].h && ra1[t].h === seq[t].h;
+    if (!ok) {
+      bad++;
+      fs.writeFileSync(path.join(dir, `det_${t.toFixed(3)}_A.png`), Buffer.from(ra1[t].b64, 'base64'));
+      fs.writeFileSync(path.join(dir, `det_${t.toFixed(3)}_B.png`), Buffer.from(seq[t].b64, 'base64'));
+    }
+    log(`t=${t.toFixed(3)}  random-access ${ra1[t].h} / ${ra2[t].h}   sequential(other process) ${seq[t].h}  ${ok ? 'OK' : 'MISMATCH'}`);
+  }
+  log(bad ? `determinism: ${bad}/${probes.length} probe times differ (saved out/preview/det_*_A/B.png)` : `determinism: all ${probes.length} probe times identical across orders and processes`);
+  return bad;
 }
 
 async function preview(workers, info) {
@@ -301,15 +352,17 @@ async function video(workers, info) {
 // ───────────────────────────── main
 try {
   server = await startServer();
-  const nW = opt.bench ? 1 : opt.workers;
+  const nW = opt.bench ? 1 : opt.det ? 2 : opt.workers;
   const workers = await Promise.all(Array.from({ length: nW }, (_, k) => openWorker(k)));
   const info = workers[0].info;
   log(`loaded ${opt.shots} + ${opt.timeline}: duration ${info.duration}s @ ${info.fps} fps, ${info.shots.length} shots`);
+  let code = 0;
   if (opt.bench) await bench(workers[0], info);
+  else if (opt.det) code = (await determinism(workers, info)) ? 3 : 0;
   else if (opt.preview != null) await preview(workers, info);
   else await video(workers, info);
   await cleanup();
-  process.exit(0);
+  process.exit(code);
 } catch (e) {
   console.error('[render] FAILED:', e && e.stack ? e.stack : e);
   await cleanup();

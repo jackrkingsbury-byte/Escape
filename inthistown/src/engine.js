@@ -55,15 +55,19 @@
  *   ctx.add (use ctx.add(obj, parent) instead).
  *
  * ─── ctx API (SPEC §8 + extras) ───────────────────────────────────────────────────────────────────
- *   THREE, scene, camera, renderer, t, dt, lt, u, shot, shotIndex, set, getSet(name), cast, props,
+ *   THREE, scene, camera, renderer, t, dt, lt, u, shot, shotIndex, set, getSet(name), cast,
+ *   props   — per-FILM object (persists across shots; create props in init(ctx)),
+ *   store   — per-SHOT scratch object: reset to {} at every shot change (assign it in setup, read it in update),
  *   use(...ids), place(char|id, anchor|Object3D|Vector3|[x,y,z], { yaw, offset, scale })  (auto-attaches the char),
  *   anchor(name)  ('setName:anchor' reads another set),  point(p) → world Vector3 for any position form,
  *   add(obj, parent = scene), remove(obj),
  *   time(anchor), since(anchor) = t − time(anchor), progress(a, b) = 0..1 between two anchors,
  *   words, beats, beat(id), wordAt(t), hussTimes(beatId?), markers, timeline,
- *   cam.set({pos, look, fov, roll}), cam.move(from, to, u, ease), cam.shake(amount, t, seed, freq),
+ *   cam.set({pos, look, fov, roll}), cam.move(from, to, u, ease = linear), cam.shake(amount, t, seed, freq),
  *   cam.punch(times|beatId, t, amount = 0.08, decay = 0.25), cam.orbit(center, radius, height, angle, fov),
  *     positions accept [x,y,z] | Vector3 | Object3D | 'anchor.name' | { anchor, offset:[x,y,z] }.
+ *     cam.move: ease may be a function or an ease name ('inOutCubic'); omitted → linear (pass a pre-eased u).
+ *     cam.set/move/orbit called in setup persist for the whole shot; called in update they apply to that frame.
  *     shake amount: 0.1 subtle handheld · 0.3 nervous · 1 earthquake. punch: FOV kick (+ tiny roll) per impact.
  *   fx.overlay(color, alpha), fx.vignette(strength)   2D overlays composited under the captions
  *   caption.hide(on = true), caption.style('default'|'high'|'low'), caption.sfx(on)  (show sfx words)
@@ -370,7 +374,12 @@ export function createEngine(opts = {}) {
   canvas.width = W; canvas.height = H;
   const scale = clamp(+(opts.scale ?? 0.6667) || 0.6667, 0.1, 2);
   const IW = Math.round(W * scale), IH = Math.round(H * scale);
-  const g2 = canvas.getContext('2d', { alpha: false });
+  // 2D composite of the upscaled 3D buffer. imageSmoothingQuality 'high' is NOT bit-deterministic in Chromium (the same
+  // drawImage differs by ±1 LSB depending on its internal rescale cache — measured), 'medium'/'low' are bit-exact
+  // (both bilinear for an upscale). composite 'cpu' = software-backed 2D canvas, 'gpu' = accelerated; both exact.
+  const compositeMode = opts.composite || 'cpu';
+  const smoothQ = opts.smoothing || 'medium';
+  const g2 = canvas.getContext('2d', { alpha: false, willReadFrequently: compositeMode === 'cpu' });
   const glCanvas = document.createElement('canvas');
   glCanvas.width = IW; glCanvas.height = IH;
   const renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: opts.antialias !== false, alpha: false,
@@ -615,7 +624,7 @@ export function createEngine(opts = {}) {
   const camApi = {
     set(o) { applyCamSpec(cam, o); camUsed = true; return camApi; },
     move(from, to, u, e) {
-      const fn = typeof e === 'string' ? ease[e] : (typeof e === 'function' ? e : ease.inOutSine);
+      const fn = typeof e === 'string' ? (ease[e] || ease.linear) : (typeof e === 'function' ? e : ease.linear);
       const k = fn(clamp(u, 0, 1));
       const a = cloneCam(cam);
       applyCamSpec(a, from);
@@ -669,7 +678,7 @@ export function createEngine(opts = {}) {
   const ctx = {
     THREE, scene, camera, renderer, canvas, glCanvas,
     t: 0, dt: 1 / 30, lt: 0, u: 0, shot: null, shotIndex: -1, frame: 0,
-    set: null, getSet, cast, props, use, place, anchor, point, add, remove,
+    set: null, getSet, cast, props, store: {}, use, place, anchor, point, add, remove,
     time, since: (a) => ctx.t - time(a),
     progress: (a, b) => { const ta = time(a), tb = time(b); return tb > ta ? clamp((ctx.t - ta) / (tb - ta), 0, 1) : (ctx.t >= tb ? 1 : 0); },
     words: [], beats: [], beat: (id) => tl.byId.get(id), wordAt, hussTimes, markers: {}, timeline: null,
@@ -686,7 +695,14 @@ export function createEngine(opts = {}) {
     else {
       const url = opts.shotsModule || '/src/shots.js';
       try { mod = await import(url); } catch (e) {
-        throw new Error(`could not load shots module ${url}: ${e.message || e}\n(does the file exist? did it, or a module it imports, throw or fail to parse? see the console for the exact error)`);
+        let missing = [];
+        try {
+          missing = performance.getEntriesByType('resource').filter((r) => r.responseStatus >= 400)
+            .map((r) => new URL(r.name).pathname).filter((p, i, a) => a.indexOf(p) === i);
+        } catch {}
+        throw new Error(`could not load shots module ${url}: ${e.message || e}` +
+          (missing.length ? `\nmissing files (HTTP 404): ${missing.join(', ')}` : '') +
+          `\n(does the file exist? did it, or a module it imports, throw or fail to parse? see the console for the exact error)`);
       }
     }
     captionOptions = { ...(mod.captionOptions || {}) };
@@ -748,7 +764,7 @@ export function createEngine(opts = {}) {
     cap = { hidden: s.def.captions === false, style: 'default', sfx: false };
     copyBackground(true);
     renderer.toneMappingExposure = activeSet && activeSet.exposure != null ? activeSet.exposure : 1.0;
-    ctx.shot = s.def; ctx.shotIndex = idx;
+    ctx.shot = s.def; ctx.shotIndex = idx; ctx.store = {};
     ctx.lt = Math.max(0, ctx.t - s.start); ctx.u = s.end > s.start ? clamp(ctx.lt / (s.end - s.start), 0, 1) : 0;
     // 6. declared cast + setup
     if (s.def.cast) { try { use(s.def.cast); } catch (e) { reportError(`shot "${s.name}" cast`, e); } }
@@ -808,7 +824,7 @@ export function createEngine(opts = {}) {
     timing.render = performance.now() - T1;
     T1 = performance.now();
     // composite
-    g2.imageSmoothingEnabled = true; g2.imageSmoothingQuality = 'high';
+    g2.imageSmoothingEnabled = true; g2.imageSmoothingQuality = smoothQ;
     g2.drawImage(glCanvas, 0, 0, W, H);
     camera.position.copy(_savePos); camera.quaternion.copy(_saveQuat); camera.fov = saveFov; camera.updateProjectionMatrix();
     for (const [c, a] of fx.overlays) { g2.globalAlpha = a; g2.fillStyle = c; g2.fillRect(0, 0, W, H); }
@@ -895,6 +911,8 @@ export async function boot({ canvas, errorEl } = {}) {
     antialias: q.get('aa') !== '0',
     debug: q.has('debug'),
     resetEveryFrame: q.get('reset') === 'frame',
+    composite: q.get('composite') || undefined,
+    smoothing: q.get('smooth') || undefined,
     onError: renderMode ? null : (msg) => { if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = msg; } },
   }); } catch (e) { showError(`ENGINE ERROR (WebGL?): ${e.message || e}`); window.__ready = true; return null; }
   window.__engine = engine.api;

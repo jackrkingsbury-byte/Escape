@@ -280,7 +280,7 @@ export const shots = [
       const near = hits.some((h) => ctx.t > h - 0.08 && ctx.t < h + 0.22);
       me.face(near ? 'huss' : 'determined');
       ctx.props.board.jump(hits, ctx.t);
-      ctx.cam.orbit([0.55, 1.0, -1.25], 1.9, 0.45, 1.1 - lt * 0.08, 36);   // stays inside the room (walls at x = ±2.4)
+      ctx.cam.orbit([0.55, 0.9, -1.35], 1.45, 1.25, 1.2 - lt * 0.1, 38);   // high over-the-shoulder, inside the room (walls at x = ±2.4)
       ctx.cam.punch(hits, ctx.t, 0.09, 0.22);
       ctx.cam.shake(0.12, ctx.t, 3, 1.5);
       ctx.fx.vignette(0.45);

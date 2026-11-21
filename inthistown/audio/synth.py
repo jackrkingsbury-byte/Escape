@@ -323,3 +323,15 @@ def coo(seed=54):
     x = np.sin(2 * np.pi * np.cumsum(f) / SR)
     e = np.exp(-((t - 0.15) / 0.08) ** 2) + 0.8 * np.exp(-((t - 0.4) / 0.1) ** 2)
     return lp((x * e).astype(np.float32), 1200) * 0.6
+
+
+def organ(chord=(69, 76, 81, 84), dur=1.6):
+    """Bright held chord (additive, organ-ish) with a gentle swell and release."""
+    t = _t(dur)
+    x = np.zeros(len(t), np.float32)
+    for m in chord:
+        f = note_hz(m)
+        for k, a in ((1, 1.0), (2, 0.5), (3, 0.3), (4, 0.18), (6, 0.08)):
+            x += a * np.sin(2 * np.pi * f * k * t * (1 + 0.0007 * np.sin(2 * np.pi * 5 * t)))
+    e = np.minimum(1, t / 0.05) * np.minimum(1, (dur - t) / 0.35)
+    return (x * e / (len(chord) * 2.1) * 0.6).astype(np.float32)

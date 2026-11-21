@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Engine Demo Sheet</title>
+<!-- MODULE D dev page: contact sheet of the standalone demo (src/shots.demo.js + audio/timeline.demo.json),
+     rendered OUT OF ORDER on purpose (random access). ?shotsModule=…&timeline=…&times=0.5,1.2,… to override. -->
+<style>
+  html, body { margin: 0; background: #111; }
+  #sheet { display: block; width: 100vw; height: auto; }
+  #err { color: #fff; background: #b00020; font: 13px monospace; white-space: pre-wrap; padding: 8px; display: none; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="err"></div>
+<canvas id="sheet"></canvas>
+<script type="module">
+  import { createEngine } from '/src/engine.js';
+  const q = new URLSearchParams(location.search);
+  const err = (m) => { const e = document.getElementById('err'); e.style.display = 'block'; e.textContent += m + '\n'; console.error(m); };
+  try {
+    const engine = createEngine({
+      timelineUrl: '/' + (q.get('timeline') || 'audio/timeline.demo.json').replace(/^\//, ''),
+      shotsModule: q.get('shotsModule') || '/src/shots.demo.js',
+      onError: err,
+    });
+    await engine.ready;
+    const times = (q.get('times') || '0.6,1.6,2.4,3.5,4.22,4.6,6.6,8.0').split(',').map(Number);
+    const cols = 4, cw = 270, ch = 480, lh = 26, rows = Math.ceil(times.length / cols);
+    const sheet = document.getElementById('sheet');
+    sheet.width = cols * cw; sheet.height = rows * (ch + lh);
+    const g = sheet.getContext('2d');
+    g.fillStyle = '#111'; g.fillRect(0, 0, sheet.width, sheet.height);
+    // render in a scrambled order to exercise random access (setup re-runs on every shot change / backwards jump)
+    const order = times.map((t, i) => i).sort((a, b) => ((a * 5) % times.length) - ((b * 5) % times.length));
+    for (const i of order) {
+      await engine.renderAt(times[i]);
+      const x = (i % cols) * cw, y = Math.floor(i / cols) * (ch + lh);
+      g.drawImage(engine.canvas, x, y, cw, ch);
+      const s = engine.shotAt(times[i]);
+      g.fillStyle = '#fff'; g.font = '600 13px sans-serif'; g.textBaseline = 'middle';
+      g.fillText(`${times[i].toFixed(2)}s  #${s.index} ${s.name}`, x + 6, y + ch + lh / 2);
+    }
+    const st = engine.stats();
+    g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(0, 0, 330, 22); g.fillStyle = '#9f9'; g.font = '12px monospace';
+    g.fillText(`3D ${st.internal.join('×')}  calls ${st.calls}  ${st.timing.total.toFixed(0)} ms/frame`, 6, 11);
+  } catch (e) { err('ENGINE ERROR: ' + (e.message || e)); }
+  window.__ready = true;
+</script>
+</body>
+</html>
