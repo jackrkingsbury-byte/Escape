@@ -210,10 +210,22 @@ if (VIEW === 'all') {
   const draw = () => { for (const [c, x, y] of cams) view(st.scene, c, x, y, cw, chh); };
   draw(); renders.push(draw);
   label(black ? 'ebony: 0° 45° 90° 180°' : 'ivory: 0° 45° 90° 180°', 6, 6);
+} else if (VIEW === 'burst') {
+  // the impact burst at u = 0.04 · 0.12 · 0.25 · 0.45 from a typical "board" camera
+  const st = studio({ shadowSize: 1.2 });
+  const { chess } = chessTable(st.scene, {});
+  const us = [0.04, 0.12, 0.25, 0.45];
+  const bursts = us.map(() => { const b = makeImpactBurst(); b.root.position.set(0.02, 0.78 + chess.thickness + 0.002, -0.16); st.scene.add(b.root); return b; });
+  const c = cam(38, W / (H / 2), [0.45, 1.05, -0.62], [0.0, 0.84, -0.1]);
+  const hw = W / 2, hh = H / 2;
+  const draw = () => us.forEach((u, i) => { bursts.forEach((b, j) => { b.root.visible = j === i; b.update(us[j]); }); view(st.scene, cam(38, hw / hh, [0.45, 1.05, -0.62], [0.0, 0.84, -0.1]), (i % 2) * hw, Math.floor(i / 2) * hh, hw, hh); });
+  draw(); renders.push(draw);
+  us.forEach((u, i) => label(`burst u=${u}`, (i % 2) * hw + 6, Math.floor(i / 2) * hh + 6));
 } else if (VIEW === 'clock') {
   const st = studio({ shadowSize: 1.0 });
-  const { clk } = chessTable(st.scene, { fen: null, chairs: false });
-  clk.root.rotation.y = 0; clk.root.position.set(0, 0.78, -0.42);
+  const { clk, chess } = chessTable(st.scene, { fen: null, chairs: false });
+  chess.root.visible = false;
+  clk.root.rotation.y = 0; clk.root.position.set(0, 0.78, -0.3);
   clk.setTimes(185, 3); clk.press('L', U(0.5));
   const p = clk.root.position;
   const c = cam(30, W / H, [p.x + 0.08, p.y + 0.22, p.z + 0.5], [p.x, p.y + 0.06, p.z]);
@@ -226,10 +238,10 @@ if (VIEW === 'all') {
   const u = U(0.12);
   chess.slam('e4', u);
   const burst = makeImpactBurst({ size: 0.2 });
-  const bp = chess.root.localToWorld(new THREE.Vector3(0, 0, -0.44));
-  burst.root.position.set(bp.x, 0.782, bp.z); burst.update(u + 0.1); st.scene.add(burst.root);
+  const bp = chess.root.localToWorld(new THREE.Vector3(0.02, 0.002, -0.12));
+  burst.root.position.copy(bp); burst.update(u + 0.1); st.scene.add(burst.root);
   const e4 = chess.root.localToWorld(chess.squareToLocal('e4'));
-  const c = cam(36, W / H, [e4.x + 0.35, e4.y + 0.3, e4.z - 0.6], [e4.x, e4.y + 0.03, e4.z - 0.1]);
+  const c = cam(36, W / H, [e4.x + 0.28, e4.y + 0.24, e4.z + 0.42], [e4.x, e4.y + 0.02, e4.z - 0.06]);
   const draw = () => view(st.scene, c, 0, 0, W, H);
   draw(); renders.push(draw);
   label(`slam("e4", u=${u}) + impact burst`, 8, 8);

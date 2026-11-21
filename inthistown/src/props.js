@@ -22,7 +22,8 @@
 //                RIGHT). Pass { filesAlong: '-x' } for real-chess handedness; squareToLocal() follows.
 //   move(from, to, u, { arc=1, tilt=1, spin=0 })   arc = lift height multiplier, spin = extra yaw (rad)
 //   slam(sq, u, { strength=1 })                    also hops the board a few mm at u≈0..0.16
-//   topple(sq, u, { toward:'e6' | dir:rad, roll=1 })   default: falls toward the board's middle (±Z)
+//   topple(sq, u, { toward:'e6' | dir:rad, roll=1 })   default: toward the board's middle (±Z), or the
+//                                                  first free direction if a piece is in the way
 //                                                  (dir is an angle in the board XZ plane: 0=+X, π/2=+Z)
 //   knockAll(u, seed=1, { origin:[x,z], floorY, maxX, maxZ })   origin = where the sweep comes from
 //                                                  (default the +Z edge, i.e. black's side / the pigeon)
@@ -737,7 +738,7 @@ export function makeChessSet(opts = {}) {
     let alpha;
     if (o.dir != null) alpha = o.dir;
     else if (o.toward) { const t = sqPos(sqIdx(o.toward)), p0 = sqPos(i); alpha = Math.atan2(t.z - p0.z, t.x - p0.x); }
-    else alpha = Math.floor(i / 8) >= 4 ? -Math.PI / 2 : Math.PI / 2;
+    else alpha = freeDirection(P, i);
     const yaw = landed[i] ? restYaw(P, i) : P.yaw;
     const ri = restInfo(P.type, alpha + yaw);
     let th, phi = 0;
@@ -754,6 +755,31 @@ export function makeChessSet(opts = {}) {
     poseTipped(P, pos, alpha, th, phi, yaw);
     P.animated = u > 0;
     syncBlobs();
+  }
+
+  /** Default topple direction: toward the board's middle (±Z) unless a piece is in the way, then the
+   *  first free direction (sideways, then diagonals). Based on the position of the last reset/setFEN. */
+  function freeDirection(P, i) {
+    const toMid = Math.floor(i / 8) >= 4 ? -Math.PI / 2 : Math.PI / 2;
+    const p0 = sqPos(i);
+    const len = P.H * s;
+    const cands = [toMid, 0, Math.PI, toMid + Math.PI / 4, toMid - Math.PI / 4, -toMid];
+    for (const a of cands) {
+      const dx = Math.cos(a), dz = Math.sin(a);
+      let ok = true;
+      for (let d = 0.55 * s; d <= len + 1e-6 && ok; d += 0.25 * s) {
+        const x = p0.x + dx * d, z = p0.z + dz * d;
+        if (Math.abs(x) > playW / 2 || Math.abs(z) > playW / 2) { ok = false; break; }
+        for (let j = 0; j < 64; j++) {
+          const Q = base[j];
+          if (!Q || Q === P || !Q.group.visible) continue;
+          const q = Q.group.position;
+          if (Math.hypot(q.x - x, q.z - z) < (Q.R + 0.24) * s) { ok = false; break; }
+        }
+      }
+      if (ok) return a;
+    }
+    return toMid;
   }
 
   const bounce = (w) => 0.2 * Math.exp(-4 * w) * Math.abs(Math.sin(2.6 * Math.PI * w)) * (1 - w);
