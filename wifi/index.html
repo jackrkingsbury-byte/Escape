@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<!-- WiFi Check: speed test, who's on your WiFi, and what to fix first -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WiFi Check: test it, see who's on it, make it faster</title>
+<meta name="theme-color" content="#2347ff">
+<meta name="description" content="Test your WiFi speed in each room, see every device on your network, and get the fixes that matter for your connection, in order.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%232347ff'/><text x='50' y='72' font-size='60' font-family='Georgia,serif' fill='white' text-anchor='middle'>W</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* pick the theme before first paint so there's no flash */
+  try {
+    const t = JSON.parse(localStorage.getItem('wifiCheck.v1') || '{}').theme;
+    document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch { document.documentElement.dataset.theme = 'light'; }
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+:root{
+  --bg:#f7f5ef;--surface:#fff;--surface-2:#efe9dd;--text:#14161c;--muted:#5f6678;
+  --brand:#2347ff;--brand-deep:#1a38d6;--brand-soft:#e7eaff;
+  --pop:#ff5630;--pop-soft:#ffe7e0;--line:#e4dece;
+  --good:#1f9d67;--good-soft:#dcf3e8;--warn:#b77f00;--warn-soft:#fbeecb;--bad:#d93a1a;--bad-soft:#ffe4dc;
+  --shadow:0 1px 2px rgba(20,22,28,.04),0 10px 30px rgba(20,22,28,.07);
+  --ring:rgba(35,71,255,.18);--radius:20px;--radius-sm:13px;--maxw:1120px;
+}
+[data-theme="dark"]{
+  --bg:#0a0c11;--surface:#11141b;--surface-2:#181c26;--text:#ececea;--muted:#9097a6;
+  --brand:#6480ff;--brand-deep:#4d6bff;--brand-soft:#1a2340;--pop:#ff6f4d;--pop-soft:#2a1712;--line:#252b3a;
+  --good:#43e0a0;--good-soft:#132a20;--warn:#ffc44d;--warn-soft:#2a2110;--bad:#ff7a5c;--bad-soft:#2c1510;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.4);--ring:rgba(100,128,255,.28);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.08;letter-spacing:-.02em;font-weight:600}
+a{color:var(--brand)}
+code,kbd,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+.label{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:800;font-size:.95rem;padding:12px 20px;border-radius:100px;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .2s,border-color .2s,color .2s;white-space:nowrap;text-decoration:none}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 12px 26px var(--ring)}
+.btn-primary:hover{background:var(--brand-deep)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-sm{padding:8px 14px;font-size:.85rem}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+/* header */
+header.nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(160%) blur(14px);background:color-mix(in srgb,var(--bg) 86%,transparent);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;gap:12px;min-height:64px;max-width:var(--maxw);margin:0 auto;padding:0 18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:1.22rem;text-decoration:none;color:var(--text)}
+.brand .mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--brand);color:#fff;font-weight:700}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;font-weight:600;margin-top:-2px}
+.spacer{flex:1}
+.tabs{display:flex;gap:4px;background:var(--surface-2);padding:5px;border-radius:100px}
+.tab{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:.9rem;color:var(--muted);padding:8px 15px;border-radius:100px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:2px solid var(--line);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;font-size:1.05rem}
+@media (max-width:640px){
+  .tabs{order:3;width:100%;margin-bottom:10px;justify-content:space-between}
+  .tab{flex:1;padding:8px 6px;font-size:.84rem}
+}
+
+main{padding:28px 0 80px}
+.view{display:none}
+.view.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.page-head{max-width:640px;margin-bottom:22px}
+.page-head h1{font-size:clamp(1.9rem,4.4vw,2.8rem);margin:8px 0}
+.page-head p{color:var(--muted);font-size:1.04rem}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.panel h2{font-size:1.3rem;margin-bottom:6px}
+.panel h3{font-size:1.08rem}
+.panel + .panel,.grid + .panel,.panel + .grid{margin-top:18px}
+.grid{display:grid;gap:18px}
+@media (min-width:880px){.grid.two{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:var(--surface);color:var(--text);font-family:inherit;font-weight:700;font-size:.88rem;padding:8px 14px;border-radius:100px;cursor:pointer}
+.chip:hover{border-color:var(--brand)}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.field{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.field > span{font-weight:700;font-size:.9rem}
+.field small{color:var(--muted);font-size:.8rem}
+input[type=text],input[type=number],textarea{font:inherit;color:var(--text);background:var(--surface-2);border:2px solid transparent;border-radius:12px;padding:10px 12px;width:100%}
+input:focus,textarea:focus{outline:none;border-color:var(--brand);background:var(--surface)}
+textarea{font-family:'JetBrains Mono',monospace;font-size:.8rem;min-height:120px;resize:vertical}
+
+/* speed gauge */
+.gauge{margin:20px 0 16px;text-align:center;padding:22px 10px;border-radius:var(--radius-sm);background:var(--surface-2)}
+.gauge .phase{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;min-height:1.2em}
+.gauge .big{font-family:'Fraunces',serif;font-size:clamp(3.2rem,11vw,4.6rem);font-weight:600;line-height:1;margin:8px 0 2px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.gauge .unit{color:var(--muted);font-weight:700}
+.bar{height:6px;border-radius:6px;background:color-mix(in srgb,var(--brand) 14%,transparent);overflow:hidden;margin-top:16px}
+.bar i{display:block;height:100%;width:0;background:var(--brand);border-radius:6px;transition:width .4s}
+.bar.run i{width:35%;animation:slide 1.4s ease-in-out infinite}
+.bar.done i{width:100%}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
+.run-row{display:flex;gap:10px;flex-wrap:wrap}
+.run-row .btn-primary{flex:1;min-width:200px;font-size:1.05rem;padding:15px 22px}
+.note{font-size:.82rem;color:var(--muted);margin-top:12px}
+.error{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--bad-soft);color:var(--bad);font-weight:600;font-size:.9rem}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:520px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.stat{background:var(--surface-2);border-radius:var(--radius-sm);padding:14px 16px}
+.stat .n{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.stat .n small{font-family:'Hanken Grotesk',sans-serif;font-size:.8rem;color:var(--muted);font-weight:700;margin-left:3px}
+.stat .k{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;font-weight:700}
+.stat .h{font-size:.78rem;color:var(--muted);margin-top:3px}
+.empty{color:var(--muted);text-align:center;padding:30px 10px}
+
+.acts{list-style:none;margin-top:16px;display:grid;gap:8px}
+.acts li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--surface-2)}
+.dot{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;color:#fff;margin-top:1px}
+.dot.good{background:var(--good)}.dot.ok{background:var(--warn)}.dot.bad{background:var(--bad)}
+.acts b{display:block;font-size:.93rem}
+.acts span{font-size:.82rem;color:var(--muted)}
+.times{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:.85rem;color:var(--muted)}
+.times b{color:var(--text)}
+
+/* diagnosis */
+.diag{border-left:6px solid var(--brand)}
+.diag.good{border-left-color:var(--good)}.diag.ok{border-left-color:var(--warn)}.diag.bad{border-left-color:var(--bad)}
+.diag h2{font-size:clamp(1.3rem,3vw,1.7rem);margin:6px 0 8px}
+.diag .findings{margin:10px 0 0 18px;color:var(--muted);font-size:.9rem}
+.top-fixes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+
+/* history */
+.hist{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px}
+.hist th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:8px 6px;border-bottom:1px solid var(--line)}
+.hist td{padding:9px 6px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.hist tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* routers + scan */
+.router-card{margin-top:14px;padding:16px;border-radius:var(--radius-sm);background:var(--surface-2)}
+.router-card ol,.steps{margin:8px 0 0 20px}
+.router-card li,.steps li{margin:4px 0}
+.router-card .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.seg{display:inline-flex;background:var(--surface-2);padding:4px;border-radius:100px;gap:4px;margin:10px 0 4px}
+.seg button{border:none;background:transparent;font:inherit;font-weight:700;font-size:.88rem;color:var(--muted);padding:7px 16px;border-radius:100px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
+pre.code{position:relative;background:#0f1320;color:#dfe6ff;border-radius:12px;padding:14px 14px 14px;font-size:.74rem;line-height:1.5;overflow-x:auto;margin-top:10px;white-space:pre}
+.code-wrap{position:relative}
+.code-wrap .btn{position:absolute;top:8px;right:8px;padding:6px 12px;font-size:.78rem}
+.dev-summary{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+.pill{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.06em;padding:5px 10px;border-radius:100px;background:var(--surface-2);color:var(--muted)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}.pill.good{background:var(--good-soft);color:var(--good)}.pill.brand{background:var(--brand-soft);color:var(--brand)}
+.devs{display:grid;gap:10px}
+@media (min-width:760px){.devs{grid-template-columns:1fr 1fr}}
+.dev{display:flex;gap:12px;padding:14px;border-radius:var(--radius-sm);border:2px solid var(--line);background:var(--surface)}
+.dev.unsure{border-color:color-mix(in srgb,var(--warn) 55%,var(--line))}
+.dev .ico{flex:none;width:42px;height:42px;border-radius:12px;background:var(--surface-2);display:grid;place-items:center;font-size:1.3rem}
+.dev .body{min-width:0;flex:1}
+.dev .title{font-weight:800;line-height:1.25;overflow-wrap:anywhere}
+.dev .sub{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
+.dev .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dev .ctl{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.dev .ctl input{flex:1;min-width:120px;padding:6px 10px;font-size:.85rem}
+.dev .ctl .chip{padding:5px 11px;font-size:.78rem}
+
+/* fixes */
+.fix{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.fix + .fix{margin-top:12px}
+.fix .num{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand);font-family:'Fraunces',serif;font-weight:700}
+.fix.done .num{background:var(--good-soft);color:var(--good)}
+.fix.done h3{text-decoration:line-through;text-decoration-thickness:2px;color:var(--muted)}
+.fix h3{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.fix .why{color:var(--muted);font-size:.93rem;margin-top:4px}
+.fix ul{margin:8px 0 0 18px;font-size:.93rem}
+.fix li{margin:3px 0}
+.fix .done-row{margin-top:10px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:.88rem;cursor:pointer;width:max-content}
+.fix .done-row input{width:18px;height:18px;accent-color:var(--good)}
+.fix.target{outline:3px solid var(--brand);outline-offset:4px}
+.say{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--surface-2);font-style:italic}
+.sec-title{margin:26px 0 10px}
+footer{color:var(--muted);font-size:.8rem;text-align:center;padding:10px 18px 40px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#speed"><span class="mark">W</span><span>WiFi Check<small>speed · devices · fixes</small></span></a>
+    <div class="spacer"></div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <a class="tab" role="tab" href="#speed" data-view="speed">Speed</a>
+      <a class="tab" role="tab" href="#devices" data-view="devices">Who's on it</a>
+      <a class="tab" role="tab" href="#fix" data-view="fix">Make it faster</a>
+    </nav>
+    <button class="icon-btn" id="themeBtn" aria-label="Switch light / dark">◐</button>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ═════════════ SPEED ═════════════ -->
+<section class="view" id="v-speed" aria-labelledby="h-speed">
+  <div class="page-head">
+    <div class="label">Speed test</div>
+    <h1 id="h-speed">How fast is your WiFi, really?</h1>
+    <p>Test once next to the router and once where it feels slow. Comparing the two shows whether the problem is the WiFi signal or the internet line, and that decides what to fix.</p>
+  </div>
+
+  <div class="grid two">
+    <div class="panel">
+      <h2>Run a test</h2>
+      <div class="field">
+        <span>Where are you right now?</span>
+        <div class="chips" role="group" aria-label="Where are you">
+          <button class="chip" id="whereNear" aria-pressed="true">Next to the router</button>
+          <button class="chip" id="whereFar" aria-pressed="false">Somewhere else</button>
+        </div>
+      </div>
+      <label class="field" id="roomField" hidden>
+        <span>Which room?</span>
+        <input type="text" id="room" list="roomList" placeholder="e.g. Bedroom" maxlength="30" autocomplete="off">
+        <datalist id="roomList"><option>Bedroom</option><option>Living room</option><option>Kitchen</option><option>Office</option><option>Upstairs</option><option>Garden</option></datalist>
+      </label>
+      <label class="field">
+        <span>Your plan's speed <span class="muted">(optional)</span></span>
+        <input type="number" id="plan" min="0" max="100000" step="1" placeholder="e.g. 500" inputmode="numeric">
+        <small>In Mbps, from your bill or provider's app. Lets the app tell you if you're getting what you pay for.</small>
+      </label>
+
+      <div class="gauge" aria-live="polite">
+        <div class="phase" id="phase">Ready</div>
+        <div class="big" id="bigNum">—</div>
+        <div class="unit" id="bigUnit">Mbps</div>
+        <div class="bar" id="bar"><i></i></div>
+      </div>
+      <div class="run-row">
+        <button class="btn btn-primary" id="runBtn">Run speed test</button>
+      </div>
+      <div class="error" id="speedErr" hidden></div>
+      <p class="note">Takes about 30 seconds. Uses Cloudflare's speed test servers. Be on WiFi, not mobile data: on a fast line the test can use a few hundred MB. Close other downloads first for a fair result.</p>
+    </div>
+
+    <div class="panel" id="resultsPanel">
+      <h2>Results</h2>
+      <div id="results"><p class="empty">Your results show up here.</p></div>
+    </div>
+  </div>
+
+  <div class="panel diag" id="diagPanel">
+    <div class="label" id="diagLabel">What it means</div>
+    <h2 id="diagHead"></h2>
+    <p id="diagDetail" class="muted"></p>
+    <ul class="findings" id="diagFindings"></ul>
+    <div class="top-fixes" id="topFixes"></div>
+  </div>
+
+  <div class="panel" id="histPanel" hidden>
+    <div class="panel-head">
+      <h2>Your tests</h2>
+      <button class="btn btn-ghost btn-sm" id="clearHist">Clear</button>
+    </div>
+    <div class="tbl-wrap"><table class="hist">
+      <thead><tr><th>Where</th><th>When</th><th>Down</th><th>Up</th><th>Ping</th><th>Busy lag</th></tr></thead>
+      <tbody id="histBody"></tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ═════════════ DEVICES ═════════════ -->
+<section class="view" id="v-devices" aria-labelledby="h-dev">
+  <div class="page-head">
+    <div class="label">Who's on it</div>
+    <h1 id="h-dev">See every device on your WiFi</h1>
+    <p>A web page isn't allowed to look around your home network, so there are two ways in: your router's own app (works from a phone), or a quick scan from a laptop that lists everything for you here.</p>
+  </div>
+
+  <div class="panel">
+    <h2>1 · Quickest: your router's app or page</h2>
+    <p class="muted">Pick who gives you your internet, or the brand on the router.</p>
+    <div class="chips" id="routerChips" style="margin-top:12px"></div>
+    <div id="routerCard"></div>
+  </div>
+
+  <div class="panel">
+    <h2>2 · From a laptop: scan the network</h2>
+    <p class="muted">Copy this, paste it into the computer's terminal, press Enter. It finds every device that answers, copies the list for you, then you paste it below.</p>
+    <div class="seg" role="group" aria-label="Computer type">
+      <button id="osWin" aria-pressed="true">Windows</button>
+      <button id="osMac" aria-pressed="false">Mac</button>
+    </div>
+    <ol class="steps" id="osSteps"></ol>
+    <div class="code-wrap">
+      <pre class="code" id="script"></pre>
+      <button class="btn btn-ghost" id="copyScript">Copy</button>
+    </div>
+    <label class="field">
+      <span>Paste the result here</span>
+      <textarea id="scanText" placeholder="GATEWAY 192.168.1.1&#10;192.168.1.23 A4-83-E7-12-34-56 Jacks-iPhone&#10;…" spellcheck="false"></textarea>
+      <small>Also works with plain <code>arp -a</code> output from Windows, Mac or Linux.</small>
+    </label>
+    <div class="run-row" style="margin-top:12px">
+      <button class="btn btn-ghost" id="pasteBtn">Paste from clipboard</button>
+      <button class="btn btn-primary" id="showDevs">Show devices</button>
+    </div>
+    <div class="error" id="devErr" hidden></div>
+  </div>
+
+  <div class="panel" id="devPanel" hidden>
+    <div class="panel-head">
+      <h2>Devices found</h2>
+      <button class="btn btn-ghost btn-sm" id="forgetDevs">Forget names</button>
+    </div>
+    <div class="dev-summary" id="devSummary"></div>
+    <div class="devs" id="devList"></div>
+    <p class="note">The laptop you ran the scan on doesn't appear in its own list. Devices that are asleep (phones in a pocket, consoles on standby) may be missing: run it again later to catch them. Phones with a private address may get a new one now and then, so they can show up as "new".</p>
+  </div>
+
+  <div class="panel">
+    <h2>Don't recognise something?</h2>
+    <ol class="steps">
+      <li><b>Think gadgets first.</b> TVs, printers, smart plugs and bulbs, doorbells, speakers, watches, the car and the robot vacuum all join the WiFi. The maker name usually gives it away.</li>
+      <li><b>Pause or block it</b> in your router's app (see step 1). Something that stops working when you do that was yours.</li>
+      <li><b>Change the WiFi password</b> to kick everyone off, then re-join your own devices. Use WPA2 or WPA3 security and turn off WPS. <a href="#fix" data-fix="password">How →</a></li>
+      <li><b>Change the router's admin password</b> too, if it's still the one on the sticker.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═════════════ FIXES ═════════════ -->
+<section class="view" id="v-fix" aria-labelledby="h-fix">
+  <div class="page-head">
+    <div class="label">Make it faster</div>
+    <h1 id="h-fix">What to fix, in order</h1>
+    <p id="fixIntro">Run a speed test first and this list puts the fixes that match your problem at the top. Most are free and take a few minutes.</p>
+  </div>
+  <div id="fixList"></div>
+</section>
+
+</main>
+
+<footer>WiFi Check runs in your browser. Test results, device names and ticks are saved on this device only, and your device list never leaves this page. The speed test talks to Cloudflare's servers and the fonts come from Google Fonts.</footer>
+
+<script type="module">
+import SpeedTest from './vendor/speedtest.js';
+import * as W from './lib.js';
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ───────────── saved state ───────────── */
+const KEY = 'wifiCheck.v1';
+const S = Object.assign({ tests: [], plan: 0, near: true, room: '', known: {}, scans: 0, done: {}, provider: '', os: '', theme: '' },
+  (() => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } })());
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch { /* private mode: fine */ } };
+
+/* ───────────── tabs ───────────── */
+const VIEWS = ['speed', 'devices', 'fix'];
+function show(view, focusFix) {
+  if (!VIEWS.includes(view)) view = 'speed';
+  for (const v of VIEWS) $('#v-' + v).classList.toggle('active', v === view);
+  document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.view === view)));
+  if (view === 'fix') renderFixes(focusFix);
+  if (focusFix) {
+    const el = $('#fix-' + focusFix);
+    if (el) { el.classList.add('target'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => el.classList.remove('target'), 2200); }
+  } else window.scrollTo({ top: 0 });
+}
+window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('[data-fix]');
+  if (!a) return;
+  e.preventDefault();
+  history.replaceState(null, '', '#fix');
+  show('fix', a.dataset.fix);
+});
+
+/* ───────────── theme ───────────── */
+$('#themeBtn').addEventListener('click', () => {
+  const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+  S.theme = t; save();
+});
+
+/* ═════════════ SPEED ═════════════ */
+const whereNear = $('#whereNear'), whereFar = $('#whereFar'), roomField = $('#roomField'), roomIn = $('#room'), planIn = $('#plan');
+function setWhere(near) {
+  S.near = near; save();
+  whereNear.setAttribute('aria-pressed', String(near));
+  whereFar.setAttribute('aria-pressed', String(!near));
+  roomField.hidden = near;
+}
+whereNear.addEventListener('click', () => setWhere(true));
+whereFar.addEventListener('click', () => { setWhere(false); roomIn.focus(); });
+roomIn.value = S.room || '';
+roomIn.addEventListener('input', () => { S.room = roomIn.value.trim(); save(); });
+planIn.value = S.plan || '';
+planIn.addEventListener('input', () => { S.plan = Math.max(0, Number(planIn.value) || 0); save(); renderDiag(); });
+setWhere(S.near !== false);
+
+let engine = null, watchdog = null;
+const runBtn = $('#runBtn'), phase = $('#phase'), bigNum = $('#bigNum'), bigUnit = $('#bigUnit'), bar = $('#bar'), speedErr = $('#speedErr');
+
+function setGauge(label, num, unit) {
+  phase.textContent = label;
+  bigNum.textContent = num;
+  bigUnit.textContent = unit;
+}
+function stopRunning() {
+  clearTimeout(watchdog);
+  bar.classList.remove('run');
+  runBtn.textContent = 'Run speed test';
+}
+
+runBtn.addEventListener('click', () => {
+  if (engine && engine.isRunning) { // second click = stop
+    engine.pause(); engine = null; stopRunning(); setGauge('Stopped', '—', 'Mbps'); return;
+  }
+  speedErr.hidden = true;
+  const cfg = { autoStart: false, logAimApiUrl: null, abortTestDuration: 60000, abortRequestDuration: 15000 };
+  const target = new URLSearchParams(location.search).get('speedtarget'); // tests point this at a local server
+  if (target && /^https?:\/\/[^/]+$/.test(target)) cfg.measurementTargets = [target];
+  const errs = [];
+  engine = new SpeedTest(cfg);
+  const me = engine;
+  engine.onError = (e) => errs.push(String(e));
+  engine.onResultsChange = ({ type }) => {
+    if (me !== engine) return;
+    const r = me.results;
+    try {
+      if (type === 'latency') {
+        const p = r.getUnloadedLatency();
+        setGauge('Checking ping…', p != null ? Math.round(p) : '…', 'ms ping');
+      } else if (type === 'download') {
+        const b = r.getDownloadBandwidth();
+        setGauge('Testing download…', b ? W.fmtMbps(b / 1e6) : '…', 'Mbps down');
+      } else if (type === 'upload') {
+        const b = r.getUploadBandwidth();
+        setGauge('Testing upload…', b ? W.fmtMbps(b / 1e6) : '…', 'Mbps up');
+      }
+    } catch { /* partial results can throw mid-test; the next update fixes it */ }
+  };
+  engine.onFinish = (results) => {
+    if (me !== engine) return;
+    engine = null;
+    stopRunning();
+    const s = results.getSummary();
+    if (!s.download) {
+      setGauge('No result', '—', 'Mbps');
+      speedErr.textContent = 'Couldn’t reach the test server. Check you’re online, then try again. Ad blockers or a VPN can block it too.' + (errs[0] ? ' (' + errs[0].slice(0, 120) + ')' : '');
+      speedErr.hidden = false;
+      return;
+    }
+    const test = {
+      t: Date.now(),
+      near: S.near !== false,
+      room: S.near !== false ? 'Next to router' : (S.room || 'Somewhere else'),
+      down: s.download / 1e6,
+      up: (s.upload || 0) / 1e6,
+      ping: s.latency ?? null,
+      jitter: s.jitter ?? 0,
+      loadedPing: Math.max(s.downLoadedLatency || 0, s.upLoadedLatency || 0) || null,
+    };
+    S.tests.push(test);
+    S.tests = S.tests.slice(-30);
+    save();
+    setGauge('Done', W.fmtMbps(test.down), 'Mbps down');
+    bar.classList.add('done');
+    renderSpeed();
+  };
+  runBtn.textContent = 'Stop';
+  bar.classList.remove('done');
+  bar.classList.add('run');
+  setGauge('Starting…', '…', 'Mbps');
+  watchdog = setTimeout(() => { // belt and braces: never spin forever
+    if (me === engine && me.isRunning) { me.pause(); engine = null; stopRunning(); setGauge('Timed out', '—', 'Mbps');
+      speedErr.textContent = 'The test took too long. Your connection may be very slow or dropping. Try again closer to the router.'; speedErr.hidden = false; }
+  }, 90000);
+  engine.play();
+});
+
+function renderSpeed() {
+  const t = S.tests[S.tests.length - 1];
+  const box = $('#results');
+  if (!t) {
+    box.innerHTML = '<p class="empty">Your results show up here.</p>';
+  } else {
+    const lag = W.busyLag(t);
+    const lagNote = lag == null ? '' : lag < 30 ? 'steady' : lag < 100 ? 'some lag' : 'big spikes';
+    box.innerHTML = `
+      <p class="muted" style="margin-bottom:12px">${esc(t.room)} · ${new Date(t.t).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
+      <div class="stats">
+        <div class="stat"><div class="n">${W.fmtMbps(t.down)}<small>Mbps</small></div><div class="k">Download</div>${S.plan ? `<div class="h">${Math.round((t.down / S.plan) * 100)}% of your plan</div>` : ''}</div>
+        <div class="stat"><div class="n">${W.fmtMbps(t.up)}<small>Mbps</small></div><div class="k">Upload</div></div>
+        <div class="stat"><div class="n">${t.ping != null ? Math.round(t.ping) : '—'}<small>ms</small></div><div class="k">Ping</div><div class="h">${t.ping == null ? '' : t.ping < 30 ? 'snappy' : t.ping < 80 ? 'fine' : 'slow to respond'}</div></div>
+        <div class="stat"><div class="n">${lag != null ? '+' + Math.round(lag) : '—'}<small>ms</small></div><div class="k">Busy lag</div><div class="h">${lagNote}</div></div>
+        <div class="stat"><div class="n">${Math.round(t.jitter)}<small>ms</small></div><div class="k">Jitter</div><div class="h">${t.jitter < 10 ? 'stable' : t.jitter < 30 ? 'a bit jumpy' : 'unstable'}</div></div>
+      </div>
+      <ul class="acts">${W.activities(t).map((a) => `<li><span class="dot ${a.rating}" aria-hidden="true">${a.rating === 'good' ? '✓' : a.rating === 'ok' ? '~' : '✕'}</span><div><b>${esc(a.label)}</b><span>${esc(a.note)}</span></div></li>`).join('')}</ul>
+      <div class="times"><span>100 GB game: <b>${W.downloadTime(100, t.down)}</b></span><span>5 GB movie: <b>${W.downloadTime(5, t.down)}</b></span></div>`;
+  }
+  renderDiag();
+  renderHistory();
+}
+
+function renderDiag() {
+  const d = W.diagnose(S.tests, S.plan);
+  const p = $('#diagPanel');
+  p.className = 'panel diag ' + d.tone;
+  $('#diagHead').textContent = d.headline;
+  $('#diagDetail').textContent = d.detail;
+  $('#diagFindings').innerHTML = d.findings.map((f) => `<li>${esc(f)}</li>`).join('');
+  $('#topFixes').innerHTML = (S.tests.length ? '<span class="label" style="width:100%">Try these first</span>' : '') +
+    d.fixes.slice(0, 3).map((id) => `<a class="btn btn-ghost btn-sm" href="#fix" data-fix="${id}">${esc(W.FIXES[id].title)} →</a>`).join('');
+}
+
+function renderHistory() {
+  const panel = $('#histPanel');
+  panel.hidden = !S.tests.length;
+  $('#histBody').innerHTML = [...S.tests].reverse().map((t) => {
+    const lag = W.busyLag(t);
+    return `<tr><td>${esc(t.room)}</td><td>${new Date(t.t).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td><td><b>${W.fmtMbps(t.down)}</b></td><td>${W.fmtMbps(t.up)}</td><td>${t.ping != null ? Math.round(t.ping) : '—'}</td><td>${lag != null ? '+' + Math.round(lag) : '—'}</td></tr>`;
+  }).join('');
+}
+$('#clearHist').addEventListener('click', () => {
+  if (!confirm('Clear all saved speed tests?')) return;
+  S.tests = []; save(); setGauge('Ready', '—', 'Mbps'); renderSpeed();
+});
+
+/* ═════════════ WHO'S ON IT ═════════════ */
+const ROUTERS = [
+  { id: 'bt', name: 'BT / EE', url: 'http://192.168.1.254', steps: ['On your WiFi, open <b>192.168.1.254</b> in a browser (button below).', 'Choose <b>My devices</b> to see everything connected.', 'Changing settings asks for the admin password, printed on the card or sticker on the hub.'] },
+  { id: 'sky', name: 'Sky', url: 'http://192.168.0.1', steps: ['Easiest: the <b>Sky Broadband Buddy</b> app lists connected devices and lets you pause them.', 'Or open <b>192.168.0.1</b> in a browser while on your WiFi.'] },
+  { id: 'virgin', name: 'Virgin Media', url: 'http://192.168.0.1', steps: ['Easiest: the <b>Virgin Media Connect</b> app shows connected devices.', 'Or open <b>192.168.0.1</b>. The settings password is on the sticker on the hub.'] },
+  { id: 'xfinity', name: 'Xfinity', url: 'http://10.0.0.1', steps: ['Open the <b>Xfinity</b> app and go to <b>WiFi</b>: your connected devices are listed and you can pause any of them.', 'Or open <b>10.0.0.1</b> in a browser while on your WiFi.'] },
+  { id: 'spectrum', name: 'Spectrum', url: 'http://192.168.1.1', steps: ['Open the <b>My Spectrum</b> app → <b>Services</b> → <b>Internet</b> to see connected devices.', 'Or open <b>192.168.1.1</b> in a browser while on your WiFi.'] },
+  { id: 'verizon', name: 'Verizon Fios', url: 'http://192.168.1.1', steps: ['Open the <b>My Fios</b> app → <b>Internet</b> to see devices on your network.', 'Or open <b>192.168.1.1</b> (also <b>myfiosgateway.com</b>). The admin password is on the router sticker.'] },
+  { id: 'att', name: 'AT&T', url: 'http://192.168.1.254', steps: ['Open the <b>Smart Home Manager</b> app → <b>Network</b> to see connected devices.', 'Or open <b>192.168.1.254</b> and look for the device list. The access code is on the router sticker.'] },
+  { id: 'tmobile', name: 'T-Mobile Home Internet', url: 'http://192.168.12.1', steps: ['Open the <b>T-Mobile Internet</b> app to see connected devices.', 'Or open <b>192.168.12.1</b> in a browser while on your WiFi.'] },
+  { id: 'google', name: 'Google Nest WiFi', url: '', steps: ['Open the <b>Google Home</b> app → <b>Wi-Fi</b> → <b>Devices</b>.', 'You can pause a device or set up schedules from there.'] },
+  { id: 'eero', name: 'eero', url: '', steps: ['Open the <b>eero</b> app: the home screen shows how many devices are connected. Tap it for the list.', 'Tap any device to pause it or rename it.'] },
+  { id: 'tplink', name: 'TP-Link / Deco', url: 'http://tplinkwifi.net', steps: ['Open the <b>Tether</b> app (or the <b>Deco</b> app for Deco mesh) → <b>Clients</b>.', 'Or open <b>tplinkwifi.net</b> (often also <b>192.168.0.1</b>).'] },
+  { id: 'netgear', name: 'Netgear / Orbi', url: 'http://routerlogin.net', steps: ['Open the <b>Nighthawk</b> or <b>Orbi</b> app → <b>Devices</b>.', 'Or open <b>routerlogin.net</b> and choose <b>Attached Devices</b>.'] },
+  { id: 'asus', name: 'ASUS', url: 'http://router.asus.com', steps: ['Open the <b>ASUS Router</b> app → <b>Devices</b>.', 'Or open <b>router.asus.com</b> in a browser while on your WiFi.'] },
+  { id: 'linksys', name: 'Linksys', url: 'http://myrouter.local', steps: ['Open the <b>Linksys</b> app → <b>Devices</b>.', 'Or open <b>myrouter.local</b> (often also <b>192.168.1.1</b>).'] },
+  { id: 'other', name: 'Other / not sure', url: '', steps: [
+    'Find your router’s address. <b>iPhone:</b> Settings → Wi-Fi → tap ⓘ next to your network → <b>Router</b>. <b>Android:</b> Settings → Wi-Fi → tap your network (or its ⚙) → <b>Gateway</b> or <b>Router</b>; the menu names vary by phone. <b>Windows:</b> type <code>ipconfig</code> in Command Prompt → <b>Default Gateway</b>. <b>Mac:</b> System Settings → Wi-Fi → Details… → TCP/IP → <b>Router</b>.',
+    'Type that address (like <b>192.168.1.1</b>) into a browser while on your WiFi.',
+    'Log in with the admin password on the router’s sticker, then look for <b>Connected devices</b>, <b>Device list</b>, <b>Clients</b> or <b>Attached devices</b>.',
+    'The brand is usually printed on the router itself. Its maker probably has an app too.'] },
+];
+const chipsBox = $('#routerChips');
+chipsBox.innerHTML = ROUTERS.map((r) => `<button class="chip" data-r="${r.id}" aria-pressed="${S.provider === r.id}">${esc(r.name)}</button>`).join('');
+chipsBox.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-r]');
+  if (!b) return;
+  S.provider = S.provider === b.dataset.r ? '' : b.dataset.r; save();
+  chipsBox.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.r === S.provider)));
+  renderRouter();
+});
+function renderRouter() {
+  const r = ROUTERS.find((x) => x.id === S.provider);
+  $('#routerCard').innerHTML = !r ? '' : `<div class="router-card">
+    <h3>${esc(r.name)}</h3>
+    <ol>${r.steps.map((s) => `<li>${s}</li>`).join('')}</ol>
+    <div class="btns">
+      ${r.url ? `<a class="btn btn-primary btn-sm" href="${r.url}" target="_blank" rel="noopener">Open ${esc(r.url.replace(/^https?:\/\//, ''))}</a>` : ''}
+      <a class="btn btn-ghost btn-sm" href="#fix" data-fix="password">Kick everyone off →</a>
+    </div>
+    ${r.url ? '<p class="note">The router page only opens when you’re on your home WiFi. Your browser may warn it’s "not secure": that’s normal for router pages.</p>' : ''}
+  </div>`;
+}
+
+/* The scan scripts. They ping every address on the router's network so each
+   device shows up in the computer's neighbour list, then print that list and
+   copy it to the clipboard. Nothing is installed or changed. */
+const SCRIPTS = {
+  win: {
+    steps: ['Press the <b>Windows key</b>, type <b>PowerShell</b>, press Enter.', 'Click <b>Copy</b> below, right-click in the blue window to paste, press <b>Enter</b>.', 'Wait about 15 seconds until it says <b>Copied</b>, then come back here and press <b>Paste from clipboard</b>.'],
+    code: `& {
+  $gw = (Get-NetRoute -DestinationPrefix '0.0.0.0/0' | Where-Object NextHop -ne '0.0.0.0' | Sort-Object RouteMetric | Select-Object -First 1).NextHop
+  $p = $gw.Substring(0, $gw.LastIndexOf('.'))
+  $t = 1..254 | ForEach-Object { (New-Object Net.NetworkInformation.Ping).SendPingAsync("$p.$_", 700) }
+  try { [Threading.Tasks.Task]::WaitAll($t) } catch {}
+  "GATEWAY $gw"
+  $nb = @(Get-NetNeighbor -AddressFamily IPv4 | Where-Object { $_.IPAddress -like "$p.*" -and $_.State -in 'Reachable','Stale','Delay','Probe' })
+  $dns = @($nb | ForEach-Object { [Net.Dns]::GetHostEntryAsync($_.IPAddress) })
+  try { [void][Threading.Tasks.Task]::WaitAll($dns, 4000) } catch {}
+  for ($i = 0; $i -lt $nb.Count; $i++) {
+    $n = if ($dns[$i].Status -eq 'RanToCompletion') { $dns[$i].Result.HostName } else { '' }
+    "$($nb[$i].IPAddress) $($nb[$i].LinkLayerAddress) $n"
+  }
+} | Tee-Object -Variable out; $out | Set-Clipboard; 'Copied - go back to WiFi Check and press Paste.'`,
+  },
+  mac: {
+    steps: ['Press <b>⌘ Space</b>, type <b>Terminal</b>, press Enter.', 'Click <b>Copy</b> below, press <b>⌘ V</b> in Terminal, press <b>Enter</b>.', 'Wait about 15 seconds until it says <b>Copied</b>, then come back here and press <b>Paste from clipboard</b>. If your Mac asks whether Terminal can find devices on your local network, click <b>Allow</b>.'],
+    code: `gw=$(route -n get default 2>/dev/null | awk '/gateway:/{print $2}'); p=\${gw%.*}
+( for i in $(seq 1 254); do ping -c1 -t1 "$p.$i" >/dev/null 2>&1 & done; wait )
+{ echo "GATEWAY $gw"; arp -a | grep -v incomplete; } | tee /dev/tty | pbcopy
+echo "Copied - go back to WiFi Check and press Paste."`,
+  },
+};
+function setOs(os) {
+  S.os = os; save();
+  $('#osWin').setAttribute('aria-pressed', String(os === 'win'));
+  $('#osMac').setAttribute('aria-pressed', String(os === 'mac'));
+  $('#osSteps').innerHTML = SCRIPTS[os].steps.map((s) => `<li>${s}</li>`).join('');
+  $('#script').textContent = SCRIPTS[os].code;
+}
+$('#osWin').addEventListener('click', () => setOs('win'));
+$('#osMac').addEventListener('click', () => setOs('mac'));
+setOs(S.os || (/Mac/.test(navigator.platform || navigator.userAgent) ? 'mac' : 'win'));
+
+async function copyText(text, btn) {
+  try { await navigator.clipboard.writeText(text); }
+  catch {
+    const ta = document.createElement('textarea'); ta.value = text; document.body.append(ta); ta.select();
+    try { document.execCommand('copy'); } catch { /* nothing more we can do */ }
+    ta.remove();
+  }
+  const old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = old; }, 1600);
+}
+$('#copyScript').addEventListener('click', (e) => copyText(SCRIPTS[S.os].code, e.currentTarget));
+
+const scanText = $('#scanText'), devErr = $('#devErr');
+$('#pasteBtn').addEventListener('click', async () => {
+  try {
+    const txt = await navigator.clipboard.readText();
+    if (txt) { scanText.value = txt; showDevices(); return; }
+  } catch { /* browser said no: fall through */ }
+  scanText.focus();
+  devErr.textContent = 'Your browser didn’t allow reading the clipboard. Click in the box and press Ctrl+V (⌘V on Mac).';
+  devErr.hidden = false;
+});
+scanText.addEventListener('paste', () => setTimeout(showDevices, 0));
+$('#showDevs').addEventListener('click', showDevices);
+
+let ouiPromise = null;
+const loadOui = () => (ouiPromise ||= fetch('oui.txt').then((r) => (r.ok ? r.text() : '')).then(W.parseOui).catch(() => new Map()));
+
+const ICONS = { console: '🎮', phone: '📱', computer: '💻', tv: '📺', speaker: '🔊', iot: '💡', printer: '🖨️', router: '📡', unknown: '❓' };
+let lastScan = null;
+
+async function showDevices() {
+  devErr.hidden = true;
+  const parsed = W.parseNeighbors(scanText.value);
+  if (!parsed.devices.length) {
+    devErr.textContent = scanText.value.trim()
+      ? 'No devices found in that text. Make sure you pasted everything the script printed (it starts with GATEWAY).'
+      : 'Paste the scan result first.';
+    devErr.hidden = false;
+    return;
+  }
+  const oui = await loadOui();
+  const firstScan = !S.scans;
+  const now = Date.now();
+  lastScan = parsed.devices.map((d) => {
+    const vendor = W.prettyVendor(W.lookupVendor(d.mac, oui));
+    const k = W.deviceKind(d.mac, vendor);
+    const isRouter = d.ip === parsed.gateway;
+    const known = S.known[d.mac];
+    return { ...d, vendor, kind: isRouter ? 'router' : k.kind, guess: isRouter ? 'Your router' : k.guess, isRouter, isNew: !firstScan && !known };
+  });
+  for (const d of lastScan) {
+    const k = (S.known[d.mac] ||= { nick: '', mine: d.isRouter ? true : null, first: now });
+    k.last = now;
+  }
+  S.scans = (S.scans || 0) + 1;
+  save();
+  renderDevices();
+  $('#devPanel').hidden = false;
+  $('#devPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderDevices() {
+  if (!lastScan) return;
+  const devs = [...lastScan].sort((a, b) => (b.isRouter - a.isRouter));
+  const mine = devs.filter((d) => S.known[d.mac]?.mine === true).length;
+  const notMine = devs.filter((d) => S.known[d.mac]?.mine === false).length;
+  const fresh = devs.filter((d) => d.isNew).length;
+  $('#devSummary').innerHTML = `<span class="pill brand">${devs.length} device${devs.length === 1 ? '' : 's'}</span>
+    <span class="pill good">${mine} marked yours</span>
+    ${devs.length - mine - notMine ? `<span class="pill">${devs.length - mine - notMine} to check</span>` : ''}
+    ${notMine ? `<span class="pill warn">${notMine} you don't know</span>` : ''}
+    ${fresh ? `<span class="pill warn">${fresh} new since last scan</span>` : ''}`;
+  $('#devList').innerHTML = devs.map((d) => {
+    const k = S.known[d.mac] || {};
+    const title = k.nick || d.name || d.guess;
+    const tags = [
+      d.isRouter ? '<span class="pill brand">Router</span>' : '',
+      d.isNew ? '<span class="pill warn">New</span>' : '',
+      W.isPrivateMac(d.mac) ? '<span class="pill">Private address</span>' : '',
+    ].join('');
+    const sub = [d.vendor, title !== d.guess ? d.guess : '', d.name && k.nick ? d.name : ''].filter(Boolean);
+    if (!d.vendor && !W.isPrivateMac(d.mac) && title !== 'Unknown maker' && !d.isRouter) sub.unshift('Unknown maker');
+    return `<div class="dev ${k.mine === false ? 'unsure' : ''}" data-mac="${d.mac}">
+      <div class="ico" aria-hidden="true">${ICONS[d.kind] || ICONS.unknown}</div>
+      <div class="body">
+        <div class="title">${esc(title)}</div>
+        <div class="sub">${sub.map(esc).join(' · ')}</div>
+        <div class="sub mono">${esc(d.ip)} · ${esc(d.mac)}</div>
+        ${tags ? `<div class="tags">${tags}</div>` : ''}
+        <div class="ctl">
+          <input type="text" value="${esc(k.nick || '')}" placeholder="Name it (e.g. Mum's iPad)" aria-label="Name for ${esc(title)}" data-nick maxlength="40">
+          <button class="chip" data-mine="yes" aria-pressed="${k.mine === true}">Mine</button>
+          <button class="chip" data-mine="no" aria-pressed="${k.mine === false}">Don't know it</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+$('#devList').addEventListener('change', (e) => {
+  const inp = e.target.closest('[data-nick]');
+  if (!inp) return;
+  const mac = inp.closest('[data-mac]').dataset.mac;
+  (S.known[mac] ||= {}).nick = inp.value.trim().slice(0, 40); save(); renderDevices();
+});
+$('#devList').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-mine]');
+  if (!b) return;
+  const mac = b.closest('[data-mac]').dataset.mac;
+  const k = (S.known[mac] ||= {});
+  const want = b.dataset.mine === 'yes';
+  k.mine = k.mine === want ? null : want;
+  save(); renderDevices();
+});
+$('#forgetDevs').addEventListener('click', () => {
+  if (!confirm('Forget all device names and marks?')) return;
+  S.known = {}; S.scans = 0; save();
+  if (lastScan) lastScan.forEach((d) => { d.isNew = false; });
+  renderDevices();
+});
+
+/* ═════════════ FIXES ═════════════ */
+const FIX_TEXT = {
+  restart: { why: 'Routers get sluggish after weeks without a restart, and a restart makes them pick a less crowded channel. It fixes more problems than anything else on this list.',
+    how: ['Unplug the router’s power (and the modem’s, if it’s a separate box).', 'Wait 30 seconds, then plug it back in.', 'Give it 3–5 minutes to come back fully.', 'Run the speed test again from the same spot.'] },
+  hogs: { why: 'One console downloading a 100 GB update, or a couple of 4K streams, can eat the whole connection for everyone else.',
+    how: ['Open <a href="#devices">Who’s on it</a> and look for anything unexpected.', 'Check consoles and PCs for big game downloads or updates. Most can be set to download overnight.', 'Pause cloud backups (iCloud, Google Photos, OneDrive) while gaming or on calls.', 'Most router apps can pause a device or put limits on it.'] },
+  move: { why: 'WiFi gets weaker through every wall, floor and big object. Where the router sits is the biggest free fix there is.',
+    how: ['Put it near the middle of your home, not at one end.', 'Up high, on a shelf, not on the floor.', 'Out in the open: not in a cupboard, a drawer, or behind the TV.', 'Away from microwaves, cordless phones, baby monitors, fish tanks, mirrors and big metal things.', 'If it has antennas, point one straight up and one sideways.'] },
+  band: { why: 'Most routers send two kinds of WiFi. 5 GHz is much faster but doesn’t go through walls as well. 2.4 GHz reaches further, but it’s slower and crowded by the neighbours.',
+    how: ['If your phone shows two names (like <b>MyWiFi</b> and <b>MyWiFi-5G</b>), use the 5G one in the same room or one room away, and the plain one far away.', 'If there’s only one name, the router picks for you. Turning WiFi off and on again on the device makes it pick again.', 'Newer routers (WiFi 6E or 7) also have 6 GHz: the fastest of all, at short range.'] },
+  cable: { why: 'A cable is always faster than WiFi and never lags. For a console, gaming PC or TV that doesn’t move, it beats every other fix.',
+    how: ['Run an Ethernet cable from one of the router’s LAN ports (often yellow) to the device. Cat 6 is plenty.', 'A long flat cable can tuck under a carpet or along a skirting board.', 'Can’t run a cable? <b>Powerline adapters</b> send internet through your home’s electrical wiring: one plugs in by the router, one by the device.'] },
+  mesh: { why: 'In bigger homes, thick walls or upstairs rooms, one router can’t cover everything. Mesh WiFi adds extra units that make one network and hand you between them.',
+    how: ['Ask your provider first: many offer WiFi boosters or pods, sometimes free with your package.', 'Otherwise a mesh kit (TP-Link Deco, eero, Google Nest WiFi, Netgear Orbi and others) covers most homes.', 'Put each unit about halfway between the router and the slow room, not inside the dead zone.', 'Skip cheap plug-in extenders that make a second network name: they often halve your speed.'] },
+  channel: { why: 'In flats and busy streets, neighbours’ WiFi on the same channel slows yours down.',
+    how: ['Open the router’s settings page (see <a href="#devices">Who’s on it</a> for how to get there).', 'Find <b>WiFi</b> or <b>Wireless</b> settings.', 'For 2.4 GHz, choose channel <b>1</b>, <b>6</b> or <b>11</b>. For 5 GHz, try a different channel from the one it’s on.', 'Or set the channel to <b>Auto</b> and restart the router so it rescans.', 'Test again and keep whichever is faster.'] },
+  qos: { why: 'When one device downloads, many routers let a queue build up, so everyone else’s ping shoots up ("bufferbloat"). QoS makes the router keep games and calls moving first.',
+    how: ['In the router’s app or settings page, look for <b>QoS</b>, <b>Smart QoS</b>, <b>Adaptive QoS</b>, <b>Game mode</b>, <b>Smart Queue</b> or <b>SQM</b>.', 'Turn it on. If it asks for your speeds, enter about 90% of your speed test result.', 'Run the test again: the <b>Busy lag</b> number should drop.', 'No QoS option? A cable for the gaming device helps most.'] },
+  device: { why: 'Sometimes the WiFi is fine and it’s just one phone or laptop.',
+    how: ['Restart the device.', 'Forget the WiFi network on it, then join again.', 'Turn off any VPN and Low Power / Battery Saver mode while testing.', 'Install system updates.', 'Phones and laptops more than about 6 years old have older WiFi and top out at lower speeds. A cheap USB WiFi adapter can help a PC.'] },
+  update: { why: 'Updates fix bugs and security holes, and can make the router faster. Provider routers usually update themselves; ones you bought often don’t.',
+    how: ['Open the router’s app or settings page.', 'Look for <b>Firmware</b>, <b>Software update</b> or <b>System</b>, and turn on automatic updates if offered.', 'Router more than about 5 years old? Ask your provider for a newer one (often free), or get a WiFi 6 model.'] },
+  isp: { why: 'If it’s slow even next to the router (or with a cable), after a restart, the problem is on your provider’s side, and only they can fix it.',
+    how: ['Test next to the router twice, at different times of day.', 'Contact your provider and give them the numbers (below).', 'Ask for a line test, an engineer, or a newer router.', 'If it keeps happening, ask for money off, or about switching plans.'] },
+  password: { why: 'If someone’s on your WiFi without asking, a new password kicks everyone off. You just re-join your own devices.',
+    how: ['Open the router’s app or settings page → <b>WiFi</b> / <b>Wireless</b> → the password (sometimes called <b>key</b> or <b>passphrase</b>).', 'Use something long, like three or four random words.', 'Set security to <b>WPA2</b> or <b>WPA3</b>, never WEP or Open.', 'Turn off <b>WPS</b>, the push-button pairing that’s easy to abuse.', 'Change the router’s admin password from the one on the sticker too.'] },
+};
+
+function ispScript() {
+  const near = [...S.tests].reverse().find((t) => t.near);
+  if (!near) return '';
+  return `<div class="say">"I’m getting ${W.fmtMbps(near.down)} Mbps download and ${W.fmtMbps(near.up)} Mbps upload right next to the router${S.plan ? `, on a ${W.fmtMbps(S.plan)} Mbps plan` : ''}, and I’ve already restarted it."</div>
+    <button class="btn btn-ghost btn-sm" style="margin-top:8px" data-copy-isp>Copy</button>`;
+}
+
+function renderFixes() {
+  const d = W.diagnose(S.tests, S.plan);
+  const has = S.tests.length > 0;
+  const order = [...d.fixes, ...Object.keys(W.FIXES).filter((id) => !d.fixes.includes(id))];
+  const top = has ? Math.min(d.fixes.length, 4) : 0;
+  $('#fixIntro').textContent = has
+    ? `Based on your last test: ${d.headline.charAt(0).toLowerCase() + d.headline.slice(1)}. Start at the top.`
+    : 'Run a speed test first and this list puts the fixes that match your problem at the top. Most are free and take a few minutes.';
+  const card = (id, i) => {
+    const f = W.FIXES[id], tx = FIX_TEXT[id], done = !!S.done[id];
+    return `<article class="panel fix ${done ? 'done' : ''}" id="fix-${id}">
+      <div class="num">${i + 1}</div>
+      <div>
+        <h3>${esc(f.title)} <span class="pill">~${f.mins} min</span></h3>
+        <p class="why">${tx.why}</p>
+        <ul>${tx.how.map((h) => `<li>${h}</li>`).join('')}</ul>
+        ${id === 'isp' ? ispScript() : ''}
+        <label class="done-row"><input type="checkbox" data-done="${id}" ${done ? 'checked' : ''}> Done</label>
+      </div>
+    </article>`;
+  };
+  $('#fixList').innerHTML =
+    (top ? `<h2 class="sec-title">Recommended for you</h2>` + order.slice(0, top).map(card).join('') + `<h2 class="sec-title">Also worth a try</h2>` : '') +
+    order.slice(top).map((id, i) => card(id, i + top)).join('');
+}
+$('#fixList').addEventListener('change', (e) => {
+  const c = e.target.closest('[data-done]');
+  if (!c) return;
+  S.done[c.dataset.done] = c.checked; save();
+  c.closest('.fix').classList.toggle('done', c.checked);
+});
+$('#fixList').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-copy-isp]');
+  if (b) copyText(b.previousElementSibling.textContent.replace(/^"|"$/g, ''), b);
+});
+
+/* ───────────── go ───────────── */
+renderRouter();
+renderSpeed();
+show(location.hash.slice(1) || 'speed');
+</script>
+</body>
+</html>
