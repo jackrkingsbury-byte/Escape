@@ -24,8 +24,8 @@ const TABLE_TOP = 0.78;
 
 export function init(ctx) {
   const P = ctx.props;
-  P.chess = makeChessSet({ size: 0.62 });
-  P.rug = makeChessSet({ size: 3.0 });         // giant board on the floor for the cat's L-hops
+  P.chess = makeChessSet({ size: 0.62, filesAlong: '-x' });   // real-chess handedness from the hero's side
+  P.rug = makeChessSet({ size: 3.0, filesAlong: '-x' });         // giant board on the floor for the cat's L-hops
   P.clock = makeChessClock();
   P.cake = makeCake();
   P.plate = makePlate();
@@ -37,7 +37,7 @@ export function init(ctx) {
   P.chair2 = makeChair();
   P.bed = makeBed();
   P.confetti = makeConfetti({ count: 140, t0: 0, origin: [0, 0, 0] });
-  P.boardThick = 0;      // chess root is the board's top surface; table top + this = root height
+  P.boardThick = P.chess.thickness || 0;   // chess root = board top surface; root goes at table top + thickness
 }
 
 // ───────────────────────────────────────────────────────────────────────────────────── helpers
@@ -76,8 +76,7 @@ function roomNook(ctx, who = 'me', { board = true, clock = true, lighting = 'nig
   ctx.place(ch, F(0, 0, 0), { yaw });
   ch.root.rotation.set(0, yaw, 0);
   const P = ctx.props;
-  putProp(ctx, P.chair, F(0, 0, 0), {});
-  P.chair.position.copy(F(0, 0, -0.02)); P.chair.rotation.set(0, yaw, 0);
+  ctx.add(P.chair); P.chair.position.copy(F(0, 0, -0.02)); P.chair.rotation.set(0, yaw, 0);
   ctx.add(P.table); P.table.position.copy(F(0, 0, 0.62)); P.table.rotation.set(0, yaw, 0);
   if (board) {
     ctx.add(P.chess.root); P.chess.root.position.copy(F(0, TABLE_TOP + P.boardThick, 0.62)); P.chess.root.rotation.set(0, yaw, 0);
@@ -102,13 +101,13 @@ function practiceTrack(ctx, beatId, whiteMoves, blackMoves) {
 
 function nookCams(F) {
   return {
-    wide: { pos: F(0.0, 1.75, 3.6), look: F(0, 1.05, 0.25), fov: 42 },
-    med: { pos: F(0.75, 1.55, 2.0), look: F(0, 1.25, 0.35), fov: 40 },
-    face: { pos: F(0.22, 1.58, 1.15), look: F(0, 1.5, 0.05), fov: 34 },
-    faceL: { pos: F(-0.45, 1.5, 1.05), look: F(0, 1.48, 0.05), fov: 36 },
-    board: { pos: F(0.5, 1.02, 1.0), look: F(0.0, 0.84, 0.6), fov: 38 },
-    boardLow: { pos: F(-0.42, 0.9, 0.95), look: F(0.05, 0.82, 0.55), fov: 40 },
-    top: { pos: F(-0.15, 2.0, 0.85), look: F(0, 0.78, 0.6), fov: 45 },
+    wide: { pos: F(0.0, 1.8, 4.4), look: F(0, 1.05, 0.25), fov: 42 },
+    med: { pos: F(0.8, 1.7, 2.9), look: F(0, 1.2, 0.35), fov: 40 },
+    face: { pos: F(0.4, 1.62, 2.0), look: F(0, 1.42, 0.1), fov: 36 },
+    faceL: { pos: F(-0.7, 1.58, 1.85), look: F(0, 1.42, 0.1), fov: 36 },
+    board: { pos: F(0.8, 1.2, 0.75), look: F(0.0, 0.82, 0.6), fov: 40 },
+    boardLow: { pos: F(0.55, 0.98, 1.35), look: F(-0.05, 0.84, 0.55), fov: 40 },
+    top: { pos: F(0.2, 2.1, 1.25), look: F(0, 0.78, 0.6), fov: 45 },
   };
 }
 
@@ -271,7 +270,7 @@ export const shots = [
       ctx.cast.pigeon.pose(ctx.t > ctx.time('b07.w7') ? 'flap' : 'idle', ctx.t);
       ctx.cast.pigeon.face('smile', ctx.t);
       const k = ease.inOutCubic(ctx.progress('b07.w5', 'b07.w7+0.1'));
-      ctx.cam.move({ pos: F(0.4, 1.4, 2.6), look: F(0, 0.35, -0.3), fov: 44 }, { pos: F(-0.05, 0.3, 0.75), look: F(-0.15, 0.2, 0), fov: 38 }, k);
+      ctx.cam.move({ pos: F(0.4, 1.4, 2.6), look: F(0, 0.35, -0.3), fov: 44 }, { pos: F(0.0, 0.45, 1.25), look: F(-0.05, 0.22, 0), fov: 40 }, k);
     },
   },
   // ── b08 "My best friend Marcus goes to every party."
@@ -299,7 +298,7 @@ export const shots = [
       ctx.place('brenda', F(0, 0, 0), {}); ctx.cast.brenda.root.rotation.set(0, F.yaw + Math.PI, 0);
       const crowd = [];
       EXTRA_IDS.slice(10, 14).forEach((id, i) => {
-        ctx.place(id, F((i - 1.5) * 1.3, 0, -1.2 - (i % 2) * 0.6), {});
+        ctx.place(id, F((i - 1.5) * 1.4, 0, 1.4 + (i % 2) * 0.7), {});
         ctx.cast[id].root.rotation.set(0, F.yaw + Math.PI + (hash(i) - 0.5) * 0.6, 0);
         crowd.push({ ch: ctx.cast[id], phase: hash(i * 2) * 2, k: i });
       });
@@ -328,7 +327,7 @@ export const shots = [
         ctx.cast[id].setAccessory?.('partyHat', true);
         crowd.push({ ch: ctx.cast[id], phase: hash(i) * 0.4, k: i });
       });
-      ctx.use('grandad');
+      ctx.place('grandad', F(0, 2.25, 0));
       ctx.store = { F, crowd };
     },
     update(ctx, lt, u) {
@@ -339,7 +338,7 @@ export const shots = [
       g.root.position.copy(F(x, 2.25 + Math.sin(ctx.t * 9) * 0.06, 0));
       g.root.rotation.set(0, F.yaw - Math.PI / 2, 0);
       g.pose('crowdSurf', ctx.t); g.face('laugh', ctx.t);
-      ctx.cam.set({ pos: F(x * 0.85 - 1.0, 2.6, 5.2), look: F(x, 2.0, 0), fov: 42 });
+      ctx.cam.set({ pos: F(x * 0.85 - 1.0, 2.7, 7.6), look: F(x, 2.15, 0), fov: 46 });
       ctx.cam.shake(0.12, ctx.t, 3);
     },
   },
@@ -432,12 +431,12 @@ export const shots = [
       const t0 = ctx.time('b15.w1') - 0.05;
       const k = ease.inOutQuad(clamp((ctx.t - t0) / 0.7, 0, 1));
       const bed = ctx.props.bed;
-      bed.position.copy(F(lerp(1.5, -1.5, k), Math.sin(Math.PI * k) * 2.3, 0.2));
+      bed.position.copy(F(lerp(1.6, -1.6, k), Math.sin(Math.PI * k) * 1.25, 0.2));
       bed.rotation.set(0, F.yaw + Math.PI / 2, Math.sin(Math.PI * k) * 0.25);
       const me = ctx.cast.me;
       me.pose(k > 0.05 && k < 0.95 ? 'surprised' : 'idle', ctx.t);
       me.face(k > 0.05 && k < 0.95 ? 'shocked' : 'smug', ctx.t);
-      ctx.cam.set({ pos: F(0, 1.7, 5.0), look: F(0, 1.1, 0.2), fov: 50 });
+      ctx.cam.set({ pos: F(0, 1.8, 5.6), look: F(0, 1.2, 0.2), fov: 54 });
       if (ctx.t > t0 + 0.7) ctx.cam.punch([t0 + 0.7], ctx.t, 0.08, 0.3);
     },
   },
@@ -478,7 +477,9 @@ export const shots = [
       if (dir.lengthSq() > 1e-6 && s < n) cat.root.rotation.set(0, Math.atan2(dir.x, dir.z), 0);
       cat.pose(s >= n || s <= 0 ? 'sit' : 'hop', ctx.t, { u: k < 0.62 ? k1 : k2 });
       cat.face('neutral', ctx.t);
-      ctx.cam.set({ pos: F(0.4, 3.6, 3.2), look: F(0, 0, 0), fov: 46 });
+      const cp = cat.root.position;
+      const fx = clamp(cp.x, -9, 9);
+      ctx.cam.set({ pos: V(cp.x, 0, cp.z).addScaledVector(F.fwd, 2.0).addScaledVector(F.left, 0.4).add(V(0, 2.1, 0)), look: V(cp.x, 0.2, cp.z), fov: 44 });
     },
   },
   // ── b17 "Day by day."
@@ -529,10 +530,10 @@ export const shots = [
     name: 'banner', start: 'b20-0.05', set: 'town',
     setup(ctx) {
       tourney(ctx);
-      const F = frameAt(ctx, 'square.table');
-      const look = ctx.anchor('square.banner') ? ctx.point('square.banner') : F(0, 3.2, -1.5);
-      ctx.store.from = { pos: look.clone().add(V().copy(F.fwd).multiplyScalar(-1).multiplyScalar(0)).add(V(0, -1.2, 0)).addScaledVector(camAway(ctx, look), 9), look, fov: 46 };
-      ctx.store.to = { pos: look.clone().add(V(0, -0.4, 0)).addScaledVector(camAway(ctx, look), 5.2), look, fov: 44 };
+      const look = ctx.point('square.banner'), cam = ctx.point('square.bannerCam');
+      const away = V().subVectors(cam, look).normalize();
+      ctx.store.from = { pos: look.clone().addScaledVector(away, cam.distanceTo(look) * 1.5).add(V(0, -1.5, 0)), look: look.clone().add(V(0, -0.6, 0)), fov: 46 };
+      ctx.store.to = { pos: cam.clone().addScaledVector(away, 1.5), look: look.clone().add(V(0, -2.0, 0)), fov: 56 };
     },
     update(ctx, lt, u) { tourneyAnim(ctx); ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.outCubic); },
   },
@@ -557,7 +558,7 @@ export const shots = [
       const k = ctx.progress('b22', 'b22.w3+0.2');
       me.pose('sitStand', ctx.t, { u: 1 - k });
       me.face('neutral', ctx.t);
-      ctx.cam.move({ pos: F(1.6, 1.9, 3.4), look: F(0, 1.1, 0.4), fov: 42 }, { pos: F(1.1, 1.7, 2.6), look: F(0, 1.25, 0.4), fov: 40 }, u, ease.inOutQuad);
+      ctx.cam.move({ pos: F(5.4, 2.1, 0.7), look: F(0, 1.05, 0.6), fov: 38 }, { pos: F(4.8, 2.0, 0.7), look: F(0, 1.1, 0.6), fov: 36 }, u, ease.inOutQuad);
     },
   },
   // ── "… everybody laughed."  + laugh SFX
@@ -594,7 +595,8 @@ export const shots = [
       const me = ctx.cast.me; me.pose('sitIdle', ctx.t, { headYaw: 0.1 }); me.face('determined', ctx.t);
       const hp = headPos(me, 0);
       const F = ctx.store.FA;
-      ctx.cam.move({ pos: F(0.5, 1.55, 1.5), look: hp, fov: 36 }, { pos: F(0.35, 1.55, 1.2), look: hp, fov: 34 }, u);
+      const FB = ctx.store.FB;
+      ctx.cam.move({ pos: FB(0.85, 1.95, -0.75), look: hp, fov: 36 }, { pos: FB(0.8, 1.9, -0.6), look: hp, fov: 33 }, u);
     },
   },
   // ── "The mayor."  reveal  /  "Undefeated for forty years."
@@ -609,7 +611,8 @@ export const shots = [
       const hp = headPos(m, 0.05);
       const F = ctx.store.FB;
       const k = ctx.progress('b24.w2', 'b25');
-      ctx.cam.move({ pos: F(-0.9, 1.5, 2.9), look: hp.clone().add(V(0, -0.15, 0)), fov: 40 }, { pos: F(-0.25, 1.55, 1.25), look: hp, fov: 32 }, ease.inOutQuad(k));
+      const FA = ctx.store.FA;
+      ctx.cam.move({ pos: FA(-1.3, 2.1, -1.2), look: hp.clone().add(V(0, -0.3, 0)), fov: 42 }, { pos: FA(-1.05, 1.9, -0.35), look: hp, fov: 34 }, ease.inOutQuad(k));
     },
   },
   // ── b25 "Then I touched my first pawn."
@@ -645,9 +648,9 @@ export const shots = [
       ctx.cam.punch(hits, ctx.t, 0.12, 0.18);
       const B = ctx.store.FBoard, FA = ctx.store.FA, FB = ctx.store.FB;
       if (hit != null) burstAt(ctx, B(0, 0.02, 0), ctx.t, hit);
-      if (i === 0) ctx.cam.set({ pos: B(0.45, 0.32, -0.6), look: B(0.0, 0.03, -0.05), fov: 36 });
-      if (i === 1) ctx.cam.set({ pos: FA(0.2, 1.55, 1.05), look: headPos(me, 0), fov: 32 });
-      if (i === 2) ctx.cam.set({ pos: FB(-0.2, 1.62, 1.05), look: headPos(m, 0), fov: 30 });
+      if (i === 0) ctx.cam.set({ pos: B(0.62, 0.38, -0.12), look: B(0.0, 0.03, -0.02), fov: 38 });
+      if (i === 1) ctx.cam.set({ pos: FB(0.8, 1.9, -0.6), look: headPos(me, 0), fov: 34 });
+      if (i === 2) ctx.cam.set({ pos: FA(-1.4, 1.85, -0.05), look: headPos(m, 0), fov: 34 });
       if (i === 3) ctx.cam.set({ pos: B(-0.35, 0.16, 0.5), look: B(0.15, 0.05, 0.1), fov: 38 });
       ctx.cam.shake(0.1, ctx.t, 40 + i);
     },
@@ -667,8 +670,8 @@ export const shots = [
       const B = ctx.store.FBoard;
       const king = ctx.props.chess.squareToLocal('e8');
       const kw = ctx.props.chess.root.localToWorld(king.clone());
-      ctx.cam.move({ pos: kw.clone().add(V(0, 0.12, 0)).addScaledVector(B.fwd, -0.35).addScaledVector(B.left, 0.2), look: kw.clone().add(V(0, 0.05, 0)), fov: 32 },
-        { pos: kw.clone().add(V(0, 0.1, 0)).addScaledVector(B.fwd, -0.28).addScaledVector(B.left, 0.12), look: kw.clone().add(V(0, 0.03, 0)), fov: 30 }, u);
+      ctx.cam.move({ pos: kw.clone().add(V(0, 0.16, 0)).addScaledVector(B.fwd, -0.12).addScaledVector(B.left, 0.55), look: kw.clone().add(V(0, 0.05, 0)), fov: 34 },
+        { pos: kw.clone().add(V(0, 0.12, 0)).addScaledVector(B.fwd, -0.1).addScaledVector(B.left, 0.42), look: kw.clone().add(V(0, 0.04, 0)), fov: 32 }, u);
     },
   },
   // ── "In four moves."  — wide: mayor stunned
@@ -692,6 +695,7 @@ export const shots = [
     setup(ctx) { tourney(ctx); ctx.store.F = frameAt(ctx, 'square.standA'); },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked', still: ctx.t > ctx.markers.musicStop });
+      ctx.set.set?.('crowdMotion', ctx.t > ctx.markers.musicStop ? 0 : 1);
       const F = ctx.store.F;
       ctx.cam.move({ pos: F(0, 2.3, 7.5), look: F(0, 2.0, 0), fov: 44 }, { pos: F(0, 2.2, 5.0), look: F(0, 2.05, 0), fov: 40 }, u, ease.inOutSine);
     },
@@ -720,9 +724,10 @@ export const shots = [
       mk.root.position.copy(F(-1.1, 0, 1.2)); mk.root.rotation.set(0, F.yaw + Math.PI * 0.62, 0);
       mk.pose('shrug', ctx.t); mk.face('shocked', ctx.t);
       ctx.cast.me.pose('idle', ctx.t); ctx.cast.me.face('neutral', ctx.t);
-      const hp = headPos(mk, 0);
-      const MF = frame(mk.root.position.clone(), mk.root.rotation.y);
-      ctx.cam.move({ pos: MF(0.35, 1.55, 1.6), look: hp, fov: 36 }, { pos: MF(0.25, 1.55, 1.25), look: hp, fov: 33 }, u);
+      const mh = headPos(mk, 0), hh = headPos(ctx.cast.me, 0);
+      const d = V(hh.x - mh.x, 0, hh.z - mh.z).normalize(), perp = V(d.z, 0, -d.x);
+      const camAt = (a, b) => mh.clone().addScaledVector(d, a).addScaledVector(perp, b).add(V(0, 0.08, 0));
+      ctx.cam.move({ pos: camAt(2.2, 1.3), look: mh, fov: 38 }, { pos: camAt(1.9, 1.1), look: mh, fov: 37 }, u);
     },
   },
   // ── b31 "I told him the truth."  /  b32 "While you were out partying."
@@ -737,8 +742,9 @@ export const shots = [
       me.pose('idle', ctx.t, { headYaw: ctx.t < ctx.time('b32') ? 0.5 : 0.1 });
       me.face(ctx.t < ctx.time('b32') ? 'neutral' : 'smug', ctx.t);
       const hp = headPos(me, 0);
+      const ry = me.root.rotation.y, f = V(Math.sin(ry), 0, Math.cos(ry));
       const k = ctx.progress('b31', 'b33');
-      ctx.cam.move({ pos: F(0.4, 1.75, 2.2), look: hp, fov: 38 }, { pos: F(0.12, 1.85, 1.05), look: hp, fov: 30 }, ease.inOutQuad(k));
+      ctx.cam.move({ pos: hp.clone().addScaledVector(f, 2.6).add(V(0.0, 0.1, 0)), look: hp, fov: 38 }, { pos: hp.clone().addScaledVector(f, 1.6).add(V(0, 0.05, 0)), look: hp, fov: 34 }, ease.inOutQuad(k));
     },
   },
   // ═══════════════════════════════════════════════════════════════ the next night
@@ -770,7 +776,7 @@ export const shots = [
     },
     update(ctx, lt, u) {
       const { F } = ctx.store;
-      ctx.props.speaker.update?.(0);
+      ctx.props.speaker.setOn?.(false); ctx.props.speaker.update?.(ctx.t);
       ctx.cam.move({ pos: F(2.4, 1.0, 2.6), look: F(1.4, 0.6, 1), fov: 38 }, { pos: F(2.1, 0.95, 2.2), look: F(1.4, 0.6, 1), fov: 36 }, u);
     },
   },
@@ -808,8 +814,8 @@ export const shots = [
       const look = ctx.t > ctx.time('b35.w4');
       me.pose('idle', ctx.t, { headPitch: look ? -0.35 : 0, headYaw: look ? 0.6 : 0 }); me.face('shocked', ctx.t);
       const hp = headPos(me, 0);
-      if (!look) ctx.cam.move({ pos: F(0.3, 1.7, 2.9), look: hp, fov: 36 }, { pos: F(0.25, 1.7, 2.6), look: hp, fov: 34 }, ctx.progress('b35', 'b35.w4'));
-      else ctx.cam.move({ pos: F(-0.6, 1.2, 2.6), look: F(2, 2.5, 0), fov: 46 }, { pos: F(-0.6, 1.2, 2.6), look: F(5, 5, -2), fov: 46 }, ease.inOutQuad(ctx.progress('b35.w4', 'b36')));
+      if (!look) ctx.cam.move({ pos: F(0.45, 1.75, 3.9), look: hp, fov: 38 }, { pos: F(0.35, 1.72, 3.3), look: hp, fov: 36 }, ctx.progress('b35', 'b35.w4'));
+      else ctx.cam.move({ pos: F(-0.6, 1.0, 0.0), look: F(6, 3.0, 3), fov: 50 }, { pos: F(-0.7, 0.9, -0.2), look: F(7, 5.0, 4), fov: 50 }, ease.inOutQuad(ctx.progress('b35.w4', 'b36')));
     },
   },
   // ── b36 HUSS ×5 from every window — windows light up one by one
@@ -840,7 +846,7 @@ export const shots = [
       const { ch, F } = ctx.store;
       ch.pose('peer', ctx.t); ch.face('squint', ctx.t);
       ctx.props.chess.setFEN('r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R');
-      ctx.cam.move({ pos: F(0.9, 1.6, 2.3), look: F(0, 1.1, 0.4), fov: 40 }, { pos: F(0.5, 1.5, 1.7), look: F(0, 1.25, 0.35), fov: 38 }, u);
+      ctx.cam.move({ pos: F(1.2, 1.75, 3.0), look: F(0, 1.1, 0.4), fov: 40 }, { pos: F(0.9, 1.65, 2.5), look: F(0, 1.2, 0.35), fov: 38 }, u);
     },
   },
   {
@@ -850,8 +856,8 @@ export const shots = [
       const { ch, F } = ctx.store;
       ch.pose('peer', ctx.t); ch.face('squint', ctx.t);
       ctx.props.chess.setFEN('r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R');
-      const hp = headPos(ch, 0.1);
-      ctx.cam.move({ pos: F(0.3, 1.75, 1.2), look: hp, fov: 34 }, { pos: F(0.2, 1.8, 0.95), look: hp, fov: 30 }, u);
+      const hp = headPos(ch, 0.28);
+      ctx.cam.move({ pos: F(0.5, 1.95, 2.3), look: hp, fov: 38 }, { pos: F(0.4, 1.95, 2.0), look: hp, fov: 36 }, u);
     },
   },
   // ═══════════════════════════════════════════════════════════════ ending
@@ -861,9 +867,8 @@ export const shots = [
     setup(ctx) {
       ctx.set.setLighting?.('day'); ctx.set.set?.('partyProps', false); ctx.set.set?.('fireworks', false); ctx.set.set?.('foam', 0);
       const F = frameAt(ctx, 'street.center');
-      ctx.use('me');
       const joggers = EXTRA_IDS.slice(0, 6);
-      joggers.forEach((id, i) => ctx.use(id));
+      ctx.use('me', ...joggers);
       ctx.store = { F, joggers };
     },
     update(ctx, lt, u) {
@@ -887,7 +892,7 @@ export const shots = [
       parkAnim(ctx, { pigeon: false });
       const me = ctx.cast.me; me.pose('sitIdle', ctx.t); me.face('sad', ctx.t);
       const F = ctx.store.FT;
-      ctx.cam.move({ pos: F(1.5, 1.6, -3.0), look: F(0, 0.9, 0), fov: 42 }, { pos: F(1.1, 1.5, -2.4), look: F(0, 1.0, 0), fov: 40 }, u);
+      ctx.cam.move({ pos: F(1.3, 1.65, 3.0), look: F(0, 0.95, -0.4), fov: 42 }, { pos: F(1.0, 1.6, 2.5), look: F(0, 1.0, -0.4), fov: 40 }, u);
     },
   },
   // ── b43 "So my only opponent is the mayor's pigeon."
@@ -900,7 +905,7 @@ export const shots = [
       const pg = ctx.cast.pigeon; pg.pose('idle', ctx.t); pg.face('smug', ctx.t);
       const F = ctx.store.FT;
       const pp = pg.root.position.clone().add(V(0, 0.2, 0));
-      ctx.cam.move({ pos: F(0.35, 1.45, -1.4), look: pp, fov: 40 }, { pos: F(0.25, 1.3, -1.0), look: pp, fov: 32 }, u, ease.inOutQuad);
+      ctx.cam.move({ pos: F(2.1, 2.1, -2.7), look: pp, fov: 38 }, { pos: F(1.8, 1.9, -2.2), look: pp, fov: 30 }, u, ease.inOutQuad);
     },
   },
   // ── b44 "He knocks over all the pieces, struts around the board..."
@@ -935,7 +940,7 @@ export const shots = [
       ctx.props.chess.reset(); ctx.props.chess.knockAll(1, 7);
       const F = ctx.store.FS;
       const hp = headPos(me, 0);
-      ctx.cam.move({ pos: F(0.3, 1.55, 1.3), look: hp, fov: 34 }, { pos: F(0.2, 1.55, 1.05), look: hp, fov: 31 }, u);
+      ctx.cam.move({ pos: F(0.6, 1.7, 2.2), look: hp, fov: 36 }, { pos: F(0.5, 1.68, 1.95), look: hp, fov: 34 }, u);
       const pg = ctx.cast.pigeon; pg.pose('strut', ctx.t); pg.face('smug', ctx.t);
     },
   },
@@ -965,8 +970,9 @@ export const shots = [
       const last = lastBefore(hs, ctx.t + 0.05);
       pg.pose(last != null ? 'huss' : 'idle', ctx.t, { hits: hs }); pg.face(last != null && ctx.t - last < 0.17 ? 'huss' : 'smug', ctx.t);
       const pp = pg.root.position.clone().add(V(0, 0.22, 0));
-      const back = V().copy(F.fwd).multiplyScalar(-1);
-      ctx.cam.set({ pos: pp.clone().addScaledVector(back, 0.75).add(V(0, 0.05, 0)), look: pp, fov: 34 });
+      ctx.cast.me.root.visible = false;
+      ctx.store.walkers.forEach((id) => { ctx.cast[id].root.visible = false; });
+      ctx.cam.set({ pos: pp.clone().addScaledVector(F.left, 0.3).addScaledVector(F.fwd, -0.95).add(V(0, 0.18, 0)), look: pp, fov: 36 });
       ctx.cam.punch(hs, ctx.t, 0.14, 0.2);
     },
   },
@@ -986,7 +992,7 @@ function neighbourShot(name, start, set, who, face) {
     update(ctx, lt, u) {
       slamUpdate(ctx, ctx.store, ctx.store.practice, { face, burst: false });
       const { cams } = ctx.store;
-      ctx.cam.move(cams.med, cams.face, u, ease.inOutQuad);
+      ctx.cam.move(cams.wide, cams.med, u, ease.inOutQuad);
     },
   };
 }
@@ -1007,6 +1013,7 @@ function camAway(ctx, from) {
 function tourney(ctx, { hero = false, mayor = false, board = false, standing = false } = {}) {
   ctx.set.setLighting?.('dusk');
   ctx.set.set?.('partyProps', true); ctx.set.set?.('fireworks', false); ctx.set.set?.('foam', 0);
+  ctx.set.set?.('standsCrowd', true); ctx.set.set?.('crowdMotion', 1);
   const st = ctx.store = {};
   // stands: main characters front row of stand A, extras fill the rest
   const front = ['marcus', 'brenda', 'grandad', 'heckler'];
@@ -1040,7 +1047,7 @@ function tourney(ctx, { hero = false, mayor = false, board = false, standing = f
     ctx.place('me', ca);
     if (standing) { ctx.cast.me.root.position.copy(st.FA(0.3, 0, 0.35)); ctx.cast.me.root.rotation.set(0, st.FA.yaw + 0.9, 0); }
   }
-  if (standing) { ctx.use('marcus'); }
+  if (standing) { ctx.place('marcus', st.FA(-1.1, 0, 1.2)); }
   if (mayor) { ctx.place('mayor', cb); }
   if (board || hero) {
     const chess = ctx.props.chess;
@@ -1059,6 +1066,7 @@ function tourney(ctx, { hero = false, mayor = false, board = false, standing = f
 
 function tourneyAnim(ctx, { action = null, face = null, still = false } = {}) {
   const t = still ? ctx.markers.musicStop : ctx.t;
+  if (still) ctx.set.set?.('crowdMotion', 0);
   animateCrowd(ctx.store.crowd, t, {
     action: action || null,
     faces: face ? [face] : ['grin', 'laugh', 'smile'],
@@ -1095,7 +1103,7 @@ function park(ctx, { pigeon = false } = {}) {
     ctx.place(pg, FT(0, TABLE_TOP, 0.3)); pg.root.rotation.set(0, yawOf(s1) + Math.PI, 0);
   }
   const walkers = EXTRA_IDS.slice(12, 16);
-  walkers.forEach((id) => ctx.use(id));
+  walkers.forEach((id, i) => ctx.place(id, FT(0, 0, 6 + i)));
   ctx.store.walkers = walkers;
 }
 

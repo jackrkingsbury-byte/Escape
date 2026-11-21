@@ -12,6 +12,18 @@
 //   EXPRESSIONS                             every face expression name
 //   WALK_SPEED, WALK_SAD_SPEED              root speed (m/s at params.speed = 1) that matches the stride
 //   PIGEON_STRUT_SPEED                      ditto for the pigeon 'strut'
+//   CHARACTER_OPTIONS = { skinned:false }   build switch (see below); mutate before building
+//
+// Extra spec fields (makeCharacter):
+//   lod: 'low' (or lowDetail: true)  → crowd/background figure: 1-segment bevels, no fade shell, fewer tiny
+//        details, casts NO shadow (still receives). Measured ~35% cheaper per figure. Use for bleacher crowds.
+//   sashColor, capColor, blindfoldColor, number (for emblem 'number').
+//   Accessory colours otherwise come from top.accent (sash/cap/bowtie/top-hat band) — e.g. mayor accent '#ffd23f'
+//   gives a gold sash.  Hair 'fade' = crop + gradient skin-fade shell (the hero's look).
+//
+// Performance (SwiftShader, 720×1280, no MSAA): ≈4.5 ms per full-detail figure without shadows, ≈8.5 ms with
+// a shadow-casting sun (shadow-map pass + PCF receive); lod:'low' ≈4 ms incl. receive. pose() ≈10 µs,
+// face() ≈2 µs (textures are cached; the first use of an expression uploads a 512² canvas).
 //
 // Character extras (beyond the spec):
 //   joints also has shinL/shinR (knees), footL/footR (ankles), handL/handR (empty Object3Ds at the
@@ -41,17 +53,30 @@
 //   crowdSurf: lift (back height above the root, default 0). Body lies along Z, head toward −Z, face up,
 //     centred over the root.
 //   walk / walkSad: in place; move the root at WALK_SPEED / WALK_SAD_SPEED × speed.
-//   pigeon huss: hits [times] (puff peaks), otherwise a held comedic puff.   cat hop: u 0..1 (else loops).
+//   pigeon huss: hits [times] (puff peaks), otherwise a held comedic puff.   cat hop: u 0..1 (else loops
+//     every 1.3 s), height (default 0.42): the pose adds the vertical arc; the shot moves the root along the L.
+//   Creatures accept headYaw/headPitch/lookAt too. Creature joints: hips (body), belly (body mesh, scaled
+//     for puffs/breaths), torso (neck base / chest), head, armL/armR (pigeon wings | cat front legs),
+//     legL/legR, plus pigeon jaw & tail, cat tail1/tail2.  Creature face() takes the human expression names
+//     (pigeon beak opens for huss/laugh/shocked/grin); the cat also has 'stare'.
+// Seated geometry: with the root on the chair origin (seat 0.55, chair faces +Z) the hip pivot sits at
+//   z = +0.06 (hipZ), thigh undersides exactly at y 0.55, thighs horizontal, knees at z ≈ 0.33, shins
+//   vertical, soles on the floor (characters with scale < 1 dangle their feet a little; > 1 angle the shins).
 // Extra human actions: pointLaugh (point + laugh), crossArms.
 //
 // Units: metres, Y up, feet at the origin, facing +Z.  Deterministic: pose()/face() are pure functions
 // of their arguments (no random, no clocks) — every call resets every joint from the rest pose.
 import * as THREE from 'three';
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { clamp, lerp, smooth, ease, hash, noise1, canvasTexture, rbox } from './lib/util.js';
+import { mergeGeometries, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { clamp, lerp, smooth, ease, hash, noise1, canvasTexture, rbox as rboxU } from './lib/util.js';
 
 export const CHARACTER_HEIGHT = 2.0;
 export const SEAT_HEIGHT = 0.55;
+// Build options read by makeCharacter/makeCreature at construction time (mutate before building).
+//   skinned: false → one merged vertex-coloured mesh per joint (default; measured ~5% faster on SwiftShader)
+//            true  → one SkinnedMesh per figure (fewest draw calls; pick this if draw calls ever dominate)
+export const CHARACTER_OPTIONS = { skinned: false };
+let _lowDetail = false;
 
 export const ACTIONS = ['idle', 'dance', 'dance2', 'walk', 'sit', 'sitSlam', 'slam', 'laugh', 'point', 'clap',
   'cheer', 'surprised', 'shrug', 'think', 'peer', 'crowdSurf', 'walkSad', 'stunned', 'wave', 'sitIdle',
@@ -67,8 +92,8 @@ const PI = Math.PI, TAU = PI * 2;
 
 // ---- human body dimensions (unscaled; standard figure is exactly 2.0 tall) ----------------------
 const HIP_Y = 0.92;          // hip pivot height when standing
-const THIGH = 0.27;          // hip pivot → knee pivot
-const SHIN = 0.58;           // knee pivot → ankle pivot
+const THIGH = 0.265;         // hip pivot → knee pivot
+const SHIN = 0.585;          // knee pivot → ankle pivot (seated: knee 0.655 − ankle 0.07 = exactly SHIN)
 const ANKLE_H = 0.07;        // ankle pivot → sole
 const LEG_D = 0.21;          // leg depth (= vertical thickness of a horizontal thigh)
 const TORSO_TOP = 0.48;      // torso top above the hip pivot
@@ -110,6 +135,8 @@ function shade(hex, k) { return k < 1 ? mixHex(hex, '#000000', 1 - k) : mixHex(h
 function lum(hex) { const [r, g, b] = hexToRgb(hex); return (0.299 * r + 0.587 * g + 0.114 * b) / 255; }
 
 // ---- materials & geometry caches --------------------------------------------------------------------
+// rounded box: small parts get a single bevel segment (indistinguishable at that size, ~3× fewer triangles)
+function rbox(w, h, d, r = 0.06, seg) { return rboxU(w, h, d, r, _lowDetail ? 1 : Math.min(seg ?? 9, Math.max(w, h, d) < 0.45 ? 1 : 2)); }
 const _vcMats = {};
 function vcMat(kind) {
   if (!_vcMats[kind]) {
@@ -153,6 +180,7 @@ class Bag {
     return this;
   }
   build(target, shadow = true) {
+    if (_collect) { _collect.take(this, target); return []; }
     const byKind = new Map();
     for (const it of this.items) { if (!byKind.has(it.kind)) byKind.set(it.kind, []); byKind.get(it.kind).push(it); }
     const out = [];
@@ -170,8 +198,10 @@ class Bag {
         g.setAttribute('color', new THREE.BufferAttribute(arr, 3));
         return g;
       });
-      const merged = mergeGeometries(geos);
+      const raw = mergeGeometries(geos);
       geos.forEach((g) => g.dispose());
+      const merged = mergeVertices(raw, 1e-4);   // re-index: far fewer vertex-shader runs (big win on SwiftShader)
+      raw.dispose();
       merged.userData.owned = true;
       merged.computeBoundingSphere();
       const mesh = new THREE.Mesh(merged, vcMat(kind));
@@ -179,6 +209,58 @@ class Bag {
       target.add(mesh); out.push(mesh);
     }
     this.items.length = 0;
+    return out;
+  }
+}
+
+// While a SkinCollector is active, Bag.build() hands its parts to it instead of making meshes; the
+// collector then emits ONE SkinnedMesh per material kind for the whole figure (every joint is a Bone).
+// Draw calls are the main cost on the software GPU (~0.3 ms each), so this halves a character's cost.
+let _collect = null;
+class SkinCollector {
+  constructor() { this.parts = []; }
+  take(bag, bone) { for (const it of bag.items) { it.bone = bone; this.parts.push(it); } bag.items.length = 0; }
+  build(container, bones, shadow = true, radius = 2.4, center = [0, 1, 0]) {
+    if (!this.parts.length) return [];
+    container.updateWorldMatrix(true, true);
+    const skeleton = new THREE.Skeleton(bones);
+    const invC = new THREE.Matrix4().copy(container.matrixWorld).invert();
+    const index = new Map(bones.map((b, i) => [b, i]));
+    const byKind = new Map();
+    for (const it of this.parts) { if (!byKind.has(it.kind)) byKind.set(it.kind, []); byKind.get(it.kind).push(it); }
+    const col = new THREE.Color(), rel = new THREE.Matrix4();
+    const out = [];
+    for (const [kind, list] of byKind) {
+      const geos = list.map((it) => {
+        const g = it.geo.index ? it.geo.toNonIndexed() : it.geo.clone();
+        for (const k of Object.keys(g.attributes)) if (k !== 'position' && k !== 'normal') g.deleteAttribute(k);
+        g.clearGroups();
+        g.applyMatrix4(it.m);
+        if (it.flat) g.computeVertexNormals();
+        g.applyMatrix4(rel.multiplyMatrices(invC, it.bone.matrixWorld));
+        col.set(it.color);
+        const n = g.attributes.position.count, c = new Float32Array(n * 3), si = new Uint16Array(n * 4), sw = new Float32Array(n * 4);
+        const bi = index.get(it.bone);
+        for (let i = 0; i < n; i++) { c[i * 3] = col.r; c[i * 3 + 1] = col.g; c[i * 3 + 2] = col.b; si[i * 4] = bi; sw[i * 4] = 1; }
+        g.setAttribute('color', new THREE.BufferAttribute(c, 3));
+        g.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(si, 4));
+        g.setAttribute('skinWeight', new THREE.Float32BufferAttribute(sw, 4));
+        return g;
+      });
+      const raw = mergeGeometries(geos);
+      geos.forEach((g) => g.dispose());
+      const merged = mergeVertices(raw, 1e-4);
+      raw.dispose();
+      merged.userData.owned = true;
+      const mesh = new THREE.SkinnedMesh(merged, vcMat(kind));
+      mesh.name = 'skin:' + kind;
+      container.add(mesh);
+      mesh.bind(skeleton);
+      mesh.boundingSphere = new THREE.Sphere(new THREE.Vector3(...center), radius);
+      mesh.castShadow = shadow; mesh.receiveShadow = true;
+      out.push(mesh);
+    }
+    this.parts.length = 0;
     return out;
   }
 }
@@ -858,8 +940,8 @@ HUMAN.dance = (c) => {
   const a = smooth(0.5 + 0.5 * Math.cos(PI * b));   // 1 on even beats → arms up
   for (const side of ['L', 'R']) {
     const sg = side === 'L' ? 1 : -1;
-    const T = _v5.set(sg * lerp(0.42, 0.26, a), lerp(0.48, 1.0, a) * (0.7 + 0.3 * I) + 0.12 * (1 - I), lerp(0.24, 0.1, a));
-    ikArm(c, side, T, _pole.set(sg, -0.25, -0.5));
+    const T = _v5.set(sg * lerp(0.44, 0.6, a), lerp(0.42, 0.84, a * I), lerp(0.27, 0.14, a));
+    ikArm(c, side, T, _pole.set(sg, -0.35, -0.5));
   }
 };
 
@@ -955,14 +1037,28 @@ function slamCommon(c, seated) {
   }
   addPos(c, 'armR', 0, 0.03 * h, 0);
   setHead(c, 0.1 + 0.12 * (1 - h) + 0.08 * impact - lean * 0.55, -0.05, 0);
-  // impact target (fist bottom exactly on the table): solve, measure the lowest point, re-solve
+  // impact target (fist bottom exactly on the table): solve, measure the lowest point, re-solve.
+  // The elbow pole is chosen so the elbow (and the back of the forearm) stays above the table top.
   const impactT = toTorso(c, _v5.set(sx, tableY + HAND / 2, sz), new THREE.Vector3());
-  const poleImp = new THREE.Vector3(-0.6, -0.5, -0.6);
-  ikArm(c, 'R', impactT, poleImp);
-  {
-    const q = _q1.copy(c.j.hips.q).multiply(c.j.torso.q).multiply(c.j.armR.q).multiply(c.j.foreArmR.q);
-    const ax = _v1.set(1, 0, 0).applyQuaternion(q), ay = _v2.set(0, 1, 0).applyQuaternion(q), az = _v4.set(0, 0, 1).applyQuaternion(q);
-    const below = (HAND / 2) * (Math.abs(ax.y) + Math.abs(ay.y) * 0.95 + Math.abs(az.y)) - 0.012;
+  const poleImp = new THREE.Vector3();
+  const tq = new THREE.Quaternion().multiplyQuaternions(c.j.hips.q, c.j.torso.q);
+  const tp = new THREE.Vector3().copy(c.j.torso.p).applyQuaternion(c.j.hips.q).add(c.j.hips.p);
+  for (let k = 0; k <= 6; k++) {
+    poleImp.set(-0.6, -0.5, -0.6).lerp(_v1.set(-0.85, 0.55, -0.15), k / 6).normalize();
+    const r = solve2(c.j.armR.p, impactT, UPPER, FORE, poleImp);
+    const elbowY = _v2.copy(r.u).multiplyScalar(UPPER).add(c.j.armR.p).applyQuaternion(tq).add(tp).y;
+    if (elbowY - ARM_D * 0.75 > tableY) break;
+  }
+  for (let pass = 0; pass < 2; pass++) {
+    ikArm(c, 'R', impactT, poleImp);
+    const q = _q1.copy(tq).multiply(c.j.armR.q).multiply(c.j.foreArmR.q);
+    const ax = _v1.set(1, 0, 0).applyQuaternion(q).y, ay = _v2.set(0, 1, 0).applyQuaternion(q).y, az = _v4.set(0, 0, 1).applyQuaternion(q).y;
+    // exact support of the rounded hand box (+ the thumb) along −Y
+    const r = 0.045;
+    const handSup = (HAND / 2 - r) * (Math.abs(ax) + Math.abs(az)) + (HAND * 0.475 - r) * Math.abs(ay) + r;
+    const cty = ax * 0.07 + ay * 0.005 + az * 0.035;
+    const thumbSup = 0.004 * Math.abs(ax) + 0.0175 * Math.abs(ay) + 0.005 * Math.abs(az) + 0.02 - cty;
+    const below = Math.max(handSup, thumbSup);
     impactT.copy(toTorso(c, _v5.set(sx, tableY + below, sz), _v3));
   }
   const raisedT = new THREE.Vector3(-0.34, 0.9, 0.04);
@@ -1033,7 +1129,7 @@ HUMAN.cheer = (c) => {
   setHead(c, -0.18, 0, 0.06 * Math.sin(PI * f * t));
   for (const side of ['L', 'R']) {
     const sg = side === 'L' ? 1 : -1;
-    ikArm(c, side, _v5.set(sg * 0.32, 0.86 + 0.14 * pump * I, 0.06), _pole.set(sg, -0.4, -0.3));
+    ikArm(c, side, _v5.set(sg * (0.6 + 0.06 * pump), 0.74 + 0.16 * pump * I, 0.1), _pole.set(sg, -0.6, -0.2));
   }
 };
 
@@ -1058,11 +1154,11 @@ HUMAN.shrug = (c) => {
   const t = c.t, amt = (0.75 + 0.25 * Math.sin(TAU * t / 1.6)) * c.I;
   stand(c, {});
   eul(c, 'torso', -0.05, 0, 0);
-  setHead(c, -0.04, 0, 0.15 * amt);
+  setHead(c, -0.06, 0.05, 0.22 * amt);
   for (const side of ['L', 'R']) {
     const sg = side === 'L' ? 1 : -1;
-    addPos(c, 'arm' + side, 0, 0.05 * amt, 0);
-    ikArm(c, side, _v5.set(sg * (0.42 + 0.04 * amt), 0.1 + 0.03 * amt, 0.27), _pole.set(sg * 0.25, -1, -0.15));
+    addPos(c, 'arm' + side, 0, 0.06 * amt, 0);
+    ikArm(c, side, _v5.set(sg * (0.5 + 0.06 * amt), 0.14 + 0.04 * amt, 0.24), _pole.set(sg * 0.2, -1, -0.15));
   }
 };
 
@@ -1144,8 +1240,8 @@ HUMAN.crossArms = (c) => {
   stand(c, { rz: 0.035, dx: 0.02, dy: 0.003 * br });
   eul(c, 'torso', -0.05 + 0.01 * br, 0.04, -0.02);
   setHead(c, -0.07, 0.05 * noise1(t * 0.2, c.seed), 0.03);
-  ikArm(c, 'L', _v5.set(-0.13, 0.22, 0.27), _pole.set(1, -0.5, 0.15));
-  ikArm(c, 'R', _v5.set(0.14, 0.26, 0.29), _pole.set(-1, -0.5, 0.15));
+  ikArm(c, 'L', _v5.set(-0.27, 0.2, 0.25), _pole.set(1, -0.45, 0.3));
+  ikArm(c, 'R', _v5.set(0.27, 0.235, 0.3), _pole.set(-1, -0.45, 0.3));
 };
 
 HUMAN.sitStand = (c) => {
@@ -1159,7 +1255,7 @@ HUMAN.sitStand = (c) => {
   const fwd = p.forward ?? sitFootZ;
   // foot positions in the seat pose (for dangling kids they come down first)
   const sitFootY = Math.max(ANKLE_H, c.j.hips.p.y - LEG_D / 2 + LEG_D / 2 - SHIN);
-  const lean = 0.62 * Math.pow(Math.sin(PI * clamp(u / 0.9, 0, 1)), 1.2);
+  const lean = 0.5 * Math.pow(Math.sin(PI * clamp(u / 0.9, 0, 1)), 1.2);
   const hz = lerp(sitHz, fwd, smooth((u - 0.08) / 0.72));
   const hy = lerp(sitHy, HIP_Y, smooth((u - 0.25) / 0.65));
   pos(c, 'hips', 0, hy, hz); eul(c, 'hips', 0, 0, 0);
@@ -1218,6 +1314,12 @@ function normSpec(spec) {
 function seedOf(id) { let s = 7; const str = String(id); for (let i = 0; i < str.length; i++) s = (s * 31 + str.charCodeAt(i)) % 99991; return s; }
 
 export function makeCharacter(spec = {}) {
+  const low = spec.lod === 'low' || !!spec.lowDetail;
+  _lowDetail = low;
+  try { return buildHuman(spec, low); } finally { _lowDetail = false; _collect = null; }
+}
+
+function buildHuman(spec, low) {
   const S = normSpec(spec);
   const bw = S.build;
   const G = {
@@ -1235,7 +1337,9 @@ export function makeCharacter(spec = {}) {
   const root = new THREE.Group(); root.name = 'char:' + S.id;
   const body = new THREE.Group(); body.name = 'body'; body.scale.setScalar(S.scale); root.add(body);
   const J = {};
-  const mk = (name, parent, x, y, z) => { const o = new THREE.Object3D(); o.name = name; o.position.set(x, y, z); parent.add(o); J[name] = o; return o; };
+  const mk = (name, parent, x, y, z) => { const o = new THREE.Bone(); o.name = name; o.position.set(x, y, z); parent.add(o); J[name] = o; return o; };
+  const skinC = new SkinCollector();
+  _collect = CHARACTER_OPTIONS.skinned ? skinC : null;
   mk('hips', body, 0, HIP_Y, 0);
   mk('torso', J.hips, 0, 0, 0);
   mk('head', J.torso, 0, NECK_Y, 0);
@@ -1250,18 +1354,19 @@ export function makeCharacter(spec = {}) {
   for (const side of ['L', 'R']) {
     const sg = side === 'L' ? 1 : -1;
     const bt = new Bag();
-    bt.add(rbox(G.legW, 0.435, LEG_D, 0.05), thighC, [0, -0.1575, 0]);
+    const tl = THIGH + LEG_D / 2 + 0.06;
+    bt.add(rbox(G.legW, tl, LEG_D, 0.05), thighC, [0, 0.06 - tl / 2, 0]);
     if (botStyle === 'shorts') bt.add(rbox(G.legW + 0.016, 0.1, LEG_D + 0.016, 0.04), shade(botC, 0.9), [0, -0.33, 0]);
     bt.build(J['leg' + side]);
     const bs = new Bag();
-    bs.add(rbox(G.legW * 0.96, 0.65, LEG_D * 0.96, 0.05), legC, [0, -0.255, 0]);
+    bs.add(rbox(G.legW * 0.96, SHIN + 0.07, LEG_D * 0.96, 0.05), legC, [0, 0.07 - (SHIN + 0.07) / 2, 0]);
     if (botStyle === 'shorts' || skirtLike) bs.add(rbox(G.legW * 0.96 + 0.012, 0.09, LEG_D * 0.96 + 0.012, 0.03), '#f4f4f4', [0, -SHIN + 0.075, 0]);
     else bs.add(rbox(G.legW * 0.96 + 0.014, 0.07, LEG_D * 0.96 + 0.014, 0.03), shade(botC, 0.85), [0, -SHIN + 0.065, 0]);
     bs.build(J['shin' + side]);
     const bf = new Bag();
     bf.add(rbox(G.legW + 0.035, 0.095, 0.30, 0.045), shoeC, [0, -0.012, 0.045]);
     bf.add(rbox(G.legW + 0.045, 0.032, 0.31, 0.014), soleC, [0, -0.054, 0.045]);
-    bf.add(rbox(0.012, 0.03, 0.12, 0.005), lum(shoeC) > 0.6 ? shade(acc === '#ffffff' ? '#4a6cff' : acc, 1) : '#f4f4f4', [sg * (G.legW / 2 + 0.018), -0.01, 0.03]);
+    if (!low) bf.add(rbox(0.012, 0.03, 0.12, 0.005), lum(shoeC) > 0.6 ? shade(acc === '#ffffff' ? '#4a6cff' : acc, 1) : '#f4f4f4', [sg * (G.legW / 2 + 0.018), -0.01, 0.03]);
     bf.build(J['foot' + side]);
   }
 
@@ -1303,14 +1408,14 @@ export function makeCharacter(spec = {}) {
     const b = new Bag();
     const tw = G.torsoW, td = G.torsoD, th = TORSO_TOP + 0.04;
     b.add(taperBox(tw, th, td, 0.07, 0.93), topC, [0, (TORSO_TOP - 0.04) / 2, 0]);
-    b.add(cyl(0.1, 0.11, 0.12, 12), skin, [0, 0.5, 0]);
+    b.add(cyl(0.1, 0.11, 0.12, 10), skin, [0, 0.5, 0]);
     const front = td / 2;
     if (topStyle === 'hoodie') {
       const dk = shade(topC, lum(topC) < 0.2 ? 1.08 : 0.9);
-      b.add(torus(0.155, 0.06, 8, 20), topC, [0, 0.47, -0.02], [PI / 2, 0, 0], [1, 1.1, 1]);
+      b.add(torus(0.155, 0.06, 6, 14), topC, [0, 0.47, -0.02], [PI / 2, 0, 0], [1, 1.1, 1]);
       b.add(rbox(0.4, 0.15, 0.12, 0.05), topC, [0, 0.45, -td / 2 + 0.02]);
       b.add(rbox(tw * 0.6, 0.15, 0.026, 0.02), dk, [0, 0.07, front + 0.004]);
-      for (const sx of [-1, 1]) {
+      if (!low) for (const sx of [-1, 1]) {
         b.add(cyl(0.012, 0.012, 0.09, 6), acc, [sx * 0.075, 0.385, front + 0.012]);
         b.add(cyl(0.017, 0.017, 0.03, 6), shade(acc, 0.8), [sx * 0.075, 0.33, front + 0.012]);
       }
@@ -1370,12 +1475,11 @@ export function makeCharacter(spec = {}) {
       bf.add(rbox(aw * 0.95 + 0.014, 0.05, ARM_D * 0.95 + 0.014, 0.02), cuff, [0, -FORE + HAND / 2 + 0.035, 0]);
     }
     bf.add(rbox(HAND, HAND * 0.95, HAND, 0.045), skin, [0, -FORE, 0]);
-    bf.add(rbox(0.048, 0.075, 0.05, 0.02), skin, [-sg * (HAND / 2), -FORE + 0.005, 0.035], [0, 0, sg * 0.25]);
+    if (!low) bf.add(rbox(0.048, 0.075, 0.05, 0.02), skin, [-sg * (HAND / 2), -FORE + 0.005, 0.035], [0, 0, sg * 0.25]);
     bf.build(J['foreArm' + side]);
+    const fg = mk('finger' + side, J['foreArm' + side], 0, -FORE - HAND / 2, 0.02);
     const fb = new Bag(); fb.add(rbox(0.046, 0.11, 0.05, 0.02), skin, [0, -0.04, 0]);
-    const fg = new THREE.Group(); fg.position.set(0, -FORE - HAND / 2, 0.02); fg.visible = false; fg.name = 'finger' + side;
     fb.build(fg);
-    J['foreArm' + side].add(fg);
     fingers[side] = fg;
   }
 
@@ -1389,13 +1493,16 @@ export function makeCharacter(spec = {}) {
   let hairTop = 0;
   {
     const b = new Bag();
-    b.add(rbox(HEAD_W, HEAD_H, HEAD_D, HEAD_R, 3), skin, [0, HEAD_H / 2, 0]);
+    b.add(rbox(HEAD_W, HEAD_H, HEAD_D, HEAD_R, 2), skin, [0, HEAD_H / 2, 0]);
     if (S.hair.style !== 'long') for (const sx of [-1, 1]) b.add(rbox(0.07, 0.14, 0.11, 0.03), skin, [sx * (HEAD_W / 2 + 0.012), 0.27, -0.01]);
     const extras = [];
     hairTop = addHair(b, S.hair.style, hairC, skin, S, extras);
     b.build(J.head);
     for (const m of extras) J.head.add(m);
   }
+  _collect = null;
+  skinC.build(body, [...HUMAN_JOINTS, 'fingerL', 'fingerR'].map((n) => J[n]));
+  for (const f of Object.values(fingers)) f.scale.setScalar(1e-5);
   const faceMat = makeFaceMaterial(humanFaceTexture('neutral', false, faceColors));
   const faceMesh = new THREE.Mesh(plane(FACE_SIZE, FACE_SIZE), faceMat);
   faceMesh.position.set(0, FACE_Y, HEAD_D / 2 + 0.0025); faceMesh.name = 'face';
@@ -1452,7 +1559,7 @@ export function makeCharacter(spec = {}) {
     },
     setAccessory(name, on = true) {
       const g = ensureAcc(name);
-      if (g) g.visible = !!on;
+      if (g) { g.visible = !!on; if (low) g.traverse((o) => { if (o.isMesh) o.castShadow = false; }); }
       placePartyHat();
       return ch;
     },
@@ -1463,7 +1570,10 @@ export function makeCharacter(spec = {}) {
       return ch;
     },
     dispose() {
-      root.traverse((o) => { if (o.isMesh && o.geometry && o.geometry.userData.owned) o.geometry.dispose(); });
+      root.traverse((o) => {
+        if (o.isMesh && o.geometry && o.geometry.userData.owned) o.geometry.dispose();
+        if (o.isSkinnedMesh && o.skeleton) o.skeleton.dispose();
+      });
       faceMat.dispose();
       if (root.parent) root.parent.remove(root);
     },
@@ -1476,10 +1586,11 @@ export function makeCharacter(spec = {}) {
     const sit = rec.x.sit || 0;
     J.skirt.scale.set(1 + 0.05 * sit, 1 - 0.62 * sit, 1 + 0.3 * sit);
     J.skirt.position.set(0, 0, 0.04 * sit);
-    fingers.L.visible = (rec.x.fingerL || 0) > 0.5;
-    fingers.R.visible = (rec.x.fingerR || 0) > 0.5;
+    for (const sd of ['L', 'R']) { const on = (rec.x['finger' + sd] || 0) > 0.5; fingers[sd].scale.setScalar(on ? 1 : 1e-5); fingers[sd].visible = on; }
     if (rec.x.footZ !== undefined) ch.sitInfo.footZ = rec.x.footZ;
   }
+  if (low) root.traverse((o) => { if (o.isMesh) o.castShadow = false; });
+  ch.lod = low ? 'low' : 'high';
   ch.pose('idle', 0);
   ch.face('neutral', 0);
   return ch;
@@ -1512,11 +1623,10 @@ function computeHuman(ch, rec, action, t, params) {
 
 // ---- hair ------------------------------------------------------------------------------------------
 const _shellMats = new Map();
-const _hidden = new THREE.MeshBasicMaterial({ visible: false });
 function fadeShell(hc, skin) {
   const key = hc + skin;
-  let mats = _shellMats.get(key);
-  if (!mats) {
+  let mat = _shellMats.get(key);
+  if (!mat) {
     const tex = canvasTexture(64, 256, (g) => {
       const gr = g.createLinearGradient(0, 0, 0, 256);
       gr.addColorStop(0, hc); gr.addColorStop(0.24, hc);
@@ -1530,14 +1640,13 @@ function fadeShell(hc, skin) {
         g.fillStyle = rgbStr(r, gg, bb, a); g.fillRect(x, y, 1.5, 1.5);
       }
     });
-    const side = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.85 });
-    const top = new THREE.MeshStandardMaterial({ color: hc, roughness: 0.85 });
-    mats = [side, side, top, _hidden, _hidden, side];
-    _shellMats.set(key, mats);
+    mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.85 });
+    _shellMats.set(key, mat);
   }
   const h = 0.6, y0 = -0.005;
-  const m = new THREE.Mesh(rbox(HEAD_W + 0.012, h, HEAD_D + 0.012, HEAD_R + 0.006, 3), mats);
-  m.position.set(0, y0 + h / 2, 0); m.castShadow = true; m.receiveShadow = true; m.name = 'fadeShell';
+  // one material (1 draw): the front face sits 6 mm inside the face so the head hides it
+  const m = new THREE.Mesh(rbox(HEAD_W + 0.012, h, HEAD_D, HEAD_R + 0.006, 2), mat);
+  m.position.set(0, y0 + h / 2, -0.006); m.castShadow = true; m.receiveShadow = true; m.name = 'fadeShell';
   return m;
 }
 
@@ -1554,7 +1663,8 @@ function addHair(b, style, hc, skin, S, extras = null) {
     case 'fade': {
       // crop on top; the sides/back are a gradient shell (hair → skin) = a clean skin fade
       cap(Hh + 0.035 - 0.47, Hh + 0.035, 0.024);
-      if (extras) extras.push(fadeShell(hc, skin));
+      if (extras && !_lowDetail) extras.push(fadeShell(hc, skin));
+      else cap(0.17, Hh + 0.035 - 0.25, 0.014, mixHex(hc, skin, 0.35), 0.07);
       b.add(rbox(0.6, 0.07, 0.5, 0.035), hc, [0, Hh + 0.05, -0.035]);
       b.add(rbox(0.54, 0.1, 0.19, 0.045), hc, [0, Hh + 0.075, 0.115], [-0.3, 0, 0]);
       b.add(rbox(0.34, 0.075, 0.15, 0.035), mixHex(hc, '#7a4e33', 0.55), [0.08, Hh + 0.118, 0.1], [-0.42, 0.14, 0.07]);
@@ -1574,7 +1684,7 @@ function addHair(b, style, hc, skin, S, extras = null) {
       for (const sx of [-1, 1]) for (const z of [-0.14, 0.06]) pts.push([sx * 0.31, Hh - 0.07, z]);
       for (const x of [-0.17, 0.17]) for (const y of [Hh - 0.13, Hh - 0.01]) pts.push([x, y, -0.27]);
       for (const x of [-0.18, 0, 0.18]) pts.push([x, Hh + 0.0, 0.24]);
-      pts.forEach((p, i) => b.add(ico(0.085, 1), i % 3 === 0 ? dark : hc, [p[0], p[1] + 0.02 * (hash(i + 3) - 0.5), p[2]], [hash(i) * 3, hash(i + 9) * 3, 0], [1, 1, 1], 'vc', true));
+      pts.forEach((p, i) => b.add(ico(0.09, 0), i % 3 === 0 ? dark : hc, [p[0], p[1] + 0.02 * (hash(i + 3) - 0.5), p[2]], [hash(i) * 3, hash(i + 9) * 3, 0], [1, 1, 1], 'vc', true));
       return 0.12;
     }
     case 'spiky': {
@@ -1636,13 +1746,13 @@ function buildHumanAccessory(name, ctx) {
       pts.push(new THREE.Vector3(-0.17, 0.48, -0.12));
       pts.push(new THREE.Vector3(-cx - 0.03, 0.46, 0.05));
       pts.push(new THREE.Vector3(-cx, 0.4, 0.17));
-      const tube = cgeo(`hpband${cx.toFixed(3)}`, () => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 28, 0.024, 7, false));
+      const tube = cgeo(`hpband${cx.toFixed(3)}`, () => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 16, 0.024, 6, false));
       b.add(tube, white);
       for (const sx of [-1, 1]) {
         const rot = [-1.15, 0, sx * 0.5];
-        b.add(cyl(0.078, 0.078, 0.055, 18), white, [sx * (cx + 0.01), 0.36, front + 0.035], rot);
-        b.add(cyl(0.064, 0.064, 0.03, 18), pad, [sx * (cx + 0.005), 0.385, front + 0.012], rot);
-        b.add(cyl(0.05, 0.05, 0.012, 16), shade(white, 0.88), [sx * (cx + 0.016), 0.34, front + 0.055], rot);
+        b.add(cyl(0.078, 0.078, 0.055, 14), white, [sx * (cx + 0.01), 0.36, front + 0.035], rot);
+        b.add(cyl(0.064, 0.064, 0.03, 12), pad, [sx * (cx + 0.005), 0.385, front + 0.012], rot);
+        b.add(cyl(0.05, 0.05, 0.012, 12), shade(white, 0.88), [sx * (cx + 0.016), 0.34, front + 0.055], rot);
       }
       break;
     }
@@ -1670,8 +1780,8 @@ function buildHumanAccessory(name, ctx) {
     }
     case 'mustache': {
       const mc = S.hair.style === 'bald' ? '#4a3426' : hairC;
-      for (const sx of [-1, 1]) b.add(rbox(0.15, 0.06, 0.04, 0.025), mc, [sx * 0.065, 0.2, faceZ + 0.008], [0, 0, sx * 0.22]);
-      b.add(rbox(0.06, 0.05, 0.04, 0.02), mc, [0, 0.212, faceZ + 0.01]);
+      for (const sx of [-1, 1]) b.add(rbox(0.15, 0.052, 0.04, 0.022), mc, [sx * 0.066, 0.214, faceZ + 0.008], [0, 0, sx * 0.24]);
+      b.add(rbox(0.06, 0.046, 0.04, 0.018), mc, [0, 0.226, faceZ + 0.01]);
       break;
     }
     case 'beard': {
@@ -1706,7 +1816,7 @@ function buildHumanAccessory(name, ctx) {
     }
     case 'chain': {
       parent = J.torso;
-      b.add(torus(0.17, 0.018, 6, 28), '#f2c230', [0, 0.42, 0.04], [PI / 2 + 0.5, 0, 0], [1, 1, 1], 'gold');
+      b.add(torus(0.17, 0.018, 5, 20), '#f2c230', [0, 0.42, 0.04], [PI / 2 + 0.5, 0, 0], [1, 1, 1], 'gold');
       b.add(rbox(0.07, 0.08, 0.02, 0.012), '#f2c230', [0, 0.315, front + 0.02], [0, 0, 0], [1, 1, 1], 'gold');
       break;
     }
@@ -1915,7 +2025,8 @@ function buildPigeon(S) {
   const root = new THREE.Group(); root.name = 'creature:pigeon:' + S.id;
   const body = new THREE.Group(); body.scale.setScalar(S.scale ?? 1); root.add(body);
   const J = {};
-  const mk = (name, parent, x, y, z) => { const o = new THREE.Object3D(); o.name = name; o.position.set(x, y, z); parent.add(o); J[name] = o; return o; };
+  const mk = (name, parent, x, y, z) => { const o = new THREE.Bone(); o.name = name; o.position.set(x, y, z); parent.add(o); J[name] = o; return o; };
+  const skin = new SkinCollector(); _collect = CHARACTER_OPTIONS.skinned ? skin : null;
   mk('hips', body, 0, 0.17, 0);
   mk('belly', J.hips, 0, 0, 0);
   mk('torso', J.hips, 0, 0.065, 0.085);
@@ -1965,6 +2076,8 @@ function buildPigeon(S) {
   b.add(rbox(0.13, 0.026, 0.14, 0.01), shade(bodyC, 0.82), [0, 0, -0.06], [-0.22, 0, 0]);
   b.add(rbox(0.132, 0.028, 0.035, 0.008), '#2c313d', [0, -0.03, -0.125], [-0.22, 0, 0]);
   b.build(J.tail);
+  _collect = null;
+  skin.build(body, PIGEON_JOINTS.map((n) => J[n]), true, 0.6, [0, 0.25, 0]);
   // party hat on the head
   const hat = makePartyHatMesh(S.partyHatColor ?? '#ff4fa3', 0.45);
   hat.position.set(0.012, 0.125, 0.0); hat.rotation.set(-0.1, 0, -0.22); hat.visible = false;
@@ -1976,7 +2089,8 @@ function buildCat(S) {
   const root = new THREE.Group(); root.name = 'creature:cat:' + S.id;
   const body = new THREE.Group(); body.scale.setScalar(S.scale ?? 1); root.add(body);
   const J = {};
-  const mk = (name, parent, x, y, z) => { const o = new THREE.Object3D(); o.name = name; o.position.set(x, y, z); parent.add(o); J[name] = o; return o; };
+  const mk = (name, parent, x, y, z) => { const o = new THREE.Bone(); o.name = name; o.position.set(x, y, z); parent.add(o); J[name] = o; return o; };
+  const skin = new SkinCollector(); _collect = CHARACTER_OPTIONS.skinned ? skin : null;
   mk('hips', body, 0, 0.24, 0);
   mk('belly', J.hips, 0, 0, 0);
   mk('torso', J.hips, 0, 0.04, 0.16);
@@ -2017,6 +2131,8 @@ function buildCat(S) {
   }
   b = new Bag(); b.add(rbox(0.055, 0.055, 0.18, 0.025), base, [0, 0, -0.08]); b.build(J.tail1);
   b = new Bag(); b.add(rbox(0.05, 0.05, 0.16, 0.022), base, [0, 0, -0.07]); b.add(rbox(0.052, 0.052, 0.05, 0.022), stripe, [0, 0, -0.14]); b.build(J.tail2);
+  _collect = null;
+  skin.build(body, CAT_JOINTS.map((n) => J[n]), true, 0.8, [0, 0.3, 0]);
   const hat = makePartyHatMesh(S.partyHatColor ?? '#ff4fa3', 0.55);
   hat.position.set(0.0, 0.13, 0.02); hat.rotation.set(-0.05, 0, 0.15); hat.visible = false;
   J.head.add(hat);
@@ -2049,6 +2165,15 @@ export function makeCreature(kind = 'pigeon', spec = {}) {
     const c = { ch, rec, j: rec.j, x: rec.x, p: params, t: t * (params.speed ?? 1), I: params.intensity ?? 1, seed };
     if (isPigeon) pigeonBase(c);
     (ACT[action] || ACT.idle)(c);
+    if (params.lookAt) {   // replace the head's yaw/pitch with a look toward a world point (clamped)
+      root.updateWorldMatrix(true, false);
+      _m1.copy(root.matrixWorld).multiply(body.matrix.compose(body.position, body.quaternion, body.scale));
+      _m2.compose(rec.j.hips.p, rec.j.hips.q, rec.j.hips.s); _m1.multiply(_m2);
+      _m2.compose(rec.j.torso.p, rec.j.torso.q, _v1.set(1, 1, 1)); _m1.multiply(_m2);
+      const L = _v2.copy(params.lookAt).applyMatrix4(_m1.invert()).sub(_v3.copy(rec.j.head.p).add(_v4.set(0, 0.05, 0)));
+      let yaw = Math.atan2(L.x, L.z); if (Math.abs(yaw) > 2.4) yaw = 0;
+      rec.j.head.q.setFromEuler(_e1.set(clamp(-Math.atan2(L.y, Math.hypot(L.x, L.z)), -0.8, 0.9), clamp(yaw, -1.3, 1.3), 0, 'YXZ'));
+    }
     if (params.headYaw || params.headPitch) {
       _q1.setFromEuler(_e1.set(params.headPitch ?? 0, params.headYaw ?? 0, 0, 'YXZ'));
       rec.j.head.q.multiply(_q1);
@@ -2077,7 +2202,10 @@ export function makeCreature(kind = 'pigeon', spec = {}) {
     setAccessory(name, on = true) { if (name === 'partyHat') hat.visible = !!on; return ch; },
     setPartyHatColor(hex) { const c = hat.getObjectByName('partyHatCone'); if (c) c.material = partyHatMaterial(hex); return ch; },
     dispose() {
-      root.traverse((o) => { if (o.isMesh && o.geometry && o.geometry.userData.owned) o.geometry.dispose(); });
+      root.traverse((o) => {
+        if (o.isMesh && o.geometry && o.geometry.userData.owned) o.geometry.dispose();
+        if (o.isSkinnedMesh && o.skeleton) o.skeleton.dispose();
+      });
       faceMat.dispose();
       if (root.parent) root.parent.remove(root);
     },
