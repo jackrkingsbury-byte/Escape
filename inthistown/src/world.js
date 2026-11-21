@@ -196,6 +196,8 @@ const G = {
 G.blob = (() => { const g = new THREE.IcosahedronGeometry(0.5, 0); const p = g.attributes.position, n = g.attributes.normal;
   for (let i = 0; i < p.count; i++) { const v = V3(p.getX(i), p.getY(i), p.getZ(i)).normalize(); n.setXYZ(i, v.x, v.y, v.z); } return g; })();
 G.balloon = new THREE.SphereGeometry(0.5, 10, 8);
+G.blob2 = (() => { const g = new THREE.IcosahedronGeometry(0.5, 1); const p = g.attributes.position, n = g.attributes.normal;
+  for (let i = 0; i < p.count; i++) { const v = V3(p.getX(i), p.getY(i), p.getZ(i)).normalize(); n.setXYZ(i, v.x, v.y, v.z); } return g; })();
 // put a plane flat on the ground (normal +Y)
 const PLANE_FLAT = new THREE.PlaneGeometry(1, 1).rotateX(-PI / 2);
 
@@ -840,7 +842,6 @@ function buildHouse(T, h) {
   const winAnchors = [];
   for (let j = 0; j < nFront; j++) {
     const r = wins[j];
-    const p = P(0, 0, 0); // unused
     const o = new THREE.Object3D();
     o.name = `house.${h.index}.window.${j}`;
     const out = 0.25;
@@ -1411,7 +1412,7 @@ function buildPool(T) {
   mkAnchor(A, root, 'pool.edge2', pl.x, dy, wz0 - 2.4, PI);
   mkAnchor(A, root, 'pool.edge3', wx0 - 1.8, dy, pl.z, -PI / 2);
   mkAnchor(A, root, 'pool.edge4', wx1 + 1.8, dy, pl.z, PI / 2);
-  mkAnchor(A, root, 'pool.cam', 6.4, 5.4, -35.8, yawTo(6.4, -35.8, pl.x, pl.z));
+  mkAnchor(A, root, 'pool.cam', 8.6, 5.6, -31.4, yawTo(8.6, -31.4, pl.x, pl.z));
 }
 
 // ── foam street
@@ -1445,12 +1446,12 @@ function buildFoam(T) {
   // foam heap particles (generated here, instanced in finalize)
   const R = rng(T.seed * 11 + 7);
   T.foamBalls = [];
-  for (let i = 0; i < 1500; i++) {
+  for (let i = 0; i < 1150; i++) {
     const x = cx + (R() - 0.5) * 10.4, z = 16.8 + R() * 17.2;
     const hx = (x - cx) / 4.4, hz = (z - (cz + 1.5)) / 6.5;
     const hMax = 0.95 * Math.exp(-hx * hx * 0.9 - hz * hz) + 0.25;
     const y = Math.pow(R(), 0.7) * hMax;
-    const r = 0.17 + R() * 0.2 + (y < 0.3 ? 0.06 : 0);
+    const r = 0.19 + R() * 0.22 + (y < 0.3 ? 0.06 : 0);
     T.foamBalls.push({ x, y, z, r, ph: R() * 6.28, rank: y / hMax * 0.7 + R() * 0.3 });
   }
   T.foamBase = { x: cx, z: 25.4, w: 10.6, d: 17.4 };
@@ -1794,15 +1795,15 @@ function finalizeTown(T) {
 
   // ── foam heap + stream
   const fb = T.foamBalls || [];
-  D.foamN = fb.length; D.streamN = 46;
-  const foamMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.45, emissive: '#e6ecff', emissiveIntensity: 0.22 });
+  D.foamN = fb.length; D.streamN = 90;
+  const foamMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.4, emissive: '#eef2ff', emissiveIntensity: 0.34 });
   if (T.foamBase) {
     const fbm = T.foamBase;
     D.foamBase = new THREE.Mesh(rbox(fbm.w, 0.6, fbm.d, 0.28, 3), foamMat);
     D.foamBase.position.set(fbm.x, -0.3, fbm.z); D.foamBase.receiveShadow = true; D.foamBase.name = 'foamBase';
     root.add(D.foamBase);
   }
-  D.foam = instanced(G.blob, foamMat,
+  D.foam = instanced(G.blob2, foamMat,
     new Array(D.foamN + D.streamN).fill(0).map(() => ({ m: M(0, -10, 0, 0, 0.01, 0.01, 0.01) })), { cast: false, receive: false, name: 'foam' });
   D.foam.frustumCulled = false; root.add(D.foam);
 
@@ -2149,11 +2150,13 @@ export function buildTown(opts = {}) {
     for (let k = 0; k < D.streamN; k++) {
       const i = D.foamN + k;
       if (!on) { im.setMatrixAt(i, MI(_m1, 0, -5, 0, 0, 0.001, 0.001, 0.001)); continue; }
-      const s = ((k / D.streamN + t * 0.55) % 1 + 1) % 1;
-      const x = lerp(fc.muzzle[0], fc.target[0], s) + Math.sin(k * 2.3 + t * 3) * 0.25 * s;
-      const z = lerp(fc.muzzle[2], fc.target[2], s);
-      const y = lerp(fc.muzzle[1], fc.target[1], s) + 2.6 * 4 * s * (1 - s);
-      const r = (0.14 + 0.3 * s) * Math.min(1, amt * 2);
+      const s = ((k * 0.6180339 + t * 0.6) % 1 + 1) % 1;            // golden-ratio spacing → irregular spray
+      const j1 = hash(k * 1.7) - 0.5, j2 = hash(k * 2.9) - 0.5, j3 = hash(k * 4.3) - 0.5;
+      const spread = 0.15 + 1.1 * s;
+      const x = lerp(fc.muzzle[0], fc.target[0], s) + j1 * 0.5 * spread;
+      const z = lerp(fc.muzzle[2], fc.target[2], s) + j2 * spread;
+      const y = lerp(fc.muzzle[1], fc.target[1], s) + 2.4 * 4 * s * (1 - s) + j3 * 0.35 * spread;
+      const r = (0.08 + 0.22 * s + 0.08 * hash(k * 5.1)) * Math.min(1, amt * 2);
       im.setMatrixAt(i, MI(_m1, x, y, z, k, r * 2, r * 2, r * 2));
     }
     im.instanceMatrix.needsUpdate = true;
@@ -2493,8 +2496,8 @@ export function buildRoom(opts = {}) {
   if (variant === 'hero' || variant === 'marcus') {
     Mg.rbox('#c7ccd4', dX + 0.02, TABLE_TOP + 0.012, dZ + 0.22, 0.3, 0.02, 0.4, 0.01);
     Mg.rbox('#c7ccd4', dX + 0.17, TABLE_TOP + 0.14, dZ + 0.22, 0.02, 0.26, 0.4, 0.01, 0, 0, 0.18);
-    screen.position.set(dX + 0.155, TABLE_TOP + 0.14, dZ + 0.22); screen.rotation.set(0, -PI / 2, 0.18 * 0 ); screen.rotateX(-0.18 * 0); screen.scale.set(0.36, 0.22, 1);
-    screen.rotation.order = 'YXZ'; screen.rotation.set(-0.0, -PI / 2, 0); screen.rotateX(0.18);
+    screen.position.set(dX + 0.155, TABLE_TOP + 0.14, dZ + 0.22); screen.scale.set(0.36, 0.22, 1);
+    screen.rotation.order = 'YXZ'; screen.rotation.set(0.18, -PI / 2, 0);
     root.add(screen);
   }
   if (variant === 'hero') {

@@ -136,6 +136,7 @@ Object.assign(VIEWS, {
   s_grinding: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 6, 12), look: F(0, 1, 0), fov: 46 }; } },
   s_park: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = frYaw(s, 'park.table', 'park.stool1', -0.78); return { pos: F(1.5, 1.6, -3.0), look: F(0, 0.9, 0), fov: 42 }; } },
   s_winning: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = frYaw(s, 'park.table', 'park.stool1', -0.78); return { pos: F(-1.6, 1.6, 0.6), look: F(0, 0.95, 0), fov: 44 }; } },
+  fireworks: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 1.8, -6), look: F(0, 14, 30), fov: 55 }; } },
   s_nook: { set: 'room', lighting: 'night', opts: { window: 'party' }, cam: (s) => ({ pos: V(0, 1.55, 1.65).add(V(0.75, 0, 0)), look: V(0, 1.25, 0), fov: 40 }) },
 });
 const SHOTS_SHEET = ['s_crane0', 's_crane1', 's_truck', 's_marcus', 's_brenda', 's_grandad', 's_birthday', 's_sq_est0', 's_sq_est1', 's_stands', 's_sits', 's_mayor',
@@ -208,6 +209,23 @@ async function main() {
     if (EXP.includes('lambert')) s.root.traverse((o) => { if (o.isMesh && o.material && o.material.isMeshStandardMaterial) { const m = o.material; o.material = new THREE.MeshLambertMaterial({ color: m.color, map: m.map, vertexColors: m.vertexColors, emissive: m.emissive, emissiveIntensity: m.emissiveIntensity, flatShading: m.flatShading }); } });
     renderer.render(scene, camera);
     const info = `${VIEW}  calls ${renderer.info.render.calls}  tris ${(renderer.info.render.triangles / 1000).toFixed(0)}k  progs ${renderer.info.programs.length}`;
+    if (Q.get('det')) {   // determinism self-test: same t → same pixels, whatever happened before
+      const gl = renderer.getContext();
+      const grab = () => { renderer.render(scene, camera); const px = new Uint8Array(W * H * 4); gl.readPixels(0, 0, W, H, gl.RGBA, gl.UNSIGNED_BYTE, px); return px; };
+      const A = grab();
+      const pres = s.anchors.houses ? ['day', 'dusk', 'quiet_night'] : ['day', 'dawn'];
+      for (const [i, pr] of pres.entries()) {
+        s.setLighting(pr);
+        if (s.anchors.houses) { s.set('foam', 0.5 + i * 0.2); s.set('fireworks', i % 2 === 0); s.set('windowGlow', (h, w) => (h + w + i) % 3 ? 1 : 0); s.set('partyProps', i !== 1); s.set('crowdMotion', 0.3); }
+        else s.set('window', ['day', 'sunrise'][i % 2]);
+        s.update(T + 3.7 * (i + 1)); grab();
+      }
+      applyView(v);   // restores the view's options + lighting and calls update(T)
+      const B = grab();
+      let diff = 0; for (let i = 0; i < A.length; i++) if (A[i] !== B[i]) diff++;
+      console.log(`DETERMINISM ${VIEW}: ${diff} differing bytes of ${A.length}`);
+      stats.textContent = `determinism: ${diff} differing bytes`;
+    }
     if (Q.get('ab')) {   // interleaved A/B variants, medians: &ab=1&n=5
       renderer.setSize(720, 1280);
       const gl = renderer.getContext(), px = new Uint8Array(4);
@@ -249,13 +267,20 @@ async function main() {
         aniso1: () => { for (const [o, m] of stdMeshes) { if (m.map) { if (!lamb.has('a1' + m.uuid)) { const c = m.clone(); c.map = m.map.clone(); c.map.anisotropy = 1; c.map.needsUpdate = true; lamb.set('a1' + m.uuid, c); } o.material = lamb.get('a1' + m.uuid); } } },
         noRecv: () => { s.root.traverse((o) => { if (o.isMesh || o.isInstancedMesh) { o.userData._rs ??= o.receiveShadow; o.receiveShadow = false; } }); },
       };
-      const variants = Q.get('ab') === 'cat' ? catVariants : Q.get('ab') === 'party' ? partyVariants : variants0;
+      const variants = Q.get('ab') === 'cat' ? catVariants : Q.get('ab') === 'party' ? partyVariants : { ...variants0 };
+      // reference scene ≈ the characters module's "empty floor" (plane + hemi + shadowed sun, standard material)
+      const refScene = new THREE.Scene(); refScene.background = new THREE.Color('#9fc8e8');
+      { const pl = new THREE.Mesh(new THREE.PlaneGeometry(60, 60).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#d9c7a8', roughness: 0.8 })); pl.receiveShadow = true; refScene.add(pl);
+        const hl = new THREE.HemisphereLight('#ffffff', '#886644', 1.2); const dl = new THREE.DirectionalLight('#ffffff', 2); dl.position.set(3, 8, 5); dl.castShadow = true; dl.shadow.mapSize.set(1024, 1024); refScene.add(hl, dl); }
+      let useRef = false;
+      if (Q.get('ab') === 'ref') { for (const k of Object.keys(variants)) delete variants[k]; variants.base = () => {}; variants.REF = () => { useRef = true; }; }
       const res = {}; for (const k in variants) res[k] = [];
       const n = +(Q.get('n') || 4);
       for (let i = -1; i < n; i++) for (const [k, f] of Object.entries(variants)) {
-        reset(); f(); s.root.traverse((o) => { if (o.material && !Array.isArray(o.material)) o.material.needsUpdate = true; });
-        renderer.render(scene, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);   // warm (compile)
-        const t0 = performance.now(); s.update(T + i / 30); renderer.render(scene, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        reset(); useRef = false; f(); s.root.traverse((o) => { if (o.material && !Array.isArray(o.material)) o.material.needsUpdate = true; });
+        const sc = useRef ? refScene : scene;
+        renderer.render(sc, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);   // warm (compile)
+        const t0 = performance.now(); s.update(T + i / 30); renderer.render(sc, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
         if (i >= 0) res[k].push(performance.now() - t0);
       }
       const med = (a) => Math.min(...a).toFixed(0);

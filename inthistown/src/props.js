@@ -354,91 +354,49 @@ function bishopMat(white) {
     g.strokeStyle = white ? '#c9b994' : '#4e4646'; g.lineWidth = 14; g.beginPath(); g.moveTo(x0, y0 + 3); g.lineTo(x1, y1 + 3); g.stroke();   // lit lower lip
     g.strokeStyle = white ? '#6e5f45' : '#0b0909'; g.lineWidth = 10; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();         // groove
   });
-  _slitMat[key] = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex, roughness: PIECE_ROUGH, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS[key] * GLOSS.k });
+  _slitMat[key] = studioize(new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex, roughness: PIECE_ROUGH, metalness: 0 }), GLOSS[key]);
   return _slitMat[key];
 }
-// A small procedural "studio" cube map used ONLY by chess materials, so the glossy pieces get readable
-// highlights in any set (dark surroundings, a couple of soft boxes → low ambient lift, crisp reflections).
-let _env = null;
-function chessEnv() {
-  if (_env) return _env;
-  const S = 128;
-  const face = (draw) => { const c = document.createElement('canvas'); c.width = c.height = S; draw(c.getContext('2d')); return c; };
-  const soft = (g, x, y, w, h, col = '#ffffff', blur = 5) => { g.save(); g.filter = `blur(${blur}px)`; g.fillStyle = col; g.fillRect(x, y, w, h); g.restore(); };
-  const side = (boxes) => face((g) => {
-    const gr = g.createLinearGradient(0, 0, 0, S);
-    gr.addColorStop(0, '#4a4b52'); gr.addColorStop(0.48, '#26262b'); gr.addColorStop(0.56, '#1f1b18'); gr.addColorStop(1, '#14110f');
-    g.fillStyle = gr; g.fillRect(0, 0, S, S);
-    for (const b of boxes) soft(g, ...b);
-  });
-  const imgs = [
-    side([[70, 18, 26, 70, '#fff6ea']]),                        // +X: tall key strip
-    side([[30, 30, 36, 40, '#b8c6dc']]),                        // -X: cool fill
-    face((g) => { g.fillStyle = '#3a3b42'; g.fillRect(0, 0, S, S); soft(g, 28, 34, 72, 60, '#ffffff', 8); }),   // +Y: big top softbox
-    face((g) => { g.fillStyle = '#1a1512'; g.fillRect(0, 0, S, S); }),                                          // -Y: dark table
-    side([[16, 26, 22, 64, '#ffffff'], [92, 40, 16, 40, '#ffe2bf']]),                                           // +Z
-    side([[52, 24, 30, 60, '#ffffff']]),                        // -Z
-  ];
-  _env = new THREE.CubeTexture(imgs);
-  _env.colorSpace = THREE.SRGBColorSpace;
-  _env.needsUpdate = true;
-  return _env;
+// Glossy "studio" reflections used ONLY by chess materials: analytic soft boxes + horizon in world space,
+// fresnel weighted, injected into MeshStandardMaterial (pure math, no env-map texture fetches — an env map
+// cost ~45% of a close-up frame on SwiftShader). Makes the ebony pieces read in any set's lighting.
+const STUDIO_GLSL = `
+{
+  vec3 sV = normalize( vViewPosition );
+  vec3 sNw = inverseTransformDirection( normal, viewMatrix );
+  vec3 sVw = inverseTransformDirection( sV, viewMatrix );
+  vec3 sR = reflect( -sVw, sNw );
+  float sNdV = clamp( dot( normal, sV ), 0.0, 1.0 );
+  float sF = 0.04 + 0.96 * pow( 1.0 - sNdV, 5.0 );
+  float sTop = smoothstep( 0.5, 0.82, sR.y );
+  float sK1 = smoothstep( 0.8, 0.96, dot( sR, vec3( 0.739, 0.296, 0.605 ) ) );
+  float sK2 = smoothstep( 0.84, 0.97, dot( sR, vec3( -0.711, 0.203, -0.673 ) ) );
+  float sHz = smoothstep( -0.15, 0.25, sR.y );
+  vec3 sEnv = vec3( 1.0, 0.98, 0.95 ) * ( sTop * 2.2 + sK1 * 2.6 ) + vec3( 0.85, 0.9, 1.0 ) * sK2 * 1.3 + vec3( 0.16, 0.16, 0.18 ) * sHz;
+  outgoingLight += sEnv * sF * uStudio;
 }
-const GLOSS = { w: 0.55, b: 1.0, board: 0.3, k: 1 };
+#include <opaque_fragment>`;
+const _studioU = [];   // [uniform, base]
+function studioize(material, base) {
+  const u = { value: base * GLOSS.k };
+  _studioU.push([u, base]);
+  material.onBeforeCompile = (sh) => {
+    sh.uniforms.uStudio = u;
+    sh.fragmentShader = 'uniform float uStudio;\n' + sh.fragmentShader.replace('#include <opaque_fragment>', STUDIO_GLSL);
+  };
+  material.customProgramCacheKey = () => 'chessStudio1';
+  return material;
+}
+const GLOSS = { w: 0.6, b: 1.0, board: 0.35, k: 1 };
 const _pmat = {};
 function pieceMat(white) {
   const key = white ? 'w' : 'b';
-  return (_pmat[key] ??= new THREE.MeshStandardMaterial({ color: white ? IVORY : EBONY, roughness: PIECE_ROUGH, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS[key] * GLOSS.k }));
+  return (_pmat[key] ??= studioize(new THREE.MeshStandardMaterial({ color: white ? IVORY : EBONY, roughness: PIECE_ROUGH, metalness: 0 }), GLOSS[key]));
 }
-const _glossMats = [];   // [material, baseIntensity]
 /** Scale the studio reflections on all chess pieces/boards (1 = default, 0 = off). Call any time. */
 export function setChessGloss(k = 1) {
   GLOSS.k = k;
-  for (const key of ['w', 'b']) if (_pmat[key]) _pmat[key].envMapIntensity = GLOSS[key] * k;
-  for (const key of ['w', 'b']) if (_slitMat[key]) _slitMat[key].envMapIntensity = GLOSS[key] * k;
-  for (const [m, b] of _glossMats) m.envMapIntensity = b * k;
-}
-const eyeMat = (white) => mat(white ? '#1c1818' : '#f5efe0', { roughness: 0.25 });
-
-function createPiece(code) {
-  const white = code === code.toUpperCase();
-  const type = code.toLowerCase();
-  const def = pieceDef(type);
-  const group = new THREE.Group();
-  group.name = `piece_${code}`;
-  const body = new THREE.Mesh(def.body, type === 'b' ? bishopMat(white) : pieceMat(white));
-  body.castShadow = true; body.receiveShadow = true;
-  group.add(body);
-  if (def.eyes) { const e = new THREE.Mesh(def.eyes, eyeMat(white)); e.castShadow = false; group.add(e); }
-  return { group, code, type, white, H: def.H, R: def.R, Rm: def.Rm, sq: -1, yaw: 0, animated: false };
-}
-
-// shared flat geometry + textures for contact blobs and highlights
-let _blob = null;
-function blobAssets() {
-  if (_blob) return _blob;
-  const tex = canvasTexture(64, 64, (g, w, h) => {
-    const gr = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
-    gr.addColorStop(0, 'rgba(0,0,0,0.62)'); gr.addColorStop(0.45, 'rgba(0,0,0,0.38)'); gr.addColorStop(0.8, 'rgba(0,0,0,0.08)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
-    g.fillStyle = gr; g.fillRect(0, 0, w, h);
-  });
-  const material = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, color: '#ffffff', polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -4 });
-  _blob = { geo: new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), material };
-  return _blob;
-}
-let _hlTex = null;
-const _hlMats = new Map();
-function hlMat(color) {
-  const key = String(color);
-  if (!_hlMats.has(key)) {
-    _hlTex ??= canvasTexture(128, 128, (g, w) => {
-      const rr = (x, y, ww, hh, r) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + ww, y, x + ww, y + hh, r); g.arcTo(x + ww, y + hh, x, y + hh, r); g.arcTo(x, y + hh, x, y, r); g.arcTo(x, y, x + ww, y, r); g.closePath(); };
-      g.fillStyle = 'rgba(255,255,255,0.42)'; rr(6, 6, w - 12, w - 12, 14); g.fill();
-      g.strokeStyle = 'rgba(255,255,255,1)'; g.lineWidth = 9; rr(8, 8, w - 16, w - 16, 13); g.stroke();
-    });
-    _hlMats.set(key, new THREE.MeshBasicMaterial({ color, map: _hlTex, transparent: true, depthWrite: false, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 }));
-  }
-  return _hlMats.get(key);
+  for (const [u, b] of _studioU) u.value = b * k;
 }
 
 // ════════════════════════════════════════════════════════════════════════════════ chess board
@@ -509,10 +467,9 @@ function buildBoard(size, playW, frameW, T, lip, bev, fileSign) {
   const g = new THREE.Group();
   g.name = 'board';
   const tex = boardTextures(size, playW, frameW, fileSign);
-  const frameMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.frame, roughness: 0.4, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS.board * GLOSS.k });
+  const frameMat = studioize(new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.frame, roughness: 0.4, metalness: 0 }), GLOSS.board);
   const sideMat = mat('#4a2a16', { roughness: 0.6 });
-  const checkerMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.checker, roughness: 0.46, metalness: 0, envMap: chessEnv(), envMapIntensity: GLOSS.board * GLOSS.k });
-  _glossMats.push([frameMat, GLOSS.board], [checkerMat, GLOSS.board]);
+  const checkerMat = studioize(new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.checker, roughness: 0.46, metalness: 0 }), GLOSS.board * 0.6);
   // frame ring: extruded square with a square hole and bevels on all edges
   const ho = size / 2 - bev, hi = playW / 2 + bev;
   const shape = new THREE.Shape([new V2(-ho, -ho), new V2(ho, -ho), new V2(ho, ho), new V2(-ho, ho)]);
@@ -685,7 +642,8 @@ export function makeChessSet(opts = {}) {
     const pos = new V3().lerpVectors(a, b, p);
     pos.y = 4 * h * u * (1 - u);
     _qb.setFromAxisAngle(UP, yaw);
-    if (dist > 1e-6) {
+    if (u <= 0 || u >= 1) { pos.copy(u <= 0 ? a : b); P.group.quaternion.setFromAxisAngle(UP, u <= 0 ? P.yaw : restYaw(P, ti)); }
+    else if (dist > 1e-6) {
       const d = new V3().subVectors(b, a).normalize();
       _qa.setFromAxisAngle(new V3(d.z, 0, -d.x), 0.22 * Math.sin(Math.PI * u) * (o.tilt ?? 1));
       P.group.quaternion.copy(_qa).multiply(_qb);

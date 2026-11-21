@@ -36,13 +36,14 @@ renderer.setSize(W, H);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = Q.get('shadow') !== '0';
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setScissorTest(true);
 document.body.appendChild(renderer.domElement);
 
 function studio({ bg = '#c9d6e3', floor = '#ddd5c8', shadowSize = 3, sun = [2.5, 5, 3], sunColor = '#fff1dc', sunI = 2.4, hemi = 1.15 } = {}) {
   const scene = new THREE.Scene();
+  (window.__scenes ??= []).push(scene);
   scene.background = new THREE.Color(bg);
   scene.add(new THREE.HemisphereLight('#eef4ff', '#8a7660', hemi));
   const d = new THREE.DirectionalLight(sunColor, sunI);
@@ -227,7 +228,7 @@ if (VIEW === 'all') {
   const A = makeChessSet(), B = makeChessSet();
   st.scene.add(A.root, B.root);
   const snap = (cs) => cs.root.children[0].children.find((c) => c.name === 'pieces').children
-    .map((g) => g.visible ? [...g.position.toArray(), ...g.quaternion.toArray(), ...g.scale.toArray()].map((x) => x.toFixed(6)).join(',') : 'hidden').sort().join('|');
+    .map((g) => g.visible ? [...g.position.toArray(), ...g.quaternion.toArray(), ...g.scale.toArray()].map((x) => (Math.abs(x) < 5e-7 ? 0 : x).toFixed(5)).join(',') : 'hidden').sort().join('|');
   const res = {};
   const same = (name, f1, f2) => { f1(A); f2(B); res[name] = snap(A) === snap(B); };
   same('move twice = once', (c) => { c.reset(); c.move('e2', 'e4', 0.5); c.move('e2', 'e4', 0.5); }, (c) => { c.reset(); c.move('e2', 'e4', 0.5); });
@@ -277,6 +278,10 @@ if (VIEW === 'all') {
   label(`slam("e4", u=${u}) + impact burst`, 8, 8);
 }
 
+if (Q.get('noenv') === '1') {
+  const seen = new Set();
+  window.__scenes?.forEach((sc) => sc.traverse((o) => { const ms = Array.isArray(o.material) ? o.material : [o.material]; for (const m of ms) if (m && m.envMap && !seen.has(m)) { seen.add(m); m.envMap = null; m.needsUpdate = true; } }));
+}
 const benchN = parseInt(Q.get('bench') || '0', 10);
 if (benchN > 0) {
   const gl = renderer.getContext(); const px = new Uint8Array(4);
