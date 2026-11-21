@@ -994,8 +994,8 @@ function neighbourShot(name, start, set, who, face) {
 function glassesOnHead(ctx) {
   // Move grandad's glasses up onto his forehead if the character exposes them; otherwise skip.
   const g = ctx.cast.grandad;
-  const node = g.accessories?.glasses || g.root.getObjectByName?.('glasses');
-  if (node) { g.setAccessory?.('glasses', true); node.position.y += 0.2; node.rotation.x = -0.3; }
+  const node = g.root.getObjectByName('acc:glasses');
+  if (node) { g.setAccessory?.('glasses', true); node.position.y += 0.19; node.position.z -= 0.03; node.rotation.x = -0.35; }
 }
 
 function camAway(ctx, from) {

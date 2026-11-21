@@ -1813,7 +1813,7 @@ PIGEON.huss = (c) => {
   } else puff = 0.92 + 0.08 * Math.sin(TAU * 9 * t);
   const tr = 0.006 * noise1(t * 20, c.seed) * puff;
   pos(c, 'hips', tr, 0.17 + 0.03 * puff, 0);
-  eul(c, 'hips', -0.15 - 0.4 * puff, 0, 0);
+  eul(c, 'hips', -0.15 - 0.18 * puff, 0, 0);
   c.j.belly.s.set(1 + 0.34 * puff, 1 + 0.22 * puff, 1 + 0.14 * puff);
   pos(c, 'torso', 0, 0.065 + 0.03 * puff, 0.085 + 0.02 * puff);
   eul(c, 'torso', 0.12 + 0.05 * puff, 0, 0);
@@ -1823,7 +1823,7 @@ PIGEON.huss = (c) => {
   // keep feet on the floor while the body is puffed & lifted
   pos(c, 'legL', 0.04, -0.07, 0.01); pos(c, 'legR', -0.04, -0.07, 0.01);
   c.j.legL.s.set(1, 1 + 0.03 * puff / 0.094, 1); c.j.legR.s.copy(c.j.legL.s);
-  eul(c, 'legL', 0.4 * puff, 0, 0); eul(c, 'legR', 0.4 * puff, 0, 0);
+  eul(c, 'legL', 0.18 * puff, 0, 0); eul(c, 'legR', 0.18 * puff, 0, 0);
   c.x.beak = puff;
 };
 PIGEON.knock = (c) => {
@@ -1993,7 +1993,7 @@ function buildCat(S) {
   const tm = mat2(tabby);
   const bodyMesh = new THREE.Mesh(rbox(0.2, 0.19, 0.42, 0.065, 2), tm); bodyMesh.castShadow = true; J.belly.add(bodyMesh);
   let b = new Bag();
-  b.add(rbox(0.15, 0.12, 0.02, 0.008), white, [0, -0.03, 0.204]);
+  b.add(rbox(0.14, 0.1, 0.06, 0.03), white, [0, -0.04, 0.186]);
   b.build(J.belly);
   const headMesh = new THREE.Mesh(rbox(0.23, 0.19, 0.18, 0.065, 2), tm); headMesh.castShadow = true; headMesh.position.set(0, 0.04, 0.03); J.head.add(headMesh);
   b = new Bag();

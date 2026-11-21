@@ -186,7 +186,9 @@ async function main() {
     const hero = makeCharacter(CAST[who]); st.scene.add(hero.root);
     const furn = chairAndTable(st.scene);
     let list;
-    if (VIEW === 'poses') {
+    if (Q.get('list')) {
+      list = Q.get('list').split(',').map((a) => [a.replace('*', ''), a, a.endsWith('*') ? { seated: true } : {}]);
+    } else if (VIEW === 'poses') {
       list = ACTIONS.map((a) => [a, a, {}]);
       list.push(['sitSlam', 'sitSlam (up)', { t: 0.85 }]);
     } else {
@@ -195,7 +197,8 @@ async function main() {
     const repT = { idle: 0.5, dance: 0.02, dance2: 0.22, walk: 0.3, sit: 0, sitSlam: 0.45, slam: 0.45, laugh: 0.3, point: 0.2, clap: 0.05,
       cheer: 0.25, surprised: 0.6, shrug: 0.4, think: 0.5, peer: 0.5, crowdSurf: 0.3, walkSad: 0.4, stunned: 0.5, wave: 0.12,
       sitIdle: 0.5, sitStand: 0, pointLaugh: 0.3, crossArms: 0.5 };
-    const cols = 4, rows = Math.ceil(list.length / cols), cw = W / cols, chh = H / rows;
+    const cols = +(Q.get('cols') || 4), rows = Math.ceil(list.length / cols), cw = W / cols, chh = H / rows;
+    const cyaw = +(Q.get('yaw') || 0.56);
     list.forEach(([a, name, extra], i) => {
       const x = (i % cols) * cw, y = Math.floor(i / cols) * chh;
       const seatedish = !!(a.startsWith('sit') || extra.seated);
@@ -206,7 +209,7 @@ async function main() {
       if (a === 'sitStand') params.u = 0.5;
       hero.pose(a, t, params); hero.face(a === 'laugh' || a === 'pointLaugh' ? 'laugh' : a.includes('lam') ? 'huss' : 'neutral', 0.5);
       hero.root.position.set(0, a === 'crowdSurf' ? 1.0 : 0, 0);
-      const camP = a === 'crowdSurf' ? cam(34, cw / chh, [3.4, 2.7, 3.8], [0, 1.15, 0]) : cam(32, cw / chh, [2.7, 1.55, 4.3], [0, 0.98, 0.25]);
+      const camP = a === 'crowdSurf' ? cam(34, cw / chh, [3.4, 2.7, 3.8], [0, 1.15, 0]) : cam(32, cw / chh, [Math.sin(cyaw) * 5.05, 1.55, 0.25 + Math.cos(cyaw) * 5.05], [0, 0.98, 0.25]);
       view(st.scene, camP, x, y, cw, chh);
       label(name, x + 4, y + 3);
     });
