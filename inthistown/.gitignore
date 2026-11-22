@@ -9,3 +9,6 @@ audio/stems/
 audio/mix.wav
 out/
 __pycache__/
+episodes/*/stems/
+episodes/*/mix.wav
+episodes/_test/
