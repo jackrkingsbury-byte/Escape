@@ -1,0 +1,2402 @@
+{
+ "fps": 30,
+ "duration": 54.58,
+ "audio": "episodes/ep5/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody dances.",
+   "start": 0.3,
+   "end": 2.166,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.707
+    },
+    {
+     "text": "dances",
+     "start": 1.707,
+     "end": 2.166
+    }
+   ],
+   "visual": "Crane down the party street, everybody dancing."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me.",
+   "start": 2.381,
+   "end": 3.044,
+   "words": [
+    {
+     "text": "Except",
+     "start": 2.396,
+     "end": 2.855
+    },
+    {
+     "text": "me",
+     "start": 2.855,
+     "end": 3.044
+    }
+   ],
+   "visual": "Push in on an upstairs window; inside, Brenda stands bolt upright, sunglasses on, frozen."
+  },
+  {
+   "id": "b03",
+   "speaker": "brenda",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 3.309,
+   "end": 4.949,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 3.309,
+     "end": 3.569
+    },
+    {
+     "text": "HUSS!",
+     "start": 3.519,
+     "end": 3.779
+    },
+    {
+     "text": "HUSS!",
+     "start": 3.709,
+     "end": 3.969
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.289,
+     "end": 4.549
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.499,
+     "end": 4.759
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.689,
+     "end": 4.949
+    }
+   ],
+   "visual": "Brenda's room: her body doesn't move a millimetre; only her face snaps to 'huss' on each HUSS."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Grandad's DJ name? Grandad.",
+   "start": 5.289,
+   "end": 7.401,
+   "words": [
+    {
+     "text": "Grandad's",
+     "start": 5.304,
+     "end": 5.79
+    },
+    {
+     "text": "DJ",
+     "start": 5.79,
+     "end": 6.166
+    },
+    {
+     "text": "name?",
+     "start": 6.166,
+     "end": 6.432
+    },
+    {
+     "text": "Grandad",
+     "start": 6.862,
+     "end": 7.401
+    }
+   ],
+   "visual": "Grandad DJing on the street in sunglasses and headphones; tag DJ GRANDAD on the punchline."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While they're out partying, by the way, I'm home. Not moving.",
+   "start": 7.716,
+   "end": 11.17,
+   "words": [
+    {
+     "text": "While",
+     "start": 7.731,
+     "end": 7.954
+    },
+    {
+     "text": "they're",
+     "start": 7.954,
+     "end": 8.177
+    },
+    {
+     "text": "out",
+     "start": 8.177,
+     "end": 8.353
+    },
+    {
+     "text": "partying",
+     "start": 8.353,
+     "end": 8.716
+    },
+    {
+     "text": "by",
+     "start": 9.046,
+     "end": 9.23
+    },
+    {
+     "text": "the",
+     "start": 9.23,
+     "end": 9.367
+    },
+    {
+     "text": "way",
+     "start": 9.367,
+     "end": 9.551
+    },
+    {
+     "text": "I'm",
+     "start": 9.681,
+     "end": 9.929
+    },
+    {
+     "text": "home",
+     "start": 9.929,
+     "end": 10.242
+    },
+    {
+     "text": "Not",
+     "start": 10.552,
+     "end": 10.797
+    },
+    {
+     "text": "moving",
+     "start": 10.797,
+     "end": 11.17
+    }
+   ],
+   "visual": "Static wide of the bedroom: Brenda frozen on the rug, party lights flicker in the window."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Day one: four seconds.",
+   "start": 11.485,
+   "end": 12.626,
+   "words": [
+    {
+     "text": "Day",
+     "start": 11.5,
+     "end": 11.723
+    },
+    {
+     "text": "one",
+     "start": 11.723,
+     "end": 11.946
+    },
+    {
+     "text": "four",
+     "start": 11.946,
+     "end": 12.169
+    },
+    {
+     "text": "seconds",
+     "start": 12.169,
+     "end": 12.626
+    }
+   ],
+   "visual": "DAY 1 card + stopwatch 0:01-0:04; on 'seconds' she wobbles, face 'sweat'."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Day forty: the cat thinks I'm a bookshelf.",
+   "start": 12.941,
+   "end": 14.759,
+   "words": [
+    {
+     "text": "Day",
+     "start": 12.956,
+     "end": 13.144
+    },
+    {
+     "text": "forty",
+     "start": 13.144,
+     "end": 13.431
+    },
+    {
+     "text": "the",
+     "start": 13.431,
+     "end": 13.57
+    },
+    {
+     "text": "cat",
+     "start": 13.57,
+     "end": 13.758
+    },
+    {
+     "text": "thinks",
+     "start": 13.758,
+     "end": 14.046
+    },
+    {
+     "text": "I'm",
+     "start": 14.046,
+     "end": 14.234
+    },
+    {
+     "text": "a",
+     "start": 14.234,
+     "end": 14.373
+    },
+    {
+     "text": "bookshelf",
+     "start": 14.373,
+     "end": 14.759
+    }
+   ],
+   "visual": "DAY 40: the cat loafs on top of her head, staring into the lens."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Be a fridge. Cold. Still. Full of snacks. My dentist.",
+   "start": 15.074,
+   "end": 19.16,
+   "words": [
+    {
+     "text": "Be",
+     "start": 15.089,
+     "end": 15.24
+    },
+    {
+     "text": "a",
+     "start": 15.24,
+     "end": 15.391
+    },
+    {
+     "text": "fridge",
+     "start": 15.391,
+     "end": 15.703
+    },
+    {
+     "text": "Cold",
+     "start": 15.983,
+     "end": 16.448
+    },
+    {
+     "text": "Still",
+     "start": 16.678,
+     "end": 17.101
+    },
+    {
+     "text": "Full",
+     "start": 17.331,
+     "end": 17.541
+    },
+    {
+     "text": "of",
+     "start": 17.541,
+     "end": 17.695
+    },
+    {
+     "text": "snacks",
+     "start": 17.695,
+     "end": 18.014
+    },
+    {
+     "text": "My",
+     "start": 18.444,
+     "end": 18.678
+    },
+    {
+     "text": "dentist",
+     "start": 18.678,
+     "end": 19.16
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Be a fridge. Cold. Still. Full of snacks.",
+    "by": "my dentist"
+   },
+   "visual": "QUOTE CARD over a slow zoom on Brenda with the cat on her head; attribution on 'My dentist'."
+  },
+  {
+   "id": "b09",
+   "speaker": "brenda",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 19.475,
+   "end": 20.135,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 19.475,
+     "end": 19.735
+    },
+    {
+     "text": "HUSS!",
+     "start": 19.685,
+     "end": 19.945
+    },
+    {
+     "text": "HUSS!",
+     "start": 19.875,
+     "end": 20.135
+    }
+   ],
+   "visual": "Tight on Brenda + cat: face 'huss' per HUSS, body still, a sweat drop slides; the cat doesn't blink."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respectful moments. Number seven: Grandad dusted me.",
+   "start": 20.475,
+   "end": 23.973,
+   "words": [
+    {
+     "text": "Top",
+     "start": 20.49,
+     "end": 20.679
+    },
+    {
+     "text": "ten",
+     "start": 20.679,
+     "end": 20.868
+    },
+    {
+     "text": "respectful",
+     "start": 20.868,
+     "end": 21.406
+    },
+    {
+     "text": "moments",
+     "start": 21.406,
+     "end": 21.843
+    },
+    {
+     "text": "Number",
+     "start": 22.223,
+     "end": 22.573
+    },
+    {
+     "text": "seven",
+     "start": 22.573,
+     "end": 22.923
+    },
+    {
+     "text": "Grandad",
+     "start": 22.923,
+     "end": 23.394
+    },
+    {
+     "text": "dusted",
+     "start": 23.394,
+     "end": 23.804
+    },
+    {
+     "text": "me",
+     "start": 23.804,
+     "end": 23.973
+    }
+   ],
+   "visual": "TOP 10 card; Grandad dusts Brenda's shoulders and the cat with a feather duster, then nods."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then came the Freeze Dance Championship.",
+   "start": 24.288,
+   "end": 25.969,
+   "words": [
+    {
+     "text": "Then",
+     "start": 24.303,
+     "end": 24.496
+    },
+    {
+     "text": "came",
+     "start": 24.496,
+     "end": 24.74
+    },
+    {
+     "text": "the",
+     "start": 24.74,
+     "end": 24.882
+    },
+    {
+     "text": "Freeze",
+     "start": 24.882,
+     "end": 25.126
+    },
+    {
+     "text": "Dance",
+     "start": 25.126,
+     "end": 25.37
+    },
+    {
+     "text": "Championship",
+     "start": 25.37,
+     "end": 25.969
+    }
+   ],
+   "visual": "Square, banner SUMMER PARTY / FREEZE DANCE / CHAMPIONSHIP, stage packed with dancers."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Marcus sneezed. He's out!",
+   "start": 26.184,
+   "end": 27.853,
+   "words": [
+    {
+     "text": "Marcus",
+     "start": 26.199,
+     "end": 26.639
+    },
+    {
+     "text": "sneezed",
+     "start": 26.639,
+     "end": 27.014
+    },
+    {
+     "text": "He's",
+     "start": 27.344,
+     "end": 27.598
+    },
+    {
+     "text": "out!",
+     "start": 27.598,
+     "end": 27.853
+    }
+   ],
+   "visual": "Music stops, everyone freezes. Marcus jolts on 'sneezed'; red OUT stamp."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The mayor's mustache twitched. He's out!",
+   "start": 28.168,
+   "end": 30.271,
+   "words": [
+    {
+     "text": "The",
+     "start": 28.183,
+     "end": 28.34
+    },
+    {
+     "text": "mayor's",
+     "start": 28.34,
+     "end": 28.667
+    },
+    {
+     "text": "mustache",
+     "start": 28.667,
+     "end": 29.049
+    },
+    {
+     "text": "twitched",
+     "start": 29.049,
+     "end": 29.432
+    },
+    {
+     "text": "He's",
+     "start": 29.762,
+     "end": 30.016
+    },
+    {
+     "text": "out!",
+     "start": 30.016,
+     "end": 30.271
+    }
+   ],
+   "visual": "ECU on the frozen mayor; one tiny twitch; red OUT stamp."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Never trust a man who blinks. A fish.",
+   "start": 30.586,
+   "end": 32.876,
+   "words": [
+    {
+     "text": "Never",
+     "start": 30.601,
+     "end": 30.844
+    },
+    {
+     "text": "trust",
+     "start": 30.844,
+     "end": 31.137
+    },
+    {
+     "text": "a",
+     "start": 31.137,
+     "end": 31.279
+    },
+    {
+     "text": "man",
+     "start": 31.279,
+     "end": 31.471
+    },
+    {
+     "text": "who",
+     "start": 31.471,
+     "end": 31.613
+    },
+    {
+     "text": "blinks",
+     "start": 31.613,
+     "end": 31.957
+    },
+    {
+     "text": "A",
+     "start": 32.387,
+     "end": 32.595
+    },
+    {
+     "text": "fish",
+     "start": 32.595,
+     "end": 32.876
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Never trust a man who blinks.",
+    "by": "a fish"
+   },
+   "visual": "QUOTE CARD over a slow dolly along the frozen contestants; attribution on 'A fish'."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Hours later. Just me and a lamppost.",
+   "start": 33.191,
+   "end": 35.505,
+   "words": [
+    {
+     "text": "Hours",
+     "start": 33.206,
+     "end": 33.51
+    },
+    {
+     "text": "later",
+     "start": 33.51,
+     "end": 33.878
+    },
+    {
+     "text": "Just",
+     "start": 34.308,
+     "end": 34.597
+    },
+    {
+     "text": "me",
+     "start": 34.597,
+     "end": 34.737
+    },
+    {
+     "text": "and",
+     "start": 34.737,
+     "end": 34.927
+    },
+    {
+     "text": "a",
+     "start": 34.927,
+     "end": 35.066
+    },
+    {
+     "text": "lamppost",
+     "start": 35.066,
+     "end": 35.505
+    }
+   ],
+   "visual": "3 AM card; the stage is empty except Brenda and a lamppost with its own bib. The crowd is half asleep."
+  },
+  {
+   "id": "b15m",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Be the lamp, not the moth. A moth.",
+   "start": 35.82,
+   "end": 38.306,
+   "words": [
+    {
+     "text": "Be",
+     "start": 35.835,
+     "end": 35.981
+    },
+    {
+     "text": "the",
+     "start": 35.981,
+     "end": 36.126
+    },
+    {
+     "text": "lamp",
+     "start": 36.126,
+     "end": 36.374
+    },
+    {
+     "text": "not",
+     "start": 36.804,
+     "end": 37.059
+    },
+    {
+     "text": "the",
+     "start": 37.059,
+     "end": 37.246
+    },
+    {
+     "text": "moth",
+     "start": 37.246,
+     "end": 37.5
+    },
+    {
+     "text": "A",
+     "start": 37.81,
+     "end": 38.02
+    },
+    {
+     "text": "moth",
+     "start": 38.02,
+     "end": 38.306
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Be the lamp, not the moth.",
+    "by": "a moth"
+   },
+   "visual": "QUOTE CARD; behind it a tiny moth circles the lamppost bulb; attribution on 'A moth'."
+  },
+  {
+   "id": "b16",
+   "speaker": "brenda",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 38.621,
+   "end": 40.261,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 38.621,
+     "end": 38.881
+    },
+    {
+     "text": "HUSS!",
+     "start": 38.831,
+     "end": 39.091
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.021,
+     "end": 39.281
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.601,
+     "end": 39.861
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.811,
+     "end": 40.071
+    },
+    {
+     "text": "HUSS!",
+     "start": 40.001,
+     "end": 40.261
+    }
+   ],
+   "visual": "Western face-off: Brenda CU ('huss' face, body still) vs the lamppost, tighter each time; crowd leans in."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The lamppost flickered. It's out!",
+   "start": 40.601,
+   "end": 42.479,
+   "words": [
+    {
+     "text": "The",
+     "start": 40.616,
+     "end": 40.771
+    },
+    {
+     "text": "lamppost",
+     "start": 40.771,
+     "end": 41.257
+    },
+    {
+     "text": "flickered",
+     "start": 41.257,
+     "end": 41.633
+    },
+    {
+     "text": "It's",
+     "start": 41.963,
+     "end": 42.221
+    },
+    {
+     "text": "out!",
+     "start": 42.221,
+     "end": 42.479
+    }
+   ],
+   "visual": "The bulb flickers; OUT stamp on the lamppost; confetti, crowd cheers, trophy in Brenda's hand."
+  },
+  {
+   "id": "b18",
+   "speaker": "marcus",
+   "kind": "quote",
+   "text": "Brenda, how did you win?",
+   "start": 42.794,
+   "end": 44.465,
+   "words": [
+    {
+     "text": "Brenda",
+     "start": 42.809,
+     "end": 43.427
+    },
+    {
+     "text": "how",
+     "start": 43.557,
+     "end": 43.8
+    },
+    {
+     "text": "did",
+     "start": 43.8,
+     "end": 44.043
+    },
+    {
+     "text": "you",
+     "start": 44.043,
+     "end": 44.222
+    },
+    {
+     "text": "win?",
+     "start": 44.222,
+     "end": 44.465
+    }
+   ],
+   "visual": "Marcus walks up, stunned, shrug."
+  },
+  {
+   "id": "b19",
+   "speaker": "brenda",
+   "kind": "quote",
+   "text": "While you were out partying, by the way.",
+   "start": 44.78,
+   "end": 46.642,
+   "words": [
+    {
+     "text": "While",
+     "start": 44.795,
+     "end": 45.046
+    },
+    {
+     "text": "you",
+     "start": 45.046,
+     "end": 45.193
+    },
+    {
+     "text": "were",
+     "start": 45.193,
+     "end": 45.34
+    },
+    {
+     "text": "out",
+     "start": 45.34,
+     "end": 45.539
+    },
+    {
+     "text": "partying",
+     "start": 45.539,
+     "end": 45.948
+    },
+    {
+     "text": "by",
+     "start": 46.078,
+     "end": 46.284
+    },
+    {
+     "text": "the",
+     "start": 46.284,
+     "end": 46.436
+    },
+    {
+     "text": "way",
+     "start": 46.436,
+     "end": 46.642
+    }
+   ],
+   "visual": "CU Brenda: only her mouth moves; sunglasses glint."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Number one: I said that in my sleep.",
+   "start": 47.007,
+   "end": 48.601,
+   "words": [
+    {
+     "text": "Number",
+     "start": 47.022,
+     "end": 47.313
+    },
+    {
+     "text": "one",
+     "start": 47.313,
+     "end": 47.505
+    },
+    {
+     "text": "I",
+     "start": 47.505,
+     "end": 47.645
+    },
+    {
+     "text": "said",
+     "start": 47.645,
+     "end": 47.837
+    },
+    {
+     "text": "that",
+     "start": 47.837,
+     "end": 48.028
+    },
+    {
+     "text": "in",
+     "start": 48.028,
+     "end": 48.169
+    },
+    {
+     "text": "my",
+     "start": 48.169,
+     "end": 48.36
+    },
+    {
+     "text": "sleep",
+     "start": 48.36,
+     "end": 48.601
+    }
+   ],
+   "visual": "TOP 10 #1; Marcus lifts her sunglasses: eyes shut, Zzz."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Stand still long enough and you become a hotel. A pigeon.",
+   "start": 48.916,
+   "end": 52.165,
+   "words": [
+    {
+     "text": "Stand",
+     "start": 48.931,
+     "end": 49.244
+    },
+    {
+     "text": "still",
+     "start": 49.244,
+     "end": 49.503
+    },
+    {
+     "text": "long",
+     "start": 49.503,
+     "end": 49.708
+    },
+    {
+     "text": "enough",
+     "start": 49.708,
+     "end": 49.966
+    },
+    {
+     "text": "and",
+     "start": 49.966,
+     "end": 50.171
+    },
+    {
+     "text": "you",
+     "start": 50.171,
+     "end": 50.322
+    },
+    {
+     "text": "become",
+     "start": 50.322,
+     "end": 50.635
+    },
+    {
+     "text": "a",
+     "start": 50.635,
+     "end": 50.786
+    },
+    {
+     "text": "hotel",
+     "start": 50.786,
+     "end": 51.153
+    },
+    {
+     "text": "A",
+     "start": 51.583,
+     "end": 51.752
+    },
+    {
+     "text": "pigeon",
+     "start": 51.752,
+     "end": 52.165
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Stand still long enough and you become a hotel.",
+    "by": "a pigeon"
+   },
+   "visual": "QUOTE CARD; reveal: the pigeon flaps down and settles into Brenda's bun."
+  },
+  {
+   "id": "b22",
+   "speaker": "brenda",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 52.48,
+   "end": 53.14,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 52.48,
+     "end": 52.74
+    },
+    {
+     "text": "HUSS!",
+     "start": 52.69,
+     "end": 52.95
+    },
+    {
+     "text": "HUSS!",
+     "start": 52.88,
+     "end": 53.14
+    }
+   ],
+   "visual": "Button: asleep standing up, trophy in hand; each snored HUSS pops a snore bubble, the pigeon puffs with it."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.707,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "dances",
+   "start": 1.707,
+   "end": 2.166,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 2.396,
+   "end": 2.855,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 2.855,
+   "end": 3.044,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 3.309,
+   "end": 3.569,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 3.519,
+   "end": 3.779,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 3.709,
+   "end": 3.969,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.289,
+   "end": 4.549,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.499,
+   "end": 4.759,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.689,
+   "end": 4.949,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 5
+  },
+  {
+   "text": "Grandad's",
+   "start": 5.304,
+   "end": 5.79,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "DJ",
+   "start": 5.79,
+   "end": 6.166,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "name?",
+   "start": 6.166,
+   "end": 6.432,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Grandad",
+   "start": 6.862,
+   "end": 7.401,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "While",
+   "start": 7.731,
+   "end": 7.954,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they're",
+   "start": 7.954,
+   "end": 8.177,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 8.177,
+   "end": 8.353,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 8.353,
+   "end": 8.716,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 9.046,
+   "end": 9.23,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 9.23,
+   "end": 9.367,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 9.367,
+   "end": 9.551,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I'm",
+   "start": 9.681,
+   "end": 9.929,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "home",
+   "start": 9.929,
+   "end": 10.242,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Not",
+   "start": 10.552,
+   "end": 10.797,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "moving",
+   "start": 10.797,
+   "end": 11.17,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Day",
+   "start": 11.5,
+   "end": 11.723,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "one",
+   "start": 11.723,
+   "end": 11.946,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "four",
+   "start": 11.946,
+   "end": 12.169,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "seconds",
+   "start": 12.169,
+   "end": 12.626,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Day",
+   "start": 12.956,
+   "end": 13.144,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "forty",
+   "start": 13.144,
+   "end": 13.431,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 13.431,
+   "end": 13.57,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "cat",
+   "start": 13.57,
+   "end": 13.758,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "thinks",
+   "start": 13.758,
+   "end": 14.046,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "I'm",
+   "start": 14.046,
+   "end": 14.234,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "a",
+   "start": 14.234,
+   "end": 14.373,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "bookshelf",
+   "start": 14.373,
+   "end": 14.759,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Be",
+   "start": 15.089,
+   "end": 15.24,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "a",
+   "start": 15.24,
+   "end": 15.391,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "fridge",
+   "start": 15.391,
+   "end": 15.703,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Cold",
+   "start": 15.983,
+   "end": 16.448,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Still",
+   "start": 16.678,
+   "end": 17.101,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Full",
+   "start": 17.331,
+   "end": 17.541,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "of",
+   "start": 17.541,
+   "end": 17.695,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "snacks",
+   "start": 17.695,
+   "end": 18.014,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "My",
+   "start": 18.444,
+   "end": 18.678,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "dentist",
+   "start": 18.678,
+   "end": 19.16,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSS!",
+   "start": 19.475,
+   "end": 19.735,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 19.685,
+   "end": 19.945,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 19.875,
+   "end": 20.135,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 2
+  },
+  {
+   "text": "Top",
+   "start": 20.49,
+   "end": 20.679,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 20.679,
+   "end": 20.868,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respectful",
+   "start": 20.868,
+   "end": 21.406,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "moments",
+   "start": 21.406,
+   "end": 21.843,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Number",
+   "start": 22.223,
+   "end": 22.573,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "seven",
+   "start": 22.573,
+   "end": 22.923,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Grandad",
+   "start": 22.923,
+   "end": 23.394,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "dusted",
+   "start": 23.394,
+   "end": 23.804,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "me",
+   "start": 23.804,
+   "end": 23.973,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Then",
+   "start": 24.303,
+   "end": 24.496,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "came",
+   "start": 24.496,
+   "end": 24.74,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 24.74,
+   "end": 24.882,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Freeze",
+   "start": 24.882,
+   "end": 25.126,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Dance",
+   "start": 25.126,
+   "end": 25.37,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Championship",
+   "start": 25.37,
+   "end": 25.969,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Marcus",
+   "start": 26.199,
+   "end": 26.639,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "sneezed",
+   "start": 26.639,
+   "end": 27.014,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "He's",
+   "start": 27.344,
+   "end": 27.598,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "out!",
+   "start": 27.598,
+   "end": 27.853,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "The",
+   "start": 28.183,
+   "end": 28.34,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "mayor's",
+   "start": 28.34,
+   "end": 28.667,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "mustache",
+   "start": 28.667,
+   "end": 29.049,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "twitched",
+   "start": 29.049,
+   "end": 29.432,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "He's",
+   "start": 29.762,
+   "end": 30.016,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "out!",
+   "start": 30.016,
+   "end": 30.271,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Never",
+   "start": 30.601,
+   "end": 30.844,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "trust",
+   "start": 30.844,
+   "end": 31.137,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "a",
+   "start": 31.137,
+   "end": 31.279,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "man",
+   "start": 31.279,
+   "end": 31.471,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "who",
+   "start": 31.471,
+   "end": 31.613,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "blinks",
+   "start": 31.613,
+   "end": 31.957,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "A",
+   "start": 32.387,
+   "end": 32.595,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "fish",
+   "start": 32.595,
+   "end": 32.876,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Hours",
+   "start": 33.206,
+   "end": 33.51,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "later",
+   "start": 33.51,
+   "end": 33.878,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Just",
+   "start": 34.308,
+   "end": 34.597,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "me",
+   "start": 34.597,
+   "end": 34.737,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "and",
+   "start": 34.737,
+   "end": 34.927,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 34.927,
+   "end": 35.066,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "lamppost",
+   "start": 35.066,
+   "end": 35.505,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Be",
+   "start": 35.835,
+   "end": 35.981,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 35.981,
+   "end": 36.126,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "lamp",
+   "start": 36.126,
+   "end": 36.374,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "not",
+   "start": 36.804,
+   "end": 37.059,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 37.059,
+   "end": 37.246,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "moth",
+   "start": 37.246,
+   "end": 37.5,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "A",
+   "start": 37.81,
+   "end": 38.02,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "moth",
+   "start": 38.02,
+   "end": 38.306,
+   "beat": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.621,
+   "end": 38.881,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.831,
+   "end": 39.091,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.021,
+   "end": 39.281,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.601,
+   "end": 39.861,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.811,
+   "end": 40.071,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 40.001,
+   "end": 40.261,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 40.616,
+   "end": 40.771,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "lamppost",
+   "start": 40.771,
+   "end": 41.257,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "flickered",
+   "start": 41.257,
+   "end": 41.633,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "It's",
+   "start": 41.963,
+   "end": 42.221,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "out!",
+   "start": 42.221,
+   "end": 42.479,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Brenda",
+   "start": 42.809,
+   "end": 43.427,
+   "beat": "b18",
+   "kind": "quote",
+   "speaker": "marcus",
+   "i": 0
+  },
+  {
+   "text": "how",
+   "start": 43.557,
+   "end": 43.8,
+   "beat": "b18",
+   "kind": "quote",
+   "speaker": "marcus",
+   "i": 1
+  },
+  {
+   "text": "did",
+   "start": 43.8,
+   "end": 44.043,
+   "beat": "b18",
+   "kind": "quote",
+   "speaker": "marcus",
+   "i": 2
+  },
+  {
+   "text": "you",
+   "start": 44.043,
+   "end": 44.222,
+   "beat": "b18",
+   "kind": "quote",
+   "speaker": "marcus",
+   "i": 3
+  },
+  {
+   "text": "win?",
+   "start": 44.222,
+   "end": 44.465,
+   "beat": "b18",
+   "kind": "quote",
+   "speaker": "marcus",
+   "i": 4
+  },
+  {
+   "text": "While",
+   "start": 44.795,
+   "end": 45.046,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 0
+  },
+  {
+   "text": "you",
+   "start": 45.046,
+   "end": 45.193,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 1
+  },
+  {
+   "text": "were",
+   "start": 45.193,
+   "end": 45.34,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 2
+  },
+  {
+   "text": "out",
+   "start": 45.34,
+   "end": 45.539,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 3
+  },
+  {
+   "text": "partying",
+   "start": 45.539,
+   "end": 45.948,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 4
+  },
+  {
+   "text": "by",
+   "start": 46.078,
+   "end": 46.284,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 46.284,
+   "end": 46.436,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 6
+  },
+  {
+   "text": "way",
+   "start": 46.436,
+   "end": 46.642,
+   "beat": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "i": 7
+  },
+  {
+   "text": "Number",
+   "start": 47.022,
+   "end": 47.313,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "one",
+   "start": 47.313,
+   "end": 47.505,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I",
+   "start": 47.505,
+   "end": 47.645,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "said",
+   "start": 47.645,
+   "end": 47.837,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "that",
+   "start": 47.837,
+   "end": 48.028,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "in",
+   "start": 48.028,
+   "end": 48.169,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "my",
+   "start": 48.169,
+   "end": 48.36,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "sleep",
+   "start": 48.36,
+   "end": 48.601,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Stand",
+   "start": 48.931,
+   "end": 49.244,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "still",
+   "start": 49.244,
+   "end": 49.503,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "long",
+   "start": 49.503,
+   "end": 49.708,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "enough",
+   "start": 49.708,
+   "end": 49.966,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "and",
+   "start": 49.966,
+   "end": 50.171,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "you",
+   "start": 50.171,
+   "end": 50.322,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "become",
+   "start": 50.322,
+   "end": 50.635,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "a",
+   "start": 50.635,
+   "end": 50.786,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "hotel",
+   "start": 50.786,
+   "end": 51.153,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "A",
+   "start": 51.583,
+   "end": 51.752,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "pigeon",
+   "start": 51.752,
+   "end": 52.165,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.48,
+   "end": 52.74,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.69,
+   "end": 52.95,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.88,
+   "end": 53.14,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "brenda",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 2.301,
+   "mode": "muffled"
+  },
+  {
+   "t": 5.209,
+   "mode": "party"
+  },
+  {
+   "t": 7.636,
+   "mode": "muffled"
+  },
+  {
+   "t": 24.208,
+   "mode": "party"
+  },
+  {
+   "t": 26.104,
+   "mode": "none"
+  },
+  {
+   "t": 40.521,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "djName": 6.862,
+  "day1": 11.485,
+  "wobble": 12.169,
+  "day40": 12.941,
+  "shelf": 14.373,
+  "quote1": 15.024,
+  "quote1end": 19.26,
+  "dentist": 18.444,
+  "top7": 22.573,
+  "dust": 23.394,
+  "sneeze": 26.639,
+  "out1": 27.344,
+  "twitch": 29.049,
+  "out2": 29.762,
+  "quote2": 30.536,
+  "quote2end": 32.976,
+  "fish": 31.137,
+  "later": 33.191,
+  "lamp": 35.066,
+  "quote4": 35.77,
+  "quote4end": 38.406,
+  "moth": 37.81,
+  "flicker": 41.257,
+  "out3": 41.963,
+  "top1": 47.313,
+  "lift": 47.645,
+  "sleep": 48.36,
+  "quote3": 48.866,
+  "quote3end": 50.585
+ },
+ "title": "In This Town \u2014 Freeze Dance"
+}

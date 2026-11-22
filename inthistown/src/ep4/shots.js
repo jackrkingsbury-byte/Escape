@@ -254,7 +254,7 @@ export const shots = [
         p.pose('strut', ctx.t * 1.4 + i * 0.25, { speed: 1.3 }); p.face('grin', ctx.t + i);
       }
       ['x05', 'x06', 'x07'].forEach((id, k) => { ctx.cast[id].pose('clap', ctx.t + k * 0.4); ctx.cast[id].face('grin', ctx.t + k); });
-      ctx.cam.set({ pos: E(0.25, 0.85, 3.0), look: E(0, 0.22, 1.15), fov: 40 });
+      ctx.cam.set({ pos: E(0.3, 1.15, 3.9), look: E(0, 0.25, 1.15), fov: 40 });
     },
   },
   {
@@ -489,7 +489,7 @@ export const shots = [
         const q = a.clone().lerp(mid, Math.min(1, e * 2)).lerp(mid.clone().lerp(b, 1), Math.max(0, e * 2 - 1));
         ctx.add(P.bigHat); P.bigHat.position.copy(q); P.bigHat.rotation.set(0.25 * Math.sin(Math.PI * e), p.root.rotation.y, 0);
       }
-      ctx.cam.set({ pos: st.S(0.6, 1.55, 6.0), look: st.S(0.45, 1.0, 2.35), fov: 42 });
+      ctx.cam.set({ pos: st.S(0.65, 1.8, 6.4), look: st.S(0.5, 1.3, 2.35), fov: 44 });
       top10Card(ctx, 7, ctx.time('b17') + 0.05, Infinity, { popAt: ctx.markers.top7 });
     },
   },
