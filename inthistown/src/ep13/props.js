@@ -221,7 +221,7 @@ export function makeGoldThrone() {
   const cone = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.5, 4), gold); cone.position.set(0, y0 + 2.85, -0.12); cone.rotation.y = Math.PI / 4; g.add(cone);
   const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.16, 0), new THREE.MeshStandardMaterial({ color: '#ff2b6a', emissive: '#a0003a', emissiveIntensity: 0.8, roughness: 0.2 }));
   gem.position.set(0, y0 + 2.0, 0.05); g.add(gem);
-  g.userData = { seat: new THREE.Vector3(0, y0, 0.16), daisH: DH };
+  g.userData = { seat: new THREE.Vector3(0, y0, 0.16), daisH: DH, gem };
   return g;
 }
 
@@ -239,7 +239,7 @@ export function makeFlash() {
   const core = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 12), mat); g.add(core);
   const rays = [];
   for (let i = 0; i < 10; i++) { const r = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.7, 6), mat); const a = i / 10 * Math.PI * 2; r.position.set(Math.cos(a) * 0.45, Math.sin(a) * 0.45, 0); r.rotation.z = a - Math.PI / 2; g.add(r); rays.push(r); }
-  g.userData = { set(k) { g.visible = k > 0.01; mat.opacity = clamp(k, 0, 1); g.scale.setScalar(0.4 + 1.1 * k); } };
+  g.userData = { set(k, base = 1) { g.visible = k > 0.01; mat.opacity = clamp(k, 0, 1); g.scale.setScalar(base * (0.4 + 1.1 * k)); } };
   return g;
 }
 

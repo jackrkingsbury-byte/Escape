@@ -234,8 +234,10 @@ export function makeBaseball() {
     for (const off of [0.08, 0.92]) { g.beginPath(); for (let i = 0; i <= 64; i++) { const x = w * (off + 0.06 * Math.sin(i / 64 * PI * 2)), y = h * i / 64; if (i) g.lineTo(x, y); else g.moveTo(x, y); } g.stroke(); }
     g.setLineDash([]);
     g.fillStyle = '#1a2a6c'; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.font = `italic 900 96px "ITT World Text", "Nunito", sans-serif`; g.fillText('Nice arm.', w / 2, h * 0.38);
-    g.font = `italic 900 70px "ITT World Text", "Nunito", sans-serif`; g.fillText('♥ Management', w / 2, h * 0.6);
+    // keep the writing inside ~80° of the sphere (u 0.39..0.61) so it reads from one side; centre (u = 0.5) faces local +X
+    const FI = (s) => `italic 900 ${s}px "ITT World Text", "Nunito", sans-serif`;
+    fit(g, 'Nice arm.', FI, 230, 84); g.fillText('Nice arm.', w / 2, h * 0.42);
+    fit(g, '♥ Management', FI, 230, 60); g.fillText('♥ Management', w / 2, h * 0.58);
   });
   const m = new THREE.Mesh(new THREE.SphereGeometry(0.12, 32, 20), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.6 }));
   m.castShadow = true;
