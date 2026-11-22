@@ -98,10 +98,10 @@ export function makeFlashlight() {
     const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, 'rgba(255,250,225,0)'); gr.addColorStop(1, 'rgba(255,250,225,1)');
     g.fillStyle = gr; g.fillRect(0, 0, w, h);
   });
-  const coneM = new THREE.MeshBasicMaterial({ map: _coneTex, transparent: true, opacity: 0.38, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+  const coneM = new THREE.MeshBasicMaterial({ map: _coneTex, transparent: true, opacity: 0.22, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
   const cone = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.42, 1.1, 20, 1, true), coneM);
   cone.rotation.x = Math.PI / 2; cone.position.z = 0.16 + 0.55; cone.renderOrder = 3; root.add(cone);
-  return { root, cone, setOn(k) { cone.visible = k > 0; coneM.opacity = 0.38 * k; lensM.color.set(k > 0 ? '#fffbe8' : '#555555'); } };
+  return { root, cone, setOn(k) { cone.visible = k > 0; coneM.opacity = 0.22 * k; lensM.color.set(k > 0 ? '#fffbe8' : '#555555'); } };
 }
 
 export function makeOffice() {
