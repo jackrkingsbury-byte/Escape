@@ -70,7 +70,7 @@ script) in place of the procedural music; `BED=0` turns it off.
 | 5 | Freeze Dance | Brenda | `out/inthistown_ep5_freeze.mp4` |
 | 6 | Gravity | the cat | `out/inthistown_ep6_gravity.mp4` |
 | 7 | Limbo | Marcus | `out/inthistown_ep7_limbo.mp4` |
-| 8 | Pet Rock | Gerald the rock | `out/inthistown_ep8_petrock.mp4` |
+| 8 | Pet Rock | DJ Hip Replacement (91) | `out/inthistown_ep8_petrock.mp4` |
 | 9 | The Heist | the burglar | `out/inthistown_ep9_heist.mp4` |
 | 10 | Snooze | DJ Hip Replacement | `out/inthistown_ep10_snooze.mp4` |
 
