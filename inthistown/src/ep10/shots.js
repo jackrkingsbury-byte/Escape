@@ -63,7 +63,7 @@ function makeAlarmClock() {
   g.userData = { face, faces, btn, set(day, press = 0, ring = 0, t = 0) { face.material.map = faces[day]; btn.position.y = 0.22 - 0.025 * press; g.rotation.z = ring ? 0.06 * Math.sin(t * 60) : 0; } };
   return g;
 }
-function makeOrb(c1, c2, kind) {
+export function makeOrb(c1, c2, kind) {
   const mk = (mood) => txt(512, 512, (g, w, h) => {
     const gr = g.createRadialGradient(w / 2, h / 2, 40, w / 2, h / 2, 250); gr.addColorStop(0, c1); gr.addColorStop(1, c2); g.fillStyle = gr; g.fillRect(0, 0, w, h);
     g.fillStyle = '#2a1a10';

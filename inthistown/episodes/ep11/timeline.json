@@ -1,0 +1,2335 @@
+{
+ "fps": 30,
+ "duration": 53.037,
+ "audio": "episodes/ep11/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody parties.",
+   "start": 0.3,
+   "end": 2.136,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.69
+    },
+    {
+     "text": "parties",
+     "start": 1.69,
+     "end": 2.136
+    }
+   ],
+   "visual": "Crane down the party street."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me. I'm counting.",
+   "start": 2.351,
+   "end": 4.118,
+   "words": [
+    {
+     "text": "Except",
+     "start": 2.366,
+     "end": 2.825
+    },
+    {
+     "text": "me",
+     "start": 2.825,
+     "end": 3.014
+    },
+    {
+     "text": "I'm",
+     "start": 3.394,
+     "end": 3.631
+    },
+    {
+     "text": "counting",
+     "start": 3.631,
+     "end": 4.118
+    }
+   ],
+   "visual": "Empty square at night: the kid with his face against a lamppost, hands over his eyes. Counter 999,941."
+  },
+  {
+   "id": "b03",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 4.383,
+   "end": 6.023,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 4.383,
+     "end": 4.643
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.593,
+     "end": 4.853
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.783,
+     "end": 5.043
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.363,
+     "end": 5.623
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.573,
+     "end": 5.833
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.763,
+     "end": 6.023
+    }
+   ],
+   "visual": "One number per HUSS; the counter ticks up."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "We started hide and seek on a Friday. It's still Friday.",
+   "start": 6.363,
+   "end": 9.409,
+   "words": [
+    {
+     "text": "We",
+     "start": 6.378,
+     "end": 6.513
+    },
+    {
+     "text": "started",
+     "start": 6.513,
+     "end": 6.89
+    },
+    {
+     "text": "hide",
+     "start": 6.89,
+     "end": 7.121
+    },
+    {
+     "text": "and",
+     "start": 7.121,
+     "end": 7.304
+    },
+    {
+     "text": "seek",
+     "start": 7.304,
+     "end": 7.488
+    },
+    {
+     "text": "on",
+     "start": 7.488,
+     "end": 7.623
+    },
+    {
+     "text": "a",
+     "start": 7.623,
+     "end": 7.758
+    },
+    {
+     "text": "Friday",
+     "start": 7.758,
+     "end": 8.134
+    },
+    {
+     "text": "It's",
+     "start": 8.514,
+     "end": 8.721
+    },
+    {
+     "text": "still",
+     "start": 8.721,
+     "end": 8.983
+    },
+    {
+     "text": "Friday",
+     "start": 8.983,
+     "end": 9.409
+    }
+   ],
+   "visual": "The square banner FRIDAY NIGHT / PARTY / 14.05.1982."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nobody hid. They threw a party instead.",
+   "start": 9.724,
+   "end": 11.937,
+   "words": [
+    {
+     "text": "Nobody",
+     "start": 9.739,
+     "end": 10.206
+    },
+    {
+     "text": "hid",
+     "start": 10.206,
+     "end": 10.433
+    },
+    {
+     "text": "They",
+     "start": 10.763,
+     "end": 10.957
+    },
+    {
+     "text": "threw",
+     "start": 10.957,
+     "end": 11.151
+    },
+    {
+     "text": "a",
+     "start": 11.151,
+     "end": 11.294
+    },
+    {
+     "text": "party",
+     "start": 11.294,
+     "end": 11.59
+    },
+    {
+     "text": "instead",
+     "start": 11.59,
+     "end": 11.937
+    }
+   ],
+   "visual": "The party street, packed."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The cat hid in a box. The box went clubbing.",
+   "start": 12.252,
+   "end": 14.663,
+   "words": [
+    {
+     "text": "The",
+     "start": 12.267,
+     "end": 12.402
+    },
+    {
+     "text": "cat",
+     "start": 12.402,
+     "end": 12.585
+    },
+    {
+     "text": "hid",
+     "start": 12.585,
+     "end": 12.769
+    },
+    {
+     "text": "in",
+     "start": 12.769,
+     "end": 12.904
+    },
+    {
+     "text": "a",
+     "start": 12.904,
+     "end": 13.039
+    },
+    {
+     "text": "box",
+     "start": 13.039,
+     "end": 13.27
+    },
+    {
+     "text": "The",
+     "start": 13.65,
+     "end": 13.798
+    },
+    {
+     "text": "box",
+     "start": 13.798,
+     "end": 14.051
+    },
+    {
+     "text": "went",
+     "start": 14.051,
+     "end": 14.304
+    },
+    {
+     "text": "clubbing",
+     "start": 14.304,
+     "end": 14.663
+    }
+   ],
+   "visual": "A cardboard box with a cat tail sticking out dances in the crowd in a party hat."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Grandad hid behind a lamppost. He's wider than the lamppost.",
+   "start": 14.978,
+   "end": 18.216,
+   "words": [
+    {
+     "text": "Grandad",
+     "start": 14.993,
+     "end": 15.386
+    },
+    {
+     "text": "hid",
+     "start": 15.386,
+     "end": 15.577
+    },
+    {
+     "text": "behind",
+     "start": 15.577,
+     "end": 15.97
+    },
+    {
+     "text": "a",
+     "start": 15.97,
+     "end": 16.111
+    },
+    {
+     "text": "lamppost",
+     "start": 16.111,
+     "end": 16.555
+    },
+    {
+     "text": "He's",
+     "start": 16.935,
+     "end": 17.13
+    },
+    {
+     "text": "wider",
+     "start": 17.13,
+     "end": 17.427
+    },
+    {
+     "text": "than",
+     "start": 17.427,
+     "end": 17.621
+    },
+    {
+     "text": "the",
+     "start": 17.621,
+     "end": 17.765
+    },
+    {
+     "text": "lamppost",
+     "start": 17.765,
+     "end": 18.216
+    }
+   ],
+   "visual": "Grandad behind a thin lamppost, sticking out both sides."
+  },
+  {
+   "id": "b08",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 18.531,
+   "end": 19.191,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 18.531,
+     "end": 18.791
+    },
+    {
+     "text": "HUSS!",
+     "start": 18.741,
+     "end": 19.001
+    },
+    {
+     "text": "HUSS!",
+     "start": 18.931,
+     "end": 19.191
+    }
+   ],
+   "visual": "Grandad shuffles left, right, left behind the pole on each HUSS. Still visible."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The best hiding place is in plain sight. The pigeon. Mayor.",
+   "start": 19.531,
+   "end": 23.019,
+   "words": [
+    {
+     "text": "The",
+     "start": 19.546,
+     "end": 19.685
+    },
+    {
+     "text": "best",
+     "start": 19.685,
+     "end": 19.924
+    },
+    {
+     "text": "hiding",
+     "start": 19.924,
+     "end": 20.263
+    },
+    {
+     "text": "place",
+     "start": 20.263,
+     "end": 20.552
+    },
+    {
+     "text": "is",
+     "start": 20.552,
+     "end": 20.692
+    },
+    {
+     "text": "in",
+     "start": 20.692,
+     "end": 20.832
+    },
+    {
+     "text": "plain",
+     "start": 20.832,
+     "end": 21.121
+    },
+    {
+     "text": "sight",
+     "start": 21.121,
+     "end": 21.36
+    },
+    {
+     "text": "The",
+     "start": 21.79,
+     "end": 21.952
+    },
+    {
+     "text": "pigeon",
+     "start": 21.952,
+     "end": 22.347
+    },
+    {
+     "text": "Mayor",
+     "start": 22.627,
+     "end": 23.019
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "The best hiding place is in plain sight.",
+    "by": "the pigeon (Mayor)"
+   },
+   "visual": "QUOTE CARD; attribution on 'The pigeon'; reveal: the pigeon in its mayor hat on the stage, perfectly visible."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Brenda's still frozen from freeze dance. Best hider in town.",
+   "start": 23.334,
+   "end": 26.655,
+   "words": [
+    {
+     "text": "Brenda's",
+     "start": 23.349,
+     "end": 23.774
+    },
+    {
+     "text": "still",
+     "start": 23.774,
+     "end": 24.036
+    },
+    {
+     "text": "frozen",
+     "start": 24.036,
+     "end": 24.461
+    },
+    {
+     "text": "from",
+     "start": 24.461,
+     "end": 24.723
+    },
+    {
+     "text": "freeze",
+     "start": 24.723,
+     "end": 24.984
+    },
+    {
+     "text": "dance",
+     "start": 24.984,
+     "end": 25.246
+    },
+    {
+     "text": "Best",
+     "start": 25.626,
+     "end": 25.897
+    },
+    {
+     "text": "hider",
+     "start": 25.897,
+     "end": 26.225
+    },
+    {
+     "text": "in",
+     "start": 26.225,
+     "end": 26.383
+    },
+    {
+     "text": "town",
+     "start": 26.383,
+     "end": 26.655
+    }
+   ],
+   "visual": "Brenda still frozen mid-dance; a moth on her; tag NOBODY'S CHECKED."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respectful moments. Number four: the moon closed its eyes too.",
+   "start": 26.97,
+   "end": 30.718,
+   "words": [
+    {
+     "text": "Top",
+     "start": 26.985,
+     "end": 27.174
+    },
+    {
+     "text": "ten",
+     "start": 27.174,
+     "end": 27.363
+    },
+    {
+     "text": "respectful",
+     "start": 27.363,
+     "end": 27.9
+    },
+    {
+     "text": "moments",
+     "start": 27.9,
+     "end": 28.338
+    },
+    {
+     "text": "Number",
+     "start": 28.718,
+     "end": 29.065
+    },
+    {
+     "text": "four",
+     "start": 29.065,
+     "end": 29.293
+    },
+    {
+     "text": "the",
+     "start": 29.293,
+     "end": 29.46
+    },
+    {
+     "text": "moon",
+     "start": 29.46,
+     "end": 29.688
+    },
+    {
+     "text": "closed",
+     "start": 29.688,
+     "end": 30.095
+    },
+    {
+     "text": "its",
+     "start": 30.095,
+     "end": 30.323
+    },
+    {
+     "text": "eyes",
+     "start": 30.323,
+     "end": 30.55
+    },
+    {
+     "text": "too",
+     "start": 30.55,
+     "end": 30.718
+    }
+   ],
+   "visual": "TOP 10 card #4; the moon over the square closes its eyes."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nine hundred ninety nine thousand, nine hundred and ninety nine.",
+   "start": 31.033,
+   "end": 34.208,
+   "words": [
+    {
+     "text": "Nine",
+     "start": 31.048,
+     "end": 31.278
+    },
+    {
+     "text": "hundred",
+     "start": 31.278,
+     "end": 31.653
+    },
+    {
+     "text": "ninety",
+     "start": 31.653,
+     "end": 31.979
+    },
+    {
+     "text": "nine",
+     "start": 31.979,
+     "end": 32.209
+    },
+    {
+     "text": "thousand",
+     "start": 32.209,
+     "end": 32.584
+    },
+    {
+     "text": "nine",
+     "start": 32.864,
+     "end": 33.094
+    },
+    {
+     "text": "hundred",
+     "start": 33.094,
+     "end": 33.468
+    },
+    {
+     "text": "and",
+     "start": 33.468,
+     "end": 33.651
+    },
+    {
+     "text": "ninety",
+     "start": 33.651,
+     "end": 33.977
+    },
+    {
+     "text": "nine",
+     "start": 33.977,
+     "end": 34.208
+    }
+   ],
+   "visual": "Silence. Slow push in on the kid at the lamppost. Counter 999,999."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "One million. Ready or not.",
+   "start": 34.673,
+   "end": 36.485,
+   "words": [
+    {
+     "text": "One",
+     "start": 34.688,
+     "end": 34.9
+    },
+    {
+     "text": "million",
+     "start": 34.9,
+     "end": 35.281
+    },
+    {
+     "text": "Ready",
+     "start": 35.711,
+     "end": 36.037
+    },
+    {
+     "text": "or",
+     "start": 36.037,
+     "end": 36.227
+    },
+    {
+     "text": "not",
+     "start": 36.227,
+     "end": 36.485
+    }
+   ],
+   "visual": "Counter 1,000,000. On 'Ready' the kid turns around."
+  },
+  {
+   "id": "b14",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 36.8,
+   "end": 38.44,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 36.8,
+     "end": 37.06
+    },
+    {
+     "text": "HUSS!",
+     "start": 37.01,
+     "end": 37.27
+    },
+    {
+     "text": "HUSS!",
+     "start": 37.2,
+     "end": 37.46
+    },
+    {
+     "text": "HUSS!",
+     "start": 37.78,
+     "end": 38.04
+    },
+    {
+     "text": "HUSS!",
+     "start": 37.99,
+     "end": 38.25
+    },
+    {
+     "text": "HUSS!",
+     "start": 38.18,
+     "end": 38.44
+    }
+   ],
+   "visual": "The kid tags one hider per HUSS: box, Grandad, pigeon, Brenda, Marcus, the mayor. FOUND stamp each time."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Found everyone. Four seconds.",
+   "start": 38.78,
+   "end": 40.595,
+   "words": [
+    {
+     "text": "Found",
+     "start": 38.795,
+     "end": 39.096
+    },
+    {
+     "text": "everyone",
+     "start": 39.096,
+     "end": 39.5
+    },
+    {
+     "text": "Four",
+     "start": 39.88,
+     "end": 40.114
+    },
+    {
+     "text": "seconds",
+     "start": 40.114,
+     "end": 40.595
+    }
+   ],
+   "visual": "Everyone found, standing in a line; tag 4 SECONDS."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Sixteen thousand nights of counting. Four seconds of finding.",
+   "start": 40.86,
+   "end": 44.119,
+   "words": [
+    {
+     "text": "Sixteen",
+     "start": 40.875,
+     "end": 41.293
+    },
+    {
+     "text": "thousand",
+     "start": 41.293,
+     "end": 41.712
+    },
+    {
+     "text": "nights",
+     "start": 41.712,
+     "end": 42.023
+    },
+    {
+     "text": "of",
+     "start": 42.023,
+     "end": 42.173
+    },
+    {
+     "text": "counting",
+     "start": 42.173,
+     "end": 42.591
+    },
+    {
+     "text": "Four",
+     "start": 42.971,
+     "end": 43.168
+    },
+    {
+     "text": "seconds",
+     "start": 43.168,
+     "end": 43.571
+    },
+    {
+     "text": "of",
+     "start": 43.571,
+     "end": 43.716
+    },
+    {
+     "text": "finding",
+     "start": 43.716,
+     "end": 44.119
+    }
+   ],
+   "visual": "Split: the kid at the lamppost across many nights; then the stopwatch 0:04."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Rules are rules. A box.",
+   "start": 44.434,
+   "end": 46.13,
+   "words": [
+    {
+     "text": "Rules",
+     "start": 44.449,
+     "end": 44.761
+    },
+    {
+     "text": "are",
+     "start": 44.761,
+     "end": 44.943
+    },
+    {
+     "text": "rules",
+     "start": 44.943,
+     "end": 45.254
+    },
+    {
+     "text": "A",
+     "start": 45.634,
+     "end": 45.817
+    },
+    {
+     "text": "box",
+     "start": 45.817,
+     "end": 46.13
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Rules are rules.",
+    "by": "a box"
+   },
+   "visual": "QUOTE CARD; attribution on 'A box'; the box nods (cat tail wags)."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So now in this town, everybody counts.",
+   "start": 46.445,
+   "end": 48.479,
+   "words": [
+    {
+     "text": "So",
+     "start": 46.46,
+     "end": 46.647
+    },
+    {
+     "text": "now",
+     "start": 46.647,
+     "end": 46.833
+    },
+    {
+     "text": "in",
+     "start": 46.833,
+     "end": 46.97
+    },
+    {
+     "text": "this",
+     "start": 46.97,
+     "end": 47.157
+    },
+    {
+     "text": "town",
+     "start": 47.157,
+     "end": 47.392
+    },
+    {
+     "text": "everybody",
+     "start": 47.522,
+     "end": 48.062
+    },
+    {
+     "text": "counts",
+     "start": 48.062,
+     "end": 48.479
+    }
+   ],
+   "visual": "The whole town faces lampposts, walls and trees, eyes covered, counting."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me. I'm partying.",
+   "start": 48.744,
+   "end": 50.492,
+   "words": [
+    {
+     "text": "Except",
+     "start": 48.759,
+     "end": 49.218
+    },
+    {
+     "text": "me",
+     "start": 49.218,
+     "end": 49.407
+    },
+    {
+     "text": "I'm",
+     "start": 49.787,
+     "end": 50.018
+    },
+    {
+     "text": "partying",
+     "start": 50.018,
+     "end": 50.492
+    }
+   ],
+   "visual": "The kid alone on the empty dance floor in a party hat; disco lights."
+  },
+  {
+   "id": "b20",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 50.757,
+   "end": 52.397,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 50.757,
+     "end": 51.017
+    },
+    {
+     "text": "HUSS!",
+     "start": 50.967,
+     "end": 51.227
+    },
+    {
+     "text": "HUSS!",
+     "start": 51.157,
+     "end": 51.417
+    },
+    {
+     "text": "HUSS!",
+     "start": 51.737,
+     "end": 51.997
+    },
+    {
+     "text": "HUSS!",
+     "start": 51.947,
+     "end": 52.207
+    },
+    {
+     "text": "HUSS!",
+     "start": 52.137,
+     "end": 52.397
+    }
+   ],
+   "visual": "The kid dances alone; fireworks on each HUSS; behind him the town keeps counting."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.69,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "parties",
+   "start": 1.69,
+   "end": 2.136,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 2.366,
+   "end": 2.825,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 2.825,
+   "end": 3.014,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I'm",
+   "start": 3.394,
+   "end": 3.631,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "counting",
+   "start": 3.631,
+   "end": 4.118,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.383,
+   "end": 4.643,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.593,
+   "end": 4.853,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.783,
+   "end": 5.043,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.363,
+   "end": 5.623,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.573,
+   "end": 5.833,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.763,
+   "end": 6.023,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "We",
+   "start": 6.378,
+   "end": 6.513,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "started",
+   "start": 6.513,
+   "end": 6.89,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hide",
+   "start": 6.89,
+   "end": 7.121,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "and",
+   "start": 7.121,
+   "end": 7.304,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "seek",
+   "start": 7.304,
+   "end": 7.488,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "on",
+   "start": 7.488,
+   "end": 7.623,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "a",
+   "start": 7.623,
+   "end": 7.758,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Friday",
+   "start": 7.758,
+   "end": 8.134,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "It's",
+   "start": 8.514,
+   "end": 8.721,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "still",
+   "start": 8.721,
+   "end": 8.983,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Friday",
+   "start": 8.983,
+   "end": 9.409,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Nobody",
+   "start": 9.739,
+   "end": 10.206,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "hid",
+   "start": 10.206,
+   "end": 10.433,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "They",
+   "start": 10.763,
+   "end": 10.957,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "threw",
+   "start": 10.957,
+   "end": 11.151,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 11.151,
+   "end": 11.294,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "party",
+   "start": 11.294,
+   "end": 11.59,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "instead",
+   "start": 11.59,
+   "end": 11.937,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "The",
+   "start": 12.267,
+   "end": 12.402,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "cat",
+   "start": 12.402,
+   "end": 12.585,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hid",
+   "start": 12.585,
+   "end": 12.769,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "in",
+   "start": 12.769,
+   "end": 12.904,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 12.904,
+   "end": 13.039,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "box",
+   "start": 13.039,
+   "end": 13.27,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 13.65,
+   "end": 13.798,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "box",
+   "start": 13.798,
+   "end": 14.051,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "went",
+   "start": 14.051,
+   "end": 14.304,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "clubbing",
+   "start": 14.304,
+   "end": 14.663,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Grandad",
+   "start": 14.993,
+   "end": 15.386,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "hid",
+   "start": 15.386,
+   "end": 15.577,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "behind",
+   "start": 15.577,
+   "end": 15.97,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 15.97,
+   "end": 16.111,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "lamppost",
+   "start": 16.111,
+   "end": 16.555,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "He's",
+   "start": 16.935,
+   "end": 17.13,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "wider",
+   "start": 17.13,
+   "end": 17.427,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "than",
+   "start": 17.427,
+   "end": 17.621,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 17.621,
+   "end": 17.765,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "lamppost",
+   "start": 17.765,
+   "end": 18.216,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSS!",
+   "start": 18.531,
+   "end": 18.791,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 18.741,
+   "end": 19.001,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 18.931,
+   "end": 19.191,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "The",
+   "start": 19.546,
+   "end": 19.685,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "best",
+   "start": 19.685,
+   "end": 19.924,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hiding",
+   "start": 19.924,
+   "end": 20.263,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "place",
+   "start": 20.263,
+   "end": 20.552,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "is",
+   "start": 20.552,
+   "end": 20.692,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "in",
+   "start": 20.692,
+   "end": 20.832,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "plain",
+   "start": 20.832,
+   "end": 21.121,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "sight",
+   "start": 21.121,
+   "end": 21.36,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "The",
+   "start": 21.79,
+   "end": 21.952,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "pigeon",
+   "start": 21.952,
+   "end": 22.347,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Mayor",
+   "start": 22.627,
+   "end": 23.019,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Brenda's",
+   "start": 23.349,
+   "end": 23.774,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "still",
+   "start": 23.774,
+   "end": 24.036,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "frozen",
+   "start": 24.036,
+   "end": 24.461,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "from",
+   "start": 24.461,
+   "end": 24.723,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "freeze",
+   "start": 24.723,
+   "end": 24.984,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "dance",
+   "start": 24.984,
+   "end": 25.246,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Best",
+   "start": 25.626,
+   "end": 25.897,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "hider",
+   "start": 25.897,
+   "end": 26.225,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "in",
+   "start": 26.225,
+   "end": 26.383,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "town",
+   "start": 26.383,
+   "end": 26.655,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Top",
+   "start": 26.985,
+   "end": 27.174,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 27.174,
+   "end": 27.363,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respectful",
+   "start": 27.363,
+   "end": 27.9,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "moments",
+   "start": 27.9,
+   "end": 28.338,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Number",
+   "start": 28.718,
+   "end": 29.065,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "four",
+   "start": 29.065,
+   "end": 29.293,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 29.293,
+   "end": 29.46,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "moon",
+   "start": 29.46,
+   "end": 29.688,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "closed",
+   "start": 29.688,
+   "end": 30.095,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "its",
+   "start": 30.095,
+   "end": 30.323,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "eyes",
+   "start": 30.323,
+   "end": 30.55,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "too",
+   "start": 30.55,
+   "end": 30.718,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Nine",
+   "start": 31.048,
+   "end": 31.278,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "hundred",
+   "start": 31.278,
+   "end": 31.653,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "ninety",
+   "start": 31.653,
+   "end": 31.979,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "nine",
+   "start": 31.979,
+   "end": 32.209,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "thousand",
+   "start": 32.209,
+   "end": 32.584,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "nine",
+   "start": 32.864,
+   "end": 33.094,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "hundred",
+   "start": 33.094,
+   "end": 33.468,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "and",
+   "start": 33.468,
+   "end": 33.651,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "ninety",
+   "start": 33.651,
+   "end": 33.977,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "nine",
+   "start": 33.977,
+   "end": 34.208,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "One",
+   "start": 34.688,
+   "end": 34.9,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "million",
+   "start": 34.9,
+   "end": 35.281,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Ready",
+   "start": 35.711,
+   "end": 36.037,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "or",
+   "start": 36.037,
+   "end": 36.227,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "not",
+   "start": 36.227,
+   "end": 36.485,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 36.8,
+   "end": 37.06,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 37.01,
+   "end": 37.27,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 37.2,
+   "end": 37.46,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 37.78,
+   "end": 38.04,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 37.99,
+   "end": 38.25,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.18,
+   "end": 38.44,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Found",
+   "start": 38.795,
+   "end": 39.096,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "everyone",
+   "start": 39.096,
+   "end": 39.5,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Four",
+   "start": 39.88,
+   "end": 40.114,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "seconds",
+   "start": 40.114,
+   "end": 40.595,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Sixteen",
+   "start": 40.875,
+   "end": 41.293,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "thousand",
+   "start": 41.293,
+   "end": 41.712,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "nights",
+   "start": 41.712,
+   "end": 42.023,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "of",
+   "start": 42.023,
+   "end": 42.173,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "counting",
+   "start": 42.173,
+   "end": 42.591,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Four",
+   "start": 42.971,
+   "end": 43.168,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "seconds",
+   "start": 43.168,
+   "end": 43.571,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "of",
+   "start": 43.571,
+   "end": 43.716,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "finding",
+   "start": 43.716,
+   "end": 44.119,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Rules",
+   "start": 44.449,
+   "end": 44.761,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "are",
+   "start": 44.761,
+   "end": 44.943,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "rules",
+   "start": 44.943,
+   "end": 45.254,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "A",
+   "start": 45.634,
+   "end": 45.817,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "box",
+   "start": 45.817,
+   "end": 46.13,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "So",
+   "start": 46.46,
+   "end": 46.647,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "now",
+   "start": 46.647,
+   "end": 46.833,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "in",
+   "start": 46.833,
+   "end": 46.97,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "this",
+   "start": 46.97,
+   "end": 47.157,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "town",
+   "start": 47.157,
+   "end": 47.392,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "everybody",
+   "start": 47.522,
+   "end": 48.062,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "counts",
+   "start": 48.062,
+   "end": 48.479,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Except",
+   "start": 48.759,
+   "end": 49.218,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 49.218,
+   "end": 49.407,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I'm",
+   "start": 49.787,
+   "end": 50.018,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 50.018,
+   "end": 50.492,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.757,
+   "end": 51.017,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.967,
+   "end": 51.227,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 51.157,
+   "end": 51.417,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 51.737,
+   "end": 51.997,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 51.947,
+   "end": 52.207,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.137,
+   "end": 52.397,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 2.271,
+   "mode": "muffled"
+  },
+  {
+   "t": 6.283,
+   "mode": "party"
+  },
+  {
+   "t": 14.898,
+   "mode": "lofi"
+  },
+  {
+   "t": 19.451,
+   "mode": "party"
+  },
+  {
+   "t": 26.89,
+   "mode": "lofi"
+  },
+  {
+   "t": 30.953,
+   "mode": "none"
+  },
+  {
+   "t": 38.7,
+   "mode": "party"
+  },
+  {
+   "t": 46.365,
+   "mode": "muffled"
+  },
+  {
+   "t": 48.664,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "counting": 3.631,
+  "still": 8.721,
+  "instead": 11.59,
+  "box": 13.039,
+  "clubbing": 14.304,
+  "wider": 17.13,
+  "quote1": 19.481,
+  "pigeon": 21.952,
+  "mayor": 22.627,
+  "best": 25.626,
+  "top4": 29.065,
+  "eyes": 30.323,
+  "nines": 33.808,
+  "million": 34.9,
+  "ready": 35.711,
+  "four": 39.88,
+  "finding": 43.716,
+  "quote2": 44.384,
+  "abox": 45.817,
+  "counts": 48.062,
+  "partying": 50.018
+ },
+ "title": "In This Town \u2014 Hide and Seek"
+}
