@@ -234,7 +234,7 @@ async function determinism(workers, info) {
 }
 
 async function preview(workers, info) {
-  const dir = rel('out/preview');
+  const dir = rel(A.previewDir || 'out/preview');   // --previewDir lets parallel previews not clobber each other
   fs.mkdirSync(dir, { recursive: true });
   const to = opt.to ?? info.duration;
   const times = opt.times || (() => { const r = []; for (let t = opt.from; t < to - 1e-6; t += opt.preview) r.push(+t.toFixed(3)); return r; })();
