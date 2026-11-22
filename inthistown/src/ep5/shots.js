@@ -31,7 +31,7 @@ export function init(ctx) {
   P.bibB = makeBib('47'); P.bibL = makeBib('LAMP', '#ffe14a');
   P.duster = makeDuster();
   P.shades = makeShades();
-  P.moth = makeMoth();
+  P.moth = makeMoth(); P.moth.scale.setScalar(2.6);
   P.trophy5 = makeTrophy();
   P.drop5 = makeSweatDrop({ size: 0.08 });
 }
@@ -102,6 +102,7 @@ function outStamp(ctx, t0, o = {}) {
 function humanFace(ch) { ch.root.updateMatrixWorld(true); return ch.joints.head.localToWorld(V(0, 0.3, 0.28)); }
 const facing = (obj) => V(Math.sin(obj.rotation.y), 0, Math.cos(obj.rotation.y));
 /** A camera `d` metres in front of a face, `side` metres to its left (+) / right (−). */
+const catCam = (ch, d, side = 0, fov = 38) => { const f = humanFace(ch).add(up(0.38)), fw = facing(ch.root), l = V(fw.z, 0, -fw.x); return { pos: f.clone().addScaledVector(fw, d).addScaledVector(l, side).add(up(0.05)), look: f, fov }; };
 const faceCam = (ch, d, side = 0, lift = 0, fov = 34) => { const f = humanFace(ch), fw = facing(ch.root), l = V(fw.z, 0, -fw.x); return { pos: f.clone().addScaledVector(fw, d).addScaledVector(l, side).add(up(lift)), look: f, fov }; };
 
 /** Brenda frozen solid (bolt upright, arms at her sides).  The face is the only thing that moves. */
@@ -159,7 +160,7 @@ function freezeStage(ctx, { dancers = true, lamp = false, night = false, crowd =
     ctx.place('grandad', S(-1.2, 0, -2.05)); ctx.cast.grandad.root.rotation.set(0, S.yaw, 0);
   }
   if (lamp) {
-    const L = ctx.props.lamp; ctx.add(L); L.position.copy(S(1.1, 0, 2.55)); L.rotation.set(0, S.yaw, 0); L.userData.setOn(true);
+    const L = ctx.props.lamp; ctx.add(L); L.position.copy(S(0.9, 0, 2.55)); L.rotation.set(0, S.yaw, 0); L.userData.setOn(true);
     const b = ctx.props.bibL; ctx.add(b, L); b.position.set(0, 1.35, 0.065); b.scale.setScalar(0.6);
   }
   return st;
@@ -235,7 +236,7 @@ export const shots = [
       const P = ctx.props; ctx.add(P.decks5.root); P.decks5.root.position.copy(F(0, 0, 2.6)); P.decks5.root.rotation.set(0, F.yaw, 0); P.decks5.setOn(true);
       ctx.place('grandad', F(0, 0, 2.05)); ctx.cast.grandad.root.rotation.set(0, F.yaw, 0);
       const crowd = [];
-      EXTRA_IDS.slice(0, 10).forEach((id, k) => { ctx.place(id, F(-2.6 + (k % 5) * 1.3 + (hash(k) - 0.5) * 0.3, 0, 4.4 + Math.floor(k / 5) * 1.2)); ctx.cast[id].root.rotation.set(0, F.yaw + Math.PI + (hash(k * 2) - 0.5) * 0.6, 0); ctx.cast[id].setAccessory?.('partyHat', true); crowd.push({ ch: ctx.cast[id], phase: hash(k) * 2, k }); });
+      EXTRA_IDS.slice(0, 10).forEach((id, k) => { const sx = k % 2 ? 1 : -1; ctx.place(id, F(sx * (1.3 + (Math.floor(k / 2) % 3) * 0.9) + (hash(k) - 0.5) * 0.3, 0, 3.8 + Math.floor(k / 6) * 1.2)); ctx.cast[id].root.rotation.set(0, F.yaw + Math.PI + (hash(k * 2) - 0.5) * 0.6, 0); ctx.cast[id].setAccessory?.('partyHat', true); crowd.push({ ch: ctx.cast[id], phase: hash(k) * 2, k }); });
       ctx.store = { F, crowd };
     },
     update(ctx, lt) {
@@ -243,7 +244,7 @@ export const shots = [
       animateCrowd(crowd, ctx.t); ctx.props.decks5.update(ctx.t);
       g.pose('dance2', ctx.t, { speed: 1.15 }); g.face('grin', ctx.t);
       const hp = headPos(g, 0.3);
-      ctx.cam.move({ pos: hp.clone().addScaledVector(F.fwd, 3.2).add(V(0.5, 0.0, 0)), look: hp.clone().add(up(-0.45)), fov: 42 }, { pos: hp.clone().addScaledVector(F.fwd, 2.4).add(V(0.3, -0.05, 0)), look: hp.clone().add(up(-0.35)), fov: 40 }, clamp(lt / 2.0, 0, 1));
+      ctx.cam.move({ pos: hp.clone().addScaledVector(F.fwd, 3.0).add(V(0.4, 0.35, 0)), look: hp.clone().add(up(-0.45)), fov: 42 }, { pos: hp.clone().addScaledVector(F.fwd, 2.3).add(V(0.25, 0.2, 0)), look: hp.clone().add(up(-0.35)), fov: 40 }, clamp(lt / 2.0, 0, 1));
       tag(ctx, 'DJ GRANDAD', ctx.markers.djName, Infinity, { y: 0.2, size: 80, bg: 'rgba(138,92,255,0.92)' });
     },
   },
@@ -278,7 +279,7 @@ export const shots = [
     update(ctx, lt) {
       const b = ctx.cast.brenda, cat = ctx.cast.cat;
       frozen(b, 'determined', OPEN(b)); cat.pose('loaf', ctx.t); cat.face('stare', OPEN(cat));
-      ctx.cam.move(faceCam(b, 2.6, 0.3, -0.1, 40), faceCam(b, 2.1, 0.25, -0.02, 38), clamp(lt / 1.6, 0, 1));
+      ctx.cam.move(catCam(b, 3.0, 0.3, 40), catCam(b, 2.5, 0.25, 38), clamp(lt / 1.6, 0, 1));
       tag(ctx, 'DAY 40', ctx.markers.day40, Infinity, { y: 0.12, size: 80, bg: 'rgba(20,130,60,0.92)', rot: 0 });
     },
   },
@@ -289,7 +290,7 @@ export const shots = [
     update(ctx, lt, u) {
       const b = ctx.cast.brenda, cat = ctx.cast.cat;
       frozen(b, 'determined', OPEN(b)); cat.pose('loaf', ctx.t); cat.face('stare', OPEN(cat));
-      ctx.cam.move(faceCam(b, 2.2, 0.2, 0.0, 38), faceCam(b, 1.6, 0.15, 0.05, 36), u);
+      ctx.cam.move(catCam(b, 2.6, 0.2, 38), catCam(b, 2.1, 0.15, 36), u);
       quoteCard(ctx, 'Be a fridge. Cold. Still. Full of snacks.', 'my dentist', ctx.markers.quote1, ctx.markers.quote1end, { y: 0.32, byAt: ctx.markers.dentist });
     },
   },
@@ -302,7 +303,7 @@ export const shots = [
       hussFace(ctx, b, hits); cat.pose('loaf', 0); cat.face('stare', OPEN(cat));
       const k = clamp((ctx.t - ctx.time('b09')) / 0.8, 0, 1);
       ctx.props.drop5.position.set(0.24, 0.5 - 0.3 * k, 0.29);
-      ctx.cam.set(faceCam(b, [1.6, 1.25, 1.0][i], [0.25, -0.2, 0.1][i], 0.12, 36)); ctx.cam.punch(hits, ctx.t, 0.1, 0.2);
+      ctx.cam.set(catCam(b, [2.2, 1.8, 1.5][i], [0.25, -0.2, 0.1][i], 36)); ctx.cam.punch(hits, ctx.t, 0.1, 0.2);
     },
   })),
   // ── b10 "Top ten respectful moments. Number seven: Grandad dusted me."
@@ -310,7 +311,7 @@ export const shots = [
     name: 'grandad dusts', start: 'b10-0.1', set: 'room',
     setup(ctx) {
       const st = ctx.store = roomScene(ctx); catOnHead(ctx);
-      ctx.place('grandad', st.F(0.7, 0, 0.25)); ctx.cast.grandad.root.rotation.set(0, st.F.yaw - 1.4, 0);
+      ctx.place('grandad', st.F(0.62, 0, 0.32)); ctx.cast.grandad.root.rotation.set(0, st.F.yaw - 1.35, 0);
       ctx.cast.grandad.setAccessory?.('headphones', false); ctx.cast.grandad.setAccessory?.('sunglasses', false); ctx.cast.grandad.setAccessory?.('glasses', true);
     },
     update(ctx) {
@@ -321,7 +322,7 @@ export const shots = [
       g.face(ctx.t > td + 1.0 ? 'smile' : 'neutral', ctx.t);
       ctx.add(P.duster); g.root.updateMatrixWorld(true);
       P.duster.position.copy(g.joints.handR.getWorldPosition(V())); P.duster.rotation.set(0.3, g.root.rotation.y, -0.5 + (dusting ? 0.4 * Math.sin(ctx.t * 14) : 0));
-      ctx.cam.set({ pos: ctx.store.F(0.45, 1.6, 2.9), look: ctx.store.F(0.3, 1.45, 0), fov: 42 });
+      ctx.cam.set({ pos: ctx.store.F(0.35, 1.85, 3.9), look: ctx.store.F(0.32, 1.55, 0.1), fov: 44 });
       top10Card(ctx, 7, ctx.time('b10') + 0.05, Infinity, { popAt: ctx.markers.top7 });
     },
   },
@@ -384,7 +385,7 @@ export const shots = [
       if (ctx.t < ctx.time('b15.w2') - 0.05) {
         ctx.cam.set({ pos: st.S(0.5, 2.2, 8.0), look: st.S(0.5, 1.2, 2.5), fov: 40 });
         ctx.fx.overlay('#1a1040', 0.55); ctx.fx.text('3 AM', { y: 0.38, size: 220, fill: '#ffe14a', stroke: '#3a1a00', rot: -0.05 }); ctx.caption.hide(true);
-      } else ctx.cam.move({ pos: st.S(0.55, 1.7, 5.4), look: st.S(0.55, 1.35, 2.5), fov: 40 }, { pos: st.S(0.55, 1.6, 4.6), look: st.S(0.55, 1.35, 2.5), fov: 40 }, clamp((ctx.t - tl + 0.6) / 1.4, 0, 1));
+      } else ctx.cam.move({ pos: st.S(0.45, 2.1, 8.4), look: st.S(0.45, 1.4, 2.55), fov: 40 }, { pos: st.S(0.45, 1.95, 7.4), look: st.S(0.45, 1.4, 2.55), fov: 40 }, clamp((ctx.t - tl + 0.6) / 1.4, 0, 1));
     },
   },
   {
@@ -410,10 +411,11 @@ export const shots = [
       stageAnim(ctx, st, { standsMode: i >= 2 ? 'peer' : 'idle', sleepy: i < 2 }); hussFace(ctx, b, hits);
       if (i >= 3) ctx.props.drop5.position.set(0.24, 0.5 - 0.06 * (i - 3), 0.29);
       const bp = L.position.clone().add(up(L.userData.bulbY - 0.15));
+      const two = { pos: st.S(0.45, 1.95, 7.4), look: st.S(0.45, 1.4, 2.55), fov: 40 };
       if (i === 0 || i === 3) ctx.cam.set(faceCam(b, [2.0, 1.1][i ? 1 : 0], -0.7, 0, 34));
       else if (i === 1 || i === 4) ctx.cam.set({ pos: bp.clone().addScaledVector(st.S.fwd, [2.2, 1.3][i === 1 ? 0 : 1]).addScaledVector(st.S.left, -0.6).add(up(-0.3)), look: bp, fov: 34 });
       else if (i === 2) { const F = frameAt(ctx, 'square.standA'); ctx.cam.set({ pos: F(0, 2.4, 5.0), look: F(0, 2.0, 0), fov: 42 }); }
-      else ctx.cam.set({ pos: st.S(0.55, 1.7, 3.9), look: st.S(0.55, 1.6, 2.55), fov: 40 });
+      else ctx.cam.set(two);
       ctx.cam.punch(hits, ctx.t, 0.12, 0.18); ctx.cam.shake(0.1, ctx.t, 40 + i);
     },
   })),
@@ -431,7 +433,7 @@ export const shots = [
       stageAnim(ctx, st, { standsMode: ctx.t > to ? 'cheer' : 'peer' }); frozen(b, 'neutral', OPEN(b));
       if (ctx.t > to) holdTrophy(ctx, b);
       ctx.props.confetti.update(ctx.t - to);
-      ctx.cam.set(ctx.t < to ? { pos: st.S(0.9, 2.2, 4.0), look: st.S(1.1, 2.3, 2.55), fov: 40 } : { pos: st.S(0.55, 1.7, 5.4), look: st.S(0.55, 1.35, 2.5), fov: 42 });
+      ctx.cam.set(ctx.t < to ? { pos: st.S(0.75, 2.2, 4.2), look: st.S(0.9, 2.4, 2.55), fov: 40 } : { pos: st.S(0.45, 1.95, 7.4), look: st.S(0.45, 1.4, 2.55), fov: 40 });
       outStamp(ctx, to, { x: 0.62, y: 0.26 });
     },
   },
@@ -446,7 +448,7 @@ export const shots = [
       const st = ctx.store, b = ctx.cast.brenda, m = ctx.cast.marcus;
       stageAnim(ctx, st, { standsMode: 'cheer' }); frozen(b, 'neutral', OPEN(b)); holdTrophy(ctx, b);
       m.pose('shrug', ctx.t); m.face('shocked', ctx.t);
-      ctx.cam.set({ pos: st.S(-0.5, 1.65, 4.6), look: st.S(-0.5, 1.4, 2.4), fov: 40 });
+      ctx.cam.set({ pos: st.S(-0.5, 1.9, 6.9), look: st.S(-0.5, 1.4, 2.45), fov: 40 });
     },
   },
   // ── b19 Brenda: "While you were out partying, by the way."
@@ -480,7 +482,7 @@ export const shots = [
       frozen(b, lifted ? 'sleepy' : 'neutral', lifted ? SHUT(b) : OPEN(b));
       m.pose(lifted ? 'cheer' : 'point', lifted ? 0.4 : ctx.t, { intensity: 0.6 }); m.face('shocked', ctx.t);
       if (lifted) { ctx.add(P.shades); m.root.updateMatrixWorld(true); P.shades.position.copy(m.joints.handL.getWorldPosition(V())).add(up(0.08)); P.shades.rotation.set(0, b.root.rotation.y, 0.2); }
-      ctx.cam.set(faceCam(b, 1.9, -0.45, 0.05, 36));
+      ctx.cam.set(faceCam(b, 2.9, -0.6, 0.0, 40));
       top10Card(ctx, 1, ctx.time('b20') + 0.02, Infinity, { popAt: ctx.markers.top1 });
       if (ctx.t > ctx.markers.sleep) tag(ctx, 'Z z z', ctx.markers.sleep, Infinity, { x: 0.68, y: 0.42, size: 96, bg: null, rot: -0.2 });
     },
@@ -529,7 +531,7 @@ export const shots = [
       ctx.cam.set(faceCam(b, [2.2, 1.7, 2.8][i], [-0.3, 0.3, -0.1][i], [0.3, 0.3, 0.15][i], 38));
       ctx.cam.punch(hits, ctx.t, 0.08, 0.2);
       hits.forEach((x, k) => { if (ctx.t > x) tag(ctx, 'HUSS', x, x + 0.5, { x: 0.3 + 0.2 * k, y: 0.3 - 0.04 * k, size: 64, fill: '#1d1d22', stroke: '#ffffff', bg: 'rgba(255,255,255,0.92)', rot: -0.1 + 0.1 * k }); });
-      const tEnd = ctx.time('b22.end') + 0.3, ki = clamp((ctx.t - tEnd) / 0.45, 0, 1);
+      const tEnd = ctx.time('b22.end') + 0.85, ki = clamp((ctx.t - tEnd) / 0.45, 0, 1);
       if (ki > 0) ctx.fx.draw((g, W, H) => { const r = Math.hypot(W, H) * 0.6 * (1 - ki); g.save(); g.fillStyle = '#000'; g.beginPath(); g.rect(0, 0, W, H); g.arc(W * 0.5, H * 0.4, Math.max(0.5, r), 0, Math.PI * 2, true); g.fill('evenodd'); g.restore(); });
     },
   })),

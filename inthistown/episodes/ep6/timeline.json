@@ -1,0 +1,2430 @@
+{
+ "fps": 30,
+ "duration": 52.705,
+ "audio": "episodes/ep6/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody parties.",
+   "start": 0.3,
+   "end": 2.136,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.69
+    },
+    {
+     "text": "parties",
+     "start": 1.69,
+     "end": 2.136
+    }
+   ],
+   "visual": "Crane down the party street."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me. I'm the cat.",
+   "start": 2.351,
+   "end": 3.968,
+   "words": [
+    {
+     "text": "Except",
+     "start": 2.366,
+     "end": 2.825
+    },
+    {
+     "text": "me",
+     "start": 2.825,
+     "end": 3.014
+    },
+    {
+     "text": "I'm",
+     "start": 3.344,
+     "end": 3.572
+    },
+    {
+     "text": "the",
+     "start": 3.572,
+     "end": 3.74
+    },
+    {
+     "text": "cat",
+     "start": 3.74,
+     "end": 3.968
+    }
+   ],
+   "visual": "Window push; inside, the camera finds the cat sitting on a table next to a mug, staring into the lens."
+  },
+  {
+   "id": "b03",
+   "speaker": "cat",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 4.233,
+   "end": 5.873,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 4.233,
+     "end": 4.493
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.443,
+     "end": 4.703
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.633,
+     "end": 4.893
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.213,
+     "end": 5.473
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.423,
+     "end": 5.683
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.613,
+     "end": 5.873
+    }
+   ],
+   "visual": "One paw swipe per HUSS: mug, pencil, book, apple, remote, a tiny trophy fly off the table."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The pigeon got a tattoo. It just says Coo.",
+   "start": 6.213,
+   "end": 8.684,
+   "words": [
+    {
+     "text": "The",
+     "start": 6.228,
+     "end": 6.385
+    },
+    {
+     "text": "pigeon",
+     "start": 6.385,
+     "end": 6.765
+    },
+    {
+     "text": "got",
+     "start": 6.765,
+     "end": 6.978
+    },
+    {
+     "text": "a",
+     "start": 6.978,
+     "end": 7.135
+    },
+    {
+     "text": "tattoo",
+     "start": 7.135,
+     "end": 7.403
+    },
+    {
+     "text": "It",
+     "start": 7.783,
+     "end": 7.949
+    },
+    {
+     "text": "just",
+     "start": 7.949,
+     "end": 8.293
+    },
+    {
+     "text": "says",
+     "start": 8.293,
+     "end": 8.518
+    },
+    {
+     "text": "Coo",
+     "start": 8.518,
+     "end": 8.684
+    }
+   ],
+   "visual": "The pigeon shows off a wing: a tattoo heart that reads COO."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While they're out partying, by the way, I push things off tables.",
+   "start": 8.999,
+   "end": 12.013,
+   "words": [
+    {
+     "text": "While",
+     "start": 9.014,
+     "end": 9.237
+    },
+    {
+     "text": "they're",
+     "start": 9.237,
+     "end": 9.46
+    },
+    {
+     "text": "out",
+     "start": 9.46,
+     "end": 9.637
+    },
+    {
+     "text": "partying",
+     "start": 9.637,
+     "end": 9.999
+    },
+    {
+     "text": "by",
+     "start": 10.129,
+     "end": 10.314
+    },
+    {
+     "text": "the",
+     "start": 10.314,
+     "end": 10.45
+    },
+    {
+     "text": "way",
+     "start": 10.45,
+     "end": 10.635
+    },
+    {
+     "text": "I",
+     "start": 10.765,
+     "end": 10.924
+    },
+    {
+     "text": "push",
+     "start": 10.924,
+     "end": 11.139
+    },
+    {
+     "text": "things",
+     "start": 11.139,
+     "end": 11.412
+    },
+    {
+     "text": "off",
+     "start": 11.412,
+     "end": 11.571
+    },
+    {
+     "text": "tables",
+     "start": 11.571,
+     "end": 12.013
+    }
+   ],
+   "visual": "Bedroom desk: the cat slowly nudges a glass toward the edge, eye contact with the lens."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "A pen. A phone. A whole lasagna.",
+   "start": 12.328,
+   "end": 14.826,
+   "words": [
+    {
+     "text": "A",
+     "start": 12.343,
+     "end": 12.55
+    },
+    {
+     "text": "pen",
+     "start": 12.55,
+     "end": 12.83
+    },
+    {
+     "text": "A",
+     "start": 13.16,
+     "end": 13.344
+    },
+    {
+     "text": "phone",
+     "start": 13.344,
+     "end": 13.66
+    },
+    {
+     "text": "A",
+     "start": 13.99,
+     "end": 14.142
+    },
+    {
+     "text": "whole",
+     "start": 14.142,
+     "end": 14.402
+    },
+    {
+     "text": "lasagna",
+     "start": 14.402,
+     "end": 14.826
+    }
+   ],
+   "visual": "Three quick swipes, each object falls on its word; the lasagna lands upside down."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Gravity is just the floor asking nicely. A physicist, crying.",
+   "start": 15.141,
+   "end": 18.886,
+   "words": [
+    {
+     "text": "Gravity",
+     "start": 15.156,
+     "end": 15.568
+    },
+    {
+     "text": "is",
+     "start": 15.568,
+     "end": 15.716
+    },
+    {
+     "text": "just",
+     "start": 15.716,
+     "end": 16.023
+    },
+    {
+     "text": "the",
+     "start": 16.023,
+     "end": 16.171
+    },
+    {
+     "text": "floor",
+     "start": 16.171,
+     "end": 16.425
+    },
+    {
+     "text": "asking",
+     "start": 16.425,
+     "end": 16.732
+    },
+    {
+     "text": "nicely",
+     "start": 16.732,
+     "end": 17.092
+    },
+    {
+     "text": "A",
+     "start": 17.522,
+     "end": 17.707
+    },
+    {
+     "text": "physicist",
+     "start": 17.707,
+     "end": 18.288
+    },
+    {
+     "text": "crying",
+     "start": 18.418,
+     "end": 18.886
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Gravity is just the floor asking nicely.",
+    "by": "a physicist, crying"
+   },
+   "visual": "QUOTE CARD; attribution on 'A physicist, crying.'"
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then came the Summer Party Fancy Dinner.",
+   "start": 19.201,
+   "end": 21.074,
+   "words": [
+    {
+     "text": "Then",
+     "start": 19.216,
+     "end": 19.432
+    },
+    {
+     "text": "came",
+     "start": 19.432,
+     "end": 19.706
+    },
+    {
+     "text": "the",
+     "start": 19.706,
+     "end": 19.866
+    },
+    {
+     "text": "Summer",
+     "start": 19.866,
+     "end": 20.139
+    },
+    {
+     "text": "Party",
+     "start": 20.139,
+     "end": 20.47
+    },
+    {
+     "text": "Fancy",
+     "start": 20.47,
+     "end": 20.8
+    },
+    {
+     "text": "Dinner",
+     "start": 20.8,
+     "end": 21.074
+    }
+   ],
+   "visual": "Square: a long dinner table on the stage with a giant champagne-glass tower in the middle; crowd in bow ties."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Five hundred glasses. One table edge.",
+   "start": 21.289,
+   "end": 23.663,
+   "words": [
+    {
+     "text": "Five",
+     "start": 21.304,
+     "end": 21.568
+    },
+    {
+     "text": "hundred",
+     "start": 21.568,
+     "end": 21.998
+    },
+    {
+     "text": "glasses",
+     "start": 21.998,
+     "end": 22.373
+    },
+    {
+     "text": "One",
+     "start": 22.753,
+     "end": 22.993
+    },
+    {
+     "text": "table",
+     "start": 22.993,
+     "end": 23.423
+    },
+    {
+     "text": "edge",
+     "start": 23.423,
+     "end": 23.663
+    }
+   ],
+   "visual": "Tilt up the tower; on 'edge' the cat hops onto the far end of the table."
+  },
+  {
+   "id": "b10",
+   "speaker": "cat",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 23.978,
+   "end": 24.638,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 23.978,
+     "end": 24.238
+    },
+    {
+     "text": "HUSS!",
+     "start": 24.188,
+     "end": 24.448
+    },
+    {
+     "text": "HUSS!",
+     "start": 24.378,
+     "end": 24.638
+    }
+   ],
+   "visual": "The cat steps closer along the table on each HUSS; the crowd gasps."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Everybody froze. Even the DJ.",
+   "start": 24.978,
+   "end": 27.209,
+   "words": [
+    {
+     "text": "Everybody",
+     "start": 24.993,
+     "end": 25.574
+    },
+    {
+     "text": "froze",
+     "start": 25.574,
+     "end": 25.956
+    },
+    {
+     "text": "Even",
+     "start": 26.336,
+     "end": 26.627
+    },
+    {
+     "text": "the",
+     "start": 26.627,
+     "end": 26.797
+    },
+    {
+     "text": "DJ",
+     "start": 26.797,
+     "end": 27.209
+    }
+   ],
+   "visual": "Music cuts; crowd frozen 'shocked'; DJ Grandad frozen mid-scratch."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every glass is a floor glass eventually. My mum.",
+   "start": 27.524,
+   "end": 30.438,
+   "words": [
+    {
+     "text": "Every",
+     "start": 27.539,
+     "end": 27.805
+    },
+    {
+     "text": "glass",
+     "start": 27.805,
+     "end": 28.072
+    },
+    {
+     "text": "is",
+     "start": 28.072,
+     "end": 28.227
+    },
+    {
+     "text": "a",
+     "start": 28.227,
+     "end": 28.383
+    },
+    {
+     "text": "floor",
+     "start": 28.383,
+     "end": 28.649
+    },
+    {
+     "text": "glass",
+     "start": 28.649,
+     "end": 28.916
+    },
+    {
+     "text": "eventually",
+     "start": 28.916,
+     "end": 29.516
+    },
+    {
+     "text": "My",
+     "start": 29.946,
+     "end": 30.192
+    },
+    {
+     "text": "mum",
+     "start": 30.192,
+     "end": 30.438
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Every glass is a floor glass eventually.",
+    "by": "my mum"
+   },
+   "visual": "QUOTE CARD over the cat and the tower; attribution on 'My mum.'"
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I sat next to it. And did nothing.",
+   "start": 30.753,
+   "end": 32.903,
+   "words": [
+    {
+     "text": "So",
+     "start": 30.768,
+     "end": 30.94
+    },
+    {
+     "text": "I",
+     "start": 30.94,
+     "end": 31.067
+    },
+    {
+     "text": "sat",
+     "start": 31.067,
+     "end": 31.239
+    },
+    {
+     "text": "next",
+     "start": 31.239,
+     "end": 31.502
+    },
+    {
+     "text": "to",
+     "start": 31.502,
+     "end": 31.629
+    },
+    {
+     "text": "it",
+     "start": 31.629,
+     "end": 31.756
+    },
+    {
+     "text": "And",
+     "start": 32.186,
+     "end": 32.389
+    },
+    {
+     "text": "did",
+     "start": 32.389,
+     "end": 32.593
+    },
+    {
+     "text": "nothing",
+     "start": 32.593,
+     "end": 32.903
+    }
+   ],
+   "visual": "The cat sits beside the tower and just stares at the lens. Nothing happens."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respectful moments. Number seven: I let it live.",
+   "start": 33.268,
+   "end": 36.37,
+   "words": [
+    {
+     "text": "Top",
+     "start": 33.283,
+     "end": 33.472
+    },
+    {
+     "text": "ten",
+     "start": 33.472,
+     "end": 33.661
+    },
+    {
+     "text": "respectful",
+     "start": 33.661,
+     "end": 34.199
+    },
+    {
+     "text": "moments",
+     "start": 34.199,
+     "end": 34.637
+    },
+    {
+     "text": "Number",
+     "start": 35.017,
+     "end": 35.321
+    },
+    {
+     "text": "seven",
+     "start": 35.321,
+     "end": 35.625
+    },
+    {
+     "text": "I",
+     "start": 35.625,
+     "end": 35.772
+    },
+    {
+     "text": "let",
+     "start": 35.772,
+     "end": 35.971
+    },
+    {
+     "text": "it",
+     "start": 35.971,
+     "end": 36.118
+    },
+    {
+     "text": "live",
+     "start": 36.118,
+     "end": 36.37
+    }
+   ],
+   "visual": "TOP 10 card; the crowd claps slowly; the mayor bows to the cat."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then the pigeon landed on it.",
+   "start": 36.685,
+   "end": 38.005,
+   "words": [
+    {
+     "text": "Then",
+     "start": 36.7,
+     "end": 36.892
+    },
+    {
+     "text": "the",
+     "start": 36.892,
+     "end": 37.034
+    },
+    {
+     "text": "pigeon",
+     "start": 37.034,
+     "end": 37.378
+    },
+    {
+     "text": "landed",
+     "start": 37.378,
+     "end": 37.722
+    },
+    {
+     "text": "on",
+     "start": 37.722,
+     "end": 37.864
+    },
+    {
+     "text": "it",
+     "start": 37.864,
+     "end": 38.005
+    }
+   ],
+   "visual": "The tattooed pigeon flaps down onto the top glass."
+  },
+  {
+   "id": "b16",
+   "speaker": "pigeon",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 38.32,
+   "end": 39.96,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 38.32,
+     "end": 38.58
+    },
+    {
+     "text": "HUSS!",
+     "start": 38.53,
+     "end": 38.79
+    },
+    {
+     "text": "HUSS!",
+     "start": 38.72,
+     "end": 38.98
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.3,
+     "end": 39.56
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.51,
+     "end": 39.77
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.7,
+     "end": 39.96
+    }
+   ],
+   "visual": "One tier of the tower collapses per HUSS, from the top down; glasses fly everywhere."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "They banned the pigeon. I got a medal.",
+   "start": 40.35,
+   "end": 42.336,
+   "words": [
+    {
+     "text": "They",
+     "start": 40.365,
+     "end": 40.549
+    },
+    {
+     "text": "banned",
+     "start": 40.549,
+     "end": 40.781
+    },
+    {
+     "text": "the",
+     "start": 40.781,
+     "end": 40.917
+    },
+    {
+     "text": "pigeon",
+     "start": 40.917,
+     "end": 41.245
+    },
+    {
+     "text": "I",
+     "start": 41.625,
+     "end": 41.756
+    },
+    {
+     "text": "got",
+     "start": 41.756,
+     "end": 41.934
+    },
+    {
+     "text": "a",
+     "start": 41.934,
+     "end": 42.065
+    },
+    {
+     "text": "medal",
+     "start": 42.065,
+     "end": 42.336
+    }
+   ],
+   "visual": "BANNED stamp on the pigeon; the mayor hangs a gold medal on the cat."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Never trust a bird with a tattoo. My grandad.",
+   "start": 42.651,
+   "end": 45.331,
+   "words": [
+    {
+     "text": "Never",
+     "start": 42.666,
+     "end": 42.922
+    },
+    {
+     "text": "trust",
+     "start": 42.922,
+     "end": 43.232
+    },
+    {
+     "text": "a",
+     "start": 43.232,
+     "end": 43.382
+    },
+    {
+     "text": "bird",
+     "start": 43.382,
+     "end": 43.585
+    },
+    {
+     "text": "with",
+     "start": 43.585,
+     "end": 43.788
+    },
+    {
+     "text": "a",
+     "start": 43.788,
+     "end": 43.937
+    },
+    {
+     "text": "tattoo",
+     "start": 43.937,
+     "end": 44.194
+    },
+    {
+     "text": "My",
+     "start": 44.624,
+     "end": 44.856
+    },
+    {
+     "text": "grandad",
+     "start": 44.856,
+     "end": 45.331
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Never trust a bird with a tattoo.",
+    "by": "my grandad"
+   },
+   "visual": "QUOTE CARD; reveal: Grandad nodding with his own COO tattoo on his arm."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now in this town, everybody eats off the floor. Except me.",
+   "start": 45.646,
+   "end": 49.194,
+   "words": [
+    {
+     "text": "Now",
+     "start": 45.661,
+     "end": 45.862
+    },
+    {
+     "text": "in",
+     "start": 45.862,
+     "end": 46.01
+    },
+    {
+     "text": "this",
+     "start": 46.01,
+     "end": 46.21
+    },
+    {
+     "text": "town",
+     "start": 46.21,
+     "end": 46.464
+    },
+    {
+     "text": "everybody",
+     "start": 46.894,
+     "end": 47.408
+    },
+    {
+     "text": "eats",
+     "start": 47.408,
+     "end": 47.629
+    },
+    {
+     "text": "off",
+     "start": 47.629,
+     "end": 47.793
+    },
+    {
+     "text": "the",
+     "start": 47.793,
+     "end": 47.956
+    },
+    {
+     "text": "floor",
+     "start": 47.956,
+     "end": 48.236
+    },
+    {
+     "text": "Except",
+     "start": 48.546,
+     "end": 49.005
+    },
+    {
+     "text": "me",
+     "start": 49.005,
+     "end": 49.194
+    }
+   ],
+   "visual": "Everyone picnics on the stage floor among glass shards; tables gone. The cat alone on the only table."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I'm still on the table.",
+   "start": 49.509,
+   "end": 50.49,
+   "words": [
+    {
+     "text": "I'm",
+     "start": 49.524,
+     "end": 49.699
+    },
+    {
+     "text": "still",
+     "start": 49.699,
+     "end": 49.92
+    },
+    {
+     "text": "on",
+     "start": 49.92,
+     "end": 50.049
+    },
+    {
+     "text": "the",
+     "start": 50.049,
+     "end": 50.177
+    },
+    {
+     "text": "table",
+     "start": 50.177,
+     "end": 50.49
+    }
+   ],
+   "visual": "The cat on the table, eye contact, slowly reaches a paw toward the camera."
+  },
+  {
+   "id": "b21",
+   "speaker": "cat",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 50.805,
+   "end": 51.465,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 50.805,
+     "end": 51.065
+    },
+    {
+     "text": "HUSS!",
+     "start": 51.015,
+     "end": 51.275
+    },
+    {
+     "text": "HUSS!",
+     "start": 51.205,
+     "end": 51.465
+    }
+   ],
+   "visual": "Paw taps the camera on each HUSS; on the third the camera tips off the table, the picture spins and falls to black."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.69,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "parties",
+   "start": 1.69,
+   "end": 2.136,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 2.366,
+   "end": 2.825,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 2.825,
+   "end": 3.014,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I'm",
+   "start": 3.344,
+   "end": 3.572,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 3.572,
+   "end": 3.74,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "cat",
+   "start": 3.74,
+   "end": 3.968,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.233,
+   "end": 4.493,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.443,
+   "end": 4.703,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.633,
+   "end": 4.893,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.213,
+   "end": 5.473,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.423,
+   "end": 5.683,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.613,
+   "end": 5.873,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 6.228,
+   "end": 6.385,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "pigeon",
+   "start": 6.385,
+   "end": 6.765,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "got",
+   "start": 6.765,
+   "end": 6.978,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 6.978,
+   "end": 7.135,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "tattoo",
+   "start": 7.135,
+   "end": 7.403,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "It",
+   "start": 7.783,
+   "end": 7.949,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "just",
+   "start": 7.949,
+   "end": 8.293,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "says",
+   "start": 8.293,
+   "end": 8.518,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Coo",
+   "start": 8.518,
+   "end": 8.684,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "While",
+   "start": 9.014,
+   "end": 9.237,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they're",
+   "start": 9.237,
+   "end": 9.46,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 9.46,
+   "end": 9.637,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 9.637,
+   "end": 9.999,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 10.129,
+   "end": 10.314,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 10.314,
+   "end": 10.45,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 10.45,
+   "end": 10.635,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 10.765,
+   "end": 10.924,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "push",
+   "start": 10.924,
+   "end": 11.139,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "things",
+   "start": 11.139,
+   "end": 11.412,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "off",
+   "start": 11.412,
+   "end": 11.571,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "tables",
+   "start": 11.571,
+   "end": 12.013,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "A",
+   "start": 12.343,
+   "end": 12.55,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "pen",
+   "start": 12.55,
+   "end": 12.83,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "A",
+   "start": 13.16,
+   "end": 13.344,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "phone",
+   "start": 13.344,
+   "end": 13.66,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "A",
+   "start": 13.99,
+   "end": 14.142,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "whole",
+   "start": 14.142,
+   "end": 14.402,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "lasagna",
+   "start": 14.402,
+   "end": 14.826,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Gravity",
+   "start": 15.156,
+   "end": 15.568,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "is",
+   "start": 15.568,
+   "end": 15.716,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "just",
+   "start": 15.716,
+   "end": 16.023,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 16.023,
+   "end": 16.171,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "floor",
+   "start": 16.171,
+   "end": 16.425,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "asking",
+   "start": 16.425,
+   "end": 16.732,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "nicely",
+   "start": 16.732,
+   "end": 17.092,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "A",
+   "start": 17.522,
+   "end": 17.707,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "physicist",
+   "start": 17.707,
+   "end": 18.288,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "crying",
+   "start": 18.418,
+   "end": 18.886,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Then",
+   "start": 19.216,
+   "end": 19.432,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "came",
+   "start": 19.432,
+   "end": 19.706,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 19.706,
+   "end": 19.866,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Summer",
+   "start": 19.866,
+   "end": 20.139,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Party",
+   "start": 20.139,
+   "end": 20.47,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Fancy",
+   "start": 20.47,
+   "end": 20.8,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Dinner",
+   "start": 20.8,
+   "end": 21.074,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Five",
+   "start": 21.304,
+   "end": 21.568,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "hundred",
+   "start": 21.568,
+   "end": 21.998,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "glasses",
+   "start": 21.998,
+   "end": 22.373,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "One",
+   "start": 22.753,
+   "end": 22.993,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "table",
+   "start": 22.993,
+   "end": 23.423,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "edge",
+   "start": 23.423,
+   "end": 23.663,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "HUSS!",
+   "start": 23.978,
+   "end": 24.238,
+   "beat": "b10",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 24.188,
+   "end": 24.448,
+   "beat": "b10",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 24.378,
+   "end": 24.638,
+   "beat": "b10",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 2
+  },
+  {
+   "text": "Everybody",
+   "start": 24.993,
+   "end": 25.574,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "froze",
+   "start": 25.574,
+   "end": 25.956,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Even",
+   "start": 26.336,
+   "end": 26.627,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 26.627,
+   "end": 26.797,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "DJ",
+   "start": 26.797,
+   "end": 27.209,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Every",
+   "start": 27.539,
+   "end": 27.805,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "glass",
+   "start": 27.805,
+   "end": 28.072,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "is",
+   "start": 28.072,
+   "end": 28.227,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 28.227,
+   "end": 28.383,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "floor",
+   "start": 28.383,
+   "end": 28.649,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "glass",
+   "start": 28.649,
+   "end": 28.916,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "eventually",
+   "start": 28.916,
+   "end": 29.516,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "My",
+   "start": 29.946,
+   "end": 30.192,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "mum",
+   "start": 30.192,
+   "end": 30.438,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "So",
+   "start": 30.768,
+   "end": 30.94,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 30.94,
+   "end": 31.067,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "sat",
+   "start": 31.067,
+   "end": 31.239,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "next",
+   "start": 31.239,
+   "end": 31.502,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "to",
+   "start": 31.502,
+   "end": 31.629,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "it",
+   "start": 31.629,
+   "end": 31.756,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "And",
+   "start": 32.186,
+   "end": 32.389,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "did",
+   "start": 32.389,
+   "end": 32.593,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "nothing",
+   "start": 32.593,
+   "end": 32.903,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Top",
+   "start": 33.283,
+   "end": 33.472,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 33.472,
+   "end": 33.661,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respectful",
+   "start": 33.661,
+   "end": 34.199,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "moments",
+   "start": 34.199,
+   "end": 34.637,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Number",
+   "start": 35.017,
+   "end": 35.321,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "seven",
+   "start": 35.321,
+   "end": 35.625,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I",
+   "start": 35.625,
+   "end": 35.772,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "let",
+   "start": 35.772,
+   "end": 35.971,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "it",
+   "start": 35.971,
+   "end": 36.118,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "live",
+   "start": 36.118,
+   "end": 36.37,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Then",
+   "start": 36.7,
+   "end": 36.892,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 36.892,
+   "end": 37.034,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "pigeon",
+   "start": 37.034,
+   "end": 37.378,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "landed",
+   "start": 37.378,
+   "end": 37.722,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "on",
+   "start": 37.722,
+   "end": 37.864,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "it",
+   "start": 37.864,
+   "end": 38.005,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.32,
+   "end": 38.58,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.53,
+   "end": 38.79,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.72,
+   "end": 38.98,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.3,
+   "end": 39.56,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.51,
+   "end": 39.77,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.7,
+   "end": 39.96,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "i": 5
+  },
+  {
+   "text": "They",
+   "start": 40.365,
+   "end": 40.549,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "banned",
+   "start": 40.549,
+   "end": 40.781,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 40.781,
+   "end": 40.917,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "pigeon",
+   "start": 40.917,
+   "end": 41.245,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "I",
+   "start": 41.625,
+   "end": 41.756,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "got",
+   "start": 41.756,
+   "end": 41.934,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "a",
+   "start": 41.934,
+   "end": 42.065,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "medal",
+   "start": 42.065,
+   "end": 42.336,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Never",
+   "start": 42.666,
+   "end": 42.922,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "trust",
+   "start": 42.922,
+   "end": 43.232,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "a",
+   "start": 43.232,
+   "end": 43.382,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "bird",
+   "start": 43.382,
+   "end": 43.585,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "with",
+   "start": 43.585,
+   "end": 43.788,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 43.788,
+   "end": 43.937,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "tattoo",
+   "start": 43.937,
+   "end": 44.194,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "My",
+   "start": 44.624,
+   "end": 44.856,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "grandad",
+   "start": 44.856,
+   "end": 45.331,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Now",
+   "start": 45.661,
+   "end": 45.862,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "in",
+   "start": 45.862,
+   "end": 46.01,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "this",
+   "start": 46.01,
+   "end": 46.21,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "town",
+   "start": 46.21,
+   "end": 46.464,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "everybody",
+   "start": 46.894,
+   "end": 47.408,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "eats",
+   "start": 47.408,
+   "end": 47.629,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "off",
+   "start": 47.629,
+   "end": 47.793,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 47.793,
+   "end": 47.956,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "floor",
+   "start": 47.956,
+   "end": 48.236,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Except",
+   "start": 48.546,
+   "end": 49.005,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "me",
+   "start": 49.005,
+   "end": 49.194,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "I'm",
+   "start": 49.524,
+   "end": 49.699,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "still",
+   "start": 49.699,
+   "end": 49.92,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "on",
+   "start": 49.92,
+   "end": 50.049,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 50.049,
+   "end": 50.177,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "table",
+   "start": 50.177,
+   "end": 50.49,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.805,
+   "end": 51.065,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 51.015,
+   "end": 51.275,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 51.205,
+   "end": 51.465,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "cat",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 2.271,
+   "mode": "muffled"
+  },
+  {
+   "t": 8.919,
+   "mode": "muffled"
+  },
+  {
+   "t": 19.121,
+   "mode": "party"
+  },
+  {
+   "t": 24.898,
+   "mode": "none"
+  },
+  {
+   "t": 33.188,
+   "mode": "party"
+  },
+  {
+   "t": 36.605,
+   "mode": "none"
+  },
+  {
+   "t": 40.27,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "imCat": 3.344,
+  "tattoo": 7.783,
+  "pen": 12.55,
+  "phone": 13.344,
+  "lasagna": 14.402,
+  "quote1": 15.091,
+  "quote1end": 18.986,
+  "phys": 17.522,
+  "tower": 21.304,
+  "edge": 23.423,
+  "froze": 25.574,
+  "dj": 26.797,
+  "quote2": 27.474,
+  "quote2end": 30.538,
+  "mum": 29.946,
+  "sat": 31.067,
+  "nothing": 32.593,
+  "top7": 35.321,
+  "land": 37.378,
+  "medal": 41.625,
+  "quote3": 42.601,
+  "quote3end": 44.574,
+  "exceptMe": 48.546,
+  "table": 50.177
+ },
+ "title": "In This Town \u2014 Gravity"
+}
