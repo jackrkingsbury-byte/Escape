@@ -83,7 +83,14 @@ def main(ep):
             phrases = BA.split_phrases(b['text'])
             pauses = b.get('pauses') or []
             for pi, ph in enumerate(phrases):
-                a = BA.trim(BA.up(BA.tts(ph, b['speaker'])))
+                if b.get('ph'):   # explicit phonemes for words the TTS can't say (e.g. a drawn-out "Hisss")
+                    v, sp, lang, yo = BA.VOICES[b['speaker']]
+                    a = BA.tts_voice(b['ph'], v, speed=sp, lang=lang, phonemes=True)
+                    if yo:
+                        a = BA._cached(f"YP|{b['ph']}|{v}|{sp}|{yo}", lambda a=a: BA.youthify(a, BA.TSR, *yo))
+                    a = BA.trim(BA.up(a))
+                else:
+                    a = BA.trim(BA.up(BA.tts(ph, b['speaker'])))
                 dur = len(a) / SR
                 voice_track.append((t, a))
                 ws = ph.split()

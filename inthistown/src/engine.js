@@ -421,7 +421,7 @@ export function createEngine(opts = {}) {
   let activeIndex = -1, activeSet = null, lastT = -Infinity, frameNo = 0;
   let lastBg = undefined, lastFog = undefined;
   let shotCam = null, cam = null, camUsedShot = false, camUsed = false;
-  const fx = { pos: new THREE.Vector3(), rot: new THREE.Vector3(), zoom: 0, roll: 0, overlays: [], vignette: 0, texts: [] };
+  const fx = { pos: new THREE.Vector3(), rot: new THREE.Vector3(), zoom: 0, roll: 0, overlays: [], vignette: 0, texts: [], draws: [] };
   let capShot = null, cap = null;
   const timing = { setup: 0, update: 0, render: 0, composite: 0, total: 0 };
 
@@ -672,6 +672,8 @@ export function createEngine(opts = {}) {
     // opts: { x=.5, y=.25, size=120, fill='#fff', stroke='#000', line=14, rot=0 (rad), scale=1, alpha=1,
     //         font='huss'|'narr', bg=null (rgba box behind), shadow=true }
     text(str, o = {}) { fx.texts.push([String(str), o]); return fxApi; },
+    // custom 2D drawing over the 3D (under captions): fn(g2d, W, H)
+    draw(fn) { fx.draws.push(fn); return fxApi; },
   };
   const captionApi = {
     hide(on = true) { cap.hidden = !!on; },
@@ -802,7 +804,7 @@ export function createEngine(opts = {}) {
     timing.setup = performance.now() - T1;
     // per-frame state from what setup left
     cam = cloneCam(shotCam); camUsed = camUsedShot;
-    fx.pos.set(0, 0, 0); fx.rot.set(0, 0, 0); fx.zoom = 0; fx.roll = 0; fx.overlays.length = 0; fx.vignette = 0; fx.texts.length = 0;
+    fx.pos.set(0, 0, 0); fx.rot.set(0, 0, 0); fx.zoom = 0; fx.roll = 0; fx.overlays.length = 0; fx.vignette = 0; fx.texts.length = 0; fx.draws.length = 0;
     cap = { ...capShot };
     if (activeSet) renderer.toneMappingExposure = activeSet.exposure != null ? activeSet.exposure : 1.0;
     T1 = performance.now();
@@ -843,6 +845,7 @@ export function createEngine(opts = {}) {
       }
       g2.globalAlpha = fx.vignette; g2.drawImage(vignetteCanvas, 0, 0, W, H); g2.globalAlpha = 1;
     }
+    for (const fn of fx.draws) { g2.save(); try { fn(g2, W, H); } catch (e) { reportError('fx.draw', e); } g2.restore(); }
     for (const [str, o] of fx.texts) {
       const size = o.size || 120, sc = o.scale == null ? 1 : o.scale;
       if (sc <= 0 || (o.alpha != null && o.alpha <= 0)) continue;
