@@ -1,0 +1,4228 @@
+{
+ "fps": 30,
+ "duration": 93.815,
+ "audio": "episodes/ep17/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, the clock tower elevator has three buttons. The tower only has two floors.",
+   "start": 0.3,
+   "end": 4.793,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "the",
+     "start": 1.112,
+     "end": 1.269
+    },
+    {
+     "text": "clock",
+     "start": 1.269,
+     "end": 1.54
+    },
+    {
+     "text": "tower",
+     "start": 1.54,
+     "end": 1.81
+    },
+    {
+     "text": "elevator",
+     "start": 1.81,
+     "end": 2.305
+    },
+    {
+     "text": "has",
+     "start": 2.305,
+     "end": 2.519
+    },
+    {
+     "text": "three",
+     "start": 2.519,
+     "end": 2.733
+    },
+    {
+     "text": "buttons",
+     "start": 2.733,
+     "end": 3.06
+    },
+    {
+     "text": "The",
+     "start": 3.37,
+     "end": 3.524
+    },
+    {
+     "text": "tower",
+     "start": 3.524,
+     "end": 3.789
+    },
+    {
+     "text": "only",
+     "start": 3.789,
+     "end": 4.109
+    },
+    {
+     "text": "has",
+     "start": 4.109,
+     "end": 4.318
+    },
+    {
+     "text": "two",
+     "start": 4.318,
+     "end": 4.473
+    },
+    {
+     "text": "floors",
+     "start": 4.473,
+     "end": 4.793
+    }
+   ],
+   "overlay": "1 \u00b7 2 \u00b7 3?",
+   "visual": "Day, outside the clock tower: the camera counts its two rows of windows. Smash cut inside an old brass elevator to a panel with buttons 1, 2 and a softly glowing 3."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nobody presses three.",
+   "start": 5.108,
+   "end": 6.228,
+   "words": [
+    {
+     "text": "Nobody",
+     "start": 5.123,
+     "end": 5.591
+    },
+    {
+     "text": "presses",
+     "start": 5.591,
+     "end": 6.0
+    },
+    {
+     "text": "three",
+     "start": 6.0,
+     "end": 6.228
+    }
+   ],
+   "visual": "Extreme close-up on the glowing 3 button. The pigeon sits on top of the panel, staring down at it."
+  },
+  {
+   "id": "b03",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 6.543,
+   "end": 7.203,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 6.543,
+     "end": 6.803
+    },
+    {
+     "text": "HUSS!",
+     "start": 6.753,
+     "end": 7.013
+    },
+    {
+     "text": "HUSS!",
+     "start": 6.943,
+     "end": 7.203
+    }
+   ],
+   "visual": "The 3 button pulses brighter on each HUSS and the elevator lights flicker."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mr. Kowalski pressed it once. He came back with a pet cloud.",
+   "start": 7.543,
+   "end": 11.198,
+   "words": [
+    {
+     "text": "Mr",
+     "start": 7.558,
+     "end": 8.059
+    },
+    {
+     "text": "Kowalski",
+     "start": 8.369,
+     "end": 8.85
+    },
+    {
+     "text": "pressed",
+     "start": 8.85,
+     "end": 9.167
+    },
+    {
+     "text": "it",
+     "start": 9.167,
+     "end": 9.32
+    },
+    {
+     "text": "once",
+     "start": 9.32,
+     "end": 9.582
+    },
+    {
+     "text": "He",
+     "start": 9.892,
+     "end": 10.024
+    },
+    {
+     "text": "came",
+     "start": 10.024,
+     "end": 10.251
+    },
+    {
+     "text": "back",
+     "start": 10.251,
+     "end": 10.431
+    },
+    {
+     "text": "with",
+     "start": 10.431,
+     "end": 10.611
+    },
+    {
+     "text": "a",
+     "start": 10.611,
+     "end": 10.744
+    },
+    {
+     "text": "pet",
+     "start": 10.744,
+     "end": 10.924
+    },
+    {
+     "text": "cloud",
+     "start": 10.924,
+     "end": 11.198
+    }
+   ],
+   "visual": "The elevator doors slide open. Mr. Kowalski (bald, glasses, green cardigan) steps out holding a leash. On the other end floats a small puffy grey cloud with tiny eyes (face: smug)."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "He walks it every morning. It rains on anyone who's rude.",
+   "start": 11.513,
+   "end": 14.308,
+   "words": [
+    {
+     "text": "He",
+     "start": 11.528,
+     "end": 11.667
+    },
+    {
+     "text": "walks",
+     "start": 11.667,
+     "end": 11.906
+    },
+    {
+     "text": "it",
+     "start": 11.906,
+     "end": 12.045
+    },
+    {
+     "text": "every",
+     "start": 12.045,
+     "end": 12.283
+    },
+    {
+     "text": "morning",
+     "start": 12.283,
+     "end": 12.621
+    },
+    {
+     "text": "It",
+     "start": 12.931,
+     "end": 13.08
+    },
+    {
+     "text": "rains",
+     "start": 13.08,
+     "end": 13.39
+    },
+    {
+     "text": "on",
+     "start": 13.39,
+     "end": 13.539
+    },
+    {
+     "text": "anyone",
+     "start": 13.539,
+     "end": 13.903
+    },
+    {
+     "text": "who's",
+     "start": 13.903,
+     "end": 14.105
+    },
+    {
+     "text": "rude",
+     "start": 14.105,
+     "end": 14.308
+    }
+   ],
+   "visual": "Main street in the morning: Kowalski strolls with his cloud. A guy in sunglasses points and laughs at him (pose: laugh). The cloud drifts over and rains on only him (face: shocked)."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Coach Dana pressed it. She came back twelve feet tall. Her team hasn't lost since.",
+   "start": 14.623,
+   "end": 18.918,
+   "words": [
+    {
+     "text": "Coach",
+     "start": 14.638,
+     "end": 14.932
+    },
+    {
+     "text": "Dana",
+     "start": 14.932,
+     "end": 15.225
+    },
+    {
+     "text": "pressed",
+     "start": 15.225,
+     "end": 15.519
+    },
+    {
+     "text": "it",
+     "start": 15.519,
+     "end": 15.66
+    },
+    {
+     "text": "She",
+     "start": 15.97,
+     "end": 16.12
+    },
+    {
+     "text": "came",
+     "start": 16.12,
+     "end": 16.376
+    },
+    {
+     "text": "back",
+     "start": 16.376,
+     "end": 16.579
+    },
+    {
+     "text": "twelve",
+     "start": 16.579,
+     "end": 16.888
+    },
+    {
+     "text": "feet",
+     "start": 16.888,
+     "end": 17.091
+    },
+    {
+     "text": "tall",
+     "start": 17.091,
+     "end": 17.293
+    },
+    {
+     "text": "Her",
+     "start": 17.603,
+     "end": 17.763
+    },
+    {
+     "text": "team",
+     "start": 17.763,
+     "end": 17.981
+    },
+    {
+     "text": "hasn't",
+     "start": 17.981,
+     "end": 18.369
+    },
+    {
+     "text": "lost",
+     "start": 18.369,
+     "end": 18.644
+    },
+    {
+     "text": "since",
+     "start": 18.644,
+     "end": 18.918
+    }
+   ],
+   "overlay": "UNDEFEATED",
+   "visual": "Park by day: Coach Dana (tracksuit, cap, whistle) towers over the table and tree, holding a ball between two fingers like a grape. Tiny kids in matching shirts cheer around her ankles (pose: cheer)."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So the rule is simple. Never press three.",
+   "start": 19.233,
+   "end": 21.505,
+   "words": [
+    {
+     "text": "So",
+     "start": 19.248,
+     "end": 19.441
+    },
+    {
+     "text": "the",
+     "start": 19.441,
+     "end": 19.583
+    },
+    {
+     "text": "rule",
+     "start": 19.583,
+     "end": 19.776
+    },
+    {
+     "text": "is",
+     "start": 19.776,
+     "end": 19.918
+    },
+    {
+     "text": "simple",
+     "start": 19.918,
+     "end": 20.264
+    },
+    {
+     "text": "Never",
+     "start": 20.574,
+     "end": 20.907
+    },
+    {
+     "text": "press",
+     "start": 20.907,
+     "end": 21.241
+    },
+    {
+     "text": "three",
+     "start": 21.241,
+     "end": 21.505
+    }
+   ],
+   "overlay": "NEVER PRESS 3",
+   "visual": "Town square: the banner over the stage shows a big 3 with a red slash through it. Townspeople nod seriously, arms crossed (pose: crossArms)."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Yesterday, I took Grandma her groceries. She lives on floor two. I HUSSed up at her window, and she HUSSed right back. Then the elevator pressed three by itself.",
+   "start": 21.82,
+   "end": 31.025,
+   "words": [
+    {
+     "text": "Yesterday",
+     "start": 21.835,
+     "end": 22.408
+    },
+    {
+     "text": "I",
+     "start": 22.538,
+     "end": 22.694
+    },
+    {
+     "text": "took",
+     "start": 22.694,
+     "end": 22.907
+    },
+    {
+     "text": "Grandma",
+     "start": 22.907,
+     "end": 23.343
+    },
+    {
+     "text": "her",
+     "start": 23.343,
+     "end": 23.5
+    },
+    {
+     "text": "groceries",
+     "start": 23.5,
+     "end": 24.048
+    },
+    {
+     "text": "She",
+     "start": 24.358,
+     "end": 24.521
+    },
+    {
+     "text": "lives",
+     "start": 24.521,
+     "end": 24.86
+    },
+    {
+     "text": "on",
+     "start": 24.86,
+     "end": 25.024
+    },
+    {
+     "text": "floor",
+     "start": 25.024,
+     "end": 25.304
+    },
+    {
+     "text": "two",
+     "start": 25.304,
+     "end": 25.467
+    },
+    {
+     "text": "I",
+     "start": 25.777,
+     "end": 25.954
+    },
+    {
+     "text": "HUSSed",
+     "start": 25.954,
+     "end": 26.383
+    },
+    {
+     "text": "up",
+     "start": 26.383,
+     "end": 26.559
+    },
+    {
+     "text": "at",
+     "start": 26.559,
+     "end": 26.736
+    },
+    {
+     "text": "her",
+     "start": 26.736,
+     "end": 26.912
+    },
+    {
+     "text": "window",
+     "start": 26.912,
+     "end": 27.341
+    },
+    {
+     "text": "and",
+     "start": 27.471,
+     "end": 27.715
+    },
+    {
+     "text": "she",
+     "start": 27.715,
+     "end": 27.895
+    },
+    {
+     "text": "HUSSed",
+     "start": 27.895,
+     "end": 28.333
+    },
+    {
+     "text": "right",
+     "start": 28.333,
+     "end": 28.642
+    },
+    {
+     "text": "back",
+     "start": 28.642,
+     "end": 28.886
+    },
+    {
+     "text": "Then",
+     "start": 29.196,
+     "end": 29.391
+    },
+    {
+     "text": "the",
+     "start": 29.391,
+     "end": 29.535
+    },
+    {
+     "text": "elevator",
+     "start": 29.535,
+     "end": 29.987
+    },
+    {
+     "text": "pressed",
+     "start": 29.987,
+     "end": 30.285
+    },
+    {
+     "text": "three",
+     "start": 30.285,
+     "end": 30.481
+    },
+    {
+     "text": "by",
+     "start": 30.481,
+     "end": 30.676
+    },
+    {
+     "text": "itself",
+     "start": 30.676,
+     "end": 31.025
+    }
+   ],
+   "visual": "Outside the clock tower: I shout HUSS up at Grandma's floor-two window, she leans out (grey bun, glasses) and HUSSes straight back, fist up. Then inside the elevator, holding two grocery bags, the 3 button clicks in by itself and glows; I slowly turn to look at it (face: shocked)."
+  },
+  {
+   "id": "b09",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 31.34,
+   "end": 32.98,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 31.34,
+     "end": 31.6
+    },
+    {
+     "text": "HUSS!",
+     "start": 31.55,
+     "end": 31.81
+    },
+    {
+     "text": "HUSS!",
+     "start": 31.74,
+     "end": 32.0
+    },
+    {
+     "text": "HUSS!",
+     "start": 32.32,
+     "end": 32.58
+    },
+    {
+     "text": "HUSS!",
+     "start": 32.53,
+     "end": 32.79
+    },
+    {
+     "text": "HUSS!",
+     "start": 32.72,
+     "end": 32.98
+    }
+   ],
+   "overlay": "3",
+   "visual": "The elevator rockets upward. The camera shakes and the lights strobe on every HUSS, the floor counter flicks 3, 3, 3, and groceries float up out of the bags."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The doors opened onto nothing.",
+   "start": 33.32,
+   "end": 34.665,
+   "words": [
+    {
+     "text": "The",
+     "start": 33.335,
+     "end": 33.484
+    },
+    {
+     "text": "doors",
+     "start": 33.484,
+     "end": 33.74
+    },
+    {
+     "text": "opened",
+     "start": 33.74,
+     "end": 34.101
+    },
+    {
+     "text": "onto",
+     "start": 34.101,
+     "end": 34.356
+    },
+    {
+     "text": "nothing",
+     "start": 34.356,
+     "end": 34.665
+    }
+   ],
+   "visual": "NEW SET, Floor Three: the doors slide open onto an endless deep purple-blue starry dark. Soft fog rolls at foot level and glowing pastel shapes drift by slowly. A path of floating stone tiles leads away from the elevator."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Just doors. Hundreds of them, floating in the fog.",
+   "start": 34.98,
+   "end": 37.844,
+   "words": [
+    {
+     "text": "Just",
+     "start": 34.995,
+     "end": 35.391
+    },
+    {
+     "text": "doors",
+     "start": 35.391,
+     "end": 35.719
+    },
+    {
+     "text": "Hundreds",
+     "start": 36.029,
+     "end": 36.52
+    },
+    {
+     "text": "of",
+     "start": 36.52,
+     "end": 36.676
+    },
+    {
+     "text": "them",
+     "start": 36.676,
+     "end": 36.888
+    },
+    {
+     "text": "floating",
+     "start": 37.018,
+     "end": 37.393
+    },
+    {
+     "text": "in",
+     "start": 37.393,
+     "end": 37.527
+    },
+    {
+     "text": "the",
+     "start": 37.527,
+     "end": 37.662
+    },
+    {
+     "text": "fog",
+     "start": 37.662,
+     "end": 37.844
+    }
+   ],
+   "visual": "Wide shot: hundreds of tall wooden doors stand on their own with no walls. They float at different heights in the fog, each with a glowing keyhole, stretching off forever."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And a glowing jellyfish in a bellhop hat.",
+   "start": 38.159,
+   "end": 40.075,
+   "words": [
+    {
+     "text": "And",
+     "start": 38.174,
+     "end": 38.362
+    },
+    {
+     "text": "a",
+     "start": 38.362,
+     "end": 38.501
+    },
+    {
+     "text": "glowing",
+     "start": 38.501,
+     "end": 38.837
+    },
+    {
+     "text": "jellyfish",
+     "start": 38.837,
+     "end": 39.273
+    },
+    {
+     "text": "in",
+     "start": 39.273,
+     "end": 39.411
+    },
+    {
+     "text": "a",
+     "start": 39.411,
+     "end": 39.55
+    },
+    {
+     "text": "bellhop",
+     "start": 39.55,
+     "end": 39.887
+    },
+    {
+     "text": "hat",
+     "start": 39.887,
+     "end": 40.075
+    }
+   ],
+   "visual": "A softly glowing cyan jellyfish in a tiny red bellhop cap bobs up to me (face: wink) and bows with one tentacle."
+  },
+  {
+   "id": "b13",
+   "speaker": "bellhop",
+   "kind": "line",
+   "text": "Welcome to floor three. One door is home. The rest are almost home.",
+   "start": 40.39,
+   "end": 45.108,
+   "words": [
+    {
+     "text": "Welcome",
+     "start": 40.405,
+     "end": 40.948
+    },
+    {
+     "text": "to",
+     "start": 40.948,
+     "end": 41.172
+    },
+    {
+     "text": "floor",
+     "start": 41.172,
+     "end": 41.556
+    },
+    {
+     "text": "three",
+     "start": 41.556,
+     "end": 41.86
+    },
+    {
+     "text": "One",
+     "start": 42.17,
+     "end": 42.435
+    },
+    {
+     "text": "door",
+     "start": 42.435,
+     "end": 42.7
+    },
+    {
+     "text": "is",
+     "start": 42.7,
+     "end": 42.895
+    },
+    {
+     "text": "home",
+     "start": 42.895,
+     "end": 43.229
+    },
+    {
+     "text": "The",
+     "start": 43.539,
+     "end": 43.73
+    },
+    {
+     "text": "rest",
+     "start": 43.73,
+     "end": 44.058
+    },
+    {
+     "text": "are",
+     "start": 44.058,
+     "end": 44.249
+    },
+    {
+     "text": "almost",
+     "start": 44.249,
+     "end": 44.781
+    },
+    {
+     "text": "home",
+     "start": 44.781,
+     "end": 45.108
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "One door is home. The rest are almost home.",
+    "by": "The Bellhop"
+   },
+   "visual": "The Bellhop says this in a polite second voice. Quote card: 'One door is home. The rest are almost home.' \u2014 The Bellhop. It sweeps a tentacle down the endless row of doors."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Three tries. Pick wrong, and you stay. Forever.",
+   "start": 45.423,
+   "end": 48.512,
+   "words": [
+    {
+     "text": "Three",
+     "start": 45.438,
+     "end": 45.715
+    },
+    {
+     "text": "tries",
+     "start": 45.715,
+     "end": 46.139
+    },
+    {
+     "text": "Pick",
+     "start": 46.449,
+     "end": 46.725
+    },
+    {
+     "text": "wrong",
+     "start": 46.725,
+     "end": 47.001
+    },
+    {
+     "text": "and",
+     "start": 47.131,
+     "end": 47.331
+    },
+    {
+     "text": "you",
+     "start": 47.331,
+     "end": 47.478
+    },
+    {
+     "text": "stay",
+     "start": 47.478,
+     "end": 47.731
+    },
+    {
+     "text": "Forever",
+     "start": 48.041,
+     "end": 48.512
+    }
+   ],
+   "overlay": "3 TRIES",
+   "visual": "Three glowing tally marks appear in the air above the jellyfish. I gulp (face: sweat)."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Door one. My street. Perfect. Except the pigeon was the size of a house.",
+   "start": 48.827,
+   "end": 53.364,
+   "words": [
+    {
+     "text": "Door",
+     "start": 48.842,
+     "end": 49.129
+    },
+    {
+     "text": "one",
+     "start": 49.129,
+     "end": 49.415
+    },
+    {
+     "text": "My",
+     "start": 49.725,
+     "end": 49.954
+    },
+    {
+     "text": "street",
+     "start": 49.954,
+     "end": 50.304
+    },
+    {
+     "text": "Perfect",
+     "start": 50.614,
+     "end": 51.127
+    },
+    {
+     "text": "Except",
+     "start": 51.437,
+     "end": 51.78
+    },
+    {
+     "text": "the",
+     "start": 51.78,
+     "end": 51.921
+    },
+    {
+     "text": "pigeon",
+     "start": 51.921,
+     "end": 52.264
+    },
+    {
+     "text": "was",
+     "start": 52.264,
+     "end": 52.456
+    },
+    {
+     "text": "the",
+     "start": 52.456,
+     "end": 52.597
+    },
+    {
+     "text": "size",
+     "start": 52.597,
+     "end": 52.839
+    },
+    {
+     "text": "of",
+     "start": 52.839,
+     "end": 52.98
+    },
+    {
+     "text": "a",
+     "start": 52.98,
+     "end": 53.122
+    },
+    {
+     "text": "house",
+     "start": 53.122,
+     "end": 53.364
+    }
+   ],
+   "overlay": "NOPE",
+   "visual": "I open the first door onto Main Street by day. A pigeon as big as a house sits in the middle of the road, cooing (the camera shakes), while tiny townspeople feed it a whole tree. I slam the door and one tally mark pops away."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Door two. Perfect again. Except everybody in town was me.",
+   "start": 53.679,
+   "end": 57.248,
+   "words": [
+    {
+     "text": "Door",
+     "start": 53.694,
+     "end": 54.05
+    },
+    {
+     "text": "two",
+     "start": 54.05,
+     "end": 54.313
+    },
+    {
+     "text": "Perfect",
+     "start": 54.623,
+     "end": 55.051
+    },
+    {
+     "text": "again",
+     "start": 55.051,
+     "end": 55.353
+    },
+    {
+     "text": "Except",
+     "start": 55.663,
+     "end": 56.024
+    },
+    {
+     "text": "everybody",
+     "start": 56.024,
+     "end": 56.492
+    },
+    {
+     "text": "in",
+     "start": 56.492,
+     "end": 56.641
+    },
+    {
+     "text": "town",
+     "start": 56.641,
+     "end": 56.897
+    },
+    {
+     "text": "was",
+     "start": 56.897,
+     "end": 57.099
+    },
+    {
+     "text": "me",
+     "start": 57.099,
+     "end": 57.248
+    }
+   ],
+   "overlay": "NOPE",
+   "visual": "Second door: Main Street is full of thirty kids in my exact outfit (black hoodie with the white knight emblem, headphones), all doing the same dance in perfect sync. They stop and turn to stare at me at the same moment. I slam it and the second tally mark pops."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "One try left. And the doors were starting to slam shut.",
+   "start": 57.563,
+   "end": 60.478,
+   "words": [
+    {
+     "text": "One",
+     "start": 57.578,
+     "end": 57.821
+    },
+    {
+     "text": "try",
+     "start": 57.821,
+     "end": 58.128
+    },
+    {
+     "text": "left",
+     "start": 58.128,
+     "end": 58.435
+    },
+    {
+     "text": "And",
+     "start": 58.745,
+     "end": 58.942
+    },
+    {
+     "text": "the",
+     "start": 58.942,
+     "end": 59.088
+    },
+    {
+     "text": "doors",
+     "start": 59.088,
+     "end": 59.337
+    },
+    {
+     "text": "were",
+     "start": 59.337,
+     "end": 59.482
+    },
+    {
+     "text": "starting",
+     "start": 59.482,
+     "end": 59.887
+    },
+    {
+     "text": "to",
+     "start": 59.887,
+     "end": 60.032
+    },
+    {
+     "text": "slam",
+     "start": 60.032,
+     "end": 60.281
+    },
+    {
+     "text": "shut",
+     "start": 60.281,
+     "end": 60.478
+    }
+   ],
+   "visual": "Down the row, doors slam shut one after another like dominoes and vanish into the fog. The jellyfish flashes red (face: sweat)."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every door left looked exactly like home. Same street. Same Grandma.",
+   "start": 60.793,
+   "end": 64.821,
+   "words": [
+    {
+     "text": "Every",
+     "start": 60.808,
+     "end": 61.064
+    },
+    {
+     "text": "door",
+     "start": 61.064,
+     "end": 61.267
+    },
+    {
+     "text": "left",
+     "start": 61.267,
+     "end": 61.523
+    },
+    {
+     "text": "looked",
+     "start": 61.523,
+     "end": 61.779
+    },
+    {
+     "text": "exactly",
+     "start": 61.779,
+     "end": 62.248
+    },
+    {
+     "text": "like",
+     "start": 62.248,
+     "end": 62.504
+    },
+    {
+     "text": "home",
+     "start": 62.504,
+     "end": 62.76
+    },
+    {
+     "text": "Same",
+     "start": 63.07,
+     "end": 63.373
+    },
+    {
+     "text": "street",
+     "start": 63.373,
+     "end": 63.739
+    },
+    {
+     "text": "Same",
+     "start": 64.049,
+     "end": 64.343
+    },
+    {
+     "text": "Grandma",
+     "start": 64.343,
+     "end": 64.821
+    }
+   ],
+   "visual": "Three doors left, each cracked open. Each one shows the same Main Street and the same Grandma (grey bun, glasses, cardigan) on the same porch, waving."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "But I knew one thing for sure. My Grandma always HUSSes back.",
+   "start": 65.136,
+   "end": 68.64,
+   "words": [
+    {
+     "text": "But",
+     "start": 65.151,
+     "end": 65.345
+    },
+    {
+     "text": "I",
+     "start": 65.345,
+     "end": 65.489
+    },
+    {
+     "text": "knew",
+     "start": 65.489,
+     "end": 65.632
+    },
+    {
+     "text": "one",
+     "start": 65.632,
+     "end": 65.827
+    },
+    {
+     "text": "thing",
+     "start": 65.827,
+     "end": 66.021
+    },
+    {
+     "text": "for",
+     "start": 66.021,
+     "end": 66.216
+    },
+    {
+     "text": "sure",
+     "start": 66.216,
+     "end": 66.411
+    },
+    {
+     "text": "My",
+     "start": 66.721,
+     "end": 66.964
+    },
+    {
+     "text": "Grandma",
+     "start": 66.964,
+     "end": 67.463
+    },
+    {
+     "text": "always",
+     "start": 67.463,
+     "end": 67.898
+    },
+    {
+     "text": "HUSSes",
+     "start": 67.898,
+     "end": 68.397
+    },
+    {
+     "text": "back",
+     "start": 68.397,
+     "end": 68.64
+    }
+   ],
+   "visual": "Close on me in the fog, thinking, then a determined smile; a tiny glowing memory bubble above my head shows Grandma HUSSing back from her window."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I didn't open a door. I shouted through every keyhole.",
+   "start": 68.955,
+   "end": 71.764,
+   "words": [
+    {
+     "text": "So",
+     "start": 68.97,
+     "end": 69.142
+    },
+    {
+     "text": "I",
+     "start": 69.142,
+     "end": 69.269
+    },
+    {
+     "text": "didn't",
+     "start": 69.269,
+     "end": 69.533
+    },
+    {
+     "text": "open",
+     "start": 69.533,
+     "end": 69.796
+    },
+    {
+     "text": "a",
+     "start": 69.796,
+     "end": 69.923
+    },
+    {
+     "text": "door",
+     "start": 69.923,
+     "end": 70.095
+    },
+    {
+     "text": "I",
+     "start": 70.405,
+     "end": 70.557
+    },
+    {
+     "text": "shouted",
+     "start": 70.557,
+     "end": 70.927
+    },
+    {
+     "text": "through",
+     "start": 70.927,
+     "end": 71.134
+    },
+    {
+     "text": "every",
+     "start": 71.134,
+     "end": 71.395
+    },
+    {
+     "text": "keyhole",
+     "start": 71.395,
+     "end": 71.764
+    }
+   ],
+   "visual": "I kneel at the first glowing keyhole and cup my hands against it (pose: peer)."
+  },
+  {
+   "id": "b21",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 72.079,
+   "end": 72.739,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 72.079,
+     "end": 72.339
+    },
+    {
+     "text": "HUSS!",
+     "start": 72.289,
+     "end": 72.549
+    },
+    {
+     "text": "HUSS!",
+     "start": 72.479,
+     "end": 72.739
+    }
+   ],
+   "visual": "One HUSS into each of the three keyholes, with the camera whipping from door to door and fog puffing out of each keyhole."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nothing. Nothing. And then, from the very last door...",
+   "start": 73.079,
+   "end": 76.39,
+   "words": [
+    {
+     "text": "Nothing",
+     "start": 73.094,
+     "end": 73.579
+    },
+    {
+     "text": "Nothing",
+     "start": 73.889,
+     "end": 74.373
+    },
+    {
+     "text": "And",
+     "start": 74.683,
+     "end": 74.912
+    },
+    {
+     "text": "then",
+     "start": 74.912,
+     "end": 75.141
+    },
+    {
+     "text": "from",
+     "start": 75.271,
+     "end": 75.527
+    },
+    {
+     "text": "the",
+     "start": 75.527,
+     "end": 75.676
+    },
+    {
+     "text": "very",
+     "start": 75.676,
+     "end": 75.932
+    },
+    {
+     "text": "last",
+     "start": 75.932,
+     "end": 76.187
+    },
+    {
+     "text": "door",
+     "start": 76.187,
+     "end": 76.39
+    }
+   ],
+   "visual": "Silence. First door: only fog. Second door: only fog. Slow push-in on the last door's keyhole."
+  },
+  {
+   "id": "b23",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 76.705,
+   "end": 77.365,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 76.705,
+     "end": 76.965
+    },
+    {
+     "text": "HUSS!",
+     "start": 76.915,
+     "end": 77.175
+    },
+    {
+     "text": "HUSS!",
+     "start": 77.105,
+     "end": 77.365
+    }
+   ],
+   "visual": "Faint and echoing from far away, Grandma HUSSes back through the last keyhole. Through it we see her on her porch with both fists up (face: huss), and the keyhole blazes gold."
+  },
+  {
+   "id": "b24",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I dove through.",
+   "start": 77.705,
+   "end": 78.488,
+   "words": [
+    {
+     "text": "I",
+     "start": 77.72,
+     "end": 77.927
+    },
+    {
+     "text": "dove",
+     "start": 77.927,
+     "end": 78.208
+    },
+    {
+     "text": "through",
+     "start": 78.208,
+     "end": 78.488
+    }
+   ],
+   "visual": "I sprint and dive through the last door in slow motion. White flash."
+  },
+  {
+   "id": "b25",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Floor two. Grandma took her groceries like nothing happened. Perfect.",
+   "start": 78.803,
+   "end": 82.981,
+   "words": [
+    {
+     "text": "Floor",
+     "start": 78.818,
+     "end": 79.228
+    },
+    {
+     "text": "two",
+     "start": 79.228,
+     "end": 79.468
+    },
+    {
+     "text": "Grandma",
+     "start": 79.778,
+     "end": 80.224
+    },
+    {
+     "text": "took",
+     "start": 80.224,
+     "end": 80.441
+    },
+    {
+     "text": "her",
+     "start": 80.441,
+     "end": 80.602
+    },
+    {
+     "text": "groceries",
+     "start": 80.602,
+     "end": 81.162
+    },
+    {
+     "text": "like",
+     "start": 81.162,
+     "end": 81.437
+    },
+    {
+     "text": "nothing",
+     "start": 81.437,
+     "end": 81.769
+    },
+    {
+     "text": "happened",
+     "start": 81.769,
+     "end": 82.158
+    },
+    {
+     "text": "Perfect",
+     "start": 82.468,
+     "end": 82.981
+    }
+   ],
+   "visual": "The elevator doors open on floor two. Grandma takes the grocery bags, pats my head (face: smile) and wanders off. I breathe out in relief (pose: shrug, face: grin)."
+  },
+  {
+   "id": "b26",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I HUSSed at her one more time. She HUSSed back. One second too late.",
+   "start": 83.296,
+   "end": 87.765,
+   "words": [
+    {
+     "text": "I",
+     "start": 83.311,
+     "end": 83.497
+    },
+    {
+     "text": "HUSSed",
+     "start": 83.497,
+     "end": 83.947
+    },
+    {
+     "text": "at",
+     "start": 83.947,
+     "end": 84.133
+    },
+    {
+     "text": "her",
+     "start": 84.133,
+     "end": 84.319
+    },
+    {
+     "text": "one",
+     "start": 84.319,
+     "end": 84.571
+    },
+    {
+     "text": "more",
+     "start": 84.571,
+     "end": 84.823
+    },
+    {
+     "text": "time",
+     "start": 84.823,
+     "end": 85.141
+    },
+    {
+     "text": "She",
+     "start": 85.451,
+     "end": 85.653
+    },
+    {
+     "text": "HUSSed",
+     "start": 85.653,
+     "end": 86.143
+    },
+    {
+     "text": "back",
+     "start": 86.143,
+     "end": 86.417
+    },
+    {
+     "text": "One",
+     "start": 86.727,
+     "end": 86.944
+    },
+    {
+     "text": "second",
+     "start": 86.944,
+     "end": 87.332
+    },
+    {
+     "text": "too",
+     "start": 87.332,
+     "end": 87.491
+    },
+    {
+     "text": "late",
+     "start": 87.491,
+     "end": 87.765
+    }
+   ],
+   "visual": "Grandma's floor-two landing: I HUSS at Grandma; she pauses, then HUSSes back a beat late with a slightly wrong, too-wide smile. I freeze (face: sweat)."
+  },
+  {
+   "id": "b27",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except one thing. The clock tower has three floors now.",
+   "start": 88.13,
+   "end": 90.956,
+   "words": [
+    {
+     "text": "Except",
+     "start": 88.145,
+     "end": 88.526
+    },
+    {
+     "text": "one",
+     "start": 88.526,
+     "end": 88.738
+    },
+    {
+     "text": "thing",
+     "start": 88.738,
+     "end": 88.951
+    },
+    {
+     "text": "The",
+     "start": 89.261,
+     "end": 89.421
+    },
+    {
+     "text": "clock",
+     "start": 89.421,
+     "end": 89.696
+    },
+    {
+     "text": "tower",
+     "start": 89.696,
+     "end": 89.971
+    },
+    {
+     "text": "has",
+     "start": 89.971,
+     "end": 90.188
+    },
+    {
+     "text": "three",
+     "start": 90.188,
+     "end": 90.406
+    },
+    {
+     "text": "floors",
+     "start": 90.406,
+     "end": 90.738
+    },
+    {
+     "text": "now",
+     "start": 90.738,
+     "end": 90.956
+    }
+   ],
+   "visual": "Outside, day. The camera tilts slowly up the clock tower. It now has a third row of windows that was never there before, glowing faintly purple."
+  },
+  {
+   "id": "b28",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And the elevator has a button for four.",
+   "start": 91.271,
+   "end": 93.0,
+   "words": [
+    {
+     "text": "And",
+     "start": 91.286,
+     "end": 91.475
+    },
+    {
+     "text": "the",
+     "start": 91.475,
+     "end": 91.615
+    },
+    {
+     "text": "elevator",
+     "start": 91.615,
+     "end": 92.053
+    },
+    {
+     "text": "has",
+     "start": 92.053,
+     "end": 92.243
+    },
+    {
+     "text": "a",
+     "start": 92.243,
+     "end": 92.382
+    },
+    {
+     "text": "button",
+     "start": 92.382,
+     "end": 92.622
+    },
+    {
+     "text": "for",
+     "start": 92.622,
+     "end": 92.811
+    },
+    {
+     "text": "four",
+     "start": 92.811,
+     "end": 93.0
+    }
+   ],
+   "overlay": "4",
+   "visual": "Close-up on the brass panel: 1, 2, 3, and a brand-new softly glowing 4. The pigeon on top of the panel slowly turns its head to the camera. Cut to black."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 1.112,
+   "end": 1.269,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "clock",
+   "start": 1.269,
+   "end": 1.54,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "tower",
+   "start": 1.54,
+   "end": 1.81,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "elevator",
+   "start": 1.81,
+   "end": 2.305,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "has",
+   "start": 2.305,
+   "end": 2.519,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "three",
+   "start": 2.519,
+   "end": 2.733,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "buttons",
+   "start": 2.733,
+   "end": 3.06,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "The",
+   "start": 3.37,
+   "end": 3.524,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "tower",
+   "start": 3.524,
+   "end": 3.789,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "only",
+   "start": 3.789,
+   "end": 4.109,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "has",
+   "start": 4.109,
+   "end": 4.318,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "two",
+   "start": 4.318,
+   "end": 4.473,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "floors",
+   "start": 4.473,
+   "end": 4.793,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Nobody",
+   "start": 5.123,
+   "end": 5.591,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "presses",
+   "start": 5.591,
+   "end": 6.0,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "three",
+   "start": 6.0,
+   "end": 6.228,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 6.543,
+   "end": 6.803,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 6.753,
+   "end": 7.013,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 6.943,
+   "end": 7.203,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Mr",
+   "start": 7.558,
+   "end": 8.059,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Kowalski",
+   "start": 8.369,
+   "end": 8.85,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "pressed",
+   "start": 8.85,
+   "end": 9.167,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 9.167,
+   "end": 9.32,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "once",
+   "start": 9.32,
+   "end": 9.582,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "He",
+   "start": 9.892,
+   "end": 10.024,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "came",
+   "start": 10.024,
+   "end": 10.251,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "back",
+   "start": 10.251,
+   "end": 10.431,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "with",
+   "start": 10.431,
+   "end": 10.611,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "a",
+   "start": 10.611,
+   "end": 10.744,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "pet",
+   "start": 10.744,
+   "end": 10.924,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "cloud",
+   "start": 10.924,
+   "end": 11.198,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "He",
+   "start": 11.528,
+   "end": 11.667,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "walks",
+   "start": 11.667,
+   "end": 11.906,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "it",
+   "start": 11.906,
+   "end": 12.045,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "every",
+   "start": 12.045,
+   "end": 12.283,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "morning",
+   "start": 12.283,
+   "end": 12.621,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "It",
+   "start": 12.931,
+   "end": 13.08,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "rains",
+   "start": 13.08,
+   "end": 13.39,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "on",
+   "start": 13.39,
+   "end": 13.539,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "anyone",
+   "start": 13.539,
+   "end": 13.903,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "who's",
+   "start": 13.903,
+   "end": 14.105,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "rude",
+   "start": 14.105,
+   "end": 14.308,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Coach",
+   "start": 14.638,
+   "end": 14.932,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Dana",
+   "start": 14.932,
+   "end": 15.225,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "pressed",
+   "start": 15.225,
+   "end": 15.519,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 15.519,
+   "end": 15.66,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "She",
+   "start": 15.97,
+   "end": 16.12,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "came",
+   "start": 16.12,
+   "end": 16.376,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "back",
+   "start": 16.376,
+   "end": 16.579,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "twelve",
+   "start": 16.579,
+   "end": 16.888,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "feet",
+   "start": 16.888,
+   "end": 17.091,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "tall",
+   "start": 17.091,
+   "end": 17.293,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Her",
+   "start": 17.603,
+   "end": 17.763,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "team",
+   "start": 17.763,
+   "end": 17.981,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "hasn't",
+   "start": 17.981,
+   "end": 18.369,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "lost",
+   "start": 18.369,
+   "end": 18.644,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "since",
+   "start": 18.644,
+   "end": 18.918,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "So",
+   "start": 19.248,
+   "end": 19.441,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 19.441,
+   "end": 19.583,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "rule",
+   "start": 19.583,
+   "end": 19.776,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "is",
+   "start": 19.776,
+   "end": 19.918,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "simple",
+   "start": 19.918,
+   "end": 20.264,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Never",
+   "start": 20.574,
+   "end": 20.907,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "press",
+   "start": 20.907,
+   "end": 21.241,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "three",
+   "start": 21.241,
+   "end": 21.505,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Yesterday",
+   "start": 21.835,
+   "end": 22.408,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 22.538,
+   "end": 22.694,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "took",
+   "start": 22.694,
+   "end": 22.907,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Grandma",
+   "start": 22.907,
+   "end": 23.343,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "her",
+   "start": 23.343,
+   "end": 23.5,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "groceries",
+   "start": 23.5,
+   "end": 24.048,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "She",
+   "start": 24.358,
+   "end": 24.521,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "lives",
+   "start": 24.521,
+   "end": 24.86,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "on",
+   "start": 24.86,
+   "end": 25.024,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "floor",
+   "start": 25.024,
+   "end": 25.304,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "two",
+   "start": 25.304,
+   "end": 25.467,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "I",
+   "start": 25.777,
+   "end": 25.954,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "HUSSed",
+   "start": 25.954,
+   "end": 26.383,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "up",
+   "start": 26.383,
+   "end": 26.559,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "at",
+   "start": 26.559,
+   "end": 26.736,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "her",
+   "start": 26.736,
+   "end": 26.912,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "window",
+   "start": 26.912,
+   "end": 27.341,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "and",
+   "start": 27.471,
+   "end": 27.715,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "she",
+   "start": 27.715,
+   "end": 27.895,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "HUSSed",
+   "start": 27.895,
+   "end": 28.333,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "right",
+   "start": 28.333,
+   "end": 28.642,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "back",
+   "start": 28.642,
+   "end": 28.886,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 21
+  },
+  {
+   "text": "Then",
+   "start": 29.196,
+   "end": 29.391,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 22
+  },
+  {
+   "text": "the",
+   "start": 29.391,
+   "end": 29.535,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 23
+  },
+  {
+   "text": "elevator",
+   "start": 29.535,
+   "end": 29.987,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 24
+  },
+  {
+   "text": "pressed",
+   "start": 29.987,
+   "end": 30.285,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 25
+  },
+  {
+   "text": "three",
+   "start": 30.285,
+   "end": 30.481,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 26
+  },
+  {
+   "text": "by",
+   "start": 30.481,
+   "end": 30.676,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 27
+  },
+  {
+   "text": "itself",
+   "start": 30.676,
+   "end": 31.025,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 28
+  },
+  {
+   "text": "HUSS!",
+   "start": 31.34,
+   "end": 31.6,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 31.55,
+   "end": 31.81,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 31.74,
+   "end": 32.0,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 32.32,
+   "end": 32.58,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 32.53,
+   "end": 32.79,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 32.72,
+   "end": 32.98,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 33.335,
+   "end": 33.484,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "doors",
+   "start": 33.484,
+   "end": 33.74,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "opened",
+   "start": 33.74,
+   "end": 34.101,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "onto",
+   "start": 34.101,
+   "end": 34.356,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "nothing",
+   "start": 34.356,
+   "end": 34.665,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Just",
+   "start": 34.995,
+   "end": 35.391,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "doors",
+   "start": 35.391,
+   "end": 35.719,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Hundreds",
+   "start": 36.029,
+   "end": 36.52,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "of",
+   "start": 36.52,
+   "end": 36.676,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "them",
+   "start": 36.676,
+   "end": 36.888,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "floating",
+   "start": 37.018,
+   "end": 37.393,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "in",
+   "start": 37.393,
+   "end": 37.527,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 37.527,
+   "end": 37.662,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "fog",
+   "start": 37.662,
+   "end": 37.844,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "And",
+   "start": 38.174,
+   "end": 38.362,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "a",
+   "start": 38.362,
+   "end": 38.501,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "glowing",
+   "start": 38.501,
+   "end": 38.837,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "jellyfish",
+   "start": 38.837,
+   "end": 39.273,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "in",
+   "start": 39.273,
+   "end": 39.411,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 39.411,
+   "end": 39.55,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "bellhop",
+   "start": 39.55,
+   "end": 39.887,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "hat",
+   "start": 39.887,
+   "end": 40.075,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Welcome",
+   "start": 40.405,
+   "end": 40.948,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 0
+  },
+  {
+   "text": "to",
+   "start": 40.948,
+   "end": 41.172,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 1
+  },
+  {
+   "text": "floor",
+   "start": 41.172,
+   "end": 41.556,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 2
+  },
+  {
+   "text": "three",
+   "start": 41.556,
+   "end": 41.86,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 3
+  },
+  {
+   "text": "One",
+   "start": 42.17,
+   "end": 42.435,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 4
+  },
+  {
+   "text": "door",
+   "start": 42.435,
+   "end": 42.7,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 5
+  },
+  {
+   "text": "is",
+   "start": 42.7,
+   "end": 42.895,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 6
+  },
+  {
+   "text": "home",
+   "start": 42.895,
+   "end": 43.229,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 7
+  },
+  {
+   "text": "The",
+   "start": 43.539,
+   "end": 43.73,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 8
+  },
+  {
+   "text": "rest",
+   "start": 43.73,
+   "end": 44.058,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 9
+  },
+  {
+   "text": "are",
+   "start": 44.058,
+   "end": 44.249,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 10
+  },
+  {
+   "text": "almost",
+   "start": 44.249,
+   "end": 44.781,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 11
+  },
+  {
+   "text": "home",
+   "start": 44.781,
+   "end": 45.108,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "i": 12
+  },
+  {
+   "text": "Three",
+   "start": 45.438,
+   "end": 45.715,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "tries",
+   "start": 45.715,
+   "end": 46.139,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Pick",
+   "start": 46.449,
+   "end": 46.725,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "wrong",
+   "start": 46.725,
+   "end": 47.001,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "and",
+   "start": 47.131,
+   "end": 47.331,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "you",
+   "start": 47.331,
+   "end": 47.478,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "stay",
+   "start": 47.478,
+   "end": 47.731,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Forever",
+   "start": 48.041,
+   "end": 48.512,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Door",
+   "start": 48.842,
+   "end": 49.129,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "one",
+   "start": 49.129,
+   "end": 49.415,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "My",
+   "start": 49.725,
+   "end": 49.954,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "street",
+   "start": 49.954,
+   "end": 50.304,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Perfect",
+   "start": 50.614,
+   "end": 51.127,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 51.437,
+   "end": 51.78,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 51.78,
+   "end": 51.921,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "pigeon",
+   "start": 51.921,
+   "end": 52.264,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "was",
+   "start": 52.264,
+   "end": 52.456,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 52.456,
+   "end": 52.597,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "size",
+   "start": 52.597,
+   "end": 52.839,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "of",
+   "start": 52.839,
+   "end": 52.98,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "a",
+   "start": 52.98,
+   "end": 53.122,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "house",
+   "start": 53.122,
+   "end": 53.364,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Door",
+   "start": 53.694,
+   "end": 54.05,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "two",
+   "start": 54.05,
+   "end": 54.313,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Perfect",
+   "start": 54.623,
+   "end": 55.051,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "again",
+   "start": 55.051,
+   "end": 55.353,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Except",
+   "start": 55.663,
+   "end": 56.024,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "everybody",
+   "start": 56.024,
+   "end": 56.492,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "in",
+   "start": 56.492,
+   "end": 56.641,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "town",
+   "start": 56.641,
+   "end": 56.897,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "was",
+   "start": 56.897,
+   "end": 57.099,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "me",
+   "start": 57.099,
+   "end": 57.248,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "One",
+   "start": 57.578,
+   "end": 57.821,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "try",
+   "start": 57.821,
+   "end": 58.128,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "left",
+   "start": 58.128,
+   "end": 58.435,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "And",
+   "start": 58.745,
+   "end": 58.942,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 58.942,
+   "end": 59.088,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "doors",
+   "start": 59.088,
+   "end": 59.337,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "were",
+   "start": 59.337,
+   "end": 59.482,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "starting",
+   "start": 59.482,
+   "end": 59.887,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "to",
+   "start": 59.887,
+   "end": 60.032,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "slam",
+   "start": 60.032,
+   "end": 60.281,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "shut",
+   "start": 60.281,
+   "end": 60.478,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Every",
+   "start": 60.808,
+   "end": 61.064,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "door",
+   "start": 61.064,
+   "end": 61.267,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "left",
+   "start": 61.267,
+   "end": 61.523,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "looked",
+   "start": 61.523,
+   "end": 61.779,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "exactly",
+   "start": 61.779,
+   "end": 62.248,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "like",
+   "start": 62.248,
+   "end": 62.504,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "home",
+   "start": 62.504,
+   "end": 62.76,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Same",
+   "start": 63.07,
+   "end": 63.373,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "street",
+   "start": 63.373,
+   "end": 63.739,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Same",
+   "start": 64.049,
+   "end": 64.343,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Grandma",
+   "start": 64.343,
+   "end": 64.821,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "But",
+   "start": 65.151,
+   "end": 65.345,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 65.345,
+   "end": 65.489,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "knew",
+   "start": 65.489,
+   "end": 65.632,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "one",
+   "start": 65.632,
+   "end": 65.827,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "thing",
+   "start": 65.827,
+   "end": 66.021,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "for",
+   "start": 66.021,
+   "end": 66.216,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "sure",
+   "start": 66.216,
+   "end": 66.411,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "My",
+   "start": 66.721,
+   "end": 66.964,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Grandma",
+   "start": 66.964,
+   "end": 67.463,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "always",
+   "start": 67.463,
+   "end": 67.898,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSSes",
+   "start": 67.898,
+   "end": 68.397,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "back",
+   "start": 68.397,
+   "end": 68.64,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "So",
+   "start": 68.97,
+   "end": 69.142,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 69.142,
+   "end": 69.269,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "didn't",
+   "start": 69.269,
+   "end": 69.533,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "open",
+   "start": 69.533,
+   "end": 69.796,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 69.796,
+   "end": 69.923,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "door",
+   "start": 69.923,
+   "end": 70.095,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I",
+   "start": 70.405,
+   "end": 70.557,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "shouted",
+   "start": 70.557,
+   "end": 70.927,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "through",
+   "start": 70.927,
+   "end": 71.134,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "every",
+   "start": 71.134,
+   "end": 71.395,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "keyhole",
+   "start": 71.395,
+   "end": 71.764,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 72.079,
+   "end": 72.339,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 72.289,
+   "end": 72.549,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 72.479,
+   "end": 72.739,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Nothing",
+   "start": 73.094,
+   "end": 73.579,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Nothing",
+   "start": 73.889,
+   "end": 74.373,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "And",
+   "start": 74.683,
+   "end": 74.912,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "then",
+   "start": 74.912,
+   "end": 75.141,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "from",
+   "start": 75.271,
+   "end": 75.527,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 75.527,
+   "end": 75.676,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "very",
+   "start": 75.676,
+   "end": 75.932,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "last",
+   "start": 75.932,
+   "end": 76.187,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "door",
+   "start": 76.187,
+   "end": 76.39,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "HUSS!",
+   "start": 76.705,
+   "end": 76.965,
+   "beat": "b23",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 76.915,
+   "end": 77.175,
+   "beat": "b23",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 77.105,
+   "end": 77.365,
+   "beat": "b23",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "I",
+   "start": 77.72,
+   "end": 77.927,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "dove",
+   "start": 77.927,
+   "end": 78.208,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "through",
+   "start": 78.208,
+   "end": 78.488,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Floor",
+   "start": 78.818,
+   "end": 79.228,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "two",
+   "start": 79.228,
+   "end": 79.468,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Grandma",
+   "start": 79.778,
+   "end": 80.224,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "took",
+   "start": 80.224,
+   "end": 80.441,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "her",
+   "start": 80.441,
+   "end": 80.602,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "groceries",
+   "start": 80.602,
+   "end": 81.162,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "like",
+   "start": 81.162,
+   "end": 81.437,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "nothing",
+   "start": 81.437,
+   "end": 81.769,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "happened",
+   "start": 81.769,
+   "end": 82.158,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Perfect",
+   "start": 82.468,
+   "end": 82.981,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "I",
+   "start": 83.311,
+   "end": 83.497,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "HUSSed",
+   "start": 83.497,
+   "end": 83.947,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "at",
+   "start": 83.947,
+   "end": 84.133,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "her",
+   "start": 84.133,
+   "end": 84.319,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "one",
+   "start": 84.319,
+   "end": 84.571,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "more",
+   "start": 84.571,
+   "end": 84.823,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "time",
+   "start": 84.823,
+   "end": 85.141,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "She",
+   "start": 85.451,
+   "end": 85.653,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "HUSSed",
+   "start": 85.653,
+   "end": 86.143,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "back",
+   "start": 86.143,
+   "end": 86.417,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "One",
+   "start": 86.727,
+   "end": 86.944,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "second",
+   "start": 86.944,
+   "end": 87.332,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "too",
+   "start": 87.332,
+   "end": 87.491,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "late",
+   "start": 87.491,
+   "end": 87.765,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Except",
+   "start": 88.145,
+   "end": 88.526,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "one",
+   "start": 88.526,
+   "end": 88.738,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "thing",
+   "start": 88.738,
+   "end": 88.951,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "The",
+   "start": 89.261,
+   "end": 89.421,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "clock",
+   "start": 89.421,
+   "end": 89.696,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "tower",
+   "start": 89.696,
+   "end": 89.971,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "has",
+   "start": 89.971,
+   "end": 90.188,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "three",
+   "start": 90.188,
+   "end": 90.406,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "floors",
+   "start": 90.406,
+   "end": 90.738,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "now",
+   "start": 90.738,
+   "end": 90.956,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "And",
+   "start": 91.286,
+   "end": 91.475,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 91.475,
+   "end": 91.615,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "elevator",
+   "start": 91.615,
+   "end": 92.053,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "has",
+   "start": 92.053,
+   "end": 92.243,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 92.243,
+   "end": 92.382,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "button",
+   "start": 92.382,
+   "end": 92.622,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "for",
+   "start": 92.622,
+   "end": 92.811,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "four",
+   "start": 92.811,
+   "end": 93.0,
+   "beat": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "lofi"
+  },
+  {
+   "t": 5.028,
+   "mode": "none"
+  },
+  {
+   "t": 7.463,
+   "mode": "lofi"
+  },
+  {
+   "t": 21.74,
+   "mode": "none"
+  },
+  {
+   "t": 33.24,
+   "mode": "night"
+  },
+  {
+   "t": 57.483,
+   "mode": "night"
+  },
+  {
+   "t": 72.999,
+   "mode": "none"
+  },
+  {
+   "t": 77.625,
+   "mode": "lofi"
+  },
+  {
+   "t": 83.216,
+   "mode": "none"
+  },
+  {
+   "t": 88.05,
+   "mode": "none"
+  }
+ ],
+ "markers": {
+  "three8": 30.285,
+  "quoteBell": 40.34,
+  "late": 87.491
+ },
+ "title": "In This Town \u2014 Floor Three"
+}

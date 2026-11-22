@@ -1,0 +1,433 @@
+{
+ "title": "In This Town — Floor Three",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {
+  "bellhop": [
+   "bm_lewis",
+   0.95,
+   "en-gb",
+   null
+  ]
+ },
+ "logline": "The clock tower has two floors, but its elevator has three buttons, and everyone who presses three comes back weird. When the elevator presses three by itself, I end up in a floating hallway of doors where one door leads home and every other door is almost home. I get three tries.",
+ "twist": "I find the door where Grandma HUSSes back, and everything looks perfect. Except the clock tower now has three floors, so I might be in an 'almost home'. And the elevator has a new button for four.",
+ "caption_hook": "the tower has 2 floors. the elevator has 3 buttons. don't press 3.",
+ "vibe": "mystic1",
+ "sets": [
+  "clock tower exterior by day",
+  "inside the clock tower elevator",
+  "main street in the morning",
+  "park by day (table and tree)",
+  "town square with stage and banner by day",
+  "Floor Three (new set built from basic shapes: starry backdrop, fog, floating tiles, endless row of floating doors)",
+  "main street by day seen through the doors (giant pigeon version, everyone-is-me version, Grandma's porch version)",
+  "floor two landing outside the elevator"
+ ],
+ "newProps": [
+  "old brass elevator inside the clock tower (box walls, sliding doors, brass panel with round buttons 1, 2 and a softly glowing 3; later a glowing 4)",
+  "Mr. Kowalski's pet cloud: a small puffy grey cloud (cluster of spheres) with tiny eyes, on a leash, that can rain (falling thin blue cylinders)",
+  "giant Coach Dana: the same character scaled to twelve feet, holding a tiny ball",
+  "town square banner with a big 3 crossed out by a red slash",
+  "grocery bags (boxes with a baguette and a leek sticking out)",
+  "overlay floor counter flicking 3, 3, 3",
+  "Floor Three set: an endless deep purple-blue backdrop with stars, fog at foot level, glowing pastel shapes drifting, and a path of floating stone tiles",
+  "hundreds of free-standing wooden doors (box frames, no walls) floating at different heights, each with a glowing keyhole; they can slam shut and vanish like dominoes",
+  "the Bellhop: a soft glowing cyan jellyfish (dome sphere with dangling thin cylinder tentacles) wearing a tiny red bellhop cap; it can flash red",
+  "three glowing tally marks floating in the air that pop away one by one",
+  "pigeon scaled up to the size of a house",
+  "thirty extras dressed exactly like me (black hoodie with white knight emblem, grey pants, white shoes, headphones) dancing in sync",
+  "an extra third row of glowing purple windows added to the clock tower"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, the clock tower elevator has three buttons. The tower only has two floors.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "1 · 2 · 3?",
+   "visual": "Day, outside the clock tower: the camera counts its two rows of windows. Smash cut inside an old brass elevator to a panel with buttons 1, 2 and a softly glowing 3."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nobody presses three.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Extreme close-up on the glowing 3 button. The pigeon sits on top of the panel, staring down at it."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "The 3 button pulses brighter on each HUSS and the elevator lights flicker."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Kowalski pressed it once. He came back with a pet cloud.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The elevator doors slide open. Mr. Kowalski (bald, glasses, green cardigan) steps out holding a leash. On the other end floats a small puffy grey cloud with tiny eyes (face: smug)."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He walks it every morning. It rains on anyone who's rude.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Main street in the morning: Kowalski strolls with his cloud. A guy in sunglasses points and laughs at him (pose: laugh). The cloud drifts over and rains on only him (face: shocked)."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Coach Dana pressed it. She came back twelve feet tall. Her team hasn't lost since.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "UNDEFEATED",
+   "visual": "Park by day: Coach Dana (tracksuit, cap, whistle) towers over the table and tree, holding a ball between two fingers like a grape. Tiny kids in matching shirts cheer around her ankles (pose: cheer)."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So the rule is simple. Never press three.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "NEVER PRESS 3",
+   "visual": "Town square: the banner over the stage shows a big 3 with a red slash through it. Townspeople nod seriously, arms crossed (pose: crossArms)."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Yesterday, I took Grandma her groceries. She lives on floor two. I HUSSed up at her window, and she HUSSed right back. Then the elevator pressed three by itself.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:Then",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Outside the clock tower: I shout HUSS up at Grandma's floor-two window, she leans out (grey bun, glasses) and HUSSes straight back, fist up. Then inside the elevator, holding two grocery bags, the 3 button clicks in by itself and glows; I slowly turn to look at it (face: shocked).",
+   "markers": {
+    "three8": "w:three"
+   }
+  },
+  {
+   "id": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "boom",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "3",
+   "visual": "The elevator rockets upward. The camera shakes and the lights strobe on every HUSS, the floor counter flicks 3, 3, 3, and groceries float up out of the bags."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The doors opened onto nothing.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "NEW SET, Floor Three: the doors slide open onto an endless deep purple-blue starry dark. Soft fog rolls at foot level and glowing pastel shapes drift by slowly. A path of floating stone tiles leads away from the elevator."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Just doors. Hundreds of them, floating in the fog.",
+   "gapAfter": 0.3,
+   "visual": "Wide shot: hundreds of tall wooden doors stand on their own with no walls. They float at different heights in the fog, each with a glowing keyhole, stretching off forever."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And a glowing jellyfish in a bellhop hat.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "A softly glowing cyan jellyfish in a tiny red bellhop cap bobs up to me (face: wink) and bows with one tentacle."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "bellhop",
+   "text": "Welcome to floor three. One door is home. The rest are almost home.",
+   "gapAfter": 0.3,
+   "card": {
+    "type": "quote",
+    "quote": "One door is home. The rest are almost home.",
+    "by": "The Bellhop"
+   },
+   "visual": "The Bellhop says this in a polite second voice. Quote card: 'One door is home. The rest are almost home.' — The Bellhop. It sweeps a tentacle down the endless row of doors.",
+   "markers": {
+    "quoteBell": "start-0.05"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Three tries. Pick wrong, and you stay. Forever.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "3 TRIES",
+   "visual": "Three glowing tally marks appear in the air above the jellyfish. I gulp (face: sweat)."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Door one. My street. Perfect. Except the pigeon was the size of a house.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "NOPE",
+   "visual": "I open the first door onto Main Street by day. A pigeon as big as a house sits in the middle of the road, cooing (the camera shakes), while tiny townspeople feed it a whole tree. I slam the door and one tally mark pops away."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Door two. Perfect again. Except everybody in town was me.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "NOPE",
+   "visual": "Second door: Main Street is full of thirty kids in my exact outfit (black hoodie with the white knight emblem, headphones), all doing the same dance in perfect sync. They stop and turn to stare at me at the same moment. I slam it and the second tally mark pops."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "One try left. And the doors were starting to slam shut.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "thump",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Down the row, doors slam shut one after another like dominoes and vanish into the fog. The jellyfish flashes red (face: sweat)."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every door left looked exactly like home. Same street. Same Grandma.",
+   "gapAfter": 0.3,
+   "visual": "Three doors left, each cracked open. Each one shows the same Main Street and the same Grandma (grey bun, glasses, cardigan) on the same porch, waving."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "But I knew one thing for sure. My Grandma always HUSSes back.",
+   "gapAfter": 0.3,
+   "visual": "Close on me in the fog, thinking, then a determined smile; a tiny glowing memory bubble above my head shows Grandma HUSSing back from her window."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I didn't open a door. I shouted through every keyhole.",
+   "gapAfter": 0.3,
+   "visual": "I kneel at the first glowing keyhole and cup my hands against it (pose: peer)."
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "One HUSS into each of the three keyholes, with the camera whipping from door to door and fog puffing out of each keyhole."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nothing. Nothing. And then, from the very last door...",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Silence. First door: only fog. Second door: only fog. Slow push-in on the last door's keyhole."
+  },
+  {
+   "id": "b23",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Faint and echoing from far away, Grandma HUSSes back through the last keyhole. Through it we see her on her porch with both fists up (face: huss), and the keyhole blazes gold."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I dove through.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "I sprint and dive through the last door in slow motion. White flash."
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Floor two. Grandma took her groceries like nothing happened. Perfect.",
+   "gapAfter": 0.3,
+   "visual": "The elevator doors open on floor two. Grandma takes the grocery bags, pats my head (face: smile) and wanders off. I breathe out in relief (pose: shrug, face: grin)."
+  },
+  {
+   "id": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I HUSSed at her one more time. She HUSSed back. One second too late.",
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:late",
+     "gain": 0.45
+    }
+   ],
+   "markers": {
+    "late": "w:late"
+   },
+   "gapAfter": 0.35,
+   "visual": "Grandma's floor-two landing: I HUSS at Grandma; she pauses, then HUSSes back a beat late with a slightly wrong, too-wide smile. I freeze (face: sweat)."
+  },
+  {
+   "id": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except one thing. The clock tower has three floors now.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Outside, day. The camera tilts slowly up the clock tower. It now has a third row of windows that was never there before, glowing faintly purple."
+  },
+  {
+   "id": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And the elevator has a button for four.",
+   "gapAfter": 0.8,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "4",
+   "visual": "Close-up on the brass panel: 1, 2, 3, and a brand-new softly glowing 4. The pigeon on top of the panel slowly turns its head to the camera. Cut to black."
+  }
+ ]
+}
