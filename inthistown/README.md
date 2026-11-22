@@ -51,3 +51,29 @@ Open `index.html?ui=1` through `node tools/serve.mjs` to scrub through the film 
 | Frame capture → ffmpeg | `render.mjs` |
 
 Rendering uses Three.js in headless Chromium, captured frame by frame, so every frame is deterministic.
+
+## Episodes
+
+Each episode is a script (`episodes/<ep>/script.json`), a shot list (`src/<ep>/shots.js`) and, if needed,
+extra props. All of them use the same jinxy narrator voice, the real HUSS sample, weird quote cards and the
+"Top 10 respectful moments" bit.
+
+| # | Title | Narrator | Video |
+|---|-------|----------|-------|
+| 1 | Chess (60 s) | the kid | `out/inthistown_v3_60s.mp4` |
+| 2 | Bingo | Grandad | `out/inthistown_ep2_bingo.mp4` |
+| 3 | Don't Blink | the kid | `out/inthistown_ep3_dontblink.mp4` |
+| 4 | Pigeon for Mayor | the pigeon | `out/inthistown_ep4_pigeon.mp4` |
+| 5 | Freeze Dance | Brenda | `out/inthistown_ep5_freeze.mp4` |
+| 6 | Gravity | the cat | `out/inthistown_ep6_gravity.mp4` |
+| 7 | Limbo | Marcus | `out/inthistown_ep7_limbo.mp4` |
+
+Build one:
+
+```bash
+python3 audio/build_episode.py ep4                     # narration + HUSS + music → episodes/ep4/{mix.wav,timeline.json}
+node render.mjs --timeline episodes/ep4/timeline.json --shots /src/ep4/shots.js --preview 1.5   # contact sheet
+node render.mjs --timeline episodes/ep4/timeline.json --shots /src/ep4/shots.js --out out/ep4.mp4 --workers 2
+```
+
+`--from/--to` re-render a time range (handy for patching one shot into a finished video).
