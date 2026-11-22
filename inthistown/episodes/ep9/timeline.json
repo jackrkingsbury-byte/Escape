@@ -1,0 +1,2505 @@
+{
+ "fps": 30,
+ "duration": 58.307,
+ "audio": "episodes/ep9/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody parties.",
+   "start": 0.3,
+   "end": 2.136,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.69
+    },
+    {
+     "text": "parties",
+     "start": 1.69,
+     "end": 2.136
+    }
+   ],
+   "visual": "Town, party_night. Crane down the party street: string lights, all 18 extras dancing (dance/dance2), DJ Hip Replacement at the decks, balloons. On the rooftop marker the crane rises and settles on a dark rooftop where a figure crouches behind a chimney."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me. I'm working.",
+   "start": 2.351,
+   "end": 4.061,
+   "words": [
+    {
+     "text": "Except",
+     "start": 2.366,
+     "end": 2.825
+    },
+    {
+     "text": "me",
+     "start": 2.825,
+     "end": 3.014
+    },
+    {
+     "text": "I'm",
+     "start": 3.394,
+     "end": 3.658
+    },
+    {
+     "text": "working",
+     "start": 3.658,
+     "end": 4.061
+    }
+   ],
+   "visual": "Rooftop close-up. The burglar (striped jumper, eye mask, beanie, sack on his shoulder) crouches behind the chimney in 'peer', face 'squint', watching the party below. On 'working' he tugs the eye mask tight and gives one flat nod."
+  },
+  {
+   "id": "b03",
+   "speaker": "burglar",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 4.326,
+   "end": 5.966,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 4.326,
+     "end": 4.586
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.536,
+     "end": 4.796
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.726,
+     "end": 4.986
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.306,
+     "end": 5.566
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.516,
+     "end": 5.776
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.706,
+     "end": 5.966
+    }
+   ],
+   "visual": "Wide over the burglar's shoulder, looking down the row of houses. On each HUSS one house's windows snap dark (windowGlow 0) and a family of 3 extras walks out from beside it toward the square in 'dance'. The doors stay static. Each time the burglar does a small standing 'slam' on the chimney top, face 'huss', with a camera punch. After six the whole row is dark."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "A tumbleweed got a job. Rolls in at nine.",
+   "start": 6.306,
+   "end": 8.662,
+   "words": [
+    {
+     "text": "A",
+     "start": 6.321,
+     "end": 6.46
+    },
+    {
+     "text": "tumbleweed",
+     "start": 6.46,
+     "end": 6.943
+    },
+    {
+     "text": "got",
+     "start": 6.943,
+     "end": 7.13
+    },
+    {
+     "text": "a",
+     "start": 7.13,
+     "end": 7.268
+    },
+    {
+     "text": "job",
+     "start": 7.268,
+     "end": 7.505
+    },
+    {
+     "text": "Rolls",
+     "start": 7.885,
+     "end": 8.163
+    },
+    {
+     "text": "in",
+     "start": 8.163,
+     "end": 8.298
+    },
+    {
+     "text": "at",
+     "start": 8.298,
+     "end": 8.432
+    },
+    {
+     "text": "nine",
+     "start": 8.432,
+     "end": 8.662
+    }
+   ],
+   "visual": "Cutaway in 'day' lighting at the edge of town. The tumbleweed rolls down the road with a tiny briefcase stuck in its twigs, heading for a small box building with a sign reading OFFICE. On 'nine' the clock tower behind it strikes (small shake on the clock face) and the tumbleweed rolls straight in through the doorway."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While they're out partying, by the way, I'm in their houses.",
+   "start": 8.977,
+   "end": 11.636,
+   "words": [
+    {
+     "text": "While",
+     "start": 8.992,
+     "end": 9.215
+    },
+    {
+     "text": "they're",
+     "start": 9.215,
+     "end": 9.438
+    },
+    {
+     "text": "out",
+     "start": 9.438,
+     "end": 9.615
+    },
+    {
+     "text": "partying",
+     "start": 9.615,
+     "end": 9.977
+    },
+    {
+     "text": "by",
+     "start": 10.107,
+     "end": 10.292
+    },
+    {
+     "text": "the",
+     "start": 10.292,
+     "end": 10.428
+    },
+    {
+     "text": "way",
+     "start": 10.428,
+     "end": 10.613
+    },
+    {
+     "text": "I'm",
+     "start": 10.743,
+     "end": 10.94
+    },
+    {
+     "text": "in",
+     "start": 10.94,
+     "end": 11.086
+    },
+    {
+     "text": "their",
+     "start": 11.086,
+     "end": 11.283
+    },
+    {
+     "text": "houses",
+     "start": 11.283,
+     "end": 11.636
+    }
+   ],
+   "visual": "Brenda's bedroom, night, lights off, framed tight on the burglar against the window wall so the bed stays out of frame. He holds a flashlight under his chin and stares into the lens: 'idle', face 'neutral'. Hold. On 'houses' a party balloon drifts past the window behind him."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every party? I threw it. Haven't slept in a year.",
+   "start": 11.951,
+   "end": 15.216,
+   "words": [
+    {
+     "text": "Every",
+     "start": 11.966,
+     "end": 12.298
+    },
+    {
+     "text": "party?",
+     "start": 12.298,
+     "end": 12.698
+    },
+    {
+     "text": "I",
+     "start": 13.028,
+     "end": 13.228
+    },
+    {
+     "text": "threw",
+     "start": 13.228,
+     "end": 13.499
+    },
+    {
+     "text": "it",
+     "start": 13.499,
+     "end": 13.699
+    },
+    {
+     "text": "Haven't",
+     "start": 14.179,
+     "end": 14.499
+    },
+    {
+     "text": "slept",
+     "start": 14.499,
+     "end": 14.772
+    },
+    {
+     "text": "in",
+     "start": 14.772,
+     "end": 14.904
+    },
+    {
+     "text": "a",
+     "start": 14.904,
+     "end": 15.036
+    },
+    {
+     "text": "year",
+     "start": 15.036,
+     "end": 15.216
+    }
+   ],
+   "visual": "One quick shot framed tight on a corkboard on a dark wall (the room build is unchanged; only the wall shows). Party flyers are joined with red string: CHESS MATCH, BINGO FINAL, STARING CONTEST, FREEZE DANCE, FANCY DINNER, LIMBO, and ELECTION with a big red X. On 'threw' the burglar taps the board ('point'), face 'smug'. On 'Haven't' he turns to the lens with face 'sleepy', and the tag LAST SLEPT: LAST YEAR pops in."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "A locked door is just a shy door. A crowbar. Flirting.",
+   "start": 15.531,
+   "end": 19.107,
+   "words": [
+    {
+     "text": "A",
+     "start": 15.546,
+     "end": 15.698
+    },
+    {
+     "text": "locked",
+     "start": 15.698,
+     "end": 15.959
+    },
+    {
+     "text": "door",
+     "start": 15.959,
+     "end": 16.166
+    },
+    {
+     "text": "is",
+     "start": 16.166,
+     "end": 16.318
+    },
+    {
+     "text": "just",
+     "start": 16.318,
+     "end": 16.633
+    },
+    {
+     "text": "a",
+     "start": 16.633,
+     "end": 16.786
+    },
+    {
+     "text": "shy",
+     "start": 16.786,
+     "end": 16.992
+    },
+    {
+     "text": "door",
+     "start": 16.992,
+     "end": 17.199
+    },
+    {
+     "text": "A",
+     "start": 17.629,
+     "end": 17.791
+    },
+    {
+     "text": "crowbar",
+     "start": 17.791,
+     "end": 18.241
+    },
+    {
+     "text": "Flirting",
+     "start": 18.621,
+     "end": 19.107
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "A locked door is just a shy door.",
+    "by": "a crowbar, flirting"
+   },
+   "visual": "QUOTE CARD 'A locked door is just a shy door.' stays up until 'crowbar'. Reveal: a front door at night (static set door) with the crowbar leaning against it. On 'Flirting' three pink hearts pop off the crowbar and the door's little window glows pink, as if blushing."
+  },
+  {
+   "id": "b08",
+   "speaker": "burglar",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 19.422,
+   "end": 20.082,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 19.422,
+     "end": 19.682
+    },
+    {
+     "text": "HUSS!",
+     "start": 19.632,
+     "end": 19.892
+    },
+    {
+     "text": "HUSS!",
+     "start": 19.822,
+     "end": 20.082
+    }
+   ],
+   "visual": "One break-in per HUSS, hard cuts, camera punch on each. (1) A lit window snaps dark and the sack is flung in through it. (2) A soot puff blasts out of a chimney top as the burglar drops down it, face 'huss'. (3) Close-up on a cat flap: the burglar's head pops through, nose to nose with the orange cat on the other side ('stare', unblinking). Burglar face 'sweat'."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Never the telly. Never the jewels. Just one thing.",
+   "start": 20.422,
+   "end": 23.501,
+   "words": [
+    {
+     "text": "Never",
+     "start": 20.437,
+     "end": 20.714
+    },
+    {
+     "text": "the",
+     "start": 20.714,
+     "end": 20.876
+    },
+    {
+     "text": "telly",
+     "start": 20.876,
+     "end": 21.154
+    },
+    {
+     "text": "Never",
+     "start": 21.484,
+     "end": 21.773
+    },
+    {
+     "text": "the",
+     "start": 21.773,
+     "end": 21.942
+    },
+    {
+     "text": "jewels",
+     "start": 21.942,
+     "end": 22.352
+    },
+    {
+     "text": "Just",
+     "start": 22.732,
+     "end": 23.065
+    },
+    {
+     "text": "one",
+     "start": 23.065,
+     "end": 23.283
+    },
+    {
+     "text": "thing",
+     "start": 23.283,
+     "end": 23.501
+    }
+   ],
+   "visual": "Marcus's bedroom, night, framed on the dresser wall only, so the bed is never in shot. The burglar walks ('walk') past a glowing TV on 'telly', past a sparkling jewellery box on 'jewels', and past the gold trophy and the toaster without looking at any of them. On 'one' he stops at the edge of frame and stares at something off-screen right that we never see, face 'smug'. He loosens the drawstring of his sack. Hard cut. The sack stays a plain round sack."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "They kept coming home early.",
+   "start": 23.816,
+   "end": 24.989,
+   "words": [
+    {
+     "text": "They",
+     "start": 23.831,
+     "end": 24.022
+    },
+    {
+     "text": "kept",
+     "start": 24.022,
+     "end": 24.264
+    },
+    {
+     "text": "coming",
+     "start": 24.264,
+     "end": 24.556
+    },
+    {
+     "text": "home",
+     "start": 24.556,
+     "end": 24.798
+    },
+    {
+     "text": "early",
+     "start": 24.798,
+     "end": 24.989
+    }
+   ],
+   "visual": "Grandad's bedroom, night, framed on the door and the corner beside it. Tag 9:04 PM top-left. The door is already open; Grandad shuffles in yawning (face 'sleepy'). The burglar is frozen mid-room in 'point' with one arm out, posing as a hat stand. Without looking, Grandad hangs his party hat on the burglar's hand, pats it and shuffles out of frame toward the unseen bed. A Zzz floats up from off-screen. The burglar's eyes slide to the hat (face 'sweat')."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Bigger parties. Foam. Pool. Foam in the pool.",
+   "start": 25.304,
+   "end": 28.653,
+   "words": [
+    {
+     "text": "Bigger",
+     "start": 25.319,
+     "end": 25.635
+    },
+    {
+     "text": "parties",
+     "start": 25.635,
+     "end": 26.082
+    },
+    {
+     "text": "Foam",
+     "start": 26.462,
+     "end": 26.848
+    },
+    {
+     "text": "Pool",
+     "start": 27.178,
+     "end": 27.608
+    },
+    {
+     "text": "Foam",
+     "start": 27.938,
+     "end": 28.18
+    },
+    {
+     "text": "in",
+     "start": 28.18,
+     "end": 28.321
+    },
+    {
+     "text": "the",
+     "start": 28.321,
+     "end": 28.461
+    },
+    {
+     "text": "pool",
+     "start": 28.461,
+     "end": 28.653
+    }
+   ],
+   "visual": "One quick cut per item. On 'Foam': the foam area, extras dancing waist-deep. On 'Pool': extras cannonball into the pool. On 'Foam in the pool': the pool heaped with foam; an extra dives in and disappears, and foam spills over the edge. In every shot the burglar stands at the edge, masked, holding a sign reading 'PARTY THIS WAY ->', face 'neutral'."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respectful moments. Number seven: I wipe my feet.",
+   "start": 28.968,
+   "end": 32.2,
+   "words": [
+    {
+     "text": "Top",
+     "start": 28.983,
+     "end": 29.172
+    },
+    {
+     "text": "ten",
+     "start": 29.172,
+     "end": 29.361
+    },
+    {
+     "text": "respectful",
+     "start": 29.361,
+     "end": 29.898
+    },
+    {
+     "text": "moments",
+     "start": 29.898,
+     "end": 30.336
+    },
+    {
+     "text": "Number",
+     "start": 30.716,
+     "end": 31.037
+    },
+    {
+     "text": "seven",
+     "start": 31.037,
+     "end": 31.358
+    },
+    {
+     "text": "I",
+     "start": 31.358,
+     "end": 31.513
+    },
+    {
+     "text": "wipe",
+     "start": 31.513,
+     "end": 31.779
+    },
+    {
+     "text": "my",
+     "start": 31.779,
+     "end": 31.99
+    },
+    {
+     "text": "feet",
+     "start": 31.99,
+     "end": 32.2
+    }
+   ],
+   "visual": "RANKING CARD (TOP 10, #7) slides in. Front doorstep at night: the burglar, sack on his back, wipes his feet on a WELCOME doormat (left, right, left), slowly and thoroughly. Then he gives the door a small, polite nod."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then came the Never-Ending Party.",
+   "start": 32.515,
+   "end": 33.975,
+   "words": [
+    {
+     "text": "Then",
+     "start": 32.53,
+     "end": 32.726
+    },
+    {
+     "text": "came",
+     "start": 32.726,
+     "end": 32.974
+    },
+    {
+     "text": "the",
+     "start": 32.974,
+     "end": 33.119
+    },
+    {
+     "text": "Never-Ending",
+     "start": 33.119,
+     "end": 33.676
+    },
+    {
+     "text": "Party",
+     "start": 33.676,
+     "end": 33.975
+    }
+   ],
+   "visual": "Town square, party_night. Banner: THE NEVER / ENDING / PARTY. Packed bleachers, the long table loaded with cakes, balloons everywhere, DJ Hip Replacement on the decks. The 18 extras, Brenda, Marcus, Grandad and the Heckler flood in from the party street."
+  },
+  {
+   "id": "b14",
+   "speaker": "mayor",
+   "kind": "quote",
+   "text": "Nobody goes home!",
+   "start": 34.19,
+   "end": 35.751,
+   "words": [
+    {
+     "text": "Nobody",
+     "start": 34.205,
+     "end": 34.898
+    },
+    {
+     "text": "goes",
+     "start": 34.898,
+     "end": 35.324
+    },
+    {
+     "text": "home!",
+     "start": 35.324,
+     "end": 35.751
+    }
+   ],
+   "visual": "Dialogue caption in the gold-outline mayor style (not a quote card). The mayor at the mic stand on stage, both arms up ('cheer'); the crowd cheers back. At the very back of the crowd the masked burglar does a slow 'clap', face 'neutral'."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "If nobody's home, it's not stealing. It's tidying. The cat's lawyer.",
+   "start": 36.066,
+   "end": 40.361,
+   "words": [
+    {
+     "text": "If",
+     "start": 36.081,
+     "end": 36.227
+    },
+    {
+     "text": "nobody's",
+     "start": 36.227,
+     "end": 36.687
+    },
+    {
+     "text": "home",
+     "start": 36.687,
+     "end": 36.938
+    },
+    {
+     "text": "it's",
+     "start": 37.268,
+     "end": 37.499
+    },
+    {
+     "text": "not",
+     "start": 37.499,
+     "end": 37.73
+    },
+    {
+     "text": "stealing",
+     "start": 37.73,
+     "end": 38.143
+    },
+    {
+     "text": "It's",
+     "start": 38.573,
+     "end": 38.802
+    },
+    {
+     "text": "tidying",
+     "start": 38.802,
+     "end": 39.272
+    },
+    {
+     "text": "The",
+     "start": 39.582,
+     "end": 39.758
+    },
+    {
+     "text": "cat's",
+     "start": 39.758,
+     "end": 40.059
+    },
+    {
+     "text": "lawyer",
+     "start": 40.059,
+     "end": 40.361
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "If nobody's home, it's not stealing. It's tidying.",
+    "by": "the cat's lawyer"
+   },
+   "visual": "QUOTE CARD stays up until 'The'. Reveal: the cat's lawyer at a small desk at the edge of the square, open briefcase, stack of papers, nodding gravely ('think'). The orange cat sits loafed on the papers ('loaf'), staring at the lens without blinking."
+  },
+  {
+   "id": "b16",
+   "speaker": "burglar",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 40.676,
+   "end": 42.316,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 40.676,
+     "end": 40.936
+    },
+    {
+     "text": "HUSS!",
+     "start": 40.886,
+     "end": 41.146
+    },
+    {
+     "text": "HUSS!",
+     "start": 41.076,
+     "end": 41.336
+    },
+    {
+     "text": "HUSS!",
+     "start": 41.656,
+     "end": 41.916
+    },
+    {
+     "text": "HUSS!",
+     "start": 41.866,
+     "end": 42.126
+    },
+    {
+     "text": "HUSS!",
+     "start": 42.056,
+     "end": 42.316
+    }
+   ],
+   "visual": "The big heist. The party street is pitch dark, every window off, with the party glowing far off at the end of the street. One doorstep per HUSS, cutting down the row: the burglar slams the sack down ('slam', face 'huss') and it puffs bigger each time with a burst of dust. It stays a round, lumpy, shapeless blob. By HUSS 6 the sack is taller than the houses and its shadow swallows the street. Camera shake grows with each hit."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Ever wonder why nobody goes home?",
+   "start": 42.656,
+   "end": 44.293,
+   "words": [
+    {
+     "text": "Ever",
+     "start": 42.671,
+     "end": 42.871
+    },
+    {
+     "text": "wonder",
+     "start": 42.871,
+     "end": 43.177
+    },
+    {
+     "text": "why",
+     "start": 43.177,
+     "end": 43.377
+    },
+    {
+     "text": "nobody",
+     "start": 43.377,
+     "end": 43.787
+    },
+    {
+     "text": "goes",
+     "start": 43.787,
+     "end": 44.04
+    },
+    {
+     "text": "home?",
+     "start": 44.04,
+     "end": 44.293
+    }
+   ],
+   "visual": "Square, dawn lighting, camera low and tight on the crowd so nothing above the stage shows. Big stamp: DAY 400. The party is still going: every extra sways with face 'sleepy', Grandad yawns mid-dance, DJ Hip Replacement is asleep on his feet at the decks with the music still playing, and the mayor's top hat has slid down over his eyes."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I have all the beds.",
+   "start": 44.608,
+   "end": 45.496,
+   "words": [
+    {
+     "text": "I",
+     "start": 44.623,
+     "end": 44.767
+    },
+    {
+     "text": "have",
+     "start": 44.767,
+     "end": 44.962
+    },
+    {
+     "text": "all",
+     "start": 44.962,
+     "end": 45.106
+    },
+    {
+     "text": "the",
+     "start": 45.106,
+     "end": 45.249
+    },
+    {
+     "text": "beds",
+     "start": 45.249,
+     "end": 45.496
+    }
+   ],
+   "visual": "Same square at dawn. Close on the burglar standing right beside the stage, mask on, face 'smug'. On 'beds' there is a white flash and the camera tilts up behind him: a crooked tower of every bed in town (instanced beds, each with a small name sign: GRANDAD, MARCUS, BRENDA, MAYOR, CAT...) right next to the stage. The tower rises past the banner, and the clock tower in the distant park sits below the top of the stack. It was there the whole time."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Too soft. Too hard. Too Grandad.",
+   "start": 45.861,
+   "end": 48.551,
+   "words": [
+    {
+     "text": "Too",
+     "start": 45.876,
+     "end": 46.105
+    },
+    {
+     "text": "soft",
+     "start": 46.105,
+     "end": 46.499
+    },
+    {
+     "text": "Too",
+     "start": 46.879,
+     "end": 47.098
+    },
+    {
+     "text": "hard",
+     "start": 47.098,
+     "end": 47.474
+    },
+    {
+     "text": "Too",
+     "start": 47.854,
+     "end": 48.038
+    },
+    {
+     "text": "Grandad",
+     "start": 48.038,
+     "end": 48.551
+    }
+   ],
+   "visual": "Night. Three quick cuts inside the bed tower, each a close-up on one bed with its name sign. On 'soft' (BRENDA): the burglar lies back and sinks out of sight into a heap of cushions. On 'hard' (MARCUS): the limbo bar is the pillow; his head clonks onto it, with a camera punch, face 'squint'. On 'Grandad' (GRANDAD): he lies down nose to nose with Grandad's toupee on the pillow, face 'sweat'."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now in this town, everybody parties. Except me.",
+   "start": 48.866,
+   "end": 52.095,
+   "words": [
+    {
+     "text": "Now",
+     "start": 48.881,
+     "end": 49.081
+    },
+    {
+     "text": "in",
+     "start": 49.081,
+     "end": 49.229
+    },
+    {
+     "text": "this",
+     "start": 49.229,
+     "end": 49.43
+    },
+    {
+     "text": "town",
+     "start": 49.43,
+     "end": 49.683
+    },
+    {
+     "text": "everybody",
+     "start": 50.113,
+     "end": 50.691
+    },
+    {
+     "text": "parties",
+     "start": 50.691,
+     "end": 51.138
+    },
+    {
+     "text": "Except",
+     "start": 51.448,
+     "end": 51.906
+    },
+    {
+     "text": "me",
+     "start": 51.906,
+     "end": 52.095
+    }
+   ],
+   "visual": "The top bed of the tower, quiet_night, with the clock face behind and below him and the party lights tiny far below. Tag JUST RIGHT pops in. The burglar, still masked, climbs in, pulls the duvet up to his chin and lies back ('crowdSurf'), face 'smile'. On 'Except' hold: long and peaceful."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I'm trying to sleep.",
+   "start": 52.41,
+   "end": 53.311,
+   "words": [
+    {
+     "text": "I'm",
+     "start": 52.425,
+     "end": 52.61
+    },
+    {
+     "text": "trying",
+     "start": 52.61,
+     "end": 52.941
+    },
+    {
+     "text": "to",
+     "start": 52.941,
+     "end": 53.077
+    },
+    {
+     "text": "sleep",
+     "start": 53.077,
+     "end": 53.311
+    }
+   ],
+   "visual": "Close on his face on the pillow: eyes wide open, face 'squint', then 'sweat'. On 'sleep' a bass thump from below makes the bed hop an inch and the whole tower sway."
+  },
+  {
+   "id": "b22",
+   "speaker": "town",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 53.626,
+   "end": 54.286,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 53.626,
+     "end": 53.886
+    },
+    {
+     "text": "HUSS!",
+     "start": 53.836,
+     "end": 54.096
+    },
+    {
+     "text": "HUSS!",
+     "start": 54.026,
+     "end": 54.286
+    }
+   ],
+   "visual": "Down in the square the whole crowd jumps and shouts on each HUSS ('cheer'), DJ Hip Replacement slams the decks, and a shockwave ring pulses across the cobbles. HUSS 1: the bed tower beside the stage leans left. HUSS 2: it leans right. HUSS 3: it topples across the square over the crowd, with a big camera shake."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now everybody sleeps. Except me.",
+   "start": 54.626,
+   "end": 56.892,
+   "words": [
+    {
+     "text": "Now",
+     "start": 54.641,
+     "end": 54.873
+    },
+    {
+     "text": "everybody",
+     "start": 54.873,
+     "end": 55.41
+    },
+    {
+     "text": "sleeps",
+     "start": 55.41,
+     "end": 55.764
+    },
+    {
+     "text": "Except",
+     "start": 56.244,
+     "end": 56.703
+    },
+    {
+     "text": "me",
+     "start": 56.703,
+     "end": 56.892
+    }
+   ],
+   "visual": "Beds rain down on the square. Three hero landings, one per hard cut: Grandad drops into a bed still wearing his party hat and is instantly out ('sleepy', Zzz); the mayor lands, and his top hat slides over his eyes, Zzz; the Heckler lands with his finger still pointing, Zzz. Beds thud down on the rest of the crowd. On 'sleeps' cut to a locked wide of the aftermath: the square covered in beds, every partier asleep in one with Zzz, DJ Hip Replacement asleep across the decks, the music off. In the middle, the burglar lies flat on bare cobbles ('crowdSurf', eyes wide, face 'neutral'). On 'Except' the last bed floats down and lands gently beside him with the orange cat already in it ('stare'), watching him without blinking. Iris-out on the burglar's open eyes."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.69,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "parties",
+   "start": 1.69,
+   "end": 2.136,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 2.366,
+   "end": 2.825,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 2.825,
+   "end": 3.014,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I'm",
+   "start": 3.394,
+   "end": 3.658,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "working",
+   "start": 3.658,
+   "end": 4.061,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.326,
+   "end": 4.586,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.536,
+   "end": 4.796,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.726,
+   "end": 4.986,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.306,
+   "end": 5.566,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.516,
+   "end": 5.776,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.706,
+   "end": 5.966,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 5
+  },
+  {
+   "text": "A",
+   "start": 6.321,
+   "end": 6.46,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "tumbleweed",
+   "start": 6.46,
+   "end": 6.943,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "got",
+   "start": 6.943,
+   "end": 7.13,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 7.13,
+   "end": 7.268,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "job",
+   "start": 7.268,
+   "end": 7.505,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Rolls",
+   "start": 7.885,
+   "end": 8.163,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "in",
+   "start": 8.163,
+   "end": 8.298,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "at",
+   "start": 8.298,
+   "end": 8.432,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "nine",
+   "start": 8.432,
+   "end": 8.662,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "While",
+   "start": 8.992,
+   "end": 9.215,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they're",
+   "start": 9.215,
+   "end": 9.438,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 9.438,
+   "end": 9.615,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 9.615,
+   "end": 9.977,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 10.107,
+   "end": 10.292,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 10.292,
+   "end": 10.428,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 10.428,
+   "end": 10.613,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I'm",
+   "start": 10.743,
+   "end": 10.94,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "in",
+   "start": 10.94,
+   "end": 11.086,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "their",
+   "start": 11.086,
+   "end": 11.283,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "houses",
+   "start": 11.283,
+   "end": 11.636,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Every",
+   "start": 11.966,
+   "end": 12.298,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "party?",
+   "start": 12.298,
+   "end": 12.698,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I",
+   "start": 13.028,
+   "end": 13.228,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "threw",
+   "start": 13.228,
+   "end": 13.499,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "it",
+   "start": 13.499,
+   "end": 13.699,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Haven't",
+   "start": 14.179,
+   "end": 14.499,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "slept",
+   "start": 14.499,
+   "end": 14.772,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "in",
+   "start": 14.772,
+   "end": 14.904,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "a",
+   "start": 14.904,
+   "end": 15.036,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "year",
+   "start": 15.036,
+   "end": 15.216,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "A",
+   "start": 15.546,
+   "end": 15.698,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "locked",
+   "start": 15.698,
+   "end": 15.959,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "door",
+   "start": 15.959,
+   "end": 16.166,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "is",
+   "start": 16.166,
+   "end": 16.318,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "just",
+   "start": 16.318,
+   "end": 16.633,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 16.633,
+   "end": 16.786,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "shy",
+   "start": 16.786,
+   "end": 16.992,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "door",
+   "start": 16.992,
+   "end": 17.199,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "A",
+   "start": 17.629,
+   "end": 17.791,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "crowbar",
+   "start": 17.791,
+   "end": 18.241,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Flirting",
+   "start": 18.621,
+   "end": 19.107,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 19.422,
+   "end": 19.682,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 19.632,
+   "end": 19.892,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 19.822,
+   "end": 20.082,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 2
+  },
+  {
+   "text": "Never",
+   "start": 20.437,
+   "end": 20.714,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 20.714,
+   "end": 20.876,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "telly",
+   "start": 20.876,
+   "end": 21.154,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Never",
+   "start": 21.484,
+   "end": 21.773,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 21.773,
+   "end": 21.942,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "jewels",
+   "start": 21.942,
+   "end": 22.352,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Just",
+   "start": 22.732,
+   "end": 23.065,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "one",
+   "start": 23.065,
+   "end": 23.283,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "thing",
+   "start": 23.283,
+   "end": 23.501,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "They",
+   "start": 23.831,
+   "end": 24.022,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "kept",
+   "start": 24.022,
+   "end": 24.264,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "coming",
+   "start": 24.264,
+   "end": 24.556,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "home",
+   "start": 24.556,
+   "end": 24.798,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "early",
+   "start": 24.798,
+   "end": 24.989,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Bigger",
+   "start": 25.319,
+   "end": 25.635,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "parties",
+   "start": 25.635,
+   "end": 26.082,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Foam",
+   "start": 26.462,
+   "end": 26.848,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Pool",
+   "start": 27.178,
+   "end": 27.608,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Foam",
+   "start": 27.938,
+   "end": 28.18,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "in",
+   "start": 28.18,
+   "end": 28.321,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 28.321,
+   "end": 28.461,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "pool",
+   "start": 28.461,
+   "end": 28.653,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Top",
+   "start": 28.983,
+   "end": 29.172,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 29.172,
+   "end": 29.361,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respectful",
+   "start": 29.361,
+   "end": 29.898,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "moments",
+   "start": 29.898,
+   "end": 30.336,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Number",
+   "start": 30.716,
+   "end": 31.037,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "seven",
+   "start": 31.037,
+   "end": 31.358,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I",
+   "start": 31.358,
+   "end": 31.513,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "wipe",
+   "start": 31.513,
+   "end": 31.779,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "my",
+   "start": 31.779,
+   "end": 31.99,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "feet",
+   "start": 31.99,
+   "end": 32.2,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Then",
+   "start": 32.53,
+   "end": 32.726,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "came",
+   "start": 32.726,
+   "end": 32.974,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 32.974,
+   "end": 33.119,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Never-Ending",
+   "start": 33.119,
+   "end": 33.676,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Party",
+   "start": 33.676,
+   "end": 33.975,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Nobody",
+   "start": 34.205,
+   "end": 34.898,
+   "beat": "b14",
+   "kind": "quote",
+   "speaker": "mayor",
+   "i": 0
+  },
+  {
+   "text": "goes",
+   "start": 34.898,
+   "end": 35.324,
+   "beat": "b14",
+   "kind": "quote",
+   "speaker": "mayor",
+   "i": 1
+  },
+  {
+   "text": "home!",
+   "start": 35.324,
+   "end": 35.751,
+   "beat": "b14",
+   "kind": "quote",
+   "speaker": "mayor",
+   "i": 2
+  },
+  {
+   "text": "If",
+   "start": 36.081,
+   "end": 36.227,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "nobody's",
+   "start": 36.227,
+   "end": 36.687,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "home",
+   "start": 36.687,
+   "end": 36.938,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it's",
+   "start": 37.268,
+   "end": 37.499,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "not",
+   "start": 37.499,
+   "end": 37.73,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "stealing",
+   "start": 37.73,
+   "end": 38.143,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "It's",
+   "start": 38.573,
+   "end": 38.802,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "tidying",
+   "start": 38.802,
+   "end": 39.272,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "The",
+   "start": 39.582,
+   "end": 39.758,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "cat's",
+   "start": 39.758,
+   "end": 40.059,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "lawyer",
+   "start": 40.059,
+   "end": 40.361,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 40.676,
+   "end": 40.936,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 40.886,
+   "end": 41.146,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 41.076,
+   "end": 41.336,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 41.656,
+   "end": 41.916,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 41.866,
+   "end": 42.126,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 42.056,
+   "end": 42.316,
+   "beat": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "i": 5
+  },
+  {
+   "text": "Ever",
+   "start": 42.671,
+   "end": 42.871,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "wonder",
+   "start": 42.871,
+   "end": 43.177,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "why",
+   "start": 43.177,
+   "end": 43.377,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "nobody",
+   "start": 43.377,
+   "end": 43.787,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "goes",
+   "start": 43.787,
+   "end": 44.04,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "home?",
+   "start": 44.04,
+   "end": 44.293,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I",
+   "start": 44.623,
+   "end": 44.767,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "have",
+   "start": 44.767,
+   "end": 44.962,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "all",
+   "start": 44.962,
+   "end": 45.106,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 45.106,
+   "end": 45.249,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "beds",
+   "start": 45.249,
+   "end": 45.496,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Too",
+   "start": 45.876,
+   "end": 46.105,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "soft",
+   "start": 46.105,
+   "end": 46.499,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Too",
+   "start": 46.879,
+   "end": 47.098,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "hard",
+   "start": 47.098,
+   "end": 47.474,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Too",
+   "start": 47.854,
+   "end": 48.038,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Grandad",
+   "start": 48.038,
+   "end": 48.551,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Now",
+   "start": 48.881,
+   "end": 49.081,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "in",
+   "start": 49.081,
+   "end": 49.229,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "this",
+   "start": 49.229,
+   "end": 49.43,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "town",
+   "start": 49.43,
+   "end": 49.683,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "everybody",
+   "start": 50.113,
+   "end": 50.691,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "parties",
+   "start": 50.691,
+   "end": 51.138,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Except",
+   "start": 51.448,
+   "end": 51.906,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "me",
+   "start": 51.906,
+   "end": 52.095,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "I'm",
+   "start": 52.425,
+   "end": 52.61,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "trying",
+   "start": 52.61,
+   "end": 52.941,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "to",
+   "start": 52.941,
+   "end": 53.077,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "sleep",
+   "start": 53.077,
+   "end": 53.311,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 53.626,
+   "end": 53.886,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "town",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 53.836,
+   "end": 54.096,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "town",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 54.026,
+   "end": 54.286,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "town",
+   "i": 2
+  },
+  {
+   "text": "Now",
+   "start": 54.641,
+   "end": 54.873,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "everybody",
+   "start": 54.873,
+   "end": 55.41,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "sleeps",
+   "start": 55.41,
+   "end": 55.764,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Except",
+   "start": 56.244,
+   "end": 56.703,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "me",
+   "start": 56.703,
+   "end": 56.892,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 2.271,
+   "mode": "muffled"
+  },
+  {
+   "t": 6.226,
+   "mode": "party"
+  },
+  {
+   "t": 8.897,
+   "mode": "muffled"
+  },
+  {
+   "t": 25.224,
+   "mode": "party"
+  },
+  {
+   "t": 28.888,
+   "mode": "muffled"
+  },
+  {
+   "t": 32.435,
+   "mode": "party"
+  },
+  {
+   "t": 40.596,
+   "mode": "muffled"
+  },
+  {
+   "t": 42.576,
+   "mode": "party"
+  },
+  {
+   "t": 44.528,
+   "mode": "none"
+  },
+  {
+   "t": 45.781,
+   "mode": "night"
+  },
+  {
+   "t": 52.33,
+   "mode": "muffled"
+  },
+  {
+   "t": 53.546,
+   "mode": "party"
+  },
+  {
+   "t": 54.546,
+   "mode": "night"
+  }
+ ],
+ "markers": {
+  "rooftop": 1.636,
+  "working": 3.658,
+  "nine": 8.432,
+  "houses": 11.283,
+  "threw": 13.228,
+  "slept": 14.179,
+  "quote1": 15.481,
+  "quote1end": 17.741,
+  "flirt": 18.621,
+  "telly": 20.876,
+  "jewels": 21.942,
+  "one": 23.065,
+  "home": 24.556,
+  "foam": 26.462,
+  "pool": 27.178,
+  "foamPool": 27.88,
+  "top7": 31.037,
+  "wipe": 31.513,
+  "banner": 33.119,
+  "quote2": 36.016,
+  "quote2end": 39.532,
+  "tidy": 38.802,
+  "day400": 42.656,
+  "beds": 45.249,
+  "soft": 46.105,
+  "hard": 47.098,
+  "grandad": 48.038,
+  "exceptMe": 56.244,
+  "thump": 53.077,
+  "sleeps": 55.41
+ },
+ "title": "In This Town \u2014 The Heist"
+}

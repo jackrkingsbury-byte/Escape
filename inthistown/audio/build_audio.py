@@ -357,7 +357,15 @@ def main():
     g_muff = 0.22 * ramp(B('b02') - 0.05, B('b04') - 0.05, 0.12) + 0.22 * ramp(B('b07') - 0.05, B('b12') - 0.1, 0.12)
     g_amb = 1.0 * ramp(music_stop + 0.2, B('b23'), 0.6)
     g_lofi = 0.4 * ramp(B('b23') - 0.2, duration - 0.6, 1.2)
-    music = (party[:N] * g_party[:, None] + muff[:N] * g_muff[:, None] + lofi[:N] * g_lofi[:, None])
+    import bed as BED
+    bedcfg = BED.enabled(True)
+    if bedcfg:   # the sampled background bed replaces the procedural music, following the same envelopes
+        bm = BED.modes(SR, int(N), bedcfg['path'], bedcfg['gain'])
+        (bf, gf), (bmu, gmu), (bs, gs), (bn, gn) = bm['party'], bm['muffled'], bm['lofi'], bm['night_bed']
+        music = (bf * (g_party / 0.27 * gf)[:, None] + bmu * (g_muff / 0.22 * gmu)[:, None] + bs * (g_lofi / 0.4 * gs)[:, None]
+                 + bn * (g_amb * gn)[:, None])
+    else:
+        music = (party[:N] * g_party[:, None] + muff[:N] * g_muff[:, None] + lofi[:N] * g_lofi[:, None])
     # duck music under the voice
     win = int(0.05 * SR)
     venv = np.sqrt(np.convolve(voice ** 2, np.ones(win) / win, mode='same'))
@@ -371,6 +379,8 @@ def main():
     for bid in ('b03', 'b08', 'b11', 'b16'):
         ws = beat[bid]['words']
         t0, t1 = ws[0]['start'] - 0.12, ws[-1]['end'] + 0.12
+        if bedcfg:
+            continue   # the bed keeps playing under the HUSS run (as in the reference); no synthetic organ
         gate *= 1 - ramp(t0, t1, 0.04)
         hold = S.organ((69, 76, 81, 84), dur=t1 - t0 + 0.6)          # bright sustained A-minor chord under the HUSSes
         hold[: int(0.03 * SR)] *= np.linspace(0, 1, int(0.03 * SR))

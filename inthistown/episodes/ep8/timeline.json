@@ -1,0 +1,2379 @@
+{
+ "fps": 30,
+ "duration": 52.082,
+ "audio": "episodes/ep8/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody parties.",
+   "start": 0.3,
+   "end": 2.136,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.69
+    },
+    {
+     "text": "parties",
+     "start": 1.69,
+     "end": 2.136
+    }
+   ],
+   "visual": "Party street, party_night. Crane down past lamp posts, balloons and confetti while extras dance (dance/dance2). The camera settles on the DJ decks at the corner. Nobody is there: just headphones on the decks and a sign reading 'DJ HIP REPLACEMENT - IN BED SINCE 7PM'."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me. I'm ninety one.",
+   "start": 2.351,
+   "end": 4.119,
+   "words": [
+    {
+     "text": "Except",
+     "start": 2.366,
+     "end": 2.825
+    },
+    {
+     "text": "me",
+     "start": 2.825,
+     "end": 3.014
+    },
+    {
+     "text": "I'm",
+     "start": 3.394,
+     "end": 3.585
+    },
+    {
+     "text": "ninety",
+     "start": 3.585,
+     "end": 3.927
+    },
+    {
+     "text": "one",
+     "start": 3.927,
+     "end": 4.119
+    }
+   ],
+   "visual": "Push through a lit window into the Grandad-variant bedroom (night), restyled for Gerald: cardigan, headphones round his neck, nightcap. Gerald sits up in bed (sitIdle, face: smile). Beside him under the duvet, on its own little pillow, lies a grey rock the size of a football. Behind the bed is a long wall shelf of about 20 plain small rocks, clearly in frame and lit but never mentioned."
+  },
+  {
+   "id": "b03",
+   "speaker": "gerald",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 4.384,
+   "end": 6.024,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 4.384,
+     "end": 4.644
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.594,
+     "end": 4.854
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.784,
+     "end": 5.044
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.364,
+     "end": 5.624
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.574,
+     "end": 5.834
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.764,
+     "end": 6.024
+    }
+   ],
+   "visual": "Gerald puts one accessory on the rock per HUSS (slam, face: huss). Each one lands with a dust puff and a camera punch: 1 party hat, 2 glasses, 3 mustache, 4 bowtie, 5 headphones, 6 tiny knitted cardigan. In the last frame the rock looks exactly like a small Gerald, which plants the hatch."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The clock tower had a birthday. It won't say how old.",
+   "start": 6.364,
+   "end": 9.109,
+   "words": [
+    {
+     "text": "The",
+     "start": 6.379,
+     "end": 6.524
+    },
+    {
+     "text": "clock",
+     "start": 6.524,
+     "end": 6.773
+    },
+    {
+     "text": "tower",
+     "start": 6.773,
+     "end": 7.022
+    },
+    {
+     "text": "had",
+     "start": 7.022,
+     "end": 7.219
+    },
+    {
+     "text": "a",
+     "start": 7.219,
+     "end": 7.365
+    },
+    {
+     "text": "birthday",
+     "start": 7.365,
+     "end": 7.718
+    },
+    {
+     "text": "It",
+     "start": 8.098,
+     "end": 8.233
+    },
+    {
+     "text": "won't",
+     "start": 8.233,
+     "end": 8.512
+    },
+    {
+     "text": "say",
+     "start": 8.512,
+     "end": 8.695
+    },
+    {
+     "text": "how",
+     "start": 8.695,
+     "end": 8.878
+    },
+    {
+     "text": "old",
+     "start": 8.878,
+     "end": 9.109
+    }
+   ],
+   "visual": "Clock tower, day. It wears a giant party hat with balloons tied round it, and extras cheer at its base (cheer). On 'won't' the camera pushes in on the clock face and both hands spin to a blur. Tag stamps in: 'AGE: ???'."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While they're out partying, by the way, I'm raising a rock. We play fetch. I fetch.",
+   "start": 9.424,
+   "end": 14.469,
+   "words": [
+    {
+     "text": "While",
+     "start": 9.439,
+     "end": 9.662
+    },
+    {
+     "text": "they're",
+     "start": 9.662,
+     "end": 9.885
+    },
+    {
+     "text": "out",
+     "start": 9.885,
+     "end": 10.062
+    },
+    {
+     "text": "partying",
+     "start": 10.062,
+     "end": 10.424
+    },
+    {
+     "text": "by",
+     "start": 10.804,
+     "end": 10.989
+    },
+    {
+     "text": "the",
+     "start": 10.989,
+     "end": 11.125
+    },
+    {
+     "text": "way",
+     "start": 11.125,
+     "end": 11.31
+    },
+    {
+     "text": "I'm",
+     "start": 11.64,
+     "end": 11.842
+    },
+    {
+     "text": "raising",
+     "start": 11.842,
+     "end": 12.203
+    },
+    {
+     "text": "a",
+     "start": 12.203,
+     "end": 12.352
+    },
+    {
+     "text": "rock",
+     "start": 12.352,
+     "end": 12.555
+    },
+    {
+     "text": "We",
+     "start": 12.865,
+     "end": 13.035
+    },
+    {
+     "text": "play",
+     "start": 13.035,
+     "end": 13.327
+    },
+    {
+     "text": "fetch",
+     "start": 13.327,
+     "end": 13.619
+    },
+    {
+     "text": "I",
+     "start": 13.929,
+     "end": 14.128
+    },
+    {
+     "text": "fetch",
+     "start": 14.128,
+     "end": 14.469
+    }
+   ],
+   "visual": "Party street, dusk. Gerald walks slowly down the middle of the road (walk) holding a lead, and the dressed-up rock drags behind on the end of it with a long scrape SFX. Dancers move round them without noticing. On 'We play fetch': the park with the stone table and tree, day. Gerald throws a stick out of frame (slam, camera punch) while the rock sits still. On 'I fetch': smash cut to Gerald walking back in holding the stick himself (walk, sweat drops, face: sweat). He drops it in front of the rock."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "This is Keith. I taught him to sit. He was already sitting.",
+   "start": 14.784,
+   "end": 17.809,
+   "words": [
+    {
+     "text": "This",
+     "start": 14.799,
+     "end": 15.018
+    },
+    {
+     "text": "is",
+     "start": 15.018,
+     "end": 15.18
+    },
+    {
+     "text": "Keith",
+     "start": 15.18,
+     "end": 15.4
+    },
+    {
+     "text": "I",
+     "start": 15.73,
+     "end": 15.867
+    },
+    {
+     "text": "taught",
+     "start": 15.867,
+     "end": 16.053
+    },
+    {
+     "text": "him",
+     "start": 16.053,
+     "end": 16.238
+    },
+    {
+     "text": "to",
+     "start": 16.238,
+     "end": 16.375
+    },
+    {
+     "text": "sit",
+     "start": 16.375,
+     "end": 16.561
+    },
+    {
+     "text": "He",
+     "start": 16.941,
+     "end": 17.067
+    },
+    {
+     "text": "was",
+     "start": 17.067,
+     "end": 17.239
+    },
+    {
+     "text": "already",
+     "start": 17.239,
+     "end": 17.547
+    },
+    {
+     "text": "sitting",
+     "start": 17.547,
+     "end": 17.809
+    }
+   ],
+   "visual": "Gerald's bedroom floor, day. The rock wears a dog tag reading 'KEITH'. On 'sit' Gerald points at it (point) and a tag reads 'SIT'. Nothing happens. On 'already' Gerald claps (clap) and sets a biscuit on top of the rock, and a big tag stamps in: 'GOOD BOY'."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then came the Summer Party Pet Show.",
+   "start": 18.124,
+   "end": 19.705,
+   "words": [
+    {
+     "text": "Then",
+     "start": 18.139,
+     "end": 18.34
+    },
+    {
+     "text": "came",
+     "start": 18.34,
+     "end": 18.594
+    },
+    {
+     "text": "the",
+     "start": 18.594,
+     "end": 18.742
+    },
+    {
+     "text": "Summer",
+     "start": 18.742,
+     "end": 18.996
+    },
+    {
+     "text": "Party",
+     "start": 18.996,
+     "end": 19.303
+    },
+    {
+     "text": "Pet",
+     "start": 19.303,
+     "end": 19.504
+    },
+    {
+     "text": "Show",
+     "start": 19.504,
+     "end": 19.705
+    }
+   ],
+   "visual": "Town square, day, banner SUMMER PARTY / PET SHOW / NO PIGEONS. Contestants cross the stage: the cat lying on a plinth (loaf), an extra in a cap walking a toaster on a lead, another extra walking a traffic cone on a lead, and Gerald with Keith. The pigeon sits in the front row of a bleacher anyway (huss chest puff). Judges at the long table: Grandad, the Heckler, and Marcus lying flat on his back on the tabletop (crowdSurf) because he still can't stand up."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "A toaster made toast. Total show off.",
+   "start": 19.92,
+   "end": 22.052,
+   "words": [
+    {
+     "text": "A",
+     "start": 19.935,
+     "end": 20.072
+    },
+    {
+     "text": "toaster",
+     "start": 20.072,
+     "end": 20.405
+    },
+    {
+     "text": "made",
+     "start": 20.405,
+     "end": 20.641
+    },
+    {
+     "text": "toast",
+     "start": 20.641,
+     "end": 20.925
+    },
+    {
+     "text": "Total",
+     "start": 21.255,
+     "end": 21.659
+    },
+    {
+     "text": "show",
+     "start": 21.659,
+     "end": 21.885
+    },
+    {
+     "text": "off",
+     "start": 21.885,
+     "end": 22.052
+    }
+   ],
+   "visual": "Centre stage, the toaster on its lead. On 'toast' two slices pop straight up. On 'Total' cut to the judges' table: Grandad and the Heckler sit with crossArms (face: squint) and raise score cards reading '2'. Marcus raises his from flat on his back. Tag stamps in: 'SHOW-OFF'."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Keith's trick was staying.",
+   "start": 22.367,
+   "end": 23.485,
+   "words": [
+    {
+     "text": "Keith's",
+     "start": 22.382,
+     "end": 22.644
+    },
+    {
+     "text": "trick",
+     "start": 22.644,
+     "end": 22.906
+    },
+    {
+     "text": "was",
+     "start": 22.906,
+     "end": 23.114
+    },
+    {
+     "text": "staying",
+     "start": 23.114,
+     "end": 23.485
+    }
+   ],
+   "visual": "Keith alone at centre stage under a spotlight, in his party hat and cardigan. Nothing happens for a full beat. Tag stamps in: 'TRICK: STAYING'. The crowd leans in (peer)."
+  },
+  {
+   "id": "b10",
+   "speaker": "gerald",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 23.8,
+   "end": 24.46,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 23.8,
+     "end": 24.06
+    },
+    {
+     "text": "HUSS!",
+     "start": 24.01,
+     "end": 24.27
+    },
+    {
+     "text": "HUSS!",
+     "start": 24.2,
+     "end": 24.46
+    }
+   ],
+   "visual": "One distraction per HUSS, each with a camera punch, and Keith never moves. HUSS 1: a confetti cannon blasts him from the side. HUSS 2: a balloon pops right next to him. HUSS 3: the Heckler leans into his face and yells (pointLaugh, face: laugh). The crowd behind looks surprised."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "True friends never leave. A stain.",
+   "start": 24.8,
+   "end": 26.84,
+   "words": [
+    {
+     "text": "True",
+     "start": 24.815,
+     "end": 25.022
+    },
+    {
+     "text": "friends",
+     "start": 25.022,
+     "end": 25.391
+    },
+    {
+     "text": "never",
+     "start": 25.391,
+     "end": 25.652
+    },
+    {
+     "text": "leave",
+     "start": 25.652,
+     "end": 25.858
+    },
+    {
+     "text": "A",
+     "start": 26.288,
+     "end": 26.468
+    },
+    {
+     "text": "stain",
+     "start": 26.468,
+     "end": 26.84
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "True friends never leave.",
+    "by": "a stain"
+   },
+   "visual": "QUOTE CARD: 'True friends never leave.' On 'A stain.' it REVEALS who said it: a floor-level shot of the stage boards. Right next to Keith, still covered in confetti, sits a dark round stain decal with two dot eyes and a smug little mouth, like an old pal. Neither of them has moved."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respectful moments. Number seven: Keith let the cone go first.",
+   "start": 27.155,
+   "end": 30.934,
+   "words": [
+    {
+     "text": "Top",
+     "start": 27.17,
+     "end": 27.359
+    },
+    {
+     "text": "ten",
+     "start": 27.359,
+     "end": 27.548
+    },
+    {
+     "text": "respectful",
+     "start": 27.548,
+     "end": 28.085
+    },
+    {
+     "text": "moments",
+     "start": 28.085,
+     "end": 28.523
+    },
+    {
+     "text": "Number",
+     "start": 28.853,
+     "end": 29.194
+    },
+    {
+     "text": "seven",
+     "start": 29.194,
+     "end": 29.535
+    },
+    {
+     "text": "Keith",
+     "start": 29.535,
+     "end": 29.758
+    },
+    {
+     "text": "let",
+     "start": 29.758,
+     "end": 29.982
+    },
+    {
+     "text": "the",
+     "start": 29.982,
+     "end": 30.146
+    },
+    {
+     "text": "cone",
+     "start": 30.146,
+     "end": 30.428
+    },
+    {
+     "text": "go",
+     "start": 30.428,
+     "end": 30.652
+    },
+    {
+     "text": "first",
+     "start": 30.652,
+     "end": 30.934
+    }
+   ],
+   "visual": "TOP 10 ranking card, #7. Cut to the top of the stage steps, where Keith and the traffic cone on its lead sit side by side. On 'cone' the extra tugs the lead and the cone slides down the steps first while Keith stays put. Tag stamps in: 'AFTER YOU'. The crowd slow-claps (clap)."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Keith won. Then he got warm.",
+   "start": 31.249,
+   "end": 33.15,
+   "words": [
+    {
+     "text": "Keith",
+     "start": 31.264,
+     "end": 31.558
+    },
+    {
+     "text": "won",
+     "start": 31.558,
+     "end": 31.851
+    },
+    {
+     "text": "Then",
+     "start": 32.331,
+     "end": 32.536
+    },
+    {
+     "text": "he",
+     "start": 32.536,
+     "end": 32.687
+    },
+    {
+     "text": "got",
+     "start": 32.687,
+     "end": 32.891
+    },
+    {
+     "text": "warm",
+     "start": 32.891,
+     "end": 33.15
+    }
+   ],
+   "visual": "On 'won': a gold trophy is set down next to Keith, confetti falls and the crowd cheers (cheer). Gerald scoops the rock up and holds it to his chest (crossArms, face: smile). On 'warm': close on Gerald. His face changes from smile to shocked, a white steam wisp curls up off the rock, and one sweat drop pops on his head."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then he cracked.",
+   "start": 33.565,
+   "end": 34.254,
+   "words": [
+    {
+     "text": "Then",
+     "start": 33.58,
+     "end": 33.786
+    },
+    {
+     "text": "he",
+     "start": 33.786,
+     "end": 33.939
+    },
+    {
+     "text": "cracked",
+     "start": 33.939,
+     "end": 34.254
+    }
+   ],
+   "visual": "Dead silence. On 'cracked': crunch SFX as the wall-crack decal zigzags across the rock. Gerald sets it down on the stage and backs off. The whole crowd freezes (stunned, face: shocked). Cut to the cat getting up off its plinth for the first time in the series (cat idle, from loaf). Tag: 'THE CAT STOOD UP'."
+  },
+  {
+   "id": "b15",
+   "speaker": "babygerald",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 34.569,
+   "end": 36.209,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 34.569,
+     "end": 34.829
+    },
+    {
+     "text": "HUSS!",
+     "start": 34.779,
+     "end": 35.039
+    },
+    {
+     "text": "HUSS!",
+     "start": 34.969,
+     "end": 35.229
+    },
+    {
+     "text": "HUSS!",
+     "start": 35.549,
+     "end": 35.809
+    },
+    {
+     "text": "HUSS!",
+     "start": 35.759,
+     "end": 36.019
+    },
+    {
+     "text": "HUSS!",
+     "start": 35.949,
+     "end": 36.209
+    }
+   ],
+   "visual": "The HUSSes come from INSIDE the rock. On each one a new crack spreads, the rock jolts and puffs dust, and the camera shakes. The crowd steps back once per HUSS, and the pigeon flaps off the bleacher on HUSS 4. On HUSS 6 the rock splits into two halves with a white flash.",
+   "pitch": 1.4
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It was a baby. It was already ninety one.",
+   "start": 36.549,
+   "end": 38.761,
+   "words": [
+    {
+     "text": "It",
+     "start": 36.564,
+     "end": 36.699
+    },
+    {
+     "text": "was",
+     "start": 36.699,
+     "end": 36.883
+    },
+    {
+     "text": "a",
+     "start": 36.883,
+     "end": 37.018
+    },
+    {
+     "text": "baby",
+     "start": 37.018,
+     "end": 37.297
+    },
+    {
+     "text": "It",
+     "start": 37.677,
+     "end": 37.804
+    },
+    {
+     "text": "was",
+     "start": 37.804,
+     "end": 37.975
+    },
+    {
+     "text": "already",
+     "start": 37.975,
+     "end": 38.282
+    },
+    {
+     "text": "ninety",
+     "start": 38.282,
+     "end": 38.589
+    },
+    {
+     "text": "one",
+     "start": 38.589,
+     "end": 38.761
+    }
+   ],
+   "visual": "Party music kicks back in as the dust clears. Standing between the two rock halves is babygerald: Gerald's rig at 35% scale in cardigan, glasses, mustache, headphones round his neck and party hat (stunned). On 'ninety' a tag stamps in: 'AGE: 91'. Cut to Gerald (face: shocked)."
+  },
+  {
+   "id": "b17",
+   "speaker": "babygerald",
+   "kind": "quote",
+   "text": "Turn that down.",
+   "start": 39.076,
+   "end": 40.272,
+   "words": [
+    {
+     "text": "Turn",
+     "start": 39.091,
+     "end": 39.453
+    },
+    {
+     "text": "that",
+     "start": 39.453,
+     "end": 39.815
+    },
+    {
+     "text": "down",
+     "start": 39.815,
+     "end": 40.272
+    }
+   ],
+   "visual": "Tiny Gerald points at the party speaker on the stage (point, face: squint) and speaks in a creaky little old-man voice. On 'scratch' (end): record-scratch SFX, the music cuts, and the whole crowd goes silent (stunned)."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every rock is an egg with patience. My mother. A boulder.",
+   "start": 40.687,
+   "end": 44.132,
+   "words": [
+    {
+     "text": "Every",
+     "start": 40.702,
+     "end": 40.968
+    },
+    {
+     "text": "rock",
+     "start": 40.968,
+     "end": 41.179
+    },
+    {
+     "text": "is",
+     "start": 41.179,
+     "end": 41.335
+    },
+    {
+     "text": "an",
+     "start": 41.335,
+     "end": 41.49
+    },
+    {
+     "text": "egg",
+     "start": 41.49,
+     "end": 41.645
+    },
+    {
+     "text": "with",
+     "start": 41.645,
+     "end": 41.856
+    },
+    {
+     "text": "patience",
+     "start": 41.856,
+     "end": 42.289
+    },
+    {
+     "text": "My",
+     "start": 42.719,
+     "end": 42.946
+    },
+    {
+     "text": "mother",
+     "start": 42.946,
+     "end": 43.232
+    },
+    {
+     "text": "A",
+     "start": 43.562,
+     "end": 43.728
+    },
+    {
+     "text": "boulder",
+     "start": 43.728,
+     "end": 44.132
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Every rock is an egg with patience.",
+    "by": "my mother, a boulder"
+   },
+   "visual": "QUOTE CARD: 'Every rock is an egg with patience.' On 'My mother.' it REVEALS who said it: Gerald's bedroom at night, where a big grey boulder sits in a rocking chair wearing glasses, a pearl necklace and a grey bun with knitting needles stuck in the top. Gerald stands beside it (idle, face: smile) and tiny Gerald waves up at it (wave). On 'boulder' a tag stamps in: 'MUM'."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now in this town, everybody parties. Except us.",
+   "start": 44.447,
+   "end": 47.69,
+   "words": [
+    {
+     "text": "Now",
+     "start": 44.462,
+     "end": 44.662
+    },
+    {
+     "text": "in",
+     "start": 44.662,
+     "end": 44.81
+    },
+    {
+     "text": "this",
+     "start": 44.81,
+     "end": 45.011
+    },
+    {
+     "text": "town",
+     "start": 45.011,
+     "end": 45.264
+    },
+    {
+     "text": "everybody",
+     "start": 45.694,
+     "end": 46.272
+    },
+    {
+     "text": "parties",
+     "start": 46.272,
+     "end": 46.718
+    },
+    {
+     "text": "Except",
+     "start": 47.028,
+     "end": 47.497
+    },
+    {
+     "text": "us",
+     "start": 47.497,
+     "end": 47.69
+    }
+   ],
+   "visual": "Exterior, party_night. The street party is seen through Gerald's window. Inside, in a row: Gerald on the bed, tiny Gerald next to him, and Mum the boulder in her rocking chair. All three wear party hats and sit perfectly still (sitIdle). Dancers bob outside the window."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Also, I collect rocks.",
+   "start": 48.005,
+   "end": 49.517,
+   "words": [
+    {
+     "text": "Also",
+     "start": 48.02,
+     "end": 48.53
+    },
+    {
+     "text": "I",
+     "start": 48.66,
+     "end": 48.826
+    },
+    {
+     "text": "collect",
+     "start": 48.826,
+     "end": 49.231
+    },
+    {
+     "text": "rocks",
+     "start": 49.231,
+     "end": 49.517
+    }
+   ],
+   "visual": "Silence. A slow pan along the long shelf from b02. All 20 small rocks now wear tiny party hats. On 'rocks' one wobbles, then another. Cut to Gerald on the bed (face: sweat, sweat drop)."
+  },
+  {
+   "id": "b21",
+   "speaker": "babygerald",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 49.882,
+   "end": 50.542,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 49.882,
+     "end": 50.142
+    },
+    {
+     "text": "HUSS!",
+     "start": 50.092,
+     "end": 50.352
+    },
+    {
+     "text": "HUSS!",
+     "start": 50.282,
+     "end": 50.542
+    }
+   ],
+   "visual": "The HUSSes come from inside the shelf. HUSS 1: cracks race across every rock at once (camera punch). HUSS 2: all of them jolt together and puff dust (camera shake). HUSS 3: they all burst with a white flash. Hard cut to about 20 babygeralds standing in a tidy cluster on the carpet, party hats on, all doing 'think' in sync. Iris out on Gerald (stunned). End.",
+   "pitch": 1.4
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.69,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "parties",
+   "start": 1.69,
+   "end": 2.136,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 2.366,
+   "end": 2.825,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 2.825,
+   "end": 3.014,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I'm",
+   "start": 3.394,
+   "end": 3.585,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "ninety",
+   "start": 3.585,
+   "end": 3.927,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "one",
+   "start": 3.927,
+   "end": 4.119,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.384,
+   "end": 4.644,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.594,
+   "end": 4.854,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.784,
+   "end": 5.044,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.364,
+   "end": 5.624,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.574,
+   "end": 5.834,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.764,
+   "end": 6.024,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 6.379,
+   "end": 6.524,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "clock",
+   "start": 6.524,
+   "end": 6.773,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "tower",
+   "start": 6.773,
+   "end": 7.022,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "had",
+   "start": 7.022,
+   "end": 7.219,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 7.219,
+   "end": 7.365,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "birthday",
+   "start": 7.365,
+   "end": 7.718,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "It",
+   "start": 8.098,
+   "end": 8.233,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "won't",
+   "start": 8.233,
+   "end": 8.512,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "say",
+   "start": 8.512,
+   "end": 8.695,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "how",
+   "start": 8.695,
+   "end": 8.878,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "old",
+   "start": 8.878,
+   "end": 9.109,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "While",
+   "start": 9.439,
+   "end": 9.662,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they're",
+   "start": 9.662,
+   "end": 9.885,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 9.885,
+   "end": 10.062,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 10.062,
+   "end": 10.424,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 10.804,
+   "end": 10.989,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 10.989,
+   "end": 11.125,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 11.125,
+   "end": 11.31,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I'm",
+   "start": 11.64,
+   "end": 11.842,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "raising",
+   "start": 11.842,
+   "end": 12.203,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "a",
+   "start": 12.203,
+   "end": 12.352,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "rock",
+   "start": 12.352,
+   "end": 12.555,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "We",
+   "start": 12.865,
+   "end": 13.035,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "play",
+   "start": 13.035,
+   "end": 13.327,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "fetch",
+   "start": 13.327,
+   "end": 13.619,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "I",
+   "start": 13.929,
+   "end": 14.128,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "fetch",
+   "start": 14.128,
+   "end": 14.469,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "This",
+   "start": 14.799,
+   "end": 15.018,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "is",
+   "start": 15.018,
+   "end": 15.18,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Keith",
+   "start": 15.18,
+   "end": 15.4,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "I",
+   "start": 15.73,
+   "end": 15.867,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "taught",
+   "start": 15.867,
+   "end": 16.053,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "him",
+   "start": 16.053,
+   "end": 16.238,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "to",
+   "start": 16.238,
+   "end": 16.375,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "sit",
+   "start": 16.375,
+   "end": 16.561,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "He",
+   "start": 16.941,
+   "end": 17.067,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "was",
+   "start": 17.067,
+   "end": 17.239,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "already",
+   "start": 17.239,
+   "end": 17.547,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "sitting",
+   "start": 17.547,
+   "end": 17.809,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Then",
+   "start": 18.139,
+   "end": 18.34,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "came",
+   "start": 18.34,
+   "end": 18.594,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 18.594,
+   "end": 18.742,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Summer",
+   "start": 18.742,
+   "end": 18.996,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Party",
+   "start": 18.996,
+   "end": 19.303,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Pet",
+   "start": 19.303,
+   "end": 19.504,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Show",
+   "start": 19.504,
+   "end": 19.705,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "A",
+   "start": 19.935,
+   "end": 20.072,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "toaster",
+   "start": 20.072,
+   "end": 20.405,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "made",
+   "start": 20.405,
+   "end": 20.641,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "toast",
+   "start": 20.641,
+   "end": 20.925,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Total",
+   "start": 21.255,
+   "end": 21.659,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "show",
+   "start": 21.659,
+   "end": 21.885,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "off",
+   "start": 21.885,
+   "end": 22.052,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Keith's",
+   "start": 22.382,
+   "end": 22.644,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "trick",
+   "start": 22.644,
+   "end": 22.906,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "was",
+   "start": 22.906,
+   "end": 23.114,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "staying",
+   "start": 23.114,
+   "end": 23.485,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 23.8,
+   "end": 24.06,
+   "beat": "b10",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 24.01,
+   "end": 24.27,
+   "beat": "b10",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 24.2,
+   "end": 24.46,
+   "beat": "b10",
+   "kind": "huss",
+   "speaker": "gerald",
+   "i": 2
+  },
+  {
+   "text": "True",
+   "start": 24.815,
+   "end": 25.022,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "friends",
+   "start": 25.022,
+   "end": 25.391,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "never",
+   "start": 25.391,
+   "end": 25.652,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "leave",
+   "start": 25.652,
+   "end": 25.858,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "A",
+   "start": 26.288,
+   "end": 26.468,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "stain",
+   "start": 26.468,
+   "end": 26.84,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Top",
+   "start": 27.17,
+   "end": 27.359,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 27.359,
+   "end": 27.548,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respectful",
+   "start": 27.548,
+   "end": 28.085,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "moments",
+   "start": 28.085,
+   "end": 28.523,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Number",
+   "start": 28.853,
+   "end": 29.194,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "seven",
+   "start": 29.194,
+   "end": 29.535,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Keith",
+   "start": 29.535,
+   "end": 29.758,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "let",
+   "start": 29.758,
+   "end": 29.982,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 29.982,
+   "end": 30.146,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "cone",
+   "start": 30.146,
+   "end": 30.428,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "go",
+   "start": 30.428,
+   "end": 30.652,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "first",
+   "start": 30.652,
+   "end": 30.934,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Keith",
+   "start": 31.264,
+   "end": 31.558,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "won",
+   "start": 31.558,
+   "end": 31.851,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Then",
+   "start": 32.331,
+   "end": 32.536,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "he",
+   "start": 32.536,
+   "end": 32.687,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "got",
+   "start": 32.687,
+   "end": 32.891,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "warm",
+   "start": 32.891,
+   "end": 33.15,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Then",
+   "start": 33.58,
+   "end": 33.786,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "he",
+   "start": 33.786,
+   "end": 33.939,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "cracked",
+   "start": 33.939,
+   "end": 34.254,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 34.569,
+   "end": 34.829,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 34.779,
+   "end": 35.039,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 34.969,
+   "end": 35.229,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 35.549,
+   "end": 35.809,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 35.759,
+   "end": 36.019,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 35.949,
+   "end": 36.209,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 5
+  },
+  {
+   "text": "It",
+   "start": 36.564,
+   "end": 36.699,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "was",
+   "start": 36.699,
+   "end": 36.883,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "a",
+   "start": 36.883,
+   "end": 37.018,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "baby",
+   "start": 37.018,
+   "end": 37.297,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "It",
+   "start": 37.677,
+   "end": 37.804,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "was",
+   "start": 37.804,
+   "end": 37.975,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "already",
+   "start": 37.975,
+   "end": 38.282,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "ninety",
+   "start": 38.282,
+   "end": 38.589,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "one",
+   "start": 38.589,
+   "end": 38.761,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Turn",
+   "start": 39.091,
+   "end": 39.453,
+   "beat": "b17",
+   "kind": "quote",
+   "speaker": "babygerald",
+   "i": 0
+  },
+  {
+   "text": "that",
+   "start": 39.453,
+   "end": 39.815,
+   "beat": "b17",
+   "kind": "quote",
+   "speaker": "babygerald",
+   "i": 1
+  },
+  {
+   "text": "down",
+   "start": 39.815,
+   "end": 40.272,
+   "beat": "b17",
+   "kind": "quote",
+   "speaker": "babygerald",
+   "i": 2
+  },
+  {
+   "text": "Every",
+   "start": 40.702,
+   "end": 40.968,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "rock",
+   "start": 40.968,
+   "end": 41.179,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "is",
+   "start": 41.179,
+   "end": 41.335,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "an",
+   "start": 41.335,
+   "end": 41.49,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "egg",
+   "start": 41.49,
+   "end": 41.645,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "with",
+   "start": 41.645,
+   "end": 41.856,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "patience",
+   "start": 41.856,
+   "end": 42.289,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "My",
+   "start": 42.719,
+   "end": 42.946,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "mother",
+   "start": 42.946,
+   "end": 43.232,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "A",
+   "start": 43.562,
+   "end": 43.728,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "boulder",
+   "start": 43.728,
+   "end": 44.132,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Now",
+   "start": 44.462,
+   "end": 44.662,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "in",
+   "start": 44.662,
+   "end": 44.81,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "this",
+   "start": 44.81,
+   "end": 45.011,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "town",
+   "start": 45.011,
+   "end": 45.264,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "everybody",
+   "start": 45.694,
+   "end": 46.272,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "parties",
+   "start": 46.272,
+   "end": 46.718,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Except",
+   "start": 47.028,
+   "end": 47.497,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "us",
+   "start": 47.497,
+   "end": 47.69,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Also",
+   "start": 48.02,
+   "end": 48.53,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 48.66,
+   "end": 48.826,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "collect",
+   "start": 48.826,
+   "end": 49.231,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "rocks",
+   "start": 49.231,
+   "end": 49.517,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 49.882,
+   "end": 50.142,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.092,
+   "end": 50.352,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.282,
+   "end": 50.542,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 2.271,
+   "mode": "muffled"
+  },
+  {
+   "t": 6.284,
+   "mode": "party"
+  },
+  {
+   "t": 9.344,
+   "mode": "muffled"
+  },
+  {
+   "t": 18.044,
+   "mode": "party"
+  },
+  {
+   "t": 33.485,
+   "mode": "none"
+  },
+  {
+   "t": 36.469,
+   "mode": "party"
+  },
+  {
+   "t": 40.607,
+   "mode": "none"
+  },
+  {
+   "t": 44.367,
+   "mode": "muffled"
+  },
+  {
+   "t": 47.925,
+   "mode": "none"
+  }
+ ],
+ "markers": {
+  "age": 3.585,
+  "old": 8.233,
+  "fetch": 12.865,
+  "ifetch": 13.929,
+  "keith": 15.18,
+  "sit": 16.375,
+  "already": 17.239,
+  "toast": 20.641,
+  "showoff": 21.255,
+  "quote1": 24.75,
+  "quote1end": 26.238,
+  "top7": 29.194,
+  "cone": 30.146,
+  "won": 31.558,
+  "warm": 32.891,
+  "crack": 33.939,
+  "baby": 37.018,
+  "age91": 38.282,
+  "scratch": 40.272,
+  "quote2": 40.637,
+  "quote2end": 42.669,
+  "boulder": 43.728,
+  "exceptUs": 47.028,
+  "rocks": 49.231
+ },
+ "title": "In This Town \u2014 Pet Rock"
+}

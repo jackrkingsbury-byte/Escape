@@ -1,49 +1,292 @@
 {
-  "title": "In This Town — Gravity",
-  "lead_in": 0.3,
-  "voices": {},
-  "beats": [
-    {"id": "b01", "kind": "line", "speaker": "narr", "text": "In this town, everybody parties.", "music": "party", "gapAfter": 0.2,
-     "visual": "Crane down the party street."},
-    {"id": "b02", "kind": "line", "speaker": "narr", "text": "Except me. I'm the cat.", "music": "muffled", "pauses": [0.3], "markers": {"imCat": "w:I'm"}, "gapAfter": 0.25,
-     "visual": "Window push; inside, the camera finds the cat sitting on a table next to a mug, staring into the lens."},
-    {"id": "b03", "kind": "huss", "speaker": "cat", "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!", "n": 6, "gapAfter": 0.3,
-     "visual": "One paw swipe per HUSS: mug, pencil, book, apple, remote, a tiny trophy fly off the table."},
-    {"id": "b04", "kind": "line", "speaker": "narr", "text": "The pigeon got a tattoo. It just says Coo.", "pauses": [0.35], "markers": {"tattoo": "w:It"}, "gapAfter": 0.3,
-     "visual": "The pigeon shows off a wing: a tattoo heart that reads COO."},
-    {"id": "b05", "kind": "line", "speaker": "narr", "text": "While they're out partying, by the way, I push things off tables.", "music": "muffled", "gapAfter": 0.3,
-     "visual": "Bedroom desk: the cat slowly nudges a glass toward the edge, eye contact with the lens."},
-    {"id": "b06", "kind": "line", "speaker": "narr", "text": "A pen. A phone. A whole lasagna.", "pauses": [0.3, 0.3], "markers": {"pen": "w:pen", "phone": "w:phone", "lasagna": "w:lasagna"}, "gapAfter": 0.3,
-     "visual": "Three quick swipes, each object falls on its word; the lasagna lands upside down."},
-    {"id": "b07", "kind": "line", "speaker": "narr", "text": "Gravity is just the floor asking nicely. A physicist, crying.", "pauses": [0.4], "card": {"type": "quote", "quote": "Gravity is just the floor asking nicely.", "by": "a physicist, crying"}, "markers": {"quote1": "start-0.05", "quote1end": "end+0.1", "phys": "we:A"}, "gapAfter": 0.3,
-     "visual": "QUOTE CARD; attribution on 'A physicist, crying.'"},
-    {"id": "b08", "kind": "line", "speaker": "narr", "text": "Then came the Summer Party Fancy Dinner.", "music": "party", "gapAfter": 0.2,
-     "visual": "Square: a long dinner table on the stage with a giant champagne-glass tower in the middle; crowd in bow ties."},
-    {"id": "b09", "kind": "line", "speaker": "narr", "text": "Five hundred glasses. One table edge.", "pauses": [0.35], "markers": {"tower": "w:Five", "edge": "w:edge"}, "gapAfter": 0.3,
-     "visual": "Tilt up the tower; on 'edge' the cat hops onto the far end of the table."},
-    {"id": "b10", "kind": "huss", "speaker": "cat", "text": "HUSS! HUSS! HUSS!", "n": 3, "gapAfter": 0.3,
-     "visual": "The cat steps closer along the table on each HUSS; the crowd gasps."},
-    {"id": "b11", "kind": "line", "speaker": "narr", "text": "Everybody froze. Even the DJ.", "music": "none", "pauses": [0.35], "markers": {"froze": "w:froze", "dj": "w:DJ"}, "gapAfter": 0.3,
-     "visual": "Music cuts; crowd frozen 'shocked'; DJ Grandad frozen mid-scratch."},
-    {"id": "b12", "kind": "line", "speaker": "narr", "text": "Every glass is a floor glass eventually. My mum.", "pauses": [0.4], "card": {"type": "quote", "quote": "Every glass is a floor glass eventually.", "by": "my mum"}, "markers": {"quote2": "start-0.05", "quote2end": "end+0.1", "mum": "we:My"}, "gapAfter": 0.3,
-     "visual": "QUOTE CARD over the cat and the tower; attribution on 'My mum.'"},
-    {"id": "b13", "kind": "line", "speaker": "narr", "text": "So I sat next to it. And did nothing.", "pauses": [0.4], "markers": {"sat": "w:sat", "nothing": "w:nothing"}, "gapAfter": 0.35,
-     "visual": "The cat sits beside the tower and just stares at the lens. Nothing happens."},
-    {"id": "b14", "kind": "line", "speaker": "narr", "text": "Top ten respectful moments. Number seven: I let it live.", "music": "party", "pauses": [0.35], "markers": {"top7": "w:seven"}, "gapAfter": 0.3,
-     "visual": "TOP 10 card; the crowd claps slowly; the mayor bows to the cat."},
-    {"id": "b15", "kind": "line", "speaker": "narr", "text": "Then the pigeon landed on it.", "music": "none", "markers": {"land": "w:landed"}, "gapAfter": 0.3,
-     "visual": "The tattooed pigeon flaps down onto the top glass."},
-    {"id": "b16", "kind": "huss", "speaker": "pigeon", "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!", "n": 6, "gapAfter": 0.35,
-     "visual": "One tier of the tower collapses per HUSS, from the top down; glasses fly everywhere."},
-    {"id": "b17", "kind": "line", "speaker": "narr", "text": "They banned the pigeon. I got a medal.", "music": "party", "pauses": [0.35], "markers": {"medal": "w:I"}, "gapAfter": 0.3,
-     "visual": "BANNED stamp on the pigeon; the mayor hangs a gold medal on the cat."},
-    {"id": "b18", "kind": "line", "speaker": "narr", "text": "Never trust a bird with a tattoo. My grandad.", "pauses": [0.4], "card": {"type": "quote", "quote": "Never trust a bird with a tattoo.", "by": "my grandad"}, "markers": {"quote3": "start-0.05", "quote3end": "we:My-0.05"}, "gapAfter": 0.3,
-     "visual": "QUOTE CARD; reveal: Grandad nodding with his own COO tattoo on his arm."},
-    {"id": "b19", "kind": "line", "speaker": "narr", "text": "Now in this town, everybody eats off the floor. Except me.", "pauses": [0.4], "markers": {"exceptMe": "w:Except"}, "gapAfter": 0.3,
-     "visual": "Everyone picnics on the stage floor among glass shards; tables gone. The cat alone on the only table."},
-    {"id": "b20", "kind": "line", "speaker": "narr", "text": "I'm still on the table.", "markers": {"table": "w:table"}, "gapAfter": 0.3,
-     "visual": "The cat on the table, eye contact, slowly reaches a paw toward the camera."},
-    {"id": "b21", "kind": "huss", "speaker": "cat", "text": "HUSS! HUSS! HUSS!", "n": 3, "gapAfter": 1.2,
-     "visual": "Paw taps the camera on each HUSS; on the third the camera tips off the table, the picture spins and falls to black."}
-  ]
+ "title": "In This Town — Gravity",
+ "lead_in": 0.3,
+ "voices": {},
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody parties.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Crane down the party street."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me. I'm the cat.",
+   "music": "muffled",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "imCat": "w:I'm"
+   },
+   "gapAfter": 0.25,
+   "visual": "Window push; inside, the camera finds the cat sitting on a table next to a mug, staring into the lens."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "cat",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "One paw swipe per HUSS: mug, pencil, book, apple, remote, a tiny trophy fly off the table."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The pigeon got a tattoo. It just says Coo.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "tattoo": "w:It"
+   },
+   "gapAfter": 0.3,
+   "visual": "The pigeon shows off a wing: a tattoo heart that reads COO."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I push things off tables.",
+   "music": "muffled",
+   "gapAfter": 0.3,
+   "visual": "Bedroom desk: the cat slowly nudges a glass toward the edge, eye contact with the lens."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A pen. A phone. A whole lasagna.",
+   "pauses": [
+    0.3,
+    0.3
+   ],
+   "markers": {
+    "pen": "w:pen",
+    "phone": "w:phone",
+    "lasagna": "w:lasagna"
+   },
+   "gapAfter": 0.3,
+   "visual": "Three quick swipes, each object falls on its word; the lasagna lands upside down."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Gravity is just the floor asking nicely. A physicist, crying.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Gravity is just the floor asking nicely.",
+    "by": "a physicist, crying"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "quote1end": "end+0.1",
+    "phys": "we:A"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; attribution on 'A physicist, crying.'"
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Summer Party Fancy Dinner.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Square: a long dinner table on the stage with a giant champagne-glass tower in the middle; crowd in bow ties."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Five hundred glasses. One table edge.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "tower": "w:Five",
+    "edge": "w:edge"
+   },
+   "gapAfter": 0.3,
+   "visual": "Tilt up the tower; on 'edge' the cat hops onto the far end of the table."
+  },
+  {
+   "id": "b10",
+   "kind": "huss",
+   "speaker": "cat",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "The cat steps closer along the table on each HUSS; the crowd gasps."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everybody froze. Even the DJ.",
+   "music": "none",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "froze": "w:froze",
+    "dj": "w:DJ"
+   },
+   "gapAfter": 0.3,
+   "visual": "Music cuts; crowd frozen 'shocked'; DJ Grandad frozen mid-scratch."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every glass is a floor glass eventually. My mum.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Every glass is a floor glass eventually.",
+    "by": "my mum"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "quote2end": "end+0.1",
+    "mum": "we:My"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD over the cat and the tower; attribution on 'My mum.'"
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I sat next to it. And did nothing.",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "sat": "w:sat",
+    "nothing": "w:nothing"
+   },
+   "gapAfter": 0.35,
+   "visual": "The cat sits beside the tower and just stares at the lens. Nothing happens."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: I let it live.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "top7": "w:seven"
+   },
+   "gapAfter": 0.3,
+   "visual": "TOP 10 card; the crowd claps slowly; the mayor bows to the cat."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the pigeon landed on it.",
+   "music": "none",
+   "markers": {
+    "land": "w:landed"
+   },
+   "gapAfter": 0.3,
+   "visual": "The tattooed pigeon flaps down onto the top glass."
+  },
+  {
+   "id": "b16",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.35,
+   "visual": "One tier of the tower collapses per HUSS, from the top down; glasses fly everywhere."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "They banned the pigeon. I got a medal.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "medal": "w:I"
+   },
+   "gapAfter": 0.3,
+   "visual": "BANNED stamp on the pigeon; the mayor hangs a gold medal on the cat."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Never trust a bird with a tattoo. My grandad.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Never trust a bird with a tattoo.",
+    "by": "my grandad"
+   },
+   "markers": {
+    "quote3": "start-0.05",
+    "quote3end": "we:My-0.05"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; reveal: Grandad nodding with his own COO tattoo on his arm."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now in this town, everybody eats off the floor. Except me.",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "exceptMe": "w:Except"
+   },
+   "gapAfter": 0.3,
+   "visual": "Everyone picnics on the stage floor among glass shards; tables gone. The cat alone on the only table."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I'm still on the table.",
+   "markers": {
+    "table": "w:table"
+   },
+   "gapAfter": 0.3,
+   "visual": "The cat on the table, eye contact, slowly reaches a paw toward the camera."
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "cat",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 1.2,
+   "visual": "Paw taps the camera on each HUSS; on the third the camera tips off the table, the picture spins and falls to black."
+  }
+ ],
+ "bed": true
 }

@@ -1,0 +1,367 @@
+{
+ "title": "In This Town — The Heist",
+ "lead_in": 0.3,
+ "voices": {
+  "burglar": [
+   "am_fenrir",
+   0.97,
+   "en-us",
+   [
+    1.45,
+    1.12,
+    1.12
+   ]
+  ],
+  "mayor": [
+   "bm_george",
+   0.95,
+   "en-gb",
+   null
+  ]
+ },
+ "banner": [
+  "THE NEVER",
+  "ENDING",
+  "PARTY"
+ ],
+ "narrator": "burglar. Existing rig restyled with a striped jumper, black eye mask, beanie and his sack on one shoulder. He narrates in first person in the series voice (young, deadpan, sing-songy, flat on every reveal). Other speakers: mayor (one dialogue line) and town (the final HUSS run). No new characters are needed.",
+ "newProps": [
+  "crowbar: thin black cylinder bent at one end",
+  "flashlight: short cylinder with a soft white light cone",
+  "OFFICE building: small box with a sign prop reading OFFICE; the existing briefcase scaled down to sit in the tumbleweed's twigs",
+  "TV: box with an emissive screen",
+  "jewellery box: small gold box with emissive sparkle dots",
+  "corkboard: brown panel with canvas-text flyers (CHESS MATCH, BINGO FINAL, STARING CONTEST, FREEZE DANCE, FANCY DINNER, LIMBO, ELECTION) joined by red string lines, plus a red X over ELECTION",
+  "WELCOME doormat: flat box with canvas text",
+  "cat flap: small square panel on a front-door box, used for one close-up",
+  "pink hearts: three canvas sprites that pop off the crowbar",
+  "giant sack: existing sack scaled up in steps across 6 hits, kept a round lumpy blob (never a rectangle)",
+  "lawyer's desk: existing table plus a box stack of papers and the open briefcase",
+  "bed tower: existing bed prop instanced about 20 high in a crooked stack beside the stage, each bed with a small name sign (GRANDAD, MARCUS, BRENDA, MAYOR, CAT, HECKLER...)",
+  "tags: 'LAST SLEPT: LAST YEAR', '9:04 PM', 'DAY 400', 'JUST RIGHT'",
+  "FX: shockwave ring decal pulsing across the cobbles",
+  "FX: Zzz sprites"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody parties.",
+   "music": "party",
+   "markers": {
+    "rooftop": "end-0.5"
+   },
+   "gapAfter": 0.2,
+   "visual": "Town, party_night. Crane down the party street: string lights, all 18 extras dancing (dance/dance2), DJ Hip Replacement at the decks, balloons. On the rooftop marker the crane rises and settles on a dark rooftop where a figure crouches behind a chimney."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me. I'm working.",
+   "music": "muffled",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "working": "w:working"
+   },
+   "gapAfter": 0.25,
+   "visual": "Rooftop close-up. The burglar (striped jumper, eye mask, beanie, sack on his shoulder) crouches behind the chimney in 'peer', face 'squint', watching the party below. On 'working' he tugs the eye mask tight and gives one flat nod."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "burglar",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Wide over the burglar's shoulder, looking down the row of houses. On each HUSS one house's windows snap dark (windowGlow 0) and a family of 3 extras walks out from beside it toward the square in 'dance'. The doors stay static. Each time the burglar does a small standing 'slam' on the chimney top, face 'huss', with a camera punch. After six the whole row is dark."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A tumbleweed got a job. Rolls in at nine.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "nine": "w:nine"
+   },
+   "gapAfter": 0.3,
+   "visual": "Cutaway in 'day' lighting at the edge of town. The tumbleweed rolls down the road with a tiny briefcase stuck in its twigs, heading for a small box building with a sign reading OFFICE. On 'nine' the clock tower behind it strikes (small shake on the clock face) and the tumbleweed rolls straight in through the doorway."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I'm in their houses.",
+   "music": "muffled",
+   "markers": {
+    "houses": "w:houses"
+   },
+   "gapAfter": 0.3,
+   "visual": "Brenda's bedroom, night, lights off, framed tight on the burglar against the window wall so the bed stays out of frame. He holds a flashlight under his chin and stares into the lens: 'idle', face 'neutral'. Hold. On 'houses' a party balloon drifts past the window behind him."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every party? I threw it. Haven't slept in a year.",
+   "pauses": [
+    0.3,
+    0.45
+   ],
+   "markers": {
+    "threw": "w:threw",
+    "slept": "w:Haven"
+   },
+   "gapAfter": 0.3,
+   "visual": "One quick shot framed tight on a corkboard on a dark wall (the room build is unchanged; only the wall shows). Party flyers are joined with red string: CHESS MATCH, BINGO FINAL, STARING CONTEST, FREEZE DANCE, FANCY DINNER, LIMBO, and ELECTION with a big red X. On 'threw' the burglar taps the board ('point'), face 'smug'. On 'Haven't' he turns to the lens with face 'sleepy', and the tag LAST SLEPT: LAST YEAR pops in."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A locked door is just a shy door. A crowbar. Flirting.",
+   "pauses": [
+    0.4,
+    0.35
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "A locked door is just a shy door.",
+    "by": "a crowbar, flirting"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "quote1end": "w:crowbar-0.05",
+    "flirt": "w:Flirting"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD 'A locked door is just a shy door.' stays up until 'crowbar'. Reveal: a front door at night (static set door) with the crowbar leaning against it. On 'Flirting' three pink hearts pop off the crowbar and the door's little window glows pink, as if blushing."
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "burglar",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "One break-in per HUSS, hard cuts, camera punch on each. (1) A lit window snaps dark and the sack is flung in through it. (2) A soot puff blasts out of a chimney top as the burglar drops down it, face 'huss'. (3) Close-up on a cat flap: the burglar's head pops through, nose to nose with the orange cat on the other side ('stare', unblinking). Burglar face 'sweat'."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Never the telly. Never the jewels. Just one thing.",
+   "pauses": [
+    0.3,
+    0.35
+   ],
+   "markers": {
+    "telly": "w:telly",
+    "jewels": "w:jewels",
+    "one": "w:one"
+   },
+   "gapAfter": 0.3,
+   "visual": "Marcus's bedroom, night, framed on the dresser wall only, so the bed is never in shot. The burglar walks ('walk') past a glowing TV on 'telly', past a sparkling jewellery box on 'jewels', and past the gold trophy and the toaster without looking at any of them. On 'one' he stops at the edge of frame and stares at something off-screen right that we never see, face 'smug'. He loosens the drawstring of his sack. Hard cut. The sack stays a plain round sack."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "They kept coming home early.",
+   "markers": {
+    "home": "w:home"
+   },
+   "gapAfter": 0.3,
+   "visual": "Grandad's bedroom, night, framed on the door and the corner beside it. Tag 9:04 PM top-left. The door is already open; Grandad shuffles in yawning (face 'sleepy'). The burglar is frozen mid-room in 'point' with one arm out, posing as a hat stand. Without looking, Grandad hangs his party hat on the burglar's hand, pats it and shuffles out of frame toward the unseen bed. A Zzz floats up from off-screen. The burglar's eyes slide to the hat (face 'sweat')."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Bigger parties. Foam. Pool. Foam in the pool.",
+   "music": "party",
+   "pauses": [
+    0.35,
+    0.3,
+    0.3
+   ],
+   "markers": {
+    "foam": "w:Foam",
+    "pool": "w:Pool",
+    "foamPool": "w:in-0.3"
+   },
+   "gapAfter": 0.3,
+   "visual": "One quick cut per item. On 'Foam': the foam area, extras dancing waist-deep. On 'Pool': extras cannonball into the pool. On 'Foam in the pool': the pool heaped with foam; an extra dives in and disappears, and foam spills over the edge. In every shot the burglar stands at the edge, masked, holding a sign reading 'PARTY THIS WAY ->', face 'neutral'."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: I wipe my feet.",
+   "music": "muffled",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "top7": "w:seven",
+    "wipe": "w:wipe"
+   },
+   "gapAfter": 0.3,
+   "visual": "RANKING CARD (TOP 10, #7) slides in. Front doorstep at night: the burglar, sack on his back, wipes his feet on a WELCOME doormat (left, right, left), slowly and thoroughly. Then he gives the door a small, polite nod."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Never-Ending Party.",
+   "music": "party",
+   "markers": {
+    "banner": "w:Never"
+   },
+   "gapAfter": 0.2,
+   "visual": "Town square, party_night. Banner: THE NEVER / ENDING / PARTY. Packed bleachers, the long table loaded with cakes, balloons everywhere, DJ Hip Replacement on the decks. The 18 extras, Brenda, Marcus, Grandad and the Heckler flood in from the party street."
+  },
+  {
+   "id": "b14",
+   "kind": "quote",
+   "speaker": "mayor",
+   "text": "Nobody goes home!",
+   "gapAfter": 0.3,
+   "visual": "Dialogue caption in the gold-outline mayor style (not a quote card). The mayor at the mic stand on stage, both arms up ('cheer'); the crowd cheers back. At the very back of the crowd the masked burglar does a slow 'clap', face 'neutral'."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "If nobody's home, it's not stealing. It's tidying. The cat's lawyer.",
+   "pauses": [
+    0.3,
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "If nobody's home, it's not stealing. It's tidying.",
+    "by": "the cat's lawyer"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "quote2end": "we:The-0.05",
+    "tidy": "w:tidying"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD stays up until 'The'. Reveal: the cat's lawyer at a small desk at the edge of the square, open briefcase, stack of papers, nodding gravely ('think'). The orange cat sits loafed on the papers ('loaf'), staring at the lens without blinking."
+  },
+  {
+   "id": "b16",
+   "kind": "huss",
+   "speaker": "burglar",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "music": "muffled",
+   "gapAfter": 0.3,
+   "visual": "The big heist. The party street is pitch dark, every window off, with the party glowing far off at the end of the street. One doorstep per HUSS, cutting down the row: the burglar slams the sack down ('slam', face 'huss') and it puffs bigger each time with a burst of dust. It stays a round, lumpy, shapeless blob. By HUSS 6 the sack is taller than the houses and its shadow swallows the street. Camera shake grows with each hit."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Ever wonder why nobody goes home?",
+   "music": "party",
+   "markers": {
+    "day400": "start"
+   },
+   "gapAfter": 0.3,
+   "visual": "Square, dawn lighting, camera low and tight on the crowd so nothing above the stage shows. Big stamp: DAY 400. The party is still going: every extra sways with face 'sleepy', Grandad yawns mid-dance, DJ Hip Replacement is asleep on his feet at the decks with the music still playing, and the mayor's top hat has slid down over his eyes."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I have all the beds.",
+   "music": "none",
+   "markers": {
+    "beds": "w:beds"
+   },
+   "gapAfter": 0.35,
+   "visual": "Same square at dawn. Close on the burglar standing right beside the stage, mask on, face 'smug'. On 'beds' there is a white flash and the camera tilts up behind him: a crooked tower of every bed in town (instanced beds, each with a small name sign: GRANDAD, MARCUS, BRENDA, MAYOR, CAT...) right next to the stage. The tower rises past the banner, and the clock tower in the distant park sits below the top of the stack. It was there the whole time."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Too soft. Too hard. Too Grandad.",
+   "music": "night",
+   "pauses": [
+    0.35,
+    0.35
+   ],
+   "markers": {
+    "soft": "w:soft",
+    "hard": "w:hard",
+    "grandad": "w:Grandad"
+   },
+   "gapAfter": 0.3,
+   "visual": "Night. Three quick cuts inside the bed tower, each a close-up on one bed with its name sign. On 'soft' (BRENDA): the burglar lies back and sinks out of sight into a heap of cushions. On 'hard' (MARCUS): the limbo bar is the pillow; his head clonks onto it, with a camera punch, face 'squint'. On 'Grandad' (GRANDAD): he lies down nose to nose with Grandad's toupee on the pillow, face 'sweat'."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now in this town, everybody parties. Except me.",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "exceptMe": "w:Except"
+   },
+   "gapAfter": 0.3,
+   "visual": "The top bed of the tower, quiet_night, with the clock face behind and below him and the party lights tiny far below. Tag JUST RIGHT pops in. The burglar, still masked, climbs in, pulls the duvet up to his chin and lies back ('crowdSurf'), face 'smile'. On 'Except' hold: long and peaceful."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I'm trying to sleep.",
+   "music": "muffled",
+   "markers": {
+    "thump": "w:sleep"
+   },
+   "gapAfter": 0.3,
+   "visual": "Close on his face on the pillow: eyes wide open, face 'squint', then 'sweat'. On 'sleep' a bass thump from below makes the bed hop an inch and the whole tower sway."
+  },
+  {
+   "id": "b22",
+   "kind": "huss",
+   "speaker": "town",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "music": "party",
+   "gapAfter": 0.3,
+   "visual": "Down in the square the whole crowd jumps and shouts on each HUSS ('cheer'), DJ Hip Replacement slams the decks, and a shockwave ring pulses across the cobbles. HUSS 1: the bed tower beside the stage leans left. HUSS 2: it leans right. HUSS 3: it topples across the square over the crowd, with a big camera shake."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now everybody sleeps. Except me.",
+   "music": "night",
+   "pauses": [
+    0.45
+   ],
+   "markers": {
+    "sleeps": "w:sleeps",
+    "exceptMe": "w:Except"
+   },
+   "gapAfter": 1.4,
+   "visual": "Beds rain down on the square. Three hero landings, one per hard cut: Grandad drops into a bed still wearing his party hat and is instantly out ('sleepy', Zzz); the mayor lands, and his top hat slides over his eyes, Zzz; the Heckler lands with his finger still pointing, Zzz. Beds thud down on the rest of the crowd. On 'sleeps' cut to a locked wide of the aftermath: the square covered in beds, every partier asleep in one with Zzz, DJ Hip Replacement asleep across the decks, the music off. In the middle, the burglar lies flat on bare cobbles ('crowdSurf', eyes wide, face 'neutral'). On 'Except' the last bed floats down and lands gently beside him with the orange cat already in it ('stare'), watching him without blinking. Iris-out on the burglar's open eyes."
+  }
+ ],
+ "bed": true
+}

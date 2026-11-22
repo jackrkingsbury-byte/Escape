@@ -14,9 +14,10 @@ Everything episode-specific lives in episodes/<ep>/script.json:
                  "markers": { "name": "w:<wordprefix>[+0.1] | start | end[+0.2]" },
                  "sfx": [ { "type": "laugh|knock|whoosh|coo|thump|cheer", "at": "w:<word>|start|end[+x]", "gain": 0.8 } ],
                  "card": {...}, "visual": "..." } ],   # passed through untouched for the shot list
-    "bed": { "path": "audio/beds/reference_bed.wav", "gain": 0.3, "duck": 0.4, "music_gain": 0.6 } }   # optional
-      # bed = a looped background texture under the WHOLE episode (also under HUSS runs), dipping under the
-      # voice by `duck`; `music_gain` scales the procedural music while the bed is on.  BED=0 disables it.
+    "bed": true | { "path": "audio/beds/reference_bed.wav", "gain": 0.8, "offset": 0 } }   # optional
+      # bed = the sampled background loop (audio/bed.py). It REPLACES the procedural music and follows the music
+      # modes (party full / muffled through the wall / lofi soft / night faint / none silent), keeps playing under
+      # the HUSS runs (no synthetic organ then). BED=0 in the environment disables it.
 
 Rules (from the user's notes): the only meme SOUND EFFECT is the real HUSS sample. Meme words (top ten,
 respect, goon…) are normal narrated words. Foley (crowd laugh, chess knocks, cat whoosh) and music are fine.
@@ -31,6 +32,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import build_audio as BA  # noqa: E402  (Kokoro, youthify, real_huss, crowd_laugh, trim, …)
 import synth as S          # noqa: E402
+import bed as BED          # noqa: E402  (sampled background bed → soundtrack)
 
 SR = BA.SR
 DEFAULT_GAP = 0.28
@@ -72,7 +74,9 @@ def main(ep):
             n = b['n']
             onsets = [(i // 3) * BA.TRIPLET_PERIOD + BA.TRIPLET[i % 3] for i in range(n)]
             for i in range(n):
-                if b['speaker'] == 'town':
+                if b.get('pitch'):
+                    h = BA.real_huss(i, b['pitch'] * [1.0, 1.03, 0.98][i % 3])
+                elif b['speaker'] == 'town':
                     h = S.reverb(S.lp(BA.real_huss(i, [1.0, 1.12, 0.92][i % 3]), 3200) * 0.8, 0.7, 0.4, 20 + i)
                 elif b['speaker'] == 'pigeon':
                     h = BA.real_huss(i, [1.45, 1.5, 1.42][i % 3])
@@ -170,6 +174,11 @@ def main(ep):
             seg.append((beat[b0['id']]['start'] - 0.08, b0['music']))
     seg.sort()
     gains = {'party': (party, 0.27), 'muffled': (muff, 0.22), 'lofi': (lofi, 0.4), 'night': (amb, 1.0)}
+    bedcfg = BED.enabled(script.get('bed'))
+    if bedcfg:   # the sampled bed replaces the procedural music and follows the same modes
+        bm = BED.modes(SR, int(N), bedcfg['path'], bedcfg['gain'], bedcfg['offset'])
+        nb, gnb = bm.pop('night_bed')
+        gains = {**bm, 'night': (amb[:N] + nb * gnb, 1.0)}
     music = np.zeros((N, 2), np.float32)
     for k, (t0, mode) in enumerate(seg):
         t1 = seg[k + 1][0] if k + 1 < len(seg) else duration
@@ -188,7 +197,7 @@ def main(ep):
     # HUSS runs: music drops out, bright held chord underneath (like the reference)
     gate = np.ones(N, np.float32)
     for b in tl_beats:
-        if b['kind'] == 'huss' and b['speaker'] in ('me', 'narr', 'grandad', 'pigeon') and b.get('gate', True):
+        if not bedcfg and b['kind'] == 'huss' and b['speaker'] in ('me', 'narr', 'grandad', 'pigeon') and b.get('gate', True):
             t0, t1 = b['words'][0]['start'] - 0.12, b['words'][-1]['end'] + 0.12
             gate *= 1 - np.clip(np.minimum((tt - t0) / 0.04 + 1, (t1 - tt) / 0.04 + 1), 0, 1)
             hold = S.organ((69, 76, 81, 84), dur=t1 - t0 + 0.6)
@@ -196,21 +205,7 @@ def main(ep):
             put(np.stack([hold, hold], 1), t0, 0.3)
     music *= gate[:, None]
 
-    # background bed (sampled loop) under everything
-    bed = np.zeros((N, 2), np.float32)
-    bcfg = script.get('bed')
-    if bcfg and os.environ.get('BED', '1') != '0':
-        bp = bcfg['path'] if os.path.isabs(bcfg['path']) else os.path.join(ROOT, bcfg['path'])
-        b_raw, bsr = sf.read(bp, dtype='float32', always_2d=True)
-        if b_raw.shape[1] == 1: b_raw = np.repeat(b_raw, 2, 1)
-        if bsr != SR: b_raw = signal.resample_poly(b_raw, SR, bsr, axis=0).astype(np.float32)
-        reps = int(np.ceil(N / len(b_raw))) + 1
-        off = int(bcfg.get('offset', 0) * SR) % len(b_raw)
-        bed = np.tile(b_raw, (reps, 1))[off: off + N]
-        fin = min(N, int(0.25 * SR)); bed[:fin] *= np.linspace(0, 1, fin)[:, None]
-        fout = min(N, int(0.6 * SR)); bed[-fout:] *= np.linspace(1, 0, fout)[:, None]
-        bed *= (bcfg.get('gain', 0.3) * (1 - bcfg.get('duck', 0.4) * np.clip(venv * 3, 0, 1)))[:, None]
-        music *= bcfg.get('music_gain', 0.6)
+    bed = np.zeros((N, 2), np.float32)   # (the bed now lives inside `music`; stem kept for compatibility)
 
     mix = np.tanh((music + bed + sfx + np.stack([voice, voice], 1)) * 1.1) / 1.1
     os.makedirs(os.path.join(epdir, 'stems'), exist_ok=True)

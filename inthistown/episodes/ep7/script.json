@@ -1,50 +1,277 @@
 {
-  "title": "In This Town — Limbo",
-  "lead_in": 0.3,
-  "voices": {
-    "marcus": ["am_fenrir", 0.97, "en-us", [1.45, 1.12, 1.12]],
-    "mayor": ["bm_george", 0.95, "en-gb", null]
-  },
-  "beats": [
-    {"id": "b01", "kind": "line", "speaker": "narr", "text": "In this town, everybody parties.", "music": "party", "gapAfter": 0.2,
-     "visual": "Crane down the party street."},
-    {"id": "b02", "kind": "line", "speaker": "narr", "text": "Except me.", "music": "muffled", "gapAfter": 0.25,
-     "visual": "Marcus's window; inside he lies flat, face up, under his desk."},
-    {"id": "b03", "kind": "huss", "speaker": "marcus", "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!", "n": 6, "gapAfter": 0.3,
-     "visual": "Marcus slides under the table flat on his back, one push per HUSS."},
-    {"id": "b04", "kind": "line", "speaker": "narr", "text": "Grandad joined a conga line in nineteen eighty two. He's still in it.", "music": "party", "pauses": [0.35], "markers": {"still": "w:He's"}, "gapAfter": 0.3,
-     "visual": "A conga line snakes down the street; Grandad at the back, older than everyone, still going."},
-    {"id": "b05", "kind": "line", "speaker": "narr", "text": "While they're out partying, by the way, I'm practising limbo.", "music": "muffled", "gapAfter": 0.3,
-     "visual": "Marcus's room: a broom across two chairs; he slides under it."},
-    {"id": "b06", "kind": "line", "speaker": "narr", "text": "I sleep under my bed. I go under doors.", "pauses": [0.35], "markers": {"bed": "w:bed", "doors": "w:doors"}, "gapAfter": 0.3,
-     "visual": "Under the bed (only his shoes stick out); then sliding under the bedroom door gap."},
-    {"id": "b07", "kind": "line", "speaker": "narr", "text": "How low can you go? Lower. A worm.", "pauses": [0.3, 0.4], "card": {"type": "quote", "quote": "How low can you go? Lower.", "by": "a worm"}, "markers": {"quote1": "start-0.05", "quote1end": "end+0.1", "worm": "we:A"}, "gapAfter": 0.3,
-     "visual": "QUOTE CARD; attribution on 'A worm.'"},
-    {"id": "b08", "kind": "huss", "speaker": "marcus", "text": "HUSS! HUSS! HUSS!", "n": 3, "gapAfter": 0.3,
-     "visual": "Under a chair, under the cat, under the pigeon."},
-    {"id": "b09", "kind": "line", "speaker": "narr", "text": "Then came the Summer Party Limbo Championship.", "music": "party", "gapAfter": 0.2,
-     "visual": "Square: banner SUMMER PARTY / LIMBO / CHAMPIONSHIP; a limbo bar on the stage, a queue of dancers."},
-    {"id": "b10", "kind": "quote", "speaker": "mayor", "text": "How low can you go?", "gapAfter": 0.3,
-     "visual": "The mayor at the bar with a microphone."},
-    {"id": "b11", "kind": "line", "speaker": "narr", "text": "Brenda fell asleep under the bar. Disqualified for comfort.", "pauses": [0.35], "markers": {"comfort": "w:Disqualified"}, "gapAfter": 0.3,
-     "visual": "Brenda lying under the bar, asleep (Zzz); red OUT stamp."},
-    {"id": "b12", "kind": "line", "speaker": "narr", "text": "The mayor's hat hit the bar. Out.", "pauses": [0.3], "markers": {"hat": "w:hit", "out2": "w:Out"}, "gapAfter": 0.3,
-     "visual": "The mayor limbos, his top hat knocks the bar; OUT stamp."},
-    {"id": "b13", "kind": "line", "speaker": "narr", "text": "Then it was me. And the bar. At one centimetre.", "pauses": [0.3, 0.3], "markers": {"cm": "w:one"}, "gapAfter": 0.3,
-     "visual": "The bar lowered almost to the floor; tag 1 CM; Marcus lies down and stares at it."},
-    {"id": "b14", "kind": "huss", "speaker": "marcus", "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!", "n": 6, "gapAfter": 0.3,
-     "visual": "One push per HUSS: Marcus slides flat under the 1 cm bar; the crowd leans in."},
-    {"id": "b15", "kind": "line", "speaker": "narr", "text": "Top ten respectful moments. Number seven: the bar bowed to me.", "pauses": [0.35], "markers": {"top7": "w:seven", "bow": "w:bowed"}, "gapAfter": 0.3,
-     "visual": "TOP 10 card; the limbo bar sags in the middle like a bow; the crowd claps."},
-    {"id": "b16", "kind": "line", "speaker": "narr", "text": "Never look down. Unless you're already there. A submarine.", "pauses": [0.3, 0.4], "card": {"type": "quote", "quote": "Never look down. Unless you're already there.", "by": "a submarine"}, "markers": {"quote2": "start-0.05", "quote2end": "end+0.1", "sub": "we:A"}, "gapAfter": 0.3,
-     "visual": "QUOTE CARD; attribution on 'A submarine.'"},
-    {"id": "b17", "kind": "line", "speaker": "narr", "text": "I won. But I can't stand up anymore.", "pauses": [0.35], "markers": {"cant": "w:But"}, "gapAfter": 0.3,
-     "visual": "Trophy laid on his chest; he tries to sit up and can't."},
-    {"id": "b18", "kind": "line", "speaker": "narr", "text": "Now in this town, everybody parties. Except me.", "pauses": [0.4], "markers": {"exceptMe": "w:Except"}, "gapAfter": 0.3,
-     "visual": "The street party; Marcus still flat on his back, sliding between dancers' legs."},
-    {"id": "b19", "kind": "line", "speaker": "narr", "text": "I live down here now.", "markers": {"here": "w:here"}, "gapAfter": 0.3,
-     "visual": "Low camera at floor level: Marcus waves from the ground; the cat walks over him."},
-    {"id": "b20", "kind": "huss", "speaker": "marcus", "text": "HUSS! HUSS! HUSS!", "n": 3, "gapAfter": 1.2,
-     "visual": "He slides off out of frame, one push per HUSS. End."}
+ "title": "In This Town — Limbo",
+ "lead_in": 0.3,
+ "voices": {
+  "marcus": [
+   "am_fenrir",
+   0.97,
+   "en-us",
+   [
+    1.45,
+    1.12,
+    1.12
+   ]
+  ],
+  "mayor": [
+   "bm_george",
+   0.95,
+   "en-gb",
+   null
   ]
+ },
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody parties.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Crane down the party street."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me.",
+   "music": "muffled",
+   "gapAfter": 0.25,
+   "visual": "Marcus's window; inside he lies flat, face up, under his desk."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "marcus",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Marcus slides under the table flat on his back, one push per HUSS."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandad joined a conga line in nineteen eighty two. He's still in it.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "still": "w:He's"
+   },
+   "gapAfter": 0.3,
+   "visual": "A conga line snakes down the street; Grandad at the back, older than everyone, still going."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I'm practising limbo.",
+   "music": "muffled",
+   "gapAfter": 0.3,
+   "visual": "Marcus's room: a broom across two chairs; he slides under it."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I sleep under my bed. I go under doors.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "bed": "w:bed",
+    "doors": "w:doors"
+   },
+   "gapAfter": 0.3,
+   "visual": "Under the bed (only his shoes stick out); then sliding under the bedroom door gap."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "How low can you go? Lower. A worm.",
+   "pauses": [
+    0.3,
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "How low can you go? Lower.",
+    "by": "a worm"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "quote1end": "end+0.1",
+    "worm": "we:A"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; attribution on 'A worm.'"
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "marcus",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Under a chair, under the cat, under the pigeon."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Summer Party Limbo Championship.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Square: banner SUMMER PARTY / LIMBO / CHAMPIONSHIP; a limbo bar on the stage, a queue of dancers."
+  },
+  {
+   "id": "b10",
+   "kind": "quote",
+   "speaker": "mayor",
+   "text": "How low can you go?",
+   "gapAfter": 0.3,
+   "visual": "The mayor at the bar with a microphone."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Brenda fell asleep under the bar. Disqualified for comfort.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "comfort": "w:Disqualified"
+   },
+   "gapAfter": 0.3,
+   "visual": "Brenda lying under the bar, asleep (Zzz); red OUT stamp."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The mayor's hat hit the bar. Out.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "hat": "w:hit",
+    "out2": "w:Out"
+   },
+   "gapAfter": 0.3,
+   "visual": "The mayor limbos, his top hat knocks the bar; OUT stamp."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then it was me. And the bar. At one centimetre.",
+   "pauses": [
+    0.3,
+    0.3
+   ],
+   "markers": {
+    "cm": "w:one"
+   },
+   "gapAfter": 0.3,
+   "visual": "The bar lowered almost to the floor; tag 1 CM; Marcus lies down and stares at it."
+  },
+  {
+   "id": "b14",
+   "kind": "huss",
+   "speaker": "marcus",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "One push per HUSS: Marcus slides flat under the 1 cm bar; the crowd leans in."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: the bar bowed to me.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "top7": "w:seven",
+    "bow": "w:bowed"
+   },
+   "gapAfter": 0.3,
+   "visual": "TOP 10 card; the limbo bar sags in the middle like a bow; the crowd claps."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Never look down. Unless you're already there. A submarine.",
+   "pauses": [
+    0.3,
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Never look down. Unless you're already there.",
+    "by": "a submarine"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "quote2end": "end+0.1",
+    "sub": "we:A"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; attribution on 'A submarine.'"
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I won. But I can't stand up anymore.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "cant": "w:But"
+   },
+   "gapAfter": 0.3,
+   "visual": "Trophy laid on his chest; he tries to sit up and can't."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now in this town, everybody parties. Except me.",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "exceptMe": "w:Except"
+   },
+   "gapAfter": 0.3,
+   "visual": "The street party; Marcus still flat on his back, sliding between dancers' legs."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I live down here now.",
+   "markers": {
+    "here": "w:here"
+   },
+   "gapAfter": 0.3,
+   "visual": "Low camera at floor level: Marcus waves from the ground; the cat walks over him."
+  },
+  {
+   "id": "b20",
+   "kind": "huss",
+   "speaker": "marcus",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 1.2,
+   "visual": "He slides off out of frame, one push per HUSS. End."
+  }
+ ],
+ "bed": true
 }

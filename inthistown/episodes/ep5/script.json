@@ -330,5 +330,6 @@
    "gapAfter": 1.4,
    "visual": "Button: asleep standing up, trophy in hand; each snored HUSS pops a snore bubble, the pigeon puffs with it."
   }
- ]
+ ],
+ "bed": true
 }
