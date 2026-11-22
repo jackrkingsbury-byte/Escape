@@ -73,6 +73,7 @@ script) in place of the procedural music; `BED=0` turns it off.
 | 8 | Pet Rock | DJ Hip Replacement (91) | `out/inthistown_ep8_petrock.mp4` |
 | 9 | The Heist | the burglar | `out/inthistown_ep9_heist.mp4` |
 | 10 | Snooze | DJ Hip Replacement | `out/inthistown_ep10_snooze.mp4` |
+| 11 | Hide and Seek | the kid | `out/inthistown_ep11_hideandseek.mp4` |
 
 Build one:
 
