@@ -1,0 +1,324 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Episode 2 — bingo props</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1d26; }
+  canvas { display: block; }
+  .lbl { position: absolute; color: #fff; font: 700 12px/1.1 system-ui, sans-serif; text-shadow: 0 1px 2px #000, 0 0 4px #000;
+         pointer-events: none; white-space: nowrap; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { makeDabber, makeBingoCard, makeCardGrid, makeCardStack, makeInkDot, makeBingoCage, makeMicStand, makeDJDecks,
+  makeSpoon, makeFork, makeTopHatProp, makeToupee, makeHearingAid, CARD_THICKNESS } from '/src/ep2/props2.js';
+import { makeTable, makeSpeaker } from '/src/props.js';
+
+// Views: ?view=all (default contact sheet) · card (texture close-up; &k=0..25 &seed=N) · cards (6 seeds, clean + dotted)
+//        · grid (&p=0..1) · stack (&h=…) · stage (cage ×2 times, decks, mic) · small (hat, toupee, aid, spoon/fork)
+//        · head (aid on grandad's ear, held dabber &len=…) · test (purity checks + per-prop draw calls → window.__test)
+// Params: &t=… (animation time for cage/decks) · &chars=0 (skip characters) · &bench=N
+const Q = new URLSearchParams(location.search);
+const VIEW = Q.get('view') || 'all';
+const T = parseFloat(Q.get('t') || '1.3');
+const W = window.innerWidth, H = window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+
+function studio({ bg = '#c9d6e3', floor = '#ddd5c8', shadowSize = 4, sun = [2.5, 6, 3.5], sunI = 2.3, hemi = 1.15 } = {}) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(bg);
+  scene.add(new THREE.HemisphereLight('#eef4ff', '#8a7660', hemi));
+  const d = new THREE.DirectionalLight('#fff1dc', sunI);
+  d.position.set(...sun); d.castShadow = true;
+  d.shadow.mapSize.set(2048, 2048);
+  const sc = d.shadow.camera; sc.left = -shadowSize; sc.right = shadowSize; sc.top = shadowSize; sc.bottom = -shadowSize; sc.near = 0.5; sc.far = 25;
+  d.shadow.bias = -0.0003; d.shadow.normalBias = 0.01;
+  scene.add(d); scene.add(d.target);
+  const fill = new THREE.DirectionalLight('#d6e4ff', 0.6); fill.position.set(-4, 3, -2); scene.add(fill);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshStandardMaterial({ color: floor, roughness: 0.92 }));
+  fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; scene.add(fl);
+  return { scene, sun: d };
+}
+function cam(fov, aspect, pos, look) {
+  const c = new THREE.PerspectiveCamera(fov, aspect, 0.01, 80);
+  c.position.set(...pos); c.lookAt(new THREE.Vector3(...look)); return c;
+}
+function view(scene, camera, x, y, w, h) {
+  renderer.setViewport(x, H - y - h, w, h); renderer.setScissor(x, H - y - h, w, h);
+  renderer.render(scene, camera);
+}
+function label(text, x, y) {
+  const d = document.createElement('div'); d.className = 'lbl'; d.textContent = text;
+  d.style.left = x + 'px'; d.style.top = y + 'px'; document.body.appendChild(d);
+}
+async function maybeChars() {
+  if (Q.get('chars') === '0') return null;
+  try {
+    const C = await import('/src/characters.js');
+    const grandad = C.makeCharacter({ id: 'grandad', skin: '#f1c7a1', hair: { style: 'grandpa', color: '#e8e8e8' },
+      top: { style: 'cardigan', color: '#6b8e5a', accent: '#ffffff' }, bottom: { style: 'pants', color: '#55575e' },
+      accessories: ['glasses', 'mustache'], scale: 0.97 });
+    return { C, grandad };
+  } catch (e) { console.log('characters.js not available:', e.message); return null; }
+}
+
+const renders = [];
+const t0 = performance.now();
+
+if (VIEW === 'all') {
+  const st = studio({ shadowSize: 5 });
+  const S = st.scene;
+  st.sun.position.set(2.5, 6, 4); st.sun.target.position.set(1.5, 0, 0);
+  // ── stage: table with the 8×10 card grid, decks, cage, mic
+  const table = makeTable({ w: 1.42, d: 1.28 }); S.add(table);
+  const grid = makeCardGrid({}); grid.root.position.set(0, 0.78 + CARD_THICKNESS, 0); grid.setProgress(0.5); S.add(grid.root);
+  const djs = makeDJDecks(); djs.root.position.set(-1.55, 0, -1.25); djs.root.rotation.y = 0.35; djs.update(T); S.add(djs.root);
+  const spk = makeSpeaker(); spk.root.position.set(-2.45, 0, -1.55); spk.root.rotation.y = 0.5; spk.update(T); S.add(spk.root);
+  const cage = makeBingoCage({ pedestal: 0.62 }); cage.root.position.set(1.25, 0, -1.0); cage.root.rotation.y = -0.45; cage.update(T); S.add(cage.root);
+  const mic = makeMicStand(); mic.position.set(0.45, 0, -1.45); mic.rotation.y = Math.PI - 0.3; S.add(mic);
+  // a dabber resting on the grid, a few dots on the table wood
+  const dg = makeDabber({ color: '#e8412c' }); dg.position.set(0.62, 0.78, 0.66); dg.rotation.set(0, 0, Math.PI / 2 - 0.02); dg.position.y = 0.78 + 0.028; S.add(dg);
+
+  // ── desk A (x=4): single card at setDots(9) + dabbers + ink dots
+  const dA = makeTable({ w: 0.9, d: 0.6 }); dA.position.set(4, 0, 0); S.add(dA);
+  const card = makeBingoCard({ seed: 1 }); card.root.position.set(4.0, 0.78 + CARD_THICKNESS, 0.02); card.setDots(9); S.add(card.root);
+  const dab = makeDabber({ color: '#e8412c' });
+  const p9 = card.root.localToWorld(card.dotPosition(9));
+  dab.position.copy(p9); dab.position.y += 0.06; dab.rotation.z = 0.06; S.add(dab);
+  const dab2 = makeDabber({ color: '#2a6be0' }); dab2.position.set(4.22, 0.78 + 0.028, 0.1); dab2.rotation.set(0, 0.5, Math.PI / 2); S.add(dab2);
+  const dab3 = makeDabber({ color: '#11a058' }); dab3.position.set(3.78, 0.78, -0.12); S.add(dab3);
+  [[4.2, -0.12, 0.03, 0], [4.27, -0.04, 0.022, 1], [3.8, 0.12, 0.026, 2], [3.74, 0.03, 0.018, 3]].forEach(([x, z, r, v]) => {
+    const d = makeInkDot({ r, variant: v }); d.position.set(x, 0.78, z); d.rotation.y = v; S.add(d);
+  });
+
+  // ── desk B (x=4, z=2.5): card stacks + spoon + fork
+  const dB = makeTable({ w: 0.9, d: 0.6 }); dB.position.set(4, 0, 2.5); S.add(dB);
+  const st1 = makeCardStack({ height: 0.3, seed: 2 }); st1.root.position.set(3.75, 0.78, 2.45); st1.root.rotation.y = 0.2; S.add(st1.root);
+  const st2 = makeCardStack({ height: 0.62, seed: 4 }); st2.root.position.set(3.95, 0.78, 2.35); st2.root.rotation.y = -0.15; S.add(st2.root);
+  const spoon = makeSpoon(); spoon.position.set(4.16, 0.78, 2.55); spoon.rotation.y = -0.3; S.add(spoon);
+  const fork = makeFork(); fork.position.set(4.26, 0.78, 2.55); fork.rotation.set(0, -0.3, -0.18); S.add(fork);
+
+  // ── desk C (x=4, z=5): top hat, toupee, hearing aid
+  const dC = makeTable({ w: 0.9, d: 0.6 }); dC.position.set(4, 0, 5); S.add(dC);
+  const hat = makeTopHatProp(); hat.position.set(3.82, 0.78, 4.98); hat.rotation.y = 0.3; S.add(hat);
+  const toupee = makeToupee(); toupee.position.set(4.18, 0.78 + 0.012, 5.04); toupee.rotation.y = -0.4; S.add(toupee);
+  const aid = makeHearingAid(); aid.position.set(4.12, 0.78 + 0.028, 5.22); aid.rotation.y = -0.9; S.add(aid);
+
+  // ── characters for scale: grandad with the hearing aid on his ear
+  const ch = await maybeChars();
+  let headCam = null;
+  if (ch) {
+    const g = ch.grandad; g.root.position.set(6.5, 0, 0); g.pose('idle', 0.5); g.face('smug', 0.5); S.add(g.root);
+    const a2 = makeHearingAid(); a2.position.set(0.378, 0.255, -0.02); g.joints.head.add(a2);
+    const d4 = makeDabber(); g.joints.handR.add(d4); d4.position.set(0, -0.085, 0.0);
+    g.root.updateMatrixWorld(true);
+    const ear = g.joints.head.localToWorld(new THREE.Vector3(0.37, 0.26, -0.02));
+    headCam = [ear.x + 0.8, ear.y + 0.05, ear.z + 0.75, ear.x - 0.12, ear.y - 0.12, ear.z];
+  }
+
+  const draw = () => {
+    const hA = Math.round(H * 330 / 960);
+    view(S, cam(40, W / hA, [1.15, 2.35, 2.05], [-0.15, 0.62, -0.45]), 0, 0, W, hA);
+    const pw = Math.round(W / 2), ph = Math.round((H - hA) / 3);
+    const ys = [hA, hA + ph, hA + 2 * ph];
+    const a = pw / ph;
+    view(S, cam(30, a, [4.02, 1.3, 0.66], [4.02, 0.82, 0.0]), 0, ys[0], pw, ph);
+    view(S, cam(36, a, [4.38, 1.2, 3.3], [4.0, 0.98, 2.45]), pw, ys[0], W - pw, ph);
+    view(S, cam(32, a, [4.1, 1.3, 6.08], [4.0, 0.88, 5.06]), 0, ys[1], pw, ph);
+    if (headCam) view(S, cam(30, a, headCam.slice(0, 3), headCam.slice(3)), pw, ys[1], W - pw, ph);
+    else view(S, cam(18, a, [4.3, 0.95, 5.5], [4.12, 0.81, 5.22]), pw, ys[1], W - pw, ph);
+    const cp = cage.root.position;
+    view(S, cam(34, a, [cp.x + 0.35, 1.3, cp.z + 1.25], [cp.x, 0.86, cp.z]), 0, ys[2], pw, ph);
+    const dp = djs.root.position;
+    view(S, cam(38, a, [dp.x + 0.75, 1.75, dp.z + 1.6], [dp.x + 0.05, 0.9, dp.z]), pw, ys[2], W - pw, ph);
+  };
+  draw(); renders.push(draw);
+  const hA = Math.round(H * 330 / 960), pw = Math.round(W / 2), ph = Math.round((H - hA) / 3);
+  label('card grid 8×10 @ progress 0.5 · DJ decks · bingo cage · mic stand', 8, 8);
+  label('card setDots(9) · dabbers · ink dots', 6, hA + 6); label('card stacks · spoon · fork', pw + 6, hA + 6);
+  label('top hat · toupee · hearing aid', 6, hA + ph + 6); label(headCam ? "hearing aid on grandad's ear" : 'hearing aid', pw + 6, hA + ph + 6);
+  label('bingo cage (pedestal 0.62)', 6, hA + 2 * ph + 6); label('DJ decks', pw + 6, hA + 2 * ph + 6);
+} else if (VIEW === 'card') {
+  const st = studio({ shadowSize: 1.0, sun: [0.8, 3, 1.6] });
+  const k = parseInt(Q.get('k') ?? '9', 10), seed = parseInt(Q.get('seed') ?? '1', 10);
+  const table = makeTable({ w: 0.9, d: 0.6 }); st.scene.add(table);
+  const card = makeBingoCard({ seed }); card.root.position.set(0, 0.78 + CARD_THICKNESS, 0); card.setDots(k); st.scene.add(card.root);
+  const dab = makeDabber();
+  const p = card.root.localToWorld(card.dotPosition(Math.min(k, 24)));
+  dab.position.copy(p); dab.position.y += 0.05; st.scene.add(dab);
+  const dot = makeInkDot({ r: 0.02 }); dot.position.set(0.12, 0.78, 0.03); st.scene.add(dot);
+  const c = cam(30, W / H, [0.0, 1.17, 0.3], [0.0, 0.78, 0.0]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`bingo card seed=${seed} setDots(${k}) · dabber over dot #${Math.min(k, 24)}`, 8, 8);
+} else if (VIEW === 'cards') {
+  const st = studio({ shadowSize: 1.0, sun: [0.5, 3, 1.5] });
+  const table = makeTable({ w: 1.2, d: 0.9 }); st.scene.add(table);
+  for (let i = 0; i < 6; i++) for (let j = 0; j < 2; j++) {
+    const c = makeBingoCard({ seed: i + 1, size: 0.13 });
+    c.root.position.set((i % 3 - 1) * 0.15, 0.78 + CARD_THICKNESS, (Math.floor(i / 3) * 2 + j - 1.5) * 0.165);
+    c.setDots(j ? 25 : 0); st.scene.add(c.root);
+  }
+  const c = cam(32, W / H, [0, 1.95, 0.35], [0, 0.78, 0.0]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label('seeds 1..6: clean / all dotted', 8, 8);
+} else if (VIEW === 'grid') {
+  const st = studio({ shadowSize: 1.6 });
+  const p = parseFloat(Q.get('p') ?? '0.5');
+  const table = makeTable({ w: 1.42, d: 1.28 }); st.scene.add(table);
+  const grid = makeCardGrid({}); grid.root.position.set(0, 0.78 + CARD_THICKNESS, 0); const n = grid.setProgress(p); st.scene.add(grid.root);
+  const c = cam(36, W / H, [0.0, 1.85, 1.35], [0, 0.78, 0.0]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`card grid setProgress(${p}) → ${n} dotted`, 8, 8);
+} else if (VIEW === 'stack') {
+  const st = studio({ shadowSize: 2.0 });
+  const hs = (Q.get('h') || '0.3,1.0,2.2').split(',').map(Number);
+  hs.forEach((h, i) => { const s = makeCardStack({ height: h, seed: i + 1 }); s.root.position.set((i - (hs.length - 1) / 2) * 0.45, 0, 0); st.scene.add(s.root); });
+  const ch = await maybeChars();
+  if (ch) { ch.grandad.root.position.set(1.0, 0, -0.1); ch.grandad.pose('idle', 0.5); st.scene.add(ch.grandad.root); }
+  const c = cam(40, W / H, [0.3, 1.4, 4.2], [0.3, 1.05, 0]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`card stacks h=${hs.join(', ')}`, 8, 8);
+} else if (VIEW === 'stage') {
+  // cage at two times (spinning) + DJ decks top view + mic close-up
+  const st = studio({ shadowSize: 2.5 });
+  const S = st.scene;
+  const cA = makeBingoCage(); cA.root.position.set(-0.4, 0, 0); cA.update(T); S.add(cA.root);
+  const cB = makeBingoCage(); cB.root.position.set(0.4, 0, 0); cB.update(T + 0.6); S.add(cB.root);
+  const dj = makeDJDecks(); dj.root.position.set(0, 0, -2.5); dj.update(T); S.add(dj.root);
+  const mic = makeMicStand(); mic.position.set(2, 0, 0); S.add(mic);
+  const hh = Math.round(H / 3), hw = Math.round(W / 2);
+  const draw = () => {
+    view(S, cam(30, W / hh, [0.0, 0.75, 1.55], [0, 0.24, 0]), 0, 0, W, hh);
+    view(S, cam(34, W / hh, [0.3, 1.9, -1.55], [0, 0.95, -2.5]), 0, hh, W, hh);
+    view(S, cam(30, hw / (H - 2 * hh), [2.0, 1.62, 0.55], [2.0, 1.55, 0.0]), 0, 2 * hh, hw, H - 2 * hh);
+    view(S, cam(30, hw / (H - 2 * hh), [2.55, 1.62, 0.0], [2.0, 1.55, 0.0]), hw, 2 * hh, W - hw, H - 2 * hh);
+  };
+  draw(); renders.push(draw);
+  label(`bingo cage update(${T}) / update(${(T + 0.6).toFixed(1)})`, 6, 6); label('DJ decks', 6, hh + 6); label('mic — front', 6, 2 * hh + 6); label('mic — side', hw + 6, 2 * hh + 6);
+} else if (VIEW === 'small') {
+  // 2×2 close-ups: top hat · toupee · hearing aid · spoon + fork + dabber
+  const st = studio({ shadowSize: 1.0, sun: [0.8, 3, 1.6] });
+  const S = st.scene;
+  const items = [[makeTopHatProp(), 0.0, 0.0], [makeToupee(), 1.0, 0.025], [makeHearingAid(), 2.0, 0.028], [makeSpoon(), 2.95, 0.0], [makeFork(), 3.05, 0.0], [makeDabber(), 3.15, 0.0]];
+  for (const [o, x, y] of items) { o.position.set(x, y, 0); S.add(o); }
+  items[0][0].rotation.y = 0.3; items[1][0].rotation.y = -0.3; items[2][0].rotation.y = -1.0;
+  const hw = Math.round(W / 2), hh = Math.round(H / 2);
+  const draw = () => {
+    view(S, cam(30, hw / hh, [0.25, 0.75, 1.05], [0, 0.16, 0]), 0, 0, hw, hh);
+    view(S, cam(30, hw / hh, [1.25, 0.55, 0.6], [1.0, 0.02, 0]), hw, 0, W - hw, hh);
+    view(S, cam(30, hw / hh, [2.12, 0.1, 0.16], [2.0, 0.03, 0]), 0, hh, hw, H - hh);
+    view(S, cam(30, hw / hh, [3.06, 0.26, 0.85], [3.05, 0.09, 0]), hw, hh, W - hw, H - hh);
+  };
+  draw(); renders.push(draw);
+  label('top hat', 6, 6); label('toupee', hw + 6, 6); label('hearing aid', 6, hh + 6); label('spoon · fork · dabber', hw + 6, hh + 6);
+} else if (VIEW === 'head') {
+  const st = studio({ shadowSize: 1.5 });
+  const ch = await maybeChars();
+  if (!ch) throw new Error('view=head needs /src/characters.js');
+  const g = ch.grandad; g.pose('idle', 0.5); g.face('smug', 0.5); st.scene.add(g.root);
+  const a2 = makeHearingAid(); a2.position.set(0.378, 0.255, -0.02); g.joints.head.add(a2);
+  const d4 = makeDabber({ length: Q.has('len') ? parseFloat(Q.get('len')) : 0.25 }); g.joints.handR.add(d4); d4.position.set(0, -(d4.userData.length / 2), 0.0);
+  const hat = makeTopHatProp({ scale: 0.97 * 1.206 }); g.joints.handL.add(hat); hat.position.set(0, 0.05, 0.12); hat.rotation.x = Math.PI / 2;
+  g.root.updateMatrixWorld(true);
+  const ear = g.joints.head.localToWorld(new THREE.Vector3(0.37, 0.26, -0.02));
+  const hw = Math.round(W / 2), hh = Math.round(H / 2);
+  const draw = () => {
+    view(st.scene, cam(30, hw / hh, [ear.x + 0.7, ear.y + 0.05, ear.z + 0.05], [ear.x, ear.y - 0.02, ear.z]), 0, 0, hw, hh);
+    view(st.scene, cam(30, hw / hh, [ear.x + 0.9, ear.y + 0.1, ear.z + 0.9], [ear.x - 0.2, ear.y - 0.05, ear.z]), hw, 0, W - hw, hh);
+    view(st.scene, cam(32, W / (H - hh), [0.9, 1.35, 2.6], [0, 1.05, 0]), 0, hh, W, H - hh);
+  };
+  draw(); renders.push(draw);
+  label('hearing aid — side', 6, 6); label('hearing aid — 3/4', hw + 6, 6); label('grandad: dabber in right hand, top hat in left', 6, hh + 6);
+} else if (VIEW === 'test') {
+  const st = studio();
+  const res = {};
+  const g1 = makeCardGrid({}), g2 = makeCardGrid({});
+  const snapGrid = (g) => g.root.children.filter((m) => m.isInstancedMesh).map((m) => m.count + ':' + Array.from(m.instanceMatrix.array.slice(0, m.count * 16)).map((x) => x.toFixed(5)).join(',')).join('|');
+  g1.setProgress(0.9); g1.setProgress(0.3); g2.setProgress(0.3);
+  res['grid pure'] = snapGrid(g1) === snapGrid(g2);
+  res['grid 0.5 → 40'] = g1.setProgress(0.5) === 40;
+  res['grid 1 → 80'] = g1.setProgress(1) === 80;
+  const c1 = makeBingoCard({ seed: 3 }), c2 = makeBingoCard({ seed: 3 });
+  c1.setDots(20); c1.setDots(5); c2.setDots(5);
+  res['card pure + shared'] = c1.mesh.material[0] === c2.mesh.material[0];
+  res['dotPosition inside'] = [...Array(25).keys()].every((i) => { const p = c1.dotPosition(i); return Math.abs(p.x) < c1.width / 2 && Math.abs(p.z) < c1.depth / 2; });
+  const s1 = makeCardStack({ height: 0.3 }), s2 = makeCardStack({ height: 0.3 });
+  s1.setHeight(2); s1.setHeight(0.7); s2.setHeight(0.7);
+  res['stack pure'] = Array.from(s1.body.geometry.attributes.position.array).every((x, i) => Math.abs(x - s2.body.geometry.attributes.position.array[i]) < 1e-9) && s1.topCard.root.position.equals(s2.topCard.root.position);
+  const k1 = makeBingoCage(), k2 = makeBingoCage();
+  k1.update(9); k1.update(2.5); k2.update(2.5);
+  res['cage pure'] = k1.cage.rotation.x === k2.cage.rotation.x;
+  const d1 = makeDJDecks(), d2 = makeDJDecks();
+  d1.update(5); d1.update(1.2); d2.update(1.2);
+  res['decks pure'] = d1.root.children.length === d2.root.children.length;
+  const dab = makeDabber(); dab.updateMatrixWorld(true); const bb = new THREE.Box3().setFromObject(dab);
+  res['dabber tip at y=0, len'] = `${bb.min.y.toFixed(4)} .. ${bb.max.y.toFixed(4)}`;
+  const sp = makeSpoon(), fk = makeFork(); const b1 = new THREE.Box3().setFromObject(sp), b2 = new THREE.Box3().setFromObject(fk);
+  res['spoon y'] = `${b1.min.y.toFixed(4)} .. ${b1.max.y.toFixed(4)}`; res['fork y'] = `${b2.min.y.toFixed(4)} .. ${b2.max.y.toFixed(4)}`;
+  const hb = new THREE.Box3().setFromObject(makeTopHatProp()); res['hat'] = hb.min.toArray().concat(hb.max.toArray()).map((x) => x.toFixed(3)).join(',');
+  const tb = new THREE.Box3().setFromObject(makeToupee()); res['toupee'] = tb.min.toArray().concat(tb.max.toArray()).map((x) => x.toFixed(3)).join(',');
+  const ab = new THREE.Box3().setFromObject(makeHearingAid()); res['aid'] = ab.min.toArray().concat(ab.max.toArray()).map((x) => x.toFixed(3)).join(',');
+  const cb = new THREE.Box3().setFromObject(makeBingoCage().root); res['cage'] = cb.min.toArray().concat(cb.max.toArray()).map((x) => x.toFixed(3)).join(',');
+  const mb = new THREE.Box3().setFromObject(makeMicStand()); res['mic'] = mb.max.y.toFixed(3);
+  const jb = new THREE.Box3().setFromObject(makeDJDecks().root); res['decks'] = jb.min.toArray().concat(jb.max.toArray()).map((x) => x.toFixed(3)).join(',');
+  // draw calls / triangles per prop (rendered alone, no shadows)
+  renderer.shadowMap.enabled = false;
+  const costs = {};
+  const probe = (name, obj) => {
+    const sc = new THREE.Scene(); sc.add(new THREE.HemisphereLight('#fff', '#444', 1)); sc.add(obj);
+    const bx = new THREE.Box3().setFromObject(obj), ctr = bx.getCenter(new THREE.Vector3()), sz = bx.getSize(new THREE.Vector3()).length();
+    const c = cam(40, 1, [ctr.x + sz, ctr.y + sz * 0.6, ctr.z + sz], ctr.toArray());
+    renderer.info.reset(); renderer.info.autoReset = false;
+    view(sc, c, 0, 0, 64, 64);
+    costs[name] = `${renderer.info.render.calls} calls, ${renderer.info.render.triangles} tris`;
+    renderer.info.autoReset = true;
+  };
+  probe('dabber', makeDabber()); probe('card', makeBingoCard().root);
+  const gp = makeCardGrid({}); gp.setProgress(0.5); probe('grid 8x10', gp.root);
+  probe('stack', makeCardStack().root); probe('inkDot', makeInkDot()); probe('cage', makeBingoCage().root);
+  probe('cage+pedestal', makeBingoCage({ pedestal: 0.62 }).root); probe('mic', makeMicStand()); probe('decks', makeDJDecks().root);
+  probe('spoon', makeSpoon()); probe('fork', makeFork()); probe('hat', makeTopHatProp()); probe('toupee', makeToupee()); probe('aid', makeHearingAid());
+  res.costs = costs;
+  renderer.shadowMap.enabled = true;
+  window.__test = res; console.log('TEST', JSON.stringify(res, null, 1));
+  const draw = () => view(st.scene, cam(40, W / H, [0.5, 0.7, -0.6], [0, 0, 0]), 0, 0, W, H);
+  draw(); renders.push(draw);
+}
+
+const benchN = parseInt(Q.get('bench') || '0', 10);
+if (benchN > 0) {
+  const gl = renderer.getContext(); const px = new Uint8Array(4);
+  renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  const b0 = performance.now();
+  for (let i = 0; i < benchN; i++) { renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); }
+  window.__bench = (performance.now() - b0) / benchN;
+  console.log('bench ms/frame', window.__bench.toFixed(1), 'calls', renderer.info.render.calls, 'tris', renderer.info.render.triangles);
+}
+window.__setupMs = performance.now() - t0;
+window.__ready = true;
+</script>
+</body>
+</html>

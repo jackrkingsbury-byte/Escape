@@ -11,7 +11,7 @@ import {
   gagTPose, quietTown,
 } from '../shots.js';
 import { makeDabber, makeBingoCard, makeCardGrid, makeCardStack, makeInkDot, makeBingoCage, makeMicStand, makeDJDecks,
-  makeSpoon, makeFork, makeTopHatProp, makeToupee, makeHearingAid } from './props2.js';
+  makeSpoon, makeFork, makeTopHatProp, makeToupee, makeHearingAid, CARD_THICKNESS, TOPHAT_MATCH_SCALE } from './props2.js';
 
 // ───────────────────────────────────────────────────────────────────────────────────────── cast
 function seniorSpecs(n, seed = 7) {
@@ -40,7 +40,7 @@ const SENIORS = seniorSpecs(18);
 const SIDS = Object.keys(SENIORS);
 export const cast = {
   grandad: MAIN.grandad, mayor: MAIN.mayor, heckler: MAIN.heckler, pigeon: MAIN.pigeon, cat: MAIN.cat,
-  mayorBald: { ...MAIN.mayor, id: 'mayorBald', hair: { style: 'bald', color: '#5a4a3a' }, accessories: ['sash', 'mustache', 'bowtie'] },
+  mayorBald: { ...MAIN.mayor, id: 'mayorBald', hair: { style: 'bald', color: MAIN.mayor.skin }, accessories: ['sash', 'mustache', 'bowtie'] },
   ...SENIORS,
 };
 export const lazySets = true;
@@ -52,15 +52,15 @@ export const sets = {
 export function init(ctx) {
   initEp1(ctx);
   const P = ctx.props;
-  P.dabber = makeDabber();
+  P.dabber = makeDabber({ length: 0.25 });
   P.card = makeBingoCard({ seed: 3 });
-  P.grid = makeCardGrid({ rows: 8, cols: 10 });
+  P.grid = makeCardGrid({ rows: 8, cols: 10, size: 0.1 });
   P.stack = makeCardStack({ height: 0.35 });
-  P.cage = makeBingoCage();
+  P.cage = makeBingoCage({ pedestal: 0.62 });
   P.mic = makeMicStand();
   P.decks = makeDJDecks();
   P.spoon = makeSpoon(); P.fork = makeFork();
-  P.hat = makeTopHatProp(); P.toupee = makeToupee();
+  P.hat = makeTopHatProp({ scale: TOPHAT_MATCH_SCALE * 1.05 }); P.toupee = makeToupee();
   P.aid = makeHearingAid();
   P.dots = Array.from({ length: 40 }, (_, i) => makeInkDot({ r: 0.028 + hash(i) * 0.02 }));
 }
@@ -78,7 +78,7 @@ function tag(ctx, text, t0, t1 = Infinity, o = {}) {
 function holdDabber(ctx, who = 'grandad') {
   const d = ctx.props.dabber, ch = ctx.cast[who];
   ctx.add(d, ch.joints.handR);
-  d.position.set(0, -0.02, 0.0); d.rotation.set(Math.PI, 0, 0);
+  d.position.set(0, -0.2, 0.0); d.rotation.set(0, 0, 0);   // tip pokes 0.13 below the fist, along the forearm
   return d;
 }
 
@@ -88,37 +88,47 @@ function bingoNook(ctx, { lighting = 'night', window = 'party', card = true, sta
   ctx.set.set?.('window', window);
   st.cams = nookCams(st.F);
   const { F } = st;
-  if (card) { const c = ctx.props.card; ctx.add(c.root); c.root.position.copy(F(0, TABLE_TOP + 0.003, 0.55)); c.root.rotation.set(0, st.F.yaw, 0); c.setDots(0); }
+  if (card) { const c = ctx.props.card; ctx.add(c.root); c.root.position.copy(F(0, TABLE_TOP + CARD_THICKNESS, 0.55)); c.root.rotation.set(0, st.F.yaw, 0); c.setDots(0); }
   if (stack) { const s = ctx.props.stack; ctx.add(s.root); s.root.position.copy(F(-0.33, TABLE_TOP, 0.65)); s.root.rotation.set(0, F.yaw + 0.1, 0); s.setHeight(stack); }
   holdDabber(ctx);
   return st;
 }
 
-/** Scatter ink dots on the outside of an object's bounding box (deterministic), parented to it. */
-function dotify(ctx, obj, count, seed = 1, { faces = ['front', 'top', 'left', 'right'], scale = 1 } = {}) {
+/** Stick ink dots onto an object's actual surface: rays from its front/top/sides hit its meshes (deterministic). */
+function dotify(ctx, obj, count, seed = 1, { faces = ['front', 'front', 'top', 'left', 'right'], scale = 1 } = {}) {
   obj.updateMatrixWorld(true);
-  const box = new THREE.Box3().setFromObject(obj);
+  const meshes = [];
+  obj.traverse((o) => { if (o.isMesh && o.visible && !ctx.props.dots.includes(o)) meshes.push(o); });
   const inv = obj.matrixWorld.clone().invert();
-  const r = rng(seed);
-  for (let i = 0; i < count; i++) {
-    const dot = ctx.props.dots[(seed * 7 + i) % ctx.props.dots.length];
+  const box = new THREE.Box3();
+  for (const m of meshes) { m.geometry.computeBoundingBox?.(); const bb = m.geometry.boundingBox.clone().applyMatrix4(m.matrixWorld).applyMatrix4(inv); box.union(bb); }
+  const r = rng(seed), ray = new THREE.Raycaster();
+  let placed = 0;
+  for (let i = 0; i < count * 4 && placed < count; i++) {
     const face = faces[i % faces.length];
-    const p = new THREE.Vector3(lerp(box.min.x, box.max.x, 0.12 + r() * 0.76), lerp(box.min.y, box.max.y, 0.15 + r() * 0.75), lerp(box.min.z, box.max.z, 0.12 + r() * 0.76));
-    const nrm = new THREE.Vector3();
-    if (face === 'front') { p.z = box.max.z + 0.004; nrm.set(0, 0, 1); }
-    if (face === 'top') { p.y = box.max.y + 0.004; nrm.set(0, 1, 0); }
-    if (face === 'left') { p.x = box.max.x + 0.004; nrm.set(1, 0, 0); }
-    if (face === 'right') { p.x = box.min.x - 0.004; nrm.set(-1, 0, 0); }
+    const u = 0.1 + r() * 0.8, v = 0.1 + r() * 0.8;
+    const o = new THREE.Vector3(), d = new THREE.Vector3();
+    if (face === 'front') { o.set(lerp(box.min.x, box.max.x, u), lerp(box.min.y, box.max.y, v), box.max.z + 1); d.set(0, 0, -1); }
+    if (face === 'top') { o.set(lerp(box.min.x, box.max.x, u), box.max.y + 1, lerp(box.min.z, box.max.z, v)); d.set(0, -1, 0); }
+    if (face === 'left') { o.set(box.max.x + 1, lerp(box.min.y, box.max.y, v), lerp(box.min.z, box.max.z, u)); d.set(-1, 0, 0); }
+    if (face === 'right') { o.set(box.min.x - 1, lerp(box.min.y, box.max.y, v), lerp(box.min.z, box.max.z, u)); d.set(1, 0, 0); }
+    ray.set(o.applyMatrix4(obj.matrixWorld), d.transformDirection(obj.matrixWorld));
+    const hit = ray.intersectObjects(meshes, false)[0];
+    if (!hit || !hit.face) continue;
+    const dot = ctx.props.dots[(seed * 7 + placed) % ctx.props.dots.length];
+    const n = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).transformDirection(inv);
     ctx.add(dot, obj);
-    dot.position.copy(p.applyMatrix4(inv));
-    dot.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), nrm);
-    dot.scale.setScalar(scale);
+    dot.position.copy(hit.point.clone().applyMatrix4(inv)).addScaledVector(n, 0.003);
+    dot.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), n);
+    if (!dot.userData.baseScale) dot.userData.baseScale = dot.scale.clone();
+    dot.scale.copy(dot.userData.baseScale).multiplyScalar(scale);
+    placed++;
   }
 }
 
 function seniorParty(ctx, ids, anchor, o = {}) {
   ctx.set.setLighting?.('party_night'); ctx.set.set?.('partyProps', true); ctx.set.set?.('fireworks', o.fireworks ?? true); ctx.set.set?.('foam', o.foam ?? 0);
-  const crowd = crowdGrid(ctx, ids, anchor, { cols: o.cols || 6, dx: 1.25, dz: 1.3, seed: o.seed || 2, hats: true });
+  const crowd = crowdGrid(ctx, ids, anchor, { cols: o.cols || 6, dx: 1.25, dz: 1.3, seed: o.seed || 2, hats: true, offset: o.offset || [0, 0, 0], rowDir: o.rowDir || 1 });
   return crowd;
 }
 
@@ -161,13 +171,13 @@ function finalStage(ctx, { mayorAt = 'mic', bald = false } = {}) {
   const P = ctx.props;
   ctx.place('grandad', ctx.anchor('square.chairA'));
   holdDabber(ctx);
-  ctx.add(P.grid.root); P.grid.root.position.copy(st.FT(0, 0.003, 0)); P.grid.root.rotation.set(0, st.FT.yaw, 0); P.grid.setProgress(0);
+  ctx.add(P.grid.root); P.grid.root.position.copy(st.FT(0, CARD_THICKNESS, 0)); P.grid.root.rotation.set(0, st.FT.yaw, 0); P.grid.setProgress(0);
   // cage + mic on the stage beside the table (opponent side)
   ctx.add(P.cage.root); P.cage.root.position.copy(st.FT(1.3, -TABLE_TOP, 0.9)); P.cage.root.rotation.set(0, st.FT.yaw + Math.PI, 0);
   ctx.add(P.mic); P.mic.position.copy(st.FT(0.75, -TABLE_TOP, 1.15)); P.mic.rotation.set(0, st.FT.yaw + Math.PI, 0);
   const m = bald ? 'mayorBald' : 'mayor';
   if (mayorAt === 'mic') { ctx.place(m, st.FT(0.75, -TABLE_TOP, 1.5)); ctx.cast[m].root.rotation.set(0, st.FT.yaw + Math.PI, 0); }
-  if (mayorAt === 'table') { ctx.place(m, st.FT(0.05, -TABLE_TOP, 0.95)); ctx.cast[m].root.rotation.set(0, st.FT.yaw + Math.PI, 0); }
+  if (mayorAt === 'table') { ctx.place(m, st.FT(0.95, -TABLE_TOP, 0.1)); ctx.cast[m].root.rotation.set(0, st.FT.yaw - Math.PI / 2, 0); }
   // pigeon (in its party hat) on the end of the table
   ctx.place('pigeon', st.FT(-0.62, 0, 0.35)); ctx.cast.pigeon.root.rotation.set(0, st.FT.yaw + Math.PI * 0.75, 0); ctx.cast.pigeon.setAccessory?.('partyHat', true);
   st.mayor = ctx.cast[m];
@@ -232,7 +242,7 @@ export const shots = [
     update(ctx) {
       const { cams, F } = ctx.store; const g = ctx.cast.grandad;
       const hits = ctx.hussTimes('b03').map((h) => h + 0.03);
-      g.pose('sitSlam', ctx.t, { hits, tableY: TABLE_TOP + 0.17, slamZ: 0.55, slamX: -0.0 });
+      g.pose('sitSlam', ctx.t, { hits, tableY: TABLE_TOP + 0.13, slamZ: 0.55, slamX: -0.0 });
       const hit = lastBefore(hits, ctx.t);
       g.face(hit != null && ctx.t - hit < 0.18 ? 'huss' : 'determined', ctx.t);
       ctx.props.card.setDots(Math.min(25, hits.filter((h) => h <= ctx.t).length * 4));
@@ -245,10 +255,10 @@ export const shots = [
   {
     name: 'DJ Hip Replacement', start: 'b04-0.1', set: 'town',
     setup(ctx) {
-      const crowd = seniorParty(ctx, SIDS.filter((id) => !['s05', 's09'].includes(id)).slice(0, 10), 'foam.center', { cols: 4, foam: 0.6, fireworks: false });
+      const crowd = seniorParty(ctx, SIDS.filter((id) => !['s05', 's09'].includes(id)).slice(0, 10), 'foam.center', { cols: 4, foam: 0.6, fireworks: false, offset: [0, 0, -0.8], rowDir: -1 });
       const c = ctx.point('foam.center'), cam = ctx.point('foam.cam');
       const fwd = V().subVectors(c, cam).setY(0).normalize(), left = V(fwd.z, 0, -fwd.x);
-      const deck = c.clone().addScaledVector(fwd, 2.2);
+      const deck = c.clone().addScaledVector(fwd, -1.6);
       const P = ctx.props; ctx.add(P.decks.root); P.decks.root.position.copy(deck); P.decks.root.rotation.set(0, Math.atan2(-fwd.x, -fwd.z), 0);
       ctx.place('s05', deck.clone().addScaledVector(fwd, 0.55)); ctx.cast.s05.root.rotation.set(0, Math.atan2(-fwd.x, -fwd.z), 0);
       ctx.store = { crowd, c, cam, fwd, deck };
@@ -258,8 +268,8 @@ export const shots = [
       animateCrowd(crowd, ctx.t, { action: 'cheer', faces: ['laugh', 'grin'] });
       ctx.props.decks.update(ctx.t);
       const gd = ctx.cast.s05; gd.pose('dance2', ctx.t, { speed: 1.2, intensity: 1 }); gd.face('grin', ctx.t);
-      const look = deck.clone().add(V(0, 1.4, 0));
-      ctx.cam.move({ pos: cam.clone().lerp(look, 0.2), look, fov: 44 }, { pos: cam.clone().lerp(look, 0.45).add(V(0, -0.3, 0)), look, fov: 40 }, u, ease.inOutQuad);
+      const look = deck.clone().addScaledVector(ctx.store.fwd, 0.5).add(V(0, 1.35, 0));
+      ctx.cam.move({ pos: deck.clone().addScaledVector(ctx.store.fwd, -3.4).add(V(0, 1.75, 0)), look, fov: 44 }, { pos: deck.clone().addScaledVector(ctx.store.fwd, -2.7).add(V(0, 1.65, 0)), look, fov: 42 }, u, ease.inOutQuad);
       tag(ctx, 'DJ HIP REPLACEMENT (91)', ctx.markers.tagDJ, Infinity, { y: 0.22, size: 66 });
     },
   },
@@ -321,7 +331,7 @@ export const shots = [
     update(ctx) {
       const { cams, F } = ctx.store; const g = ctx.cast.grandad;
       const hits = ctx.hussTimes('b08').map((h) => h + 0.03);
-      g.pose('sitSlam', ctx.t, { hits, tableY: TABLE_TOP + 0.17, slamZ: 0.55 });
+      g.pose('sitSlam', ctx.t, { hits, tableY: TABLE_TOP + 0.13, slamZ: 0.55 });
       const hit = lastBefore(hits, ctx.t);
       g.face(i === 1 ? 'sweat' : (hit != null && ctx.t - hit < 0.18 ? 'huss' : 'determined'), ctx.t);
       ctx.props.card.setDots(Math.min(25, 8 + hits.filter((h) => h <= ctx.t).length * 5));
@@ -345,7 +355,7 @@ export const shots = [
       const F = st.F;
       ctx.place('cat', F(0, TABLE_TOP + 0.005, 0.55)); ctx.cast.cat.root.rotation.set(0, F.yaw, 0);
       ctx.cast.cat.pose('stare', 0); ctx.cast.cat.face('stare', 0);
-      dotify(ctx, ctx.cast.cat.root, 22, 4, { scale: 1.1 });
+      dotify(ctx, ctx.cast.cat.root, 36, 4, { scale: 0.42 });
       ctx.props.card.setAllDotted(true);
       ctx.store = st;
     },
@@ -353,7 +363,7 @@ export const shots = [
       const F = ctx.store.F, cat = ctx.cast.cat;
       const hiss = ctx.markers.hissCat;
       cat.pose(ctx.t < hiss ? 'stare' : 'stare', ctx.t); cat.face(ctx.t > hiss && ctx.t < hiss + 0.9 ? 'shocked' : 'stare', ctx.t);
-      ctx.cam.set({ pos: F(0, TABLE_TOP + 0.33, 1.55), look: F(0, TABLE_TOP + 0.24, 0.55), fov: 30 });
+      ctx.cam.set({ pos: F(0, TABLE_TOP + 0.45, 2.25), look: F(0, TABLE_TOP + 0.27, 0.55), fov: 32 });
       tag(ctx, 'DALMATIAN (now)', ctx.markers.dalmatian, Infinity, { y: 0.24 });
     },
   },
@@ -402,12 +412,12 @@ export const shots = [
       st.mayor.pose('pointLaugh', ctx.t); st.mayor.face('laugh', ctx.t);
       const tp = ctx.markers.pigeonLaugh;
       if (ctx.t < tp) {
-        ctx.cam.move({ pos: st.FT(1.6, 1.6, -1.2), look: st.FT(0, 0.1, 0), fov: 44 }, { pos: st.FT(1.3, 1.4, -1.0), look: st.FT(0, 0.1, 0), fov: 42 }, ctx.progress('b13', tp));
+        ctx.cam.move({ pos: st.FT(2.1, 1.9, -0.4), look: st.FT(0, 0.1, 0), fov: 44 }, { pos: st.FT(1.8, 1.7, -0.3), look: st.FT(0, 0.1, 0), fov: 42 }, ctx.progress('b13', tp));
         tag(ctx, '80 CARDS', ctx.markers.cards80, tp, { y: 0.22 });
       } else {
         const pg = ctx.cast.pigeon; pg.pose('flap', ctx.t * 2); pg.face('laugh', ctx.t);
         const pp = pg.root.position.clone().add(V(0, 0.22, 0));
-        ctx.cam.set({ pos: pp.clone().addScaledVector(st.FT.fwd, -0.9).addScaledVector(st.FT.left, -0.4).add(V(0, 0.1, 0)), look: pp, fov: 36 });
+        ctx.cam.set({ pos: pp.clone().addScaledVector(st.FT.fwd, -1.3).addScaledVector(st.FT.left, -0.7).add(V(0, 0.2, 0)), look: pp, fov: 38 });
         ctx.cam.shake(0.1, ctx.t, 41);
       }
     },
@@ -436,7 +446,7 @@ export const shots = [
       const hits = ctx.hussTimes('b15').map((h) => h + 0.03);
       const n = hits.filter((h) => h <= ctx.t).length;
       finalAnim(ctx, st, { crowd: 'stunned', grid: Math.min(1, n / 2) });
-      g.pose('sitSlam', ctx.t, { hits, tableY: TABLE_TOP + 0.17, slamZ: i === 2 ? 0.75 : 0.55 });
+      g.pose('sitSlam', ctx.t, { hits, tableY: TABLE_TOP + 0.13, slamZ: i === 2 ? 0.75 : 0.55 });
       const hit = lastBefore(hits, ctx.t);
       g.face(hit != null && ctx.t - hit < 0.16 ? 'huss' : 'determined', ctx.t);
       if (hit != null) burstAt(ctx, st.FT(0, 0.01, i === 2 ? 0.15 : 0), ctx.t, hit);
@@ -449,7 +459,7 @@ export const shots = [
       }
       if (i === 2) {
         const m = st.mayor; m.pose('peer', ctx.t); m.face('shocked', ctx.t);
-        ctx.cam.set({ pos: st.FT(0.25, 1.15, 1.95), look: st.FT(0, 0.5, 0.0), fov: 40 });
+        ctx.cam.set({ pos: st.FT(-1.7, 1.45, -1.3), look: st.FT(0.45, 0.45, 0.0), fov: 40 });
       }
     },
   })),
@@ -462,7 +472,7 @@ export const shots = [
       finalAnim(ctx, st, { crowd: 'stunned', grid: 1 });
       const g = ctx.cast.grandad; g.pose('sitIdle', ctx.t, { headYaw: 0.15 }); g.face('smug', ctx.t);
       st.mayor.pose('stunned', ctx.t); st.mayor.face('shocked', ctx.t);
-      ctx.cam.move({ pos: st.FT(3.6, 2.2, 0.6), look: st.FT(0, 0.3, 0.3), fov: 44 }, { pos: st.FT(3.1, 2.0, 0.6), look: st.FT(0, 0.3, 0.3), fov: 42 }, u);
+      ctx.cam.move({ pos: st.FT(2.4, 2.7, -1.9), look: st.FT(0, 0.3, 0.2), fov: 44 }, { pos: st.FT(2.1, 2.5, -1.6), look: st.FT(0, 0.3, 0.2), fov: 42 }, u);
       ctx.fx.text('BINGOS: 80\nNUMBERS CALLED: 0', { y: 0.2, size: 84, fill: '#ffe14a', bg: 'rgba(20,20,30,0.75)', scale: Math.max(0.01, ease.outBack(clamp((ctx.t - ctx.markers.counter) / 0.2, 0, 1))) });
     },
   },
@@ -472,7 +482,7 @@ export const shots = [
     setup(ctx) {
       ctx.store = finalStage(ctx);
       const g = ctx.cast.grandad, aid = ctx.props.aid;
-      ctx.add(aid, g.joints.head); aid.position.set(0.33, 0.27, 0.0);
+      ctx.add(aid, g.joints.head); aid.position.set(0.378, 0.255, -0.02);
       const cf = ctx.props.confetti; ctx.add(cf.root); cf.root.position.copy(ctx.store.FT(0, 1.4, 0));
     },
     update(ctx, lt, u) {
