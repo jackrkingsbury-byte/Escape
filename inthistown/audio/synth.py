@@ -469,3 +469,28 @@ def spooky_drone(dur, seed=87, root=38):
         out[:, ch] = (x / 2.2 + wind) * 0.35
     fade = np.minimum(1, t / 1.5)[:, None]
     return (out * fade).astype(np.float32)
+
+
+def whistle_tune(notes=(76, 79, 81, 79, 76, 74, 76), dur_each=0.28, seed=88):
+    """A human-ish whistled tune: pure sine with vibrato, breathy noise, soft attacks."""
+    rng = np.random.default_rng(seed)
+    out = np.zeros(int((len(notes) * dur_each + 0.4) * SR), np.float32)
+    for i, m in enumerate(notes):
+        t = _t(dur_each * 1.05)
+        f = note_hz(m + 12) * (1 + 0.012 * np.sin(2 * np.pi * 5.5 * t))
+        x = np.sin(2 * np.pi * np.cumsum(f) / SR)
+        breath = bp(rng.standard_normal(len(t)).astype(np.float32), 1500, 5000) * 0.08
+        env = np.minimum(1, t / 0.04) * np.minimum(1, (dur_each * 1.05 - t) / 0.05)
+        place(out, ((x + breath) * env * 0.35).astype(np.float32), i * dur_each)
+    return reverb(out, room=0.7, wet=0.3, seed=89)
+
+
+def wind_whistle(dur=2.5, seed=90):
+    """Storm wind whistling through a crack: a wavering high tone inside rushing noise."""
+    rng = np.random.default_rng(seed)
+    t = _t(dur)
+    f = 1150 + 180 * np.sin(2 * np.pi * 0.6 * t) + 60 * np.sin(2 * np.pi * 3.1 * t)
+    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.35
+    air = bp(rng.standard_normal(len(t)).astype(np.float32), 600, 3000) * 0.3
+    env = np.minimum(1, t / 0.4) * np.minimum(1, (dur - t) / 0.5)
+    return (reverb(((tone + air) * env).astype(np.float32), room=0.8, wet=0.35, seed=91) * 0.8).astype(np.float32)

@@ -181,6 +181,10 @@ def main(ep):
                 put(S.sting(), at, g)
             elif typ == 'wahwah':
                 put(S.bruh_drop(), at, g)
+            elif typ == 'whistle':
+                put(S.whistle_tune(), at, g)
+            elif typ == 'windwhistle':
+                put(S.wind_whistle(fx.get('dur', 2.5)), at, g)
             else:
                 raise ValueError(f'unknown sfx type {typ}')
     for (th, bid, i, spk) in huss_events:

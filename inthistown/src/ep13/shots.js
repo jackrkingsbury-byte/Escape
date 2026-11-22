@@ -280,7 +280,7 @@ function patelScene(ctx) {
   putChar(ctx, 'friend', L(FRIEND[0], 0, FRIEND[1]), L.yaw - PI / 2 - 0.1);
   return { L, tg: tags(ctx, 3) };
 }
-function patelAnim(ctx, st, { freezeAt = Infinity } = {}) {
+function patelAnim(ctx, st, { freezeAt = Infinity, ring = true } = {}) {
   const t = ctx.t, c = ctx.cast, tw = ctx.time('b06.w2');
   c.wanda.pose('wave', t, { speed: 1.2 }); c.wanda.face('grin', t);
   c.friend.pose(t > tw + 0.4 ? 'wave' : 'idle', t + 0.3, { speed: 1.1 }); c.friend.face('smile', t);
@@ -289,7 +289,7 @@ function patelAnim(ctx, st, { freezeAt = Infinity } = {}) {
   else { c.patel.pose('wave', pt, { speed: 1.2 }); c.patel.face(t > freezeAt ? 'sweat' : 'grin', t > freezeAt ? 0.5 : t); }
   const tm = ctx.markers.minus2k;
   const crash = clamp((t - tm) / 0.25, 0, 1);
-  placeTag(st.tg[0], c.patel, { text: fmt(t < tm ? 4210 : 2210), style: t < tm ? 'gold' : 'red', w: 0.9, dy: 0.62 - 0.35 * Math.sin(PI * crash) * (1 - crash) - (t > tm ? 0.06 * Math.exp(-(t - tm) * 6) : 0) });
+  placeTag(st.tg[0], c.patel, { ring, text: fmt(t < tm ? 4210 : 2210), style: t < tm ? 'gold' : 'red', w: 0.9, dy: 0.62 - 0.35 * Math.sin(PI * crash) * (1 - crash) - (t > tm ? 0.06 * Math.exp(-(t - tm) * 6) : 0) });
   placeTag(st.tg[1], c.wanda, { text: '3,300', w: 0.8 });
   placeTag(st.tg[2], c.friend, { text: '2,900', w: 0.8 });
 }
@@ -506,9 +506,9 @@ export const shots = [
     setup(ctx) { ctx.store = patelScene(ctx); },
     update(ctx) {
       const { L } = ctx.store, hits = ctx.hussTimes('b07').map((h) => h + 0.03);
-      patelAnim(ctx, ctx.store, { freezeAt: ctx.time('b06.w8') });
+      patelAnim(ctx, ctx.store, { freezeAt: ctx.time('b06.w8'), ring: false });
       const f = humanFace(ctx.cast.patel), d = [2.7, 1.9, 1.3][i], side = [0.25, -0.35, 0.1][i];
-      ctx.cam.set({ pos: f.clone().add(L(-d, 0, side).sub(L(0, 0, 0))).add(up([0.25, 0.1, 0.0][i])), look: f.clone().add(up([0.35, 0.12, 0][i])), fov: 34 });
+      ctx.cam.set({ pos: f.clone().add(L(-0.72 * d, 0, 0.7 * d + side * 0.3).sub(L(0, 0, 0))).add(up([0.15, 0.05, 0.0][i])), look: f.clone().add(up([-0.05, -0.12, -0.16][i])), fov: 34 });
       ctx.cam.punch(hits, ctx.t, 0.1, 0.2); ctx.cam.shake(0.12, ctx.t, 7 + i);
     },
   })),
@@ -598,7 +598,7 @@ export const shots = [
       me.root.position.copy(S(3.3 - WALK_SPEED * (t - t0), 0, LANE)); me.root.rotation.set(0, S.yaw - PI / 2, 0);
       me.pose('walk', t); me.face('smile', t);
       placeTag(tg[0], me, { text: '12', style: 'dim', w: 0.6 });
-      ctx.cam.move({ pos: S(3.4, 3.4, 9.6), look: me.root.position.clone().add(up(0.9)), fov: 40 }, { pos: S(2.6, 3.2, 9.0), look: me.root.position.clone().add(up(0.9)), fov: 40 }, clamp(lt / 2.4, 0, 1));
+      ctx.cam.move({ pos: S(4.6, 3.6, 10.8), look: me.root.position.clone().add(up(1.0)), fov: 42 }, { pos: S(3.8, 3.4, 10.2), look: me.root.position.clone().add(up(1.0)), fov: 42 }, clamp(lt / 2.4, 0, 1));
     },
   },
   {
@@ -676,7 +676,7 @@ export const shots = [
       }
       if (who === 'grandma') mouthCover(ch, ease.outCubic(clamp((t - h + 0.05) / 0.12, 0, 1)));
       if (who === 'patel') { ch.pose('surprised', 0.25); ch.face('shocked', 1); }
-      placeTag(tg[0], ch, { text: fmt(VAL[who]), w: 0.85 });
+      placeTag(tg[0], ch, { text: fmt(VAL[who]), w: 0.85, ring: false });
       const f = humanFace(ch), fw = S(0, 0, -1).sub(S(0, 0, 0));
       const side = [0.35, -0.3, 0.25][i];
       ctx.cam.set({ pos: f.clone().addScaledVector(fw, 1.75).add(S(side, 0, 0).sub(S(0, 0, 0))).add(up(0.05)), look: f.clone().add(up(0.12)), fov: 36 });
@@ -1048,7 +1048,7 @@ export const shots = [
       p.root.position.copy(me.joints.head.localToWorld(V(0, 0.74, 0.02))); p.root.rotation.set(0, S.yaw, 0); p.pose('idle', t * 0.3); p.face('neutral', 0.5);
       placeTag(tg[0], p, { text: '2,000,000', style: 'gold', w: 3.6, dy: 0.45, ringScale: 2.4 });
       const pc = headC(p), d = [2.1, 1.5, 1.05][i];
-      ctx.cam.set({ pos: pc.clone().add(S([0.15, -0.1, 0.0][i], 0.0, d).sub(S(0, 0, 0))), look: pc.clone().add(up(-0.02)), fov: 32 });
+      ctx.cam.set({ pos: pc.clone().add(S([0.15, -0.1, 0.0][i], 0.0, d).sub(S(0, 0, 0))), look: pc.clone().add(up(-0.11 * d)), fov: 32 });
       ctx.cam.punch(hits, t, 0.12, 0.2);
       if (i === 2) iris(ctx, ctx.time('b26.end') + 0.35, 0.45);
     },

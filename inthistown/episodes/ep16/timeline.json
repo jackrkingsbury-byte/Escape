@@ -1,0 +1,3661 @@
+{
+ "fps": 30,
+ "duration": 75.734,
+ "audio": "episodes/ep16/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, you are never, ever allowed to whistle.",
+   "start": 0.3,
+   "end": 2.732,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "you",
+     "start": 1.112,
+     "end": 1.271
+    },
+    {
+     "text": "are",
+     "start": 1.271,
+     "end": 1.43
+    },
+    {
+     "text": "never",
+     "start": 1.43,
+     "end": 1.703
+    },
+    {
+     "text": "ever",
+     "start": 1.833,
+     "end": 2.021
+    },
+    {
+     "text": "allowed",
+     "start": 2.021,
+     "end": 2.307
+    },
+    {
+     "text": "to",
+     "start": 2.307,
+     "end": 2.446
+    },
+    {
+     "text": "whistle",
+     "start": 2.446,
+     "end": 2.732
+    }
+   ],
+   "overlay": "NO WHISTLING",
+   "visual": "Harbour town at dusk. Main street slopes down to a wooden pier and dark water, and a red-and-white striped lighthouse stands on the rocks. Push in on a big wooden sign on the pier showing a whistle with a red cross through it."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Because something under the harbour whistles back.",
+   "start": 3.047,
+   "end": 5.045,
+   "words": [
+    {
+     "text": "Because",
+     "start": 3.062,
+     "end": 3.376
+    },
+    {
+     "text": "something",
+     "start": 3.376,
+     "end": 3.745
+    },
+    {
+     "text": "under",
+     "start": 3.745,
+     "end": 4.005
+    },
+    {
+     "text": "the",
+     "start": 4.005,
+     "end": 4.157
+    },
+    {
+     "text": "harbour",
+     "start": 4.157,
+     "end": 4.471
+    },
+    {
+     "text": "whistles",
+     "start": 4.471,
+     "end": 4.839
+    },
+    {
+     "text": "back",
+     "start": 4.839,
+     "end": 5.045
+    }
+   ],
+   "visual": "The camera sinks below the surface into dark blue fog. In the darkness, one huge green eye bigger than a house slowly opens and glows, with bubbles drifting up past it."
+  },
+  {
+   "id": "b03",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 5.36,
+   "end": 6.02,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 5.36,
+     "end": 5.62
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.57,
+     "end": 5.83
+    },
+    {
+     "text": "HUSS!",
+     "start": 5.76,
+     "end": 6.02
+    }
+   ],
+   "visual": "Me (black hoodie with white knight emblem, grey pants, white shoes, headphones) on the pier, huss face, lit green from below by the glow in the water. Camera punches in on each HUSS."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Fifty years ago, the lighthouse keeper whistled the same tune every night.",
+   "start": 6.36,
+   "end": 9.841,
+   "words": [
+    {
+     "text": "Fifty",
+     "start": 6.375,
+     "end": 6.676
+    },
+    {
+     "text": "years",
+     "start": 6.676,
+     "end": 6.926
+    },
+    {
+     "text": "ago",
+     "start": 6.926,
+     "end": 7.175
+    },
+    {
+     "text": "the",
+     "start": 7.305,
+     "end": 7.465
+    },
+    {
+     "text": "lighthouse",
+     "start": 7.465,
+     "end": 7.97
+    },
+    {
+     "text": "keeper",
+     "start": 7.97,
+     "end": 8.246
+    },
+    {
+     "text": "whistled",
+     "start": 8.246,
+     "end": 8.636
+    },
+    {
+     "text": "the",
+     "start": 8.636,
+     "end": 8.797
+    },
+    {
+     "text": "same",
+     "start": 8.797,
+     "end": 9.072
+    },
+    {
+     "text": "tune",
+     "start": 9.072,
+     "end": 9.29
+    },
+    {
+     "text": "every",
+     "start": 9.29,
+     "end": 9.566
+    },
+    {
+     "text": "night",
+     "start": 9.566,
+     "end": 9.841
+    }
+   ],
+   "visual": "Flashback at dusk, top of the lighthouse: an old keeper with a long white beard and a sailor cap leans on the rail whistling happily while the big glowing lamp turns behind him."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then one night, the sea whistled it back, and a tentacle the size of a bus took his lamp.",
+   "start": 10.156,
+   "end": 14.308,
+   "words": [
+    {
+     "text": "Then",
+     "start": 10.171,
+     "end": 10.416
+    },
+    {
+     "text": "one",
+     "start": 10.416,
+     "end": 10.661
+    },
+    {
+     "text": "night",
+     "start": 10.661,
+     "end": 10.971
+    },
+    {
+     "text": "the",
+     "start": 11.101,
+     "end": 11.24
+    },
+    {
+     "text": "sea",
+     "start": 11.24,
+     "end": 11.378
+    },
+    {
+     "text": "whistled",
+     "start": 11.378,
+     "end": 11.715
+    },
+    {
+     "text": "it",
+     "start": 11.715,
+     "end": 11.854
+    },
+    {
+     "text": "back",
+     "start": 11.854,
+     "end": 12.042
+    },
+    {
+     "text": "and",
+     "start": 12.172,
+     "end": 12.353
+    },
+    {
+     "text": "a",
+     "start": 12.353,
+     "end": 12.487
+    },
+    {
+     "text": "tentacle",
+     "start": 12.487,
+     "end": 12.906
+    },
+    {
+     "text": "the",
+     "start": 12.906,
+     "end": 13.04
+    },
+    {
+     "text": "size",
+     "start": 13.04,
+     "end": 13.269
+    },
+    {
+     "text": "of",
+     "start": 13.269,
+     "end": 13.402
+    },
+    {
+     "text": "a",
+     "start": 13.402,
+     "end": 13.536
+    },
+    {
+     "text": "bus",
+     "start": 13.536,
+     "end": 13.717
+    },
+    {
+     "text": "took",
+     "start": 13.717,
+     "end": 13.898
+    },
+    {
+     "text": "his",
+     "start": 13.898,
+     "end": 14.079
+    },
+    {
+     "text": "lamp",
+     "start": 14.079,
+     "end": 14.308
+    }
+   ],
+   "visual": "The sea below bulges. A giant dark-teal tentacle with round suckers rises higher than the lighthouse, curls around the glowing lamp and yanks it down into the water. The keeper's cap flies off and he stands there stunned in the dark."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "We call it the Gulp. One giant green eye, a hundred tentacles, and it copies every sound it hears.",
+   "start": 14.623,
+   "end": 19.774,
+   "words": [
+    {
+     "text": "We",
+     "start": 14.638,
+     "end": 14.774
+    },
+    {
+     "text": "call",
+     "start": 14.774,
+     "end": 14.958
+    },
+    {
+     "text": "it",
+     "start": 14.958,
+     "end": 15.093
+    },
+    {
+     "text": "the",
+     "start": 15.093,
+     "end": 15.229
+    },
+    {
+     "text": "Gulp",
+     "start": 15.229,
+     "end": 15.462
+    },
+    {
+     "text": "One",
+     "start": 15.772,
+     "end": 15.973
+    },
+    {
+     "text": "giant",
+     "start": 15.973,
+     "end": 16.386
+    },
+    {
+     "text": "green",
+     "start": 16.386,
+     "end": 16.64
+    },
+    {
+     "text": "eye",
+     "start": 16.64,
+     "end": 16.789
+    },
+    {
+     "text": "a",
+     "start": 16.919,
+     "end": 17.061
+    },
+    {
+     "text": "hundred",
+     "start": 17.061,
+     "end": 17.459
+    },
+    {
+     "text": "tentacles",
+     "start": 17.459,
+     "end": 17.959
+    },
+    {
+     "text": "and",
+     "start": 18.089,
+     "end": 18.299
+    },
+    {
+     "text": "it",
+     "start": 18.299,
+     "end": 18.453
+    },
+    {
+     "text": "copies",
+     "start": 18.453,
+     "end": 18.772
+    },
+    {
+     "text": "every",
+     "start": 18.772,
+     "end": 19.036
+    },
+    {
+     "text": "sound",
+     "start": 19.036,
+     "end": 19.355
+    },
+    {
+     "text": "it",
+     "start": 19.355,
+     "end": 19.509
+    },
+    {
+     "text": "hears",
+     "start": 19.509,
+     "end": 19.774
+    }
+   ],
+   "overlay": "THE GULP",
+   "visual": "Full reveal at night in fog: a huge dark dome rises from the harbour with one giant glowing green eye, tentacles swaying all around it, and fishing boats looking tiny beside it. A seagull squawks, the eye flashes, and the same squawk booms back louder."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So now there are rules. No whistling. No squeaky shoes. No kettles. And near the water, we only whisper.",
+   "start": 20.089,
+   "end": 26.423,
+   "words": [
+    {
+     "text": "So",
+     "start": 20.104,
+     "end": 20.299
+    },
+    {
+     "text": "now",
+     "start": 20.299,
+     "end": 20.495
+    },
+    {
+     "text": "there",
+     "start": 20.495,
+     "end": 20.69
+    },
+    {
+     "text": "are",
+     "start": 20.69,
+     "end": 20.834
+    },
+    {
+     "text": "rules",
+     "start": 20.834,
+     "end": 21.081
+    },
+    {
+     "text": "No",
+     "start": 21.391,
+     "end": 21.621
+    },
+    {
+     "text": "whistling",
+     "start": 21.621,
+     "end": 22.093
+    },
+    {
+     "text": "No",
+     "start": 22.403,
+     "end": 22.668
+    },
+    {
+     "text": "squeaky",
+     "start": 22.668,
+     "end": 23.142
+    },
+    {
+     "text": "shoes",
+     "start": 23.142,
+     "end": 23.406
+    },
+    {
+     "text": "No",
+     "start": 23.716,
+     "end": 23.979
+    },
+    {
+     "text": "kettles",
+     "start": 23.979,
+     "end": 24.449
+    },
+    {
+     "text": "And",
+     "start": 24.759,
+     "end": 24.95
+    },
+    {
+     "text": "near",
+     "start": 24.95,
+     "end": 25.142
+    },
+    {
+     "text": "the",
+     "start": 25.142,
+     "end": 25.283
+    },
+    {
+     "text": "water",
+     "start": 25.283,
+     "end": 25.525
+    },
+    {
+     "text": "we",
+     "start": 25.655,
+     "end": 25.805
+    },
+    {
+     "text": "only",
+     "start": 25.805,
+     "end": 26.114
+    },
+    {
+     "text": "whisper",
+     "start": 26.114,
+     "end": 26.423
+    }
+   ],
+   "overlay": "NO KETTLES",
+   "visual": "Daytime rules montage: a man tiptoes down main street in socks with his shoes in his hand, a NO KETTLES sign hangs on a lamp post, and a mum presses a finger to her lips at a kid who is about to whistle. Also: an old man whispers to a fishmonger behind his hand at the pier; the cracked top window of the lighthouse is visible in the background."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mr. Dobbs bought a kettle anyway. His kitchen is now at the bottom of the harbour.",
+   "start": 26.738,
+   "end": 31.31,
+   "words": [
+    {
+     "text": "Mr",
+     "start": 26.753,
+     "end": 27.254
+    },
+    {
+     "text": "Dobbs",
+     "start": 27.564,
+     "end": 27.825
+    },
+    {
+     "text": "bought",
+     "start": 27.825,
+     "end": 28.032
+    },
+    {
+     "text": "a",
+     "start": 28.032,
+     "end": 28.184
+    },
+    {
+     "text": "kettle",
+     "start": 28.184,
+     "end": 28.5
+    },
+    {
+     "text": "anyway",
+     "start": 28.5,
+     "end": 28.87
+    },
+    {
+     "text": "His",
+     "start": 29.18,
+     "end": 29.382
+    },
+    {
+     "text": "kitchen",
+     "start": 29.382,
+     "end": 29.744
+    },
+    {
+     "text": "is",
+     "start": 29.744,
+     "end": 29.894
+    },
+    {
+     "text": "now",
+     "start": 29.894,
+     "end": 30.096
+    },
+    {
+     "text": "at",
+     "start": 30.096,
+     "end": 30.245
+    },
+    {
+     "text": "the",
+     "start": 30.245,
+     "end": 30.394
+    },
+    {
+     "text": "bottom",
+     "start": 30.394,
+     "end": 30.703
+    },
+    {
+     "text": "of",
+     "start": 30.703,
+     "end": 30.852
+    },
+    {
+     "text": "the",
+     "start": 30.852,
+     "end": 31.001
+    },
+    {
+     "text": "harbour",
+     "start": 31.001,
+     "end": 31.31
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "It was a really nice kettle.",
+    "by": "Mr. Dobbs"
+   },
+   "visual": "Mr. Dobbs (bald, big mustache, striped apron) proudly holds a shiny steaming kettle in his waterfront window. A tentacle bursts out of the harbour, wraps the whole front room and drags it into the sea. Mr. Dobbs is left standing in a doorway with nothing behind it, still holding the kettle."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The fishermen talk with flags.",
+   "start": 31.625,
+   "end": 32.931,
+   "words": [
+    {
+     "text": "The",
+     "start": 31.64,
+     "end": 31.791
+    },
+    {
+     "text": "fishermen",
+     "start": 31.791,
+     "end": 32.21
+    },
+    {
+     "text": "talk",
+     "start": 32.21,
+     "end": 32.415
+    },
+    {
+     "text": "with",
+     "start": 32.415,
+     "end": 32.619
+    },
+    {
+     "text": "flags",
+     "start": 32.619,
+     "end": 32.931
+    }
+   ],
+   "visual": "Fishermen on little boats in the harbour silently wave coloured signal flags at each other, deadpan."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Until last week, when the biggest storm ever hit.",
+   "start": 33.246,
+   "end": 35.536,
+   "words": [
+    {
+     "text": "Until",
+     "start": 33.261,
+     "end": 33.618
+    },
+    {
+     "text": "last",
+     "start": 33.618,
+     "end": 33.913
+    },
+    {
+     "text": "week",
+     "start": 33.913,
+     "end": 34.147
+    },
+    {
+     "text": "when",
+     "start": 34.277,
+     "end": 34.455
+    },
+    {
+     "text": "the",
+     "start": 34.455,
+     "end": 34.587
+    },
+    {
+     "text": "biggest",
+     "start": 34.587,
+     "end": 34.906
+    },
+    {
+     "text": "storm",
+     "start": 34.906,
+     "end": 35.179
+    },
+    {
+     "text": "ever",
+     "start": 35.179,
+     "end": 35.357
+    },
+    {
+     "text": "hit",
+     "start": 35.357,
+     "end": 35.536
+    }
+   ],
+   "visual": "Stormy night: black clouds, lightning flashes, heavy rain, and huge waves smashing over the pier while the boats rock wildly."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Wind blew through the cracked lighthouse window, and the lighthouse started to whistle.",
+   "start": 35.851,
+   "end": 39.331,
+   "words": [
+    {
+     "text": "Wind",
+     "start": 35.866,
+     "end": 36.116
+    },
+    {
+     "text": "blew",
+     "start": 36.116,
+     "end": 36.314
+    },
+    {
+     "text": "through",
+     "start": 36.314,
+     "end": 36.511
+    },
+    {
+     "text": "the",
+     "start": 36.511,
+     "end": 36.657
+    },
+    {
+     "text": "cracked",
+     "start": 36.657,
+     "end": 36.959
+    },
+    {
+     "text": "lighthouse",
+     "start": 36.959,
+     "end": 37.418
+    },
+    {
+     "text": "window",
+     "start": 37.418,
+     "end": 37.772
+    },
+    {
+     "text": "and",
+     "start": 37.902,
+     "end": 38.072
+    },
+    {
+     "text": "the",
+     "start": 38.072,
+     "end": 38.198
+    },
+    {
+     "text": "lighthouse",
+     "start": 38.198,
+     "end": 38.594
+    },
+    {
+     "text": "started",
+     "start": 38.594,
+     "end": 38.945
+    },
+    {
+     "text": "to",
+     "start": 38.945,
+     "end": 39.071
+    },
+    {
+     "text": "whistle",
+     "start": 39.071,
+     "end": 39.331
+    }
+   ],
+   "overlay": "FWEEEEE",
+   "visual": "Close on the top of the lighthouse: rain streams down the cracked window, the lamp flickers, and the camera slowly pushes in as the wind howls through the crack."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The harbour went dead quiet. Then the sea whistled back.",
+   "start": 39.646,
+   "end": 42.172,
+   "words": [
+    {
+     "text": "The",
+     "start": 39.661,
+     "end": 39.809
+    },
+    {
+     "text": "harbour",
+     "start": 39.809,
+     "end": 40.114
+    },
+    {
+     "text": "went",
+     "start": 40.114,
+     "end": 40.367
+    },
+    {
+     "text": "dead",
+     "start": 40.367,
+     "end": 40.567
+    },
+    {
+     "text": "quiet",
+     "start": 40.567,
+     "end": 40.924
+    },
+    {
+     "text": "Then",
+     "start": 41.234,
+     "end": 41.413
+    },
+    {
+     "text": "the",
+     "start": 41.413,
+     "end": 41.544
+    },
+    {
+     "text": "sea",
+     "start": 41.544,
+     "end": 41.675
+    },
+    {
+     "text": "whistled",
+     "start": 41.675,
+     "end": 41.994
+    },
+    {
+     "text": "back",
+     "start": 41.994,
+     "end": 42.172
+    }
+   ],
+   "visual": "Townspeople freeze in their windows along main street with shocked faces. The harbour goes flat and still. Then the water bulges and the giant green eye rises out of the waves as tentacles unfurl all around it."
+  },
+  {
+   "id": "b13",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 42.487,
+   "end": 44.127,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 42.487,
+     "end": 42.747
+    },
+    {
+     "text": "HUSS!",
+     "start": 42.697,
+     "end": 42.957
+    },
+    {
+     "text": "HUSS!",
+     "start": 42.887,
+     "end": 43.147
+    },
+    {
+     "text": "HUSS!",
+     "start": 43.467,
+     "end": 43.727
+    },
+    {
+     "text": "HUSS!",
+     "start": 43.677,
+     "end": 43.937
+    },
+    {
+     "text": "HUSS!",
+     "start": 43.867,
+     "end": 44.127
+    }
+   ],
+   "visual": "Me sprinting down the pier in the rain with a huss face. Camera shake and a lightning flash on every HUSS while tentacles crash down left and right behind me."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Tentacles slammed onto the pier. One grabbed Grandma, still on her bike.",
+   "start": 44.467,
+   "end": 48.166,
+   "words": [
+    {
+     "text": "Tentacles",
+     "start": 44.482,
+     "end": 45.002
+    },
+    {
+     "text": "slammed",
+     "start": 45.002,
+     "end": 45.31
+    },
+    {
+     "text": "onto",
+     "start": 45.31,
+     "end": 45.565
+    },
+    {
+     "text": "the",
+     "start": 45.565,
+     "end": 45.714
+    },
+    {
+     "text": "pier",
+     "start": 45.714,
+     "end": 45.915
+    },
+    {
+     "text": "One",
+     "start": 46.225,
+     "end": 46.447
+    },
+    {
+     "text": "grabbed",
+     "start": 46.447,
+     "end": 46.784
+    },
+    {
+     "text": "Grandma",
+     "start": 46.784,
+     "end": 47.238
+    },
+    {
+     "text": "still",
+     "start": 47.368,
+     "end": 47.62
+    },
+    {
+     "text": "on",
+     "start": 47.62,
+     "end": 47.767
+    },
+    {
+     "text": "her",
+     "start": 47.767,
+     "end": 47.914
+    },
+    {
+     "text": "bike",
+     "start": 47.914,
+     "end": 48.166
+    }
+   ],
+   "visual": "Tentacles slam onto the pier and planks fly. One tentacle lifts Grandma (grey bun, glasses, cardigan) high into the air still sitting on her bicycle, pedalling furiously."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then I remembered. It copies everything. So I grabbed the fish market megaphone.",
+   "start": 48.481,
+   "end": 52.759,
+   "words": [
+    {
+     "text": "Then",
+     "start": 48.496,
+     "end": 48.695
+    },
+    {
+     "text": "I",
+     "start": 48.695,
+     "end": 48.842
+    },
+    {
+     "text": "remembered",
+     "start": 48.842,
+     "end": 49.303
+    },
+    {
+     "text": "It",
+     "start": 49.613,
+     "end": 49.786
+    },
+    {
+     "text": "copies",
+     "start": 49.786,
+     "end": 50.144
+    },
+    {
+     "text": "everything",
+     "start": 50.144,
+     "end": 50.625
+    },
+    {
+     "text": "So",
+     "start": 50.935,
+     "end": 51.136
+    },
+    {
+     "text": "I",
+     "start": 51.136,
+     "end": 51.283
+    },
+    {
+     "text": "grabbed",
+     "start": 51.283,
+     "end": 51.589
+    },
+    {
+     "text": "the",
+     "start": 51.589,
+     "end": 51.736
+    },
+    {
+     "text": "fish",
+     "start": 51.736,
+     "end": 51.937
+    },
+    {
+     "text": "market",
+     "start": 51.937,
+     "end": 52.295
+    },
+    {
+     "text": "megaphone",
+     "start": 52.295,
+     "end": 52.759
+    }
+   ],
+   "visual": "Me with a determined face, grabbing a big megaphone off the fish market stall and running to the very end of the pier to face the giant eye."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And I did the biggest, longest, sleepiest yawn in history.",
+   "start": 53.074,
+   "end": 55.998,
+   "words": [
+    {
+     "text": "And",
+     "start": 53.089,
+     "end": 53.266
+    },
+    {
+     "text": "I",
+     "start": 53.266,
+     "end": 53.397
+    },
+    {
+     "text": "did",
+     "start": 53.397,
+     "end": 53.574
+    },
+    {
+     "text": "the",
+     "start": 53.574,
+     "end": 53.705
+    },
+    {
+     "text": "biggest",
+     "start": 53.705,
+     "end": 54.022
+    },
+    {
+     "text": "longest",
+     "start": 54.152,
+     "end": 54.677
+    },
+    {
+     "text": "sleepiest",
+     "start": 54.807,
+     "end": 55.259
+    },
+    {
+     "text": "yawn",
+     "start": 55.259,
+     "end": 55.454
+    },
+    {
+     "text": "in",
+     "start": 55.454,
+     "end": 55.597
+    },
+    {
+     "text": "history",
+     "start": 55.597,
+     "end": 55.998
+    }
+   ],
+   "overlay": "YAWN",
+   "visual": "Close-up: I raise the megaphone with a sleepy face and do a giant yawn with my arms stretched out, while the sound rolls across the harbour."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The Gulp copied it. Then it yawned again. And again. Yawns are contagious, even for monsters.",
+   "start": 56.313,
+   "end": 61.728,
+   "words": [
+    {
+     "text": "The",
+     "start": 56.328,
+     "end": 56.487
+    },
+    {
+     "text": "Gulp",
+     "start": 56.487,
+     "end": 56.759
+    },
+    {
+     "text": "copied",
+     "start": 56.759,
+     "end": 57.088
+    },
+    {
+     "text": "it",
+     "start": 57.088,
+     "end": 57.247
+    },
+    {
+     "text": "Then",
+     "start": 57.557,
+     "end": 57.739
+    },
+    {
+     "text": "it",
+     "start": 57.739,
+     "end": 57.874
+    },
+    {
+     "text": "yawned",
+     "start": 57.874,
+     "end": 58.104
+    },
+    {
+     "text": "again",
+     "start": 58.104,
+     "end": 58.335
+    },
+    {
+     "text": "And",
+     "start": 58.645,
+     "end": 58.871
+    },
+    {
+     "text": "again",
+     "start": 58.871,
+     "end": 59.156
+    },
+    {
+     "text": "Yawns",
+     "start": 59.466,
+     "end": 59.752
+    },
+    {
+     "text": "are",
+     "start": 59.752,
+     "end": 59.919
+    },
+    {
+     "text": "contagious",
+     "start": 59.919,
+     "end": 60.563
+    },
+    {
+     "text": "even",
+     "start": 60.693,
+     "end": 60.996
+    },
+    {
+     "text": "for",
+     "start": 60.996,
+     "end": 61.236
+    },
+    {
+     "text": "monsters",
+     "start": 61.236,
+     "end": 61.728
+    }
+   ],
+   "overlay": "CONTAGIOUS",
+   "visual": "The giant green eye blinks slowly. Its lid droops halfway, opens, then droops again. The tentacles go limp and sag into the water one by one."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It put Grandma down, sank under the waves, and started snoring bubbles.",
+   "start": 62.043,
+   "end": 65.473,
+   "words": [
+    {
+     "text": "It",
+     "start": 62.058,
+     "end": 62.206
+    },
+    {
+     "text": "put",
+     "start": 62.206,
+     "end": 62.406
+    },
+    {
+     "text": "Grandma",
+     "start": 62.406,
+     "end": 62.817
+    },
+    {
+     "text": "down",
+     "start": 62.817,
+     "end": 63.07
+    },
+    {
+     "text": "sank",
+     "start": 63.2,
+     "end": 63.438
+    },
+    {
+     "text": "under",
+     "start": 63.438,
+     "end": 63.676
+    },
+    {
+     "text": "the",
+     "start": 63.676,
+     "end": 63.815
+    },
+    {
+     "text": "waves",
+     "start": 63.815,
+     "end": 64.103
+    },
+    {
+     "text": "and",
+     "start": 64.233,
+     "end": 64.42
+    },
+    {
+     "text": "started",
+     "start": 64.42,
+     "end": 64.804
+    },
+    {
+     "text": "snoring",
+     "start": 64.804,
+     "end": 65.138
+    },
+    {
+     "text": "bubbles",
+     "start": 65.138,
+     "end": 65.473
+    }
+   ],
+   "overlay": "Zzz",
+   "visual": "A tentacle gently sets Grandma and her bike back on the pier, and she crosses her arms. The eye closes, the Gulp sinks under the waves, and big bubbles rise with floating Z letters."
+  },
+  {
+   "id": "b19",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 65.788,
+   "end": 66.448,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 65.788,
+     "end": 66.048
+    },
+    {
+     "text": "HUSS!",
+     "start": 65.998,
+     "end": 66.258
+    },
+    {
+     "text": "HUSS!",
+     "start": 66.188,
+     "end": 66.448
+    }
+   ],
+   "visual": "At dawn the townspeople pour onto the pier and lift me up crowd-surf style; the whole town shouts HUSS across the water with me. Under the pier, a faint green glow blinks once."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Everyone called me a hero. But I forgot one thing.",
+   "start": 66.788,
+   "end": 69.275,
+   "words": [
+    {
+     "text": "Everyone",
+     "start": 66.803,
+     "end": 67.164
+    },
+    {
+     "text": "called",
+     "start": 67.164,
+     "end": 67.386
+    },
+    {
+     "text": "me",
+     "start": 67.386,
+     "end": 67.516
+    },
+    {
+     "text": "a",
+     "start": 67.516,
+     "end": 67.646
+    },
+    {
+     "text": "hero",
+     "start": 67.646,
+     "end": 67.96
+    },
+    {
+     "text": "But",
+     "start": 68.27,
+     "end": 68.461
+    },
+    {
+     "text": "I",
+     "start": 68.461,
+     "end": 68.602
+    },
+    {
+     "text": "forgot",
+     "start": 68.602,
+     "end": 68.894
+    },
+    {
+     "text": "one",
+     "start": 68.894,
+     "end": 69.084
+    },
+    {
+     "text": "thing",
+     "start": 69.084,
+     "end": 69.275
+    }
+   ],
+   "visual": "Party night in the town square: a banner over the stage and me on stage getting a medal. The music fades, I stop smiling, and I turn to look back at the dark harbour."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It copies every voice. And tonight, the harbour whispered back. In my voice.",
+   "start": 69.59,
+   "end": 73.919,
+   "words": [
+    {
+     "text": "It",
+     "start": 69.605,
+     "end": 69.785
+    },
+    {
+     "text": "copies",
+     "start": 69.785,
+     "end": 70.158
+    },
+    {
+     "text": "every",
+     "start": 70.158,
+     "end": 70.467
+    },
+    {
+     "text": "voice",
+     "start": 70.467,
+     "end": 70.775
+    },
+    {
+     "text": "And",
+     "start": 71.085,
+     "end": 71.295
+    },
+    {
+     "text": "tonight",
+     "start": 71.295,
+     "end": 71.671
+    },
+    {
+     "text": "the",
+     "start": 71.801,
+     "end": 71.961
+    },
+    {
+     "text": "harbour",
+     "start": 71.961,
+     "end": 72.292
+    },
+    {
+     "text": "whispered",
+     "start": 72.292,
+     "end": 72.68
+    },
+    {
+     "text": "back",
+     "start": 72.68,
+     "end": 72.897
+    },
+    {
+     "text": "In",
+     "start": 73.207,
+     "end": 73.382
+    },
+    {
+     "text": "my",
+     "start": 73.382,
+     "end": 73.62
+    },
+    {
+     "text": "voice",
+     "start": 73.62,
+     "end": 73.919
+    }
+   ],
+   "visual": "My bedroom at night. I'm in bed, wide awake, with a sweat face. Through the window the harbour is black and still, and a faint green glow pulses under the water as a whisper drifts up from it."
+  },
+  {
+   "id": "b22",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 74.234,
+   "end": 74.894,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 74.234,
+     "end": 74.494
+    },
+    {
+     "text": "HUSS!",
+     "start": 74.444,
+     "end": 74.704
+    },
+    {
+     "text": "HUSS!",
+     "start": 74.634,
+     "end": 74.894
+    }
+   ],
+   "visual": "The green eye snaps open right under my window and fills the frame. Each HUSS bursts out of the water as a giant bubble, in my own voice. Cut to black."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "you",
+   "start": 1.112,
+   "end": 1.271,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "are",
+   "start": 1.271,
+   "end": 1.43,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "never",
+   "start": 1.43,
+   "end": 1.703,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "ever",
+   "start": 1.833,
+   "end": 2.021,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "allowed",
+   "start": 2.021,
+   "end": 2.307,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "to",
+   "start": 2.307,
+   "end": 2.446,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "whistle",
+   "start": 2.446,
+   "end": 2.732,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Because",
+   "start": 3.062,
+   "end": 3.376,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "something",
+   "start": 3.376,
+   "end": 3.745,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "under",
+   "start": 3.745,
+   "end": 4.005,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 4.005,
+   "end": 4.157,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "harbour",
+   "start": 4.157,
+   "end": 4.471,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "whistles",
+   "start": 4.471,
+   "end": 4.839,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "back",
+   "start": 4.839,
+   "end": 5.045,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.36,
+   "end": 5.62,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.57,
+   "end": 5.83,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 5.76,
+   "end": 6.02,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Fifty",
+   "start": 6.375,
+   "end": 6.676,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "years",
+   "start": 6.676,
+   "end": 6.926,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "ago",
+   "start": 6.926,
+   "end": 7.175,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 7.305,
+   "end": 7.465,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "lighthouse",
+   "start": 7.465,
+   "end": 7.97,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "keeper",
+   "start": 7.97,
+   "end": 8.246,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "whistled",
+   "start": 8.246,
+   "end": 8.636,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 8.636,
+   "end": 8.797,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "same",
+   "start": 8.797,
+   "end": 9.072,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "tune",
+   "start": 9.072,
+   "end": 9.29,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "every",
+   "start": 9.29,
+   "end": 9.566,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "night",
+   "start": 9.566,
+   "end": 9.841,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Then",
+   "start": 10.171,
+   "end": 10.416,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "one",
+   "start": 10.416,
+   "end": 10.661,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "night",
+   "start": 10.661,
+   "end": 10.971,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 11.101,
+   "end": 11.24,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "sea",
+   "start": 11.24,
+   "end": 11.378,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "whistled",
+   "start": 11.378,
+   "end": 11.715,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "it",
+   "start": 11.715,
+   "end": 11.854,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "back",
+   "start": 11.854,
+   "end": 12.042,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "and",
+   "start": 12.172,
+   "end": 12.353,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "a",
+   "start": 12.353,
+   "end": 12.487,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "tentacle",
+   "start": 12.487,
+   "end": 12.906,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 12.906,
+   "end": 13.04,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "size",
+   "start": 13.04,
+   "end": 13.269,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "of",
+   "start": 13.269,
+   "end": 13.402,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "a",
+   "start": 13.402,
+   "end": 13.536,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "bus",
+   "start": 13.536,
+   "end": 13.717,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "took",
+   "start": 13.717,
+   "end": 13.898,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "his",
+   "start": 13.898,
+   "end": 14.079,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "lamp",
+   "start": 14.079,
+   "end": 14.308,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "We",
+   "start": 14.638,
+   "end": 14.774,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "call",
+   "start": 14.774,
+   "end": 14.958,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "it",
+   "start": 14.958,
+   "end": 15.093,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 15.093,
+   "end": 15.229,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Gulp",
+   "start": 15.229,
+   "end": 15.462,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "One",
+   "start": 15.772,
+   "end": 15.973,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "giant",
+   "start": 15.973,
+   "end": 16.386,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "green",
+   "start": 16.386,
+   "end": 16.64,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "eye",
+   "start": 16.64,
+   "end": 16.789,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "a",
+   "start": 16.919,
+   "end": 17.061,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "hundred",
+   "start": 17.061,
+   "end": 17.459,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "tentacles",
+   "start": 17.459,
+   "end": 17.959,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "and",
+   "start": 18.089,
+   "end": 18.299,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "it",
+   "start": 18.299,
+   "end": 18.453,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "copies",
+   "start": 18.453,
+   "end": 18.772,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "every",
+   "start": 18.772,
+   "end": 19.036,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "sound",
+   "start": 19.036,
+   "end": 19.355,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "it",
+   "start": 19.355,
+   "end": 19.509,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "hears",
+   "start": 19.509,
+   "end": 19.774,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "So",
+   "start": 20.104,
+   "end": 20.299,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "now",
+   "start": 20.299,
+   "end": 20.495,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "there",
+   "start": 20.495,
+   "end": 20.69,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "are",
+   "start": 20.69,
+   "end": 20.834,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "rules",
+   "start": 20.834,
+   "end": 21.081,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "No",
+   "start": 21.391,
+   "end": 21.621,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "whistling",
+   "start": 21.621,
+   "end": 22.093,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "No",
+   "start": 22.403,
+   "end": 22.668,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "squeaky",
+   "start": 22.668,
+   "end": 23.142,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "shoes",
+   "start": 23.142,
+   "end": 23.406,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "No",
+   "start": 23.716,
+   "end": 23.979,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "kettles",
+   "start": 23.979,
+   "end": 24.449,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "And",
+   "start": 24.759,
+   "end": 24.95,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "near",
+   "start": 24.95,
+   "end": 25.142,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "the",
+   "start": 25.142,
+   "end": 25.283,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "water",
+   "start": 25.283,
+   "end": 25.525,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "we",
+   "start": 25.655,
+   "end": 25.805,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "only",
+   "start": 25.805,
+   "end": 26.114,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "whisper",
+   "start": 26.114,
+   "end": 26.423,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "Mr",
+   "start": 26.753,
+   "end": 27.254,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Dobbs",
+   "start": 27.564,
+   "end": 27.825,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "bought",
+   "start": 27.825,
+   "end": 28.032,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 28.032,
+   "end": 28.184,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "kettle",
+   "start": 28.184,
+   "end": 28.5,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "anyway",
+   "start": 28.5,
+   "end": 28.87,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "His",
+   "start": 29.18,
+   "end": 29.382,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "kitchen",
+   "start": 29.382,
+   "end": 29.744,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "is",
+   "start": 29.744,
+   "end": 29.894,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "now",
+   "start": 29.894,
+   "end": 30.096,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "at",
+   "start": 30.096,
+   "end": 30.245,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 30.245,
+   "end": 30.394,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "bottom",
+   "start": 30.394,
+   "end": 30.703,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "of",
+   "start": 30.703,
+   "end": 30.852,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "the",
+   "start": 30.852,
+   "end": 31.001,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "harbour",
+   "start": 31.001,
+   "end": 31.31,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "The",
+   "start": 31.64,
+   "end": 31.791,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "fishermen",
+   "start": 31.791,
+   "end": 32.21,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "talk",
+   "start": 32.21,
+   "end": 32.415,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "with",
+   "start": 32.415,
+   "end": 32.619,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "flags",
+   "start": 32.619,
+   "end": 32.931,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Until",
+   "start": 33.261,
+   "end": 33.618,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "last",
+   "start": 33.618,
+   "end": 33.913,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "week",
+   "start": 33.913,
+   "end": 34.147,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "when",
+   "start": 34.277,
+   "end": 34.455,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 34.455,
+   "end": 34.587,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "biggest",
+   "start": 34.587,
+   "end": 34.906,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "storm",
+   "start": 34.906,
+   "end": 35.179,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "ever",
+   "start": 35.179,
+   "end": 35.357,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "hit",
+   "start": 35.357,
+   "end": 35.536,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Wind",
+   "start": 35.866,
+   "end": 36.116,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "blew",
+   "start": 36.116,
+   "end": 36.314,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "through",
+   "start": 36.314,
+   "end": 36.511,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 36.511,
+   "end": 36.657,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "cracked",
+   "start": 36.657,
+   "end": 36.959,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "lighthouse",
+   "start": 36.959,
+   "end": 37.418,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "window",
+   "start": 37.418,
+   "end": 37.772,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "and",
+   "start": 37.902,
+   "end": 38.072,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 38.072,
+   "end": 38.198,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "lighthouse",
+   "start": 38.198,
+   "end": 38.594,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "started",
+   "start": 38.594,
+   "end": 38.945,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "to",
+   "start": 38.945,
+   "end": 39.071,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "whistle",
+   "start": 39.071,
+   "end": 39.331,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "The",
+   "start": 39.661,
+   "end": 39.809,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "harbour",
+   "start": 39.809,
+   "end": 40.114,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "went",
+   "start": 40.114,
+   "end": 40.367,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "dead",
+   "start": 40.367,
+   "end": 40.567,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "quiet",
+   "start": 40.567,
+   "end": 40.924,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Then",
+   "start": 41.234,
+   "end": 41.413,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 41.413,
+   "end": 41.544,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "sea",
+   "start": 41.544,
+   "end": 41.675,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "whistled",
+   "start": 41.675,
+   "end": 41.994,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "back",
+   "start": 41.994,
+   "end": 42.172,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSS!",
+   "start": 42.487,
+   "end": 42.747,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 42.697,
+   "end": 42.957,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 42.887,
+   "end": 43.147,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.467,
+   "end": 43.727,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.677,
+   "end": 43.937,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.867,
+   "end": 44.127,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Tentacles",
+   "start": 44.482,
+   "end": 45.002,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "slammed",
+   "start": 45.002,
+   "end": 45.31,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "onto",
+   "start": 45.31,
+   "end": 45.565,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 45.565,
+   "end": 45.714,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "pier",
+   "start": 45.714,
+   "end": 45.915,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "One",
+   "start": 46.225,
+   "end": 46.447,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "grabbed",
+   "start": 46.447,
+   "end": 46.784,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Grandma",
+   "start": 46.784,
+   "end": 47.238,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "still",
+   "start": 47.368,
+   "end": 47.62,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "on",
+   "start": 47.62,
+   "end": 47.767,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "her",
+   "start": 47.767,
+   "end": 47.914,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "bike",
+   "start": 47.914,
+   "end": 48.166,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Then",
+   "start": 48.496,
+   "end": 48.695,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 48.695,
+   "end": 48.842,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "remembered",
+   "start": 48.842,
+   "end": 49.303,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "It",
+   "start": 49.613,
+   "end": 49.786,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "copies",
+   "start": 49.786,
+   "end": 50.144,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "everything",
+   "start": 50.144,
+   "end": 50.625,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "So",
+   "start": 50.935,
+   "end": 51.136,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 51.136,
+   "end": 51.283,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "grabbed",
+   "start": 51.283,
+   "end": 51.589,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 51.589,
+   "end": 51.736,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "fish",
+   "start": 51.736,
+   "end": 51.937,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "market",
+   "start": 51.937,
+   "end": 52.295,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "megaphone",
+   "start": 52.295,
+   "end": 52.759,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "And",
+   "start": 53.089,
+   "end": 53.266,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 53.266,
+   "end": 53.397,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "did",
+   "start": 53.397,
+   "end": 53.574,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 53.574,
+   "end": 53.705,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "biggest",
+   "start": 53.705,
+   "end": 54.022,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "longest",
+   "start": 54.152,
+   "end": 54.677,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "sleepiest",
+   "start": 54.807,
+   "end": 55.259,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "yawn",
+   "start": 55.259,
+   "end": 55.454,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "in",
+   "start": 55.454,
+   "end": 55.597,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "history",
+   "start": 55.597,
+   "end": 55.998,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "The",
+   "start": 56.328,
+   "end": 56.487,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Gulp",
+   "start": 56.487,
+   "end": 56.759,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "copied",
+   "start": 56.759,
+   "end": 57.088,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 57.088,
+   "end": 57.247,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Then",
+   "start": 57.557,
+   "end": 57.739,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "it",
+   "start": 57.739,
+   "end": 57.874,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "yawned",
+   "start": 57.874,
+   "end": 58.104,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "again",
+   "start": 58.104,
+   "end": 58.335,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "And",
+   "start": 58.645,
+   "end": 58.871,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "again",
+   "start": 58.871,
+   "end": 59.156,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Yawns",
+   "start": 59.466,
+   "end": 59.752,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "are",
+   "start": 59.752,
+   "end": 59.919,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "contagious",
+   "start": 59.919,
+   "end": 60.563,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "even",
+   "start": 60.693,
+   "end": 60.996,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "for",
+   "start": 60.996,
+   "end": 61.236,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "monsters",
+   "start": 61.236,
+   "end": 61.728,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "It",
+   "start": 62.058,
+   "end": 62.206,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "put",
+   "start": 62.206,
+   "end": 62.406,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Grandma",
+   "start": 62.406,
+   "end": 62.817,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "down",
+   "start": 62.817,
+   "end": 63.07,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "sank",
+   "start": 63.2,
+   "end": 63.438,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "under",
+   "start": 63.438,
+   "end": 63.676,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 63.676,
+   "end": 63.815,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "waves",
+   "start": 63.815,
+   "end": 64.103,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "and",
+   "start": 64.233,
+   "end": 64.42,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "started",
+   "start": 64.42,
+   "end": 64.804,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "snoring",
+   "start": 64.804,
+   "end": 65.138,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "bubbles",
+   "start": 65.138,
+   "end": 65.473,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "HUSS!",
+   "start": 65.788,
+   "end": 66.048,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 65.998,
+   "end": 66.258,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 66.188,
+   "end": 66.448,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Everyone",
+   "start": 66.803,
+   "end": 67.164,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "called",
+   "start": 67.164,
+   "end": 67.386,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "me",
+   "start": 67.386,
+   "end": 67.516,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 67.516,
+   "end": 67.646,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "hero",
+   "start": 67.646,
+   "end": 67.96,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "But",
+   "start": 68.27,
+   "end": 68.461,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I",
+   "start": 68.461,
+   "end": 68.602,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "forgot",
+   "start": 68.602,
+   "end": 68.894,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "one",
+   "start": 68.894,
+   "end": 69.084,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "thing",
+   "start": 69.084,
+   "end": 69.275,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "It",
+   "start": 69.605,
+   "end": 69.785,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "copies",
+   "start": 69.785,
+   "end": 70.158,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "every",
+   "start": 70.158,
+   "end": 70.467,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "voice",
+   "start": 70.467,
+   "end": 70.775,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "And",
+   "start": 71.085,
+   "end": 71.295,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "tonight",
+   "start": 71.295,
+   "end": 71.671,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 71.801,
+   "end": 71.961,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "harbour",
+   "start": 71.961,
+   "end": 72.292,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "whispered",
+   "start": 72.292,
+   "end": 72.68,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "back",
+   "start": 72.68,
+   "end": 72.897,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "In",
+   "start": 73.207,
+   "end": 73.382,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "my",
+   "start": 73.382,
+   "end": 73.62,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "voice",
+   "start": 73.62,
+   "end": 73.919,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "HUSS!",
+   "start": 74.234,
+   "end": 74.494,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 74.444,
+   "end": 74.704,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 74.634,
+   "end": 74.894,
+   "beat": "b22",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "spooky"
+  },
+  {
+   "t": 20.009,
+   "mode": "lofi"
+  },
+  {
+   "t": 33.166,
+   "mode": "spooky"
+  },
+  {
+   "t": 52.994,
+   "mode": "muffled"
+  },
+  {
+   "t": 65.708,
+   "mode": "party"
+  },
+  {
+   "t": 66.708,
+   "mode": "spooky"
+  },
+  {
+   "t": 69.51,
+   "mode": "none"
+  }
+ ],
+ "markers": {
+  "grab": 13.717,
+  "fweee": 39.071,
+  "back": 41.994,
+  "yawn": 55.259,
+  "myvoice": 70.467
+ },
+ "title": "In This Town \u2014 Don't Whistle"
+}

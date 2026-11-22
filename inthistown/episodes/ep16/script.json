@@ -1,0 +1,432 @@
+{
+ "title": "In This Town — Don't Whistle",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In a harbour town, whistling is banned because a giant one-eyed sea monster called the Gulp copies every sound it hears and comes up to find whoever made it. When a storm makes the cracked lighthouse whistle, the Gulp attacks the pier. The kid saves the town by yawning into the fish market megaphone until the monster copies the yawn and falls asleep.",
+ "twist": "The Gulp copies every sound, and that includes voices. That night the harbour calls the kid's name in his own voice, then the glowing eye rises under his window and shouts HUSS back at him.",
+ "caption_hook": "never whistle near the harbour. it learns your voice.",
+ "vibe": "kraken",
+ "sets": [
+  "harbour town at dusk: main street slopes down to a new wooden pier and dark sea, striped lighthouse on rocks at the end",
+  "underwater view: dark blue fog, rising bubbles",
+  "top of the lighthouse (flashback, dusk)",
+  "harbour by day for the rules montage (signs, fishing boats, ice cream van)",
+  "Mr. Dobbs' waterfront house",
+  "the harbour on a stormy night (rain, lightning, fog, crashing waves)",
+  "town square at party night (stage and banner)",
+  "the kid's bedroom at night, with a window looking out on the black harbour and the lighthouse"
+ ],
+ "newProps": [
+  "sea: a large dark animated water plane with rolling waves and foam, filling the end of main street",
+  "wooden pier: plank boxes on cylinder posts, with lanterns on poles",
+  "lighthouse: tall white-and-red striped cylinder on box rocks, cone roof, glowing lamp room with a rotating light beam, one cracked window",
+  "the Gulp: huge dark-teal dome body with one giant glowing green eye (sphere with a black slit pupil and a box eyelid that can droop and close), plus a ring of long segmented-cylinder tentacles with round sucker spheres",
+  "old lighthouse keeper: long white beard, sailor cap that can fly off",
+  "small fishing boats: box hulls, cylinder masts, colored signal flags (thin boxes on sticks)",
+  "NO WHISTLING sign: wooden board with a whistle icon and a red cross through it",
+  "NO KETTLES sign on a lamp post",
+  "shiny kettle: cylinder body, cone spout, steam puffs (small white spheres)",
+  "Mr. Dobbs' front room as one box chunk (table, stove, window) that a tentacle can rip off the house",
+  "ice cream van: boxes with a giant cone-and-sphere ice cream on the roof and a serving window",
+  "seagull (reuse the pigeon, painted white and grey)",
+  "bakery shopfront with a striped awning and a box roof that can lift off",
+  "Grandma's bicycle: cylinder wheels and a box frame, Grandma with grey bun, glasses and a cardigan",
+  "fish market stall with a megaphone (cone plus cylinder handle)",
+  "storm: rain particles, lightning flashes, black storm clouds",
+  "snore bubbles: big rising spheres with floating Z letters",
+  "medal on a ribbon for the party",
+  "whisper glow: faint pulsing green light under the black water outside the bedroom window"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, you are never, ever allowed to whistle.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "NO WHISTLING",
+   "visual": "Harbour town at dusk. Main street slopes down to a wooden pier and dark water, and a red-and-white striped lighthouse stands on the rocks. Push in on a big wooden sign on the pier showing a whistle with a red cross through it."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Because something under the harbour whistles back.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The camera sinks below the surface into dark blue fog. In the darkness, one huge green eye bigger than a house slowly opens and glows, with bubbles drifting up past it."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Me (black hoodie with white knight emblem, grey pants, white shoes, headphones) on the pier, huss face, lit green from below by the glow in the water. Camera punches in on each HUSS."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Fifty years ago, the lighthouse keeper whistled the same tune every night.",
+   "gapAfter": 0.3,
+   "visual": "Flashback at dusk, top of the lighthouse: an old keeper with a long white beard and a sailor cap leans on the rail whistling happily while the big glowing lamp turns behind him.",
+   "sfx": [
+    {
+     "type": "whistle",
+     "at": "w:whistled",
+     "gain": 0.5
+    }
+   ]
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then one night, the sea whistled it back, and a tentacle the size of a bus took his lamp.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whistle",
+     "at": "start",
+     "gain": 0.35
+    },
+    {
+     "type": "whoosh",
+     "at": "w:tentacle",
+     "gain": 0.6
+    },
+    {
+     "type": "thump",
+     "at": "w:took",
+     "gain": 0.8
+    }
+   ],
+   "visual": "The sea below bulges. A giant dark-teal tentacle with round suckers rises higher than the lighthouse, curls around the glowing lamp and yanks it down into the water. The keeper's cap flies off and he stands there stunned in the dark.",
+   "markers": {
+    "grab": "w:took"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "We call it the Gulp. One giant green eye, a hundred tentacles, and it copies every sound it hears.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "THE GULP",
+   "visual": "Full reveal at night in fog: a huge dark dome rises from the harbour with one giant glowing green eye, tentacles swaying all around it, and fishing boats looking tiny beside it. A seagull squawks, the eye flashes, and the same squawk booms back louder."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So now there are rules. No whistling. No squeaky shoes. No kettles. And near the water, we only whisper.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:whistling",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:squeaky",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:kettles",
+     "gain": 0.65
+    }
+   ],
+   "overlay": "NO KETTLES",
+   "visual": "Daytime rules montage: a man tiptoes down main street in socks with his shoes in his hand, a NO KETTLES sign hangs on a lamp post, and a mum presses a finger to her lips at a kid who is about to whistle. Also: an old man whispers to a fishmonger behind his hand at the pier; the cracked top window of the lighthouse is visible in the background."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Dobbs bought a kettle anyway. His kitchen is now at the bottom of the harbour.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "boom",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "It was a really nice kettle.",
+    "by": "Mr. Dobbs"
+   },
+   "visual": "Mr. Dobbs (bald, big mustache, striped apron) proudly holds a shiny steaming kettle in his waterfront window. A tentacle bursts out of the harbour, wraps the whole front room and drags it into the sea. Mr. Dobbs is left standing in a doorway with nothing behind it, still holding the kettle."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The fishermen talk with flags.",
+   "gapAfter": 0.3,
+   "sfx": [],
+   "visual": "Fishermen on little boats in the harbour silently wave coloured signal flags at each other, deadpan."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Until last week, when the biggest storm ever hit.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Stormy night: black clouds, lightning flashes, heavy rain, and huge waves smashing over the pier while the boats rock wildly."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Wind blew through the cracked lighthouse window, and the lighthouse started to whistle.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "windwhistle",
+     "at": "w:whistle",
+     "gain": 0.6,
+     "dur": 3.0
+    }
+   ],
+   "overlay": "FWEEEEE",
+   "visual": "Close on the top of the lighthouse: rain streams down the cracked window, the lamp flickers, and the camera slowly pushes in as the wind howls through the crack.",
+   "markers": {
+    "fweee": "w:whistle"
+   }
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The harbour went dead quiet. Then the sea whistled back.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whistle",
+     "at": "w:whistled",
+     "gain": 0.45
+    },
+    {
+     "type": "boom",
+     "at": "w:back",
+     "gain": 0.8
+    }
+   ],
+   "visual": "Townspeople freeze in their windows along main street with shocked faces. The harbour goes flat and still. Then the water bulges and the giant green eye rises out of the waves as tentacles unfurl all around it.",
+   "markers": {
+    "back": "w:back"
+   }
+  },
+  {
+   "id": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Me sprinting down the pier in the rain with a huss face. Camera shake and a lightning flash on every HUSS while tentacles crash down left and right behind me."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Tentacles slammed onto the pier. One grabbed Grandma, still on her bike.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "whoosh",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Tentacles slam onto the pier and planks fly. One tentacle lifts Grandma (grey bun, glasses, cardigan) high into the air still sitting on her bicycle, pedalling furiously."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I remembered. It copies everything. So I grabbed the fish market megaphone.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Me with a determined face, grabbing a big megaphone off the fish market stall and running to the very end of the pier to face the giant eye."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And I did the biggest, longest, sleepiest yawn in history.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "overlay": "YAWN",
+   "visual": "Close-up: I raise the megaphone with a sleepy face and do a giant yawn with my arms stretched out, while the sound rolls across the harbour.",
+   "markers": {
+    "yawn": "w:yawn"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The Gulp copied it. Then it yawned again. And again. Yawns are contagious, even for monsters.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "CONTAGIOUS",
+   "visual": "The giant green eye blinks slowly. Its lid droops halfway, opens, then droops again. The tentacles go limp and sag into the water one by one."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It put Grandma down, sank under the waves, and started snoring bubbles.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "pop",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "Zzz",
+   "visual": "A tentacle gently sets Grandma and her bike back on the pier, and she crosses her arms. The eye closes, the Gulp sinks under the waves, and big bubbles rise with floating Z letters."
+  },
+  {
+   "id": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "At dawn the townspeople pour onto the pier and lift me up crowd-surf style; the whole town shouts HUSS across the water with me. Under the pier, a faint green glow blinks once."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone called me a hero. But I forgot one thing.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "visual": "Party night in the town square: a banner over the stage and me on stage getting a medal. The music fades, I stop smiling, and I turn to look back at the dark harbour."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It copies every voice. And tonight, the harbour whispered back. In my voice.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "My bedroom at night. I'm in bed, wide awake, with a sweat face. Through the window the harbour is black and still, and a faint green glow pulses under the water as a whisper drifts up from it.",
+   "markers": {
+    "myvoice": "w:voice"
+   }
+  },
+  {
+   "id": "b22",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.8,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The green eye snaps open right under my window and fills the frame. Each HUSS bursts out of the water as a giant bubble, in my own voice. Cut to black."
+  }
+ ]
+}
