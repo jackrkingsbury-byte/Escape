@@ -7,7 +7,7 @@ import { buildTown, buildRoom } from '../world.js';
 import { makeCreature, WALK_SPEED } from '../characters.js';
 import { MAIN, EXTRAS, EXTRA_IDS } from '../cast.js';
 import { yawOf, rel } from '../direct.js';
-import { clamp, ease, hash, lerp } from '../lib/util.js';
+import { clamp, ease, hash, lerp, canvasTexture } from '../lib/util.js';
 import { quoteCard } from '../cards.js';
 import { makeTable } from '../props.js';
 import { V, frame, frameAt, lastBefore } from '../shots.js';
@@ -76,8 +76,13 @@ export function init(ctx) {
   for (let i = 0; i < 11; i++) P.lampGlows.push(glowSprite('#ffe2a8', 2.6, 0.7));
   P.whiteWin = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.3), new THREE.MeshBasicMaterial({ color: '#ffffff', toneMapped: false }));
   P.whiteGlow = glowSprite('#ffffff', 4.5, 0.9);
-  P.blanket = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.0, 1.0), new THREE.MeshStandardMaterial({ color: '#4f7fbf', roughness: 0.9 }));
-  P.blanket.geometry.translate(0, 0.5, 0);
+  { const geo = new THREE.SphereGeometry(0.5, 28, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+    const pp = geo.attributes.position;   // lumpy quilted surface
+    for (let i = 0; i < pp.count; i++) { const x = pp.getX(i), y = pp.getY(i), z = pp.getZ(i); const k = 1 + 0.05 * Math.sin(x * 19) * Math.sin(z * 17) + 0.04 * Math.sin(y * 23); pp.setXYZ(i, x * k, y, z * k); }
+    geo.computeVertexNormals();
+    const tex = canvasTexture(128, 128, (g) => { g.fillStyle = '#4f7fbf'; g.fillRect(0, 0, 128, 128); g.fillStyle = '#ffd23f'; for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) if ((i + j) % 3 === 0) { g.beginPath(); g.arc(i * 16 + 8, j * 16 + 8, 3.5, 0, Math.PI * 2); g.fill(); } });
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(3, 2);
+    P.blanket = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 })); }
   P.suitcase = new THREE.Group();
   { const b = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.38, 0.16), new THREE.MeshStandardMaterial({ color: '#7a1f2b', roughness: 0.6 })); P.suitcase.add(b);
     const h = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.04), new THREE.MeshStandardMaterial({ color: '#1d1d22' })); h.position.y = 0.21; P.suitcase.add(h); }
@@ -86,6 +91,21 @@ export function init(ctx) {
   P.paw2 = makeWhitePaw();
   P.redLight = new THREE.PointLight('#ff2020', 0, 14, 1.2);
   P.moonOrb = glowSprite('#e8f0ff', 9, 0.9);
+  P.fogTower = makeFogBank({ n: 16, w: 14, d: 10, h: 1.6, size: 6, color: '#a8bcd6', opacity: 0.42 });
+  P.winLight = new THREE.PointLight('#eef4ff', 0, 7, 1.3);
+  P.povFrame = makePovFrame();
+}
+/** Window frame + curtains sized to sit 0.6 m in front of a fov-42 camera (posts at the frame edges). */
+function makePovFrame() {
+  const g = new THREE.Group(), m = new THREE.MeshStandardMaterial({ color: '#f4efe6', roughness: 0.7, emissive: '#2a2f40', emissiveIntensity: 0.5 });
+  const cur = new THREE.MeshStandardMaterial({ color: '#2f4d8a', roughness: 0.85, emissive: '#0c1630', emissiveIntensity: 0.6 });
+  const b = (w, h, d, x, y, z, mm = m) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mm); o.position.set(x, y, z); g.add(o); };
+  b(0.03, 0.6, 0.02, -0.118, 0, 0); b(0.03, 0.6, 0.02, 0.118, 0, 0);       // side posts
+  b(0.3, 0.035, 0.02, 0, 0.205, 0); b(0.34, 0.05, 0.06, 0, -0.215, 0.01);  // top bar + sill
+  b(0.24, 0.008, 0.008, 0, 0.12, -0.005);                                   // thin transom
+  for (const s of [-1, 1]) for (let k = 0; k < 3; k++) b(0.035, 0.5, 0.012, s * (0.112 + k * 0.03), 0.01 - 0.01 * k, 0.03 + 0.008 * (k % 2), cur);
+  b(0.3, 0.06, 0.02, 0, 0.245, 0.03, cur);                                  // pelmet
+  return g;
 }
 function makeWindowFrameFG() {
   const g = new THREE.Group(), m = new THREE.MeshStandardMaterial({ color: '#f4efe6', roughness: 0.7 }), cur = new THREE.MeshStandardMaterial({ color: '#2f4d8a', roughness: 0.85 });
@@ -230,7 +250,7 @@ function walkWave(ch, t, speed = 1) {
   J.armR.rotation.set(0, 0, 0); J.armR.rotation.x = -0.2; J.armR.rotation.z = 2.5 + 0.35 * Math.sin(t * 10);
   J.foreArmR.rotation.set(0, 0, 0.3 * Math.sin(t * 10));
 }
-function cabRig(ctx) { const set = ctx.set; set.lights.hemi.intensity = 1.25; set.root.updateMatrixWorld(true); const C = (x, y, z) => set.root.localToWorld(V(x, y, z)); C.yaw = yawOf(set.root); ctx.store.ticks = []; const P = ctx.props; ctx.add(P.motesCab); P.motesCab.position.copy(C(0, 1.3, 0)); ctx.store.ticks.push((t) => P.motesCab.userData.set(t, 0.8)); return C; }
+function cabRig(ctx) { const set = ctx.set; set.lights.hemi.intensity = 1.25; set.root.updateMatrixWorld(true); const C = (x, y, z) => set.root.localToWorld(V(x, y, z)); C.yaw = yawOf(set.root); ctx.store.ticks = []; (set.pools || []).forEach((p) => { p.material.opacity = 0.7; }); const P = ctx.props; ctx.add(P.motesCab); P.motesCab.position.copy(C(0, 1.3, 0)); ctx.store.ticks.push((t) => P.motesCab.userData.set(t, 0.8)); return C; }
 /** the back of the carriage: the white-paw cat on the last seat (left side, facing +x) */
 const CAT_SEAT = [-8.62, 0.54, -0.98];
 function seatCat(ctx, C, { cap = true, sandwich = true } = {}) {
@@ -256,16 +276,27 @@ const S = (def) => { shots_.push(def); return def; };
 // ── b01 "In this town, a train comes through at three thirty-three every night. There are no tracks."
 S({
   name: 'clock 3:33', start: 0, set: 'town',
-  setup(ctx) { const L = nightTown(ctx, { motes: 0 }); ctx.store.L = L; ctx.add(ctx.props.moonOrb); ctx.props.moonOrb.position.copy(L(-80, 30, -14)); },
+  setup(ctx) {
+    const L = nightTown(ctx, { motes: 0 }); ctx.store.L = L;
+    const P = ctx.props; ctx.add(P.moonOrb); P.moonOrb.position.copy(L(-82, 34, -22));
+    // extra fog drifting round the tower base
+    ctx.add(P.fogTower); P.fogTower.position.copy(L(-47, 0, 2)); P.fogTower.rotation.set(0, L.yaw + Math.PI / 2, 0);
+    ctx.store.ticks.push((t) => P.fogTower.userData.set(t, 1));
+  },
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store;
     const tt = ctx.time('b01.w9');   // "thirty-three"
     const d = ctx.t - tt;
-    const m = d < 0 ? 32 + 0.02 * Math.sin(ctx.t * 20) * 0 : 33 + 0.4 * Math.exp(-d * 9) * Math.sin(d * 40);
-    clockOnTower(ctx, L, 3, m, 1);
+    const m = d < 0 ? 32 : 33 + 0.4 * Math.exp(-d * 9) * Math.sin(d * 40);
+    const c = clockOnTower(ctx, L, 3, m, d < 0 ? 0.8 : 1);
+    if (d >= 0) c.userData.halo.material.opacity = 0.35 * (1.6 + 0.9 * Math.sin(d * 9)) * (1 + 1.5 * Math.exp(-d * 4));
+    // wide night establishing shot (tower against the moonlit sky) → eases into the clock close-up by "thirty-three"
+    const w0 = { pos: L(-37, 4.5, 6), look: L(CLOCK[0], 10.4, CLOCK[2]), fov: 40 };
     const a = { pos: L(-43.0, 7.6, 1.2), look: L(CLOCK[0], 10.9, CLOCK[2]), fov: 30 };
     const b = { pos: L(-44.6, 8.6, 1.4), look: L(CLOCK[0], 11.0, CLOCK[2]), fov: 26 };
-    moveCam(ctx, a, b, ease.inOutSine(clamp(lt / 3, 0, 1)), 0.2);
+    const ta = tt;   // shot starts at t = 0, so this is the local time of the hit
+    if (lt < ta) moveCam(ctx, w0, a, ease.inOutCubic(clamp(lt / ta, 0, 1)), 0.2);
+    else moveCam(ctx, a, b, ease.outSine(clamp((lt - ta) / 0.6, 0, 1)), 0.2);
     if (d > 0 && d < 0.12) ctx.cam.shake(0.15, ctx.t, 3);
     clock333(ctx, tt);
   },
@@ -300,10 +331,10 @@ S({
   setup(ctx) { ctx.store.L = nightTown(ctx); },
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store;
-    const x = 9 - 6 * (ctx.t - ctx.time('b02'));
+    const x = 23.5 - 6 * (ctx.t - ctx.time('b02'));
     trainAt(ctx, L, x, { t: ctx.t });
-    lampGlows(ctx, L, x);
-    moveCam(ctx, { pos: L(5.5, 0.6, 7.2), look: L(-3, 3.2, -3.5), fov: 52 }, { pos: L(4.5, 0.65, 7.0), look: L(-5, 3.1, -3.2), fov: 50 }, clamp(lt / 2.2, 0, 1), 0.5);
+    lampGlows(ctx, L, x - 12);
+    moveCam(ctx, { pos: L(-6, 0.6, 6.6), look: L(8, 2.4, 2.0), fov: 54 }, { pos: L(-6.3, 0.55, 6.7), look: L(7, 2.3, 1.8), fov: 52 }, clamp(lt / 2.2, 0, 1), 0.5);
   },
 });
 S({
@@ -324,10 +355,10 @@ S({
   update(ctx) {
     tick(ctx); const { L } = ctx.store;
     const hits = ctx.hussTimes('b03').map((h) => h + 0.03), hit = hits[i];
-    const camX = -8, win = [3, 6, 8][i];
+    const camX = -8, win = [5, 6, 8][i];
     const trX = camX + ctx.props.train.userData.winX[win] - 16 * (ctx.t - hit);
     trainAt(ctx, L, trX, { t: ctx.t });
-    const cams = [{ pos: L(camX, 2.75, 4.0), look: L(camX, 2.75, 0), fov: 40 }, { pos: L(camX + 0.4, 1.0, 3.6), look: L(camX - 0.4, 2.8, 0), fov: 46 }, { pos: L(camX - 0.5, 4.6, 3.8), look: L(camX, 2.6, 0.5), fov: 42 }];
+    const cams = [{ pos: L(camX, 2.3, 4.0), look: L(camX, 2.55, 0), fov: 50 }, { pos: L(camX + 0.4, 1.0, 3.6), look: L(camX - 0.4, 2.8, 0), fov: 46 }, { pos: L(camX - 0.5, 4.6, 3.8), look: L(camX, 2.6, 0.5), fov: 42 }];
     setCam(ctx, cams[i], 0.6, '#ffe2b0');
     ctx.cam.punch(hits, ctx.t, 0.1, 0.2);
     speedLines(ctx, 1);
@@ -347,9 +378,9 @@ S({
   },
 });
 /** Two townsfolk on the south pavement watching (day). */
-function bystanders(ctx, L) {
+function bystanders(ctx, L, spots = [[OTTO_X - 3.2, 6.0, 0.7], [OTTO_X - 1.9, 6.5, 0.4], [OTTO_X + 5.4, 5.7, -1.0]]) {
   const ids = NEIGHBOR_IDS.slice(2, 5);
-  [[OTTO_X - 3.2, 6.0, 0.7], [OTTO_X - 1.9, 6.5, 0.4], [OTTO_X + 5.4, 5.7, -1.0]].forEach(([x, z, y], k) => { ctx.place(ids[k], L(x, CURB, z)); ctx.cast[ids[k]].root.rotation.set(0, L.yaw + Math.PI + y, 0); });
+  spots.forEach(([x, z, y], k) => { ctx.place(ids[k], L(x, z > 5.15 ? CURB : 0, z)); ctx.cast[ids[k]].root.rotation.set(0, L.yaw + Math.PI + y, 0); });
   ctx.store.ticks.push((t) => ids.forEach((id, k) => { const c = ctx.cast[id]; const late = ctx.t > ctx.time('b05.w8'); c.pose(late ? (k === 1 ? 'surprised' : k === 2 ? 'point' : 'clap') : 'idle', t + k); c.face(late ? 'shocked' : 'smile', t + k); }));
 }
 // ── b05 "Grandpa Otto rode it once. He came back twelve seconds later with a beard down to his knees."
@@ -360,7 +391,7 @@ S({
     const L = dayTown(ctx); ctx.store.L = L;
     ctx.place('otto', L(OTTO_X, 0, 4.4));
     const P = ctx.props; ctx.add(P.suitcase, ctx.cast.otto.joints.handR); P.suitcase.position.set(0, -0.22, 0); P.suitcase.rotation.set(0, Math.PI / 2, 0);
-    bystanders(ctx, L);
+    bystanders(ctx, L, [[OTTO_X + 2.2, 5.6, 0.5], [OTTO_X + 3.9, 5.8, 0.3], [OTTO_X + 5.6, 5.5, 0.6]]);
   },
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store, o = ctx.cast.otto;
@@ -370,9 +401,9 @@ S({
     const z = lerp(4.4, 1.2, k), y = z > 2.4 ? 0 : z > 1.9 ? lerp(0, 0.35, (2.4 - z) / 0.5) : z > 1.5 ? lerp(0.35, 0.7, (1.9 - z) / 0.4) : lerp(0.7, 1.16, (1.5 - z) / 0.3);
     o.root.position.copy(L(OTTO_X, Math.min(y, 1.16), z)); o.root.rotation.set(0, L.yaw + Math.PI, 0);
     if (k < 1) { o.pose('walk', ctx.t, { speed: 0.9 }); } else o.pose('idle', ctx.t);
-    if (ctx.t > t0 + 0.2 && ctx.t < t0 + 0.9) { o.joints.armL.rotation.z = 2.4 + 0.3 * Math.sin(ctx.t * 10); o.joints.head.rotation.y = 0.9; }
-    o.face('grin', ctx.t);
-    moveCam(ctx, { pos: L(OTTO_X + 3.2, 1.6, 8.4), look: L(OTTO_X - 0.2, 1.6, 2.2), fov: 44 }, { pos: L(OTTO_X + 2.6, 1.7, 7.6), look: L(OTTO_X - 0.2, 1.9, 1.6), fov: 42 }, clamp(lt / 2.3, 0, 1), 0);
+    if (ctx.t > t0 + 0.1 && ctx.t < t0 + 1.3) { o.joints.armL.rotation.set(0, 0, 2.5 + 0.3 * Math.sin(ctx.t * 10)); o.joints.foreArmL.rotation.set(0, 0, 0.3 * Math.sin(ctx.t * 10)); o.joints.head.rotation.y = 0.8; }
+    o.face('grin', 0.5);
+    moveCam(ctx, { pos: L(OTTO_X - 4.4, 1.5, 2.15), look: L(OTTO_X + 0.3, 1.45, 3.9), fov: 50 }, { pos: L(OTTO_X - 3.8, 1.6, 2.2), look: L(OTTO_X + 0.3, 1.7, 2.6), fov: 48 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)), 0);
   },
 });
 S({
@@ -381,7 +412,7 @@ S({
     const L = dayTown(ctx); ctx.store.L = L;
     ctx.place('otto', L(OTTO_X, 1.16, 0.9));
     const P = ctx.props; ctx.add(P.beard, ctx.cast.otto.joints.head); P.beard.position.set(0, 0.12, 0.3); P.beard.rotation.set(0, 0, 0);
-    bystanders(ctx, L);
+    bystanders(ctx, L, [[OTTO_X - 1.15, 3.7, -2.02], [OTTO_X + 1.15, 3.9, 2.02], [OTTO_X - 2.4, 5.6, -0.5]]);
   },
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store, o = ctx.cast.otto;
@@ -391,7 +422,7 @@ S({
     o.root.position.copy(L(OTTO_X, y, z)); o.root.rotation.set(0, L.yaw, 0);
     if (k < 1) o.pose('walk', ctx.t, { speed: 0.9 }); else o.pose('cheer', ctx.t, { intensity: 0.6 });
     o.face('grin', 0.5);
-    moveCam(ctx, { pos: L(OTTO_X + 0.6, 1.5, 8.6), look: L(OTTO_X, 1.6, 1.6), fov: 40 }, { pos: L(OTTO_X + 0.5, 1.3, 7.4), look: L(OTTO_X, 1.3, 2.8), fov: 40 }, clamp(lt / 1.4, 0, 1), 0);
+    moveCam(ctx, { pos: L(OTTO_X, 1.5, 9.2), look: L(OTTO_X, 1.6, 1.6), fov: 48 }, { pos: L(OTTO_X, 1.35, 8.4), look: L(OTTO_X, 1.35, 2.8), fov: 46 }, clamp(lt / 1.4, 0, 1), 0);
     stamp(ctx, '12 SECONDS LATER', ctx.time('b05.w8'), { size: 96, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.06, y: 0.2 });
   },
 });
@@ -419,7 +450,7 @@ function benchRig(ctx) {
   const a = ctx.anchor('park.table'), pa = rel(a); pa.y -= 0.78; const F = frame(pa, yawOf(a)), P = ctx.props;
   ctx.add(P.bench); P.bench.position.copy(F(0, 0, 2.3)); P.bench.rotation.set(0, F.yaw, 0);
   const o = ctx.cast.otto; ctx.place('otto', F(0.35, 0, 2.4)); o.root.rotation.set(0, F.yaw, 0);
-  ctx.add(P.beard, o.joints.head); P.beard.position.set(0, 0.12, 0.3); P.beard.rotation.set(-0.5, 0, 0);
+  ctx.add(P.beard, o.joints.head); P.beard.position.set(0, 0.1, 0.3); P.beard.rotation.set(-0.15, 0, 0);
   ctx.place('me', F(-0.75, 0, 2.95)); ctx.cast.me.root.rotation.set(0, F.yaw - 1.2, 0);
   return F;
 }
@@ -427,7 +458,7 @@ function ottoShh(o, t, turn = 0) {
   o.pose('sit', t, { seatHeight: 0.5, hands: 'lap' });
   const J = o.joints;
   J.armR.rotation.set(-2.0, 0, 0.35); J.foreArmR.rotation.set(-1.75, 0, 0);
-  J.head.rotation.y += -0.9 * turn; J.head.rotation.x += -0.1;
+  J.head.rotation.y += 1.0 * turn; J.head.rotation.x += -0.1;
   o.face('smug', 1.0);
 }
 S({
@@ -437,7 +468,7 @@ S({
     const { F } = ctx.store, o = ctx.cast.otto, me = ctx.cast.me;
     ottoShh(o, ctx.t, 0);
     me.pose('peer', ctx.t, { intensity: 0.7 }); me.face('neutral', ctx.t);
-    moveCam(ctx, { pos: F(-0.3, 1.5, 9.4), look: F(-0.2, 1.0, 2.5), fov: 38 }, { pos: F(-0.25, 1.45, 8.4), look: F(-0.2, 1.0, 2.5), fov: 36 }, clamp(lt / 2.4, 0, 1), 0);
+    moveCam(ctx, { pos: F(-0.75, 1.5, 9.6), look: F(-0.35, 1.0, 2.6), fov: 38 }, { pos: F(-0.7, 1.45, 8.6), look: F(-0.35, 1.0, 2.6), fov: 36 }, clamp(lt / 2.4, 0, 1), 0);
     tag(ctx, 'BEST VACATION EVER', ctx.time('b06.w5'), Infinity, { y: 0.17, bg: 'rgba(255,122,47,0.92)' });
   },
 });
@@ -449,9 +480,9 @@ S({
     const turn = ease.inOutCubic(clamp((ctx.t - ctx.time('b06.w11')) / 0.35, 0, 1));
     ottoShh(o, ctx.t, turn);
     me.pose('peer', ctx.t, { intensity: 1 }); me.face(turn > 0.5 ? 'sad' : 'shocked', ctx.t);
-    const f = humanFace(o);
-    setCam(ctx, { pos: F(0.15, 1.35, 6.4), look: F(-0.15, 1.2, 2.5), fov: 32 }, 0);
-    tag(ctx, 'WHERE?!', ctx.time('b06.w13'), Infinity, { y: 0.17, size: 80 });
+    const k = ease.inOutSine(clamp(lt / 1.1, 0, 1));
+    setCam(ctx, { pos: F(lerp(-1.95, -1.85, k), 1.6, lerp(4.7, 4.4, k)), look: F(0.25, 1.15, 2.4), fov: 40 }, 0);
+    tag(ctx, 'WHERE?!', ctx.time('b06.w13'), Infinity, { y: 0.13, size: 80 });
   },
 });
 // ── b07 library  "Mrs. Lacey came back speaking only in rhymes. She's a librarian."
@@ -475,19 +506,19 @@ function libraryRig(ctx) {
 function laceyWag(l, t, k = 1) {
   l.pose('idle', t, { intensity: 0.4 });
   const J = l.joints;
-  J.armR.rotation.set(-2.5 * k, 0, 0.25 * k); J.foreArmR.rotation.set(-0.35 * k, 0, 0.25 * Math.sin(t * 9) * k);
+  J.armR.rotation.set(-2.2 * k, 0, 0.5 * k); J.foreArmR.rotation.set(-0.45 * k, 0, 0.3 * Math.sin(t * 9) * k);
   J.armL.rotation.z += 0.0; J.torso.rotation.x += 0.08 * k;
 }
 S({
   name: 'library wide', start: 'b07-0.1', set: 'library',
-  setup(ctx) { ctx.store.R = libraryRig(ctx); ctx.place('me', ctx.store.R(1.15, 0, 0.7)); ctx.cast.me.root.rotation.set(0, ctx.store.R.yaw + Math.PI + 0.55, 0); },
+  setup(ctx) { ctx.store.R = libraryRig(ctx); ctx.place('me', ctx.store.R(0.8, 0, 1.2)); ctx.cast.me.root.rotation.set(0, ctx.store.R.yaw + Math.PI + 0.45, 0); },
   update(ctx, lt) {
     tick(ctx); const { R: Rf } = ctx.store, l = ctx.cast.lacey, me = ctx.cast.me;
     const tr = ctx.markers.rhymes;
     laceyWag(l, ctx.t, ctx.t > tr - 0.3 ? 1 : 0); l.face(ctx.t > tr ? 'smug' : 'smile', ctx.t);
     me.pose('idle', ctx.t); me.face('neutral', ctx.t);
     moveCam(ctx, { pos: Rf(-0.5, 2.4, 5.6), look: Rf(0.3, 1.2, -0.6), fov: 44 }, { pos: Rf(-0.4, 1.9, 4.4), look: Rf(0.3, 1.3, -0.7), fov: 42 }, ease.inOutSine(clamp(lt / 3.2, 0, 1)), 0);
-    tag(ctx, 'ONLY RHYMES', tr, Infinity, { y: 0.17, bg: 'rgba(138,92,255,0.92)' });
+    tag(ctx, 'ONLY RHYMES', tr, Infinity, { y: 0.28, bg: 'rgba(138,92,255,0.92)' });
   },
 });
 S({
@@ -512,12 +543,12 @@ function bookArms(me, raise = 0) {
 }
 S({
   name: 'quote OTS', start: 'quoteLacey-0.06', set: 'library',
-  setup(ctx) { const Rf = libraryRig(ctx); ctx.store.R = Rf; ctx.place('me', Rf(0.35, 0, 0.75)); ctx.cast.me.root.rotation.set(0, Rf.yaw + Math.PI, 0); kidWithBook(ctx, ctx.cast.me); },
+  setup(ctx) { const Rf = libraryRig(ctx); ctx.store.R = Rf; ctx.place('me', Rf(0.35, 0, 0.75)); ctx.cast.me.root.rotation.set(0, Rf.yaw + Math.PI + 0.25, 0); kidWithBook(ctx, ctx.cast.me); },
   update(ctx, lt) {
     tick(ctx); const { R: Rf } = ctx.store, l = ctx.cast.lacey, me = ctx.cast.me;
     laceyWag(l, ctx.t, 1); l.face('determined', ctx.t);
-    me.pose('idle', ctx.t, { intensity: 0.4 }); bookArms(me, 0); me.face('sweat', ctx.t);
-    moveCam(ctx, { pos: Rf(-0.65, 1.85, 2.8), look: humanFace(l).add(up(-0.35)), fov: 42 }, { pos: Rf(-0.6, 1.8, 2.5), look: humanFace(l).add(up(-0.3)), fov: 40 }, clamp(lt / 2.8, 0, 1), 0);
+    me.pose('idle', ctx.t, { intensity: 0.4 }); bookArms(me, 0.35); me.face('sweat', ctx.t);
+    moveCam(ctx, { pos: Rf(-0.15, 1.45, 2.75), look: humanFace(l).add(up(0.3)), fov: 42 }, { pos: Rf(-0.12, 1.45, 2.45), look: humanFace(l).add(up(0.28)), fov: 41 }, clamp(lt / 2.8, 0, 1), 0.6);
     quoteCard(ctx, 'This book is late, and that’s a crime. Return it now, or pay a dime.', 'Mrs. Lacey', ctx.markers.quoteLacey, ctx.time('b08.end') + 0.15, { y: 0.3, size: 72, byAt: ctx.markers.quoteLacey + 0.5 });
   },
 });
@@ -529,8 +560,8 @@ S({
     laceyWag(l, ctx.t, 1); l.face('determined', ctx.t);
     me.pose('idle', ctx.t, { intensity: 0.4 }); bookArms(me, 0.3); me.face('sweat', ctx.t);
     const f = humanFace(me);
-    setCam(ctx, { pos: Rf(-0.1, 1.85, -0.35), look: f.clone().add(up(-0.2)), fov: 38 }, 0);
-    ctx.cam.shake(0.05, ctx.t, 7);
+    setCam(ctx, { pos: Rf(-0.35, 1.95, -1.8), look: f.clone().add(up(0.05)), fov: 36 }, 1.4, '#fff0dc');
+    ctx.cam.shake(0.03, ctx.t, 7);
     quoteCard(ctx, 'This book is late, and that’s a crime. Return it now, or pay a dime.', 'Mrs. Lacey', ctx.markers.quoteLacey, ctx.time('b08.end') + 0.15, { y: 0.3, size: 72, byAt: ctx.markers.quoteLacey + 0.5 });
   },
 });
@@ -544,7 +575,7 @@ S({
     const z = 0.75 + 0.9 * lt;
     me.root.position.copy(Rf(0.35, 0, z)); me.root.rotation.set(0, Rf.yaw + Math.PI, 0);
     me.pose('walk', -ctx.t, { speed: 0.8 }); bookArms(me, 1); me.face('sweat', ctx.t);
-    setCam(ctx, { pos: Rf(1.9, 1.5, 4.6), look: Rf(0.2, 1.25, 0.3), fov: 42 }, 0);
+    setCam(ctx, { pos: Rf(-0.85, 1.7, -1.85), look: Rf(0.35, 1.2, 1.2), fov: 42 }, 0.8, '#fff0dc');
     tag(ctx, 'IT’S A PROBLEM', ctx.time('b09.w1'), Infinity, { y: 0.17, bg: 'rgba(200,0,40,0.9)' });
   },
 });
@@ -558,19 +589,28 @@ function curtainRig(ctx, L) {
     const c = ctx.props.curtains[k]; ctx.add(c);
     const a = h.windows[wj]; a.updateWorldMatrix(true, false);
     c.position.copy(rel(a, [0, 0, -0.18])); c.rotation.set(0, yawOf(a), 0); c.scale.setScalar(0.95);
+    c.userData.hk = h.index; c.userData.wk = wj; c.userData.k = k;
     out.push(c);
   });
   return out;
 }
+const CURTAIN_T = [0.2, 1.2, 0.5, 1.5, 0.85, 0.65, 1.75, 1.0];
 S({
   name: 'curtains close', start: 'b10-0.1', set: 'town',
-  setup(ctx) { const L = nightTown(ctx, { glow: 0.0, fogA: 0.7 }); ctx.store.L = L; ctx.store.cur = curtainRig(ctx, L); ctx.set.set?.('windowGlow', (hi, wj) => 0.0); },
+  setup(ctx) { const L = nightTown(ctx, { glow: 0.0, fogA: 0.7 }); ctx.store.L = L; ctx.store.cur = curtainRig(ctx, L); },
   update(ctx, lt) {
     tick(ctx); const { L, cur } = ctx.store;
-    const t0 = ctx.time('b10') + 0.3;
-    cur.forEach((c, k) => { const tk = t0 + [0.2, 1.2, 0.5, 1.5, 0.85, 0.65, 1.75, 1.0][k] * 1.15; c.userData.set(ease.inOutCubic(clamp((ctx.t - tk) / 0.4, 0, 1)), 1); });
-    lampGlows(ctx, L, null, 0.8);
-    moveCam(ctx, { pos: L(-12.0, 2.6, 0.5), look: L(-15, 3.6, -10.5), fov: 46 }, { pos: L(-12.8, 2.8, -0.5), look: L(-15, 3.7, -10.5), fov: 44 }, clamp(lt / 2.5, 0, 1), 0.4);
+    const t0 = ctx.time('b10') + 0.3, set = ctx.set;
+    const shut = new Map();   // "house:window" → time its curtain finishes closing
+    cur.forEach((c) => { const tk = t0 + CURTAIN_T[c.userData.k] * 1.15; c.userData.set(ease.inOutCubic(clamp((ctx.t - tk) / 0.4, 0, 1)), 1); shut.set(c.userData.hk + ':' + c.userData.wk, tk + 0.4); });
+    // every other window up and down the street switches off one by one too
+    set.set?.('windowGlow', (hi, wj) => { const ts = shut.get(hi + ':' + wj) ?? (t0 + 0.1 + 2.1 * hash(hi * 7.3 + wj * 3.1)); return ctx.t < ts ? 0.95 : 0; });
+    const cold = clamp((ctx.t - t0) / 2.2, 0, 1);
+    set.exposure = lerp(1.12, 0.82, cold);
+    if (set.fog) set.fog.color.set('#1a2c3e').lerp(new THREE.Color('#0c1a33'), cold);
+    lampGlows(ctx, L, null, lerp(0.8, 0.45, cold));
+    moveCam(ctx, { pos: L(-3, 3.2, 3.5), look: L(-26, 3.0, -10), fov: 50 }, { pos: L(-3.6, 3.0, 3.2), look: L(-26, 3.0, -10), fov: 48 }, clamp(lt / 2.5, 0, 1), 0.4, '#a8c0ff');
+    ctx.fx.overlay('#0a1a40', 0.12 * cold);
     tag(ctx, 'THE RULE', ctx.time('b10.w2'), Infinity, { y: 0.16, bg: 'rgba(200,0,40,0.9)' });
   },
 });
@@ -590,18 +630,23 @@ S({
     const b = ctx.anchor('room.bed'), Fb = frame(rel(b), yawOf(b)); ctx.store.Fb = Fb;
     ctx.place('me', Fb(0, -0.02, -0.4)); ctx.cast.me.root.rotation.set(0, Fb.yaw, 0);
     const P = ctx.props; ctx.add(P.blanket); P.blanket.rotation.set(0, Fb.yaw, 0);
+    const w = ctx.anchor('room.window'); w.updateWorldMatrix(true, false);
+    ctx.add(P.winLight); P.winLight.position.copy(rel(w, [0, -0.1, 0.6]));
   },
   update(ctx, lt) {
     const { R: Rf, Fb } = ctx.store, me = ctx.cast.me, P = ctx.props;
     me.pose('sit', ctx.t, { seated: true, seatHeight: 0.02, intensity: 0.3, hands: 'lap' });
     const tl = ctx.time('b10.w14') - 0.1, k = ease.inOutCubic(clamp((ctx.t - tl) / 0.35, 0, 1));
-    me.face(k > 0 ? 'shocked' : 'sweat', ctx.t);
-    me.joints.armL.rotation.x += -2.4 * k; me.joints.armR.rotation.x += -2.4 * k;
-    // blanket: a lump that rises from the lap to over the head
-    P.blanket.position.copy(Fb(0, 0.0, lerp(0.35, -0.2, k))); P.blanket.scale.set(1.0, lerp(0.18, 1.55, k), lerp(1.4, 0.95, k));
-    const flick = 0.85 + 0.15 * Math.sin(ctx.t * 23) * Math.sin(ctx.t * 7);
-    P.whiteWin.material.color.setScalar(flick); P.whiteGlow.material.opacity = 0.9 * flick;
-    setCam(ctx, { pos: Rf(0.9, 1.6, 1.9), look: Fb(0, 0.9, -0.2), fov: 44 }, 0.2);
+    me.face(k > 0 ? 'shocked' : 'sweat', 0.4);
+    me.joints.armL.rotation.x += -0.5 * k; me.joints.armR.rotation.x += -0.5 * k;
+    // blanket: a soft lump that rises from the lap until only his eyes and hair peek out
+    const base = Fb(0, 0.0, lerp(0.3, -0.38, k));
+    const eyes = humanFace(me).y - 0.12 - base.y;
+    P.blanket.position.copy(base); P.blanket.scale.set(lerp(1.4, 1.05, k), Math.max(0.05, lerp(0.22, eyes / 0.5, k)), lerp(1.5, 1.15, k));
+    const flick = 0.75 + 0.25 * Math.sin(ctx.t * 23) * Math.sin(ctx.t * 7) + 0.1 * (hash(Math.floor(ctx.t * 14)) > 0.7 ? 1 : 0);
+    P.whiteWin.material.color.setScalar(Math.min(1, flick)); P.whiteGlow.material.opacity = 0.9 * flick;
+    P.winLight.intensity = 14 * flick;
+    setCam(ctx, { pos: Rf(0.9, 1.6, 1.9), look: Fb(0, 0.75, -0.3), fov: 44 }, 0.15);
     ctx.fx.overlay('#dfe8ff', 0.05 * flick);
     tag(ctx, "DON'T LOOK", ctx.time('b10.w15'), Infinity, { y: 0.16, bg: 'rgba(200,0,40,0.9)' });
   },
@@ -615,10 +660,13 @@ S({
     trainAt(ctx, L, TRAIN_STOP, { t: ctx.t, door: 1 });
     lampGlows(ctx, L, null);
     const w = ctx.anchor('myHouse.window'); w.updateWorldMatrix(true, false);
-    const pos = rel(w, [0.45, 0.1, 0.25]), look = L(TRAIN_STOP - 1.4, 1.0, 1.6);
     const k = ease.inOutSine(clamp(lt / 2.2, 0, 1));
-    ctx.cam.set({ pos, look: look.clone().add(up(lerp(0.3, 0, k))), fov: lerp(46, 38, k) }); fill(ctx, pos, 0.2);
-    ctx.cam.shake(0.04, ctx.t, 5);
+    const pos = rel(w, [0.3, 0.1, lerp(-0.25, 0.05, k)]), look = L(TRAIN_STOP - 1.4, 1.0, 1.6).add(up(lerp(0.3, 0, k)));
+    ctx.cam.set({ pos, look, fov: 42 }); fill(ctx, pos, 0.2);
+    const fr = ctx.props.povFrame, dir = look.clone().sub(pos).normalize();
+    ctx.add(fr); fr.position.copy(pos).addScaledVector(dir, 0.6); fr.up.set(0, 1, 0); fr.lookAt(pos);
+    ctx.fx.draw((g, W, H) => { const gr = g.createRadialGradient(W / 2, H / 2, H * 0.25, W / 2, H / 2, H * 0.62); gr.addColorStop(0, 'rgba(0,0,10,0)'); gr.addColorStop(1, 'rgba(0,0,10,0.55)'); g.fillStyle = gr; g.fillRect(0, 0, W, H); });
+    ctx.fx.text('POV: MY WINDOW', { x: 0.5, y: 0.12, size: 48, fill: '#ffffff', stroke: '#000000', bg: 'rgba(20,20,30,0.7)', rot: -0.02 });
   },
 });
 S({
@@ -667,7 +715,7 @@ function pressPose(me, t) {
       const d = [3.2, 2.4, 1.7][i / 2];
       const f = humanFace(me);
       const pos = rel(w, [0.25 * (i / 2 - 1), 0.0, d]);
-      setCam(ctx, { pos, look: f, fov: 34 }, 1.2, '#dde6ff');
+      setCam(ctx, { pos, look: f.clone().add(up(-0.25)), fov: 34 }, 1.2, '#dde6ff');
     } else {
       const cams = [{ pos: L(TRAIN_STOP + 2.6, 1.0, 5.6), look: L(TRAIN_STOP, 1.9, DOOR_Z), fov: 40 }, { pos: L(TRAIN_STOP - 1.8, 0.6, 4.4), look: L(TRAIN_STOP, 2.0, DOOR_Z), fov: 44 }, { pos: L(TRAIN_STOP + 1.6, 1.6, 5.4), look: L(TRAIN_STOP, 2.0, DOOR_Z), fov: 40 }][(i - 1) / 2];
       setCam(ctx, cams, 0.4);
@@ -697,7 +745,7 @@ S({
     const bedP = Rf(-1.95, 0.75, -0.6);
     P.backpack.position.copy(bedP.clone().lerp(onBack, k).add(up(0.5 * Math.sin(Math.PI * k))));
     P.backpack.rotation.set(0, me.root.rotation.y, 0);
-    setCam(ctx, { pos: Rf(1.2, 1.7, 3.6), look: Rf(-0.4, 1.2, -0.6), fov: 46 }, 0.2);
+    setCam(ctx, { pos: Rf(1.6, 1.6, 2.8), look: Rf(-1.0, 1.0, -0.8), fov: 48 }, 0.3);
     ctx.fx.overlay('#dfe8ff', 0.04);
   },
 });
@@ -705,7 +753,7 @@ S({
   name: 'sprint across', start: 'b13.w4-0.1', set: 'town',
   setup(ctx) {
     const L = nightTown(ctx, { fogA: 0.9 }); ctx.store.L = L;
-    ctx.place('me', L(TRAIN_STOP + 0.3, 0, 8.8));
+    ctx.place('me', L(TRAIN_STOP + 0.3, CURB, 8.0));
     const P = ctx.props; ctx.add(P.backpack, ctx.cast.me.joints.torso); P.backpack.position.set(0, 0.25, -0.32); P.backpack.rotation.set(0, 0, 0);
   },
   update(ctx, lt) {
@@ -713,9 +761,10 @@ S({
     const t0 = ctx.time('b13.w4'), k = clamp((ctx.t - t0) / 1.15, 0, 1);
     trainAt(ctx, L, TRAIN_STOP, { t: ctx.t, door: lerp(0.32, 0.22, k) });
     lampGlows(ctx, L, null);
-    me.root.position.copy(L(TRAIN_STOP + 0.3, k > 0.92 ? 0 : 0, lerp(8.8, 2.6, k))); me.root.rotation.set(0, L.yaw + Math.PI, 0);
+    const kz = lerp(8.0, 2.6, k), ky = kz > 5.15 ? CURB : 0;
+    me.root.position.copy(L(TRAIN_STOP + 0.3, ky, kz)); me.root.rotation.set(0, L.yaw + Math.PI, 0);
     me.pose('walk', ctx.t, { speed: 2.6 }); me.joints.torso.rotation.x += 0.25; me.face('determined', ctx.t);
-    setCam(ctx, { pos: L(TRAIN_STOP + 6.2, 1.3, 6.8), look: L(TRAIN_STOP + 0.2, 1.3, lerp(6.5, 3.0, k)), fov: 44 }, 1.0);
+    setCam(ctx, { pos: L(TRAIN_STOP + 6.2, 1.3, 6.8), look: L(TRAIN_STOP + 0.3, 1.2, kz - 0.4), fov: 46 }, 1.0);
   },
 });
 const diveQ = (() => { const m = new THREE.Matrix4().makeBasis(V(-1, 0, 0), V(0, 0, -1), V(0, -1, 0)); return new THREE.Quaternion().setFromRotationMatrix(m); })();
@@ -750,12 +799,12 @@ S({
 // ── b14 "Inside, every window showed a different version of our town."
 S({
   name: 'carriage reveal', start: 'b14-0.1', set: 'cab',
-  setup(ctx) { const C = cabRig(ctx); ctx.store.C = C; ctx.place('me', C(-5.2, 0, -0.4)); ctx.cast.me.root.rotation.set(0, C.yaw + Math.PI / 2, 0);
+  setup(ctx) { const C = cabRig(ctx); ctx.store.C = C; ctx.place('me', C(-3.5, 0, -0.3)); ctx.cast.me.root.rotation.set(0, C.yaw + Math.PI / 2, 0);
     const P = ctx.props; ctx.add(P.backpack, ctx.cast.me.joints.torso); P.backpack.position.set(0, 0.25, -0.32); },
   update(ctx, lt) {
     tick(ctx); const { C } = ctx.store, me = ctx.cast.me;
     me.pose('idle', ctx.t, { headYaw: 0.7 * Math.sin(lt * 1.4), headPitch: -0.05 }); me.face('shocked', 0.4);
-    moveCam(ctx, { pos: C(-9.6, 1.9, 0.45), look: C(2, 1.3, -0.1), fov: 54 }, { pos: C(-8.9, 1.75, 0.4), look: C(2, 1.35, -0.1), fov: 50 }, ease.inOutSine(clamp(lt / 3, 0, 1)), 0.6, '#ffe2b0');
+    moveCam(ctx, { pos: C(-9.5, 2.3, -0.95), look: C(1.5, 1.0, 0.45), fov: 62 }, { pos: C(-8.9, 2.2, -0.85), look: C(1.5, 1.05, 0.4), fov: 58 }, ease.inOutSine(clamp(lt / 3, 0, 1)), 0.6, '#ffe2b0');
   },
 });
 // ── b15 "One with dinosaurs. One underwater. One where everyone is a pigeon."
