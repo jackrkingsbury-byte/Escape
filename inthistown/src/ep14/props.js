@@ -379,7 +379,8 @@ export function makeSkyCrack({ H = 13, n = 16, seed = 5, wmax = 2.7 } = {}) {
         F.root.rotation.set(0.04 * Math.sin(t * 1.3 + f), 0, 0);
         F.segs.forEach((sg, j) => {
           const sz = z0 + j * S;
-          sg.visible = sz + S > -0.05;
+          const showSeg = sz + S > -0.05;               // hide only this segment's own meshes (never its child segments)
+          for (const m of sg.children) if (m.isMesh) m.visible = showSeg;
           const out = sz > 0 ? 1 : 0;
           const wig = 0.07 * Math.sin(t * 2.6 + j * 0.9 + f * 1.7) + flinch * 0.35 * Math.sin(t * 47 + j + f * 3);
           sg.rotation.y = j === 0 ? 0 : -out * (curl * (0.36 + 0.03 * f) + wig - flinch * 0.25);
