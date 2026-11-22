@@ -1,0 +1,508 @@
+{
+ "title": "In This Town — Battery 1%",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town, one second of a mystery song makes you dance until sunrise. Someone hacks the clock tower speakers and the whole town dances nonstop. The only kid left standing has headphones on 5% battery and has to get the town to crowd-surf him to the plug.",
+ "twist": "He pulls the plug and saves the town. Then the sky turns purple and a giant spaceship comes down blasting the remix, which explains the hooded hacker with glowing green eyes. His headphone battery hits zero percent.",
+ "caption_hook": "Hear one second of this song and you dance till sunrise. My headphones were on 5%.",
+ "vibe": "memetrend",
+ "sets": [
+  "main street at dawn and day",
+  "town square with stage and banner (day, party night)",
+  "main street bakery house (day)",
+  "kid's bedroom (night)",
+  "clock tower (quiet night, party night)",
+  "town park picnic table (party night)"
+ ],
+ "newProps": [
+  "DJ booth: glowing box table with two spinning black cylinder turntables and a big red button",
+  "TOWN FAIR banner text on the stage",
+  "floating glowing music notes (sphere + thin box stem)",
+  "rule cards (overlay panels)",
+  "BAKERY sign box on a main-street house",
+  "shower cap: half-sphere pulled over the narrator's headphones, plus a yellow sphere rubber duck",
+  "hooded hacker: all-black blocky figure with its face in shadow and two small glowing green sphere eyes",
+  "two big grey loudspeakers clamped to the clock face (boxes with black cylinder cones) with green spark particles",
+  "battery icon overlay on the headphones (box outline with fill bar that turns red)",
+  "lightbulb pop above the head (yellow sphere + small cylinder)",
+  "ladder up the clock tower (two thin boxes with rungs)",
+  "giant power plug and cable: glowing box plug with cylinder prongs and a thick cylinder cable",
+  "purple spaceship: huge flattened disc (cylinder) with a ring of glowing sphere lights, a glass dome, a mirror-ball sphere and four giant speaker boxes"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, there's a song so catchy that if you hear one second of it, you dance for as long as it's playing.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Dawn on main street. Thirty townspeople dance in perfect sync with sweaty, sleepy faces. In the middle the narrator (my avatar with headphones) stands still, arms crossed, deadpan."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It started at the town fair, when DJ Noodle played a mystery track.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "ONE YEAR AGO",
+   "visual": "Flashback, day, town square. The stage banner reads 'TOWN FAIR'. DJ Noodle (sunglasses, gold chain, yellow cap) stands behind a glowing DJ booth with two spinning turntables."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It only had four words.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Close-up of DJ Noodle's smug face as he slowly presses a big red button on the booth."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Bimbalo! Fezza-ree! Oonga vay! Dooblanni!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:Bimbalo",
+     "gain": 0.6
+    },
+    {
+     "type": "airhorn",
+     "at": "w:Dooblanni",
+     "gain": 0.4
+    }
+   ],
+   "overlay": "BIMBALO! FEZZA-REE! OONGA VAY! DOOBLANNI!",
+   "visual": "Giant stamped words slam across the screen one at a time over pulsing purple fair lights. A small note at the bottom says 'DON'T SING THIS'.",
+   "markers": {
+    "bim": "w:Bimbalo"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The whole fair crowd snaps into dance2 at once. Party night lighting kicks in, camera shake on each HUSS."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now we have rules. Always wear headphones. Never hum. And never look a dancer in the eyes.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Always",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:Never",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:never",
+     "gain": 0.65
+    }
+   ],
+   "overlay": "RULE 1: HEADPHONES. RULE 2: NO HUMMING. RULE 3: NO EYE CONTACT.",
+   "visual": "Main street, day. Three rule cards pop in one by one: a kid in giant headphones, a crossed-out humming face, a kid covering his eyes as he walks past a dancer."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Pell hummed it in the bakery. Twelve customers danced out the door.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "laugh",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Main street bakery. Mrs. Pell (apron, hair bun, glasses) hums with her eyes closed. A conga line of twelve customers dances out of the door and down the street."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Officer Brandt sneezed it. The whole police station did the worm.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "laugh",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Officer Brandt (blue cap, mustache) sneezes. Cut to three officers lying flat (crowdSurf pose) in a row on the street, wiggling the worm in sync."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Me? I never take my headphones off. Not even in the shower.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Kid's bedroom. The narrator sleeps in bed with headphones on. Gag cut: he wears a shower cap over the headphones and holds a rubber duck, smug face."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Until yesterday, when someone in a hood, with glowing green eyes, hacked the clock tower speakers.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "HACKED",
+   "visual": "Night: a hooded figure with two glowing green eyes crouches at the clock tower speakers and plugs in a cable. HACKED stamps over it.",
+   "markers": {
+    "green": "w:green"
+   }
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole town started dancing. Grandma. The mailman. Even the pigeon.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Party night. The speakers blast glowing music notes over town. Quick cuts: Grandma starts dancing, the mailman (blue cap, sash bag) starts dance2, the pigeon bobs its head in time."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "They danced all night... while they're out partying, by the way.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:way",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "WHILE THEY'RE OUT PARTYING, BY THE WAY",
+   "visual": "Party night montage: a conga line around the clock tower and a crowd-surfer in the square. The narrator sits alone on the park picnic table with headphones on, deadpan.",
+   "markers": {
+    "btw": "w:way"
+   }
+  },
+  {
+   "id": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Rapid cuts of dancers' huss faces under pink and purple strobe lights, camera shake on every HUSS."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then my headphones beeped. Battery: five percent.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "BATTERY: 5%",
+   "visual": "Close-up on the narrator's headphones flashing red as a battery icon appears. His face turns to sweat."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Four. Three. The song leaked in. My foot started tapping. Ah, almost... almost!",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:almost",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "AH, ALMOST... ALMOST!",
+   "visual": "The battery counter drops 4%, then 3%, and the muffled music gets louder. The narrator's foot starts tapping and he catches himself with a jolt (stunned pose).",
+   "markers": {
+    "almost": "w:almost"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I had to reach the clock tower. But the streets were jammed.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "BATTERY: 2%",
+   "visual": "Wide shot from the narrator's view: the glowing clock tower far away past a main street packed wall to wall with dancers."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then it hit me. If they have to dance... they can dance me there.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The narrator in the think pose, then a sly grin as a lightbulb pops above his head."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I squeezed my eyes shut, because you never look a dancer in the eyes, and dove into the crowd. Goon Squad!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:dove",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:Goon",
+     "gain": 0.75
+    }
+   ],
+   "overlay": "GOON SQUAD!",
+   "visual": "The narrator leaps backward off the picnic table into the crowd, arms out. The dancers snap to attention in sunglasses and catch him.",
+   "markers": {
+    "goon": "w:Goon"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole town passed me over their heads, right to the clock tower.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "cheer",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The narrator in the crowdSurf pose glides over a sea of dancing townspeople down main street toward the glowing clock tower, camera tracking alongside."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I climbed the ladder. One percent left. I yanked the plug.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "BATTERY: 1%",
+   "visual": "The narrator climbs a ladder up the clock tower with the battery icon blinking red. He grabs a giant glowing power plug and yanks it out in a burst of sparks."
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Total silence, then three slow-motion HUSS cuts of the narrator on top of the clock tower holding the plug up in the moonlight, huss face."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone flopped like noodles. Then they cheered. Top ten respect.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "cheer",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "TOP 10 RESPECTFUL MOMENTS: #1 THE TOWN CARRIED ME",
+   "visual": "The whole town collapses flat on the ground, then jumps up cheering and clapping at the narrator. A Top 10 card slides in.",
+   "markers": {
+    "top10": "w:respect"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the sky turned purple. A giant spaceship came down, blasting the remix. And in every window, glowing green eyes.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:purple",
+     "gain": 0.55
+    },
+    {
+     "type": "boom",
+     "at": "w:remix",
+     "gain": 0.8
+    },
+    {
+     "type": "boom",
+     "at": "w:eyes",
+     "gain": 0.75
+    }
+   ],
+   "overlay": "THE REMIX",
+   "visual": "Purple sky: a huge round blocky spaceship lowers over the clock tower, rings of speakers pumping; every porthole glows with pairs of green eyes (the same as the hacker's).",
+   "markers": {
+    "remix": "w:remix",
+    "eyes": "w:eyes"
+   }
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And my battery? Zero percent.",
+   "gapAfter": 0.8,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:Zero",
+     "gain": 0.85
+    }
+   ],
+   "overlay": "BATTERY: 0%",
+   "visual": "Close-up: the narrator's headphones go dark and the battery icon hits 0%. His foot taps, his shocked face fights it, and he breaks into a reluctant dance. Cut to black.",
+   "markers": {
+    "zero": "w:Zero"
+   }
+  }
+ ]
+}
