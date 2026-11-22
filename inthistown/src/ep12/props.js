@@ -61,7 +61,7 @@ export function textTex(lines, { w = 512, h = 128, bg = '#ffffff', fg = '#1d1d22
 const SKY_TOP = '#2f7fe0', SKY_MID = '#7cc0f4', SKY_LOW = '#ffc58a', SKY_HOR = '#ff9a6b';
 function paintSky(g, w, h, { clouds = false, sun = false, seams = 6 } = {}) {
   const gr = g.createLinearGradient(0, 0, 0, h);
-  gr.addColorStop(0, SKY_TOP); gr.addColorStop(0.5, SKY_MID); gr.addColorStop(0.82, SKY_LOW); gr.addColorStop(1, SKY_HOR);
+  gr.addColorStop(0, SKY_TOP); gr.addColorStop(0.55, SKY_MID); gr.addColorStop(0.86, '#b4e0fa'); gr.addColorStop(0.95, SKY_LOW); gr.addColorStop(1, SKY_HOR);
   g.fillStyle = gr; g.fillRect(0, 0, w, h);
   // brush strokes (it's paint)
   const R = rng(7);
@@ -87,15 +87,33 @@ function boxCloud(s = 1) {
   return g;
 }
 function paintedBird() {
-  const g = new THREE.Group(), ink = std('#2b2d3f', { roughness: 0.6 }), m2 = std('#3d4060');
-  g.add(box(1.3, 0.5, 0.18, ink, 0, 0, 0.1, 0.18));
-  const head = box(0.5, 0.45, 0.18, ink, 0.8, 0.18, 0.1, 0.16); g.add(head);
-  const beak = box(0.32, 0.14, 0.12, '#ff9a1a', 1.18, 0.14, 0.12); beak.rotation.z = -0.15; g.add(beak);
-  const eye = box(0.14, 0.1, 0.06, basic('#ffffff'), 0.86, 0.26, 0.21); g.add(eye);
-  const lid = box(0.16, 0.04, 0.07, ink, 0.86, 0.3, 0.22); g.add(lid);   // half-closed: lazy
-  for (const s of [1, -1]) { const wing = box(1.5, 0.3, 0.14, s > 0 ? ink : m2, -0.2, 0.55, 0.08 + (s > 0 ? 0.04 : -0.02), 0.1); wing.rotation.z = s > 0 ? 0.75 : 0.35; wing.position.x = s > 0 ? -0.35 : 0.1; g.add(wing); }
-  const tail = box(0.6, 0.3, 0.14, ink, -0.85, 0.05, 0.1); tail.rotation.z = 0.35; g.add(tail);
-  g.add(box(0.06, 0.6, 0.04, '#8a8f99', 0, -0.5, -0.02));   // the pin it hangs on
+  const tex = canvasTexture(512, 384, (g, w, h) => {
+    g.lineJoin = 'round'; g.lineCap = 'round';
+    const ol = (f) => { g.lineWidth = 14; g.strokeStyle = '#1d1d22'; g.stroke(); g.fillStyle = f; g.fill(); };
+    // back wing (up, mid-flap)
+    g.beginPath(); g.moveTo(200, 200); g.quadraticCurveTo(150, 40, 60, 30); g.quadraticCurveTo(170, 120, 260, 200); g.closePath(); ol('#2f6bd8');
+    // tail
+    g.beginPath(); g.moveTo(130, 230); g.lineTo(40, 200); g.lineTo(60, 260); g.lineTo(40, 300); g.lineTo(140, 270); g.closePath(); ol('#2f6bd8');
+    // body
+    g.beginPath(); g.ellipse(250, 245, 130, 78, -0.1, 0, Math.PI * 2); ol('#4f9bff');
+    g.beginPath(); g.ellipse(270, 275, 80, 40, -0.1, 0, Math.PI * 2); g.fillStyle = '#cfe6ff'; g.fill();
+    // head
+    g.beginPath(); g.arc(380, 190, 62, 0, Math.PI * 2); ol('#4f9bff');
+    // beak
+    g.beginPath(); g.moveTo(432, 180); g.lineTo(500, 200); g.lineTo(432, 214); g.closePath(); ol('#ff9a1a');
+    // lazy half-closed eye
+    g.beginPath(); g.arc(392, 182, 20, 0, Math.PI * 2); g.fillStyle = '#ffffff'; g.fill(); g.lineWidth = 6; g.stroke();
+    g.fillStyle = '#4f9bff'; g.fillRect(368, 158, 50, 24); g.lineWidth = 9; g.beginPath(); g.moveTo(368, 182); g.lineTo(416, 182); g.stroke();
+    g.fillStyle = '#1d1d22'; g.beginPath(); g.arc(396, 190, 8, 0, Math.PI * 2); g.fill();
+    // front wing (up, mid-flap)
+    g.beginPath(); g.moveTo(230, 215); g.quadraticCurveTo(230, 30, 330, 6); g.quadraticCurveTo(290, 120, 300, 215); g.closePath(); ol('#3a82f0');
+    // zzz
+    g.fillStyle = '#ffffff'; g.strokeStyle = '#1d1d22'; g.lineWidth = 8; g.font = FONTD(60); g.strokeText('z', 450, 110); g.fillText('z', 450, 110); g.font = FONTD(42); g.strokeText('z', 490, 60); g.fillText('z', 490, 60);
+  });
+  const g = new THREE.Group();
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2.4), new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.05, fog: false }));
+  m.position.z = 0.06; g.add(m);
+  g.add(box(0.12, 0.12, 0.12, '#8a8f99', 0.15, 0.2, 0.02));   // the nail it hangs on
   return g;
 }
 export function makeSkyPanel({ w = 70, h = 34 } = {}) {
@@ -106,17 +124,17 @@ export function makeSkyPanel({ w = 70, h = 34 } = {}) {
   panel.position.set(0, h / 2, -0.2); g.add(panel);
   g.add(box(w, 0.6, 0.5, '#9a7448', 0, 0.3, 0.05));   // plywood baseboard
   const clouds = [];
-  for (const [x, y, s] of [[-12, 20, 1.3], [9, 24, 1.0], [-2, 13.5, 0.9], [18, 15, 1.2], [-24, 12, 1.0]]) { const c = boxCloud(s); c.position.set(x, y, 0); g.add(c); clouds.push(c); }
+  for (const [x, y, s] of [[-10, 20, 1.3], [6.5, 22.5, 1.0], [-1.5, 15.5, 0.9], [14, 13, 1.2], [-18, 11, 1.0]]) { const c = boxCloud(s); c.position.set(x, y, 0); g.add(c); clouds.push(c); }
   // the cloud that comes loose (pivot at its left pin)
-  const looseCloud = new THREE.Group(); looseCloud.position.set(-1.5, 8.0, 0.02); g.add(looseCloud);
+  const looseCloud = new THREE.Group(); looseCloud.position.set(-3.8, 6.5, 0.02); g.add(looseCloud);
   const lc = boxCloud(0.75); lc.position.set(2.0, 0, 0); looseCloud.add(lc);
   const pin = box(0.18, 0.18, 0.3, '#8a8f99', 0, 0.1, 0.35); looseCloud.add(pin);
-  const sunPos = V(9, 6.2, 0);
+  const sunPos = V(4.2, 7.2, 0);
   const sun = new THREE.Group(); sun.position.copy(sunPos); g.add(sun);
   const disc = new THREE.Mesh(new THREE.CylinderGeometry(3.0, 3.0, 0.25, 48), basic('#ff9a1a', { fog: false })); disc.rotation.x = PI / 2; disc.position.z = 0.15; sun.add(disc);
   const rim = new THREE.Mesh(new THREE.CylinderGeometry(3.45, 3.45, 0.2, 48), basic('#ffd23f', { fog: false })); rim.rotation.x = PI / 2; rim.position.z = 0.08; sun.add(rim);
-  const birdPos = V(-6.5, 10.5, 0.05);
-  const bird = paintedBird(); bird.position.copy(birdPos); bird.rotation.z = 0.42; bird.scale.setScalar(1.25); g.add(bird);
+  const birdPos = V(-4.5, 11.0, 0.05);
+  const bird = paintedBird(); bird.position.copy(birdPos); bird.rotation.z = 0.32; bird.scale.setScalar(1.0); g.add(bird);
   g.userData = {
     paintMat, sun, bird, clouds, looseCloud, sunPos, birdPos, w, h,
     tint(c) { paintMat.color.set(c); },
@@ -173,10 +191,10 @@ export function makeStaffDoor() {
   const glow = new THREE.Mesh(new THREE.PlaneGeometry(W + 1.6, H + 1.2), basic('#ffffff', { map: glowTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, opacity: 0.85 }));
   glow.position.set(0, H / 2, 0.01); glow.renderOrder = 3; g.add(glow);
   const hinge = new THREE.Group(); hinge.position.set(-W / 2, 0, 0.06); g.add(hinge);
-  const slab = box(W, H, 0.06, std('#8cc6f2', { roughness: 0.6 }), W / 2, H / 2, 0); hinge.add(slab);
-  const inset = box(W * 0.74, H * 0.36, 0.02, std('#a6d4f6'), W / 2, H * 0.28, 0.035); hinge.add(inset);
+  const slab = box(W, H, 0.06, std('#4f9be6', { roughness: 0.6 }), W / 2, H / 2, 0); hinge.add(slab);
+  const inset = box(W * 0.74, H * 0.36, 0.02, std('#79b8f0'), W / 2, H * 0.28, 0.035); hinge.add(inset);
   const knob = new THREE.Mesh(new THREE.SphereGeometry(0.045, 14, 10), std('#ffd23f', { metalness: 0.4, roughness: 0.3 })); knob.position.set(W * 0.86, H * 0.47, 0.06); hinge.add(knob);
-  const plate = new THREE.Mesh(new THREE.PlaneGeometry(0.72, 0.3), new THREE.MeshStandardMaterial({ map: textTex(['STAFF', 'ONLY'], { w: 512, h: 220, bg: '#fbf6ec', fg: '#d81f26', border: '#1d1d22', bw: 14 }), roughness: 0.6, emissive: '#ffffff', emissiveIntensity: 0.15 }));
+  const plate = new THREE.Mesh(new THREE.PlaneGeometry(0.72, 0.3), new THREE.MeshStandardMaterial({ map: textTex(['STAFF', 'ONLY'], { w: 512, h: 220, bg: '#fbf6ec', fg: '#d81f26', border: '#1d1d22', bw: 14 }), roughness: 0.6, emissive: '#ffffff', emissiveIntensity: 0.04 }));
   plate.position.set(W / 2, H * 0.72, 0.034); hinge.add(plate);
   g.userData = { hinge, light, glow, plate, open(k) { hinge.rotation.y = -1.9 * clamp(k, 0, 1); } };
   return g;
@@ -419,7 +437,7 @@ export function buildControlRoom() {
     const knob = new THREE.Mesh(new THREE.SphereGeometry(0.075, 16, 12), std(red ? '#e8232b' : '#ffffff', { roughness: 0.35, emissive: red ? '#550000' : '#000000' })); knob.position.y = 0.43; piv.add(knob);
     const tex = textTex(text || [name], { w: 512, h: text ? 200 : 128, bg: red ? '#d81f26' : color, fg: red ? '#ffffff' : '#10131c', border: '#10131c', bw: 10 });
     const plate = new THREE.Mesh(new THREE.PlaneGeometry(plateW, plateW * (text ? 200 : 128) / 512), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
-    plate.position.set(0, 0.32, -0.02); g.add(plate);
+    plate.position.set(0, 0.32, 0.012); g.add(plate);
     const anchor = new THREE.Object3D(); anchor.position.set(0, 0, 0.1); g.add(anchor); anchors['lever.' + name] = anchor;
     levers[name] = { g, piv, plate, knob, set(on) { piv.rotation.x = 0.75 - 1.5 * clamp(on, 0, 1); } };
     levers[name].set(0);
@@ -431,17 +449,17 @@ export function buildControlRoom() {
   const hzM = new THREE.MeshStandardMaterial({ map: hz.clone(), roughness: 0.7 }); hzM.map.repeat.set(2, 1); hzM.map.needsUpdate = true;
   root.add(box(1.5, 1.25, 0.05, hzM, gx, 1.3, CONSOLE_Z + 0.005));
   root.add(box(1.32, 1.07, 0.06, '#2a1418', gx, 1.3, CONSOLE_Z + 0.01));
-  namedLever('GRAVITY', gx, 1.12, CONSOLE_Z, { red: true, text: ['GRAVITY', { t: '(DO NOT TOUCH)', s: 0.62 }], plateW: 1.1, scale: 1.15 });
+  namedLever('GRAVITY', gx, 1.12, CONSOLE_Z + 0.05, { red: true, text: ['GRAVITY', { t: '(DO NOT TOUCH)', s: 0.62 }], plateW: 1.1, scale: 1.15 });
   levers.GRAVITY.set(1);   // gravity is ON
   // the very last lever: alone at the far east end, on a small pedestal, under a spotlight
-  root.add(box(1.1, 1.1, 0.7, consoleM, LAST_X, 0.55, CONSOLE_Z - 0.2, 0.04));
+  root.add(box(2.1, 1.1, 0.7, consoleM, LAST_X - 0.5, 0.55, CONSOLE_Z - 0.2, 0.04));
   namedLever('LAST', LAST_X, 1.42, CONSOLE_Z + 0.2, { text: ['THE PERSON', 'WATCHING THIS'], color: '#ffffff', plateW: 1.0, scale: 1.0 });
   levers.LAST.set(1);
   const onLamp = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), basic('#3cff6b', { toneMapped: false })); onLamp.position.set(LAST_X + 0.32, 1.42, CONSOLE_Z + 0.27); root.add(onLamp);
   const onTag = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.1), new THREE.MeshBasicMaterial({ map: textTex(['ON'], { w: 128, h: 64, bg: '#10131c', fg: '#3cff6b', border: null }), toneMapped: false })); onTag.position.set(LAST_X + 0.32, 1.3, CONSOLE_Z + 0.211); root.add(onTag);
-  const beam = new THREE.Mesh(new THREE.ConeGeometry(1.4, 7, 32, 1, true), basic('#fff3c8', { transparent: true, opacity: 0.12, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
-  beam.position.set(LAST_X, 4.3, CONSOLE_Z + 0.6); beam.renderOrder = 4; root.add(beam);
-  const pool = new THREE.Mesh(new THREE.CircleGeometry(1.3, 32), basic('#fff3c8', { transparent: true, opacity: 0.18, depthWrite: false, blending: THREE.AdditiveBlending })); pool.rotation.x = -PI / 2; pool.position.set(LAST_X, 0.01, CONSOLE_Z + 0.9); root.add(pool);
+  const beam = new THREE.Mesh(new THREE.ConeGeometry(0.9, 7, 32, 1, true), basic('#fff3c8', { transparent: true, opacity: 0.12, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
+  beam.position.set(LAST_X - 0.3, 4.3, CONSOLE_Z + 0.25); beam.renderOrder = 4; root.add(beam);
+  const pool = new THREE.Mesh(new THREE.CircleGeometry(1.0, 32), basic('#fff3c8', { transparent: true, opacity: 0.18, depthWrite: false, blending: THREE.AdditiveBlending })); pool.rotation.x = -PI / 2; pool.position.set(LAST_X - 0.3, 0.01, CONSOLE_Z + 0.75); root.add(pool);
   mk('last', LAST_X, 0, CONSOLE_Z + 0.2);
   // ── monitors
   const modes = ['day', 'night', 'float', 'cheer', 'tuesday', 'alert'];
@@ -484,9 +502,9 @@ export function buildControlRoom() {
   for (let i = 0; i < dotN; i++) { p.set(-13.8 + i * 0.468, 1.66, CONSOLE_Z + 0.02); m4.compose(p, q.identity(), one); dots.setMatrixAt(i, m4); dots.setColorAt(i, c.set('#3cff6b')); }
   root.add(dots);
   // ── lights
-  const amb = new THREE.AmbientLight('#8090c0', 0.35); root.add(amb);
-  const hemi = new THREE.HemisphereLight('#a8b8ff', '#20202c', 0.7); root.add(hemi);
-  const key = new THREE.DirectionalLight('#dfe6ff', 1.1); key.position.set(4, 9, 8); root.add(key); root.add(key.target); key.target.position.set(0, 0, -3);
+  const amb = new THREE.AmbientLight('#8090c0', 0.6); root.add(amb);
+  const hemi = new THREE.HemisphereLight('#a8b8ff', '#30303c', 1.1); root.add(hemi);
+  const key = new THREE.DirectionalLight('#dfe6ff', 1.5); key.position.set(4, 9, 8); root.add(key); root.add(key.target); key.target.position.set(0, 0, -3);
   const monGlow = new THREE.PointLight('#8fc8ff', 6, 12, 1.2); monGlow.position.set(0, 3.6, -2.4); root.add(monGlow);
   const consoleGlow = new THREE.PointLight('#c8d0ff', 3, 16, 1.2); consoleGlow.position.set(-6, 2.2, -1.5); root.add(consoleGlow);
   const consoleGlow2 = new THREE.PointLight('#c8d0ff', 3, 16, 1.2); consoleGlow2.position.set(7, 2.2, -1.5); root.add(consoleGlow2);
@@ -499,7 +517,7 @@ export function buildControlRoom() {
   const background = new THREE.Color('#05060c');
   const fog = new THREE.Fog('#05060c', 20, 60);
   const options = { alarm: 0, power: 1, screens: 'day', lights: null, lastSpot: 0 };
-  const base = { amb: 0.35, hemi: 0.7, key: 1.1, mon: 6, cg: 3 };
+  const base = { amb: 0.6, hemi: 1.1, key: 1.5, mon: 8, cg: 5 };
   const tmpC = new THREE.Color();
   let lastT = 0;
   function apply() {
@@ -509,7 +527,7 @@ export function buildControlRoom() {
     monGlow.intensity = base.mon * pw; consoleGlow.intensity = base.cg * pw * (1 - 0.4 * al); consoleGlow2.intensity = base.cg * pw * (1 - 0.4 * al);
     reds.forEach((r) => { r.intensity = 60 * al * pulse * pw; });
     alarmBulb.material.color.set(al > 0 ? tmpC.set('#ff2020').multiplyScalar(0.4 + pulse) : tmpC.set('#5a0d10'));
-    lastSpot.intensity = 8 * options.lastSpot; beam.material.opacity = 0.05 + 0.12 * options.lastSpot; pool.material.opacity = 0.06 + 0.16 * options.lastSpot;
+    lastSpot.intensity = 8 * options.lastSpot; beam.material.opacity = 0.02 + 0.05 * options.lastSpot; pool.material.opacity = 0.06 + 0.16 * options.lastSpot;
     const lf = options.lights;
     screens.forEach((s, i) => {
       const md = typeof options.screens === 'function' ? options.screens(i, lastT) : options.screens;
