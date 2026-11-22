@@ -1,0 +1,497 @@
+{
+ "title": "In This Town — Zero Aura",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town everyone has a glowing aura number floating over their head. The narrator has the lowest score in town, and after tripping on stage it drops to one point, a step away from turning gray forever. Then they find the one cheat code nobody has tried: not caring.",
+ "twist": "The whole town copies the 'I don't care' trick, but they're all lying, so they all drop to zero and turn gray. The kid finally takes the golden throne. Then a pigeon lands on their head with TWO MILLION aura, because the pigeon has never cared about anything in its life.",
+ "caption_hook": "my aura hit 1 so i tried the one thing nobody in this town has ever done",
+ "vibe": "trend",
+ "sets": [
+  "town main street (day)",
+  "park with table and tree (day)",
+  "town square with stage and banner (day)",
+  "kid's bedroom (night)",
+  "town square (dusk), filled with gray townspeople walking in a circle"
+ ],
+ "newProps": [
+  "glowing aura number tags floating above every character's head (gold for positive, red when dropping, dim when low, '0' when gone)",
+  "thin gold halo ring (flat cylinder) under each number tag",
+  "golden throne on the town square stage (gold boxes, red cushion box, two sphere knobs, light beams behind it)",
+  "'AURA KING' banner on the town square stage",
+  "falling phone (thin black box with glowing screen)",
+  "school photo camera on a tripod (box body, cylinder lens, three thin cylinder legs) with a white flash burst",
+  "gray NPC versions of the townspeople (gray skin and gray clothes, no number tag)",
+  "giant glowing '1,000,000' made of gold boxes towering over the square, with vertical light beams",
+  "'2,000,000' giant tag over the pigeon, much bigger than the kid's"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everyone has a glowing number floating over their head.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Slow push down main street on a sunny day. Every townsperson has a glowing gold number hovering over their head: 4,210, 880, 15,300. Extras walk and wave. On a bench, the pigeon sits completely unbothered with a blurry '???' tag that is cropped at the top edge of frame."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Your aura.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "AURA",
+   "visual": "Snap zoom onto one townsperson's glowing number tag as it pulses brighter."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Do something cool, it goes up. Do something cringe, it goes down.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "scratch",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "COOL = UP / CRINGE = DOWN",
+   "visual": "Two quick cuts. A kid does dance2 and their number flicks up in green. Then a man in a bowtie trips into the stunned pose and his number drops in red."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Whoever has the most aura gets the golden throne.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Town square stage. A glowing golden throne sits under an 'AURA KING' banner, gold light beams behind it, sparkles drifting."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Kevin from the Goon Squad caught a falling phone without even looking. Plus five hundred.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:falling",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:Plus",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "+500",
+   "visual": "Park. Kevin (sunglasses, red hoodie, smug face) leans on the tree. A phone slides off the table and his hand snaps out and catches it while he keeps staring the other way. His tag flies up: +500. Kevin's two friends (matching sunglasses, a 'GOON SQUAD' tag) nod behind him.",
+   "markers": {
+    "goon": "w:Goon",
+    "plus500": "w:Plus"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Patel waved back at someone who wasn't waving at him. Minus two thousand.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:wasn",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "-2,000",
+   "visual": "Main street. Mr. Patel (mustache, green sweater) waves happily at a woman, but she's waving at someone behind him. He freezes mid-wave with a sweat face, and his tag crashes down in red.",
+   "markers": {
+    "minus2k": "w:Minus"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Three snap zooms, closer each time, on Mr. Patel's frozen sweaty face and hand still raised. Small camera shake."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And if your aura ever hits zero, you turn gray and walk in circles forever, saying, nice weather today.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Main street at dusk. Gray townspeople with no number tags shuffle slowly in a circle around a street lamp, sleepy faces. One slowly turns its head to the camera."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And me? I had twelve. The lowest in town.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Kid's bedroom at night. The narrator (tan skin, messy black hair, yellow hoodie, blue cap on backwards) sits on the bed with a sad face. A tiny, dim '12' flickers over their head."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Because I sneezed during the school photo.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "-300",
+   "visual": "Flashback in the town square. A row of smiling kids faces the tripod camera. The flash fires white just as the narrator sneezes (surprised face, head snapped forward). Their number plummets."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Yesterday, something went terribly wrong. I tripped on the stage in front of the whole town.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "scratch",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Town square, day, with a crowd watching. The narrator walks across the stage, catches a foot and falls flat on their face (crowdSurf pose). The crowd switches to shocked faces."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My number started dropping. Twelve. Eight. Three...",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Twelve",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:Eight",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:Three",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "12... 8... 3...",
+   "visual": "Close on the narrator lying face-down. The red number over their head ticks down in big jumps, flickering.",
+   "markers": {
+    "n12": "w:Twelve",
+    "n8": "w:Eight",
+    "n3": "w:Three"
+   }
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "One. Ah, almost. Almost.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.5
+    },
+    {
+     "type": "boom",
+     "at": "w:almost",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "1 ... ALMOST",
+   "visual": "Extreme close-up on a single flickering red '1' over the narrator's head, dark vignette closing in.",
+   "markers": {
+    "almost": "w:almost"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Three snap cuts on shocked faces in the crowd: Kevin lowering his sunglasses, Mr. Patel, a grandma covering her mouth."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "One aura point left. Everyone backed away like I was contagious.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Wide shot. The crowd shuffles backward and makes a big empty ring around the stage. Some peer, some cross their arms."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then a pigeon walked right past me. Didn't care. Not even a little. That's it. The coolest thing you can do is not care.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "The pigeon waddles slowly across the stage right past the narrator's face, blank stare, ignoring everything (its tag still cropped out of frame). The narrator watches it, then copies its blank stare: face goes from sad to determined to a small smug smile.",
+   "markers": {
+    "pigeon16": "w:pigeon",
+    "copy": "w:coolest"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I lay there, looked up at the sky, and said, I don't care about aura.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Top-down shot. The narrator rolls onto their back on the stage, arms behind their head, sleepy content face, clouds drifting over. The '1' wobbles."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My number exploded. One. Million.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:Million",
+     "gain": 0.85
+    },
+    {
+     "type": "cheer",
+     "at": "w:Million+0.3",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "1,000,000",
+   "visual": "The '1' bursts into a giant glowing gold '1,000,000' towering over the town square, with vertical light beams. The crowd gets blown back into stunned poses.",
+   "markers": {
+    "million": "w:Million"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Victory chant. Saibao! Ela des! Ela sobi! Nubani!",
+   "music": "party",
+   "overlay": "SAIBAO! ELA DES! ELA SOBI! NUBANI!",
+   "sfx": [
+    {
+     "type": "airhorn",
+     "at": "w:Saibao",
+     "gain": 0.45
+    },
+    {
+     "type": "scratch",
+     "at": "w:Nubani",
+     "gain": 0.5
+    }
+   ],
+   "markers": {
+    "saibao": "w:Saibao",
+    "eladesc": "w:des",
+    "sobi": "w:sobi",
+    "nubani": "w:Nubani"
+   },
+   "gapAfter": 0.25,
+   "visual": "The narrator does a wild victory dance on the stage under the gold beams; each nonsense word stamps on screen in a different color with a camera punch."
+  },
+  {
+   "id": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Fast cuts: the narrator jumps up and dances on stage under the gold beams, the crowd's jaws drop, Kevin's sunglasses fall off, Mr. Patel claps, camera shake on the giant number."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone wanted my secret. So the whole town shouted, I don't care about aura!",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The whole crowd faces the sky with fists up (cheer pose), shouting together, determined faces."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "But they were lying. Zero. Zero. Zero.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:Zero",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:Zero+0.5",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:Zero+1.0",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "0",
+   "visual": "Down the line of the crowd, each number tag pops to a red '0', one after another, and each person turns gray as it hits.",
+   "markers": {
+    "zero": "w:Zero"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now the whole town walks in circles, saying nice weather today.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Town square at dusk. The entire gray town shuffles slowly in one huge circle around the stage, sleepy faces."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're walking in circles, by the way, I'm on the golden throne. Maximum aura.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The narrator lounges on the golden throne with a smug face and the gold '1,000,000' glowing above them. The gray crowd circles slowly below.",
+   "markers": {
+    "btw": "w:way",
+    "throne": "w:throne"
+   }
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then a pigeon landed on my head. Its number? Two million.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:landed",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:Two",
+     "gain": 0.85
+    }
+   ],
+   "overlay": "2,000,000",
+   "visual": "The pigeon flutters down and lands right on the narrator's cap. A massive '2,000,000' tag appears above the pigeon and dwarfs the kid's. The narrator's face goes shocked. At the same moment the narrator's 1,000,000 starts ticking down ('wait... do I care now?').",
+   "markers": {
+    "landed": "w:landed",
+    "twomil": "w:Two"
+   }
+  },
+  {
+   "id": "b26",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.8,
+   "music": "party",
+   "visual": "Three snap zooms on the pigeon staring blankly into the camera, completely unbothered."
+  }
+ ]
+}
