@@ -1,0 +1,450 @@
+{
+ "title": "In This Town — Staff Only",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town the sky is a painted wall you can bonk into. When a kid follows his cat through a crack in the clouds, he finds a STAFF ONLY door, a control room full of levers, and the pigeon who runs the whole world. Then he floats the entire town by accident.",
+ "twist": "After he saves the town by switching everything off and on again, he spots the very last lever. Its label reads THE PERSON WATCHING THIS, and it's switched ON. The pigeon turns to the camera and reaches for it. 'So, uh... don't scroll.' Hard cut to static.",
+ "caption_hook": "the sky in my town has a STAFF ONLY door",
+ "vibe": "unknown",
+ "sets": [
+  "main street (day, then dusk) ending at the painted sky wall",
+  "town square stage with the big banner reading SKY RULES (day)",
+  "bedroom interior redressed as Mr. Finch's living room",
+  "edge of town by the painted sunset",
+  "park with table and tree at dusk, by the sky wall",
+  "control room behind the sky (new interior built from boxes)"
+ ],
+ "newProps": [
+  "giant painted sky wall: huge flat blue panel that curves around the town, flat white box clouds, flat orange disc sun, a crooked painted bird",
+  "glowing crack in the sky wall (thin bright white sliver)",
+  "small door set into the sky wall with a glowing white outline and a STAFF ONLY sign plate",
+  "control room interior: big dark box room",
+  "lever wall: long box panels with rows of cylinder levers, each with a glowing label plate (SUNRISE, RAIN, TUESDAY, red GRAVITY (DO NOT TOUCH), and one last lone lever: THE PERSON WATCHING THIS)",
+  "bank of glowing monitor boxes showing the town from above",
+  "big spinny chair (cylinder base, box seat and back)",
+  "headphones and sunglasses sized for the pigeon",
+  "huge red MAIN switch with a box handle",
+  "red alarm light that floods the room",
+  "small personal rain cloud: dark gray spheres dripping blue cylinder raindrops",
+  "white sphere baseball",
+  "BAKERY sign for one house",
+  "houses and townspeople lifting off the ground (float animation)"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, if you walk far enough in any direction, you bonk into the sky.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:bonk",
+     "gain": 0.9
+    }
+   ],
+   "overlay": "BONK.",
+   "visual": "Day, main street. The kid (red cap, yellow hoodie) walks to the end of the road, where the houses stop and the road runs straight into a giant flat painted wall: blue sky, white box clouds, an orange disc sun. He walks face-first into it. Camera shake, the wall wobbles.",
+   "markers": {
+    "bonk": "w:bonk"
+   }
+  },
+  {
+   "id": "b02",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "The kid staggers back rubbing his forehead (face: shocked). A punch-in on each HUSS; a painted cloud comes loose and tilts sideways."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It's a wall. A painted wall. Clouds, sunset, one very lazy bird.",
+   "gapAfter": 0.3,
+   "visual": "Wide crane up: the painted wall curves all the way around the town like a giant fence. Then a close-up of a flat painted bird stuck mid-flap, slightly crooked."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The grown-ups have three rules. Don't touch the sky. Don't peel the sky. And never, ever knock on the sky.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:touch",
+     "gain": 0.7
+    },
+    {
+     "type": "ding",
+     "at": "w:peel",
+     "gain": 0.7
+    },
+    {
+     "type": "ding",
+     "at": "w:knock",
+     "gain": 0.75
+    }
+   ],
+   "overlay": "1. DON'T TOUCH  2. DON'T PEEL  3. NEVER KNOCK",
+   "visual": "Town square, day. The mayor (top hat, sash) points from the stage under the big banner reading SKY RULES. A stamped card pops in for each rule.",
+   "markers": {
+    "r1": "w:touch",
+    "r2": "w:peel",
+    "r3": "w:knock"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Finch peeled a corner once. Now it rains on him. Only him. Indoors.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:rains",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "INDOORS.",
+   "visual": "Mr. Finch's living room (redressed bedroom). Mr. Finch (gray mustache, glasses, cardigan) sits at a table sipping from a mug, deadpan, while a small dark-gray sphere cloud hovers over his head and drips blue cylinder raindrops on him.",
+   "markers": {
+    "indoors": "w:Indoors"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Becky threw a baseball at the sunset. It came back. Signed.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:threw",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:back",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Edge of town at the painted sunset. Becky (pigtails, green jersey) winds up and throws a white sphere baseball at the orange sun disc. It bounces off the wall and drops right back into her hands.",
+   "markers": {
+    "back": "w:back",
+    "signed": "w:Signed"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It said, nice arm. Love, Management.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Nice arm.",
+    "by": "Management"
+   },
+   "visual": "Close-up of the ball in Becky's hands, then the quote card slams in.",
+   "markers": {
+    "quote1": "start-0.05",
+    "mgmt": "w:Love"
+   }
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Becky stunned. Behind her, a crowd of extras slowly turns to look up at the sky wall, one punch-in per HUSS."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Yesterday my cat squeezed through a crack in the sky behind the park.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Dusk at the park. The orange cat trots past the table and the tree to the sky wall and squeezes into a thin glowing crack in the painted clouds."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I followed him. Behind the crack, there was a tiny door. It said, Staff Only.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "STAFF ONLY",
+   "visual": "The kid peers into the crack (face: squint). Reveal: a small door set into the painted sky, outlined in glowing white light, with a sign plate.",
+   "markers": {
+    "staff": "w:Staff"
+   }
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So obviously, I went in.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid looks straight at the camera, shrugs (shrug pose) and pushes the door open. White light floods the screen."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A giant control room. Hundreds of levers. Sunrise. Rain. Tuesday. Gravity, do not touch.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "A huge dark control room: a long wall of cylinder levers on box panels, each with a glowing label plate (SUNRISE, RAIN, TUESDAY, and in red, GRAVITY (DO NOT TOUCH)). Rows of glowing monitors show the town from above. The camera pans along the labels as they're named."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And in the big spinny chair, wearing headphones... a pigeon.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:pigeon",
+     "gain": 0.8
+    }
+   ],
+   "visual": "A big spinny chair facing the monitors slowly turns around to reveal the pigeon in chunky headphones and sunglasses.",
+   "markers": {
+    "pigeon": "w:pigeon"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Staredown: alternating punch-ins between the kid (face: shocked) and the pigeon. On the sixth HUSS the pigeon's sunglasses slide down its beak."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I screamed. He screamed. I fell backwards, right onto Gravity.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:screamed",
+     "gain": 0.6
+    },
+    {
+     "type": "siren",
+     "at": "w:Gravity",
+     "gain": 0.45,
+     "dur": 2.4
+    }
+   ],
+   "overlay": "GRAVITY: OFF",
+   "visual": "The kid (face: shocked) and the pigeon (flapping) both scream. The kid falls backwards and his elbow slams the GRAVITY lever. It flips, and red alarm light floods the room.",
+   "markers": {
+    "gravity": "w:Gravity"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Outside, the whole town floated up. The bakery. The mayor. Mr. Finch and his little rain cloud.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Main street at dusk: houses lift off the ground (one labeled BAKERY), the mayor drifts past upside down holding his top hat, Mr. Finch floats by still sitting in his chair under his rain cloud, and extras drift up flat in crowdSurf pose."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I grabbed Sunrise to steady myself. Then Tuesday. It was Tuesday three times.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Sunrise",
+     "gain": 0.7
+    },
+    {
+     "type": "ding",
+     "at": "w:Tuesday",
+     "gain": 0.7
+    },
+    {
+     "type": "ding",
+     "at": "w:three",
+     "gain": 0.75
+    }
+   ],
+   "overlay": "TUESDAY x3",
+   "visual": "Control room: the kid grabs SUNRISE, then TUESDAY. On the monitors the sky flashes day, night, day, night. A counter stamps up.",
+   "markers": {
+    "sunrise": "w:Sunrise",
+    "tuesday": "w:Tuesday",
+    "three": "w:three"
+   }
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I remembered how my mom fixes the TV. I switched everything off... and on again.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:off",
+     "gain": 0.8
+    },
+    {
+     "type": "ding",
+     "at": "we:on",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "OFF... AND ON AGAIN",
+   "visual": "The kid (face: determined) grabs a huge red MAIN switch with both hands and pulls it down. Total blackout. He pushes it back up and the lights blink back on one by one.",
+   "markers": {
+    "off18": "w:off",
+    "on18": "we:on"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone landed. The pigeon gave me a slow clap. With wings.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "cheer",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Main street: every house and townsperson drops back down with a bump and dusts themselves off. Cut back to the control room, where the pigeon slow-claps its wings from the spinny chair."
+  },
+  {
+   "id": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "The kid in cheer pose (face: grin). The monitors behind him show the townspeople cheering. A punch-in on the pigeon nodding with each HUSS."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I saw the very last lever. It wasn't labeled rain, or sky.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "The camera tracks slowly down the lever wall, past dozens of labels, to the very last lever at the far end, glowing alone in the dark."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It said, the person watching this. And it's switched on.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:switched",
+     "gain": 0.8
+    }
+   ],
+   "overlay": "THE PERSON WATCHING THIS: ON",
+   "visual": "Close-up of its glowing label plate: THE PERSON WATCHING THIS. The lever is in the ON position. The pigeon slowly turns and looks straight into the camera.",
+   "markers": {
+    "watching": "w:watching",
+    "on": "w:switched"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So, uh... don't scroll.",
+   "gapAfter": 0.8,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "DON'T SCROLL",
+   "visual": "The pigeon's wing slowly reaches for the lever. The kid leans into the camera and whispers (face: sweat). Hard cut to static."
+  }
+ ]
+}
