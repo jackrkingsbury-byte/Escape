@@ -451,11 +451,11 @@ export const shots = [
       g.face(hit != null && ctx.t - hit < 0.16 ? 'huss' : 'determined', ctx.t);
       if (hit != null) burstAt(ctx, st.FT(0, 0.01, i === 2 ? 0.15 : 0), ctx.t, hit);
       ctx.cam.punch(hits, ctx.t, 0.12, 0.18); ctx.cam.shake(0.12, ctx.t, 50 + i);
-      if (i === 0) ctx.cam.set({ pos: st.FT(0.55, 0.5, -0.75), look: st.FT(0, 0.02, 0), fov: 44 });
+      if (i === 0) ctx.cam.set({ pos: st.FT(1.05, 0.62, -0.15), look: st.FT(-0.1, 0.02, 0.05), fov: 44 });
       if (i === 1) {
         if (n >= 4) { const d = P.dots[39]; ctx.add(d, ctx.cast.pigeon.root); d.position.set(0, 0.24, 0.12); d.rotation.set(Math.PI / 2, 0, 0); }
         const pg = ctx.cast.pigeon; pg.face(n >= 4 ? 'shocked' : 'smug', ctx.t);
-        ctx.cam.set({ pos: st.FT(-0.2, 0.55, -0.9), look: st.FT(-0.45, 0.15, 0.25), fov: 40 });
+        ctx.cam.set({ pos: st.FT(-1.25, 0.7, -0.05), look: st.FT(-0.45, 0.12, 0.25), fov: 40 });
       }
       if (i === 2) {
         const m = st.mayor; m.pose('peer', ctx.t); m.face('shocked', ctx.t);
@@ -632,7 +632,7 @@ export const shots = [
       const g = ctx.cast.grandad; g.root.position.copy(F(3.2, 2.25, 0)); g.root.rotation.set(0, F.yaw - Math.PI / 2, 0);
       g.pose('crowdSurf', ctx.t); g.face('wink', ctx.t);
       const hp = headPos(g, 0);
-      ctx.cam.set({ pos: hp.clone().add(V(0, 0.9, 0)).addScaledVector(F.fwd, 2.2), look: hp, fov: 40 });
+      ctx.cam.set({ pos: hp.clone().add(V(0, 1.7, 0)).addScaledVector(F.fwd, 3.6), look: hp.clone().add(V(0, -0.3, 0)), fov: 40 });
       const d = ctx.t - ctx.markers.bingo - 0.35;
       if (d > 0) {
         const rr = Math.min(1, ease.inCubic(d / 0.6)) * 1300;
