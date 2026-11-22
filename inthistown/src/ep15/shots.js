@@ -296,7 +296,7 @@ S({
     const b = { pos: L(-44.6, 8.6, 1.4), look: L(CLOCK[0], 11.0, CLOCK[2]), fov: 26 };
     const ta = tt;   // shot starts at t = 0, so this is the local time of the hit
     if (lt < ta) moveCam(ctx, w0, a, ease.inOutCubic(clamp(lt / ta, 0, 1)), 0.2);
-    else moveCam(ctx, a, b, ease.outSine(clamp((lt - ta) / 0.6, 0, 1)), 0.2);
+    else moveCam(ctx, a, b, ease.outCubic(clamp((lt - ta) / 0.6, 0, 1)), 0.2);
     if (d > 0 && d < 0.12) ctx.cam.shake(0.15, ctx.t, 3);
     clock333(ctx, tt);
   },
@@ -334,7 +334,7 @@ S({
     const x = 23.5 - 6 * (ctx.t - ctx.time('b02'));
     trainAt(ctx, L, x, { t: ctx.t });
     lampGlows(ctx, L, x - 12);
-    moveCam(ctx, { pos: L(-6, 0.6, 6.6), look: L(8, 2.4, 2.0), fov: 54 }, { pos: L(-6.3, 0.55, 6.7), look: L(7, 2.3, 1.8), fov: 52 }, clamp(lt / 2.2, 0, 1), 0.5);
+    moveCam(ctx, { pos: L(-1.6, 0.6, 6.7), look: L(10, 2.4, 2.0), fov: 54 }, { pos: L(-1.9, 0.55, 6.8), look: L(9, 2.3, 1.8), fov: 52 }, clamp(lt / 2.2, 0, 1), 0.5);
   },
 });
 S({
@@ -403,7 +403,8 @@ S({
     if (k < 1) { o.pose('walk', ctx.t, { speed: 0.9 }); } else o.pose('idle', ctx.t);
     if (ctx.t > t0 + 0.1 && ctx.t < t0 + 1.3) { o.joints.armL.rotation.set(0, 0, 2.5 + 0.3 * Math.sin(ctx.t * 10)); o.joints.foreArmL.rotation.set(0, 0, 0.3 * Math.sin(ctx.t * 10)); o.joints.head.rotation.y = 0.8; }
     o.face('grin', 0.5);
-    moveCam(ctx, { pos: L(OTTO_X - 4.4, 1.5, 2.15), look: L(OTTO_X + 0.3, 1.45, 3.9), fov: 50 }, { pos: L(OTTO_X - 3.8, 1.6, 2.2), look: L(OTTO_X + 0.3, 1.7, 2.6), fov: 48 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)), 0);
+    const oc = moveCam(ctx, { pos: L(OTTO_X - 5.2, 1.5, 2.15), look: L(OTTO_X + 0.6, 1.45, 4.2), fov: 50 }, { pos: L(OTTO_X - 4.6, 1.6, 2.2), look: L(OTTO_X + 0.6, 1.7, 2.6), fov: 48 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)), 0);
+    ctx.cam.set({ ...oc, look: L(OTTO_X + 0.5, 1.45 + Math.min(y, 1.16), z + 0.6) });
   },
 });
 S({
@@ -457,7 +458,7 @@ function benchRig(ctx) {
 function ottoShh(o, t, turn = 0) {
   o.pose('sit', t, { seatHeight: 0.5, hands: 'lap' });
   const J = o.joints;
-  J.armR.rotation.set(-2.0, 0, 0.35); J.foreArmR.rotation.set(-1.75, 0, 0);
+  J.armR.rotation.set(-2.0, 0, 0.75); J.foreArmR.rotation.set(-1.75, 0, 0);
   J.head.rotation.y += 1.0 * turn; J.head.rotation.x += -0.1;
   o.face('smug', 1.0);
 }
@@ -481,7 +482,7 @@ S({
     ottoShh(o, ctx.t, turn);
     me.pose('peer', ctx.t, { intensity: 1 }); me.face(turn > 0.5 ? 'sad' : 'shocked', ctx.t);
     const k = ease.inOutSine(clamp(lt / 1.1, 0, 1));
-    setCam(ctx, { pos: F(lerp(-1.95, -1.85, k), 1.6, lerp(4.7, 4.4, k)), look: F(0.25, 1.15, 2.4), fov: 40 }, 0);
+    setCam(ctx, { pos: F(lerp(1.0, 0.9, k), 0.85, lerp(9.4, 9.0, k)), look: F(-0.35, 1.2, 2.7), fov: 46 }, 0);
     tag(ctx, 'WHERE?!', ctx.time('b06.w13'), Infinity, { y: 0.13, size: 80 });
   },
 });
@@ -506,7 +507,7 @@ function libraryRig(ctx) {
 function laceyWag(l, t, k = 1) {
   l.pose('idle', t, { intensity: 0.4 });
   const J = l.joints;
-  J.armR.rotation.set(-2.2 * k, 0, 0.5 * k); J.foreArmR.rotation.set(-0.45 * k, 0, 0.3 * Math.sin(t * 9) * k);
+  J.armR.rotation.set(-2.5 * k, 0, -0.2 * k); J.foreArmR.rotation.set(-0.45 * k, 0, 0.3 * Math.sin(t * 9) * k);
   J.armL.rotation.z += 0.0; J.torso.rotation.x += 0.08 * k;
 }
 S({
@@ -517,7 +518,7 @@ S({
     const tr = ctx.markers.rhymes;
     laceyWag(l, ctx.t, ctx.t > tr - 0.3 ? 1 : 0); l.face(ctx.t > tr ? 'smug' : 'smile', ctx.t);
     me.pose('idle', ctx.t); me.face('neutral', ctx.t);
-    moveCam(ctx, { pos: Rf(-0.5, 2.4, 5.6), look: Rf(0.3, 1.2, -0.6), fov: 44 }, { pos: Rf(-0.4, 1.9, 4.4), look: Rf(0.3, 1.3, -0.7), fov: 42 }, ease.inOutSine(clamp(lt / 3.2, 0, 1)), 0);
+    moveCam(ctx, { pos: Rf(0.0, 2.4, 5.6), look: Rf(0.4, 1.2, -0.4), fov: 44 }, { pos: Rf(0.1, 1.9, 4.4), look: Rf(0.4, 1.3, -0.5), fov: 42 }, ease.inOutSine(clamp(lt / 3.2, 0, 1)), 0);
     tag(ctx, 'ONLY RHYMES', tr, Infinity, { y: 0.28, bg: 'rgba(138,92,255,0.92)' });
   },
 });
@@ -538,8 +539,8 @@ function kidWithBook(ctx, me, raise = 0) {
 }
 function bookArms(me, raise = 0) {
   const J = me.joints;
-  J.armR.rotation.set(lerp(-0.9, -1.9, raise), 0, lerp(0.35, 0.45, raise)); J.foreArmR.rotation.set(lerp(-0.9, -0.9, raise), 0, 0);
-  J.armL.rotation.set(lerp(-0.9, -1.9, raise), 0, lerp(-0.35, -0.45, raise)); J.foreArmL.rotation.set(lerp(-0.9, -0.9, raise), 0, 0);
+  J.armR.rotation.set(lerp(-0.9, -1.4, raise), 0, lerp(0.35, 0.45, raise)); J.foreArmR.rotation.set(lerp(-0.9, -1.0, raise), 0, 0);
+  J.armL.rotation.set(lerp(-0.9, -1.4, raise), 0, lerp(-0.35, -0.45, raise)); J.foreArmL.rotation.set(lerp(-0.9, -1.0, raise), 0, 0);
 }
 S({
   name: 'quote OTS', start: 'quoteLacey-0.06', set: 'library',
@@ -548,7 +549,7 @@ S({
     tick(ctx); const { R: Rf } = ctx.store, l = ctx.cast.lacey, me = ctx.cast.me;
     laceyWag(l, ctx.t, 1); l.face('determined', ctx.t);
     me.pose('idle', ctx.t, { intensity: 0.4 }); bookArms(me, 0.35); me.face('sweat', ctx.t);
-    moveCam(ctx, { pos: Rf(-0.15, 1.45, 2.75), look: humanFace(l).add(up(0.3)), fov: 42 }, { pos: Rf(-0.12, 1.45, 2.45), look: humanFace(l).add(up(0.28)), fov: 41 }, clamp(lt / 2.8, 0, 1), 0.6);
+    moveCam(ctx, { pos: Rf(-0.5, 1.45, 2.75), look: humanFace(l).add(up(0.3)), fov: 42 }, { pos: Rf(-0.47, 1.45, 2.45), look: humanFace(l).add(up(0.28)), fov: 41 }, clamp(lt / 2.8, 0, 1), 0.6);
     quoteCard(ctx, 'This book is late, and that’s a crime. Return it now, or pay a dime.', 'Mrs. Lacey', ctx.markers.quoteLacey, ctx.time('b08.end') + 0.15, { y: 0.3, size: 72, byAt: ctx.markers.quoteLacey + 0.5 });
   },
 });
@@ -560,7 +561,7 @@ S({
     laceyWag(l, ctx.t, 1); l.face('determined', ctx.t);
     me.pose('idle', ctx.t, { intensity: 0.4 }); bookArms(me, 0.3); me.face('sweat', ctx.t);
     const f = humanFace(me);
-    setCam(ctx, { pos: Rf(-0.35, 1.95, -1.8), look: f.clone().add(up(0.05)), fov: 36 }, 1.4, '#fff0dc');
+    setCam(ctx, { pos: Rf(-0.8, 2.05, -1.75), look: f.clone().add(up(0.0)), fov: 36 }, 1.4, '#fff0dc');
     ctx.cam.shake(0.03, ctx.t, 7);
     quoteCard(ctx, 'This book is late, and that’s a crime. Return it now, or pay a dime.', 'Mrs. Lacey', ctx.markers.quoteLacey, ctx.time('b08.end') + 0.15, { y: 0.3, size: 72, byAt: ctx.markers.quoteLacey + 0.5 });
   },
@@ -575,7 +576,7 @@ S({
     const z = 0.75 + 0.9 * lt;
     me.root.position.copy(Rf(0.35, 0, z)); me.root.rotation.set(0, Rf.yaw + Math.PI, 0);
     me.pose('walk', -ctx.t, { speed: 0.8 }); bookArms(me, 1); me.face('sweat', ctx.t);
-    setCam(ctx, { pos: Rf(-0.85, 1.7, -1.85), look: Rf(0.35, 1.2, 1.2), fov: 42 }, 0.8, '#fff0dc');
+    setCam(ctx, { pos: Rf(-1.4, 1.65, -1.5), look: Rf(0.3, 1.15, 1.2), fov: 42 }, 0.8, '#fff0dc');
     tag(ctx, 'IT’S A PROBLEM', ctx.time('b09.w1'), Infinity, { y: 0.17, bg: 'rgba(200,0,40,0.9)' });
   },
 });
@@ -609,7 +610,7 @@ S({
     set.exposure = lerp(1.12, 0.82, cold);
     if (set.fog) set.fog.color.set('#1a2c3e').lerp(new THREE.Color('#0c1a33'), cold);
     lampGlows(ctx, L, null, lerp(0.8, 0.45, cold));
-    moveCam(ctx, { pos: L(-3, 3.2, 3.5), look: L(-26, 3.0, -10), fov: 50 }, { pos: L(-3.6, 3.0, 3.2), look: L(-26, 3.0, -10), fov: 48 }, clamp(lt / 2.5, 0, 1), 0.4, '#a8c0ff');
+    moveCam(ctx, { pos: L(2.5, 4.4, 5.5), look: L(-19, 4.6, -10.5), fov: 54 }, { pos: L(1.8, 4.2, 5.2), look: L(-19, 4.6, -10.5), fov: 52 }, clamp(lt / 2.5, 0, 1), 0.4, '#a8c0ff');
     ctx.fx.overlay('#0a1a40', 0.12 * cold);
     tag(ctx, 'THE RULE', ctx.time('b10.w2'), Infinity, { y: 0.16, bg: 'rgba(200,0,40,0.9)' });
   },
@@ -661,7 +662,7 @@ S({
     lampGlows(ctx, L, null);
     const w = ctx.anchor('myHouse.window'); w.updateWorldMatrix(true, false);
     const k = ease.inOutSine(clamp(lt / 2.2, 0, 1));
-    const pos = rel(w, [0.3, 0.1, lerp(-0.25, 0.05, k)]), look = L(TRAIN_STOP - 1.4, 1.0, 1.6).add(up(lerp(0.3, 0, k)));
+    const pos = rel(w, [0.3, 0.1, lerp(0.1, 0.32, k)]), look = L(TRAIN_STOP - 0.8, lerp(0.9, 1.3, k), lerp(3.0, 2.2, k));
     ctx.cam.set({ pos, look, fov: 42 }); fill(ctx, pos, 0.2);
     const fr = ctx.props.povFrame, dir = look.clone().sub(pos).normalize();
     ctx.add(fr); fr.position.copy(pos).addScaledVector(dir, 0.6); fr.up.set(0, 1, 0); fr.lookAt(pos);
@@ -917,7 +918,7 @@ S({
     catEat(c, ctx.t, { chew: 0, expr: 'squint', head: humanFace(me) });
     me.pose('idle', ctx.t, { intensity: 0.3, lookAt: catFace(c) }); me.face('neutral', 0.5);
     const f = humanFace(me);
-    setCam(ctx, { pos: C(CAT_SEAT[0] - 0.12, 1.2, CAT_SEAT[2] + 0.42), look: f.clone().add(up(-0.08)), fov: 40 }, 0.9, '#ffe2b0');
+    setCam(ctx, { pos: C(-9.72, 1.38, -0.55), look: f.clone().add(up(-0.1)), fov: 42 }, 0.9, '#ffe2b0');
     tag(ctx, 'LATE?!', ctx.time('b17.w11'), Infinity, { y: 0.1 });
   },
 });
@@ -931,9 +932,9 @@ S({
     catEat(c, ctx.t, { chew: 0, expr: 'squint', head: humanFace(me) });
     me.pose('idle', ctx.t, { intensity: 0.3, lookAt: catFace(c) }); me.face(i === 1 ? 'determined' : 'neutral', 0.5);
     const dx = C(1, 0, 0).sub(C(0, 0, 0)), dz = C(0, 0, 1).sub(C(0, 0, 0));
-    if (i === 0) { const f = catFace(c); setCam(ctx, { pos: f.clone().addScaledVector(dx, 1.0).addScaledVector(dz, 0.12).add(up(0.04)), look: f.clone().add(up(-0.1)), fov: 34 }, 0.8, '#ffe2b0'); }
-    else if (i === 1) { const f = humanFace(me); setCam(ctx, { pos: C(CAT_SEAT[0] + 0.12, 1.2, CAT_SEAT[2] + 0.48), look: f.clone().add(up(-0.13)), fov: 31 }, 0.9, '#ffe2b0'); }
-    else { const f = catFace(c); setCam(ctx, { pos: f.clone().addScaledVector(dx, 0.8).addScaledVector(dz, 0.28).add(up(0.06)), look: f.clone().add(up(-0.07)), fov: 30 }, 0.8, '#ffe2b0'); }
+    if (i === 0) { const f = catFace(c); setCam(ctx, { pos: f.clone().addScaledVector(dx, 1.3).addScaledVector(dz, 0.15).add(up(0.05)), look: f.clone().add(up(-0.12)), fov: 36 }, 0.8, '#ffe2b0'); }
+    else if (i === 1) { const f = humanFace(me); setCam(ctx, { pos: C(-9.72, 1.42, -0.45), look: f.clone().add(up(-0.16)), fov: 32 }, 0.9, '#ffe2b0'); }
+    else { const f = catFace(c); setCam(ctx, { pos: f.clone().addScaledVector(dx, 1.25).addScaledVector(dz, 0.4).add(up(0.07)), look: f.clone().add(up(-0.11)), fov: 32 }, 0.8, '#ffe2b0'); }
     ctx.cam.punch(hits, ctx.t, 0.12, 0.2);
   },
 }));
@@ -977,13 +978,13 @@ S({
     c.root.position.copy(C(CAT_SEAT[0] - 0.12 * back, CAT_SEAT[1], CAT_SEAT[2] - 0.0));
     c.pose(back > 0 ? 'stare' : 'sit', ctx.t, { lookAt: humanFace(me) }); c.face(back > 0 ? 'huss' : 'squint', 0.4);
     c.joints.torso.rotation.x += -0.2 * back; if (c.joints.tail1) c.joints.tail1.rotation.x = -1.2 * back;
-    me.root.position.copy(C(-7.0, 0, -0.2)); me.root.rotation.set(0, C.yaw - Math.PI / 2 - 0.55, 0);
+    me.root.position.copy(C(-7.15, 0, 0.3)); me.root.rotation.set(0, C.yaw - Math.PI / 2 - 0.7, 0);
     me.pose('idle', ctx.t, { intensity: 0.3, lookAt: catFace(c) }); me.face('sweat', ctx.t);
     const reach = ease.inOutSine(clamp(lt / 0.5, 0, 1)) * (1 - 0.35 * back);
     me.joints.armR.rotation.set(-1.45 * reach, 0, 0.1); me.joints.foreArmR.rotation.set(-0.15 * reach, 0, 0);
     me.joints.armL.rotation.set(-1.25 * reach, 0, -0.15); me.joints.foreArmL.rotation.set(-0.2 * reach, 0, 0);
     me.joints.torso.rotation.x += 0.2 * reach;
-    setCam(ctx, { pos: C(-5.1, 1.65, 0.95), look: C(-8.25, 0.85, -0.8), fov: 40 }, 0.8, '#ffe2b0');
+    setCam(ctx, { pos: C(-7.2, 1.15, -0.5), look: catFace(c).add(up(-0.12)), fov: 44 }, 0.9, '#ffe2b0');
     if (back > 0) { ctx.cam.shake(0.12 * (1 - back), ctx.t, 4); tag(ctx, 'HSSSS!', th, Infinity, { y: 0.16, size: 90, fill: '#ff4f4f' }); }
   },
 });
@@ -1030,7 +1031,7 @@ S({
     c.pose('loaf', ctx.t); c.face('shocked', 0.4);
     P.lever.updateMatrixWorld(true);
     const hp = P.lever.userData.handle.getWorldPosition(V());
-    setCam(ctx, { pos: C(-4.6, 1.7, 0.3), look: rel(a, [-0.1, -0.3, 0.5]), fov: 46 }, 0.7, '#ffe2b0');
+    setCam(ctx, { pos: C(-3.8, 1.8, 0.5), look: rel(a, [-0.1, -0.25, 0.5]), fov: 52 }, 0.7, '#ffe2b0');
     if (pull > 0) { stamp(ctx, 'YANK!', ty, { size: 140, fill: '#ffffff', stroke: '#c0182b', line: 14, y: 0.12, rot: -0.08 }); ctx.cam.shake(0.25, ctx.t, 21); ctx.fx.overlay('#ff1a1a', Math.sin(ctx.t * 22) > 0 ? 0.22 : 0.05); }
   },
 });
@@ -1090,30 +1091,30 @@ S({
     hugAnim(ctx, me, c, 'smile');
     lampGlows(ctx, L, null, 0.7);
     moveCam(ctx, { pos: L(TRAIN_STOP - 2.0, 2.0, 2.3), look: L(TRAIN_STOP - 0.2, 2.4, 11), fov: 52 }, { pos: L(TRAIN_STOP - 1.8, 2.5, 2.1), look: L(TRAIN_STOP - 0.2, 3.0, 11), fov: 54 }, ease.inOutSine(clamp(lt / 1.7, 0, 1)), 0);
-    tag(ctx, 'HOME', ctx.time('b21.w7'), Infinity, { y: 0.16, bg: 'rgba(255,122,47,0.92)' });
   },
 });
 S({
   name: 'home smile', start: 'b21.w7-0.1', set: 'town',
-  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP + 0.4, 4.2, Math.PI - 0.3); },
+  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP + 0.4, 4.2, 0.3); },
   update(ctx, lt) {
     const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
     trainAt(ctx, L, TRAIN_STOP, { t: ctx.t, door: 1, glow: 0.8, light: 0.4, beam: 0.4 });
     hugAnim(ctx, me, c, 'grin', 0.4);
     const f = humanFace(me);
-    moveCam(ctx, { pos: L(TRAIN_STOP + 0.0, 1.5, 6.6), look: f.clone().add(up(-0.3)), fov: 34 }, { pos: L(TRAIN_STOP + 0.1, 1.55, 6.1), look: f.clone().add(up(-0.25)), fov: 32 }, clamp(lt / 0.8, 0, 1), 0);
+    moveCam(ctx, { pos: L(TRAIN_STOP + 1.2, 1.5, 6.6), look: f.clone().add(up(-0.3)), fov: 36 }, { pos: L(TRAIN_STOP + 1.1, 1.55, 6.1), look: f.clone().add(up(-0.25)), fov: 34 }, clamp(lt / 0.8, 0, 1), 0.3, '#ffd8b0');
+    tag(ctx, 'HOME', ctx.time('b21.w7'), Infinity, { y: 0.14, bg: 'rgba(255,122,47,0.92)' });
   },
 });
 // ── b22 "Except the clock tower was ticking backwards."
 S({
   name: 'smile drops', start: 'b22-0.1', set: 'town',
-  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP + 0.4, 4.2, -Math.PI / 2 - 0.2); },
+  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP + 0.4, 4.2, -Math.PI / 2 - 0.2); holdCat(ctx, ctx.cast.me, ctx.cast.catW, { y: -0.04 }); },
   update(ctx, lt) {
     const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
-    me.pose('idle', ctx.t, { intensity: 0.3, headPitch: -0.35, headYaw: 0.2 }); hugArms(me, 1); me.face(lt > 0.2 ? 'shocked' : 'smile', 0.4);
+    me.pose('idle', ctx.t, { intensity: 0.3, headPitch: -0.3, headYaw: 0.2 }); hugArms(me, 1); me.face(lt > 0.2 ? 'shocked' : 'smile', 0.4);
     c.pose('loaf', ctx.t); c.face('neutral', 0.4);
     const f = humanFace(me);
-    setCam(ctx, { pos: L(TRAIN_STOP - 1.3, 0.9, 5.5), look: f.clone().add(up(0.2)), fov: 40 }, 0);
+    setCam(ctx, { pos: L(TRAIN_STOP - 1.6, 1.6, 5.4), look: f.clone().add(up(-0.12)), fov: 40 }, 0.3, '#ffd8b0');
   },
 });
 S({
@@ -1148,70 +1149,75 @@ S({
 S({
   name: 'everyone arrives waving', start: 'b24-0.1', set: 'town',
   setup(ctx) {
-    const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 0.5, 6.4, 0.2);
-    const plan = [[TRAIN_STOP - 7, 6.6, 1], [TRAIN_STOP + 7, 6.2, -1], [TRAIN_STOP - 5, 2.0, 1], [TRAIN_STOP + 6, 2.5, -1], [TRAIN_STOP + 1.4, 6.4, 0]];
+    const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 1.0, 6.4, Math.PI - 0.1);
+    // [x0, z0, x1, z1]: everyone walks in along the pavement / road edge and stops round the kid
+    const KX = TRAIN_STOP - 1.0; const plan = [[KX - 4.0, 6.7, KX - 1.6, 6.8], [KX + 4.0, 6.7, KX + 1.6, 6.8], [KX - 3.6, 3.9, KX - 1.1, 4.7], [KX + 3.6, 4.0, KX + 1.1, 4.8], [KX + 1.9, 7.8, KX + 1.9, 7.8]];
     ctx.store.plan = plan;
     const ids = [...NEIGHBOR_IDS.slice(0, 4), 'neighbor'];
     ctx.store.ids = ids; ids.forEach((id, k) => ctx.place(id, L(plan[k][0], 0, plan[k][1])));
   },
   update(ctx, lt) {
-    const { L, plan, ids } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
+    const { L, plan, ids } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW, KX = TRAIN_STOP - 1.0;
     hugAnim(ctx, me, c, 'sweat', 0.5);
     ids.forEach((id, k) => {
-      const ch = ctx.cast[id], [x0, z0, dir] = plan[k];
-      const kk = clamp((lt - k * 0.15) / 1.6, 0, 1);
-      const tx = TRAIN_STOP - 0.5 + dir * 1.6, tz = z0 > 4 ? 6.4 : 4.6;
-      if (dir === 0) { ch.root.position.copy(L(x0, CURB, z0)); ch.root.rotation.set(0, L.yaw - Math.PI / 2, 0); ch.pose('wave', ctx.t); ch.face('grin', ctx.t); return; }
-      const p = V(lerp(x0, tx, kk), 0, lerp(z0, tz, kk));
-      ch.root.position.copy(L(p.x, p.z > 5.1 ? CURB : 0, p.z)); ch.root.rotation.set(0, L.yaw + (dir > 0 ? Math.PI / 2 : -Math.PI / 2) + (z0 < 4 ? dir * 0.5 : 0), 0);
-      walkWave(ch, ctx.t + k, 1); ch.face('grin', ctx.t + k);
+      const ch = ctx.cast[id], [x0, z0, x1, z1] = plan[k];
+      const kk = ease.outCubic(clamp((lt - k * 0.08) / 0.95, 0, 1));
+      const x = lerp(x0, x1, kk), z = lerp(z0, z1, kk);
+      ch.root.position.copy(L(x, z > 5.15 ? CURB : 0, z));
+      if (x0 === x1) { ch.root.rotation.set(0, L.yaw + Math.PI + 0.3, 0); ch.pose('wave', ctx.t + k); ch.face('grin', ctx.t + k); return; }
+      const dir = Math.sign(x1 - x0);
+      ch.root.rotation.set(0, L.yaw + Math.atan2(dir * 0.85, -0.55), 0);
+      if (kk < 1) walkWave(ch, ctx.t + k, 1); else ch.pose('wave', ctx.t + k);
+      ch.face('grin', ctx.t + k);
     });
-    moveCam(ctx, { pos: L(TRAIN_STOP - 0.2, 3.0, 13.2), look: L(TRAIN_STOP - 0.5, 1.0, 5.2), fov: 50 }, { pos: L(TRAIN_STOP - 0.2, 2.6, 12.0), look: L(TRAIN_STOP - 0.5, 1.0, 5.2), fov: 48 }, clamp(lt / 1.2, 0, 1), 0);
+    moveCam(ctx, { pos: L(KX, 2.4, -2.0), look: L(KX, 1.3, 6.4), fov: 46 }, { pos: L(KX, 2.2, -1.2), look: L(KX, 1.3, 6.4), fov: 45 }, clamp(lt / 1.0, 0, 1), 0);
     tag(ctx, 'BYE!', ctx.time('b24') + 0.2, Infinity, { x: 0.25, y: 0.3, size: 60, bg: 'rgba(60,143,69,0.9)', rot: 0.1 });
     tag(ctx, 'SEE YA!', ctx.time('b24') + 0.5, Infinity, { x: 0.74, y: 0.27, size: 60, bg: 'rgba(255,79,163,0.9)', rot: -0.08 });
   },
 });
 S({
   name: 'kid worried', start: 'b24.w3-0.1', set: 'town',
-  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 0.5, 6.4, Math.PI + 0.2);
-    ['neighbor', NEIGHBOR_IDS[0], NEIGHBOR_IDS[1]].forEach((id, k) => { ctx.place(id, L(TRAIN_STOP - 2.0 + k * 1.6, CURB, 9.4 + (k % 2) * 0.5)); ctx.cast[id].root.rotation.set(0, L.yaw + Math.PI, 0); }); },
+  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 1.0, 6.4, Math.PI + 0.2);
+    ['neighbor', NEIGHBOR_IDS[0], NEIGHBOR_IDS[1]].forEach((id, k) => { ctx.place(id, L(TRAIN_STOP - 2.5 + k * 1.6, CURB, 9.4 + (k % 2) * 0.5)); ctx.cast[id].root.rotation.set(0, L.yaw + Math.PI, 0); }); },
   update(ctx, lt) {
     const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
     hugAnim(ctx, me, c, 'sweat', 1);
     ['neighbor', NEIGHBOR_IDS[0], NEIGHBOR_IDS[1]].forEach((id, k) => { const ch = ctx.cast[id]; ch.pose('wave', ctx.t + k); ch.face('grin', ctx.t + k); });
     const f = humanFace(me);
-    setCam(ctx, { pos: L(TRAIN_STOP - 0.9, 1.6, 4.1), look: f.clone().add(up(-0.35)), fov: 38 }, 0);
+    setCam(ctx, { pos: L(TRAIN_STOP - 1.4, 1.6, 4.1), look: f.clone().add(up(-0.35)), fov: 38 }, 0);
     ctx.cam.shake(0.05, ctx.t, 8);
   },
 });
 // ── b25 "And my cat? My cat never had a white paw."
 S({
   name: 'cat in arms', start: 'b25-0.1', set: 'town',
-  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 0.5, 6.4, Math.PI); },
+  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 1.0, 6.4, Math.PI); holdCat(ctx, ctx.cast.me, ctx.cast.catW, { y: -0.14, z: 0.36, yaw: 0 }); },
   update(ctx, lt) {
     const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
-    me.pose('idle', ctx.t, { intensity: 0.2, headPitch: 0.45 }); hugArms(me, 1, 0.5); me.face('sweat', ctx.t);
-    c.pose('idle', ctx.t, { headYaw: 0.6 }); c.face('neutral', 0.4);
+    me.pose('idle', ctx.t, { intensity: 0.2, headPitch: 0.25 }); hugArms(me, 1, 0.5); me.face('sweat', ctx.t);
+    c.pose('idle', ctx.t); c.face('neutral', 0.4);
     const cf = catFace(c);
-    const mid = cf.clone().lerp(humanFace(me), 0.4), fw = L(0, 0, -1).sub(L(0, 0, 0));
-    moveCam(ctx, { pos: mid.clone().addScaledVector(fw, 2.3).add(up(0.1)), look: mid, fov: 38 }, { pos: mid.clone().addScaledVector(fw, 1.8).add(up(0.05)), look: mid, fov: 36 }, clamp(lt / 2, 0, 1), 0);
+    const mid = cf.clone().lerp(humanFace(me), 0.6), fw = L(0, 0, -1).sub(L(0, 0, 0));
+    moveCam(ctx, { pos: mid.clone().addScaledVector(fw, 3.0).add(up(0.1)), look: mid, fov: 38 }, { pos: mid.clone().addScaledVector(fw, 2.6).add(up(0.05)), look: mid, fov: 36 }, clamp(lt / 2, 0, 1), 0);
   },
 });
 S({
   name: 'white paw', start: 'whitepaw-0.06', set: 'town',
-  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 0.5, 6.4, Math.PI); },
+  setup(ctx) { const L = dayTown(ctx, 'dusk'); ctx.store.L = L; homeKid(ctx, L, TRAIN_STOP - 1.0, 6.4, Math.PI); },
   update(ctx, lt) {
     const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
     me.pose('idle', ctx.t, { intensity: 0.2 }); hugArms(me, 1, 0.5); me.face('sweat', ctx.t);
     const tw = ctx.markers.whitepaw;
-    const turn = ease.inOutCubic(clamp((ctx.t - tw - 0.35) / 0.3, 0, 1));
+    const turn = ease.inOutCubic(clamp((ctx.t - tw - 0.35) / 0.35, 0, 1));
+    c.pose('idle', ctx.t);
     const pp = pawPos(c);
-    const camP = pp.clone().add(L(TRAIN_STOP - 0.5, 0, 5.2).sub(L(TRAIN_STOP - 0.5, 0, 6.4))).add(up(0.18));
+    const camP = pp.clone().add(L(0, 0, -1.2).sub(L(0, 0, 0))).add(up(0.18));
     c.pose('idle', ctx.t, { lookAt: turn > 0 ? camP : undefined }); c.face(turn > 0.7 ? 'wink' : 'neutral', 0.4);
-    const look = pp.clone().lerp(catFace(c), turn * 0.6);
-    setCam(ctx, { pos: camP.clone().lerp(camP.clone().add(up(0.1)), turn), look, fov: lerp(34, 36, turn) }, 0.3);
+    const look = pp.clone().lerp(catFace(c), turn);
+    setCam(ctx, { pos: camP.clone().lerp(camP.clone().add(up(0.12)), turn), look, fov: lerp(34, 40, turn) }, 0.3);
     ctx.cam.punch([tw], ctx.t, 0.14, 0.3);
-    stamp(ctx, 'WHITE PAW', tw, { size: 120, fill: '#ffffff', stroke: '#1d1d22', y: 0.2 });
+    const fade = 1 - clamp((ctx.t - (tw + 0.35)) / 0.2, 0, 1);
+    if (fade > 0) stamp(ctx, 'WHITE PAW', tw, { size: 120, fill: '#ffffff', stroke: '#1d1d22', y: 0.2, alpha: fade * clamp((ctx.t - tw) / 0.06, 0, 1) });
   },
 });
 // ── b26 "At three thirty-three, the train came back. And in the window, waving at me, holding my cat... was me."
@@ -1228,18 +1234,19 @@ S({
 });
 S({
   name: 'train came back', start: 'b26.w3-0.1', set: 'town',
-  setup(ctx) { const L = nightTown(ctx, { fogA: 0.9 }); ctx.store.L = L; homeKid(ctx, L, -27.4, 4.4, Math.PI - 0.3); },
+  setup(ctx) { const L = nightTown(ctx, { fogA: 0.45 }); ctx.store.L = L; homeKid(ctx, L, KX26, KZ26, Math.PI - 0.55); },
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
     hugAnim(ctx, me, c, 'shocked', 0.5);
     me.pose('stunned', ctx.t); hugArms(me, 1, 0.5); me.face('shocked', 0.4);
-    const x = -10 - 6 * (ctx.t - ctx.time('b26.w3'));
+    const x = 5.5 - 6 * (ctx.t - ctx.time('b26.w3'));
     trainAt(ctx, L, x, { t: ctx.t });
-    lampGlows(ctx, L, x);
-    setCam(ctx, { pos: L(-25.0, 0.7, 7.6), look: L(-29.5, 2.0, 1.0), fov: 50 }, 0.8);
+    lampGlows(ctx, L, x - 12);
+    moveCam(ctx, { pos: L(-31, 1.5, 4.0), look: L(-15, 1.8, 3.4), fov: 46 }, { pos: L(-30.4, 1.5, 4.0), look: L(-15, 1.8, 3.4), fov: 44 }, clamp(lt / 1.1, 0, 1), 0.8);
   },
 });
 const TWIN_WIN = 3;   // window index (door side) where the twin stands
+const KX26 = -25.5, KZ26 = 4.6;   // the kid's mark for b26/b27 (between the x −27 lamp post and the parked car at x −24…−20)
 function twinRig(ctx) {
   const me2 = ctx.cast.me2;
   ctx.place('me2', V(0, -50, 0));
@@ -1251,23 +1258,23 @@ function twinAnim(ctx, tr) {
   me2.root.position.copy(p); me2.root.rotation.set(0, yawOf(tr) + Math.PI, 0);
   me2.pose('idle', ctx.t, { intensity: 0.3 });
   const J = me2.joints;
-  J.armR.rotation.set(-0.2, 0, 2.5 + 0.35 * Math.sin(ctx.t * 9)); J.foreArmR.rotation.set(0, 0, 0.3 * Math.sin(ctx.t * 9));
+  J.armR.rotation.set(-0.25, 0, 1.9 + 0.3 * Math.sin(ctx.t * 9)); J.foreArmR.rotation.set(0, 0, 0.45 + 0.35 * Math.sin(ctx.t * 9));
   J.armL.rotation.x += -0.9; J.armL.rotation.z += -0.2; J.foreArmL.rotation.x += -1.3; J.foreArmL.rotation.y = 0.5;
   me2.face('grin', 0.5);
   c.pose('loaf', ctx.t); c.face('smile', 0.5);
 }
 S({
   name: 'windows slide by', start: 'b26.w7-0.1', set: 'town',
-  setup(ctx) { const L = nightTown(ctx, { fogA: 0.7 }); ctx.store.L = L; homeKid(ctx, L, -27.4, 4.6, Math.PI - 0.3);  twinRig(ctx); },
+  setup(ctx) { const L = nightTown(ctx, { fogA: 0.7 }); ctx.store.L = L; homeKid(ctx, L, KX26, KZ26, Math.PI - 0.2);  twinRig(ctx); },
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
     me.pose('stunned', ctx.t); hugArms(me, 1, 0.5); me.face('shocked', 0.4); c.pose('loaf', ctx.t); c.face('neutral', 0.4);
     const tw = ctx.markers.wasme;
-    const x = -27.4 + ctx.props.train.userData.winX[TWIN_WIN] + 2.4 * (tw - ctx.t) + 1.2;
+    const x = KX26 + ctx.props.train.userData.winX[TWIN_WIN] + 2.4 * (tw - ctx.t) + 1.2;
     const tr = trainAt(ctx, L, x, { t: ctx.t, twin: TWIN_WIN });
     twinAnim(ctx, tr);
     lampGlows(ctx, L, null);
-    setCam(ctx, { pos: L(-23.5, 1.6, 9.0), look: L(-28.5, 2.2, 1.0), fov: 44 }, 0.9);
+    setCam(ctx, { pos: L(-21.5, 1.6, 8.0), look: L(-27, 2.1, 1.5), fov: 46 }, 0.9);
   },
 });
 S({
@@ -1276,7 +1283,7 @@ S({
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store;
     const tw = ctx.markers.wasme;
-    const x = -27.4 + ctx.props.train.userData.winX[TWIN_WIN] - 0.9 * (ctx.t - tw);
+    const x = KX26 + ctx.props.train.userData.winX[TWIN_WIN] - 0.9 * (ctx.t - tw);
     const tr = trainAt(ctx, L, x, { t: ctx.t, twin: TWIN_WIN });
     twinAnim(ctx, tr);
     const wx = x - ctx.props.train.userData.winX[TWIN_WIN];
@@ -1291,20 +1298,20 @@ S({
   update(ctx, lt) {
     tick(ctx); const { L } = ctx.store;
     const t0 = ctx.time('b26.w17');
-    const x = -27.4 + ctx.props.train.userData.winX[TWIN_WIN] - 0.9 * (ctx.t - ctx.markers.wasme);
+    const x = KX26 + ctx.props.train.userData.winX[TWIN_WIN] - 0.9 * (ctx.t - ctx.markers.wasme);
     const tr = trainAt(ctx, L, x, { t: ctx.t, twin: TWIN_WIN });
     twinAnim(ctx, tr);
     const f = humanFace(ctx.cast.me2);
     const zk = ease.outCubic(clamp((ctx.t - ctx.time('b26.w18')) / 0.25, 0, 1));
     setCam(ctx, { pos: f.clone().add(L(0, 0, lerp(3.2, 2.1, zk)).sub(L(0, 0, 0))), look: f.clone().add(up(-0.1)), fov: lerp(34, 28, zk) }, 0.5, '#ffe2b0');
     ctx.cam.punch([ctx.time('b26.w18')], ctx.t, 0.15, 0.3);
-    if (ctx.t > ctx.time('b26.w18')) stamp(ctx, 'ME?!', ctx.time('b26.w18'), { size: 160, fill: '#ffd23f', stroke: '#1d1d22', y: 0.22 });
+    if (ctx.t > ctx.time('b26.w18')) stamp(ctx, 'ME?!', ctx.time('b26.w18'), { size: 160, fill: '#ffd23f', stroke: '#1d1d22', y: 0.1 });
   },
 });
 // ── b27 HUSS ×3 — red tail lights shrink into the fog; the white-paw cat slowly grins
 [0, 1, 2].forEach((i) => S({
   name: `tail lights #${i + 1}`, start: i === 0 ? 'b27.h0-0.12' : `b27.h${i}-0.03`, set: 'town',
-  setup(ctx) { const L = nightTown(ctx, { fogNear: 3, fogFar: 55 }); ctx.store.L = L; homeKid(ctx, L, -27.4, 4.6, -Math.PI / 2 + 0.1); },
+  setup(ctx) { const L = nightTown(ctx, { fogNear: 3, fogFar: 55 }); ctx.store.L = L; homeKid(ctx, L, KX26, KZ26, -Math.PI / 2 + 0.1); },
   update(ctx) {
     tick(ctx); const { L } = ctx.store, me = ctx.cast.me, c = ctx.cast.catW;
     const hits = ctx.hussTimes('b27').map((h) => h + 0.03);
@@ -1314,15 +1321,15 @@ S({
     me.pose('stunned', ctx.t); hugArms(me, 1, 0.5); me.face('shocked', 0.4);
     if (i < 2) {
       c.pose('loaf', ctx.t); c.face('neutral', 0.4);
-      const cams = [{ pos: L(-23.0, 1.9, 8.4), look: L(-36, 2.0, 0.5), fov: 40 }, { pos: L(-26.0, 2.1, 0.4), look: L(-60, 2.0, 0.0), fov: 26 }];
+      const cams = [{ pos: L(-19, 1.8, 7.5), look: L(-36, 2.0, -2.0), fov: 46 }, { pos: L(-26.0, 2.1, 0.4), look: L(-60, 2.0, 0.0), fov: 26 }];
       setCam(ctx, cams[i], 0.6);
     } else {
       const g = clamp((ctx.t - hits[2]) / 0.5, 0, 1);
       c.pose('idle', ctx.t); const cf0 = catFace(c);
-      const camP = cf0.clone().add(L(0, 0, 0).sub(L(1.45, 0, 0.3))).add(up(0.12));
+      const camP = cf0.clone().add(L(0, 0, 0).sub(L(1.45, 0, 0.8))).add(up(0.12));
       c.pose('idle', ctx.t, { lookAt: camP }); c.face(g > 0.4 ? 'grin' : 'squint', 0.4);
       const cf = catFace(c);
-      setCam(ctx, { pos: camP, look: cf.clone().add(up(-0.04)), fov: lerp(36, 30, g) }, 0.9, '#ffe2b0');
+      setCam(ctx, { pos: camP, look: cf.clone().add(up(-0.2)), fov: lerp(38, 34, g) }, 0.9, '#ffe2b0');
       iris(ctx, ctx.time('b27.end') + 0.2, 0.42, 0.5);
     }
     ctx.cam.punch(hits, ctx.t, 0.1, 0.2);
