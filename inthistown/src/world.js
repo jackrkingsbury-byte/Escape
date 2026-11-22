@@ -1052,8 +1052,10 @@ function buildClockTower(T, x, z) {
 }
 
 // ── canvas art for the square
+let _bannerLines = ['SUMMER PARTY', 'CHESS', 'MATCH'], _bannerIcons = true;
 function bannerTex() {
-  return cachedTex('banner', 1024, 700, (g, w, h) => {
+  const L = _bannerLines;
+  return cachedTex('banner:' + L.join('|') + _bannerIcons, 1024, 700, (g, w, h) => {
     // festive background: magenta → purple with sunburst
     const bg = g.createLinearGradient(0, 0, 0, h);
     bg.addColorStop(0, '#ff3d9a'); bg.addColorStop(1, '#7b3cff');
@@ -1073,14 +1075,13 @@ function bannerTex() {
     for (let i = 0; i < 40; i++) drawStar(g, 50 + R() * (w - 100), 50 + R() * (h - 100), 6 + R() * 10, ['#ffd23f', '#3ee0c8', '#ffffff', '#ff7a2f'][i % 4]);
     const F = DISPLAY();
     // text
-    let s1 = fitFont(g, 'SUMMER PARTY', F, w - 150, 120);
-    outlinedText(g, 'SUMMER PARTY', w / 2, h * 0.22, `${s1}px ${F}`, '#ffffff', '#1d1d22', 22, 'rgba(40,0,60,0.6)');
-    let s2 = fitFont(g, 'CHESS', F, w - 180, 250);
-    outlinedText(g, 'CHESS', w / 2, h * 0.52, `${s2}px ${F}`, '#ffe14a', '#1d1d22', 30, 'rgba(40,0,60,0.65)');
-    let s3 = fitFont(g, 'MATCH', F, w - 220, 170);
-    outlinedText(g, 'MATCH', w / 2, h * 0.8, `${s3}px ${F}`, '#3ee0c8', '#1d1d22', 24, 'rgba(40,0,60,0.6)');
-    drawKnight(g, 110, h * 0.52, 120, '#ffffff');
-    drawKing(g, w - 110, h * 0.52, 120, '#ffe14a');
+    let s1 = fitFont(g, L[0], F, w - 150, 120);
+    outlinedText(g, L[0], w / 2, h * 0.22, `${s1}px ${F}`, '#ffffff', '#1d1d22', 22, 'rgba(40,0,60,0.6)');
+    let s2 = fitFont(g, L[1], F, w - (_bannerIcons ? 300 : 180), 250);
+    outlinedText(g, L[1], w / 2, h * 0.52, `${s2}px ${F}`, '#ffe14a', '#1d1d22', 30, 'rgba(40,0,60,0.65)');
+    let s3 = fitFont(g, L[2], F, w - 220, 170);
+    outlinedText(g, L[2], w / 2, h * 0.8, `${s3}px ${F}`, '#3ee0c8', '#1d1d22', 24, 'rgba(40,0,60,0.6)');
+    if (_bannerIcons) { drawKnight(g, 110, h * 0.52, 120, '#ffffff'); drawKing(g, w - 110, h * 0.52, 120, '#ffe14a'); }
   });
 }
 function vsTex() {
@@ -1937,6 +1938,9 @@ const _m1 = new THREE.Matrix4(), _m2 = new THREE.Matrix4(), _c1 = new THREE.Colo
 
 export function buildTown(opts = {}) {
   const seed = opts.seed ?? 3;
+  // opts.banner: three lines for the town-square banner (default SUMMER PARTY / CHESS / MATCH); opts.bannerIcons
+  if (opts.banner) _bannerLines = [...opts.banner, '', '', ''].slice(0, 3);
+  _bannerIcons = opts.bannerIcons ?? !opts.banner;
   const T = townCtx(seed);
   const root = new THREE.Group(); root.name = 'town'; T.root = root;
   const party = new THREE.Group(); party.name = 'partyProps'; root.add(party); T.party = party;

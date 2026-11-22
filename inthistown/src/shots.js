@@ -946,3 +946,10 @@ function parkAnim(ctx) {
     ch.pose('walk', ctx.t + i, { speed: 1.5 }); ch.face('determined', ctx.t);
   });
 }
+
+// Shared building blocks for later episodes (src/ep2/shots.js etc.).
+export {
+  V, TABLE_TOP, PARTY_A, PARTY_B, headPos, frame, frameAt, roomNook, practiceTrack, nookCams, burstAt, lastBefore,
+  slamUpdate, pressClock, partyTown, tourney, tourneyAnim, pigeonOnShoulder, quietTown, park, parkAnim, glassesOnHead,
+  boomCam, memeText, gagTPose, gagBreakdance, makeCar, makeTumbleweed,
+};
