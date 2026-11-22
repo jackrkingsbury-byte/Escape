@@ -217,7 +217,7 @@ export function makeSkyCrack({ H = 13, n = 16, seed = 5, wmax = 2.7 } = {}) {
   const tapes = [];
   const TI = [2, 4, 6, 8, 10, 12, 14].filter((i) => i < n);
   TI.forEach((i, k) => {
-    const len = 2.6 + 1.3 * pts[i].wb;
+    const len = 1.9 + 1.0 * pts[i].wb;
     const pivot = new THREE.Group(); g.add(pivot);
     const m = box(len, 0.6, 0.05, tapeMat, len / 2, 0, 0); pivot.add(m);
     for (const s of [-1, 1]) pivot.add(box(len, 0.06, 0.06, tapeEdge, len / 2, s * 0.29, 0.005));
@@ -254,12 +254,12 @@ export function makeSkyCrack({ H = 13, n = 16, seed = 5, wmax = 2.7 } = {}) {
   for (let i = 0; i < n; i++) {
     const a = pts[i], b = pts[i + 1], gg = new THREE.Group();
     gg.position.set((a.x + b.x) / 2, (a.y + b.y) / 2, 0.25); g.add(gg);
-    const sz = 0.55 + 0.45 * Math.max(a.wb, b.wb);
+    const sz = 0.2 + 0.2 * Math.max(a.wb, b.wb);
     for (let k = 0; k < 3; k++) {
       const m = new THREE.Mesh(sphG, gumM); const r = sz * (0.55 + 0.35 * hash(i * 7 + k));
       m.scale.set(r * 1.25, r, r * 0.6); m.position.set((hash(i * 3 + k) - 0.5) * 0.8, (k - 1) * 0.35, 0.05 * k); m.castShadow = true; gg.add(m);
     }
-    for (let k = 0; k < 2; k++) { const s = new THREE.Mesh(cylG, strM); s.scale.set(0.05, 1.6 + 0.8 * hash(i + k), 0.05); s.rotation.z = PI / 2 + (hash(i * 5 + k) - 0.5) * 1.2; s.position.set(0, (k - 0.5) * 0.4, 0.15); gg.add(s); }
+    for (let k = 0; k < 2; k++) { const s = new THREE.Mesh(cylG, strM); s.scale.set(0.03, 1.0 + 0.6 * hash(i + k), 0.03); s.rotation.z = PI / 2 + (hash(i * 5 + k) - 0.5) * 1.2; s.position.set(0, (k - 0.5) * 0.4, 0.15); gg.add(s); }
     gg.visible = false;
     gums.push({ g: gg, i, rank: i === 0 ? 99 : Math.abs(i - SLAM_SEG) + (i < SLAM_SEG ? 0.5 : 0) });
   }

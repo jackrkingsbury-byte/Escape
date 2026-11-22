@@ -142,7 +142,7 @@
    "id": "b08",
    "kind": "line",
    "speaker": "narr",
-   "text": "Yesterday, I took Grandma her groceries. She lives on floor two. I HUSSed up at her window, and she HUSSed right back. Then the elevator pressed three by itself.",
+   "text": "Yesterday, I took Grandma her groceries. She lives on floor two. I yelled HUSS up at her window, and she yelled HUSS right back. Then the elevator pressed three by itself.",
    "gapAfter": 0.3,
    "music": "none",
    "sfx": [
@@ -315,7 +315,7 @@
    "id": "b19",
    "kind": "line",
    "speaker": "narr",
-   "text": "But I knew one thing for sure. My Grandma always HUSSes back.",
+   "text": "But I knew one thing for sure. My Grandma always yells HUSS back.",
    "gapAfter": 0.3,
    "visual": "Close on me in the fog, thinking, then a determined smile; a tiny glowing memory bubble above my head shows Grandma HUSSing back from her window."
   },
@@ -382,7 +382,7 @@
    "id": "b26",
    "kind": "line",
    "speaker": "narr",
-   "text": "I HUSSed at her one more time. She HUSSed back. One second too late.",
+   "text": "I yelled HUSS one more time. She yelled it back. One second too late.",
    "music": "none",
    "sfx": [
     {
