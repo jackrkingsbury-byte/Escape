@@ -387,3 +387,85 @@ def dun_dun(root=45):
         env = np.minimum(1, t / 0.015) * np.exp(-t / (0.5 if ln > 1 else 0.25))
         place(out, (x * env * 0.3).astype(np.float32), st)
     return reverb(out, room=0.6, wet=0.25, seed=80)
+
+
+# ------------------------------------------------------------------------------------- season-2 sfx
+def pop(seed=81):
+    """Cartoon 'pop' (balloon / bubble): fast pitch drop + a tiny noise burst."""
+    t = _t(0.18)
+    f = 900 * np.exp(-t / 0.02) + 180
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.035)
+    rng = np.random.default_rng(seed)
+    x = x + bp(rng.standard_normal(len(t)).astype(np.float32), 1500, 6000) * np.exp(-t / 0.008) * 0.5
+    return (np.tanh(x * 1.5) * 0.6).astype(np.float32)
+
+
+def thunder(dur=3.0, seed=82):
+    """Rolling thunder: a sharp crack then low rumbling noise with slow tremolo."""
+    rng = np.random.default_rng(seed)
+    t = _t(dur)
+    n = rng.standard_normal(len(t)).astype(np.float32)
+    crack = bp(n, 800, 6000) * np.exp(-t / 0.06)
+    rumble = lp(lp(n, 180), 180) * (0.6 + 0.4 * np.sin(2 * np.pi * 1.7 * t + 1.3)) * np.exp(-t / 1.1) * 6
+    x = reverb((crack * 0.8 + rumble).astype(np.float32), room=0.85, wet=0.35, seed=83)
+    return (x / (np.abs(x).max() + 1e-9) * 0.9).astype(np.float32)
+
+
+def siren(dur=2.6, f_lo=520, f_hi=980, rate=0.9):
+    """Town warning siren: slow up/down wail."""
+    t = _t(dur)
+    f = f_lo + (f_hi - f_lo) * (0.5 - 0.5 * np.cos(2 * np.pi * rate * t))
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.35 * np.sin(4 * np.pi * np.cumsum(f) / SR)
+    env = np.minimum(1, t / 0.15) * np.minimum(1, (dur - t) / 0.3)
+    return (reverb((x * env * 0.3).astype(np.float32), room=0.8, wet=0.3, seed=84)).astype(np.float32)
+
+
+def static_burst(dur=0.8, seed=85):
+    """Radio/TV static crackle."""
+    rng = np.random.default_rng(seed)
+    t = _t(dur)
+    x = bp(rng.standard_normal(len(t)).astype(np.float32), 1200, 7000)
+    gate = (rng.random(len(t) // 400 + 1) > 0.25).repeat(400)[: len(t)]
+    env = np.minimum(1, t / 0.02) * np.minimum(1, (dur - t) / 0.05)
+    y = x * gate * env
+    return (y / (np.abs(y).max() + 1e-9) * 0.45).astype(np.float32)
+
+
+def rumble(dur=2.0, seed=86):
+    """Deep ground rumble (giant footsteps / earthquake bed)."""
+    rng = np.random.default_rng(seed)
+    t = _t(dur)
+    x = lp(lp(rng.standard_normal(len(t)).astype(np.float32), 90), 90) * 8
+    env = np.minimum(1, t / 0.3) * np.minimum(1, (dur - t) / 0.5)
+    return (np.tanh(x * env) * 0.8).astype(np.float32)
+
+
+def bruh_drop():
+    """A comedic descending 'wah-wah' (sad trombone-ish), no voice."""
+    out = np.zeros(int(2.2 * SR), np.float32)
+    for st, ln, m in ((0.0, 0.42, 58), (0.45, 0.42, 57), (0.9, 0.42, 56), (1.35, 0.8, 55)):
+        t = _t(ln)
+        bend = 1 - (0.03 * t / ln if ln > 0.5 else 0)
+        f = note_hz(m) * bend * (1 + 0.012 * np.sin(2 * np.pi * 6 * t))
+        x = np.zeros(len(t), np.float32)
+        for k, a in ((1, 1.0), (2, 0.6), (3, 0.45), (4, 0.3), (5, 0.2)):
+            x += a * np.sin(2 * np.pi * np.cumsum(f * k) / SR)
+        env = np.minimum(1, t / 0.03) * np.minimum(1, (ln - t) / 0.05)
+        place(out, lp((x * env * 0.18).astype(np.float32), 2200), st)
+    return out
+
+
+def spooky_drone(dur, seed=87, root=38):
+    """Dark ambient bed for spooky stories: detuned low drone + minor-second shimmer + wind (stereo)."""
+    rng = np.random.default_rng(seed)
+    t = _t(dur)
+    out = np.zeros((len(t), 2), np.float32)
+    for ch in (0, 1):
+        x = np.zeros(len(t), np.float32)
+        for m, a in ((root, 1.0), (root + 7, 0.45), (root + 12, 0.35), (root + 13, 0.12)):
+            f = note_hz(m) * (1 + (0.002 if ch else -0.002))
+            x += a * np.sin(2 * np.pi * f * t + rng.random() * 6) * (0.75 + 0.25 * np.sin(2 * np.pi * (0.07 + 0.03 * ch) * t))
+        wind = bp(rng.standard_normal(len(t)).astype(np.float32), 300, 1200) * (0.5 + 0.5 * np.sin(2 * np.pi * 0.11 * t + ch)) * 0.25
+        out[:, ch] = (x / 2.2 + wind) * 0.35
+    fade = np.minimum(1, t / 1.5)[:, None]
+    return (out * fade).astype(np.float32)

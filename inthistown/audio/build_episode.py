@@ -12,7 +12,7 @@ Everything episode-specific lives in episodes/<ep>/script.json:
                  "pauses": [0.4, null],          # pause after phrase k inside the beat (null = default)
                  "music": "party|muffled|lofi|night|none",   # music mode from this beat on
                  "markers": { "name": "w:<wordprefix>[+0.1] | start | end[+0.2]" },
-                 "sfx": [ { "type": "laugh|knock|whoosh|coo|thump|cheer", "at": "w:<word>|start|end[+x]", "gain": 0.8 } ],
+                 "sfx": [ { "type": "laugh|knock|whoosh|coo|thump|cheer|boom|scratch|ding|pop|thunder|siren|static|rumble|airhorn|dundun|sting|wahwah", "at": "w:<word>|start|end[+x]", "gain": 0.8 } ],
                  "card": {...}, "visual": "..." } ],   # passed through untouched for the shot list
     "bed": true | { "path": "audio/beds/reference_bed.wav", "gain": 0.8, "offset": 0 } }   # optional
       # bed = the sampled background loop (audio/bed.py). It REPLACES the procedural music and follows the music
@@ -157,6 +157,30 @@ def main(ep):
                 put(S.coo(), at, g, 0.55)
             elif typ == 'thump':
                 put(S.thump(0.35), at, g)
+            elif typ == 'boom':
+                put(S.vine_boom(), at, g)
+            elif typ == 'scratch':
+                put(S.record_scratch(seed=int(at * 10)), at, g)
+            elif typ == 'ding':
+                put(S.ding(), at, g)
+            elif typ == 'pop':
+                put(S.pop(seed=int(at * 10)), at, g)
+            elif typ == 'thunder':
+                put(S.thunder(seed=int(at * 10)), at, g)
+            elif typ == 'siren':
+                put(S.siren(fx.get('dur', 2.6)), at, g)
+            elif typ == 'static':
+                put(S.static_burst(fx.get('dur', 0.8), seed=int(at * 10)), at, g)
+            elif typ == 'rumble':
+                put(S.rumble(fx.get('dur', 2.0), seed=int(at * 10)), at, g)
+            elif typ == 'airhorn':
+                put(S.airhorn(), at, g)
+            elif typ == 'dundun':
+                put(S.dun_dun(), at, g)
+            elif typ == 'sting':
+                put(S.sting(), at, g)
+            elif typ == 'wahwah':
+                put(S.bruh_drop(), at, g)
             else:
                 raise ValueError(f'unknown sfx type {typ}')
     for (th, bid, i, spk) in huss_events:
@@ -179,6 +203,7 @@ def main(ep):
         bm = BED.modes(SR, int(N), bedcfg['path'], bedcfg['gain'], bedcfg['offset'])
         nb, gnb = bm.pop('night_bed')
         gains = {**bm, 'night': (amb[:N] + nb * gnb, 1.0)}
+    gains['spooky'] = (S.spooky_drone(duration + 1)[:N] + (gains['night'][0][:N] if gains['night'][0].ndim == 2 else np.stack([gains['night'][0][:N]] * 2, 1)) * 0.25, 1.0)
     music = np.zeros((N, 2), np.float32)
     for k, (t0, mode) in enumerate(seg):
         t1 = seg[k + 1][0] if k + 1 < len(seg) else duration
