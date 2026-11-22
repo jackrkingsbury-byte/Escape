@@ -1,9 +1,10 @@
 // Episode 3 ("Don't Blink") props. Same conventions as src/props.js / src/ep2/props2.js (SPEC.md §2/§7):
 // ES module, metres, Y up, deterministic (no Math.random / clocks), animated things are pure functions of the
-// t / u / g passed in, geometries + materials + textures cached at module level.
+// t / u / g passed in, geometries + materials + textures cached at module level. Dev page: dev/props3.html
+// (?view=all | crack | detail | scale | test).
 //
 // ── Exports ─────────────────────────────────────────────────────────────────────────────────────
-//   makeToaster()                                        → { root, setTremble(t, amount), toast, … }
+//   makeToaster(opts)                                    → { root, setTremble(t, amount), toast, … }
 //   makeCrack({ w=1.2, h=1.0, seed=1, … })               → { root, setGrowth(g), … }
 //   makeTrophy({ stone=false })                          → Object3D
 //   makePhotoCamera()                                    → Object3D
@@ -13,102 +14,113 @@
 //   makeBriefcase()                                      → Object3D
 //   makeSack()                                           → Object3D
 //   makePlinth({ w=0.9, d=0.9, h=0.35, plaque='NEVER BLINKED', … })               → Object3D
-//   setProps3EnvIntensity(k=1)   scales the reflections of every metal/gloss material made here (e.g. 0.4 at
-//                                night — the toaster chrome would otherwise look studio-lit in a dark room)
+//   setProps3EnvIntensity(k=1)   scales the reflections of every metal/gloss material made here (e.g. 0.35–0.5 in
+//                                a night room — the toaster chrome would otherwise look studio-lit in the dark)
 //   crackStage(g, stages=8)      → the stage index setGrowth(g) shows (0 = nothing)
 //   STONE_GREY ('#9a9a9a')
 //
 // ── Origins / sizes / details ───────────────────────────────────────────────────────────────────
-// makeToaster       0.26 (X) × 0.17 (Y, top of the body; slot rims reach 0.174) × 0.15 (Z) chrome-grey #c9ccd2 body
-//                   on 4 little black feet. Origin = bottom centre (feet on y=0), front = +Z. Slots run along X
-//                   (front slot z=+0.0225, back slot z=−0.0225); lever + groove on the +X end, browning dial on the
-//                   front face. Returns { root, setTremble(t, amount), toast, inner, setLever(u), toastRestY,
-//                   slotTopY, sweatSpot }.
-//                   toast: a Group, DIRECT child of root, sitting in the front slot: root-space position
-//                   (0, toastRestY=0.0696, 0.0225); its origin is the bottom centre of the slice, which is 0.1136
-//                   wide (X) × 0.1226 tall (Y) × 0.02 thick (Z); at rest its top pokes 0.018 above the slot. Animate
-//                   toast.position.y yourself (e.g. +0.07 = half out, +0.5 = shot out of frame). The toast faces
-//                   ±Z (camera at +Z sees the toasted face). You may re-parent it.
-//                   setTremble(t, amount): pure jitter of root.userData.inner (the body group; amount in metres,
-//                   0.01 = the faint 1 cm tremble, 0.025 = shivering hard, 0 = rest). It also moves the toast's
-//                   internal pivot (toast.children[0]) rigidly with the body as if the toast were at rest in the
-//                   slot — toast.position is never touched, so your toast.position.y animation stays yours.
-//                   The jitter never pushes the body below y=0 (it hops a hair instead).
-//                   setLever(u): 0 = pushed down (toasting, default) … 1 = up (popped). Pure.
-//                   sweatSpot: Object3D on the front face, upper right (0.085, 0.14, 0.076), inside the trembling
-//                   body — parent a makeSweatDrop({ size: 0.05 }) there so it shivers with the toaster.
+// makeToaster       0.26 (X) × 0.17 (Y, top of the body; slot rims reach 0.174) × 0.15 (Z) chunky rounded chrome-grey
+//                   #c9ccd2 body on 4 little black feet + a dark bumper band. Origin = bottom centre (feet on y=0),
+//                   front = +Z. Slots run along X (front slot z=+0.0225, back slot z=−0.0225); lever + groove on the +X
+//                   end (knob reaches x=0.175), browning dial on the front face.
+//                   Returns { root, setTremble(t, amount), toast, inner, setLever(u), toastRestY, slotTopY, sweatSpot, size }.
+//                   toast: a Group, DIRECT child of root, sitting in the front slot at root-space (0, toastRestY=0.0696,
+//                   0.0225); its origin is the bottom centre of the slice (bread-slice silhouette 0.114 wide × 0.1226
+//                   tall × 0.02 thick, golden faces with a darker crust ring + crust sides); at rest its top pokes 0.018
+//                   above the slot. Animate toast.position.y yourself (+0.07 = half out, +0.12 = fully out, +0.6 = shot out
+//                   of frame). The toasted face looks ±Z. You may re-parent it.
+//                   setTremble(t, amount): pure jitter of root.userData.inner (the body group; amount in metres:
+//                   0.01 = the faint 1 cm tremble, 0.025 = shivering hard, 0 = exact rest). Translation ±amount plus
+//                   small tilts (~2·amount rad), ~30 Hz noise of t. It never pushes the body below y=0 (it hops a hair).
+//                   It also moves the toast's internal pivot (toast.children[0]) rigidly with the body as if the toast
+//                   were at rest in the slot — toast.position is never touched, so your toast.position.y stays yours.
+//                   setLever(u): 0 = pushed down (toasting, default; opts.lever) … 1 = up (popped). Pure.
+//                   sweatSpot (also root.userData.sweatSpot): Object3D on the front face, upper right (0.07, 0.124,
+//                   0.076), inside the trembling body — add a makeSweatDrop({ size: 0.045 }) there (z += 0.012) so it
+//                   shivers with the toaster. ~8 draw calls.
 // makeCrack         a dark zig-zag crack decal on a transparent plane (w × h) in the XY plane facing +Z
-//                   (MeshBasicMaterial, transparent, depthWrite false, polygonOffset −2/−2; renderOrder 2).
-//                   Origin = the crack's START point (the impact spot). The plane is NOT centred on the origin:
-//                   opts.start = [0.42, 0.58] = where the start sits as fractions of w (from the left) / h (from
-//                   the bottom), so root.userData.bounds = { x0: −0.504, x1: 0.696, y0: −0.58, y1: 0.42 } for the
-//                   defaults. Put root ON the surface (≈1–2 mm in front of it), facing out.
-//                   Growth: the main bolt runs from the origin to the FARTHEST plane corner (default: bottom
-//                   right), then `branches` (default 4, 0..6) sprout: #0 from the origin toward the opposite
-//                   corner (so with ≥1 branch the crack runs right through the start point), #1/#2 from the main
-//                   bolt / #0 toward the two remaining corners, #3+ off to the edges; every line has short twigs and
-//                   the start point has a little impact star. At g = 1 every corner is reached (branches ≥ 3).
-//                   setGrowth(g) shows the nearest of `stages` (default 8) precomputed stages:
-//                   k = round(g·stages), g ≈ 0 → hidden. Stage textures are drawn lazily on first use and cached
-//                   across instances (same options → same textures). Default schedule (stages 8, branches 4):
+//                   (MeshBasicMaterial + canvas alpha texture, transparent, depthWrite false, polygonOffset −2/−2,
+//                   renderOrder 2; 1 draw call). Origin = the crack's START point (the impact spot). The plane is NOT
+//                   centred on the origin: opts.start = [0.42, 0.58] = where the start sits as fractions of w (from the
+//                   left) / h (from the bottom), so for the defaults root.userData.bounds (= .bounds) =
+//                   { x0: −0.504, x1: 0.696, y0: −0.58, y1: 0.42 }. Put root ON the surface (1–2 mm in front of it,
+//                   e.g. the eye-line spot the kid stares at), facing out.
+//                   Growth: a bold tapered main bolt runs from the origin to the FARTHEST plane corner (default: bottom
+//                   right), then `branches` (default 4, 0..6) sprout: #0 from the origin toward the most opposite corner
+//                   (so with ≥ 1 branch the crack runs right through the start point), #1/#2 off the main bolt / #0 toward
+//                   the two remaining corners, #3+ off to the edges; every line has short twigs and the start point has a
+//                   little impact star. At g = 1 every corner is reached (branches ≥ 3).
+//                   setGrowth(g) shows the nearest of `stages` (default 8) precomputed stages: k = round(g·stages),
+//                   k = 0 → hidden; returns k. Stage textures are drawn lazily on first use and cached across instances
+//                   (same options → same textures, ~1024×853 each). Default schedule (stages 8, branches 4):
 //                     g 0.125 / 0.25 / 0.375 → main bolt 1/3, 2/3, complete (no branches yet)
 //                     g 0.5 → branch #0 ~85 %;  0.625 → #0 done, #1 ~70 %;  0.75 → #1 done, #2 ~55 %;
 //                     0.875 → #2 done, #3 ~40 %;  1.0 → everything, all four corners reached.
-//                   → for "a new branch per HUSS": 0.375 on 'cracked', then 0.625 / 0.875 / 1.0 on HUSS 1/2/3.
+//                   → "a new branch per HUSS": 0.375 on 'cracked', then 0.625 / 0.875 / 1.0 on HUSS 1 / 2 / 3.
 //                   Returns { root, setGrowth, mesh, stages, stage (current k), schedule ({ main:[t0,t1],
-//                   branches:[[t0,t1],…] } in g units), bounds, prewarm(renderer) }.
-//                   Other opts: res=1024 (texture px on the longest side), width=1 (line-width multiplier),
-//                   color='#1b1714'. Scaling: line widths and zig-zag size scale with min(w,h), so for the statue
-//                   face either pass a small w/h (e.g. { w:0.3, h:0.26, branches:1 } = ONE crack straight across)
-//                   or scale root. Branch count 1 gives main + opposite branch = one line through the start.
-// makeTrophy        gold cup trophy 0.32 tall: square two-tier base (0.14 × 0.14, 0.075 tall) with a dark plaque
-//                   (gold "CHAMPION") on its +Z face, stem with a knob, bowl (rim Ø0.16 at y 0.32), two loop
-//                   handles on ±X (total width 0.25). Origin = base bottom centre. { stone: true } = identical shape
-//                   in rough stone grey #9a9a9a (plaque a darker grey with carved lettering) for the statue.
-//                   root.userData.grip = Object3D at the stem knob (y 0.122): for a character hand,
-//                   trophy.position.copy(grip.position).negate() inside joints.handR (hands are 0.14 cubes, so
-//                   consider scale 1.3–1.5 for a hero shot). userData.height = 0.32.
-// makePhotoCamera   old press camera on a wooden tripod, ~1.44 m tall (flash reflector top). Origin = floor centre
-//                   under the tripod head; lens points +Z (the photographer stands at about z = −0.45, between the
-//                   two rear legs; front leg points +Z). Body 0.30 × 0.20 × 0.18 (y 1.035..1.235), lens Ø0.16
-//                   reaching z = 0.21, flash reflector Ø0.15 on top (+X side) facing +Z.
-//                   root.userData.flash = Object3D at the bulb centre (≈ (0.085, 1.355, 0.03)).
-//                   root.userData.setFlash(k): k 0..1 makes the bulb glow (emissive, not tone-mapped down) — pure;
-//                   the bulb material is per-camera. root.userData.lens = Object3D at the lens front centre.
-// makeCushions      two stacked red velvet cushions (#a01830, sheen), each 0.42 × ~0.1 × 0.42 (puffy centre, thinner
-//                   pinched corners, gold piping, gold tassel cubes at the 4 corners, gold centre button); the top one
-//                   is yawed 0.17 rad. Origin = bottom centre. root.userData.top = 0.196 = y of the top surface
-//                   centre (put the cat's root there). root.userData.setSquash(k): k > 0 squashes the stack (k=1 →
-//                   ~20 % flatter, a little wider), k < 0 stretches; returns the new top y. Pure.
-//                   root.userData.bounce(u, amount=1): convenience damped wobble for a table slam, u = seconds
-//                   since the hit (0 → squashed, settles by ~0.6 s); returns the top y (move the cat with it).
-// makeTrafficCone   orange cone 0.5 tall (base Ø0.27, rounded tip) with a white band (y 0.27–0.355) on a black
-//                   square base 0.36 × 0.035 × 0.36. Origin = bottom centre. root.userData.tip = Object3D at the tip
-//                   top (y 0.5); a makePartyHat (brim radius 0.105) at scale 0.45 sits at about y 0.44
-//                   (root.userData.hatY = 0.44, hatScale = 0.45).
-// makeSign          hand-painted board (w × h × 0.018, painted `color`, darker painted border, lines in bold ink
-//                   with a slight hand-lettered wobble, auto-fitted) nailed to a 0.032 × 0.022 wooden stake. Board
-//                   bottom at y = 0.5 (stick), so the top is at 0.5 + h; the stake's pointed bottom is the origin.
-//                   Text faces +Z. Extra opts: ink (colour or array per line; default alternates red / navy),
-//                   stick=0.5 (visible stick length below the board), seed=1 (lettering wobble).
-//                   root.userData.board = Object3D at the board centre front.
-// makeBriefcase     brown leather briefcase, body 0.42 (X) × 0.275 (Y) × 0.10 (Z) + handle (top at y 0.326), two
-//                   gold clasps on the +Z face, standing on 4 gold studs. Origin = bottom centre.
-//                   root.userData.handle = Object3D at the handle grip centre (for a hand).
-// makeSack          lumpy beige burlap sack 0.45 tall, ~0.39 wide, gathered + tied neck (rope) at the top (+Y).
-//                   Origin = the bounding-box centre (y −0.225..+0.225). root.userData.neck = Object3D at the tie
-//                   (y ≈ +0.13) — for over-the-shoulder carrying, put the neck at the hand / shoulder and rotate the
-//                   sack (e.g. rotation.x ≈ 2.4 so the body hangs behind the back).
-// makePlinth        low stone plinth: base course w × 0.06 × d, inset body, top slab (w−0.02) × 0.05 × (d−0.02),
-//                   small bevels, speckled warm stone (#aeaaa1, box-projected texture so close-ups don't stretch).
-//                   Bronze plaque with raised serif letters on the +Z face of the body. Origin = bottom centre;
-//                   root.userData.top = h; root.userData.plaque = Object3D at the plaque's front centre (camera
-//                   push-in target). Extra opts: stone (colour), plaqueW (default min(0.62·w, 0.6)).
-//                   plaque may contain '\n' for two lines.
+//                   branches:[[t0,t1],…] } in g units), bounds, prewarm(renderer) (uploads all stages up front) }.
+//                   Other opts: growth=1 (initial), res=1024 (texture px on the longest side), width=1 (line-width
+//                   multiplier), color='#1b1714'. Line widths and zig-zag size scale with min(w,h).
+//                   Statue face (b25): makeCrack({ w: 0.42, h: 0.4, branches: 1, start: [0.38, 0.55], seed: 3 }) on a
+//                   0.62 head front = ONE crack straight across the face through the start point (main + branch #0),
+//                   revealed with setGrowth(1) (or 0.375 → half, 1 → across).
+// makeTrophy        gold cup trophy 0.32 tall, 0.26 wide incl. the two loop handles on ±X: square two-tier gold base
+//                   (0.14 × 0.14, 0.075 tall) with a dark plaque (gold "CHAMPION") on its +Z face, stem with a knob, bowl
+//                   (rim Ø0.163 at y 0.32). Origin = base bottom centre. { stone: true } = identical shape in rough stone
+//                   grey #9a9a9a (plaque a darker grey with carved lettering) for the statue. 5 draw calls.
+//                   root.userData.grip = Object3D at the stem knob (y 0.122); userData.height = 0.32.
+//                   In a character hand (joints.handR): the hand's local +Y runs UP the forearm, so with the arm hanging
+//                   use rotation 0 and position = −grip; with the arm raised overhead (cheer) flip it:
+//                     t.scale.setScalar(s); t.rotation.x = Math.PI;
+//                     t.position.copy(t.userData.grip.position).multiplyScalar(s).applyEuler(t.rotation).negate();
+//                   Hands are 0.14 cubes — s ≈ 1.3–1.5 reads better in a wide shot.
+// makePhotoCamera   old press camera on a wooden tripod, 1.43 m tall (flash reflector top). Origin = floor centre under the
+//                   tripod head; lens points +Z (the photographer stands at about z = −0.45, between the two rear legs;
+//                   the front leg points +Z; feet on a 0.43 radius). Black body 0.30 × 0.20 × 0.18 (y 1.035..1.235) with
+//                   chrome top/bottom plates, viewfinder, winding knob, red shutter button; lens Ø0.16 reaching z ≈ 0.21;
+//                   chrome flash reflector Ø0.15 on a post on top (+X side) facing +Z.
+//                   root.userData.flash = Object3D at the bulb centre (0.085, 1.355, 0.028).
+//                   root.userData.setFlash(k): k 0..1 makes the bulb glow (emissive ×4, not tone-mapped while lit) — pure;
+//                   the bulb material is per-camera. root.userData.lens = Object3D at the lens front centre (0, 1.13, 0.203).
+//                   root.userData.flashBulb = the bulb mesh. 8 draw calls.
+// makeCushions      two stacked red velvet cushions (#a01830, MeshPhysicalMaterial sheen), each 0.42 × ~0.11 × 0.42 (puffy
+//                   centre, thinner pinched corners, gold piping along the seam, gold tassel cubes at the 4 corners, gold
+//                   centre button); the top one is yawed 0.17 rad. Footprint incl. tassels ≈ 0.49. Origin = bottom centre.
+//                   root.userData.top = 0.206 = y of the top surface centre (put the cat's root there).
+//                   root.userData.setSquash(k): k > 0 squashes the stack (k=1 → ~20 % flatter, a little wider), k < 0
+//                   stretches; returns (and stores in userData.top) the new top y. Pure.
+//                   root.userData.bounce(u, amount=1): convenience damped wobble for a table slam, u = seconds since the
+//                   hit (0 → squashed, settled by ~0.6 s); returns the top y (move the cat with it). 8 draw calls.
+// makeTrafficCone   orange cone 0.5 tall (base Ø0.27, rounded tip) with a white band (y 0.27–0.355) on a black square base
+//                   0.36 × 0.035 × 0.36. Origin = bottom centre. root.userData.tip = Object3D at the tip top (y 0.5);
+//                   a makePartyHat (brim radius 0.105) at scale root.userData.hatScale (0.45) sits at y = userData.hatY
+//                   (0.44). 3 draw calls.
+// makeSign          hand-painted board (w × h × 0.018, brush-streaked `color`, darker painted border, little stars, lines
+//                   in heavy bold ink with a hand-lettered wobble, each line auto-fitted to the width) nailed to a
+//                   0.032 × 0.022 wooden stake. Board bottom at y = stick (0.5), top at stick + h (0.9); the stake's pointed
+//                   bottom is the origin. Text faces +Z. Extra opts: ink (colour or array per line; default red / navy
+//                   alternating), stick=0.5 (stick length below the board), seed=1 (lettering wobble).
+//                   root.userData.board = Object3D at the board's front centre. 8 draw calls.
+// makeBriefcase     brown leather briefcase, body 0.42 (X) × 0.275 (Y) × 0.10 (Z) on 4 gold studs (body bottom y 0.008),
+//                   lid seam band, two gold clasps with keyholes on the +Z face, leather handle with gold mounts (top of
+//                   the handle y ≈ 0.34). Origin = bottom centre. root.userData.handle = Object3D at the grip centre
+//                   (y 0.329) — parent it to a hand via −handle.position. 5 draw calls.
+// makeSack          lumpy beige burlap sack 0.446 tall (bbox 0.46 X × 0.41 Z), gathered neck tied with rope and a flared
+//                   tuft on top (+Y). Origin = its bounding-box centre (y −0.223..+0.223). root.userData.neck = Object3D at
+//                   the tie (y +0.144): to hold it by the neck, sack.position.set(0, −neck.y, 0) inside joints.handR (it
+//                   hangs below the fist); for over the shoulder, put the neck at the shoulder/hand and rotate it so the
+//                   body hangs behind the back. 3 draw calls.
+// makePlinth        low stone plinth: base course w × 0.06 × d, inset body, top slab (w−0.02) × 0.05 × (d−0.02), small bevels,
+//                   speckled warm stone (#aeaaa1, box-projected UVs so close-ups don't stretch). Bronze plaque with raised
+//                   serif letters (default 'NEVER BLINKED', 0.56 × 0.15) on the +Z face of the body. Origin = bottom centre;
+//                   root.userData.top = h; root.userData.plaque = Object3D at the plaque's front centre (camera push-in
+//                   target, y ≈ 0.18). Extra opts: stone (colour), plaqueW (default min(0.62·w, 0.6)); plaque may contain
+//                   '\n' for two lines, plaque: '' = none. 7 draw calls.
 //
 // Metals / gloss (toaster chrome, trophy gold, camera chrome, plaque bronze, gold piping) use the same tiny built-in
-// studio reflection map approach as props2 (there is no scene environment in this project, and metalness ≥ 0.6
-// would otherwise render nearly black).
+// studio reflection map approach as props2 (there is no scene environment in this project, and metalness ≥ 0.6 would
+// otherwise render nearly black). Tune them all at once with setProps3EnvIntensity(k).
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -293,7 +305,7 @@ export function setProps3EnvIntensity(k = 1) {
   for (const { m, base } of _envMats) m.envMapIntensity = base * k;
 }
 const chrome = () => envMat('#e9edf2', { metalness: 0.92, roughness: 0.18 }, 1);
-const gold = () => envMat('#e8b23a', { metalness: 0.9, roughness: 0.24 }, 1.1);
+const gold = () => envMat('#f4c445', { metalness: 0.84, roughness: 0.3 }, 1.45);
 const brass = () => envMat('#d9a441', { metalness: 0.85, roughness: 0.3 }, 1.0);
 
 // ════════════════════════════════════════════════════════════════════════════════ 1. toaster
@@ -359,20 +371,20 @@ function toasterGeos() {
   return G('toaster', () => {
     const { W, H, D, foot } = TST;
     const bodyH = H - foot;
-    const body = xf(softBox(W, bodyH, D, 0.028, 4), [0, foot + bodyH / 2, 0]);
+    const body = xf(softBox(W, bodyH, D, 0.036, 4), [0, foot + bodyH / 2, 0]);
     // light chrome bits: top bezel + two decorative front lines
     const light = merge([
-      xf(softBox(0.19, 0.006, 0.085, 0.0028, 2), [0, H + 0.0005, 0]),
-      xf(softBox(0.17, 0.0035, 0.003, 0.0012, 1), [-0.01, 0.128, D / 2 + 0.0004]),
-      xf(softBox(0.17, 0.0035, 0.003, 0.0012, 1), [-0.01, 0.116, D / 2 + 0.0004]),
+      xf(softBox(0.184, 0.006, 0.076, 0.0028, 2), [0, H + 0.0005, 0]),
+      xf(softBox(0.16, 0.0035, 0.003, 0.0012, 1), [-0.012, 0.118, D / 2 + 0.0004]),
+      xf(softBox(0.16, 0.0035, 0.003, 0.0012, 1), [-0.012, 0.106, D / 2 + 0.0004]),
     ]);
     const dark = [];
     for (const z of [TST.slotZ, -TST.slotZ]) dark.push(xf(softBox(0.165, 0.03, 0.024, 0.005, 2), [0, TST.slotTop - 0.015, z]));
-    dark.push(xf(softBox(0.004, 0.105, 0.016, 0.0018, 1), [W / 2 + 0.0003, 0.095, 0]));               // lever groove
+    dark.push(xf(softBox(0.004, 0.08, 0.016, 0.0018, 1), [W / 2 + 0.0003, 0.092, 0]));               // lever groove
     for (const x of [-0.1, 0.1]) for (const z of [-0.052, 0.052]) dark.push(xf(softBox(0.026, 0.014, 0.026, 0.005, 2), [x, 0.007, z]));
-    dark.push(xf(new THREE.CylinderGeometry(0.0165, 0.0175, 0.011, 20), [0.085, 0.054, D / 2 + 0.004], [Math.PI / 2, 0, 0]));   // dial
+    dark.push(xf(new THREE.CylinderGeometry(0.0165, 0.0175, 0.011, 20), [0.075, 0.07, D / 2 + 0.004], [Math.PI / 2, 0, 0]));   // dial
     const trim = xf(softBox(W + 0.005, 0.017, D + 0.005, 0.006, 2), [0, 0.0245, 0]);
-    const tick = xf(softBox(0.0034, 0.012, 0.002, 0.0008, 1), [0.085, 0.06, D / 2 + 0.0098]);
+    const tick = xf(softBox(0.0034, 0.012, 0.002, 0.0008, 1), [0.075, 0.076, D / 2 + 0.0098]);
     const leverStem = xf(softBox(0.022, 0.008, 0.008, 0.002, 1), [W / 2 + 0.011, 0, 0]);
     const leverKnob = xf(softBox(0.032, 0.021, 0.036, 0.008, 2), [W / 2 + 0.029, 0, 0]);
     return { body, light, dark: merge(dark), trim, tick, lever: merge([leverStem, leverKnob]) };
@@ -391,10 +403,10 @@ export function makeToaster(opts = {}) {
   const tickM = mesh(A.tick, mat('#f4f4f4', { roughness: 0.5 })); tickM.castShadow = false; inner.add(tickM);
   const lever = new THREE.Group(); lever.name = 'lever'; inner.add(lever);
   lever.add(mesh(A.lever, envMat('#17181c', { roughness: 0.32 }, 0.45)));
-  const LEVER_DOWN = 0.058, LEVER_UP = 0.136;
+  const LEVER_DOWN = 0.062, LEVER_UP = 0.124;
   const setLever = (u) => { lever.position.y = lerp(LEVER_DOWN, LEVER_UP, clamp(u, 0, 1)); };
   setLever(opts.lever ?? 0);
-  const sweatSpot = new THREE.Object3D(); sweatSpot.name = 'sweatSpot'; sweatSpot.position.set(0.085, 0.14, TST.D / 2 + 0.001); inner.add(sweatSpot);
+  const sweatSpot = new THREE.Object3D(); sweatSpot.name = 'sweatSpot'; sweatSpot.position.set(0.07, 0.124, TST.D / 2 + 0.001); inner.add(sweatSpot);
 
   const toast = new THREE.Group(); toast.name = 'toast';
   toast.position.copy(TOAST_REST);
@@ -425,17 +437,18 @@ export function makeToaster(opts = {}) {
 export function crackStage(g, stages = 8) { return clamp(Math.round((Number.isFinite(g) ? g : 0) * stages), 0, stages); }
 
 const _crackData = new Map();
-function zigzag(r, A, B, seg, amp) {
-  const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy) || 1e-6;
-  const n = Math.max(2, Math.round(L / seg));
-  const px = -dy / L, py = dx / L;
+/** Steered zig-zag from A to B: each step heads toward B ± a random kink angle (alternating sides), random length. */
+function zigzag(r, A, B, seg, kink = 0.62) {
   const pts = [[A[0], A[1]]];
-  let side = r() < 0.5 ? 1 : -1;
-  for (let i = 1; i < n; i++) {
-    const u = (i + (r() - 0.5) * 0.5) / n;
-    const off = side * amp * (0.35 + 0.65 * r());
-    side = r() < 0.82 ? -side : side;
-    pts.push([A[0] + dx * u + px * off, A[1] + dy * u + py * off]);
+  let P = [A[0], A[1]], side = r() < 0.5 ? 1 : -1;
+  for (let guard = 0; guard < 200; guard++) {
+    const dx = B[0] - P[0], dy = B[1] - P[1], d = Math.hypot(dx, dy);
+    if (d < seg * 1.25) break;
+    const ang = Math.atan2(dy, dx) + side * kink * (0.45 + 0.75 * r());
+    const len = seg * (0.5 + 0.9 * r());
+    P = [P[0] + Math.cos(ang) * len, P[1] + Math.sin(ang) * len];
+    pts.push(P);
+    side = r() < 0.84 ? -side : side;
   }
   pts.push([B[0], B[1]]);
   return pts;
@@ -467,10 +480,10 @@ function crackData(o) {
   const bx0 = x0 + ins, bx1 = x1 - ins, by0 = y0 + ins, by1 = y1 - ins;
   const inside = (p) => [clamp(p[0], bx0, bx1), clamp(p[1], by0, by1)];
   const corners = [[bx0, by0], [bx1, by0], [bx1, by1], [bx0, by1]];
-  const seg = 0.075 * S, amp = 0.042 * S;
+  const seg = 0.1 * S;
   const lines = [];
   const add = (A, Bp, w0, w1, t0, t1, opts = {}) => {
-    const pts = zigzag(r, A, Bp, opts.seg ?? seg, opts.amp ?? amp).map(inside);
+    const pts = zigzag(r, A, Bp, opts.seg ?? seg, opts.kink ?? 0.62).map(inside);
     const cum = polyInfo(pts);
     const L = { pts, cum, len: cum[cum.length - 1], w0: w0 * wk, w1: w1 * wk, t0, t1, cap: !!opts.cap };
     lines.push(L);
@@ -487,7 +500,7 @@ function crackData(o) {
   const dist = corners.map((c) => Math.hypot(c[0], c[1]));
   const mi = dist.indexOf(Math.max(...dist));
   const gm = B > 0 ? 0.375 : 1;
-  const main = add([0, 0], corners[mi], 0.016 * S, 0.0032 * S, 0, gm, { cap: true });
+  const main = add([0, 0], corners[mi], 0.03 * S, 0.0065 * S, 0, gm, { cap: true });
   const mdir = [corners[mi][0] / dist[mi], corners[mi][1] / dist[mi]];
   // ── branches
   const rest = corners.filter((_, i) => i !== mi).map((c) => ({ c, d: (c[0] * mdir[0] + c[1] * mdir[1]) / Math.hypot(c[0], c[1]) })).sort((a, b) => a.d - b.d);
@@ -498,7 +511,7 @@ function crackData(o) {
     const [t0, t1] = win(i);
     let L;
     if (i === 0) {
-      L = add([0, 0], rest[0].c, 0.0105 * S, 0.0026 * S, t0, t1);
+      L = add([0, 0], rest[0].c, 0.021 * S, 0.0052 * S, t0, t1);
     } else if (i <= 2 && rest[i]) {
       const tgt = rest[i].c;
       const cands = [main, brs[0]].filter(Boolean);
@@ -507,7 +520,7 @@ function crackData(o) {
       for (const c of cands) { const e = c.pts[c.pts.length - 1]; const d = Math.cos(Math.atan2(e[1], e[0]) - tdir); if (d > bd) { bd = d; best = c; } }
       const f = (i === 1 ? 0.12 : 0.22) + 0.18 * r();
       const at = pointAt(best, f);
-      L = add(at.p, tgt, widthAt(best, f) * 0.62, 0.0024 * S, t0, t1);
+      L = add(at.p, tgt, widthAt(best, f) * 0.66, 0.005 * S, t0, t1);
     } else {
       const parent = i % 2 ? main : (brs[1] || main);
       const f = 0.45 + 0.25 * r();
@@ -519,7 +532,7 @@ function crackData(o) {
         const d = Math.min(...used.map((u) => Math.hypot(u[0] - end[0], u[1] - end[1])));
         if (d > bd) { bd = d; best = end; }
       }
-      L = add(at.p, best, widthAt(parent, f) * 0.6, 0.0022 * S, t0, t1);
+      L = add(at.p, best, widthAt(parent, f) * 0.62, 0.0045 * S, t0, t1);
     }
     brs.push(L);
   }
@@ -531,17 +544,17 @@ function crackData(o) {
       const f = 0.15 + 0.7 * r();
       const at = pointAt(P, f);
       const ang = at.dir + (r() < 0.5 ? 1 : -1) * (0.55 + 0.55 * r());
-      const len = (0.035 + 0.075 * r()) * S;
+      const len = (0.045 + 0.085 * r()) * S;
       const end = inside([at.p[0] + Math.cos(ang) * len, at.p[1] + Math.sin(ang) * len]);
       const t0 = P.t0 + f * (P.t1 - P.t0);
-      add(at.p, end, Math.max(0.0035 * S, widthAt(P, f) * 0.5), 0.0011 * S, t0, Math.min(1, t0 + 0.07), { seg: 0.03 * S, amp: 0.012 * S });
+      add(at.p, end, Math.max(0.006 * S, widthAt(P, f) * 0.45), 0.0018 * S, t0, Math.min(1, t0 + 0.07), { seg: 0.032 * S, kink: 0.55 });
     }
   }
   // ── impact star at the start point
   for (let k = 0; k < 6; k++) {
     const ang = (k / 6) * TAU + r() * 0.8;
-    const len = (0.012 + 0.022 * r()) * S;
-    add([0, 0], [Math.cos(ang) * len, Math.sin(ang) * len], 0.005 * S, 0.0012 * S, 0, 0.06, { seg: 0.012 * S, amp: 0.004 * S });
+    const len = (0.02 + 0.03 * r()) * S;
+    add([0, 0], [Math.cos(ang) * len, Math.sin(ang) * len], 0.009 * S, 0.0018 * S, 0, 0.06, { seg: 0.014 * S, kink: 0.4 });
   }
   D = { lines, bounds: { x0, x1, y0, y1 }, schedule: { main: [0, gm], branches: brs.map((b) => [b.t0, b.t1]) }, S };
   _crackData.set(key, D);
@@ -564,7 +577,7 @@ function drawCrackLine(g, L, f, P, px, pass, tip) {
     let w = 0.5 * lerp(L.w0, L.w1, s / L.len) * px;
     if (f < 1) w *= clamp((sEnd - s) / tip, 0.12, 1);     // growing front tapers to a point
     if (i === n - 1) w = Math.min(w, 0.35);
-    return pass === 0 ? w * 2.3 + 1.1 : w;
+    return pass === 0 ? w * 1.6 + 1.6 : w;
   });
   const nrm = [];
   for (let i = 0; i < n - 1; i++) {
@@ -610,9 +623,9 @@ function crackMaterial(o, k) {
   const rgb = `${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)}`;
   const tex = canvasTexture(cw, ch, (ctx) => {
     ctx.clearRect(0, 0, cw, ch);
-    const tip = 0.05 * D.S * px;
+    const tip = 0.06 * D.S;                        // metres of taper behind a growing front
     for (const pass of [0, 1]) {
-      ctx.fillStyle = pass === 0 ? `rgba(${rgb},0.2)` : `rgb(${rgb})`;
+      ctx.fillStyle = pass === 0 ? `rgba(${rgb},0.18)` : `rgb(${rgb})`;
       for (const L of D.lines) {
         const f = clamp((g - L.t0) / Math.max(1e-6, L.t1 - L.t0), 0, 1);
         if (f > 0) drawCrackLine(ctx, L, f, P, px, pass, tip);
@@ -629,13 +642,13 @@ function crackMaterial(o, k) {
 export function makeCrack(opts = {}) {
   const { w = 1.2, h = 1.0, seed = 1, start = [0.42, 0.58], branches = 4, stages = 8, res = 1024, width = 1, color = '#1b1714' } = opts;
   const o = { w, h, seed, sx: clamp(start[0], 0, 1), sy: clamp(start[1], 0, 1), branches: clamp(Math.round(branches), 0, 6), width, res: Math.round(res), stages: Math.max(1, Math.round(stages)), color };
-  const D = crackData({ w, h, seed, sx: o.sx, sy: o.sy, branches: o.branches, width });
+  const D = crackData(crackDataKey(o));
   const geo = G(`crackPlane|${w}|${h}|${o.sx}|${o.sy}`, () => new THREE.PlaneGeometry(w, h).translate(w * (0.5 - o.sx), h * (0.5 - o.sy), 0));
   const root = new THREE.Group(); root.name = 'Crack';
-  const m = new THREE.Mesh(geo, crackMaterial(o, o.stages));
+  _crackHidden ??= new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+  const m = new THREE.Mesh(geo, _crackHidden);
   m.castShadow = false; m.receiveShadow = false; m.renderOrder = 2; m.name = 'crackDecal';
   root.add(m);
-  const dataKey = { w, h, seed, sx: o.sx, sy: o.sy, branches: o.branches, width };
   const crack = {
     root, mesh: m, stages: o.stages, stage: -1, bounds: { ...D.bounds }, schedule: D.schedule,
     setGrowth(gr) {
@@ -643,10 +656,10 @@ export function makeCrack(opts = {}) {
       if (k === crack.stage) return k;
       crack.stage = k;
       m.visible = k > 0;
-      if (k > 0) m.material = crackMaterial({ ...o, ...dataKey }, k);
+      m.material = k > 0 ? crackMaterial(o, k) : _crackHidden;
       return k;
     },
-    prewarm(renderer) { for (let k = 1; k <= o.stages; k++) renderer.initTexture(crackMaterial({ ...o, ...dataKey }, k).map); },
+    prewarm(renderer) { for (let k = 1; k <= o.stages; k++) renderer.initTexture(crackMaterial(o, k).map); },
   };
   root.userData.bounds = crack.bounds;
   crack.setGrowth(opts.growth ?? 1);
@@ -790,16 +803,21 @@ export function makePhotoCamera() {
 }
 
 // ════════════════════════════════════════════════════════════════════════════════ 5. velvet cushions
-const CUSH = { W: 0.42, T: 0.106 };
+const CUSH = { W: 0.42, T: 0.112 };
 function cushionGeos() {
   return G('cushion', () => {
     const { W, T } = CUSH, hw = W / 2;
-    const g = new RoundedBoxGeometry(W, T, W, 5, 0.04);
+    // superquadric pillow from a sphere (dense vertices everywhere, so the dome/tuft deformation has something to move)
+    const g = new THREE.SphereGeometry(1, 56, 28);
     g.deleteAttribute('uv');
     const p = g.attributes.position;
+    const PE = 6, QE = 3, hb = T / 2;
     let minY = Infinity;
     for (let i = 0; i < p.count; i++) {
-      const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+      const dx = p.getX(i), dy = p.getY(i), dz = p.getZ(i);
+      const F = Math.pow(Math.pow(Math.abs(dx) / hw, PE) + Math.pow(Math.abs(dz) / hw, PE), QE / PE) + Math.pow(Math.abs(dy) / hb, QE);
+      const t = Math.pow(F, -1 / QE);
+      const x = dx * t, y = dy * t, z = dz * t;
       const nx = clamp(Math.abs(x) / hw, 0, 1), nz = clamp(Math.abs(z) / hw, 0, 1);
       const f = (1 - nx ** 3.2) * (1 - nz ** 3.2);
       let yy = y > 0 ? y * (0.6 + 0.4 * f) : y * (0.86 + 0.14 * f);
@@ -811,23 +829,19 @@ function cushionGeos() {
     g.translate(0, -minY, 0);
     smoothNormals(g);
     g.computeBoundingBox();
-    const seamY = -minY - 0.006;
+    const seamY = -minY - 0.002;
     const topY = g.boundingBox.max.y;
-    // gold piping around the seam (rounded square), tassels at the corners, centre button
-    const r = 0.05, e = hw - r - 0.004;
-    const pt = (x, z) => new V3(x, seamY, z);
-    const arc = (cx, cz, a0) => {
-      const pts = [];
-      for (let i = 0; i <= 6; i++) { const a = a0 + (i / 6) * (Math.PI / 2); pts.push(pt(cx + Math.cos(a) * (r + 0.002), cz + Math.sin(a) * (r + 0.002))); }
-      return pts;
-    };
-    const ring = [...arc(e, e, 0), ...arc(-e, e, Math.PI / 2), ...arc(-e, -e, Math.PI), ...arc(e, -e, 1.5 * Math.PI)];
-    const pipe = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ring, true, 'centripetal'), 120, 0.0058, 6, true);
+    // gold piping along the seam = the same superellipse outline (slightly pinched), tassels at its corners
+    const rho = (phi) => 0.968 * hw / Math.pow(Math.pow(Math.abs(Math.cos(phi)), PE) + Math.pow(Math.abs(Math.sin(phi)), PE), 1 / PE);
+    const ring = [];
+    for (let k = 0; k < 96; k++) { const phi = (k / 96) * TAU; const rr = rho(phi) + 0.001; ring.push(new V3(Math.cos(phi) * rr, seamY, Math.sin(phi) * rr)); }
+    const pipe = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ring, true, 'centripetal'), 128, 0.0058, 6, true);
     const tas = [];
+    const rc = rho(Math.PI / 4) * Math.SQRT1_2;
     for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-      const cx = sx * (hw - 0.012), cz = sz * (hw - 0.012);
+      const cx = sx * (rc + 0.006), cz = sz * (rc + 0.006);
       tas.push(xf(softBox(0.026, 0.026, 0.026, 0.006, 2), [cx, seamY, cz], [0, Math.PI / 4, 0]));
-      tas.push(xf(new THREE.CylinderGeometry(0.007, 0.0145, 0.04, 10), [cx + sx * 0.012, seamY - 0.022, cz + sz * 0.012], [sz * 0.45, 0, -sx * 0.45]));
+      tas.push(xf(new THREE.CylinderGeometry(0.007, 0.0145, 0.032, 10), [cx + sx * 0.011, seamY - 0.019, cz + sz * 0.011], [sz * 0.45, 0, -sx * 0.45]));
     }
     const button = xf(new THREE.SphereGeometry(0.011, 12, 8), [0, topY - 0.009, 0], [0, 0, 0], [1, 0.55, 1]);
     return { body: g, pipe, tassels: merge(tas), button, topY, seamY };
@@ -835,7 +849,7 @@ function cushionGeos() {
 }
 let _velvet = null;
 function velvetMat() {
-  return (_velvet ??= new THREE.MeshPhysicalMaterial({ color: '#a01830', roughness: 0.78, sheen: 1, sheenColor: new THREE.Color('#ff7a96'), sheenRoughness: 0.42 }));
+  return (_velvet ??= new THREE.MeshPhysicalMaterial({ color: '#a01830', roughness: 0.78, sheen: 0.85, sheenColor: new THREE.Color('#f0607e'), sheenRoughness: 0.45 }));
 }
 export function makeCushions() {
   const A = cushionGeos();
@@ -1056,9 +1070,9 @@ function sackGeos() {
   return G('sack', () => {
     const r = rng(404);
     const lumps = [];
-    for (let i = 0; i < 9; i++) {
-      const th = r() * TAU, y = -0.75 + r() * 1.25, c = Math.sqrt(1 - y * y);
-      lumps.push({ d: [Math.cos(th) * c, y, Math.sin(th) * c], a: 0.05 + r() * 0.07, s: 0.05 + r() * 0.08 });
+    for (let i = 0; i < 12; i++) {
+      const th = r() * TAU, y = -0.7 + r() * 1.2, c = Math.sqrt(1 - y * y);
+      lumps.push({ d: [Math.cos(th) * c, y, Math.sin(th) * c], a: 0.1 + r() * 0.12, s: 0.022 + r() * 0.035 });
     }
     const g = new THREE.SphereGeometry(1, 44, 30);
     const p = g.attributes.position;
@@ -1067,13 +1081,13 @@ function sackGeos() {
       let bump = 0;
       for (const L of lumps) { const dt = x * L.d[0] + y * L.d[1] + z * L.d[2]; bump += L.a * Math.exp(-(1 - dt) / L.s); }
       const k = (y < 0 ? 1 - 0.08 * y * y : 1 - 0.6 * Math.pow(y, 1.7)) * (1 + bump);
-      let Y = y * 0.155 * (1 + bump * 0.6);
-      if (y < -0.55) Y = -0.155 * (0.55 + (-y - 0.55) * 0.55) * (1 + bump * 0.4);     // flattish bottom
+      let Y = y * 0.165 * (1 + bump * 0.6);
+      if (y < -0.6) Y = -0.165 * (0.6 + (-y - 0.6) * 0.6) * (1 + bump * 0.4);         // flattish bottom
       p.setXYZ(i, x * 0.19 * k, Y, z * 0.19 * k);
     }
     smoothNormals(g);
     // neck: gathered folds up to the tie, flared tuft above
-    const y0 = 0.115, yt = 0.215, y2 = 0.29;
+    const y0 = 0.125, yt = 0.228, y2 = 0.305;
     const neck = lathe([[0.075, y0 - 0.025], [0.06, y0 + 0.015], [0.042, y0 + 0.05], [0.03, yt - 0.025], [0.026, yt], [0.03, yt + 0.012], [0.045, yt + 0.035], [0.058, y2 - 0.012], [0.05, y2], [0.03, y2 + 0.002], [0, y2 - 0.006]], 30);
     const np = neck.attributes.position;
     for (let i = 0; i < np.count; i++) {
@@ -1121,12 +1135,12 @@ function stoneMat(color) {
       const gr = g.createRadialGradient(x, y, 0, x, y, rr);
       const c = r() < 0.5 ? shade(color, 0.1) : shade(color, -0.09);
       gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)');
-      g.globalAlpha = 0.5; g.fillStyle = gr;
+      g.globalAlpha = 0.22; g.fillStyle = gr;
       for (const ox of [-w, 0, w]) for (const oy of [-h, 0, h]) { g.save(); g.translate(ox, oy); g.beginPath(); g.arc(x, y, rr, 0, TAU); g.fill(); g.restore(); }
     }
     g.globalAlpha = 1;
-    for (let i = 0; i < 900; i++) {                      // speckles
-      g.fillStyle = r() < 0.6 ? `rgba(60,58,54,${0.15 + r() * 0.3})` : `rgba(255,255,250,${0.15 + r() * 0.3})`;
+    for (let i = 0; i < 700; i++) {                      // speckles
+      g.fillStyle = r() < 0.6 ? `rgba(70,68,64,${0.08 + r() * 0.16})` : `rgba(255,255,250,${0.1 + r() * 0.18})`;
       g.fillRect(r() * w, r() * h, 1 + r() * 1.6, 1 + r() * 1.6);
     }
   });

@@ -2189,7 +2189,7 @@ export function makeCreature(kind = 'pigeon', spec = {}) {
     }
   };
   const ch = {
-    id: S.id, root, body, joints: J, kind, spec: S, expression: 'neutral', _poseBeak: 0,
+    id: S.id, root, body, joints: J, kind, spec: S, expression: 'neutral', _poseBeak: 0, blinkPhase,
     pose(action, t = 0, params = {}) { compute(recA, action, t, params); apply(recA); return ch; },
     poseMix(a, ta, pa, b2, tb, pb, w) { compute(recA, a, ta, pa || {}); compute(recB, b2, tb, pb || {}); mixRec(recM, recA, recB, clamp(w, 0, 1)); apply(recM); return ch; },
     face(expr = 'neutral', t = 0) {
