@@ -12,7 +12,7 @@ export function wrap(text, max = 20) {
 }
 
 /** Full-screen weird quote card, visible in [t0, t1]. Hides the captions while up (the card IS the caption). */
-export function quoteCard(ctx, quote, by, t0, t1, { y = 0.36, size = 78, tint = '#000000' } = {}) {
+export function quoteCard(ctx, quote, by, t0, t1, { y = 0.36, size = 78, tint = '#000000', byAt = null } = {}) {
   const t = ctx.t;
   if (t < t0 || t > t1) return false;
   const d = t - t0, out = t1 - t;
@@ -23,7 +23,7 @@ export function quoteCard(ctx, quote, by, t0, t1, { y = 0.36, size = 78, tint = 
   const lines = wrap(`“${quote}”`, 19);
   const nl = lines.split('\n').length;
   ctx.fx.text(lines, { y, size, font: 'narr', fill: '#ffffff', stroke: '#000000', line: 10, scale: 0.6 + 0.4 * pop, alpha: a, rot: -0.02 });
-  if (by) ctx.fx.text(`— ${by}`, { y: y + (nl * 0.5 + 0.7) * size * 1.05 / 1920, size: size * 0.62, font: 'narr', fill: '#ffe14a', stroke: '#000000', line: 8, alpha: clamp((d - 0.25) / 0.15, 0, 1) * a, rot: -0.02 });
+  if (by) ctx.fx.text(`— ${by}`, { y: y + (nl * 0.5 + 0.7) * size * 1.05 / 1920, size: size * 0.62, font: 'narr', fill: '#ffe14a', stroke: '#000000', line: 8, alpha: clamp((byAt != null ? t - byAt : d - 0.25) / 0.12, 0, 1) * a, rot: -0.02 });
   ctx.caption.hide(true);
   return true;
 }

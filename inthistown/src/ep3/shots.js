@@ -538,7 +538,7 @@ export const shots = [
       st.me.pose('sitIdle', 0, { tableY: st.tableY, intensity: 0 }); st.me.face('shocked', OPEN(st.me)); sweat(ctx, st.me, 8);
       const shut = ctx.t > tb && ctx.t < tb + 0.32;
       cat.pose('stare', 0); cat.face('stare', shut ? SHUT(cat) : OPEN(cat));
-      ctx.cam.move(C.catCU(st), C.catECU(st), clamp(lt / 1.4, 0, 1), ease.inOutQuad);
+      ctx.cam.set(ctx.t < tb - 0.25 ? C.catCU(st) : C.catECU(st));   // hard cut (a move between these passes through the kid's head)
       scoreboard(ctx, ctx.t > tb ? 1 : 0);
       if (ctx.t > tb) tag(ctx, 'BLINK DETECTED', tb + 0.05, Infinity, { y: 0.26, size: 64, bg: 'rgba(200,0,40,0.9)' });
     },
