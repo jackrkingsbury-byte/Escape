@@ -21,13 +21,15 @@ Rules from the creator:
 | 13 | Zero Aura | trend / meme | shots building (narrator → MAIN.me before render) |
 | 14 | Tape Duty | spooky | script + audio ready |
 | 15 | The 3:33 | mysterious | script + audio ready |
+| 16 | Don't Whistle | scary sea monster (Kraken-style) | script + audio ready |
 
 ## Backlog (writers' room 1, scratchpad/s2_ranked.json)
 Low Moon (spooky) · Big Love (homey) · Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Biscuit the T-rex (giants) · Sunrise (homey) · Nugget the chicken (giants)
 
-## Writers' room 2 (running)
-Kraken-style sea monster (scary) · two mysterious mystical worlds · a "what if" mystery · pirate-token meme · meme trends
+## Writers' room 2 (scratchpad/s2b_ranked.json)
+Next up: Floor Three (mystical) · Pirate Token to the Moon (meme) · Battery 1% (meme trend) · The Deep Above (mystical) ·
+The Arrr Pond (meme kraken) · Lost Property (mystical fog) · The Harbour Blinks (scary sea) · Don't Touch the Stars (mystical) · Captain Loudest (pirate meme)
 
 ## Later: factual series
 Own look (glowing blueprint line-art, the creator's avatar as host), fact-checked with web sources:
