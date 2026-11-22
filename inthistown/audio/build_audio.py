@@ -44,20 +44,19 @@ TRIPLET_PERIOD = 0.98
 
 # Extra silence AFTER each beat (seconds). Default 0.30.
 GAP_AFTER = {
-    'b01': 0.22, 'b02': 0.22, 'b03': 0.32, 'b04': 0.18, 'b05': 0.12, 'b06': 0.16, 'b07': 0.35,
-    'b08': 0.16, 'b09': 0.16, 'b10': 0.38, 'b11': 0.18, 'b12': 0.32, 'b13': 0.22, 'b14': 0.4,
-    'b15': 0.3, 'b16': 0.4, 'b17': 0.16, 'b18': 0.4, 'b19': 0.2, 'b20': 0.35, 'b21': 0.2,
-    'b22': 1.15,  # crowd laugh plays here, heckler cuts in on top of its tail
-    'b23': 0.45, 'b24': 0.3, 'b25': 0.16, 'b26': 0.38, 'b27': 0.4, 'b28': 1.1, 'b29': 0.12,
-    'b30': 0.5, 'b31': 0.42, 'b32': 1.0, 'b33': 0.3, 'b34': 0.55, 'b35': 0.45, 'b36': 0.5,
-    'b37': 0.15, 'b38': 0.15, 'b39': 0.45, 'b40': 0.6, 'b41': 0.35, 'b42': 0.6, 'b43': 0.25,
-    'b44': 0.25, 'b45': 0.45, 'b46': 1.6,
+    'b01': 0.2, 'b02': 0.25, 'b03': 0.3, 'b04': 0.15, 'b05': 0.5, 'b06': 0.55, 'b07': 0.15, 'b08': 0.3,
+    'b09': 0.65, 'b10': 0.35, 'b11': 0.35, 'b12': 0.2,
+    'b13': 1.15,  # crowd laugh, heckler cuts in on its tail
+    'b14': 0.35, 'b15': 1.25,  # "TOP 10" sting
+    'b16': 0.35, 'b17': 1.35,  # air horn + RESPECT
+    'b18': 0.75, 'b19': 0.4, 'b20': 1.0,  # deal-with-it shades + boom
+    'b21': 0.15, 'b22': 0.4, 'b23': 0.75,  # bruh
+    'b24': 0.3, 'b25': 0.45, 'b26': 2.1,   # air horn + RESPECT + coo
 }
 # Pause after a phrase-final punctuation INSIDE a beat.
-PHRASE_PAUSE = {',': 0.1, '.': 0.3, '?': 0.34, '!': 0.28, '...': 0.36, ';': 0.2}
-PHRASE_PAUSE_OVERRIDE = {('b14', 0): 0.45, ('b24', 0): 0.38, ('b24', 1): 0.35, ('b27', 0): 0.42,
-                         ('b28', 0): 0.65, ('b34', 0): 0.35, ('b34', 1): 0.35, ('b35', 0): 0.45,
-                         ('b41', 0): 0.3, ('b45', 0): 0.5}
+PHRASE_PAUSE = {',': 0.1, '.': 0.28, '?': 0.32, '!': 0.26, '...': 0.34, ';': 0.2}
+PHRASE_PAUSE_OVERRIDE = {('b04', 0): 0.12, ('b09', 0): 0.45, ('b15', 0): 0.35, ('b15', 1): 0.3, ('b17', 0): 0.4,
+                         ('b23', 0): 0.45, ('b25', 0): 0.35}
 LEAD_IN = 0.3
 
 
@@ -182,6 +181,42 @@ def make_huss(voice='am_fenrir', pitch=1.0, seed=0, grit=1.0, youth=None):
     return _HUSS_CACHE[key]
 
 
+_REAL = None
+
+
+def real_huss(i, pitch=1.0):
+    """The shared meme HUSS sound (cut from the user's reference clip), i cycles through the 3 takes."""
+    global _REAL
+    if _REAL is None:
+        _REAL = [sf.read(os.path.join(HERE, f'sfx/huss_{k}.wav'))[0].astype(np.float32) for k in (1, 2, 3)]
+    x = _REAL[i % 3]
+    if pitch != 1.0:
+        x = signal.resample(x, int(len(x) / pitch)).astype(np.float32)
+    return x
+
+
+def say(text, voice, speed=1.0, lang='en-us', pitch=1.0, rev=0.0):
+    a = trim(up(tts_voice(text, voice, speed=speed, lang=lang)))
+    if pitch != 1.0:
+        a = signal.resample(a, int(len(a) / pitch)).astype(np.float32)
+    if rev:
+        a = S.reverb(a, room=0.6, wet=rev, seed=5)
+    return a / (np.abs(a).max() + 1e-9)
+
+
+def crowd(text_list, seed=61, n=8):
+    rng = np.random.default_rng(seed)
+    voices = [('af_bella', 'en-us'), ('am_puck', 'en-us'), ('bf_emma', 'en-gb'), ('am_eric', 'en-us'),
+              ('af_nicole', 'en-us'), ('bm_lewis', 'en-gb'), ('af_sarah', 'en-us'), ('am_adam', 'en-us')]
+    L = np.zeros(int(2.0 * SR), np.float32); R = np.zeros_like(L)
+    for i, (v, lang) in enumerate(voices[:n]):
+        a = trim(up(tts_voice(text_list[i % len(text_list)], v, speed=rng.uniform(0.9, 1.1), lang=lang)))
+        a /= np.abs(a).max() + 1e-9
+        off, pan, g = rng.uniform(0, 0.15), rng.uniform(0.15, 0.85), rng.uniform(0.35, 0.55)
+        S.place(L, a, off, g * (1 - pan)); S.place(R, a, off, g * pan)
+    return np.stack([S.reverb(L, 0.6, 0.35, 1), S.reverb(R, 0.6, 0.35, 2)], 1)
+
+
 def crowd_laugh(seed=60):
     rng = np.random.default_rng(seed)
     voices = [('af_bella', 'en-us'), ('am_puck', 'en-us'), ('bf_emma', 'en-gb'), ('am_eric', 'en-us'),
@@ -217,15 +252,12 @@ def main():
             n = b['n']
             onsets = [(i // 3) * TRIPLET_PERIOD + TRIPLET[i % 3] for i in range(n)]
             for i in range(n):
-                if b['speaker'] == 'town':
-                    vlist = ['am_liam', 'af_bella', 'bm_daniel', 'am_onyx', 'am_fenrir']
-                    h = make_huss(vlist[i % len(vlist)], pitch=[1.0, 1.25, 0.9, 0.95, 1.05][i % 5], seed=10 + i)
-                    h = S.lp(h, 2600) * 0.75
-                    h = S.reverb(h, 0.7, 0.4, 20 + i)
-                elif b['speaker'] == 'pigeon':
-                    h = make_huss('am_puck', pitch=[1.75, 1.85, 1.7][i % 3], seed=99 + i)
+                if b['speaker'] == 'town':       # heard from the windows: distant + roomy
+                    h = S.reverb(S.lp(real_huss(i, [1.0, 1.12, 0.92][i % 3]), 3200) * 0.8, 0.7, 0.4, 20 + i)
+                elif b['speaker'] == 'pigeon':   # pitched up — the pigeon's own HUSS
+                    h = real_huss(i, [1.45, 1.5, 1.42][i % 3])
                 else:
-                    h = make_huss(HERO_HUSS[0], pitch=[1.0, 1.03, 0.98][i % 3], seed=i, youth=HERO_HUSS[1])
+                    h = real_huss(i)
                 th = t + onsets[i]
                 voice_track.append((th, h))
                 words_out.append({'text': 'HUSS!', 'start': round(th, 3), 'end': round(th + 0.26, 3)})
@@ -274,28 +306,42 @@ def main():
         else:
             S.place(sfx[:, 0], x, at, g * (1 - pan) * 2 ** 0.5); S.place(sfx[:, 1], x, at, g * pan * 2 ** 0.5)
 
+    def wend(bid, wi=-1):
+        return beat[bid]['words'][wi]['end']
+
+    gags = {}
     for (th, bid, i, spk) in huss_events:
-        if bid in ('b03', 'b12', 'b18', 'b26'):
-            put(S.wood_knock(seed=i, pitch=1 + 0.05 * (i % 3))[: int(0.09 * SR)] * np.exp(-np.arange(int(0.09 * SR)) / (0.025 * SR)), th + 0.02, 0.5, 0.45 + 0.1 * (i % 2))
-        if bid == 'b26':
-            put(S.clock_click(), th + 0.17, 0.5, 0.65)
-        if bid == 'b36':
-            put(S.wood_knock(seed=20 + i), th + 0.04, 0.12, 0.2 + 0.15 * i)
-    put(S.whoosh(0.3, up=True), wstart('b14', 5) - 0.05, 0.35)                 # sacrifice → toast flies
-    put(S.whoosh(0.32, seed=5, up=False), wstart('b15', 1) - 0.05, 0.35)        # castled
-    put(S.thump(0.3), wstart('b15', 3) + 0.1, 0.5)
+        if bid in ('b03', 'b08', 'b11', 'b16'):
+            put(S.wood_knock(seed=i, pitch=1 + 0.05 * (i % 3))[: int(0.09 * SR)] * np.exp(-np.arange(int(0.09 * SR)) / (0.025 * SR)), th + 0.02, 0.4, 0.45 + 0.1 * (i % 2))
+        if bid == 'b16' and i in (1, 4):
+            put(S.clock_click(), th + 0.05, 0.5, 0.65)
+    boom = S.vine_boom(); horn = S.airhorn()
+    gags['boomExcept'] = wstart('b02', 1); put(boom, gags['boomExcept'], 0.55)
+    gags['boomPigeon'] = wstart('b05', -1); put(boom, gags['boomPigeon'], 0.6)
+    gags['hornGrandad'] = wstart('b06', 3) - 0.05; put(horn, gags['hornGrandad'], 0.32)
+    put(S.whoosh(0.3, up=True), wstart('b09', 5) - 0.05, 0.35)                  # sacrifice → plate flies
+    gags['bruh1'] = wend('b09') + 0.15; put(say('bruh.', 'am_onyx', 0.9, pitch=0.9), gags['bruh1'], 0.6)
     for k in range(2):                                                          # cat L-hop boings
-        put(S.whoosh(0.18, seed=8 + k), wstart('b16', 5) + k * 0.28, 0.25, 0.4 + 0.2 * k)
-    laugh = crowd_laugh()
-    put(laugh, beat['b22']['end'] + 0.05, 0.9)
-    put(S.thump(0.4), wstart('b27', 0), 0.6)
-    put(S.wood_knock(seed=77, pitch=0.8), wstart('b27', 0) + 0.12, 0.6)
-    music_stop = wstart('b28', 2) + 0.08                                        # "The music STOPPED"
+        put(S.whoosh(0.18, seed=8 + k), wstart('b10', 5) + k * 0.28, 0.25, 0.4 + 0.2 * k)
+    put(crowd_laugh(), wend('b13') + 0.05, 0.9)
+    gags['top10'] = wend('b15') + 0.12
+    put(say('Top. Ten.', 'am_onyx', 0.9, rev=0.12), gags['top10'], 0.85)
+    put(S.dun_dun(), gags['top10'] + 0.75, 0.45)
+    gags['checkmate'] = wstart('b17', 0)
+    put(S.thump(0.4), gags['checkmate'], 0.6); put(S.wood_knock(seed=77, pitch=0.8), gags['checkmate'] + 0.12, 0.6)
+    put(horn, gags['checkmate'] + 0.05, 0.3)
+    gags['respect1'] = wend('b17') + 0.25
+    put(say('Respect!', 'am_fenrir', 0.85, rev=0.12), gags['respect1'], 0.85); put(S.ding(), gags['respect1'] + 0.6, 0.4)
+    music_stop = beat['b18']['start'] - 0.12                                   # record scratch → silence
     put(S.record_scratch(), music_stop - 0.05, 0.55)
-    for k in range(9):                                                          # pigeon knocks pieces over
-        put(S.wood_knock(seed=200 + k, pitch=0.9 + 0.08 * (k % 4)), wstart('b44', 1) + k * 0.07, 0.3, 0.3 + 0.05 * k)
-    put(S.coo(), beat['b46']['words'][0]['end'] + 0.12, 0.7, 0.55)
-    put(S.sting((65, 69, 72, 77)), beat['b46']['words'][0]['end'] + 0.25, 0.35)
+    gags['shades'] = wend('b20') + 0.05; put(boom, gags['shades'], 0.55)
+    gags['bruh2'] = wend('b23') + 0.15; put(say('bruh.', 'am_onyx', 0.9, pitch=0.9), gags['bruh2'], 0.6)
+    gags['boomWinning'] = wstart('b25', -1); put(boom, gags['boomWinning'], 0.55)
+    hend = beat['b26']['words'][-1]['end']
+    gags['hornEnd'] = hend + 0.1; put(horn, gags['hornEnd'], 0.32)
+    gags['respect2'] = hend + 0.75; put(say('Respect!', 'am_fenrir', 0.85, rev=0.12), gags['respect2'], 0.85); put(S.ding(), gags['respect2'] + 0.6, 0.4)
+    put(S.coo(), hend + 1.4, 0.6, 0.55)
+    gags['ooh'] = beat['b22']['words'][-1]['end'] + 0.05
 
     # ---------------------------------------------------------------------------------- music bus
     party = S.party_track(duration + 1)
@@ -310,11 +356,11 @@ def main():
         return np.clip(np.minimum((tt - t0) / fade + 1, (t1 - tt) / fade + 1), 0, 1).astype(np.float32)
 
     B = lambda bid: beat[bid]['start']  # noqa: E731
-    g_party = 0.27 * ramp(0, B('b02') - 0.05, 0.12) + 0.27 * ramp(B('b04') - 0.05, B('b11') - 0.05, 0.12) \
-        + 0.26 * ramp(B('b19') - 0.1, music_stop, 0.02)
-    g_muff = 0.22 * ramp(B('b02') - 0.05, B('b04') - 0.05, 0.12) + 0.22 * ramp(B('b11') - 0.05, B('b19') - 0.1, 0.12)
-    g_amb = 1.0 * ramp(B('b33') - 0.3, B('b38'), 0.8)
-    g_lofi = 0.4 * ramp(B('b37') - 0.2, duration - 0.6, 1.2)
+    g_party = 0.27 * ramp(0, B('b02') - 0.05, 0.12) + 0.27 * ramp(B('b04') - 0.05, B('b07') - 0.05, 0.12) \
+        + 0.26 * ramp(B('b12') - 0.1, music_stop, 0.02)
+    g_muff = 0.22 * ramp(B('b02') - 0.05, B('b04') - 0.05, 0.12) + 0.22 * ramp(B('b07') - 0.05, B('b12') - 0.1, 0.12)
+    g_amb = 1.0 * ramp(music_stop + 0.2, B('b23'), 0.6)
+    g_lofi = 0.4 * ramp(B('b23') - 0.2, duration - 0.6, 1.2)
     music = (party[:N] * g_party[:, None] + muff[:N] * g_muff[:, None] + lofi[:N] * g_lofi[:, None])
     # duck music under the voice
     win = int(0.05 * SR)
@@ -326,7 +372,7 @@ def main():
     music *= duck[:, None]
     # the reference drops the music out completely for each HUSS run (hard, punchy)
     gate = np.ones(N, np.float32)
-    for bid in ('b03', 'b12', 'b18', 'b26'):
+    for bid in ('b03', 'b08', 'b11', 'b16'):
         ws = beat[bid]['words']
         t0, t1 = ws[0]['start'] - 0.12, ws[-1]['end'] + 0.12
         gate *= 1 - ramp(t0, t1, 0.04)
@@ -359,11 +405,10 @@ def main():
         for i, w in enumerate(b['words']):
             words.append({**w, 'beat': b['id'], 'kind': b['kind'], 'speaker': b['speaker'], 'i': i})
     music_cues = [{'t': 0, 'mode': 'party'}, {'t': B('b02'), 'mode': 'muffled'}, {'t': B('b04'), 'mode': 'party'},
-                  {'t': B('b11'), 'mode': 'muffled'}, {'t': B('b19'), 'mode': 'party'},
-                  {'t': round(music_stop, 3), 'mode': 'silence'}, {'t': B('b33'), 'mode': 'night'},
-                  {'t': B('b37'), 'mode': 'lofi'}]
+                  {'t': B('b07'), 'mode': 'muffled'}, {'t': B('b12'), 'mode': 'party'},
+                  {'t': round(music_stop, 3), 'mode': 'silence'}, {'t': B('b23'), 'mode': 'lofi'}]
     tl = {'fps': 30, 'duration': duration, 'audio': 'audio/mix.wav', 'beats': timeline_beats, 'words': words,
-          'music': music_cues, 'markers': {'musicStop': round(music_stop, 3)}}
+          'music': music_cues, 'markers': {'musicStop': round(music_stop, 3), **{k: round(v, 3) for k, v in gags.items()}}}
     json.dump(tl, open(os.path.join(HERE, 'timeline.json'), 'w'), indent=1)
     print('duration', duration, 'words', len(words))
 

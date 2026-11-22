@@ -22,8 +22,7 @@
 //                RIGHT). Pass { filesAlong: '-x' } for real-chess handedness; squareToLocal() follows.
 //   move(from, to, u, { arc=1, tilt=1, spin=0 })   arc = lift height multiplier, spin = extra yaw (rad)
 //   slam(sq, u, { strength=1 })                    also hops the board a few mm at u≈0..0.16
-//   topple(sq, u, { toward:'e6' | dir:rad, roll=1 })   default: toward the board's middle (±Z), or the
-//                                                  first free direction if a piece is in the way
+//   topple(sq, u, { toward:'e6' | dir:rad, roll=1 })   default: falls toward the board's middle (±Z)
 //                                                  (dir is an angle in the board XZ plane: 0=+X, π/2=+Z)
 //   knockAll(u, seed=1, { origin:[x,z], floorY, maxX, maxZ })   origin = where the sweep comes from
 //                                                  (default the +Z edge, i.e. black's side / the pigeon)
@@ -42,8 +41,7 @@
 // makeBalloon(color, { string=0.85 })  origin = bottom end of the string, balloon floats above it.
 // makeConfetti({ origin=[0,0,0], t0=0, count=120, speed=5.5, spread=0.75, dir=[0,1,0], groundY=0,
 //                size=1, life=Infinity, seed=1, colors })   pieces land and lie flat on groundY.
-// makeImpactBurst({ size=0.22, overlay=true }) put root ON the table top at the impact point; update(u) u∈[0,1].
-//   A camera-facing comic star (drawn on top of everything when overlay=true) + a shock ring + impact lines.
+// makeImpactBurst({ size=0.22 }) lies on the XZ plane (put it on the table top), update(u) u∈[0,1].
 // makeSweatDrop({ size=0.12 }) origin at the drop centre, outlined so it reads at phone size.
 // makeTable({ w=1.2, d=0.75, h=0.78, wood }) .userData.top = h.   makeChair({ wood }) seat 0.55, faces +Z.
 // makeBed({ w=1.0, l=2.05, blanket }) long axis along Z, headboard at −Z.
@@ -204,7 +202,6 @@ const PIECE_ROUGH = 0.35;
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 const JIT = { p: 0.5, r: 0.5, n: 0.09, b: 0.35, q: 0.4, k: 0.09 };
 const TYPE_CODE = { p: 1, r: 2, n: 3, b: 4, q: 5, k: 6 };
-const KNIGHT_TURN = 0.95;   // knights face 54° toward the board's middle files
 
 /** Common Staunton base: chamfered foot, rounded top edge, a ledge and a bead ring. Ends at the stem. */
 function baseProfile(R) {
@@ -354,49 +351,51 @@ function bishopMat(white) {
     g.strokeStyle = white ? '#c9b994' : '#4e4646'; g.lineWidth = 14; g.beginPath(); g.moveTo(x0, y0 + 3); g.lineTo(x1, y1 + 3); g.stroke();   // lit lower lip
     g.strokeStyle = white ? '#6e5f45' : '#0b0909'; g.lineWidth = 10; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();         // groove
   });
-  _slitMat[key] = studioize(new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex, roughness: PIECE_ROUGH, metalness: 0 }), GLOSS[key]);
+  _slitMat[key] = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex, roughness: PIECE_ROUGH, metalness: 0 });
   return _slitMat[key];
 }
-// Glossy "studio" reflections used ONLY by chess materials: analytic soft boxes + horizon in world space,
-// fresnel weighted, injected into MeshStandardMaterial (pure math, no env-map texture fetches — an env map
-// cost ~45% of a close-up frame on SwiftShader). Makes the ebony pieces read in any set's lighting.
-const STUDIO_GLSL = `
-{
-  vec3 sV = normalize( vViewPosition );
-  vec3 sNw = inverseTransformDirection( normal, viewMatrix );
-  vec3 sVw = inverseTransformDirection( sV, viewMatrix );
-  vec3 sR = reflect( -sVw, sNw );
-  float sNdV = clamp( dot( normal, sV ), 0.0, 1.0 );
-  float sF = 0.04 + 0.96 * pow( 1.0 - sNdV, 5.0 );
-  float sTop = smoothstep( 0.5, 0.82, sR.y );
-  float sK1 = smoothstep( 0.8, 0.96, dot( sR, vec3( 0.739, 0.296, 0.605 ) ) );
-  float sK2 = smoothstep( 0.84, 0.97, dot( sR, vec3( -0.711, 0.203, -0.673 ) ) );
-  float sHz = smoothstep( -0.15, 0.25, sR.y );
-  vec3 sEnv = vec3( 1.0, 0.98, 0.95 ) * ( sTop * 2.2 + sK1 * 2.6 ) + vec3( 0.85, 0.9, 1.0 ) * sK2 * 1.3 + vec3( 0.16, 0.16, 0.18 ) * sHz;
-  outgoingLight += sEnv * sF * uStudio;
+const pieceMat = (white) => mat(white ? IVORY : EBONY, { roughness: PIECE_ROUGH });
+const eyeMat = (white) => mat(white ? '#1c1818' : '#f5efe0', { roughness: 0.25 });
+
+function createPiece(code) {
+  const white = code === code.toUpperCase();
+  const type = code.toLowerCase();
+  const def = pieceDef(type);
+  const group = new THREE.Group();
+  group.name = `piece_${code}`;
+  const body = new THREE.Mesh(def.body, type === 'b' ? bishopMat(white) : pieceMat(white));
+  body.castShadow = true; body.receiveShadow = true;
+  group.add(body);
+  if (def.eyes) { const e = new THREE.Mesh(def.eyes, eyeMat(white)); e.castShadow = false; group.add(e); }
+  return { group, code, type, white, H: def.H, R: def.R, Rm: def.Rm, sq: -1, yaw: 0, animated: false };
 }
-#include <opaque_fragment>`;
-const _studioU = [];   // [uniform, base]
-function studioize(material, base) {
-  const u = { value: base * GLOSS.k };
-  _studioU.push([u, base]);
-  material.onBeforeCompile = (sh) => {
-    sh.uniforms.uStudio = u;
-    sh.fragmentShader = 'uniform float uStudio;\n' + sh.fragmentShader.replace('#include <opaque_fragment>', STUDIO_GLSL);
-  };
-  material.customProgramCacheKey = () => 'chessStudio1';
-  return material;
+
+// shared flat geometry + textures for contact blobs and highlights
+let _blob = null;
+function blobAssets() {
+  if (_blob) return _blob;
+  const tex = canvasTexture(64, 64, (g, w, h) => {
+    const gr = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+    gr.addColorStop(0, 'rgba(0,0,0,0.62)'); gr.addColorStop(0.45, 'rgba(0,0,0,0.38)'); gr.addColorStop(0.8, 'rgba(0,0,0,0.08)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, w, h);
+  });
+  const material = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, color: '#ffffff', polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -4 });
+  _blob = { geo: new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), material };
+  return _blob;
 }
-const GLOSS = { w: 0.6, b: 1.0, board: 0.35, k: 1 };
-const _pmat = {};
-function pieceMat(white) {
-  const key = white ? 'w' : 'b';
-  return (_pmat[key] ??= studioize(new THREE.MeshStandardMaterial({ color: white ? IVORY : EBONY, roughness: PIECE_ROUGH, metalness: 0 }), GLOSS[key]));
-}
-/** Scale the studio reflections on all chess pieces/boards (1 = default, 0 = off). Call any time. */
-export function setChessGloss(k = 1) {
-  GLOSS.k = k;
-  for (const [u, b] of _studioU) u.value = b * k;
+let _hlTex = null;
+const _hlMats = new Map();
+function hlMat(color) {
+  const key = String(color);
+  if (!_hlMats.has(key)) {
+    _hlTex ??= canvasTexture(128, 128, (g, w) => {
+      const rr = (x, y, ww, hh, r) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + ww, y, x + ww, y + hh, r); g.arcTo(x + ww, y + hh, x, y + hh, r); g.arcTo(x, y + hh, x, y, r); g.arcTo(x, y, x + ww, y, r); g.closePath(); };
+      g.fillStyle = 'rgba(255,255,255,0.42)'; rr(6, 6, w - 12, w - 12, 14); g.fill();
+      g.strokeStyle = 'rgba(255,255,255,1)'; g.lineWidth = 9; rr(8, 8, w - 16, w - 16, 13); g.stroke();
+    });
+    _hlMats.set(key, new THREE.MeshBasicMaterial({ color, map: _hlTex, transparent: true, depthWrite: false, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 }));
+  }
+  return _hlMats.get(key);
 }
 
 // ════════════════════════════════════════════════════════════════════════════════ chess board
@@ -467,9 +466,9 @@ function buildBoard(size, playW, frameW, T, lip, bev, fileSign) {
   const g = new THREE.Group();
   g.name = 'board';
   const tex = boardTextures(size, playW, frameW, fileSign);
-  const frameMat = studioize(new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.frame, roughness: 0.4, metalness: 0 }), GLOSS.board);
+  const frameMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.frame, roughness: 0.42, metalness: 0 });
   const sideMat = mat('#4a2a16', { roughness: 0.6 });
-  const checkerMat = studioize(new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.checker, roughness: 0.46, metalness: 0 }), GLOSS.board * 0.6);
+  const checkerMat = new THREE.MeshStandardMaterial({ color: '#ffffff', map: tex.checker, roughness: 0.48, metalness: 0 });
   // frame ring: extruded square with a square hole and bevels on all edges
   const ho = size / 2 - bev, hi = playW / 2 + bev;
   const shape = new THREE.Shape([new V2(-ho, -ho), new V2(ho, -ho), new V2(ho, ho), new V2(-ho, ho)]);
@@ -521,11 +520,7 @@ export function makeChessSet(opts = {}) {
     return f >= 0 && f < 8 && r >= 0 && r < 8 ? r * 8 + f : -1;
   };
   const sqPos = (i) => new V3(((i % 8) - 3.5) * s * fileSign, 0, (Math.floor(i / 8) - 3.5) * s);
-  const restYaw = (P, i) => {
-    let y = (P.white ? 0 : Math.PI) + (hash(i * 7.13 + TYPE_CODE[P.type] * 1.71 + (P.white ? 0 : 0.37)) - 0.5) * 2 * JIT[P.type];
-    if (P.type === 'n') y += (i % 8 < 4 ? 1 : -1) * fileSign * (P.white ? 1 : -1) * KNIGHT_TURN;
-    return y;
-  };
+  const restYaw = (P, i) => (P.white ? 0 : Math.PI) + (hash(i * 7.13 + TYPE_CODE[P.type] * 1.71 + (P.white ? 0 : 0.37)) - 0.5) * 2 * JIT[P.type];
   const onBoard = (x, z, m = 0) => Math.abs(x) < size / 2 - m && Math.abs(z) < size / 2 - m;
 
   function getPiece(code, n) {
@@ -642,8 +637,7 @@ export function makeChessSet(opts = {}) {
     const pos = new V3().lerpVectors(a, b, p);
     pos.y = 4 * h * u * (1 - u);
     _qb.setFromAxisAngle(UP, yaw);
-    if (u <= 0 || u >= 1) { pos.copy(u <= 0 ? a : b); P.group.quaternion.setFromAxisAngle(UP, u <= 0 ? P.yaw : restYaw(P, ti)); }
-    else if (dist > 1e-6) {
+    if (dist > 1e-6) {
       const d = new V3().subVectors(b, a).normalize();
       _qa.setFromAxisAngle(new V3(d.z, 0, -d.x), 0.22 * Math.sin(Math.PI * u) * (o.tilt ?? 1));
       P.group.quaternion.copy(_qa).multiply(_qb);
@@ -671,7 +665,7 @@ export function makeChessSet(opts = {}) {
     P.group.scale.set(s * sxz, s * sy, s * sxz);
     // neighbours rattle (pure: from rest + offsets)
     const f0 = i % 8, r0 = Math.floor(i / 8);
-    const env = Math.exp(-5 * u) * (1 - u);
+    const env = Math.exp(-5 * u);
     for (let j = 0; j < 64; j++) {
       const Q = base[j];
       if (!Q || Q === P || Q.animated || !Q.group.visible || landed[j] === P) continue;
@@ -697,7 +691,7 @@ export function makeChessSet(opts = {}) {
     let alpha;
     if (o.dir != null) alpha = o.dir;
     else if (o.toward) { const t = sqPos(sqIdx(o.toward)), p0 = sqPos(i); alpha = Math.atan2(t.z - p0.z, t.x - p0.x); }
-    else alpha = freeDirection(P, i);
+    else alpha = Math.floor(i / 8) >= 4 ? -Math.PI / 2 : Math.PI / 2;
     const yaw = landed[i] ? restYaw(P, i) : P.yaw;
     const ri = restInfo(P.type, alpha + yaw);
     let th, phi = 0;
@@ -716,31 +710,6 @@ export function makeChessSet(opts = {}) {
     syncBlobs();
   }
 
-  /** Default topple direction: toward the board's middle (±Z) unless a piece is in the way, then the
-   *  first free direction (sideways, then diagonals). Based on the position of the last reset/setFEN. */
-  function freeDirection(P, i) {
-    const toMid = Math.floor(i / 8) >= 4 ? -Math.PI / 2 : Math.PI / 2;
-    const p0 = sqPos(i);
-    const len = P.H * s;
-    const cands = [toMid, 0, Math.PI, toMid + Math.PI / 4, toMid - Math.PI / 4, -toMid];
-    for (const a of cands) {
-      const dx = Math.cos(a), dz = Math.sin(a);
-      let ok = true;
-      for (let d = 0.55 * s; d <= len + 1e-6 && ok; d += 0.25 * s) {
-        const x = p0.x + dx * d, z = p0.z + dz * d;
-        if (Math.abs(x) > playW / 2 || Math.abs(z) > playW / 2) { ok = false; break; }
-        for (let j = 0; j < 64; j++) {
-          const Q = base[j];
-          if (!Q || Q === P || !Q.group.visible) continue;
-          const q = Q.group.position;
-          if (Math.hypot(q.x - x, q.z - z) < (Q.R + 0.24) * s) { ok = false; break; }
-        }
-      }
-      if (ok) return a;
-    }
-    return toMid;
-  }
-
   const bounce = (w) => 0.2 * Math.exp(-4 * w) * Math.abs(Math.sin(2.6 * Math.PI * w)) * (1 - w);
   function knockAll(u, seed = 1, o = {}) {
     u = clamp(u, 0, 1);
@@ -749,8 +718,7 @@ export function makeChessSet(opts = {}) {
     const maxX = o.maxX ?? size * 0.66, maxZ = o.maxZ ?? size * 0.56;
     for (let i = 0; i < 64; i++) {
       const P = base[i];
-      if (!P) continue;
-      if (u <= 0) { rest(P); continue; }
+      if (!P || u <= 0) continue;
       const r = rng(seed * 977 + i * 31 + 7);
       const p0 = sqPos(i);
       const ax = p0.x - org[0], az = p0.z - org[1], dO = Math.hypot(ax, az);
@@ -767,7 +735,7 @@ export function makeChessSet(opts = {}) {
       const L = s * (1.4 + r() * 3.2);
       const tipPush = s * (0.4 + r() * 0.8);
       const v = clamp((u - delay) / dur, 0, 1);
-      if (v <= 0) { rest(P); continue; }
+      if (v <= 0) continue;
       P.animated = true;
       const dx = Math.cos(ang), dz = Math.sin(ang);
       const v2 = clamp((u - delay - dur) / 0.22, 0, 1);
@@ -1388,78 +1356,62 @@ export function makeSweatDrop(opts = {}) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════════ impact burst
-let _burstTex = null;
-function burstTexture() {
-  return (_burstTex ??= canvasTexture(256, 256, (g, W) => {
-    const c = W / 2;
-    const star = (n, ro, ri, seed, rot = 0) => {
-      const r = rng(seed); g.beginPath();
-      for (let i = 0; i < n * 2; i++) {
-        const a = (i / (n * 2)) * TAU + rot;
-        const rr = i % 2 === 0 ? ro * (0.78 + 0.3 * r()) : ri * (0.85 + 0.3 * r());
-        const x = c + Math.cos(a) * rr, y = c + Math.sin(a) * rr;
-        if (i) g.lineTo(x, y); else g.moveTo(x, y);
-      }
-      g.closePath();
-    };
-    g.lineJoin = 'round';
-    star(12, c * 0.97, c * 0.5, 3, 0.1); g.fillStyle = '#ff7a2f'; g.fill(); g.lineWidth = 7; g.strokeStyle = '#3a1606'; g.stroke();
-    star(12, c * 0.74, c * 0.4, 3, 0.1); g.fillStyle = '#ffe14a'; g.fill();
-    star(9, c * 0.42, c * 0.24, 8, 0.35); g.fillStyle = '#ffffff'; g.fill();
-  }));
-}
 export function makeImpactBurst(opts = {}) {
   const R = opts.size ?? 0.22;
-  const overlay = opts.overlay ?? true;
   const root = new THREE.Group(); root.name = 'ImpactBurst';
   const inner = new THREE.Group(); root.add(inner);
   const bm = (color) => new THREE.MeshBasicMaterial({ color, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
-  // comic star: a sprite, so it always faces the camera
-  const sMat = new THREE.SpriteMaterial({ map: burstTexture(), transparent: true, depthWrite: false, depthTest: !overlay, toneMapped: false });
-  const star = new THREE.Sprite(sMat);
-  star.renderOrder = 10;
-  inner.add(star);
-  // shock ring on the table
-  const mRing = bm('#ffffff');
-  const ring = new THREE.Mesh(new THREE.RingGeometry(0.86, 1.0, 48).rotateX(-Math.PI / 2), mRing); ring.position.y = 0.002;
-  inner.add(ring);
-  // impact lines radiating low over the table (crossed quads so they read from any side)
+  const star = (n, ro, ri, seed) => {
+    const r = rng(seed), pts = [];
+    for (let i = 0; i < n * 2; i++) {
+      const a = (i / (n * 2)) * TAU + 0.15;
+      const rr = i % 2 === 0 ? ro * (0.8 + 0.35 * r()) : ri * (0.85 + 0.3 * r());
+      pts.push(new V2(Math.cos(a) * rr, Math.sin(a) * rr));
+    }
+    return new THREE.ShapeGeometry(new THREE.Shape(pts)).rotateX(-Math.PI / 2);
+  };
+  const mOut = bm('#ff7a2f'), mMid = bm('#ffe14a'), mIn = bm('#ffffff'), mRing = bm('#ffffff'), mSpk = bm('#ffffff'), mSpk2 = bm('#ffe14a');
+  const sOut = new THREE.Mesh(star(11, 1.0, 0.46, 3), mOut); sOut.position.y = 0.001;
+  const sMid = new THREE.Mesh(star(11, 0.8, 0.4, 3), mMid); sMid.position.y = 0.002;
+  const sIn = new THREE.Mesh(star(9, 0.42, 0.24, 8), mIn); sIn.position.y = 0.003;
+  const ring = new THREE.Mesh(new THREE.RingGeometry(0.9, 1.0, 48).rotateX(-Math.PI / 2), mRing); ring.position.y = 0.0015;
+  const flat = new THREE.Group(); flat.add(sOut, sMid, sIn, ring);
+  inner.add(flat);
+  // 3D speed spikes radiating out and up (crossed quads so they read from any side)
   const diamond = new THREE.BufferGeometry();
   diamond.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0.5, 0.5, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0.5, -0.5, 0, 0, 0, 0, 0.5, 0, 0.5, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0.5, 0, -0.5], 3));
-  const mSpk = bm('#ffffff'), mSpk2 = bm('#ffe14a');
+  diamond.computeVertexNormals();
   const spikes = [];
   const rs = rng(17);
-  for (let i = 0; i < 9; i++) {
-    const a = (i / 9) * TAU + rs() * 0.35, el = 0.12 + rs() * 0.4;
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * TAU + rs() * 0.4, el = 0.35 + rs() * 0.5;
     const pivot = new THREE.Group();
     pivot.rotation.set(0, a, el, 'YXZ');
-    pivot.position.y = 0.06;
     const sp = new THREE.Mesh(diamond, i % 2 ? mSpk : mSpk2);
     pivot.add(sp); inner.add(pivot);
-    spikes.push({ sp, len: 0.55 + rs() * 0.35, w: 0.045 + rs() * 0.02, delay: rs() * 0.05 });
+    spikes.push({ sp, len: 0.9 + rs() * 0.5, w: 0.05 + rs() * 0.03, delay: rs() * 0.06 });
   }
-  const rot0 = rs() * TAU;
   inner.scale.setScalar(R);
   function update(u) {
     inner.visible = u > 0 && u < 1;
     if (!inner.visible) return;
-    const pop = u < 0.12 ? ease.outBack(u / 0.12) : 1 + 0.12 * (u - 0.12);
-    const sz = 0.82 * pop;
-    star.scale.set(sz, sz, 1);
-    star.position.y = 0.3 + 0.12 * u;
-    sMat.rotation = rot0 + 0.25 * u;
-    sMat.opacity = 1 - smooth((u - 0.35) / 0.4);
-    ring.scale.setScalar(0.3 + 1.3 * ease.outCubic(u));
-    mRing.opacity = Math.pow(1 - u, 1.6) * 0.85;
+    const pop = u < 0.15 ? ease.outBack(u / 0.15) : 1;
+    const fade = 1 - smooth((u - 0.4) / 0.4);
+    sOut.scale.setScalar(0.3 + 0.75 * pop); sMid.scale.setScalar(0.3 + 0.72 * pop); sIn.scale.setScalar(0.35 + 0.7 * pop * (1 - 0.3 * u));
+    sOut.rotation.y = sMid.rotation.y = 0.25 * u; sIn.rotation.y = -0.3 * u;
+    mOut.opacity = mMid.opacity = fade; mIn.opacity = fade * (1 - 0.5 * u);
+    const ru = ease.outCubic(u);
+    ring.scale.setScalar(0.25 + 1.25 * ru);
+    mRing.opacity = Math.pow(1 - u, 1.5) * 0.9;
     for (const s of spikes) {
       const v = clamp((u - s.delay) / (1 - s.delay), 0, 1);
-      const ro = (0.25 + 1.05 * ease.outCubic(Math.min(1, v / 0.35))) * s.len;
-      const ri = (0.2 + 1.1 * ease.inOutQuad(Math.max(0, (v - 0.15) / 0.85))) * s.len;
-      const L = Math.max(0.0001, ro - ri), w = s.w * (1 - 0.6 * v) + 0.0001;
-      s.sp.position.x = ri; s.sp.scale.set(L, w, w);
+      const ro = (0.2 + 1.15 * ease.outCubic(Math.min(1, v / 0.4))) * s.len;
+      const ri = (0.12 + 1.2 * ease.inOutQuad(Math.max(0, (v - 0.18) / 0.82))) * s.len;
+      const L = Math.max(0.0001, ro - ri);
+      s.sp.position.x = ri; s.sp.scale.set(L, s.w * (1 - 0.6 * v) + 0.0001, s.w * (1 - 0.6 * v) + 0.0001);
       s.sp.visible = v > 0;
     }
-    mSpk.opacity = mSpk2.opacity = 1 - smooth((u - 0.5) / 0.4);
+    mSpk.opacity = mSpk2.opacity = 1 - smooth((u - 0.55) / 0.45);
   }
   update(0.0001); inner.visible = false;
   return { root, update };

@@ -335,3 +335,55 @@ def organ(chord=(69, 76, 81, 84), dur=1.6):
             x += a * np.sin(2 * np.pi * f * k * t * (1 + 0.0007 * np.sin(2 * np.pi * 5 * t)))
     e = np.minimum(1, t / 0.05) * np.minimum(1, (dur - t) / 0.35)
     return (x * e / (len(chord) * 2.1) * 0.6).astype(np.float32)
+
+
+# ------------------------------------------------------------------------------------- meme sfx
+def vine_boom(dur=1.1):
+    """Deep cinematic 'boom' for dramatic stares (bass drop + body + saturated sub, long tail)."""
+    t = _t(dur)
+    f = 38 + 95 * np.exp(-t / 0.06)
+    sub = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.45)
+    body = np.sin(2 * np.pi * np.cumsum(f * 2.01) / SR) * np.exp(-t / 0.18) * 0.5
+    rng = np.random.default_rng(77)
+    click = lp(rng.standard_normal(len(t)).astype(np.float32), 2500) * np.exp(-t / 0.012) * 0.6
+    x = np.tanh((sub + body + click) * 2.2) / np.tanh(2.2)
+    x = reverb(x.astype(np.float32), room=0.7, wet=0.25, seed=78)
+    return (x / (np.abs(x).max() + 1e-9) * 0.95).astype(np.float32)
+
+
+def airhorn(blasts=(0.0, 0.16, 0.32, 0.55), lens=(0.12, 0.12, 0.12, 0.6)):
+    """Classic stadium air-horn: stacked detuned saws with a slight pitch sag, in blasts."""
+    total = blasts[-1] + lens[-1] + 0.3
+    out = np.zeros(int(total * SR), np.float32)
+    for st, ln in zip(blasts, lens):
+        t = _t(ln)
+        sag = 1 - 0.015 * (t / ln)
+        x = np.zeros(len(t), np.float32)
+        for fq, a in ((415, 1.0), (523, 0.8), (622, 0.7), (830, 0.35)):
+            for d in (-0.006, 0.0, 0.006):
+                x += a * saw(fq * (1 + d) * sag, t, phase=abs(d) * 20)
+        env = np.minimum(1, t / 0.01) * np.minimum(1, (ln - t) / 0.02)
+        x = bp(x * env, 300, 5000) / 6
+        x = np.tanh(x * 2.5) * 0.7
+        place(out, x.astype(np.float32), st)
+    return reverb(out, room=0.5, wet=0.2, seed=79)
+
+
+def ding():
+    t = _t(1.2)
+    x = (np.sin(2 * np.pi * 1318 * t) + 0.5 * np.sin(2 * np.pi * 1975 * t) + 0.25 * np.sin(2 * np.pi * 2637 * t)) * np.exp(-t / 0.35)
+    return (x * 0.35).astype(np.float32)
+
+
+def dun_dun(root=45):
+    """Dramatic 'dun dun DUNNN' brass-ish stabs."""
+    out = np.zeros(int(1.9 * SR), np.float32)
+    for st, ln, m in ((0.0, 0.22, root + 7), (0.28, 0.22, root + 6), (0.58, 1.2, root + 3)):
+        t = _t(ln)
+        x = np.zeros(len(t), np.float32)
+        for k in (1, 2, 3, 4, 5):
+            x += np.sin(2 * np.pi * note_hz(m) * k * t) / k
+        x += 0.6 * np.sin(2 * np.pi * note_hz(m - 12) * t)
+        env = np.minimum(1, t / 0.015) * np.exp(-t / (0.5 if ln > 1 else 0.25))
+        place(out, (x * env * 0.3).astype(np.float32), st)
+    return reverb(out, room=0.6, wet=0.25, seed=80)

@@ -1,5 +1,5 @@
 {
- "title": "In This Town — Chess",
+ "title": "In This Town — Chess (60s)",
  "beats": [
   {
    "id": "b01",
@@ -24,262 +24,140 @@
    "id": "b04",
    "kind": "line",
    "speaker": "narr",
-   "text": "Every night, there's a party somewhere."
+   "text": "Pool parties. Foam parties."
   },
   {
    "id": "b05",
    "kind": "line",
    "speaker": "narr",
-   "text": "Pool parties."
+   "text": "Even a birthday party for the mayor's pigeon."
   },
   {
    "id": "b06",
    "kind": "line",
    "speaker": "narr",
-   "text": "Foam parties."
+   "text": "My grandad crowd-surfs on Wednesdays."
   },
   {
    "id": "b07",
    "kind": "line",
    "speaker": "narr",
-   "text": "Even a birthday party for the mayor's pigeon."
-  },
-  {
-   "id": "b08",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "My best friend Marcus goes to every party."
-  },
-  {
-   "id": "b09",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "My neighbor Brenda goes to every party."
-  },
-  {
-   "id": "b10",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Even my grandad crowd-surfs on Wednesdays."
-  },
-  {
-   "id": "b11",
-   "kind": "line",
-   "speaker": "narr",
    "text": "But not me. I play chess."
   },
   {
-   "id": "b12",
+   "id": "b08",
    "kind": "huss",
    "speaker": "me",
    "text": "HUSS! HUSS! HUSS!",
    "n": 3
   },
   {
-   "id": "b13",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Three hundred puzzles before breakfast."
-  },
-  {
-   "id": "b14",
+   "id": "b09",
    "kind": "line",
    "speaker": "narr",
    "text": "I don't eat breakfast. I sacrifice it."
   },
   {
-   "id": "b15",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "I castled my bed."
-  },
-  {
-   "id": "b16",
+   "id": "b10",
    "kind": "line",
    "speaker": "narr",
    "text": "My cat only moves in L-shapes now."
   },
   {
-   "id": "b17",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Day by day."
-  },
-  {
-   "id": "b18",
+   "id": "b11",
    "kind": "huss",
    "speaker": "me",
    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
    "n": 6
   },
   {
-   "id": "b19",
+   "id": "b12",
    "kind": "line",
    "speaker": "narr",
-   "text": "Then came the biggest party of the year."
+   "text": "Then came the Summer Party Chess Match."
   },
   {
-   "id": "b20",
+   "id": "b13",
    "kind": "line",
    "speaker": "narr",
-   "text": "The Summer Party Chess Match."
+   "text": "Everybody laughed."
   },
   {
-   "id": "b21",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Everybody showed up in party hats."
-  },
-  {
-   "id": "b22",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "When I sat down, everybody laughed.",
-   "sfx_after": "crowd_laugh"
-  },
-  {
-   "id": "b23",
+   "id": "b14",
    "kind": "quote",
    "speaker": "heckler",
    "text": "Who brings a chess clock to a party?"
   },
   {
-   "id": "b24",
+   "id": "b15",
    "kind": "line",
    "speaker": "narr",
    "text": "My opponent? The mayor. Undefeated for forty years."
   },
   {
-   "id": "b25",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Then I touched my first pawn."
-  },
-  {
-   "id": "b26",
+   "id": "b16",
    "kind": "huss",
    "speaker": "me",
    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
    "n": 6
   },
   {
-   "id": "b27",
+   "id": "b17",
    "kind": "line",
    "speaker": "narr",
    "text": "Checkmate. In four moves."
   },
   {
-   "id": "b28",
+   "id": "b18",
    "kind": "line",
    "speaker": "narr",
-   "text": "The music stopped. The whole crowd went silent.",
-   "music_stop_word": 2
+   "text": "The whole crowd went silent."
   },
   {
-   "id": "b29",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Marcus asked me,"
-  },
-  {
-   "id": "b30",
+   "id": "b19",
    "kind": "quote",
    "speaker": "marcus",
    "text": "When did you get so good?"
   },
   {
-   "id": "b31",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "I told him the truth."
-  },
-  {
-   "id": "b32",
+   "id": "b20",
    "kind": "quote",
    "speaker": "me",
    "text": "While you were out partying."
   },
   {
-   "id": "b33",
+   "id": "b21",
    "kind": "line",
    "speaker": "narr",
-   "text": "The next night, something was wrong."
+   "text": "Now the whole town is grinding."
   },
   {
-   "id": "b34",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "No music. No party lights. Nothing."
-  },
-  {
-   "id": "b35",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Then I heard it. From every single window."
-  },
-  {
-   "id": "b36",
+   "id": "b22",
    "kind": "huss",
    "speaker": "town",
-   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
-   "n": 6
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
   },
   {
-   "id": "b37",
+   "id": "b23",
    "kind": "line",
    "speaker": "narr",
-   "text": "Marcus was playing chess."
+   "text": "My grandad plays blindfolded. He just lost his glasses."
   },
   {
-   "id": "b38",
+   "id": "b24",
    "kind": "line",
    "speaker": "narr",
-   "text": "Brenda was playing chess."
+   "text": "And my only opponent left is the mayor's pigeon."
   },
   {
-   "id": "b39",
+   "id": "b25",
    "kind": "line",
    "speaker": "narr",
-   "text": "My grandad was playing blindfolded."
+   "text": "Honestly? He's winning."
   },
   {
-   "id": "b40",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "He just lost his glasses."
-  },
-  {
-   "id": "b41",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "The whole town is grinding now. Which is great."
-  },
-  {
-   "id": "b42",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "Except now, nobody has time to play me."
-  },
-  {
-   "id": "b43",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "So my only opponent is the mayor's pigeon."
-  },
-  {
-   "id": "b44",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "He knocks over all the pieces, struts around the board..."
-  },
-  {
-   "id": "b45",
-   "kind": "line",
-   "speaker": "narr",
-   "text": "and honestly? I think he's winning."
-  },
-  {
-   "id": "b46",
+   "id": "b26",
    "kind": "huss",
    "speaker": "pigeon",
    "text": "HUSS! HUSS! HUSS!",

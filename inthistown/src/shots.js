@@ -36,8 +36,30 @@ export function init(ctx) {
   P.chair = makeChair();
   P.chair2 = makeChair();
   P.bed = makeBed();
-  P.confetti = makeConfetti({ count: 140, t0: 0, origin: [0, 0, 0] });
+  P.confetti = makeConfetti({ count: 160, t0: 0, origin: [0, 0, 0], speed: 4.5, groundY: -0.8 });
+  P.splash = makeConfetti({ count: 90, t0: 0, origin: [0, 0, 0], speed: 4, spread: 0.5, colors: ['#bfe9ff', '#ffffff', '#7fd3ff', '#e6f7ff'], groundY: -0.2, life: 1.2 });
+  P.car = makeCar('#ff4fa3');
+  P.tumbleweed = makeTumbleweed();
   P.boardThick = P.chess.thickness || 0;   // chess root = board top surface; root goes at table top + thickness
+}
+
+// ───────────────────────────────────────────────────────────────────────────── gag props
+function makeCar(color) {
+  const g = new THREE.Group();
+  const m = (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.6 });
+  const box = (w, h, d, c, x, y, z) => { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m(c)); b.position.set(x, y, z); b.castShadow = true; g.add(b); };
+  box(1.9, 0.5, 0.95, color, 0, 0.45, 0); box(1.0, 0.45, 0.85, color, -0.1, 0.92, 0); box(0.95, 0.36, 0.87, '#bfe9ff', -0.1, 0.92, 0);
+  for (const [x, z] of [[0.6, 0.48], [-0.6, 0.48], [0.6, -0.48], [-0.6, -0.48]]) {
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.16, 12), m('#1d1d22')); w.rotation.x = Math.PI / 2; w.position.set(x, 0.22, z); g.add(w);
+  }
+  return g;
+}
+function makeTumbleweed() {
+  const g = new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.32, 1), new THREE.MeshStandardMaterial({ color: '#a07a45', wireframe: true })));
+  const g2 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.26, 0), new THREE.MeshStandardMaterial({ color: '#8a6534', wireframe: true }));
+  g2.rotation.set(0.5, 0.3, 0.2); g.add(g2);
+  return g;
 }
 
 // ───────────────────────────────────────────────────────────────────────────────────── helpers
@@ -153,7 +175,7 @@ const PARTY_B = EXTRA_IDS.slice(10, 18);
 
 // ═════════════════════════════════════════════════════════════════════════════════════ SHOTS
 export const shots = [
-  // ── b01 "In this town, everybody goes out partying."
+  // ── b01 "In this town, everybody goes out partying."  (+ a breakdancer and a T-poser in the crowd)
   {
     name: 'party town crane', start: 0, set: 'town',
     setup(ctx) {
@@ -163,24 +185,27 @@ export const shots = [
       const d = V(hi.x - c.x, 0, hi.z - c.z).normalize();
       ctx.store.from = { pos: hi, look: c.clone().add(V(0, 0.5, 0)), fov: 50 };
       ctx.store.to = { pos: c.clone().addScaledVector(d, 9).add(V(0, 3.2, 0)), look: ctx.point('street.crowdA').add(V(0, 1.2, 0)), fov: 42 };
+      ctx.store.bdBase = ctx.store.crowd[2] ? ctx.store.crowd[2].ch.root.position.clone() : null;
     },
     update(ctx, lt, u) {
       animateCrowd(ctx.store.crowd, ctx.t);
+      gagBreakdance(ctx, ctx.store.crowd[2]?.ch, ctx.store.bdBase);
+      gagTPose(ctx.store.crowd[7]?.ch);
       ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.inOutCubic);
     },
   },
-  // ── b02 "Except me."
+  // ── b02 "Except me."  → vine boom zoom
   {
-    name: 'except me', start: 'b02-0.1', set: 'room', captions: true,
+    name: 'except me', start: 'b02-0.1', set: 'room',
     setup(ctx) { ctx.store = roomNook(ctx); ctx.store.cams = nookCams(ctx.store.F); },
     update(ctx, lt, u) {
-      const { ch, cams } = ctx.store;
-      ch.pose('sitIdle', ctx.t);
-      ch.face(ctx.t > ctx.time('b02.w1') ? 'determined' : 'neutral', ctx.t);
-      ctx.cam.move(cams.wide, cams.med, u, ease.inOutQuad);
+      const { ch, cams, F } = ctx.store;
+      const tb = ctx.markers.boomExcept;
+      ch.pose('sitIdle', ctx.t); ch.face(ctx.t > tb - 0.1 ? 'determined' : 'neutral', ctx.t);
+      boomCam(ctx, tb, cams.med, { pos: F(0.15, 1.55, 1.45), look: F(0, 1.48, 0.1), fov: 34 });
     },
   },
-  // ── b03 HUSS ×6 (two tight triplets) — cut on every HUSS
+  // ── b03 HUSS ×6 — cut on every HUSS
   ...['board', 'face', 'boardLow', 'med', 'faceL', 'board'].map((camName, i) => ({
     name: `huss b03 #${i + 1}`, start: i === 0 ? 'b03.h0-0.12' : `b03.h${i}-0.03`, set: 'room',
     setup(ctx) {
@@ -188,142 +213,107 @@ export const shots = [
       ctx.store.practice = practiceTrack(ctx, 'b03', [['e2', 'e4'], ['g1', 'f3'], ['f1', 'c4'], ['c2', 'c3'], ['d2', 'd4'], ['e1', 'g1']],
         [['e7', 'e5'], ['b8', 'c6'], ['f8', 'c5'], ['g8', 'f6'], ['e5', 'd4'], null]);
     },
-    update(ctx, lt) {
+    update(ctx) {
       slamUpdate(ctx, ctx.store, ctx.store.practice);
       pressClock(ctx, ctx.store.practice.hits.map((h) => h + 0.09));
-      const c = ctx.store.cams[camName];
-      ctx.cam.set(c); ctx.cam.shake(0.08, ctx.t, i);
+      ctx.cam.set(ctx.store.cams[camName]); ctx.cam.shake(0.08, ctx.t, i);
     },
   })),
-  // ── b04 "Every night, there's a party somewhere."
+  // ── b04 "Pool parties."  (+ someone backflips into the pool)
   {
-    name: 'street party truck', start: 'b04-0.15', set: 'town',
-    setup(ctx) {
-      partyTown(ctx);
-      ctx.store = { crowd: crowdGrid(ctx, [...PARTY_A, ...PARTY_B], 'street.crowdB', { cols: 6, dx: 1.2, dz: 1.25, seed: 5 }) };
-      const F = frameAt(ctx, 'street.crowdB');
-      ctx.store.from = { pos: F(-5, 2.2, 7.5), look: F(-1, 1.3, 0), fov: 45 };
-      ctx.store.to = { pos: F(4, 2.6, 7.0), look: F(1, 1.3, 0), fov: 45 };
-    },
-    update(ctx, lt, u) { animateCrowd(ctx.store.crowd, ctx.t); ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.inOutSine); },
-  },
-  // ── b05 "Pool parties."
-  {
-    name: 'pool party', start: 'b05-0.05', set: 'town',
+    name: 'pool party', start: 'b04-0.05', set: 'town',
     setup(ctx) {
       partyTown(ctx, { fireworks: false });
-      const ids = EXTRA_IDS.slice(0, 8);
       const crowd = [];
-      ids.forEach((id, i) => {
+      EXTRA_IDS.slice(0, 7).forEach((id, i) => {
         const ch = ctx.cast[id];
-        const edge = `pool.edge${(i % 4) + 1}`;
-        ctx.place(ch, edge, { offset: [(Math.floor(i / 4) - 0.5) * 1.3, 0, 0], yaw: Math.PI + (hash(i) - 0.5) });
+        ctx.place(ch, `pool.edge${(i % 4) + 1}`, { offset: [(Math.floor(i / 4) - 0.5) * 1.3, 0, 0], yaw: Math.PI + (hash(i) - 0.5) });
         ch.setAccessory?.('partyHat', i % 2 === 0);
         crowd.push({ ch, phase: hash(i + 3) * 2, k: i });
       });
-      ctx.store = { crowd };
+      ctx.place('x08', 'pool.edge1', { offset: [1.2, 0, 0], yaw: Math.PI });
       const c = ctx.point('pool.center'), cam = ctx.point('pool.cam');
-      ctx.store.from = { pos: cam, look: c.clone().add(V(0, 0.6, 0)), fov: 46 };
-      ctx.store.to = { pos: cam.clone().lerp(c, 0.25).add(V(0, -0.3, 0)), look: c.clone().add(V(0, 0.8, 0)), fov: 44 };
+      ctx.store = { crowd, c, from: { pos: cam, look: c.clone().add(V(0, 0.6, 0)), fov: 46 }, to: { pos: cam.clone().lerp(c, 0.25).add(V(0, -0.3, 0)), look: c.clone().add(V(0, 0.8, 0)), fov: 44 } };
+      ctx.store.e1 = ctx.cast.x08.root.position.clone();
+      ctx.store.yaw1 = ctx.cast.x08.root.rotation.y;
+      const sp = ctx.props.splash; ctx.add(sp.root); sp.root.position.copy(c).add(V(0, 0.05, 0));
     },
-    update(ctx, lt, u) { animateCrowd(ctx.store.crowd, ctx.t, { faces: ['grin', 'laugh', 'smile'] }); ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.outQuad); },
+    update(ctx, lt, u) {
+      animateCrowd(ctx.store.crowd, ctx.t, { faces: ['grin', 'laugh', 'smile'] });
+      // backflip: from the deck edge into the middle of the pool
+      const flipper = ctx.cast.x08, t0 = ctx.time('b04') + 0.1, k = clamp((ctx.t - t0) / 0.75, 0, 1);
+      const a = ctx.store.e1, b = ctx.store.c;
+      flipper.root.position.copy(a.clone().lerp(b, k)).add(V(0, Math.sin(Math.PI * k) * 2.2 - (k > 0.85 ? (k - 0.85) * 8 : 0), 0));
+      flipper.root.rotation.set(-Math.PI * 2 * ease.inOutQuad(k), ctx.store.yaw1, 0, 'YXZ');
+      flipper.pose(k > 0 && k < 1 ? 'cheer' : 'idle', ctx.t); flipper.face('laugh', ctx.t);
+      flipper.root.visible = k < 0.97;
+      ctx.props.splash.update(ctx.t - (t0 + 0.72));
+      ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.outQuad);
+    },
   },
-  // ── b06 "Foam parties."
+  // ── "Foam parties."  (+ a car flies over)
   {
-    name: 'foam party', start: 'b06-0.05', set: 'town',
+    name: 'foam party', start: 'b04.w2-0.05', set: 'town',
     setup(ctx) {
       partyTown(ctx, { fireworks: false });
       ctx.set.set?.('foam', 1);
       ctx.store = { crowd: crowdGrid(ctx, EXTRA_IDS.slice(6, 16), 'foam.center', { cols: 4, dx: 1.2, dz: 1.2, seed: 9, hats: true }) };
       const c = ctx.point('foam.center'), cam = ctx.point('foam.cam');
+      ctx.store.c = c; ctx.store.cam = cam;
       ctx.store.from = { pos: cam, look: c.clone().add(V(0, 0.9, 0)), fov: 48 };
-      ctx.store.to = { pos: cam.clone().lerp(c, 0.3), look: c.clone().add(V(0, 1.0, 0)), fov: 44 };
+      ctx.store.to = { pos: cam.clone().lerp(c, 0.12).add(V(0, 0.4, 0)), look: c.clone().add(V(0, 1.6, 0)), fov: 48 };
+      ctx.add(ctx.props.car);
     },
     update(ctx, lt, u) {
       animateCrowd(ctx.store.crowd, ctx.t, { action: 'cheer', faces: ['laugh', 'grin'] });
+      const { c, cam } = ctx.store;
+      const fwd = V().subVectors(c, cam).setY(0).normalize();
+      const across = V(fwd.z, 0, -fwd.x);
+      const k = clamp(lt / 1.6, 0, 1);
+      ctx.props.car.position.copy(c).addScaledVector(across, lerp(-12, 12, k)).add(V(0, 5 + Math.sin(Math.PI * k) * 2, 0)).addScaledVector(fwd, 6);
+      ctx.props.car.rotation.set(k * 5, k * 7, k * 3);
       ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.outQuad);
     },
   },
-  // ── b07 "Even a birthday party for the mayor's pigeon."
+  // ── b05 "Even a birthday party for the mayor's pigeon."  → vine boom on the pigeon
   {
-    name: 'pigeon birthday', start: 'b07-0.05', set: 'town',
+    name: 'pigeon birthday', start: 'b05-0.05', set: 'town',
     setup(ctx) {
       partyTown(ctx, { fireworks: false });
       const F = frameAt(ctx, 'park.table');
       const { cake } = ctx.props;
       ctx.add(cake.root); cake.root.position.copy(F(0.12, 0, -0.05)); cake.root.rotation.set(0, F.yaw, 0);
       const pg = ctx.cast.pigeon;
-      ctx.place(pg, F(-0.18, 0, 0.0), { yaw: F.yaw + 0.5 });
-      pg.root.rotation.set(0, F.yaw + 0.6, 0);
+      ctx.place(pg, F(-0.18, 0, 0.0)); pg.root.rotation.set(0, F.yaw + 0.25, 0);
       pg.setAccessory?.('partyHat', true);
-      ctx.place('mayor', F(0, -0.78, -1.1), {}); ctx.cast.mayor.root.rotation.set(0, F.yaw, 0);
-      ctx.place('x03', F(-1.1, -0.78, -0.8), {}); ctx.cast.x03.root.rotation.set(0, F.yaw + 0.4, 0); ctx.cast.x03.setAccessory?.('partyHat', true);
-      ctx.place('x07', F(1.1, -0.78, -0.8), {}); ctx.cast.x07.root.rotation.set(0, F.yaw - 0.4, 0); ctx.cast.x07.setAccessory?.('partyHat', true);
+      ctx.place('mayor', F(0, -0.78, -1.1)); ctx.cast.mayor.root.rotation.set(0, F.yaw, 0);
+      ctx.place('x03', F(-1.1, -0.78, -0.8)); ctx.cast.x03.root.rotation.set(0, F.yaw + 0.4, 0); ctx.cast.x03.setAccessory?.('partyHat', true);
+      ctx.place('x07', F(1.1, -0.78, -0.8)); ctx.cast.x07.root.rotation.set(0, F.yaw - 0.4, 0); ctx.cast.x07.setAccessory?.('partyHat', true);
       ctx.store = { F };
     },
     update(ctx, lt, u) {
       const { F } = ctx.store;
+      const tb = ctx.markers.boomPigeon;
       ctx.props.cake.update(ctx.t);
       ctx.cast.mayor.pose('clap', ctx.t); ctx.cast.mayor.face('grin', ctx.t);
       ctx.cast.x03.pose('cheer', ctx.t + 0.4); ctx.cast.x03.face('laugh', ctx.t);
       ctx.cast.x07.pose('clap', ctx.t + 0.2); ctx.cast.x07.face('smile', ctx.t);
-      ctx.cast.pigeon.pose(ctx.t > ctx.time('b07.w7') ? 'flap' : 'idle', ctx.t);
-      ctx.cast.pigeon.face('smile', ctx.t);
-      const k = ease.inOutCubic(ctx.progress('b07.w5', 'b07.w7+0.1'));
-      ctx.cam.move({ pos: F(0.4, 1.4, 2.6), look: F(0, 0.35, -0.3), fov: 44 }, { pos: F(0.0, 0.45, 1.25), look: F(-0.05, 0.22, 0), fov: 40 }, k);
+      ctx.cast.pigeon.pose('idle', ctx.t, { headYaw: ctx.t > tb ? 0 : 0.4 }); ctx.cast.pigeon.face(ctx.t > tb - 0.05 ? 'smug' : 'smile', ctx.t);
+      if (ctx.t < tb) ctx.cam.move({ pos: F(0.4, 1.4, 2.6), look: F(0, 0.35, -0.3), fov: 44 }, { pos: F(0.15, 0.8, 1.7), look: F(-0.1, 0.3, -0.1), fov: 42 }, ease.inOutQuad(clamp(lt / (tb - ctx.time('b05')), 0, 1)));
+      else boomCam(ctx, tb, { pos: F(0.15, 0.8, 1.7), look: F(-0.1, 0.3, -0.1), fov: 42 }, { pos: F(-0.12, 0.33, 0.62), look: F(-0.17, 0.3, 0), fov: 34 });
     },
   },
-  // ── b08 "My best friend Marcus goes to every party."
+  // ── b06 "My grandad crowd-surfs on Wednesdays."  (+ air horn)
   {
-    name: 'marcus dancing', start: 'b08-0.1', set: 'town',
-    setup(ctx) {
-      partyTown(ctx);
-      const F = frameAt(ctx, 'street.crowdA');
-      ctx.place('marcus', F(0, 0, 2.2), {}); ctx.cast.marcus.root.rotation.set(0, F.yaw, 0);
-      ctx.store = { F, crowd: crowdGrid(ctx, PARTY_A, 'street.crowdA', { cols: 5, dx: 1.3, dz: 1.3, seed: 12, hats: true }) };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store;
-      animateCrowd(ctx.store.crowd, ctx.t);
-      ctx.cast.marcus.pose('dance2', ctx.t, { speed: 1.1, intensity: 1 }); ctx.cast.marcus.face(lt > 0.8 ? 'laugh' : 'grin', ctx.t);
-      ctx.cam.move({ pos: F(1.2, 1.6, 6.0), look: F(0, 1.3, 2.2), fov: 40 }, { pos: F(0.4, 1.5, 4.6), look: F(0, 1.45, 2.2), fov: 38 }, u, ease.inOutQuad);
-    },
-  },
-  // ── b09 "My neighbor Brenda goes to every party."
-  {
-    name: 'brenda dancing', start: 'b09-0.1', set: 'town',
-    setup(ctx) {
-      partyTown(ctx, { fireworks: false });
-      const F = frameAt(ctx, 'pool.edge1');
-      ctx.place('brenda', F(0, 0, 0), {}); ctx.cast.brenda.root.rotation.set(0, F.yaw + Math.PI, 0);
-      const crowd = [];
-      EXTRA_IDS.slice(10, 14).forEach((id, i) => {
-        ctx.place(id, F((i - 1.5) * 1.4, 0, 1.4 + (i % 2) * 0.7), {});
-        ctx.cast[id].root.rotation.set(0, F.yaw + Math.PI + (hash(i) - 0.5) * 0.6, 0);
-        crowd.push({ ch: ctx.cast[id], phase: hash(i * 2) * 2, k: i });
-      });
-      ctx.store = { F, crowd, back: F(0, 0, 0) };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store;
-      animateCrowd(ctx.store.crowd, ctx.t);
-      ctx.cast.brenda.pose('dance', ctx.t, { speed: 1.05 }); ctx.cast.brenda.face('grin', ctx.t);
-      // Brenda faces -F.z (towards the pool); film from the pool side
-      ctx.cam.move({ pos: F(-1.0, 1.4, -3.6), look: F(0, 1.35, 0), fov: 40 }, { pos: F(-0.4, 1.45, -2.8), look: F(0, 1.5, 0), fov: 38 }, u, ease.inOutQuad);
-    },
-  },
-  // ── b10 "Even my grandad crowd-surfs on Wednesdays."
-  {
-    name: 'grandad crowd surf', start: 'b10-0.1', set: 'town',
+    name: 'grandad crowd surf', start: 'b06-0.1', set: 'town',
     setup(ctx) {
       partyTown(ctx);
       const F = frameAt(ctx, 'street.crowdB');
-      const ids = [...PARTY_A, ...PARTY_B].slice(0, 14);
       const crowd = [];
-      ids.forEach((id, i) => {
+      [...PARTY_A, ...PARTY_B].slice(0, 14).forEach((id, i) => {
         const row = i % 2, col = Math.floor(i / 2);
-        ctx.place(id, F(-4.2 + col * 1.2, 0, row ? 0.55 : -0.55), {});
-        ctx.cast[id].root.rotation.set(0, F.yaw + (row ? Math.PI : 0) * 0 + (hash(i) - 0.5) * 0.5, 0);
+        ctx.place(id, F(-4.2 + col * 1.2, 0, row ? 0.55 : -0.55));
+        ctx.cast[id].root.rotation.set(0, F.yaw + (hash(i) - 0.5) * 0.5, 0);
         ctx.cast[id].setAccessory?.('partyHat', true);
         crowd.push({ ch: ctx.cast[id], phase: hash(i) * 0.4, k: i });
       });
@@ -339,28 +329,28 @@ export const shots = [
       g.root.rotation.set(0, F.yaw - Math.PI / 2, 0);
       g.pose('crowdSurf', ctx.t); g.face('laugh', ctx.t);
       ctx.cam.set({ pos: F(x * 0.85 - 1.0, 2.7, 7.6), look: F(x, 2.15, 0), fov: 46 });
-      ctx.cam.shake(0.12, ctx.t, 3);
+      ctx.cam.shake(ctx.t > ctx.markers.hornGrandad ? 0.3 : 0.12, ctx.t, 3);
     },
   },
-  // ── b11 "But not me. I play chess."
+  // ── b07 "But not me. I play chess."
   {
-    name: 'but not me', start: 'b11-0.1', set: 'room',
+    name: 'but not me', start: 'b07-0.1', set: 'room',
     setup(ctx) { ctx.store = roomNook(ctx); ctx.store.cams = nookCams(ctx.store.F); },
     update(ctx, lt, u) {
       const { ch, cams, F } = ctx.store;
-      const chess = ctx.time('b11.w3');
+      const chess = ctx.time('b07.w3');
       ch.pose('sitIdle', ctx.t, { headYaw: ctx.t < chess ? 0 : -0.15 });
       ch.face(ctx.t < chess ? 'smug' : 'determined', ctx.t);
-      if (ctx.t < chess) ctx.cam.move(cams.med, cams.face, ease.inOutQuad(ctx.progress('b11', 'b11.w3')));
-      else ctx.cam.move({ pos: F(0.0, 1.6, 1.6), look: F(0, 0.85, 0.6), fov: 40 }, cams.top, ease.outQuad(ctx.progress('b11.w3', 'b12')));
+      if (ctx.t < chess) ctx.cam.move(cams.med, cams.face, ease.inOutQuad(ctx.progress('b07', 'b07.w3')));
+      else ctx.cam.move({ pos: F(0.0, 1.7, 2.0), look: F(0, 0.85, 0.6), fov: 40 }, cams.top, ease.outQuad(ctx.progress('b07.w3', 'b08')));
     },
   },
-  // ── b12 HUSS ×3
+  // ── b08 HUSS ×3
   ...['faceL', 'board', 'face'].map((camName, i) => ({
-    name: `huss b12 #${i + 1}`, start: i === 0 ? 'b12.h0-0.12' : `b12.h${i}-0.03`, set: 'room',
+    name: `huss b08 #${i + 1}`, start: i === 0 ? 'b08.h0-0.12' : `b08.h${i}-0.03`, set: 'room',
     setup(ctx) {
       ctx.store = roomNook(ctx); ctx.store.cams = nookCams(ctx.store.F);
-      ctx.store.practice = practiceTrack(ctx, 'b12', [['d2', 'd4'], ['c2', 'c4'], ['b1', 'c3']], [['d7', 'd5'], ['e7', 'e6'], null]);
+      ctx.store.practice = practiceTrack(ctx, 'b08', [['d2', 'd4'], ['c2', 'c4'], ['b1', 'c3']], [['d7', 'd5'], ['e7', 'e6'], null]);
     },
     update(ctx) {
       slamUpdate(ctx, ctx.store, ctx.store.practice);
@@ -368,30 +358,9 @@ export const shots = [
       ctx.cam.set(ctx.store.cams[camName]); ctx.cam.shake(0.08, ctx.t, 10 + i);
     },
   })),
-  // ── b13 "Three hundred puzzles before breakfast."  (blitz at dawn)
+  // ── b09 "I don't eat breakfast. I sacrifice it."  → BRUH
   {
-    name: 'puzzles at dawn', start: 'b13-0.1', set: 'room',
-    setup(ctx) {
-      ctx.store = roomNook(ctx, 'me', { lighting: 'dawn' }); ctx.set.set?.('window', 'sunrise');
-      ctx.store.cams = nookCams(ctx.store.F);
-      const t0 = ctx.time('b13'), t1 = ctx.time('b14');
-      const seq = [['e2', 'e4'], ['e7', 'e5'], ['g1', 'f3'], ['b8', 'c6'], ['f1', 'b5'], ['a7', 'a6'], ['b5', 'a4'], ['g8', 'f6'], ['e1', 'g1'], ['f8', 'e7']];
-      const hits = [];
-      ctx.store.track = moveTrack(seq.map((m, i) => { const at = t0 + 0.15 + i * (t1 - t0 - 0.3) / seq.length; if (i % 2 === 0) hits.push(at); return { from: m[0], to: m[1], at, dur: 0.1, noSlam: i % 2 === 1 }; }));
-      ctx.store.hits = hits;
-    },
-    update(ctx, lt, u) {
-      const { ch, cams } = ctx.store;
-      ch.pose('sitSlam', ctx.t, { hits: ctx.store.hits, speed: 2 });
-      ch.face('determined', ctx.t);
-      ctx.store.track.play(ctx.props.chess, ctx.t);
-      pressClock(ctx, ctx.store.hits.map((h) => h + 0.05));
-      ctx.cam.move(cams.wide, cams.med, u, ease.inOutSine);
-    },
-  },
-  // ── b14 "I don't eat breakfast. I sacrifice it."
-  {
-    name: 'sacrifice breakfast', start: 'b14-0.1', set: 'room',
+    name: 'sacrifice breakfast', start: 'b09-0.1', set: 'room',
     setup(ctx) {
       ctx.store = roomNook(ctx, 'me', { lighting: 'day' }); ctx.set.set?.('window', 'day');
       ctx.store.cams = nookCams(ctx.store.F);
@@ -400,49 +369,23 @@ export const shots = [
     },
     update(ctx, lt, u) {
       const { ch, cams, F } = ctx.store;
-      const tS = ctx.time('b14.w5');
+      const tS = ctx.time('b09.w5');
       const k = clamp((ctx.t - tS) / 0.55, 0, 1);
       const p = ctx.props.plate;
-      // sacrifice: the hero flicks the plate off the board — it flies away tumbling
-      p.root.position.copy(F(0.05 + 2.2 * k, TABLE_TOP + 0.02 + 1.6 * k - 2.4 * k * k + 0.0, 0.6 + 0.4 * k));
+      p.root.position.copy(F(0.05 + 2.2 * k, TABLE_TOP + 0.02 + 1.6 * k - 2.4 * k * k, 0.6 + 0.4 * k));
       p.root.rotation.set(k * 5, F.yaw + k * 3, k * 2);
       if (p.food) { p.food.position.y = k * 0.25; p.food.rotation.x = k * 6; }
       ch.pose(ctx.t < tS - 0.15 ? 'sitIdle' : 'sitSlam', ctx.t, { hits: [tS] });
-      ch.face(ctx.t < ctx.time('b14.w4') ? 'neutral' : 'smug', ctx.t);
-      ctx.cam.move(cams.med, { pos: F(0.6, 1.45, 1.6), look: F(0, 1.05, 0.45), fov: 40 }, ease.inOutQuad(u));
+      ch.face(ctx.t < ctx.time('b09.w4') ? 'neutral' : 'smug', ctx.t);
+      const tb = ctx.markers.bruh1;
+      const mid = { pos: F(0.6, 1.55, 2.3), look: F(0, 1.05, 0.45), fov: 40 };
+      if (ctx.t < tb) ctx.cam.move(cams.med, mid, ease.inOutQuad(clamp(lt / (tb - ctx.time('b09')), 0, 1)));
+      else { boomCam(ctx, tb, mid, cams.face); memeText(ctx, 'BRUH', tb, { y: 0.2, size: 170 }); }
     },
   },
-  // ── b15 "I castled my bed."
+  // ── b10 "My cat only moves in L-shapes now."
   {
-    name: 'castled bed', start: 'b15-0.1', set: 'room',
-    setup(ctx) {
-      const set = ctx.set; set.setLighting?.('day'); set.set?.('window', 'day');
-      set.root.updateMatrixWorld(true);
-      const center = set.root.getWorldPosition(V());
-      const cam = ctx.point('room.cam');
-      const d = V(cam.x - center.x, 0, cam.z - center.z).normalize();
-      const F = frame(center, Math.atan2(d.x, d.z));
-      ctx.use('me'); ctx.cast.me.root.position.copy(F(0.0, 0, 0.4)); ctx.cast.me.root.rotation.set(0, F.yaw, 0);
-      ctx.add(ctx.props.bed); ctx.props.bed.rotation.set(0, F.yaw + Math.PI / 2, 0);
-      ctx.store = { F };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store;
-      const t0 = ctx.time('b15.w1') - 0.05;
-      const k = ease.inOutQuad(clamp((ctx.t - t0) / 0.7, 0, 1));
-      const bed = ctx.props.bed;
-      bed.position.copy(F(lerp(1.6, -1.6, k), Math.sin(Math.PI * k) * 1.25, 0.2));
-      bed.rotation.set(0, F.yaw + Math.PI / 2, Math.sin(Math.PI * k) * 0.25);
-      const me = ctx.cast.me;
-      me.pose(k > 0.05 && k < 0.95 ? 'surprised' : 'idle', ctx.t);
-      me.face(k > 0.05 && k < 0.95 ? 'shocked' : 'smug', ctx.t);
-      ctx.cam.set({ pos: F(0, 1.8, 5.6), look: F(0, 1.2, 0.2), fov: 54 });
-      if (ctx.t > t0 + 0.7) ctx.cam.punch([t0 + 0.7], ctx.t, 0.08, 0.3);
-    },
-  },
-  // ── b16 "My cat only moves in L-shapes now."
-  {
-    name: 'cat L hops', start: 'b16-0.1', set: 'room',
+    name: 'cat L hops', start: 'b10-0.1', set: 'room',
     setup(ctx) {
       const set = ctx.set; set.setLighting?.('day'); set.set?.('window', 'day');
       set.root.updateMatrixWorld(true);
@@ -455,18 +398,16 @@ export const shots = [
       rug.setFEN('8/8/8/8/8/8/8/8');
       ctx.use('cat');
       const sq = rug.squareSize || 3.0 / 8;
-      // L path in board squares (knight moves): start b1 → c3 → e4 → f6
       const path = [[1, 0], [2, 2], [4, 3], [5, 5]].map(([fx, rz]) => F(-(fx - 3.5) * sq, 0.03, (rz - 3.5) * sq));
       ctx.store = { F, path };
     },
-    update(ctx, lt, u) {
+    update(ctx) {
       const { F, path } = ctx.store;
       const cat = ctx.cast.cat;
-      const t0 = ctx.time('b16.w1'), hopDur = 0.42;
+      const t0 = ctx.time('b10.w1'), hopDur = 0.42;
       const n = path.length - 1;
       const s = clamp((ctx.t - t0) / hopDur, 0, n);
       const i = Math.min(Math.floor(s), n - 1), k = s - i;
-      // knight move = 2 squares one way, then 1 square the other: do it as two short hops
       const a = path[i], b = path[i + 1];
       const corner = Math.abs(b.x - a.x) > Math.abs(b.z - a.z) ? V(b.x, a.y, a.z) : V(a.x, a.y, b.z);
       const k1 = clamp(k / 0.62, 0, 1), k2 = clamp((k - 0.62) / 0.38, 0, 1);
@@ -476,34 +417,19 @@ export const shots = [
       const dir = (k < 0.62 ? corner.clone().sub(a) : b.clone().sub(corner));
       if (dir.lengthSq() > 1e-6 && s < n) cat.root.rotation.set(0, Math.atan2(dir.x, dir.z), 0);
       cat.pose(s >= n || s <= 0 ? 'sit' : 'hop', ctx.t, { u: k < 0.62 ? k1 : k2 });
-      cat.face('neutral', ctx.t);
+      cat.face(s >= n ? 'smug' : 'neutral', ctx.t);
       const cp = cat.root.position;
-      const fx = clamp(cp.x, -9, 9);
       ctx.cam.set({ pos: V(cp.x, 0, cp.z).addScaledVector(F.fwd, 2.0).addScaledVector(F.left, 0.4).add(V(0, 2.1, 0)), look: V(cp.x, 0.2, cp.z), fov: 44 });
     },
   },
-  // ── b17 "Day by day."
-  {
-    name: 'day by day', start: 'b17-0.1', set: 'room',
-    setup(ctx) { ctx.store = roomNook(ctx, 'me', { lighting: 'day' }); ctx.store.cams = nookCams(ctx.store.F); },
-    update(ctx, lt, u) {
-      const { ch, cams } = ctx.store;
-      const phase = Math.floor(lt / 0.22) % 3;
-      ctx.set.setLighting?.(['day', 'night', 'dawn'][phase]);
-      ctx.set.set?.('window', ['day', 'party', 'sunrise'][phase]);
-      ch.pose('sitSlam', ctx.t, { hits: [0, 1, 2, 3].map((k) => ctx.time('b17') + 0.15 + k * 0.22) });
-      ch.face('determined', ctx.t);
-      ctx.cam.move(cams.wide, cams.med, u);
-    },
-  },
-  // ── b18 HUSS ×6 montage (a different time of day on every hit)
+  // ── b11 HUSS ×6 montage (a different time of day on every hit)
   ...['face', 'board', 'faceL', 'wide', 'boardLow', 'face'].map((camName, i) => ({
-    name: `huss b18 #${i + 1}`, start: i === 0 ? 'b18.h0-0.12' : `b18.h${i}-0.03`, set: 'room',
+    name: `huss b11 #${i + 1}`, start: i === 0 ? 'b11.h0-0.12' : `b11.h${i}-0.03`, set: 'room',
     setup(ctx) {
       ctx.store = roomNook(ctx, 'me', { lighting: ['night', 'day', 'dawn', 'night', 'day', 'dawn'][i] });
       ctx.set.set?.('window', ['party', 'day', 'sunrise', 'party', 'day', 'sunrise'][i]);
       ctx.store.cams = nookCams(ctx.store.F);
-      ctx.store.practice = practiceTrack(ctx, 'b18', [['e2', 'e4'], ['g1', 'f3'], ['d2', 'd4'], ['f3', 'd4'], ['b1', 'c3'], ['c1', 'e3']],
+      ctx.store.practice = practiceTrack(ctx, 'b11', [['e2', 'e4'], ['g1', 'f3'], ['d2', 'd4'], ['f3', 'd4'], ['b1', 'c3'], ['c1', 'e3']],
         [['c7', 'c5'], ['d7', 'd6'], ['c5', 'd4'], ['g8', 'f6'], ['a7', 'a6'], null]);
     },
     update(ctx) {
@@ -512,10 +438,9 @@ export const shots = [
       ctx.cam.set(ctx.store.cams[camName]); ctx.cam.shake(0.09, ctx.t, 20 + i);
     },
   })),
-  // ═══════════════════════════════════════════════════════════════ the Summer Party Chess Match
-  // ── b19 "Then came the biggest party of the year."
+  // ── b12 "Then came the Summer Party Chess Match."
   {
-    name: 'square establishing', start: 'b19-0.1', set: 'town',
+    name: 'square establishing', start: 'b12-0.1', set: 'town',
     setup(ctx) {
       tourney(ctx);
       const c = ctx.point('square.center'), cam = ctx.point('square.cam1');
@@ -525,9 +450,8 @@ export const shots = [
     },
     update(ctx, lt, u) { tourneyAnim(ctx); ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.inOutCubic); },
   },
-  // ── b20 "The Summer Party Chess Match."  (push into the banner)
   {
-    name: 'banner', start: 'b20-0.05', set: 'town',
+    name: 'banner', start: 'b12.w3-0.05', set: 'town',
     setup(ctx) {
       tourney(ctx);
       const look = ctx.point('square.banner'), cam = ctx.point('square.bannerCam');
@@ -537,44 +461,26 @@ export const shots = [
     },
     update(ctx, lt, u) { tourneyAnim(ctx); ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.outCubic); },
   },
-  // ── b21 "Everybody showed up in party hats."
+  // ── b13 "Everybody laughed."  (+ laugh SFX, a T-poser and the cat in a party hat in the stands)
   {
-    name: 'stands pan', start: 'b21-0.05', set: 'town',
+    name: 'crowd laughs', start: 'b13-0.1', set: 'town',
     setup(ctx) {
-      tourney(ctx);
-      const F = frameAt(ctx, 'square.standA');
-      ctx.store.from = { pos: F(-4, 2.4, 6.5), look: F(-2, 1.8, 0), fov: 44 };
-      ctx.store.to = { pos: F(4, 2.4, 6.5), look: F(2, 1.8, 0), fov: 44 };
+      tourney(ctx); const F = frameAt(ctx, 'square.standA'); ctx.store.F = F;
+      const rows = ctx.anchor('square.standA.rows');
+      if (Array.isArray(rows) && rows[1]) { ctx.place('cat', rows[1], { offset: [2.9, 0, 0] }); ctx.cast.cat.setAccessory?.('partyHat', true); }
     },
-    update(ctx, lt, u) { tourneyAnim(ctx, { action: 'cheer' }); ctx.cam.move(ctx.store.from, ctx.store.to, u, ease.inOutSine); },
-  },
-  // ── b22 "When I sat down, …"
-  {
-    name: 'hero sits down', start: 'b22-0.1', set: 'town',
-    setup(ctx) { tourney(ctx, { hero: true }); },
-    update(ctx, lt, u) {
-      tourneyAnim(ctx, { action: 'clap' });
-      const me = ctx.cast.me, F = ctx.store.FA;
-      const k = ctx.progress('b22', 'b22.w3+0.2');
-      me.pose('sitStand', ctx.t, { u: 1 - k });
-      me.face('neutral', ctx.t);
-      ctx.cam.move({ pos: F(5.4, 2.1, 0.7), look: F(0, 1.05, 0.6), fov: 38 }, { pos: F(4.8, 2.0, 0.7), look: F(0, 1.1, 0.6), fov: 36 }, u, ease.inOutQuad);
-    },
-  },
-  // ── "… everybody laughed."  + laugh SFX
-  {
-    name: 'crowd laughs', start: 'b22.w4-0.05', set: 'town',
-    setup(ctx) { tourney(ctx); const F = frameAt(ctx, 'square.standA'); ctx.store.F = F; },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'laugh', face: 'laugh' });
+      gagTPose(ctx.store.crowd[9]?.ch);
+      ctx.cast.cat.pose('sit', ctx.t); ctx.cast.cat.face('smug', ctx.t);
       const F = ctx.store.F;
       ctx.cam.move({ pos: F(1.5, 2.2, 6.2), look: F(0, 2.0, 0), fov: 40 }, { pos: F(0.6, 2.3, 4.8), look: F(0, 2.1, 0), fov: 38 }, u, ease.outQuad);
       ctx.cam.shake(0.1, ctx.t, 31);
     },
   },
-  // ── b23 heckler: "Who brings a chess clock to a party?"
+  // ── b14 heckler: "Who brings a chess clock to a party?"
   {
-    name: 'heckler', start: 'b23-0.1', set: 'town',
+    name: 'heckler', start: 'b14-0.1', set: 'town',
     setup(ctx) { tourney(ctx); },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'laugh', face: 'laugh' });
@@ -586,58 +492,48 @@ export const shots = [
       ctx.cam.shake(0.1, ctx.t, 32);
     },
   },
-  // ── b24 "My opponent?"
+  // ── b15 "My opponent?"
   {
-    name: 'my opponent?', start: 'b24-0.1', set: 'town',
+    name: 'my opponent?', start: 'b15-0.1', set: 'town',
     setup(ctx) { tourney(ctx, { hero: true, mayor: true }); },
     update(ctx, lt, u) {
       tourneyAnim(ctx);
       const me = ctx.cast.me; me.pose('sitIdle', ctx.t, { headYaw: 0.1 }); me.face('determined', ctx.t);
       const hp = headPos(me, 0);
-      const F = ctx.store.FA;
       const FB = ctx.store.FB;
       ctx.cam.move({ pos: FB(0.85, 1.95, -0.75), look: hp, fov: 36 }, { pos: FB(0.8, 1.9, -0.6), look: hp, fov: 33 }, u);
     },
   },
-  // ── "The mayor."  reveal  /  "Undefeated for forty years."
+  // ── "The mayor. Undefeated for forty years."  → TOP 10 card
   {
-    name: 'the mayor', start: 'b24.w2-0.08', set: 'town',
+    name: 'the mayor', start: 'b15.w2-0.08', set: 'town',
     setup(ctx) { tourney(ctx, { hero: true, mayor: true }); },
     update(ctx, lt, u) {
       tourneyAnim(ctx);
       const m = ctx.cast.mayor;
-      m.pose('sitIdle', ctx.t); m.face(ctx.t > ctx.time('b24.w4') ? 'smug' : 'neutral', ctx.t);
+      m.pose('sitIdle', ctx.t); m.face(ctx.t > ctx.time('b15.w4') ? 'smug' : 'neutral', ctx.t);
       pigeonOnShoulder(ctx);
       const hp = headPos(m, 0.05);
-      const F = ctx.store.FB;
-      const k = ctx.progress('b24.w2', 'b25');
       const FA = ctx.store.FA;
-      ctx.cam.move({ pos: FA(-1.3, 2.1, -1.2), look: hp.clone().add(V(0, -0.3, 0)), fov: 42 }, { pos: FA(-1.05, 1.9, -0.35), look: hp, fov: 34 }, ease.inOutQuad(k));
+      const t10 = ctx.markers.top10;
+      const near = { pos: FA(-1.05, 1.9, -0.35), look: hp, fov: 34 };
+      if (ctx.t < t10) ctx.cam.move({ pos: FA(-1.3, 2.1, -1.2), look: hp.clone().add(V(0, -0.3, 0)), fov: 42 }, near, ease.inOutQuad(ctx.progress('b15.w2', t10)));
+      else {
+        boomCam(ctx, t10, near, { pos: FA(-0.95, 1.85, -0.1), look: hp, fov: 26 });
+        ctx.fx.vignette(0.55); ctx.fx.overlay('#ff0022', 0.12);
+        memeText(ctx, 'TOP 10', t10, { y: 0.14, size: 210, fill: '#ffe14a' });
+        memeText(ctx, 'SCARIEST\nOPPONENTS', t10 + 0.25, { y: 0.27, size: 120 });
+      }
     },
   },
-  // ── b25 "Then I touched my first pawn."
-  {
-    name: 'first pawn', start: 'b25-0.1', set: 'town',
-    setup(ctx) { tourney(ctx, { hero: true, mayor: true, board: true }); },
-    update(ctx, lt, u) {
-      tourneyAnim(ctx);
-      const me = ctx.cast.me;
-      me.pose('sitSlam', ctx.t, { hits: [ctx.time('b26.h0') + 0.03] }); me.face('determined', ctx.t);
-      ctx.cast.mayor.pose('sitIdle', ctx.t); ctx.cast.mayor.face('smug', ctx.t);
-      pigeonOnShoulder(ctx);
-      ctx.store.match.play(ctx.props.chess, ctx.t);
-      const B = ctx.store.FBoard;
-      ctx.cam.move({ pos: B(0.55, 0.35, -0.55), look: B(0.05, 0.05, -0.15), fov: 36 }, { pos: B(0.35, 0.2, -0.4), look: B(0.07, 0.04, -0.15), fov: 30 }, u, ease.inOutSine);
-    },
-  },
-  // ── b26 HUSS ×6: scholar's mate — moves land on HUSS 1,3,4,6, the clock gets slammed on 2 and 5
+  // ── b16 HUSS ×6: scholar's mate — moves land on HUSS 1,3,4,6, the clock gets slammed on 2 and 5
   ...[0, 2, 3, 5].map((hi, i) => ({
-    name: `match huss #${i + 1}`, start: i === 0 ? 'b26.h0-0.12' : `b26.h${hi}-0.03`, set: 'town',
+    name: `match huss #${i + 1}`, start: i === 0 ? 'b16.h0-0.12' : `b16.h${hi}-0.03`, set: 'town',
     setup(ctx) { tourney(ctx, { hero: true, mayor: true, board: true }); },
-    update(ctx, lt) {
+    update(ctx) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked' });
       const me = ctx.cast.me, m = ctx.cast.mayor;
-      const hits = ctx.hussTimes('b26').map((h) => h + 0.03);
+      const hits = ctx.hussTimes('b16').map((h) => h + 0.03);
       me.pose('sitSlam', ctx.t, { hits });
       const hit = lastBefore(hits, ctx.t);
       me.face(hit != null && ctx.t - hit < 0.16 ? 'huss' : 'determined', ctx.t);
@@ -651,13 +547,13 @@ export const shots = [
       if (i === 0) ctx.cam.set({ pos: B(0.62, 0.38, -0.12), look: B(0.0, 0.03, -0.02), fov: 38 });
       if (i === 1) ctx.cam.set({ pos: FB(0.8, 1.9, -0.6), look: headPos(me, 0), fov: 34 });
       if (i === 2) ctx.cam.set({ pos: FA(-1.4, 1.85, -0.05), look: headPos(m, 0), fov: 34 });
-      if (i === 3) ctx.cam.set({ pos: B(-0.35, 0.16, 0.5), look: B(0.15, 0.05, 0.1), fov: 38 });
+      if (i === 3) ctx.cam.set({ pos: B(-0.6, 0.24, 0.22), look: B(0.12, 0.04, 0.1), fov: 38 });
       ctx.cam.shake(0.1, ctx.t, 40 + i);
     },
   })),
-  // ── b27 "Checkmate."  — the king topples
+  // ── b17 "Checkmate."  — the king topples (+ air horn)
   {
-    name: 'checkmate', start: 'b27-0.1', set: 'town',
+    name: 'checkmate', start: 'b17-0.1', set: 'town',
     setup(ctx) { tourney(ctx, { hero: true, mayor: true, board: true }); },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked' });
@@ -665,19 +561,22 @@ export const shots = [
       ctx.cast.mayor.pose('surprised', ctx.t); ctx.cast.mayor.face('shocked', ctx.t);
       pigeonOnShoulder(ctx);
       ctx.store.match.play(ctx.props.chess, ctx.t);
-      const k = clamp((ctx.t - ctx.time('b27.w0')) / 0.7, 0, 1);
+      const k = clamp((ctx.t - ctx.time('b17.w0')) / 0.7, 0, 1);
       ctx.props.chess.topple('e8', ease.outQuad(k));
       const B = ctx.store.FBoard;
-      const king = ctx.props.chess.squareToLocal('e8');
-      const kw = ctx.props.chess.root.localToWorld(king.clone());
+      const kw = ctx.props.chess.root.localToWorld(ctx.props.chess.squareToLocal('e8').clone());
       ctx.cam.move({ pos: kw.clone().add(V(0, 0.16, 0)).addScaledVector(B.fwd, -0.12).addScaledVector(B.left, 0.55), look: kw.clone().add(V(0, 0.05, 0)), fov: 34 },
         { pos: kw.clone().add(V(0, 0.12, 0)).addScaledVector(B.fwd, -0.1).addScaledVector(B.left, 0.42), look: kw.clone().add(V(0, 0.04, 0)), fov: 32 }, u);
+      if (ctx.t > ctx.markers.checkmate) ctx.cam.shake(0.25, ctx.t, 51);
     },
   },
-  // ── "In four moves."  — wide: mayor stunned
+  // ── "In four moves."  → +1000 RESPECT, confetti
   {
-    name: 'in four moves', start: 'b27.w1-0.08', set: 'town',
-    setup(ctx) { tourney(ctx, { hero: true, mayor: true, board: true }); },
+    name: 'in four moves', start: 'b17.w1-0.08', set: 'town',
+    setup(ctx) {
+      tourney(ctx, { hero: true, mayor: true, board: true });
+      const cf = ctx.props.confetti; ctx.add(cf.root); cf.root.position.copy(ctx.store.FBoard(0, 0.6, 0));
+    },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked' });
       ctx.cast.me.pose('sitIdle', ctx.t); ctx.cast.me.face('smug', ctx.t);
@@ -685,38 +584,36 @@ export const shots = [
       pigeonOnShoulder(ctx);
       ctx.store.match.play(ctx.props.chess, ctx.t);
       ctx.props.chess.topple('e8', 1);
+      const tr = ctx.markers.respect1;
+      ctx.props.confetti.update(ctx.t - tr);
       const B = ctx.store.FBoard;
       ctx.cam.move({ pos: B(2.6, 1.3, 0.2), look: B(0, 0.45, 0), fov: 42 }, { pos: B(2.2, 1.2, 0.2), look: B(0, 0.5, 0), fov: 40 }, u);
+      memeText(ctx, '+1000\nRESPECT', tr, { y: 0.22, size: 150, fill: '#7dff6a', rise: true });
     },
   },
-  // ── b28 "The music stopped. The whole crowd went silent."
+  // ── b18 "The whole crowd went silent."  (record scratch, crickets… a tumbleweed rolls across the stage)
   {
-    name: 'silence', start: 'b28-0.1', set: 'town',
-    setup(ctx) { tourney(ctx); ctx.store.F = frameAt(ctx, 'square.standA'); },
-    update(ctx, lt, u) {
-      tourneyAnim(ctx, { action: 'stunned', face: 'shocked', still: ctx.t > ctx.markers.musicStop });
-      ctx.set.set?.('crowdMotion', ctx.t > ctx.markers.musicStop ? 0 : 1);
-      const F = ctx.store.F;
-      ctx.cam.move({ pos: F(0, 2.3, 7.5), look: F(0, 2.0, 0), fov: 44 }, { pos: F(0, 2.2, 5.0), look: F(0, 2.05, 0), fov: 40 }, u, ease.inOutSine);
+    name: 'silence', start: 'b18-0.25', set: 'town',
+    setup(ctx) {
+      tourney(ctx, { hero: true, mayor: true, board: true });
+      ctx.add(ctx.props.tumbleweed);
     },
-  },
-  // ── b29 "Marcus asked me,"
-  {
-    name: 'marcus walks up', start: 'b29-0.1', set: 'town',
-    setup(ctx) { tourney(ctx, { hero: true, standing: true }); },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked', still: true });
-      const F = ctx.store.FA, mk = ctx.cast.marcus;
-      const k = ease.outQuad(clamp(lt / 1.0, 0, 1));
-      mk.root.position.copy(F(lerp(-2.6, -1.1, k), 0, 1.2)); mk.root.rotation.set(0, F.yaw + Math.PI * 0.62, 0);
-      mk.pose(k < 1 ? 'walk' : 'idle', ctx.t); mk.face('shocked', ctx.t);
-      ctx.cast.me.pose('idle', ctx.t); ctx.cast.me.face('neutral', ctx.t);
-      ctx.cam.set({ pos: F(0.6, 1.7, 4.4), look: F(-0.9, 1.4, 0.8), fov: 40 });
+      ctx.cast.me.pose('sitIdle', ctx.t); ctx.cast.me.face('smug', ctx.t);
+      ctx.cast.mayor.pose('stunned', ctx.t); ctx.cast.mayor.face('shocked', ctx.t);
+      pigeonOnShoulder(ctx); ctx.store.match.play(ctx.props.chess, ctx.t); ctx.props.chess.topple('e8', 1);
+      const FB = ctx.store.FBoard;
+      const k = clamp(lt / 2.2, 0, 1);
+      const tw = ctx.props.tumbleweed;
+      tw.position.copy(FB(lerp(-4.5, 4.5, k), -0.78 + 0.32 + Math.abs(Math.sin(k * 18)) * 0.25, 1.4));
+      tw.rotation.set(0, 0, -k * 22);
+      ctx.cam.move({ pos: FB(4.8, 2.5, -3.8), look: FB(0, 0.3, 0.8), fov: 44 }, { pos: FB(4.3, 2.3, -3.3), look: FB(0, 0.3, 0.8), fov: 42 }, u, ease.inOutSine);
     },
   },
-  // ── b30 Marcus: "When did you get so good?"
+  // ── b19 Marcus: "When did you get so good?"
   {
-    name: 'marcus asks', start: 'b30-0.1', set: 'town',
+    name: 'marcus asks', start: 'b19-0.1', set: 'town',
     setup(ctx) { tourney(ctx, { hero: true, standing: true }); },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked', still: true });
@@ -730,118 +627,52 @@ export const shots = [
       ctx.cam.move({ pos: camAt(2.2, 1.3), look: mh, fov: 38 }, { pos: camAt(1.9, 1.1), look: mh, fov: 37 }, u);
     },
   },
-  // ── b31 "I told him the truth."  /  b32 "While you were out partying."
+  // ── b20 "While you were out partying."  → deal-with-it shades + boom
   {
-    name: 'the truth', start: 'b31-0.1', set: 'town',
-    setup(ctx) { tourney(ctx, { hero: true, standing: true }); },
+    name: 'the truth', start: 'b20-0.1', set: 'town',
+    setup(ctx) {
+      tourney(ctx, { hero: true, standing: true });
+      const me = ctx.cast.me;
+      me.setAccessory?.('sunglasses', true);
+      const sg = me.root.getObjectByName('acc:sunglasses');
+      ctx.store.sg = sg; ctx.store.sgY = sg ? sg.position.y : 0;
+    },
     update(ctx, lt, u) {
       tourneyAnim(ctx, { action: 'stunned', face: 'shocked', still: true });
       const F = ctx.store.FA, me = ctx.cast.me;
       const mk = ctx.cast.marcus; mk.root.position.copy(F(-1.1, 0, 1.2)); mk.root.rotation.set(0, F.yaw + Math.PI * 0.62, 0);
       mk.pose('idle', ctx.t); mk.face('shocked', ctx.t);
-      me.pose('idle', ctx.t, { headYaw: ctx.t < ctx.time('b32') ? 0.5 : 0.1 });
-      me.face(ctx.t < ctx.time('b32') ? 'neutral' : 'smug', ctx.t);
-      const hp = headPos(me, 0);
+      me.pose('idle', ctx.t, { headYaw: 0.1 }); me.face('smug', ctx.t);
+      const ts = ctx.markers.shades;
+      if (ctx.store.sg) {
+        const k = ease.outQuad(clamp((ctx.t - (ts - 0.55)) / 0.55, 0, 1));
+        ctx.store.sg.position.y = ctx.store.sgY + (1 - k) * 0.9;
+        ctx.store.sg.visible = ctx.t > ts - 0.6;
+      }
+      const hp = headPos(me, 0.3);
       const ry = me.root.rotation.y, f = V(Math.sin(ry), 0, Math.cos(ry));
-      const k = ctx.progress('b31', 'b33');
-      ctx.cam.move({ pos: hp.clone().addScaledVector(f, 2.6).add(V(0.0, 0.1, 0)), look: hp, fov: 38 }, { pos: hp.clone().addScaledVector(f, 1.6).add(V(0, 0.05, 0)), look: hp, fov: 34 }, ease.inOutQuad(k));
+      const mid = { pos: hp.clone().addScaledVector(f, 2.0).add(V(0, 0.05, 0)), look: hp, fov: 36 };
+      if (ctx.t < ts) ctx.cam.move({ pos: hp.clone().addScaledVector(f, 2.6).add(V(0, 0.1, 0)), look: hp, fov: 38 }, mid, ease.inOutQuad(ctx.progress('b20', ts)));
+      else { boomCam(ctx, ts, mid, { pos: hp.clone().addScaledVector(f, 1.55), look: hp, fov: 32 }); memeText(ctx, 'DEAL WITH IT', ts, { y: 0.17, size: 120 }); }
     },
   },
-  // ═══════════════════════════════════════════════════════════════ the next night
-  // ── b33 "The next night, something was wrong."
+  // ── b21 "Now the whole town is grinding."  /  b22 HUSS ×3 from every window
   {
-    name: 'quiet walk', start: 'b33-0.1', set: 'town',
-    setup(ctx) {
-      quietTown(ctx);
-      const F = frameAt(ctx, 'street.center');
-      ctx.use('me'); ctx.store = { F };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store; const me = ctx.cast.me;
-      const z = lerp(-3, 1.5, u);
-      me.root.position.copy(F(0, 0, z)); me.root.rotation.set(0, F.yaw, 0);
-      me.pose(ctx.t < ctx.time('b33.w5') ? 'walk' : 'idle', ctx.t, { headYaw: Math.sin(ctx.t * 1.3) * 0.4 });
-      me.face(ctx.t < ctx.time('b33.w3') ? 'neutral' : 'sad', ctx.t);
-      ctx.cam.set({ pos: F(1.6, 1.9, z + 4.2), look: F(0, 1.3, z), fov: 44 });
-    },
-  },
-  // ── b34 "No music."  /  "No party lights."  /  "Nothing."
-  {
-    name: 'no music', start: 'b34-0.1', set: 'town',
-    setup(ctx) {
-      quietTown(ctx);
-      const F = frameAt(ctx, 'street.center');
-      ctx.add(ctx.props.speaker.root); ctx.props.speaker.root.position.copy(F(1.4, 0, 1)); ctx.props.speaker.root.rotation.set(0, F.yaw + 0.4, 0);
-      ctx.store = { F };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store;
-      ctx.props.speaker.setOn?.(false); ctx.props.speaker.update?.(ctx.t);
-      ctx.cam.move({ pos: F(2.4, 1.0, 2.6), look: F(1.4, 0.6, 1), fov: 38 }, { pos: F(2.1, 0.95, 2.2), look: F(1.4, 0.6, 1), fov: 36 }, u);
-    },
-  },
-  {
-    name: 'no party lights', start: 'b34.w2-0.08', set: 'town',
+    name: 'grinding town night', start: 'b21-0.1', set: 'town',
     setup(ctx) { quietTown(ctx); ctx.store = { F: frameAt(ctx, 'street.center') }; },
     update(ctx, lt, u) {
-      const { F } = ctx.store;
-      ctx.cam.move({ pos: F(0, 1.6, 4), look: F(0, 6, -6), fov: 50 }, { pos: F(0, 1.6, 3.5), look: F(0, 6.5, -7), fov: 48 }, u);
-    },
-  },
-  {
-    name: 'nothing', start: 'b34.w5-0.08', set: 'town',
-    setup(ctx) {
-      quietTown(ctx); const F = frameAt(ctx, 'street.center');
-      ctx.use('me'); ctx.cast.me.root.position.copy(F(0, 0, 1.5)); ctx.cast.me.root.rotation.set(0, F.yaw, 0);
-      ctx.store = { F };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store;
-      ctx.cast.me.pose('idle', ctx.t); ctx.cast.me.face('sad', ctx.t);
-      ctx.cam.move({ pos: F(0, 9, 16), look: F(0, 0.5, 0), fov: 44 }, { pos: F(0, 10, 18), look: F(0, 0.5, 0), fov: 44 }, u);
-    },
-  },
-  // ── b35 "Then I heard it. From every single window."
-  {
-    name: 'heard it', start: 'b35-0.1', set: 'town',
-    setup(ctx) {
-      quietTown(ctx); const F = frameAt(ctx, 'street.center');
-      ctx.use('me'); ctx.cast.me.root.position.copy(F(0, 0, 1.5)); ctx.cast.me.root.rotation.set(0, F.yaw, 0);
-      ctx.store = { F };
-    },
-    update(ctx, lt, u) {
-      const { F } = ctx.store; const me = ctx.cast.me;
-      const look = ctx.t > ctx.time('b35.w4');
-      me.pose('idle', ctx.t, { headPitch: look ? -0.35 : 0, headYaw: look ? 0.6 : 0 }); me.face('shocked', ctx.t);
-      const hp = headPos(me, 0);
-      if (!look) ctx.cam.move({ pos: F(0.45, 1.75, 3.9), look: hp, fov: 38 }, { pos: F(0.35, 1.72, 3.3), look: hp, fov: 36 }, ctx.progress('b35', 'b35.w4'));
-      else ctx.cam.move({ pos: F(-0.6, 1.0, 0.0), look: F(6, 3.0, 3), fov: 50 }, { pos: F(-0.7, 0.9, -0.2), look: F(7, 5.0, 4), fov: 50 }, ease.inOutQuad(ctx.progress('b35.w4', 'b36')));
-    },
-  },
-  // ── b36 HUSS ×5 from every window — windows light up one by one
-  ...[0, 1].map((part) => ({
-    name: `windows huss ${part + 1}`, start: part === 0 ? 'b36.h0-0.1' : 'b36.h3-0.1', set: 'town',
-    setup(ctx) {
-      quietTown(ctx);
-      const houses = ctx.anchor('houses') || [];
-      ctx.store = { houses, F: frameAt(ctx, 'street.center') };
-    },
-    update(ctx) {
-      const hs = ctx.hussTimes('b36');
+      const hs = ctx.hussTimes('b22');
       const n = hs.filter((h) => h <= ctx.t + 0.02).length;
-      ctx.set.set?.('windowGlow', (hi, wi) => (((hi * 3 + wi * 5) % 7) < n + (n >= 5 ? 2 : 0) ? 1 : 0.06));
+      ctx.set.set?.('windowGlow', (hi, wi) => (((hi * 3 + wi * 5) % 7) < n * 2 + 1 ? 1 : 0.06));
       const F = ctx.store.F;
-      ctx.cam.punch(hs, ctx.t, 0.07, 0.25);
-      if (part === 0) ctx.cam.move({ pos: F(-2, 2.2, 6), look: F(3, 3, -2), fov: 52 }, { pos: F(-1.4, 2.4, 5.2), look: F(3, 3.2, -2), fov: 50 }, ctx.progress('b36.h0', 'b36.h3'));
-      else ctx.cam.move({ pos: F(0, 7, 14), look: F(0, 2.5, -4), fov: 52 }, { pos: F(0, 8, 16), look: F(0, 2.5, -4), fov: 52 }, ctx.progress('b36.h3', 'b37'));
+      ctx.cam.punch(hs, ctx.t, 0.08, 0.25);
+      ctx.cam.move({ pos: F(-2, 2.2, 6), look: F(3, 3, -2), fov: 52 }, { pos: F(-1.2, 2.5, 4.8), look: F(3, 3.4, -2), fov: 50 }, u);
     },
-  })),
-  // ── b37–b40 the neighbours, grinding
-  neighbourShot('marcus at night', 'b37-0.1', 'roomMarcus', 'marcus', 'determined'),
-  neighbourShot('brenda at night', 'b38-0.1', 'roomBrenda', 'brenda', 'determined'),
+  },
+  // ── b23 "My grandad plays blindfolded."  /  "He just lost his glasses."  → BRUH
   {
-    name: 'grandad blindfold?', start: 'b39-0.1', set: 'roomGrandad',
-    setup(ctx) { ctx.store = roomNook(ctx, 'grandad', { lighting: 'night', clock: false }); ctx.store.cams = nookCams(ctx.store.F); ctx.cast.grandad.setAccessory?.('glasses', false); },
+    name: 'grandad blindfold?', start: 'b23-0.1', set: 'roomGrandad',
+    setup(ctx) { ctx.store = roomNook(ctx, 'grandad', { lighting: 'night', clock: false }); ctx.cast.grandad.setAccessory?.('glasses', false); },
     update(ctx, lt, u) {
       const { ch, F } = ctx.store;
       ch.pose('peer', ctx.t); ch.face('squint', ctx.t);
@@ -850,57 +681,35 @@ export const shots = [
     },
   },
   {
-    name: 'lost his glasses', start: 'b40-0.1', set: 'roomGrandad',
+    name: 'lost his glasses', start: 'b23.w4-0.08', set: 'roomGrandad',
     setup(ctx) { ctx.store = roomNook(ctx, 'grandad', { lighting: 'night', clock: false }); ctx.cast.grandad.setAccessory?.('glasses', false); glassesOnHead(ctx); },
     update(ctx, lt, u) {
       const { ch, F } = ctx.store;
       ch.pose('peer', ctx.t); ch.face('squint', ctx.t);
       ctx.props.chess.setFEN('r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R');
       const hp = headPos(ch, 0.28);
-      ctx.cam.move({ pos: F(0.5, 1.95, 2.3), look: hp, fov: 38 }, { pos: F(0.4, 1.95, 2.0), look: hp, fov: 36 }, u);
+      const tb = ctx.markers.bruh2;
+      const mid = { pos: F(0.4, 1.95, 2.0), look: hp, fov: 36 };
+      if (ctx.t < tb) ctx.cam.move({ pos: F(0.5, 1.95, 2.3), look: hp, fov: 38 }, mid, ease.inOutQuad(clamp(lt / (tb - ctx.time('b23.w4')), 0, 1)));
+      else { boomCam(ctx, tb, mid, { pos: F(0.3, 1.9, 1.55), look: hp, fov: 32 }); memeText(ctx, 'BRUH', tb, { y: 0.2, size: 170 }); }
     },
   },
-  // ═══════════════════════════════════════════════════════════════ ending
-  // ── b41 "The whole town is grinding now. Which is great."
+  // ── b24 "And my only opponent left…"  /  "…is the mayor's pigeon."
   {
-    name: 'grinding town', start: 'b41-0.1', set: 'town',
-    setup(ctx) {
-      ctx.set.setLighting?.('day'); ctx.set.set?.('partyProps', false); ctx.set.set?.('fireworks', false); ctx.set.set?.('foam', 0);
-      const F = frameAt(ctx, 'street.center');
-      const joggers = EXTRA_IDS.slice(0, 6);
-      ctx.use('me', ...joggers);
-      ctx.store = { F, joggers };
-    },
-    update(ctx, lt, u) {
-      const { F, joggers } = ctx.store;
-      joggers.forEach((id, i) => {
-        const ch = ctx.cast[id];
-        const z = -8 + ((ctx.t * 1.6 + i * 2.7) % 16);
-        ch.root.position.copy(F(i % 2 ? 2.4 : -2.4, 0, i % 2 ? -z : z)); ch.root.rotation.set(0, F.yaw + (i % 2 ? Math.PI : 0), 0);
-        ch.pose('walk', ctx.t + i, { speed: 1.6 }); ch.face('determined', ctx.t);
-      });
-      const me = ctx.cast.me; me.root.position.copy(F(0, 0, lerp(-1, 1, u))); me.root.rotation.set(0, F.yaw, 0);
-      me.pose('walk', ctx.t); me.face(ctx.t > ctx.time('b41.w6') ? 'grin' : 'smile', ctx.t);
-      ctx.cam.move({ pos: F(0, 6, 12), look: F(0, 1, 0), fov: 46 }, { pos: F(0, 3, 6), look: F(0, 1.3, 0), fov: 42 }, u, ease.inOutCubic);
-    },
-  },
-  // ── b42 "Except now, nobody has time to play me."
-  {
-    name: 'alone in the park', start: 'b42-0.1', set: 'town',
+    name: 'alone in the park', start: 'b24-0.1', set: 'town',
     setup(ctx) { park(ctx); },
     update(ctx, lt, u) {
-      parkAnim(ctx, { pigeon: false });
+      parkAnim(ctx);
       const me = ctx.cast.me; me.pose('sitIdle', ctx.t); me.face('sad', ctx.t);
       const F = ctx.store.FT;
       ctx.cam.move({ pos: F(1.3, 1.65, 3.0), look: F(0, 0.95, -0.4), fov: 42 }, { pos: F(1.0, 1.6, 2.5), look: F(0, 1.0, -0.4), fov: 40 }, u);
     },
   },
-  // ── b43 "So my only opponent is the mayor's pigeon."
   {
-    name: 'pigeon opponent', start: 'b43.w3-0.08', set: 'town',
+    name: 'pigeon opponent', start: 'b24.w6-0.08', set: 'town',
     setup(ctx) { park(ctx, { pigeon: true }); },
     update(ctx, lt, u) {
-      parkAnim(ctx, { pigeon: true });
+      parkAnim(ctx);
       const me = ctx.cast.me; me.pose('sitIdle', ctx.t); me.face('neutral', ctx.t);
       const pg = ctx.cast.pigeon; pg.pose('idle', ctx.t); pg.face('smug', ctx.t);
       const F = ctx.store.FT;
@@ -908,75 +717,96 @@ export const shots = [
       ctx.cam.move({ pos: F(2.1, 2.1, -2.7), look: pp, fov: 38 }, { pos: F(1.8, 1.9, -2.2), look: pp, fov: 30 }, u, ease.inOutQuad);
     },
   },
-  // ── b44 "He knocks over all the pieces, struts around the board..."
+  // ── b25 "Honestly?" — pigeon chaos  /  "He's winning." → boom on the pigeon
   {
-    name: 'pigeon chaos', start: 'b44-0.1', set: 'town',
+    name: 'pigeon chaos', start: 'b25-0.1', set: 'town',
     setup(ctx) { park(ctx, { pigeon: true }); },
     update(ctx, lt, u) {
-      parkAnim(ctx, { pigeon: true });
+      parkAnim(ctx);
       const pg = ctx.cast.pigeon, F = ctx.store.FT, chess = ctx.props.chess;
-      const tK = ctx.time('b44.w1'), tS = ctx.time('b44.w6');
+      const tK = ctx.time('b25'), tW = ctx.time('b25.w1');
       chess.reset();
-      chess.knockAll(clamp((ctx.t - tK) / 0.8, 0, 1), 7);
-      if (ctx.t < tS) { pg.pose(ctx.t > tK - 0.1 && ctx.t < tK + 0.6 ? 'knock' : 'idle', ctx.t); pg.root.position.copy(F(0.0, TABLE_TOP + 0.0, 0.3)); }
+      chess.knockAll(clamp((ctx.t - tK) / 0.7, 0, 1), 7);
+      if (ctx.t < tW) { pg.pose('knock', ctx.t); pg.root.position.copy(F(0.0, TABLE_TOP, 0.3)); }
       else {
-        const k = (ctx.t - tS) * 0.35;
-        pg.root.position.copy(F(Math.sin(k * 2.2) * 0.18, TABLE_TOP + 0.0, Math.cos(k * 2.2) * 0.14));
+        const k = (ctx.t - tW) * 0.5;
+        pg.root.position.copy(F(Math.sin(k * 2.2) * 0.16, TABLE_TOP, Math.cos(k * 2.2) * 0.12));
         pg.root.rotation.set(0, F.yaw + Math.PI + k * 2.2 + Math.PI / 2, 0);
         pg.pose('strut', ctx.t);
       }
       pg.face('smug', ctx.t);
-      ctx.cast.me.pose('sitIdle', ctx.t); ctx.cast.me.face('shocked', ctx.t);
-      ctx.cam.move({ pos: F(0.9, 1.55, 1.1), look: F(0, TABLE_TOP + 0.1, 0), fov: 42 }, { pos: F(0.7, 1.35, 0.9), look: F(0, TABLE_TOP + 0.15, 0), fov: 40 }, u);
+      ctx.cast.me.pose('sitIdle', ctx.t); ctx.cast.me.face(ctx.t < tW ? 'shocked' : 'sweat', ctx.t);
+      const tb = ctx.markers.boomWinning;
+      const pp = pg.root.position.clone().add(V(0, 0.22, 0));
+      const mid = { pos: F(0.7, 1.35, 0.9), look: F(0, TABLE_TOP + 0.15, 0), fov: 40 };
+      if (ctx.t < tb) ctx.cam.move({ pos: F(0.9, 1.55, 1.1), look: F(0, TABLE_TOP + 0.1, 0), fov: 42 }, mid, ease.inOutQuad(ctx.progress('b25', tb)));
+      else {
+        ctx.cast.me.root.visible = false;
+        ctx.store.walkers.forEach((id) => { ctx.cast[id].root.visible = false; });
+        boomCam(ctx, tb, mid, { pos: pp.clone().addScaledVector(F.left, 0.3).addScaledVector(F.fwd, -0.9).add(V(0, 0.15, 0)), look: pp, fov: 34 });
+      }
     },
   },
-  // ── b45 "and honestly?"  /  "I think he's winning."
+  // ── b26 the pigeon: "HUSS! HUSS! HUSS!"  → air horn, +1000 RESPECT, confetti
   {
-    name: 'honestly?', start: 'b45-0.1', set: 'town',
-    setup(ctx) { park(ctx, { pigeon: true }); },
-    update(ctx, lt, u) {
-      parkAnim(ctx, { pigeon: true });
-      const me = ctx.cast.me; me.pose('sitIdle', ctx.t, { headYaw: -0.25 }); me.face('sweat', ctx.t);
-      ctx.props.chess.reset(); ctx.props.chess.knockAll(1, 7);
-      const F = ctx.store.FS;
-      const hp = headPos(me, 0);
-      ctx.cam.move({ pos: F(0.6, 1.7, 2.2), look: hp, fov: 36 }, { pos: F(0.5, 1.68, 1.95), look: hp, fov: 34 }, u);
-      const pg = ctx.cast.pigeon; pg.pose('strut', ctx.t); pg.face('smug', ctx.t);
+    name: 'pigeon huss', start: 'b26.h0-0.2', set: 'town',
+    setup(ctx) {
+      park(ctx, { pigeon: true });
+      const cf = ctx.props.confetti; ctx.add(cf.root); cf.root.position.copy(ctx.store.FT(0, TABLE_TOP + 0.6, 0.0));
     },
-  },
-  {
-    name: 'winning', start: 'b45.w2-0.08', set: 'town',
-    setup(ctx) { park(ctx, { pigeon: true }); },
     update(ctx, lt, u) {
-      parkAnim(ctx, { pigeon: true });
-      const pg = ctx.cast.pigeon, F = ctx.store.FT;
-      ctx.props.chess.reset(); ctx.props.chess.knockAll(1, 7);
-      pg.root.position.copy(F(0.05, TABLE_TOP, 0.0)); pg.root.rotation.set(0, F.yaw + Math.PI, 0);
-      pg.pose('strut', ctx.t); pg.face('smug', ctx.t);
-      ctx.cast.me.pose('sitIdle', ctx.t); ctx.cast.me.face('sad', ctx.t);
-      ctx.cam.move({ pos: F(-1.6, 1.6, 0.6), look: F(0, 0.95, 0), fov: 44 }, { pos: F(-1.3, 1.5, 0.5), look: F(0, 1.0, 0), fov: 42 }, u);
-    },
-  },
-  // ── b46 the pigeon: "HUSS!"
-  {
-    name: 'pigeon huss', start: 'b46.h0-0.35', set: 'town',
-    setup(ctx) { park(ctx, { pigeon: true }); },
-    update(ctx, lt, u) {
-      parkAnim(ctx, { pigeon: true });
+      parkAnim(ctx);
       const pg = ctx.cast.pigeon, F = ctx.store.FT;
       ctx.props.chess.reset(); ctx.props.chess.knockAll(1, 7);
       pg.root.position.copy(F(0.0, TABLE_TOP, 0.05)); pg.root.rotation.set(0, F.yaw + Math.PI, 0);
-      const hs = ctx.hussTimes('b46'), h = hs[0];
+      const hs = ctx.hussTimes('b26');
       const last = lastBefore(hs, ctx.t + 0.05);
       pg.pose(last != null ? 'huss' : 'idle', ctx.t, { hits: hs }); pg.face(last != null && ctx.t - last < 0.17 ? 'huss' : 'smug', ctx.t);
-      const pp = pg.root.position.clone().add(V(0, 0.22, 0));
       ctx.cast.me.root.visible = false;
       ctx.store.walkers.forEach((id) => { ctx.cast[id].root.visible = false; });
+      const pp = pg.root.position.clone().add(V(0, 0.22, 0));
       ctx.cam.set({ pos: pp.clone().addScaledVector(F.left, 0.3).addScaledVector(F.fwd, -0.95).add(V(0, 0.18, 0)), look: pp, fov: 36 });
       ctx.cam.punch(hs, ctx.t, 0.14, 0.2);
+      ctx.cam.shake(ctx.t > ctx.markers.hornEnd ? 0.3 : 0.05, ctx.t, 61);
+      ctx.props.confetti.update(ctx.t - ctx.markers.hornEnd);
+      memeText(ctx, '+1000\nRESPECT', ctx.markers.respect2, { y: 0.2, size: 160, fill: '#7dff6a', rise: true });
     },
   },
 ];
+
+// ───────────────────────────────────────────────────────────────────────────── gag helpers
+/** "Vine boom": hold `from` until t0, then snap-zoom to `to` in 0.12 s with a decaying shake. */
+function boomCam(ctx, t0, from, to) {
+  if (ctx.t < t0) { if (from) ctx.cam.set(from); return; }
+  const k = ease.outCubic(clamp((ctx.t - t0) / 0.12, 0, 1));
+  ctx.cam.move(from || to, to, k);
+  ctx.cam.shake(Math.max(0, 0.6 - (ctx.t - t0) * 1.2), ctx.t, 77);
+}
+
+/** Pop-in meme text (scale overshoot), optional slow rise. */
+function memeText(ctx, str, t0, o = {}) {
+  const d = ctx.t - t0;
+  if (d < 0) return;
+  const pop = d < 0.18 ? Math.max(0.01, ease.outBack(d / 0.18)) : 1;
+  const wob = Math.sin(d * 7) * 0.03;
+  ctx.fx.text(str, { ...o, y: (o.y ?? 0.22) - (o.rise ? Math.min(d, 1.5) * 0.03 : 0), scale: pop * (o.scale ?? 1), rot: (o.rot ?? -0.06) + wob });
+}
+
+function gagTPose(ch) {
+  if (!ch) return;
+  ch.pose('idle', 0);
+  ch.joints.armL.rotation.set(0, 0, Math.PI / 2);
+  ch.joints.armR.rotation.set(0, 0, -Math.PI / 2);
+  ch.face('neutral', 0);
+}
+
+function gagBreakdance(ctx, ch, base) {
+  if (!ch || !base) return;
+  ch.pose('dance', ctx.t * 1.5, { intensity: 1 });
+  ch.root.position.set(base.x, base.y + 2.0 * (ch.spec?.scale || 1), base.z);
+  ch.root.rotation.set(0, ctx.t * 9, Math.PI, 'YXZ');
+  ch.face('grin', ctx.t);
+}
 
 // ───────────────────────────────────────────────────────────────────────── shot-group helpers
 function neighbourShot(name, start, set, who, face) {

@@ -196,8 +196,6 @@ const G = {
 G.blob = (() => { const g = new THREE.IcosahedronGeometry(0.5, 0); const p = g.attributes.position, n = g.attributes.normal;
   for (let i = 0; i < p.count; i++) { const v = V3(p.getX(i), p.getY(i), p.getZ(i)).normalize(); n.setXYZ(i, v.x, v.y, v.z); } return g; })();
 G.balloon = new THREE.SphereGeometry(0.5, 10, 8);
-G.blob2 = (() => { const g = new THREE.IcosahedronGeometry(0.5, 1); const p = g.attributes.position, n = g.attributes.normal;
-  for (let i = 0; i < p.count; i++) { const v = V3(p.getX(i), p.getY(i), p.getZ(i)).normalize(); n.setXYZ(i, v.x, v.y, v.z); } return g; })();
 // put a plane flat on the ground (normal +Y)
 const PLANE_FLAT = new THREE.PlaneGeometry(1, 1).rotateX(-PI / 2);
 
@@ -292,7 +290,7 @@ const GLOW_FS = /* glsl */`
   }`;
 const _vp = new THREE.Vector4();
 /** Additive camera-facing glows. atten=true: size in world metres; false: size in pixels at 1280 px height. */
-function makeGlowPoints(count, { atten = true, core = 0.6, name = 'glow', renderOrder = 5, maxPx = 52 } = {}) {
+function makeGlowPoints(count, { atten = true, core = 0.6, name = 'glow', renderOrder = 5, maxPx = 70 } = {}) {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
   geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
@@ -423,45 +421,45 @@ function fitFont(g, text, family, maxW, size) {
 }
 
 // ───────────────────────────────────────────────────────────────────────────── sky dome
-// Sky dome: all colour math (gradient, glows, ACES tone mapping, sRGB encode) runs per VERTEX on a finely
-// tessellated sphere; the fragment shader only outputs the interpolated colour (cheap on SwiftShader).
 const SKY_VS = /* glsl */`
-  uniform vec3 uZenith, uMid, uHorizon, uGround, uSunDir, uSunColor, uGlowDir, uGlowColor;
-  uniform float uSunGlow, uGlowAmt;
-  varying vec3 vCol;
-  vec3 RRTAndODTFit(vec3 v) { vec3 a = v * (v + 0.0245786) - 0.000090537; vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081; return a / b; }
-  vec3 aces(vec3 c) {
-    const mat3 IM = mat3(vec3(0.59719, 0.07600, 0.02840), vec3(0.35458, 0.90834, 0.13383), vec3(0.04823, 0.01566, 0.83777));
-    const mat3 OM = mat3(vec3(1.60475, -0.10208, -0.00327), vec3(-0.53108, 1.10813, -0.07276), vec3(-0.07367, -0.00605, 1.07602));
-    c *= 1.0 / 0.6; c = IM * c; c = RRTAndODTFit(c); c = OM * c; return clamp(c, 0.0, 1.0);
-  }
-  vec3 toSRGB(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c)); }
+  varying vec3 vDir;
   void main() {
-    vec3 d = normalize(position);
-    float h = d.y;
-    vec3 c;
-    if (h >= 0.0) { c = mix(uHorizon, uMid, smoothstep(0.0, 0.22, h)); c = mix(c, uZenith, smoothstep(0.18, 0.85, h)); }
-    else c = mix(uHorizon, uGround, smoothstep(0.0, -0.12, h));
-    float sd = max(dot(d, uSunDir), 0.0);
-    c += uSunColor * (pow(sd, uSunGlow) * 0.55 + pow(sd, uSunGlow * 8.0) * 0.6);
-    vec3 gd = normalize(vec3(uGlowDir.x, 0.0, uGlowDir.z));
-    float gh = max(dot(normalize(vec3(d.x, 0.0, d.z) + 1e-5), gd), 0.0);
-    c += uGlowColor * uGlowAmt * pow(gh, 3.0) * exp(-max(h, 0.0) * 9.0) * step(-0.02, h);
-    vCol = toSRGB(aces(c));
+    vDir = normalize(position);
     vec4 p = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     gl_Position = p.xyww;
   }`;
 const SKY_FS = /* glsl */`
-  varying vec3 vCol;
-  void main() { gl_FragColor = vec4(vCol, 1.0); }`;
+  uniform vec3 uZenith, uMid, uHorizon, uGround, uSunDir, uSunColor, uGlowDir, uGlowColor;
+  uniform float uSunSize, uSunGlow, uGlowAmt, uSunDisc;
+  varying vec3 vDir;
+  void main() {
+    vec3 d = normalize(vDir);
+    float h = d.y;
+    vec3 c;
+    if (h >= 0.0) {
+      c = mix(uHorizon, uMid, smoothstep(0.0, 0.22, h));
+      c = mix(c, uZenith, smoothstep(0.18, 0.85, h));
+    } else {
+      c = mix(uHorizon, uGround, smoothstep(0.0, -0.12, h));
+    }
+    float sd = max(dot(d, uSunDir), 0.0);
+    c += uSunColor * (pow(sd, uSunGlow) * 0.55 + pow(sd, uSunGlow * 8.0) * 0.6);
+    c += uSunColor * smoothstep(1.0 - uSunSize, 1.0 - uSunSize * 0.6, sd) * uSunDisc;
+    vec3 gd = normalize(vec3(uGlowDir.x, 0.0, uGlowDir.z));
+    float gh = max(dot(normalize(vec3(d.x, 0.0, d.z)), gd), 0.0);
+    c += uGlowColor * uGlowAmt * pow(gh, 3.0) * exp(-max(h, 0.0) * 9.0) * step(-0.02, h);
+    gl_FragColor = vec4(c, 1.0);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
+  }`;
 function makeSky(radius = 450) {
   const u = {
     uZenith: { value: C('#070a24') }, uMid: { value: C('#151a3a') }, uHorizon: { value: C('#2b2f6b') }, uGround: { value: C('#0b0d1c') },
     uSunDir: { value: V3(0, 1, 0) }, uSunColor: { value: C('#000000') }, uSunSize: { value: 0.0 }, uSunGlow: { value: 8 }, uSunDisc: { value: 0 },
     uGlowDir: { value: V3(1, 0, 0) }, uGlowColor: { value: C('#ff4fa3') }, uGlowAmt: { value: 0 },
   };
-  const mat = new THREE.ShaderMaterial({ uniforms: u, vertexShader: SKY_VS, fragmentShader: SKY_FS, side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false });
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 64, 40), mat);
+  const mat = new THREE.ShaderMaterial({ uniforms: u, vertexShader: SKY_VS, fragmentShader: SKY_FS, side: THREE.BackSide, depthWrite: false, fog: false });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 32, 16), mat);
   mesh.name = 'sky'; mesh.frustumCulled = false; mesh.renderOrder = 2;   // after opaque scenery (cheap fill)
   return mesh;
 }
@@ -599,7 +597,7 @@ const L = {
   square: { x0: 30, x1: 62, z0: -18, z1: 18 },
   stage: { x: 53, z: 0, w: 7, d: 12.4, h: 0.8 },   // w along X (depth of the stage), d along Z
   table: { x: 52.2, z: 0 },
-  pool: { x: -3, z: -27.0, w: 7.5, d: 4.0 },
+  pool: { x: -3, z: -25.5, w: 7.5, d: 4.0 },
   park: { x0: -62, x1: -45.5, z0: -32, z1: 8 },
   parkTable: { x: -53, z: -10 },
 };
@@ -609,9 +607,7 @@ function townCtx(seed) {
     R: rng(seed * 13 + 1), seed,
     root: null, party: null, anchors: {},
     m: {
-      ground: new Merger(), street: new Merger(), trim: new Merger(),
-      housesN: new Merger(), housesS: new Merger(), housesF: new Merger(), housesQ: new Merger(),
-      roofsN: new Merger(), roofsS: new Merger(), roofsF: new Merger(), roofsQ: new Merger(),
+      ground: new Merger(), street: new Merger(), houses: new Merger(), roofs: new Merger(), trim: new Merger(),
       square: new Merger(), stands: new Merger(), park: new Merger(), pool: new Merger(), foam: new Merger(),
       gloss: new Merger(), party: new Merger(), partyGloss: new Merger(), hills: new Merger(),
     },
@@ -741,8 +737,7 @@ function buildGround(T) {
 // ── houses
 /** h: { index, x, z, yaw, w, d, wall, roof, trim, door, kind:'side'|'front', shutters, flowerBox, chimney } */
 function buildHouse(T, h) {
-  const reg = h.index < 5 ? 'N' : h.index < 9 ? 'S' : h.index < 11 ? 'F' : 'Q';
-  const Hm = T.m['houses' + reg], Rf = T.m['roofs' + reg], Tr = T.m.trim;
+  const Hm = T.m.houses, Rf = T.m.roofs, Tr = T.m.trim;
   const f = frameXZ(h.x, h.z, h.yaw);
   const w = h.w, d = h.d, H1 = 3.0, H = 5.8;
   const yaw = h.yaw;
@@ -842,6 +837,7 @@ function buildHouse(T, h) {
   const winAnchors = [];
   for (let j = 0; j < nFront; j++) {
     const r = wins[j];
+    const p = P(0, 0, 0); // unused
     const o = new THREE.Object3D();
     o.name = `house.${h.index}.window.${j}`;
     const out = 0.25;
@@ -925,7 +921,7 @@ function buildStreetscape(T) {
     const tl = f(-spec.w / 2 - 1.3, 0, d / 2 + 1.4);
     if (i < 11) addTree(T, tl[0], tl[2], 0.8 + hash(i * 1.7) * 0.35, hash(i * 2.9) > 0.3 ? 'round' : 'pine');
     const tb = f(spec.w * 0.2, 0, -d / 2 - 4 - hash(i) * 3);
-    const inPoolYard = tb[0] > -11.5 && tb[0] < 5.5 && tb[2] < -17 && tb[2] > -35;
+    const inPoolYard = tb[0] > -11.5 && tb[0] < 5.5 && tb[2] < -17 && tb[2] > -33.5;
     if (!inPoolYard) addTree(T, tb[0], tb[2], 1.0 + hash(i * 0.9) * 0.5, hash(i * 4.1) > 0.5 ? 'round' : 'pine');
     // bunting across the upper floor of each street-facing house
     if (i < 9) {
@@ -1341,7 +1337,7 @@ function waterMaterial() {
 function buildPool(T) {
   const P = T.m.pool, A = T.anchors, root = T.root, pl = L.pool;
   const wx0 = pl.x - pl.w / 2, wx1 = pl.x + pl.w / 2, wz0 = pl.z - pl.d / 2, wz1 = pl.z + pl.d / 2;
-  const dx0 = -10.2, dx1 = 4.2, dz0 = -32.7, dz1 = -20.4, dy = 0.12;
+  const dx0 = -10.2, dx1 = 4.2, dz0 = -31.2, dz1 = -19.6, dy = 0.12;
   const deck = '#c9a273';
   // deck around the hole
   P.box(deck, (dx0 + wx0) / 2, dy / 2, (dz0 + dz1) / 2, wx0 - dx0, dy, dz1 - dz0);
@@ -1387,7 +1383,7 @@ function buildPool(T) {
     T.m.trim.box(PAL.trim, (x0 + x1) / 2, 0.75, (z0 + z1) / 2, len, 0.07, 0.04, yaw);
     T.m.trim.box(PAL.trim, (x0 + x1) / 2, 0.3, (z0 + z1) / 2, len, 0.07, 0.04, yaw);
   };
-  fenceRun(-11, -17.6, -11, -34.5); fenceRun(5, -17.6, 5, -34.5); fenceRun(-11, -34.5, 5, -34.5);
+  fenceRun(-11, -17.6, -11, -33); fenceRun(5, -17.6, 5, -33); fenceRun(-11, -33, 5, -33);
   // poles + string lights + bunting
   const poles = [[dx0 + 0.2, dz0 + 0.2], [dx1 - 0.2, dz0 + 0.2], [dx0 + 0.2, dz1 - 0.1], [dx1 - 0.2, dz1 - 0.1]];
   for (const [x, z] of poles) P.cyl('#6d4a30', x, 1.7, z, 0.06, 3.4, 'cyl6');
@@ -1395,10 +1391,6 @@ function buildPool(T) {
   addStringLights(T, pt[0], pt[3], { sag: 0.7, offset: 1 }); addStringLights(T, pt[1], pt[2], { sag: 0.7, offset: 3 });
   addStringLights(T, pt[0], pt[1], { sag: 0.6, offset: 5 }); addStringLights(T, pt[2], pt[3], { sag: 0.6, offset: 2 });
   addStringLights(T, [-7.5, 2.95, -17.6], pt[2], { sag: 0.4 }); addStringLights(T, [1.5, 2.95, -17.6], pt[3], { sag: 0.4, offset: 4 });
-  addStringLights(T, [-7.6, 2.75, -17.45], [1.6, 2.75, -17.45], { sag: 0.35, offset: 2 });
-  addBunting(T, [-7.4, 5.5, -17.4], [1.4, 5.5, -17.4], { sag: 0.4, offset: 3, size: 0.32 });
-  addBalloonCluster(T, -6.2, 0.95, -18.0, 5, { spread: 0.3, height: 1.3 });
-  addBalloonCluster(T, 0.2, 0.95, -18.0, 5, { spread: 0.3, height: 1.3 });
   addBunting(T, [pt[2][0], 2.9, pt[2][2]], [pt[1][0], 2.9, pt[1][2]], { sag: 0.6, offset: 1 });
   addBunting(T, [pt[3][0], 2.9, pt[3][2]], [pt[0][0], 2.9, pt[0][2]], { sag: 0.6, offset: 3 });
   buildSpeakerStack(T, dx0 + 0.9, dy, dz1 - 1.2, PI * 0.75, 1);
@@ -1412,7 +1404,7 @@ function buildPool(T) {
   mkAnchor(A, root, 'pool.edge2', pl.x, dy, wz0 - 2.4, PI);
   mkAnchor(A, root, 'pool.edge3', wx0 - 1.8, dy, pl.z, -PI / 2);
   mkAnchor(A, root, 'pool.edge4', wx1 + 1.8, dy, pl.z, PI / 2);
-  mkAnchor(A, root, 'pool.cam', 8.6, 5.6, -31.4, yawTo(8.6, -31.4, pl.x, pl.z));
+  mkAnchor(A, root, 'pool.cam', 6.2, 5.4, -34.2, yawTo(6.2, -34.2, pl.x, pl.z));
 }
 
 // ── foam street
@@ -1420,19 +1412,20 @@ function buildFoam(T) {
   const A = T.anchors, root = T.root, Pm = T.m.party, Fs = L.foamSt;
   const cx = Fs.x, cz = 24;
   // the cannon on its trailer (south end, pointing north)
-  const kf = frameXZ(cx + 4.7, cz + 2.5, -PI / 2);      // trailer on the east pavement, facing west
-  const KP = (x, y, z) => kf(x, y, z), kyaw = -PI / 2;
-  { const p = KP(0, 0.62, 0); Pm.rbox('#2f4d8a', p[0], p[1], p[2], 2.0, 0.36, 2.8, 0.06, kyaw); }
-  for (const sx of [-1, 1]) for (const zz of [-0.8, 0.8]) { const p = KP(sx * 1.05, 0.34, zz); Pm.add(G.cyl, '#1b1b1f', M(p[0], p[1], p[2], kyaw, 0.66, 0.24, 0.66, 0, PI / 2)); }
-  { const p = KP(0, 1.15, -0.5); Pm.rbox('#ffd23f', p[0], p[1], p[2], 1.2, 0.7, 1.2, 0.08, kyaw); }
-  { const p = KP(0, 1.45, 0.3); Pm.cyl('#d9dde3', p[0], p[1], p[2], 0.12, 0.8, 'cyl8'); }
-  const tilt = 0.42, bl = 2.2, by = 1.95, bzl = 0.5;
-  { const p = KP(0, by, bzl); Pm.add(G.cyl, '#ff4fa3', M(p[0], p[1], p[2], kyaw, 0.9, bl, 0.9, PI / 2 - tilt, 0)); }
-  for (let i = 0; i < 3; i++) { const p = KP(0, by + Math.sin(tilt) * (i - 1) * 0.6, bzl + Math.cos(tilt) * (i - 1) * 0.6); Pm.add(G.cyl, '#fbf6ec', M(p[0], p[1], p[2], kyaw, 0.96, 0.08, 0.96, PI / 2 - tilt, 0)); }
-  { const p = KP(0, by + Math.sin(tilt) * (bl / 2 + 0.25), bzl + Math.cos(tilt) * (bl / 2 + 0.25)); Pm.add(G.cone, '#ffd23f', M(p[0], p[1], p[2], kyaw, 1.15, 0.55, 1.15, -PI / 2 - tilt, 0)); }
-  const muzzle = KP(0, by + Math.sin(tilt) * (bl / 2 + 0.5), bzl + Math.cos(tilt) * (bl / 2 + 0.5));
-  T.foamCannon = { muzzle, target: [cx - 1.5, 1.3, cz + 1.2] };
-  mkAnchor(A, root, 'foam.cannon', muzzle[0], muzzle[1], muzzle[2], -PI / 2);
+  const kz = 35.2;
+  Pm.rbox('#2f4d8a', cx, 0.62, kz, 2.0, 0.36, 2.8, 0.06);
+  for (const s of [-1, 1]) for (const zz of [-0.8, 0.8]) Pm.add(G.cyl, '#1b1b1f', M(cx + s * 1.05, 0.34, kz + zz, 0, 0.66, 0.24, 0.66, 0, PI / 2));
+  Pm.rbox('#ffd23f', cx, 1.15, kz + 0.5, 1.2, 0.7, 1.2, 0.08);                 // tank
+  Pm.cyl('#d9dde3', cx, 1.45, kz - 0.3, 0.12, 0.8, 'cyl8');                    // mount
+  const tilt = 0.42, bl = 2.2;
+  const by = 1.95, bz = kz - 0.5;
+  Pm.add(G.cyl, '#ff4fa3', M(cx, by, bz, 0, 0.9, bl, 0.9, -PI / 2 + tilt, 0));  // barrel (points −Z, up)
+  const mz = bz - Math.cos(tilt) * bl / 2, my = by + Math.sin(tilt) * bl / 2;
+  Pm.add(G.cone, '#ffd23f', M(cx, my + Math.sin(tilt) * 0.25, mz - Math.cos(tilt) * 0.25, 0, 1.15, 0.55, 1.15, PI / 2 + tilt, 0));
+  for (let i = 0; i < 3; i++) Pm.add(G.cyl, '#fbf6ec', M(cx, by + Math.sin(tilt) * (i - 1) * 0.6, bz - Math.cos(tilt) * (i - 1) * 0.6, 0, 0.96, 0.08, 0.96, -PI / 2 + tilt, 0));
+  const muzzle = [cx, my + Math.sin(tilt) * 0.5, mz - Math.cos(tilt) * 0.5];
+  T.foamCannon = { muzzle, target: [cx, 1.4, cz + 2.5] };
+  mkAnchor(A, root, 'foam.cannon', muzzle[0], muzzle[1], muzzle[2], PI);
   mkAnchor(A, root, 'foam.center', cx, 0, cz, PI);
   mkAnchor(A, root, 'foam.cam', cx + 0.6, 3.4, cz - 9.5, yawTo(cx + 0.6, cz - 9.5, cx, cz));
   // string lights zig-zag + bunting across the side street
@@ -1446,12 +1439,12 @@ function buildFoam(T) {
   // foam heap particles (generated here, instanced in finalize)
   const R = rng(T.seed * 11 + 7);
   T.foamBalls = [];
-  for (let i = 0; i < 1150; i++) {
+  for (let i = 0; i < 1500; i++) {
     const x = cx + (R() - 0.5) * 10.4, z = 16.8 + R() * 17.2;
     const hx = (x - cx) / 4.4, hz = (z - (cz + 1.5)) / 6.5;
     const hMax = 0.95 * Math.exp(-hx * hx * 0.9 - hz * hz) + 0.25;
     const y = Math.pow(R(), 0.7) * hMax;
-    const r = 0.19 + R() * 0.22 + (y < 0.3 ? 0.06 : 0);
+    const r = 0.17 + R() * 0.2 + (y < 0.3 ? 0.06 : 0);
     T.foamBalls.push({ x, y, z, r, ph: R() * 6.28, rank: y / hMax * 0.7 + R() * 0.3 });
   }
   T.foamBase = { x: cx, z: 25.4, w: 10.6, d: 17.4 };
@@ -1511,9 +1504,8 @@ function buildPark(T) {
   addLamp(T, -57, -26, 0); addLamp(T, -57, 2, 0); addLamp(T, -47.3, -6.2, 0);
   // birthday decorations (party props): bunting from the tree to the lamp, balloons on the stools, lights in the crown
   addBunting(T, [treeX + 0.3, 3.3, treeZ + 0.2], [pt.x + 2.4, 4.4, pt.z - 2.2], { sag: 0.5, offset: 2 });
-  addBalloonCluster(T, pt.x + 0.85, 0.5, pt.z - 0.25, 3, { spread: 0.15, height: 1.1, s: 0.85 });
-  addBalloonCluster(T, pt.x - 0.85, 0.5, pt.z - 0.25, 3, { spread: 0.15, height: 1.1, s: 0.85 });
-  T.bdayBanner = { x: (treeX + pt.x + 2.4) / 2, y: 2.05, z: (treeZ + pt.z - 2.2) / 2 - 0.1, a: [treeX + 0.25, 2.9, treeZ + 0.2], b: [pt.x + 2.4, 2.9, pt.z - 2.2] };
+  addBalloonCluster(T, pt.x + 1.05, 0.5, pt.z + 0.35, 3, { spread: 0.15, height: 1.0, s: 0.85 });
+  addBalloonCluster(T, pt.x - 1.05, 0.5, pt.z + 0.35, 3, { spread: 0.15, height: 1.0, s: 0.85 });
   for (let i = 0; i < 3; i++) {
     const a0 = i * 2.1, r = 2.3, y = 4.2 + i * 0.5;
     addStringLights(T, [treeX + Math.cos(a0) * r, y, treeZ + Math.sin(a0) * r], [treeX + Math.cos(a0 + 2.0) * r, y + 0.3, treeZ + Math.sin(a0 + 2.0) * r], { sag: 0.6, offset: i, wire: false });
@@ -1601,17 +1593,17 @@ export const TOWN_PRESETS = {
     front: ['#ffd8b0', 0.95], rimL: ['#ff4fa3', 1.4], rimR: ['#3ee0c8', 1.15], flicker: 0.25,
     win: { dark: '#151b36', lit: ['#ffd27a', '#ffc265', '#ffe2a2', '#ffb46a'], mul: 1.75, halo: 0.6, tv: true },
     lamp: { core: '#ffe4ad', mul: 2.4, pool: '#ffc880', poolA: 0.62, halo: '#ffcf8a', haloI: 1.0, haloS: 1.5 },
-    bulbs: { mul: 2.3, halo: 1.1, size: 0.34, twinkle: 0.35 }, porch: 2.0, stage: 2.0, clock: 1.6, beams: 0.12, eq: 1.0,
+    bulbs: { mul: 2.3, halo: 1.0, size: 0.4, twinkle: 0.35 }, porch: 2.0, stage: 2.0, clock: 1.6, beams: 0.12, eq: 1.0,
     water: { deep: '#0a4c8a', shallow: '#33cbef', glow: 0.55, spark: 0.45 }, banner: 0.45, sign: 1.3,
   },
   quiet_night: {
-    sky: { zenith: '#050a1c', mid: '#12213f', horizon: '#2e5068', ground: '#070b12', sunDir: MOON_DIR, sunColor: '#2a3a60', sunGlow: 5, glowAmt: 0 },
-    fog: ['#1d3242', 28, 190], bg: '#1d3242', stars: 0.8, moon: 1, clouds: 0,
-    hemi: ['#4d6c96', '#1a2230', 1.2], key: ['#b8ccf2', 1.05, MOON_DIR],
-    front: ['#c4d2ee', 0.72], rimL: ['#000000', 0], rimR: ['#5fc3d0', 0.3], flicker: 0,
+    sky: { zenith: '#02040d', mid: '#0a1124', horizon: '#1a2c3f', ground: '#05080e', sunDir: MOON_DIR, sunColor: '#1a2540', sunGlow: 5, glowAmt: 0 },
+    fog: ['#13222f', 22, 170], bg: '#13222f', stars: 0.75, moon: 1, clouds: 0,
+    hemi: ['#34507a', '#161c26', 0.95], key: ['#a3bbe6', 0.75, MOON_DIR],
+    front: ['#bccbe8', 0.62], rimL: ['#000000', 0], rimR: ['#4fb3c0', 0.22], flicker: 0,
     win: { dark: '#0d121d', lit: ['#e4ecff', '#d8e4ff', '#eef3ff', '#dce6ff'], mul: 1.55, halo: 0.6, tv: false },
-    lamp: { core: '#d6e0f0', mul: 1.35, pool: '#a8bcdf', poolA: 0.34, halo: '#b0c4e4', haloI: 0.45, haloS: 1.4 },
-    bulbs: { mul: 0.16, halo: 0, size: 0.4, twinkle: 0, off: true }, porch: 0.25, stage: 0.12, clock: 0.55, beams: 0, eq: 0,
+    lamp: { core: '#cfd8ea', mul: 1.15, pool: '#9fb3d8', poolA: 0.2, halo: '#a8bcdc', haloI: 0.35, haloS: 1.5 },
+    bulbs: { mul: 0.13, halo: 0, size: 0.4, twinkle: 0, off: true }, porch: 0.25, stage: 0.12, clock: 0.55, beams: 0, eq: 0,
     water: { deep: '#06263f', shallow: '#0f4f6c', glow: 0.08, spark: 0.12 }, banner: 0.03, sign: 0.25,
   },
   dusk: {
@@ -1643,12 +1635,8 @@ function finalizeTown(T) {
   const add = (mesh, parent = root) => { if (mesh) parent.add(mesh); return mesh; };
   // shadow policy (SwiftShader budget): only things that matter cast; only walkable surfaces receive
   add(T.m.street.build(MAT.lam, 'streets', { cast: false, receive: true }));
-  D.bigCasters = [];
-  for (const r of ['N', 'S', 'F', 'Q']) {
-    const hm = add(T.m['houses' + r].build(MAT.lam, 'houses', { cast: true, receive: false }));
-    const rm = add(T.m['roofs' + r].build(MAT.lamFlat, 'roofs', { cast: true, receive: false }));
-    for (const m of [hm, rm]) if (m) { m.geometry.computeBoundingSphere(); D.bigCasters.push(m); }
-  }
+  add(T.m.houses.build(MAT.lam, 'houses', { cast: true, receive: false }));
+  add(T.m.roofs.build(MAT.lamFlat, 'roofs', { cast: true, receive: false }));
   add(T.m.trim.build(MAT.lam, 'trim', { cast: false, receive: false }));
   add(T.m.square.build(MAT.vc, 'square', { cast: true, receive: true }));
   add(T.m.stands.build(MAT.vc, 'stands', { cast: true, receive: true }));
@@ -1689,27 +1677,11 @@ function finalizeTown(T) {
     W.map((w) => ({ m: M(w.x + Math.sin(w.yaw) * 0.04, w.y, w.z + Math.cos(w.yaw) * 0.04, w.yaw, w.w * 1.9, w.h * 1.75, 1), c: '#000000' })), { cast: false, receive: false, name: 'windowHalos' });
   D.winHalo.renderOrder = 4; root.add(D.winHalo);
 
-  // ── pigeon birthday banner in the park (party prop)
-  if (T.bdayBanner) {
-    const bb = T.bdayBanner, bw = 2.9, bh = 0.66;
-    const tex = cachedTex('bday', 768, 176, (g, w, h) => {
-      g.fillStyle = '#fff4c2'; g.fillRect(0, 0, w, h);
-      for (let i = 0; i < 24; i++) { g.fillStyle = PAL.party[i % 6]; g.beginPath(); g.moveTo(i * w / 24, 0); g.lineTo((i + 1) * w / 24, 0); g.lineTo((i + 0.5) * w / 24, 26); g.fill(); }
-      const F = DISPLAY();
-      const fs = fitFont(g, 'HAPPY BIRTHDAY!', F, w - 60, 104);
-      outlinedText(g, 'HAPPY BIRTHDAY!', w / 2, h * 0.6, `${fs}px ${F}`, '#ff4fa3', '#1d1d22', 12);
-      drawStar(g, 34, h * 0.62, 18, '#ffd23f'); drawStar(g, w - 34, h * 0.62, 18, '#3ee0c8');
-    });
-    const ban = new THREE.Mesh(G.plane, new THREE.MeshLambertMaterial({ map: tex, side: THREE.DoubleSide, emissive: '#ffffff', emissiveMap: tex, emissiveIntensity: 0.25 }));
-    ban.position.set(bb.x, bb.y, bb.z); ban.scale.set(bw, bh, 1); ban.name = 'birthdayBanner';
-    party.add(ban);
-    T.wires.push(...bb.a, bb.x - bw / 2, bb.y + bh / 2, bb.z, ...bb.b, bb.x + bw / 2, bb.y + bh / 2, bb.z);
-  }
   // ── string lights: wires, bulbs, halos (all party props)
   const wg = new THREE.BufferGeometry(); wg.setAttribute('position', new THREE.Float32BufferAttribute(T.wires, 3));
   const wires = new THREE.LineSegments(wg, new THREE.LineBasicMaterial({ color: '#1a1a20' })); wires.name = 'wires';
   party.add(wires);
-  D.bulbs = instanced(G.blob, new THREE.MeshBasicMaterial({ color: '#ffffff' }),
+  D.bulbs = instanced(G.octa, new THREE.MeshBasicMaterial({ color: '#ffffff' }),
     T.bulbs.map((b) => ({ m: M(b.x, b.y, b.z, 0, 0.1, 0.13, 0.1), c: '#ffffff' })), { cast: false, receive: false, name: 'bulbs' });
   party.add(D.bulbs);
   D.bulbHalo = makeGlowPoints(T.bulbs.length, { name: 'bulbHalos', core: 0.5 });
@@ -1719,12 +1691,12 @@ function finalizeTown(T) {
   D.bulbCols = PAL.party.map((h) => C(h));
 
   // ── bunting flags (party, gentle sway in update)
-  D.flags = instanced(G.flag, new THREE.MeshLambertMaterial({ side: THREE.DoubleSide }),
+  D.flags = instanced(G.flag, new THREE.MeshStandardMaterial({ roughness: 0.75, side: THREE.DoubleSide }),
     T.flags.map((f) => ({ m: M(f.x, f.y, f.z, f.yaw, f.s * 0.8, f.s, 1), c: PAL.party[f.c] })), { cast: false, receive: false, name: 'bunting' });
   party.add(D.flags);
 
   // ── balloons + strings (party, bobbing)
-  D.balloons = instanced(G.balloon, new THREE.MeshLambertMaterial({}),
+  D.balloons = instanced(G.balloon, new THREE.MeshStandardMaterial({ roughness: 0.32, metalness: 0 }),
     T.balloons.map((b) => ({ m: M(b.x, b.y, b.z, 0, 0.36 * b.s, 0.44 * b.s, 0.36 * b.s), c: PAL.party[b.c] })), { cast: false, receive: false, name: 'balloons' });
   party.add(D.balloons);
   const bsg = new THREE.BufferGeometry(); bsg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(T.balloons.length * 6), 3));
@@ -1732,32 +1704,23 @@ function finalizeTown(T) {
   party.add(D.balloonStrings);
 
   // ── trees
-  const trunks = [], crowns = [], pines = [], fTrunks = [], fCrowns = [], fPines = [];
+  const trunks = [], crowns = [], pines = [];
   const crownCols = ['#4caf50', '#3c8f45', '#5cbf5a', '#43a047', '#6cc35a'];
   T.trees.forEach((t, i) => {
-    const far = Math.abs(t.z) > 35 || t.x > 63 || t.x < -59.5;
-    const trunks_ = far ? fTrunks : trunks, crowns_ = far ? fCrowns : crowns, pines_ = far ? fPines : pines;
     const s = t.s, c0 = C(t.c || crownCols[i % crownCols.length]);
     if (t.kind === 'pine') {
-      trunks_.push({ m: M(t.x, 0.6 * s, t.z, 0, 0.28 * s, 1.2 * s, 0.28 * s) });
-      for (let k = 0; k < 3; k++) pines_.push({ m: M(t.x, (1.3 + k * 1.05) * s, t.z, i + k, (2.6 - k * 0.65) * s, (1.9 - k * 0.2) * s, (2.6 - k * 0.65) * s), c: c0.clone().multiplyScalar(0.85 + k * 0.07) });
+      trunks.push({ m: M(t.x, 0.6 * s, t.z, 0, 0.28 * s, 1.2 * s, 0.28 * s) });
+      for (let k = 0; k < 3; k++) pines.push({ m: M(t.x, (1.3 + k * 1.05) * s, t.z, i + k, (2.6 - k * 0.65) * s, (1.9 - k * 0.2) * s, (2.6 - k * 0.65) * s), c: c0.clone().multiplyScalar(0.85 + k * 0.07) });
     } else {
-      trunks_.push({ m: M(t.x, 1.0 * s, t.z, 0, 0.34 * s, 2.0 * s, 0.34 * s) });
-      crowns_.push({ m: M(t.x, 3.0 * s, t.z, i, 3.0 * s, 2.7 * s, 3.0 * s), c: c0 });
-      crowns_.push({ m: M(t.x + 0.75 * s, 2.55 * s, t.z + 0.35 * s, i * 2, 1.9 * s, 1.7 * s, 1.9 * s), c: c0.clone().multiplyScalar(0.9) });
-      crowns_.push({ m: M(t.x - 0.6 * s, 3.6 * s, t.z - 0.45 * s, i * 3, 1.7 * s, 1.5 * s, 1.7 * s), c: c0.clone().multiplyScalar(1.08) });
+      trunks.push({ m: M(t.x, 1.0 * s, t.z, 0, 0.34 * s, 2.0 * s, 0.34 * s) });
+      crowns.push({ m: M(t.x, 3.0 * s, t.z, i, 3.0 * s, 2.7 * s, 3.0 * s), c: c0 });
+      crowns.push({ m: M(t.x + 0.75 * s, 2.55 * s, t.z + 0.35 * s, i * 2, 1.9 * s, 1.7 * s, 1.9 * s), c: c0.clone().multiplyScalar(0.9) });
+      crowns.push({ m: M(t.x - 0.6 * s, 3.6 * s, t.z - 0.45 * s, i * 3, 1.7 * s, 1.5 * s, 1.7 * s), c: c0.clone().multiplyScalar(1.08) });
     }
   });
-  const trunkMat = new THREE.MeshLambertMaterial({ color: '#7d5232' }), crownMat = new THREE.MeshLambertMaterial({ flatShading: true });
-  D.treeMeshes = [
-    instanced(G.cyl6, trunkMat, trunks, { name: 'trunks', cast: true, receive: false }),
-    instanced(G.ico, crownMat, crowns, { name: 'crowns', cast: true, receive: false }),
-    instanced(G.cone6, crownMat, pines, { name: 'pines', cast: true, receive: false }),
-  ];
-  root.add(...D.treeMeshes);
-  root.add(instanced(G.cyl6, trunkMat, fTrunks, { name: 'trunks', cast: false, receive: false }),
-    instanced(G.ico, crownMat, fCrowns, { name: 'crowns', cast: false, receive: false }),
-    instanced(G.cone6, crownMat, fPines, { name: 'pines', cast: false, receive: false }));
+  root.add(instanced(G.cyl6, new THREE.MeshLambertMaterial({ color: '#7d5232' }), trunks, { name: 'trunks', cast: true, receive: false }));
+  root.add(instanced(G.ico, new THREE.MeshLambertMaterial({ flatShading: true }), crowns, { name: 'crowns', cast: true, receive: false }));
+  root.add(instanced(G.cone6, new THREE.MeshLambertMaterial({ flatShading: true }), pines, { name: 'pines', cast: true, receive: false }));
 
   // ── emissive bits (porch lights, stage lenses) — one InstancedMesh per geometry
   D.glows = [];
@@ -1790,20 +1753,20 @@ function finalizeTown(T) {
   }
 
   // ── confetti on the plaza (party)
-  party.add(instanced(PLANE_FLAT, new THREE.MeshLambertMaterial({}),
+  party.add(instanced(PLANE_FLAT, new THREE.MeshStandardMaterial({ roughness: 0.7, side: THREE.DoubleSide }),
     T.confettiFloor.map((c) => ({ m: M(c.x, 0.012, c.z, c.ry, 0.13, 1, 0.08), c: PAL.party[c.c] })), { cast: false, receive: false, name: 'confettiFloor' }));
 
   // ── foam heap + stream
   const fb = T.foamBalls || [];
-  D.foamN = fb.length; D.streamN = 90;
-  const foamMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.4, emissive: '#eef2ff', emissiveIntensity: 0.34 });
+  D.foamN = fb.length; D.streamN = 46;
+  const foamMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.45, emissive: '#e6ecff', emissiveIntensity: 0.22 });
   if (T.foamBase) {
     const fbm = T.foamBase;
     D.foamBase = new THREE.Mesh(rbox(fbm.w, 0.6, fbm.d, 0.28, 3), foamMat);
     D.foamBase.position.set(fbm.x, -0.3, fbm.z); D.foamBase.receiveShadow = true; D.foamBase.name = 'foamBase';
     root.add(D.foamBase);
   }
-  D.foam = instanced(G.blob2, foamMat,
+  D.foam = instanced(G.blob, foamMat,
     new Array(D.foamN + D.streamN).fill(0).map(() => ({ m: M(0, -10, 0, 0, 0.01, 0.01, 0.01) })), { cast: false, receive: false, name: 'foam' });
   D.foam.frustumCulled = false; root.add(D.foam);
 
@@ -1875,8 +1838,6 @@ function finalizeTown(T) {
   const moonHalo = new THREE.Mesh(G.plane, new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
   moonHalo.position.copy(MOON_DIR).multiplyScalar(332); moonHalo.scale.setScalar(110); moonHalo.lookAt(0, 0, 0); moonHalo.renderOrder = 3;
   root.add(moon, moonHalo); D.moon = moon; D.moonHalo = moonHalo;
-  const sun = new THREE.Mesh(G.plane, new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
-  sun.renderOrder = 3; sun.name = 'sunDisc'; root.add(sun); D.sun = sun;
   const cm = new Merger(); const RC = rng(T.seed + 71);
   for (let i = 0; i < 10; i++) {
     const a = (i / 10) * PI * 2 + RC() * 0.4, r = 280 + RC() * 50, y = 62 + RC() * 40;
@@ -2054,11 +2015,6 @@ export function buildTown(opts = {}) {
     D.stars.visible = P.stars > 0; D.stars.material.uniforms.uOpacity.value = P.stars;
     D.moon.visible = D.moonHalo.visible = P.moon > 0;
     D.moon.material.opacity = P.moon; D.moonHalo.material.opacity = P.moon * 0.3;
-    D.sun.visible = (P.sky.sunDisc || 0) > 0;
-    if (D.sun.visible) {
-      D.sun.position.copy(P.sky.sunDir).normalize().multiplyScalar(340); D.sun.lookAt(0, 0, 0);
-      D.sun.scale.setScalar(name === 'dusk' ? 60 : 40); D.sun.material.color.set(P.sky.sunColor).multiplyScalar(name === 'dusk' ? 1.6 : 1.3);
-    }
     if (D.clouds) {
       D.clouds.visible = P.clouds > 0;
       D.clouds.material.emissive.set(name === 'dusk' ? '#ff9a8a' : '#ffffff');
@@ -2075,9 +2031,6 @@ export function buildTown(opts = {}) {
     if (T.vsSign) T.vsSign.material.color.setScalar(P.sign);
     for (const b of D.beams) b.visible = P.beams > 0;
     if (D.fillerGroup) D.fillerGroup.visible = fillerVisible();
-    const bigCast = name === 'day' || name === 'dusk';
-    for (const m of D.bigCasters) m.castShadow = bigCast;
-    for (const m of D.treeMeshes) m.castShadow = bigCast;
     applyWindows(); applyLamps(); applyGlows();
     updateDynamic(lastT);
   }
@@ -2150,13 +2103,11 @@ export function buildTown(opts = {}) {
     for (let k = 0; k < D.streamN; k++) {
       const i = D.foamN + k;
       if (!on) { im.setMatrixAt(i, MI(_m1, 0, -5, 0, 0, 0.001, 0.001, 0.001)); continue; }
-      const s = ((k * 0.6180339 + t * 0.6) % 1 + 1) % 1;            // golden-ratio spacing → irregular spray
-      const j1 = hash(k * 1.7) - 0.5, j2 = hash(k * 2.9) - 0.5, j3 = hash(k * 4.3) - 0.5;
-      const spread = 0.15 + 1.1 * s;
-      const x = lerp(fc.muzzle[0], fc.target[0], s) + j1 * 0.5 * spread;
-      const z = lerp(fc.muzzle[2], fc.target[2], s) + j2 * spread;
-      const y = lerp(fc.muzzle[1], fc.target[1], s) + 2.4 * 4 * s * (1 - s) + j3 * 0.35 * spread;
-      const r = (0.08 + 0.22 * s + 0.08 * hash(k * 5.1)) * Math.min(1, amt * 2);
+      const s = ((k / D.streamN + t * 0.55) % 1 + 1) % 1;
+      const x = lerp(fc.muzzle[0], fc.target[0], s) + Math.sin(k * 2.3 + t * 3) * 0.25 * s;
+      const z = lerp(fc.muzzle[2], fc.target[2], s);
+      const y = lerp(fc.muzzle[1], fc.target[1], s) + 2.6 * 4 * s * (1 - s);
+      const r = (0.14 + 0.3 * s) * Math.min(1, amt * 2);
       im.setMatrixAt(i, MI(_m1, x, y, z, k, r * 2, r * 2, r * 2));
     }
     im.instanceMatrix.needsUpdate = true;
@@ -2496,8 +2447,8 @@ export function buildRoom(opts = {}) {
   if (variant === 'hero' || variant === 'marcus') {
     Mg.rbox('#c7ccd4', dX + 0.02, TABLE_TOP + 0.012, dZ + 0.22, 0.3, 0.02, 0.4, 0.01);
     Mg.rbox('#c7ccd4', dX + 0.17, TABLE_TOP + 0.14, dZ + 0.22, 0.02, 0.26, 0.4, 0.01, 0, 0, 0.18);
-    screen.position.set(dX + 0.155, TABLE_TOP + 0.14, dZ + 0.22); screen.scale.set(0.36, 0.22, 1);
-    screen.rotation.order = 'YXZ'; screen.rotation.set(0.18, -PI / 2, 0);
+    screen.position.set(dX + 0.155, TABLE_TOP + 0.14, dZ + 0.22); screen.rotation.set(0, -PI / 2, 0.18 * 0 ); screen.rotateX(-0.18 * 0); screen.scale.set(0.36, 0.22, 1);
+    screen.rotation.order = 'YXZ'; screen.rotation.set(-0.0, -PI / 2, 0); screen.rotateX(0.18);
     root.add(screen);
   }
   if (variant === 'hero') {

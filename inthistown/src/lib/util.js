@@ -61,7 +61,10 @@ export function canvasTexture(w, h, drawFn) {
 }
 
 const _geoCache = new Map();
+// Global 'blockiness': rounded-box corner radii are scaled by this (1 = soft toy, 0.2 = crisp blocks).
+export const BLOCKY = 0.22;
 export function rbox(w, h, d, r = 0.06, seg = 2) {
+  r *= BLOCKY;
   const key = `${w.toFixed(4)}|${h.toFixed(4)}|${d.toFixed(4)}|${r}|${seg}`;
   let g = _geoCache.get(key);
   if (!g) {

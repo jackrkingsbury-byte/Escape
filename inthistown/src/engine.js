@@ -421,7 +421,7 @@ export function createEngine(opts = {}) {
   let activeIndex = -1, activeSet = null, lastT = -Infinity, frameNo = 0;
   let lastBg = undefined, lastFog = undefined;
   let shotCam = null, cam = null, camUsedShot = false, camUsed = false;
-  const fx = { pos: new THREE.Vector3(), rot: new THREE.Vector3(), zoom: 0, roll: 0, overlays: [], vignette: 0 };
+  const fx = { pos: new THREE.Vector3(), rot: new THREE.Vector3(), zoom: 0, roll: 0, overlays: [], vignette: 0, texts: [] };
   let capShot = null, cap = null;
   const timing = { setup: 0, update: 0, render: 0, composite: 0, total: 0 };
 
@@ -668,6 +668,10 @@ export function createEngine(opts = {}) {
   const fxApi = {
     overlay(color = '#000', alpha = 1) { if (alpha > 0) fx.overlays.push([color, clamp(alpha, 0, 1)]); return fxApi; },
     vignette(strength = 0.5) { fx.vignette = Math.max(fx.vignette, clamp(strength, 0, 1)); return fxApi; },
+    // meme text overlay drawn over the 3D, under the captions. x/y are 0..1 of the frame.
+    // opts: { x=.5, y=.25, size=120, fill='#fff', stroke='#000', line=14, rot=0 (rad), scale=1, alpha=1,
+    //         font='huss'|'narr', bg=null (rgba box behind), shadow=true }
+    text(str, o = {}) { fx.texts.push([String(str), o]); return fxApi; },
   };
   const captionApi = {
     hide(on = true) { cap.hidden = !!on; },
@@ -798,7 +802,7 @@ export function createEngine(opts = {}) {
     timing.setup = performance.now() - T1;
     // per-frame state from what setup left
     cam = cloneCam(shotCam); camUsed = camUsedShot;
-    fx.pos.set(0, 0, 0); fx.rot.set(0, 0, 0); fx.zoom = 0; fx.roll = 0; fx.overlays.length = 0; fx.vignette = 0;
+    fx.pos.set(0, 0, 0); fx.rot.set(0, 0, 0); fx.zoom = 0; fx.roll = 0; fx.overlays.length = 0; fx.vignette = 0; fx.texts.length = 0;
     cap = { ...capShot };
     if (activeSet) renderer.toneMappingExposure = activeSet.exposure != null ? activeSet.exposure : 1.0;
     T1 = performance.now();
@@ -838,6 +842,25 @@ export function createEngine(opts = {}) {
         vg.fillStyle = grd; vg.fillRect(0, 0, W / 4, H / 4);
       }
       g2.globalAlpha = fx.vignette; g2.drawImage(vignetteCanvas, 0, 0, W, H); g2.globalAlpha = 1;
+    }
+    for (const [str, o] of fx.texts) {
+      const size = o.size || 120, sc = o.scale == null ? 1 : o.scale;
+      if (sc <= 0 || (o.alpha != null && o.alpha <= 0)) continue;
+      g2.save();
+      g2.globalAlpha = o.alpha == null ? 1 : clamp(o.alpha, 0, 1);
+      g2.translate((o.x == null ? 0.5 : o.x) * W, (o.y == null ? 0.25 : o.y) * H);
+      g2.rotate(o.rot || 0); g2.scale(sc, sc);
+      g2.font = `${o.font === 'narr' ? '900 ' : ''}${size}px "${o.font === 'narr' ? FONT_NARR : FONT_HUSS}", sans-serif`;
+      g2.textAlign = 'center'; g2.textBaseline = 'middle'; g2.lineJoin = 'round';
+      const lines = str.split('\n');
+      lines.forEach((ln, i) => {
+        const y = (i - (lines.length - 1) / 2) * size * 1.05;
+        if (o.bg) { const w = g2.measureText(ln).width + size * 0.5; g2.fillStyle = o.bg; roundRect(g2, -w / 2, y - size * 0.62, w, size * 1.24, size * 0.2); g2.fill(); }
+        if (o.shadow !== false) { g2.shadowColor = 'rgba(0,0,0,0.45)'; g2.shadowBlur = size * 0.12; g2.shadowOffsetY = size * 0.06; }
+        g2.lineWidth = o.line == null ? Math.max(6, size * 0.13) : o.line; g2.strokeStyle = o.stroke || '#000'; g2.strokeText(ln, 0, y);
+        g2.shadowColor = 'transparent'; g2.fillStyle = o.fill || '#ffffff'; g2.fillText(ln, 0, y);
+      });
+      g2.restore();
     }
     try { drawCaptions(g2, tl, t, { ...cap, options: captionOptions }); } catch (e) { reportError('captions', e); }
     if (opts.debug) {
