@@ -1,0 +1,2473 @@
+{
+ "fps": 30,
+ "duration": 56.086,
+ "audio": "episodes/ep3/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody goes out partying.",
+   "start": 0.3,
+   "end": 2.445,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.577
+    },
+    {
+     "text": "goes",
+     "start": 1.577,
+     "end": 1.832
+    },
+    {
+     "text": "out",
+     "start": 1.832,
+     "end": 2.033
+    },
+    {
+     "text": "partying",
+     "start": 2.033,
+     "end": 2.445
+    }
+   ],
+   "visual": "Music 'party'. Town, party_night. Crane down from street.camHigh along the party street: string lights, all 18 extras in party hats dancing (dance / dance2). Background plant for b15: Gerald (ep2's s05 senior spec) arm-pumps at his decks (makeDJDecks) behind street.crowdB. The cone is not in this shot; it gets its own beat at b04."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Except me.",
+   "start": 2.66,
+   "end": 3.323,
+   "words": [
+    {
+     "text": "Except",
+     "start": 2.675,
+     "end": 3.134
+    },
+    {
+     "text": "me",
+     "start": 3.134,
+     "end": 3.323
+    }
+   ],
+   "visual": "Music 'muffled'. Push in on the lit upstairs myHouse.window, then cut inside: hero room (variant 'hero', window 'party', board off), lighting 'night'. The camera sits at the desk looking back at the kid in room.chair (sitIdle), so he faces the lens with no head-turn (lookAt yaw clamps at about 75\u00b0). Face 'neutral', frozen: a dead, open-eyed stare. Behind him on the bed (left wall), his cat sits in 'stare', also staring down the lens."
+  },
+  {
+   "id": "b03",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 3.588,
+   "end": 5.228,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 3.588,
+     "end": 3.848
+    },
+    {
+     "text": "HUSS!",
+     "start": 3.798,
+     "end": 4.058
+    },
+    {
+     "text": "HUSS!",
+     "start": 3.988,
+     "end": 4.248
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.568,
+     "end": 4.828
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.778,
+     "end": 5.038
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.968,
+     "end": 5.228
+    }
+   ],
+   "visual": "Cut on every HUSS. HUSS 1, 3 and 5 are the desk angle (room.camClose): the kid does a sitSlam with params.hits on the HUSS times, face 'shocked', and the toaster and desk items jump on each hit. HUSS 2 and 4 are a reverse on the cat on the bed in 'stare', completely unmoved. HUSS 6: the kid snaps to the lens, tight. His eyes never close."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "A traffic cone retired. Huge party.",
+   "start": 5.568,
+   "end": 7.883,
+   "words": [
+    {
+     "text": "A",
+     "start": 5.583,
+     "end": 5.734
+    },
+    {
+     "text": "traffic",
+     "start": 5.734,
+     "end": 6.101
+    },
+    {
+     "text": "cone",
+     "start": 6.101,
+     "end": 6.36
+    },
+    {
+     "text": "retired",
+     "start": 6.36,
+     "end": 6.781
+    },
+    {
+     "text": "Huge",
+     "start": 7.161,
+     "end": 7.522
+    },
+    {
+     "text": "party",
+     "start": 7.522,
+     "end": 7.883
+    }
+   ],
+   "visual": "Music 'party'. Back on the party street, party_night, low close shot at the kerb. An orange traffic cone with a white band wears a party hat beside a small cake (makeCake) and a HAPPY RETIREMENT sign. Two extras flank it with 'sad' faces (built-in tear), one resting a hand on its tip; a third claps. Tag on 'retired': 41 YEARS OF SERVICE. On 'Huge party.' pull back to reveal that the whole dancing street from b01 is the cone's party."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I haven't blinked since March.",
+   "start": 8.198,
+   "end": 9.505,
+   "words": [
+    {
+     "text": "I",
+     "start": 8.213,
+     "end": 8.347
+    },
+    {
+     "text": "haven't",
+     "start": 8.347,
+     "end": 8.672
+    },
+    {
+     "text": "blinked",
+     "start": 8.672,
+     "end": 8.998
+    },
+    {
+     "text": "since",
+     "start": 8.998,
+     "end": 9.227
+    },
+    {
+     "text": "March",
+     "start": 9.227,
+     "end": 9.505
+    }
+   ],
+   "visual": "Music 'muffled'. Bedroom. A tag styled like a factory safety board (green and white) pops in top-left and stays up for the rest of the bedroom section: DAYS SINCE LAST BLINK: 112. Slow push-in on the kid's face, 'neutral' frozen, dead still."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I stare at toasters until they pop. Out of fear.",
+   "start": 9.82,
+   "end": 12.419,
+   "words": [
+    {
+     "text": "I",
+     "start": 9.835,
+     "end": 9.977
+    },
+    {
+     "text": "stare",
+     "start": 9.977,
+     "end": 10.22
+    },
+    {
+     "text": "at",
+     "start": 10.22,
+     "end": 10.362
+    },
+    {
+     "text": "toasters",
+     "start": 10.362,
+     "end": 10.757
+    },
+    {
+     "text": "until",
+     "start": 10.757,
+     "end": 11.051
+    },
+    {
+     "text": "they",
+     "start": 11.051,
+     "end": 11.244
+    },
+    {
+     "text": "pop",
+     "start": 11.244,
+     "end": 11.436
+    },
+    {
+     "text": "Out",
+     "start": 11.816,
+     "end": 12.037
+    },
+    {
+     "text": "of",
+     "start": 12.037,
+     "end": 12.199
+    },
+    {
+     "text": "fear",
+     "start": 12.199,
+     "end": 12.419
+    }
+   ],
+   "visual": "Desk two-shot. The kid's face is 30 cm from a blocky toaster (sitIdle, hands 'table', small headPitch; there is no chin-on-fists pose). On 'I stare at toasters' the toaster starts a faint 1 cm tremble. On 'pop' a slice of toast shoots straight up out of frame. On 'fear', and not before, a sweat drop (makeSweatDrop) appears on the toaster's side and it shivers harder. The kid doesn't flinch. Hold 0.2 s."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While they're out partying, by the way, I'm staring at a wall.",
+   "start": 12.784,
+   "end": 15.508,
+   "words": [
+    {
+     "text": "While",
+     "start": 12.799,
+     "end": 13.022
+    },
+    {
+     "text": "they're",
+     "start": 13.022,
+     "end": 13.245
+    },
+    {
+     "text": "out",
+     "start": 13.245,
+     "end": 13.421
+    },
+    {
+     "text": "partying",
+     "start": 13.421,
+     "end": 13.784
+    },
+    {
+     "text": "by",
+     "start": 13.914,
+     "end": 14.098
+    },
+    {
+     "text": "the",
+     "start": 14.098,
+     "end": 14.235
+    },
+    {
+     "text": "way",
+     "start": 14.235,
+     "end": 14.419
+    },
+    {
+     "text": "I'm",
+     "start": 14.549,
+     "end": 14.732
+    },
+    {
+     "text": "staring",
+     "start": 14.732,
+     "end": 15.058
+    },
+    {
+     "text": "at",
+     "start": 15.058,
+     "end": 15.192
+    },
+    {
+     "text": "a",
+     "start": 15.192,
+     "end": 15.326
+    },
+    {
+     "text": "wall",
+     "start": 15.326,
+     "end": 15.508
+    }
+   ],
+   "visual": "Deadpan wide (room.cam). The kid stands 10 cm from a bare patch of the back wall beside the window, arms at his sides (idle, intensity 0), dead still. Party lights flicker in the window next to him."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It cracked first.",
+   "start": 15.823,
+   "end": 16.666,
+   "words": [
+    {
+     "text": "It",
+     "start": 15.838,
+     "end": 16.011
+    },
+    {
+     "text": "cracked",
+     "start": 16.011,
+     "end": 16.369
+    },
+    {
+     "text": "first",
+     "start": 16.369,
+     "end": 16.666
+    }
+   ],
+   "visual": "Insert on the wall. On 'cracked' a zig-zag crack decal grows out from the exact spot he's staring at. Silent, no SFX. Cut back: the kid is unmoved, 'neutral' frozen. Hold 0.2 s."
+  },
+  {
+   "id": "b09",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 16.981,
+   "end": 17.641,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 16.981,
+     "end": 17.241
+    },
+    {
+     "text": "HUSS!",
+     "start": 17.191,
+     "end": 17.451
+    },
+    {
+     "text": "HUSS!",
+     "start": 17.381,
+     "end": 17.641
+    }
+   ],
+   "visual": "Profile two-shot of the kid and the wall. On each HUSS the kid does a standing 'slam' hit, face 'shocked', eyes wide, and the crack sprouts a new branch on that hit. By the third HUSS it reaches the corners."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Eyes are windows. Never close a window. A burglar.",
+   "start": 17.981,
+   "end": 21.032,
+   "words": [
+    {
+     "text": "Eyes",
+     "start": 17.996,
+     "end": 18.211
+    },
+    {
+     "text": "are",
+     "start": 18.211,
+     "end": 18.37
+    },
+    {
+     "text": "windows",
+     "start": 18.37,
+     "end": 18.813
+    },
+    {
+     "text": "Never",
+     "start": 19.043,
+     "end": 19.275
+    },
+    {
+     "text": "close",
+     "start": 19.275,
+     "end": 19.556
+    },
+    {
+     "text": "a",
+     "start": 19.556,
+     "end": 19.691
+    },
+    {
+     "text": "window",
+     "start": 19.691,
+     "end": 20.02
+    },
+    {
+     "text": "A",
+     "start": 20.45,
+     "end": 20.639
+    },
+    {
+     "text": "burglar",
+     "start": 20.639,
+     "end": 21.032
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Eyes are windows. Never close a window.",
+    "by": "a burglar"
+   },
+   "visual": "Music 'muffled'. Outside, same night: the upstairs myHouse.window seen from the street, lit (windowGlow 1; town windows can't open). Below it a burglar stands in the hedge looking up at it ('peer' standing, lookAt aimed up at the window), sack on his shoulder. QUOTE CARD \"Eyes are windows. Never close a window.\" runs from the line start and ends exactly where 'A burglar.' starts (the card dims the frame). Cut to the undimmed burglar, who turns and gives the camera a friendly 'wave', face 'smile'. The reveal of who said it is the joke."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then came the Summer Party Staring Contest.",
+   "start": 21.397,
+   "end": 23.381,
+   "words": [
+    {
+     "text": "Then",
+     "start": 21.412,
+     "end": 21.616
+    },
+    {
+     "text": "came",
+     "start": 21.616,
+     "end": 21.874
+    },
+    {
+     "text": "the",
+     "start": 21.874,
+     "end": 22.025
+    },
+    {
+     "text": "Summer",
+     "start": 22.025,
+     "end": 22.283
+    },
+    {
+     "text": "Party",
+     "start": 22.283,
+     "end": 22.596
+    },
+    {
+     "text": "Staring",
+     "start": 22.596,
+     "end": 22.961
+    },
+    {
+     "text": "Contest",
+     "start": 22.961,
+     "end": 23.381
+    }
+   ],
+   "visual": "Music 'party'. Town square, 'day' lighting, square.cam1. Banner lines: SUMMER PARTY / STARING / CONTEST. The bleachers are full of party hats; the front three rows are full characters, crowdMotion 0.6. The ep1 vsSign (T.vsSign) is retextured to ME VS CAT. The tag becomes a scoreboard: BLINKS \u2014 ME 0 | CAT 0. At the stage edge, Gerald arm-pumps at his decks (dance2)."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Defending champion? My own cat. Nine lives. Zero blinks.",
+   "start": 23.596,
+   "end": 27.705,
+   "words": [
+    {
+     "text": "Defending",
+     "start": 23.611,
+     "end": 24.097
+    },
+    {
+     "text": "champion?",
+     "start": 24.097,
+     "end": 24.582
+    },
+    {
+     "text": "My",
+     "start": 24.912,
+     "end": 25.168
+    },
+    {
+     "text": "own",
+     "start": 25.168,
+     "end": 25.424
+    },
+    {
+     "text": "cat",
+     "start": 25.424,
+     "end": 25.68
+    },
+    {
+     "text": "Nine",
+     "start": 26.01,
+     "end": 26.342
+    },
+    {
+     "text": "lives",
+     "start": 26.342,
+     "end": 26.743
+    },
+    {
+     "text": "Zero",
+     "start": 26.973,
+     "end": 27.339
+    },
+    {
+     "text": "blinks",
+     "start": 27.339,
+     "end": 27.705
+    }
+   ],
+   "visual": "'Defending champion?': the kid at square.chairA (sitIdle, hands 'table', face 'determined' frozen, a staredown glare). 'My own cat': snap-zoom across the table to the cat in 'stare', perched on TWO stacked red velvet cushions at the chairB end so his eyes are level with the kid's. Small tag: UNDEFEATED. 'Nine lives. Zero blinks.': hard profile two-shot, both dead still."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Your eyes have the right to remain open. My cat's lawyer.",
+   "start": 28.02,
+   "end": 31.122,
+   "words": [
+    {
+     "text": "Your",
+     "start": 28.035,
+     "end": 28.232
+    },
+    {
+     "text": "eyes",
+     "start": 28.232,
+     "end": 28.43
+    },
+    {
+     "text": "have",
+     "start": 28.43,
+     "end": 28.627
+    },
+    {
+     "text": "the",
+     "start": 28.627,
+     "end": 28.773
+    },
+    {
+     "text": "right",
+     "start": 28.773,
+     "end": 29.022
+    },
+    {
+     "text": "to",
+     "start": 29.022,
+     "end": 29.167
+    },
+    {
+     "text": "remain",
+     "start": 29.167,
+     "end": 29.521
+    },
+    {
+     "text": "open",
+     "start": 29.521,
+     "end": 29.822
+    },
+    {
+     "text": "My",
+     "start": 30.252,
+     "end": 30.499
+    },
+    {
+     "text": "cat's",
+     "start": 30.499,
+     "end": 30.81
+    },
+    {
+     "text": "lawyer",
+     "start": 30.81,
+     "end": 31.122
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Your eyes have the right to remain open.",
+    "by": "my cat's lawyer"
+   },
+   "visual": "QUOTE CARD \"Your eyes have the right to remain open.\" runs until 'My cat's lawyer.' starts. Then cut to the undimmed lawyer (new character) standing behind the cushions: arms crossed (crossArms), face 'smug', briefcase at his feet."
+  },
+  {
+   "id": "b14",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 31.437,
+   "end": 33.077,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 31.437,
+     "end": 31.697
+    },
+    {
+     "text": "HUSS!",
+     "start": 31.647,
+     "end": 31.907
+    },
+    {
+     "text": "HUSS!",
+     "start": 31.837,
+     "end": 32.097
+    },
+    {
+     "text": "HUSS!",
+     "start": 32.417,
+     "end": 32.677
+    },
+    {
+     "text": "HUSS!",
+     "start": 32.627,
+     "end": 32.887
+    },
+    {
+     "text": "HUSS!",
+     "start": 32.817,
+     "end": 33.077
+    }
+   ],
+   "visual": "The contest starts. Western cut-backs, one cut per HUSS, each tighter than the last: (1) kid ECU, sitSlam on the table, face 'shocked', eyes wide; (2) cat ECU framed on head and ears (the cat face is a 512 px canvas, so don't go tighter), 'stare', the cushions bounce from the slam and the cat doesn't move; (3) the front bleacher rows lean in (peer); (4) kid, closer; (5) cat, closer; (6) both in profile, noses 40 cm apart. From HUSS 3 on, one sweat drop (makeSweatDrop) appears on the kid's forehead per HUSS: 4 by the end."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Four hours. DJ Hip Replacement fell asleep.",
+   "start": 33.467,
+   "end": 36.328,
+   "words": [
+    {
+     "text": "Four",
+     "start": 33.482,
+     "end": 33.768
+    },
+    {
+     "text": "hours",
+     "start": 33.768,
+     "end": 34.13
+    },
+    {
+     "text": "DJ",
+     "start": 34.56,
+     "end": 34.936
+    },
+    {
+     "text": "Hip",
+     "start": 34.936,
+     "end": 35.146
+    },
+    {
+     "text": "Replacement",
+     "start": 35.146,
+     "end": 35.798
+    },
+    {
+     "text": "fell",
+     "start": 35.798,
+     "end": 36.008
+    },
+    {
+     "text": "asleep",
+     "start": 36.008,
+     "end": 36.328
+    }
+   ],
+   "visual": "'Four hours.': a big text stamp, 4 HOURS LATER (SpongeBob time-card style), over a locked wide of the stalemate where nobody has moved. Lighting hard-cuts to 'dusk' with no interpolation. Don't animate the clock tower; its hands are painted into a static texture. 'DJ Hip Replacement fell asleep.': cut to the stage. Gerald is slumped over his decks: seated, headPitch about 0.9 plus a hand-set torso lean, face('sleepy', t inside its blink window) for closed eyes and a yawn. Tag (ep2 callback): DJ HIP REPLACEMENT (91). The party music cuts dead on 'asleep' (music only) and stays out until b18. Behind him the kid and the cat haven't moved; the kid has 6 sweat drops."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Blinking is a nap for cowards. My grandad. Mid-nap.",
+   "start": 36.643,
+   "end": 39.912,
+   "words": [
+    {
+     "text": "Blinking",
+     "start": 36.658,
+     "end": 37.061
+    },
+    {
+     "text": "is",
+     "start": 37.061,
+     "end": 37.205
+    },
+    {
+     "text": "a",
+     "start": 37.205,
+     "end": 37.35
+    },
+    {
+     "text": "nap",
+     "start": 37.35,
+     "end": 37.546
+    },
+    {
+     "text": "for",
+     "start": 37.546,
+     "end": 37.742
+    },
+    {
+     "text": "cowards",
+     "start": 37.742,
+     "end": 38.093
+    },
+    {
+     "text": "My",
+     "start": 38.523,
+     "end": 38.755
+    },
+    {
+     "text": "grandad",
+     "start": 38.755,
+     "end": 39.231
+    },
+    {
+     "text": "Mid-nap",
+     "start": 39.461,
+     "end": 39.912
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Blinking is a nap for cowards.",
+    "by": "my grandad, mid-nap"
+   },
+   "visual": "No music. party_night, string lights on, crowdMotion 0. Front bleacher row: Grandad in a party hat, asleep sitting up (seated idle, face('sleepy', t inside its blink window), slow snore bob). Half of the front three rows are asleep the same way; the back rows are faceless instanced fans, so only the front rows show faces. QUOTE CARD \"Blinking is a nap for cowards.\" runs until 'My grandad.' starts. Cut to the undimmed Grandad, asleep. On 'Mid-nap.' his head droops onto the shoulder of the burglar from b10, who sits next to him still holding his sack."
+  },
+  {
+   "id": "b17",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 40.227,
+   "end": 40.886,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 40.227,
+     "end": 40.486
+    },
+    {
+     "text": "HUSS!",
+     "start": 40.437,
+     "end": 40.697
+    },
+    {
+     "text": "HUSS!",
+     "start": 40.627,
+     "end": 40.886
+    }
+   ],
+   "visual": "THE TWITCH: silence under the HUSSes, three cut-backs. (1) Kid ECU: sitSlam on the table, 'shocked', 7 sweat drops. (2) Cat ECU, head and ears: the cushions bounce and his eyes twitch (the face toggles stare, squint, stare, 2 frames each, plus a 1 cm head jitter), and one sweat drop pops on his forehead. (3) Kid ECU: 8 sweat drops, eyes wide, perfectly still. Then 0.5 s of dead silence."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then the cat blinked.",
+   "start": 41.327,
+   "end": 42.251,
+   "words": [
+    {
+     "text": "Then",
+     "start": 41.342,
+     "end": 41.542
+    },
+    {
+     "text": "the",
+     "start": 41.542,
+     "end": 41.69
+    },
+    {
+     "text": "cat",
+     "start": 41.69,
+     "end": 41.891
+    },
+    {
+     "text": "blinked",
+     "start": 41.891,
+     "end": 42.251
+    }
+   ],
+   "visual": "Delivered into silence. Cat ECU on head and ears (or render that one cat face texture at 1024). Slow motion, about 4 frames per step: stare, smug (half-lid), closed (stare at a t inside the blink window), smug, stare. Smash cut wide on the last word: the front rows wake 'shocked', Gerald jolts upright and the party music slams back in, confetti bursts, crowdMotion 1, and the scoreboard flips to BLINKS \u2014 ME 0 | CAT 1."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respectful moments. Number seven: he let me win.",
+   "start": 42.866,
+   "end": 45.898,
+   "words": [
+    {
+     "text": "Top",
+     "start": 42.881,
+     "end": 43.07
+    },
+    {
+     "text": "ten",
+     "start": 43.07,
+     "end": 43.259
+    },
+    {
+     "text": "respectful",
+     "start": 43.259,
+     "end": 43.796
+    },
+    {
+     "text": "moments",
+     "start": 43.796,
+     "end": 44.234
+    },
+    {
+     "text": "Number",
+     "start": 44.614,
+     "end": 44.914
+    },
+    {
+     "text": "seven",
+     "start": 44.914,
+     "end": 45.214
+    },
+    {
+     "text": "he",
+     "start": 45.214,
+     "end": 45.359
+    },
+    {
+     "text": "let",
+     "start": 45.359,
+     "end": 45.556
+    },
+    {
+     "text": "me",
+     "start": 45.556,
+     "end": 45.701
+    },
+    {
+     "text": "win",
+     "start": 45.701,
+     "end": 45.898
+    }
+   ],
+   "visual": "RANKING CARD (top10Card, which doesn't dim the frame) slides in on 'Top ten' over a two-shot of the kid and the cat across the table. The big #7 pops on 'Number seven'. On 'he let me win' the cat turns his head to the kid, unbothered."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "That's cat for good game.",
+   "start": 46.213,
+   "end": 47.345,
+   "words": [
+    {
+     "text": "That's",
+     "start": 46.228,
+     "end": 46.483
+    },
+    {
+     "text": "cat",
+     "start": 46.483,
+     "end": 46.686
+    },
+    {
+     "text": "for",
+     "start": 46.686,
+     "end": 46.888
+    },
+    {
+     "text": "good",
+     "start": 46.888,
+     "end": 47.09
+    },
+    {
+     "text": "game",
+     "start": 47.09,
+     "end": 47.345
+    }
+   ],
+   "visual": "Card gone, clean two-shot. The cat gives the kid a slow, deliberate blink with a little head dip (headPitch 0.3): smug, closed, smug, stare. That's a cat's real-life slow blink, which means respect; the line explains it. The kid, eyes still wide, gives one small nod back. Behind them the lawyer starts a slow 'clap'. TTS note: 'GG' is said 'gee-gee'."
+  },
+  {
+   "id": "b21",
+   "speaker": "mayor",
+   "kind": "quote",
+   "text": "Say cheese!",
+   "start": 47.76,
+   "end": 48.802,
+   "words": [
+    {
+     "text": "Say",
+     "start": 47.775,
+     "end": 48.229
+    },
+    {
+     "text": "cheese!",
+     "start": 48.229,
+     "end": 48.802
+    }
+   ],
+   "visual": "Dialogue caption in the gold-outline mayor style, not a quote card. On stage the kid stands holding the new trophy prop in handR. The cat sits on his cushions on a box stool beside him, with the lawyer and a now-awake Grandad behind. The mayor ducks behind the blocky camera on its tripod and raises one hand."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I blinked.",
+   "start": 49.167,
+   "end": 49.748,
+   "words": [
+    {
+     "text": "I",
+     "start": 49.182,
+     "end": 49.347
+    },
+    {
+     "text": "blinked",
+     "start": 49.347,
+     "end": 49.748
+    }
+   ],
+   "visual": "Camera-flash white-out in the gap before the line. The white fades into a freeze-frame photo with a white polaroid border that resolves on 'blinked'. Everyone wears 'smile' (open oval eyes; not 'grin', whose half-moon eyes read as closed at phone size), each at a t outside their own blink window. That leaves the kid with the only closed eyes in the frame: 'smile' at a t inside his blink window, his first and only blink. The cat stares dead into the lens. The tag slams back: DAYS SINCE LAST BLINK: 0. Hold 0.6 s."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "They built me a statue. Eyes closed.",
+   "start": 50.263,
+   "end": 52.364,
+   "words": [
+    {
+     "text": "They",
+     "start": 50.278,
+     "end": 50.458
+    },
+    {
+     "text": "built",
+     "start": 50.458,
+     "end": 50.685
+    },
+    {
+     "text": "me",
+     "start": 50.685,
+     "end": 50.818
+    },
+    {
+     "text": "a",
+     "start": 50.818,
+     "end": 50.951
+    },
+    {
+     "text": "statue",
+     "start": 50.951,
+     "end": 51.273
+    },
+    {
+     "text": "Eyes",
+     "start": 51.653,
+     "end": 51.908
+    },
+    {
+     "text": "closed",
+     "start": 51.908,
+     "end": 52.364
+    }
+   ],
+   "visual": "Music 'party' (low). Town square, 'day'. 'They built me a statue.': a grey stone statue of the kid in the photo pose (trophy up, smiling, eyes closed) on a wide, low plinth (0.35 m) at square.center. The real kid stands on the plinth beside it, crossArms, 'neutral' frozen: a matching pair, one with eyes shut and one with eyes wide. 'Eyes closed.': push in past the statue's closed eyes to its plaque, NEVER BLINKED. Hold 0.4 s."
+  },
+  {
+   "id": "b24",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 52.679,
+   "end": 53.339,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 52.679,
+     "end": 52.939
+    },
+    {
+     "text": "HUSS!",
+     "start": 52.889,
+     "end": 53.149
+    },
+    {
+     "text": "HUSS!",
+     "start": 53.079,
+     "end": 53.339
+    }
+   ],
+   "visual": "The kid turns and stares the statue in the face, nose to nose (they share the plinth, so heads are level). On each HUSS he does a standing 'slam' hit, face 'shocked'. The statue stays fully intact through all three. On the third HUSS the pigeon, in his party hat, flaps down and lands on the statue's head."
+  },
+  {
+   "id": "b25",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It cracked first.",
+   "start": 53.729,
+   "end": 54.571,
+   "words": [
+    {
+     "text": "It",
+     "start": 53.744,
+     "end": 53.917
+    },
+    {
+     "text": "cracked",
+     "start": 53.917,
+     "end": 54.275
+    },
+    {
+     "text": "first",
+     "start": 54.275,
+     "end": 54.571
+    }
+   ],
+   "visual": "On 'cracked', and not before: a single zig-zag crack (the wall decal, scaled down) runs across the statue's face, and a small grey box chip drops off its nose. The pigeon doesn't budge. The kid turns from the statue and stares wide-eyed down the lens ('neutral' frozen) for 0.8 s, then cut to black. There is no cat slow-blink after the button; that gag is spent."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.577,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "goes",
+   "start": 1.577,
+   "end": 1.832,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "out",
+   "start": 1.832,
+   "end": 2.033,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "partying",
+   "start": 2.033,
+   "end": 2.445,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Except",
+   "start": 2.675,
+   "end": 3.134,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me",
+   "start": 3.134,
+   "end": 3.323,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 3.588,
+   "end": 3.848,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 3.798,
+   "end": 4.058,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 3.988,
+   "end": 4.248,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.568,
+   "end": 4.828,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.778,
+   "end": 5.038,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.968,
+   "end": 5.228,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "A",
+   "start": 5.583,
+   "end": 5.734,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "traffic",
+   "start": 5.734,
+   "end": 6.101,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "cone",
+   "start": 6.101,
+   "end": 6.36,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "retired",
+   "start": 6.36,
+   "end": 6.781,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Huge",
+   "start": 7.161,
+   "end": 7.522,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "party",
+   "start": 7.522,
+   "end": 7.883,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I",
+   "start": 8.213,
+   "end": 8.347,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "haven't",
+   "start": 8.347,
+   "end": 8.672,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "blinked",
+   "start": 8.672,
+   "end": 8.998,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "since",
+   "start": 8.998,
+   "end": 9.227,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "March",
+   "start": 9.227,
+   "end": 9.505,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "I",
+   "start": 9.835,
+   "end": 9.977,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "stare",
+   "start": 9.977,
+   "end": 10.22,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "at",
+   "start": 10.22,
+   "end": 10.362,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "toasters",
+   "start": 10.362,
+   "end": 10.757,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "until",
+   "start": 10.757,
+   "end": 11.051,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "they",
+   "start": 11.051,
+   "end": 11.244,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "pop",
+   "start": 11.244,
+   "end": 11.436,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Out",
+   "start": 11.816,
+   "end": 12.037,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "of",
+   "start": 12.037,
+   "end": 12.199,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "fear",
+   "start": 12.199,
+   "end": 12.419,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "While",
+   "start": 12.799,
+   "end": 13.022,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they're",
+   "start": 13.022,
+   "end": 13.245,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 13.245,
+   "end": 13.421,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 13.421,
+   "end": 13.784,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 13.914,
+   "end": 14.098,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 14.098,
+   "end": 14.235,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 14.235,
+   "end": 14.419,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I'm",
+   "start": 14.549,
+   "end": 14.732,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "staring",
+   "start": 14.732,
+   "end": 15.058,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "at",
+   "start": 15.058,
+   "end": 15.192,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "a",
+   "start": 15.192,
+   "end": 15.326,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "wall",
+   "start": 15.326,
+   "end": 15.508,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "It",
+   "start": 15.838,
+   "end": 16.011,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "cracked",
+   "start": 16.011,
+   "end": 16.369,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "first",
+   "start": 16.369,
+   "end": 16.666,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 16.981,
+   "end": 17.241,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 17.191,
+   "end": 17.451,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 17.381,
+   "end": 17.641,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Eyes",
+   "start": 17.996,
+   "end": 18.211,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "are",
+   "start": 18.211,
+   "end": 18.37,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "windows",
+   "start": 18.37,
+   "end": 18.813,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Never",
+   "start": 19.043,
+   "end": 19.275,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "close",
+   "start": 19.275,
+   "end": 19.556,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 19.556,
+   "end": 19.691,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "window",
+   "start": 19.691,
+   "end": 20.02,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "A",
+   "start": 20.45,
+   "end": 20.639,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "burglar",
+   "start": 20.639,
+   "end": 21.032,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Then",
+   "start": 21.412,
+   "end": 21.616,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "came",
+   "start": 21.616,
+   "end": 21.874,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 21.874,
+   "end": 22.025,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Summer",
+   "start": 22.025,
+   "end": 22.283,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Party",
+   "start": 22.283,
+   "end": 22.596,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Staring",
+   "start": 22.596,
+   "end": 22.961,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Contest",
+   "start": 22.961,
+   "end": 23.381,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Defending",
+   "start": 23.611,
+   "end": 24.097,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "champion?",
+   "start": 24.097,
+   "end": 24.582,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "My",
+   "start": 24.912,
+   "end": 25.168,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "own",
+   "start": 25.168,
+   "end": 25.424,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "cat",
+   "start": 25.424,
+   "end": 25.68,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Nine",
+   "start": 26.01,
+   "end": 26.342,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "lives",
+   "start": 26.342,
+   "end": 26.743,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Zero",
+   "start": 26.973,
+   "end": 27.339,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "blinks",
+   "start": 27.339,
+   "end": 27.705,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Your",
+   "start": 28.035,
+   "end": 28.232,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "eyes",
+   "start": 28.232,
+   "end": 28.43,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "have",
+   "start": 28.43,
+   "end": 28.627,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 28.627,
+   "end": 28.773,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "right",
+   "start": 28.773,
+   "end": 29.022,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "to",
+   "start": 29.022,
+   "end": 29.167,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "remain",
+   "start": 29.167,
+   "end": 29.521,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "open",
+   "start": 29.521,
+   "end": 29.822,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "My",
+   "start": 30.252,
+   "end": 30.499,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "cat's",
+   "start": 30.499,
+   "end": 30.81,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "lawyer",
+   "start": 30.81,
+   "end": 31.122,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 31.437,
+   "end": 31.697,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 31.647,
+   "end": 31.907,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 31.837,
+   "end": 32.097,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 32.417,
+   "end": 32.677,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 32.627,
+   "end": 32.887,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 32.817,
+   "end": 33.077,
+   "beat": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Four",
+   "start": 33.482,
+   "end": 33.768,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "hours",
+   "start": 33.768,
+   "end": 34.13,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "DJ",
+   "start": 34.56,
+   "end": 34.936,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Hip",
+   "start": 34.936,
+   "end": 35.146,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Replacement",
+   "start": 35.146,
+   "end": 35.798,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "fell",
+   "start": 35.798,
+   "end": 36.008,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "asleep",
+   "start": 36.008,
+   "end": 36.328,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Blinking",
+   "start": 36.658,
+   "end": 37.061,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "is",
+   "start": 37.061,
+   "end": 37.205,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "a",
+   "start": 37.205,
+   "end": 37.35,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "nap",
+   "start": 37.35,
+   "end": 37.546,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "for",
+   "start": 37.546,
+   "end": 37.742,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "cowards",
+   "start": 37.742,
+   "end": 38.093,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "My",
+   "start": 38.523,
+   "end": 38.755,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "grandad",
+   "start": 38.755,
+   "end": 39.231,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Mid-nap",
+   "start": 39.461,
+   "end": 39.912,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "HUSS!",
+   "start": 40.227,
+   "end": 40.486,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 40.437,
+   "end": 40.697,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 40.627,
+   "end": 40.886,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Then",
+   "start": 41.342,
+   "end": 41.542,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 41.542,
+   "end": 41.69,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "cat",
+   "start": 41.69,
+   "end": 41.891,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "blinked",
+   "start": 41.891,
+   "end": 42.251,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Top",
+   "start": 42.881,
+   "end": 43.07,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 43.07,
+   "end": 43.259,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respectful",
+   "start": 43.259,
+   "end": 43.796,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "moments",
+   "start": 43.796,
+   "end": 44.234,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Number",
+   "start": 44.614,
+   "end": 44.914,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "seven",
+   "start": 44.914,
+   "end": 45.214,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "he",
+   "start": 45.214,
+   "end": 45.359,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "let",
+   "start": 45.359,
+   "end": 45.556,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "me",
+   "start": 45.556,
+   "end": 45.701,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "win",
+   "start": 45.701,
+   "end": 45.898,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "That's",
+   "start": 46.228,
+   "end": 46.483,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "cat",
+   "start": 46.483,
+   "end": 46.686,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "for",
+   "start": 46.686,
+   "end": 46.888,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "good",
+   "start": 46.888,
+   "end": 47.09,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "game",
+   "start": 47.09,
+   "end": 47.345,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Say",
+   "start": 47.775,
+   "end": 48.229,
+   "beat": "b21",
+   "kind": "quote",
+   "speaker": "mayor",
+   "i": 0
+  },
+  {
+   "text": "cheese!",
+   "start": 48.229,
+   "end": 48.802,
+   "beat": "b21",
+   "kind": "quote",
+   "speaker": "mayor",
+   "i": 1
+  },
+  {
+   "text": "I",
+   "start": 49.182,
+   "end": 49.347,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "blinked",
+   "start": 49.347,
+   "end": 49.748,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "They",
+   "start": 50.278,
+   "end": 50.458,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "built",
+   "start": 50.458,
+   "end": 50.685,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "me",
+   "start": 50.685,
+   "end": 50.818,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 50.818,
+   "end": 50.951,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "statue",
+   "start": 50.951,
+   "end": 51.273,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Eyes",
+   "start": 51.653,
+   "end": 51.908,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "closed",
+   "start": 51.908,
+   "end": 52.364,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.679,
+   "end": 52.939,
+   "beat": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.889,
+   "end": 53.149,
+   "beat": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 53.079,
+   "end": 53.339,
+   "beat": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "It",
+   "start": 53.744,
+   "end": 53.917,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "cracked",
+   "start": 53.917,
+   "end": 54.275,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "first",
+   "start": 54.275,
+   "end": 54.571,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 2.58,
+   "mode": "muffled"
+  },
+  {
+   "t": 5.488,
+   "mode": "party"
+  },
+  {
+   "t": 8.118,
+   "mode": "muffled"
+  },
+  {
+   "t": 21.317,
+   "mode": "party"
+  },
+  {
+   "t": 41.247,
+   "mode": "none"
+  },
+  {
+   "t": 42.786,
+   "mode": "party"
+  },
+  {
+   "t": 50.183,
+   "mode": "lofi"
+  }
+ ],
+ "markers": {
+  "tag41": 6.36,
+  "hugeParty": 7.161,
+  "daysTag": 8.198,
+  "pop": 11.244,
+  "fear": 12.199,
+  "cracked": 16.011,
+  "quote1": 17.931,
+  "quote1end": 19.506,
+  "myCat": 24.912,
+  "nine": 26.01,
+  "quote2": 27.97,
+  "quote2end": 30.202,
+  "fourHours": 33.467,
+  "asleep": 36.008,
+  "quote3": 36.593,
+  "quote3end": 38.473,
+  "catBlink": 41.891,
+  "top7": 44.614,
+  "cheese": 47.76,
+  "flash": 48.922,
+  "iBlinked": 49.347,
+  "statue": 50.263,
+  "cracked2": 53.917
+ },
+ "title": "In This Town \u2014 Don't Blink"
+}

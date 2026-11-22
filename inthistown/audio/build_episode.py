@@ -35,7 +35,7 @@ DEFAULT_GAP = 0.28
 
 def parse_at(spec, beat):
     """'w:laughed+0.1' | 'start' | 'end-0.2' → seconds."""
-    m = re.match(r'^(w:[^+\-]+|start|end)([+\-][0-9.]+)?$', spec.strip())
+    m = re.match(r'^(we?:[^+\-]+|start|end)([+\-][0-9.]+)?$', spec.strip())
     if not m:
         raise ValueError(f'bad anchor {spec!r} in {beat["id"]}')
     base, off = m.group(1), float(m.group(2) or 0)
@@ -44,8 +44,11 @@ def parse_at(spec, beat):
     elif base == 'end':
         t = beat['end']
     else:
-        word = base[2:].lower()
-        hits = [w for w in beat['words'] if re.sub(r'[^a-z0-9]', '', w['text'].lower()).startswith(re.sub(r'[^a-z0-9]', '', word))]
+        exact = base.startswith('we:')
+        word = base.split(':', 1)[1].lower()
+        key = re.sub(r'[^a-z0-9]', '', word)
+        norm = lambda s: re.sub(r'[^a-z0-9]', '', s.lower())  # noqa: E731
+        hits = [w for w in beat['words'] if (norm(w['text']) == key if exact else norm(w['text']).startswith(key))]
         if not hits:
             raise KeyError(f'word {word!r} not in {beat["id"]}: {[w["text"] for w in beat["words"]]}')
         t = hits[0]['start']
