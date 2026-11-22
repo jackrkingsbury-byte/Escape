@@ -808,43 +808,47 @@ S({
   },
 });
 // ── b15 "One with dinosaurs. One underwater. One where everyone is a pigeon."
-function viewShot(kind, name, start, extra = {}) {
+/** One continuous dolly along a wall of windows: keys = [[time, windowX], ...] (the camera holds on each window at its time). */
+function trackX(keys, t) {
+  if (t <= keys[0][0]) return keys[0][1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    const [ta, xa] = keys[i], [tb, xb] = keys[i + 1];
+    if (t <= tb) { const u = clamp((t - ta) / (tb - ta), 0, 1); return lerp(xa, xb, ease.inOutCubic(u)); }
+  }
+  const [tl, xl] = keys[keys.length - 1]; return xl + 0.12 * (t - tl);
+}
+function trackShot(name, start, side, keysFn, extra = {}) {
   return S({
     name, start, set: 'cab',
-    setup(ctx) {
-      const C = cabRig(ctx); ctx.store.C = C;
-      const v = ctx.set.view(kind); ctx.store.v = v;
-      const s = v.side; // −1 left wall (z < 0) / +1 right wall
-      ctx.place('me', C(v.x - 0.85, 0, s * 0.35)); ctx.cast.me.root.rotation.set(0, C.yaw + (s < 0 ? Math.PI : 0) + s * -0.35, 0);
-      const P = ctx.props; ctx.add(P.backpack, ctx.cast.me.joints.torso); P.backpack.position.set(0, 0.25, -0.32);
-      extra.setup?.(ctx, C, v);
-    },
-    update(ctx, lt, u) {
-      tick(ctx); const { C, v } = ctx.store, me = ctx.cast.me, s = v.side;
-      me.pose('idle', ctx.t, { intensity: 0.4 }); me.face(extra.face || 'shocked', 0.4);
-      const x0 = v.x - 0.5, x1 = v.x + 0.15;
-      const k = ease.inOutSine(clamp(lt / (extra.dur || 1.4), 0, 1));
-      const pos = C(lerp(x0, x1, k), 1.62, -s * 0.85), look = C(v.x + 0.1, 1.42, s * 3.0);
-      setCam(ctx, { pos, look, fov: extra.fov || 40 }, 0.5, '#ffe2b0');
-      extra.update?.(ctx, C, v, lt);
+    setup(ctx) { const C = cabRig(ctx); ctx.store.C = C; extra.setup?.(ctx, C); },
+    update(ctx, lt) {
+      tick(ctx); const { C } = ctx.store;
+      const x = trackX(keysFn(ctx), ctx.t);
+      setCam(ctx, { pos: C(x - 0.15, 1.6, -side * 0.85), look: C(x + 0.1, 1.42, side * 3.0), fov: 40 }, 0.5, '#ffe2b0');
+      extra.update?.(ctx, C, x);
     },
   });
 }
-viewShot('dino', 'window dinosaurs', 'b15-0.1', { update(ctx, C, v) { ctx.cam.punch([ctx.markers.dino], ctx.t, 0.08, 0.25); tag(ctx, 'DINOSAURS', ctx.markers.dino, Infinity, { y: 0.16, bg: 'rgba(60,160,60,0.92)' }); } });
-viewShot('water', 'window underwater', 'b15.w3-0.1', { update(ctx, C, v) { ctx.cam.punch([ctx.markers.water], ctx.t, 0.08, 0.25); tag(ctx, 'UNDERWATER', ctx.markers.water, Infinity, { y: 0.16, bg: 'rgba(30,110,220,0.92)' }); } });
-viewShot('pigeons', 'window pigeons', 'b15.w5-0.1', {
-  dur: 1.6, face: 'grin',
-  setup(ctx, C, v) {
-    const ids = ['pig1', 'pig2', 'pig3', 'pig4'], sp = v.v.userData.spots;
-    ids.forEach((id, k) => {
+const PIG_IDS = ['pig1', 'pig2', 'pig3', 'pig4'];
+trackShot('windows: dino → water → pigeons', 'b15-0.1', -1, (ctx) => {
+  const m = ctx.markers, dx = ctx.set.view('dino').x, wx = ctx.set.view('water').x, px = ctx.set.view('pigeons').x;
+  return [[ctx.time('b15') - 0.1, dx - 0.55], [m.dino - 0.15, dx], [m.dino + 0.45, dx + 0.1], [m.water - 0.15, wx], [m.water + 0.75, wx + 0.1], [m.pigeons - 0.15, px]];
+}, {
+  setup(ctx, C) {
+    const v = ctx.set.view('pigeons'), sp = v.v.userData.spots;
+    PIG_IDS.forEach((id, k) => {
       const o = sp['p' + k]; o.updateWorldMatrix(true, false);
       ctx.place(id, rel(o), { scale: 1.6 }); ctx.cast[id].root.rotation.set(0, C.yaw + (v.side < 0 ? 0 : Math.PI) + (k - 1.5) * 0.25, 0);
       const hat = ctx.props.pigHats[k]; ctx.add(hat, ctx.cast[id].joints.head); hat.position.set(0, 0.135, -0.005); hat.rotation.set(-0.1, 0, 0.12 * (k % 2 ? -1 : 1));
     });
   },
-  update(ctx, C, v) {
-    ['pig1', 'pig2', 'pig3', 'pig4'].forEach((id, k) => { const p = ctx.cast[id]; p.pose(k === 3 ? 'strut' : k === 1 ? 'peck' : 'idle', ctx.t + k); p.face(k === 2 ? 'smug' : 'neutral', ctx.t + k); });
-    ctx.cam.punch([ctx.markers.pigeons], ctx.t, 0.08, 0.25); tag(ctx, 'PIGEON TOWN', ctx.markers.pigeons, Infinity, { y: 0.16, bg: 'rgba(110,110,130,0.92)' });
+  update(ctx) {
+    PIG_IDS.forEach((id, k) => { const p = ctx.cast[id]; p.pose(k === 3 ? 'strut' : k === 1 ? 'peck' : 'idle', ctx.t + k); p.face(k === 2 ? 'smug' : 'neutral', ctx.t + k); });
+    const m = ctx.markers;
+    ctx.cam.punch([m.dino, m.water, m.pigeons], ctx.t, 0.08, 0.25);
+    tag(ctx, 'DINOSAURS', m.dino, m.water - 0.35, { y: 0.16, bg: 'rgba(60,160,60,0.92)' });
+    tag(ctx, 'UNDERWATER', m.water, m.pigeons - 0.35, { y: 0.16, bg: 'rgba(30,110,220,0.92)' });
+    tag(ctx, 'PIGEON TOWN', m.pigeons, Infinity, { y: 0.16, bg: 'rgba(110,110,130,0.92)' });
   },
 });
 // ── b16 "And at the very back, in a tiny conductor's hat, eating a sandwich... my cat."
@@ -884,7 +888,7 @@ S({
     tick(ctx); const { C } = ctx.store, c = ctx.cast.catW;
     const cp = C(CAT_SEAT[0] + 1.35, 1.0, CAT_SEAT[2] + 0.1);
     catEat(c, ctx.t, { expr: 'smug', head: cp });
-    setCam(ctx, { pos: cp, look: catFace(c).add(up(-0.12)), fov: 36 }, 0.8, '#ffe2b0');
+    setCam(ctx, { pos: cp, look: catFace(c).add(up(0.14)), fov: 38 }, 0.8, '#ffe2b0');
     ctx.cam.punch([ctx.markers.conductor], ctx.t, 0.14, 0.3);
     stamp(ctx, 'MY CAT?!', ctx.markers.conductor, { size: 140, fill: '#ffd23f', stroke: '#1d1d22' });
   },
@@ -913,8 +917,8 @@ S({
     catEat(c, ctx.t, { chew: 0, expr: 'squint', head: humanFace(me) });
     me.pose('idle', ctx.t, { intensity: 0.3, lookAt: catFace(c) }); me.face('neutral', 0.5);
     const f = humanFace(me);
-    setCam(ctx, { pos: C(CAT_SEAT[0] + 0.35, 1.0, CAT_SEAT[2] + 0.05), look: f.clone().add(up(-0.12)), fov: 32 }, 0.8, '#ffe2b0');
-    tag(ctx, 'LATE?!', ctx.time('b17.w11'), Infinity, { y: 0.16 });
+    setCam(ctx, { pos: C(CAT_SEAT[0] - 0.12, 1.2, CAT_SEAT[2] + 0.42), look: f.clone().add(up(-0.08)), fov: 40 }, 0.9, '#ffe2b0');
+    tag(ctx, 'LATE?!', ctx.time('b17.w11'), Infinity, { y: 0.1 });
   },
 });
 // ── b18 HUSS ×3 — staredown
@@ -926,8 +930,10 @@ S({
     const hits = ctx.hussTimes('b18').map((h) => h + 0.03);
     catEat(c, ctx.t, { chew: 0, expr: 'squint', head: humanFace(me) });
     me.pose('idle', ctx.t, { intensity: 0.3, lookAt: catFace(c) }); me.face(i === 1 ? 'determined' : 'neutral', 0.5);
-    if (i !== 1) { const f = catFace(c); setCam(ctx, { pos: f.clone().add(C(CAT_SEAT[0] + (i ? 0.55 : 0.95), 0.0, 0).sub(C(CAT_SEAT[0], 0, 0))).add(up(0.02)), look: f, fov: i ? 26 : 32 }, 0.8, '#ffe2b0'); }
-    else { const f = humanFace(me); setCam(ctx, { pos: C(CAT_SEAT[0] + 0.55, 1.05, CAT_SEAT[2] + 0.1), look: f, fov: 26 }, 0.8, '#ffe2b0'); }
+    const dx = C(1, 0, 0).sub(C(0, 0, 0)), dz = C(0, 0, 1).sub(C(0, 0, 0));
+    if (i === 0) { const f = catFace(c); setCam(ctx, { pos: f.clone().addScaledVector(dx, 1.0).addScaledVector(dz, 0.12).add(up(0.04)), look: f.clone().add(up(-0.1)), fov: 34 }, 0.8, '#ffe2b0'); }
+    else if (i === 1) { const f = humanFace(me); setCam(ctx, { pos: C(CAT_SEAT[0] + 0.12, 1.2, CAT_SEAT[2] + 0.48), look: f.clone().add(up(-0.13)), fov: 31 }, 0.9, '#ffe2b0'); }
+    else { const f = catFace(c); setCam(ctx, { pos: f.clone().addScaledVector(dx, 0.8).addScaledVector(dz, 0.28).add(up(0.06)), look: f.clone().add(up(-0.07)), fov: 30 }, 0.8, '#ffe2b0'); }
     ctx.cam.punch(hits, ctx.t, 0.12, 0.2);
   },
 }));
@@ -944,18 +950,20 @@ S({
     setCam(ctx, { pos: C(x + 3.6, 1.8, -1.1), look: C(x - 0.8, 1.35, 1.3), fov: 46 }, 0.5, '#ffe2b0');
   },
 });
-viewShot('street', 'window my street', 'b19.w7-0.1', { face: 'neutral', dur: 0.9 });
-viewShot('house', 'window my house', 'b19.w9-0.1', { face: 'shocked', dur: 0.9 });
-viewShot('bedroom', 'window other kid', 'b19.w11-0.1', {
-  face: 'shocked', dur: 1.4, fov: 34,
-  setup(ctx, C, v) {
-    const o = v.v.userData.spots.bed; o.updateWorldMatrix(true, false);
+trackShot('windows: street → house → other kid', 'b19.w7-0.1', 1, (ctx) => {
+  const sx = ctx.set.view('street').x, hx = ctx.set.view('house').x, bx = ctx.set.view('bedroom').x;
+  return [[ctx.time('b19.w7') - 0.1, sx - 0.4], [ctx.time('b19.w7') + 0.1, sx], [ctx.time('b19.w8') + 0.1, sx + 0.1], [ctx.time('b19.w9') + 0.05, hx], [ctx.time('b19.w10') + 0.1, hx + 0.1], [ctx.markers.otherkid - 0.25, bx]];
+}, {
+  setup(ctx) {
+    const v = ctx.set.view('bedroom'), o = v.v.userData.spots.bed; o.updateWorldMatrix(true, false);
     const s = ctx.cast.sleeper; ctx.place('sleeper', rel(o)); s.root.rotation.set(0, yawOf(o) + 0.25, 0);
   },
-  update(ctx, C, v) {
+  update(ctx) {
     const s = ctx.cast.sleeper; s.pose('sit', ctx.t, { seated: true, seatHeight: 0.02, intensity: 0.2, hands: 'lap', headPitch: 0.25, headYaw: 0.2 }); s.face('sleepy', 1.0);
-    glitch(ctx, ctx.markers.otherkid, 0.4, 1);
-    ctx.fx.overlay('#2a1050', 0.12);
+    ctx.cam.punch([ctx.time('b19.w7'), ctx.time('b19.w9'), ctx.markers.otherkid], ctx.t, 0.07, 0.25);
+    tag(ctx, 'MY STREET', ctx.time('b19.w7'), ctx.time('b19.w9') - 0.3, { y: 0.16, bg: 'rgba(47,77,138,0.92)' });
+    tag(ctx, 'MY HOUSE', ctx.time('b19.w9'), ctx.markers.otherkid - 0.3, { y: 0.16, bg: 'rgba(47,77,138,0.92)' });
+    if (ctx.t > ctx.markers.otherkid) { glitch(ctx, ctx.markers.otherkid, 0.4, 1); ctx.fx.overlay('#2a1050', 0.12); }
     tag(ctx, 'NOT ME', ctx.time('b19.w13'), Infinity, { y: 0.16, bg: 'rgba(90,40,140,0.92)' });
   },
 });
@@ -969,9 +977,13 @@ S({
     c.root.position.copy(C(CAT_SEAT[0] - 0.12 * back, CAT_SEAT[1], CAT_SEAT[2] - 0.0));
     c.pose(back > 0 ? 'stare' : 'sit', ctx.t, { lookAt: humanFace(me) }); c.face(back > 0 ? 'huss' : 'squint', 0.4);
     c.joints.torso.rotation.x += -0.2 * back; if (c.joints.tail1) c.joints.tail1.rotation.x = -1.2 * back;
-    me.pose('point', ctx.t, { intensity: 0.6 }); me.face('sweat', ctx.t);
-    me.joints.armL.rotation.x += -1.2; me.joints.foreArmL.rotation.x += -0.2;
-    setCam(ctx, { pos: C(CAT_SEAT[0] + 0.55, 1.3, 0.62), look: C(CAT_SEAT[0] + 0.75, 0.9, CAT_SEAT[2] + 0.1), fov: 50 }, 0.7, '#ffe2b0');
+    me.root.position.copy(C(-7.0, 0, -0.2)); me.root.rotation.set(0, C.yaw - Math.PI / 2 - 0.55, 0);
+    me.pose('idle', ctx.t, { intensity: 0.3, lookAt: catFace(c) }); me.face('sweat', ctx.t);
+    const reach = ease.inOutSine(clamp(lt / 0.5, 0, 1)) * (1 - 0.35 * back);
+    me.joints.armR.rotation.set(-1.45 * reach, 0, 0.1); me.joints.foreArmR.rotation.set(-0.15 * reach, 0, 0);
+    me.joints.armL.rotation.set(-1.25 * reach, 0, -0.15); me.joints.foreArmL.rotation.set(-0.2 * reach, 0, 0);
+    me.joints.torso.rotation.x += 0.2 * reach;
+    setCam(ctx, { pos: C(-5.1, 1.65, 0.95), look: C(-8.25, 0.85, -0.8), fov: 40 }, 0.8, '#ffe2b0');
     if (back > 0) { ctx.cam.shake(0.12 * (1 - back), ctx.t, 4); tag(ctx, 'HSSSS!', th, Infinity, { y: 0.16, size: 90, fill: '#ff4f4f' }); }
   },
 });
@@ -1000,8 +1012,8 @@ S({
   name: 'yank the lever', start: 'b20.w5-0.1', set: 'cab',
   setup(ctx) {
     const C = cabRig(ctx); ctx.store.C = C; const a = leverRig(ctx, C); ctx.store.a = a;
-    ctx.place('me', rel(a, [-0.5, -1.45, 0.6])); ctx.cast.me.root.rotation.set(0, yawOf(a) + Math.PI - 0.8, 0);
-    holdCat(ctx, ctx.cast.me, ctx.cast.catW, { x: 0.18, y: 0.1, z: 0.3 });
+    ctx.place('me', rel(a, [0.05, -1.45, 0.85])); ctx.cast.me.root.rotation.set(0, yawOf(a) + Math.PI - 0.15, 0);
+    holdCat(ctx, ctx.cast.me, ctx.cast.catW, { x: 0.2, y: 0.08, z: 0.28 });
     const P = ctx.props; ctx.add(P.cap, ctx.cast.catW.joints.head); P.cap.position.set(0, 0.135, 0.01);
   },
   update(ctx, lt) {
@@ -1011,14 +1023,15 @@ S({
     P.sparks.userData.set(clamp((ctx.t - ty - 0.12) / 0.9, 0, 1));
     P.redLight.intensity = pull > 0.5 ? (Math.sin(ctx.t * 22) > 0 ? 40 : 5) : 0;
     me.pose('idle', ctx.t, { intensity: 0.3 });
-    const J = me.joints; J.armR.rotation.set(lerp(-2.6, -1.2, pull), 0, 0.15); J.foreArmR.rotation.set(-0.3, 0, 0);
+    const J = me.joints; J.armR.rotation.set(lerp(-2.65, -1.5, pull), 0, 0.2); J.foreArmR.rotation.set(-0.2, 0, 0);
+    J.torso.rotation.x += lerp(0.3, 0.15, pull);
     J.armL.rotation.x += -0.9; J.foreArmL.rotation.x += -1.3; J.foreArmL.rotation.y = 0.5;
-    me.face(pull > 0 ? 'huss' : 'determined', ctx.t);
+    me.face(pull > 0 ? 'huss' : 'determined', 0.4);
     c.pose('loaf', ctx.t); c.face('shocked', 0.4);
     P.lever.updateMatrixWorld(true);
     const hp = P.lever.userData.handle.getWorldPosition(V());
-    setCam(ctx, { pos: rel(a, [0.95, 0.4, 2.3]), look: rel(a, [-0.15, -0.35, 0.3]), fov: 50 }, 0.6, '#ffe2b0');
-    if (pull > 0) { stamp(ctx, 'EMERGENCY STOP', ty, { size: 104, fill: '#ffffff', stroke: '#c0182b', line: 14, y: 0.2, rot: -0.08 }); ctx.cam.shake(0.25, ctx.t, 21); ctx.fx.overlay('#ff1a1a', Math.sin(ctx.t * 22) > 0 ? 0.22 : 0.05); }
+    setCam(ctx, { pos: C(-4.6, 1.7, 0.3), look: rel(a, [-0.1, -0.3, 0.5]), fov: 46 }, 0.7, '#ffe2b0');
+    if (pull > 0) { stamp(ctx, 'YANK!', ty, { size: 140, fill: '#ffffff', stroke: '#c0182b', line: 14, y: 0.12, rot: -0.08 }); ctx.cam.shake(0.25, ctx.t, 21); ctx.fx.overlay('#ff1a1a', Math.sin(ctx.t * 22) > 0 ? 0.22 : 0.05); }
   },
 });
 S({

@@ -284,7 +284,7 @@ export function makeLighthouse() {
   for (const y of [7, 12]) { const w = box(0.6, 0.9, 0.3, basic('#ffe7a0'), 0, y, lerp(2.5, 1.75, (y - LH.base) / H) - 0.02); g.add(w); }
   // the cracked window just under the gallery (faces +Z)
   const crackM = new THREE.MeshStandardMaterial({ map: crackTex(), roughness: 0.25, emissive: '#ffffff', emissiveMap: null, emissiveIntensity: 0 });
-  const crack = new THREE.Mesh(new THREE.PlaneGeometry(1.15, 1.5), crackM); crack.position.set(0, LH.gallery - 1.6, 1.86); crack.rotation.x = -0.03; g.add(crack);
+  const crack = new THREE.Mesh(new THREE.PlaneGeometry(1.15, 1.5), crackM); crack.position.set(0, LH.gallery - 1.6, 1.89); crack.rotation.x = -0.03; g.add(crack);
   const cframe = box(1.35, 1.7, 0.12, '#f6f2ea', 0, LH.gallery - 1.6, 1.8); g.add(cframe);
   // gallery
   const deck = cyl(2.7, 2.7, 0.35, '#2b2f3a', 28); deck.position.y = LH.gallery; g.add(deck);
@@ -725,7 +725,7 @@ export function makeGulp() {
   const mouth = new THREE.Group(); mouth.position.set(0, 0.0, 0.95); inner.add(mouth);
   const mIn = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 14), basic('#1a0508')); mouth.add(mIn);
   const tongue = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 10), std('#c04060')); tongue.position.set(0, -0.06, 0.02); mouth.add(tongue);
-  const teeth = new THREE.Group(); mouth.add(teeth);
+  const teeth = new THREE.Group(); teeth.position.set(0, 0, 0.97); inner.add(teeth);
   for (let k = 0; k < 7; k++) { const c = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.08, 6), std('#f4f0e0')); c.rotation.x = PI; c.position.set(-0.27 + k * 0.09, 0, 0.06); teeth.add(c); }
   // glow
   const glow = glowSprite('#5aff7a', 1.6, 0.6); glow.position.set(0, 0.38, 0.95); inner.add(glow);
@@ -750,8 +750,7 @@ export function makeGulp() {
       const o = clamp(mo, 0, 1);
       mouth.scale.set(0.34 + 0.06 * o, 0.015 + 0.2 * o, 0.12);
       tongue.visible = o > 0.2; tongue.scale.set(0.6, 0.35, 0.5);
-      teeth.visible = o > 0.15; teeth.position.y = 0.75; teeth.scale.setScalar(1 / Math.max(0.01, mouth.scale.y) * 0.0001 + 1);
-      teeth.scale.set(1 / mouth.scale.x * 0.34, 1 / mouth.scale.y * 0.06, 1 / mouth.scale.z * 0.12);
+      teeth.visible = o > 0.15; teeth.position.y = mouth.position.y + mouth.scale.y * 0.82;
       if (!tentOn) { for (let k = 0; k < 10; k++) tent.userData.hide(k); return; }
       tdefs.forEach((d, k) => {
         const r = smooth(clamp(tentRise * 1.6 - k * 0.06, 0, 1));
@@ -830,6 +829,8 @@ export function buildHarbour() {
     quay.push({ z, w, floors });
   }
   B.m.identity(); Wm.m.identity();
+  B.box('#2a1a14', -3.97, 1.1, DOBBS.z, 0.06, 2.2, 1.2); B.box('#fbf6ea', -3.95, 2.3, DOBBS.z, 0.12, 0.16, 1.5);
+  for (const s of [-1, 1]) B.box('#fbf6ea', -3.95, 1.1, DOBBS.z + s * 0.68, 0.12, 2.3, 0.14);
   // street lamps + quay lamps + pier lanterns
   const lampPos = [];
   for (let lx = -16; lx > -70; lx -= 12) for (const s of [-1, 1]) lampPos.push(addLamp(B, Lm, lx + (s > 0 ? 6 : 0), s * 5.9));
@@ -983,6 +984,8 @@ export function buildHarbour() {
       U.uTime.value = t; U.uAmp.value = options.seaAmp; U.uFoamK.value = options.lighting === 'storm' ? 0.9 : 0.55;
       U.uBulge.value.set(0, 0, 0, 1); U.uGlow.value.set(0, 0, 0, 1);
       fill.intensity = 0; glowL.intensity = 0; glowL2.intensity = 0;
+      frontRoom.position.set(DOBBS.x + 1.9, 0, DOBBS.z); frontRoom.rotation.set(0, 0, 0); megaphone.visible = true;
+      LU.crackM.emissiveIntensity = 0;
       boats.forEach((b, i) => b.userData.set(t, options.boatsRock + options.seaAmp * 0.05, i * 1.7));
       // lighthouse lamp
       const lm = options.lamp;

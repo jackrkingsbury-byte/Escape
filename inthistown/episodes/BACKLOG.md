@@ -1,8 +1,11 @@
 # Season 2 production line
 
-Posting: every finished episode goes straight to TikTok (@alexlivealert) through Buffer with `mode: shareNow`,
-`schedulingType: automatic`, `isAiGenerated: false`, caption = "Episode N 🔥 <story hook>" + exactly 5 hashtags:
-`#animation #robloxanimation #storytime #huss #funny`. Videos are copied to `videos/` (public raw links).
+Posting (updated): every finished episode is SCHEDULED through Buffer into the next free slot of
+09:30 / 15:30 / 19:30 South African time (3 a day, ~5 h apart — 2026 studies: afternoons/evenings best,
+space posts hours apart). Check scheduled posts with list_posts and take the first slot after the last one.
+`mode: customScheduled`, `schedulingType: automatic`, `isAiGenerated: false`, caption = "Episode N <emoji> <story hook>"
++ exactly 5 hashtags: `#animation #robloxanimation #storytime #huss #funny`. Videos are copied to `videos/` (public raw links).
+Staff Only (ep12) is reposted Mon 23 Nov 09:30 at the creator's request. Production itself never stops.
 
 Rules from the creator:
 - The narrator is always the creator's avatar: cast `me` = `MAIN.me` (black hoodie, knight emblem, headphones).
