@@ -166,7 +166,7 @@ const pigeonHead = (ctx) => headOf(ctx.cast.pigeon, 0.06);
 function pigeonClap(p, t, k) {
   p.pose('idle', t);
   const J = p.joints;
-  J.armL.rotation.set(-0.6, 2.35 + 0.5 * k, 0.5); J.armR.rotation.set(-0.6, -(2.35 + 0.5 * k), -0.5);
+  J.armL.rotation.set(-0.5, lerp(3.75, 2.8, k), 0); J.armR.rotation.set(-0.5, -lerp(3.75, 2.8, k), 0);
 }
 function kidAt(ctx, Cc, x, z, yaw) { return putAt(ctx, 'me', Cc(x, 0, z), yaw); }
 function hussShots(beat, n, def) {
@@ -272,7 +272,7 @@ export const shots = [
     update(ctx, lt) {
       const { L } = ctx.store;
       const u = ease.inOutCubic(prog(ctx.t, ctx.time('b03') + 0.1, ctx.time('b03.w8') - 0.2));
-      ctx.cam.move({ pos: L(-28, 2.5, 6), look: L(-76, 12, 18), fov: 55 }, { pos: L(30, 58, 52), look: L(-40, 4, -18), fov: 52 }, u);
+      ctx.cam.move({ pos: L(-30, 8, 9), look: L(-76, 13, 12), fov: 55 }, { pos: L(30, 58, 52), look: L(-40, 4, -18), fov: 52 }, u);
       tag(ctx, 'A PAINTED WALL', ctx.time('b03.w3'), Infinity, { y: 0.16 });
     },
   },
@@ -411,14 +411,14 @@ export const shots = [
       ctx.store = { E, ids };
     },
     update(ctx) {
-      const { E, ids } = ctx.store, b = ctx.cast.becky, hits = hitsOf(ctx, 'b08'), t0 = hits[0] - 0.12, t1 = hits[2] + 0.3;
+      const { E, ids } = ctx.store, b = ctx.cast.becky, hits = hitsOf(ctx, 'b08'), t0 = hits[0] - 0.2, t1 = hits[1] + 0.02;
       holdPose(b, 0.5, 'stunned'); b.face('shocked', 0.5); ctx.props.ball.position.copy(ballInHands(ctx, b)); ctx.props.ball.scale.setScalar(1.1);
       ids.forEach((id, k) => {
         const c = ctx.cast[id], u = ease.inOutCubic(prog(ctx.t, t0 + k * 0.05, t1 + k * 0.04));
         c.root.rotation.set(0, E.yaw + Math.PI * u + (hash(k) - 0.5) * 0.3, 0);
         c.pose('stunned', ctx.t + k, { headPitch: -0.55 * u }); c.face(u > 0.5 ? 'shocked' : 'neutral', 0.7);
       });
-      const cams = [{ pos: E(2.0, 1.55, 6.6), look: E(1.6, 1.4, 9.8), fov: 40 }, { pos: E(-0.8, 0.7, 9.6), look: E(1.7, 2.3, 13.6), fov: 46 }, { pos: E(1.6, 0.9, 19.5), look: E(2.5, 7.0, 0), fov: 56 }];
+      const cams = [{ pos: E(2.0, 1.55, 6.6), look: E(1.6, 1.4, 9.8), fov: 40 }, { pos: E(-1.5, 0.8, 7.5), look: E(1.7, 2.2, 13.5), fov: 50 }, { pos: E(1.6, 1.9, 20.5), look: E(2.6, 6.5, 0), fov: 52 }];
       setCam(ctx, cams[i]); ctx.cam.punch(hits, ctx.t, 0.12, 0.2);
     },
   })),
@@ -427,7 +427,7 @@ export const shots = [
     name: 'cat to the crack', start: 'b09-0.1', set: 'town',
     setup(ctx) {
       dayTown(ctx, 'dusk'); const F = PARK(ctx); placePanel(ctx, F, '#ffc6a8');
-      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.02)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(0.25, 1);
+      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.31)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(0.25, 1);
       ctx.place('cat', F(0, 0, 0)); ctx.store = { F };
     },
     update(ctx, lt) {
@@ -443,7 +443,7 @@ export const shots = [
     name: 'cat squeezes in', start: 'b09.w6-0.1', set: 'town',
     setup(ctx) {
       dayTown(ctx, 'dusk'); const F = PARK(ctx); placePanel(ctx, F, '#ffc6a8');
-      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.02)); cr.rotation.set(0, F.yaw, 0);
+      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.31)); cr.rotation.set(0, F.yaw, 0);
       ctx.add(ctx.props.crackLight); ctx.props.crackLight.position.copy(F(1.0, 0.9, 0.6));
       ctx.place('cat', F(0, 0, 0)); ctx.store = { F };
     },
@@ -463,7 +463,7 @@ export const shots = [
     name: 'i followed him', start: 'b10-0.1', set: 'town',
     setup(ctx) {
       dayTown(ctx, 'dusk'); const F = PARK(ctx); placePanel(ctx, F, '#ffc6a8');
-      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.02)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(0.3, 1);
+      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.31)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(0.3, 1);
       ctx.store = { F };
     },
     update(ctx, lt) {
@@ -477,7 +477,7 @@ export const shots = [
     name: 'peering in', start: 'b10.w3-0.1', set: 'town',
     setup(ctx) {
       dayTown(ctx, 'dusk'); const F = PARK(ctx); placePanel(ctx, F, '#ffc6a8');
-      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.02)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(0.45, 1);
+      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.31)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(0.45, 1);
       ctx.add(ctx.props.crackLight); ctx.props.crackLight.position.copy(F(1.0, 1.5, 0.4));
       putAt(ctx, 'me', F(1.7, 0, 0.62), 0); ctx.cast.me.root.lookAt(F(1.0, 0, 0.05)); ctx.cast.me.root.rotation.set(0, ctx.cast.me.root.rotation.y, 0);
       { const a = F(1.7, 0, 0.62), b = F(1.0, 0, 0.0); ctx.cast.me.root.rotation.set(0, Math.atan2(b.x - a.x, b.z - a.z), 0); }
@@ -487,22 +487,22 @@ export const shots = [
       const { F } = ctx.store, me = ctx.cast.me;
       me.pose('peer', ctx.t, { tableY: 1.0 }); me.face('squint', 0.3);
       ctx.props.crack.userData.set(0.45 + 0.05 * Math.sin(ctx.t * 6), 1);
-      setCam(ctx, { pos: F(0.3, 1.42, 0.38), look: F(1.55, 1.32, 0.5), fov: 40 }, 0.5);
+      setCam(ctx, { pos: F(-0.35, 1.45, 0.42), look: F(1.5, 1.3, 0.5), fov: 40 }, 0.5);
     },
   },
   {
     name: 'tiny door', start: 'b10.w8-0.1', set: 'town',
     setup(ctx) {
       dayTown(ctx, 'dusk'); const F = PARK(ctx); placePanel(ctx, F, '#ffc6a8');
-      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.01)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(1, 0.9); cr.scale.set(1.6, 0.8, 1);
-      const D = ctx.props.door; ctx.add(D); D.position.copy(F(1.0, 0, 0.02)); D.rotation.set(0, F.yaw, 0); D.userData.open(0);
-      putAt(ctx, 'me', F(2.05, 0, 0.75), F.yaw + Math.PI - 0.9);
+      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.31)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(1, 0.9); cr.scale.set(1.6, 0.8, 1);
+      const D = ctx.props.door; ctx.add(D); D.position.copy(F(1.0, 0, 0.32)); D.rotation.set(0, F.yaw, 0); D.userData.open(0);
+      putAt(ctx, 'me', F(2.15, 0, 0.7), F.yaw - 0.5);
       ctx.store = { F };
     },
     update(ctx, lt) {
       const { F } = ctx.store, me = ctx.cast.me, ts = ctx.markers.staff;
       me.pose('idle', ctx.t, { intensity: 0.3, lookAt: F(1.0, 1.0, 0) }); me.face('shocked', 0.4);
-      moveCam(ctx, { pos: F(0.7, 0.8, 4.4), look: F(1.45, 1.05, 0), fov: 44 }, { pos: F(0.95, 1.0, 2.1), look: F(1.0, 1.0, 0), fov: 40 }, prog(ctx.t, ctx.time('b10.w8'), ts - 0.05), ease.inOutCubic, 0.6);
+      moveCam(ctx, { pos: F(1.6, 0.95, 3.75), look: F(1.55, 1.0, 0), fov: 46 }, { pos: F(0.95, 1.0, 2.1), look: F(1.0, 1.0, 0), fov: 40 }, prog(ctx.t, ts - 0.75, ts - 0.05), ease.inOutCubic, 0.6);
       tag(ctx, 'STAFF ONLY', ts, Infinity, { y: 0.17, fill: '#e8232b', bg: 'rgba(251,246,236,0.95)', stroke: '#1d1d22', size: 96 });
     },
   },
@@ -511,8 +511,8 @@ export const shots = [
     name: 'obviously', start: 'b11-0.1', set: 'town',
     setup(ctx) {
       dayTown(ctx, 'dusk'); const F = PARK(ctx); placePanel(ctx, F, '#ffc6a8');
-      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.01)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(1, 0.9); cr.scale.set(1.6, 0.8, 1);
-      const D = ctx.props.door; ctx.add(D); D.position.copy(F(1.0, 0, 0.02)); D.rotation.set(0, F.yaw, 0);
+      const cr = ctx.props.crack; ctx.add(cr); cr.position.copy(F(1.0, 0.0, 0.31)); cr.rotation.set(0, F.yaw, 0); cr.userData.set(1, 0.9); cr.scale.set(1.6, 0.8, 1);
+      const D = ctx.props.door; ctx.add(D); D.position.copy(F(1.0, 0, 0.32)); D.rotation.set(0, F.yaw, 0);
       ctx.store = { F };
     },
     update(ctx, lt) {
@@ -555,7 +555,7 @@ export const shots = [
       keys.forEach(([t, kx], k) => { if (k > 0) x = lerp(x, kx, ease.inOutCubic(prog(ctx.t, t - 0.3, t + 0.05))); });
       x += 0.12 * (ctx.t - keys[0][0]);
       for (const [t, , name] of keys) { const d = ctx.t - t; const L = S.levers[name]; L.plate.scale.setScalar(d > 0 && d < 0.25 ? 1 + 0.15 * Math.sin(Math.PI * d / 0.25) : 1); }
-      setCam(ctx, { pos: Cc(x + 0.15, 1.72, -1.15), look: Cc(x, 1.6, -3.9), fov: 44 }, 0.9);
+      setCam(ctx, { pos: Cc(x + 0.15, 1.85, -1.15), look: Cc(x, 1.75, -3.9), fov: 44 }, 0.9);
     },
   },
   {
@@ -564,13 +564,13 @@ export const shots = [
     update(ctx, lt) {
       const { Cc } = ctx.store, g = NAMED.GRAVITY;
       ctx.props.redLight.intensity = 4 + 2 * Math.sin(ctx.t * 6);
-      moveCam(ctx, { pos: Cc(g + 0.7, 0.55, -1.5), look: Cc(g, 1.45, -3.9), fov: 44 }, { pos: Cc(g + 0.45, 0.65, -2.1), look: Cc(g, 1.5, -3.9), fov: 42 }, prog(lt, 0, 1.6), ease.inOutSine, 0.5);
+      moveCam(ctx, { pos: Cc(g + 0.7, 0.65, -1.3), look: Cc(g, 1.6, -3.9), fov: 46 }, { pos: Cc(g + 0.45, 0.75, -1.8), look: Cc(g, 1.65, -3.9), fov: 44 }, prog(lt, 0, 1.6), ease.inOutSine, 0.5);
     },
   },
   // ── b13 "And in the big spinny chair, wearing headphones... a pigeon."
   {
     name: 'the chair', start: 'b13-0.1', set: 'control',
-    setup(ctx) { const st = controlRoom(ctx); kidAt(ctx, st.Cc, -2.3, 3.0, Math.PI - 0.5); ctx.store = st; },
+    setup(ctx) { const st = controlRoom(ctx); kidAt(ctx, st.Cc, -0.95, 3.5, Math.PI + 0.15); ctx.store = st; },
     update(ctx, lt) {
       const { Cc } = ctx.store, me = ctx.cast.me; seatPigeon(ctx, Math.PI); ctx.cast.pigeon.pose('idle', ctx.t);
       me.pose('idle', ctx.t, { intensity: 0.3 }); me.face('shocked', 0.4);
@@ -637,9 +637,9 @@ export const shots = [
     update(ctx) {
       const { Cc } = ctx.store, me = ctx.cast.me, tf = ctx.time('b15.w5'), tg = ctx.markers.gravity;
       seatPigeon(ctx, 0.8); ctx.cast.pigeon.pose('flap', ctx.t); ctx.cast.pigeon.face('huss', 1);
-      const k = ease.inCubic(prog(ctx.t, tf, tg)), g = NAMED.GRAVITY;
+      const k = ease.inQuad(prog(ctx.t, tf - 0.1, tg)), g = NAMED.GRAVITY;
       const base = Cc(g + 0.35, 0, -2.55 + 0.25 * k);
-      ctx.place('me', base); me.root.rotation.set(-0.62 * k, 0.45, 0, 'YXZ');
+      ctx.place('me', base); me.root.rotation.set(-0.8 * k, 0.45, 0, 'YXZ');
       me.pose('surprised', ctx.t * 1.3, { intensity: 1 }); me.face('huss', 0.4);
       me.joints.armL.rotation.x += 0.8 * k; me.joints.armR.rotation.x += 0.8 * k;
       setCam(ctx, { pos: Cc(g + 3.4, 1.35, 0.8), look: Cc(g + 0.2, 1.1, -2.9), fov: 44 }, 0.9);
@@ -653,8 +653,8 @@ export const shots = [
       S.setLever('GRAVITY', 1 - ease.outCubic(clamp(d / 0.1, 0, 1)));
       S.set('alarm', d > 0.05 ? 1 : 0); S.set('screens', d > 0.05 ? 'alert' : 'day');
       ctx.props.redLight.position.copy(Cc(g, 1.8, -2.6)); ctx.props.redLight.intensity = d > 0.05 ? 8 * (0.6 + 0.4 * Math.abs(Math.sin(ctx.t * 5.5))) : 0;
-      setCam(ctx, { pos: Cc(g - 0.55, 1.15, -2.2), look: Cc(g, 1.4, -3.9), fov: 44 }, 0.7);
-      if (d > 0) { ctx.cam.shake(0.4 * Math.exp(-d * 2), ctx.t, 11); stamp(ctx, 'GRAVITY: OFF', tg + 0.05, { size: 130, y: 0.2, fill: '#ff2a2a', stroke: '#ffffff' }); }
+      setCam(ctx, { pos: Cc(g - 0.55, 1.3, -1.9), look: Cc(g, 1.55, -3.9), fov: 46 }, 0.7);
+      if (d > 0) { ctx.cam.shake(0.4 * Math.exp(-d * 2), ctx.t, 11); stamp(ctx, 'GRAVITY: OFF', tg + 0.05, { size: 130, y: 0.36, fill: '#ff2a2a', stroke: '#ffffff' }); }
     },
   },
   // ── b16 "Outside, the whole town floated up. The bakery. The mayor. Mr. Finch and his little rain cloud."
@@ -663,23 +663,24 @@ export const shots = [
     setup(ctx) {
       dayTown(ctx, 'dusk'); const L = T(ctx), P = ctx.props;
       ctx.add(P.bakery); P.bakery.rotation.set(0, L.yaw + Math.PI, 0);
-      for (const [h, x, z] of [[P.fh1, -10, 26], [P.fh2, 16, 30], [P.fh3, -22, 28]]) { ctx.add(h); h.position.copy(L(x, 0, z)); h.rotation.set(0, L.yaw + Math.PI, 0); }
+      for (const [h, x, z] of [[P.fh1, -9, 24], [P.fh2, 15, 28], [P.fh3, -20, 26]]) { ctx.add(h); h.position.copy(L(x, 0, z)); h.rotation.set(0, L.yaw + Math.PI, 0); }
       const ids = EXTRA_IDS.slice(0, 9);
-      ids.forEach((id, k) => putAt(ctx, id, L(-1.5 + (k % 3) * 2.4 + (hash(k) - 0.5), 0, 1.5 + Math.floor(k / 3) * 1.8), L.yaw + Math.PI + (hash(k * 2) - 0.5) * 2));
+      ids.forEach((id) => ctx.place(id, L(0, 0, 0)));
       ctx.store = { L, ids };
     },
     update(ctx, lt) {
       const { L, ids } = ctx.store, P = ctx.props, t0 = ctx.time('b16');
       ids.forEach((id, k) => {
-        const c = ctx.cast[id], tl = t0 + 0.3 + k * 0.12, d = ctx.t - tl;
-        const base = L(-1.5 + (k % 3) * 2.4 + (hash(k) - 0.5), 0, 1.5 + Math.floor(k / 3) * 1.8);
-        if (d < 0) { c.root.position.copy(base); c.root.rotation.set(0, L.yaw + Math.PI + (hash(k * 2) - 0.5) * 2, 0); c.pose('surprised', 0.3); c.face('shocked', 0.5); }
-        else { const y = 0.6 + d * (1.1 + 0.4 * hash(k)); c.root.position.copy(base).add(up(y)); c.root.rotation.set(0.3 * Math.sin(d + k), L.yaw + k + d * 0.4, 0.2 * Math.sin(d * 0.7 + k)); c.pose('crowdSurf', ctx.t + k, { lift: 0 }); c.face('shocked', 0.5); }
+        const c = ctx.cast[id], d = ctx.t - t0 + 0.6;
+        const base = L(-3.5 + (k % 3) * 3.2 + (hash(k) - 0.5) * 1.2, 0, 3 + Math.floor(k / 3) * 2.6 + hash(k * 5) * 1.0);
+        const y = 0.6 + (k % 4) * 1.1 + Math.floor(k / 3) * 0.8 + d * (0.9 + 0.4 * hash(k));
+        c.root.position.copy(base).add(up(y)); c.root.rotation.set(0.35 * Math.sin(d * 0.8 + k), L.yaw + k * 1.3 + d * 0.35, 0.25 * Math.sin(d * 0.6 + k));
+        c.pose('crowdSurf', ctx.t + k, { lift: 0 }); c.face('shocked', 0.5);
       });
-      const lift = (t, s) => Math.max(0, t - t0 - s);
-      P.bakery.position.copy(L(3.8, 0.2 + 2.2 * lift(ctx.t, 0.4) ** 1.4, 13.3)); P.bakery.rotation.set(0.06 * Math.sin(ctx.t), L.yaw + Math.PI + 0.1 * lift(ctx.t, 0.5), 0.05 * Math.sin(ctx.t * 0.8));
-      [P.fh1, P.fh2, P.fh3].forEach((h, k) => { h.position.y = 5 + k * 2 + 1.1 * lift(ctx.t, 0); h.rotation.z = 0.1 * Math.sin(ctx.t * 0.6 + k); });
-      moveCam(ctx, { pos: L(-3.2, 0.6, -4.6), look: L(2.4, 3.4, 9), fov: 58 }, { pos: L(-3.4, 0.55, -5.0), look: L(2.6, 4.4, 9), fov: 60 }, prog(lt, 0, 2.2));
+      const lift = Math.max(0, ctx.t - t0 + 0.4);
+      P.bakery.position.copy(L(3.8, 0.2 + 1.6 * lift ** 1.35, 13.3)); P.bakery.rotation.set(0.06 * Math.sin(ctx.t), L.yaw + Math.PI + 0.1 * lift, 0.05 * Math.sin(ctx.t * 0.8));
+      [P.fh1, P.fh2, P.fh3].forEach((h, k) => { h.position.y = 7 + k * 2.5 + 1.1 * lift; h.rotation.z = 0.12 * Math.sin(ctx.t * 0.6 + k); });
+      moveCam(ctx, { pos: L(-3.0, 0.5, -3.6), look: L(1.5, 4.6, 8), fov: 60 }, { pos: L(-3.2, 0.45, -4.0), look: L(1.8, 5.6, 8), fov: 62 }, prog(lt, 0, 2.2));
     },
   },
   {
@@ -734,7 +735,7 @@ export const shots = [
       S.set('screens', (i, t) => t < ts ? 'alert' : (Math.floor((t - ts) * 5 + i * 0.5) % 2 ? 'night' : 'day'));
       me.pose('idle', ctx.t, { intensity: 0.5 }); me.face('sweat', ctx.t);
       me.joints.armR.rotation.x += -1.9 - 0.6 * k; me.joints.armR.rotation.z += 0.1; me.joints.armL.rotation.z += -0.6 + 0.2 * Math.sin(ctx.t * 7);
-      setCam(ctx, { pos: Cc(NAMED.SUNRISE + 1.75, 1.75, -2.35), look: Cc(NAMED.SUNRISE - 0.05, 1.65, -3.55), fov: 48 }, 0.9);
+      setCam(ctx, { pos: Cc(NAMED.SUNRISE + 2.4, 1.95, -1.3), look: Cc(NAMED.SUNRISE - 0.1, 1.75, -3.6), fov: 46 }, 0.9);
     },
   },
   {
@@ -748,7 +749,7 @@ export const shots = [
       S.set('screens', (i, t) => t < tt ? (Math.floor(t * 5 + i * 0.5) % 2 ? 'night' : 'day') : ((i + Math.floor((t - tt) * 4)) % 3 === 0 ? 'tuesday' : (Math.floor(t * 5 + i) % 2 ? 'night' : 'day')));
       me.pose('idle', ctx.t, { intensity: 0.5 }); me.face('sweat', ctx.t);
       me.joints.armR.rotation.x += -1.9 - 0.6 * k; me.joints.armL.rotation.x += -1.7;
-      setCam(ctx, { pos: Cc(NAMED.TUESDAY - 1.7, 1.7, -2.45), look: Cc(NAMED.TUESDAY + 0.05, 1.62, -3.55), fov: 46 }, 0.9);
+      setCam(ctx, { pos: Cc(NAMED.TUESDAY - 2.4, 1.9, -1.4), look: Cc(NAMED.TUESDAY + 0.1, 1.75, -3.6), fov: 46 }, 0.9);
       tag(ctx, 'TUESDAY x1', tt, Infinity, { y: 0.16, size: 84, fill: '#ffe14a', bg: 'rgba(10,10,20,0.88)' });
     },
   },
@@ -858,10 +859,10 @@ export const shots = [
   // ── b21 "Then I saw the very last lever. It wasn't labeled rain, or sky."
   {
     name: 'the very last lever', start: 'b21-0.1', set: 'control',
-    setup(ctx) { const st = controlRoom(ctx, { pigeon: false, chair: false }); ctx.set.set('power', 0.55); ctx.store = st; },
+    setup(ctx) { const st = controlRoom(ctx, { pigeon: false, chair: false }); ctx.set.set('power', 0.75); ctx.store = st; },
     update(ctx, lt, u) {
       const { Cc } = ctx.store; ctx.set.set('lastSpot', prog(ctx.t, ctx.time('b21.w5'), ctx.time('b21.w7')));
-      moveCam(ctx, { pos: Cc(9.5, 1.75, -0.9), look: Cc(13, 1.3, -3.9), fov: 46 }, { pos: Cc(LAST_X - 1.6, 1.7, -0.6), look: Cc(LAST_X - 0.1, 1.5, -3.7), fov: 44 }, u, ease.inOutSine, 0.4);
+      moveCam(ctx, { pos: Cc(6.0, 1.7, -1.25), look: Cc(LAST_X, 1.45, -3.8), fov: 40 }, { pos: Cc(LAST_X - 1.3, 1.75, -0.8), look: Cc(LAST_X - 0.1, 1.7, -3.7), fov: 44 }, u, ease.inOutSine, 0.4);
     },
   },
   // ── b22 "It said, the person watching this. And it's switched on."
@@ -870,18 +871,18 @@ export const shots = [
     setup(ctx) { const st = controlRoom(ctx, { pigeon: false, chair: false }); ctx.set.set('power', 0.5); ctx.set.set('lastSpot', 1); ctx.store = st; },
     update(ctx, lt) {
       const { Cc } = ctx.store;
-      moveCam(ctx, { pos: Cc(LAST_X + 0.2, 1.6, -0.9), look: Cc(LAST_X + 0.05, 1.62, -3.7), fov: 44 }, { pos: Cc(LAST_X + 0.12, 1.62, -1.35), look: Cc(LAST_X + 0.05, 1.64, -3.7), fov: 42 }, prog(lt, 0, 2.2), ease.inOutSine, 0.4);
+      moveCam(ctx, { pos: Cc(LAST_X + 0.2, 1.75, -0.9), look: Cc(LAST_X + 0.05, 1.72, -3.7), fov: 44 }, { pos: Cc(LAST_X + 0.12, 1.78, -1.35), look: Cc(LAST_X + 0.05, 1.75, -3.7), fov: 42 }, prog(lt, 0, 2.2), ease.inOutSine, 0.4);
     },
   },
   {
     name: 'pigeon turns to camera', start: 'b22.w6-0.1', set: 'control',
-    setup(ctx) { const st = controlRoom(ctx, { chair: false }); ctx.set.set('power', 0.5); ctx.set.set('lastSpot', 1); putAt(ctx, 'pigeon', st.Cc(LAST_X - 0.95, 1.1, -3.95), Math.PI / 2); dressPigeon(ctx, 1); ctx.store = st; },
+    setup(ctx) { const st = controlRoom(ctx, { chair: false }); ctx.set.set('power', 0.5); ctx.set.set('lastSpot', 1); putAt(ctx, 'pigeon', st.Cc(LAST_X - 0.66, 1.1, -3.55), Math.PI / 2); dressPigeon(ctx, 1); ctx.store = st; },
     update(ctx, lt) {
       const { Cc } = ctx.store, p = ctx.cast.pigeon, ts = ctx.markers.on;
       const k = ease.inOutCubic(prog(ctx.t, ts - 0.45, ts + 0.05));
       p.pose('idle', 1.2, { headYaw: -1.25 * k }); p.face(k > 0.5 ? 'smug' : 'neutral', 1.0);
       const ph = pigeonHead(ctx);
-      setCam(ctx, { pos: Cc(LAST_X - 0.35, 1.72, -1.15), look: Cc(LAST_X - 0.42, 1.62, -3.8), fov: 44 }, 0.6);
+      setCam(ctx, { pos: ph.clone().add(V(0.12, 0.0, 1.35)), look: ph.clone().add(V(0.1, -0.12, 0)), fov: 40 }, 0.6);
       ctx.cam.punch([ts], ctx.t, 0.14, 0.3);
       tag(ctx, 'THE PERSON WATCHING THIS:\nON', ts, Infinity, { y: 0.17, size: 60, fill: '#3cff6b', bg: 'rgba(8,10,14,0.9)' });
     },
@@ -889,12 +890,12 @@ export const shots = [
   // ── b23 "So, uh... don't scroll."
   {
     name: 'wing reaches', start: 'b23-0.1', set: 'control',
-    setup(ctx) { const st = controlRoom(ctx, { chair: false }); ctx.set.set('power', 0.5); ctx.set.set('lastSpot', 1); putAt(ctx, 'pigeon', st.Cc(LAST_X - 0.95, 1.1, -3.95), Math.PI / 2); dressPigeon(ctx, 1); ctx.store = st; },
+    setup(ctx) { const st = controlRoom(ctx, { chair: false }); ctx.set.set('power', 0.5); ctx.set.set('lastSpot', 1); putAt(ctx, 'pigeon', st.Cc(LAST_X - 0.66, 1.1, -3.55), Math.PI / 2); dressPigeon(ctx, 1); ctx.store = st; },
     update(ctx, lt) {
       const { Cc } = ctx.store, p = ctx.cast.pigeon, k = ease.inOutSine(prog(lt, 0.1, 1.1));
       p.pose('idle', 1.2, { headYaw: -1.0 }); p.face('smug', 1.0);
-      p.joints.armL.rotation.set(-0.4 * k, 0.9 * k, 0.9 * k);
-      setCam(ctx, { pos: Cc(LAST_X - 0.4, 1.6, -1.25), look: Cc(LAST_X - 0.42, 1.5, -3.8), fov: 46 }, 0.5);
+      p.joints.armR.rotation.set(-0.7 * k, -2.9 * k, 0);
+      setCam(ctx, { pos: Cc(LAST_X - 0.35, 1.75, -1.75), look: Cc(LAST_X - 0.4, 1.62, -3.85), fov: 44 }, 0.5);
     },
   },
   {

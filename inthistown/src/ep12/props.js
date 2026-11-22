@@ -61,7 +61,7 @@ export function textTex(lines, { w = 512, h = 128, bg = '#ffffff', fg = '#1d1d22
 const SKY_TOP = '#2f7fe0', SKY_MID = '#7cc0f4', SKY_LOW = '#ffc58a', SKY_HOR = '#ff9a6b';
 function paintSky(g, w, h, { clouds = false, sun = false, seams = 6 } = {}) {
   const gr = g.createLinearGradient(0, 0, 0, h);
-  gr.addColorStop(0, SKY_TOP); gr.addColorStop(0.55, SKY_MID); gr.addColorStop(0.86, '#b4e0fa'); gr.addColorStop(0.95, SKY_LOW); gr.addColorStop(1, SKY_HOR);
+  gr.addColorStop(0, SKY_TOP); gr.addColorStop(0.55, SKY_MID); gr.addColorStop(0.95, '#a8daf8'); gr.addColorStop(0.99, SKY_LOW); gr.addColorStop(1, SKY_HOR);
   g.fillStyle = gr; g.fillRect(0, 0, w, h);
   // brush strokes (it's paint)
   const R = rng(7);
@@ -384,8 +384,8 @@ export function buildControlRoom() {
   for (let x = -13; x <= 18; x += 4.5) root.add(box(2.6, 0.08, 0.25, stripM, x, 8.2, 0.5));
   // ── console with levers
   const consoleM = std('#3a3f58', { roughness: 0.6 });
-  root.add(box(28.6, 1.75, 0.6, consoleM, 0, 0.875, CONSOLE_Z - 0.3, 0.04));
-  root.add(box(28.8, 0.12, 0.85, std('#555b78'), 0, 1.81, CONSOLE_Z - 0.2, 0.03));
+  root.add(box(28.6, 2.3, 0.6, consoleM, 0, 1.15, CONSOLE_Z - 0.3, 0.04));
+  root.add(box(28.8, 0.12, 0.75, std('#555b78'), 0, 2.36, CONSOLE_Z - 0.3, 0.03));
   // instanced generic levers
   const slots = [];
   for (let r = 0; r < 2; r++) for (let x = -13.6; x <= 13.61; x += 0.8) {
@@ -437,9 +437,9 @@ export function buildControlRoom() {
     const knob = new THREE.Mesh(new THREE.SphereGeometry(0.075, 16, 12), std(red ? '#e8232b' : '#ffffff', { roughness: 0.35, emissive: red ? '#550000' : '#000000' })); knob.position.y = 0.43; piv.add(knob);
     const tex = textTex(text || [name], { w: 512, h: text ? 200 : 128, bg: red ? '#d81f26' : color, fg: red ? '#ffffff' : '#10131c', border: '#10131c', bw: 10 });
     const plate = new THREE.Mesh(new THREE.PlaneGeometry(plateW, plateW * (text ? 200 : 128) / 512), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
-    plate.position.set(0, 0.32, 0.012); g.add(plate);
+    plate.position.set(0, text ? 0.66 : 0.6, 0.012); g.add(plate);
     const anchor = new THREE.Object3D(); anchor.position.set(0, 0, 0.1); g.add(anchor); anchors['lever.' + name] = anchor;
-    levers[name] = { g, piv, plate, knob, set(on) { piv.rotation.x = 0.75 - 1.5 * clamp(on, 0, 1); } };
+    levers[name] = { g, piv, plate, knob, set(on) { piv.rotation.x = 2.3 - 1.95 * clamp(on, 0, 1); } };
     levers[name].set(0);
     return levers[name];
   }
@@ -447,16 +447,17 @@ export function buildControlRoom() {
   // GRAVITY: bigger, red, in a hazard frame
   const gx = NAMED.GRAVITY;
   const hzM = new THREE.MeshStandardMaterial({ map: hz.clone(), roughness: 0.7 }); hzM.map.repeat.set(2, 1); hzM.map.needsUpdate = true;
-  root.add(box(1.5, 1.25, 0.05, hzM, gx, 1.3, CONSOLE_Z + 0.005));
-  root.add(box(1.32, 1.07, 0.06, '#2a1418', gx, 1.3, CONSOLE_Z + 0.01));
-  namedLever('GRAVITY', gx, 1.12, CONSOLE_Z + 0.05, { red: true, text: ['GRAVITY', { t: '(DO NOT TOUCH)', s: 0.62 }], plateW: 1.1, scale: 1.15 });
+  root.add(box(1.5, 1.45, 0.05, hzM, gx, 1.45, CONSOLE_Z + 0.005));
+  root.add(box(1.32, 1.27, 0.06, '#2a1418', gx, 1.45, CONSOLE_Z + 0.01));
+  namedLever('GRAVITY', gx, 1.02, CONSOLE_Z + 0.05, { red: true, text: ['GRAVITY', { t: '(DO NOT TOUCH)', s: 0.62 }], plateW: 1.1, scale: 1.15 });
   levers.GRAVITY.set(1);   // gravity is ON
   // the very last lever: alone at the far east end, on a small pedestal, under a spotlight
-  root.add(box(2.1, 1.1, 0.7, consoleM, LAST_X - 0.5, 0.55, CONSOLE_Z - 0.2, 0.04));
-  namedLever('LAST', LAST_X, 1.42, CONSOLE_Z + 0.2, { text: ['THE PERSON', 'WATCHING THIS'], color: '#ffffff', plateW: 1.0, scale: 1.0 });
+  root.add(box(2.1, 1.1, 1.1, consoleM, LAST_X - 0.5, 0.55, CONSOLE_Z, 0.04));
+  root.add(box(1.25, 1.3, 0.12, consoleM, LAST_X, 1.75, CONSOLE_Z + 0.06, 0.03));
+  namedLever('LAST', LAST_X, 1.3, CONSOLE_Z + 0.13, { text: ['THE PERSON', 'WATCHING THIS'], color: '#ffffff', plateW: 1.0, scale: 1.0 });
   levers.LAST.set(1);
-  const onLamp = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), basic('#3cff6b', { toneMapped: false })); onLamp.position.set(LAST_X + 0.32, 1.42, CONSOLE_Z + 0.27); root.add(onLamp);
-  const onTag = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.1), new THREE.MeshBasicMaterial({ map: textTex(['ON'], { w: 128, h: 64, bg: '#10131c', fg: '#3cff6b', border: null }), toneMapped: false })); onTag.position.set(LAST_X + 0.32, 1.3, CONSOLE_Z + 0.211); root.add(onTag);
+  const onLamp = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), basic('#3cff6b', { toneMapped: false })); onLamp.position.set(LAST_X + 0.34, 1.32, CONSOLE_Z + 0.16); root.add(onLamp);
+  const onTag = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.1), new THREE.MeshBasicMaterial({ map: textTex(['ON'], { w: 128, h: 64, bg: '#10131c', fg: '#3cff6b', border: null }), toneMapped: false })); onTag.position.set(LAST_X + 0.34, 1.19, CONSOLE_Z + 0.125); root.add(onTag);
   const beam = new THREE.Mesh(new THREE.ConeGeometry(0.9, 7, 32, 1, true), basic('#fff3c8', { transparent: true, opacity: 0.12, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
   beam.position.set(LAST_X - 0.3, 4.3, CONSOLE_Z + 0.25); beam.renderOrder = 4; root.add(beam);
   const pool = new THREE.Mesh(new THREE.CircleGeometry(1.0, 32), basic('#fff3c8', { transparent: true, opacity: 0.18, depthWrite: false, blending: THREE.AdditiveBlending })); pool.rotation.x = -PI / 2; pool.position.set(LAST_X - 0.3, 0.01, CONSOLE_Z + 0.75); root.add(pool);
@@ -468,13 +469,13 @@ export function buildControlRoom() {
   const screens = [];
   const frameM = std('#14161f', { roughness: 0.5 });
   for (let r = 0; r < 2; r++) for (let k = 0; k < 5; k++) {
-    const x = -3.8 + k * 1.9, y = 2.85 + r * 1.45;
+    const x = -3.8 + k * 1.9, y = 3.1 + r * 1.45;
     root.add(box(1.8, 1.32, 0.18, frameM, x, y, -4.45));
     const s = new THREE.Mesh(new THREE.PlaneGeometry(1.62, 1.14), new THREE.MeshBasicMaterial({ map: tex('day', screens.length), toneMapped: false }));
     s.position.set(x, y, -4.35); root.add(s); screens.push(s);
   }
   // side screens (dim, for scale)
-  for (const x of [-8.5, -6.6, 6.6, 8.5]) for (const y of [3.0, 4.4]) { root.add(box(1.6, 1.1, 0.16, frameM, x, y, -4.45)); const s = new THREE.Mesh(new THREE.PlaneGeometry(1.44, 0.94), new THREE.MeshBasicMaterial({ map: tex('night', screens.length), toneMapped: false })); s.position.set(x, y, -4.36); root.add(s); screens.push(s); }
+  for (const x of [-8.5, -6.6, 6.6, 8.5]) for (const y of [3.2, 4.6]) { root.add(box(1.6, 1.1, 0.16, frameM, x, y, -4.45)); const s = new THREE.Mesh(new THREE.PlaneGeometry(1.44, 0.94), new THREE.MeshBasicMaterial({ map: tex('night', screens.length), toneMapped: false })); s.position.set(x, y, -4.36); root.add(s); screens.push(s); }
   mk('monitors', 0, 3.6, -4.3);
   // ── MAIN switch on a pillar
   const MX = 8.6, MZ = -2.6;
@@ -499,7 +500,7 @@ export function buildControlRoom() {
   doorPlate.position.set(-15.9, 2.2, 1.5); doorPlate.rotation.y = PI / 2; root.add(doorPlate);
   // indicator dots on the console (blink in update)
   const dotN = 60, dots = new THREE.InstancedMesh(new THREE.SphereGeometry(0.03, 6, 4), new THREE.MeshBasicMaterial({ toneMapped: false }), dotN);
-  for (let i = 0; i < dotN; i++) { p.set(-13.8 + i * 0.468, 1.66, CONSOLE_Z + 0.02); m4.compose(p, q.identity(), one); dots.setMatrixAt(i, m4); dots.setColorAt(i, c.set('#3cff6b')); }
+  for (let i = 0; i < dotN; i++) { p.set(-13.8 + i * 0.468, 2.2, CONSOLE_Z + 0.02); m4.compose(p, q.identity(), one); dots.setMatrixAt(i, m4); dots.setColorAt(i, c.set('#3cff6b')); }
   root.add(dots);
   // ── lights
   const amb = new THREE.AmbientLight('#8090c0', 0.6); root.add(amb);
@@ -527,7 +528,7 @@ export function buildControlRoom() {
     monGlow.intensity = base.mon * pw; consoleGlow.intensity = base.cg * pw * (1 - 0.4 * al); consoleGlow2.intensity = base.cg * pw * (1 - 0.4 * al);
     reds.forEach((r) => { r.intensity = 60 * al * pulse * pw; });
     alarmBulb.material.color.set(al > 0 ? tmpC.set('#ff2020').multiplyScalar(0.4 + pulse) : tmpC.set('#5a0d10'));
-    lastSpot.intensity = 8 * options.lastSpot; beam.material.opacity = 0.02 + 0.05 * options.lastSpot; pool.material.opacity = 0.06 + 0.16 * options.lastSpot;
+    lastSpot.intensity = 5 * options.lastSpot; beam.material.opacity = 0.02 + 0.05 * options.lastSpot; pool.material.opacity = 0.06 + 0.16 * options.lastSpot;
     const lf = options.lights;
     screens.forEach((s, i) => {
       const md = typeof options.screens === 'function' ? options.screens(i, lastT) : options.screens;
