@@ -228,7 +228,7 @@ export function makeSkyCrack({ H = 13, n = 16, seed = 5, wmax = 2.7 } = {}) {
   const FY = [3.2, 4.25, 5.3, 6.3], NS = [6, 7, 7, 6], S = 0.95;
   const boneM = new THREE.MeshStandardMaterial({ color: '#9a9da6', roughness: 0.7, emissive: '#2a2433', emissiveIntensity: 0.6, fog: false });
   const knM = new THREE.MeshStandardMaterial({ color: '#7a7d86', roughness: 0.8, emissive: '#221c2a', emissiveIntensity: 0.6, fog: false });
-  const nailM = new THREE.MeshStandardMaterial({ color: '#d0cfd8', roughness: 0.3, emissive: '#3a3444', emissiveIntensity: 0.5, fog: false });
+  const nailM = new THREE.MeshStandardMaterial({ color: '#ecebf2', roughness: 0.25, emissive: '#5a5266', emissiveIntensity: 0.6, fog: false });
   const lineM = new THREE.MeshStandardMaterial({ color: '#55575f', roughness: 0.9, fog: false });
   const fingers = FY.map((fy, f) => {
     const root = new THREE.Group(); root.position.set(xAt(fy) + (f - 1.5) * 0.1, fy, 0); g.add(root);
@@ -239,7 +239,12 @@ export function makeSkyCrack({ H = 13, n = 16, seed = 5, wmax = 2.7 } = {}) {
       sg.add(box(th * 0.96, th * 0.9, S * 0.84, boneM, 0, 0, S * 0.5, 0.12));
       sg.add(box(th * 1.08, th * 1.02, 0.24, knM, 0, 0, 0.04, 0.07));
       for (const dz of [-0.05, 0.05]) sg.add(box(th * 0.55, 0.035, 0.035, lineM, 0, th * 0.52, 0.04 + dz));
-      if (j === NS[f] - 1) { sg.add(box(th * 0.6, 0.09, 0.42, nailM, 0, th * 0.45, S * 0.62, 0.03)); sg.add(box(th * 0.92, th * 0.84, 0.3, boneM, 0, 0, S * 0.92, 0.14)); }
+      if (j < NS[f] - 1) sg.add(box(th * 0.7, 0.12, 0.3, knM, 0, th * 0.5, 0.06, 0.05));          // knuckle bump on top
+      if (j === NS[f] - 1) {                                                                          // rounded fingertip + pale nail
+        sg.add(box(th * 0.92, th * 0.84, 0.3, boneM, 0, 0, S * 0.92, 0.14));
+        const tip = new THREE.Mesh(new THREE.SphereGeometry(th * 0.47, 16, 12), boneM); tip.scale.set(1, 0.9, 0.8); tip.position.set(0, -0.02, S * 1.06); tip.castShadow = true; sg.add(tip);
+        const nail = new THREE.Mesh(new THREE.SphereGeometry(th * 0.34, 14, 10), nailM); nail.scale.set(1, 0.32, 1.25); nail.position.set(0, th * 0.4, S * 0.88); sg.add(nail);
+      }
       segs.push(sg); parent = sg;
     }
     return { root, segs, ns: NS[f] };
@@ -512,7 +517,7 @@ export function makeGumBlob(r = 0.5, seed = 1) {
   return g;
 }
 export function makeGumStrings(n = 6) {
-  const g = new THREE.Group(), m = new THREE.MeshStandardMaterial({ color: '#ff8fcb', roughness: 0.35, emissive: '#5a1036', emissiveIntensity: 0.3 });
+  const g = new THREE.Group(), m = new THREE.MeshStandardMaterial({ color: '#ff8fcb', roughness: 0.35, emissive: '#d0307a', emissiveIntensity: 0.55 });
   const geo = new THREE.CylinderGeometry(1, 1, 1, 6);
   const list = Array.from({ length: n }, () => { const s = new THREE.Mesh(geo, m); g.add(s); return s; });
   const _a = V(), _d = V(), _q = new THREE.Quaternion(), Y = V(0, 1, 0);

@@ -78,6 +78,9 @@ export function init(ctx) {
   P.crackLight = new THREE.PointLight('#b46bff', 30, 40, 1.1);
   P.deckLight = new THREE.PointLight('#ffcf90', 5, 8, 1.4);
   P.sun = new THREE.PointLight('#fff1d6', 0, 10, 1.2);
+  // soft pink glow along the sealed scar (crack-local, added to the crack in townBase)
+  P.scar = new THREE.Group();
+  { const C = P.crack.userData; for (let i = 1; i < C.n; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: '#ff7ac8', transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, toneMapped: false, opacity: 0 })); sp.position.set(C.pts[i].x, C.pts[i].y, 0); sp.scale.set(2.2, 2.6, 1); P.scar.add(sp); } }
 }
 function makeWrapRoll() {
   const g = new THREE.Group();
@@ -141,7 +144,7 @@ function story(ctx, t = ctx.t) {
     s.bulge = 0.75 * smooth((t - k.midnight) / 1.4);
     s.strain = s.bulge;
     s.pulse += 1.3 * hitPulse(k.b03h, t, 0.16) + 0.25 * s.bulge * (0.5 + 0.5 * Math.sin(t * 9));
-    if (t > k.b03h[0] - 0.05) { s.slide = 0.13 + 0.07 * hitPulse(k.b03h, t, 0.25); s.curl = 0.05; }
+    if (t > k.b03h[0] - 0.05) { s.slide = 0.32 + 0.15 * hitPulse(k.b03h, t, 0.25); s.curl = 0.1; }
     s.open = 0.42 + 0.12 * s.bulge;
   } else if (t < k.b12 - 0.3) {                      // flashbacks / Mrs Pell
     if (t >= k.b07 - 0.2) { s.peel = [1, 0, 1, 1, 1, 0, 1]; s.wrap = t >= k.wrap; }
@@ -151,7 +154,7 @@ function story(ctx, t = ctx.t) {
     const sp = smooth((t - k.split + 0.1) / 0.55);
     s.open = lerp(0.42, 1.0, sp);
     if (t > k.split - 0.1) { s.pulse += 0.9 * hitPulse([k.split], t, 0.4); [0, 2, 4, 6].forEach((i, j) => { s.peel[i] = Math.max(s.peel[i], clamp((t - k.split - 0.06 * j) / 1.1, 0, 1)); }); }
-    s.slide = smooth((t - k.fingers + 0.15) / 1.3);
+    s.slide = smooth((t - k.fingers + 0.4) / 1.3);
     s.curl = smooth((t - k.fingers - 0.5) / 1.9);
     if (t > k.split) s.pulse += 0.25 * (0.5 + 0.5 * Math.sin(t * 6.5));
     // the gum
@@ -178,6 +181,14 @@ function applyCrack(ctx, s = story(ctx)) {
   for (let i = 0; i < C.nTape; i++) C.tape(i, s.peel[i], t, s.strain);
   C.setFingers({ slide: s.slide, curl: s.curl, t, flinch: s.flinch, retreat: s.retreat });
   C.wrap.visible = s.wrap;
+  // sealed: the gum flattens into a soft glowing pink scar (no stiff string rods)
+  const sealed = s.tint > 0.5;
+  for (const q of C.gums) {
+    q.g.children.forEach((m) => { if (m.geometry?.type === 'CylinderGeometry') m.visible = !sealed; });
+    if (sealed && q.g.visible) q.g.scale.z *= 0.4;
+  }
+  P.scar.visible = s.tint > 0.01;
+  if (P.scar.visible) P.scar.children.forEach((sp, i) => { sp.material.opacity = 0.5 * s.tint * (0.8 + 0.2 * Math.sin(t * 1.6 + i)); });
   P.tower.userData.setClock(s.clock[0], s.clock[1]);
   const L = P.crackLight; L.intensity = (16 * s.glow + 40 * Math.min(1.5, s.pulse)) * (1 - 0.55 * s.tint) * (0.6 + 0.6 * s.open);
   L.color.set(s.tint > 0.5 ? '#ff7ac8' : '#b46bff');
@@ -193,15 +204,23 @@ function townBase(ctx, { lighting = 'quiet_night', crack = true, tower = true, g
   if (crack) {
     ctx.add(P.crack, root); P.crack.position.set(TX, DY + 1.2, TZ); P.crack.rotation.set(0, PI / 2, 0);
     ctx.add(P.crackLight, P.crack); P.crackLight.position.set(0, 4.0, 3.2);
+    ctx.add(P.scar, P.crack); P.scar.position.set(0, 0, 0.5); P.scar.visible = false;
   }
   if (fogRing) { ctx.add(P.fogRing, root); P.fogRing.position.set(TX, DY + 1.5, TZ); ctx.store.fogRing = true; }
   if (tower && lighting !== 'day') { ctx.add(P.deckLight, root); P.deckLight.position.set(TX + 1.6, DY + 2.6, TZ + 1.2); }
+  ctx.store.fog0 = S.fog ? S.fog.color.clone() : null; ctx.store.bg0 = S.background?.clone ? S.background.clone() : null;
   return T(ctx);
 }
 /** crack-local point → world */
 function CR(ctx, x, y, z = 0) { const c = ctx.props.crack; c.updateMatrixWorld(true); return c.localToWorld(V(x, y, z)); }
 function nightFog(ctx, near = 16, far = 120) { const f = ctx.set.fog; if (f) { f.near = near; f.far = far; } }
-function purpleSky(ctx, k) { if (k <= 0) return; const f = ctx.set.fog; if (f) f.color.lerp(new THREE.Color('#3a1660'), clamp(k, 0, 1)); ctx.set.background?.lerp?.(new THREE.Color('#2a0f48'), clamp(k, 0, 1)); }
+const PURPLE_FOG = new THREE.Color('#3a1660'), PURPLE_BG = new THREE.Color('#2a0f48');
+/** tint fog + background toward purple: a pure function of k (base colours captured in setup by townBase). */
+function purpleSky(ctx, k) {
+  const S = ctx.set, st = ctx.store, kk = clamp(k, 0, 1);
+  if (S.fog && st.fog0) S.fog.color.copy(st.fog0).lerp(PURPLE_FOG, kk);
+  if (S.background?.copy && st.bg0) S.background.copy(st.bg0).lerp(PURPLE_BG, kk);
+}
 
 // kid spots (town-local)
 const KE = (L) => ({ p: L(TX + 2.0, DY, TZ + 0.4), yaw: L.yaw + PI / 2 });      // at the east edge, facing the town
@@ -267,8 +286,8 @@ export const shots = [
     name: 'crack establishing', start: 0, set: 'town',
     setup(ctx) { const L = townBase(ctx, { glow: 0.65, fogRing: true }); ctx.store.L = L; },
     update(ctx, lt, u) {
-      const { L } = ctx.store; applyCrack(ctx); nightFog(ctx, 26, 150);
-      ctx.cam.move({ pos: L(-4, 14, 5), look: L(TX, DY + 6.5, TZ), fov: 44 }, { pos: L(-13, 12.2, 4), look: L(TX, DY + 6.8, TZ), fov: 42 }, u, 'inOutSine');
+      const { L } = ctx.store; applyCrack(ctx); nightFog(ctx, 20, 140);
+      ctx.cam.move({ pos: L(-16, 15.5, 0.5), look: L(TX, DY + 3.5, TZ), fov: 50 }, { pos: L(-24, 14.5, 0.8), look: L(TX, DY + 3.5, TZ), fov: 50 }, u, 'inOutSine');
     },
   },
   // ── b02 "And every night at midnight, something tries to push it open."  — the crack bulges, tape strains
@@ -293,7 +312,7 @@ export const shots = [
       const { F } = ctx.store, k = tk(ctx);
       const c = ease.outCubic(clamp((ctx.t - k.push - 0.05) / 0.12, 0, 1));
       ctx.props.curtain.userData.set(c, 1);
-      setCam(ctx, { pos: F(-1.2, -2.3, 7.0), look: F(0, -0.2, 0), fov: 40 }, 0.5);
+      setCam(ctx, { pos: F(-1.2, -2.3, 7.0), look: F(0, -1.0, 0), fov: 40 }, 0.5);
       if (c > 0.9) ctx.cam.shake(0.12 * (1 - clamp((ctx.t - k.push - 0.2) / 0.3, 0, 1)), ctx.t, 4);
     },
   },
@@ -317,21 +336,25 @@ export const shots = [
       const { L } = ctx.store, k = tk(ctx), s = applyCrack(ctx), t = ctx.t, P = ctx.props;
       const hits = k.b03h, h = lastBefore(hits, t), dh = h != null ? t - h : 9;
       if (i === 0) {
-        setCam(ctx, { pos: L(TX + 6.2, 13.7, TZ + 0.9), look: L(TX + 2.2, 13.75, TZ), fov: 40 }, 0.5);
-        stamp(ctx, '12:00', hits[0], { fill: '#ffe14a', stroke: '#000000', rot: -0.06, y: 0.2, size: 170 });
-      } else if (i === 1 || i === 3) {
-        const c = i === 1 ? { pos: L(TX + 4.6, DY + 0.9, TZ - 2.2), look: L(TX, DY + 6.0, TZ), fov: 56 } : { pos: L(TX + 3.6, DY + 0.6, TZ + 2.6), look: L(TX + 0.2, DY + 5.0, TZ - 0.3), fov: 62 };
-        setCam(ctx, c, 0.6);
+        setCam(ctx, { pos: L(TX + 9, 14.5, TZ + 2), look: L(TX + 2.0, 15.0, TZ), fov: 40 }, 0.5);
+        stamp(ctx, '12:00', hits[0], { fill: '#ffe14a', stroke: '#000000', rot: -0.06, y: 0.12, size: 150 });
+      } else if (i === 1) {
+        setCam(ctx, { pos: L(TX + 4.6, DY + 0.9, TZ - 2.2), look: L(TX + 0.8, DY + 5.8, TZ), fov: 58 }, 0.6);
+      } else if (i === 3) {
+        // street-level wide down the street: the crack flashes, the windows go dark one by one
+        ctx.set.set('windowGlow', (hi, wi) => (hash(hi * 7.3 + wi * 2.9) < 0.75 - 0.5 * clamp((t - hits[3]) / 0.35, 0, 1) ? 0.9 : 0.04));
+        const u = clamp((t - hits[3]) / 0.5, 0, 1);
+        moveCam(ctx, { pos: L(-22, 1.6, -2), look: L(TX, DY + 6, TZ), fov: 50 }, { pos: L(-23.5, 1.5, -2), look: L(TX, DY + 6.4, TZ), fov: 50 }, u, 'outCubic', 0);
       } else if (i === 2) {
         const { D, runners } = ctx.store;
         runners.forEach(([id, x, z0], j) => {
           const ch = ctx.cast[id], u = clamp((t - (hits[2] - 0.05)) / 0.5, 0, 1);
-          ch.root.position.copy(D(x * (1 - u) - 0.4 * u, 0, lerp(z0 + 2.5, 1.4, u)));
+          ch.root.position.copy(D(x * (1 - u) + 0.3 * x * u, 0, lerp(z0 + 2.5, 1.7 + 0.25 * j, u)));
           ch.root.rotation.set(0, D.yaw + PI, 0);
           ch.pose('walk', t * 2.2 + j, { speed: 2.5 }); ch.face('shocked', 0.5);
           ch.joints.torso.rotation.x += 0.35; ch.joints.armL.rotation.x += -1.2; ch.joints.armR.rotation.x += -1.2;
         });
-        setCam(ctx, { pos: D(1.5, 1.7, 0.35), look: D(-0.4, 1.6, 4.5), fov: 50 }, 1.0, '#c9a0ff');
+        setCam(ctx, { pos: D(0.05, 1.45, 0.3), look: D(0, 1.75, 6), fov: 62 }, 1.0, '#c9a0ff');
       } else if (i === 4) {
         const ch = ctx.cast.x03; ch.pose('surprised', 0.25, { lookAt: L(TX, DY + 8, TZ) }); ch.face('shocked', 0.5);
         const f = humanFace(ch); const { D } = ctx.store;
@@ -362,7 +385,7 @@ export const shots = [
     setup(ctx) { const L = flashback(ctx); ctx.store.L = L; },
     update(ctx, lt) {
       const { L } = ctx.store; flashAnim(ctx);
-      moveCam(ctx, { pos: L(TX + 7.6, 24.2, TZ + 5.2), look: L(TX + 2.1, 24.8, TZ), fov: 42 }, { pos: L(TX + 6.6, 24.6, TZ + 4.4), look: L(TX + 2.0, 25.0, TZ), fov: 42 }, clamp(lt / 2.3, 0, 1), 'inOutSine', 0);
+      moveCam(ctx, { pos: L(TX + 1.6, 25.0, TZ + 5.9), look: L(TX + 2.2, 24.4, TZ), fov: 44 }, { pos: L(TX + 1.6, 25.0, TZ + 5.4), look: L(TX + 2.2, 24.5, TZ), fov: 44 }, clamp(lt / 2.3, 0, 1), 'inOutSine', 0);
       flashLook(ctx);
       tag(ctx, '5 YEARS AGO', -1, Infinity, { y: 0.13, size: 56, bg: 'rgba(120,70,20,0.88)' });
     },
@@ -373,7 +396,7 @@ export const shots = [
     update(ctx) {
       const { L } = ctx.store, k = tk(ctx); flashAnim(ctx);
       const h = ctx.cast.hamble, f = humanFace(h);
-      setCam(ctx, { pos: L(TX + 4.6, 26.2, TZ + 2.6), look: f.clone().add(V(-0.5, 0.35, -0.3)), fov: 40 }, 0);
+      setCam(ctx, { pos: L(TX + 4.6, 26.2, TZ + 2.6), look: f.clone(), fov: 46 }, 0);
       ctx.cam.shake(0.45 * hitPulse([k.crack5], ctx.t, 0.35) + 0.04, ctx.t, 12);
       ctx.fx.overlay('#ffffff', 0.5 * hitPulse([k.crack5], ctx.t, 0.08));
       flashLook(ctx);
@@ -397,8 +420,8 @@ export const shots = [
     setup(ctx) {
       townBase(ctx, { lighting: 'dusk', crack: false, tower: false }); ctx.set.set('standsCrowd', true); ctx.set.set('crowdMotion', 0.1);
       const S = frameAt(ctx, 'square.stage');
-      put(ctx, 'mayor', S(1.35, 0, 1.7), S.yaw - PI / 2 + 0.5);
-      const fam = [['x01', -0.45, 1.55], ['x02', -1.35, 1.35], ['x05', -2.15, 1.65]];
+      put(ctx, 'mayor', S(0.8, 0, 1.75), S.yaw - PI / 2 + 0.45);
+      const fam = [['x01', -0.35, 1.7], ['x02', -1.0, 1.35], ['x05', -1.6, 1.85]];
       fam.forEach(([id, x, z]) => put(ctx, id, S(x, 0, z), S.yaw + PI / 2 - 0.6));
       ctx.cast.x05.root.scale.setScalar(0.82);
       const aud = ['x08', 'x09', 'x10', 'x11', 'x12', 'x13'];
@@ -409,14 +432,13 @@ export const shots = [
     update(ctx, lt) {
       const { S, fam, aud } = ctx.store, t = ctx.t, m = ctx.cast.mayor, R = ctx.props.roll;
       m.pose('idle', t, { intensity: 0.3 }); m.face('grin', t);
-      m.joints.armL.rotation.x += -1.25; m.joints.armR.rotation.x += -1.25; m.joints.armL.rotation.z += -0.25; m.joints.armR.rotation.z += 0.25;
+      m.joints.armL.rotation.x += -1.0; m.joints.armR.rotation.x += -1.0; m.joints.armL.rotation.z += -0.25; m.joints.armR.rotation.z += 0.25;
       m.root.updateMatrixWorld(true);
-      R.userData.set(1); R.position.copy(m.root.localToWorld(V(0, 1.42, 0.78))); R.rotation.set(0, m.root.rotation.y + PI / 2, 0);
+      R.userData.set(1); R.position.copy(m.root.localToWorld(V(0, 1.15, 0.6))); R.rotation.set(0, m.root.rotation.y + PI / 2, 0);
       R.position.y += 0.06 * Math.sin(t * 3);
       fam.forEach(([id], j) => { const c = ctx.cast[id]; c.pose('clap', t + j * 0.3, { speed: 0.35, intensity: 0.5 }); c.face(['neutral', 'sleepy', 'sad'][j], 1.0); });
       aud.forEach((id, j) => { const c = ctx.cast[id]; c.pose('clap', t + j, { speed: 0.3, intensity: 0.4 }); c.face('sleepy', 1); });
-      ctx.cam.move({ pos: S(-0.35, 1.5, 9.4), look: S(-0.35, 1.25, 1.6), fov: 40 }, { pos: S(-0.35, 1.45, 8.4), look: S(-0.35, 1.3, 1.6), fov: 40 }, clamp(lt / 1.6, 0, 1), 'inOutSine');
-      stamp(ctx, 'TAPE DUTY', ctx.time('b05.w7'), { y: 0.17, size: 130, fill: '#ffe14a', stroke: '#000000', rot: -0.07 });
+      ctx.cam.move({ pos: S(1.1, 2.1, 9.4), look: S(-0.2, 1.4, 1.7), fov: 44 }, { pos: S(1.0, 2.0, 8.8), look: S(-0.2, 1.4, 1.7), fov: 44 }, clamp(lt / 1.6, 0, 1), 'inOutSine');
     },
   },
   // ── b06 "Climb the tower. Tape the crack. Never, ever look inside."  — the rules over the tower top
@@ -425,7 +447,7 @@ export const shots = [
     setup(ctx) { const L = townBase(ctx, { fogRing: true }); ctx.store.L = L; const P = ctx.props; ctx.add(P.roll, ctx.set.root); P.roll.position.set(TX + 1.6, DY + 0.42, TZ - 1.2); P.roll.rotation.set(0, 0.6, 0); P.roll.userData.set(1); },
     update(ctx, lt, u) {
       const { L } = ctx.store; applyCrack(ctx); nightFog(ctx, 18, 120);
-      moveCam(ctx, { pos: L(TX + 5.4, DY + 0.95, TZ + 3.2), look: L(TX + 0.6, DY + 2.4, TZ), fov: 54 }, { pos: L(TX + 5.8, DY + 1.4, TZ + 2.6), look: L(TX, DY + 7.2, TZ), fov: 58 }, u, 'inOutSine', 0.6);
+      moveCam(ctx, { pos: L(TX + 6.6, DY + 7.4, TZ + 5.6), look: L(TX + 0.5, DY + 2.5, TZ), fov: 54 }, { pos: L(TX + 6, DY + 7, TZ + 5), look: L(TX + 0.5, DY + 2.9, TZ), fov: 56 }, u, 'inOutSine', 0.6);
       const M = ctx.markers, o = { size: 66, bg: 'rgba(14,10,30,0.85)', rot: 0 };
       tag(ctx, 'RULE 1: CLIMB', M.rule1, Infinity, { ...o, y: 0.1 });
       tag(ctx, 'RULE 2: TAPE', M.rule2, Infinity, { ...o, y: 0.165 });
@@ -448,7 +470,7 @@ export const shots = [
       P.wrapRoll.position.copy(p.joints.handL.getWorldPosition(V())); P.wrapRoll.rotation.set(0.3, p.root.rotation.y, 0.6);
       P.roll.userData.set(0); P.roll.position.copy(p.joints.handR.getWorldPosition(V())); P.roll.rotation.set(0, p.root.rotation.y + 0.5, 0);
       const f = humanFace(p);
-      moveCam(ctx, { pos: L(TX + 4.6, DY + 1.9, TZ + 1.7), look: f.clone().add(V(0, 0.15, 0)), fov: 40 }, { pos: L(TX + 3.9, DY + 1.8, TZ + 1.4), look: f.clone().add(V(0, 0.25, 0)), fov: 40 }, clamp(lt / 2.3, 0, 1), 'inOutSine', 1.2);
+      moveCam(ctx, { pos: L(TX + 4.6, DY + 1.9, TZ + 1.7), look: f.clone().add(up(-0.5)), fov: 40 }, { pos: L(TX + 3.9, DY + 1.8, TZ + 1.4), look: f.clone().add(up(-0.45)), fov: 40 }, clamp(lt / 2.3, 0, 1), 'inOutSine', 1.2);
       tag(ctx, 'OUT OF TAPE', ctx.time('b07.w5'), Infinity, { y: 0.18 });
     },
   },
@@ -465,7 +487,7 @@ export const shots = [
       p.pose('idle', t, { intensity: 0.4 }); p.face('grin', 0.4); thumbsUp(ctx, p, ctx.props.thumb);
       ctx.props.festive.userData.set(t, 1);
       if (t > ctx.time('b07.w10')) ctx.set.set('fireworks', true);
-      moveCam(ctx, { pos: L(TX + 5.6, DY + 0.9, TZ + 2.4), look: L(TX + 0.6, DY + 4.8, TZ), fov: 60 }, { pos: L(TX + 6.4, DY + 1.0, TZ + 2.8), look: L(TX + 0.4, DY + 5.4, TZ), fov: 60 }, u, 'inOutSine', 1.0, '#ffe0c0');
+      moveCam(ctx, { pos: L(TX + 9.5, DY + 1.3, TZ + 3.8), look: L(TX + 0.8, DY + 3.8, TZ), fov: 64 }, { pos: L(TX + 10.5, DY + 1.4, TZ + 4.2), look: L(TX + 0.8, DY + 3.8, TZ), fov: 64 }, u, 'inOutSine', 1.0, '#ffe0c0');
       tag(ctx, 'FESTIVE', ctx.time('b07.w13'), Infinity, { y: 0.16, bg: 'rgba(31,154,74,0.92)', size: 80 });
     },
   },
@@ -489,7 +511,7 @@ export const shots = [
     update(ctx, lt, u) {
       const { L } = ctx.store; parkAnim(ctx);
       const C = PT;
-      ctx.cam.move({ pos: L(C.x + 0.9, 1.35, C.z + 6.4), look: L(C.x + 0.5, 0.95, C.z + 0.4), fov: 40 }, { pos: L(C.x + 0.7, 1.25, C.z + 5.2), look: L(C.x + 0.45, 0.95, C.z + 0.4), fov: 40 }, u, 'inOutSine');
+      ctx.cam.move({ pos: L(C.x + 3.5, 0.82, C.z + 4.0), look: L(C.x + 0.2, 0.78, C.z + 0.6), fov: 40 }, { pos: L(C.x + 3.2, 0.8, C.z + 3.6), look: L(C.x + 0.2, 0.75, C.z + 0.6), fov: 40 }, u, 'inOutSine');
       stamp(ctx, 'STUCK', ctx.markers.stuck, { y: 0.17, size: 140, fill: '#ff6fb8', stroke: '#ffffff' });
       tag(ctx, 'SINCE SPRING', ctx.time('b08.w16'), Infinity, { y: 0.27, size: 60 });
     },
@@ -501,7 +523,7 @@ export const shots = [
     update(ctx, lt, u) {
       const { L } = ctx.store; pigeonAnim(ctx, null);
       const B = PB;
-      ctx.cam.move({ pos: L(B.x + 2.6, 1.3, B.z - 4.0), look: L(B.x, 0.9, B.z), fov: 36 }, { pos: L(B.x + 1.6, 1.1, B.z - 2.6), look: L(B.x, 0.85, B.z), fov: 34 }, u, 'inOutSine');
+      ctx.cam.move({ pos: L(B.x - 4.8, 0.72, B.z - 0.6), look: L(B.x, 0.9, B.z - 0.1), fov: 40 }, { pos: L(B.x - 4.3, 0.74, B.z - 0.55), look: L(B.x, 0.9, B.z - 0.1), fov: 40 }, u, 'inOutSine');
       tag(ctx, 'NO COMMENT', ctx.time('b09.w12'), Infinity, { y: 0.2, size: 62 });
     },
   },
@@ -511,13 +533,13 @@ export const shots = [
     setup(ctx) { const L = pigeonBench(ctx); ctx.store.L = L; },
     update(ctx) {
       const { L } = ctx.store, k = tk(ctx), t = ctx.t, hits = k.b10h;
-      const B = PB, d = [1.75, 1.05, 0.62][i], head = L(B.x, 0.95, B.z - 0.03);
+      const B = PB, d = [1.8, 1.15, 0.7][i], head = L(B.x, 0.95, B.z - 0.03);
       const dir = V(0.56, 0.12, -0.82).normalize();
       const cam = head.clone().addScaledVector(dir, d);
       pigeonAnim(ctx, i === 2 ? { cam, k: ease.inOutCubic(clamp((t - hits[2] - 0.03) / 0.3, 0, 1)) } : null);
       ctx.cam.set({ pos: cam, look: head.clone().add(up(-0.02 * i)), fov: 36 });
       ctx.cam.punch(hits, t, 0.12, 0.2);
-      if (i === 2) quoteCard(ctx, 'coo.', 'the pigeon', hits[2] + 0.12, ctx.time('b11') - 0.04, { y: 0.3, size: 110, byAt: hits[2] + 0.2 });
+      if (i === 2) quoteCard(ctx, 'coo.', 'the pigeon', hits[2] + 0.12, ctx.time('b11') - 0.04, { y: 0.17, size: 110, byAt: hits[2] + 0.2 });
     },
   })),
   // ── b11 "Last night was our turn. But Dad pulled his back opening a jar."  (bedroom)
@@ -526,7 +548,7 @@ export const shots = [
     setup(ctx) { const R = bedroom(ctx); ctx.store.R = R; },
     update(ctx, lt, u) {
       const { R } = ctx.store; bedroomAnim(ctx);
-      ctx.cam.move({ pos: R(0.7, 3.1, 3.9), look: R(0.15, 0.45, 0.1), fov: 46 }, { pos: R(0.6, 2.7, 3.4), look: R(0.15, 0.45, 0.1), fov: 46 }, u, 'inOutSine');
+      ctx.cam.move({ pos: R(0.5, 3.2, 4.4), look: R(0.4, 0.55, 0.4), fov: 48 }, { pos: R(0.45, 2.9, 3.9), look: R(0.4, 0.55, 0.4), fov: 48 }, u, 'inOutSine');
       tag(ctx, 'OUR TURN', ctx.time('b11.w3'), Infinity, { y: 0.18 });
     },
   },
@@ -567,7 +589,7 @@ export const shots = [
       const { L, me } = ctx.store; applyCrack(ctx); nightFog(ctx, 14, 110);
       me.pose('idle', ctx.t, { intensity: 0.4 }); me.face('neutral', ctx.t); carryRoll(ctx, me, 'under', 1);
       moveCam(ctx, { pos: L(TX + 9.5, 14.4, TZ + 1.6), look: L(TX + 2.2, 15.4, TZ + 0.2), fov: 56 }, { pos: L(TX + 8.6, 14.5, TZ + 1.4), look: L(TX + 2.2, 15.4, TZ + 0.2), fov: 56 }, u, 'inOutSine', 0.3);
-      tag(ctx, '11:58', ctx.time('b12.w10') - 0.2, Infinity, { y: 0.13, size: 120, fill: '#ffe14a', bg: 'rgba(14,10,30,0.85)' });
+      tag(ctx, '11:58', ctx.time('b12.w10') - 0.2, Infinity, { y: 0.28, size: 100, fill: '#ffe14a', bg: 'rgba(14,10,30,0.85)' });
     },
   },
   // ── b13 "I pulled out the tape. Empty roll. Just cardboard."
@@ -604,12 +626,12 @@ export const shots = [
       const { L, me } = ctx.store, t = ctx.t, k = tk(ctx); const s = applyCrack(ctx); nightFog(ctx, 14, 110);
       me.pose('idle', t, { intensity: 0.2, lookAt: CR(ctx, 0, 4.5) }); me.face(i === 0 ? 'neutral' : 'shocked', 0.4); carryRoll(ctx, me, 'under', 0);
       const kh = k.knocks[i], p = hitPulse([kh], t, 0.2);
-      if (i === 0) setCam(ctx, { pos: L(TX + 4.0, DY + 2.0, TZ + 2.3), look: L(TX, DY + 5.0, TZ - 0.2), fov: 52 }, 0.8);
-      else if (i === 1) { const f = humanFace(me); setCam(ctx, { pos: L(TX + 0.45, DY + 2.8, TZ + 1.3), look: f, fov: 42 }, 1.3, '#d0a8ff'); }
+      if (i === 0) setCam(ctx, { pos: L(TX + 2.3, DY + 1.7, TZ - 3.3), look: L(TX + 0.4, DY + 3.7, TZ), fov: 56 }, 0.8);   // profile: kid vs the crack
+      else if (i === 1) setCam(ctx, { pos: L(TX + 2.7, DY + 1.4, TZ + 1.0), look: CR(ctx, 0, 5), fov: 56 }, 0.6);              // low over-the-shoulder
       else moveCam(ctx, { pos: L(TX + 17, DY + 2.5, TZ + 7.5), look: L(TX + 1, DY + 4.5, TZ), fov: 50 }, { pos: L(TX + 16, DY + 2.5, TZ + 7), look: L(TX + 2, DY + 4.0, TZ + 1), fov: 50 }, clamp((t - kh) / 0.7, 0, 1), 'outCubic', 0.4);
       ctx.cam.shake(0.05 + 0.4 * p, t, 21 + i); ctx.cam.punch([kh], t, 0.06, 0.2);
       ctx.fx.overlay('#b45cff', 0.18 * p);
-      ctx.fx.text('KNOCK', { x: [0.3, 0.68, 0.5][i], y: [0.17, 0.24, 0.16][i], size: 120, fill: '#d9a8ff', stroke: '#1a0630', rot: [-0.18, 0.14, -0.06][i], alpha: clamp((t - kh) / 0.05, 0, 1), scale: 1 + 0.4 * p });
+      ctx.fx.text('KNOCK', { x: [0.3, 0.68, 0.5][i], y: [0.17, 0.24, 0.16][i], size: 120, fill: '#ffffff', stroke: '#3a0870', line: 14, rot: [-0.18, 0.14, -0.06][i], alpha: clamp((t - kh) / 0.05, 0, 1), scale: 1 + 0.4 * p });
     },
   })),
   // ── b15 "The crack split open. Giant fingers slid through. Long and grey, with way too many knuckles."
@@ -631,19 +653,20 @@ export const shots = [
     update(ctx, lt) {
       const { L, me } = ctx.store, t = ctx.t, k = tk(ctx); applyCrack(ctx); nightFog(ctx, 14, 110); purpleSky(ctx, 0.5);
       me.pose('surprised', 0.5, { lookAt: CR(ctx, 0, 6, 3) }); me.face('shocked', 0.4); carryRoll(ctx, me, 'under', 0);
-      me.root.position.copy(L(TX + 1.6, DY, TZ + 0.9)); me.root.rotation.y = L.yaw + PI / 2 + 0.5;
-      moveCam(ctx, { pos: L(TX + 4.2, DY + 0.7, TZ + 2.9), look: L(TX + 1.0, DY + 5.2, TZ - 0.6), fov: 66 }, { pos: L(TX + 4.0, DY + 0.65, TZ + 2.7), look: L(TX + 0.9, DY + 5.6, TZ - 0.6), fov: 66 }, clamp(lt / 1.5, 0, 1), 'inOutSine', 1.0, '#d0a8ff');
+      me.root.position.copy(L(TX + 2.3, DY, TZ + 0.9)); me.root.rotation.y = L.yaw + PI / 2 + 0.5;
+      const fy = ctx.props.crack.userData.fingerY[1];
+      moveCam(ctx, { pos: L(TX + 4.6, DY + 0.8, TZ + 2.2), look: CR(ctx, 0, fy, 1.5), fov: 66 }, { pos: L(TX + 4.4, DY + 0.75, TZ + 2.1), look: CR(ctx, 0, fy + 0.3, 1.6), fov: 66 }, clamp(lt / 1.5, 0, 1), 'inOutSine', 1.0, '#d0a8ff');
       ctx.cam.shake(0.25 + 0.6 * hitPulse([ctx.markers.fingers], t, 0.4), t, 33);
     },
   },
   {
     name: 'too many knuckles', start: 'b15.w8-0.1', set: 'town',
-    setup(ctx) { deckShot(ctx, { spot: KF, roll: true }); },
+    setup(ctx) { deckShot(ctx, { spot: KF, roll: true, fogRing: false }); ctx.store.fogRing = false; },
     update(ctx, lt, u) {
-      const { L, me } = ctx.store, t = ctx.t; applyCrack(ctx); nightFog(ctx, 14, 110); purpleSky(ctx, 0.5);
+      const { L, me } = ctx.store, t = ctx.t; applyCrack(ctx); nightFog(ctx, 40, 200); purpleSky(ctx, 0.5);
       me.pose('stunned', t, { lookAt: CR(ctx, 0, 5, 3) }); me.face('shocked', 0.4); carryRoll(ctx, me, 'under', 0);
       me.root.position.copy(L(TX + 1.6, DY, TZ + 0.9)); me.root.rotation.y = L.yaw + PI / 2 + 0.5;
-      moveCam(ctx, { pos: L(TX + 12.5, DY + 4.0, TZ + 7.5), look: L(TX + 2.4, DY + 4.2, TZ - 0.5), fov: 46 }, { pos: L(TX + 10.5, DY + 4.6, TZ + 5.6), look: L(TX + 2.6, DY + 4.6, TZ - 0.5), fov: 46 }, u, 'inOutSine', 0.4);
+      moveCam(ctx, { pos: L(TX + 12, DY + 3.6, TZ + 6.4), look: L(TX, DY + 5, TZ - 0.3), fov: 46 }, { pos: L(TX + 9.6, DY + 3.9, TZ + 5.0), look: L(TX, DY + 5, TZ - 0.3), fov: 46 }, u, 'linear', 0.5);
       ctx.cam.shake(0.3, t, 35);
     },
   },
@@ -656,18 +679,23 @@ export const shots = [
     },
     update(ctx, lt) {
       const { L, me } = ctx.store, t = ctx.t, P = ctx.props; applyCrack(ctx); nightFog(ctx, 14, 110); purpleSky(ctx, 0.4);
-      me.pose('idle', t, { intensity: 0.2, headPitch: 0.75 }); me.face('sweat', t);
-      const J = me.joints;
-      for (const s of ['L', 'R']) { J['arm' + s].rotation.x += -1.05; J['arm' + s].rotation.z += (s === 'L' ? -0.18 : 0.18); J['foreArm' + s] && (J['foreArm' + s].rotation.x += -0.35); }
+      me.pose('idle', 0.4, { intensity: 0.1, headPitch: 0.75 }); me.face('sweat', 0.4);
+      const J = me.joints;                                   // both hands out, palms up, from the first frame
+      for (const s of ['L', 'R']) { J['arm' + s].rotation.x += -1.15; J['arm' + s].rotation.z += (s === 'L' ? -0.32 : 0.32); J['foreArm' + s] && (J['foreArm' + s].rotation.x += -0.3); }
       me.root.updateMatrixWorld(true);
       const hl = J.handL.getWorldPosition(V()), hr = J.handR.getWorldPosition(V()), yaw = me.root.rotation.y;
-      const pop = (w) => ease.outBack(clamp((t - ctx.time(w)) / 0.18, 0, 1));
-      const mid0 = hl.clone().lerp(hr, 0.5), lat = V(Math.cos(yaw), 0, -Math.sin(yaw)), fw0 = V(Math.sin(yaw), 0, Math.cos(yaw));
-      const items = [[P.homework, 0.2, 'b16.w7', 0.2, 2.0], [P.sock, -0.2, 'b16.w9', -0.4, 2.0], [P.gumPack, 0.0, 'b16.w11', 0.1, 2.4]];
-      items.forEach(([o, dx, w, ry, sc], j) => { const k = pop(w); o.visible = k > 0.01; o.scale.setScalar(Math.max(0.01, k * sc)); o.position.copy(mid0).addScaledVector(lat, dx).addScaledVector(fw0, j === 2 ? 0.12 : 0).add(up(0.04 + (j === 2 ? 0.1 : 0) + 0.25 * (1 - k))); o.rotation.set(0, yaw + ry, 0); });
-      P.glint.userData.set(clamp((t - ctx.time('b16.w13') + 0.05) / 0.5, 0, 1)); P.glint.position.copy(P.gumPack.position).add(up(0.1)); P.glint.lookAt(ctx.camera.position);
       const mid = hl.clone().lerp(hr, 0.5), fwd = V(Math.sin(yaw), 0, Math.cos(yaw));
-      setCam(ctx, { pos: mid.clone().addScaledVector(fwd, 0.95).add(up(0.95)), look: mid.clone().addScaledVector(fwd, -0.05).add(up(0.15)), fov: 44 }, 1.4);
+      const pop = (w) => ease.outBack(clamp((t - ctx.time(w)) / 0.18, 0, 1));
+      // homework in the left palm, sock in the right, the gum pack centred (side by side, life-size-ish)
+      const items = [[P.homework, hl, 'b16.w7', 0.1, 1.2], [P.sock, hr, 'b16.w9', -0.3, 1.2], [P.gumPack, mid, 'b16.w11', 0.0, 1.3]];
+      items.forEach(([o, at, w, ry, sc], j) => {
+        const k = pop(w); o.visible = k > 0.01; o.scale.setScalar(Math.max(0.01, k * sc));
+        o.position.copy(at).addScaledVector(fwd, j === 2 ? 0.05 : 0.02).add(up(0.07 + 0.2 * (1 - k)));
+        o.rotation.set(0, yaw + ry, 0);
+      });
+      P.glint.userData.set(clamp((t - ctx.time('b16.w13') + 0.05) / 0.5, 0, 1)); P.glint.position.copy(P.gumPack.position).add(up(0.1)); P.glint.lookAt(ctx.camera.position);
+      // top-down: camera above the hands, the look point pushed forward so the palms sit high (clear of the caption)
+      setCam(ctx, { pos: mid.clone().addScaledVector(fwd, 0.25).add(up(1.3)), look: mid.clone().addScaledVector(fwd, 0.16), fov: 44 }, 1.4);
     },
   },
   // ── b17 "I chewed all twelve pieces at once. And I gummed that crack closed."
@@ -739,14 +767,14 @@ export const shots = [
         ctx.set.set('windowGlow', (hi, wi) => (hash(hi * 13.1 + wi * 3.7) < (n + 0.5) / 5 ? 1 : 0.08));
         cheer.forEach(([id], j) => { const c = ctx.cast[id]; c.pose('cheer', t + j * 0.4, { speed: 1.3 }); c.face(j % 2 ? 'laugh' : 'grin', t + j); });
         if (i === 2) setCam(ctx, { pos: D(-3.5, 1.7, 11.5), look: D(-3.0, 2.6, 2.0), fov: 54 }, 1.2, '#ffe0b0');
-        else { const c = ctx.cast.x06, f = humanFace(c); const dir = V(Math.sin(c.root.rotation.y), 0, Math.cos(c.root.rotation.y)); setCam(ctx, { pos: f.clone().addScaledVector(dir, 2.8).add(up(-0.2)), look: f.clone().add(up(-0.2)), fov: 38 }, 1.5, '#ffe0b0'); }
+        else { const c = ctx.cast.x06, f = humanFace(c); const dir = V(Math.sin(c.root.rotation.y - 0.55), 0, Math.cos(c.root.rotation.y - 0.55)); setCam(ctx, { pos: f.clone().addScaledVector(dir, 2.8).add(up(-0.2)), look: f.clone().add(up(-0.2)), fov: 38 }, 1.5, '#ffe0b0'); }
       } else {
         const me = ctx.cast.me;
         smearPose(me, t, hits); me.face(dh < 0.18 ? 'huss' : 'determined', t);
         const target = CR(ctx, P.crack.userData.slamX, P.crack.userData.slamY, 0.45);
         P.splat.position.copy(target); P.splat.scale.set(1.25, 0.9, 0.5); P.splat.rotation.set(0, PI / 2, 0);
         const cams = {
-          0: { pos: L(TX + 3.9, DY + 1.3, TZ + 1.8), look: L(TX + 0.2, DY + 4.4, TZ - 0.2), fov: 60 },
+          0: { pos: L(TX + 4.6, DY + 1.0, TZ + 2.6), look: L(TX + 0.8, DY + 3.2, TZ), fov: 62 },
           1: { pos: L(TX + 15, DY + 3.5, TZ - 7), look: L(TX + 0.5, DY + 5.5, TZ), fov: 50 },
           3: { pos: L(TX + 4.6, DY + 0.9, TZ - 1.6), look: L(TX + 0.6, DY + 3.8, TZ), fov: 58 },
           5: { pos: L(TX + 20, DY + 3.5, TZ + 9), look: L(TX, DY + 5.8, TZ), fov: 50 },
@@ -765,8 +793,8 @@ export const shots = [
     setup(ctx) { const L = townBase(ctx, { fogRing: true, glow: 1 }); ctx.store.L = L; },
     update(ctx, lt) {
       const { L } = ctx.store; applyCrack(ctx);
-      moveCam(ctx, { pos: L(TX + 5.6, 13.6, TZ + 0.5), look: L(TX + 2.2, 13.6, TZ), fov: 40 }, { pos: L(TX + 5.0, 13.6, TZ + 0.4), look: L(TX + 2.2, 13.6, TZ), fov: 40 }, clamp(lt / 1, 0, 1), 'inOutSine', 0.3);
-      tag(ctx, 'MIDNIGHT', ctx.time('b19') + 0.1, Infinity, { y: 0.15, size: 70, bg: 'rgba(14,10,30,0.85)' });
+      moveCam(ctx, { pos: L(TX + 14.5, 2.8, TZ + 8.2), look: L(TX, 15.3, TZ), fov: 44 }, { pos: L(TX + 14, 3, TZ + 8), look: L(TX, 15.6, TZ), fov: 44 }, clamp(lt / 1, 0, 1), 'inOutSine', 0);
+      tag(ctx, 'MIDNIGHT', ctx.time('b19') + 0.1, Infinity, { y: 0.12, size: 70, bg: 'rgba(14,10,30,0.85)' });
     },
   },
   {
@@ -784,16 +812,16 @@ export const shots = [
     setup(ctx) {
       const L = townBase(ctx, { glow: 1 }); const P = ctx.props, C = P.crack.userData;
       const sx = C.xAt(0.55);
-      put(ctx, 'me', L(TX + 0.78, DY, TZ - sx + 0.1), L.yaw - PI / 2);
+      put(ctx, 'me', L(TX + 1.2, DY, TZ - sx + 0.1), L.yaw - PI / 2);
       ctx.add(P.sliverGlow); ctx.store = { L, sx };
     },
     update(ctx, lt) {
       const { L, sx } = ctx.store, t = ctx.t, me = ctx.cast.me, P = ctx.props; applyCrack(ctx); nightFog(ctx, 30, 190);
       const k = clamp((t - ctx.time('b20.w5')) / 0.5, 0, 1);
       me.pose('peer', t, { intensity: 0.3 }); me.face(k > 0.5 ? 'squint' : 'neutral', 0.5);
-      me.root.position.copy(L(TX + 0.78 - 0.12 * k, DY, TZ - sx + 0.1));
+      me.root.position.copy(L(TX + 1.2 - 0.18 * k, DY, TZ - sx + 0.1));
       const sp = CR(ctx, sx, 0.62, 0.1); P.sliverGlow.position.copy(sp); P.sliverGlow.scale.setScalar(0.9 + 0.2 * Math.sin(t * 5)); P.sliverGlow.material.opacity = 0.9;
-      moveCam(ctx, { pos: L(TX + 2.9, DY + 2.0, TZ - sx + 2.9), look: L(TX + 0.45, DY + 1.75, TZ - sx), fov: 40 }, { pos: L(TX + 1.7, DY + 1.9, TZ - sx + 1.7), look: L(TX + 0.35, DY + 1.78, TZ - sx), fov: 36 }, clamp(lt / 2.4, 0, 1), 'inOutSine', 1.2, '#ffd0ec');
+      moveCam(ctx, { pos: L(TX + 0.65, DY + 1.85, TZ - sx + 1.9), look: L(TX + 0.6, DY + 1.8, TZ - sx), fov: 40 }, { pos: L(TX + 0.63, DY + 1.83, TZ - sx + 1.3), look: L(TX + 0.6, DY + 1.8, TZ - sx), fov: 40 }, clamp(lt / 2.4, 0, 1), 'inOutSine', 1.2, '#ffd0ec');
       tag(ctx, 'RULE 3', ctx.time('b20.w3'), Infinity, { y: 0.16, size: 90, bg: 'rgba(200,0,40,0.92)' });
     },
   },
@@ -821,7 +849,7 @@ export const shots = [
       P.tapeSheet.rotation.set(0, 0, 0.08 * Math.sin(t * 0.7));
       const hl = smooth((t - ctx.time('b21') - 0.2) / 2.4);
       P.hand.position.set(-1.1, lerp(5.0, -0.5, hl), -8.5); P.hand.rotation.set(0.1, 0.25, 0.15);
-      P.eye.position.set(2.6, 2.7, -5.6); P.eye.rotation.set(0, -0.3, 0); P.eye.userData.set(0.45 + 0.1 * Math.sin(t * 0.8), -0.6, -0.2);
+      P.eye.position.set(1.1, 2.6, -5.6); P.eye.rotation.set(0, -0.3, 0); P.eye.userData.set(0.45 + 0.1 * Math.sin(t * 0.8), -0.6, -0.2);
       ctx.cam.move({ pos: V(0.25, 1.5, 2.1), look: V(0.2, 1.6, -3), fov: 54 }, { pos: V(0.2, 1.45, 1.8), look: V(0.2, 1.6, -3), fov: 52 }, clamp(lt / 2.8, 0, 1), 'inOutSine');
       sliverMask(ctx, t);
       lightCard(ctx, 'Phew. The ladder monsters almost got in again.', 'the other side', ctx.markers.quote2, ctx.time('b22') - 0.06, { byAt: ctx.time('b21.w4') });
@@ -835,8 +863,10 @@ export const shots = [
       const { L, me } = ctx.store, t = ctx.t, k = tk(ctx); applyCrack(ctx); nightFog(ctx, 60, 260);
       me.pose('stunned', 0.3); me.face('shocked', 0.5);
       const f = humanFace(me);
-      const u = ease.inOutCubic(clamp((t - ctx.time('b22')) / (k.us - ctx.time('b22') + 0.15), 0, 1));
-      const a = { pos: f.clone().add(V(1.7, 0.05, 0.25)), look: f.clone(), fov: 36 };
+      const th = ctx.time('b22.w2') - 0.1;            // hold the frozen face, then crane out
+      const u = ease.inOutCubic(clamp((t - th) / (k.us + 0.15 - th), 0, 1));
+      const hold = clamp((t - ctx.time('b22') + 0.1) / (th - ctx.time('b22') + 0.1), 0, 1);
+      const a = { pos: f.clone().add(V(1.85 - 0.25 * hold, 0.05, 0.27 - 0.04 * hold)), look: f.clone(), fov: 36 };
       const b = { pos: L(TX + 58, DY + 26, TZ + 30), look: L(TX + 4, DY + 3, TZ - 1), fov: 46 };
       const w = ease.inQuad(u);
       ctx.cam.set({ pos: a.pos.clone().lerp(b.pos, u), look: a.look.clone().lerp(b.look, Math.min(1, w * 1.1)), fov: lerp(a.fov, b.fov, u) });
@@ -869,7 +899,7 @@ function hamblePos(ctx, t) {
 function flashAnim(ctx) {
   const t = ctx.t, k = tk(ctx), h = ctx.cast.hamble, P = ctx.props, L = T(ctx);
   h.root.position.copy(hamblePos(ctx, t));
-  const tap = k.bumped - 0.05, turn = ease.inOutCubic(clamp((t - k.crack5 - 0.08) / 0.3, 0, 1));
+  const tap = k.bumped - 0.05, turn = ease.inOutCubic(clamp((t - k.crack5 + 0.1) / 0.3, 0, 1));
   h.root.rotation.set(0, L.yaw - PI / 2 + 2.2 * turn, 0);
   if (t < tap - 0.35) { climbPose(h, t); h.face('determined', t); }
   else if (turn < 0.05) {
@@ -912,19 +942,20 @@ function parkAnim(ctx) {
   g.pose('crossArms', t); g.face('smug', 0.6);
   chew(g, t, 1.2);
   P.leaves.userData.set(t);
+  P.bubble.userData.set(0);                      // per-frame reset (grandma gum overrides it after parkAnim)
   m.root.updateMatrixWorld(true);
   const toLocal = (v) => ctx.set.root.worldToLocal(v);
   const J = m.joints, pairs = [];
   for (const [leg, dx] of [[J.legL, 0.05], [J.legR, -0.05]]) {
     const a = leg.localToWorld(V(dx, -0.12, 0.05)), b = a.clone(); b.y = 0.47; b.x += 0.03 * Math.sin(t * 1.3);
-    pairs.push([toLocal(a.clone()), toLocal(b.clone()), 0.025]);
+    pairs.push([toLocal(a.clone()), toLocal(b.clone()), 0.05]);
     const a2 = leg.localToWorld(V(-dx, -0.2, 0.18)), b2 = a2.clone(); b2.y = 0.46; b2.z -= 0.05;
-    pairs.push([toLocal(a2.clone()), toLocal(b2.clone()), 0.018]);
+    pairs.push([toLocal(a2.clone()), toLocal(b2.clone()), 0.04]);
   }
   const hip = J.hips.localToWorld(V(0, 0.0, -0.12));
-  pairs.push([toLocal(hip.clone()), toLocal(L(PT.x + 0.1, 0.77, PT.z + 0.32)), 0.03]);
-  pairs.push([toLocal(J.hips.localToWorld(V(0.18, 0.1, -0.1))), toLocal(L(PT.x + 0.45, 0.77, PT.z + 0.3)), 0.02]);
-  pairs.push([toLocal(J.hips.localToWorld(V(-0.18, 0.05, -0.1))), toLocal(L(PT.x - 0.2, 0.47, PT.z + 0.75)), 0.02]);
+  pairs.push([toLocal(hip.clone()), toLocal(L(PT.x + 0.1, 0.77, PT.z + 0.32)), 0.055]);
+  pairs.push([toLocal(J.hips.localToWorld(V(0.18, 0.1, -0.1))), toLocal(L(PT.x + 0.45, 0.77, PT.z + 0.3)), 0.045]);
+  pairs.push([toLocal(J.hips.localToWorld(V(-0.18, 0.05, -0.1))), toLocal(L(PT.x - 0.2, 0.47, PT.z + 0.75)), 0.045]);
   P.strings.userData.set(pairs);
   ctx.store.walkers.forEach((id, i) => {
     const c = ctx.cast[id], x = -6 + ((t * 1.1 + i * 6) % 12);
@@ -956,7 +987,7 @@ function bedroom(ctx) {
   S.root.updateMatrixWorld(true);
   const R = (x, y, z) => S.root.localToWorld(V(x, y, z)); const yaw = yawOf(S.root);
   const d = put(ctx, 'dad', R(0.25, 0, 0.15), yaw + PI / 2);
-  put(ctx, 'me', R(1.35, 0, 0.75), yaw - PI / 2 - 0.35);
+  put(ctx, 'me', R(0.55, 0, -0.85), yaw + 0.15);
   const P = ctx.props;
   ctx.add(P.jar); P.jar.position.copy(R(-0.75, 0, 0.62)); P.jar.rotation.set(0, 0.4, 0);
   ctx.add(P.roll); P.roll.position.copy(R(1.65, 0.42, -1.4)); P.roll.rotation.set(0, yaw + 0.3, 0); P.roll.userData.set(1);
@@ -992,6 +1023,6 @@ function lightCard(ctx, quote, by, t0, t1, { y = 0.12, size = 70, byAt = null } 
   const pop = d < 0.2 ? ease.outBack(clamp(d / 0.2, 0, 1)) : 1;
   const lines = wrap(`“${quote}”`, 20), nl = lines.split('\n').length;
   ctx.fx.text(lines, { y, size, font: 'narr', fill: '#ffffff', stroke: '#000000', line: 10, scale: 0.6 + 0.4 * pop, alpha: a, rot: -0.02 });
-  if (by) ctx.fx.text(`— ${by}`, { y: y + (nl * 0.5 + 0.7) * size * 1.05 / 1920, size: size * 0.66, font: 'narr', fill: '#ffe14a', stroke: '#000000', line: 8, alpha: clamp((byAt != null ? t - byAt : d - 0.25) / 0.12, 0, 1) * a, rot: -0.02 });
+  if (by) ctx.fx.text(`— ${by}`, { y: y + (nl * 0.5 + 0.7) * size * 1.05 / 1920, size: size * 0.66, font: 'narr', fill: '#ffe14a', stroke: '#000000', line: 10, bg: 'rgba(8,2,16,0.85)', alpha: clamp((byAt != null ? t - byAt : d - 0.25) / 0.12, 0, 1) * a, rot: -0.02 });
   ctx.caption.hide(true);
 }
