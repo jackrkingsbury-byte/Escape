@@ -1,0 +1,449 @@
+{
+ "title": "In This Town — The 3:33",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {
+  "lacey": [
+   "bf_emma",
+   0.92,
+   "en-gb",
+   null
+  ],
+  "neighbor": [
+   "am_michael",
+   1.0,
+   "en-us",
+   null
+  ]
+ },
+ "logline": "Every night at 3:33 a glowing train with no tracks floats down Main Street, and nobody who boards comes back the same. When a kid's cat strolls on board, he dives in after it, past windows into other versions of town, and pulls the emergency stop to get home.",
+ "twist": "He gets off on his own street, but the clock tower ticks backwards, neighbors say goodbye when they arrive, and his cat has a white paw it never had. At 3:33 the train glides past again, and in the window, waving and holding his real cat, is him.",
+ "caption_hook": "never get on the 3:33. my cat did.",
+ "vibe": "unknown",
+ "sets": [
+  "main street at quiet night with fog, and the clock tower",
+  "main street by day (Otto's return)",
+  "park bench by day",
+  "bedroom interior redressed as the library",
+  "the kid's bedroom at night, window looking out on the street",
+  "train interior (new, built from boxes)",
+  "main street at dusk (the wrong home)"
+ ],
+ "newProps": [
+  "long silver floating train with no wheels (rounded boxes), rows of glowing yellow windows, cylinder headlight with a cone beam, red tail lights",
+  "fog layer on the street",
+  "train interior: long glowing carriage corridor with box seats and window panels",
+  "three window scenes: green panel with a blocky long-neck dinosaur walking between houses; blue panel with bubble spheres and a box fish swimming past a street lamp; gray panel with pigeons in tiny hats at a bus stop",
+  "tiny conductor's cap for the cat (short cylinder with a brim)",
+  "sandwich (stacked thin boxes)",
+  "big red EMERGENCY STOP lever with a cylinder handle, sparks (small glowing spheres), red flashing light",
+  "knee-length white beard (long tapered box) for Grandpa Otto",
+  "book stacks and a desk for the library (boxes)",
+  "bright white paw on the cat",
+  "clock tower hands animated to spin backwards and set to 3:33",
+  "second identical kid (same outfit) in a train window"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, a train comes through at three thirty-three every night. There are no tracks.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "3:33",
+   "visual": "Quiet night, fog on main street. Close-up of the clock tower as it hits 3:33. Then a long silver train with glowing yellow windows and a big headlight glides down the middle of the street, floating a meter off the ground. No tracks."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It just floats down Main Street, glowing, without making a sound.",
+   "gapAfter": 0.3,
+   "visual": "Low angle from the sidewalk: the train slides silently past the houses. The street lamps flicker as it passes, and its headlight beam sweeps through the fog."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Glowing windows whip past the camera, one per HUSS, each with a dark passenger silhouette inside."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nobody who gets on comes back the same.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The train stops. A door slides open onto pure white light. Nobody is inside."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandpa Otto rode it once. He came back twelve seconds later with a beard down to his knees.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "12 SECONDS LATER",
+   "visual": "Main street by day. Grandpa Otto (bald, glasses) steps off the train with an enormous white beard reaching his knees, beaming (face: grin)."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He says it was the best vacation of his life. He won't say where.",
+   "gapAfter": 0.3,
+   "visual": "Park bench: Otto sits with his huge beard (face: smug) and holds a finger to his lips. A kid leans in to ask, and Otto turns away."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Lacey came back speaking only in rhymes. She's a librarian.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The library (redressed bedroom with book-stack boxes). Mrs. Lacey (glasses, gray bun, cardigan) at her desk, finger raised at a kid. The quote card slams in.",
+   "markers": {
+    "rhymes": "w:rhymes"
+   }
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "lacey",
+   "text": "This book is late, and that's a crime. Return it now, or pay a dime.",
+   "card": {
+    "type": "quote",
+    "quote": "This book is late, and that's a crime. Return it now, or pay a dime.",
+    "by": "Mrs. Lacey"
+   },
+   "markers": {
+    "quoteLacey": "start-0.05"
+   },
+   "gapAfter": 0.25,
+   "visual": "The library (redressed bedroom with book-stack boxes). Mrs. Lacey (glasses, gray bun, cardigan) at her desk, finger raised at a nervous kid holding a book."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It's a problem.",
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "start",
+     "gain": 0.45
+    }
+   ],
+   "gapAfter": 0.3,
+   "visual": "The kid slowly backs out of the library, holding the book up like a shield."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So the rule is simple. When the train stops, you stay inside, and you don't look.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "visual": "Night. Up and down the street, house windows go dark one by one as the curtains close. In his bedroom, the kid pulls the blanket over his head while his window glows white."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Last night it stopped outside my house. And my cat walked right on board.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "POV from the bedroom window: the train idles outside with its door open, white light spilling across the road. The orange cat strolls across the street and hops up the steps inside."
+  },
+  {
+   "id": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "The kid (pajamas, face: shocked) presses his face to the window while the train door slides shut, a punch-in on each HUSS."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I grabbed my backpack and dove through the doors right before they closed.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "thump",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid in pajamas and a backpack sprints across the foggy street and dives through the closing doors, which slam shut behind him."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Inside, every window showed a different version of our town.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "visual": "Inside the train: a long glowing carriage of seats, and every window along both sides glows a different color."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "One with dinosaurs. One underwater. One where everyone is a pigeon.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:dinosaurs",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:underwater",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:pigeon",
+     "gain": 0.65
+    }
+   ],
+   "visual": "Tracking past three windows: green, with a blocky long-neck dinosaur walking between houses; blue, with bubbles and a box fish swimming past a street lamp; gray, with pigeons in tiny hats waiting at a bus stop.",
+   "markers": {
+    "dino": "w:dinosaurs",
+    "water": "w:underwater",
+    "pigeons": "w:pigeon"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And at the very back, in a tiny conductor's hat, eating a sandwich... my cat.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:cat",
+     "gain": 0.8
+    }
+   ],
+   "visual": "At the back of the carriage, the orange cat sits on a seat in a tiny conductor's cap, holding a stacked sandwich. Hold on the cat's paw gripping the sandwich: one paw is bright WHITE (a clue sharp viewers can catch).",
+   "markers": {
+    "conductor": "w:cat"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He looked at me like I was the one who was late.",
+   "gapAfter": 0.3,
+   "visual": "Close-up of the cat: a slow, unimpressed squint. The kid stares back (face: neutral)."
+  },
+  {
+   "id": "b18",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Staredown between the kid and the cat, alternating punch-ins."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the windows got closer to home. My street. My house. A different kid in my bed. And my cat would not come.",
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:different",
+     "gain": 0.45
+    }
+   ],
+   "markers": {
+    "otherkid": "w:different"
+   },
+   "gapAfter": 0.3,
+   "visual": "Tracking past windows that now show the kid's own street, then his own house, then through a bedroom window: a different kid asleep in his bed. Back at the cat: it hisses and backs away when the kid reaches for it."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I scooped him up anyway and yanked the emergency stop.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:yanked",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:stop",
+     "gain": 0.8
+    }
+   ],
+   "overlay": "EMERGENCY STOP",
+   "visual": "The kid tucks the cat under one arm and yanks a big red EMERGENCY STOP lever. Sparks, flashing red light, camera shake.",
+   "markers": {
+    "estop": "w:yanked"
+   }
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The doors opened. My street. My house. Home.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Main street at dusk. The doors open and the kid steps off hugging the cat (face: smile). His house and the street lamps all look normal."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except the clock tower was ticking backwards.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Close-up of the clock tower as its hands spin backwards."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "neighbor",
+   "text": "Bye! See you!",
+   "overlay": "GOODBYE!",
+   "markers": {
+    "bye": "start"
+   },
+   "gapAfter": 0.25,
+   "visual": "A neighbor (tall, green cap, mustache) walks UP to the kid from down the street, waving cheerfully as he arrives."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone said goodbye when they arrived.",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.4
+    }
+   ],
+   "gapAfter": 0.3,
+   "visual": "More neighbors arrive one after another, each waving goodbye as they walk up. The kid hugs the cat tighter (face: worried)."
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And my cat? My cat never had a white paw.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:white",
+     "gain": 0.8
+    }
+   ],
+   "visual": "Close-up of the cat in his arms: one paw is bright white. The cat slowly turns its head to the camera and winks.",
+   "markers": {
+    "whitepaw": "w:white"
+   }
+  },
+  {
+   "id": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "At three thirty-three, the train came back. And in the window, waving at me, holding my cat... was me.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "we:me",
+     "gain": 0.9
+    }
+   ],
+   "overlay": "3:33",
+   "visual": "Night and fog. The clock tower reads 3:33 as the train glides past the kid. In one glowing window stands another kid in the identical outfit, waving and holding the real orange cat (no white paw). Our kid is stunned (stunned pose).",
+   "markers": {
+    "wasme": "we:me"
+   }
+  },
+  {
+   "id": "b27",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.8,
+   "visual": "The train's red tail lights shrink into the fog, one punch-in per HUSS. On the last one, the white-paw cat in his arms slowly grins."
+  }
+ ]
+}
