@@ -80,7 +80,7 @@
    "id": "b13",
    "kind": "line",
    "speaker": "narr",
-   "text": "Everybody laughed."
+   "text": "Everybody laughed. Some goon yelled,"
   },
   {
    "id": "b14",
@@ -92,7 +92,7 @@
    "id": "b15",
    "kind": "line",
    "speaker": "narr",
-   "text": "My opponent? The mayor. Undefeated for forty years."
+   "text": "My opponent? The mayor. Undefeated for forty years. Top ten scariest opponents."
   },
   {
    "id": "b16",
@@ -105,7 +105,7 @@
    "id": "b17",
    "kind": "line",
    "speaker": "narr",
-   "text": "Checkmate. In four moves."
+   "text": "Checkmate. In four moves. Respect."
   },
   {
    "id": "b18",
@@ -142,7 +142,7 @@
    "id": "b23",
    "kind": "line",
    "speaker": "narr",
-   "text": "My grandad plays blindfolded. He just lost his glasses."
+   "text": "My grandad plays blindfolded. He just lost his glasses. Bro."
   },
   {
    "id": "b24",
@@ -162,6 +162,12 @@
    "speaker": "pigeon",
    "text": "HUSS! HUSS! HUSS!",
    "n": 3
+  },
+  {
+   "id": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Respect."
   }
  ]
 }

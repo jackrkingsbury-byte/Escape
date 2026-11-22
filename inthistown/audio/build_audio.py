@@ -32,7 +32,7 @@ def style(*mix):
 # F0 ≈ 200 Hz, ~13 semitone range). Kokoro has no young male voice, so we take am_fenrir and
 # youthify it with the WORLD vocoder (pitch ×1.45, vocal tract ×1.12, contour ×1.1).
 VOICES = {  # speaker → (voice style or name, speed, lang, youth=(f0_scale, formant, expr) | None)
-    'narr': ('am_fenrir', 1.0, 'en-us', (1.45, 1.12, 1.1)),
+    'narr': ('am_fenrir', 1.05, 'en-us', (1.45, 1.12, 1.1)),
     'me': ('am_fenrir', 0.97, 'en-us', (1.45, 1.12, 1.12)),
     'heckler': ('bm_george', 1.1, 'en-gb', None),
     'marcus': ('am_liam', 1.04, 'en-us', (1.3, 1.07, 1.1)),
@@ -44,19 +44,16 @@ TRIPLET_PERIOD = 0.98
 
 # Extra silence AFTER each beat (seconds). Default 0.30.
 GAP_AFTER = {
-    'b01': 0.2, 'b02': 0.25, 'b03': 0.3, 'b04': 0.15, 'b05': 0.5, 'b06': 0.55, 'b07': 0.15, 'b08': 0.3,
-    'b09': 0.65, 'b10': 0.35, 'b11': 0.35, 'b12': 0.2,
-    'b13': 1.15,  # crowd laugh, heckler cuts in on its tail
-    'b14': 0.35, 'b15': 1.25,  # "TOP 10" sting
-    'b16': 0.35, 'b17': 1.35,  # air horn + RESPECT
-    'b18': 0.75, 'b19': 0.4, 'b20': 1.0,  # deal-with-it shades + boom
-    'b21': 0.15, 'b22': 0.4, 'b23': 0.75,  # bruh
-    'b24': 0.3, 'b25': 0.45, 'b26': 2.1,   # air horn + RESPECT + coo
+    'b01': 0.2, 'b02': 0.22, 'b03': 0.3, 'b04': 0.15, 'b05': 0.32, 'b06': 0.3, 'b07': 0.15, 'b08': 0.3,
+    'b09': 0.4, 'b10': 0.35, 'b11': 0.35, 'b12': 0.2, 'b13': 0.1, 'b14': 0.35, 'b15': 0.4,
+    'b16': 0.35, 'b17': 0.42, 'b18': 0.5, 'b19': 0.38, 'b20': 0.65,
+    'b21': 0.15, 'b22': 0.4, 'b23': 0.45, 'b24': 0.3, 'b25': 0.45, 'b26': 0.45, 'b27': 1.15,
 }
 # Pause after a phrase-final punctuation INSIDE a beat.
 PHRASE_PAUSE = {',': 0.1, '.': 0.28, '?': 0.32, '!': 0.26, '...': 0.34, ';': 0.2}
-PHRASE_PAUSE_OVERRIDE = {('b04', 0): 0.12, ('b09', 0): 0.45, ('b15', 0): 0.35, ('b15', 1): 0.3, ('b17', 0): 0.4,
-                         ('b23', 0): 0.45, ('b25', 0): 0.35}
+PHRASE_PAUSE_OVERRIDE = {('b04', 0): 0.12, ('b09', 0): 0.45, ('b13', 0): 0.8, ('b15', 0): 0.35, ('b15', 1): 0.3,
+                         ('b15', 2): 0.4, ('b17', 0): 0.4, ('b17', 1): 0.4, ('b23', 0): 0.45, ('b23', 1): 0.35,
+                         ('b25', 0): 0.35}
 LEAD_IN = 0.3
 
 
@@ -315,33 +312,32 @@ def main():
             put(S.wood_knock(seed=i, pitch=1 + 0.05 * (i % 3))[: int(0.09 * SR)] * np.exp(-np.arange(int(0.09 * SR)) / (0.025 * SR)), th + 0.02, 0.4, 0.45 + 0.1 * (i % 2))
         if bid == 'b16' and i in (1, 4):
             put(S.clock_click(), th + 0.05, 0.5, 0.65)
-    boom = S.vine_boom(); horn = S.airhorn()
-    gags['boomExcept'] = wstart('b02', 1); put(boom, gags['boomExcept'], 0.55)
-    gags['boomPigeon'] = wstart('b05', -1); put(boom, gags['boomPigeon'], 0.6)
-    gags['hornGrandad'] = wstart('b06', 3) - 0.05; put(horn, gags['hornGrandad'], 0.32)
-    put(S.whoosh(0.3, up=True), wstart('b09', 5) - 0.05, 0.35)                  # sacrifice → plate flies
-    gags['bruh1'] = wend('b09') + 0.15; put(say('bruh.', 'am_onyx', 0.9, pitch=0.9), gags['bruh1'], 0.6)
-    for k in range(2):                                                          # cat L-hop boings
-        put(S.whoosh(0.18, seed=8 + k), wstart('b10', 5) + k * 0.28, 0.25, 0.4 + 0.2 * k)
-    put(crowd_laugh(), wend('b13') + 0.05, 0.9)
-    gags['top10'] = wend('b15') + 0.12
-    put(say('Top. Ten.', 'am_onyx', 0.9, rev=0.12), gags['top10'], 0.85)
-    put(S.dun_dun(), gags['top10'] + 0.75, 0.45)
+    # Meme words ("goon", "top ten", "respect", "bruh") are narrated lines in the script — no fake effects.
+    # The only meme SOUND EFFECT is the real HUSS. Markers below drive the visual gags (zooms, text).
+    def wfind(bid, word):
+        for i, w in enumerate(beat[bid]['words']):
+            if w['text'].lower().startswith(word.lower()):
+                return i
+        raise KeyError(f'{word} not in {bid}')
+    gags['boomExcept'] = wstart('b02', 1)
+    gags['boomPigeon'] = wstart('b05', -1)
+    gags['hornGrandad'] = wstart('b06', 3) - 0.05
+    gags['bruh1'] = wend('b09') + 0.15
+    gags['top10'] = wstart('b15', wfind('b15', 'Top'))
     gags['checkmate'] = wstart('b17', 0)
-    put(S.thump(0.4), gags['checkmate'], 0.6); put(S.wood_knock(seed=77, pitch=0.8), gags['checkmate'] + 0.12, 0.6)
-    put(horn, gags['checkmate'] + 0.05, 0.3)
-    gags['respect1'] = wend('b17') + 0.25
-    put(say('Respect!', 'am_fenrir', 0.85, rev=0.12), gags['respect1'], 0.85); put(S.ding(), gags['respect1'] + 0.6, 0.4)
-    music_stop = beat['b18']['start'] - 0.12                                   # record scratch → silence
-    put(S.record_scratch(), music_stop - 0.05, 0.55)
-    gags['shades'] = wend('b20') + 0.05; put(boom, gags['shades'], 0.55)
-    gags['bruh2'] = wend('b23') + 0.15; put(say('bruh.', 'am_onyx', 0.9, pitch=0.9), gags['bruh2'], 0.6)
-    gags['boomWinning'] = wstart('b25', -1); put(boom, gags['boomWinning'], 0.55)
-    hend = beat['b26']['words'][-1]['end']
-    gags['hornEnd'] = hend + 0.1; put(horn, gags['hornEnd'], 0.32)
-    gags['respect2'] = hend + 0.75; put(say('Respect!', 'am_fenrir', 0.85, rev=0.12), gags['respect2'], 0.85); put(S.ding(), gags['respect2'] + 0.6, 0.4)
-    put(S.coo(), hend + 1.4, 0.6, 0.55)
-    gags['ooh'] = beat['b22']['words'][-1]['end'] + 0.05
+    gags['respect1'] = wstart('b17', wfind('b17', 'Respect'))
+    gags['shades'] = wend('b20') + 0.05
+    gags['bruh2'] = wstart('b23', wfind('b23', 'Bro'))
+    gags['boomWinning'] = wstart('b25', -1)
+    gags['hornEnd'] = beat['b26']['words'][-1]['end'] + 0.1
+    gags['respect2'] = wstart('b27', 0)
+    put(S.whoosh(0.3, up=True), wstart('b09', 5) - 0.05, 0.3)                   # plate flies (foley)
+    for k in range(2):                                                          # cat hops (foley)
+        put(S.whoosh(0.18, seed=8 + k), wstart('b10', 5) + k * 0.28, 0.2, 0.4 + 0.2 * k)
+    put(crowd_laugh(), wend('b13', wfind('b13', 'laughed')) + 0.05, 0.85)        # "Everybody laughed."
+    put(S.thump(0.3), gags['checkmate'] + 0.1, 0.45); put(S.wood_knock(seed=77, pitch=0.8), gags['checkmate'] + 0.12, 0.55)
+    music_stop = beat['b18']['start'] - 0.12                                   # the music just cuts out
+    put(S.coo(), beat['b27']['words'][-1]['end'] + 0.25, 0.6, 0.55)
 
     # ---------------------------------------------------------------------------------- music bus
     party = S.party_track(duration + 1)

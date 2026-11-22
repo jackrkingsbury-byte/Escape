@@ -358,7 +358,7 @@ export const shots = [
       ctx.cam.set(ctx.store.cams[camName]); ctx.cam.shake(0.08, ctx.t, 10 + i);
     },
   })),
-  // ── b09 "I don't eat breakfast. I sacrifice it."  → BRUH
+  // ── b09 "I don't eat breakfast. I sacrifice it."  → zoom
   {
     name: 'sacrifice breakfast', start: 'b09-0.1', set: 'room',
     setup(ctx) {
@@ -380,7 +380,7 @@ export const shots = [
       const tb = ctx.markers.bruh1;
       const mid = { pos: F(0.6, 1.55, 2.3), look: F(0, 1.05, 0.45), fov: 40 };
       if (ctx.t < tb) ctx.cam.move(cams.med, mid, ease.inOutQuad(clamp(lt / (tb - ctx.time('b09')), 0, 1)));
-      else { boomCam(ctx, tb, mid, cams.face); memeText(ctx, 'BRUH', tb, { y: 0.2, size: 170 }); }
+      else boomCam(ctx, tb, mid, cams.face);
     },
   },
   // ── b10 "My cat only moves in L-shapes now."
@@ -669,7 +669,7 @@ export const shots = [
       ctx.cam.move({ pos: F(-2, 2.2, 6), look: F(3, 3, -2), fov: 52 }, { pos: F(-1.2, 2.5, 4.8), look: F(3, 3.4, -2), fov: 50 }, u);
     },
   },
-  // ── b23 "My grandad plays blindfolded."  /  "He just lost his glasses."  → BRUH
+  // ── b23 "My grandad plays blindfolded."  /  "He just lost his glasses."  → zoom
   {
     name: 'grandad blindfold?', start: 'b23-0.1', set: 'roomGrandad',
     setup(ctx) { ctx.store = roomNook(ctx, 'grandad', { lighting: 'night', clock: false }); ctx.cast.grandad.setAccessory?.('glasses', false); },
@@ -691,7 +691,7 @@ export const shots = [
       const tb = ctx.markers.bruh2;
       const mid = { pos: F(0.4, 1.95, 2.0), look: hp, fov: 36 };
       if (ctx.t < tb) ctx.cam.move({ pos: F(0.5, 1.95, 2.3), look: hp, fov: 38 }, mid, ease.inOutQuad(clamp(lt / (tb - ctx.time('b23.w4')), 0, 1)));
-      else { boomCam(ctx, tb, mid, { pos: F(0.3, 1.9, 1.55), look: hp, fov: 32 }); memeText(ctx, 'BRUH', tb, { y: 0.2, size: 170 }); }
+      else boomCam(ctx, tb, mid, { pos: F(0.3, 1.9, 1.55), look: hp, fov: 32 });
     },
   },
   // ── b24 "And my only opponent left…"  /  "…is the mayor's pigeon."

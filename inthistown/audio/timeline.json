@@ -1,6 +1,6 @@
 {
  "fps": 30,
- "duration": 60.119,
+ "duration": 60.2,
  "audio": "audio/mix.wav",
  "beats": [
   {
@@ -9,42 +9,42 @@
    "kind": "line",
    "text": "In this town, everybody goes out partying.",
    "start": 0.3,
-   "end": 2.55,
+   "end": 2.445,
    "words": [
     {
      "text": "In",
      "start": 0.315,
-     "end": 0.489
+     "end": 0.479
     },
     {
      "text": "this",
-     "start": 0.489,
-     "end": 0.725
+     "start": 0.479,
+     "end": 0.701
     },
     {
      "text": "town",
-     "start": 0.725,
-     "end": 1.023
+     "start": 0.701,
+     "end": 0.982
     },
     {
      "text": "everybody",
-     "start": 1.153,
-     "end": 1.641
+     "start": 1.112,
+     "end": 1.577
     },
     {
      "text": "goes",
-     "start": 1.641,
-     "end": 1.907
+     "start": 1.577,
+     "end": 1.832
     },
     {
      "text": "out",
-     "start": 1.907,
-     "end": 2.118
+     "start": 1.832,
+     "end": 2.033
     },
     {
      "text": "partying",
-     "start": 2.118,
-     "end": 2.55
+     "start": 2.033,
+     "end": 2.445
     }
    ]
   },
@@ -53,18 +53,18 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Except me.",
-   "start": 2.765,
-   "end": 3.446,
+   "start": 2.66,
+   "end": 3.323,
    "words": [
     {
      "text": "Except",
-     "start": 2.78,
-     "end": 3.252
+     "start": 2.675,
+     "end": 3.134
     },
     {
      "text": "me",
-     "start": 3.252,
-     "end": 3.446
+     "start": 3.134,
+     "end": 3.323
     }
    ]
   },
@@ -73,38 +73,38 @@
    "speaker": "me",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
-   "start": 3.711,
-   "end": 5.351,
+   "start": 3.558,
+   "end": 5.198,
    "words": [
     {
      "text": "HUSS!",
-     "start": 3.711,
-     "end": 3.971
+     "start": 3.558,
+     "end": 3.818
     },
     {
      "text": "HUSS!",
-     "start": 3.921,
-     "end": 4.181
+     "start": 3.768,
+     "end": 4.028
     },
     {
      "text": "HUSS!",
-     "start": 4.111,
-     "end": 4.371
+     "start": 3.958,
+     "end": 4.218
     },
     {
      "text": "HUSS!",
-     "start": 4.691,
-     "end": 4.951
+     "start": 4.538,
+     "end": 4.798
     },
     {
      "text": "HUSS!",
-     "start": 4.901,
-     "end": 5.161
+     "start": 4.748,
+     "end": 5.008
     },
     {
      "text": "HUSS!",
-     "start": 5.091,
-     "end": 5.351
+     "start": 4.938,
+     "end": 5.198
     }
    ]
   },
@@ -113,28 +113,28 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Pool parties. Foam parties.",
-   "start": 5.691,
-   "end": 7.439,
+   "start": 5.538,
+   "end": 7.246,
    "words": [
     {
      "text": "Pool",
-     "start": 5.706,
-     "end": 5.989
+     "start": 5.553,
+     "end": 5.83
     },
     {
      "text": "parties",
-     "start": 5.989,
-     "end": 6.496
+     "start": 5.83,
+     "end": 6.326
     },
     {
      "text": "Foam",
-     "start": 6.646,
-     "end": 6.974
+     "start": 6.476,
+     "end": 6.795
     },
     {
      "text": "parties",
-     "start": 6.974,
-     "end": 7.439
+     "start": 6.795,
+     "end": 7.246
     }
    ]
   },
@@ -143,48 +143,48 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Even a birthday party for the mayor's pigeon.",
-   "start": 7.604,
-   "end": 9.715,
+   "start": 7.411,
+   "end": 9.5,
    "words": [
     {
      "text": "Even",
-     "start": 7.619,
-     "end": 7.875
+     "start": 7.426,
+     "end": 7.679
     },
     {
      "text": "a",
-     "start": 7.875,
-     "end": 8.024
+     "start": 7.679,
+     "end": 7.826
     },
     {
      "text": "birthday",
-     "start": 8.024,
-     "end": 8.385
+     "start": 7.826,
+     "end": 8.184
     },
     {
      "text": "party",
-     "start": 8.385,
-     "end": 8.694
+     "start": 8.184,
+     "end": 8.489
     },
     {
      "text": "for",
-     "start": 8.694,
-     "end": 8.896
+     "start": 8.489,
+     "end": 8.689
     },
     {
      "text": "the",
-     "start": 8.896,
-     "end": 9.045
+     "start": 8.689,
+     "end": 8.837
     },
     {
      "text": "mayor's",
-     "start": 9.045,
-     "end": 9.354
+     "start": 8.837,
+     "end": 9.142
     },
     {
      "text": "pigeon",
-     "start": 9.354,
-     "end": 9.715
+     "start": 9.142,
+     "end": 9.5
     }
    ]
   },
@@ -193,33 +193,33 @@
    "speaker": "narr",
    "kind": "line",
    "text": "My grandad crowd-surfs on Wednesdays.",
-   "start": 10.23,
-   "end": 12.15,
+   "start": 9.835,
+   "end": 11.644,
    "words": [
     {
      "text": "My",
-     "start": 10.245,
-     "end": 10.465
+     "start": 9.85,
+     "end": 10.056
     },
     {
      "text": "grandad",
-     "start": 10.465,
-     "end": 10.915
+     "start": 10.056,
+     "end": 10.48
     },
     {
      "text": "crowd-surfs",
-     "start": 10.915,
-     "end": 11.481
+     "start": 10.48,
+     "end": 11.013
     },
     {
      "text": "on",
-     "start": 11.481,
-     "end": 11.642
+     "start": 11.013,
+     "end": 11.165
     },
     {
      "text": "Wednesdays",
-     "start": 11.642,
-     "end": 12.15
+     "start": 11.165,
+     "end": 11.644
     }
    ]
   },
@@ -228,38 +228,38 @@
    "speaker": "narr",
    "kind": "line",
    "text": "But not me. I play chess.",
-   "start": 12.715,
-   "end": 14.535,
+   "start": 11.959,
+   "end": 13.686,
    "words": [
     {
      "text": "But",
-     "start": 12.73,
-     "end": 12.983
+     "start": 11.974,
+     "end": 12.205
     },
     {
      "text": "not",
-     "start": 12.983,
-     "end": 13.236
+     "start": 12.205,
+     "end": 12.436
     },
     {
      "text": "me",
-     "start": 13.236,
-     "end": 13.422
+     "start": 12.436,
+     "end": 12.607
     },
     {
      "text": "I",
-     "start": 13.732,
-     "end": 13.913
+     "start": 12.917,
+     "end": 13.09
     },
     {
      "text": "play",
-     "start": 13.913,
-     "end": 14.224
+     "start": 13.09,
+     "end": 13.388
     },
     {
      "text": "chess",
-     "start": 14.224,
-     "end": 14.535
+     "start": 13.388,
+     "end": 13.686
     }
    ]
   },
@@ -268,23 +268,23 @@
    "speaker": "me",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS!",
-   "start": 14.7,
-   "end": 15.36,
+   "start": 13.851,
+   "end": 14.511,
    "words": [
     {
      "text": "HUSS!",
-     "start": 14.7,
-     "end": 14.96
+     "start": 13.851,
+     "end": 14.111
     },
     {
      "text": "HUSS!",
-     "start": 14.91,
-     "end": 15.17
+     "start": 14.061,
+     "end": 14.321
     },
     {
      "text": "HUSS!",
-     "start": 15.1,
-     "end": 15.36
+     "start": 14.251,
+     "end": 14.511
     }
    ]
   },
@@ -293,43 +293,43 @@
    "speaker": "narr",
    "kind": "line",
    "text": "I don't eat breakfast. I sacrifice it.",
-   "start": 15.7,
-   "end": 18.041,
+   "start": 14.851,
+   "end": 17.161,
    "words": [
     {
      "text": "I",
-     "start": 15.715,
-     "end": 15.852
+     "start": 14.866,
+     "end": 15.002
     },
     {
      "text": "don't",
-     "start": 15.852,
-     "end": 16.137
+     "start": 15.002,
+     "end": 15.285
     },
     {
      "text": "eat",
-     "start": 16.137,
-     "end": 16.274
+     "start": 15.285,
+     "end": 15.422
     },
     {
      "text": "breakfast",
-     "start": 16.274,
-     "end": 16.705
+     "start": 15.422,
+     "end": 15.851
     },
     {
      "text": "I",
-     "start": 17.185,
-     "end": 17.341
+     "start": 16.331,
+     "end": 16.482
     },
     {
      "text": "sacrifice",
-     "start": 17.341,
-     "end": 17.885
+     "start": 16.482,
+     "end": 17.01
     },
     {
      "text": "it",
-     "start": 17.885,
-     "end": 18.041
+     "start": 17.01,
+     "end": 17.161
     }
    ]
   },
@@ -338,43 +338,43 @@
    "speaker": "narr",
    "kind": "line",
    "text": "My cat only moves in L-shapes now.",
-   "start": 18.706,
-   "end": 20.553,
+   "start": 17.576,
+   "end": 19.423,
    "words": [
     {
      "text": "My",
-     "start": 18.721,
-     "end": 18.934
+     "start": 17.591,
+     "end": 17.804
     },
     {
      "text": "cat",
-     "start": 18.934,
-     "end": 19.148
+     "start": 17.804,
+     "end": 18.018
     },
     {
      "text": "only",
-     "start": 19.148,
-     "end": 19.474
+     "start": 18.018,
+     "end": 18.344
     },
     {
      "text": "moves",
-     "start": 19.474,
-     "end": 19.744
+     "start": 18.344,
+     "end": 18.614
     },
     {
      "text": "in",
-     "start": 19.744,
-     "end": 19.901
+     "start": 18.614,
+     "end": 18.771
     },
     {
      "text": "L-shapes",
-     "start": 19.901,
-     "end": 20.339
+     "start": 18.771,
+     "end": 19.21
     },
     {
      "text": "now",
-     "start": 20.339,
-     "end": 20.553
+     "start": 19.21,
+     "end": 19.423
     }
    ]
   },
@@ -383,38 +383,38 @@
    "speaker": "me",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
-   "start": 20.918,
-   "end": 22.558,
+   "start": 19.788,
+   "end": 21.428,
    "words": [
     {
      "text": "HUSS!",
-     "start": 20.918,
-     "end": 21.178
+     "start": 19.788,
+     "end": 20.048
     },
     {
      "text": "HUSS!",
-     "start": 21.128,
-     "end": 21.388
+     "start": 19.998,
+     "end": 20.258
     },
     {
      "text": "HUSS!",
-     "start": 21.318,
-     "end": 21.578
+     "start": 20.188,
+     "end": 20.448
     },
     {
      "text": "HUSS!",
-     "start": 21.898,
-     "end": 22.158
+     "start": 20.768,
+     "end": 21.028
     },
     {
      "text": "HUSS!",
-     "start": 22.108,
-     "end": 22.368
+     "start": 20.978,
+     "end": 21.238
     },
     {
      "text": "HUSS!",
-     "start": 22.298,
-     "end": 22.558
+     "start": 21.168,
+     "end": 21.428
     }
    ]
   },
@@ -423,43 +423,43 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Then came the Summer Party Chess Match.",
-   "start": 22.948,
-   "end": 24.744,
+   "start": 21.818,
+   "end": 23.523,
    "words": [
     {
      "text": "Then",
-     "start": 22.963,
-     "end": 23.177
+     "start": 21.833,
+     "end": 22.037
     },
     {
      "text": "came",
-     "start": 23.177,
-     "end": 23.447
+     "start": 22.037,
+     "end": 22.293
     },
     {
      "text": "the",
-     "start": 23.447,
-     "end": 23.605
+     "start": 22.293,
+     "end": 22.443
     },
     {
      "text": "Summer",
-     "start": 23.605,
-     "end": 23.876
+     "start": 22.443,
+     "end": 22.699
     },
     {
      "text": "Party",
-     "start": 23.876,
-     "end": 24.203
+     "start": 22.699,
+     "end": 23.01
     },
     {
      "text": "Chess",
-     "start": 24.203,
-     "end": 24.474
+     "start": 23.01,
+     "end": 23.266
     },
     {
      "text": "Match",
-     "start": 24.474,
-     "end": 24.744
+     "start": 23.266,
+     "end": 23.523
     }
    ]
   },
@@ -467,19 +467,34 @@
    "id": "b13",
    "speaker": "narr",
    "kind": "line",
-   "text": "Everybody laughed.",
-   "start": 24.959,
-   "end": 25.885,
+   "text": "Everybody laughed. Some goon yelled,",
+   "start": 23.738,
+   "end": 26.322,
    "words": [
     {
      "text": "Everybody",
-     "start": 24.974,
-     "end": 25.564
+     "start": 23.753,
+     "end": 24.329
     },
     {
      "text": "laughed",
-     "start": 25.564,
-     "end": 25.885
+     "start": 24.329,
+     "end": 24.644
+    },
+    {
+     "text": "Some",
+     "start": 25.474,
+     "end": 25.734
+    },
+    {
+     "text": "goon",
+     "start": 25.734,
+     "end": 25.994
+    },
+    {
+     "text": "yelled",
+     "start": 25.994,
+     "end": 26.322
     }
    ]
   },
@@ -488,48 +503,48 @@
    "speaker": "heckler",
    "kind": "quote",
    "text": "Who brings a chess clock to a party?",
-   "start": 27.05,
-   "end": 29.127,
+   "start": 26.437,
+   "end": 28.514,
    "words": [
     {
      "text": "Who",
-     "start": 27.065,
-     "end": 27.243
+     "start": 26.452,
+     "end": 26.63
     },
     {
      "text": "brings",
-     "start": 27.243,
-     "end": 27.612
+     "start": 26.63,
+     "end": 27.0
     },
     {
      "text": "a",
-     "start": 27.612,
-     "end": 27.791
+     "start": 27.0,
+     "end": 27.178
     },
     {
      "text": "chess",
-     "start": 27.791,
-     "end": 28.096
+     "start": 27.178,
+     "end": 27.483
     },
     {
      "text": "clock",
-     "start": 28.096,
-     "end": 28.402
+     "start": 27.483,
+     "end": 27.789
     },
     {
      "text": "to",
-     "start": 28.402,
-     "end": 28.58
+     "start": 27.789,
+     "end": 27.967
     },
     {
      "text": "a",
-     "start": 28.58,
-     "end": 28.758
+     "start": 27.967,
+     "end": 28.145
     },
     {
      "text": "party?",
-     "start": 28.758,
-     "end": 29.127
+     "start": 28.145,
+     "end": 28.514
     }
    ]
   },
@@ -537,49 +552,69 @@
    "id": "b15",
    "speaker": "narr",
    "kind": "line",
-   "text": "My opponent? The mayor. Undefeated for forty years.",
-   "start": 29.492,
-   "end": 32.873,
+   "text": "My opponent? The mayor. Undefeated for forty years. Top ten scariest opponents.",
+   "start": 28.879,
+   "end": 34.058,
    "words": [
     {
      "text": "My",
-     "start": 29.507,
-     "end": 29.721
+     "start": 28.894,
+     "end": 29.094
     },
     {
      "text": "opponent?",
-     "start": 29.721,
-     "end": 30.217
+     "start": 29.094,
+     "end": 29.557
     },
     {
      "text": "The",
-     "start": 30.597,
-     "end": 30.783
+     "start": 29.937,
+     "end": 30.114
     },
     {
      "text": "mayor",
-     "start": 30.783,
-     "end": 31.101
+     "start": 30.114,
+     "end": 30.417
     },
     {
      "text": "Undefeated",
-     "start": 31.431,
-     "end": 32.015
+     "start": 30.747,
+     "end": 31.321
     },
     {
      "text": "for",
-     "start": 32.015,
-     "end": 32.241
+     "start": 31.321,
+     "end": 31.544
     },
     {
      "text": "forty",
-     "start": 32.241,
-     "end": 32.587
+     "start": 31.544,
+     "end": 31.884
     },
     {
      "text": "years",
-     "start": 32.587,
-     "end": 32.873
+     "start": 31.884,
+     "end": 32.166
+    },
+    {
+     "text": "Top",
+     "start": 32.596,
+     "end": 32.808
+    },
+    {
+     "text": "ten",
+     "start": 32.808,
+     "end": 33.02
+    },
+    {
+     "text": "scariest",
+     "start": 33.02,
+     "end": 33.511
+    },
+    {
+     "text": "opponents",
+     "start": 33.511,
+     "end": 34.058
     }
    ]
   },
@@ -588,38 +623,38 @@
    "speaker": "me",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
-   "start": 34.138,
-   "end": 35.778,
+   "start": 34.473,
+   "end": 36.113,
    "words": [
     {
      "text": "HUSS!",
-     "start": 34.138,
-     "end": 34.398
+     "start": 34.473,
+     "end": 34.733
     },
     {
      "text": "HUSS!",
-     "start": 34.348,
-     "end": 34.608
+     "start": 34.683,
+     "end": 34.943
     },
     {
      "text": "HUSS!",
-     "start": 34.538,
-     "end": 34.798
+     "start": 34.873,
+     "end": 35.133
     },
     {
      "text": "HUSS!",
-     "start": 35.118,
-     "end": 35.378
+     "start": 35.453,
+     "end": 35.713
     },
     {
      "text": "HUSS!",
-     "start": 35.328,
-     "end": 35.588
+     "start": 35.663,
+     "end": 35.923
     },
     {
      "text": "HUSS!",
-     "start": 35.518,
-     "end": 35.778
+     "start": 35.853,
+     "end": 36.113
     }
    ]
   },
@@ -627,29 +662,34 @@
    "id": "b17",
    "speaker": "narr",
    "kind": "line",
-   "text": "Checkmate. In four moves.",
-   "start": 36.168,
-   "end": 37.995,
+   "text": "Checkmate. In four moves. Respect.",
+   "start": 36.503,
+   "end": 39.294,
    "words": [
     {
      "text": "Checkmate",
-     "start": 36.183,
-     "end": 36.75
+     "start": 36.518,
+     "end": 37.055
     },
     {
      "text": "In",
-     "start": 37.18,
-     "end": 37.38
+     "start": 37.485,
+     "end": 37.683
     },
     {
      "text": "four",
-     "start": 37.38,
-     "end": 37.652
+     "start": 37.683,
+     "end": 37.951
     },
     {
      "text": "moves",
-     "start": 37.652,
-     "end": 37.995
+     "start": 37.951,
+     "end": 38.29
+    },
+    {
+     "text": "Respect",
+     "start": 38.72,
+     "end": 39.294
     }
    ]
   },
@@ -658,33 +698,33 @@
    "speaker": "narr",
    "kind": "line",
    "text": "The whole crowd went silent.",
-   "start": 39.36,
-   "end": 40.758,
+   "start": 39.729,
+   "end": 41.047,
    "words": [
     {
      "text": "The",
-     "start": 39.375,
-     "end": 39.524
+     "start": 39.744,
+     "end": 39.884
     },
     {
      "text": "whole",
-     "start": 39.524,
-     "end": 39.779
+     "start": 39.884,
+     "end": 40.125
     },
     {
      "text": "crowd",
-     "start": 39.779,
-     "end": 40.088
+     "start": 40.125,
+     "end": 40.416
     },
     {
      "text": "went",
-     "start": 40.088,
-     "end": 40.343
+     "start": 40.416,
+     "end": 40.656
     },
     {
      "text": "silent",
-     "start": 40.343,
-     "end": 40.758
+     "start": 40.656,
+     "end": 41.047
     }
    ]
   },
@@ -693,38 +733,38 @@
    "speaker": "marcus",
    "kind": "quote",
    "text": "When did you get so good?",
-   "start": 41.523,
-   "end": 42.943,
+   "start": 41.562,
+   "end": 42.983,
    "words": [
     {
      "text": "When",
-     "start": 41.538,
-     "end": 41.782
+     "start": 41.577,
+     "end": 41.822
     },
     {
      "text": "did",
-     "start": 41.782,
-     "end": 42.027
+     "start": 41.822,
+     "end": 42.067
     },
     {
      "text": "you",
-     "start": 42.027,
-     "end": 42.208
+     "start": 42.067,
+     "end": 42.248
     },
     {
      "text": "get",
-     "start": 42.208,
-     "end": 42.453
+     "start": 42.248,
+     "end": 42.493
     },
     {
      "text": "so",
-     "start": 42.453,
-     "end": 42.698
+     "start": 42.493,
+     "end": 42.738
     },
     {
      "text": "good?",
-     "start": 42.698,
-     "end": 42.943
+     "start": 42.738,
+     "end": 42.983
     }
    ]
   },
@@ -733,33 +773,33 @@
    "speaker": "me",
    "kind": "quote",
    "text": "While you were out partying.",
-   "start": 43.358,
-   "end": 44.526,
+   "start": 43.378,
+   "end": 44.546,
    "words": [
     {
      "text": "While",
-     "start": 43.373,
-     "end": 43.625
+     "start": 43.393,
+     "end": 43.644
     },
     {
      "text": "you",
-     "start": 43.625,
-     "end": 43.771
+     "start": 43.644,
+     "end": 43.791
     },
     {
      "text": "were",
-     "start": 43.771,
-     "end": 43.918
+     "start": 43.791,
+     "end": 43.938
     },
     {
      "text": "out",
-     "start": 43.918,
-     "end": 44.117
+     "start": 43.938,
+     "end": 44.137
     },
     {
      "text": "partying",
-     "start": 44.117,
-     "end": 44.526
+     "start": 44.137,
+     "end": 44.546
     }
    ]
   },
@@ -768,38 +808,38 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Now the whole town is grinding.",
-   "start": 45.541,
-   "end": 46.934,
+   "start": 45.211,
+   "end": 46.578,
    "words": [
     {
      "text": "Now",
-     "start": 45.556,
-     "end": 45.744
+     "start": 45.226,
+     "end": 45.411
     },
     {
      "text": "the",
-     "start": 45.744,
-     "end": 45.883
+     "start": 45.411,
+     "end": 45.547
     },
     {
      "text": "whole",
-     "start": 45.883,
-     "end": 46.121
+     "start": 45.547,
+     "end": 45.78
     },
     {
      "text": "town",
-     "start": 46.121,
-     "end": 46.359
+     "start": 45.78,
+     "end": 46.014
     },
     {
      "text": "is",
-     "start": 46.359,
-     "end": 46.498
+     "start": 46.014,
+     "end": 46.15
     },
     {
      "text": "grinding",
-     "start": 46.498,
-     "end": 46.934
+     "start": 46.15,
+     "end": 46.578
     }
    ]
   },
@@ -808,23 +848,23 @@
    "speaker": "town",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS!",
-   "start": 47.099,
-   "end": 47.759,
+   "start": 46.743,
+   "end": 47.403,
    "words": [
     {
      "text": "HUSS!",
-     "start": 47.099,
-     "end": 47.359
+     "start": 46.743,
+     "end": 47.003
     },
     {
      "text": "HUSS!",
-     "start": 47.309,
-     "end": 47.569
+     "start": 46.953,
+     "end": 47.213
     },
     {
      "text": "HUSS!",
-     "start": 47.499,
-     "end": 47.759
+     "start": 47.143,
+     "end": 47.403
     }
    ]
   },
@@ -832,54 +872,59 @@
    "id": "b23",
    "speaker": "narr",
    "kind": "line",
-   "text": "My grandad plays blindfolded. He just lost his glasses.",
-   "start": 48.199,
-   "end": 51.607,
+   "text": "My grandad plays blindfolded. He just lost his glasses. Bro.",
+   "start": 47.843,
+   "end": 51.978,
    "words": [
     {
      "text": "My",
-     "start": 48.214,
-     "end": 48.405
+     "start": 47.858,
+     "end": 48.046
     },
     {
      "text": "grandad",
-     "start": 48.405,
-     "end": 48.798
+     "start": 48.046,
+     "end": 48.432
     },
     {
      "text": "plays",
-     "start": 48.798,
-     "end": 49.089
+     "start": 48.432,
+     "end": 48.719
     },
     {
      "text": "blindfolded",
-     "start": 49.089,
-     "end": 49.783
+     "start": 48.719,
+     "end": 49.402
     },
     {
      "text": "He",
-     "start": 50.263,
-     "end": 50.42
+     "start": 49.882,
+     "end": 50.034
     },
     {
      "text": "just",
-     "start": 50.42,
-     "end": 50.745
+     "start": 50.034,
+     "end": 50.348
     },
     {
      "text": "lost",
-     "start": 50.745,
-     "end": 51.013
+     "start": 50.348,
+     "end": 50.608
     },
     {
      "text": "his",
-     "start": 51.013,
-     "end": 51.226
+     "start": 50.608,
+     "end": 50.814
     },
     {
      "text": "glasses",
-     "start": 51.226,
-     "end": 51.607
+     "start": 50.814,
+     "end": 51.182
+    },
+    {
+     "text": "Bro",
+     "start": 51.562,
+     "end": 51.978
     }
    ]
   },
@@ -888,53 +933,53 @@
    "speaker": "narr",
    "kind": "line",
    "text": "And my only opponent left is the mayor's pigeon.",
-   "start": 52.372,
-   "end": 54.911,
+   "start": 52.443,
+   "end": 54.958,
    "words": [
     {
      "text": "And",
-     "start": 52.387,
-     "end": 52.599
+     "start": 52.458,
+     "end": 52.668
     },
     {
      "text": "my",
-     "start": 52.599,
-     "end": 52.811
+     "start": 52.668,
+     "end": 52.878
     },
     {
      "text": "only",
-     "start": 52.811,
-     "end": 53.135
+     "start": 52.878,
+     "end": 53.199
     },
     {
      "text": "opponent",
-     "start": 53.135,
-     "end": 53.627
+     "start": 53.199,
+     "end": 53.686
     },
     {
      "text": "left",
-     "start": 53.627,
-     "end": 53.895
+     "start": 53.686,
+     "end": 53.951
     },
     {
      "text": "is",
-     "start": 53.895,
-     "end": 54.051
+     "start": 53.951,
+     "end": 54.106
     },
     {
      "text": "the",
-     "start": 54.051,
-     "end": 54.207
+     "start": 54.106,
+     "end": 54.261
     },
     {
      "text": "mayor's",
-     "start": 54.207,
-     "end": 54.531
+     "start": 54.261,
+     "end": 54.582
     },
     {
      "text": "pigeon",
-     "start": 54.531,
-     "end": 54.911
+     "start": 54.582,
+     "end": 54.958
     }
    ]
   },
@@ -943,23 +988,23 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Honestly? He's winning.",
-   "start": 55.226,
-   "end": 56.854,
+   "start": 55.273,
+   "end": 56.831,
    "words": [
     {
      "text": "Honestly?",
-     "start": 55.241,
-     "end": 55.828
+     "start": 55.288,
+     "end": 55.84
     },
     {
      "text": "He's",
-     "start": 56.208,
-     "end": 56.464
+     "start": 56.22,
+     "end": 56.462
     },
     {
      "text": "winning",
-     "start": 56.464,
-     "end": 56.854
+     "start": 56.462,
+     "end": 56.831
     }
    ]
   },
@@ -968,23 +1013,38 @@
    "speaker": "pigeon",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS!",
-   "start": 57.319,
-   "end": 57.979,
+   "start": 57.296,
+   "end": 57.956,
    "words": [
     {
      "text": "HUSS!",
-     "start": 57.319,
-     "end": 57.579
+     "start": 57.296,
+     "end": 57.556
     },
     {
      "text": "HUSS!",
-     "start": 57.529,
-     "end": 57.789
+     "start": 57.506,
+     "end": 57.766
     },
     {
      "text": "HUSS!",
-     "start": 57.719,
-     "end": 57.979
+     "start": 57.696,
+     "end": 57.956
+    }
+   ]
+  },
+  {
+   "id": "b27",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Respect.",
+   "start": 58.446,
+   "end": 59.035,
+   "words": [
+    {
+     "text": "Respect",
+     "start": 58.461,
+     "end": 59.035
     }
    ]
   }
@@ -993,7 +1053,7 @@
   {
    "text": "In",
    "start": 0.315,
-   "end": 0.489,
+   "end": 0.479,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1001,8 +1061,8 @@
   },
   {
    "text": "this",
-   "start": 0.489,
-   "end": 0.725,
+   "start": 0.479,
+   "end": 0.701,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1010,8 +1070,8 @@
   },
   {
    "text": "town",
-   "start": 0.725,
-   "end": 1.023,
+   "start": 0.701,
+   "end": 0.982,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1019,8 +1079,8 @@
   },
   {
    "text": "everybody",
-   "start": 1.153,
-   "end": 1.641,
+   "start": 1.112,
+   "end": 1.577,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1028,8 +1088,8 @@
   },
   {
    "text": "goes",
-   "start": 1.641,
-   "end": 1.907,
+   "start": 1.577,
+   "end": 1.832,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1037,8 +1097,8 @@
   },
   {
    "text": "out",
-   "start": 1.907,
-   "end": 2.118,
+   "start": 1.832,
+   "end": 2.033,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1046,8 +1106,8 @@
   },
   {
    "text": "partying",
-   "start": 2.118,
-   "end": 2.55,
+   "start": 2.033,
+   "end": 2.445,
    "beat": "b01",
    "kind": "line",
    "speaker": "narr",
@@ -1055,8 +1115,8 @@
   },
   {
    "text": "Except",
-   "start": 2.78,
-   "end": 3.252,
+   "start": 2.675,
+   "end": 3.134,
    "beat": "b02",
    "kind": "line",
    "speaker": "narr",
@@ -1064,8 +1124,8 @@
   },
   {
    "text": "me",
-   "start": 3.252,
-   "end": 3.446,
+   "start": 3.134,
+   "end": 3.323,
    "beat": "b02",
    "kind": "line",
    "speaker": "narr",
@@ -1073,8 +1133,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 3.711,
-   "end": 3.971,
+   "start": 3.558,
+   "end": 3.818,
    "beat": "b03",
    "kind": "huss",
    "speaker": "me",
@@ -1082,8 +1142,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 3.921,
-   "end": 4.181,
+   "start": 3.768,
+   "end": 4.028,
    "beat": "b03",
    "kind": "huss",
    "speaker": "me",
@@ -1091,8 +1151,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 4.111,
-   "end": 4.371,
+   "start": 3.958,
+   "end": 4.218,
    "beat": "b03",
    "kind": "huss",
    "speaker": "me",
@@ -1100,8 +1160,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 4.691,
-   "end": 4.951,
+   "start": 4.538,
+   "end": 4.798,
    "beat": "b03",
    "kind": "huss",
    "speaker": "me",
@@ -1109,8 +1169,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 4.901,
-   "end": 5.161,
+   "start": 4.748,
+   "end": 5.008,
    "beat": "b03",
    "kind": "huss",
    "speaker": "me",
@@ -1118,8 +1178,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 5.091,
-   "end": 5.351,
+   "start": 4.938,
+   "end": 5.198,
    "beat": "b03",
    "kind": "huss",
    "speaker": "me",
@@ -1127,8 +1187,8 @@
   },
   {
    "text": "Pool",
-   "start": 5.706,
-   "end": 5.989,
+   "start": 5.553,
+   "end": 5.83,
    "beat": "b04",
    "kind": "line",
    "speaker": "narr",
@@ -1136,8 +1196,8 @@
   },
   {
    "text": "parties",
-   "start": 5.989,
-   "end": 6.496,
+   "start": 5.83,
+   "end": 6.326,
    "beat": "b04",
    "kind": "line",
    "speaker": "narr",
@@ -1145,8 +1205,8 @@
   },
   {
    "text": "Foam",
-   "start": 6.646,
-   "end": 6.974,
+   "start": 6.476,
+   "end": 6.795,
    "beat": "b04",
    "kind": "line",
    "speaker": "narr",
@@ -1154,8 +1214,8 @@
   },
   {
    "text": "parties",
-   "start": 6.974,
-   "end": 7.439,
+   "start": 6.795,
+   "end": 7.246,
    "beat": "b04",
    "kind": "line",
    "speaker": "narr",
@@ -1163,8 +1223,8 @@
   },
   {
    "text": "Even",
-   "start": 7.619,
-   "end": 7.875,
+   "start": 7.426,
+   "end": 7.679,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1172,8 +1232,8 @@
   },
   {
    "text": "a",
-   "start": 7.875,
-   "end": 8.024,
+   "start": 7.679,
+   "end": 7.826,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1181,8 +1241,8 @@
   },
   {
    "text": "birthday",
-   "start": 8.024,
-   "end": 8.385,
+   "start": 7.826,
+   "end": 8.184,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1190,8 +1250,8 @@
   },
   {
    "text": "party",
-   "start": 8.385,
-   "end": 8.694,
+   "start": 8.184,
+   "end": 8.489,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1199,8 +1259,8 @@
   },
   {
    "text": "for",
-   "start": 8.694,
-   "end": 8.896,
+   "start": 8.489,
+   "end": 8.689,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1208,8 +1268,8 @@
   },
   {
    "text": "the",
-   "start": 8.896,
-   "end": 9.045,
+   "start": 8.689,
+   "end": 8.837,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1217,8 +1277,8 @@
   },
   {
    "text": "mayor's",
-   "start": 9.045,
-   "end": 9.354,
+   "start": 8.837,
+   "end": 9.142,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1226,8 +1286,8 @@
   },
   {
    "text": "pigeon",
-   "start": 9.354,
-   "end": 9.715,
+   "start": 9.142,
+   "end": 9.5,
    "beat": "b05",
    "kind": "line",
    "speaker": "narr",
@@ -1235,8 +1295,8 @@
   },
   {
    "text": "My",
-   "start": 10.245,
-   "end": 10.465,
+   "start": 9.85,
+   "end": 10.056,
    "beat": "b06",
    "kind": "line",
    "speaker": "narr",
@@ -1244,8 +1304,8 @@
   },
   {
    "text": "grandad",
-   "start": 10.465,
-   "end": 10.915,
+   "start": 10.056,
+   "end": 10.48,
    "beat": "b06",
    "kind": "line",
    "speaker": "narr",
@@ -1253,8 +1313,8 @@
   },
   {
    "text": "crowd-surfs",
-   "start": 10.915,
-   "end": 11.481,
+   "start": 10.48,
+   "end": 11.013,
    "beat": "b06",
    "kind": "line",
    "speaker": "narr",
@@ -1262,8 +1322,8 @@
   },
   {
    "text": "on",
-   "start": 11.481,
-   "end": 11.642,
+   "start": 11.013,
+   "end": 11.165,
    "beat": "b06",
    "kind": "line",
    "speaker": "narr",
@@ -1271,8 +1331,8 @@
   },
   {
    "text": "Wednesdays",
-   "start": 11.642,
-   "end": 12.15,
+   "start": 11.165,
+   "end": 11.644,
    "beat": "b06",
    "kind": "line",
    "speaker": "narr",
@@ -1280,8 +1340,8 @@
   },
   {
    "text": "But",
-   "start": 12.73,
-   "end": 12.983,
+   "start": 11.974,
+   "end": 12.205,
    "beat": "b07",
    "kind": "line",
    "speaker": "narr",
@@ -1289,8 +1349,8 @@
   },
   {
    "text": "not",
-   "start": 12.983,
-   "end": 13.236,
+   "start": 12.205,
+   "end": 12.436,
    "beat": "b07",
    "kind": "line",
    "speaker": "narr",
@@ -1298,8 +1358,8 @@
   },
   {
    "text": "me",
-   "start": 13.236,
-   "end": 13.422,
+   "start": 12.436,
+   "end": 12.607,
    "beat": "b07",
    "kind": "line",
    "speaker": "narr",
@@ -1307,8 +1367,8 @@
   },
   {
    "text": "I",
-   "start": 13.732,
-   "end": 13.913,
+   "start": 12.917,
+   "end": 13.09,
    "beat": "b07",
    "kind": "line",
    "speaker": "narr",
@@ -1316,8 +1376,8 @@
   },
   {
    "text": "play",
-   "start": 13.913,
-   "end": 14.224,
+   "start": 13.09,
+   "end": 13.388,
    "beat": "b07",
    "kind": "line",
    "speaker": "narr",
@@ -1325,8 +1385,8 @@
   },
   {
    "text": "chess",
-   "start": 14.224,
-   "end": 14.535,
+   "start": 13.388,
+   "end": 13.686,
    "beat": "b07",
    "kind": "line",
    "speaker": "narr",
@@ -1334,8 +1394,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 14.7,
-   "end": 14.96,
+   "start": 13.851,
+   "end": 14.111,
    "beat": "b08",
    "kind": "huss",
    "speaker": "me",
@@ -1343,8 +1403,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 14.91,
-   "end": 15.17,
+   "start": 14.061,
+   "end": 14.321,
    "beat": "b08",
    "kind": "huss",
    "speaker": "me",
@@ -1352,8 +1412,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 15.1,
-   "end": 15.36,
+   "start": 14.251,
+   "end": 14.511,
    "beat": "b08",
    "kind": "huss",
    "speaker": "me",
@@ -1361,8 +1421,8 @@
   },
   {
    "text": "I",
-   "start": 15.715,
-   "end": 15.852,
+   "start": 14.866,
+   "end": 15.002,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1370,8 +1430,8 @@
   },
   {
    "text": "don't",
-   "start": 15.852,
-   "end": 16.137,
+   "start": 15.002,
+   "end": 15.285,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1379,8 +1439,8 @@
   },
   {
    "text": "eat",
-   "start": 16.137,
-   "end": 16.274,
+   "start": 15.285,
+   "end": 15.422,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1388,8 +1448,8 @@
   },
   {
    "text": "breakfast",
-   "start": 16.274,
-   "end": 16.705,
+   "start": 15.422,
+   "end": 15.851,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1397,8 +1457,8 @@
   },
   {
    "text": "I",
-   "start": 17.185,
-   "end": 17.341,
+   "start": 16.331,
+   "end": 16.482,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1406,8 +1466,8 @@
   },
   {
    "text": "sacrifice",
-   "start": 17.341,
-   "end": 17.885,
+   "start": 16.482,
+   "end": 17.01,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1415,8 +1475,8 @@
   },
   {
    "text": "it",
-   "start": 17.885,
-   "end": 18.041,
+   "start": 17.01,
+   "end": 17.161,
    "beat": "b09",
    "kind": "line",
    "speaker": "narr",
@@ -1424,8 +1484,8 @@
   },
   {
    "text": "My",
-   "start": 18.721,
-   "end": 18.934,
+   "start": 17.591,
+   "end": 17.804,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1433,8 +1493,8 @@
   },
   {
    "text": "cat",
-   "start": 18.934,
-   "end": 19.148,
+   "start": 17.804,
+   "end": 18.018,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1442,8 +1502,8 @@
   },
   {
    "text": "only",
-   "start": 19.148,
-   "end": 19.474,
+   "start": 18.018,
+   "end": 18.344,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1451,8 +1511,8 @@
   },
   {
    "text": "moves",
-   "start": 19.474,
-   "end": 19.744,
+   "start": 18.344,
+   "end": 18.614,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1460,8 +1520,8 @@
   },
   {
    "text": "in",
-   "start": 19.744,
-   "end": 19.901,
+   "start": 18.614,
+   "end": 18.771,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1469,8 +1529,8 @@
   },
   {
    "text": "L-shapes",
-   "start": 19.901,
-   "end": 20.339,
+   "start": 18.771,
+   "end": 19.21,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1478,8 +1538,8 @@
   },
   {
    "text": "now",
-   "start": 20.339,
-   "end": 20.553,
+   "start": 19.21,
+   "end": 19.423,
    "beat": "b10",
    "kind": "line",
    "speaker": "narr",
@@ -1487,8 +1547,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 20.918,
-   "end": 21.178,
+   "start": 19.788,
+   "end": 20.048,
    "beat": "b11",
    "kind": "huss",
    "speaker": "me",
@@ -1496,8 +1556,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 21.128,
-   "end": 21.388,
+   "start": 19.998,
+   "end": 20.258,
    "beat": "b11",
    "kind": "huss",
    "speaker": "me",
@@ -1505,8 +1565,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 21.318,
-   "end": 21.578,
+   "start": 20.188,
+   "end": 20.448,
    "beat": "b11",
    "kind": "huss",
    "speaker": "me",
@@ -1514,8 +1574,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 21.898,
-   "end": 22.158,
+   "start": 20.768,
+   "end": 21.028,
    "beat": "b11",
    "kind": "huss",
    "speaker": "me",
@@ -1523,8 +1583,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 22.108,
-   "end": 22.368,
+   "start": 20.978,
+   "end": 21.238,
    "beat": "b11",
    "kind": "huss",
    "speaker": "me",
@@ -1532,8 +1592,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 22.298,
-   "end": 22.558,
+   "start": 21.168,
+   "end": 21.428,
    "beat": "b11",
    "kind": "huss",
    "speaker": "me",
@@ -1541,8 +1601,8 @@
   },
   {
    "text": "Then",
-   "start": 22.963,
-   "end": 23.177,
+   "start": 21.833,
+   "end": 22.037,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1550,8 +1610,8 @@
   },
   {
    "text": "came",
-   "start": 23.177,
-   "end": 23.447,
+   "start": 22.037,
+   "end": 22.293,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1559,8 +1619,8 @@
   },
   {
    "text": "the",
-   "start": 23.447,
-   "end": 23.605,
+   "start": 22.293,
+   "end": 22.443,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1568,8 +1628,8 @@
   },
   {
    "text": "Summer",
-   "start": 23.605,
-   "end": 23.876,
+   "start": 22.443,
+   "end": 22.699,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1577,8 +1637,8 @@
   },
   {
    "text": "Party",
-   "start": 23.876,
-   "end": 24.203,
+   "start": 22.699,
+   "end": 23.01,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1586,8 +1646,8 @@
   },
   {
    "text": "Chess",
-   "start": 24.203,
-   "end": 24.474,
+   "start": 23.01,
+   "end": 23.266,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1595,8 +1655,8 @@
   },
   {
    "text": "Match",
-   "start": 24.474,
-   "end": 24.744,
+   "start": 23.266,
+   "end": 23.523,
    "beat": "b12",
    "kind": "line",
    "speaker": "narr",
@@ -1604,8 +1664,8 @@
   },
   {
    "text": "Everybody",
-   "start": 24.974,
-   "end": 25.564,
+   "start": 23.753,
+   "end": 24.329,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -1613,17 +1673,44 @@
   },
   {
    "text": "laughed",
-   "start": 25.564,
-   "end": 25.885,
+   "start": 24.329,
+   "end": 24.644,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
    "i": 1
   },
   {
+   "text": "Some",
+   "start": 25.474,
+   "end": 25.734,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "goon",
+   "start": 25.734,
+   "end": 25.994,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "yelled",
+   "start": 25.994,
+   "end": 26.322,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
    "text": "Who",
-   "start": 27.065,
-   "end": 27.243,
+   "start": 26.452,
+   "end": 26.63,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1631,8 +1718,8 @@
   },
   {
    "text": "brings",
-   "start": 27.243,
-   "end": 27.612,
+   "start": 26.63,
+   "end": 27.0,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1640,8 +1727,8 @@
   },
   {
    "text": "a",
-   "start": 27.612,
-   "end": 27.791,
+   "start": 27.0,
+   "end": 27.178,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1649,8 +1736,8 @@
   },
   {
    "text": "chess",
-   "start": 27.791,
-   "end": 28.096,
+   "start": 27.178,
+   "end": 27.483,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1658,8 +1745,8 @@
   },
   {
    "text": "clock",
-   "start": 28.096,
-   "end": 28.402,
+   "start": 27.483,
+   "end": 27.789,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1667,8 +1754,8 @@
   },
   {
    "text": "to",
-   "start": 28.402,
-   "end": 28.58,
+   "start": 27.789,
+   "end": 27.967,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1676,8 +1763,8 @@
   },
   {
    "text": "a",
-   "start": 28.58,
-   "end": 28.758,
+   "start": 27.967,
+   "end": 28.145,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1685,8 +1772,8 @@
   },
   {
    "text": "party?",
-   "start": 28.758,
-   "end": 29.127,
+   "start": 28.145,
+   "end": 28.514,
    "beat": "b14",
    "kind": "quote",
    "speaker": "heckler",
@@ -1694,8 +1781,8 @@
   },
   {
    "text": "My",
-   "start": 29.507,
-   "end": 29.721,
+   "start": 28.894,
+   "end": 29.094,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1703,8 +1790,8 @@
   },
   {
    "text": "opponent?",
-   "start": 29.721,
-   "end": 30.217,
+   "start": 29.094,
+   "end": 29.557,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1712,8 +1799,8 @@
   },
   {
    "text": "The",
-   "start": 30.597,
-   "end": 30.783,
+   "start": 29.937,
+   "end": 30.114,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1721,8 +1808,8 @@
   },
   {
    "text": "mayor",
-   "start": 30.783,
-   "end": 31.101,
+   "start": 30.114,
+   "end": 30.417,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1730,8 +1817,8 @@
   },
   {
    "text": "Undefeated",
-   "start": 31.431,
-   "end": 32.015,
+   "start": 30.747,
+   "end": 31.321,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1739,8 +1826,8 @@
   },
   {
    "text": "for",
-   "start": 32.015,
-   "end": 32.241,
+   "start": 31.321,
+   "end": 31.544,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1748,8 +1835,8 @@
   },
   {
    "text": "forty",
-   "start": 32.241,
-   "end": 32.587,
+   "start": 31.544,
+   "end": 31.884,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
@@ -1757,17 +1844,53 @@
   },
   {
    "text": "years",
-   "start": 32.587,
-   "end": 32.873,
+   "start": 31.884,
+   "end": 32.166,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
    "i": 7
   },
   {
+   "text": "Top",
+   "start": 32.596,
+   "end": 32.808,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "ten",
+   "start": 32.808,
+   "end": 33.02,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "scariest",
+   "start": 33.02,
+   "end": 33.511,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "opponents",
+   "start": 33.511,
+   "end": 34.058,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
    "text": "HUSS!",
-   "start": 34.138,
-   "end": 34.398,
+   "start": 34.473,
+   "end": 34.733,
    "beat": "b16",
    "kind": "huss",
    "speaker": "me",
@@ -1775,8 +1898,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 34.348,
-   "end": 34.608,
+   "start": 34.683,
+   "end": 34.943,
    "beat": "b16",
    "kind": "huss",
    "speaker": "me",
@@ -1784,8 +1907,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 34.538,
-   "end": 34.798,
+   "start": 34.873,
+   "end": 35.133,
    "beat": "b16",
    "kind": "huss",
    "speaker": "me",
@@ -1793,8 +1916,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 35.118,
-   "end": 35.378,
+   "start": 35.453,
+   "end": 35.713,
    "beat": "b16",
    "kind": "huss",
    "speaker": "me",
@@ -1802,8 +1925,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 35.328,
-   "end": 35.588,
+   "start": 35.663,
+   "end": 35.923,
    "beat": "b16",
    "kind": "huss",
    "speaker": "me",
@@ -1811,8 +1934,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 35.518,
-   "end": 35.778,
+   "start": 35.853,
+   "end": 36.113,
    "beat": "b16",
    "kind": "huss",
    "speaker": "me",
@@ -1820,8 +1943,8 @@
   },
   {
    "text": "Checkmate",
-   "start": 36.183,
-   "end": 36.75,
+   "start": 36.518,
+   "end": 37.055,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -1829,8 +1952,8 @@
   },
   {
    "text": "In",
-   "start": 37.18,
-   "end": 37.38,
+   "start": 37.485,
+   "end": 37.683,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -1838,8 +1961,8 @@
   },
   {
    "text": "four",
-   "start": 37.38,
-   "end": 37.652,
+   "start": 37.683,
+   "end": 37.951,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -1847,17 +1970,26 @@
   },
   {
    "text": "moves",
-   "start": 37.652,
-   "end": 37.995,
+   "start": 37.951,
+   "end": 38.29,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
    "i": 3
   },
   {
+   "text": "Respect",
+   "start": 38.72,
+   "end": 39.294,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
    "text": "The",
-   "start": 39.375,
-   "end": 39.524,
+   "start": 39.744,
+   "end": 39.884,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -1865,8 +1997,8 @@
   },
   {
    "text": "whole",
-   "start": 39.524,
-   "end": 39.779,
+   "start": 39.884,
+   "end": 40.125,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -1874,8 +2006,8 @@
   },
   {
    "text": "crowd",
-   "start": 39.779,
-   "end": 40.088,
+   "start": 40.125,
+   "end": 40.416,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -1883,8 +2015,8 @@
   },
   {
    "text": "went",
-   "start": 40.088,
-   "end": 40.343,
+   "start": 40.416,
+   "end": 40.656,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -1892,8 +2024,8 @@
   },
   {
    "text": "silent",
-   "start": 40.343,
-   "end": 40.758,
+   "start": 40.656,
+   "end": 41.047,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -1901,8 +2033,8 @@
   },
   {
    "text": "When",
-   "start": 41.538,
-   "end": 41.782,
+   "start": 41.577,
+   "end": 41.822,
    "beat": "b19",
    "kind": "quote",
    "speaker": "marcus",
@@ -1910,8 +2042,8 @@
   },
   {
    "text": "did",
-   "start": 41.782,
-   "end": 42.027,
+   "start": 41.822,
+   "end": 42.067,
    "beat": "b19",
    "kind": "quote",
    "speaker": "marcus",
@@ -1919,8 +2051,8 @@
   },
   {
    "text": "you",
-   "start": 42.027,
-   "end": 42.208,
+   "start": 42.067,
+   "end": 42.248,
    "beat": "b19",
    "kind": "quote",
    "speaker": "marcus",
@@ -1928,8 +2060,8 @@
   },
   {
    "text": "get",
-   "start": 42.208,
-   "end": 42.453,
+   "start": 42.248,
+   "end": 42.493,
    "beat": "b19",
    "kind": "quote",
    "speaker": "marcus",
@@ -1937,8 +2069,8 @@
   },
   {
    "text": "so",
-   "start": 42.453,
-   "end": 42.698,
+   "start": 42.493,
+   "end": 42.738,
    "beat": "b19",
    "kind": "quote",
    "speaker": "marcus",
@@ -1946,8 +2078,8 @@
   },
   {
    "text": "good?",
-   "start": 42.698,
-   "end": 42.943,
+   "start": 42.738,
+   "end": 42.983,
    "beat": "b19",
    "kind": "quote",
    "speaker": "marcus",
@@ -1955,8 +2087,8 @@
   },
   {
    "text": "While",
-   "start": 43.373,
-   "end": 43.625,
+   "start": 43.393,
+   "end": 43.644,
    "beat": "b20",
    "kind": "quote",
    "speaker": "me",
@@ -1964,8 +2096,8 @@
   },
   {
    "text": "you",
-   "start": 43.625,
-   "end": 43.771,
+   "start": 43.644,
+   "end": 43.791,
    "beat": "b20",
    "kind": "quote",
    "speaker": "me",
@@ -1973,8 +2105,8 @@
   },
   {
    "text": "were",
-   "start": 43.771,
-   "end": 43.918,
+   "start": 43.791,
+   "end": 43.938,
    "beat": "b20",
    "kind": "quote",
    "speaker": "me",
@@ -1982,8 +2114,8 @@
   },
   {
    "text": "out",
-   "start": 43.918,
-   "end": 44.117,
+   "start": 43.938,
+   "end": 44.137,
    "beat": "b20",
    "kind": "quote",
    "speaker": "me",
@@ -1991,8 +2123,8 @@
   },
   {
    "text": "partying",
-   "start": 44.117,
-   "end": 44.526,
+   "start": 44.137,
+   "end": 44.546,
    "beat": "b20",
    "kind": "quote",
    "speaker": "me",
@@ -2000,8 +2132,8 @@
   },
   {
    "text": "Now",
-   "start": 45.556,
-   "end": 45.744,
+   "start": 45.226,
+   "end": 45.411,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -2009,8 +2141,8 @@
   },
   {
    "text": "the",
-   "start": 45.744,
-   "end": 45.883,
+   "start": 45.411,
+   "end": 45.547,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -2018,8 +2150,8 @@
   },
   {
    "text": "whole",
-   "start": 45.883,
-   "end": 46.121,
+   "start": 45.547,
+   "end": 45.78,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -2027,8 +2159,8 @@
   },
   {
    "text": "town",
-   "start": 46.121,
-   "end": 46.359,
+   "start": 45.78,
+   "end": 46.014,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -2036,8 +2168,8 @@
   },
   {
    "text": "is",
-   "start": 46.359,
-   "end": 46.498,
+   "start": 46.014,
+   "end": 46.15,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -2045,8 +2177,8 @@
   },
   {
    "text": "grinding",
-   "start": 46.498,
-   "end": 46.934,
+   "start": 46.15,
+   "end": 46.578,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -2054,8 +2186,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 47.099,
-   "end": 47.359,
+   "start": 46.743,
+   "end": 47.003,
    "beat": "b22",
    "kind": "huss",
    "speaker": "town",
@@ -2063,8 +2195,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 47.309,
-   "end": 47.569,
+   "start": 46.953,
+   "end": 47.213,
    "beat": "b22",
    "kind": "huss",
    "speaker": "town",
@@ -2072,8 +2204,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 47.499,
-   "end": 47.759,
+   "start": 47.143,
+   "end": 47.403,
    "beat": "b22",
    "kind": "huss",
    "speaker": "town",
@@ -2081,8 +2213,8 @@
   },
   {
    "text": "My",
-   "start": 48.214,
-   "end": 48.405,
+   "start": 47.858,
+   "end": 48.046,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2090,8 +2222,8 @@
   },
   {
    "text": "grandad",
-   "start": 48.405,
-   "end": 48.798,
+   "start": 48.046,
+   "end": 48.432,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2099,8 +2231,8 @@
   },
   {
    "text": "plays",
-   "start": 48.798,
-   "end": 49.089,
+   "start": 48.432,
+   "end": 48.719,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2108,8 +2240,8 @@
   },
   {
    "text": "blindfolded",
-   "start": 49.089,
-   "end": 49.783,
+   "start": 48.719,
+   "end": 49.402,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2117,8 +2249,8 @@
   },
   {
    "text": "He",
-   "start": 50.263,
-   "end": 50.42,
+   "start": 49.882,
+   "end": 50.034,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2126,8 +2258,8 @@
   },
   {
    "text": "just",
-   "start": 50.42,
-   "end": 50.745,
+   "start": 50.034,
+   "end": 50.348,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2135,8 +2267,8 @@
   },
   {
    "text": "lost",
-   "start": 50.745,
-   "end": 51.013,
+   "start": 50.348,
+   "end": 50.608,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2144,8 +2276,8 @@
   },
   {
    "text": "his",
-   "start": 51.013,
-   "end": 51.226,
+   "start": 50.608,
+   "end": 50.814,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
@@ -2153,17 +2285,26 @@
   },
   {
    "text": "glasses",
-   "start": 51.226,
-   "end": 51.607,
+   "start": 50.814,
+   "end": 51.182,
    "beat": "b23",
    "kind": "line",
    "speaker": "narr",
    "i": 8
   },
   {
+   "text": "Bro",
+   "start": 51.562,
+   "end": 51.978,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
    "text": "And",
-   "start": 52.387,
-   "end": 52.599,
+   "start": 52.458,
+   "end": 52.668,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2171,8 +2312,8 @@
   },
   {
    "text": "my",
-   "start": 52.599,
-   "end": 52.811,
+   "start": 52.668,
+   "end": 52.878,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2180,8 +2321,8 @@
   },
   {
    "text": "only",
-   "start": 52.811,
-   "end": 53.135,
+   "start": 52.878,
+   "end": 53.199,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2189,8 +2330,8 @@
   },
   {
    "text": "opponent",
-   "start": 53.135,
-   "end": 53.627,
+   "start": 53.199,
+   "end": 53.686,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2198,8 +2339,8 @@
   },
   {
    "text": "left",
-   "start": 53.627,
-   "end": 53.895,
+   "start": 53.686,
+   "end": 53.951,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2207,8 +2348,8 @@
   },
   {
    "text": "is",
-   "start": 53.895,
-   "end": 54.051,
+   "start": 53.951,
+   "end": 54.106,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2216,8 +2357,8 @@
   },
   {
    "text": "the",
-   "start": 54.051,
-   "end": 54.207,
+   "start": 54.106,
+   "end": 54.261,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2225,8 +2366,8 @@
   },
   {
    "text": "mayor's",
-   "start": 54.207,
-   "end": 54.531,
+   "start": 54.261,
+   "end": 54.582,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2234,8 +2375,8 @@
   },
   {
    "text": "pigeon",
-   "start": 54.531,
-   "end": 54.911,
+   "start": 54.582,
+   "end": 54.958,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -2243,8 +2384,8 @@
   },
   {
    "text": "Honestly?",
-   "start": 55.241,
-   "end": 55.828,
+   "start": 55.288,
+   "end": 55.84,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -2252,8 +2393,8 @@
   },
   {
    "text": "He's",
-   "start": 56.208,
-   "end": 56.464,
+   "start": 56.22,
+   "end": 56.462,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -2261,8 +2402,8 @@
   },
   {
    "text": "winning",
-   "start": 56.464,
-   "end": 56.854,
+   "start": 56.462,
+   "end": 56.831,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -2270,8 +2411,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 57.319,
-   "end": 57.579,
+   "start": 57.296,
+   "end": 57.556,
    "beat": "b26",
    "kind": "huss",
    "speaker": "pigeon",
@@ -2279,8 +2420,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 57.529,
-   "end": 57.789,
+   "start": 57.506,
+   "end": 57.766,
    "beat": "b26",
    "kind": "huss",
    "speaker": "pigeon",
@@ -2288,12 +2429,21 @@
   },
   {
    "text": "HUSS!",
-   "start": 57.719,
-   "end": 57.979,
+   "start": 57.696,
+   "end": 57.956,
    "beat": "b26",
    "kind": "huss",
    "speaker": "pigeon",
    "i": 2
+  },
+  {
+   "text": "Respect",
+   "start": 58.461,
+   "end": 59.035,
+   "beat": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
   }
  ],
  "music": [
@@ -2302,44 +2452,43 @@
    "mode": "party"
   },
   {
-   "t": 2.765,
+   "t": 2.66,
    "mode": "muffled"
   },
   {
-   "t": 5.691,
+   "t": 5.538,
    "mode": "party"
   },
   {
-   "t": 12.715,
+   "t": 11.959,
    "mode": "muffled"
   },
   {
-   "t": 22.948,
+   "t": 21.818,
    "mode": "party"
   },
   {
-   "t": 39.24,
+   "t": 39.609,
    "mode": "silence"
   },
   {
-   "t": 48.199,
+   "t": 47.843,
    "mode": "lofi"
   }
  ],
  "markers": {
-  "musicStop": 39.24,
-  "boomExcept": 3.252,
-  "boomPigeon": 9.354,
-  "hornGrandad": 11.431,
-  "bruh1": 18.191,
-  "top10": 32.993,
-  "checkmate": 36.183,
-  "respect1": 38.245,
-  "shades": 44.576,
-  "bruh2": 51.757,
-  "boomWinning": 56.464,
-  "hornEnd": 58.079,
-  "respect2": 58.729,
-  "ooh": 47.809
+  "musicStop": 39.609,
+  "boomExcept": 3.134,
+  "boomPigeon": 9.142,
+  "hornGrandad": 10.963,
+  "bruh1": 17.311,
+  "top10": 32.596,
+  "checkmate": 36.518,
+  "respect1": 38.72,
+  "shades": 44.596,
+  "bruh2": 51.562,
+  "boomWinning": 56.462,
+  "hornEnd": 58.056,
+  "respect2": 58.461
  }
 }
