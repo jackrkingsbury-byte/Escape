@@ -58,6 +58,9 @@ Each episode is a script (`episodes/<ep>/script.json`), a shot list (`src/<ep>/s
 extra props. All of them use the same jinxy narrator voice, the real HUSS sample, weird quote cards and the
 "Top 10 respectful moments" bit.
 
+Every episode plays the sampled background loop (`audio/beds/reference_bed.wav`, `"bed": true` in the
+script) in place of the procedural music; `BED=0` turns it off.
+
 | # | Title | Narrator | Video |
 |---|-------|----------|-------|
 | 1 | Chess (60 s) | the kid | `out/inthistown_v3_60s.mp4` |
@@ -67,6 +70,9 @@ extra props. All of them use the same jinxy narrator voice, the real HUSS sample
 | 5 | Freeze Dance | Brenda | `out/inthistown_ep5_freeze.mp4` |
 | 6 | Gravity | the cat | `out/inthistown_ep6_gravity.mp4` |
 | 7 | Limbo | Marcus | `out/inthistown_ep7_limbo.mp4` |
+| 8 | Pet Rock | Gerald the rock | `out/inthistown_ep8_petrock.mp4` |
+| 9 | The Heist | the burglar | `out/inthistown_ep9_heist.mp4` |
+| 10 | Snooze | DJ Hip Replacement | `out/inthistown_ep10_snooze.mp4` |
 
 Build one:
 
