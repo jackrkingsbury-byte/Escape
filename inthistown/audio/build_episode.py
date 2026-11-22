@@ -13,7 +13,10 @@ Everything episode-specific lives in episodes/<ep>/script.json:
                  "music": "party|muffled|lofi|night|none",   # music mode from this beat on
                  "markers": { "name": "w:<wordprefix>[+0.1] | start | end[+0.2]" },
                  "sfx": [ { "type": "laugh|knock|whoosh|coo|thump|cheer", "at": "w:<word>|start|end[+x]", "gain": 0.8 } ],
-                 "card": {...}, "visual": "..." } ] }   # passed through untouched for the shot list
+                 "card": {...}, "visual": "..." } ],   # passed through untouched for the shot list
+    "bed": { "path": "audio/beds/reference_bed.wav", "gain": 0.3, "duck": 0.4, "music_gain": 0.6 } }   # optional
+      # bed = a looped background texture under the WHOLE episode (also under HUSS runs), dipping under the
+      # voice by `duck`; `music_gain` scales the procedural music while the bed is on.  BED=0 disables it.
 
 Rules (from the user's notes): the only meme SOUND EFFECT is the real HUSS sample. Meme words (top ten,
 respect, goon…) are normal narrated words. Foley (crowd laugh, chess knocks, cat whoosh) and music are fine.
@@ -193,9 +196,25 @@ def main(ep):
             put(np.stack([hold, hold], 1), t0, 0.3)
     music *= gate[:, None]
 
-    mix = np.tanh((music + sfx + np.stack([voice, voice], 1)) * 1.1) / 1.1
+    # background bed (sampled loop) under everything
+    bed = np.zeros((N, 2), np.float32)
+    bcfg = script.get('bed')
+    if bcfg and os.environ.get('BED', '1') != '0':
+        bp = bcfg['path'] if os.path.isabs(bcfg['path']) else os.path.join(ROOT, bcfg['path'])
+        b_raw, bsr = sf.read(bp, dtype='float32', always_2d=True)
+        if b_raw.shape[1] == 1: b_raw = np.repeat(b_raw, 2, 1)
+        if bsr != SR: b_raw = signal.resample_poly(b_raw, SR, bsr, axis=0).astype(np.float32)
+        reps = int(np.ceil(N / len(b_raw))) + 1
+        off = int(bcfg.get('offset', 0) * SR) % len(b_raw)
+        bed = np.tile(b_raw, (reps, 1))[off: off + N]
+        fin = min(N, int(0.25 * SR)); bed[:fin] *= np.linspace(0, 1, fin)[:, None]
+        fout = min(N, int(0.6 * SR)); bed[-fout:] *= np.linspace(1, 0, fout)[:, None]
+        bed *= (bcfg.get('gain', 0.3) * (1 - bcfg.get('duck', 0.4) * np.clip(venv * 3, 0, 1)))[:, None]
+        music *= bcfg.get('music_gain', 0.6)
+
+    mix = np.tanh((music + bed + sfx + np.stack([voice, voice], 1)) * 1.1) / 1.1
     os.makedirs(os.path.join(epdir, 'stems'), exist_ok=True)
-    for name, arr in (('voice', voice), ('music', music), ('sfx', sfx)):
+    for name, arr in (('voice', voice), ('music', music), ('bed', bed), ('sfx', sfx)):
         sf.write(os.path.join(epdir, f'stems/{name}.wav'), arr, SR)
     raw = os.path.join(epdir, 'stems/mix_raw.wav'); sf.write(raw, mix, SR)
     out = os.path.join(epdir, 'mix.wav')
