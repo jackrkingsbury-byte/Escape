@@ -85,8 +85,10 @@ function makeTower() {
   const jit = TOWER_NAMES.map((_, i) => (i === NT - 1 ? { x: 0, z: 0, y: 0 } : { x: (hash(i * 3.1) - 0.5) * 0.3, z: (hash(i * 5.7) - 0.5) * 0.25, y: (hash(i * 7.3) - 0.5) * 0.4 }));
   const local = [];
   const q = new THREE.Quaternion(), qa = new THREE.Quaternion(), qy = new THREE.Quaternion(), X = V(1, 0, 0), Y = V(0, 1, 0), Z = V(0, 0, 1);
-  function set({ lean = 0, topple = 0, hop = 0, sway = 0, hide = [] } = {}) {
-    pivot.rotation.set(topple, 0, 0); pivot.position.set(0, hop, 0);
+  const fallAxis = new THREE.Vector3();
+  function set({ lean = 0, topple = 0, hop = 0, sway = 0, hide = [], fallDir = [0, 1] } = {}) {
+    // topple tips the stack's +Y toward the (stage-local) ground direction fallDir = [x, z]
+    fallAxis.set(fallDir[1], 0, -fallDir[0]).normalize(); pivot.quaternion.setFromAxisAngle(fallAxis, topple); pivot.position.set(0, hop, 0);
     let x = 0, y = 0;
     for (let i = 0; i < NT; i++) {
       const a = (lean + sway) * (i / NT) * 1.6 + (i ? (hash(i * 9.1) - 0.5) * 0.06 : 0);
@@ -126,7 +128,8 @@ function stamp(ctx, text, t0, o = {}) {
 }
 function humanFace(ch) { ch.root.updateMatrixWorld(true); return ch.joints.head.localToWorld(V(0, 0.3, 0.28)); }
 function catFace(cat) { cat.root.updateMatrixWorld(true); return cat.joints.head.localToWorld(V(0, 0.035, 0.123)); }
-const facing = (obj) => V(Math.sin(obj.rotation.y), 0, Math.cos(obj.rotation.y));
+const facing = (obj) => { const v = V(0, 0, 1).applyQuaternion(obj.quaternion); v.y = 0; return v.normalize(); };   // (rotation.y lies for |yaw| > π/2)
+const rootYaw = (obj) => { const v = facing(obj); return Math.atan2(v.x, v.z); };
 function put(ctx, id, pos, yaw = 0) { ctx.place(id, pos, { yaw }); return ctx.cast[id]; }
 function armsDown(ch) { ch.joints.armL.rotation.set(0.05, 0, 0.12); ch.joints.armR.rotation.set(0.05, 0, -0.12); }
 /** A figure lying on its back on a bed (bed frame from makeBeds / tower.bed): head toward the headboard. */
@@ -139,16 +142,16 @@ function lie(ch, t, face, eyesT, { arms = 'down', headYaw = 0 } = {}) {
   ch.face(face, eyesT);
 }
 function sackOnBack(ctx, ch) {
-  const s = ctx.props.sack; ctx.add(s, ch.joints.torso); s.rotation.set(2.4, 0, 0.2); s.position.set(-0.18, 0.55, -0.22); s.scale.setScalar(1.2);
+  const s = ctx.props.sack; ctx.add(s, ch.joints.torso); s.rotation.set(2.4, 0, 0.2); s.position.set(-0.18, 0.35, -0.22); s.scale.setScalar(1.0);
 }
 function zzz(ctx, k, pos, t, t0 = -1) {
   const z = ctx.props.zzz[k]; ctx.add(z);
   const d = Math.max(0, t - t0);
   z.visible = t >= t0; z.position.copy(pos).add(V(0.15 * Math.sin(d * 2 + k), 0.25 + 0.18 * ((d * 0.6 + hash(k)) % 1), 0));
 }
-function iris(ctx, t0, cy = 0.5) {
+function iris(ctx, t0, cy = 0.5, cx = 0.5) {
   const k = clamp((ctx.t - t0) / 0.5, 0, 1);
-  if (k > 0) ctx.fx.draw((g, W, H) => { const r = Math.hypot(W, H) * 0.6 * (1 - ease.inCubic(k)); g.save(); g.fillStyle = '#000'; g.beginPath(); g.rect(0, 0, W, H); g.arc(W * 0.5, H * cy, Math.max(0.5, r), 0, Math.PI * 2, true); g.fill('evenodd'); g.restore(); });
+  if (k > 0) ctx.fx.draw((g, W, H) => { const r = Math.hypot(W, H) * 0.6 * (1 - ease.inCubic(k)); g.save(); g.fillStyle = '#000'; g.beginPath(); g.rect(0, 0, W, H); g.arc(W * cx, H * cy, Math.max(0.5, r), 0, Math.PI * 2, true); g.fill('evenodd'); g.restore(); });
 }
 const hits = (ctx, b, d = 0.03) => ctx.hussTimes(b).map((h) => h + d);
 const hussShot = (b, i) => (i === 0 ? `${b}.h0-0.12` : `${b}.h${i}-0.03`);
@@ -167,7 +170,10 @@ function rooftop(ctx) {
   return { Hf, B, C, b, ridge };
 }
 // the row of houses that go dark during b03 (visible looking east from the rooftop), one per HUSS
-const DARK_ORDER = [6, 2, 7, 3, 8, 4];
+// the two south-row houses across the street from the roof (6 = 'front' kind, 6 front windows; 7 = 'side', 5) go dark
+// window by window, in six steps; the family for step k walks out of house DARK_ORDER[k]
+const DARK_ORDER = [6, 7, 6, 7, 6, 7];
+const DARK_STEPS = [[[6, 5], [6, 2]], [[7, 0], [7, 3]], [[6, 1], [6, 4]], [[7, 1], [7, 4]], [[6, 0], [6, 3]], [[7, 2], [7, 5], [7, 6], [7, 7], [7, 8], [6, 6], [6, 7], [6, 8], [6, 9]]];
 
 // ── the square.  S: stage frame (+z = audience, origin stage floor y 0.8).  ground = S y −0.8.
 const G0 = -0.8;
@@ -222,7 +228,7 @@ function djAnim(ctx, { asleep = false, slamHits = null } = {}) {
 /** The mayor's top hat slid down over his eyes. */
 function hatOverEyes(ctx, m) {
   m.setAccessory('topHat', false);
-  const h = ctx.props.hatOverEyes; ctx.add(h, m.joints.head); h.position.set(0, 0.2, 0.03); h.rotation.set(0.12, 0, 0);
+  const h = ctx.props.hatOverEyes; ctx.add(h, m.joints.head); h.position.set(0, 0.36, 0.03); h.rotation.set(0.12, 0, 0);
 }
 
 // ── the plaza after the fall: beds in a loose grid; slot 'hole' (the middle) is bare cobbles for the burglar.
@@ -249,15 +255,21 @@ export const shots = [
       const c = ctx.point('street.center'), hi = ctx.point('street.camHigh');
       const d = V(hi.x - c.x, 0, hi.z - c.z).normalize();
       ctx.store = { crowd, rt, from: { pos: hi, look: c.clone().add(up(0.5)), fov: 50 }, mid: { pos: c.clone().addScaledVector(d, 9).add(up(3.2)), look: ctx.point('street.crowdA').add(up(1.3)), fov: 42 },
-        roof: { pos: rt.Hf(4.2, rt.ridge + 1.4, 8.2), look: rt.Hf(0, rt.ridge + 0.9, 1.9), fov: 34 } };
+        roof: { pos: rt.Hf(4.2, rt.ridge + 1.4, 8.2), look: rt.Hf(0, rt.ridge + 0.9, 1.9), fov: 34 }, way: rt.Hf(0, rt.ridge + 4, 6) };
     },
     update(ctx) {
-      const { crowd, rt, from, mid, roof } = ctx.store;
+      const { crowd, rt, from, mid, roof, way } = ctx.store;
       animateCrowd(crowd, ctx.t);
       rt.b.pose('peer', ctx.t, { intensity: 0.4 }); rt.b.face('squint', ctx.t);
-      const tr = ctx.markers.rooftop;
+      const tr = ctx.markers.rooftop - 0.25;   // rise starts early so the roof wide holds ≥ 0.3 s before the cut
       if (ctx.t < tr) ctx.cam.move(from, mid, clamp(ctx.t / tr, 0, 1), ease.inOutCubic);
-      else { const k = clamp((ctx.t - tr) / 0.6, 0, 1); ctx.cam.move(mid, roof, k, ease.inOutCubic); ctx.cam.set({ pos: ctx.cam.state.pos.clone().add(up(6 * Math.sin(Math.PI * k))) }); }
+      else {
+        // mid → over the roofline (waypoint above the house) → roof: a quadratic Bézier, so the lens never grazes the front wall
+        const k = clamp((ctx.t - tr) / 0.55, 0, 1), u = ease.inOutCubic(k), a = (1 - u) * (1 - u), b2 = 2 * u * (1 - u), c2 = u * u;
+        const pos = V().addScaledVector(mid.pos, a).addScaledVector(way, b2).addScaledVector(roof.pos, c2);
+        const look = mid.look.clone().lerp(roof.look, ease.outCubic(k));
+        ctx.cam.set({ pos, look, fov: lerp(mid.fov, roof.fov, u) });
+      }
     },
   },
   // ── b02 "Except me. I'm working."  rooftop close-up; tugs the mask on 'working', one flat nod
@@ -281,10 +293,9 @@ export const shots = [
     setup(ctx) {
       partyTown(ctx, { fireworks: false });
       const rt = rooftop(ctx);
-      const houses = ctx.anchor('houses') || [];
       const fams = [];
+      // one family per HUSS, alternating out of the doors of houses 6 and 7 (south row, across the street from the roof)
       DARK_ORDER.forEach((hi, k) => {
-        const h = houses.find((x) => x.index === hi); if (!h) return;
         const D = frameAt(ctx, `house.${hi}.door`);
         for (let j = 0; j < 3; j++) { const id = EXTRA_IDS[k * 3 + j]; ctx.place(id, D(0, 0, 0)); ctx.cast[id].setAccessory?.('partyHat', true); fams.push({ id, k, j, D }); }
       });
@@ -292,27 +303,37 @@ export const shots = [
     },
     update(ctx) {
       const { rt, fams } = ctx.store, b = rt.b, hs = hits(ctx, 'b03');
-      const n = hs.filter((h) => h <= ctx.t).length;
-      const dark = new Set(DARK_ORDER.slice(0, n));
-      ctx.set.set?.('windowGlow', (hi) => (dark.has(hi) ? 0 : 1));
-      b.pose('slam', ctx.t, { hits: hs, slamTarget: rt.C.clone().add(up(0.02)) }); b.face('huss', OPEN(b));
+      // window by window: each HUSS kills the windows of the house the family just left, one after another
+      const off = new Set();
+      DARK_STEPS.forEach((step, k) => step.forEach(([hi, wi], m) => { if (ctx.t >= hs[k] + m * 0.05) off.add(hi * 100 + wi); }));
+      ctx.set.set?.('windowGlow', (hi, wi) => (off.has(hi * 100 + wi) ? 0 : 1));
+      b.pose('slam', ctx.t, { hits: hs, slamTarget: rt.C.clone().add(up(0.35)) }); b.face('huss', OPEN(b));
       for (const f of fams) {
-        const ch = ctx.cast[f.id], th = hs[f.k];
+        const ch = ctx.cast[f.id], th = hs[f.k] - 0.02;
         const vis = ctx.t >= th; ch.root.visible = vis; if (!vis) continue;
         const d = ctx.t - th;
-        const p = f.D(0, 0, 1.2 + Math.min(d, 0.6) * 2.5).add(V(Math.max(0, d - 0.3) * 1.6 + (f.j - 1) * 0.8, 0, (f.j - 1) * 0.3));
-        ch.root.position.copy(p); ch.root.rotation.set(0, Math.PI / 2, 0);
+        // out of the door toward the camera (the street), then off east toward the square
+        const out = 0.4 + Math.min(d, 0.5) * 3.2, east = Math.max(0, d - 0.45) * 2.4;
+        const p = f.D((f.j - 1) * 0.75, 0, out - Math.abs(f.j - 1) * 0.3).add(V(east, 0, 0));
+        ch.root.position.copy(p); ch.root.rotation.set(0, d < 0.45 ? f.D.yaw : Math.PI / 2, 0);
         ch.pose('dance2', ctx.t + f.j * 0.4, { speed: 1.2 }); ch.face('grin', ctx.t + f.j);
       }
       const { Hf, B } = rt;
       if (i % 2 === 0 || i === 5) {
-        const k = i === 5 ? 1 : 0;
-        ctx.cam.set({ pos: B.clone().add(V(-3.2 - 2 * k, 2.0 + 1.2 * k, -2.0 - 1.5 * k)), look: V(16, 1.5, 0), fov: 46 + 4 * k });
+        // over the burglar's shoulder (left third), across the street at houses 6 and 7; a different framing each cut
+        // (camera positions in house-1 local coords, clear of the house's own chimney; look targets are world points)
+        const W = { 0: [Hf(-1.8, rt.ridge + 2.3, -2.2), V(-7.5, 3, 14), 48], 2: [Hf(-1.2, rt.ridge + 1.8, -1.6), V(-10.5, 3.2, 14), 42],
+          4: [Hf(-2.2, rt.ridge + 2.6, -2.6), V(-5.5, 3, 14), 46], 5: [Hf(-2.6, rt.ridge + 3.6, -4.0), V(-8, 2, 13), 56] }[i];
+        ctx.cam.set({ pos: W[0], look: W[1], fov: W[2] });
       } else {
-        ctx.cam.set({ pos: Hf(3.4, rt.ridge + 1.1, 3.6), look: Hf(0, rt.ridge + 1.05, 2.0), fov: 38 });
+        ctx.cam.set({ pos: Hf(i === 1 ? 1.2 : -1.2, rt.ridge + 1.0, 6.4), look: humanFace(b).add(up(-0.3)), fov: 34 });
       }
       const hit = lastBefore(hs, ctx.t);
-      if (hit != null) { const s = ctx.props.soot; ctx.add(s.root); s.root.position.copy(rt.C); s.root.scale.setScalar(0.6); s.update((ctx.t - hit) / 0.45); }
+      if (hit != null) {   // soot puffs out of the chimney (behind it, away from the lens, on the close cuts)
+        const s = ctx.props.soot; ctx.add(s.root); s.root.position.copy(rt.C).add(up(0.1)); s.root.scale.setScalar(0.6);
+        if (i === 1 || i === 3) { s.root.position.addScaledVector(Hf.fwd, -0.5); s.root.scale.setScalar(0.45); }
+        s.update((ctx.t - hit) / 0.45);
+      }
       ctx.cam.punch(hs, ctx.t, 0.1, 0.2); ctx.cam.shake(0.08, ctx.t, i);
     },
   })),
@@ -327,7 +348,7 @@ export const shots = [
       ctx.add(P.office); P.office.position.copy(F(1.6, 0, 9.5)); P.office.rotation.set(0, F.yaw, 0);
       ctx.add(P.tumbleweed); ctx.add(P.miniCase, P.tumbleweed);
       P.miniCase.position.set(0.12, 0.05, 0.2); P.miniCase.rotation.set(0.3, 0.5, 0.2);
-      ctx.store = { F, door: F(1.6, 0.45, 11.0), inside: F(1.6, 0.45, 9.2), start: F(6.5, 0.45, 17.5) };
+      ctx.store = { F, door: F(1.6, 0.55, 11.0), inside: F(1.6, 0.55, 9.2), start: F(3.9, 0.55, 13.0) };
     },
     update(ctx) {
       const { F, door, inside, start } = ctx.store, tw = ctx.props.tumbleweed;
@@ -335,11 +356,11 @@ export const shots = [
       let p;
       if (ctx.t < tn) p = start.clone().lerp(door, clamp((ctx.t - t0) / (tn - t0), 0, 1));
       else p = door.clone().lerp(inside, clamp((ctx.t - tn) / 0.35, 0, 1));
-      tw.scale.setScalar(1.4);
-      tw.position.copy(p).add(up(Math.abs(Math.sin(ctx.t * 7)) * 0.18));
+      tw.scale.setScalar(2.0);
+      tw.position.copy(p).add(up(Math.abs(Math.sin(ctx.t * 6)) * 0.16));
       const dist = start.distanceTo(p);
-      tw.rotation.set(-dist / 0.45, F.yaw + 0.5, 0);
-      ctx.cam.set({ pos: F(5.5, 1.7, 20.5), look: F(1.6, 2.6, 9.0), fov: 44 });
+      tw.rotation.set(-dist / 0.55, F.yaw + 0.6, 0);
+      ctx.cam.set({ pos: F(4.0, 1.3, 16.0), look: F(2.0, 2.2, 10.5), fov: 44 });
       if (ctx.t > tn) { ctx.cam.shake(0.25 * clamp(1 - (ctx.t - tn) / 0.4, 0, 1), ctx.t, 4); tag(ctx, 'DONG ×9', tn, Infinity, { y: 0.14, size: 72, bg: 'rgba(30,60,140,0.85)' }); }
       tag(ctx, '9:00 AM', t0 + 0.2, tn, { y: 0.14, size: 64 });
     },
@@ -356,17 +377,20 @@ export const shots = [
       sackOnBack(ctx, b);
       const P = ctx.props; ctx.add(P.flash.root); P.flash.setOn(1);
       ctx.add(P.balloon9);
-      ctx.store = { W, b };
+      const glow = new THREE.PointLight('#ffc27a', 2, 1, 1.5); ctx.add(glow);   // warm under-chin light from the torch
+      ctx.store = { W, b, glow };
     },
     update(ctx, lt) {
-      const { W, b } = ctx.store, P = ctx.props;
+      const { W, b, glow } = ctx.store, P = ctx.props;
       b.pose('think', 0.6, { intensity: 0, headPitch: -0.05 }); b.face('neutral', OPEN(b));
       b.root.updateMatrixWorld(true);
-      const hp = b.joints.handR.getWorldPosition(V());
-      P.flash.root.position.copy(hp).addScaledVector(W.fwd, 0.04); P.flash.root.lookAt(hp.clone().add(up(1)).addScaledVector(W.fwd, -0.25));
-      const th = ctx.markers.houses, k = clamp((ctx.t - (th - 0.5)) / 1.6, 0, 1);
+      const hp = b.joints.handR.getWorldPosition(V()).add(up(-0.15)).addScaledVector(W.fwd, 0.05);   // below the chin
+      P.flash.root.position.copy(hp); P.flash.root.lookAt(hp.clone().add(up(1)).addScaledVector(W.fwd, -0.2));
+      glow.position.copy(hp).add(up(0.12)).addScaledVector(W.fwd, 0.08);
+      // the balloon drifts past outside, through the window strip left of his head, on 'houses'
+      const th = ctx.markers.houses, k = clamp((ctx.t - (th - 1.35)) / 1.8, 0, 1);
       P.balloon9.visible = k > 0 && k < 1;
-      P.balloon9.position.copy(W(lerp(-0.05, -1.75, k), 1.2 + 0.08 * Math.sin(ctx.t * 3), -2.55)); P.balloon9.rotation.set(0, 0, 0.15 * Math.sin(ctx.t * 2));
+      P.balloon9.position.copy(W(lerp(-0.05, -1.75, k), 0.9 + 0.06 * Math.sin(ctx.t * 3), -2.55)); P.balloon9.rotation.set(0, 0, 0.15 * Math.sin(ctx.t * 2));
       const f = humanFace(b);
       const fy = f.y - W.origin.y;
       ctx.cam.move({ pos: W(-0.62, fy + 0.1, 1.6), look: W(-0.62, fy - 0.3, -1.5), fov: 36 },
@@ -382,22 +406,22 @@ export const shots = [
       ctx.set.setLighting?.('night'); ctx.set.set?.('window', 'dark');
       const R = ctx.set.root; R.updateMatrixWorld(true);
       const W = frame(R.localToWorld(V(0, 0, 0)), yawOf(R));
-      const P = ctx.props; ctx.add(P.cork); P.cork.position.copy(W(0.9, 1.62, -2.03)); P.cork.rotation.set(0, W.yaw, 0);
-      const b = put(ctx, 'burglar', W(0.05, 0, -1.45), W.yaw);
+      const P = ctx.props; ctx.add(P.cork); P.cork.position.copy(W(0.9, 2.0, -2.03)); P.cork.rotation.set(0, W.yaw, 0);
+      const b = put(ctx, 'burglar', W(0.25, 0, -1.45), W.yaw);
       sackOnBack(ctx, b);
-      ctx.store = { W, b };
+      ctx.store = { W, b, wide: { pos: W(0.45, 1.5, 3.6), look: W(0.55, 1.2, -1.8), fov: 40 } };
     },
     update(ctx) {
-      const { W, b } = ctx.store, tt = ctx.markers.threw, ts = ctx.markers.slept;
+      const { W, b, wide } = ctx.store, tt = ctx.markers.threw, ts = ctx.markers.slept;
       const turn = clamp((ctx.t - ts) / 0.25, 0, 1);
       b.root.rotation.set(0, W.yaw + lerp(Math.PI * 0.72, 0.15, ease.inOutCubic(turn)), 0);
       if (ctx.t < ts) {
         const tap = ctx.t > tt - 0.15;
-        b.pose(tap ? 'point' : 'idle', ctx.t, { intensity: 0.3, lookAt: W(0.9, 1.6, -2.0) }); b.face(tap ? 'smug' : 'neutral', ctx.t);
+        b.pose(tap ? 'point' : 'idle', ctx.t, { intensity: 0.3, lookAt: W(0.9, 2.0, -2.0) }); b.face(tap ? 'smug' : 'neutral', ctx.t);
       } else { b.pose('idle', ctx.t, { intensity: 0.2 }); b.face('sleepy', OPEN(b)); }
-      if (ctx.t < ts) ctx.cam.set({ pos: W(0.45, 1.65, 3.0), look: W(0.5, 1.45, -1.8), fov: 36 });
-      else { const f = humanFace(b); ctx.cam.move({ pos: W(0.45, 1.65, 3.0), look: W(0.5, 1.45, -1.8), fov: 36 }, { pos: f.clone().add(V(0, 0, 0)).addScaledVector(W.fwd, 2.4).addScaledVector(W.left, 0.25), look: f.clone().add(up(-0.1)), fov: 32 }, clamp((ctx.t - ts) / 0.35, 0, 1), ease.inOutCubic); }
-      tag(ctx, 'LAST SLEPT: LAST YEAR', ts + 0.2, Infinity, { y: 0.2, size: 62, bg: 'rgba(120,20,40,0.9)' });
+      if (ctx.t < ts) ctx.cam.set(wide);
+      else { const f = humanFace(b); ctx.cam.move(wide, { pos: f.clone().addScaledVector(W.fwd, 3.3).addScaledVector(W.left, 0.25), look: f.clone().add(up(-0.3)), fov: 32 }, clamp((ctx.t - ts) / 0.35, 0, 1), ease.inOutCubic); }
+      tag(ctx, 'LAST SLEPT: LAST YEAR', ts + 0.2, Infinity, { y: 0.12, size: 62, bg: 'rgba(120,20,40,0.9)' });
     },
   },
   // ── b07 quote card "A locked door is just a shy door." → a front door, the crowbar leaning on it, flirting
@@ -420,15 +444,15 @@ export const shots = [
       P.hearts.forEach((h, i) => {
         const d = ctx.t - tf - i * 0.12;
         h.visible = d > 0;
-        const top = D(0.36, 0.85, -0.76);
-        h.position.copy(top).add(V(0, d * 0.7, 0)).addScaledVector(D.left, (i - 1) * 0.18 + 0.05 * Math.sin(d * 6 + i)).addScaledVector(D.fwd, 0.1);
+        const hook = D(0.32, 0.93, -0.78);   // the crowbar's hook (it leans on the door)
+        h.position.copy(hook).add(V(0, 0.15 + 1.25 * d - 0.25 * d * d, 0)).addScaledVector(D.left, (i - 1) * 0.2 * clamp(d / 0.3, 0, 1) + 0.05 * Math.sin(d * 6 + i)).addScaledVector(D.fwd, 0.12);
         const s = 0.28 * ease.outBack(clamp(d / 0.2, 0, 1)); h.scale.set(s + 0.001, s + 0.001, 1);
       });
       if (part === 'card') {
         ctx.cam.set({ pos: D(0.6, 1.25, 2.2), look: D(0.1, 1.1, -0.8), fov: 40 });
         quoteCard(ctx, 'A locked door is just a shy door.', 'a crowbar, flirting', ctx.markers.quote1, ctx.markers.quote1end + 0.05, { y: 0.34, byAt: ctx.markers.quote1end - 0.2 });
       } else {
-        ctx.cam.move({ pos: D(0.75, 1.1, 1.9), look: D(0.18, 0.95, -0.8), fov: 40 }, { pos: D(0.6, 1.05, 1.55), look: D(0.18, 1.0, -0.8), fov: 38 }, clamp(ctx.since('quote1end') / 1.2, 0, 1));
+        ctx.cam.move({ pos: D(0.6, 1.32, 2.9), look: D(0.15, 1.45, -0.8), fov: 42 }, { pos: D(0.5, 1.3, 2.6), look: D(0.15, 1.45, -0.8), fov: 42 }, clamp(ctx.since('quote1end') / 1.2, 0, 1));
         tag(ctx, 'A CROWBAR', ctx.time('b07.w9'), Infinity, { y: 0.17 });
       }
     },
@@ -460,10 +484,12 @@ export const shots = [
     update(ctx) {
       const { rt } = ctx.store, b = rt.b, hs = hits(ctx, 'b08'), h = hs[1];
       const d = ctx.t - h;
-      b.root.position.copy(rt.C).add(up(d < 0 ? 0.05 : -Math.min(2.4, 6 * d * d + 1.2 * d)));
+      // already sunk to the chest at the hit, then dropping fast down the flue
+      b.root.position.copy(rt.C).add(up(-0.9 - 4 * Math.max(0, d)));
       b.pose('cheer', 0.3, { intensity: 1 }); b.face('huss', OPEN(b));
-      const s = ctx.props.soot; ctx.add(s.root); s.root.position.copy(rt.C).add(up(0.2)); s.root.scale.setScalar(1.1); s.update(d / 0.5);
-      ctx.cam.set({ pos: rt.C.clone().addScaledVector(rt.Hf.fwd, 3.0).addScaledVector(rt.Hf.left, 1.2).add(up(1.2)), look: rt.C.clone().add(up(0.6)), fov: 38 });
+      // soot shoots up and out of the hole, behind his head
+      const s = ctx.props.soot; ctx.add(s.root); s.root.position.copy(rt.C).add(up(0.25)).addScaledVector(rt.Hf.fwd, -0.3); s.root.scale.set(0.8, 1.5, 0.8); s.update(Math.max(0, d + 0.03) / 0.5);
+      ctx.cam.set({ pos: rt.C.clone().addScaledVector(rt.Hf.fwd, 2.6).addScaledVector(rt.Hf.left, 0.5).add(up(0.9)), look: rt.C.clone().add(up(0.4)), fov: 40 });
       ctx.cam.punch(hs, ctx.t, 0.12, 0.2); ctx.cam.shake(0.1, ctx.t, 11);
     },
   },
@@ -488,8 +514,10 @@ export const shots = [
       ctx.props.flapDoor.flap.rotation.x = -1.65 * k;
       b.root.position.copy(Dd(0, -0.5, lerp(-1.75, -1.31, ease.outCubic(k))));
       b.pose('idle', 0, { intensity: 0, headPitch: -1.0 }); b.face('sweat', OPEN(b));
-      cat.pose('stare', 0); cat.face('stare', OPEN(cat));
-      ctx.cam.set({ pos: Dd(1.55, 0.95, 2.1), look: Dd(0.05, 0.5, 0.25), fov: 44 });
+      cat.pose('stare', 0, { headYaw: 0.55 }); cat.face('stare', OPEN(cat));   // head turned just enough that the stare reads
+      // profile: both faces side-on, the noses meeting above the caption line (≈ y 0.35 of frame)
+      const hf = humanFace(b), cf = catFace(cat), ny = 0.5 * (hf.y + cf.y) - Dd.origin.y;
+      ctx.cam.set({ pos: Dd(-2.2, ny - 0.05, 1.5), look: Dd(0, ny - 0.24, 0.22), fov: 50 });
       ctx.cam.punch(hs, ctx.t, 0.12, 0.2);
     },
   },
@@ -516,15 +544,18 @@ export const shots = [
     update(ctx) {
       const { W, b, t0 } = ctx.store, P = ctx.props, to = ctx.markers.one;
       P.tv.update(ctx.t); P.jewels.update(ctx.t);
-      const walkEnd = to - 0.05;
-      const z = lerp(-1.2, 1.25, clamp((ctx.t - t0) / (walkEnd - t0), 0, 1));
-      b.root.position.copy(W(1.45, 0, z)); b.root.rotation.set(0, W.yaw, 0);
+      const walkEnd = to - 0.05, tT = ctx.markers.telly, tJ = ctx.markers.jewels;
+      // he has just walked past each prop on its word (TV z −0.3 on 'telly', jewels z 0.35 on 'jewels'), never looking
+      const KZ = [[t0, -0.75], [tT, 0.3], [tJ, 0.95], [walkEnd, 1.55]];
+      let z = KZ[KZ.length - 1][1];
+      for (let j = 1; j < KZ.length; j++) if (ctx.t < KZ[j][0]) { z = lerp(KZ[j - 1][1], KZ[j][1], clamp((ctx.t - KZ[j - 1][0]) / (KZ[j][0] - KZ[j - 1][0]), 0, 1)); break; }
+      b.root.position.copy(W(1.0, 0, z)); b.root.rotation.set(0, W.yaw, 0);
       if (ctx.t < walkEnd) { b.pose('walk', ctx.t, { speed: 1.0 }); b.face('neutral', OPEN(b)); }
       else { b.pose('idle', ctx.t, { intensity: 0.2, headYaw: -0.25 }); b.face('smug', OPEN(b)); b.joints.armL.rotation.x = -0.9; b.joints.armL.rotation.z = 0.3; }
-      const zc = Math.min(z, 0.95) + 0.1;
-      ctx.cam.set({ pos: W(-1.15, 1.95, zc - 0.2), look: W(2.2, 0.95, zc), fov: 50 });
-      if (Math.abs(ctx.t - ctx.markers.telly) < 0.6) tag(ctx, 'NOPE', ctx.markers.telly, ctx.markers.telly + 0.6, { y: 0.2, size: 60 });
-      if (Math.abs(ctx.t - ctx.markers.jewels) < 0.6) tag(ctx, 'NOPE', ctx.markers.jewels, ctx.markers.jewels + 0.6, { y: 0.2, size: 60 });
+      const zc = Math.min(z - 0.35, 1.0);
+      ctx.cam.set({ pos: W(-2.3, 1.7, zc), look: W(2.2, 0.95, zc), fov: 44 });
+      if (Math.abs(ctx.t - tT) < 0.6) tag(ctx, 'NOPE', tT, tT + 0.6, { y: 0.12, size: 60 });
+      if (Math.abs(ctx.t - tJ) < 0.6) tag(ctx, 'NOPE', tJ, tJ + 0.6, { y: 0.12, size: 60 });
     },
   },
   // ── b10 "They kept coming home early."  Grandad hangs his party hat on the frozen burglar
@@ -535,27 +566,34 @@ export const shots = [
       ctx.set.setLighting?.('night'); ctx.set.set?.('window', 'dark');
       const R = ctx.set.root; R.updateMatrixWorld(true);
       const W = frame(R.localToWorld(V(0, 0, 0)), yawOf(R));
-      const b = put(ctx, 'burglar', W(-1.0, 0, 0.35), W.yaw - Math.PI / 2);
-      put(ctx, 'grandad', W(-2.1, 0, 1.6), W.yaw + Math.PI);
+      // the burglar faces the camera 3/4, frozen in 'point': the outstretched right arm is the hat peg
+      const b = put(ctx, 'burglar', W(-1.35, 0, 0.45), W.yaw - 0.4);
+      b.pose('point', 0.8, { intensity: 1 }); b.root.updateMatrixWorld(true);
+      const hand0 = b.joints.handR.getWorldPosition(V());
+      const bf = facing(b.root), br = V(-bf.z, 0, bf.x);   // his forward / his right (world)
+      // grandad shuffles past just outside the hand (on his right, away from his body), parallel to the arm
+      const q = hand0.clone().addScaledVector(br, 0.42); q.y = W.origin.y;
+      const dir = bf.clone().negate();
+      put(ctx, 'grandad', q, Math.atan2(dir.x, dir.z));
       const P = ctx.props; ctx.add(P.handHat); ctx.add(P.grandHat);
-      ctx.store = { W, b, t0: ctx.time('b10') - 0.1 };
+      ctx.store = { W, b, t0: ctx.time('b10') - 0.1, q, dir };
     },
     update(ctx) {
-      const { W, b, t0 } = ctx.store, g = ctx.cast.grandad, P = ctx.props;
+      const { W, b, t0, q, dir } = ctx.store, g = ctx.cast.grandad, P = ctx.props;
       const tHang = t0 + 0.65;
-      b.pose('point', 0.8, { intensity: 0 }); b.face(ctx.t > tHang + 0.2 ? 'sweat' : 'neutral', OPEN(b));
+      b.pose('point', 0.8, { intensity: 1 }); b.face(ctx.t > tHang + 0.2 ? 'sweat' : 'neutral', OPEN(b));
+      if (ctx.t > tHang + 0.2) b.joints.head.rotation.y += -0.25 * clamp((ctx.t - tHang - 0.2) / 0.2, 0, 1);   // eyes slide to the hat
       b.root.updateMatrixWorld(true);
       const hand = b.joints.handR.getWorldPosition(V());
-      // grandad: in from the door, past the hand, out toward the (unseen) bed
-      const k = clamp((ctx.t - t0) / 1.45, 0, 1);
-      const gp = W(-2.12, 0, lerp(1.7, -0.25, k));
-      g.root.position.copy(gp); g.root.rotation.set(0, W.yaw + Math.PI, 0);
-      const pat = ctx.t > tHang && ctx.t < tHang + 0.3;
+      // grandad: in from the camera side, past the hand at tHang, on toward the (unseen) bed
+      const gp = q.clone().addScaledVector(dir, (ctx.t - tHang) * 0.75);
+      g.root.position.copy(gp); g.root.rotation.set(0, Math.atan2(dir.x, dir.z), 0);
+      const pat = ctx.t > tHang - 0.12 && ctx.t < tHang + 0.3;
       g.pose(pat ? 'point' : 'walk', ctx.t, { speed: 0.7, intensity: 0.6 }); g.face('sleepy', ctx.t);
       g.root.updateMatrixWorld(true);
       if (ctx.t < tHang) { P.grandHat.visible = true; P.handHat.visible = false; const hp = headPos(g, 0.62); P.grandHat.position.copy(hp); P.grandHat.rotation.set(0, g.root.rotation.y, 0.1); }
-      else { P.grandHat.visible = false; P.handHat.visible = true; P.handHat.position.copy(hand).add(up(0.06)); P.handHat.rotation.set(0, 0, 0.25); }
-      ctx.cam.set({ pos: W(1.5, 2.1, 4.6), look: W(-1.5, 1.05, 0.55), fov: 48 });
+      else { P.grandHat.visible = false; P.handHat.visible = true; P.handHat.position.copy(hand).add(up(0.1)); P.handHat.rotation.set(0, 0, 0.25); }
+      ctx.cam.set({ pos: W(1.3, 2.1, 4.8), look: W(-1.75, 1.1, 0.8), fov: 42 });
       tag(ctx, '9:04 PM', t0, Infinity, { x: 0.27, y: 0.12, size: 64, bg: 'rgba(10,10,20,0.85)', fill: '#ffe14a', rot: 0 });
       if (ctx.t > t0 + 1.15) tag(ctx, 'Z z z', t0 + 1.15, Infinity, { x: 0.15, y: 0.3, size: 80, bg: null, rot: -0.2 });
     },
@@ -567,7 +605,8 @@ export const shots = [
       partyTown(ctx);
       const crowd = crowdGrid(ctx, EXTRA_IDS, 'street.crowdA', { cols: 6, dx: 1.25, dz: 1.3, seed: 19, hats: true });
       const F = frameAt(ctx, 'street.crowdA');
-      const b = put(ctx, 'burglar', F(-2.5, 0, 9.4), F.yaw + Math.PI * 0.85);
+      const camEnd = F(-1.6, 2.2, 11.5), bp = F(-1.1, 0, 7.6);
+      const b = put(ctx, 'burglar', bp, Math.atan2(camEnd.x - bp.x, camEnd.z - bp.z));   // faces the lens: sign reads PARTY THIS WAY
       signIn(ctx, b);
       ctx.store = { crowd, F, b };
     },
@@ -583,7 +622,8 @@ export const shots = [
       partyTown(ctx, { fireworks: false }); ctx.set.set?.('foam', 1);
       const crowd = crowdGrid(ctx, EXTRA_IDS.slice(0, 12), 'foam.center', { cols: 4, dx: 1.3, dz: 1.3, seed: 7, hats: true, offset: [0, 0, -1.5] });
       const F = frameAt(ctx, 'foam.center');
-      const b = put(ctx, 'burglar', F(1.9, 0, 6.2), F.yaw - 0.4);
+      const cam = F(1.0, 2.4, 9.0), bp = F(1.45, 0, 5.7);
+      const b = put(ctx, 'burglar', bp, Math.atan2(cam.x - bp.x, cam.z - bp.z));   // at the foam's edge, right third, facing the lens
       signIn(ctx, b);
       ctx.store = { crowd, F, b };
     },
@@ -599,13 +639,14 @@ export const shots = [
       const E = frameAt(ctx, 'pool.edge3');
       const P = ctx.props;
       const jumpers = ['x03', 'x07', 'x11'].map((id, k) => { put(ctx, id, E(0, 0, 0), E.yaw + Math.PI); ctx.cast[id].setAccessory?.('partyHat', true); return { id, k }; });
-      const b = put(ctx, 'burglar', E(-1.6, 0, 0.5), E.yaw + Math.PI + 0.6);
+      const c = ctx.point('pool.center'), pc = poolCam(E, c);
+      const b = put(ctx, 'burglar', pc.bp, Math.atan2(pc.pos.x - pc.bp.x, pc.pos.z - pc.bp.z));
       signIn(ctx, b);
       ctx.add(P.splash.root);
-      ctx.store = { E, b, jumpers, c: ctx.point('pool.center') };
+      ctx.store = { E, b, jumpers, c, pc };
     },
     update(ctx) {
-      const { E, b, jumpers, c } = ctx.store, t0 = ctx.markers.pool - 0.05; holdSign(ctx, b);
+      const { E, b, jumpers, c, pc } = ctx.store, t0 = ctx.markers.pool - 0.05; holdSign(ctx, b);
       jumpers.forEach(({ id, k }) => {
         const ch = ctx.cast[id], tj = t0 + 0.05 + k * 0.18, u = clamp((ctx.t - tj) / 0.45, 0, 1);
         const from = E((k - 1) * 1.1, 0, -0.3), to = c.clone().addScaledVector(E.left, (k - 1) * 1.6);
@@ -615,7 +656,7 @@ export const shots = [
         if (u > 0) { ch.joints.legL.rotation.x = -1.6; ch.joints.legR.rotation.x = -1.6; ch.joints.shinL && (ch.joints.shinL.rotation.x = 2.0); ch.joints.shinR && (ch.joints.shinR.rotation.x = 2.0); }
       });
       const P = ctx.props; P.splash.root.position.copy(c); P.splash.update(ctx.t - (t0 + 0.5));
-      ctx.cam.set({ pos: E(-0.6, 2.6, 5.2), look: c.clone().add(up(0.4)), fov: 46 });
+      ctx.cam.set({ pos: pc.pos, look: pc.look, fov: 55 });   // side-on: the cannonballs arc across the frame in profile
     },
   },
   {
@@ -625,18 +666,19 @@ export const shots = [
       const E = frameAt(ctx, 'pool.edge3'), c = ctx.point('pool.center');
       const P = ctx.props; ctx.add(P.foamPool.root); P.foamPool.root.position.copy(c); P.foamPool.root.rotation.set(0, yawOf(ctx.anchor('pool.edge1')), 0);
       put(ctx, 'x05', E(0.4, 0, -0.4), E.yaw + Math.PI); ctx.cast.x05.setAccessory?.('partyHat', true);
-      const b = put(ctx, 'burglar', E(-1.6, 0, 0.5), E.yaw + Math.PI + 0.6);
+      const pc = poolCam(E, c);
+      const b = put(ctx, 'burglar', pc.bp, Math.atan2(pc.pos.x - pc.bp.x, pc.pos.z - pc.bp.z));
       signIn(ctx, b);
-      ctx.store = { E, b, c };
+      ctx.store = { E, b, c, pc };
     },
     update(ctx) {
-      const { E, b, c } = ctx.store, P = ctx.props; holdSign(ctx, b);
+      const { E, b, c, pc } = ctx.store, P = ctx.props; holdSign(ctx, b);
       P.foamPool.update(ctx.t, 1);
       const x = ctx.cast.x05, tj = ctx.markers.foamPool + 0.15, u = clamp((ctx.t - tj) / 0.5, 0, 1);
       const p = E(0.4, 0, -0.4).lerp(c, u); p.y += 1.4 * Math.sin(Math.PI * u) - 1.6 * u * u;
       x.root.position.copy(p); x.root.rotation.set(-1.2 * u, E.yaw + Math.PI, 0); x.root.visible = u < 0.98;
       x.pose('cheer', ctx.t, { intensity: 1 }); x.face('grin', ctx.t);
-      ctx.cam.set({ pos: E(-0.6, 2.8, 5.4), look: c.clone().add(up(0.5)), fov: 46 });
+      ctx.cam.set({ pos: pc.pos, look: pc.look.clone().add(up(0.1)), fov: 55 });
     },
   },
   // ── b12 "Top ten respectful moments. Number seven: I wipe my feet."
@@ -646,8 +688,9 @@ export const shots = [
       setProps3EnvIntensity(0.55);
       ctx.set.setLighting?.('party_night'); ctx.set.set?.('partyProps', true); ctx.set.set?.('fireworks', false); ctx.set.set?.('windowGlow', 0.1);
       const D = frameAt(ctx, 'house.6.door');
-      const P = ctx.props; ctx.add(P.mat); P.mat.position.copy(D(0, 0, -0.05)); P.mat.rotation.set(0, D.yaw, 0);
-      const b = put(ctx, 'burglar', D(0, 0.03, 0.3), D.yaw + Math.PI);
+      // the doorstep box (world.js) spans D z −0.92 … −0.14, top at y 0.18: the mat lies ON it, he stands on the mat
+      const P = ctx.props; ctx.add(P.mat); P.mat.position.copy(D(0, 0.185, -0.5)); P.mat.rotation.set(0, D.yaw, 0);
+      const b = put(ctx, 'burglar', D(0, 0.215, -0.5), D.yaw + Math.PI);
       sackOnBack(ctx, b);
       ctx.store = { D, b };
     },
@@ -655,13 +698,14 @@ export const shots = [
       const { D, b } = ctx.store, tw = ctx.markers.wipe;
       b.pose('idle', ctx.t, { intensity: 0.2, headPitch: 0.45 }); b.face('neutral', OPEN(b));
       const d = ctx.t - (tw - 0.1);
-      if (d > 0 && d < 1.2) {   // left, right, left: each foot scrubs back and forth
-        const step = Math.floor(d / 0.4), u = (d % 0.4) / 0.4, leg = step % 2 ? 'legR' : 'legL';
-        b.joints[leg].rotation.x = 0.35 * Math.sin(u * Math.PI * 4);
-        b.root.position.copy(D(0, 0.03, 0.3)).add(up(0.02 * Math.abs(Math.sin(u * Math.PI * 4))));
+      b.root.position.copy(D(0, 0.215, -0.5));
+      if (d > 0 && d < 1.2) {   // left, right, left: each foot scrubs back and forth, hips swinging with it
+        const step = Math.floor(d / 0.4), u = (d % 0.4) / 0.4, leg = step % 2 ? 'legR' : 'legL', w = Math.sin(u * Math.PI * 4);
+        b.joints[leg].rotation.x = 0.6 * w;
+        b.root.position.add(up(0.03 * Math.abs(w))).addScaledVector(D.left, 0.08 * Math.sin(u * Math.PI * 2) * (step % 2 ? -1 : 1));
       }
       if (d >= 1.25) { const n = clamp((d - 1.25) / 0.35, 0, 1); b.pose('idle', ctx.t, { intensity: 0.2, headPitch: 0.45 * Math.sin(Math.PI * n) }); }
-      ctx.cam.set({ pos: D(2.3, 2.3, 3.4), look: D(0.0, 0.95, -0.1), fov: 52 });
+      ctx.cam.set({ pos: D(-1.8, 1.35, 2.4), look: D(0, 1.3, -0.45), fov: 50 });
       top10Card(ctx, 7, ctx.time('b12') + 0.05, Infinity, { popAt: ctx.markers.top7 });
     },
   },
@@ -684,9 +728,9 @@ export const shots = [
   },
   {
     name: 'banner', start: 'banner-0.05', set: 'town',
-    setup(ctx) { ctx.store = squareScene(ctx); },
+    setup(ctx) { ctx.store = squareScene(ctx, { mayorMic: false }); },
     update(ctx, lt) {
-      const st = ctx.store; crowdAnim(ctx, st, { mode: 'cheer' }); djAnim(ctx); ctx.cast.mayor.pose('cheer', ctx.t); ctx.cast.mayor.face('grin', ctx.t);
+      const st = ctx.store; crowdAnim(ctx, st, { mode: 'cheer' }); djAnim(ctx);
       const bc = ctx.point('square.bannerCam'), bn = ctx.point('square.banner');
       ctx.cam.move({ pos: bc.clone().add(up(-0.8)), look: bn.clone().add(up(-0.9)), fov: 50 }, { pos: bc.clone().lerp(bn, 0.12).add(up(-0.7)), look: bn.clone().add(up(-0.8)), fov: 50 }, clamp(lt / 1.0, 0, 1));
     },
@@ -698,7 +742,7 @@ export const shots = [
     update(ctx) {
       const st = ctx.store, m = ctx.cast.mayor; crowdAnim(ctx, st, { mode: 'cheer' }); djAnim(ctx);
       m.pose('cheer', ctx.t); m.face('grin', ctx.t);
-      ctx.cam.set({ pos: st.S(0.6, 1.75, 6.4), look: st.S(0, 1.75, 2.4), fov: 38 });
+      ctx.cam.set({ pos: st.S(0.6, 1.6, 6.4), look: st.S(0, 1.25, 2.4), fov: 38 });
     },
   },
   {
@@ -710,7 +754,7 @@ export const shots = [
     update(ctx) {
       const st = ctx.store, b = ctx.cast.burglar; crowdAnim(ctx, st, { mode: 'cheer' }); djAnim(ctx);
       b.pose('clap', ctx.t * 0.35, { intensity: 0.7 }); b.face('neutral', OPEN(b));
-      ctx.cam.set({ pos: st.S(0.2, 5.0, 2.9), look: st.S(0.3, 0.5, 11.2), fov: 36 });
+      ctx.cam.set({ pos: st.S(0.3, 3.2, 6.5), look: st.S(0.3, G0 + 1.05, 12.6), fov: 30 });
     },
   },
   // ── b15 quote card "If nobody's home, it's not stealing. It's tidying." → the cat's lawyer
@@ -733,13 +777,14 @@ export const shots = [
       law.pose('think', ctx.t, { headPitch: 0.25 + 0.2 * Math.sin(ctx.t * 4) }); law.face('determined', ctx.t);
       cat.pose('loaf', 0); cat.face('stare', OPEN(cat));
       if (part === 'card') {
-        ctx.cam.set({ pos: st.S(2.5, 2.4, 14.0), look: st.S(-0.5, 0.9, 4.0), fov: 46 });
+        ctx.cam.set({ pos: st.S(2.5, 2.4, 14.0), look: st.S(-0.5, 5.5, 4.0), fov: 46 });   // plain dark sky behind the card text
         quoteCard(ctx, "If nobody's home, it's not stealing. It's tidying.", "the cat's lawyer", ctx.markers.quote2, ctx.markers.quote2end, { y: 0.33, byAt: ctx.markers.quote2end - 0.25 });
       } else {
         const cf = catFace(cat);
-        ctx.cam.move({ pos: cf.clone().addScaledVector(L.fwd, 2.7).addScaledVector(L.left, -0.9).add(up(0.3)), look: cf.clone().add(up(0.2)), fov: 38 },
-          { pos: cf.clone().addScaledVector(L.fwd, 2.3).addScaledVector(L.left, -0.8).add(up(0.25)), look: cf.clone().add(up(0.2)), fov: 37 }, clamp(ctx.since('quote2end') / 1.0, 0, 1));
-        tag(ctx, "THE CAT'S LAWYER", ctx.time('b15.w8'), Infinity, { y: 0.17 });
+        // the lawyer's whole head above, the cat's face above the caption line
+        ctx.cam.move({ pos: cf.clone().addScaledVector(L.fwd, 3.7).addScaledVector(L.left, -0.4).add(up(0.3)), look: cf.clone().add(up(-0.25)), fov: 46 },
+          { pos: cf.clone().addScaledVector(L.fwd, 3.3).addScaledVector(L.left, -0.4).add(up(0.25)), look: cf.clone().add(up(-0.25)), fov: 46 }, clamp(ctx.since('quote2end') / 1.0, 0, 1));
+        tag(ctx, "THE CAT'S LAWYER", ctx.time('b15.w8'), Infinity, { y: 0.09, size: 56 });
       }
     },
   })),
@@ -766,12 +811,15 @@ export const shots = [
       const squash = d < 0.25 ? 1 - 0.18 * Math.sin(Math.PI * d / 0.25) : 1;
       P.bigSack.scale.set(s / squash ** 0.5, s * squash, s / squash ** 0.5);
       P.bigSack.position.copy(sackPos).add(up(0.223 * s * squash)); P.bigSack.rotation.set(0, D.yaw + i, 0);
-      P.puff.root.position.copy(sackPos); P.puff.root.scale.setScalar(0.35 * S0 + 0.4); P.puff.update(d / 0.55);
+      P.puff.root.position.copy(sackPos); P.puff.root.scale.set(0.85 * S0, 0.3 * S0, 0.85 * S0); P.puff.update(d / 0.3);   // low ground burst
       const tgt = sackPos.clone().addScaledVector(V().subVectors(b.root.position, sackPos).normalize(), 0.3 * s).add(up(Math.min(1.0, 0.4 * s)));
       b.pose('slam', ctx.t, { hits: hs, slamTarget: tgt }); b.face('huss', OPEN(b));
       const mid = sackPos.clone().lerp(b.root.position, 0.35);
       const dist = [4.2, 5.0, 6.5, 9.0, 13.0, 30][i], hgt = [1.6, 1.9, 2.4, 3.2, 4.2, 6.5][i];
-      if (i < 5) ctx.cam.set({ pos: mid.clone().addScaledVector(D.fwd, dist).addScaledVector(D.left, dist * 0.35 * (i % 2 ? -1 : 1)).add(up(hgt)), look: mid.clone().add(up(Math.min(hgt * 0.75, 0.25 * S0 + 0.8))), fov: 44 });
+      // high and along the street (not across the pavement), so mailboxes and parked cars stay off the line of sight
+      // along the front yard (between house wall and fence), high: mailboxes / cars / lamp posts are off the line of sight
+      // from the front, high over the fence line: the mailbox and parked cars pass under the line of sight
+      if (i < 5) ctx.cam.set({ pos: mid.clone().addScaledVector(D.fwd, dist * 0.8).addScaledVector(D.left, dist * 0.22 * (i % 2 ? -1 : 1)).add(up(Math.max(3.2, hgt * 1.4))), look: mid.clone().add(up(0.6 * S0)), fov: 46 });
       else ctx.cam.set({ pos: sackPos.clone().add(V(-28, 5.5, 3)), look: sackPos.clone().add(up(4.5)), fov: 50 });
       ctx.cam.punch(hs, ctx.t, 0.12, 0.2); ctx.cam.shake(0.06 + 0.07 * i, ctx.t, 70 + i);
     },
@@ -779,14 +827,20 @@ export const shots = [
   // ── b17 "Ever wonder why nobody goes home?"  DAY 400, everybody asleep on their feet
   {
     name: 'day 400', start: 'b17-0.1', set: 'town',
-    setup(ctx) { const st = ctx.store = squareScene(ctx, { light: 'dusk' }); hatOverEyes(ctx, ctx.cast.mayor); ctx.set.set?.('crowdMotion', 0.15);
-      const g = st.crowd.find((c) => c.ch.id === 'grandad'); if (g) { g.x = -0.4; g.z = 5.5; g.ch.root.position.copy(st.S(-0.4, G0, 5.5)); }
-      const m = put(ctx, 'mayor', st.S(1.6, G0, 6.6), st.S.yaw + Math.PI - 0.3); st.crowd.forEach((c) => { if (!c.stand && Math.abs(c.x - 1.6) < 0.8 && Math.abs(c.z - 6.6) < 0.8) c.ch.root.visible = false; }); },
+    setup(ctx) { const st = ctx.store = squareScene(ctx, { light: 'dusk', mayorMic: false }); ctx.set.set?.('crowdMotion', 0.15);
+      // front row: Grandad (yawning) and the mayor (hat over his eyes); the extras on those spots step aside
+      const g = st.crowd.find((c) => c.ch.id === 'grandad'); if (g) { g.x = -0.7; g.z = 5.2; g.ch.root.position.copy(st.S(-0.7, G0, 5.2)); }
+      const m = put(ctx, 'mayor', st.S(0.9, G0, 5.0), st.S.yaw + Math.PI - 0.15); hatOverEyes(ctx, m);
+      st.crowd.forEach((c) => { if (!c.stand && c.ch.id !== 'grandad' && ((Math.abs(c.x - 0.9) < 0.8 && Math.abs(c.z - 5.0) < 0.8) || (Math.abs(c.x + 0.7) < 0.8 && Math.abs(c.z - 5.2) < 0.8))) c.ch.root.visible = false; }); },
     update(ctx, lt) {
       const st = ctx.store; crowdAnim(ctx, st, { mode: 'sleepy' }); djAnim(ctx, { asleep: true });
       const m = ctx.cast.mayor; m.pose('idle', ctx.t, { headPitch: 0.15 }); m.face('sleepy', ctx.t);
-      const g = ctx.cast.grandad; g.pose('dance', ctx.t * 0.5, { intensity: 0.4 }); g.face('huss', ctx.t);   // the yawn
-      ctx.cam.move({ pos: st.S(0.2, 1.5, 0.6), look: st.S(0.2, 0.2, 8.0), fov: 50 }, { pos: st.S(0.2, 1.4, 1.1), look: st.S(0.2, 0.2, 8.0), fov: 48 }, clamp(lt / 1.7, 0, 1));
+      const g = ctx.cast.grandad; g.pose('dance', ctx.t * 0.5, { intensity: 0.4, headPitch: -0.3 }); g.face('huss', ctx.t);   // the yawn
+      const crowdView = { pos: st.S(0.2, 1.4, 1.1), look: st.S(0.1, 0.3, 8.0), fov: 56 };
+      const tEnd = ctx.time('b18') - 0.1, kd = ctx.t < tEnd - 0.5 ? 0 : Math.max(0.001, clamp((ctx.t - (tEnd - 0.5)) / 0.5, 0, 1));
+      // last half second: drift left to the DJ, asleep on his feet at the decks
+      if (kd <= 0) ctx.cam.move({ pos: st.S(0.2, 1.5, 0.6), look: st.S(0.1, 0.3, 8.0), fov: 56 }, crowdView, clamp(lt / 1.4, 0, 1));
+      else ctx.cam.move({ pos: st.S(-3.9, 1.45, 3.9), look: st.S(-4.15, 1.0, 1.05), fov: 46 }, { pos: st.S(-3.95, 1.4, 3.5), look: st.S(-4.15, 1.0, 1.05), fov: 46 }, kd);   // cut: the DJ asleep at the decks
       ctx.fx.overlay('#ff9a6a', 0.12);
       stamp(ctx, 'DAY 400', ctx.markers.day400 + 0.05, { y: 0.2 });
     },
@@ -817,27 +871,37 @@ export const shots = [
     name: `too ${which}`, start, set: 'town',
     setup(ctx) {
       const st = ctx.store = squareScene(ctx, { light: 'quiet_night', party: false, crowd: false, mayorMic: false, cakes: false });
-      const T = ctx.props.tower, P = ctx.props; T.set({ hide: [bi + 1] }); const bed = T.bed(bi);
+      // nothing directly above the target bed, so the camera can sit level with the mattress
+      const T = ctx.props.tower, P = ctx.props; T.set({ hide: [bi + 1, bi + 2, bi + 3] }); const bed = T.bed(bi);
       put(ctx, 'burglar', bed.pos, 0);
-      if (which === 'soft') { ctx.add(P.pillows); P.pillows.position.copy(bed.at(0, 0.45, 0.25)); P.pillows.quaternion.copy(bed.quat); P.pillows.scale.set(0.9, 0.75, 0.75); }
+      if (which === 'soft') { ctx.add(P.pillows); P.pillows.position.copy(bed.at(0, 0.45, 0.05)); P.pillows.quaternion.copy(bed.quat); P.pillows.scale.set(1.0, 1.05, 1.15); }
       if (which === 'hard') { ctx.add(P.limboPillow); P.limboPillow.position.copy(bed.at(0, 0.66, -0.78)); P.limboPillow.quaternion.copy(bed.quat); }
-      if (which === 'grandad') { ctx.add(P.toupee); P.toupee.position.copy(bed.at(0.27, 0.63, -0.68)); P.toupee.quaternion.copy(bed.quat); P.toupee.rotateY(-0.4); }
+      if (which === 'grandad') {   // the toupee on the pillow, between his face and the lens, turned toward him
+        ctx.add(P.toupee); P.toupee.position.copy(bed.at(0.22, 0.6, -0.66)); P.toupee.quaternion.copy(bed.quat); P.toupee.rotateY(-Math.PI / 2); P.toupee.rotateZ(0.25);
+      }
       st.bed = bed;
     },
     update(ctx) {
       const st = ctx.store, b = ctx.cast.burglar, bed = st.bed;
       const tw = ctx.markers[which];
-      if (which === 'soft') { const k = clamp((ctx.t - tw - 0.25) / 0.5, 0, 1); lieOnBed(b, bed, { lift: 0.55 - 1.15 * ease.inQuad(k), z: 0.1 }); lie(b, ctx.t, 'smile', OPEN(b)); }
-      if (which === 'hard') {
-        const k = clamp((ctx.t - (tw - 0.25)) / 0.25, 0, 1);
-        lieOnBed(b, bed, { lift: 0.28 * (1 - ease.inQuad(k)) + 0.08, z: 0.02 }); lie(b, ctx.t, ctx.t > tw ? 'squint' : 'neutral', OPEN(b));
+      const side = bed.at(1, 0, 0).sub(bed.pos).normalize();
+      if (which === 'soft') {   // lies back on top of the cushion heap … then sinks out of sight into it
+        const k = clamp((ctx.t - tw) / 0.45, 0, 1);
+        lieOnBed(b, bed, { lift: 0.62 - 1.0 * ease.inQuad(k), z: 0.1 }); lie(b, ctx.t, 'smile', OPEN(b));
+        ctx.cam.set({ pos: bed.at(0, 1.1, -0.4).addScaledVector(side, 4.4), look: bed.at(0, 0.95, -0.7), fov: 42 });
+      }
+      if (which === 'hard') {   // head clonks down ~0.25 m onto the limbo bar right on 'hard'
+        const k = clamp((ctx.t - (tw - 0.09)) / 0.09, 0, 1);
+        lieOnBed(b, bed, { lift: 0.25 * (1 - ease.inQuad(k)) + 0.08, z: 0.02 }); lie(b, ctx.t, ctx.t > tw ? 'squint' : 'neutral', OPEN(b));
+        if (ctx.t > tw) b.joints.head.rotation.x += 0.12 * Math.exp(-(ctx.t - tw) * 10) * Math.sin((ctx.t - tw) * 40);
+        ctx.cam.set({ pos: bed.at(0, 0.85, -0.4).addScaledVector(side, 4.4), look: bed.at(0, 0.72, -0.65), fov: 40 });
         ctx.cam.punch([tw], ctx.t, 0.14, 0.2);
       }
-      if (which === 'grandad') { lieOnBed(b, bed, { lift: 0.02, z: 0.08 }); lie(b, ctx.t, 'sweat', OPEN(b), { headYaw: 0.9 }); }
-      const f = humanFace(b);
-      const side = bed.at(1, 0, 0).sub(bed.pos).normalize();
-      const head = bed.at(0, 0, -1).sub(bed.pos).normalize();
-      ctx.cam.set({ pos: bed.at(0, 0.6, -0.2).addScaledVector(side, 2.6).addScaledVector(head, -1.3).add(up(1.4)), look: bed.at(0.1, 0.55, -0.45), fov: 42 });
+      if (which === 'grandad') {
+        lieOnBed(b, bed, { lift: 0.02, z: 0.08 }); lie(b, ctx.t, 'sweat', OPEN(b), { headYaw: 1.0 });
+        const f = humanFace(b);
+        ctx.cam.set({ pos: f.clone().addScaledVector(side, 3.1).add(up(0.15)).addScaledVector(bed.at(0, 0, 1).sub(bed.pos).normalize(), 0.1), look: f.clone().addScaledVector(side, 0.15).add(up(-0.22)).addScaledVector(bed.at(0, 0, 1).sub(bed.pos).normalize(), -0.15), fov: 40 });
+      }
       ctx.fx.vignette(0.35);
     },
   })),
@@ -859,8 +923,9 @@ export const shots = [
       lieOnBed(b, bed, { lift: 0.04, z: 0.08 }); lie(b, ctx.t, 'smile', OPEN(b));
       P.duvet.setCover(lerp(0.55, -0.42, ease.inOutCubic(k)), 1.02, 0.86);
       const side = bed.at(1, 0, 0).sub(bed.pos).normalize();
-      ctx.cam.move({ pos: bed.at(0, 0.5, 0.3).addScaledVector(side, 3.4).add(up(2.2)), look: bed.at(0, 0.2, -0.1), fov: 44 },
-        { pos: bed.at(0, 0.5, 0.0).addScaledVector(side, 2.6).add(up(1.5)), look: bed.at(0, 0.45, -0.25), fov: 42 }, clamp(lt / 3.2, 0, 1), ease.inOutSine);
+      // wide first (the party tiny far below), then push in level with / just under the bed, looking up into the night sky
+      ctx.cam.move({ pos: bed.at(0, 0.3, 0.2).addScaledVector(side, 8.5).add(up(2.4)), look: bed.at(0, 0.0, -0.2).add(up(-1.2)), fov: 52 },
+        { pos: bed.at(0, 1.1, -0.2).addScaledVector(side, 4.2), look: bed.at(0, 0.7, -0.85), fov: 42 }, clamp(lt / 2.6, 0, 1), ease.inOutSine);
       tag(ctx, 'JUST RIGHT', t0 + 0.35, Infinity, { y: 0.17, bg: 'rgba(20,130,60,0.92)' });
     },
   },
@@ -874,15 +939,16 @@ export const shots = [
     update(ctx) {
       const st = ctx.store, b = ctx.cast.burglar, P = ctx.props, T = P.tower, th = ctx.markers.thump;
       const d = ctx.t - th;
-      const hop = d > 0 && d < 0.25 ? 0.06 * Math.sin(Math.PI * d / 0.25) : 0;
-      T.set({ hop, sway: d > 0 ? 0.05 * Math.sin(d * 9) * Math.exp(-d * 2) : 0 });
+      // the camera is fixed in the world (from the bed at rest), so the hop and the sway visibly move bed + tower
+      T.set({}); const bed0 = T.bed(BED_TOP); lieOnBed(b, bed0, { lift: 0.04, z: 0.08 }); lie(b, ctx.t, 'squint', OPEN(b));
+      const f0 = humanFace(b), head = bed0.at(0, 0, -1).sub(bed0.pos).normalize(), sd = bed0.at(1, 0, 0).sub(bed0.pos).normalize();
+      ctx.cam.set({ pos: f0.clone().add(up(1.25)).addScaledVector(head, -1.3).addScaledVector(sd, 0.5), look: f0.clone().add(up(-0.25)), fov: 40 });
+      const hop = d > 0 && d < 0.25 ? 0.16 * Math.sin(Math.PI * d / 0.25) : 0;
+      T.set({ hop, sway: d > 0 ? 0.08 * Math.sin(d * 9) * Math.exp(-d * 2) : 0 });
       const bed = T.bed(BED_TOP);
-      lieOnBed(b, bed, { lift: 0.04 + (d > 0 && d < 0.3 ? 0.04 * Math.sin(Math.PI * d / 0.3) : 0), z: 0.08 });
+      lieOnBed(b, bed, { lift: 0.04 + (d > 0 && d < 0.3 ? 0.06 * Math.sin(Math.PI * d / 0.3) : 0), z: 0.08 });
       lie(b, ctx.t, ctx.t < ctx.time('b21.w2') ? 'squint' : 'sweat', OPEN(b));
       P.duvet.root.position.copy(bed.pos); P.duvet.root.quaternion.copy(bed.quat); P.duvet.setCover(-0.42, 1.02, 0.86);
-      const f = humanFace(b), head = bed.at(0, 0, -1).sub(bed.pos).normalize();
-      const sd = bed.at(1, 0, 0).sub(bed.pos).normalize();
-      ctx.cam.set({ pos: f.clone().add(up(1.25)).addScaledVector(head, -1.3).addScaledVector(sd, 0.5), look: f.clone().add(up(0.05)), fov: 38 });
       if (d > 0) ctx.cam.shake(0.3 * Math.exp(-d * 4), ctx.t, 12);
     },
   },
@@ -902,9 +968,10 @@ export const shots = [
       const leanTo = [0, -0.35, 0.4, 0.4][n], leanFrom = [0, 0, -0.35, 0.4][n];
       const lean = lerp(leanFrom, leanTo, ease.outBack(clamp(d / 0.3, 0, 1)));
       const topple = n >= 3 ? 1.45 * ease.inQuad(clamp(d / 0.5, 0, 1)) : 0;
-      P.tower.set({ lean, topple });
-      if (i < 2) ctx.cam.set({ pos: st.S(-3.5, 1.4, 19.5), look: st.S(3.5, 4.8, 2.0), fov: 54 });
-      else ctx.cam.set({ pos: st.S(-6.5, 1.2, 21.5), look: st.S(2.5, 3.8, 6.0), fov: 58 });
+      P.tower.set({ lean, topple, fallDir: [-0.76, 0.65] });   // HUSS 3: it falls across the square, over the crowd
+      if (i === 0) ctx.cam.set({ pos: st.S(-3.5, 1.4, 19.5), look: st.S(3.5, 4.8, 2.0), fov: 54 });
+      else if (i === 1) ctx.cam.set({ pos: st.S(4, 0.6, 12), look: st.S(8.6, 6, 0.2), fov: 56 });   // low in the crowd, looking up the tower
+      else ctx.cam.set({ pos: st.S(-2, 6, 26), look: st.S(4.5, 5.5, 3.0), fov: 68 });
       ctx.cam.punch(hs, ctx.t, 0.12, 0.2); ctx.cam.shake(i === 2 ? 0.25 + 0.5 * clamp(d / 0.4, 0, 1) : 0.12, ctx.t, 90 + i);
     },
   })),
@@ -914,7 +981,7 @@ export const shots = [
     setup(ctx) {
       const st = ctx.store = fieldScene(ctx, { who: [who] });
       const slot = FIELD_WHO.indexOf(who);
-      st.slot = slot; st.tl = ctx.time(start) + 0.17;
+      st.slot = slot; st.tl = ctx.time(start) + 0.05;   // the impact lands right at the cut, so the Zzz has time to read
       if (who === 'grandad') { const h = ctx.props.grandHat; ctx.add(h, ctx.cast.grandad.joints.head); h.position.set(0, 0.62, 0); h.rotation.set(-0.2, 0, 0.15); }
       if (who === 'mayor') ctx.cast.mayor.setAccessory('topHat', true);
     },
@@ -924,11 +991,11 @@ export const shots = [
       lieOnBed(ch, bed, { z: 0.08 });
       const landed = ctx.t > st.tl;
       lie(ch, ctx.t, 'sleepy', landed ? SHUT(ch) : OPEN(ch), { arms: who === 'heckler' ? 'point' : 'down' });
-      if (who === 'heckler') { armsDown(ch); ch.joints.armR.rotation.set(-1.55, 0, 0); }
-      if (who === 'mayor' && landed) { const k = clamp((ctx.t - st.tl) / 0.15, 0, 1); hatOverEyes(ctx, ch); ctx.props.hatOverEyes.position.set(0, lerp(0.58, 0.2, k), 0.03); }
+      if (who === 'heckler') { armsDown(ch); ch.joints.armR.rotation.set(0, 0, -1.4); }   // finger still pointing, sideways off the bed
+      if (who === 'mayor' && landed) { const k = clamp((ctx.t - st.tl) / 0.15, 0, 1); hatOverEyes(ctx, ch); ctx.props.hatOverEyes.position.set(0, lerp(0.64, 0.36, k), 0.03); }
       const f = humanFace(ch), side = bed.at(1, 0, 0).sub(bed.pos).normalize();
       const hd = bed.at(0, 0, -1).sub(bed.pos).normalize(), fp = st.slots[st.slot] ? st.S(st.slots[st.slot].x, G0 + 0.6, st.slots[st.slot].z) : f;
-      ctx.cam.set({ pos: fp.clone().addScaledVector(side, 1.4).addScaledVector(hd, -2.0).add(up(1.6)), look: fp.clone().addScaledVector(hd, 0.75), fov: 46 });
+      ctx.cam.set({ pos: fp.clone().addScaledVector(side, who === 'heckler' ? -0.5 : 0.3).addScaledVector(hd, -2.4).add(up(2.2)), look: fp.clone().addScaledVector(hd, 0.7).add(up(-0.05)), fov: 46 });
       if (landed) { zzz(ctx, 0, f.clone().add(up(0.3)), ctx.t, st.tl + 0.05); ctx.cam.shake(0.25 * Math.exp(-(ctx.t - st.tl) * 8), ctx.t, 30 + i); }
     },
   })),
@@ -957,11 +1024,21 @@ export const shots = [
       b.pose('crowdSurf', 0, { intensity: 0 }); armsDown(b); b.face('neutral', OPEN(b));
       djAnim(ctx, { asleep: true }); ctx.cast.gerald.pose('peer', 0, { intensity: 0, headPitch: 0.8 }); ctx.cast.gerald.face('sleepy', SHUT(ctx.cast.gerald));
       const f = humanFace(b);
-      const k = clamp((ctx.t - tE) / 1.4, 0, 1);
-      const bs = V(Math.cos(b.root.rotation.y), 0, -Math.sin(b.root.rotation.y)), bh = V(-Math.sin(b.root.rotation.y), 0, -Math.cos(b.root.rotation.y));
-      ctx.cam.move({ pos: f.clone().addScaledVector(bs, -5.2).addScaledVector(bh, -2.5).add(up(4.2)), look: f, fov: 50 },
-        { pos: f.clone().addScaledVector(bs, -2.6).addScaledVector(bh, -1.3).add(up(2.1)), look: f, fov: 46 }, ease.inOutCubic(k));
-      iris(ctx, ctx.time('b23.end') + 0.25, 0.5);
+      const tI = ctx.time('b23.end') + 0.25;
+      const k = clamp((ctx.t - (tE - 0.2)) / (tI - tE + 0.2), 0, 1);   // the push completes as the iris starts
+      const bh = V(-Math.sin(b.root.rotation.y), 0, -Math.cos(b.root.rotation.y));   // toward his head
+      // high crane over the whole field of beds → a final two-shot of his open eyes and the cat (landed position), ~3.2 m
+      const cq = new THREE.Quaternion().setFromAxisAngle(V(0, 1, 0), st.S.yaw + Math.PI / 2 + 0.25);
+      const cf = V(0, 0.75, 0.1).applyQuaternion(cq).add(st.catPos), mid = f.clone().lerp(cf, 0.5);
+      const wide = { pos: f.clone().addScaledVector(bh, -6.5).add(up(9)), look: f.clone().addScaledVector(bh, 1.5), fov: 55 };
+      // from beyond his shoulder, along the him→cat line: he lies in the lower frame, the cat stares back at the lens above him
+      const ax = f.clone().sub(cf).setY(0).normalize();
+      const fin = { pos: f.clone().addScaledVector(ax, 2.0).addScaledVector(bh, -0.9).add(up(3.0)), look: mid.clone().add(up(-0.1)), fov: 48 };
+      ctx.cam.move(wide, fin, ease.inOutCubic(k));
+      // iris centred on his eyes (projected through the final camera)
+      const pc = new THREE.PerspectiveCamera(fin.fov, 1080 / 1920, 0.1, 500); pc.position.copy(fin.pos); pc.lookAt(fin.look); pc.updateMatrixWorld(true);
+      const ndc = f.clone().project(pc);
+      iris(ctx, tI, clamp(0.5 - ndc.y / 2, 0.2, 0.8), clamp(0.5 + ndc.x / 2, 0.2, 0.8));
     },
   },
 ];
@@ -999,6 +1076,15 @@ function fieldBed(ctx, st, k, tl, { float = false, t0 = 0 } = {}) {
   return { pos, quat, at: (x, yy, z) => V(x, yy, z).applyQuaternion(quat).add(pos) };
 }
 
+/** Side-on pool camera (jumpers go from edge3 toward the centre, across the frame) + the burglar's near-edge spot. */
+function poolCam(E, c) {
+  const pos = c.clone().addScaledVector(E.left, 8).add(up(2.0));
+  const look = c.clone().addScaledVector(E.left, 0.6).addScaledVector(E.fwd, 1.2).add(up(0.5));
+  // the burglar stands on the near deck, on the line of sight but pushed to screen right (−E.fwd), facing the lens
+  const dir = look.clone().sub(pos).setY(0).normalize();
+  const bp = pos.clone().addScaledVector(dir, 4.0).addScaledVector(E.fwd, -0.62); bp.y = c.y;
+  return { pos, look, bp };
+}
 // the PARTY THIS WAY sign: held in the right hand, board beside the head
 function signIn(ctx, b) { ctx.add(ctx.props.partySign); }
 function holdSign(ctx, b) {
@@ -1008,5 +1094,5 @@ function holdSign(ctx, b) {
   b.face('neutral', OPEN(b));
   b.root.updateMatrixWorld(true);
   const s = ctx.props.partySign, hp = b.joints.handR.getWorldPosition(V());
-  s.position.copy(hp).add(up(-0.42)); s.rotation.set(0, b.root.rotation.y, 0);
+  s.position.copy(hp).add(up(-0.42)); s.rotation.set(0, rootYaw(b.root), 0);
 }
