@@ -24,11 +24,11 @@ Rules from the creator:
 | 13 | Zero Aura | trend / meme | posted Nov 22 |
 | 14 | Tape Duty | spooky | scheduled Mon 23 Nov 15:30 |
 | 15 | The 3:33 | mysterious | scheduled Mon 23 Nov 19:30 |
-| 16 | Don't Whistle | scary sea monster | rendering → Tue 24 Nov 09:30 |
-| 17 | Floor Three | mystical | render queued → Tue 24 Nov 15:30 |
-| 18 | Pirate Token to the Moon | meme | shots in review → Tue 24 Nov 19:30 |
+| 16 | Don't Whistle | scary sea monster | scheduled Tue 24 Nov 09:30 |
+| 17 | Floor Three | mystical | rendering → Tue 24 Nov 15:30 |
+| 18 | Pirate Token to the Moon | meme | render queued → Tue 24 Nov 19:30 |
 | 19 | Battery 1% | meme trend | shots building |
-| 20 | Biscuit (the T-rex) | giants / funny | script + audio ready |
+| 20 | Biscuit (the T-rex) | giants / funny | shots building |
 | 21 | The Deep Above | mystical | script + audio ready |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)

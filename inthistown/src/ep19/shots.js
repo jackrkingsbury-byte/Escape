@@ -276,7 +276,7 @@ function meArrow(ctx, cam) {
   const me = ctx.cast.me, h = headPt(me, 0, 0.3, 0), P = ctx.props;
   ctx.add(P.pink); P.pink.color.set('#ffd8a0'); P.pink.intensity = 12; P.pink.position.copy(h).add(up(1.6));
   const sp = screenOf(cam, h);
-  const below = sp.y > 0.42 && sp.y < 0.7, bob = 0.01 * Math.abs(Math.sin(ctx.t * 6));
+  const below = sp.y > 0.56 && sp.y < 0.75, bob = 0.01 * Math.abs(Math.sin(ctx.t * 6));
   const y = below ? sp.y + 0.05 + bob : sp.y - 0.06 - bob, dir = below ? -1 : 1;
   ctx.fx.draw((g, W, H) => { g.translate(sp.x * W, y * H); g.scale(1, dir); g.fillStyle = '#ffe14a'; g.strokeStyle = '#000'; g.lineWidth = 8; g.beginPath(); g.moveTo(-26, -30); g.lineTo(26, -30); g.lineTo(0, 6); g.closePath(); g.stroke(); g.fill(); });
   ctx.fx.text('ME', { x: sp.x, y: y - 0.04 * dir, size: 64, fill: '#ffe14a', stroke: '#000000', bg: null, rot: 0 });
