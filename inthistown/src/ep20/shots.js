@@ -399,10 +399,13 @@ export const shots = [
       bset(ctx, { sit: 1, lean: 1, bodyLean: 0.7, headPitch: -1.0, headTilt: 0.35 + 0.1 * i, lookY: -0.7, lookX: 0, wag: 0.3, jaw: 0.1 });
       me.pose('slam', t, { hits }); me.face('huss', t);
       ctx.props.filler.userData.set(t, { arms: 'up' });
-      const f = humanFace(me), e = eyeMid(ctx);
-      const P0 = L(-31.2, 0.35, 0.6), P1 = L(-30.5, 1.6, -0.5), P2 = L(-32.0, 0.9, 1.3);
-      const cams = [frame2(P0, f, 0.37, e, 0.12), frame2(P1, f, 0.4, e, 0.12), frame2(P2, f, 0.34, e, 0.1)];
-      setCam(ctx, cams[i]); ctx.cam.punch(hits, t, 0.1, 0.2);
+      const f = humanFace(me), feet = me.root.getWorldPosition(V()), e = eyeMid(ctx);
+      // ~3.3 m from the kid: low left, high right, dutch — face ≈ 0.36, feet ≈ 0.9, Biscuit's head over him in the top third
+      const P = [L(-34.9, 0.3, -1.3), L(-35.1, 2.5, 1.5), L(-34.6, 1.0, 0.2)][i];
+      const c = frame2(P, f, [0.36, 0.38, 0.35][i], feet, [0.9, 0.92, 0.88][i], { x: [0.56, 0.44, 0.5][i] });
+      c.roll = [0, 0, -0.2][i];
+      setCam(ctx, c); ctx.cam.punch(hits, t, 0.1, 0.2);
+      const cams = [c];
       dbg(ctx, ['eyes ' + f1(toLocal(L, e)), 'face ' + f1(toLocal(L, f)), 'cam ' + f1(toLocal(L, cams[i].pos)) + ' fov ' + cams[i].fov.toFixed(1), 'look ' + f1(toLocal(L, cams[i].look))]);
     },
   })),
