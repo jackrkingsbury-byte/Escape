@@ -1,0 +1,4041 @@
+{
+ "fps": 30,
+ "duration": 82.837,
+ "audio": "episodes/ep28/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, colours can run out. Paint your door red, and somewhere a fire truck turns grey.",
+   "start": 0.3,
+   "end": 5.125,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "colours",
+     "start": 1.112,
+     "end": 1.443
+    },
+    {
+     "text": "can",
+     "start": 1.443,
+     "end": 1.659
+    },
+    {
+     "text": "run",
+     "start": 1.659,
+     "end": 1.876
+    },
+    {
+     "text": "out",
+     "start": 1.876,
+     "end": 2.093
+    },
+    {
+     "text": "Paint",
+     "start": 2.403,
+     "end": 2.693
+    },
+    {
+     "text": "your",
+     "start": 2.693,
+     "end": 2.882
+    },
+    {
+     "text": "door",
+     "start": 2.882,
+     "end": 3.072
+    },
+    {
+     "text": "red",
+     "start": 3.072,
+     "end": 3.262
+    },
+    {
+     "text": "and",
+     "start": 3.392,
+     "end": 3.594
+    },
+    {
+     "text": "somewhere",
+     "start": 3.594,
+     "end": 3.955
+    },
+    {
+     "text": "a",
+     "start": 3.955,
+     "end": 4.104
+    },
+    {
+     "text": "fire",
+     "start": 4.104,
+     "end": 4.359
+    },
+    {
+     "text": "truck",
+     "start": 4.359,
+     "end": 4.615
+    },
+    {
+     "text": "turns",
+     "start": 4.615,
+     "end": 4.87
+    },
+    {
+     "text": "grey",
+     "start": 4.87,
+     "end": 5.125
+    }
+   ],
+   "overlay": "RED: -1",
+   "visual": "Main street, day. Mrs. Kaur rolls bright red paint onto her front door. Hard cut to the end of the street, where a boxy red fire truck drains to grey from bumper to ladder while a firefighter in a helmet stares."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Fifty years ago, a rainbow crashed into the park, and every colour we have spilled out of it.",
+   "start": 5.44,
+   "end": 9.569,
+   "words": [
+    {
+     "text": "Fifty",
+     "start": 5.455,
+     "end": 5.756
+    },
+    {
+     "text": "years",
+     "start": 5.756,
+     "end": 6.005
+    },
+    {
+     "text": "ago",
+     "start": 6.005,
+     "end": 6.254
+    },
+    {
+     "text": "a",
+     "start": 6.384,
+     "end": 6.528
+    },
+    {
+     "text": "rainbow",
+     "start": 6.528,
+     "end": 6.928
+    },
+    {
+     "text": "crashed",
+     "start": 6.928,
+     "end": 7.225
+    },
+    {
+     "text": "into",
+     "start": 7.225,
+     "end": 7.472
+    },
+    {
+     "text": "the",
+     "start": 7.472,
+     "end": 7.615
+    },
+    {
+     "text": "park",
+     "start": 7.615,
+     "end": 7.861
+    },
+    {
+     "text": "and",
+     "start": 7.991,
+     "end": 8.162
+    },
+    {
+     "text": "every",
+     "start": 8.162,
+     "end": 8.377
+    },
+    {
+     "text": "colour",
+     "start": 8.377,
+     "end": 8.592
+    },
+    {
+     "text": "we",
+     "start": 8.592,
+     "end": 8.717
+    },
+    {
+     "text": "have",
+     "start": 8.717,
+     "end": 8.888
+    },
+    {
+     "text": "spilled",
+     "start": 8.888,
+     "end": 9.148
+    },
+    {
+     "text": "out",
+     "start": 9.148,
+     "end": 9.318
+    },
+    {
+     "text": "of",
+     "start": 9.318,
+     "end": 9.443
+    },
+    {
+     "text": "it",
+     "start": 9.443,
+     "end": 9.569
+    }
+   ],
+   "overlay": "50 YEARS AGO",
+   "visual": "Flashback, dusk, pink-purple sky over a grey park. A giant rainbow arch of seven bands of coloured blocks cracks and topples, bursting into thousands of glowing coloured cubes that fly onto the grey houses and paint them."
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "There's no more where that came from. So colour is basically money.",
+   "start": 9.884,
+   "end": 12.961,
+   "words": [
+    {
+     "text": "There's",
+     "start": 9.899,
+     "end": 10.126
+    },
+    {
+     "text": "no",
+     "start": 10.126,
+     "end": 10.307
+    },
+    {
+     "text": "more",
+     "start": 10.307,
+     "end": 10.487
+    },
+    {
+     "text": "where",
+     "start": 10.487,
+     "end": 10.667
+    },
+    {
+     "text": "that",
+     "start": 10.667,
+     "end": 10.847
+    },
+    {
+     "text": "came",
+     "start": 10.847,
+     "end": 11.075
+    },
+    {
+     "text": "from",
+     "start": 11.075,
+     "end": 11.302
+    },
+    {
+     "text": "So",
+     "start": 11.612,
+     "end": 11.817
+    },
+    {
+     "text": "colour",
+     "start": 11.817,
+     "end": 12.076
+    },
+    {
+     "text": "is",
+     "start": 12.076,
+     "end": 12.227
+    },
+    {
+     "text": "basically",
+     "start": 12.227,
+     "end": 12.702
+    },
+    {
+     "text": "money",
+     "start": 12.702,
+     "end": 12.961
+    }
+   ],
+   "visual": "Town square market, day. Stalls sell small glowing cubes of colour under signs BLUE: 9 COINS and YELLOW: SOLD OUT, and a kid counts out a pile of coins for one green cube."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "When the mayor painted his house purple, every grape in town went grey.",
+   "start": 13.276,
+   "end": 16.394,
+   "words": [
+    {
+     "text": "When",
+     "start": 13.291,
+     "end": 13.473
+    },
+    {
+     "text": "the",
+     "start": 13.473,
+     "end": 13.607
+    },
+    {
+     "text": "mayor",
+     "start": 13.607,
+     "end": 13.837
+    },
+    {
+     "text": "painted",
+     "start": 13.837,
+     "end": 14.211
+    },
+    {
+     "text": "his",
+     "start": 14.211,
+     "end": 14.393
+    },
+    {
+     "text": "house",
+     "start": 14.393,
+     "end": 14.623
+    },
+    {
+     "text": "purple",
+     "start": 14.623,
+     "end": 14.9
+    },
+    {
+     "text": "every",
+     "start": 15.03,
+     "end": 15.266
+    },
+    {
+     "text": "grape",
+     "start": 15.266,
+     "end": 15.55
+    },
+    {
+     "text": "in",
+     "start": 15.55,
+     "end": 15.687
+    },
+    {
+     "text": "town",
+     "start": 15.687,
+     "end": 15.923
+    },
+    {
+     "text": "went",
+     "start": 15.923,
+     "end": 16.158
+    },
+    {
+     "text": "grey",
+     "start": 16.158,
+     "end": 16.394
+    }
+   ],
+   "overlay": "PURPLE: 0 LEFT",
+   "visual": "The mayor in a top hat and sash poses proudly in front of his freshly purple house. Cut to a fruit stall where a pile of purple grape bunches drains to grey and a shopper holds one up, disgusted."
+  },
+  {
+   "id": "b05",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 16.709,
+   "end": 17.369,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 16.709,
+     "end": 16.969
+    },
+    {
+     "text": "HUSS!",
+     "start": 16.919,
+     "end": 17.179
+    },
+    {
+     "text": "HUSS!",
+     "start": 17.109,
+     "end": 17.369
+    }
+   ],
+   "visual": "Me next to the grey grapes shouting HUSS at the camera while the mayor shrugs in the background."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Only Grandma Mabel doesn't care. She's worn the same black cardigan since the day it fell.",
+   "start": 17.709,
+   "end": 22.366,
+   "words": [
+    {
+     "text": "Only",
+     "start": 17.724,
+     "end": 18.035
+    },
+    {
+     "text": "Grandma",
+     "start": 18.035,
+     "end": 18.453
+    },
+    {
+     "text": "Mabel",
+     "start": 18.453,
+     "end": 18.817
+    },
+    {
+     "text": "doesn't",
+     "start": 18.817,
+     "end": 19.182
+    },
+    {
+     "text": "care",
+     "start": 19.182,
+     "end": 19.386
+    },
+    {
+     "text": "She's",
+     "start": 19.696,
+     "end": 19.908
+    },
+    {
+     "text": "worn",
+     "start": 19.908,
+     "end": 20.176
+    },
+    {
+     "text": "the",
+     "start": 20.176,
+     "end": 20.332
+    },
+    {
+     "text": "same",
+     "start": 20.332,
+     "end": 20.6
+    },
+    {
+     "text": "black",
+     "start": 20.6,
+     "end": 20.869
+    },
+    {
+     "text": "cardigan",
+     "start": 20.869,
+     "end": 21.36
+    },
+    {
+     "text": "since",
+     "start": 21.36,
+     "end": 21.628
+    },
+    {
+     "text": "the",
+     "start": 21.628,
+     "end": 21.785
+    },
+    {
+     "text": "day",
+     "start": 21.785,
+     "end": 21.997
+    },
+    {
+     "text": "it",
+     "start": 21.997,
+     "end": 22.153
+    },
+    {
+     "text": "fell",
+     "start": 22.153,
+     "end": 22.366
+    }
+   ],
+   "overlay": "SINCE DAY ONE",
+   "visual": "Grandma Mabel (grey bun, glasses, black cardigan) knitting in a rocking chair on her porch. She looks up and winks at the camera."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then last week, colours started vanishing that nobody had used.",
+   "start": 22.681,
+   "end": 25.883,
+   "words": [
+    {
+     "text": "Then",
+     "start": 22.696,
+     "end": 22.933
+    },
+    {
+     "text": "last",
+     "start": 22.933,
+     "end": 23.233
+    },
+    {
+     "text": "week",
+     "start": 23.233,
+     "end": 23.47
+    },
+    {
+     "text": "colours",
+     "start": 23.6,
+     "end": 23.918
+    },
+    {
+     "text": "started",
+     "start": 23.918,
+     "end": 24.346
+    },
+    {
+     "text": "vanishing",
+     "start": 24.346,
+     "end": 24.774
+    },
+    {
+     "text": "that",
+     "start": 24.774,
+     "end": 24.983
+    },
+    {
+     "text": "nobody",
+     "start": 24.983,
+     "end": 25.411
+    },
+    {
+     "text": "had",
+     "start": 25.411,
+     "end": 25.619
+    },
+    {
+     "text": "used",
+     "start": 25.619,
+     "end": 25.883
+    }
+   ],
+   "overlay": "MONDAY: THE PARK",
+   "visual": "Park at dusk. The camera pans as the grass, the tree and the park table drain to grey in one slow wave. (Builder note: do NOT desaturate the whole town; grey out only the hero targets \u2014 fire truck, grapes, park tree, bakery, sky \u2014 by swapping/crossfading to pre-made grey copies of their materials; the colour-return wave is one sweeping front of coloured cubes.)"
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Tuesday, the bakery. Wednesday, the whole sky.",
+   "start": 26.198,
+   "end": 29.203,
+   "words": [
+    {
+     "text": "Tuesday",
+     "start": 26.213,
+     "end": 26.741
+    },
+    {
+     "text": "the",
+     "start": 26.871,
+     "end": 27.042
+    },
+    {
+     "text": "bakery",
+     "start": 27.042,
+     "end": 27.516
+    },
+    {
+     "text": "Wednesday",
+     "start": 27.826,
+     "end": 28.381
+    },
+    {
+     "text": "the",
+     "start": 28.511,
+     "end": 28.667
+    },
+    {
+     "text": "whole",
+     "start": 28.667,
+     "end": 28.935
+    },
+    {
+     "text": "sky",
+     "start": 28.935,
+     "end": 29.203
+    }
+   ],
+   "overlay": "WEDNESDAY: THE SKY",
+   "visual": "The bakery front drains to grey. Then the sky over main street flattens to dead grey and townspeople freeze and look up, stunned."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Everyone blamed everyone. Mrs. Kaur painted her door grey just to prove it wasn't her.",
+   "start": 29.518,
+   "end": 34.558,
+   "words": [
+    {
+     "text": "Everyone",
+     "start": 29.533,
+     "end": 29.935
+    },
+    {
+     "text": "blamed",
+     "start": 29.935,
+     "end": 30.285
+    },
+    {
+     "text": "everyone",
+     "start": 30.285,
+     "end": 30.686
+    },
+    {
+     "text": "Mrs",
+     "start": 30.996,
+     "end": 31.503
+    },
+    {
+     "text": "Kaur",
+     "start": 31.813,
+     "end": 32.031
+    },
+    {
+     "text": "painted",
+     "start": 32.031,
+     "end": 32.479
+    },
+    {
+     "text": "her",
+     "start": 32.479,
+     "end": 32.64
+    },
+    {
+     "text": "door",
+     "start": 32.64,
+     "end": 32.858
+    },
+    {
+     "text": "grey",
+     "start": 32.858,
+     "end": 33.134
+    },
+    {
+     "text": "just",
+     "start": 33.134,
+     "end": 33.467
+    },
+    {
+     "text": "to",
+     "start": 33.467,
+     "end": 33.628
+    },
+    {
+     "text": "prove",
+     "start": 33.628,
+     "end": 33.903
+    },
+    {
+     "text": "it",
+     "start": 33.903,
+     "end": 34.064
+    },
+    {
+     "text": "wasn't",
+     "start": 34.064,
+     "end": 34.397
+    },
+    {
+     "text": "her",
+     "start": 34.397,
+     "end": 34.558
+    }
+   ],
+   "visual": "Town square stage with a shouting crowd all pointing at each other. Cut to Mrs. Kaur, arms crossed, roller in hand, next to her now-grey door."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I marked every grey spot on a map. And they made a line.",
+   "start": 34.873,
+   "end": 37.899,
+   "words": [
+    {
+     "text": "So",
+     "start": 34.888,
+     "end": 35.084
+    },
+    {
+     "text": "I",
+     "start": 35.084,
+     "end": 35.229
+    },
+    {
+     "text": "marked",
+     "start": 35.229,
+     "end": 35.528
+    },
+    {
+     "text": "every",
+     "start": 35.528,
+     "end": 35.776
+    },
+    {
+     "text": "grey",
+     "start": 35.776,
+     "end": 36.023
+    },
+    {
+     "text": "spot",
+     "start": 36.023,
+     "end": 36.271
+    },
+    {
+     "text": "on",
+     "start": 36.271,
+     "end": 36.416
+    },
+    {
+     "text": "a",
+     "start": 36.416,
+     "end": 36.56
+    },
+    {
+     "text": "map",
+     "start": 36.56,
+     "end": 36.756
+    },
+    {
+     "text": "And",
+     "start": 37.066,
+     "end": 37.224
+    },
+    {
+     "text": "they",
+     "start": 37.224,
+     "end": 37.383
+    },
+    {
+     "text": "made",
+     "start": 37.383,
+     "end": 37.582
+    },
+    {
+     "text": "a",
+     "start": 37.582,
+     "end": 37.699
+    },
+    {
+     "text": "line",
+     "start": 37.699,
+     "end": 37.899
+    }
+   ],
+   "visual": "Kid's bedroom at night. Me at the desk with a big paper map of town and a grey pencil (the only colour left), dotting the grey spots until the dots line up."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Down Main Street. Through the park. Past the bakery. Straight to my front door.",
+   "start": 38.214,
+   "end": 42.612,
+   "words": [
+    {
+     "text": "Down",
+     "start": 38.229,
+     "end": 38.49
+    },
+    {
+     "text": "Main",
+     "start": 38.49,
+     "end": 38.752
+    },
+    {
+     "text": "Street",
+     "start": 38.752,
+     "end": 39.068
+    },
+    {
+     "text": "Through",
+     "start": 39.378,
+     "end": 39.602
+    },
+    {
+     "text": "the",
+     "start": 39.602,
+     "end": 39.767
+    },
+    {
+     "text": "park",
+     "start": 39.767,
+     "end": 40.05
+    },
+    {
+     "text": "Past",
+     "start": 40.36,
+     "end": 40.619
+    },
+    {
+     "text": "the",
+     "start": 40.619,
+     "end": 40.77
+    },
+    {
+     "text": "bakery",
+     "start": 40.77,
+     "end": 41.191
+    },
+    {
+     "text": "Straight",
+     "start": 41.501,
+     "end": 41.829
+    },
+    {
+     "text": "to",
+     "start": 41.829,
+     "end": 41.965
+    },
+    {
+     "text": "my",
+     "start": 41.965,
+     "end": 42.148
+    },
+    {
+     "text": "front",
+     "start": 42.148,
+     "end": 42.428
+    },
+    {
+     "text": "door",
+     "start": 42.428,
+     "end": 42.612
+    }
+   ],
+   "overlay": "FOUND!",
+   "visual": "Top-down drone shot following a grey trail across town block by block, ending at my house. The camera drops down to my front door."
+  },
+  {
+   "id": "b12",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 42.927,
+   "end": 44.567,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 42.927,
+     "end": 43.187
+    },
+    {
+     "text": "HUSS!",
+     "start": 43.137,
+     "end": 43.397
+    },
+    {
+     "text": "HUSS!",
+     "start": 43.327,
+     "end": 43.587
+    },
+    {
+     "text": "HUSS!",
+     "start": 43.907,
+     "end": 44.167
+    },
+    {
+     "text": "HUSS!",
+     "start": 44.117,
+     "end": 44.377
+    },
+    {
+     "text": "HUSS!",
+     "start": 44.307,
+     "end": 44.567
+    }
+   ],
+   "visual": "Me standing in my doorway, slowly looking down at my own hoodie as the camera spirals in, with screen shake."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I'd been everywhere, right before it went grey.",
+   "start": 44.907,
+   "end": 46.966,
+   "words": [
+    {
+     "text": "I'd",
+     "start": 44.922,
+     "end": 45.131
+    },
+    {
+     "text": "been",
+     "start": 45.131,
+     "end": 45.34
+    },
+    {
+     "text": "everywhere",
+     "start": 45.34,
+     "end": 45.769
+    },
+    {
+     "text": "right",
+     "start": 45.899,
+     "end": 46.122
+    },
+    {
+     "text": "before",
+     "start": 46.122,
+     "end": 46.391
+    },
+    {
+     "text": "it",
+     "start": 46.391,
+     "end": 46.521
+    },
+    {
+     "text": "went",
+     "start": 46.521,
+     "end": 46.743
+    },
+    {
+     "text": "grey",
+     "start": 46.743,
+     "end": 46.966
+    }
+   ],
+   "visual": "Quick flashes: me eating a donut at the bakery, me sitting in the park, me staring at the sky. Each time, the colours drain the moment I walk away."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Black soaks up light. Every colour. That's science.",
+   "start": 47.281,
+   "end": 50.276,
+   "words": [
+    {
+     "text": "Black",
+     "start": 47.296,
+     "end": 47.563
+    },
+    {
+     "text": "soaks",
+     "start": 47.563,
+     "end": 47.885
+    },
+    {
+     "text": "up",
+     "start": 47.885,
+     "end": 48.041
+    },
+    {
+     "text": "light",
+     "start": 48.041,
+     "end": 48.307
+    },
+    {
+     "text": "Every",
+     "start": 48.617,
+     "end": 48.944
+    },
+    {
+     "text": "colour",
+     "start": 48.944,
+     "end": 49.27
+    },
+    {
+     "text": "That's",
+     "start": 49.58,
+     "end": 49.868
+    },
+    {
+     "text": "science",
+     "start": 49.868,
+     "end": 50.276
+    }
+   ],
+   "overlay": "BLACK ABSORBS EVERY COLOUR",
+   "visual": "Close-up on my black hoodie. Tiny glowing red, yellow and blue cubes drift off a nearby house and get sucked into it like a vacuum, then vanish."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And I haven't taken this hoodie off in five years.",
+   "start": 50.591,
+   "end": 52.988,
+   "words": [
+    {
+     "text": "And",
+     "start": 50.606,
+     "end": 50.812
+    },
+    {
+     "text": "I",
+     "start": 50.812,
+     "end": 50.963
+    },
+    {
+     "text": "haven't",
+     "start": 50.963,
+     "end": 51.331
+    },
+    {
+     "text": "taken",
+     "start": 51.331,
+     "end": 51.7
+    },
+    {
+     "text": "this",
+     "start": 51.7,
+     "end": 51.905
+    },
+    {
+     "text": "hoodie",
+     "start": 51.905,
+     "end": 52.165
+    },
+    {
+     "text": "off",
+     "start": 52.165,
+     "end": 52.317
+    },
+    {
+     "text": "in",
+     "start": 52.317,
+     "end": 52.468
+    },
+    {
+     "text": "five",
+     "start": 52.468,
+     "end": 52.728
+    },
+    {
+     "text": "years",
+     "start": 52.728,
+     "end": 52.988
+    }
+   ],
+   "overlay": "SUSPECT: ME",
+   "visual": "Me facing a crowd of townspeople outside my house with a sheepish grin, pointing at the hoodie. The crowd stares, and the pigeon on the fence looks away."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then last week, Mom finally washed it. It came out empty. And thirsty.",
+   "start": 53.303,
+   "end": 57.538,
+   "words": [
+    {
+     "text": "Then",
+     "start": 53.318,
+     "end": 53.556
+    },
+    {
+     "text": "last",
+     "start": 53.556,
+     "end": 53.855
+    },
+    {
+     "text": "week",
+     "start": 53.855,
+     "end": 54.093
+    },
+    {
+     "text": "Mom",
+     "start": 54.223,
+     "end": 54.441
+    },
+    {
+     "text": "finally",
+     "start": 54.441,
+     "end": 54.889
+    },
+    {
+     "text": "washed",
+     "start": 54.889,
+     "end": 55.165
+    },
+    {
+     "text": "it",
+     "start": 55.165,
+     "end": 55.326
+    },
+    {
+     "text": "It",
+     "start": 55.636,
+     "end": 55.785
+    },
+    {
+     "text": "came",
+     "start": 55.785,
+     "end": 56.041
+    },
+    {
+     "text": "out",
+     "start": 56.041,
+     "end": 56.243
+    },
+    {
+     "text": "empty",
+     "start": 56.243,
+     "end": 56.552
+    },
+    {
+     "text": "And",
+     "start": 56.862,
+     "end": 57.13
+    },
+    {
+     "text": "thirsty",
+     "start": 57.13,
+     "end": 57.538
+    }
+   ],
+   "visual": "Quick flashback: Mom pulls the black hoodie out of the washing machine; it is a deeper, emptier black that seems to suck light in, with a little glint; tiny coloured sparkles drift INTO it. 'THIRSTY' stamp.",
+   "overlay": "WASHED: 1ST TIME IN 5 YEARS"
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I tried wringing it out. Ah, almost... almost!",
+   "start": 57.853,
+   "end": 61.313,
+   "words": [
+    {
+     "text": "I",
+     "start": 57.868,
+     "end": 58.009
+    },
+    {
+     "text": "tried",
+     "start": 58.009,
+     "end": 58.302
+    },
+    {
+     "text": "wringing",
+     "start": 58.302,
+     "end": 58.595
+    },
+    {
+     "text": "it",
+     "start": 58.595,
+     "end": 58.736
+    },
+    {
+     "text": "out",
+     "start": 58.736,
+     "end": 58.927
+    },
+    {
+     "text": "Ah",
+     "start": 59.237,
+     "end": 59.62
+    },
+    {
+     "text": "almost",
+     "start": 59.75,
+     "end": 60.332
+    },
+    {
+     "text": "almost!",
+     "start": 60.702,
+     "end": 61.313
+    }
+   ],
+   "overlay": "AH, ALMOST... ALMOST!",
+   "visual": "Me twisting the hoodie hem with both hands, straining. One blue drop falls and plinks onto the grey street, turning a single paving block blue."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I cannonballed into the town fountain.",
+   "start": 61.628,
+   "end": 63.562,
+   "words": [
+    {
+     "text": "So",
+     "start": 61.643,
+     "end": 61.843
+    },
+    {
+     "text": "I",
+     "start": 61.843,
+     "end": 61.989
+    },
+    {
+     "text": "cannonballed",
+     "start": 61.989,
+     "end": 62.503
+    },
+    {
+     "text": "into",
+     "start": 62.503,
+     "end": 62.755
+    },
+    {
+     "text": "the",
+     "start": 62.755,
+     "end": 62.902
+    },
+    {
+     "text": "town",
+     "start": 62.902,
+     "end": 63.153
+    },
+    {
+     "text": "fountain",
+     "start": 63.153,
+     "end": 63.562
+    }
+   ],
+   "visual": "Town square fountain. Me sprinting and leaping into a cannonball while the crowd shields their faces."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The water turned rainbow and blasted every colour back where it belonged.",
+   "start": 63.877,
+   "end": 67.695,
+   "words": [
+    {
+     "text": "The",
+     "start": 63.892,
+     "end": 64.074
+    },
+    {
+     "text": "water",
+     "start": 64.074,
+     "end": 64.385
+    },
+    {
+     "text": "turned",
+     "start": 64.385,
+     "end": 64.697
+    },
+    {
+     "text": "rainbow",
+     "start": 64.697,
+     "end": 65.203
+    },
+    {
+     "text": "and",
+     "start": 65.203,
+     "end": 65.45
+    },
+    {
+     "text": "blasted",
+     "start": 65.45,
+     "end": 65.956
+    },
+    {
+     "text": "every",
+     "start": 65.956,
+     "end": 66.267
+    },
+    {
+     "text": "colour",
+     "start": 66.267,
+     "end": 66.579
+    },
+    {
+     "text": "back",
+     "start": 66.579,
+     "end": 66.825
+    },
+    {
+     "text": "where",
+     "start": 66.825,
+     "end": 67.072
+    },
+    {
+     "text": "it",
+     "start": 67.072,
+     "end": 67.254
+    },
+    {
+     "text": "belonged",
+     "start": 67.254,
+     "end": 67.695
+    }
+   ],
+   "visual": "A huge rainbow geyser of coloured cubes erupts from the fountain and rains across town. A wave of colour rolls over the houses, the park, the bakery and the fire truck, and the sky snaps back to blue."
+  },
+  {
+   "id": "b20",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 68.01,
+   "end": 69.65,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 68.01,
+     "end": 68.27
+    },
+    {
+     "text": "HUSS!",
+     "start": 68.22,
+     "end": 68.48
+    },
+    {
+     "text": "HUSS!",
+     "start": 68.41,
+     "end": 68.67
+    },
+    {
+     "text": "HUSS!",
+     "start": 68.99,
+     "end": 69.25
+    },
+    {
+     "text": "HUSS!",
+     "start": 69.2,
+     "end": 69.46
+    },
+    {
+     "text": "HUSS!",
+     "start": 69.39,
+     "end": 69.65
+    }
+   ],
+   "visual": "The whole town dances in the rainbow spray: the mayor doing dance2, and Mrs. Kaur happily rolling red back onto her door."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then Grandma Mabel took off her cardigan. For the first time in fifty years.",
+   "start": 69.99,
+   "end": 73.784,
+   "words": [
+    {
+     "text": "Then",
+     "start": 70.005,
+     "end": 70.217
+    },
+    {
+     "text": "Grandma",
+     "start": 70.217,
+     "end": 70.653
+    },
+    {
+     "text": "Mabel",
+     "start": 70.653,
+     "end": 71.033
+    },
+    {
+     "text": "took",
+     "start": 71.033,
+     "end": 71.246
+    },
+    {
+     "text": "off",
+     "start": 71.246,
+     "end": 71.402
+    },
+    {
+     "text": "her",
+     "start": 71.402,
+     "end": 71.559
+    },
+    {
+     "text": "cardigan",
+     "start": 71.559,
+     "end": 72.05
+    },
+    {
+     "text": "For",
+     "start": 72.36,
+     "end": 72.543
+    },
+    {
+     "text": "the",
+     "start": 72.543,
+     "end": 72.678
+    },
+    {
+     "text": "first",
+     "start": 72.678,
+     "end": 72.909
+    },
+    {
+     "text": "time",
+     "start": 72.909,
+     "end": 73.139
+    },
+    {
+     "text": "in",
+     "start": 73.139,
+     "end": 73.274
+    },
+    {
+     "text": "fifty",
+     "start": 73.274,
+     "end": 73.553
+    },
+    {
+     "text": "years",
+     "start": 73.553,
+     "end": 73.784
+    }
+   ],
+   "visual": "The square goes quiet. Grandma Mabel steps up beside the fountain and slowly lifts off her black cardigan."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Fifty years of colour, all mixed together, poured out as one nobody has ever seen.",
+   "start": 74.099,
+   "end": 77.996,
+   "words": [
+    {
+     "text": "Fifty",
+     "start": 74.114,
+     "end": 74.411
+    },
+    {
+     "text": "years",
+     "start": 74.411,
+     "end": 74.658
+    },
+    {
+     "text": "of",
+     "start": 74.658,
+     "end": 74.801
+    },
+    {
+     "text": "colour",
+     "start": 74.801,
+     "end": 75.048
+    },
+    {
+     "text": "all",
+     "start": 75.178,
+     "end": 75.338
+    },
+    {
+     "text": "mixed",
+     "start": 75.338,
+     "end": 75.672
+    },
+    {
+     "text": "together",
+     "start": 75.672,
+     "end": 76.062
+    },
+    {
+     "text": "poured",
+     "start": 76.192,
+     "end": 76.444
+    },
+    {
+     "text": "out",
+     "start": 76.444,
+     "end": 76.643
+    },
+    {
+     "text": "as",
+     "start": 76.643,
+     "end": 76.79
+    },
+    {
+     "text": "one",
+     "start": 76.79,
+     "end": 76.989
+    },
+    {
+     "text": "nobody",
+     "start": 76.989,
+     "end": 77.398
+    },
+    {
+     "text": "has",
+     "start": 77.398,
+     "end": 77.597
+    },
+    {
+     "text": "ever",
+     "start": 77.597,
+     "end": 77.797
+    },
+    {
+     "text": "seen",
+     "start": 77.797,
+     "end": 77.996
+    }
+   ],
+   "overlay": "NEW COLOUR",
+   "visual": "A column of impossible shimmering colour (iridescent, always shifting hue) spirals up out of the cardigan and spreads across the sky, lighting up every stunned face."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nobody can name it. Whoever looks at it can only say...",
+   "start": 78.311,
+   "end": 81.022,
+   "words": [
+    {
+     "text": "Nobody",
+     "start": 78.326,
+     "end": 78.715
+    },
+    {
+     "text": "can",
+     "start": 78.715,
+     "end": 78.904
+    },
+    {
+     "text": "name",
+     "start": 78.904,
+     "end": 79.144
+    },
+    {
+     "text": "it",
+     "start": 79.144,
+     "end": 79.283
+    },
+    {
+     "text": "Whoever",
+     "start": 79.593,
+     "end": 79.873
+    },
+    {
+     "text": "looks",
+     "start": 79.873,
+     "end": 80.105
+    },
+    {
+     "text": "at",
+     "start": 80.105,
+     "end": 80.24
+    },
+    {
+     "text": "it",
+     "start": 80.24,
+     "end": 80.375
+    },
+    {
+     "text": "can",
+     "start": 80.375,
+     "end": 80.559
+    },
+    {
+     "text": "only",
+     "start": 80.559,
+     "end": 80.839
+    },
+    {
+     "text": "say",
+     "start": 80.839,
+     "end": 81.022
+    }
+   ],
+   "visual": "The whole town staring up open-mouthed. Slow push in on me, the new colour shimmering on my headphones."
+  },
+  {
+   "id": "b24",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 81.337,
+   "end": 81.997,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 81.337,
+     "end": 81.597
+    },
+    {
+     "text": "HUSS!",
+     "start": 81.547,
+     "end": 81.807
+    },
+    {
+     "text": "HUSS!",
+     "start": 81.737,
+     "end": 81.997
+    }
+   ],
+   "overlay": "COLOUR NAME: HUSS",
+   "visual": "Everyone in the square shouts it at the sky together, and a stamped label slaps onto the shimmering colour."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "colours",
+   "start": 1.112,
+   "end": 1.443,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "can",
+   "start": 1.443,
+   "end": 1.659,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "run",
+   "start": 1.659,
+   "end": 1.876,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "out",
+   "start": 1.876,
+   "end": 2.093,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Paint",
+   "start": 2.403,
+   "end": 2.693,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "your",
+   "start": 2.693,
+   "end": 2.882,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "door",
+   "start": 2.882,
+   "end": 3.072,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "red",
+   "start": 3.072,
+   "end": 3.262,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "and",
+   "start": 3.392,
+   "end": 3.594,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "somewhere",
+   "start": 3.594,
+   "end": 3.955,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "a",
+   "start": 3.955,
+   "end": 4.104,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "fire",
+   "start": 4.104,
+   "end": 4.359,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "truck",
+   "start": 4.359,
+   "end": 4.615,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "turns",
+   "start": 4.615,
+   "end": 4.87,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "grey",
+   "start": 4.87,
+   "end": 5.125,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "Fifty",
+   "start": 5.455,
+   "end": 5.756,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "years",
+   "start": 5.756,
+   "end": 6.005,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "ago",
+   "start": 6.005,
+   "end": 6.254,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 6.384,
+   "end": 6.528,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "rainbow",
+   "start": 6.528,
+   "end": 6.928,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "crashed",
+   "start": 6.928,
+   "end": 7.225,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "into",
+   "start": 7.225,
+   "end": 7.472,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 7.472,
+   "end": 7.615,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "park",
+   "start": 7.615,
+   "end": 7.861,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "and",
+   "start": 7.991,
+   "end": 8.162,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "every",
+   "start": 8.162,
+   "end": 8.377,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "colour",
+   "start": 8.377,
+   "end": 8.592,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "we",
+   "start": 8.592,
+   "end": 8.717,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "have",
+   "start": 8.717,
+   "end": 8.888,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "spilled",
+   "start": 8.888,
+   "end": 9.148,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "out",
+   "start": 9.148,
+   "end": 9.318,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "of",
+   "start": 9.318,
+   "end": 9.443,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "it",
+   "start": 9.443,
+   "end": 9.569,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "There's",
+   "start": 9.899,
+   "end": 10.126,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "no",
+   "start": 10.126,
+   "end": 10.307,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "more",
+   "start": 10.307,
+   "end": 10.487,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "where",
+   "start": 10.487,
+   "end": 10.667,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "that",
+   "start": 10.667,
+   "end": 10.847,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "came",
+   "start": 10.847,
+   "end": 11.075,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "from",
+   "start": 11.075,
+   "end": 11.302,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "So",
+   "start": 11.612,
+   "end": 11.817,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "colour",
+   "start": 11.817,
+   "end": 12.076,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "is",
+   "start": 12.076,
+   "end": 12.227,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "basically",
+   "start": 12.227,
+   "end": 12.702,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "money",
+   "start": 12.702,
+   "end": 12.961,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "When",
+   "start": 13.291,
+   "end": 13.473,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 13.473,
+   "end": 13.607,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "mayor",
+   "start": 13.607,
+   "end": 13.837,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "painted",
+   "start": 13.837,
+   "end": 14.211,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "his",
+   "start": 14.211,
+   "end": 14.393,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "house",
+   "start": 14.393,
+   "end": 14.623,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "purple",
+   "start": 14.623,
+   "end": 14.9,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "every",
+   "start": 15.03,
+   "end": 15.266,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "grape",
+   "start": 15.266,
+   "end": 15.55,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "in",
+   "start": 15.55,
+   "end": 15.687,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "town",
+   "start": 15.687,
+   "end": 15.923,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "went",
+   "start": 15.923,
+   "end": 16.158,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "grey",
+   "start": 16.158,
+   "end": 16.394,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "HUSS!",
+   "start": 16.709,
+   "end": 16.969,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 16.919,
+   "end": 17.179,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 17.109,
+   "end": 17.369,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Only",
+   "start": 17.724,
+   "end": 18.035,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Grandma",
+   "start": 18.035,
+   "end": 18.453,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Mabel",
+   "start": 18.453,
+   "end": 18.817,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "doesn't",
+   "start": 18.817,
+   "end": 19.182,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "care",
+   "start": 19.182,
+   "end": 19.386,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "She's",
+   "start": 19.696,
+   "end": 19.908,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "worn",
+   "start": 19.908,
+   "end": 20.176,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 20.176,
+   "end": 20.332,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "same",
+   "start": 20.332,
+   "end": 20.6,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "black",
+   "start": 20.6,
+   "end": 20.869,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "cardigan",
+   "start": 20.869,
+   "end": 21.36,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "since",
+   "start": 21.36,
+   "end": 21.628,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "the",
+   "start": 21.628,
+   "end": 21.785,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "day",
+   "start": 21.785,
+   "end": 21.997,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "it",
+   "start": 21.997,
+   "end": 22.153,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "fell",
+   "start": 22.153,
+   "end": 22.366,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Then",
+   "start": 22.696,
+   "end": 22.933,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "last",
+   "start": 22.933,
+   "end": 23.233,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "week",
+   "start": 23.233,
+   "end": 23.47,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "colours",
+   "start": 23.6,
+   "end": 23.918,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "started",
+   "start": 23.918,
+   "end": 24.346,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "vanishing",
+   "start": 24.346,
+   "end": 24.774,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "that",
+   "start": 24.774,
+   "end": 24.983,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "nobody",
+   "start": 24.983,
+   "end": 25.411,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "had",
+   "start": 25.411,
+   "end": 25.619,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "used",
+   "start": 25.619,
+   "end": 25.883,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Tuesday",
+   "start": 26.213,
+   "end": 26.741,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 26.871,
+   "end": 27.042,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "bakery",
+   "start": 27.042,
+   "end": 27.516,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Wednesday",
+   "start": 27.826,
+   "end": 28.381,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 28.511,
+   "end": 28.667,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "whole",
+   "start": 28.667,
+   "end": 28.935,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "sky",
+   "start": 28.935,
+   "end": 29.203,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Everyone",
+   "start": 29.533,
+   "end": 29.935,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "blamed",
+   "start": 29.935,
+   "end": 30.285,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "everyone",
+   "start": 30.285,
+   "end": 30.686,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Mrs",
+   "start": 30.996,
+   "end": 31.503,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Kaur",
+   "start": 31.813,
+   "end": 32.031,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "painted",
+   "start": 32.031,
+   "end": 32.479,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "her",
+   "start": 32.479,
+   "end": 32.64,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "door",
+   "start": 32.64,
+   "end": 32.858,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "grey",
+   "start": 32.858,
+   "end": 33.134,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "just",
+   "start": 33.134,
+   "end": 33.467,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "to",
+   "start": 33.467,
+   "end": 33.628,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "prove",
+   "start": 33.628,
+   "end": 33.903,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "it",
+   "start": 33.903,
+   "end": 34.064,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "wasn't",
+   "start": 34.064,
+   "end": 34.397,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "her",
+   "start": 34.397,
+   "end": 34.558,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "So",
+   "start": 34.888,
+   "end": 35.084,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 35.084,
+   "end": 35.229,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "marked",
+   "start": 35.229,
+   "end": 35.528,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "every",
+   "start": 35.528,
+   "end": 35.776,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "grey",
+   "start": 35.776,
+   "end": 36.023,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "spot",
+   "start": 36.023,
+   "end": 36.271,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "on",
+   "start": 36.271,
+   "end": 36.416,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "a",
+   "start": 36.416,
+   "end": 36.56,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "map",
+   "start": 36.56,
+   "end": 36.756,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "And",
+   "start": 37.066,
+   "end": 37.224,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "they",
+   "start": 37.224,
+   "end": 37.383,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "made",
+   "start": 37.383,
+   "end": 37.582,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "a",
+   "start": 37.582,
+   "end": 37.699,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "line",
+   "start": 37.699,
+   "end": 37.899,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Down",
+   "start": 38.229,
+   "end": 38.49,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Main",
+   "start": 38.49,
+   "end": 38.752,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Street",
+   "start": 38.752,
+   "end": 39.068,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Through",
+   "start": 39.378,
+   "end": 39.602,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 39.602,
+   "end": 39.767,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "park",
+   "start": 39.767,
+   "end": 40.05,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Past",
+   "start": 40.36,
+   "end": 40.619,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 40.619,
+   "end": 40.77,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "bakery",
+   "start": 40.77,
+   "end": 41.191,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Straight",
+   "start": 41.501,
+   "end": 41.829,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "to",
+   "start": 41.829,
+   "end": 41.965,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "my",
+   "start": 41.965,
+   "end": 42.148,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "front",
+   "start": 42.148,
+   "end": 42.428,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "door",
+   "start": 42.428,
+   "end": 42.612,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "HUSS!",
+   "start": 42.927,
+   "end": 43.187,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.137,
+   "end": 43.397,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.327,
+   "end": 43.587,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.907,
+   "end": 44.167,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 44.117,
+   "end": 44.377,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 44.307,
+   "end": 44.567,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "I'd",
+   "start": 44.922,
+   "end": 45.131,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "been",
+   "start": 45.131,
+   "end": 45.34,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "everywhere",
+   "start": 45.34,
+   "end": 45.769,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "right",
+   "start": 45.899,
+   "end": 46.122,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "before",
+   "start": 46.122,
+   "end": 46.391,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "it",
+   "start": 46.391,
+   "end": 46.521,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "went",
+   "start": 46.521,
+   "end": 46.743,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "grey",
+   "start": 46.743,
+   "end": 46.966,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Black",
+   "start": 47.296,
+   "end": 47.563,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "soaks",
+   "start": 47.563,
+   "end": 47.885,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "up",
+   "start": 47.885,
+   "end": 48.041,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "light",
+   "start": 48.041,
+   "end": 48.307,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Every",
+   "start": 48.617,
+   "end": 48.944,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "colour",
+   "start": 48.944,
+   "end": 49.27,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "That's",
+   "start": 49.58,
+   "end": 49.868,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "science",
+   "start": 49.868,
+   "end": 50.276,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "And",
+   "start": 50.606,
+   "end": 50.812,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 50.812,
+   "end": 50.963,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "haven't",
+   "start": 50.963,
+   "end": 51.331,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "taken",
+   "start": 51.331,
+   "end": 51.7,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "this",
+   "start": 51.7,
+   "end": 51.905,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "hoodie",
+   "start": 51.905,
+   "end": 52.165,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "off",
+   "start": 52.165,
+   "end": 52.317,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "in",
+   "start": 52.317,
+   "end": 52.468,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "five",
+   "start": 52.468,
+   "end": 52.728,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "years",
+   "start": 52.728,
+   "end": 52.988,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Then",
+   "start": 53.318,
+   "end": 53.556,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "last",
+   "start": 53.556,
+   "end": 53.855,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "week",
+   "start": 53.855,
+   "end": 54.093,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Mom",
+   "start": 54.223,
+   "end": 54.441,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "finally",
+   "start": 54.441,
+   "end": 54.889,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "washed",
+   "start": 54.889,
+   "end": 55.165,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "it",
+   "start": 55.165,
+   "end": 55.326,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "It",
+   "start": 55.636,
+   "end": 55.785,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "came",
+   "start": 55.785,
+   "end": 56.041,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "out",
+   "start": 56.041,
+   "end": 56.243,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "empty",
+   "start": 56.243,
+   "end": 56.552,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "And",
+   "start": 56.862,
+   "end": 57.13,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "thirsty",
+   "start": 57.13,
+   "end": 57.538,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "I",
+   "start": 57.868,
+   "end": 58.009,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "tried",
+   "start": 58.009,
+   "end": 58.302,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "wringing",
+   "start": 58.302,
+   "end": 58.595,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 58.595,
+   "end": 58.736,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "out",
+   "start": 58.736,
+   "end": 58.927,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Ah",
+   "start": 59.237,
+   "end": 59.62,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "almost",
+   "start": 59.75,
+   "end": 60.332,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "almost!",
+   "start": 60.702,
+   "end": 61.313,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "So",
+   "start": 61.643,
+   "end": 61.843,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 61.843,
+   "end": 61.989,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "cannonballed",
+   "start": 61.989,
+   "end": 62.503,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "into",
+   "start": 62.503,
+   "end": 62.755,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 62.755,
+   "end": 62.902,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "town",
+   "start": 62.902,
+   "end": 63.153,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "fountain",
+   "start": 63.153,
+   "end": 63.562,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "The",
+   "start": 63.892,
+   "end": 64.074,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "water",
+   "start": 64.074,
+   "end": 64.385,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "turned",
+   "start": 64.385,
+   "end": 64.697,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "rainbow",
+   "start": 64.697,
+   "end": 65.203,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "and",
+   "start": 65.203,
+   "end": 65.45,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "blasted",
+   "start": 65.45,
+   "end": 65.956,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "every",
+   "start": 65.956,
+   "end": 66.267,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "colour",
+   "start": 66.267,
+   "end": 66.579,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "back",
+   "start": 66.579,
+   "end": 66.825,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "where",
+   "start": 66.825,
+   "end": 67.072,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "it",
+   "start": 67.072,
+   "end": 67.254,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "belonged",
+   "start": 67.254,
+   "end": 67.695,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "HUSS!",
+   "start": 68.01,
+   "end": 68.27,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 68.22,
+   "end": 68.48,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 68.41,
+   "end": 68.67,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 68.99,
+   "end": 69.25,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 69.2,
+   "end": 69.46,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 69.39,
+   "end": 69.65,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Then",
+   "start": 70.005,
+   "end": 70.217,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Grandma",
+   "start": 70.217,
+   "end": 70.653,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Mabel",
+   "start": 70.653,
+   "end": 71.033,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "took",
+   "start": 71.033,
+   "end": 71.246,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "off",
+   "start": 71.246,
+   "end": 71.402,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "her",
+   "start": 71.402,
+   "end": 71.559,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "cardigan",
+   "start": 71.559,
+   "end": 72.05,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "For",
+   "start": 72.36,
+   "end": 72.543,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 72.543,
+   "end": 72.678,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "first",
+   "start": 72.678,
+   "end": 72.909,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "time",
+   "start": 72.909,
+   "end": 73.139,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "in",
+   "start": 73.139,
+   "end": 73.274,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "fifty",
+   "start": 73.274,
+   "end": 73.553,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "years",
+   "start": 73.553,
+   "end": 73.784,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Fifty",
+   "start": 74.114,
+   "end": 74.411,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "years",
+   "start": 74.411,
+   "end": 74.658,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "of",
+   "start": 74.658,
+   "end": 74.801,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "colour",
+   "start": 74.801,
+   "end": 75.048,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "all",
+   "start": 75.178,
+   "end": 75.338,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "mixed",
+   "start": 75.338,
+   "end": 75.672,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "together",
+   "start": 75.672,
+   "end": 76.062,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "poured",
+   "start": 76.192,
+   "end": 76.444,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "out",
+   "start": 76.444,
+   "end": 76.643,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "as",
+   "start": 76.643,
+   "end": 76.79,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "one",
+   "start": 76.79,
+   "end": 76.989,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "nobody",
+   "start": 76.989,
+   "end": 77.398,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "has",
+   "start": 77.398,
+   "end": 77.597,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "ever",
+   "start": 77.597,
+   "end": 77.797,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "seen",
+   "start": 77.797,
+   "end": 77.996,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Nobody",
+   "start": 78.326,
+   "end": 78.715,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "can",
+   "start": 78.715,
+   "end": 78.904,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "name",
+   "start": 78.904,
+   "end": 79.144,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 79.144,
+   "end": 79.283,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Whoever",
+   "start": 79.593,
+   "end": 79.873,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "looks",
+   "start": 79.873,
+   "end": 80.105,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "at",
+   "start": 80.105,
+   "end": 80.24,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "it",
+   "start": 80.24,
+   "end": 80.375,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "can",
+   "start": 80.375,
+   "end": 80.559,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "only",
+   "start": 80.559,
+   "end": 80.839,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "say",
+   "start": 80.839,
+   "end": 81.022,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 81.337,
+   "end": 81.597,
+   "beat": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 81.547,
+   "end": 81.807,
+   "beat": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 81.737,
+   "end": 81.997,
+   "beat": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "lofi"
+  },
+  {
+   "t": 5.36,
+   "mode": "night"
+  },
+  {
+   "t": 9.804,
+   "mode": "party"
+  },
+  {
+   "t": 16.629,
+   "mode": "party"
+  },
+  {
+   "t": 17.629,
+   "mode": "lofi"
+  },
+  {
+   "t": 22.601,
+   "mode": "night"
+  },
+  {
+   "t": 29.438,
+   "mode": "party"
+  },
+  {
+   "t": 34.793,
+   "mode": "lofi"
+  },
+  {
+   "t": 38.134,
+   "mode": "none"
+  },
+  {
+   "t": 42.847,
+   "mode": "muffled"
+  },
+  {
+   "t": 44.827,
+   "mode": "muffled"
+  },
+  {
+   "t": 47.201,
+   "mode": "night"
+  },
+  {
+   "t": 50.511,
+   "mode": "none"
+  },
+  {
+   "t": 57.773,
+   "mode": "party"
+  },
+  {
+   "t": 63.797,
+   "mode": "party"
+  },
+  {
+   "t": 67.93,
+   "mode": "party"
+  },
+  {
+   "t": 69.91,
+   "mode": "none"
+  },
+  {
+   "t": 74.019,
+   "mode": "night"
+  },
+  {
+   "t": 78.231,
+   "mode": "none"
+  },
+  {
+   "t": 81.257,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "paint": 2.403,
+  "truck": 4.104,
+  "purple": 13.837,
+  "grapes": 15.266,
+  "bakery": 40.36,
+  "sky": 27.826,
+  "main": 38.229,
+  "park": 39.378,
+  "door": 41.501,
+  "wash": 54.889,
+  "thirsty": 56.862,
+  "wring": 58.302,
+  "almost": 59.237,
+  "rainbow": 64.697,
+  "wave": 65.45,
+  "pour": 76.192
+ },
+ "title": "In This Town \u2014 Out of Colour"
+}

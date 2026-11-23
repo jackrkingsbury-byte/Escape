@@ -273,7 +273,7 @@ export function makeBiteWall({ wall = '#ffb3d1', W = 4, Hh = 3, T = 0.5 } = {}) 
   const mat = new THREE.MeshStandardMaterial({ roughness: 0.8 });
   const items = [];
   const cw = 0.1, n = Math.round(W / cw);
-  const R = 1.45, cx0 = 0.35, cy0 = Hh + 0.35;       // bite circle
+  const R = 1.45, cx0 = 1.25, cy0 = Hh + 0.35;       // bite circle
   const tooth = 0.3, gapX = cx0 - 0.02, gapW = 0.62;
   let gapTop = 0;
   for (let i = 0; i < n; i++) {
@@ -303,8 +303,8 @@ export function makeBiteWall({ wall = '#ffb3d1', W = 4, Hh = 3, T = 0.5 } = {}) 
   g.add(boxes(items, mat));
   // trim band + base
   g.add(box(W + 0.06, 0.36, T + 0.06, '#8c7b6b', 0, 0.18, 0));
-  const win = box(0.9, 1.0, 0.06, std('#9cc8ec', { roughness: 0.25 }), -1.15, 1.45, T / 2 + 0.01); g.add(win);
-  g.add(box(1.1, 1.2, 0.05, '#ffffff', -1.15, 1.45, T / 2));
+  const win = box(0.9, 1.0, 0.06, std('#9cc8ec', { roughness: 0.25 }), -0.9, 1.45, T / 2 + 0.01); g.add(win);
+  g.add(box(1.1, 1.2, 0.05, '#ffffff', -0.9, 1.45, T / 2));
   g.userData = { gap: V(gapX, gapTop + 0.05, T / 2), circle: { x: cx0, y: cy0, r: R } };
   return g;
 }
@@ -771,4 +771,14 @@ export function makeMoonSky(w = 3.2, h = 2.4) {
     const rg = g.createRadialGradient(W * 0.62, Hh * 0.38, 10, W * 0.62, Hh * 0.38, 170); rg.addColorStop(0, 'rgba(255,250,225,1)'); rg.addColorStop(0.3, 'rgba(255,248,220,0.95)'); rg.addColorStop(0.34, 'rgba(220,230,255,0.5)'); rg.addColorStop(1, 'rgba(200,215,255,0)'); g.fillStyle = rg; g.fillRect(0, 0, W, Hh);
   });
   return new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, fog: false, toneMapped: false }));
+}
+
+/** fork silhouette from solid black boxes (tines down), ~4 × 3.6 m, origin at the centre */
+export function makeForkShadow() {
+  const g = new THREE.Group(); const m = new THREE.MeshBasicMaterial({ color: '#04040a', fog: false });
+  for (let i = 0; i < 4; i++) { const b = new THREE.Mesh(UNIT, m); b.scale.set(0.26, 1.7, 0.02); b.position.set(-0.6 + i * 0.4, -0.85, 0); g.add(b); }
+  const br = new THREE.Mesh(UNIT, m); br.scale.set(1.5, 0.35, 0.02); br.position.set(0, 0.1, 0); g.add(br);
+  const nk = new THREE.Mesh(UNIT, m); nk.scale.set(0.5, 1.0, 0.02); nk.position.set(0.1, 0.7, 0); nk.rotation.z = -0.25; g.add(nk);
+  const hd = new THREE.Mesh(UNIT, m); hd.scale.set(0.4, 3.0, 0.02); hd.position.set(0.75, 2.5, 0); hd.rotation.z = -0.35; g.add(hd);
+  return g;
 }

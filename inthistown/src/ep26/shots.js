@@ -26,7 +26,7 @@ import { makeHand } from '../ep24/props.js';
 import {
   makeVoxHouse, makeBiteWall, makeGarage, makeFork, makeGiantKid, makeMatch, makeWick, makePlateCake, makeSprinkles, makeCrumbs,
   makeHotSauce, makeRoller, makePancakes, makeDetectiveCap, makeMagnifier, makeCorkboard26, makeLawnChair, makeTeeth, makeTongue,
-  makeRedRing, makeShadowShape, makeSteam, makeCrumbBurst, makeMoonSky,
+  makeRedRing, makeShadowShape, makeSteam, makeCrumbBurst, makeMoonSky, makeForkShadow,
 } from './props.js';
 
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -96,7 +96,7 @@ export function init(ctx) {
   P.gusTeeth = makeTeeth(false);
   P.tongue = makeTongue();
   P.ring = makeRedRing();
-  P.shadow = makeShadowShape();
+  P.shadow = makeForkShadow();
   P.steam = makeSteam(12);
   P.clock = makeClockFace();
   P.hand = makeHand();
@@ -111,6 +111,7 @@ export function init(ctx) {
   P.dust = makeSparkles({ n: 40, w: 6, h: 4, d: 5, color: '#fff2d0', size: 0.03 });
   P.glint = glowSprite('#ffffff', 2, 1);
   P.moonGlow = glowSprite('#dfe6ff', 30, 0.55);
+  P.winGlow = glowSprite('#ffc860', 1, 0.9);
   P.fill = new THREE.PointLight('#f0f2ff', 5, 12, 1.4);
   P.zap = new THREE.PointLight('#c8b8ff', 0, 200, 1.0);
   P.warm = new THREE.PointLight('#ff9a3a', 0, 140, 1.2);
@@ -393,7 +394,7 @@ function pointUp(ch, t, k = 1, hit = 0) {
 function facepalm(ch, t) {
   ch.pose('idle', t, { intensity: 0.3 });
   const J = ch.joints;
-  J.armR.rotation.set(-2.75, 0, 0.55); J.foreArmR.rotation.set(-2.35, 0, 0);
+  J.armR.rotation.set(-1.7, 0, 0.75); J.foreArmR.rotation.set(-1.2, 0, 0);
   J.head.rotation.x += 0.22; J.armL.rotation.set(-0.3, 0, -0.55); J.foreArmL.rotation.set(-0.4, 0, 0);
 }
 /** dive to the side (u 0 → 1): body tilts toward −x, arms flung out */
@@ -528,7 +529,7 @@ export const shots = [
   },
   {
     name: 'post office', start: 'post-0.12', set: 'town',
-    setup(ctx) { town(ctx, 'day', { edits: { hide: [8] } }); house(ctx, ctx.props.post, 8); ctx.store.cr = crowd(ctx, [X[13]], [[25.6, 0.12, 6.6, -0.5]]); },
+    setup(ctx) { town(ctx, 'day', { edits: { hide: [8] } }); house(ctx, ctx.props.post, 8); ctx.store.cr = crowd(ctx, [X[13]], [[24.0, 0.12, 6.0, -0.4]]); },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.store.cr.forEach((c) => { c.ch.pose('point', t + c.ph, { headPitch: -0.5 }); c.ch.face('shocked', 0.3); });
@@ -560,8 +561,9 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, tc = ctx.time('b03.w9');
       const on = t > tc + 0.38;
-      ctx.set.set('windowGlow', (h, wi) => (h === 5 && wi === 1 && on ? 1 : 0));
-      const c = moveCam(ctx, { pos: L(-3, 3.1, 5.2), look: L(-45, 7.6, 4.2), fov: 60 }, { pos: L(-5, 3.2, 5.4), look: L(-45, 8, 4), fov: 60 }, lt / 3.2, 2.2, '#9fb0ff', 40);
+      ctx.set.set('windowGlow', (h, wi) => (h === 5 && on ? 1 : 0));
+      const c = moveCam(ctx, { pos: L(-3, 3.1, 0.9), look: L(-45, 7.6, 5.2), fov: 60 }, { pos: L(-5, 3.2, 1.0), look: L(-45, 8, 5.0), fov: 60 }, lt / 3.2, 2.2, '#9fb0ff', 40);
+      { const g = ctx.props.winGlow; ctx.add(g); g.position.copy(L(-27, 4.3, 10.0)); g.scale.setScalar(on ? 7 * (1 + 0.5 * Math.max(0, 1 - (t - tc - 0.38) / 0.2)) : 0.001); }
       shakeOn(ctx, [tc + 0.03], 1.1, 0.5, 5);
       pop(ctx, tc + 0.03, 0.1, '#ffffff', 0.25);
       stamp(ctx, 'CRUNCH', tc + 0.02, { y: 0.24, size: 150, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.08, t1: tc + 0.5 });
@@ -592,7 +594,7 @@ export const shots = [
       ctx.store.cr.forEach((c, i) => { rollerPose(c.ch, t + c.ph, i * 1.3); c.ch.face(i === 1 ? 'grin' : 'determined', t + c.ph); });
       const u = clamp(0.12 + (t - ctx.time('b04')) / 2.6, 0, 1);
       P.yellow.userData.paint(u, '#5bd65b', 1);
-      moveCam(ctx, { pos: L(-7.4, 2.5, 6.4), look: L(-15.5, 3.2, 10.6), fov: 58 }, { pos: L(-8.0, 2.4, 7.0), look: L(-15.5, 3.4, 10.6), fov: 56 }, lt / 2.9);
+      moveCam(ctx, { pos: L(-12.8, 7.9, 3.6), look: L(-15.0, 3.0, 10.6), fov: 64 }, { pos: L(-13.0, 7.6, 4.2), look: L(-15.0, 3.1, 10.6), fov: 62 }, lt / 2.9);
       tag(ctx, 'RULE 1: PAINT IT GREEN', ctx.markers.r1 - 0.05, Infinity, { y: 0.13, size: 62, bg: 'rgba(40,150,60,0.93)' });
     },
   },
@@ -652,7 +654,7 @@ export const shots = [
       const L = ctx.store.L, t = ctx.t, b = ctx.cast.bramble;
       b.pose('crossArms', t); b.face('smug', 0.5);
       ctx.cast.gcat.pose('sit', t); ctx.cast.gcat.face('smug', 0.5);
-      moveCam(ctx, { pos: L(-4.4, 1.25, 1.6), look: L(-5.0, 1.55, 6.5), fov: 54 }, { pos: L(-4.6, 1.3, 2.2), look: L(-5.0, 1.55, 6.5), fov: 52 }, lt / 2.6);
+      moveCam(ctx, { pos: L(-4.4, 1.25, 1.6), look: L(-5.0, 0.95, 6.5), fov: 54 }, { pos: L(-4.6, 1.3, 2.2), look: L(-5.0, 0.95, 6.5), fov: 52 }, lt / 2.6);
     },
   },
   {
@@ -747,17 +749,17 @@ export const shots = [
       const L = town(ctx, 'day', { edits: { hide: [1] } }); house(ctx, ctx.props.lilac, 1);
       const P = ctx.props; addTo(ctx, P.biteWall, -6.0, 0.12, -6.9, 0);
       addTo(ctx, P.crumbs, -5.6, 0.12, -6.0);
-      const me = put(ctx, 'me', L(-4.9, 0.12, -6.2), -PI / 2 - 0.15); capOn(ctx, me);
+      const me = put(ctx, 'me', L(-3.55, 0.12, -6.5), -PI / 2); capOn(ctx, me);
       ctx.add(P.tongue, me.joints.head); P.tongue.position.set(0, 0.13, 0.27);
       addTo(ctx, P.sparks, -5.6, 1.9, -6.2);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me, P = ctx.props, ts = ctx.time('b09.w5');
       const lean = t < ts ? ease.inOutSine(clamp(lt / 0.7, 0, 1)) : 0;
-      const cam = { pos: L(-7.6, 1.6, -3.9), look: L(-5.2, 1.45, -6.3), fov: 42 };
-      const target = L(-5.67, 2.0, -6.62);   // cream edge at the bottom of the bite, on the wall's front face
+      const cam = { pos: L(-5.7, 1.8, -3.5), look: L(-4.0, 1.65, -6.6), fov: 42 };
+      const target = L(-3.97, 2.0, -6.75);   // cream edge at the bottom of the bite, on the wall's front face
       if (t < ts) {
-        me.root.position.copy(L(-4.9, 0.12, -6.2)); me.root.rotation.set(0, -PI / 2 - 0.15, 0);
+        me.root.position.copy(L(-3.55, 0.12, -6.5)); me.root.rotation.set(0, -PI / 2, 0);
         me.pose('peer', t, { intensity: 0.4 }); me.joints.torso.rotation.x += 0.25 * lean; me.joints.head.rotation.x -= 0.45 * lean; me.face('laugh', 0.5);
         // slide toward the wall so the tongue tip reaches the bite edge
         me.root.updateMatrixWorld(true); const tip = P.tongue.localToWorld(V(0, 0, 0.14));
@@ -787,14 +789,15 @@ export const shots = [
       const L = town(ctx, 'day');
       addTo(ctx, ctx.props.sprinkles, -2, 0.005, 0.5);
       const me = put(ctx, 'me', L(-5.0, 0, 0.4), PI / 2 - 0.25); capOn(ctx, me);
-      const P = ctx.props; ctx.add(P.mag, me.joints.handR); P.mag.position.set(0, 0.02, 0.05); P.mag.rotation.set(0.2, 0, 0);
+      const P = ctx.props; ctx.add(P.mag); P.mag.scale.setScalar(2.0);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me;
       skyMood(ctx, 'sunrise', 0.65);
       me.pose('peer', t, { seated: true, seatHeight: 0.42, headPitch: 0.05 }); me.face('squint', 0.5);
       const J = me.joints; J.torso.rotation.x += 0.3;
-      J.armR.rotation.set(-1.45, 0, 0.12); J.foreArmR.rotation.set(-0.55, 0, 0);
+      J.armR.rotation.set(-1.5, 0, 0.6); J.foreArmR.rotation.set(-1.0, 0, 0);
+      { const M = ctx.props.mag; me.root.updateMatrixWorld(true); const eye = J.head.localToWorld(V(-0.15, 0.32, 0.62)); M.position.copy(eye).add(up(-0.2 * 2.0)); M.rotation.set(0, me.root.rotation.y, 0); }
       J.armL.rotation.set(-0.5, 0, -0.25); J.foreArmL.rotation.set(-1.0, 0, 0);
       const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
       moveCam(ctx, { pos: L(4.0, 0.3, 1.3), look: L(-5, 0.6, 0.3), fov: 46 }, { pos: L(-1.8, 0.45, 0.9), look: L(-5.0, 0.7, 0.3), fov: 42 }, k);
@@ -908,7 +911,7 @@ export const shots = [
       if (t < ts - 0.3) { paintRoofPose(me, t); me.face('determined', 0.5); } else { me.pose('crossArms', t); me.face('smug', 0.5); }
       paintRoof(ctx, clamp((t - ctx.time('b14')) / 2.6 + 0.25, 0, 1));
       const fc = faceCam(me, 4.6, 0.6, 0.45, 42), bt = slotPt(ctx, HOME, 0.45, ROOF_Y + 1.0, -0.25);
-      fc.look.lerp(bt.clone().setY(fc.look.y), 0.4);
+      fc.look.lerp(bt.clone().setY(fc.look.y), 0.55);
       setCam(ctx, fc, 0.9, '#ffd8b0');
       stamp(ctx, 'EXTRA SPICY', ts - 0.02, { x: 0.41, y: 0.1, size: 92, rot: -0.06 });
       flameIcon(ctx, 0.85, 0.12, 1.6, ts);
@@ -920,7 +923,7 @@ export const shots = [
     setup(ctx) {
       const R = room(ctx, { light: 'night', win: 'dark' });
       put(ctx, 'me', R(-1.95, 0.0, -1.55), 0);
-      const P = ctx.props; addTo(ctx, P.moonSky, -0.8, 1.6, -3.05, 0); addTo(ctx, P.shadow, -0.8, 1.6, -2.75, 0); P.shadow.rotation.z = PI; P.shadow.scale.set(1.3, 1.3, 1);
+      const P = ctx.props; addTo(ctx, P.moonSky, -0.8, 1.6, -3.05, 0); addTo(ctx, P.shadow, -0.8, 1.6, -2.75, 0);
     },
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me, tc = ctx.time('b15.w4'), P = ctx.props;
@@ -930,8 +933,8 @@ export const shots = [
       me.face(t < tc ? 'sleepy' : 'shocked', 0.4);
       if (t > tc) { me.joints.armL.rotation.z -= 0.6 * u; me.joints.armR.rotation.z += 0.6 * u; }
       // the giant shadow sliding past the window
-      const sx = lerp(-3.6, 2.6, clamp((t - tc + 0.1) / 1.5, 0, 1));
-      P.shadow.position.copy(R(sx, 1.75, -2.75));
+      const sx = lerp(-3.2, 1.8, clamp((t - tc + 0.1) / 1.5, 0, 1));
+      P.shadow.position.set(sx, 1.75 - 0.25 * clamp((t - tc) / 1.2, 0, 1), -2.75);
       setCam(ctx, { pos: R(0.2, 1.3, 1.7), look: R(-1.75, 1.1, -1.6), fov: 46 }, 0.9, '#c8d0ff');
       shakeOn(ctx, [tc + 0.02], 0.9, 0.6, 12);
       stamp(ctx, 'CRUNCH', tc + 0.02, { y: 0.22, size: 140, fill: '#ffd23f', stroke: '#1d1d22', t1: tc + 0.6 });
@@ -988,7 +991,7 @@ export const shots = [
       for (const R0 of [U.roof, U.roofB]) { R0.position.set(0, yy, 0); R0.rotation.set(0.06, 0, -0.08); }
       const db = t - tb;
       P.crumbRain.visible = db > 0; P.crumbRain.position.copy(L(HX + 1, 36 + yy - 30 - 9 * Math.max(0, db) ** 2 * 3, HZ - 1));
-      P.burst2.update(clamp(db / 1.0, 0, 1.01)); P.burst2.root.position.copy(slotPt(ctx, HOME, -3.6, 8.0 + yy, 2.4));
+      P.burst2.update(clamp(db / 1.0, 0, 1.01)); P.burst2.root.position.copy(slotPt(ctx, HOME, -4.6, 8.6 + yy, 3.6));
       lightning(ctx, [tb + 0.01], { popA: 0.3, dur: 0.1, single: true });
       const slab = slotPt(ctx, HOME, -0.8, 7.6 + yy, 0);
       setCam(ctx, { pos: slab.clone().add(V(14, 7, -26)), look: slab.clone().add(V(-0.5, 1.5, 0)), fov: 34 }, 0, '#c8b8ff');
@@ -1083,9 +1086,9 @@ export const shots = [
       K.updateMatrixWorld(true);
       const mouth = K.userData.mouth.getWorldPosition(V());
       const fan = Math.sin(t * 22);
-      P.hand.position.copy(mouth.clone().add(V(12, -3 + 3.5 * fan, 9))); P.hand.rotation.set(0.3, -PI / 2 + 0.6, -1.3 + 0.35 * fan); P.hand.scale.setScalar(6); P.hand.userData.set({ curl: 0.1 });
+      P.hand.position.copy(mouth.clone().add(V(12, -1 + 3.5 * fan, -9))); P.hand.rotation.set(0.3, -PI / 2 + 0.6, -1.3 + 0.35 * fan); P.hand.scale.setScalar(6); P.hand.userData.set({ curl: 0.1 });
       P.steam.position.copy(mouth.clone().add(V(-4, 34, 0))); P.steam.userData.set(t, rise);
-      setCam(ctx, { pos: L(-25.0, 1.6, 2.4), look: L(-51, 5.4, -1.0), fov: 56 }, 0.5);
+      setCam(ctx, { pos: L(-25.0, 1.6, 2.4), look: L(-51, 5.4, -4.0), fov: 56 }, 0.5);
       shakeOn(ctx, [t0], 1.0, 0.6, 5);
       stamp(ctx, 'SPICY!!!', t0 - 0.02, { y: 0.09, size: 150, fill: '#ff3a1a', stroke: '#ffe14a', rot: -0.06 });
     },
@@ -1119,9 +1122,9 @@ export const shots = [
         { pos: at(2.7, 1.5, -0.6), look: at(0, 0, -0.4), fov: 52 },
         { pos: L(-31.5, 5.5, -2.0), look: L(-2, 3.5, -1.5), fov: 50 },
         { pos: L(-14.8, 1.35, -1.4), look: L(-14.8, 2.5, -9), fov: 54 },
-        { pos: at(1.5, -2.8, -0.8), look: at(0, 0, 0.05), fov: 50 },
-        { pos: mp.clone().addScaledVector(kd, -3.6).addScaledVector(ks, 1.6).add(up(0.6)), look: mp.clone().addScaledVector(kd, 40).addScaledVector(ks, 3).add(up(9)), fov: 66 },
-        { pos: at(0.9, -3.3, 0.1), look: at(0, 0, -0.2), fov: 54 },
+        { pos: at(1.4, 2.9, -0.9), look: at(0, 0, 0.1), fov: 52 },
+        { pos: mp.clone().addScaledVector(kd, -3.6).addScaledVector(ks, 0.6).add(up(0.6)), look: mp.clone().addScaledVector(kd, 40).add(up(9)), fov: 66 },
+        { pos: at(0.8, 3.3, 0.0), look: at(0, 0, -0.1), fov: 54 },
       ];
       setCam(ctx, cams[i], 1.0, '#ffd8c8', 14); ctx.cam.punch(hits, t, 0.1, 0.2); shakeOn(ctx, hits, 0.45, 0.25, 11 + i);
       tag(ctx, 'THE BITER', ctx.time('b21') - 0.1, Infinity, { y: 0.1, size: 70, bg: 'rgba(200,0,40,0.9)' });
@@ -1260,7 +1263,7 @@ export const shots = [
       const lag = hitPulse(hits.map((x) => x + 0.08), t, 0.2);
       kidAt(ctx, [HX + 6, 26 + 2 * lag, HZ + 70], PI, 46, { eyes: lag > 0.3 ? 'shut' : 'happy', mouth: lag > 0.2 ? 'open' : 'grin', open: lag > 0.2 ? 1 : null, cheeks: 0.6, hat: true }, 0.1);
       const f = humanFace(me);
-      const cams = [{ pos: f.clone().add(V(1.0, 0.3, -3.6)), look: f.clone().add(V(0, -0.6, 0)), fov: 52 }, faceCam(me, 2.3, -0.4, 0.3, 38, -0.3), { pos: f.clone().add(V(0.9, -1.3, -3.0)), look: f.clone().add(V(0.2, 1.2, 4)), fov: 64 }];
+      const cams = [{ pos: f.clone().add(V(1.0, 0.3, -3.6)), look: f.clone().add(V(0, -0.6, 0)), fov: 52 }, faceCam(me, 2.3, -0.4, 0.3, 38, -0.3), { pos: f.clone().add(V(0.9, -1.3, -3.0)), look: f.clone().add(V(0.2, 0.2, 4)), fov: 64 }];
       setCam(ctx, cams[i], 1.1, '#ffe0d0', 14); ctx.cam.punch(hits, t, 0.1, 0.2); shakeOn(ctx, hits, 0.35, 0.2, 7 + i);
     },
   })),
@@ -1276,7 +1279,7 @@ export const shots = [
       const L = ctx.store.L, t = ctx.t;
       kidAt(ctx, [KS.x, KS.y + 2 * Math.abs(Math.sin(t * 5)), KS.z], PI / 2 - 0.12, KS.s, { eyes: 'happy', mouth: 'grin', hat: true, cheeks: 0.5 });
       ctx.props.sparks.userData.set(t, 1);
-      moveCam(ctx, { pos: L(-24.0, 1.5, 2.6), look: L(-51, 4.6, -1.2), fov: 58 }, { pos: L(-25.0, 1.6, 2.4), look: L(-51, 5.0, -1.0), fov: 56 }, lt / 1.4, 0.5);
+      moveCam(ctx, { pos: L(-24.0, 1.5, 2.6), look: L(-51, 4.6, -4.2), fov: 58 }, { pos: L(-25.0, 1.6, 2.4), look: L(-51, 5.0, -4.0), fov: 56 }, lt / 1.4, 0.5);
       tag(ctx, 'PARTY: TOMORROW', ctx.markers.party - 0.05, Infinity, { y: 0.12, size: 76, bg: 'rgba(255,79,163,0.93)' });
     },
   },
@@ -1303,20 +1306,20 @@ export const shots = [
       ctx.add(P.warm);
     },
     update(ctx, lt) {
-      const L = ctx.store.L, t = ctx.t, P = ctx.props, ts = ctx.markers.match, S = 16;
+      const L = ctx.store.L, t = ctx.t, P = ctx.props, ts = ctx.markers.match, S = 11;
       const lit = clamp((t - ts) / 0.08, 0, 1), flare = Math.max(0, 1 - (t - ts) / 0.6) * lit;
       // poised (gentle hover) → quick swipe-strike to the left at ts → slow descent toward the wick (held to the end)
       const strike = ease.inOutCubic(clamp((t - ts + 0.16) / 0.16, 0, 1)), low = ease.inOutSine(clamp((t - ts - 0.2) / 1.4, 0, 1));
       const hover = 0.3 * Math.sin(t * 2.4);
-      const hp = strike < 1 ? V(lerp(-41.5, -45.5, strike), lerp(27.5, 26.0, strike) + hover * (1 - strike), 1.5) : V(lerp(-45.5, -48.2, low), lerp(26.0, 23.0, low), 1.5);
-      const head = L(hp.x, hp.y, hp.z), dir = V(-0.93, -0.36, 0).normalize();
+      const hp = strike < 1 ? V(-46.5, lerp(25.0, 24.0, strike) + hover * (1 - strike), lerp(-4.0, -1.0, strike)) : V(lerp(-46.5, -48.6, low), lerp(24.0, 21.8, low), lerp(-1.0, 0.8, low));
+      const head = L(hp.x, hp.y, hp.z), dir = V(-0.15, -0.8, 0.58).normalize();
       P.match.quaternion.setFromUnitVectors(V(0, 1, 0), dir); P.match.scale.setScalar(S);
       P.match.position.copy(head).addScaledVector(dir, -1.06 * S);
       P.match.userData.set(t, { lit, flare }); P.match.userData.flame.quaternion.copy(P.match.quaternion).invert();
-      P.hand.position.copy(P.match.position).add(V(0.8, 1.2, 0.4)); P.hand.rotation.set(0, 0, -0.35); P.hand.scale.setScalar(4); P.hand.userData.set({ curl: 1 });
+      P.hand.position.copy(P.match.position).addScaledVector(dir, -0.3).add(V(0.4, 0.6, -0.6)); P.hand.rotation.set(0.3, -PI / 2, -0.35); P.hand.scale.setScalar(4); P.hand.userData.set({ curl: 1 });
       P.warm.position.copy(head.clone().add(V(0, 6, 4))); P.warm.intensity = 2500 * lit * (1 + 1.5 * flare);
       if (lit > 0) skyMood(ctx, 'orange', 0.75 * lit, { lights: true });
-      setCam(ctx, { pos: L(-27.5, 6.0, 9.0), look: L(-48, 21.0, 1.5), fov: 50 }, 0.5);
+      setCam(ctx, { pos: L(-12, 8.5, 2.5), look: L(-49, 20.6, 0.0), fov: 40 }, 0.5);
       pop(ctx, ts, 0.1, '#ffd08a', 0.35);
       shakeOn(ctx, [ts], 0.5, 0.4, 3);
     },
