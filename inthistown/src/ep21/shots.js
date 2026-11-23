@@ -281,7 +281,7 @@ export const shots = [
     update(ctx, lt) {
       const { L, w, sw } = ctx.store, t = ctx.t; tick(ctx, { sea: { caus: 0.55, light: '#9fc8ff', glow: 1.1 }, shafts: 0.55 });
       ctx.props.school.userData.set(t, { speed: 2.4 }); animWalkers(w, L, t, 20);
-      const fk = clamp((t - 2.5) / 1.9, 0, 1), F = ctx.props.fish;
+      const fk = Math.max(0, (t - 2.5) / 1.9), F = ctx.props.fish;   // keeps cruising until the cut
       F.position.copy(L(-20 + 0.3 * fk, 18.3 + 0.25 * Math.sin(t * 1.7), lerp(4, -7, fk))); F.userData.set(t, { wag: 1, speed: 0.6 });
       for (const m of sw) { m.ch.root.position.copy(L(m.x + m.dir * 0.85 * t, 0, m.z)); m.ch.pose('walk', t + m.i * 0.4); m.ch.face('smile', t + m.i); }
       const k = ease.inOutCubic(clamp((t - 1.0) / 3.4, 0, 1));
@@ -467,13 +467,14 @@ export const shots = [
       P.board.userData.set(1, 1, clamp((t - mk.r3) / 0.14, 0, 1));
       animC(c, t, 'idle', 'neutral', { intensity: 0.4 }); c.forEach((x, i) => { x.ch.joints.head.rotation.x += 0.18 * Math.max(0, Math.sin((t + i * 0.3) * 6)); });
       const fm = humanFace(m), u = clamp(lt / 1.5, 0, 1);
-      const cp = S(-3.6, 1.15, 7.4).lerp(S(-3.45, 1.15, 7.0), u);
+      // pulled back so the whole rule-3 line and the mayor's face (upper third) both fit
+      const cp = S(-2.4, 1.2, 9.6).lerp(S(-2.3, 1.2, 9.2), u);
       const a0 = fm.clone().setY(cp.y + 0.05), b0 = boardLine(S, 2).setY(cp.y + 0.05);
-      const cam = setCam(ctx, { pos: cp, look: lookMix(cp, a0, b0, 0.5), fov: 62 });
+      const cam = setCam(ctx, { pos: cp, look: lookMix(cp, a0, b0, 0.62), fov: 64 });
       m.pose('idle', t, { intensity: 0.6, lookAt: cam.pos }); m.face('determined', t);
       aimArm(m, 'L', boardLine(S, 2));
       shakeOn(ctx, [mk.r3], 0.3, 0.25);
-      tag(ctx, 'RULE #3', mk.r3, Infinity, { y: 0.12, size: 64, bg: 'rgba(200,0,40,0.92)' });
+      tag(ctx, 'RULE #3', mk.r3, Infinity, { x: 0.32, y: 0.07, size: 64, bg: 'rgba(200,0,40,0.92)' });
     },
   },
   // ── b06 "Because something lives up there."  — night, the camera drifts up; a colossal shadow slides past, one eye flickers

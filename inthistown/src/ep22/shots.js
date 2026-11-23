@@ -218,6 +218,20 @@ function hangCat(ctx, cat, tip, t, { slip = 0, swing = 0.12, face = 'shocked', f
   const mid = slip > 0.5 ? pa : pa.add(pb).multiplyScalar(0.5);
   r.position.copy(tip).sub(mid); r.updateMatrixWorld(true);
 }
+/** cat scrambling up a wall facing +x: body vertical (head up), belly to the wall, back to the street; root = wall point */
+function climbCat(ctx, cat, p, t, { gait = 1, look = 0.5, turn = 0, face = 'determined', faceT = 0.3 } = {}) {
+  cat.pose('idle', t);
+  const J = cat.joints, ph = t * 12 * gait, sw = Math.sin(ph);
+  J.hips.rotation.set(0, 0, 0);
+  J.armL.rotation.set(-1.35 + 0.5 * sw, 0, 0.14); J.armR.rotation.set(-1.35 - 0.5 * sw, 0, -0.14);
+  J.legL.rotation.set(0.8 - 0.45 * sw, 0, 0.12); J.legR.rotation.set(0.8 + 0.45 * sw, 0, -0.12);
+  J.head.rotation.set(-look, turn, 0);
+  J.tail1.rotation.set(-0.5 + 0.15 * Math.sin(t * 5), 0.5 * Math.sin(t * 4.2), 0);
+  cat.face(face, faceT);
+  const r = cat.root; r.rotation.order = 'YXZ';
+  r.rotation.set(-PI / 2, ctx.store.L.yaw - PI / 2, 0.1 * sw);
+  r.position.copy(p); r.updateMatrixWorld(true);
+}
 /** a cat sitting tall: the shot sets root + scale */
 function bigCatSit(cat, t, { face = 'smile', faceT = 0.3, headPitch = 0, headYaw = 0, lick = 0 } = {}) {
   cat.pose('sit', t, { headPitch, headYaw });
@@ -702,31 +716,38 @@ export const shots = [
       stormFrame(ctx, c, [ctx.time('b13.w4'), ctx.time('b13.w4') + 0.22], { boltAt: (k) => L(-80, 52, k ? -18 : 12) });
     },
   },
-  // ── "Waffles chased the mayor's pigeon all the way up the clock tower."
+  // ── "Waffles chased the mayor's pigeon all the way up the clock tower."  — close, low on the tower face: the cat
+  //    scrambles up the clock (belly to the wall) with the pigeon flapping just above him; the roof in frame; lightning
   {
-    name: 'chase up', start: 'b13.w7-0.1', set: 'town',
+    name: 'chase up', start: 'b13.w6-0.1', set: 'town',
     setup(ctx) {
-      const L = storm(ctx); ctx.store.tip = towerHands(ctx);
+      const L = storm(ctx, { exposure: 1.3 }); ctx.store.tip = towerHands(ctx);
       put(ctx, 'waffles', L(TW.face + 0.22, 9.95, TW.z - 0.4), L.yaw + PI / 2, 1);
-      put(ctx, 'pigeon', L(TW.face + 0.3, 12.31, TW.z + 0.6), L.yaw + PI / 2 + 0.5, 1.5);
+      put(ctx, 'pigeon', L(TW.face + 0.3, 10.2, TW.z + 0.9), L.yaw + PI / 2 + 0.5, 1.5);
+      const P = ctx.props; ctx.add(P.key); P.key.color.set('#ffe6c8');
     },
     update(ctx, lt) {
-      const L = ctx.store.L, t = ctx.t, w = ctx.cast.waffles, pg = ctx.cast.pigeon, t0 = ctx.time('b13.w7');
-      // pigeon flaps from below up to the top ledge
-      const kp = ease.outCubic(clamp((t - t0) / 1.6, 0, 1));
-      pg.root.position.copy(L(TW.face + 0.6 - 0.3 * kp, lerp(7.5, 12.31, kp) + (kp < 1 ? 0.15 * Math.sin(t * 20) : 0), TW.z + lerp(2.4, 0.6, kp)));
-      pg.pose(kp < 1 ? 'flap' : 'idle', t); pg.face(kp < 1 ? 'shocked' : 'smug', 0.3);
-      // Waffles: on the ledge → hop up onto the minute hand
-      const tj = t0 + 1.0, kj = clamp((t - tj) / 0.45, 0, 1);
-      const tip = ctx.store.tip;
-      if (kj <= 0) { w.pose('stare', t, { lookAt: pg.root.position.clone().add(up(0.2)) }); w.face('stare', 0.3); w.root.position.copy(L(TW.face + 0.22, 9.95, TW.z - 0.4)); w.root.rotation.set(0, L.yaw + PI / 2, 0); }
-      else if (kj < 1) { w.pose('hop', t, { u: kj, height: 0.6 }); w.face('determined', 0.3); const a = L(TW.face + 0.22, 9.95, TW.z - 0.4), b = tip.clone().add(V(0.15, -0.55, 0)); w.root.position.copy(a.lerp(b, kj)); w.root.rotation.set(0, L.yaw + PI / 2 - 0.6, 0); }
-      else hangCat(ctx, w, tip, t, { face: 'shocked' });
-      const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
-      const c = setCam(ctx, { pos: L(lerp(-40.2, -40.6, k), lerp(9.2, 9.8, k), lerp(-3.4, -3.0, k)), look: L(-49.7, lerp(10.8, 11.3, k), 1.0), fov: 32 }, 1.2, '#e0d8ff');
-      ctx.props.clouds.userData.set(t, 0);
-      stormFrame(ctx, c, [t0 + 0.05, ctx.time('b13.w15') - 0.05], { boltAt: (kk) => L(-90, 50, kk ? -25 : 20) });
-          },
+      const L = ctx.store.L, t = ctx.t, w = ctx.cast.waffles, pg = ctx.cast.pigeon, P = ctx.props;
+      const tw = ctx.time('b13.w6'), tc = ctx.time('b13.w7'), tf = ctx.time('b13.w15') - 0.06;   // flip onto the hand on "the clock"
+      // Waffles: crouch on the ledge → scramble up the clock face → paws up under the roof trim, swiping at the pigeon
+      const kc = clamp((t - (tc - 0.05)) / (tf - tc + 0.05), 0, 1), ky = ease.inOutSine(kc);
+      const cy = lerp(10.2, 11.72, ky) + (kc < 1 ? 0.05 * Math.abs(Math.sin(t * 11)) : 0);
+      if (t < tc - 0.05) { w.pose('stare', t, { lookAt: pg.root.position.clone() }); w.face('stare', 0.3); w.root.position.copy(L(TW.face + 0.22, 9.95, TW.z - 0.1)); w.root.rotation.set(0, L.yaw + PI / 2 - 0.9, 0); }
+      else if (kc < 1) climbCat(ctx, w, L(TW.face + 0.06, cy, TW.z - 0.05), t, { look: 0.5, turn: 0.6 });
+      else { climbCat(ctx, w, L(TW.face + 0.06, cy, TW.z - 0.05), t, { gait: 0.25, look: 0.9, turn: 0.6, face: 'shocked' }); const J = w.joints; J.armL.rotation.x = -2.2 + 0.4 * Math.sin(t * 16); J.armR.rotation.x = -1.6; }
+      // the pigeon: perched by the cat → flaps up, always ~0.8 m above him → lands smug on the roof trim
+      const kp = clamp((t - tc) / (tf - tc - 0.15), 0, 1), land = kp >= 1;
+      const py = land ? 12.31 : Math.min(12.31, lerp(10.0, 12.2, ease.outCubic(kp)) + 0.12 * Math.sin(t * 22));
+      pg.root.position.copy(L(TW.face + (land ? 0.3 : lerp(0.35, 0.75, Math.min(1, kp * 3))), py, TW.z + lerp(0.35, 0.25, kp)));
+      pg.root.rotation.set(0, L.yaw + PI / 2 + (land ? -0.7 : 0.3), 0);
+      pg.pose(t >= tc && !land ? 'flap' : 'idle', t); pg.face(t >= tc && !land ? 'shocked' : land ? 'smug' : 'neutral', 0.3);
+      // camera: low on the north-east corner looking up the face; cranes up with the climb (cat stays in the upper middle)
+      const cyc = lerp(10.2, 11.72, ease.inOutSine(clamp((t - tc + 0.2) / (tf - tc + 0.2), 0, 1)));
+      const c = setCam(ctx, { pos: L(-47.75, cyc - 0.85, -0.25), look: L(-49.7, cyc + 0.02, 1.3), fov: 60 }, 1.5, '#ffe8d8');
+      P.key.position.copy(L(-46.5, 12.5, 2.5)); P.key.intensity = 14; P.key.distance = 14; P.key.decay = 1.2;
+      P.clouds.userData.set(t, 0);
+      stormFrame(ctx, c, [tc + 0.02, tf - 0.02], { rainDist: 3, popA: 0.3, popDur: 0.1, boltAt: (kk) => L(-90, 48, kk ? -28 : -6) });
+    },
   },
   // ── b14 "The fire ladder was too short."
   {
