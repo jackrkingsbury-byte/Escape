@@ -140,9 +140,43 @@ const dbg = (ctx, lines) => { if (DEBUG) ctx.fx.text(lines.join('\n'), { x: 0.5,
 /** a look point between two targets by ANGLE (w 0 → a, 1 → b) as seen from pos */
 function lookMix(pos, a, b, w) { const da = a.clone().sub(pos).normalize(), db = b.clone().sub(pos).normalize(); return pos.clone().add(da.lerp(db, w).normalize().multiplyScalar(10)); }
 const f1 = (v) => `${v.x.toFixed(1)},${v.y.toFixed(1)},${v.z.toFixed(1)}`;
+/** midpoint of Biscuit's two googly eyes (world) */
+const eyeMid = (ctx) => { const u = ctx.props.bis.userData; return u.eyeWorld('L').add(u.eyeWorld('R')).multiplyScalar(0.5); };
+/** Biscuit's horizontal forward (world) */
+function bisFwd(ctx) { const b = ctx.props.bis; b.updateMatrixWorld(true); const q = new THREE.Quaternion(); b.getWorldQuaternion(q); const f = V(0, 0, 1).applyQuaternion(q); f.y = 0; return f.normalize(); }
+/** a point ~k up Biscuit's torso (world), follows tumbles */
+const bTorso = (ctx, y = 2.0) => { const b = ctx.props.bis; b.updateMatrixWorld(true); return b.userData.parts.torso.localToWorld(V(0, y, 0.5)); };
+/** world → town-local */
+function toLocal(L, w) { return w.clone().applyMatrix4(L.M.clone().invert()); }
+/** warm, filmic flashback treatment: sepia wash, heavy vignette, soft rounded film frame with sprocket ticks + scratches */
+function flashFx(ctx) {
+  ctx.fx.overlay('#d08a3a', 0.34); ctx.fx.vignette(0.85);
+  const t = ctx.t;
+  ctx.fx.draw((g, W, H) => {
+    g.save();
+    const m = W * 0.045, r = W * 0.07;
+    g.fillStyle = 'rgba(40,22,8,0.92)'; g.beginPath(); g.rect(0, 0, W, H); g.roundRect(m, m * 1.6, W - 2 * m, H - 3.2 * m, r); g.fill('evenodd');
+    g.fillStyle = 'rgba(255,230,180,0.55)';
+    for (let y = m * 2.2; y < H - m * 2; y += m * 1.5) { g.fillRect(m * 0.25, y, m * 0.45, m * 0.7); g.fillRect(W - m * 0.7, y, m * 0.45, m * 0.7); }
+    g.strokeStyle = 'rgba(255,240,210,0.35)'; g.lineWidth = 2;
+    for (let i = 0; i < 3; i++) { const x = W * hash(Math.floor(t * 12) * 3.1 + i * 7.7); g.beginPath(); g.moveTo(x, 0); g.lineTo(x + 6, H); g.stroke(); }
+    g.restore();
+  });
+}
+/** quote card with a narrow wrap (two short lines), placed over sky */
+function quoteCard2(ctx, lines, by, t0, t1, { y = 0.22, size = 96, byAt = null } = {}) {
+  const t = ctx.t; if (t < t0 || t > t1) return false;
+  const d = t - t0, out = t1 - t, a = clamp(Math.min(d / 0.12, out / 0.12), 0, 1);
+  ctx.fx.overlay('#000000', 0.5 * a); ctx.fx.vignette(0.5 * a);
+  const pop = d < 0.2 ? ease.outBack(clamp(d / 0.2, 0, 1)) : 1, nl = lines.split('\n').length;
+  ctx.fx.text(lines, { y, size, font: 'narr', fill: '#ffffff', stroke: '#000000', line: 12, scale: 0.6 + 0.4 * pop, alpha: a, rot: -0.02 });
+  if (by) ctx.fx.text(`— ${by}`, { y: y + (nl * 0.5 + 0.7) * size * 1.05 / 1920, size: size * 0.62, font: 'narr', fill: '#ffe14a', stroke: '#000000', line: 8, alpha: clamp((byAt != null ? t - byAt : d - 0.25) / 0.12, 0, 1) * a, rot: -0.02 });
+  ctx.caption.hide(true);
+  return true;
+}
 
 // ─── town base (lighting, permanent set dressing)
-function town(ctx, { light = 'day', clouds = true, sign = false, wt = true, wtTip = 0, mtn = true } = {}) {
+function town(ctx, { light = 'day', clouds = true, cloudAt = [-40, 0, -10], sign = false, wt = true, wtTip = 0, mtn = true } = {}) {
   const s = ctx.set, P = ctx.props;
   if (P.rootY0 == null) P.rootY0 = s.root.position.y;
   s.root.position.y = P.rootY0; s.root.updateMatrixWorld(true);
@@ -154,7 +188,8 @@ function town(ctx, { light = 'day', clouds = true, sign = false, wt = true, wtTi
   addTo(ctx, P.tower, TX, 0, TZ);
   if (mtn) { addTo(ctx, P.mtn, MTN.x, 0, MTN.z, 0.3); P.mtn.scale.setScalar(MTN.s); }
   if (wt) { addTo(ctx, P.wt, WT.x, 0, WT.z, PI / 2); P.wt.userData.set(wtTip); }
-  if (clouds) { addTo(ctx, P.clouds, -40, 0, -10); P.clouds.userData.set(ctx.t, 0); }
+  if (clouds) { addTo(ctx, P.clouds, cloudAt[0], cloudAt[1], cloudAt[2]); P.clouds.userData.set(ctx.t, 0); }
+  P.bis.userData.parts.tongue.scale.set(1, 1, 1);
   if (sign) addTo(ctx, P.sign, -37.5, 0, 15.5, PI / 2 - 0.5);
   ctx.store.L = L;
   return L;
@@ -253,7 +288,7 @@ export const shots = [
   {
     name: 'tilt up to biscuit', start: 0, set: 'town',
     setup(ctx) {
-      const L = town(ctx);
+      const L = town(ctx, { cloudAt: [-10, 34, 40] });
       bisAt(ctx, BIS.x, BIS.z, PI / 2);
       put(ctx, 'me', L(-24, 0.0, 1.2), L.yaw + PI / 2 - 0.25);
       filler(ctx, streetFill(-36, 10, { seed: 2, step: 2.6 }));
@@ -266,11 +301,11 @@ export const shots = [
       me.pose('wave', t); me.face('grin', t);
       walkers.forEach((w, i) => { w.root.position.copy(L(-14 + i * 4 + ((t * 0.9 * (i % 2 ? -1 : 1)) % 6), 0.12, i % 2 ? 6.2 : -6.2)); w.pose('walk', t + i); w.face('smile', t + i); });
       ctx.props.filler.userData.set(t, { arms: 'limp', bounce: 0.2 });
-      const face = humanFace(me), head = bHead(ctx);
-      const k = ease.inOutCubic(clamp((t - 1.15) / 2.3, 0, 1));
-      const pos = L(-19.6, 1.05, 2.4).lerp(L(-12, 0.7, 2.2), k);
-      const look = face.clone().lerp(head.clone().add(up(-2)), k);
-      setCam(ctx, { pos, look, fov: lerp(36, 52, k) });
+      const face = humanFace(me), head = eyeMid(ctx);
+      const k = ease.inOutCubic(clamp((t - 1.15) / 2.6, 0, 1));
+      const pos = L(-20.6, 2.0, 2.2).lerp(L(-11, 0.8, 4.4), k);
+      const look = k < 1e-4 ? face.clone().add(up(-0.25)) : lookMix(pos, face.clone().add(up(-0.25)), head.clone().add(up(-3)), ease.inOutSine(k) * 0.8);
+      setCam(ctx, { pos, look, fov: lerp(28, 58, k) });
       shakeOn(ctx, [ctx.time('b01.w4'), ctx.time('b01.w9')], 0.25, 0.3); shakeOn(ctx, [ctx.time('b01.w16')], 0.5, 0.4);
       tag(ctx, 'IN THIS TOWN', 0.25, 2.2, { y: 0.15, size: 80, bg: 'rgba(200,0,40,0.9)' });
       dbg(ctx, ['head ' + f1(head)]);
@@ -283,8 +318,9 @@ export const shots = [
     update(ctx, lt) {
       const { B } = ctx.store, t = ctx.t;
       bset(ctx, { sit: 1, wag: 0.6, headTilt: 0.18 * Math.sin(lt * 1.4), tongue: 0.35, jaw: 0.18, lookX: 0, lookY: -0.4 });
-      const tagP = ctx.props.bis.userData.parts.tagG.getWorldPosition(V()), head = bHead(ctx);
-      moveCam(ctx, { pos: B(1.2, 3.2, 10.5), look: tagP.clone().lerp(head, 0.55), fov: 46 }, { pos: B(0.8, 3.8, 8.6), look: tagP.clone().lerp(head, 0.5), fov: 44 }, lt / 1.5);
+      const tagP = ctx.props.bis.userData.parts.tagG.getWorldPosition(V()), eyes = eyeMid(ctx);
+      const look = tagP.clone().lerp(eyes, 0.55);
+      moveCam(ctx, { pos: B(1.2, 5.2, 12), look, fov: 52 }, { pos: B(0.9, 5.6, 10.4), look, fov: 50 }, lt / 1.5);
       tag(ctx, 'BISCUIT: 300 FT.  AGE: UNKNOWN', ctx.time('b02.w3') - 0.05, Infinity, { y: 0.14, size: 54 });
     },
   },
@@ -294,7 +330,7 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, { sign: true });
       bisAt(ctx, BIS.x, BIS.z, PI / 2);
-      ctx.store.peek = crowd(ctx, ['x04', 'x05', 'x06', 'x07', 'x08'], -36, 12.0, { cols: 5, dx: 1.3, faceTo: [-86, -14] });
+      ctx.store.peek = crowd(ctx, ['x04', 'x05', 'x06', 'x07', 'x08'], -35.2, 16.6, { cols: 5, dx: 1.25, dz: 0.3, faceTo: [-24, 30] });
       filler(ctx, streetFill(-38, -10, { seed: 5, step: 2.2 }));
     },
     update(ctx, lt) {
@@ -309,7 +345,7 @@ export const shots = [
       const y = hop(t, hits, 1.4, 0.4); hopTown(ctx, y);
       peek.forEach((c, i) => { c.ch.root.position.y = L(0, 0, 0).y + hop(t, hits, 1.6 + 0.2 * i, 0.45); c.ch.pose(t > tSat ? 'surprised' : 'idle', t + c.ph); c.ch.face(t > tSat ? 'shocked' : 'neutral', t + c.ph); });
       ctx.props.filler.userData.set(t, { arms: t > tSat ? 'up' : 'limp', bounce: t > tSat ? 1 : 0.2 });
-      moveCam(ctx, { pos: L(-30, 1.5, 21), look: L(-84, 18, -10), fov: 52 }, { pos: L(-31.5, 1.7, 20), look: L(-84, 22, -11), fov: 52 }, lt / 4);
+      moveCam(ctx, { pos: L(-29, 1.6 + y, 22.5), look: L(-84, 14 + y, -10), fov: 60 }, { pos: L(-30.5, 1.8 + y, 21.5), look: L(-84, 16 + y, -11), fov: 60 }, lt / 4);
       shakeOn(ctx, hits, 0.8, 0.45);
       ctx.fx.overlay('#ffb347', 0.12); ctx.fx.vignette(0.35);
       tag(ctx, '12 YEARS AGO', lt > 0 ? ctx.time('b02.w4') : 0, ctx.time('b02.w13'), { y: 0.14, size: 58, bg: 'rgba(120,70,20,0.85)' });
@@ -320,29 +356,34 @@ export const shots = [
     name: `huss street #${i + 1}`, start: H('b03', i), set: 'town',
     setup(ctx) {
       const L = town(ctx);
-      bisAt(ctx, -66, 0, PI / 2);
+      bisAt(ctx, -92, -6, PI / 2);
       put(ctx, 'me', L(-38, 0, 0), L.yaw + PI / 2);
       filler(ctx, streetFill(-34, -6, { seed: 8, step: 2.0 }));
     },
     update(ctx) {
       const { L } = ctx.store, t = ctx.t, me = ctx.cast.me, hits = ctx.hussTimes('b03').map((h) => h + 0.03);
-      bset(ctx, { sit: 1, lean: 0.85, headTilt: 0.35 + 0.1 * i, lookY: -0.6, lookX: 0, wag: 0.3, jaw: 0.1 });
+      bset(ctx, { sit: 1, lean: 1, bodyLean: 0.85, headPitch: -1.3, headTilt: 0.35 + 0.1 * i, lookY: -0.7, lookX: 0, wag: 0.3, jaw: 0.1 });
       me.pose('slam', t, { hits }); me.face('huss', t);
       ctx.props.filler.userData.set(t, { arms: 'up' });
-      const cams = [{ pos: L(-33.2, 0.55, 1.6), look: L(-40, 3.4, -0.2), fov: 58 }, { pos: L(-35.5, 0.9, -3.2), look: lookMix(L(-35.5, 0.9, -3.2), humanFace(me), bHead(ctx), 0.45), fov: 58 }, { pos: L(-35.4, 1.5, 1.0), look: lookMix(L(-35.4, 1.5, 1.0), humanFace(me), bHead(ctx), 0.3), fov: 50 }];
+      const f = humanFace(me), e = eyeMid(ctx);
+      const P0 = L(-34.6, 0.35, 0.9), P1 = L(-34.5, 1.0, -2.8), P2 = L(-35.2, 1.3, 1.6);
+      const cams = [{ pos: P0, look: lookMix(P0, f, e, -0.5), fov: 56 }, { pos: P1, look: lookMix(P1, f, e, 0.2), fov: 60 }, { pos: P2, look: lookMix(P2, f, e, -0.3), fov: 54 }];
       setCam(ctx, cams[i]); ctx.cam.punch(hits, t, 0.1, 0.2);
+      dbg(ctx, ['eyes ' + f1(toLocal(L, e))]);
     },
   })),
   // ── b04 "His arms are way too short,"  — tiny arms can't reach the itch
   {
     name: 'tiny arms', start: 'b04-0.1', set: 'town',
-    setup(ctx) { town(ctx); const B = bisAt(ctx, BIS.x, BIS.z, PI / 2); const it = ctx.props.itch; ctx.add(it, ctx.props.bis.userData.parts.torso); it.position.set(0.55, 2.55, 1.88); it.scale.setScalar(1); },
+    setup(ctx) { town(ctx); const B = bisAt(ctx, BIS.x, BIS.z, PI / 2); const it = ctx.props.itch; ctx.add(it, ctx.props.bis.userData.parts.torso); it.position.set(0.0, 2.05, 1.9); it.scale.setScalar(1.25); },
     update(ctx, lt) {
       const { B } = ctx.store, t = ctx.t;
-      bset(ctx, { sit: 1, arms: 1, armsUp: 0.3 + 0.12 * Math.sin(t * 3), headPitch: 0.05, lookY: -0.9, lookX: -0.2, brow: -0.6, wag: 0.2, jaw: 0.25 });
-      ctx.props.itch.scale.setScalar(1 + 0.12 * Math.sin(t * 14));
-      const tor = ctx.props.bis.userData.parts.torso.localToWorld(V(0.2, 2.7, 1.6));
-      moveCam(ctx, { pos: B(4.2, 3.2, 8.5), look: tor.clone().add(up(2)), fov: 44 }, { pos: B(3.6, 3.4, 7.6), look: tor.clone().add(up(2)), fov: 42 }, lt / 1.4);
+      // strain toward the itch: arms reach down/in, wiggle fast (t scaled), cross brows, gritted teeth
+      bset(ctx, { sit: 1, arms: 1.6, armsUp: 0.05 + 0.1 * Math.sin(t * 7), headPitch: 0.45, lean: 0.15, lookY: -1, lookX: 0, brow: 0.9, wag: 0.2, jaw: 0.12, lid: 0.25, headTilt: 0.12 * Math.sin(t * 5) }, t * 1.8);
+      ctx.props.itch.scale.setScalar(1.25 * (1 + 0.15 * Math.sin(t * 14)));
+      const tor = ctx.props.bis.userData.parts.torso.localToWorld(V(0, 2.3, 1.6)), e = eyeMid(ctx);
+      const look = tor.clone().lerp(e, 0.5);
+      moveCam(ctx, { pos: B(2.8, 5.4, 10.6), look, fov: 54 }, { pos: B(2.5, 5.5, 9.5), look, fov: 52 }, lt / 1.4);
       tag(ctx, 'TOO SHORT', ctx.time('b04.w5'), Infinity, { y: 0.16, size: 80, bg: 'rgba(200,0,40,0.9)' });
     },
   },
@@ -353,7 +394,7 @@ export const shots = [
       const L = town(ctx);
       bisAt(ctx, BIS.x, BIS.z, PI / 2);
       const ids = ['x09', 'x10', 'x11', 'x12', 'x13', 'x14', 'x15', 'x16'];
-      ctx.store.cr = crowd(ctx, ids, -42, -8.5, { cols: 4, dx: 1.5, dz: 1.6, faceTo: [-86, -14] });
+      ctx.store.cr = crowd(ctx, ids, -44, -2.2, { cols: 4, dx: 1.6, dz: 1.5, faceTo: [-30, 4] });
       const P = ctx.props, cr = ctx.store.cr;
       [0, 3, 6].forEach((k, j) => { const br = P.brooms[j]; ctx.add(br, cr[k].ch.joints.handR); br.position.set(0, -0.35, 0.05); br.rotation.set(0.2, 0, 0); });
       [[1, 0], [5, 1]].forEach(([k, j]) => { const ld = P.ladders[j]; ctx.add(ld, cr[k].ch.joints.torso); ld.position.set(0.0, -0.6, -0.3); ld.rotation.set(-0.25, 0, 0.1); });
@@ -361,11 +402,12 @@ export const shots = [
     },
     update(ctx, lt) {
       const { L, cr } = ctx.store, t = ctx.t;
-      bset(ctx, { sit: 1, arms: 0.7, wag: 0.4, lookY: -0.5, lookX: 0.2, tongue: 0.2, jaw: 0.1 });
-      const head = bHead(ctx);
-      cr.forEach((c) => { c.ch.pose('think', t + c.ph, { lookAt: head }); c.ch.face(c.k % 2 ? 'determined' : 'smile', t + c.ph); });
+      bset(ctx, { sit: 1, lean: 0.9, bodyLean: 0.25, headPitch: -0.5, arms: 0.7, wag: 0.6, lookY: -0.9, lookX: 0.1, tongue: 0.6, jaw: 0.3, headTilt: 0.2 });
+      cr.forEach((c) => { c.ch.pose(c.k % 3 === 2 ? 'wave' : c.k % 3 ? 'cheer' : 'idle', t + c.ph, { intensity: 0.6 }); c.ch.face(c.k % 2 ? 'grin' : 'smile', t + c.ph); });
       ctx.props.filler.userData.set(t, { arms: 'limp', bounce: 0.15 });
-      moveCam(ctx, { pos: L(-33, 0.7, -2.0), look: L(-62, 11, -14), fov: 54 }, { pos: L(-34, 0.8, -2.4), look: L(-63, 13, -14.5), fov: 54 }, lt / 1.8);
+      const head = eyeMid(ctx), mid = L(-44, 1.4, -1.5);
+      const p0 = L(-34, 0.8, 3.2), p1 = L(-35, 0.85, 2.8);
+      moveCam(ctx, { pos: p0, look: lookMix(p0, mid, head, 0.42), fov: 58 }, { pos: p1, look: lookMix(p1, mid, head, 0.42), fov: 56 }, lt / 1.8);
     },
   },
   // ── b05 "Mr. Okafor brushes his teeth with a street sweeper."  — jaw like a garage door, Okafor on the tongue
@@ -375,31 +417,37 @@ export const shots = [
       const L = town(ctx);
       bisAt(ctx, -84, -7, PI / 2);
       put(ctx, 'okafor', L(0, 0, 0), 0);
-      const P = ctx.props; ctx.add(P.brush, ctx.cast.okafor.joints.handR); P.brush.position.set(0, 0, 0.05); P.brush.rotation.set(0, 0, 0); P.brush.scale.setScalar(1.3);
+      const P = ctx.props; ctx.add(P.brush, ctx.cast.okafor.root); P.brush.rotation.order = 'ZYX'; P.brush.scale.setScalar(0.62);
       ctx.add(P.bubbles);
     },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, b = ctx.props.bis, P = ctx.props;
       const open = ease.inOutCubic(clamp((t - ctx.time('b05') + 0.05) / 0.7, 0, 1));
       bset(ctx, { sit: 1, lean: 0.3, headPitch: -1.0 * open, jaw: 1.0 * open, lid: 0.7, wag: 0.3, lookY: -0.6 });
+      b.userData.parts.tongue.scale.set(1, 1, 0.72);              // tongue pulled back so Okafor can stand behind the front teeth
       const jaw = b.userData.parts.jaw; b.updateMatrixWorld(true);
       const ok = ctx.cast.okafor;
-      const feet = jaw.localToWorld(V(0.3, 0.42, 2.9));
+      // stand on the jaw floor just behind the front teeth, the lower tooth (jaw x 0.4, z 3.75) at his front-left
+      const feet = jaw.localToWorld(V(0.18, -0.01, 3.28));
       ok.root.position.copy(feet);
       const q = new THREE.Quaternion(); jaw.getWorldQuaternion(q);
-      ok.root.quaternion.copy(q); ok.root.rotateY(-PI / 2 + 0.6);
-      ok.pose('idle', t, { intensity: 0.3 }); ok.face(t > ctx.time('b05.w2') ? 'determined' : 'smile', t);
-      const J = ok.joints, sc = Math.sin(t * 11);
-      J.armR.rotation.set(-1.25 + 0.35 * sc, 0, 0.15); J.foreArmR.rotation.set(-0.6, 0, 0);
-      J.armL.rotation.set(-1.05 + 0.35 * sc, 0, -0.35); J.foreArmL.rotation.set(-0.9, 0, 0);
-      P.brush.rotation.set(-1.1, 0.0, 0.0);
-      P.bubbles.position.copy(jaw.localToWorld(V(0.9, 0.4, 2.6))); P.bubbles.userData.set(t, open);
+      ok.root.quaternion.copy(q); ok.root.rotateY(0.25);
+      ok.pose('idle', t, { intensity: 0.3 }); ok.face(t > ctx.time('b05.w2') ? 'determined' : 'grin', t);
+      const J = ok.joints, sc = Math.sin(t * 13);
+      J.armR.rotation.set(-1.35, 0, 0.35 + 0.18 * sc); J.foreArmR.rotation.set(-0.5, 0, 0);
+      J.armL.rotation.set(-1.25, 0, -0.1 + 0.18 * sc); J.foreArmL.rotation.set(-0.7, 0, 0);
+      J.torso.rotation.y += 0.12 * sc;
+      // the brush, handle pointing forward, bristle head laid on its side against the tooth, scrubbing
+      P.brush.position.set(0.25 + 0.22 * sc, 1.0, 0.25); P.brush.rotation.set(PI / 2 - 0.12, 0, PI / 2);
+      const toothP = jaw.localToWorld(V(0.4, 0.2, 3.75));
+      P.bubbles.position.copy(toothP); P.bubbles.userData.set(t, open);
       const inMouth = jaw.localToWorld(V(0.2, 0.8, 2.6));
-      const fwd = L(1, 0, 0).sub(L(0, 0, 0));
+      const fwd = L(1, 0, 0).sub(L(0, 0, 0)), side = L(0, 0, 1).sub(L(0, 0, 0));
       const tip = jaw.localToWorld(V(0, 0.5, 4.2));
+      const mid = feet.clone().lerp(toothP, 0.5).add(up(0.6));
       const c0 = { pos: tip.clone().addScaledVector(fwd, 16).add(up(5)), look: inMouth, fov: 50 };
-      const c1 = { pos: feet.clone().addScaledVector(fwd, 7.5).add(up(1.6)).add(L(0, 0, -1.2).sub(L(0, 0, 0))), look: feet.clone().add(up(1.2)), fov: 44 };
-      moveCam(ctx, c0, c1, ease.inOutSine(clamp(lt / 3.0, 0, 1)));
+      const c1 = { pos: mid.clone().addScaledVector(fwd, 6.2).addScaledVector(side, 2.6).add(up(0.7)), look: mid, fov: 46 };
+      moveCam(ctx, c0, c1, ease.inOutSine(clamp(lt / 2.6, 0, 1)));
       tag(ctx, 'DENTAL HYGIENE', ctx.time('b05.w7'), Infinity, { y: 0.15, size: 60, bg: 'rgba(40,120,220,0.9)' });
       dbg(ctx, ['feet ' + f1(feet)]);
     },

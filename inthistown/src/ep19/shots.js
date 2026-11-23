@@ -1115,14 +1115,14 @@ export const shots = [
   // ── b18 "I squeezed my eyes shut ... and dove into the crowd. Goon Squad!"
   {
     name: 'eyes shut', start: 'b18-0.1', set: 'town',
-    setup(ctx) { tableStand(ctx, { clear: [[PIC.x + 0.6, PIC.z - 2.8, 2.0]] }); },
+    setup(ctx) { tableStand(ctx, { clear: [[PIC.x + 0.9, PIC.z - 3.6, 2.4]] }); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, me = ctx.cast.me;
       tableTick(ctx);
       me.pose('idle', t, { intensity: 0.3 }); me.face(t > ctx.time('b18.w1') ? 'huss' : 'determined', 0.5);
       const f = humanFace(me), LV = (x, y, z) => L(x, y, z).sub(L(0, 0, 0));
       const f0 = L(PIC.x - 0.2, 0, PIC.z).add(up(f.y - L(0, 0, 0).y));
-      moveCam(ctx, { pos: f0.clone().add(LV(0.7, -0.35, -3.0)), look: f0.clone().add(up(-0.4)), fov: 40 }, { pos: f0.clone().add(LV(0.6, -0.35, -2.6)), look: f0.clone().add(up(-0.4)), fov: 38 }, clamp(lt / 1.6, 0, 1), 1.0, '#e0e8ff');
+      moveCam(ctx, { pos: f0.clone().add(LV(1.1, -0.45, -4.0)), look: f0.clone().add(up(-0.45)), fov: 40 }, { pos: f0.clone().add(LV(0.95, -0.45, -3.5)), look: f0.clone().add(up(-0.45)), fov: 40 }, clamp(lt / 1.6, 0, 1), 1.0, '#e0e8ff');
       tag(ctx, 'NO EYE CONTACT', ctx.time('b18.w5'), Infinity, { y: 0.13, size: 62, bg: 'rgba(210,20,45,0.9)' });
     },
   },
