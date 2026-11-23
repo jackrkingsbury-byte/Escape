@@ -37,9 +37,9 @@ Rules from the creator:
 | 22 | Big Love | homey | scheduled Wed 25 Nov 17:30 |
 | 23 | Low Moon | spooky | scheduled Wed 25 Nov 20:00 |
 | 24 | Word of the Day | meme | scheduled Thu 26 Nov 07:30 |
-| 25 | Nugget | giants / funny | shots building (deep 'Ba-gawk' voice) |
+| 25 | Nugget | giants / funny | rendering → Thu 26 Nov 12:30 |
 | 26 | Who Bit the Town? | MYSTERY | shots building |
-| 27 | Moving Night | RANDOM | script + audio ready (doorbell rule planted) |
+| 27 | Moving Night | RANDOM | shots building |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Sneeze Season (meme) · The Golden Snagglet (trend) ·

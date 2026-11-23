@@ -26,7 +26,7 @@ import { makeHand } from '../ep24/props.js';
 import {
   makeVoxHouse, makeBiteWall, makeGarage, makeFork, makeGiantKid, makeMatch, makeWick, makePlateCake, makeSprinkles, makeCrumbs,
   makeHotSauce, makeRoller, makePancakes, makeDetectiveCap, makeMagnifier, makeCorkboard26, makeLawnChair, makeTeeth, makeTongue,
-  makeRedRing, makeShadowShape, makeSteam,
+  makeRedRing, makeShadowShape, makeSteam, makeCrumbBurst, makeMoonSky,
 } from './props.js';
 
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -64,13 +64,14 @@ const HX = -27, HZ = 14;                          // our house centre; front wal
 const ROOF_Y = 8.9;                               // standing height on the ridge cap
 const TOWER = { x: -51, z: 1.5, faceX: -49.6, clockY: 11, top: 15.72 };
 const LAMP_HOME = [-27, 5.15];
+const KS = { x: -170, z: -30, s: 40, y: 50 };      // the giant kid beside the clock tower (seen from our street)
 
 export function init(ctx) {
   const P = ctx.props;
   // houses
-  P.home = makeVoxHouse({ wall: '#ff9cc8', roof: '#ff6fae', trim: '#8ff0cf', door: '#8ff0cf', shutters: '#5fd8b0', roofBites2: [{ x: -2.2, y: 8.8, z: -0.4, r: 3.0 }], seed: 5 });
+  P.home = makeVoxHouse({ wall: '#ff9cc8', roof: '#ff6fae', trim: '#8ff0cf', door: '#8ff0cf', shutters: '#5fd8b0', roofBites2: [{ x: -3.3, y: 8.2, z: 2.0, r: 3.7 }], seed: 5 });
   P.lilac = makeVoxHouse({ wall: '#c9a7f0', roof: '#7a4ab0', shutters: '#5a3a8a', bites: [{ x: 3.4, y: 7.6, z: 2.7, r: 3.7 }], crumbs: 34, seed: 2 });
-  P.bakery = makeVoxHouse({ wall: '#ffe9a8', roof: '#e8456f', door: '#7a1f2b', bites: [{ x: -1.6, y: 9.6, z: 0.8, r: 3.4 }], crumbs: 22, seed: 3, sign: { text: 'BAKERY', bg: '#fff4e0', fg: '#c2185b' }, awning: ['#ff4fa3', '#ffffff'] });
+  P.bakery = makeVoxHouse({ wall: '#ffe9a8', roof: '#e8456f', door: '#7a1f2b', bites: [{ x: -2.0, y: 8.0, z: 2.5, r: 3.4 }], crumbs: 22, seed: 3, sign: { text: 'BAKERY', bg: '#fff4e0', fg: '#c2185b' }, awning: ['#ff4fa3', '#ffffff'] });
   P.post = makeVoxHouse({ wall: '#9fd4ff', roof: '#2f4d8a', door: '#e8232b', chimneyBitten: true, chimneyX: -0.25, bites: [{ x: -2.4, y: 9.3, z: -0.6, r: 1.9 }], crumbs: 16, seed: 4, sign: { text: 'POST OFFICE', bg: '#ffffff', fg: '#2f4d8a' } });
   P.yellow = makeVoxHouse({ wall: '#ffe08a', roof: '#ff8a3a', shutters: '#ff8a3a', seed: 6 });
   P.peach = makeVoxHouse({ wall: '#ffc2a8', roof: '#d0603a', bites: [{ x: -3.6, y: 7.8, z: 2.2, r: 3.4 }], crumbs: 20, seed: 7 });
@@ -109,10 +110,14 @@ export function init(ctx) {
   P.sparks = makeSparkles({ n: 60, w: 18, h: 10, d: 10, color: '#ffe6b0', size: 0.07 });
   P.dust = makeSparkles({ n: 40, w: 6, h: 4, d: 5, color: '#fff2d0', size: 0.03 });
   P.glint = glowSprite('#ffffff', 2, 1);
+  P.moonGlow = glowSprite('#dfe6ff', 30, 0.55);
   P.fill = new THREE.PointLight('#f0f2ff', 5, 12, 1.4);
   P.zap = new THREE.PointLight('#c8b8ff', 0, 200, 1.0);
   P.warm = new THREE.PointLight('#ff9a3a', 0, 140, 1.2);
   P.topLight = new THREE.DirectionalLight('#e6ecff', 1.4);
+  P.burst = makeCrumbBurst({ n: 46, radius: 3.2, size: 0.42 });
+  P.burst2 = makeCrumbBurst({ n: 70, radius: 9, size: 0.75, seed: 9 });
+  P.moonSky = makeMoonSky();
   P.crumbRain = makeCrumbs(40, 6, 6, ['#f3cf86', '#fff4e6', '#ff6fae', '#e8232b'], { seed: 11, size: 0.5 });
 }
 
@@ -170,6 +175,24 @@ function flameIcon(ctx, x, y, s, t0) {
     g.beginPath(); g.moveTo(0, -18); g.bezierCurveTo(22, 4, 18, 30, 0, 32); g.bezierCurveTo(-18, 30, -22, 4, 0, -18); g.fillStyle = '#ffd21a'; g.fill();
   });
 }
+/** approximate screen position (0..1) of a world point for the current ctx.store.cam (portrait 9:16) */
+function scr(ctx, wp) {
+  const c = ctx.store.cam; if (!c) return { x: 0.5, y: 0.5 };
+  const f = c.look.clone().sub(c.pos).normalize(), r = V().crossVectors(f, V(0, 1, 0)).normalize(), u = V().crossVectors(r, f);
+  const d = wp.clone().sub(c.pos), z = d.dot(f), ty = Math.tan((c.fov * PI) / 360), tx = ty * 9 / 16;
+  return { x: 0.5 + (d.dot(r) / z) / tx / 2, y: 0.5 - (d.dot(u) / z) / ty / 2 };
+}
+/** a pointer arrow (2D) from (x0,y0) to (x1,y1) */
+function arrow2d(ctx, x0, y0, x1, y1, color = '#ffffff') {
+  ctx.fx.draw((g, W, Hh) => {
+    const ax = x0 * W, ay = y0 * Hh, bx = x1 * W, by = y1 * Hh, a = Math.atan2(by - ay, bx - ax);
+    g.lineCap = 'round'; g.lineJoin = 'round';
+    for (const [lw, col] of [[22, '#000000'], [11, color]]) {
+      g.strokeStyle = col; g.lineWidth = lw; g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by);
+      g.moveTo(bx, by); g.lineTo(bx - 34 * Math.cos(a - 0.5), by - 34 * Math.sin(a - 0.5)); g.moveTo(bx, by); g.lineTo(bx - 34 * Math.cos(a + 0.5), by - 34 * Math.sin(a + 0.5)); g.stroke();
+    }
+  });
+}
 /** hard cut to black from t0 (no captions on the black) */
 function blackout(ctx, t0) { if (ctx.t >= t0) { ctx.fx.overlay('#000000', 1); ctx.caption.hide(true); } }
 /** screen-space red ring around a world point */
@@ -194,13 +217,16 @@ function townData(ctx) {
   const BX = SLOTS.map((_, i) => slotBox(i));
   const inB = (b, x, y, z) => x > b.x0 && x < b.x1 && z > b.z0 && z < b.z1 && y < b.y1 && y > -1;
   const lampIn = (x, z) => Math.hypot(x - LAMP_HOME[0], z - LAMP_HOME[1]) < 0.7;
-  for (const n of ['houses', 'roofs', 'trim', 'gold', 'lampPosts']) {
+  const carIn = (x, y, z) => x > -24.4 && x < -19.6 && z > 2.0 && z < 4.6 && y < 2.2;
+  for (const n of ['houses', 'roofs', 'trim', 'gold', 'lampPosts', 'gloss']) {
     const m = r.getObjectByName(n); if (!m || !m.geometry) continue;
     const pos = m.geometry.attributes.position, col = m.geometry.attributes.color;
     const lists = BX.map(() => []), lamp = [];
     for (let v = 0; v < pos.count; v++) {
       const x = pos.getX(v), y = pos.getY(v), z = pos.getZ(v);
       if (n === 'lampPosts') { if (lampIn(x, z)) lamp.push(v); continue; }
+      if ((n === 'gloss' || n === 'trim') && carIn(x, y, z)) lamp.push(v);
+      if (n === 'gloss') continue;
       for (let i = 0; i < BX.length; i++) if (inB(BX[i], x, y, z)) lists[i].push(v);
     }
     D.meshes.push({ n, m, pos, col, pos0: pos.array.slice(), col0: col ? col.array.slice() : null, lists, lamp });
@@ -250,6 +276,7 @@ const MOODS = {
   red: { z: '#2a0206', m: '#7a0a10', h: '#ff4a1a', g: '#2a0606', s: '#ff3010', fog: '#8a2216', hemi: ['#ff7a66', '#3a0808'], dir: '#ff6a4a' },
   storm: { z: '#07031a', m: '#221040', h: '#4a2478', g: '#08040e', s: '#000000', fog: '#1a0e30', hemi: ['#8a7ad8', '#1a1028'], dir: '#a8a0ff' },
   sunrise: { z: '#4f86d8', m: '#ffb48a', h: '#ffd09a', g: '#6a8f5a', s: '#ffd8a0', fog: '#ffcfa8', hemi: ['#ffe6c8', '#8a7a5a'], dir: '#ffcf98' },
+  redBright: { z: '#a00a0a', m: '#ff2a14', h: '#ff8a3a', g: '#5a0a08', s: '#ffd080', fog: '#ff3a1a', hemi: ['#ff9a80', '#5a1010'], dir: '#ff8a6a' },
   orange: { z: '#160804', m: '#5a2208', h: '#ff8a2a', g: '#2a1206', s: '#ff9a3a', fog: '#4a2010', hemi: ['#ffb070', '#3a1808'], dir: '#ffb070' },
 };
 const _m1 = new THREE.Color(), _m2 = new THREE.Color();
@@ -306,10 +333,10 @@ function storm(ctx, k = 1) {
   addTo(ctx, P.clouds, HX, 0, HZ + 20); P.clouds.userData.set(ctx.t, 0);
   ctx.add(P.zap); P.zap.position.copy(ctx.store.L(HX, 70, HZ + 40)); P.zap.intensity = 0;
 }
-function lightning(ctx, strikes, { popA = 0.35 } = {}) {
-  const P = ctx.props; let z = 0;
-  for (const s of strikes) { const d = ctx.t - s; if (d >= 0 && d < 0.22) z = Math.max(z, (1 - d / 0.22) * (d < 0.05 || (d > 0.09 && d < 0.13) ? 1 : 0.35)); }
-  P.zap.intensity = 900 * z; if (z > 0) ctx.fx.overlay('#d8d0ff', popA * z);
+function lightning(ctx, strikes, { popA = 0.35, dur = 0.22, single = false } = {}) {
+  const P = ctx.props; let z = 0, zp = 0;
+  for (const s of strikes) { const d = ctx.t - s; if (d >= 0 && d < dur) { z = Math.max(z, (1 - d / dur) * (single || d < 0.05 || (d > 0.09 && d < 0.13) ? 1 : 0.35)); if (d < 0.1) zp = Math.max(zp, 1 - d / 0.1); } }
+  P.zap.intensity = 900 * z; if (zp > 0 || (!single && z > 0)) ctx.fx.overlay('#d8d0ff', popA * (single ? zp : z));
   P.clouds.userData.m.emissiveIntensity = 0.6 + 1.6 * z; P.clouds.userData.mL.emissiveIntensity = 0.5 + 1.6 * z;
 }
 function crowd(ctx, ids, spots) {
@@ -359,14 +386,14 @@ function rollerPose(ch, t, ph = 0) {
 function pointUp(ch, t, k = 1, hit = 0) {
   ch.pose('idle', t, { intensity: 0.5 });
   const J = ch.joints;
-  J.armR.rotation.set(-2.85 * k - 0.1 * hit, 0, 0.12); J.foreArmR.rotation.set(-0.1, 0, 0);
+  J.armR.rotation.set(-2.8 * k - 0.1 * hit, 0, -0.45); J.foreArmR.rotation.set(0, 0, 0);
   J.armL.rotation.set(-0.4, 0, -0.5 - 0.2 * hit); J.foreArmL.rotation.set(-1.2, 0, 0);
   J.torso.rotation.x -= 0.12; J.head.rotation.x -= 0.4 + 0.1 * hit;
 }
 function facepalm(ch, t) {
   ch.pose('idle', t, { intensity: 0.3 });
   const J = ch.joints;
-  J.armR.rotation.set(-2.25, 0, 0.55); J.foreArmR.rotation.set(-2.1, 0, 0);
+  J.armR.rotation.set(-2.75, 0, 0.55); J.foreArmR.rotation.set(-2.35, 0, 0);
   J.head.rotation.x += 0.22; J.armL.rotation.set(-0.3, 0, -0.55); J.foreArmL.rotation.set(-0.4, 0, 0);
 }
 /** dive to the side (u 0 → 1): body tilts toward −x, arms flung out */
@@ -436,7 +463,6 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day', { edits: { hide: [1] } });
       house(ctx, ctx.props.lilac, 1);
-      addTo(ctx, ctx.props.plate, 0, 0, 0); ctx.props.plate.userData.rimOnly(true);
       towerDress(ctx);
       ctx.store.w = crowd(ctx, [X[0], X[1], X[2], X[3]], [[-6, 0.12, -5.6, PI], [-4.5, 0.12, 5.8, -PI / 2], [2, 0, -1.5, -PI / 2], [-8, 0.12, 6.2, PI / 2]]);
     },
@@ -447,8 +473,7 @@ export const shots = [
         if (i === 2 || i === 1) { const sp = WALK_SPEED * 0.8 * lt; w.ch.root.position.copy(L(w.x + sp * Math.sin(w.yw), w.y, w.z + sp * Math.cos(w.yw))); w.ch.pose('walk', t + w.ph, { speed: 0.8 }); w.ch.face('smile', t + w.ph); }
         else { w.ch.pose('point', t + w.ph, {}); w.ch.face('shocked', 0.4); }
       });
-      moveCam(ctx, { pos: L(14, 7.5, 2.4), look: L(-40, 4.5, -1.5), fov: 58 }, { pos: L(8, 5.2, 1.6), look: L(-40, 4.2, -2.5), fov: 54 }, ease.inOutSine(u));
-      ctx.props.plate.userData.glint(t + 1.2, 1);
+      moveCam(ctx, { pos: L(12, 7.0, 3.0), look: L(-30, 5.0, -6.0), fov: 60 }, { pos: L(-2, 4.5, -1), look: L(-11.6, 7.0, -11.3), fov: 50 }, ease.inOutSine(clamp(lt / 1.6, 0, 1)));
       ctx.fx.overlay('#ffb070', 0.08);
     },
   },
@@ -458,14 +483,14 @@ export const shots = [
       const L = town(ctx, 'day', { edits: { hide: [1] } });
       house(ctx, ctx.props.lilac, 1);
       ctx.store.cr = crowd(ctx, [X[4], X[5], X[6], X[7], X[8], X[9], X[10]], [[-17.2, 0.12, -6.4, PI + 0.1], [-15.6, 0.12, -6.8, PI - 0.1], [-13.8, 0.12, -6.3, PI + 0.3], [-12.2, 0.12, -5.6, PI + 0.5], [-16.6, 0, -4.6, PI], [-14.4, 0, -4.3, PI - 0.2], [-18.4, 0, -4.9, PI + 0.3]]);
-      put(ctx, 'me', L(-13.6, 0, -2.4), 0.45);
+      put(ctx, 'me', L(-10.2, 0, 1.0), 0.36);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me;
       skyMood(ctx, 'sunrise', 0.6);
       ctx.store.cr.forEach((c, i) => { if (i % 3 === 0) c.ch.pose('point', t + c.ph, { headPitch: -0.3 }); else c.ch.pose('surprised', t * 0.3 + c.ph, { headPitch: -0.35 }); c.ch.face(i % 2 ? 'shocked' : 'sweat', 0.4); });
       me.pose('surprised', clamp(lt, 0, 0.6) + 0.1, {}); me.face('shocked', 0.4);
-      moveCam(ctx, { pos: L(-11.0, 1.25, 3.6), look: L(-14.6, 3.7, -9), fov: 56 }, { pos: L(-11.6, 1.2, 2.2), look: L(-14.8, 3.9, -9), fov: 54 }, ease.inOutSine(clamp(lt / 1.4, 0, 1)), 0);
+      moveCam(ctx, { pos: L(-8.8, 0.65, 4.9), look: L(-12.2, 2.6, -9), fov: 60 }, { pos: L(-9.0, 0.6, 4.2), look: L(-12.2, 2.8, -9), fov: 58 }, ease.inOutSine(clamp(lt / 1.4, 0, 1)), 0);
       tag(ctx, 'EVERY. MORNING.', ctx.time('b01') + 0.1, Infinity, { y: 0.1, size: 56 });
     },
   },
@@ -474,17 +499,17 @@ export const shots = [
     setup(ctx) {
       town(ctx, 'day', { edits: { hide: [1] } });
       house(ctx, ctx.props.lilac, 1);
-      ctx.store.cr = crowd(ctx, [X[4], X[5], X[6]], [[-12.4, 0.12, -6.4, PI + 0.4], [-10.6, 0.12, -5.9, PI + 0.2], [-13.9, 0.12, -6.2, PI - 0.1]]);
-      const P = ctx.props; addTo(ctx, P.puff2, -11, 7.5, -10.5);
+      ctx.store.cr = crowd(ctx, [X[4], X[5], X[6]], [[-16.6, 0.12, -6.4, PI - 0.4], [-9.8, 0.12, -6.6, PI + 0.2], [-17.6, 0.12, -5.6, PI - 0.6]]);
+      const P = ctx.props; addTo(ctx, P.burst.root, -11.6, 7.4, -10.6);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       skyMood(ctx, 'sunrise', 0.5);
       ctx.store.cr.forEach((c, i) => { c.ch.pose(i === 1 ? 'point' : 'surprised', t * 0.3 + c.ph, { headPitch: -0.5 }); c.ch.face('shocked', 0.4); });
       const k = ease.outCubic(clamp(lt / 1.2, 0, 1));
-      moveCam(ctx, { pos: L(-7.2, 1.0, -1.5), look: L(-11.6, 6.2, -10.5), fov: 52 }, { pos: L(-7.8, 1.4, -2.6), look: L(-11.4, 6.6, -10.5), fov: 46 }, k);
+      moveCam(ctx, { pos: L(-6.0, 4.2, -1.4), look: L(-11.6, 7.2, -11.3), fov: 50 }, { pos: L(-6.5, 4.5, -2.5), look: L(-11.6, 7.4, -11.3), fov: 44 }, k);
       const tb = ctx.time('b01.w12');
-      ctx.props.puff2.update(clamp((t - tb) / 0.9, 0, 1.01));
+      ctx.props.burst.update(clamp((t - tb) / 0.9, 0, 1.01));
       shakeOn(ctx, [tb + 0.02], 0.5, 0.35, 3);
       stamp(ctx, 'CHOMP', tb, { y: 0.2, size: 130, fill: '#ff4fa3', rot: 0.1 });
     },
@@ -496,18 +521,18 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.store.cr.forEach((c, i) => { c.ch.pose(i ? 'shrug' : 'point', t + c.ph, { headPitch: -0.4 }); c.ch.face(i ? 'sad' : 'shocked', 0.3); });
-      const c = moveCam(ctx, { pos: L(13.5, 1.4, 1.5), look: L(8.0, 5.4, -10.5), fov: 54 }, { pos: L(12.8, 1.5, 0.6), look: L(8.0, 5.6, -10.5), fov: 52 }, lt / 1.4);
+      const c = moveCam(ctx, { pos: L(14.5, 4.4, 2.6), look: L(8.0, 6.4, -10.5), fov: 56 }, { pos: L(14, 4.8, 2), look: L(8.0, 6.8, -10.5), fov: 54 }, lt / 1.4);
       whip(ctx, c, lt, 1);
       tag(ctx, 'BITES: 19', ctx.time('b02') - 0.1, Infinity, { y: 0.12, size: 76, bg: 'rgba(200,0,40,0.9)' });
     },
   },
   {
     name: 'post office', start: 'post-0.12', set: 'town',
-    setup(ctx) { town(ctx, 'day', { edits: { hide: [8] } }); house(ctx, ctx.props.post, 8); ctx.store.cr = crowd(ctx, [X[13]], [[23.2, 0.12, 6.0, -0.2]]); },
+    setup(ctx) { town(ctx, 'day', { edits: { hide: [8] } }); house(ctx, ctx.props.post, 8); ctx.store.cr = crowd(ctx, [X[13]], [[25.6, 0.12, 6.6, -0.5]]); },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.store.cr.forEach((c) => { c.ch.pose('point', t + c.ph, { headPitch: -0.5 }); c.ch.face('shocked', 0.3); });
-      const c = moveCam(ctx, { pos: L(19.0, 1.0, 1.0), look: L(26.5, 7.4, 13), fov: 52 }, { pos: L(19.6, 1.1, 1.8), look: L(26.6, 7.6, 13), fov: 50 }, lt / 1.2);
+      const c = moveCam(ctx, { pos: L(31.6, 2.2, -5.2), look: L(25, 6.0, 12), fov: 60 }, { pos: L(31, 2.4, -4.5), look: L(25, 6.2, 12), fov: 58 }, lt / 1.2);
       whip(ctx, c, lt, -1);
       tag(ctx, 'BITES: 20', ctx.markers.post - 0.12, Infinity, { y: 0.12, size: 76, bg: 'rgba(200,0,40,0.9)' });
     },
@@ -522,9 +547,8 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, pl = ctx.cast.plum;
       pl.pose('crossArms', t); pl.face('sweat', 0.5);
-      const c = setCam(ctx, faceCam(pl, 4.2, -0.9, 0.55, 44, 0.3));
       const k = ease.outCubic(clamp(lt / 1.4, 0, 1));
-      ctx.cam.set({ pos: c.pos.clone().lerp(faceCam(pl, 3.4, -0.8, 0.5, 42, 0.2).pos, k), look: c.look, fov: 44 });
+      const c = moveCam(ctx, { pos: L(3.0, 1.7, 4.2), look: L(5.2, 1.4, 11.2), fov: 52 }, { pos: L(3.4, 1.6, 5.2), look: L(5.2, 1.45, 11.2), fov: 50 }, k);
       whip(ctx, c, lt, 1);
       tag(ctx, 'BITES: 21', ctx.markers.garage - 0.12, Infinity, { y: 0.12, size: 76, bg: 'rgba(200,0,40,0.9)' });
     },
@@ -535,8 +559,9 @@ export const shots = [
     setup(ctx) { town(ctx, 'quiet_night', { glow: 0 }); towerDress(ctx, { clock: true, h: 3 }); },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, tc = ctx.time('b03.w9');
-      ctx.set.set('windowGlow', (h, wi) => (h === 0 && wi === 1 && t > tc + 0.38 ? 1 : 0));
-      moveCam(ctx, { pos: L(-6, 3.4, 1.2), look: L(-50, 9.4, 1.5), fov: 46 }, { pos: L(-12, 3.6, 1.3), look: L(-50, 9.8, 1.5), fov: 44 }, lt / 3.2, 0);
+      const on = t > tc + 0.38;
+      ctx.set.set('windowGlow', (h, wi) => (h === 5 && wi === 1 && on ? 1 : 0));
+      const c = moveCam(ctx, { pos: L(-3, 3.1, 5.2), look: L(-45, 7.6, 4.2), fov: 60 }, { pos: L(-5, 3.2, 5.4), look: L(-45, 8, 4), fov: 60 }, lt / 3.2, 2.2, '#9fb0ff', 40);
       shakeOn(ctx, [tc + 0.03], 1.1, 0.5, 5);
       pop(ctx, tc + 0.03, 0.1, '#ffffff', 0.25);
       stamp(ctx, 'CRUNCH', tc + 0.02, { y: 0.24, size: 150, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.08, t1: tc + 0.5 });
@@ -567,7 +592,7 @@ export const shots = [
       ctx.store.cr.forEach((c, i) => { rollerPose(c.ch, t + c.ph, i * 1.3); c.ch.face(i === 1 ? 'grin' : 'determined', t + c.ph); });
       const u = clamp(0.12 + (t - ctx.time('b04')) / 2.6, 0, 1);
       P.yellow.userData.paint(u, '#5bd65b', 1);
-      moveCam(ctx, { pos: L(-9.0, 2.0, 1.2), look: L(-15.2, 3.0, 10.5), fov: 54 }, { pos: L(-10.2, 1.9, 2.4), look: L(-15.2, 3.1, 10.5), fov: 52 }, lt / 2.9);
+      moveCam(ctx, { pos: L(-7.4, 2.5, 6.4), look: L(-15.5, 3.2, 10.6), fov: 58 }, { pos: L(-8.0, 2.4, 7.0), look: L(-15.5, 3.4, 10.6), fov: 56 }, lt / 2.9);
       tag(ctx, 'RULE 1: PAINT IT GREEN', ctx.markers.r1 - 0.05, Infinity, { y: 0.13, size: 62, bg: 'rgba(40,150,60,0.93)' });
     },
   },
@@ -580,8 +605,8 @@ export const shots = [
     },
     update(ctx, lt) {
       const L = ctx.store.L;
-      moveCam(ctx, { pos: L(31, 2.2, -2.0), look: L(4, 5.0, -12.5), fov: 50 }, { pos: L(30, 2.4, -3.0), look: L(4, 5.0, -12.5), fov: 48 }, lt / 1.6);
-      stamp(ctx, 'SAFE', ctx.time('b04.w11') - 0.05, { y: 0.24, size: 140, fill: '#3fd04a', stroke: '#ffffff', rot: -0.1 });
+      moveCam(ctx, { pos: L(13.4, 11.4, 12.6), look: L(12.5, 6, -12), fov: 72 }, { pos: L(13, 11, 12), look: L(12.5, 6, -12), fov: 70 }, lt / 1.6);
+      { const sp = scr(ctx, L(9, 9.5, -10.5)); stamp(ctx, 'SAFE', ctx.time('b04.w11') - 0.05, { x: clamp(sp.x, 0.2, 0.8), y: 0.22, size: 140, fill: '#3fd04a', stroke: '#ffffff', rot: -0.1 }); }
       tag(ctx, 'RULE 1: PAINT IT GREEN', ctx.time('b04.w8') - 0.12, Infinity, { y: 0.1, size: 54, bg: 'rgba(40,150,60,0.93)' });
     },
   },
@@ -606,13 +631,13 @@ export const shots = [
     name: 'nobody knows', start: 'b05.w9-0.12', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'dusk', { glow: 0.5 }); towerDress(ctx, { clock: true, h: 7 });
-      ctx.store.cr = crowd(ctx, [X[2], X[9]], [[-47.3, 0, 2.7, -PI / 2 - 0.55], [-47.0, 0, 1.1, -PI / 2 + 0.6]]);
+      ctx.store.cr = crowd(ctx, [X[2], X[9]], [[-45.5, 0, 2.6, PI / 2 - 0.35], [-45.3, 0, 1.2, PI / 2 + 0.35]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.store.cr.forEach((c, i) => { if (lt < 0.45) { c.ch.pose('idle', t, { headPitch: -0.7 }); c.ch.face('squint', 0.3); } else { c.ch.pose('shrug', lt - 0.45 + i * 0.1, {}); c.ch.face(i ? 'sweat' : 'neutral', 0.3); } });
       const f = humanFace(ctx.store.cr[0].ch).lerp(humanFace(ctx.store.cr[1].ch), 0.5);
-      setCam(ctx, { pos: L(-42.2, 1.5, 2.1), look: f.clone().add(up(-0.45)), fov: 38 }, 0.5, '#ffe0c0');
+      setCam(ctx, { pos: L(-40.6, 2.8, 1.9), look: f.clone().add(up(-1.0)), fov: 42 }, 0.5, '#ffe0c0');
     },
   },
   // ── b06 "Mr. Bramble painted his house green. And his cat. And himself."
@@ -620,30 +645,30 @@ export const shots = [
     name: 'bramble proud', start: 'b06-0.12', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'day', { edits: { paint: { 7: '#4fc24a' }, roofPaint: { 7: '#1f7a24' } } });
-      put(ctx, 'bramble', L(-3.4, 0, 8.6), PI - 0.15);
-      put(ctx, 'gcat', L(-2.5, 0, 8.2), PI + 0.4);
+      put(ctx, 'bramble', L(-5.0, 0.12, 6.5), PI - 0.15);
+      put(ctx, 'gcat', L(-4.1, 0.12, 6.1), PI + 0.4);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, b = ctx.cast.bramble;
       b.pose('crossArms', t); b.face('smug', 0.5);
       ctx.cast.gcat.pose('sit', t); ctx.cast.gcat.face('smug', 0.5);
-      moveCam(ctx, { pos: L(-1.4, 1.0, 1.4), look: L(-3.2, 3.2, 10.5), fov: 54 }, { pos: L(-1.8, 1.1, 3.0), look: L(-3.2, 3.0, 10.5), fov: 50 }, lt / 2.6);
+      moveCam(ctx, { pos: L(-4.4, 1.25, 1.6), look: L(-5.0, 1.55, 6.5), fov: 54 }, { pos: L(-4.6, 1.3, 2.2), look: L(-5.0, 1.55, 6.5), fov: 52 }, lt / 2.6);
     },
   },
   {
     name: 'green cat', start: 'cat-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'day', { edits: { paint: { 7: '#4fc24a' }, roofPaint: { 7: '#1f7a24' } } });
-      put(ctx, 'bramble', L(-3.4, 0, 8.6), PI - 0.15);
-      put(ctx, 'gcat', L(-2.5, 0, 8.2), PI + 0.4);
+      put(ctx, 'bramble', L(-5.0, 0.12, 6.5), PI - 0.15);
+      put(ctx, 'gcat', L(-4.1, 0.12, 6.1), PI + 0.4);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.cast.bramble.pose('crossArms', t); ctx.cast.bramble.face('smug', 0.5);
       ctx.cast.gcat.pose('sit', t); ctx.cast.gcat.face(lt > 0.4 ? 'smug' : 'neutral', 0.5);
-      const cp = L(-2.5, 0.3, 8.2);
+      const cp = L(-4.1, 0.42, 6.1);
       const k = ease.outCubic(clamp(lt / 0.2, 0, 1));
-      setCam(ctx, { pos: L(-2.05 - 0.2 * (1 - k), 0.35, 6.6 - 0.6 * (1 - k)), look: cp.clone().add(up(0.0)), fov: 40 });
+      setCam(ctx, { pos: L(-3.6 - 0.2 * (1 - k), 0.55, 4.6 - 0.6 * (1 - k)), look: cp.clone().add(up(-0.05)), fov: 40 });
       pop(ctx, ctx.time('cat') + 0.3, 0.1, '#ffffff', 0.3);
       tag(ctx, '+ CAT', ctx.time('b06.w8') - 0.02, Infinity, { y: 0.16, size: 80, bg: 'rgba(40,150,60,0.93)' });
     },
@@ -652,14 +677,14 @@ export const shots = [
     name: 'green himself', start: 'self-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'day', { edits: { paint: { 7: '#4fc24a' }, roofPaint: { 7: '#1f7a24' } } });
-      put(ctx, 'bramble', L(-3.4, 0, 8.6), PI - 0.15);
+      put(ctx, 'bramble', L(-5.0, 0.12, 6.5), PI - 0.15);
     },
     update(ctx, lt) {
       const b = ctx.cast.bramble, t = ctx.t;
       b.pose('crossArms', t); b.face('grin', 0.5);
       const k = ease.outCubic(clamp(lt / 0.2, 0, 1));
-      setCam(ctx, faceCam(b, 2.4 - 0.6 * k, 0.3, 0.42, 34));
-      tag(ctx, '+ HIMSELF', ctx.markers.self - 0.02, Infinity, { y: 0.14, size: 80, bg: 'rgba(40,150,60,0.93)' });
+      setCam(ctx, faceCam(b, 3.6 - 0.4 * k, 0.3, 0.45, 34));
+      tag(ctx, '+ HIMSELF', ctx.markers.self - 0.02, Infinity, { y: 0.08, size: 64, bg: 'rgba(40,150,60,0.93)' });
     },
   },
   // ── b07 "My mom refused. Our house stays bubblegum pink, because it's a vibe."
@@ -668,9 +693,9 @@ export const shots = [
     setup(ctx) {
       const L = homeStreet(ctx, 'day', { roof: 'pink' });
       ctx.props.home.userData.setLit(0, '#ffd27a', true);
-      const P = ctx.props; addTo(ctx, P.chair, -25.2, 0.12, 6.7, PI);
-      put(ctx, 'mom', L(-25.2, 0.12, 6.7), PI);
-      put(ctx, 'me', L(-23.7, 0.12, 6.3), PI + 0.5);
+      const P = ctx.props; addTo(ctx, P.chair, -25.2, 0.12, 6.7, PI - 0.55);
+      put(ctx, 'mom', L(-25.2, 0.12, 6.7), PI - 0.55);
+      put(ctx, 'me', L(-23.7, 0.12, 6.4), PI + 0.35);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, tr = ctx.time('b07.w2');
@@ -678,9 +703,9 @@ export const shots = [
       if (t < tr) { mom.pose('sit', t, { seatHeight: 0.42, hands: 'lap' }); mom.face('smug', 0.4); }
       else { mom.pose('shrug', t - tr, { seated: true, seatHeight: 0.42 }); mom.face('smug', 0.4); }
       facepalm(me, t); me.face('sad', 0.4);
-      const c = { pos: L(-23.9, 1.15, 3.2), look: L(-24.6, 0.95, 6.6), fov: 44 };
+      const c = { pos: L(-24.5, 1.55, 0.6), look: L(-24.45, 1.0, 6.5), fov: 48 };
       setCam(ctx, c);
-      stamp(ctx, 'REFUSED', tr - 0.02, { y: 0.2, size: 140, rot: -0.12 });
+      stamp(ctx, 'REFUSED', tr - 0.02, { y: 0.1, size: 130, rot: -0.08 });
       if (t > tr && t < tr + 0.12) ctx.cam.shake(0.25, t, 9);
     },
   },
@@ -689,16 +714,16 @@ export const shots = [
     setup(ctx) {
       const L = homeStreet(ctx, 'day', { roof: 'pink' });
       ctx.props.home.userData.setLit(0, '#ffd27a', true);
-      const P = ctx.props; addTo(ctx, P.chair, -25.2, 0.12, 6.7, PI);
-      put(ctx, 'mom', L(-25.2, 0.12, 6.7), PI);
-      put(ctx, 'me', L(-23.7, 0.12, 6.3), PI + 0.5);
+      const P = ctx.props; addTo(ctx, P.chair, -24.8, 0.12, 7.5, PI - 0.4);
+      put(ctx, 'mom', L(-24.8, 0.12, 7.5), PI - 0.4);
+      put(ctx, 'me', L(-23.5, 0.12, 7.2), PI + 0.3);
       addTo(ctx, P.sparks, -27, 5, 9);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.cast.mom.pose('sit', t, { seatHeight: 0.42, hands: 'lap' }); ctx.cast.mom.face('smug', 0.4);
-      ctx.cast.me.pose('shrug', 0.6 + 0.2 * Math.sin(t), {}); ctx.cast.me.face('squint', 0.4);
-      moveCam(ctx, { pos: L(-21.0, 0.6, -1.0), look: L(-26.4, 5.0, 12), fov: 58 }, { pos: L(-21.6, 0.7, 0.0), look: L(-26.6, 5.2, 12), fov: 56 }, lt / 2.6);
+      if (t < ctx.time('b07.w5')) { facepalm(ctx.cast.me, t); ctx.cast.me.face('sad', 0.4); } else { ctx.cast.me.pose('shrug', 0.6 + 0.2 * Math.sin(t), {}); ctx.cast.me.face('squint', 0.4); }
+      moveCam(ctx, { pos: L(-25.4, 1.2, -1.6), look: L(-24.9, 4.6, 10), fov: 62 }, { pos: L(-25.0, 1.15, -0.6), look: L(-24.7, 4.4, 10), fov: 60 }, lt / 2.6);
       ctx.props.sparks.userData.set(t, 0.9);
       quoteCard(ctx, "It's a vibe.", 'Mom', ctx.time('b07.w8') - 0.1, ctx.time('b07.end') + 0.28, { y: 0.3, byAt: ctx.time('b07.w11') });
     },
@@ -710,9 +735,9 @@ export const shots = [
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me;
       me.pose('think', t); me.face(t > ctx.time('b08.w3') ? 'smug' : 'determined', 0.6);
-      moveCam(ctx, { pos: R(0.2, 1.45, 2.3), look: R(1.1, 1.3, -1.4), fov: 48 }, { pos: R(0.45, 1.5, 1.2), look: R(1.05, 1.42, -1.2), fov: 42 }, ease.inOutSine(lt / 3.0));
-      tag(ctx, 'DETECTIVE', ctx.time('b08.w3') - 0.05, Infinity, { y: 0.12, size: 88, bg: 'rgba(60,40,20,0.92)' });
-      stamp(ctx, '(UNPAID)', ctx.time('b08.w4') - 0.03, { y: 0.24, size: 104, rot: -0.08 });
+      moveCam(ctx, { pos: R(0.2, 1.45, 2.4), look: R(1.1, 1.4, -1.4), fov: 50 }, { pos: R(0.5, 1.45, 1.6), look: R(1.05, 1.48, -1.2), fov: 46 }, ease.inOutSine(lt / 3.0));
+      tag(ctx, 'DETECTIVE', ctx.time('b08.w3') - 0.05, Infinity, { y: 0.075, size: 74, bg: 'rgba(60,40,20,0.92)' });
+      stamp(ctx, '(UNPAID)', ctx.time('b08.w4') - 0.03, { y: 0.165, size: 88, rot: -0.06 });
     },
   },
   // ── b09 "First clue: the bites taste sweet. Don't ask how I know."
@@ -722,21 +747,37 @@ export const shots = [
       const L = town(ctx, 'day', { edits: { hide: [1] } }); house(ctx, ctx.props.lilac, 1);
       const P = ctx.props; addTo(ctx, P.biteWall, -6.0, 0.12, -6.9, 0);
       addTo(ctx, P.crumbs, -5.6, 0.12, -6.0);
-      const me = put(ctx, 'me', L(-5.65, 0.12, -6.1), PI); capOn(ctx, me);
+      const me = put(ctx, 'me', L(-4.9, 0.12, -6.2), -PI / 2 - 0.15); capOn(ctx, me);
       ctx.add(P.tongue, me.joints.head); P.tongue.position.set(0, 0.13, 0.27);
       addTo(ctx, P.sparks, -5.6, 1.9, -6.2);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me, P = ctx.props, ts = ctx.time('b09.w5');
-      const lean = t < ts ? ease.inOutSine(clamp(lt / 0.7, 0, 1)) : 1 - ease.outCubic(clamp((t - ts) / 0.15, 0, 1));
-      if (t < ts) { me.pose('peer', t, { intensity: 0.4 }); me.joints.torso.rotation.x += 0.25 * lean; me.joints.head.rotation.x -= 0.5 * lean; me.face('laugh', 0.5); }
-      else { me.pose('surprised', 0.12 + 0.3 * clamp((t - ts) / 0.4, 0, 1), {}); me.face(t > ctx.time('b09.w6') ? 'wink' : 'shocked', 0.5); }
-      P.tongue.visible = t < ts && lean > 0.6; P.tongue.scale.set(1, 1, 0.6 + 0.6 * Math.abs(Math.sin(t * 9)));
-      const c = { pos: L(-3.6, 1.55, -4.4), look: L(-5.8, 1.35, -6.6), fov: 40 };
-      setCam(ctx, c);
+      const lean = t < ts ? ease.inOutSine(clamp(lt / 0.7, 0, 1)) : 0;
+      const cam = { pos: L(-7.6, 1.6, -3.9), look: L(-5.2, 1.45, -6.3), fov: 42 };
+      const target = L(-5.67, 2.0, -6.62);   // cream edge at the bottom of the bite, on the wall's front face
+      if (t < ts) {
+        me.root.position.copy(L(-4.9, 0.12, -6.2)); me.root.rotation.set(0, -PI / 2 - 0.15, 0);
+        me.pose('peer', t, { intensity: 0.4 }); me.joints.torso.rotation.x += 0.25 * lean; me.joints.head.rotation.x -= 0.45 * lean; me.face('laugh', 0.5);
+        // slide toward the wall so the tongue tip reaches the bite edge
+        me.root.updateMatrixWorld(true); const tip = P.tongue.localToWorld(V(0, 0, 0.14));
+        const dlt = target.clone().sub(tip); dlt.y = 0; if (dlt.length() > 0.7) dlt.setLength(0.7);
+        me.root.position.addScaledVector(dlt, 0.85 * lean);
+        me.root.updateMatrixWorld(true);
+        const base = P.tongue.getWorldPosition(V()), dist = base.distanceTo(target);
+        P.tongue.lookAt(target); P.tongue.visible = lean > 0.6;
+        P.tongue.scale.set(1, 1, clamp(dist / 0.14, 0.4, 4) * (lean > 0.85 ? 1 - 0.12 * Math.abs(Math.sin(t * 9)) : ease.outCubic(clamp((lean - 0.6) / 0.25, 0, 1))));
+      } else {
+        // snap to face the camera: shocked
+        const yaw = Math.atan2(cam.pos.x - me.root.position.x, cam.pos.z - me.root.position.z);
+        me.root.rotation.set(0, yaw, 0);
+        me.pose('surprised', 0.12 + 0.3 * clamp((t - ts) / 0.4, 0, 1), {}); me.face(t > ctx.time('b09.w6') ? 'wink' : 'shocked', 0.5);
+        P.tongue.visible = false;
+      }
+      setCam(ctx, cam);
       P.sparks.userData.set(t, t > ts ? clamp((t - ts) / 0.2, 0, 1) : 0);
-      tag(ctx, 'CLUE #1: SWEET', ctx.time('b09.w1') - 0.05, Infinity, { y: 0.11, size: 70, bg: 'rgba(255,79,163,0.92)' });
-      stamp(ctx, 'SWEET!', ts, { y: 0.23, size: 130, fill: '#ff4fa3', rot: 0.08 });
+      tag(ctx, 'CLUE #1: SWEET', ctx.time('b09.w1') - 0.05, ts - 0.02, { y: 0.1, size: 66, bg: 'rgba(255,79,163,0.92)' });
+      stamp(ctx, 'SWEET!', ts, { y: 0.1, size: 120, fill: '#ff4fa3', rot: 0.06 });
     },
   },
   // ── b10 "Second clue: rainbow sprinkles all over the street."
@@ -746,15 +787,17 @@ export const shots = [
       const L = town(ctx, 'day');
       addTo(ctx, ctx.props.sprinkles, -2, 0.005, 0.5);
       const me = put(ctx, 'me', L(-5.0, 0, 0.4), PI / 2 - 0.25); capOn(ctx, me);
-      const P = ctx.props; ctx.add(P.mag, me.joints.handR); P.mag.position.set(0, 0.02, 0.05); P.mag.rotation.set(-1.1, 0, 0);
+      const P = ctx.props; ctx.add(P.mag, me.joints.handR); P.mag.position.set(0, 0.02, 0.05); P.mag.rotation.set(0.2, 0, 0);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me;
       skyMood(ctx, 'sunrise', 0.65);
-      me.pose('peer', t, {}); me.face('squint', 0.5);
-      me.joints.armR.rotation.set(-1.1, 0, 0.1); me.joints.foreArmR.rotation.set(-0.4, 0, 0);
+      me.pose('peer', t, { seated: true, seatHeight: 0.42, headPitch: 0.05 }); me.face('squint', 0.5);
+      const J = me.joints; J.torso.rotation.x += 0.3;
+      J.armR.rotation.set(-1.45, 0, 0.12); J.foreArmR.rotation.set(-0.55, 0, 0);
+      J.armL.rotation.set(-0.5, 0, -0.25); J.foreArmL.rotation.set(-1.0, 0, 0);
       const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
-      moveCam(ctx, { pos: L(4.0, 0.28, 1.3), look: L(-5, 0.55, 0.3), fov: 46 }, { pos: L(-1.6, 0.42, 0.9), look: L(-5.0, 1.0, 0.3), fov: 42 }, k);
+      moveCam(ctx, { pos: L(4.0, 0.3, 1.3), look: L(-5, 0.6, 0.3), fov: 46 }, { pos: L(-1.8, 0.45, 0.9), look: L(-5.0, 0.7, 0.3), fov: 42 }, k);
       ctx.fx.overlay('#ffb070', 0.06);
       tag(ctx, 'CLUE #2: SPRINKLES', ctx.time('b10.w1') - 0.05, Infinity, { y: 0.11, size: 66, bg: 'rgba(138,92,255,0.92)' });
     },
@@ -763,16 +806,17 @@ export const shots = [
   {
     name: 'gap tooth clue', start: 'b11-0.12', set: 'town',
     setup(ctx) {
-      town(ctx, 'day', { edits: { hide: [1] } }); house(ctx, ctx.props.lilac, 1);
-      addTo(ctx, ctx.props.biteWall, -6.0, 0.12, -6.9, 0);
+      town(ctx, 'day', { edits: { hide: [1] } });
+      addTo(ctx, ctx.props.biteWall, -15.0, 0.12, -9.6, 0);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, BW = ctx.props.biteWall;
       BW.updateMatrixWorld(true);
       const gap = BW.localToWorld(BW.userData.gap.clone());
       const k = ease.inOutSine(clamp(lt / 3.0, 0, 1));
-      const c = moveCam(ctx, { pos: gap.clone().add(V(1.1, 0.35, 1.5)), look: gap.clone().add(V(0.35, -0.15, 0)), fov: 40 }, { pos: gap.clone().add(V(0.25, 0.25, 1.25)), look: gap.clone().add(V(0.05, -0.3, 0)), fov: 38 }, k);
-      ringAt(ctx, gap.clone().add(V(0, 0.08, 0.06)), ctx.markers.gap, 0.34);
+      const c = moveCam(ctx, { pos: gap.clone().add(V(0.7, -1.6, 4.8)), look: gap.clone().add(V(0.05, 0.45, 0)), fov: 42 }, { pos: gap.clone().add(V(0.5, -1.4, 4.0)), look: gap.clone().add(V(0.0, 0.42, 0)), fov: 40 }, k);
+      ringAt(ctx, gap.clone().add(V(0, -0.02, 0.06)), ctx.markers.gap, 0.36);
+      if (t > ctx.markers.gap + 0.15) { const sp = scr(ctx, gap.clone().add(up(0.28))); tag(ctx, 'NO TOOTH HERE', ctx.markers.gap + 0.15, Infinity, { x: 0.5, y: 0.2, size: 60, bg: 'rgba(232,35,43,0.92)', rot: 0.02 }); arrow2d(ctx, 0.5, 0.24, sp.x, Math.max(0.27, sp.y - 0.02)); }
       tag(ctx, 'CLUE #3: GAP TOOTH', ctx.time('b11.w1') - 0.05, Infinity, { y: 0.11, size: 66, bg: 'rgba(232,35,43,0.92)' });
     },
   },
@@ -799,17 +843,17 @@ export const shots = [
       const L = town(ctx, 'day');
       const P = ctx.props, gus = put(ctx, 'gus', L(45.0, 0, 0.3), -PI / 2);
       ctx.add(P.pancakes);
-      ctx.store.cr = crowd(ctx, [X[0], X[1], X[3], X[5], X[7], X[10], X[12], X[14]], [[40.6, 0, -2.6, PI / 2 - 0.4], [40.0, 0, -1.0, PI / 2 - 0.2], [40.2, 0, 1.4, PI / 2 + 0.2], [41.0, 0, 3.0, PI / 2 + 0.5], [38.8, 0, -2.0, PI / 2], [38.6, 0, 0.4, PI / 2], [38.9, 0, 2.4, PI / 2 + 0.2], [41.7, 0, -3.8, PI / 2 - 0.7]]);
-      filler(ctx, blockFill(33, 38, -6, 6, 50, { seed: 4, faceX: 45, faceZ: 0 }));
+      ctx.store.cr = crowd(ctx, [X[0], X[1], X[3], X[5], X[7], X[10], X[12], X[14]], [[40.6, 0, -2.6, PI / 2 - 0.4], [40.0, 0, -1.0, PI / 2 - 0.2], [40.2, 0, 1.4, PI / 2 + 0.2], [41.0, 0, 3.0, PI / 2 + 0.5], [38.8, 0, -2.0, PI / 2], [38.6, 0, 0.4, PI / 2], [38.9, 0, 2.4, PI / 2 + 0.2], [39.8, 0, -2.2, PI / 2 - 0.5]]);
+      filler(ctx, blockFill(33, 38, -1.5, 6.5, 40, { seed: 4, faceX: 45, faceZ: 0 }));
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, gus = ctx.cast.gus, P = ctx.props;
-      holdUp(gus, t, 1); gus.face(lt > 0.6 ? 'sweat' : 'neutral', 0.5);
+      gus.pose('idle', t, { intensity: 0.3 }); gus.joints.armL.rotation.set(-0.5, 0, -0.35); gus.joints.foreArmL.rotation.set(-1.2, 0, 0); gus.face(lt > 0.6 ? 'sweat' : 'neutral', 0.5);
       gus.root.updateMatrixWorld(true);
-      P.pancakes.position.copy(gus.joints.handL.getWorldPosition(V()).lerp(gus.joints.handR.getWorldPosition(V()), 0.5)).add(up(-0.08)); P.pancakes.rotation.set(0, 0, 0); P.pancakes.scale.setScalar(1.3);
+      P.pancakes.position.copy(gus.joints.handL.getWorldPosition(V())).add(up(-0.06)); P.pancakes.rotation.set(0, 0, 0); P.pancakes.scale.setScalar(1.0);
       ctx.store.cr.forEach((c, i) => { c.ch.pose(i % 3 === 2 ? 'pointLaugh' : 'point', t + c.ph, {}); c.ch.face(i % 2 ? 'determined' : 'smug', t + c.ph); });
       P.filler.userData.set(t, { arms: 'cheer', bounce: 0.3, speed: 0.7 });
-      moveCam(ctx, { pos: L(37.5, 2.0, -6.2), look: L(43.6, 1.7, 0.2), fov: 48 }, { pos: L(38.4, 1.9, -5.6), look: L(44.0, 1.8, 0.2), fov: 46 }, lt / 1.6);
+      moveCam(ctx, { pos: L(38.0, 3.1, -7.0), look: L(44.3, 1.7, 0.3), fov: 44 }, { pos: L(38.5, 3.0, -6.5), look: L(44.3, 1.8, 0.3), fov: 40 }, lt / 1.6);
       tag(ctx, 'SUSPECT: BIG GUS', ctx.time('b13.w2') - 0.05, Infinity, { y: 0.12, size: 70, bg: 'rgba(200,0,40,0.92)' });
     },
   },
@@ -823,14 +867,14 @@ export const shots = [
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, gus = ctx.cast.gus, P = ctx.props, tt = ctx.time('b13.w9');
-      holdUp(gus, t, 1); gus.face('smile', 0.5);
+      gus.pose('idle', t, { intensity: 0.3 }); gus.joints.armL.rotation.set(-0.5, 0, -0.35); gus.joints.foreArmL.rotation.set(-1.2, 0, 0); gus.face('smile', 0.5);
       gus.root.updateMatrixWorld(true);
-      P.pancakes.position.copy(gus.joints.handL.getWorldPosition(V()).lerp(gus.joints.handR.getWorldPosition(V()), 0.5)).add(up(-0.08)); P.pancakes.scale.setScalar(1.3);
+      P.pancakes.position.copy(gus.joints.handL.getWorldPosition(V())).add(up(-0.06)); P.pancakes.scale.setScalar(1.0);
       P.gusTeeth.userData.glint.material.opacity = t > tt ? 0.5 + 0.5 * Math.sin(t * 12) : 0.4;
       const k = ease.outCubic(clamp(lt / 0.25, 0, 1));
-      setCam(ctx, faceCam(gus, 3.2 - 0.9 * k, 0.35, 0.5, 34));
-      stamp(ctx, 'CLEARED', tt - 0.02, { y: 0.22, size: 130, fill: '#3fd04a', stroke: '#ffffff', rot: -0.1 });
-      tag(ctx, 'ALL HIS TEETH', ctx.time('b13.w6') - 0.05, Infinity, { y: 0.1, size: 62 });
+      setCam(ctx, faceCam(gus, 4.9 - 0.5 * k, 0.35, 0.5, 34));
+      stamp(ctx, 'CLEARED', tt - 0.02, { y: 0.09, size: 120, fill: '#3fd04a', stroke: '#ffffff', rot: -0.06 });
+      tag(ctx, 'ALL HIS TEETH', ctx.time('b13.w6') - 0.05, tt - 0.03, { y: 0.08, size: 58 });
     },
   },
   // ── b14 "So I made a trap. If it likes sweet, let's see how it likes spicy."  (dusk, on our roof)
@@ -847,7 +891,7 @@ export const shots = [
       paintRoofPose(me, t); me.face('determined', 0.5);
       const u = clamp((t - ctx.time('b14')) / 2.6 + 0.25, 0, 1);
       paintRoof(ctx, u);
-      moveCam(ctx, { pos: L(-21.0, 1.1, 0.5), look: L(-26.0, 7.6, 12), fov: 52 }, { pos: L(-21.6, 1.3, 1.6), look: L(-26.0, 7.9, 12), fov: 50 }, lt / 1.2, 0.6, '#ffd8b0');
+      moveCam(ctx, { pos: L(-22.0, 3.0, 3.2), look: L(-26.0, 8.6, 13), fov: 50 }, { pos: L(-22.6, 3.4, 4.6), look: L(-26.0, 8.9, 13), fov: 46 }, lt / 1.2, 0.6, '#ffd8b0');
       tag(ctx, 'TRAP: EXTRA SPICY', ctx.markers.paint - 0.05, Infinity, { y: 0.12, size: 66, bg: 'rgba(200,0,40,0.92)' });
     },
   },
@@ -855,19 +899,19 @@ export const shots = [
     name: 'roof trap smug', start: 'b14.w5-0.12', set: 'town',
     setup(ctx) {
       const L = homeStreet(ctx, 'dusk', { roof: 'pink', glow: 0.5 });
-      const P = ctx.props, me = put(ctx, 'me', slotPt(ctx, HOME, 1.4, ROOF_Y, 0), PI + 0.35);
-      addTo(ctx, P.sauce, ...slotPt(ctx, HOME, -0.6, ROOF_Y - 0.08, 0.0).toArray(), PI + 0.2, 1.0);
+      const P = ctx.props, me = put(ctx, 'me', slotPt(ctx, HOME, 1.4, ROOF_Y, 0), PI);
+      addTo(ctx, P.sauce, ...slotPt(ctx, HOME, 0.45, ROOF_Y - 0.08, -0.25).toArray(), PI + 0.1, 1.0);
       ctx.add(P.redRoller, me.joints.handR); P.redRoller.position.set(0, 0, 0); P.redRoller.rotation.set(-1.1, 0, 0);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me, ts = ctx.time('b14.w14');
       if (t < ts - 0.3) { paintRoofPose(me, t); me.face('determined', 0.5); } else { me.pose('crossArms', t); me.face('smug', 0.5); }
       paintRoof(ctx, clamp((t - ctx.time('b14')) / 2.6 + 0.25, 0, 1));
-      const f = humanFace(me);
-      const c = { pos: L(-23.2, 7.9, 6.6), look: f.clone().lerp(slotPt(ctx, HOME, -0.6, ROOF_Y + 0.9, 0), 0.35).add(up(-0.45)), fov: 40 };
-      setCam(ctx, c, 0.8, '#ffd8b0');
-      stamp(ctx, 'EXTRA SPICY', ts - 0.02, { y: 0.24, size: 120, rot: -0.08 });
-      flameIcon(ctx, 0.84, 0.13, 0.9, ts);
+      const fc = faceCam(me, 4.6, 0.6, 0.45, 42), bt = slotPt(ctx, HOME, 0.45, ROOF_Y + 1.0, -0.25);
+      fc.look.lerp(bt.clone().setY(fc.look.y), 0.4);
+      setCam(ctx, fc, 0.9, '#ffd8b0');
+      stamp(ctx, 'EXTRA SPICY', ts - 0.02, { x: 0.41, y: 0.1, size: 92, rot: -0.06 });
+      flameIcon(ctx, 0.85, 0.12, 1.6, ts);
     },
   },
   // ── b15 "Then last night, the crunch was on my street."
@@ -876,7 +920,7 @@ export const shots = [
     setup(ctx) {
       const R = room(ctx, { light: 'night', win: 'dark' });
       put(ctx, 'me', R(-1.95, 0.0, -1.55), 0);
-      const P = ctx.props; addTo(ctx, P.shadow, -0.8, 1.6, -2.75, 0);
+      const P = ctx.props; addTo(ctx, P.moonSky, -0.8, 1.6, -3.05, 0); addTo(ctx, P.shadow, -0.8, 1.6, -2.75, 0); P.shadow.rotation.z = PI; P.shadow.scale.set(1.3, 1.3, 1);
     },
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me, tc = ctx.time('b15.w4'), P = ctx.props;
@@ -886,9 +930,9 @@ export const shots = [
       me.face(t < tc ? 'sleepy' : 'shocked', 0.4);
       if (t > tc) { me.joints.armL.rotation.z -= 0.6 * u; me.joints.armR.rotation.z += 0.6 * u; }
       // the giant shadow sliding past the window
-      const sx = lerp(-4.5, 3.2, clamp((t - tc - 0.1) / 1.0, 0, 1));
-      P.shadow.position.copy(R(sx, 1.5, -2.75));
-      setCam(ctx, { pos: R(0.6, 1.25, 1.7), look: R(-1.3, 1.15, -1.6), fov: 46 }, 0.9, '#c8d0ff');
+      const sx = lerp(-3.6, 2.6, clamp((t - tc + 0.1) / 1.5, 0, 1));
+      P.shadow.position.copy(R(sx, 1.75, -2.75));
+      setCam(ctx, { pos: R(0.2, 1.3, 1.7), look: R(-1.75, 1.1, -1.6), fov: 46 }, 0.9, '#c8d0ff');
       shakeOn(ctx, [tc + 0.02], 0.9, 0.6, 12);
       stamp(ctx, 'CRUNCH', tc + 0.02, { y: 0.22, size: 140, fill: '#ffd23f', stroke: '#1d1d22', t1: tc + 0.6 });
     },
@@ -906,7 +950,7 @@ export const shots = [
       const u = ease.inCubic(clamp((t - ctx.time('b16.w1') + 0.1) / (ts - ctx.time('b16.w1') + 0.1), 0, 1));
       F.position.copy(L(HX + 0.2, lerp(70, 6.6, u), HZ + 0.6)); F.rotation.set(-0.12, 0, 0.05);
       lightning(ctx, [ctx.time('b16') + 0.1, ts + 0.02]);
-      setCam(ctx, { pos: L(-21.2, 0.8, 1.6), look: L(-26.2, 10.5, 13), fov: 60 }, 0.6, '#c8b8ff');
+      setCam(ctx, { pos: L(-30.5, 0.8, 1.2), look: L(-27.2, 10.5, 13), fov: 62 }, 0.6, '#c8b8ff');
       shakeOn(ctx, [ts + 0.02], 1.0, 0.45, 6);
       stamp(ctx, 'STAB', ts + 0.02, { y: 0.2, size: 120, fill: '#dfe4ee', stroke: '#1d1d22', t1: ts + 0.6 });
     },
@@ -923,7 +967,7 @@ export const shots = [
       const R0 = P.home.userData.roof; R0.position.set(0, y, 0); R0.rotation.set(0.06 * u, 0, -0.08 * u);
       P.crumbRain.position.copy(L(HX, 6.2 + y * 0.5 - 6 * u * u, HZ - 1.5)); P.crumbRain.visible = u > 0.05 && u < 0.95;
       lightning(ctx, [tl + 0.9]);
-      moveCam(ctx, { pos: L(-23.5, 1.6, -4.5), look: L(-26.8, 8.0, 13), fov: 58 }, { pos: L(-23.5, 1.6, -4.5), look: L(-26.8, 22, 13), fov: 62 }, ease.inOutSine(clamp((t - tl - 0.2) / 1.6, 0, 1)), 0.5, '#c8b8ff');
+      setCam(ctx, { pos: L(-13.5, 9.2, 7.6), look: L(-27, 10.5 + 0.8 * y, 14), fov: 56 + 6 * u }, 0.5, '#c8b8ff');
       tag(ctx, 'LIKE A CRACKER', ctx.time('b16.w12') - 0.05, Infinity, { y: 0.12, size: 64 });
     },
   },
@@ -932,7 +976,7 @@ export const shots = [
     setup(ctx) {
       homeStreet(ctx, 'quiet_night', { roof: 'red', glow: 0.7 }); storm(ctx);
       const P = ctx.props; addTo(ctx, P.fork, HX, 36.6, HZ, 0); addTo(ctx, P.crumbRain, HX, 30, HZ);
-      addTo(ctx, P.puff, HX, 38, HZ);
+      addTo(ctx, P.burst2.root, HX, 38, HZ);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tb = ctx.markers.bite;
@@ -944,9 +988,10 @@ export const shots = [
       for (const R0 of [U.roof, U.roofB]) { R0.position.set(0, yy, 0); R0.rotation.set(0.06, 0, -0.08); }
       const db = t - tb;
       P.crumbRain.visible = db > 0; P.crumbRain.position.copy(L(HX + 1, 36 + yy - 30 - 9 * Math.max(0, db) ** 2 * 3, HZ - 1));
-      P.puff.update(clamp(db / 0.7, 0, 1.01)); P.puff.root.position.copy(L(HX + 2.2, 6.6 + yy + 2.5, HZ));
-      lightning(ctx, [tb + 0.01], { popA: 0.5 });
-      setCam(ctx, { pos: L(-24.0, 1.0, 4.0), look: L(-26.6, 38, 13.5), fov: 60 }, 0.4, '#c8b8ff');
+      P.burst2.update(clamp(db / 1.0, 0, 1.01)); P.burst2.root.position.copy(slotPt(ctx, HOME, -3.6, 8.0 + yy, 2.4));
+      lightning(ctx, [tb + 0.01], { popA: 0.3, dur: 0.1, single: true });
+      const slab = slotPt(ctx, HOME, -0.8, 7.6 + yy, 0);
+      setCam(ctx, { pos: slab.clone().add(V(14, 7, -26)), look: slab.clone().add(V(-0.5, 1.5, 0)), fov: 34 }, 0, '#c8b8ff');
       shakeOn(ctx, [tb + 0.01], 1.2, 0.5, 8);
       stamp(ctx, 'CRUNCH!', tb, { y: 0.22, size: 160, fill: '#ffd23f', stroke: '#1d1d22' });
     },
@@ -958,12 +1003,13 @@ export const shots = [
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me, F = ctx.props.fork, tm = ctx.time('b17.w5');
       roomStorm(ctx, 1);
-      const u = ease.inCubic(clamp((t - ctx.time('b17.w2')) / (tm - ctx.time('b17.w2') + 0.35), 0, 1));
-      F.position.copy(R(0.6, lerp(22, 2.4, u), -0.15)); F.rotation.set(0.25, 0.1, 0.05); F.scale.setScalar(0.5);
+      const u = ease.inQuad(clamp((t - ctx.time('b17.w2') + 0.25) / (ctx.time('b17.w6') - ctx.time('b17.w2') + 0.25), 0, 1));
+      F.position.copy(R(0.6, lerp(9, 2.0, u), -0.15)); F.rotation.set(0.25, 0.1, 0.05); F.scale.setScalar(0.5);
       const d = clamp((t - tm - 0.05) / 0.3, 0, 1);
       if (d <= 0) { me.pose('stunned', t, { headPitch: -0.6 }); me.face('shocked', 0.4); me.root.position.copy(R(0.15, 0, -0.2)); me.root.rotation.set(0, 0.15, 0); }
       else { divePose(me, t, d); me.face('sweat', 0.4); me.root.position.copy(R(0.15 - 1.1 * d, 0.35 * Math.sin(PI * d), -0.2)); me.root.rotation.set(0, 0.15, 0.9 * d); }
-      setCam(ctx, { pos: R(1.6, 0.6, 2.6), look: R(0.0, 2.6, -0.8), fov: 58 }, 1.1, '#d0d8ff');
+      const dv = ease.inOutSine(d);
+      setCam(ctx, { pos: R(lerp(1.6, 2.2, dv), lerp(1.3, 1.2, dv), lerp(2.6, 3.2, dv)), look: R(lerp(0.1, 0.15 - 1.1 * d, 0.7 * dv), lerp(1.1, 1.3, dv), -0.5), fov: lerp(58, 66, dv) }, 1.1, '#d0d8ff');
       shakeOn(ctx, [tm + 0.2], 0.6, 0.3, 4);
     },
   },
@@ -972,7 +1018,7 @@ export const shots = [
     name: 'almost', start: 'b18-0.12', set: 'room',
     setup(ctx) {
       room(ctx, { light: 'night', win: 'dark', exposure: 1.25 }); roomStorm(ctx, 1);
-      put(ctx, 'me', ctx.store.R(-0.75, 0.32, -0.2), 0.15);
+      put(ctx, 'me', ctx.store.R(0.45, 0.32, -0.2), 0.15);
       const P = ctx.props; addTo(ctx, P.fork, 0, 3, 0, 0, 0.5);
       ctx.add(P.sweat); ctx.add(P.sweat2);
     },
@@ -980,7 +1026,7 @@ export const shots = [
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me, P = ctx.props, F = P.fork;
       roomStorm(ctx, 1);
       divePose(me, 0, 0.75); me.face('sweat', 0.2);
-      me.root.position.copy(R(-0.75, 0.32, -0.2)); me.root.rotation.set(0, 0.15, 0.7);
+      me.root.position.copy(R(0.45, 0.32, -0.2)); me.root.rotation.set(0, 0.15, 0.7);
       const head = headPt(me, 0.62, 0.0);
       F.scale.setScalar(0.5); F.rotation.set(0.25, 0.1, 0.05);
       // the nearest tine tip a few cm from the hood
@@ -990,10 +1036,10 @@ export const shots = [
       P.sweat.position.copy(headPt(me, 0.55, 0.3).add(V(0.2, 0.15, 0))); P.sweat2.position.copy(headPt(me, 0.4, 0.2).add(V(-0.25, 0.3, 0.1)));
       const a = lerp(-0.5, 0.45, ease.inOutSine(clamp(lt / 2.3, 0, 1)));
       const ctr = head.clone().add(V(0.05, -0.3, 0));
-      setCam(ctx, { pos: ctr.clone().add(V(Math.sin(a) * 2.4, 0.15, Math.cos(a) * 2.4)), look: ctr.clone().add(up(-0.15)), fov: 40 }, 1.1, '#d0d8ff');
+      setCam(ctx, { pos: ctr.clone().add(V(Math.sin(a) * 3.2, 0.25, Math.cos(a) * 3.2)), look: ctr.clone().add(up(-0.2)), fov: 44 }, 1.1, '#d0d8ff');
       ctx.fx.overlay('#3040a0', 0.16); ctx.fx.vignette(0.55);
-      stamp(ctx, 'ALMOST!', ctx.time('b18.w1') - 0.02, { y: 0.2, size: 140, rot: -0.1, t1: ctx.time('b18.w2') - 0.05 });
-      stamp(ctx, 'ALMOST!!', ctx.time('b18.w2') - 0.02, { y: 0.2, size: 180, rot: 0.08 });
+      stamp(ctx, 'ALMOST!', ctx.time('b18.w1') - 0.02, { y: 0.08, size: 120, rot: -0.06, t1: ctx.time('b18.w2') - 0.05 });
+      stamp(ctx, 'ALMOST!!', ctx.time('b18.w2') - 0.02, { y: 0.085, size: 150, rot: 0.05 });
       shakeOn(ctx, [ctx.time('b18.w2')], 0.5, 0.3, 2);
     },
   },
@@ -1003,18 +1049,22 @@ export const shots = [
     setup(ctx) {
       homeStreet(ctx, 'quiet_night', { roof: 'none', glow: 0.7 }); storm(ctx);
       const P = ctx.props; addTo(ctx, P.fork, HX, 8, HZ, 0);
-      put(ctx, 'me', slotPt(ctx, HOME, 0.6, 5.8, 0.4), PI + 0.3);
+      put(ctx, 'me', slotPt(ctx, HOME, 0.6, 5.8, 2.8), PI + 0.3);
     },
     update(ctx, lt) {
-      const L = ctx.store.L, t = ctx.t, P = ctx.props, ty = ctx.time('b19.w3'), me = ctx.cast.me;
-      const red = t > ty ? clamp((t - ty) / 0.08, 0, 1) * (0.8 + 0.2 * Math.sin(t * 40)) : 0;
-      storm(ctx, 1 - red); if (red > 0) skyMood(ctx, 'red', red);
-      const u = ease.outCubic(clamp((t - ctx.time('b19')) / 0.45, 0, 1));
-      P.fork.position.copy(L(HX + 1, lerp(9, 70, u), HZ + 2)); P.fork.rotation.set(-0.1, 0, 0.1);
+      const L = ctx.store.L, t = ctx.t, P = ctx.props, ty = ctx.time('b19.w3'), me = ctx.cast.me, F = P.fork;
+      const red = t > ty ? clamp((t - ty) / 0.05, 0, 1) : 0;
+      storm(ctx, 1 - red); if (red > 0) skyMood(ctx, 'redBright', red * (0.85 + 0.15 * Math.sin(t * 40)));
       me.pose('stunned', t, { headPitch: -0.6 }); me.face('shocked', 0.4);
-      setCam(ctx, { pos: L(-22.5, 1.0, 2.0), look: L(-26.5, 12, 13), fov: 60 }, 0.6, '#c8b8ff');
+      // the fork is yanked up out of frame over ~0.3 s
+      const head = headPt(me, 0.62, 0), u = ease.inCubic(clamp((t - ctx.time('b19') + 0.02) / 0.32, 0, 1));
+      F.scale.setScalar(1); F.rotation.set(-0.1, 0.2, 0.08); F.position.set(0, 0, 0); F.updateMatrixWorld(true);
+      const tip = F.userData.tines[1].getWorldPosition(V());
+      F.position.add(head.clone().add(V(0.4, 0.7, -0.6)).sub(tip)).add(up(60 * u));
+      const f = humanFace(me), yw = me.root.rotation.y, fw = V(Math.sin(yw), 0, Math.cos(yw)), sd = V(fw.z, 0, -fw.x);
+      setCam(ctx, { pos: f.clone().addScaledVector(fw, 2.7).addScaledVector(sd, 0.5).add(up(-0.95)), look: f.clone().add(up(-0.5)), fov: 52 }, 1.4, '#ffd8d0');
       shakeOn(ctx, [ty + 0.02], 1.0, 0.6, 3);
-      if (red > 0) ctx.fx.overlay('#ff2010', 0.12 * red);
+      pop(ctx, ty, 0.12, '#ff2a10', 0.6);
     },
   },
   // ── b20 "Spicy!"  — the giant kid rises over the rooftops behind the clock tower
@@ -1022,22 +1072,22 @@ export const shots = [
     name: 'spicy', start: 'b20-0.15', set: 'town',
     setup(ctx) {
       homeStreet(ctx, 'quiet_night', { roof: 'none', glow: 0.7 }); towerDress(ctx);
-      const P = ctx.props; kidAt(ctx, [-150, 0, 1.5], PI / 2, 58, {});
-      addTo(ctx, P.hand, -120, 40, 20, 0, 9); addTo(ctx, P.steam, -120, 30, 1.5, 0, 18);
+      const P = ctx.props; kidAt(ctx, [KS.x, 0, KS.z], PI / 2 - 0.12, KS.s, {});
+      addTo(ctx, P.hand, -120, 40, 20, 0, 6); addTo(ctx, P.steam, -120, 30, 1.5, 0, 12);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, t0 = ctx.time('b20');
       skyMood(ctx, 'red', 0.85 + 0.15 * Math.sin(t * 30));
       const rise = ease.outBack(clamp((t - t0 + 0.1) / 0.35, 0, 1));
-      const K = kidAt(ctx, [-150, lerp(-20, 34, rise), 1.5], PI / 2, 58, { eyes: 'shut', mouth: 'open', open: 0.85, tongue: 1, cheeks: 1, sweat: true, brows: 'worried' });
+      const K = kidAt(ctx, [KS.x, lerp(-20, KS.y, rise), KS.z], PI / 2 - 0.12, KS.s, { eyes: 'shut', mouth: 'open', open: 0.85, tongue: 1, cheeks: 1, sweat: true, brows: 'worried' });
       K.updateMatrixWorld(true);
       const mouth = K.userData.mouth.getWorldPosition(V());
       const fan = Math.sin(t * 22);
-      P.hand.position.copy(mouth.clone().add(V(14, -4 + 5 * fan, 26))); P.hand.rotation.set(0.3, -PI / 2 + 0.6, -1.3 + 0.35 * fan); P.hand.scale.setScalar(9); P.hand.userData.set({ curl: 0.1 });
-      P.steam.position.copy(mouth.clone().add(V(4, 4, 0))); P.steam.userData.set(t, rise);
-      setCam(ctx, { pos: L(-23.5, 1.6, 3.2), look: L(-51, 17, 1.5), fov: 56 }, 0.5);
+      P.hand.position.copy(mouth.clone().add(V(12, -3 + 3.5 * fan, 9))); P.hand.rotation.set(0.3, -PI / 2 + 0.6, -1.3 + 0.35 * fan); P.hand.scale.setScalar(6); P.hand.userData.set({ curl: 0.1 });
+      P.steam.position.copy(mouth.clone().add(V(-4, 34, 0))); P.steam.userData.set(t, rise);
+      setCam(ctx, { pos: L(-25.0, 1.6, 2.4), look: L(-51, 5.4, -1.0), fov: 56 }, 0.5);
       shakeOn(ctx, [t0], 1.0, 0.6, 5);
-      stamp(ctx, 'SPICY!!!', t0 - 0.02, { y: 0.15, size: 170, fill: '#ff3a1a', stroke: '#ffe14a', rot: -0.08 });
+      stamp(ctx, 'SPICY!!!', t0 - 0.02, { y: 0.09, size: 150, fill: '#ff3a1a', stroke: '#ffe14a', rot: -0.06 });
     },
   },
   // ── b21 HUSS ×6 — on the roofless house pointing up; the street lights up, the town pours out
@@ -1045,31 +1095,33 @@ export const shots = [
     name: `point up #${i + 1}`, start: H('b21', i), set: 'town',
     setup(ctx) {
       const L = homeStreet(ctx, 'quiet_night', { roof: 'none', glow: 0 }); towerDress(ctx);
-      put(ctx, 'me', slotPt(ctx, HOME, 0.4, 5.8, 0.6), PI + 0.75);
+      put(ctx, 'me', slotPt(ctx, HOME, 0.4, 5.8, 2.8), PI + 0.75);
       ctx.store.cr = crowd(ctx, [X[0], X[2], X[4], X[6], X[8], X[11], X[13], X[15]], [
         [-15.4, 0.12, -8.6, -0.3], [-14.2, 0.12, -7.0, 0.2], [-3.4, 0.12, -8.2, 0.1], [-2.1, 0.12, -7.2, -0.2],
         [-16.0, 0.12, 7.6, PI - 0.3], [-13.8, 0.12, 8.3, PI + 0.2], [-4.0, 0.12, 8.0, PI + 0.1], [-2.6, 0.12, 6.8, PI - 0.4]]);
       filler(ctx, blockFill(-12, 6, -3.5, 3.5, 40, { seed: 21, faceX: -150, faceZ: 1.5 }));
-      kidAt(ctx, [-150, 34, 1.5], PI / 2, 58, {});
+      kidAt(ctx, [KS.x, KS.y, KS.z], PI / 2 - 0.12, KS.s, {});
     },
     update(ctx) {
       const L = ctx.store.L, t = ctx.t, hits = hussHits(ctx, 'b21'), me = ctx.cast.me, P = ctx.props;
       const n = hits.filter((h) => h <= t).length, h = lastBefore(hits, t), dh = h != null ? t - h : 9, hp = hitPulse(hits, t, 0.15);
       skyMood(ctx, 'red', 0.35);
       pointUp(me, t, 1, hp); me.face(dh < 0.25 ? 'huss' : 'determined', 0.4);
-      kidAt(ctx, [-150, 34, 1.5], PI / 2, 58, { eyes: 'shut', mouth: 'o', tongue: 0.6, cheeks: 0.8, sweat: true, brows: 'worried' });
+      kidAt(ctx, [KS.x, KS.y, KS.z], PI / 2 - 0.12, KS.s, { eyes: 'shut', mouth: 'o', tongue: 0.6, cheeks: 0.8, sweat: true, brows: 'worried' });
       // windows light up house by house, east to west, one wave per HUSS
       ctx.set.set('windowGlow', (hh, wi) => { const order = [5, 0, 6, 1, 7, 2, 3, 8, 4]; const k = order.indexOf(hh); return k >= 0 && k < n * 1.6 ? 1 : 0.05; });
       ctx.store.cr.forEach((c, k) => { const out = clamp((t - (hits[Math.min(5, Math.floor(k / 1.6))] ?? 0)) / 0.4, 0, 1); c.ch.pose('point', t + c.ph, { headPitch: -0.6 }); c.ch.face(k % 2 ? 'shocked' : 'sweat', t + c.ph); c.ch.root.position.copy(L(c.x, c.y, c.z - Math.sign(c.z) * 1.2 * out)); });
       P.filler.userData.set(t, { arms: 'up', bounce: 0.4 * hp, speed: 0.6 }); P.filler.visible = n >= 2;
-      const roofTop = slotPt(ctx, HOME, 0.4, 7.2, 0.6);
+      const mp = me.root.position.clone(), kd = V(KS.x, 0, KS.z).sub(V(mp.x, 0, mp.z)).normalize(), ks = V(-kd.z, 0, kd.x);
+      const fc = humanFace(me), yw = me.root.rotation.y, fw = V(Math.sin(yw), 0, Math.cos(yw)), sd = V(fw.z, 0, -fw.x);
+      const at = (f, s, y) => fc.clone().addScaledVector(fw, f).addScaledVector(sd, s).add(up(y));
       const cams = [
-        { pos: L(-23.5, 1.0, 4.6), look: roofTop.clone().add(V(-1.0, 1.2, 0)), fov: 52 },
+        { pos: at(2.7, 1.5, -0.6), look: at(0, 0, -0.4), fov: 52 },
         { pos: L(-31.5, 5.5, -2.0), look: L(-2, 3.5, -1.5), fov: 50 },
-        { pos: L(-8.5, 0.6, -3.2), look: L(-14.6, 3.0, -8.0), fov: 52 },
-        faceCam(me, 2.2, 0.5, 0.25, 38, -0.6),
-        { pos: L(-4, 16, -9), look: L(-30, 6, 6), fov: 58 },
-        { pos: L(-31.0, 4.2, 7.5), look: roofTop.clone().add(V(0, 1.4, 0)), fov: 50 },
+        { pos: L(-14.8, 1.35, -1.4), look: L(-14.8, 2.5, -9), fov: 54 },
+        { pos: at(1.5, -2.8, -0.8), look: at(0, 0, 0.05), fov: 50 },
+        { pos: mp.clone().addScaledVector(kd, -3.6).addScaledVector(ks, 1.6).add(up(0.6)), look: mp.clone().addScaledVector(kd, 40).addScaledVector(ks, 3).add(up(9)), fov: 66 },
+        { pos: at(0.9, -3.3, 0.1), look: at(0, 0, -0.2), fov: 54 },
       ];
       setCam(ctx, cams[i], 1.0, '#ffd8c8', 14); ctx.cam.punch(hits, t, 0.1, 0.2); shakeOn(ctx, hits, 0.45, 0.25, 11 + i);
       tag(ctx, 'THE BITER', ctx.time('b21') - 0.1, Infinity, { y: 0.1, size: 70, bg: 'rgba(200,0,40,0.9)' });
@@ -1080,19 +1132,19 @@ export const shots = [
     name: 'gap grin', start: 'b22-0.12', set: 'town',
     setup(ctx) {
       homeStreet(ctx, 'quiet_night', { roof: 'none', glow: 0.9 });
-      kidAt(ctx, [-21, 0, -70], 0, 46, {});
+      kidAt(ctx, [-21, 30, -75], 0, 30, {});
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, tt = ctx.time('b22.w6');
       skyMood(ctx, 'red', 0.2);
-      const rise = ease.outCubic(clamp(lt / 1.0, 0, 1));
-      const K = kidAt(ctx, [-21, lerp(10, 24, rise), -70], 0.05, 46, { eyes: 'happy', mouth: 'grin', cheeks: 0.5, sweat: true, brows: 'worried' }, -0.1);
+      const rise = ease.outCubic(clamp(lt / 0.9, 0, 1));
+      const K = kidAt(ctx, [-21, lerp(26, 42, rise), -75], 0.05, 30, { eyes: 'happy', mouth: 'grin', cheeks: 0.5, sweat: true, brows: 'worried' }, 0.1);
       K.updateMatrixWorld(true);
-      const gap = K.userData.teeth.localToWorld(V(-0.05, 0, 0.02));
+      const gap = K.userData.teeth.localToWorld(V(-0.04, 0, 0.02));
       const k = ease.inOutSine(clamp(lt / 1.9, 0, 1));
-      moveCam(ctx, { pos: L(-18, 0.6, 7.0), look: L(-20, 20, -60), fov: 54 }, { pos: L(-18.5, 0.8, 5.5), look: gap.clone().add(up(-6)), fov: 44 }, k);
-      ringAt(ctx, gap, tt, 7);
-      tag(ctx, 'GAP TOOTH: FOUND', tt - 0.05, Infinity, { y: 0.12, size: 70, bg: 'rgba(232,35,43,0.92)' });
+      moveCam(ctx, { pos: L(-18, 0.6, 7.0), look: L(-20.5, 22.0, -75), fov: 66 }, { pos: L(-18, 0.65, 6.4), look: L(-20.5, 22.5, -75), fov: 62 }, k, 0.6, '#ffe0d0', 14);
+      ringAt(ctx, gap, tt, 2.6);
+      tag(ctx, 'GAP TOOTH: FOUND', tt - 0.05, Infinity, { y: 0.065, size: 62, bg: 'rgba(232,35,43,0.92)' });
     },
   },
   // ── b23 "He wasn't eating our town. Just checking if it was ready."
@@ -1100,21 +1152,21 @@ export const shots = [
     name: 'roof back', start: 'b23-0.12', set: 'town',
     setup(ctx) {
       const L = homeStreet(ctx, 'quiet_night', { roof: 'redBitten', glow: 0.9 });
-      kidAt(ctx, [HX - 4, 26, HZ + 64], PI, 46, {}, 0.12);
+      kidAt(ctx, [HX - 4, 92, HZ + 150], PI, 46, {}, 0.12);
       addTo(ctx, ctx.props.hand, HX, 20, HZ, PI, 9);
-      put(ctx, 'me', L(-24.0, 0, -1.6), PI - 0.55);
+      put(ctx, 'me', L(-23.2, 0.12, -3.4), -0.45);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, me = ctx.cast.me, tr = ctx.time('b23.w10');
-      kidAt(ctx, [HX - 4, 24, HZ + 64], PI, 46, { eyes: 'side', mouth: 'smile', cheeks: 0.4, sweat: true, brows: 'worried', look: [-0.6, -0.6] }, 0.12);
+      kidAt(ctx, [HX - 4, 92, HZ + 150], PI, 46, { eyes: 'side', mouth: 'smile', cheeks: 0.4, sweat: true, brows: 'worried', look: [-0.6, -0.6] }, 0.12);
       const u = ease.inOutSine(clamp((t - ctx.time('b23')) / (tr - ctx.time('b23') - 0.05), 0, 1));
       const y = lerp(16, 0, u), U = P.home.userData;
       U.roofB.position.set(0, y, 0); U.roofB.rotation.set(0, 0, 0.05 * (1 - u));
       const top = slotPt(ctx, HOME, 0, 5.8 + 3.2 + y, 0);
-      P.hand.position.copy(top.clone().add(V(0, 1.5, 1.4))); P.hand.rotation.set(0.15, PI, 0); P.hand.scale.setScalar(9); P.hand.userData.set({ curl: 0.55 });
+      P.hand.position.copy(top.clone().add(V(0, 3.2, 0.6))); P.hand.rotation.set(1.25, PI, 0.15); P.hand.scale.setScalar(4.2); P.hand.userData.set({ curl: 0.35 });
       if (u >= 1) { P.hand.position.y += 6 * clamp((t - tr) / 0.6, 0, 1); }
       me.pose('crossArms', t); me.face('squint', 0.4);
-      moveCam(ctx, { pos: L(-21.2, 1.2, -5.4), look: L(-26.0, 9.5, 12), fov: 56 }, { pos: L(-21.6, 1.25, -4.8), look: L(-26.0, 8.0, 12), fov: 54 }, lt / 2.8, 0.9, '#ffe0d0');
+      moveCam(ctx, { pos: L(-21.8, 0.75, -7.0), look: L(-25.5, 9.5, 9), fov: 66 }, { pos: L(-22.0, 0.7, -6.4), look: L(-25.5, 8.5, 9), fov: 64 }, lt / 2.8, 0.9, '#ffe0d0');
       pop(ctx, tr, 0.1, '#ffffff', 0.25);
       if (t > tr) shakeOn(ctx, [tr], 0.3, 0.25, 4);
     },
@@ -1127,7 +1179,7 @@ export const shots = [
       const me = ctx.cast.me, t = ctx.t;
       me.pose('shrug', 0.15 + lt, {}); me.face('squint', 0.3);
       const k = ease.outCubic(clamp(lt / 0.3, 0, 1));
-      setCam(ctx, faceCam(me, 2.5 - 0.3 * k, -0.35, 0.42, 36), 1.3, '#ffe6d8');
+      setCam(ctx, faceCam(me, 2.7 - 0.3 * k, -0.35, 0.45, 36, -0.2), 1.3, '#ffe6d8');
     },
   },
   // ── b25 "Then I noticed the silver rim around town. Like a plate."  — crane up and up
@@ -1157,11 +1209,11 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tc = ctx.time('b26.w8');
       const lean = ease.outCubic(clamp(lt / 1.2, 0, 1));
-      kidAt(ctx, [4, lerp(70, 120, lean), lerp(-300, -240, lean)], 0, 150, { eyes: 'happy', mouth: 'grin', hat: true, cheeks: 0.5 }, 0.5);
+      kidAt(ctx, [4, lerp(30, 72, lean), lerp(-300, -240, lean)], 0, 150, { eyes: 'happy', mouth: 'grin', hat: true, cheeks: 0.5 }, 0.5);
       moveCam(ctx, { pos: L(4, 300, 230), look: L(4, 30, -90), fov: 52 }, { pos: L(4, 280, 205), look: L(4, 40, -100), fov: 50 }, lt / 2.5);
       P.plate.userData.glint(t, 0.6);
       shakeOn(ctx, [tc], 0.8, 0.5, 3);
-      stamp(ctx, "IT'S A CAKE", tc - 0.02, { y: 0.25, size: 130, fill: '#ff4fa3', stroke: '#ffffff', rot: -0.08 });
+      stamp(ctx, "IT'S A CAKE", tc - 0.02, { x: 0.3, y: 0.08, size: 100, fill: '#ff4fa3', stroke: '#ffffff', rot: -0.06 });
     },
   },
   // ── b27 "And nothing bites green? No kid eats the vegetables."
@@ -1182,15 +1234,15 @@ export const shots = [
     name: 'bramble waves', start: 'b27.w4-0.12', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'quiet_night', { glow: 0.9, exposure: 1.35, edits: { paint: GREEN_SLOTS, roofPaint: GREEN_ROOFS } });
-      put(ctx, 'bramble', L(-3.4, 0, 7.8), PI); put(ctx, 'gcat', L(-2.6, 0, 7.4), PI + 0.3);
+      put(ctx, 'bramble', L(-5.0, 0.12, 6.5), PI); put(ctx, 'gcat', L(-4.2, 0.12, 6.1), PI + 0.3);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, b = ctx.cast.bramble;
       b.pose('wave', t, { headPitch: -0.9 }); b.face('grin', 0.5);
       ctx.cast.gcat.pose('sit', t, { headPitch: -0.6 }); ctx.cast.gcat.face('smile', 0.5);
       const f = humanFace(b);
-      moveCam(ctx, { pos: f.clone().add(V(0.4, 7.5, -3.0)), look: f.clone().add(V(0, -1.2, 0.9)), fov: 40 }, { pos: f.clone().add(V(0.3, 5.0, -2.2)), look: f.clone().add(V(0, -1.0, 0.7)), fov: 38 }, lt / 1.8, 1.4, '#e8ffe0', 14);
-      stamp(ctx, 'NO KID EATS THE VEGGIES', ctx.time('b27.w8') - 0.05, { y: 0.16, size: 64, fill: '#5bd65b', stroke: '#ffffff', rot: -0.05 });
+      moveCam(ctx, { pos: f.clone().add(V(-0.9, 3.6, -3.4)), look: f.clone().add(V(0, -1.6, 0.4)), fov: 42 }, { pos: f.clone().add(V(-0.8, 2.8, -2.7)), look: f.clone().add(V(0, -1.5, 0.3)), fov: 40 }, lt / 1.8, 1.4, '#e8ffe0', 14);
+      stamp(ctx, 'NO KID EATS THE VEGGIES', ctx.time('b27.w8') - 0.05, { y: 0.12, size: 60, fill: '#ffffff', stroke: '#145a14', line: 10, bg: 'rgba(10,50,15,0.85)', rot: -0.04 });
     },
   },
   // ── b28 HUSS ×3 — on his roof; behind him the giant kid tries the HUSS
@@ -1208,7 +1260,7 @@ export const shots = [
       const lag = hitPulse(hits.map((x) => x + 0.08), t, 0.2);
       kidAt(ctx, [HX + 6, 26 + 2 * lag, HZ + 70], PI, 46, { eyes: lag > 0.3 ? 'shut' : 'happy', mouth: lag > 0.2 ? 'open' : 'grin', open: lag > 0.2 ? 1 : null, cheeks: 0.6, hat: true }, 0.1);
       const f = humanFace(me);
-      const cams = [{ pos: L(-24.5, 8.4, 4.2), look: f.clone().add(V(0, 2.0, 6)), fov: 50 }, faceCam(me, 2.3, -0.4, 0.3, 38, -0.3), { pos: L(-30.5, 7.6, 3.6), look: f.clone().add(V(1, 3.5, 8)), fov: 54 }];
+      const cams = [{ pos: f.clone().add(V(1.0, 0.3, -3.6)), look: f.clone().add(V(0, -0.6, 0)), fov: 52 }, faceCam(me, 2.3, -0.4, 0.3, 38, -0.3), { pos: f.clone().add(V(0.9, -1.3, -3.0)), look: f.clone().add(V(0.2, 1.2, 4)), fov: 64 }];
       setCam(ctx, cams[i], 1.1, '#ffe0d0', 14); ctx.cam.punch(hits, t, 0.1, 0.2); shakeOn(ctx, hits, 0.35, 0.2, 7 + i);
     },
   })),
@@ -1217,14 +1269,14 @@ export const shots = [
     name: 'party tomorrow', start: 'b29-0.12', set: 'town',
     setup(ctx) {
       homeStreet(ctx, 'quiet_night', { roof: 'redBitten', glow: 0.9 }); towerDress(ctx);
-      kidAt(ctx, [-150, 34, 1.5], PI / 2, 58, {});
+      kidAt(ctx, [KS.x, KS.y, KS.z], PI / 2 - 0.12, KS.s, {});
       addTo(ctx, ctx.props.sparks, -60, 30, 1.5, 0, 6);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
-      kidAt(ctx, [-150, 32 + 2 * Math.abs(Math.sin(t * 5)), 1.5], PI / 2, 58, { eyes: 'happy', mouth: 'grin', hat: true, cheeks: 0.5 });
+      kidAt(ctx, [KS.x, KS.y + 2 * Math.abs(Math.sin(t * 5)), KS.z], PI / 2 - 0.12, KS.s, { eyes: 'happy', mouth: 'grin', hat: true, cheeks: 0.5 });
       ctx.props.sparks.userData.set(t, 1);
-      moveCam(ctx, { pos: L(-22.5, 1.4, 3.0), look: L(-60, 22, 1.5), fov: 54 }, { pos: L(-23.5, 1.5, 3.0), look: L(-60, 23, 1.5), fov: 52 }, lt / 1.4, 0.5);
+      moveCam(ctx, { pos: L(-24.0, 1.5, 2.6), look: L(-51, 4.6, -1.2), fov: 58 }, { pos: L(-25.0, 1.6, 2.4), look: L(-51, 5.0, -1.0), fov: 56 }, lt / 1.4, 0.5);
       tag(ctx, 'PARTY: TOMORROW', ctx.markers.party - 0.05, Infinity, { y: 0.12, size: 76, bg: 'rgba(255,79,163,0.93)' });
     },
   },
@@ -1234,35 +1286,39 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, tw = ctx.markers.wick;
       const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
-      const c = moveCam(ctx, { pos: L(-41, 4.0, 4.5), look: L(-51, 10.5, 1.5), fov: 48 }, { pos: L(-47.2, 14.6, 4.2), look: L(-50.9, 16.6, 1.5), fov: 36 }, k);
+      const c = moveCam(ctx, { pos: L(-41, 4.0, 4.5), look: L(-51, 10.5, 1.5), fov: 48 }, { pos: L(-45.5, 13.5, 5.5), look: L(-50.9, 16.2, 1.5), fov: 42 }, k);
       fill(ctx, c.pos, 0.9, '#ffe6c0', 20);
+      { const g = ctx.props.moonGlow; ctx.add(g); const w = L(TOWER.x, TOWER.top + 2, TOWER.z); g.position.copy(w).addScaledVector(w.clone().sub(c.pos).normalize(), 40); }
       ctx.props.wick.userData.set(t, t > tw ? 0.6 : 0);
-      if (t > tw) { ringAt(ctx, L(TOWER.x + 0.2, TOWER.top + 1.8, TOWER.z), tw, 2.2); }
+      if (t > tw) { ringAt(ctx, L(TOWER.x + 0.3, TOWER.top + 2.9, TOWER.z), tw, 0.6); }
       tag(ctx, 'CANDLE WICK', tw - 0.05, Infinity, { y: 0.12, size: 80, bg: 'rgba(255,140,40,0.93)' });
     },
   },
-  // ── b30 "And somebody just struck a match."  — hard cut to black
+  // ── b30 "And somebody just struck a match."  — the flame descends toward the wick, held to the last frame
   {
     name: 'match', start: 'b30-0.12', set: 'town', captions: true,
     setup(ctx) {
       homeStreet(ctx, 'quiet_night', { roof: 'redBitten', glow: 0.9 }); towerDress(ctx);
-      const P = ctx.props; addTo(ctx, P.match, -60, 40, 1.5, 0, 26); addTo(ctx, P.hand, -60, 60, 1.5, 0, 6);
+      const P = ctx.props; addTo(ctx, P.match, -60, 40, 1.5, 0, 18); addTo(ctx, P.hand, -60, 60, 1.5, 0, 4);
       ctx.add(P.warm);
     },
     update(ctx, lt) {
-      const L = ctx.store.L, t = ctx.t, P = ctx.props, ts = ctx.markers.match;
+      const L = ctx.store.L, t = ctx.t, P = ctx.props, ts = ctx.markers.match, S = 16;
       const lit = clamp((t - ts) / 0.08, 0, 1), flare = Math.max(0, 1 - (t - ts) / 0.6) * lit;
-      const strike = ease.inOutCubic(clamp((t - ts + 0.35) / 0.35, 0, 1)), low = ease.inOutSine(clamp((t - ts - 0.4) / 1.4, 0, 1));
-      const mp = L(lerp(-36, -55, strike) + 3 * low, lerp(44, 40, strike) - 13 * low, 1.5);
-      P.match.position.copy(mp); P.match.rotation.set(0, PI / 2, lerp(-0.9, 0.35, strike)); P.match.scale.setScalar(26);
-      P.match.userData.set(t, { lit, flare });
-      P.hand.position.copy(mp.clone().add(V(4, 2, 0))); P.hand.rotation.set(0, PI / 2, 1.2); P.hand.scale.setScalar(6); P.hand.userData.set({ curl: 0.9 });
-      P.warm.position.copy(mp.clone().add(V(0, 26, 0))); P.warm.intensity = 4000 * lit * (1 + 1.5 * flare);
+      // poised (gentle hover) → quick swipe-strike to the left at ts → slow descent toward the wick (held to the end)
+      const strike = ease.inOutCubic(clamp((t - ts + 0.16) / 0.16, 0, 1)), low = ease.inOutSine(clamp((t - ts - 0.2) / 1.4, 0, 1));
+      const hover = 0.3 * Math.sin(t * 2.4);
+      const hp = strike < 1 ? V(lerp(-41.5, -45.5, strike), lerp(27.5, 26.0, strike) + hover * (1 - strike), 1.5) : V(lerp(-45.5, -48.2, low), lerp(26.0, 23.0, low), 1.5);
+      const head = L(hp.x, hp.y, hp.z), dir = V(-0.93, -0.36, 0).normalize();
+      P.match.quaternion.setFromUnitVectors(V(0, 1, 0), dir); P.match.scale.setScalar(S);
+      P.match.position.copy(head).addScaledVector(dir, -1.06 * S);
+      P.match.userData.set(t, { lit, flare }); P.match.userData.flame.quaternion.copy(P.match.quaternion).invert();
+      P.hand.position.copy(P.match.position).add(V(0.8, 1.2, 0.4)); P.hand.rotation.set(0, 0, -0.35); P.hand.scale.setScalar(4); P.hand.userData.set({ curl: 1 });
+      P.warm.position.copy(head.clone().add(V(0, 6, 4))); P.warm.intensity = 2500 * lit * (1 + 1.5 * flare);
       if (lit > 0) skyMood(ctx, 'orange', 0.75 * lit, { lights: true });
-      setCam(ctx, { pos: L(-38.5, 0.8, 4.6), look: L(-51, 19, 1.5), fov: 58 }, 0.5);
-      if (lit > 0) ctx.fx.overlay('#ff9a3a', 0.15 * flare);
+      setCam(ctx, { pos: L(-27.5, 6.0, 9.0), look: L(-48, 21.0, 1.5), fov: 50 }, 0.5);
+      pop(ctx, ts, 0.1, '#ffd08a', 0.35);
       shakeOn(ctx, [ts], 0.5, 0.4, 3);
-      blackout(ctx, ts + 1.15);
     },
   },
 ];

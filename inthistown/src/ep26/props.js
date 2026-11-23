@@ -274,7 +274,7 @@ export function makeBiteWall({ wall = '#ffb3d1', W = 4, Hh = 3, T = 0.5 } = {}) 
   const items = [];
   const cw = 0.1, n = Math.round(W / cw);
   const R = 1.45, cx0 = 0.35, cy0 = Hh + 0.35;       // bite circle
-  const tooth = 0.3, gapX = cx0 - 0.02, gapW = 0.42;
+  const tooth = 0.3, gapX = cx0 - 0.02, gapW = 0.62;
   let gapTop = 0;
   for (let i = 0; i < n; i++) {
     const x = -W / 2 + (i + 0.5) * cw;
@@ -285,8 +285,10 @@ export function makeBiteWall({ wall = '#ffb3d1', W = 4, Hh = 3, T = 0.5 } = {}) 
       cut = Math.floor(cut / 0.1) * 0.1;
       // tooth notches: each tooth bites 0.14 deeper, square
       const ph = ((x - cx0 + 10 * tooth) % tooth) / tooth;
-      if (ph > 0.12 && ph < 0.88) cut -= 0.14;
-      if (Math.abs(x - gapX) < gapW / 2) { cut += 0.36; gapTop = Math.max(gapTop, cut); }   // missing tooth: an un-bitten tab
+      const ag = Math.abs(x - gapX);
+      if (ag < gapW / 2) { cut += 0.06; gapTop = Math.max(gapTop, cut); }                 // missing tooth: a wide FLAT un-notched section
+      else if (ag < gapW / 2 + 0.2) cut -= 0.42;                                          // flanked by two deep tooth notches
+      else if (ph > 0.14 && ph < 0.86) cut -= 0.24;
       top = Math.min(Hh, cut);
     }
     const cutCol = top < Hh - 0.01;
@@ -352,8 +354,15 @@ export function makeFork({ tineL = 9, tineW = 0.8, gap = 2.2, handleL = 26 } = {
   const bridgeW = xs[3] - xs[0] + tineW;
   const neck = new THREE.Mesh(UNIT, m); neck.scale.set(bridgeW, 1.6, tineW * 0.8); neck.position.y = tineL + 0.7; neck.castShadow = true; g.add(neck);
   const taper = new THREE.Mesh(new THREE.CylinderGeometry(0.75, bridgeW / 2, 4, 4, 1), m); taper.rotation.y = PI / 4; taper.scale.z = 0.45; taper.position.y = tineL + 3.5; g.add(taper);
-  const handle = new THREE.Mesh(UNIT, m); handle.scale.set(1.5, handleL, 0.6); handle.position.y = tineL + 5.5 + handleL / 2; handle.castShadow = true; g.add(handle);
-  const stripe = new THREE.Mesh(UNIT, dark); stripe.scale.set(0.5, handleL * 0.8, 0.62); stripe.position.y = tineL + 5.5 + handleL / 2; g.add(stripe);
+  // curved neck: a chain of short segments bending back, then the handle continues at the bent angle
+  let par = new THREE.Group(); par.position.y = tineL + 5.5; g.add(par);
+  for (let k = 0; k < 4; k++) {
+    const seg = new THREE.Mesh(UNIT, m); seg.scale.set(1.5 - 0.05 * k, 1.7, 0.62); seg.position.y = 0.85; seg.castShadow = true; par.add(seg);
+    const nx = new THREE.Group(); nx.position.y = 1.6; nx.rotation.x = -0.11; par.add(nx); par = nx;
+  }
+  const handle = new THREE.Mesh(UNIT, m); handle.scale.set(1.5, handleL - 6, 0.6); handle.position.y = (handleL - 6) / 2; handle.castShadow = true; par.add(handle);
+  const stripe = new THREE.Mesh(UNIT, dark); stripe.scale.set(0.5, (handleL - 6) * 0.8, 0.62); stripe.position.y = (handleL - 6) / 2; par.add(stripe);
+  const end = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 0.6, 16), m); end.rotation.x = PI / 2; end.scale.set(1, 1, 1); end.position.y = handleL - 6; par.add(end);
   const glint = glowSprite('#ffffff', 5, 0.8); glint.position.set(xs[2], 2.5, 0.6); g.add(glint);
   g.userData = { tines, m, glint, height: tineL + 5.5 + handleL };
   return g;
@@ -408,7 +417,7 @@ export function makeGiantKid() {
   const mouth = new THREE.Group(); mouth.position.set(0, -0.29, FZ + 0.006); head.add(mouth);
   const hole = B(1, 1, 0.02, mouthM, 0, 0, 0); mouth.add(hole);
   const teeth = new THREE.Group(); mouth.add(teeth);
-  [-0.15, -0.05, 0.05, 0.15].forEach((x, k) => { if (k === 1) return; teeth.add(B(0.085, 0.085, 0.02, white, x, 0, 0.012)); });
+  for (let k = 0; k < 6; k++) { const x = -0.2 + k * 0.08; if (k === 2) { teeth.add(B(0.07, 0.09, 0.02, dark, x, 0, 0.014)); continue; } teeth.add(B(0.072, 0.09, 0.02, white, x, 0, 0.012)); }
   const smile = new THREE.Group(); mouth.add(smile);
   const sm = B(0.34, 0.05, 0.02, dark, 0, 0, 0.01); smile.add(sm);
   for (const s of [-1, 1]) { const c = B(0.1, 0.05, 0.02, dark, s * 0.2, 0.03, 0.01); c.rotation.z = s * 0.6; smile.add(c); }
@@ -455,13 +464,16 @@ export function makeMatch() {
   const stick = new THREE.Mesh(UNIT, wood); stick.scale.set(0.06, 1, 0.06); stick.position.y = 0.5; g.add(stick);
   const head = box(0.1, 0.13, 0.1, red, 0, 1.03, 0, 0.04); g.add(head);
   const flame = new THREE.Group(); flame.position.y = 1.08; g.add(flame);
-  const fo = new THREE.Mesh(new THREE.ConeGeometry(0.11, 0.42, 10), new THREE.MeshBasicMaterial({ color: '#ff8a1a', transparent: true, opacity: 0.92, fog: false, toneMapped: false }));
-  fo.position.y = 0.17; flame.add(fo);
-  const fi = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.26, 10), new THREE.MeshBasicMaterial({ color: '#fff2a0', fog: false, toneMapped: false }));
-  fi.position.y = 0.1; flame.add(fi);
-  const fb = sph(0.1, new THREE.MeshBasicMaterial({ color: '#ffb02a', fog: false, toneMapped: false }), 12, 10); fb.position.y = 0.0; flame.add(fb);
-  const glow = glowSprite('#ff9a3a', 1.4, 0.9); glow.position.y = 0.15; flame.add(glow);
-  const glow2 = glowSprite('#ffd08a', 0.55, 1); glow2.position.y = 0.1; flame.add(glow2);
+  // teardrop: round bottom (half sphere) + tall cone, outer orange, inner yellow-white core
+  const om = new THREE.MeshBasicMaterial({ color: '#ff8a10', transparent: true, opacity: 0.95, fog: false, toneMapped: false });
+  const im2 = new THREE.MeshBasicMaterial({ color: '#ffe86a', fog: false, toneMapped: false });
+  const cm = new THREE.MeshBasicMaterial({ color: '#fffbe0', fog: false, toneMapped: false });
+  const fb = new THREE.Mesh(new THREE.SphereGeometry(0.085, 14, 8, 0, PI * 2, PI / 2, PI / 2), om); fb.position.y = 0.1; flame.add(fb);
+  const fo = new THREE.Mesh(new THREE.ConeGeometry(0.085, 0.42, 14), om); fo.position.y = 0.1 + 0.21; flame.add(fo);
+  const fib = new THREE.Mesh(new THREE.SphereGeometry(0.055, 12, 6, 0, PI * 2, PI / 2, PI / 2), im2); fib.position.set(0, 0.09, 0.01); flame.add(fib);
+  const fi = new THREE.Mesh(new THREE.ConeGeometry(0.055, 0.27, 12), im2); fi.position.set(0, 0.09 + 0.135, 0.01); flame.add(fi);
+  const fc = new THREE.Mesh(new THREE.ConeGeometry(0.026, 0.12, 8), cm); fc.position.set(0, 0.11, 0.02); flame.add(fc);
+  const glow = glowSprite('#ff9a3a', 0.75, 0.6); glow.position.y = 0.22; flame.add(glow);
   const sparks = [];
   for (let i = 0; i < 14; i++) { const s = sph(0.012, new THREE.MeshBasicMaterial({ color: i % 2 ? '#ffe08a' : '#ff7a1a', fog: false, toneMapped: false }), 6, 4); flame.add(s); sparks.push(s); }
   g.userData = {
@@ -469,9 +481,9 @@ export function makeMatch() {
     set(t = 0, { lit = 1, flare = 0 } = {}) {
       flame.visible = lit > 0.01;
       const fl = 1 + 0.12 * Math.sin(t * 23) + 0.08 * Math.sin(t * 37 + 1);
-      flame.scale.set(lit * (1 + 0.8 * flare), lit * fl * (1 + 1.4 * flare), lit * (1 + 0.8 * flare));
-      glow.material.opacity = 0.9 * lit; glow.scale.setScalar(1.4 + 2.2 * flare);
-      head.material.emissive.set('#5a0808').lerp(_c.set('#ff4a00'), lit);
+      flame.scale.set(lit * (1 + 0.4 * flare), lit * fl * (1 + 0.6 * flare), lit * (1 + 0.4 * flare));
+      glow.material.opacity = 0.6 * lit; glow.scale.setScalar(0.75 + 1.2 * flare);
+      head.material.emissive.set('#5a0808').lerp(_c.set('#c01008'), lit);
       sparks.forEach((s, i) => {
         const u = (hash(i * 1.3) + t * (1.2 + hash(i * 2.2))) % 1;
         s.visible = flare > 0.05 || lit > 0.5;
@@ -490,7 +502,7 @@ export function makeWick() {
   const b = cyl(0.11, 0.13, 1.0, m, 10); b.position.set(0.18, 2.75, 0); b.rotation.z = -0.4; g.add(b);
   const tip = sph(0.12, m, 10, 8); tip.position.set(0.37, 3.2, 0); g.add(tip);
   const ember = glowSprite('#ff7a2a', 1.2, 0); ember.position.set(0.37, 3.2, 0); g.add(ember);
-  g.userData = { set(t, ember01 = 0) { ember.material.opacity = ember01 * (0.8 + 0.2 * Math.sin(t * 17)); } };
+  g.userData = { m, set(t, ember01 = 0) { ember.material.opacity = ember01 * (0.8 + 0.2 * Math.sin(t * 17)); } };
   return g;
 }
 
@@ -707,9 +719,10 @@ export function makeRedRing() {
 }
 export function makeShadowShape() {
   const tex = canvasTexture(512, 256, (g, w, h) => {
-    g.fillStyle = 'rgba(0,0,0,0)'; g.clearRect(0, 0, w, h); g.fillStyle = 'rgba(4,4,10,0.95)';
-    for (let i = 0; i < 4; i++) g.fillRect(40 + i * 70, 0, 34, 150);
-    g.fillRect(40, 130, 280, 40); g.fillRect(150, 160, 70, 90); g.fillRect(200, 200, 312, 56);
+    g.clearRect(0, 0, w, h); g.fillStyle = 'rgba(2,2,8,0.97)';
+    for (let i = 0; i < 4; i++) { g.fillRect(30 + i * 62, 0, 40, 150); g.beginPath(); g.moveTo(30 + i * 62, 150); g.lineTo(70 + i * 62, 150); g.lineTo(50 + i * 62, 0); g.fill(); }
+    g.fillRect(30, 140, 226, 44); g.beginPath(); g.moveTo(30, 184); g.lineTo(256, 184); g.lineTo(190, 236); g.lineTo(96, 236); g.fill();
+    g.fillRect(118, 220, 70, 36); g.fillRect(150, 226, 362, 30);
   });
   const m = new THREE.Mesh(new THREE.PlaneGeometry(4, 2), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, fog: false }));
   return m;
@@ -726,4 +739,36 @@ export function makeSteam(n = 10) {
     },
   };
   return g;
+}
+
+/** cake crumb burst (cubes flying out + falling): { root, update(u 0..1) } */
+export function makeCrumbBurst({ n = 40, radius = 3, cols = [CAKE.sponge, CAKE.cream, '#ff9cc8', '#ff6fae', CAKE.jam], seed = 5, size = 0.35 } = {}) {
+  const mat = new THREE.MeshBasicMaterial({ fog: false });
+  const im = new THREE.InstancedMesh(UNIT, mat, n); im.frustumCulled = false;
+  const root = new THREE.Group(); root.add(im);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(), p = V(), sc = V();
+  const parts = Array.from({ length: n }, (_, i) => { const a = hash(i * 1.9 + seed) * PI * 2, el = (hash(i * 3.7 + seed) - 0.25) * 1.3; return { d: V(Math.cos(a) * Math.cos(el), Math.sin(el), Math.sin(a) * Math.cos(el)), v: 0.6 + 0.6 * hash(i * 5.3 + seed), s: size * (0.5 + hash(i * 7.1 + seed)), r: hash(i * 2.2) * 6 }; });
+  parts.forEach((pt, i) => im.setColorAt(i, _c.set(cols[i % cols.length])));
+  im.instanceColor.needsUpdate = true;
+  return {
+    root, update(u) {
+      root.visible = u > 0 && u < 1;
+      if (!root.visible) return;
+      const k = 1 - Math.pow(1 - u, 2.2);
+      parts.forEach((pt, i) => {
+        p.copy(pt.d).multiplyScalar(radius * pt.v * k); p.y -= radius * 1.4 * u * u;
+        e.set(pt.r + u * 6, pt.r * 2 + u * 4, 0); q.setFromEuler(e); sc.setScalar(Math.max(0.001, pt.s * (1 - 0.5 * u)));
+        m4.compose(p, q, sc); im.setMatrixAt(i, m4);
+      });
+      im.instanceMatrix.needsUpdate = true;
+    },
+  };
+}
+/** moonlit night sky card (for behind the bedroom window): pale blue gradient + big moon */
+export function makeMoonSky(w = 3.2, h = 2.4) {
+  const tex = canvasTexture(512, 384, (g, W, Hh) => {
+    const gr = g.createLinearGradient(0, 0, 0, Hh); gr.addColorStop(0, '#3a4f9a'); gr.addColorStop(1, '#8ea6e6'); g.fillStyle = gr; g.fillRect(0, 0, W, Hh);
+    const rg = g.createRadialGradient(W * 0.62, Hh * 0.38, 10, W * 0.62, Hh * 0.38, 170); rg.addColorStop(0, 'rgba(255,250,225,1)'); rg.addColorStop(0.3, 'rgba(255,248,220,0.95)'); rg.addColorStop(0.34, 'rgba(220,230,255,0.5)'); rg.addColorStop(1, 'rgba(200,215,255,0)'); g.fillStyle = rg; g.fillRect(0, 0, W, Hh);
+  });
+  return new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, fog: false, toneMapped: false }));
 }

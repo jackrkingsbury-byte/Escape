@@ -408,8 +408,8 @@ export function makeFence({ w = 26, h = 6, gateW = 6.4 } = {}) {
     const cap = cone(0.55, 0.7, std('#3f7a5a'), 4); cap.rotation.y = PI / 4; at(C.g, cap, s * (gateW / 2 + 0.05), h + 2.75, 0);
   }
   const signT = labelTex(['DINOSAUR PARK'], { w: 1024, h: 240, bg: '#3f7a5a', fg: '#ffe14a', border: '#1f3a28', bw: 22, stroke: '#1f3a28', radius: 50 });
-  C.g.add(box(gateW + 1.4, 1.5, 0.22, std('#1f3a28'), 0, h + 1.35, 0.1, 0.06));
-  const sign = plane(gateW + 1.2, 1.32, signT, { glow: 0.25 }); at(C.g, sign, 0, h + 1.35, 0.23);
+  C.g.add(box(gateW + 1.4, 1.5, 0.22, std('#1f3a28'), 0, h + 1.35, 0.42, 0.06));   // in front of the gate posts (they used to crop the D and K)
+  const sign = plane(gateW + 1.2, 1.32, signT, { glow: 0.25 }); at(C.g, sign, 0, h + 1.35, 0.545);
   // dino footprint icons on the sign corners
   const doors = [];
   for (const s of [-1, 1]) {
@@ -567,6 +567,9 @@ export function makeEgg() {
       const seg = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.045, len + 0.03), glowM);
       const holder = grp(body); holder.position.copy(mid); holder.lookAt(b); holder.add(seg);   // +Z along a→b
       const n = mid.clone().setY(mid.y - H * 0.5).normalize(); holder.position.addScaledVector(n, 0.01);
+      // dark split around the glowing core: a wider charcoal bar sunk along the surface normal
+      holder.updateMatrix(); const nl = n.clone().applyQuaternion(holder.quaternion.clone().invert());
+      const edge = new THREE.Mesh(new THREE.BoxGeometry(0.085, 0.085, len + 0.05), darkM); edge.position.copy(nl).multiplyScalar(-0.034); holder.add(edge);
       segs.push({ holder, k: order0 + i });
     }
   }
@@ -635,8 +638,9 @@ export function makeStartLine(w = 9.2) {
     const p = cyl(0.12, 0.14, 6.2, std('#e8232b', { roughness: 0.5 }), 10); at(root, p, 0, 3.1, s * (w / 2 + 0.6));
     root.add(at(grp(null), sph(0.22, std('#ffd23f', { roughness: 0.4 })), 0, 6.3, s * (w / 2 + 0.6)));
   }
-  const ban = new THREE.Mesh(new THREE.PlaneGeometry(w + 1.0, 1.5), new THREE.MeshStandardMaterial({ map: checkerTex('chkBan', 1536, 192, 16, 'START'), roughness: 0.7, side: THREE.DoubleSide, emissive: '#ffffff', emissiveMap: checkerTex('chkBan', 1536, 192, 16, 'START'), emissiveIntensity: 0.15 }));
-  ban.rotation.y = -PI / 2; ban.position.set(0, 5.3, 0); root.add(ban);
+  // two single-sided faces so START reads correctly from both sides of the line (DoubleSide showed 'TRATS' from +X)
+  const banM = new THREE.MeshStandardMaterial({ map: checkerTex('chkBan', 1536, 192, 16, 'START'), roughness: 0.7, emissive: '#ffffff', emissiveMap: checkerTex('chkBan', 1536, 192, 16, 'START'), emissiveIntensity: 0.15 });
+  for (const ry of [-PI / 2, PI / 2]) { const ban = new THREE.Mesh(new THREE.PlaneGeometry(w + 1.0, 1.5), banM); ban.rotation.y = ry; ban.position.set(ry > 0 ? 0.01 : -0.01, 5.3, 0); root.add(ban); }
   return root;
 }
 export function makeFlag() {
