@@ -3,7 +3,7 @@
 Posting (updated Mon 23 Nov, creator's request: 3–4 a day at popular times): every finished episode is SCHEDULED through
 Buffer into the next free slot of 07:30 / 12:30 / 17:30 / 20:00 South African time (4 a day). 2026 timing data: 20:00 SAST is
 the strongest single hour (7–9 PM window), 12:00–13:00 lunch peak, 6–9 AM morning window, 14:00–18:00 after school/work.
-If fewer than 4 finished-but-unposted episodes are left, use only 07:30 / 17:30 / 20:00 (3 a day) until the buffer grows.
+Only if fewer than 4 posts are still waiting in Buffer (scheduled, not yet sent), use 07:30 / 17:30 / 20:00 (3 a day) until the queue grows.
 Check scheduled posts with list_posts and take the first slot after the last one.
 `mode: customScheduled`, `schedulingType: automatic`, `isAiGenerated: false`, caption = "Episode N <emoji> <story hook>"
 + exactly 5 hashtags: `#animation #robloxanimation #storytime #huss #funny`. Videos are copied to `videos/` (public raw links).
