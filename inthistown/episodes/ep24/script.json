@@ -1,0 +1,548 @@
+{
+ "title": "In This Town — Word of the Day",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "Every morning at eight, a giant new word falls out of a crack in the sky and the whole town has to say it all day (skronk, gubbins, flimbo, bonkle). The kid refuses because the words are cringe. Then one morning no word falls, the whole town forgets how to talk, and a giant eye in the crack waits for someone to give it a new word.",
+ "twist": "The kid, the only one who never needed the sky words, panics on stage and the only thing that comes out is 'HUSS!' The town chants it back and the sky is saved. Then a giant hand hands him a pencil: the old word-maker retired, so now he has to come up with tomorrow's word, due at eight.",
+ "caption_hook": "a new word falls from the sky every morning. today it didn't.",
+ "vibe": "meme",
+ "sets": [
+  "town square with stage and clock tower (morning)",
+  "clock tower (quiet night flashback)",
+  "main street front lawn (day)",
+  "house front doorstep (day)",
+  "town square stage with banner reading PRESS CONFERENCE",
+  "edge of main street where the road ends",
+  "park with table and tree",
+  "town square under a red sky",
+  "town square at party night",
+  "kid's bedroom (night)"
+ ],
+ "newProps": [
+  "sky crack (jagged zigzag of glowing white-gold thin boxes on the sky that can widen and narrow)",
+  "giant glowing toy alphabet blocks (cubes with a letter on each face) spelling SKRONK, then H-U-S-S",
+  "boxy red lawnmower that pops apart into small blocks",
+  "kid's ridiculous tall spiky block haircut",
+  "PRESS CONFERENCE podium (box)",
+  "lonely BRIDGE signpost (thin post plus an arrow-shaped box sign) at a road that ends in empty air",
+  "tumbleweed (small brown wireframe-ish sphere) rolling across the empty square",
+  "word-bubble tags popping above heads (SKRONK!, FLIMBO!, BONKLE!)",
+  "giant eye in the crack (big white sphere, red glowing iris ring, black pupil sphere; blinks by squashing)",
+  "giant blocky hand descending from the crack",
+  "giant pencil (yellow hex cylinder, pink cylinder eraser, cone tip)",
+  "bedroom wall clock reading 7:59",
+  "speech-length counter overlay"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, every morning at eight, a new word falls out of the sky.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:falls",
+     "gain": 0.5
+    },
+    {
+     "type": "boom",
+     "at": "w:sky",
+     "gain": 0.65
+    }
+   ],
+   "overlay": "8:00 AM",
+   "visual": "Town square, bright morning, clock tower reading 8:00. A jagged glowing crack opens in the blue sky and six giant glowing toy alphabet blocks spelling S-K-R-O-N-K tumble out and slam into the square one by one. Dust puffs, camera shake."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And everyone has to say it. All day long.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:everyone",
+     "gain": 0.5
+    },
+    {
+     "type": "pop",
+     "at": "w:say",
+     "gain": 0.5
+    },
+    {
+     "type": "cheer",
+     "at": "w:All",
+     "gain": 0.4
+    }
+   ],
+   "overlay": "SKRONK!",
+   "visual": "Townspeople swarm the letter blocks, pointing and cheering (point and cheer poses). Word-bubble tags reading SKRONK! pop above Grandma, Mr. Dunbar and the Mayor as they turn to each other."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone except me.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:me",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "EXCEPT ME",
+   "visual": "Cut to the kid (yellow hoodie, backwards cap) leaning on a street lamp at the edge of the square, crossArms pose, smug face."
+  },
+  {
+   "id": "b04",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "The kid snaps out three HUSSes (slam pose, huss face) with a punch-zoom on each. Townspeople behind him turn to stare."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Five years ago, the sky cracked open above the clock tower.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:cracked",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "5 YEARS AGO",
+   "visual": "Flashback, clock tower on a quiet night. A jagged white-gold crack splits the dark sky above the tower with a flash. Townspeople peer up from their doorways (peer pose)."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Monday's word was skronk. By lunch, Mr. Dunbar had skronked his lawnmower.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:skronk",
+     "gain": 0.5
+    },
+    {
+     "type": "thump",
+     "at": "w:lawnmower",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "MONDAY: SKRONK",
+   "visual": "Main street front lawn, day. Mr. Dunbar (grey beard, cap) gives a boxy red lawnmower one pat and it pops apart into blocks that bounce down the street. He shrugs (shrug pose).",
+   "markers": {
+    "skronk": "w:skronk",
+    "mower": "w:By"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Tuesday was gubbins. Grandma said my haircut was absolute gubbins.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:gubbins",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "TUESDAY: GUBBINS",
+   "visual": "Front doorstep of a house. The kid stands there with a ridiculous tall spiky block haircut. Grandma (white hair, glasses, pink cardigan) points at it, then bursts out laughing (point, then laugh pose).",
+   "markers": {
+    "gub": "w:Grandma"
+   }
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Wednesday was flimbo. The mayor answered everything with it.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:flimbo",
+     "gain": 0.5
+    },
+    {
+     "type": "ding",
+     "at": "w:everything",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "WEDNESDAY: FLIMBO",
+   "visual": "Town square stage under a banner reading PRESS CONFERENCE. Mayor Pickles (top hat, sash, mustache) stands at the podium. Extras raise their hands and he points at each one with a smug face."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Someone asked where the bridge went. Flimbo. The bridge is still missing.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:Flimbo",
+     "gain": 0.55
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Flimbo.",
+    "by": "Mayor Pickles, when asked where the bridge went"
+   },
+   "visual": "A quote card slams in. Then cut to the edge of main street where the road just ends in empty air: a lonely signpost with an arrow reading BRIDGE points at nothing, and the pigeon sits on top of it.",
+   "markers": {
+    "ask": "w:Someone",
+    "flimbo": "w:Flimbo",
+    "missing": "w:still"
+   }
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Number one word of all time? Bonkle. Nobody knows what it means. Fourteen people cried. The Goon Squad cried twice.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Bonkle",
+     "gain": 0.5
+    },
+    {
+     "type": "boom",
+     "at": "w:cried",
+     "gain": 0.55
+    },
+    {
+     "type": "airhorn",
+     "at": "w:Goon",
+     "gain": 0.4
+    }
+   ],
+   "overlay": "TOP 10 SKY WORDS OF ALL TIME",
+   "visual": "Top 10 card: TOP 10 SKY WORDS OF ALL TIME. #3 WOBBLETON, #2 SKRONK, #1 BONKLE (2022), which stamps in with a boom, plus a small tag reading 14 PEOPLE CRIED. Cutaway to townspeople in the square clapping with sad, teary faces.",
+   "markers": {
+    "bonkle": "w:Bonkle",
+    "cried": "w:Fourteen",
+    "goon": "w:Goon"
+   }
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Me? I don't say the words. They're cringe.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:cringe",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Park table. The kid sits alone (sit pose, smug face) while townspeople stroll past and word tags pop above their heads: BONKLE!, FLIMBO!, GUBBINS!"
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then this morning, eight o'clock... nothing fell.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:eight",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "8:00 AM",
+   "visual": "Town square. The whole town is gathered, looking up at the crack (peer pose). The clock tower hands click to 8:00, and the crack stays empty.",
+   "markers": {
+    "nothing": "w:nothing"
+   }
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "No word.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:word",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "NO WORD",
+   "visual": "Close on the empty spot where the blocks always land. A tumbleweed rolls through and the pigeon walks across. Giant stamp."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And the whole town forgot how to talk.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:forgot",
+     "gain": 0.35
+    }
+   ],
+   "visual": "Townspeople open their mouths and nothing comes out. They point at things and shrug. Mr. Dunbar and Grandma face each other and just stare (stunned and shrug poses)."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The mayor tried a speech. Forty minutes of jazz hands.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "overlay": "SPEECH LENGTH: 40:00",
+   "visual": "On stage, Mayor Pickles waves both hands frantically (dance2 pose, grin face) at a totally silent crowd. A counter overlay races up to 40:00.",
+   "sfx": [
+    {
+     "type": "wahwah",
+     "at": "w:jazz",
+     "gain": 0.45
+    }
+   ]
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the sky turned red, and a giant ear leaned down through the crack.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:red",
+     "gain": 0.55
+    },
+    {
+     "type": "boom",
+     "at": "w:ear",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The sky floods deep red. The crack widens and a giant glowing ear fills it, staring down over the clock tower. Street lamps flicker and the camera shakes. (It is a giant EAR, listening for a word: pink, blocky, with an earring-like gold ring, filling the crack.)",
+   "markers": {
+    "red": "w:red",
+    "ear": "w:ear"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "If nobody gave it a new word, the crack would close, and we'd never talk again.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:close",
+     "gain": 0.35
+    }
+   ],
+   "overlay": "SILENCE: FOREVER",
+   "visual": "The crack's glowing edges slowly start sliding shut around the ear. Townspeople walk in sad little circles below (walkSad pose, sad face)."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Only one person in town never needed the sky words. Me.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Me",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "EXCEPT ME",
+   "visual": "The camera pushes through the frozen crowd and stops on the kid, who slowly points at himself (point pose, sweat face)."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I climbed on stage. The whole town stared. The ear leaned closer.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:climbed",
+     "gain": 0.5
+    },
+    {
+     "type": "thump",
+     "at": "w:stared",
+     "gain": 0.5
+    }
+   ],
+   "visual": "The kid alone on the stage under the banner. Reverse shot of the whole silent town staring up at him. Then the giant ear in the crack swivels down to look at him.",
+   "markers": {
+    "stare": "w:whole",
+    "ear": "w:ear"
+   }
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I opened my mouth, and out came...",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Extreme slow push into the kid's face, with the crack almost shut in the sky behind him. He takes a big breath."
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid shouts three HUSSes (slam pose, huss face). Shockwave rings blast up toward the eye and the camera shakes on each one."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The giant ear wiggled. The sky turned gold. And the whole town shouted it back.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:wiggled",
+     "gain": 0.5
+    },
+    {
+     "type": "cheer",
+     "at": "w:shouted",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The giant ear wiggles, the crack flares gold, and the red sky floods back to bright golden day. The crowd's mouths open and every fist goes up (cheer pose).",
+   "markers": {
+    "wig": "w:wiggled",
+    "gold": "w:sky",
+    "shout": "w:whole"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "cheer",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Party-night lighting. The whole town (Grandma, Mr. Dunbar, Mayor Pickles and 30 extras) jumps and chants while the kid crowd-surfs over them (crowdSurf pose). Glowing toy blocks spelling H-U-S-S drop out of the crack."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then a giant hand reached down from the crack and handed me a pencil.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:hand",
+     "gain": 0.5
+    },
+    {
+     "type": "ding",
+     "at": "w:pencil",
+     "gain": 0.5
+    }
+   ],
+   "visual": "The music cuts. A giant blocky hand slowly lowers from the crack holding a giant yellow pencil and offers it to the kid on stage (stunned pose, shocked face).",
+   "markers": {
+    "hand": "w:giant",
+    "pencil": "w:handed"
+   }
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Turns out the old word-maker just retired. Tomorrow's word is due at eight.",
+   "gapAfter": 0.8,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:eight",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "DUE: 8:00 AM",
+   "visual": "Kid's bedroom at night. He sits on his bed hugging the giant pencil (sit pose, sweat face). The wall clock reads 7:59, and through the window the crack glows with the eye waiting. Stamp.",
+   "markers": {
+    "retired": "w:retired",
+    "due": "w:Tomorrows"
+   }
+  }
+ ]
+}

@@ -33,6 +33,7 @@ const PI = Math.PI;
 // ───────────────────────────────────────────────────────────────────────────────────────── cast
 const KIDS = Object.fromEntries(Object.values(extraSpecs(5, 922)).map((s, i) => [`k${i}`, { ...s, id: `k${i}`, scale: 0.8 + 0.06 * (i % 3), accessories: [] }]));
 const KID_IDS = Object.keys(KIDS);
+const KSP = [[43.0, -1.0, -PI / 2 + 0.35], [42.8, 0.6, -PI / 2 - 0.1], [43.4, 1.25, -PI / 2 - 0.3], [44.6, -1.7, -PI / 2 + 0.45], [44.6, 1.35, -PI / 2 - 0.35]];
 const SPECIAL = {
   lin: { id: 'lin', skin: '#f0c8a8', hair: { style: 'bun', color: '#b8b8b8' }, top: { style: 'cardigan', color: '#4f9a48', accent: '#ffffff' },
     bottom: { style: 'skirt', color: '#5a4a3a' }, shoes: '#4a3b2f', accessories: ['glasses'], scale: 0.93 },
@@ -57,7 +58,7 @@ const B = { x: -4.5, z: -1.0 };                 // fish bowl centre
 const SCAF = { x: B.x + 0.2, z: B.z + BOWL.R + 1.12 };
 const BN = { x: 12, z: 2.6, yaw: PI / 2 - 0.4 }; // Mr. Barnes on the road, facing the east camera
 const MH = { x: -52, z: -14 };                  // the mayor's house (park), facing +x
-const PUP = { x: -37, z: 0, s: 1.7 };
+const PUP = { x: -44, z: 0.4, s: 3 };
 const TW = { x: -51, z: 1.5, face: -49.66, cy: 11 };
 const TRUCK = { x: -41, z: 3.9 };
 const CAT_BIG = { x: -52, z: -12 };             // giant Waffles after he steps down (root), facing +x
@@ -254,6 +255,19 @@ function towerHands(ctx, mAng = -PI / 2, hAng = PI / 3) {
   const P = ctx.props; addTo(ctx, P.hands, TW.face, TW.cy, TW.z, PI / 2); P.hands.userData.set(mAng, hAng);
   return P.hands.userData.tipWorld();
 }
+/** comic freeze-frame speed lines from the frame edges */
+function speedLines(ctx, k = 1) {
+  ctx.fx.draw((g, W, H) => {
+    g.save(); g.strokeStyle = `rgba(255,255,255,${0.75 * k})`; g.lineCap = 'round';
+    const cx = W * 0.5, cy = H * 0.42, R0 = Math.hypot(W, H) * 0.62;
+    for (let i = 0; i < 40; i++) {
+      const a = (i / 40) * PI * 2 + 0.07 * hash(i * 3.1), r1 = R0 * (0.62 + 0.12 * hash(i * 1.7));
+      g.lineWidth = W * (0.004 + 0.006 * hash(i * 5.3));
+      g.beginPath(); g.moveTo(cx + Math.cos(a) * R0, cy + Math.sin(a) * R0); g.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); g.stroke();
+    }
+    g.restore();
+  });
+}
 function surprisedArms(ch, t, k = 1) { ch.pose('surprised', t, { intensity: k }); }
 function lookHands(ch, t, k = 1) {
   ch.pose('idle', t, { intensity: 0.3 });
@@ -300,20 +314,24 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day'); bowlStreet(ctx);
       put(ctx, 'lin', L(-0.4, 0, 3.0), L.yaw + 0.2);
-      barnesRig(ctx, { pose: 'crossArms' });
+      const bn = barnesRig(ctx, { pose: 'crossArms' });
+      ctx.remove(ctx.props.dog);
+      const lp = ctx.props.loop; addTo(ctx, lp, bn.dp.x, 0.13, bn.dp.z, BN.yaw + PI / 2);
+      ctx.store.loopEnd = V(bn.dp.x, 0.2, bn.dp.z);
       ctx.store.walk = crowd(ctx, [X[0], X[1], X[2], X[3], X[4]], [[16, 6.2, -PI / 2], [6, -6.3, PI / 2], [-12, 6.3, -PI / 2], [1.5, 4.4, -2.4], [-0.5, -5.8, PI + 0.4]]);
     },
     update(ctx, lt, u) {
       const L = ctx.store.L, t = ctx.t;
       fishLook(ctx, 18, 2, 6, t, { blink: 0 });
-      barnesFrame(ctx, t);
+      barnesFrame(ctx, t, { thick: 4.5, end: ctx.store.loopEnd });
+      ctx.props.loop.rotation.z = 0.15 * Math.sin(t * 5);
       const lin = ctx.cast.lin; lin.pose('wave', t); lin.face('smile', t);
       const w = ctx.store.walk;
       w.forEach((c, i) => {
         if (i < 3) { const dir = i === 1 ? 1 : -1; c.ch.root.position.copy(L(c.x + dir * 0.9 * lt, 0.12, c.z)); c.ch.pose('walk', t + c.ph); c.ch.face('smile', t + c.ph); }
         else { c.ch.pose('point', t + c.ph, { lookAt: L(B.x, 6, B.z) }); c.ch.face('shocked', 1); }
       });
-      ctx.cam.move({ pos: L(26, 9, 8), look: L(-4, 4.6, -1), fov: 46 }, { pos: L(19.5, 2.3, 5.6), look: L(-3, 4.2, -0.5), fov: 46 }, u, 'inOutSine');
+      ctx.cam.move({ pos: L(26, 9, 8), look: L(-4, 4.6, -1), fov: 46 }, { pos: L(21, 2.8, 7.6), look: L(-3, 3.6, -0.5), fov: 46 }, u, 'inOutSine');
     },
   },
   // ── b02 "Mrs. Lin loves her goldfish so much, it's the size of a school bus."  — wave, tilt up the bowl
@@ -332,8 +350,8 @@ export const shots = [
       ctx.store.walk.forEach((c, i) => { const dir = i ? 1 : -1; c.ch.root.position.copy(L(c.x + dir * 0.9 * (t - t0), 0.12, c.z)); c.ch.pose('walk', t + c.ph); c.ch.face('smile', t); });
       const k = ease.inOutCubic(clamp((t - t0 - 0.9) / 2.2, 0, 1));
       const pos = L(3.6, 0.8, 4.0);
-      const look = L(-0.2, 1.2, 2.4).lerp(L(B.x + 0.8, 5.4, B.z + 0.6), k);
-      ctx.cam.set({ pos: pos.clone().lerp(L(6.0, 0.55, 4.2), k), look, fov: lerp(36, 56, k) });
+      const look = L(-0.2, 1.2, 2.4).lerp(L(B.x + 0.8, 2.5, B.z + 0.6), k);
+      ctx.cam.set({ pos: pos.clone().lerp(L(6.0, 0.9, 4.2), k), look, fov: lerp(36, 56, k) });
       tag(ctx, 'SIZE: SCHOOL BUS', ctx.time('b02.w12'), Infinity, { y: 0.13, bg: 'rgba(255,122,26,0.92)' });
     },
   },
@@ -343,7 +361,7 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day'); bowlStreet(ctx);
       const P = ctx.props, deck = 7.4;
-      put(ctx, 'lin', L(SCAF.x + 0.15, deck, SCAF.z + 0.75), L.yaw + PI);
+      put(ctx, 'lin', L(SCAF.x + 0.15, deck, SCAF.z + 0.75), L.yaw + PI + 1.15);
       addTo(ctx, P.barrow, SCAF.x + 0.15, deck, SCAF.z - 0.25, PI);
       addTo(ctx, P.flakes, 0, 0, 0);
     },
@@ -358,7 +376,9 @@ export const shots = [
       const mouthW = P.bowl.userData.mouthWorld().applyMatrix4(L.M.clone().invert());
       const lip = P.barrow.userData.lipWorld().applyMatrix4(L.M.clone().invert());
       P.flakes.userData.set(clamp((t - tf - 0.1) / 0.75, 0, 1), lip, mouthW.add(up(0.2)), 0.7);
-      ctx.cam.set({ pos: L(B.x - 4.6, 9.8, B.z + 9.6), look: L(B.x + 0.2, 8.0, B.z + 3.8), fov: 54 });
+      const linP = ctx.cast.lin.root.position.clone().applyMatrix4(L.M.clone().invert());
+      const foc = V(lerp(linP.x, mouthW.x, 0.62), mouthW.y - 2.3, lerp(linP.z, mouthW.z, 0.62));
+      ctx.cam.set({ pos: L(B.x - 5.0, 13.6, B.z + 8.6), look: L(foc.x, foc.y, foc.z), fov: 52 });
       stamp(ctx, 'GULP!', tw + 0.12, { size: 140, fill: '#ff7a1a', rot: 0.1, y: 0.16 });
     },
   },
@@ -380,15 +400,14 @@ export const shots = [
       const med = { pos: L(bx + f.x * 3.4 + s.x * 0.5, 1.25, bz + f.z * 3.4 + s.z * 0.5), look: L(bx, 1.2, bz), fov: 34 };
       const med2 = { pos: L(bx + f.x * 2.9 + s.x * 0.45, 1.3, bz + f.z * 2.9 + s.z * 0.45), look: L(bx, 1.25, bz), fov: 34 };
       const dw = { x: dp.x + f.x * 0.17 - s.x * 0.03, z: dp.z + f.z * 0.17 - s.z * 0.03 };
-      const macro = { pos: L(dw.x, 0.045, dw.z), look: L(dp.x, 0.018, dp.z), fov: 30 };
+      const dw2 = { x: dp.x + f.x * 0.3 - s.x * 0.06, z: dp.z + f.z * 0.3 - s.z * 0.06 };
+      const macroA = { pos: L(dw2.x, 0.11, dw2.z), look: L(dp.x, -0.01, dp.z), fov: 32 };
+      const macro = { pos: L(dw.x, 0.075, dw.z), look: L(dp.x, -0.01, dp.z), fov: 30 };
       const tn = ctx.time('b04.w8');
-      if (t < tn - 0.1) moveCam(ctx, med, med2, (t - 9.5) / 3);
-      else {
-        const k = ease.inOutCubic(clamp((t - tn + 0.1) / 0.85, 0, 1));
-        const c = camLerp(med2, macro, k); c.pos.y = lerp(med2.pos.y, macro.pos.y, Math.pow(k, 0.6)); ctx.cam.set(c);
-      }
-      tag(ctx, 'ACTUAL SIZE', ctx.time('b04.w10'), Infinity, { y: 0.16, size: 80, bg: 'rgba(200,0,40,0.9)' });
-      if (t > ctx.time('b04.w10')) ctx.fx.text('↓', { x: 0.5, y: 0.27, size: 120, fill: '#ffffff', stroke: '#000000', line: 10 });
+      if (t < tn) moveCam(ctx, med, med2, (t - 9.5) / 3);
+      else moveCam(ctx, macroA, macro, ease.outCubic(clamp((t - tn) / 0.7, 0, 1)));
+      tag(ctx, 'ACTUAL SIZE', ctx.time('b04.w10'), Infinity, { y: 0.12, size: 80, bg: 'rgba(200,0,40,0.9)' });
+      if (t > ctx.time('b04.w10')) ctx.fx.text('↓', { x: 0.5, y: 0.2, size: 110, fill: '#ffffff', stroke: '#000000', line: 10 });
     },
   },
   // ── b05 HUSS ×3 — I land in frame, slam; the street laughs at the tiny dog
@@ -414,7 +433,7 @@ export const shots = [
       const cams = [
         { pos: L(mx + 3.0, 0.45, mz + 0.4), look: L(mx, 1.45, mz), fov: 44 },
         { pos: L(mx + 4.4, 1.5, mz + 2.2), look: L(mx, 1.3, mz), fov: 36 },
-        { pos: L(mx + 5.6, 2.2, mz + 1.6), look: L(BN.x + 0.6, 0.9, BN.z), fov: 42 },
+        { pos: L(mx + 5.4, 2.2, mz + 3.2), look: L(mx - 0.5, 0.65, mz - 1.0), fov: 44 },
       ];
       ctx.cam.set(cams[i]); ctx.cam.punch(hits, t, 0.1, 0.2);
     },
@@ -425,7 +444,7 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day');
       const P = ctx.props, W = { x: 70, z: 70 };
-      addTo(ctx, P.winRoom, W.x, 0, W.z, 0);
+      addTo(ctx, P.winRoom, W.x, 0, W.z, 0); P.winRoom.children[9].visible = false;   // no cross bar over his face
       put(ctx, 'mayor', L(W.x, 0, W.z - 1.25), L.yaw);
       addTo(ctx, P.hamS, 0, 0, 0, 0, 0.11);
       ctx.store.W = W;
@@ -447,11 +466,11 @@ export const shots = [
       P.hearts.forEach((h, k) => {
         const d = t - (tl + 0.08 + k * 0.09);
         if (d < 0) { h.position.set(0, -50, 0); return; }
-        const a = (k / 8 - 0.5) * 2.2;
-        h.position.set(fc.x + Math.sin(a) * (0.25 + 0.5 * d), fc.y + 0.25 + 0.9 * d, fc.z + 0.3); h.scale.setScalar(0.22 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
+        const a = (k / 8 - 0.5) * 2.2, rise = Math.min(0.55, 0.7 * d);
+        h.position.set(fc.x + Math.sin(a) * 0.32, fc.y + 0.3 + rise + 0.05 * Math.sin(t * 4 + k), fc.z + 0.35); h.scale.setScalar(0.2 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
       });
       const k = ease.inOutSine(clamp(lt / 3.6, 0, 1));
-      ctx.cam.set({ pos: L(W.x + 0.25, 1.45, W.z + lerp(7.6, 4.4, k)), look: L(W.x, 1.62, W.z - 1.2), fov: 36 });
+      ctx.cam.set({ pos: L(W.x + 0.7, 1.2, W.z + lerp(7.6, 4.4, k)), look: L(W.x + 0.45, 1.15, W.z - 1.2), fov: 36 });
       // flashback treatment
       ctx.fx.overlay('#d89a4a', 0.2); ctx.fx.vignette(0.75);
       ctx.fx.draw((g, Wd, Hd) => { g.save(); const mm = Wd * 0.04; g.fillStyle = 'rgba(40,22,8,0.9)'; g.beginPath(); g.rect(0, 0, Wd, Hd); g.roundRect(mm, mm * 1.6, Wd - 2 * mm, Hd - 3.2 * mm, Wd * 0.06); g.fill('evenodd'); g.restore(); });
@@ -475,7 +494,7 @@ export const shots = [
       const pre = t < tb ? 0.04 * Math.sin(t * 60) : 0;
       P.house.rotation.z = pre;
       const hp = ease.outBack(clamp((t - tb) / 0.35, 0, 1));
-      P.ham.position.set(MH.x, lerp(0.5, 6.0, hp), MH.z); P.ham.visible = t > tb - 0.02;
+      P.ham.position.set(MH.x, lerp(3.5, 6.0, hp), MH.z); P.ham.scale.setScalar(lerp(0.8, 2.35, clamp(hp, 0, 1.2))); P.ham.visible = t > tb + 0.02;
       P.ham.userData.set(t, { cheeks: 1, wiggle: 1 });
       P.debris.userData.set(clamp((t - tb) / 1.6, 0, 1), 1);
       animList(ctx.store.walk, t, t > tb ? 'surprised' : 'idle', t > tb ? 'shocked' : 'smile', (c) => ({ lookAt: L(MH.x, 6, MH.z) }));
@@ -495,9 +514,9 @@ export const shots = [
     update(ctx) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tb = ctx.time('b07.w1');
       P.house.userData.set((t - tb) / 1.1, -1);
-      P.ham.userData.set(t, { cheeks: 1.1, wiggle: 1.2 });
+      P.ham.userData.set(t, { cheeks: 0.7, wiggle: 1.2 });
       P.debris.userData.set(clamp((t - tb) / 1.6, 0, 1), 1);
-      ctx.cam.move({ pos: L(MH.x + 9.5, 0.6, MH.z + 3.8), look: L(MH.x, 7.8, MH.z), fov: 58 }, { pos: L(MH.x + 9.0, 0.6, MH.z + 3.6), look: L(MH.x, 8.0, MH.z), fov: 56 }, clamp(ctx.lt / 0.8, 0, 1));
+      ctx.cam.move({ pos: L(MH.x + 11.5, 4.4, MH.z + 4.4), look: L(MH.x, 5.6, MH.z), fov: 52 }, { pos: L(MH.x + 11, 4.6, MH.z + 4.2), look: L(MH.x, 5.8, MH.z), fov: 50 }, clamp(ctx.lt / 0.8, 0, 1));
       ctx.cam.shake(0.15, t, 5);
     },
   },
@@ -507,14 +526,14 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day'); const P = ctx.props;
       addTo(ctx, P.board, 46, 0, 0, -PI / 2);
-      ctx.store.crowd = crowd(ctx, ['lin', 'barnes', X[0], X[1], X[2], X[12]], [[42.4, 2.0, -2.0], [42.2, -2.0, -1.1], [43.6, 3.0, -2.2], [43.4, -3.0, -0.9], [40.8, 2.8, -1.9], [40.6, -2.6, -1.2]]);
+      ctx.store.crowd = crowd(ctx, ['lin', 'barnes', X[0], X[1], X[2], X[12]], [[41.2, 1.15, -1.8], [41.0, -1.0, -1.3], [43.2, 1.9, -2.0], [43.0, -1.8, -1.1], [39.4, 1.6, -1.9], [39.2, -1.45, -1.25]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tr = ctx.time('b08.w4'), tn = ctx.time('b08.w5');
       P.board.userData.set(ease.inOutCubic(clamp((t - tr + 0.1) / 0.45, 0, 1)));
       const nod = t > tn + 0.3;
       animList(ctx.store.crowd, t, 'idle', nod ? 'determined' : 'neutral', (c) => ({ headPitch: nod ? 0.2 * Math.max(0, Math.sin((t - tn) * 6 + c.k)) : 0, intensity: 0.3 }));
-      const a = { pos: L(31.5, 1.4, 1.4), look: L(46, 2.0, 0), fov: 46 }, b = { pos: L(33.5, 1.5, 1.0), look: L(46, 2.2, 0), fov: 44 };
+      const a = { pos: L(31.0, 1.5, 0.9), look: L(46, 2.0, 0), fov: 52 }, b = { pos: L(32.5, 1.6, 0.7), look: L(46, 2.2, 0), fov: 50 };
       moveCam(ctx, a, b, ease.inOutSine(clamp((t - tr) / 1.6, 0, 1)));
       tag(ctx, 'RULE #1: NO "I LOVE YOU" INDOORS', tn, Infinity, { y: 0.12, size: 48, bg: 'rgba(200,0,40,0.9)' });
     },
@@ -525,15 +544,15 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day'); const P = ctx.props;
       addTo(ctx, P.shop, 15, 0, 7.45, PI);
-      put(ctx, 'pearl', L(12.2, 0.12, 6.4), L.yaw + PI + 0.6);
+      put(ctx, 'pearl', L(14.3, 0.12, 6.1), L.yaw + PI);
       ctx.store.walk = crowd(ctx, [X[13]], [[22, 6.0, -PI / 2]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tg = ctx.time('b08.w13');
       P.shop.userData.setX((t - tg) / 0.12);
-      const pe = ctx.cast.pearl; pe.pose(t > tg + 0.2 ? 'shrug' : 'idle', t); pe.face(t > tg + 0.1 ? 'sad' : 'smile', 0.4);
+      const pe = ctx.cast.pearl; pe.pose(t > tg + 0.2 ? 'shrug' : 'idle', t); pe.face(t > tg + 0.02 ? 'sad' : 'smile', 0.4);
       const w = ctx.store.walk[0]; w.ch.root.position.copy(L(22 - 0.9 * lt, 0.12, 6.0)); w.ch.pose('walk', t); w.ch.face('smile', t);
-      ctx.cam.move({ pos: L(14.2, 1.9, -3.2), look: L(14.6, 3.2, 7.4), fov: 44 }, { pos: L(14.4, 2.2, -2.2), look: L(14.8, 3.6, 7.4), fov: 42 }, clamp(lt / 2, 0, 1));
+      ctx.cam.move({ pos: L(15.0, 1.9, -3.6), look: L(15.0, 3.0, 7.4), fov: 52 }, { pos: L(15.0, 2.1, -3.0), look: L(15.0, 3.2, 7.4), fov: 50 }, clamp(lt / 2, 0, 1));
       shakeOn(ctx, [tg], 0.5, 0.3, 4);
     },
   },
@@ -543,17 +562,17 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day'); const P = ctx.props;
       addTo(ctx, P.pup, PUP.x, 0, PUP.z, PI / 2, PUP.s);
-      addTo(ctx, P.barrier, -27.5, 0, 0.4, PI / 2);
-      P.cones.forEach((c, i) => addTo(ctx, c, -27.0 + (i - 1) * 0.3, 0, [-3.6, 3.8, 4.4][i], i));
+      addTo(ctx, P.barrier, -24, 0, 0.6, PI / 2);
+      P.cones.forEach((c, i) => addTo(ctx, c, -23.6 + (i - 1) * 0.3, 0, [-3.4, 3.6, 4.3][i], i));
       addTo(ctx, P.zzz, PUP.x + 2, 5.6, PUP.z - 3.2);
-      put(ctx, 'pearl', L(-33.0, 0, -1.4), L.yaw - PI / 2 - 0.55);
+      put(ctx, 'pearl', L(-37.2, 0, -1.4), L.yaw + 0.5);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props;
       P.pup.userData.set(t); P.barrier.userData.set(t);
-      P.zzz.position.set(PUP.x + 2.2, 5.8 + 0.3 * Math.sin(t * 2), PUP.z - 3.6); P.zzz.material.rotation = 0.1 * Math.sin(t * 1.5);
+      P.zzz.position.set(PUP.x + 3.5, 9.6 + 0.4 * Math.sin(t * 2), PUP.z - 5.5); P.zzz.scale.set(3.6, 3.6, 1); P.zzz.material.rotation = 0.1 * Math.sin(t * 1.5);
       const pe = ctx.cast.pearl; patPose(pe, t); pe.face('smile', 0.4);
-      ctx.cam.move({ pos: L(-15.5, 3.0, 0.6), look: L(-35, 2.0, -0.8), fov: 46 }, { pos: L(-17.5, 2.6, 0.5), look: L(-35, 2.0, -0.9), fov: 44 }, clamp(lt / 2, 0, 1));
+      ctx.cam.move({ pos: L(-21.5, 7.4, 3.4), look: L(-41, 2.6, -3.4), fov: 48 }, { pos: L(-22.5, 6.9, 3.2), look: L(-41, 2.4, -3.4), fov: 46 }, clamp(lt / 2, 0, 1));
     },
   },
   {
@@ -561,16 +580,15 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day'); const P = ctx.props;
       addTo(ctx, P.pup, PUP.x, 0, PUP.z, PI / 2, PUP.s);
-      addTo(ctx, P.barrier, -27.5, 0, 0.4, PI / 2);
       addTo(ctx, P.zzz, PUP.x + 2, 5.6, PUP.z - 3.2);
-      put(ctx, 'pearl', L(-33.4, 0, -0.2), L.yaw - 0.35);
+      put(ctx, 'pearl', L(-36.6, 0, -2.0), L.yaw + 0.25);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props;
-      P.pup.userData.set(t); P.barrier.userData.set(t);
-      P.zzz.position.set(PUP.x + 2.4, 4.4 + 0.3 * Math.sin(t * 2), PUP.z - 3.0);
+      P.pup.userData.set(t);
+      P.zzz.position.set(PUP.x + 3.4, 5.6 + 0.25 * Math.sin(t * 2), PUP.z - 5.6); P.zzz.scale.set(2.2, 2.2, 1);
       const pe = ctx.cast.pearl; patPose(pe, t); pe.face('smile', 0.4);
-      ctx.cam.move({ pos: L(-30.4, 0.8, 3.8), look: L(-34.2, 0.78, -1.2), fov: 50 }, { pos: L(-30.8, 0.8, 3.4), look: L(-34.2, 0.8, -1.2), fov: 48 }, clamp(lt / 1.3, 0, 1));
+      ctx.cam.move({ pos: L(-31.0, 1.3, 1.6), look: L(-39.6, 2.3, -5.0), fov: 54 }, { pos: L(-31.5, 1.25, 1.2), look: L(-39.6, 2.4, -5.0), fov: 52 }, clamp(lt / 1.3, 0, 1));
       tag(ctx, 'ROAD CLOSED', ctx.time('b09.w8'), Infinity, { y: 0.13, size: 84, fill: '#1d1d22', stroke: '#ffffff', bg: 'rgba(255,138,26,0.95)' });
     },
   },
@@ -604,7 +622,7 @@ export const shots = [
       w.pose('sit', t, { lookAt: humanFace(me) }); w.face('smile', 0.4);
       me.pose('crossArms', t, { headYaw: 0.75, headPitch: -0.1 }); me.face('smug', 0.4);
       const mid = V(bed.x + 0.7, 0, bed.z + 0.6);
-      ctx.cam.move({ pos: mid.clone().add(V(0.2, 1.2, 4.6)), look: mid.clone().add(V(0.1, 1.05, 0)), fov: 38 }, { pos: mid.clone().add(V(0.15, 1.25, 3.9)), look: mid.clone().add(V(0.1, 1.1, 0)), fov: 38 }, clamp(lt / 2.8, 0, 1));
+      ctx.cam.move({ pos: mid.clone().add(V(0.35, 1.2, 5.0)), look: mid.clone().add(V(0.25, 1.0, 0)), fov: 42 }, { pos: mid.clone().add(V(0.3, 1.25, 4.3)), look: mid.clone().add(V(0.25, 1.05, 0)), fov: 42 }, clamp(lt / 2.8, 0, 1));
       tag(ctx, 'NORMAL-SIZED', ctx.time('b10.w8'), ctx.time('b10.w13') - 0.05, { y: 0.13 });
       tag(ctx, 'TOO COOL', ctx.time('b10.w13'), Infinity, { y: 0.13, bg: 'rgba(30,30,40,0.92)', fill: '#3ee0c8' });
     },
@@ -616,7 +634,7 @@ export const shots = [
       const L = town(ctx, 'day');
       put(ctx, 'me', L(38, 0, 1.0), L.yaw + PI / 2);
       put(ctx, 'tyler', L(41.4, 0, 0.2), L.yaw - PI / 2 + 0.1);
-      ctx.store.kids = crowd(ctx, KID_IDS, [[43.2, -1.6, -PI / 2 + 0.3], [43.6, 1.8, -PI / 2 - 0.3], [44.6, 0.2, -PI / 2], [45.2, -2.8, -PI / 2 + 0.4], [45.4, 2.9, -PI / 2 - 0.4]]);
+      ctx.store.kids = crowd(ctx, KID_IDS, KSP);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me, ty = ctx.cast.tyler;
@@ -624,7 +642,7 @@ export const shots = [
       ty.pose(t > ts ? 'pointLaugh' : 'idle', t, { lookAt: humanFace(me) }); ty.face(t > ts ? 'laugh' : 'smug', t);
       animList(ctx.store.kids, t, (c) => (t > ts + 0.4 + c.k * 0.1 ? (c.k % 2 ? 'laugh' : 'pointLaugh') : 'idle'), (c) => (t > ts + 0.4 ? 'laugh' : 'smile'));
       me.pose('idle', t, { intensity: 0.3 }); me.face('neutral', 0.4);
-      ctx.cam.move({ pos: L(34.4, 1.6, 3.4), look: L(42.4, 0.85, -0.2), fov: 42 }, { pos: L(35.0, 1.6, 3.2), look: L(42.2, 0.9, -0.1), fov: 39 }, clamp(lt / 2.6, 0, 1));
+      ctx.cam.move({ pos: L(35.0, 1.75, 2.45), look: L(43, 0.95, 0.3), fov: 35 }, { pos: L(35.5, 1.75, 2.35), look: L(43, 1.0, 0.3), fov: 32 }, clamp(lt / 2.6, 0, 1));
     },
   },
   {
@@ -633,7 +651,7 @@ export const shots = [
       const L = town(ctx, 'day');
       put(ctx, 'me', L(38, 0, 1.0), L.yaw + PI / 2 - 0.55);
       put(ctx, 'tyler', L(41.4, 0, 0.2), L.yaw - PI / 2 + 0.1);
-      ctx.store.kids = crowd(ctx, KID_IDS, [[43.2, -1.6, -PI / 2 + 0.3], [43.6, 1.8, -PI / 2 - 0.3], [44.6, 0.2, -PI / 2], [45.2, -2.8, -PI / 2 + 0.4], [45.4, 2.9, -PI / 2 - 0.4]]);
+      ctx.store.kids = crowd(ctx, KID_IDS, KSP);
       ctx.add(ctx.props.sweat, ctx.cast.me.joints.head); ctx.props.sweat.position.set(0.3, 0.5, 0.2);
     },
     update(ctx, lt) {
@@ -653,7 +671,7 @@ export const shots = [
       const L = town(ctx, 'day');
       put(ctx, 'me', L(38, 0, 1.0), L.yaw - PI / 2 + 0.2);
       put(ctx, 'tyler', L(41.4, 0, 0.2), L.yaw - PI / 2 + 0.1);
-      ctx.store.kids = crowd(ctx, KID_IDS, [[43.2, -1.6, -PI / 2 + 0.3], [43.6, 1.8, -PI / 2 - 0.3], [44.6, 0.2, -PI / 2], [45.2, -2.8, -PI / 2 + 0.4], [45.4, 2.9, -PI / 2 - 0.4]]);
+      ctx.store.kids = crowd(ctx, KID_IDS, KSP);
     },
     update(ctx) {
       const L = ctx.store.L, t = ctx.t, me = ctx.cast.me, hits = hussHits(ctx, 'b12');
@@ -662,8 +680,8 @@ export const shots = [
       fistsPose(me, t); const h = lastBefore(hits, t); me.face(h != null && t - h < 0.2 ? 'huss' : 'determined', t);
       const f = humanFace(me);
       const cams = [
-        { pos: L(34.3, 1.45, 1.3), look: f.clone().add(up(-0.4)), fov: 34 },
-        { pos: L(35.8, 0.7, -0.6), look: f.clone().add(up(-0.2)), fov: 40 },
+        { pos: L(35.6, 0.6, 2.6), look: f.clone().add(up(-0.45)), fov: 40 },
+        { pos: L(34.6, 1.6, -0.2), look: f.clone().add(up(-0.35)), fov: 46 },
         { pos: L(35.0, 1.7, 3.0), look: f.clone().add(up(-0.4)), fov: 32 },
       ];
       ctx.cam.set(cams[i]); ctx.cam.punch(hits, t, 0.12, 0.2);
@@ -679,7 +697,7 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, w = ctx.cast.waffles;
       w.pose('sit', t); w.face('neutral', 0.3); w.root.position.copy(L(TW.face + 0.22, 9.95, TW.z - 0.4));
-      const c = moveCam(ctx, { pos: L(-24, 2.0, 3.2), look: L(-51, 9.5, 1.5), fov: 48 }, { pos: L(-27, 2.4, 3.0), look: L(-51, 10, 1.5), fov: 46 }, clamp(lt / 2.3, 0, 1));
+      const c = moveCam(ctx, { pos: L(-36.5, 1.6, -9.5), look: L(-51, 9.0, 1.0), fov: 52 }, { pos: L(-37.5, 2.0, -9.0), look: L(-51, 9.8, 1.0), fov: 50 }, clamp(lt / 2.3, 0, 1), 1.0, '#cfc4ff');
       ctx.props.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [ctx.time('b13.w4'), ctx.time('b13.w4') + 0.22], { boltAt: (k) => L(-80, 52, k ? -18 : 12) });
     },
@@ -690,7 +708,7 @@ export const shots = [
     setup(ctx) {
       const L = storm(ctx); ctx.store.tip = towerHands(ctx);
       put(ctx, 'waffles', L(TW.face + 0.22, 9.95, TW.z - 0.4), L.yaw + PI / 2, 1);
-      put(ctx, 'pigeon', L(TW.face + 0.3, 12.31, TW.z + 0.6), L.yaw + PI / 2);
+      put(ctx, 'pigeon', L(TW.face + 0.3, 12.31, TW.z + 0.6), L.yaw + PI / 2 + 0.5, 1.5);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, w = ctx.cast.waffles, pg = ctx.cast.pigeon, t0 = ctx.time('b13.w7');
@@ -705,7 +723,7 @@ export const shots = [
       else if (kj < 1) { w.pose('hop', t, { u: kj, height: 0.6 }); w.face('determined', 0.3); const a = L(TW.face + 0.22, 9.95, TW.z - 0.4), b = tip.clone().add(V(0.15, -0.55, 0)); w.root.position.copy(a.lerp(b, kj)); w.root.rotation.set(0, L.yaw + PI / 2 - 0.6, 0); }
       else hangCat(ctx, w, tip, t, { face: 'shocked' });
       const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
-      const c = setCam(ctx, { pos: L(-37.5, lerp(6.8, 9.0, k), 5.6), look: L(-50, lerp(9.4, 11.2, k), 1.2), fov: 46 }, 0.0);
+      const c = setCam(ctx, { pos: L(lerp(-41.6, -42.2, k), lerp(9.0, 9.8, k), lerp(7.8, 7.4, k)), look: L(-49.7, lerp(10.4, 11.0, k), 1.5), fov: 30 }, 1.2, '#e0d8ff');
       ctx.props.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [t0 + 0.05, ctx.time('b13.w15') - 0.05], { boltAt: (kk) => L(-90, 50, kk ? -25 : 20) });
           },
@@ -731,16 +749,16 @@ export const shots = [
       P.filler.userData.set(t, { arms: 'catch', bounce: 0.1, speed: 0.6 });
       const top = L(-50, 10.5, 1.5);
       ctx.store.holders.forEach((h) => { lightPose(h.ch, t + h.ph, top); h.ch.face('shocked', 0.3); });
-      const c = moveCam(ctx, { pos: L(-25.5, 1.7, 6.6), look: L(-45, 7.0, 1.5), fov: 50 }, { pos: L(-26.5, 1.6, 6.4), look: L(-45, 7.4, 1.5), fov: 48 }, clamp(lt / 1.7, 0, 1), 1.2, '#cfc4ff');
+      const c = moveCam(ctx, { pos: L(-26.4, 4.3, 8.8), look: L(-44, 6.4, 1.5), fov: 52 }, { pos: L(-27, 4.6, 8.6), look: L(-44, 6.6, 1.5), fov: 50 }, clamp(lt / 1.4, 0, 1), 1.2, '#cfc4ff');
       P.torches.userData.set(t, c.pos);
       P.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [ctx.time('b14') + 0.2], { boltAt: () => L(-85, 50, 14) });
-      tag(ctx, 'TOO SHORT', ctx.time('b14.w4'), Infinity, { y: 0.14, bg: 'rgba(200,0,40,0.9)' });
+      tag(ctx, 'TOO SHORT', ctx.time('b14.w5'), Infinity, { y: 0.14, bg: 'rgba(200,0,40,0.9)' });
     },
   },
   // ── "The wind got stronger. Waffles started slipping."  — close on the clock hand
   {
-    name: 'slipping', start: 'b14.w5-0.12', set: 'town',
+    name: 'slipping', start: 'b14.w6-0.12', set: 'town',
     setup(ctx) {
       const L = storm(ctx, { exposure: 1.3 }); ctx.store.tip = towerHands(ctx);
       put(ctx, 'waffles', L(0, 0, 0), 0, 1);
@@ -750,10 +768,10 @@ export const shots = [
       const slip = ease.outCubic(clamp((t - ts) / 0.18, 0, 1));
       const wind = clamp((t - tw) / 0.8, 0, 1);
       hangCat(ctx, ctx.cast.waffles, ctx.store.tip, t, { slip, swing: 0.12 + 0.25 * wind, face: slip > 0 ? 'shocked' : 'sweat', faceT: 0.3 });
-      const cc = ctx.cast.waffles.joints.hips.getWorldPosition(V()); const c = setCam(ctx, { pos: cc.clone().add(V(2.6, 0.45, 0.7)), look: cc.clone().add(up(0.08)), fov: 27 }, 1.6, '#e0d8ff');
+      const cc = ctx.cast.waffles.joints.hips.getWorldPosition(V()); const c = setCam(ctx, { pos: cc.clone().add(V(2.2, -1.3, 1.2)), look: cc.clone().add(up(0.15)), fov: 34 }, 0.8, '#e0d8ff');
       ctx.cam.shake(0.08 + 0.25 * wind + 0.5 * slip * Math.max(0, 1 - (t - ts) / 0.4), t, 11);
       P.clouds.userData.set(t, 0);
-      stormFrame(ctx, c, [tw + 0.05, ts + 0.02], { slant: 0.25 + 0.6 * wind, boltAt: (k) => L(-20, 30, k ? -30 : 25) });
+      stormFrame(ctx, c, [tw + 0.05, ts + 0.02], { rainDist: 2, popA: 0.25, popDur: 0.08, slant: 0.25 + 0.6 * wind, boltAt: (k) => L(-20, 30, k ? -30 : 25) });
       tag(ctx, 'SLIPPING!', ts + 0.05, Infinity, { y: 0.14, bg: 'rgba(200,0,40,0.9)' });
     },
   },
@@ -767,6 +785,7 @@ export const shots = [
       const list = blockFill(-30, -22, -3.5, 7.0, 80, { seed: 7, faceX: -51, faceZ: 1.5 });
       filler(ctx, list); addTo(ctx, P.torches, 0, 0, 0); P.torches.userData.layout(list);
       addTo(ctx, P.truck, TRUCK.x, 0, TRUCK.z, 0); P.truck.userData.set({ yaw: -PI / 2, raise: 0.42, extend: 0.12 });
+      ctx.add(P.key); P.key.color.set('#d8d0ff'); P.key.distance = 8; P.key.intensity = 0;
     },
     update(ctx) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, me = ctx.cast.me, hits = hussHits(ctx, 'b15');
@@ -788,7 +807,9 @@ export const shots = [
       const c = setCam(ctx, cams[i], 1.0, '#e4dcff');
       ctx.cam.punch(hits, t, 0.12, 0.2); shakeOn(ctx, hits, 0.12 + 0.1 * i, 0.3, 13);
       P.torches.userData.set(t, c.pos); P.clouds.userData.set(t, 0);
-      stormFrame(ctx, c, hits, { boltAt: (k) => c.pos.clone().add(V(-40 - 10 * (k % 3), 40, -30 + 20 * (k % 2))) });
+      stormFrame(ctx, c, hits, { popA: 0.2, popDur: 0.08, zapMax: 3, boltAt: (k) => c.pos.clone().add(V(-40 - 10 * (k % 3), 40, -30 + 20 * (k % 2))) });
+      const hp = headPt(me, 0.3), away = hp.clone().sub(c.pos).setY(0).normalize();
+      P.key.position.copy(hp).addScaledVector(away, 1.6).add(up(1.2)); P.key.intensity = 14 * hitPulse(hits, t, 0.09);
     },
   })),
   // ── b16 "There was only one way to save him. In front of the whole town."  — slow push; the town turns to stare
@@ -814,7 +835,7 @@ export const shots = [
       me.pose('idle', t, { intensity: 0.3, headPitch: -0.12 }); me.face(t > tin ? 'determined' : 'sweat', 0.3);
       const f = humanFace(me);
       const k = ease.inOutSine(clamp(lt / 3.2, 0, 1));
-      const c = setCam(ctx, { pos: L(lerp(-45.5, -41.6, k), lerp(1.2, 1.45, k), lerp(3.3, 3.1, k)), look: f.clone().add(up(lerp(-0.2, -0.36, k))), fov: lerp(44, 34, k) }, 1.4, '#e4dcff');
+      const c = setCam(ctx, { pos: L(lerp(-46, -43.8, k), lerp(0.8, 1.0, k), lerp(4.3, 4.0, k)), look: f.clone().add(V(0, lerp(-0.3, -0.4, k), lerp(0.9, 0.7, k))), fov: lerp(50, 40, k) }, 1.4, '#e4dcff');
       P.torches.userData.set(t, c.pos); P.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [], { rainA: 0.8 });
     },
@@ -833,7 +854,7 @@ export const shots = [
       const c = setCam(ctx, { pos: L(-42.2, 0.35, 3.9), look: L(-38.5, 2.5, 3.0), fov: 50 }, 1.6, '#e4dcff');
       P.clouds.userData.set(tt, 0);
       stormFrame(ctx, c, [tz - 0.02], { boltAt: () => L(-70, 40, -6) });
-      if (t >= tz) { P.rain.userData.set(tz, 1, 0.25); ctx.fx.overlay('#b8c8ff', 0.16); ctx.fx.vignette(0.5); ctx.cam.shake(0.0, t, 1); }
+      if (t >= tz) { P.rain.userData.set(tz, 1, 0.25); ctx.fx.vignette(0.6); speedLines(ctx, clamp((t - tz) / 0.1, 0, 1)); }
       tag(ctx, 'I LOVE YOU, WAFFLES!', ctx.time('b17') + 0.05, Infinity, { y: 0.15, size: 84, fill: '#ff4fa3', stroke: '#ffffff', bg: null, line: 12 });
     },
   },

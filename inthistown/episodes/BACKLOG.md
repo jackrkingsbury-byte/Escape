@@ -29,12 +29,13 @@ Rules from the creator:
 | 18 | Pirate Token to the Moon | meme | scheduled Tue 24 Nov 19:30 |
 | 19 | Battery 1% | meme trend | scheduled Wed 25 Nov 09:30 |
 | 20 | Biscuit (the T-rex) | giants / funny | scheduled Wed 25 Nov 15:30 |
-| 21 | The Deep Above | mystical | polish pass |
+| 21 | The Deep Above | mystical | final polish round → Wed 25 Nov 19:30 |
 | 22 | Big Love | homey | shots building |
 | 23 | Low Moon | spooky | script + audio ready |
+| 24 | Word of the Day | meme | script + audio ready (giant ear, not an eye) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
-Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
+Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey) · Nugget the chicken (giants)
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)
