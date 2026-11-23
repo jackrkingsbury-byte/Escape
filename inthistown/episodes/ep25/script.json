@@ -1,0 +1,594 @@
+{
+ "title": "In This Town — Nugget",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "Ever since the dinosaur park's fence fell over, every kid in town rides a dinosaur to school. I ride a chicken. When I enter her in the Great Dino Race, the whole town laughs, right up until the race turns into a twelve-dinosaur pile-up.",
+ "twist": "Nugget wins by slowly walking past the pile-up and ringing the bell with her face. Then she sits on top of the clock tower and lays an egg bigger than the clock tower itself. Every dinosaur runs screaming back into the dinosaur park and fixes the fence themselves, and the egg starts cracking with a very, very deep 'BAWK'.",
+ "caption_hook": "everyone laughed at my chicken. then she laid an egg.",
+ "vibe": "giants",
+ "sets": [
+  "town main street (day) with houses and street lamps, used as the race course",
+  "town square with stage and big banner (day)",
+  "clock tower exterior, stairs and top bell platform",
+  "dinosaur park gate and fence at the edge of town",
+  "town square at night with the giant egg"
+ ],
+ "newProps": [
+  "Nugget the chicken: small white body (box/sphere), red box comb and wattle, orange cone beak, stick legs, flappy box wings. Kid-sized, so the kid's feet touch the ground when he rides her",
+  "teal triceratops: box body, round frill disc, three cone horns, thick tail",
+  "purple raptor 'Sprinkles': slim upright body, long snout, sickle claws",
+  "long-neck dinosaur: big body, tall cylinder neck whose head is above the rooftops, can tip over sideways",
+  "T-rex (shared rig with the Biscuit build)",
+  "dinosaur park fence: tall wooden plank wall plus a gate with a 'DINOSAUR PARK' sign. It falls over in the flashback and gets fixed at the end",
+  "'THE GREAT DINO RACE' banner and a chalk start line across main street",
+  "starter flag for the mayor",
+  "big gold bell at the top of the clock tower",
+  "clipboard sign-up sheet",
+  "giant white egg (huge sphere, scaled tall) with a zigzag crack and glowing light leaking out",
+  "crumbling clock tower top (box chunks that fall away)",
+  "'KEEP OUT' sign, hammer and nailed boards on the fixed fence",
+  "dust cloud (grey spheres) for the race start"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody rides a dinosaur to school. Except me.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:rides",
+     "gain": 0.55
+    },
+    {
+     "type": "thump",
+     "at": "w:dinosaur",
+     "gain": 0.55
+    },
+    {
+     "type": "whoosh",
+     "at": "w:Except",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "IN THIS TOWN",
+   "visual": "Day lighting, main street. Kids ride past on blocky dinosaurs: Priya on a teal triceratops, Big Marcus on a purple raptor, and a long-neck whose head bobs above the rooftops. The kid narrator (light brown skin, curly black hair, yellow jacket, glasses, backpack) stands alone on the sidewalk."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I ride Nugget. Nugget is a chicken.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:Nugget",
+     "gain": 0.5
+    },
+    {
+     "type": "scratch",
+     "at": "w:chicken",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "NUGGET: 1 CHICKEN POWER",
+   "visual": "The camera pans down to show the kid sitting on a small white chicken with his sneakers flat on the ground. Nugget blinks at the camera.",
+   "markers": {
+    "chicken": "w:chicken"
+   }
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "party",
+   "visual": "The kid on Nugget, huss face, cheer pose. Nugget flaps her wings while the dinosaurs behind them stare blankly. Punch-in on each HUSS."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Ten years ago, the dinosaur park's fence fell over, and they all moved into town.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:fell",
+     "gain": 0.6
+    },
+    {
+     "type": "thump",
+     "at": "w:moved",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Warm-tinted flashback: the tall plank fence with the 'DINOSAUR PARK' sign tips over with a crash. Dinosaurs stroll out onto main street past the clock tower, one drinks from the fountain and the long-neck peeks into a second-floor window.",
+   "markers": {
+    "fence": "w:fell",
+    "town": "w:moved"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Priya rides a triceratops. Big Marcus has a raptor named Sprinkles. The mailman rides a long-neck and delivers to the roof.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Priya",
+     "gain": 0.45
+    },
+    {
+     "type": "ding",
+     "at": "w:raptor",
+     "gain": 0.45
+    },
+    {
+     "type": "ding",
+     "at": "w:mailman",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Quick character cards, each with a name tag: Priya (ponytail, pink sash) waves from her triceratops. Big Marcus (tall, sunglasses, chain) rears up on Sprinkles the raptor. The mailman (cap) sits on top of the long-neck and drops letters down a chimney.",
+   "markers": {
+    "priya": "w:Priya",
+    "marcus": "w:Big",
+    "mail": "w:mailman",
+    "roof": "w:delivers"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And every single day, they all laugh at me.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:laugh",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Town square. A crowd of extras and dinosaurs point and laugh at the kid on Nugget (laugh poses). Kid has a sad face and Nugget looks at her feet."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Great Dino Race. First one to ring the clock tower bell wins.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "w:Race",
+     "gain": 0.45
+    },
+    {
+     "type": "ding",
+     "at": "w:bell",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "FINISH LINE: THE BELL",
+   "visual": "The town square banner reads 'THE GREAT DINO RACE' and the mayor (top hat, sash) is on the stage. The camera tilts up to the big gold bell glinting at the top of the clock tower.",
+   "markers": {
+    "bell": "w:ring"
+   }
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I signed up Nugget. The whole town laughed so hard the long-neck fell over.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:laughed",
+     "gain": 0.5
+    },
+    {
+     "type": "boom",
+     "at": "w:fell",
+     "gain": 0.65
+    }
+   ],
+   "visual": "The kid signs a clipboard at the stage with Nugget tucked under his arm. The crowd erupts laughing, and the long-neck laughs so hard it tips sideways onto a house with a crunch.",
+   "markers": {
+    "signed": "w:signed",
+    "fell": "w:long"
+   }
+  },
+  {
+   "id": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "The kid, determined face, crossArms pose, with Nugget sitting on his head. The long-neck lies across a squashed house behind them, legs in the air."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Three. Two. One. Go!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Three",
+     "gain": 0.5
+    },
+    {
+     "type": "ding",
+     "at": "w:Two",
+     "gain": 0.5
+    },
+    {
+     "type": "ding",
+     "at": "w:One",
+     "gain": 0.5
+    },
+    {
+     "type": "airhorn",
+     "at": "w:Go",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "3... 2... 1... GO!",
+   "visual": "Start line across main street. Twelve dinosaurs stomp and snort in a row, with tiny Nugget at the end. The mayor drops the starter flag.",
+   "markers": {
+    "three": "w:Three",
+    "two": "w:Two",
+    "one": "w:One",
+    "go": "w:Go"
+   }
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Twelve dinosaurs exploded off the line. Nugget just stood there, pecking at a crumb.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:exploded",
+     "gain": 0.55
+    },
+    {
+     "type": "pop",
+     "at": "w:pecking",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The dinosaurs blast off in a huge grey dust cloud and the camera shakes. The dust clears to show Nugget alone at the start line, calmly pecking one crumb, while the kid holds his head (think pose).",
+   "markers": {
+    "go": "w:exploded",
+    "peck": "w:Nugget"
+   }
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then Sprinkles tripped on the triceratops's tail.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:tripped",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Slow motion: the raptor's foot catches on the triceratops' tail and Big Marcus's sunglasses fly off. Everything freezes for a beat."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The triceratops crashed into the stage. The stage launched the mayor. The mayor landed on the T-rex.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:crashed",
+     "gain": 0.65
+    },
+    {
+     "type": "whoosh",
+     "at": "w:launched",
+     "gain": 0.55
+    },
+    {
+     "type": "thump",
+     "at": "w:landed",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Chain reaction with whip-pans: the triceratops plows into the stage, which flips up like a seesaw and launches the mayor through the air (top hat spinning). He lands on top of the T-rex's head.",
+   "markers": {
+    "crash": "w:crashed",
+    "launch": "w:launched",
+    "land": "w:landed"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And the T-rex sat on everybody.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:sat",
+     "gain": 0.75
+    },
+    {
+     "type": "thump",
+     "at": "w:everybody",
+     "gain": 0.6
+    }
+   ],
+   "visual": "The confused T-rex sits straight down on the whole pack of dinosaurs. A big dust puff and camera shake."
+  },
+  {
+   "id": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "A wide shot of the dinosaur pile-up blocking main street, legs and tails sticking out and stunned faces. The kid in the foreground with a huss face."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Twelve dinosaurs. One giant pile. Nobody could move.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:pile",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "DINO PILE-UP",
+   "visual": "Overhead shot of the tangled pile. A long-neck head waves weakly from the bottom."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And Nugget? Nugget just walked. Slowly. Right past them.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "visual": "Slow motion: Nugget strolls calmly past the pile, one step at a time, and every dinosaur's eyes follow her.",
+   "markers": {
+    "walk": "w:walked",
+    "past": "w:Right"
+   }
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Up the steps. Up the tower. And she rang the bell with her face.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:face",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "WINNER",
+   "visual": "Nugget hops up the clock tower steps. At the top she headbutts the giant gold bell, which swings with a huge DONG.",
+   "markers": {
+    "steps": "w:steps",
+    "tower": "w:tower",
+    "bell": "w:rang"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid sprints into the town square with both arms up (cheer) as confetti falls. Nugget stands on top of the clock tower with her wings spread like a champion."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nobody was laughing now. Top ten respect.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "The crowd and the dinosaurs stare up at the tower in total silence, jaws dropped (shocked faces).",
+   "sfx": [
+    {
+     "type": "dundun",
+     "at": "w:respect",
+     "gain": 0.45
+    }
+   ],
+   "markers": {
+    "respect": "w:Top"
+   }
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then Nugget sat down on top of the clock tower and laid an egg.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:egg",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Close on Nugget at the top of the tower. She fluffs up, wiggles, squints hard (squint face) and settles down.",
+   "markers": {
+    "sit": "w:sat",
+    "egg": "w:laid"
+   }
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The egg was bigger than the clock tower.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:bigger",
+     "gain": 0.75
+    },
+    {
+     "type": "thunder",
+     "at": "w:tower",
+     "gain": 0.5
+    }
+   ],
+   "visual": "A gigantic white egg swells out from under Nugget. The clock tower top cracks and crumbles under it, and the egg drops into the town square, dwarfing every dinosaur. The camera tilts up, and up, and up."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every dinosaur in town ran screaming back into the dinosaur park and fixed the fence themselves.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:screaming",
+     "gain": 0.55
+    },
+    {
+     "type": "knock",
+     "at": "w:fixed",
+     "gain": 0.5
+    },
+    {
+     "type": "knock",
+     "at": "w:fence",
+     "gain": 0.5
+    },
+    {
+     "type": "knock",
+     "at": "w:themselves",
+     "gain": 0.5
+    }
+   ],
+   "visual": "All twelve dinosaurs scramble screaming through the dinosaur park gate. The triceratops slams the gate, the raptor hammers boards onto the fence, and the long-neck holds up a 'KEEP OUT' sign.",
+   "markers": {
+    "run": "w:ran",
+    "fix": "w:fixed"
+   }
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now the egg is cracking. And something inside just went...",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:cracking",
+     "gain": 0.55
+    },
+    {
+     "type": "static",
+     "at": "w:inside",
+     "gain": 0.35
+    }
+   ],
+   "visual": "Night lighting. The kid and Nugget stand beside the colossal egg in the empty town square as a jagged crack zigzags across it with glowing light leaking out.",
+   "markers": {
+    "crack": "w:cracking"
+   }
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Bawk.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.85
+    }
+   ],
+   "overlay": "BAWK.",
+   "visual": "Extreme close-up on the glowing crack. The line is spoken by a very deep, pitched-down extra character voice. The whole town shakes and street lamps flicker."
+  },
+  {
+   "id": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In a really, really deep voice.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "The kid slowly turns to the camera (sweat face) while Nugget puffs out her chest proudly (smug face)."
+  },
+  {
+   "id": "b27",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.8,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid in a slam pose with a huss face as the giant egg wobbles behind him and the pigeon flaps away in a panic."
+  }
+ ]
+}

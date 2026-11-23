@@ -1,0 +1,3936 @@
+{
+ "fps": 30,
+ "duration": 83.8,
+ "audio": "episodes/ep25/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, everybody rides a dinosaur to school. Except me.",
+   "start": 0.3,
+   "end": 3.922,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "everybody",
+     "start": 1.112,
+     "end": 1.594
+    },
+    {
+     "text": "rides",
+     "start": 1.594,
+     "end": 1.912
+    },
+    {
+     "text": "a",
+     "start": 1.912,
+     "end": 2.066
+    },
+    {
+     "text": "dinosaur",
+     "start": 2.066,
+     "end": 2.548
+    },
+    {
+     "text": "to",
+     "start": 2.548,
+     "end": 2.702
+    },
+    {
+     "text": "school",
+     "start": 2.702,
+     "end": 2.965
+    },
+    {
+     "text": "Except",
+     "start": 3.275,
+     "end": 3.734
+    },
+    {
+     "text": "me",
+     "start": 3.734,
+     "end": 3.922
+    }
+   ],
+   "overlay": "IN THIS TOWN",
+   "visual": "Day lighting, main street. Kids ride past on blocky dinosaurs: Priya on a teal triceratops, Big Marcus on a purple raptor, and a long-neck whose head bobs above the rooftops. The kid narrator (light brown skin, curly black hair, yellow jacket, glasses, backpack) stands alone on the sidewalk."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I ride Nugget. Nugget is a chicken.",
+   "start": 4.237,
+   "end": 6.316,
+   "words": [
+    {
+     "text": "I",
+     "start": 4.252,
+     "end": 4.423
+    },
+    {
+     "text": "ride",
+     "start": 4.423,
+     "end": 4.715
+    },
+    {
+     "text": "Nugget",
+     "start": 4.715,
+     "end": 5.068
+    },
+    {
+     "text": "Nugget",
+     "start": 5.378,
+     "end": 5.677
+    },
+    {
+     "text": "is",
+     "start": 5.677,
+     "end": 5.821
+    },
+    {
+     "text": "a",
+     "start": 5.821,
+     "end": 5.966
+    },
+    {
+     "text": "chicken",
+     "start": 5.966,
+     "end": 6.316
+    }
+   ],
+   "overlay": "NUGGET: 1 CHICKEN POWER",
+   "visual": "The camera pans down to show the kid sitting on a small white chicken with his sneakers flat on the ground. Nugget blinks at the camera."
+  },
+  {
+   "id": "b03",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 6.631,
+   "end": 7.291,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 6.631,
+     "end": 6.891
+    },
+    {
+     "text": "HUSS!",
+     "start": 6.841,
+     "end": 7.101
+    },
+    {
+     "text": "HUSS!",
+     "start": 7.031,
+     "end": 7.291
+    }
+   ],
+   "visual": "The kid on Nugget, huss face, cheer pose. Nugget flaps her wings while the dinosaurs behind them stare blankly. Punch-in on each HUSS."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Ten years ago, the dinosaur park's fence fell over, and they all moved into town.",
+   "start": 7.631,
+   "end": 11.62,
+   "words": [
+    {
+     "text": "Ten",
+     "start": 7.646,
+     "end": 7.849
+    },
+    {
+     "text": "years",
+     "start": 7.849,
+     "end": 8.106
+    },
+    {
+     "text": "ago",
+     "start": 8.106,
+     "end": 8.362
+    },
+    {
+     "text": "the",
+     "start": 8.492,
+     "end": 8.646
+    },
+    {
+     "text": "dinosaur",
+     "start": 8.646,
+     "end": 9.129
+    },
+    {
+     "text": "park's",
+     "start": 9.129,
+     "end": 9.448
+    },
+    {
+     "text": "fence",
+     "start": 9.448,
+     "end": 9.711
+    },
+    {
+     "text": "fell",
+     "start": 9.711,
+     "end": 9.92
+    },
+    {
+     "text": "over",
+     "start": 9.92,
+     "end": 10.184
+    },
+    {
+     "text": "and",
+     "start": 10.314,
+     "end": 10.514
+    },
+    {
+     "text": "they",
+     "start": 10.514,
+     "end": 10.714
+    },
+    {
+     "text": "all",
+     "start": 10.714,
+     "end": 10.862
+    },
+    {
+     "text": "moved",
+     "start": 10.862,
+     "end": 11.115
+    },
+    {
+     "text": "into",
+     "start": 11.115,
+     "end": 11.367
+    },
+    {
+     "text": "town",
+     "start": 11.367,
+     "end": 11.62
+    }
+   ],
+   "visual": "Warm-tinted flashback: the tall plank fence with the 'DINOSAUR PARK' sign tips over with a crash. Dinosaurs stroll out onto main street past the clock tower, one drinks from the fountain and the long-neck peeks into a second-floor window."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Priya rides a triceratops. Big Marcus has a raptor named Sprinkles. The mailman rides a long-neck and delivers to the roof.",
+   "start": 11.935,
+   "end": 18.673,
+   "words": [
+    {
+     "text": "Priya",
+     "start": 11.95,
+     "end": 12.268
+    },
+    {
+     "text": "rides",
+     "start": 12.268,
+     "end": 12.586
+    },
+    {
+     "text": "a",
+     "start": 12.586,
+     "end": 12.739
+    },
+    {
+     "text": "triceratops",
+     "start": 12.739,
+     "end": 13.441
+    },
+    {
+     "text": "Big",
+     "start": 13.751,
+     "end": 13.949
+    },
+    {
+     "text": "Marcus",
+     "start": 13.949,
+     "end": 14.303
+    },
+    {
+     "text": "has",
+     "start": 14.303,
+     "end": 14.5
+    },
+    {
+     "text": "a",
+     "start": 14.5,
+     "end": 14.646
+    },
+    {
+     "text": "raptor",
+     "start": 14.646,
+     "end": 14.948
+    },
+    {
+     "text": "named",
+     "start": 14.948,
+     "end": 15.25
+    },
+    {
+     "text": "Sprinkles",
+     "start": 15.25,
+     "end": 15.76
+    },
+    {
+     "text": "The",
+     "start": 16.07,
+     "end": 16.225
+    },
+    {
+     "text": "mailman",
+     "start": 16.225,
+     "end": 16.657
+    },
+    {
+     "text": "rides",
+     "start": 16.657,
+     "end": 16.978
+    },
+    {
+     "text": "a",
+     "start": 16.978,
+     "end": 17.134
+    },
+    {
+     "text": "long-neck",
+     "start": 17.134,
+     "end": 17.51
+    },
+    {
+     "text": "and",
+     "start": 17.51,
+     "end": 17.721
+    },
+    {
+     "text": "delivers",
+     "start": 17.721,
+     "end": 18.153
+    },
+    {
+     "text": "to",
+     "start": 18.153,
+     "end": 18.308
+    },
+    {
+     "text": "the",
+     "start": 18.308,
+     "end": 18.463
+    },
+    {
+     "text": "roof",
+     "start": 18.463,
+     "end": 18.673
+    }
+   ],
+   "visual": "Quick character cards, each with a name tag: Priya (ponytail, pink sash) waves from her triceratops. Big Marcus (tall, sunglasses, chain) rears up on Sprinkles the raptor. The mailman (cap) sits on top of the long-neck and drops letters down a chimney."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And every single day, they all laugh at me.",
+   "start": 18.988,
+   "end": 21.024,
+   "words": [
+    {
+     "text": "And",
+     "start": 19.003,
+     "end": 19.202
+    },
+    {
+     "text": "every",
+     "start": 19.202,
+     "end": 19.454
+    },
+    {
+     "text": "single",
+     "start": 19.454,
+     "end": 19.81
+    },
+    {
+     "text": "day",
+     "start": 19.81,
+     "end": 20.009
+    },
+    {
+     "text": "they",
+     "start": 20.139,
+     "end": 20.349
+    },
+    {
+     "text": "all",
+     "start": 20.349,
+     "end": 20.504
+    },
+    {
+     "text": "laugh",
+     "start": 20.504,
+     "end": 20.714
+    },
+    {
+     "text": "at",
+     "start": 20.714,
+     "end": 20.869
+    },
+    {
+     "text": "me",
+     "start": 20.869,
+     "end": 21.024
+    }
+   ],
+   "visual": "Town square. A crowd of extras and dinosaurs point and laugh at the kid on Nugget (laugh poses). Kid has a sad face and Nugget looks at her feet."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then came the Great Dino Race. First one to ring the clock tower bell wins.",
+   "start": 21.339,
+   "end": 25.113,
+   "words": [
+    {
+     "text": "Then",
+     "start": 21.354,
+     "end": 21.546
+    },
+    {
+     "text": "came",
+     "start": 21.546,
+     "end": 21.789
+    },
+    {
+     "text": "the",
+     "start": 21.789,
+     "end": 21.931
+    },
+    {
+     "text": "Great",
+     "start": 21.931,
+     "end": 22.224
+    },
+    {
+     "text": "Dino",
+     "start": 22.224,
+     "end": 22.517
+    },
+    {
+     "text": "Race",
+     "start": 22.517,
+     "end": 22.76
+    },
+    {
+     "text": "First",
+     "start": 23.07,
+     "end": 23.341
+    },
+    {
+     "text": "one",
+     "start": 23.341,
+     "end": 23.555
+    },
+    {
+     "text": "to",
+     "start": 23.555,
+     "end": 23.713
+    },
+    {
+     "text": "ring",
+     "start": 23.713,
+     "end": 23.928
+    },
+    {
+     "text": "the",
+     "start": 23.928,
+     "end": 24.086
+    },
+    {
+     "text": "clock",
+     "start": 24.086,
+     "end": 24.357
+    },
+    {
+     "text": "tower",
+     "start": 24.357,
+     "end": 24.628
+    },
+    {
+     "text": "bell",
+     "start": 24.628,
+     "end": 24.842
+    },
+    {
+     "text": "wins",
+     "start": 24.842,
+     "end": 25.113
+    }
+   ],
+   "overlay": "FINISH LINE: THE BELL",
+   "visual": "The town square banner reads 'THE GREAT DINO RACE' and the mayor (top hat, sash) is on the stage. The camera tilts up to the big gold bell glinting at the top of the clock tower."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I signed up Nugget. The whole town laughed so hard the long-neck fell over.",
+   "start": 25.428,
+   "end": 29.275,
+   "words": [
+    {
+     "text": "I",
+     "start": 25.443,
+     "end": 25.598
+    },
+    {
+     "text": "signed",
+     "start": 25.598,
+     "end": 25.918
+    },
+    {
+     "text": "up",
+     "start": 25.918,
+     "end": 26.072
+    },
+    {
+     "text": "Nugget",
+     "start": 26.072,
+     "end": 26.392
+    },
+    {
+     "text": "The",
+     "start": 26.702,
+     "end": 26.866
+    },
+    {
+     "text": "whole",
+     "start": 26.866,
+     "end": 27.147
+    },
+    {
+     "text": "town",
+     "start": 27.147,
+     "end": 27.427
+    },
+    {
+     "text": "laughed",
+     "start": 27.427,
+     "end": 27.708
+    },
+    {
+     "text": "so",
+     "start": 27.708,
+     "end": 27.93
+    },
+    {
+     "text": "hard",
+     "start": 27.93,
+     "end": 28.211
+    },
+    {
+     "text": "the",
+     "start": 28.211,
+     "end": 28.375
+    },
+    {
+     "text": "long-neck",
+     "start": 28.375,
+     "end": 28.772
+    },
+    {
+     "text": "fell",
+     "start": 28.772,
+     "end": 28.995
+    },
+    {
+     "text": "over",
+     "start": 28.995,
+     "end": 29.275
+    }
+   ],
+   "visual": "The kid signs a clipboard at the stage with Nugget tucked under his arm. The crowd erupts laughing, and the long-neck laughs so hard it tips sideways onto a house with a crunch."
+  },
+  {
+   "id": "b09",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 29.59,
+   "end": 30.25,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 29.59,
+     "end": 29.85
+    },
+    {
+     "text": "HUSS!",
+     "start": 29.8,
+     "end": 30.06
+    },
+    {
+     "text": "HUSS!",
+     "start": 29.99,
+     "end": 30.25
+    }
+   ],
+   "visual": "The kid, determined face, crossArms pose, with Nugget sitting on his head. The long-neck lies across a squashed house behind them, legs in the air."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Three. Two. One. Go!",
+   "start": 30.59,
+   "end": 33.139,
+   "words": [
+    {
+     "text": "Three",
+     "start": 30.605,
+     "end": 31.057
+    },
+    {
+     "text": "Two",
+     "start": 31.367,
+     "end": 31.773
+    },
+    {
+     "text": "One",
+     "start": 32.083,
+     "end": 32.434
+    },
+    {
+     "text": "Go!",
+     "start": 32.744,
+     "end": 33.139
+    }
+   ],
+   "overlay": "3... 2... 1... GO!",
+   "visual": "Start line across main street. Twelve dinosaurs stomp and snort in a row, with tiny Nugget at the end. The mayor drops the starter flag."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Twelve dinosaurs exploded off the line. Nugget just stood there, pecking at a crumb.",
+   "start": 33.454,
+   "end": 37.727,
+   "words": [
+    {
+     "text": "Twelve",
+     "start": 33.469,
+     "end": 33.788
+    },
+    {
+     "text": "dinosaurs",
+     "start": 33.788,
+     "end": 34.327
+    },
+    {
+     "text": "exploded",
+     "start": 34.327,
+     "end": 34.922
+    },
+    {
+     "text": "off",
+     "start": 34.922,
+     "end": 35.076
+    },
+    {
+     "text": "the",
+     "start": 35.076,
+     "end": 35.23
+    },
+    {
+     "text": "line",
+     "start": 35.23,
+     "end": 35.494
+    },
+    {
+     "text": "Nugget",
+     "start": 35.804,
+     "end": 36.085
+    },
+    {
+     "text": "just",
+     "start": 36.085,
+     "end": 36.366
+    },
+    {
+     "text": "stood",
+     "start": 36.366,
+     "end": 36.598
+    },
+    {
+     "text": "there",
+     "start": 36.598,
+     "end": 36.782
+    },
+    {
+     "text": "pecking",
+     "start": 36.912,
+     "end": 37.204
+    },
+    {
+     "text": "at",
+     "start": 37.204,
+     "end": 37.344
+    },
+    {
+     "text": "a",
+     "start": 37.344,
+     "end": 37.485
+    },
+    {
+     "text": "crumb",
+     "start": 37.485,
+     "end": 37.727
+    }
+   ],
+   "visual": "The dinosaurs blast off in a huge grey dust cloud and the camera shakes. The dust clears to show Nugget alone at the start line, calmly pecking one crumb, while the kid holds his head (think pose)."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then Sprinkles tripped on the triceratops's tail.",
+   "start": 38.042,
+   "end": 40.546,
+   "words": [
+    {
+     "text": "Then",
+     "start": 38.057,
+     "end": 38.269
+    },
+    {
+     "text": "Sprinkles",
+     "start": 38.269,
+     "end": 38.816
+    },
+    {
+     "text": "tripped",
+     "start": 38.816,
+     "end": 39.139
+    },
+    {
+     "text": "on",
+     "start": 39.139,
+     "end": 39.295
+    },
+    {
+     "text": "the",
+     "start": 39.295,
+     "end": 39.452
+    },
+    {
+     "text": "triceratops's",
+     "start": 39.452,
+     "end": 40.278
+    },
+    {
+     "text": "tail",
+     "start": 40.278,
+     "end": 40.546
+    }
+   ],
+   "visual": "Slow motion: the raptor's foot catches on the triceratops' tail and Big Marcus's sunglasses fly off. Everything freezes for a beat."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The triceratops crashed into the stage. The stage launched the mayor. The mayor landed on the T-rex.",
+   "start": 40.861,
+   "end": 45.95,
+   "words": [
+    {
+     "text": "The",
+     "start": 40.876,
+     "end": 41.024
+    },
+    {
+     "text": "triceratops",
+     "start": 41.024,
+     "end": 41.704
+    },
+    {
+     "text": "crashed",
+     "start": 41.704,
+     "end": 42.012
+    },
+    {
+     "text": "into",
+     "start": 42.012,
+     "end": 42.267
+    },
+    {
+     "text": "the",
+     "start": 42.267,
+     "end": 42.416
+    },
+    {
+     "text": "stage",
+     "start": 42.416,
+     "end": 42.777
+    },
+    {
+     "text": "The",
+     "start": 43.087,
+     "end": 43.221
+    },
+    {
+     "text": "stage",
+     "start": 43.221,
+     "end": 43.547
+    },
+    {
+     "text": "launched",
+     "start": 43.547,
+     "end": 43.874
+    },
+    {
+     "text": "the",
+     "start": 43.874,
+     "end": 44.008
+    },
+    {
+     "text": "mayor",
+     "start": 44.008,
+     "end": 44.238
+    },
+    {
+     "text": "The",
+     "start": 44.548,
+     "end": 44.695
+    },
+    {
+     "text": "mayor",
+     "start": 44.695,
+     "end": 44.946
+    },
+    {
+     "text": "landed",
+     "start": 44.946,
+     "end": 45.302
+    },
+    {
+     "text": "on",
+     "start": 45.302,
+     "end": 45.448
+    },
+    {
+     "text": "the",
+     "start": 45.448,
+     "end": 45.595
+    },
+    {
+     "text": "T-rex",
+     "start": 45.595,
+     "end": 45.95
+    }
+   ],
+   "visual": "Chain reaction with whip-pans: the triceratops plows into the stage, which flips up like a seesaw and launches the mayor through the air (top hat spinning). He lands on top of the T-rex's head."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And the T-rex sat on everybody.",
+   "start": 46.265,
+   "end": 47.846,
+   "words": [
+    {
+     "text": "And",
+     "start": 46.28,
+     "end": 46.487
+    },
+    {
+     "text": "the",
+     "start": 46.487,
+     "end": 46.639
+    },
+    {
+     "text": "T-rex",
+     "start": 46.639,
+     "end": 47.009
+    },
+    {
+     "text": "sat",
+     "start": 47.009,
+     "end": 47.215
+    },
+    {
+     "text": "on",
+     "start": 47.215,
+     "end": 47.367
+    },
+    {
+     "text": "everybody",
+     "start": 47.367,
+     "end": 47.846
+    }
+   ],
+   "visual": "The confused T-rex sits straight down on the whole pack of dinosaurs. A big dust puff and camera shake."
+  },
+  {
+   "id": "b15",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 48.161,
+   "end": 48.821,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 48.161,
+     "end": 48.421
+    },
+    {
+     "text": "HUSS!",
+     "start": 48.371,
+     "end": 48.631
+    },
+    {
+     "text": "HUSS!",
+     "start": 48.561,
+     "end": 48.821
+    }
+   ],
+   "visual": "A wide shot of the dinosaur pile-up blocking main street, legs and tails sticking out and stunned faces. The kid in the foreground with a huss face."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Twelve dinosaurs. One giant pile. Nobody could move.",
+   "start": 49.161,
+   "end": 52.532,
+   "words": [
+    {
+     "text": "Twelve",
+     "start": 49.176,
+     "end": 49.527
+    },
+    {
+     "text": "dinosaurs",
+     "start": 49.527,
+     "end": 50.121
+    },
+    {
+     "text": "One",
+     "start": 50.431,
+     "end": 50.633
+    },
+    {
+     "text": "giant",
+     "start": 50.633,
+     "end": 51.047
+    },
+    {
+     "text": "pile",
+     "start": 51.047,
+     "end": 51.302
+    },
+    {
+     "text": "Nobody",
+     "start": 51.612,
+     "end": 52.078
+    },
+    {
+     "text": "could",
+     "start": 52.078,
+     "end": 52.305
+    },
+    {
+     "text": "move",
+     "start": 52.305,
+     "end": 52.532
+    }
+   ],
+   "overlay": "DINO PILE-UP",
+   "visual": "Overhead shot of the tangled pile. A long-neck head waves weakly from the bottom."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And Nugget? Nugget just walked. Slowly. Right past them.",
+   "start": 52.847,
+   "end": 56.609,
+   "words": [
+    {
+     "text": "And",
+     "start": 52.862,
+     "end": 53.095
+    },
+    {
+     "text": "Nugget?",
+     "start": 53.095,
+     "end": 53.45
+    },
+    {
+     "text": "Nugget",
+     "start": 53.8,
+     "end": 54.116
+    },
+    {
+     "text": "just",
+     "start": 54.116,
+     "end": 54.433
+    },
+    {
+     "text": "walked",
+     "start": 54.433,
+     "end": 54.694
+    },
+    {
+     "text": "Slowly",
+     "start": 55.004,
+     "end": 55.55
+    },
+    {
+     "text": "Right",
+     "start": 55.86,
+     "end": 56.128
+    },
+    {
+     "text": "past",
+     "start": 56.128,
+     "end": 56.397
+    },
+    {
+     "text": "them",
+     "start": 56.397,
+     "end": 56.609
+    }
+   ],
+   "visual": "Slow motion: Nugget strolls calmly past the pile, one step at a time, and every dinosaur's eyes follow her."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Up the steps. Up the tower. And she rang the bell with her face.",
+   "start": 56.924,
+   "end": 60.317,
+   "words": [
+    {
+     "text": "Up",
+     "start": 56.939,
+     "end": 57.096
+    },
+    {
+     "text": "the",
+     "start": 57.096,
+     "end": 57.254
+    },
+    {
+     "text": "steps",
+     "start": 57.254,
+     "end": 57.579
+    },
+    {
+     "text": "Up",
+     "start": 57.889,
+     "end": 58.076
+    },
+    {
+     "text": "the",
+     "start": 58.076,
+     "end": 58.262
+    },
+    {
+     "text": "tower",
+     "start": 58.262,
+     "end": 58.581
+    },
+    {
+     "text": "And",
+     "start": 58.891,
+     "end": 59.082
+    },
+    {
+     "text": "she",
+     "start": 59.082,
+     "end": 59.222
+    },
+    {
+     "text": "rang",
+     "start": 59.222,
+     "end": 59.413
+    },
+    {
+     "text": "the",
+     "start": 59.413,
+     "end": 59.554
+    },
+    {
+     "text": "bell",
+     "start": 59.554,
+     "end": 59.745
+    },
+    {
+     "text": "with",
+     "start": 59.745,
+     "end": 59.936
+    },
+    {
+     "text": "her",
+     "start": 59.936,
+     "end": 60.076
+    },
+    {
+     "text": "face",
+     "start": 60.076,
+     "end": 60.317
+    }
+   ],
+   "overlay": "WINNER",
+   "visual": "Nugget hops up the clock tower steps. At the top she headbutts the giant gold bell, which swings with a huge DONG."
+  },
+  {
+   "id": "b19",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 60.632,
+   "end": 62.272,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 60.632,
+     "end": 60.892
+    },
+    {
+     "text": "HUSS!",
+     "start": 60.842,
+     "end": 61.102
+    },
+    {
+     "text": "HUSS!",
+     "start": 61.032,
+     "end": 61.292
+    },
+    {
+     "text": "HUSS!",
+     "start": 61.612,
+     "end": 61.872
+    },
+    {
+     "text": "HUSS!",
+     "start": 61.822,
+     "end": 62.082
+    },
+    {
+     "text": "HUSS!",
+     "start": 62.012,
+     "end": 62.272
+    }
+   ],
+   "visual": "The kid sprints into the town square with both arms up (cheer) as confetti falls. Nugget stands on top of the clock tower with her wings spread like a champion."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nobody was laughing now. Top ten respect.",
+   "start": 62.612,
+   "end": 64.927,
+   "words": [
+    {
+     "text": "Nobody",
+     "start": 62.627,
+     "end": 63.024
+    },
+    {
+     "text": "was",
+     "start": 63.024,
+     "end": 63.218
+    },
+    {
+     "text": "laughing",
+     "start": 63.218,
+     "end": 63.513
+    },
+    {
+     "text": "now",
+     "start": 63.513,
+     "end": 63.706
+    },
+    {
+     "text": "Top",
+     "start": 64.016,
+     "end": 64.241
+    },
+    {
+     "text": "ten",
+     "start": 64.241,
+     "end": 64.465
+    },
+    {
+     "text": "respect",
+     "start": 64.465,
+     "end": 64.927
+    }
+   ],
+   "visual": "The crowd and the dinosaurs stare up at the tower in total silence, jaws dropped (shocked faces)."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then Nugget sat down on top of the clock tower and laid an egg.",
+   "start": 65.242,
+   "end": 68.471,
+   "words": [
+    {
+     "text": "Then",
+     "start": 65.257,
+     "end": 65.482
+    },
+    {
+     "text": "Nugget",
+     "start": 65.482,
+     "end": 65.826
+    },
+    {
+     "text": "sat",
+     "start": 65.826,
+     "end": 66.051
+    },
+    {
+     "text": "down",
+     "start": 66.051,
+     "end": 66.336
+    },
+    {
+     "text": "on",
+     "start": 66.336,
+     "end": 66.502
+    },
+    {
+     "text": "top",
+     "start": 66.502,
+     "end": 66.727
+    },
+    {
+     "text": "of",
+     "start": 66.727,
+     "end": 66.893
+    },
+    {
+     "text": "the",
+     "start": 66.893,
+     "end": 67.059
+    },
+    {
+     "text": "clock",
+     "start": 67.059,
+     "end": 67.344
+    },
+    {
+     "text": "tower",
+     "start": 67.344,
+     "end": 67.629
+    },
+    {
+     "text": "and",
+     "start": 67.629,
+     "end": 67.854
+    },
+    {
+     "text": "laid",
+     "start": 67.854,
+     "end": 68.139
+    },
+    {
+     "text": "an",
+     "start": 68.139,
+     "end": 68.305
+    },
+    {
+     "text": "egg",
+     "start": 68.305,
+     "end": 68.471
+    }
+   ],
+   "visual": "Close on Nugget at the top of the tower. She fluffs up, wiggles, squints hard (squint face) and settles down."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The egg was bigger than the clock tower.",
+   "start": 68.786,
+   "end": 70.392,
+   "words": [
+    {
+     "text": "The",
+     "start": 68.801,
+     "end": 68.947
+    },
+    {
+     "text": "egg",
+     "start": 68.947,
+     "end": 69.094
+    },
+    {
+     "text": "was",
+     "start": 69.094,
+     "end": 69.293
+    },
+    {
+     "text": "bigger",
+     "start": 69.293,
+     "end": 69.544
+    },
+    {
+     "text": "than",
+     "start": 69.544,
+     "end": 69.743
+    },
+    {
+     "text": "the",
+     "start": 69.743,
+     "end": 69.889
+    },
+    {
+     "text": "clock",
+     "start": 69.889,
+     "end": 70.141
+    },
+    {
+     "text": "tower",
+     "start": 70.141,
+     "end": 70.392
+    }
+   ],
+   "visual": "A gigantic white egg swells out from under Nugget. The clock tower top cracks and crumbles under it, and the egg drops into the town square, dwarfing every dinosaur. The camera tilts up, and up, and up."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every dinosaur in town ran screaming back into the dinosaur park and fixed the fence themselves.",
+   "start": 70.707,
+   "end": 76.081,
+   "words": [
+    {
+     "text": "Every",
+     "start": 70.722,
+     "end": 71.029
+    },
+    {
+     "text": "dinosaur",
+     "start": 71.029,
+     "end": 71.592
+    },
+    {
+     "text": "in",
+     "start": 71.592,
+     "end": 71.771
+    },
+    {
+     "text": "town",
+     "start": 71.771,
+     "end": 72.078
+    },
+    {
+     "text": "ran",
+     "start": 72.078,
+     "end": 72.321
+    },
+    {
+     "text": "screaming",
+     "start": 72.321,
+     "end": 72.819
+    },
+    {
+     "text": "back",
+     "start": 72.819,
+     "end": 73.062
+    },
+    {
+     "text": "into",
+     "start": 73.062,
+     "end": 73.369
+    },
+    {
+     "text": "the",
+     "start": 73.369,
+     "end": 73.548
+    },
+    {
+     "text": "dinosaur",
+     "start": 73.548,
+     "end": 74.111
+    },
+    {
+     "text": "park",
+     "start": 74.111,
+     "end": 74.418
+    },
+    {
+     "text": "and",
+     "start": 74.418,
+     "end": 74.661
+    },
+    {
+     "text": "fixed",
+     "start": 74.661,
+     "end": 75.032
+    },
+    {
+     "text": "the",
+     "start": 75.032,
+     "end": 75.211
+    },
+    {
+     "text": "fence",
+     "start": 75.211,
+     "end": 75.518
+    },
+    {
+     "text": "themselves",
+     "start": 75.518,
+     "end": 76.081
+    }
+   ],
+   "visual": "All twelve dinosaurs scramble screaming through the dinosaur park gate. The triceratops slams the gate, the raptor hammers boards onto the fence, and the long-neck holds up a 'KEEP OUT' sign."
+  },
+  {
+   "id": "b24",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now the egg is cracking. And something inside just went...",
+   "start": 76.396,
+   "end": 79.266,
+   "words": [
+    {
+     "text": "Now",
+     "start": 76.411,
+     "end": 76.626
+    },
+    {
+     "text": "the",
+     "start": 76.626,
+     "end": 76.784
+    },
+    {
+     "text": "egg",
+     "start": 76.784,
+     "end": 76.943
+    },
+    {
+     "text": "is",
+     "start": 76.943,
+     "end": 77.101
+    },
+    {
+     "text": "cracking",
+     "start": 77.101,
+     "end": 77.486
+    },
+    {
+     "text": "And",
+     "start": 77.796,
+     "end": 77.995
+    },
+    {
+     "text": "something",
+     "start": 77.995,
+     "end": 78.352
+    },
+    {
+     "text": "inside",
+     "start": 78.352,
+     "end": 78.709
+    },
+    {
+     "text": "just",
+     "start": 78.709,
+     "end": 79.014
+    },
+    {
+     "text": "went",
+     "start": 79.014,
+     "end": 79.266
+    }
+   ],
+   "visual": "Night lighting. The kid and Nugget stand beside the colossal egg in the empty town square as a jagged crack zigzags across it with glowing light leaking out."
+  },
+  {
+   "id": "b25",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Bawk.",
+   "start": 79.581,
+   "end": 79.998,
+   "words": [
+    {
+     "text": "Bawk",
+     "start": 79.596,
+     "end": 79.998
+    }
+   ],
+   "overlay": "BAWK.",
+   "visual": "Extreme close-up on the glowing crack. The line is spoken by a very deep, pitched-down extra character voice. The whole town shakes and street lamps flicker."
+  },
+  {
+   "id": "b26",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In a really, really deep voice.",
+   "start": 80.313,
+   "end": 81.985,
+   "words": [
+    {
+     "text": "In",
+     "start": 80.328,
+     "end": 80.47
+    },
+    {
+     "text": "a",
+     "start": 80.47,
+     "end": 80.611
+    },
+    {
+     "text": "really",
+     "start": 80.611,
+     "end": 80.905
+    },
+    {
+     "text": "really",
+     "start": 81.035,
+     "end": 81.417
+    },
+    {
+     "text": "deep",
+     "start": 81.417,
+     "end": 81.668
+    },
+    {
+     "text": "voice",
+     "start": 81.668,
+     "end": 81.985
+    }
+   ],
+   "visual": "The kid slowly turns to the camera (sweat face) while Nugget puffs out her chest proudly (smug face)."
+  },
+  {
+   "id": "b27",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 82.3,
+   "end": 82.96,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 82.3,
+     "end": 82.56
+    },
+    {
+     "text": "HUSS!",
+     "start": 82.51,
+     "end": 82.77
+    },
+    {
+     "text": "HUSS!",
+     "start": 82.7,
+     "end": 82.96
+    }
+   ],
+   "visual": "The kid in a slam pose with a huss face as the giant egg wobbles behind him and the pigeon flaps away in a panic."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "everybody",
+   "start": 1.112,
+   "end": 1.594,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "rides",
+   "start": 1.594,
+   "end": 1.912,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 1.912,
+   "end": 2.066,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "dinosaur",
+   "start": 2.066,
+   "end": 2.548,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "to",
+   "start": 2.548,
+   "end": 2.702,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "school",
+   "start": 2.702,
+   "end": 2.965,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Except",
+   "start": 3.275,
+   "end": 3.734,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "me",
+   "start": 3.734,
+   "end": 3.922,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "I",
+   "start": 4.252,
+   "end": 4.423,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ride",
+   "start": 4.423,
+   "end": 4.715,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Nugget",
+   "start": 4.715,
+   "end": 5.068,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Nugget",
+   "start": 5.378,
+   "end": 5.677,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "is",
+   "start": 5.677,
+   "end": 5.821,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 5.821,
+   "end": 5.966,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "chicken",
+   "start": 5.966,
+   "end": 6.316,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "HUSS!",
+   "start": 6.631,
+   "end": 6.891,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 6.841,
+   "end": 7.101,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 7.031,
+   "end": 7.291,
+   "beat": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Ten",
+   "start": 7.646,
+   "end": 7.849,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "years",
+   "start": 7.849,
+   "end": 8.106,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "ago",
+   "start": 8.106,
+   "end": 8.362,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 8.492,
+   "end": 8.646,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "dinosaur",
+   "start": 8.646,
+   "end": 9.129,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "park's",
+   "start": 9.129,
+   "end": 9.448,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "fence",
+   "start": 9.448,
+   "end": 9.711,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "fell",
+   "start": 9.711,
+   "end": 9.92,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "over",
+   "start": 9.92,
+   "end": 10.184,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "and",
+   "start": 10.314,
+   "end": 10.514,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "they",
+   "start": 10.514,
+   "end": 10.714,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "all",
+   "start": 10.714,
+   "end": 10.862,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "moved",
+   "start": 10.862,
+   "end": 11.115,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "into",
+   "start": 11.115,
+   "end": 11.367,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "town",
+   "start": 11.367,
+   "end": 11.62,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Priya",
+   "start": 11.95,
+   "end": 12.268,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "rides",
+   "start": 12.268,
+   "end": 12.586,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "a",
+   "start": 12.586,
+   "end": 12.739,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "triceratops",
+   "start": 12.739,
+   "end": 13.441,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Big",
+   "start": 13.751,
+   "end": 13.949,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Marcus",
+   "start": 13.949,
+   "end": 14.303,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "has",
+   "start": 14.303,
+   "end": 14.5,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "a",
+   "start": 14.5,
+   "end": 14.646,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "raptor",
+   "start": 14.646,
+   "end": 14.948,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "named",
+   "start": 14.948,
+   "end": 15.25,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Sprinkles",
+   "start": 15.25,
+   "end": 15.76,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "The",
+   "start": 16.07,
+   "end": 16.225,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "mailman",
+   "start": 16.225,
+   "end": 16.657,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "rides",
+   "start": 16.657,
+   "end": 16.978,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "a",
+   "start": 16.978,
+   "end": 17.134,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "long-neck",
+   "start": 17.134,
+   "end": 17.51,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "and",
+   "start": 17.51,
+   "end": 17.721,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "delivers",
+   "start": 17.721,
+   "end": 18.153,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "to",
+   "start": 18.153,
+   "end": 18.308,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "the",
+   "start": 18.308,
+   "end": 18.463,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "roof",
+   "start": 18.463,
+   "end": 18.673,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "And",
+   "start": 19.003,
+   "end": 19.202,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "every",
+   "start": 19.202,
+   "end": 19.454,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "single",
+   "start": 19.454,
+   "end": 19.81,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "day",
+   "start": 19.81,
+   "end": 20.009,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "they",
+   "start": 20.139,
+   "end": 20.349,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "all",
+   "start": 20.349,
+   "end": 20.504,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "laugh",
+   "start": 20.504,
+   "end": 20.714,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "at",
+   "start": 20.714,
+   "end": 20.869,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "me",
+   "start": 20.869,
+   "end": 21.024,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Then",
+   "start": 21.354,
+   "end": 21.546,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "came",
+   "start": 21.546,
+   "end": 21.789,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 21.789,
+   "end": 21.931,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Great",
+   "start": 21.931,
+   "end": 22.224,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Dino",
+   "start": 22.224,
+   "end": 22.517,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Race",
+   "start": 22.517,
+   "end": 22.76,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "First",
+   "start": 23.07,
+   "end": 23.341,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "one",
+   "start": 23.341,
+   "end": 23.555,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "to",
+   "start": 23.555,
+   "end": 23.713,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "ring",
+   "start": 23.713,
+   "end": 23.928,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "the",
+   "start": 23.928,
+   "end": 24.086,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "clock",
+   "start": 24.086,
+   "end": 24.357,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "tower",
+   "start": 24.357,
+   "end": 24.628,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "bell",
+   "start": 24.628,
+   "end": 24.842,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "wins",
+   "start": 24.842,
+   "end": 25.113,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "I",
+   "start": 25.443,
+   "end": 25.598,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "signed",
+   "start": 25.598,
+   "end": 25.918,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "up",
+   "start": 25.918,
+   "end": 26.072,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Nugget",
+   "start": 26.072,
+   "end": 26.392,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "The",
+   "start": 26.702,
+   "end": 26.866,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "whole",
+   "start": 26.866,
+   "end": 27.147,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "town",
+   "start": 27.147,
+   "end": 27.427,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "laughed",
+   "start": 27.427,
+   "end": 27.708,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "so",
+   "start": 27.708,
+   "end": 27.93,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "hard",
+   "start": 27.93,
+   "end": 28.211,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "the",
+   "start": 28.211,
+   "end": 28.375,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "long-neck",
+   "start": 28.375,
+   "end": 28.772,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "fell",
+   "start": 28.772,
+   "end": 28.995,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "over",
+   "start": 28.995,
+   "end": 29.275,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "HUSS!",
+   "start": 29.59,
+   "end": 29.85,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 29.8,
+   "end": 30.06,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 29.99,
+   "end": 30.25,
+   "beat": "b09",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Three",
+   "start": 30.605,
+   "end": 31.057,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Two",
+   "start": 31.367,
+   "end": 31.773,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "One",
+   "start": 32.083,
+   "end": 32.434,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Go!",
+   "start": 32.744,
+   "end": 33.139,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Twelve",
+   "start": 33.469,
+   "end": 33.788,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "dinosaurs",
+   "start": 33.788,
+   "end": 34.327,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "exploded",
+   "start": 34.327,
+   "end": 34.922,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "off",
+   "start": 34.922,
+   "end": 35.076,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 35.076,
+   "end": 35.23,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "line",
+   "start": 35.23,
+   "end": 35.494,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Nugget",
+   "start": 35.804,
+   "end": 36.085,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "just",
+   "start": 36.085,
+   "end": 36.366,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "stood",
+   "start": 36.366,
+   "end": 36.598,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "there",
+   "start": 36.598,
+   "end": 36.782,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "pecking",
+   "start": 36.912,
+   "end": 37.204,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "at",
+   "start": 37.204,
+   "end": 37.344,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "a",
+   "start": 37.344,
+   "end": 37.485,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "crumb",
+   "start": 37.485,
+   "end": 37.727,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Then",
+   "start": 38.057,
+   "end": 38.269,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Sprinkles",
+   "start": 38.269,
+   "end": 38.816,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "tripped",
+   "start": 38.816,
+   "end": 39.139,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "on",
+   "start": 39.139,
+   "end": 39.295,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 39.295,
+   "end": 39.452,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "triceratops's",
+   "start": 39.452,
+   "end": 40.278,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "tail",
+   "start": 40.278,
+   "end": 40.546,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "The",
+   "start": 40.876,
+   "end": 41.024,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "triceratops",
+   "start": 41.024,
+   "end": 41.704,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "crashed",
+   "start": 41.704,
+   "end": 42.012,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "into",
+   "start": 42.012,
+   "end": 42.267,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 42.267,
+   "end": 42.416,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "stage",
+   "start": 42.416,
+   "end": 42.777,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 43.087,
+   "end": 43.221,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "stage",
+   "start": 43.221,
+   "end": 43.547,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "launched",
+   "start": 43.547,
+   "end": 43.874,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 43.874,
+   "end": 44.008,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "mayor",
+   "start": 44.008,
+   "end": 44.238,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "The",
+   "start": 44.548,
+   "end": 44.695,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "mayor",
+   "start": 44.695,
+   "end": 44.946,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "landed",
+   "start": 44.946,
+   "end": 45.302,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "on",
+   "start": 45.302,
+   "end": 45.448,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "the",
+   "start": 45.448,
+   "end": 45.595,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "T-rex",
+   "start": 45.595,
+   "end": 45.95,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "And",
+   "start": 46.28,
+   "end": 46.487,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 46.487,
+   "end": 46.639,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "T-rex",
+   "start": 46.639,
+   "end": 47.009,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "sat",
+   "start": 47.009,
+   "end": 47.215,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "on",
+   "start": 47.215,
+   "end": 47.367,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "everybody",
+   "start": 47.367,
+   "end": 47.846,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "HUSS!",
+   "start": 48.161,
+   "end": 48.421,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 48.371,
+   "end": 48.631,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 48.561,
+   "end": 48.821,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Twelve",
+   "start": 49.176,
+   "end": 49.527,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "dinosaurs",
+   "start": 49.527,
+   "end": 50.121,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "One",
+   "start": 50.431,
+   "end": 50.633,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "giant",
+   "start": 50.633,
+   "end": 51.047,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "pile",
+   "start": 51.047,
+   "end": 51.302,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Nobody",
+   "start": 51.612,
+   "end": 52.078,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "could",
+   "start": 52.078,
+   "end": 52.305,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "move",
+   "start": 52.305,
+   "end": 52.532,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "And",
+   "start": 52.862,
+   "end": 53.095,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Nugget?",
+   "start": 53.095,
+   "end": 53.45,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Nugget",
+   "start": 53.8,
+   "end": 54.116,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "just",
+   "start": 54.116,
+   "end": 54.433,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "walked",
+   "start": 54.433,
+   "end": 54.694,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Slowly",
+   "start": 55.004,
+   "end": 55.55,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Right",
+   "start": 55.86,
+   "end": 56.128,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "past",
+   "start": 56.128,
+   "end": 56.397,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "them",
+   "start": 56.397,
+   "end": 56.609,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Up",
+   "start": 56.939,
+   "end": 57.096,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 57.096,
+   "end": 57.254,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "steps",
+   "start": 57.254,
+   "end": 57.579,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Up",
+   "start": 57.889,
+   "end": 58.076,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 58.076,
+   "end": 58.262,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "tower",
+   "start": 58.262,
+   "end": 58.581,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "And",
+   "start": 58.891,
+   "end": 59.082,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "she",
+   "start": 59.082,
+   "end": 59.222,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "rang",
+   "start": 59.222,
+   "end": 59.413,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 59.413,
+   "end": 59.554,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "bell",
+   "start": 59.554,
+   "end": 59.745,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "with",
+   "start": 59.745,
+   "end": 59.936,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "her",
+   "start": 59.936,
+   "end": 60.076,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "face",
+   "start": 60.076,
+   "end": 60.317,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "HUSS!",
+   "start": 60.632,
+   "end": 60.892,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 60.842,
+   "end": 61.102,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 61.032,
+   "end": 61.292,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 61.612,
+   "end": 61.872,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 61.822,
+   "end": 62.082,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 62.012,
+   "end": 62.272,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Nobody",
+   "start": 62.627,
+   "end": 63.024,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "was",
+   "start": 63.024,
+   "end": 63.218,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "laughing",
+   "start": 63.218,
+   "end": 63.513,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "now",
+   "start": 63.513,
+   "end": 63.706,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Top",
+   "start": 64.016,
+   "end": 64.241,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "ten",
+   "start": 64.241,
+   "end": 64.465,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "respect",
+   "start": 64.465,
+   "end": 64.927,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Then",
+   "start": 65.257,
+   "end": 65.482,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Nugget",
+   "start": 65.482,
+   "end": 65.826,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "sat",
+   "start": 65.826,
+   "end": 66.051,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "down",
+   "start": 66.051,
+   "end": 66.336,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "on",
+   "start": 66.336,
+   "end": 66.502,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "top",
+   "start": 66.502,
+   "end": 66.727,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "of",
+   "start": 66.727,
+   "end": 66.893,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 66.893,
+   "end": 67.059,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "clock",
+   "start": 67.059,
+   "end": 67.344,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "tower",
+   "start": 67.344,
+   "end": 67.629,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "and",
+   "start": 67.629,
+   "end": 67.854,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "laid",
+   "start": 67.854,
+   "end": 68.139,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "an",
+   "start": 68.139,
+   "end": 68.305,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "egg",
+   "start": 68.305,
+   "end": 68.471,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "The",
+   "start": 68.801,
+   "end": 68.947,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "egg",
+   "start": 68.947,
+   "end": 69.094,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "was",
+   "start": 69.094,
+   "end": 69.293,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "bigger",
+   "start": 69.293,
+   "end": 69.544,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "than",
+   "start": 69.544,
+   "end": 69.743,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 69.743,
+   "end": 69.889,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "clock",
+   "start": 69.889,
+   "end": 70.141,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "tower",
+   "start": 70.141,
+   "end": 70.392,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Every",
+   "start": 70.722,
+   "end": 71.029,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "dinosaur",
+   "start": 71.029,
+   "end": 71.592,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "in",
+   "start": 71.592,
+   "end": 71.771,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "town",
+   "start": 71.771,
+   "end": 72.078,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "ran",
+   "start": 72.078,
+   "end": 72.321,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "screaming",
+   "start": 72.321,
+   "end": 72.819,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "back",
+   "start": 72.819,
+   "end": 73.062,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "into",
+   "start": 73.062,
+   "end": 73.369,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 73.369,
+   "end": 73.548,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "dinosaur",
+   "start": 73.548,
+   "end": 74.111,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "park",
+   "start": 74.111,
+   "end": 74.418,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "and",
+   "start": 74.418,
+   "end": 74.661,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "fixed",
+   "start": 74.661,
+   "end": 75.032,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "the",
+   "start": 75.032,
+   "end": 75.211,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "fence",
+   "start": 75.211,
+   "end": 75.518,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "themselves",
+   "start": 75.518,
+   "end": 76.081,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Now",
+   "start": 76.411,
+   "end": 76.626,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 76.626,
+   "end": 76.784,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "egg",
+   "start": 76.784,
+   "end": 76.943,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "is",
+   "start": 76.943,
+   "end": 77.101,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "cracking",
+   "start": 77.101,
+   "end": 77.486,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "And",
+   "start": 77.796,
+   "end": 77.995,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "something",
+   "start": 77.995,
+   "end": 78.352,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "inside",
+   "start": 78.352,
+   "end": 78.709,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "just",
+   "start": 78.709,
+   "end": 79.014,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "went",
+   "start": 79.014,
+   "end": 79.266,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Bawk",
+   "start": 79.596,
+   "end": 79.998,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "In",
+   "start": 80.328,
+   "end": 80.47,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "a",
+   "start": 80.47,
+   "end": 80.611,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "really",
+   "start": 80.611,
+   "end": 80.905,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "really",
+   "start": 81.035,
+   "end": 81.417,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "deep",
+   "start": 81.417,
+   "end": 81.668,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "voice",
+   "start": 81.668,
+   "end": 81.985,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "HUSS!",
+   "start": 82.3,
+   "end": 82.56,
+   "beat": "b27",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 82.51,
+   "end": 82.77,
+   "beat": "b27",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 82.7,
+   "end": 82.96,
+   "beat": "b27",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 4.157,
+   "mode": "none"
+  },
+  {
+   "t": 6.551,
+   "mode": "party"
+  },
+  {
+   "t": 18.908,
+   "mode": "muffled"
+  },
+  {
+   "t": 21.259,
+   "mode": "party"
+  },
+  {
+   "t": 30.51,
+   "mode": "party"
+  },
+  {
+   "t": 37.962,
+   "mode": "none"
+  },
+  {
+   "t": 40.781,
+   "mode": "party"
+  },
+  {
+   "t": 52.767,
+   "mode": "muffled"
+  },
+  {
+   "t": 56.844,
+   "mode": "none"
+  },
+  {
+   "t": 60.552,
+   "mode": "party"
+  },
+  {
+   "t": 62.532,
+   "mode": "none"
+  },
+  {
+   "t": 65.162,
+   "mode": "muffled"
+  },
+  {
+   "t": 68.706,
+   "mode": "none"
+  },
+  {
+   "t": 70.627,
+   "mode": "party"
+  },
+  {
+   "t": 76.316,
+   "mode": "night"
+  },
+  {
+   "t": 79.501,
+   "mode": "none"
+  },
+  {
+   "t": 80.233,
+   "mode": "none"
+  },
+  {
+   "t": 82.22,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "chicken": 5.966,
+  "fence": 9.711,
+  "town": 10.862,
+  "priya": 11.95,
+  "marcus": 13.751,
+  "mail": 16.225,
+  "roof": 17.721,
+  "bell": 59.222,
+  "signed": 25.598,
+  "fell": 28.375,
+  "three": 30.605,
+  "two": 31.367,
+  "one": 32.083,
+  "go": 34.327,
+  "peck": 35.804,
+  "crash": 41.704,
+  "launch": 43.547,
+  "land": 44.946,
+  "walk": 54.433,
+  "past": 55.86,
+  "steps": 57.254,
+  "tower": 58.262,
+  "respect": 64.016,
+  "sit": 65.826,
+  "egg": 67.854,
+  "run": 72.078,
+  "fix": 74.661,
+  "crack": 77.101
+ },
+ "title": "In This Town \u2014 Nugget"
+}

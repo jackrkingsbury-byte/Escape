@@ -340,7 +340,7 @@ export const shots = [
       const k = ease.inOutSine(clamp(lt / 2.4, 0, 1));
       const c = moveCam(ctx, { pos: L(-16.9, 0.32, 5.1), look: L(-19.6, 1.25, 5.45), fov: 46 }, { pos: L(-17.25, 0.25, 5.2), look: L(-19.8, 1.3, 5.45), fov: 46 }, k, 1.3);
       moonFrame(ctx, c, [MO.base[0], lerp(40, 37, k), MO.base[2]]);
-      tag(ctx, 'SHOUTING', ctx.time('b02.w9') + 0.05, Infinity, { y: 0.1, size: 90, bg: 'rgba(200,0,40,0.9)' });
+      tag(ctx, 'SHOUTING', ctx.time('b02.w9') + 0.05, Infinity, { y: 0.085, size: 112, bg: 'rgba(200,0,40,0.92)' });
     },
   },
   // ── b03 HUSS ×6 — the town square shouts; the moon jolts up one notch per HUSS
@@ -887,13 +887,15 @@ export const shots = [
     setup(ctx) { room(ctx); put(ctx, 'me', ctx.store.R(KID_BED.x, 0, KID_BED.z), PI / 2); ctx.add(ctx.props.bulb); },
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me, tr = ctx.time('b17.w2');
+      me.pose('think', t, { seated: true, seatHeight: 0.55 }); const f0 = humanFace(me);   // steady camera anchor (seated face)
       if (t < tr) { me.pose('think', t, { seated: true, seatHeight: 0.55 }); me.face('neutral', t); }
       else { me.pose('surprised', t - tr, { seated: true, seatHeight: 0.55 }); me.face('shocked', 0.3); }
-      const hp = humanFace(me).add(V(0.05, 0.46, 0.05));
-      ctx.props.bulb.position.copy(hp); ctx.props.bulb.userData.set(t > tr ? ease.outBack(clamp((t - tr) / 0.25, 0, 1)) : 0);
+      const hp = humanFace(me).add(V(0.05, 0.4, 0.05));
+      ctx.props.bulb.position.copy(hp); ctx.props.bulb.userData.set(t > tr ? 0.78 * ease.outBack(clamp((t - tr) / 0.25, 0, 1)) : 0);
       windowMoon(ctx, -0.55, 1.85, 0.95);
-      const f = humanFace(me);
-      const c = moveCam(ctx, { pos: f.clone().add(V(1.85, -0.7, 2.45)), look: f.clone().add(V(0, -0.3, 0)), fov: 40 }, { pos: f.clone().add(V(1.5, -0.7, 2.0)), look: f.clone().add(V(0, -0.3, 0)), fov: 40 }, ease.inOutSine(clamp(lt / 1.9, 0, 1)), 1.0, '#fff0e0', 8);
+      const f = f0;
+      // pulled back + more frontal: whole head (and the bulb above it) in frame, face in the upper third
+      const c = moveCam(ctx, { pos: f.clone().add(V(3.1, -0.5, 2.4)), look: f.clone().add(V(0, -0.62, 0.1)), fov: 44 }, { pos: f.clone().add(V(2.85, -0.5, 2.15)), look: f.clone().add(V(0, -0.6, 0.1)), fov: 44 }, ease.inOutSine(clamp(lt / 1.9, 0, 1)), 1.0, '#fff0e0', 8);
       pop(ctx, tr, 0.1, '#fff6c0', 0.3);
     },
   },
