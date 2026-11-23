@@ -1009,7 +1009,7 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'dusk'); const P = ctx.props;
       put(ctx, 'waffles', L(-61, -6.2, -2.5), L.yaw + PI / 2, 40);
-      put(ctx, 'me', L(-44.4, 0, -1.0), L.yaw - PI / 2 + 0.55);
+      put(ctx, 'me', L(-44.0, 0, -0.6), L.yaw - PI / 2 + 1.25);
       addTo(ctx, P.purr, 0, 0, 0);
       P.hearts.forEach((h) => addTo(ctx, h, 0, -50, 0));
     },
@@ -1022,7 +1022,7 @@ export const shots = [
       const nose = headPt(me, 0.45).applyMatrix4(L.M.clone().invert());
       P.purr.position.copy(nose.clone().add(V(-0.9, 0.3, 0.6))); P.purr.rotation.y = PI / 2; P.purr.scale.setScalar(1.6); P.purr.userData.set(t, t > tp ? 1 : 0);
       P.hearts.forEach((h, k) => { const d = t - (tp + 0.1 + k * 0.12); if (d < 0) { h.position.set(0, -50, 0); return; } h.position.set(nose.x - 1.2 + (k % 3) * 0.5, nose.y + 0.6 + d * 1.2, nose.z + 0.4 + (k % 2) * 0.6); h.scale.setScalar(0.45 * Math.min(1, d / 0.2)); });
-      ctx.cam.move({ pos: L(-36.6, 1.5, 5.4), look: L(-45.6, 3.0, -2.0), fov: 52 }, { pos: L(-38.0, 1.4, 4.4), look: L(-45.4, 2.7, -2.0), fov: 50 }, clamp(lt / 2.8, 0, 1), 'inOutSine');
+      ctx.cam.move({ pos: L(-36.6, 1.1, 5.4), look: L(-45.6, 4.6, -2.0), fov: 54 }, { pos: L(-38.0, 1.0, 4.4), look: L(-45.4, 4.4, -2.0), fov: 52 }, clamp(lt / 2.8, 0, 1), 'inOutSine');
       fill(ctx, L(-42.4, 1.6, 1.4), 1.4, '#ffe0c8', 8);
     },
   },
