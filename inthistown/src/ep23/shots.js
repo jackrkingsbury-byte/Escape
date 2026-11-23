@@ -610,9 +610,11 @@ export const shots = [
       const r = put(ctx, 'rose', L(-14, 0.12, -7.0), 0);
       const P = ctx.props; ctx.add(P.kazoo, r.joints.head); P.kazoo.position.set(0, 0.13, 0.28); P.kazoo.rotation.set(0.15, 0, 0);
       ctx.add(P.notes, P.kazoo); P.notes.position.set(0, 0, 0.3); P.notes.scale.setScalar(1);
+      P.kazoo.visible = true; P.notes.visible = true;
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, r = ctx.cast.rose;
+      ctx.props.kazoo.visible = true; ctx.props.notes.visible = true;
       kazooPose(r, t); r.face('smug', 0.3);
       r.joints.head.rotation.z = 0.06 * Math.sin(t * 18);
       ctx.props.notes.userData.set(t, 1, [0.9, 0.7, 0.6], 0.16, 1.4);
@@ -630,9 +632,11 @@ export const shots = [
       ctx.store.cr = crowd(ctx, [X[11], X[12]], [[-14.9, 0.12, -7.3, 0.55], [-13.1, 0.12, -7.3, 0.15]]);
       const P = ctx.props; ctx.add(P.kazoo, r.joints.head); P.kazoo.position.set(0, 0.13, 0.28); P.kazoo.rotation.set(0.15, 0, 0);
       ctx.add(P.notes, P.kazoo); P.notes.position.set(0, 0, 0.3);
+      P.kazoo.visible = true; P.notes.visible = true;
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, r = ctx.cast.rose;
+      ctx.props.kazoo.visible = true; ctx.props.notes.visible = true;
       kazooPose(r, t); r.face('smug', 0.3);
       ctx.store.cr.forEach((c, i) => { earsPose(c.ch, t + c.ph); c.ch.face(i ? 'squint' : 'sweat', 0.4); });
       ctx.props.notes.userData.set(t, 1, [0.9, 0.7, 0.6], 0.22, 1.4);
@@ -738,7 +742,7 @@ export const shots = [
       const open = t > to;
       ctx.store.cr.forEach((c) => { if (open) { shoutPose(c.ch, t + c.ph, 0.4, 0); c.ch.face('shocked', 0.3); } else { fistsPose(c.ch, t + c.ph); c.ch.face('determined', t + c.ph); } });
       ctx.props.filler.userData.set(t, { arms: 'limp', bounce: 0, speed: 0.5 });
-      const c = moveCam(ctx, { pos: L(37.0, 2.3, -3.6), look: L(41.6, 1.55, 0.2), fov: 44 }, { pos: L(37.6, 2.1, -3.0), look: L(41.6, 1.55, 0.2), fov: 42 }, lt / 1.8, 1.6);
+      const c = moveCam(ctx, { pos: L(37.0, 2.3, -3.6), look: L(41.6, 0.75, 0.2), fov: 44 }, { pos: L(37.6, 2.1, -3.0), look: L(41.6, 0.75, 0.2), fov: 42 }, lt / 1.8, 1.6);
       moonFrame(ctx, c, MO.base, MR, { dust: false });
       if (open) tag(ctx, '. . .', to + 0.1, Infinity, { y: 0.14, size: 110, bg: 'rgba(20,20,40,0.85)' });
     },
@@ -855,14 +859,14 @@ export const shots = [
     },
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, P = ctx.props, dad = ctx.cast.dad, t0 = ctx.time('b15.w10') - 0.05;
-      const x = 0.1 - 0.6 * (t - 50.45);
-      dad.root.position.copy(R(x, 1.42 + 0.06 * Math.sin(t * 2.2), -2.92));
+      const x = 0.32 - 0.3 * (t - 50.45);
+      dad.root.position.copy(R(x, 1.72 + 0.06 * Math.sin(t * 2.2), -2.92));
       dad.root.quaternion.copy(_qBasis).premultiply(new THREE.Quaternion().setFromAxisAngle(V(0, 0, 1), 0.05 * Math.sin(t * 1.5)));
       dad.pose('crowdSurf', t, { intensity: 0.15 }); dad.face('sleepy', 1.0);
       const hp = headPt(dad, 0.3, 0.2);
       P.zzz.position.copy(hp).add(V(0.25 + 0.1 * Math.sin(t * 3), 0.35 + 0.25 * ((t * 0.8) % 1), 0.3)); P.zzz.material.opacity = 1;
       P.zzz2.position.copy(hp).add(V(0.55, 0.75 + 0.25 * ((t * 0.8 + 0.5) % 1), 0.3));
-      const c = moveCam(ctx, { pos: R(-0.2, 1.45, 1.3), look: R(-0.8, 1.6, -2.1), fov: 44 }, { pos: R(-0.35, 1.45, 0.9), look: R(-0.8, 1.6, -2.1), fov: 44 }, lt / 2.6, 0.9, '#dfe8ff', 8);
+      const c = moveCam(ctx, { pos: R(-0.2, 1.45, 1.3), look: R(-0.8, 1.35, -2.1), fov: 44 }, { pos: R(-0.35, 1.45, 0.9), look: R(-0.8, 1.35, -2.1), fov: 44 }, lt / 2.6, 0.9, '#dfe8ff', 8);
       tag(ctx, 'STILL SNORING', ctx.time('b15.w15'), Infinity, { y: 0.14, size: 70, bg: 'rgba(40,90,200,0.92)' });
     },
   },
@@ -1082,7 +1086,7 @@ export const shots = [
       const n = hits.filter((h) => h <= t).length, h = lastBefore(hits, t), dh = h != null ? t - h : 9, hp = hitPulse(hits, t, 0.2);
       const ka = ease.outCubic(clamp(dh / 0.16, 0, 1));
       const mp = n === 0 ? MO.up[0] : lerpA(MO.up[n - 1], MO.up[n], ka);
-      const lampK = Math.max(0, 1 - (n - 1 + ka) / 3);
+      const lampK = Math.max(0, 1 - (n - 1 + ka) / 4);
       let c;
       if (i === 0 || i === 5) {
         const me = ctx.cast.me; me.pose('cheer', t); me.face(dh < 0.22 ? 'huss' : 'grin', t);
@@ -1091,14 +1095,14 @@ export const shots = [
         c = i === 0 ? setCam(ctx, { pos: L(46.0, 1.0, 0.3), look: L(51, 2.3, 0), fov: 54 }, 1.6) : setCam(ctx, { pos: L(47.6, 1.5, -1.2), look: L(50.4, 2.0, 0), fov: 44 }, 1.6);
       } else if (i === 1 || i === 3) {
         bendFrame(ctx, lampK);
-        { const LC = lampCam(ctx); c = setCam(ctx, LC[i === 1 ? 0 : 1], 0.8); }
+        c = i === 1 ? setCam(ctx, { pos: L(23, 1.4, 1.6), look: L(-40, 25, 0), fov: 60 }, 0.8) : setCam(ctx, { pos: L(12, 1.2, -3.5), look: L(-45, 30, 0), fov: 62 }, 0.8);
       } else if (i === 2) {
         ctx.store.sick.forEach((ch, k) => { ch.pose('cheer', t + k * 0.3, { seated: true, seatHeight: 0.55 }); ch.face(k % 2 ? 'grin' : 'laugh', t + k); });
         c = setCam(ctx, { pos: L(FACADE.x, 3.3, -1.0), look: L(FACADE.x, 4.0, FACADE.z), fov: 52 }, 0.8);
       } else {
         const m = 0.02 + 1.2 * (t - hits[0]) + 2.5 * hp;
         P.clock.userData.set(m, 0.75 + m / 12);
-        c = setCam(ctx, { pos: L(-43.6, 9.6, 0.2), look: L(-49.6, 12.75, 1.5), fov: 48 }, 0.8);
+        c = setCam(ctx, { pos: L(-38, 8.5, 2.5), look: L(-49.6, 15, 0.5), fov: 58 }, 0.8);
       }
       moonFrame(ctx, c, mp, MR, { light: 1.6 });
       ctx.cam.punch(hits, t, 0.12, 0.2); shakeOn(ctx, hits, 0.6, 0.3, 40 + i);

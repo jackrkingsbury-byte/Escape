@@ -1,0 +1,2200 @@
+{
+ "ranked": [
+  {
+   "title": "The Cat Did It",
+   "logline": "In this town, every lie makes a raincloud pop over your head, and it rains on you until you tell the truth. I have never had a cloud, not once. Then Grandpa's birthday cake goes missing, I have frosting on my face, and I blame the cat. Every new lie makes my cloud bigger, until it floods the whole town.",
+   "twist": "I break the cloud with a paradox, 'I am lying right now', and it short-circuits and explodes into the biggest rainbow in town history. Then Mom hugs me and says 'It's okay, sweetie. I'm not mad.' Pop: the biggest thunderstorm the town has ever seen appears over HER head.",
+   "caption_hook": "in my town, if you lie, it rains on you. so I blamed the cat.",
+   "new_props": [
+    "Personal raincloud: a cluster of grey spheres floating above someone's head with thin blue cylinder rain falling only under it. It scales from head-size up to town-size and has a dark thundercloud version",
+    "Lightning bolt: a yellow zigzag of thin boxes plus a white screen flash",
+    "Umbrella hat: a colored cone canopy on a thin pole strapped to the mayor's top hat",
+    "Mrs. Fennick's huge tower of purple hair: stacked boxes and spheres",
+    "Flood water: a see-through blue box plane that rises along main street up to the windows, then drains",
+    "Bathtub boat: a white rounded box tub on little sphere feet, with two plank oars",
+    "Inflatable swim rings: fat, short, brightly colored cylinders",
+    "Empty cake stand: a plate cylinder on a stem covered in tiny brown crumb boxes",
+    "Pink frosting smear: a flat pink box across my mouth",
+    "Giant blocky rainbow: an arc of six colored box segments over the clock tower",
+    "'HAPPY BIRTHDAY GRANDPA' banner swap for the town square",
+    "Briefcase and fishing hat for Mr. Pibbs"
+   ],
+   "sets": [
+    "Main street on a sunny day with houses and street lamps",
+    "Town square with stage and big banner (flashback with the mayor, then Grandpa's birthday party)",
+    "Main street flooded under one giant storm cloud: dark grey sky, rain, fog, lightning flashes",
+    "Rooftops of the houses on main street (pool party, chanting townspeople)",
+    "Town square under the rainbow, back in bright sun"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, if you lie, a raincloud pops over your head and rains on you until you tell the truth.",
+     "visual": "Main street, sunny day. A man in sunglasses tells his neighbor something with a big fake grin. Pop: a small grey cloud appears right above his head and pours rain on only him, while everyone else stays in the sun.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "thunder"
+     ],
+     "overlay": "LIE = RAIN"
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago, Mayor Glossy promised everyone free ice cream.",
+     "visual": "Flashback: the mayor in a top hat and sash stands at a podium on the town square stage with his arms wide, and the crowd cheers. Pop: a tiny thundercloud appears over his top hat.",
+     "music": "same",
+     "sfx": [
+      "cheer",
+      "pop"
+     ],
+     "overlay": "5 YEARS AGO"
+    },
+    {
+     "kind": "line",
+     "text": "He wears an umbrella hat now. Still no ice cream.",
+     "visual": "Present day. The mayor walks down main street in an umbrella hat under his own little lightning storm, and it's sunny everywhere else.",
+     "music": "same",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "STILL NO ICE CREAM"
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Fennick asked the street if they liked her new haircut. Everyone said yes. School got cancelled. Flood.",
+     "visual": "A lady with an enormous tower of purple hair twirls on main street. Her neighbors give a thumbs-up with fake smiles, then pop-pop-pop-pop: a cloud appears over every single neighbor, and water rises up the street to the door handles.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "pop",
+      "pop",
+      "pop",
+      "thunder"
+     ],
+     "overlay": "SCHOOL: CANCELLED"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Kids dance and cheer on a rooftop in the rain, celebrating no school.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Me? Never had a cloud. Not once. Top ten respect.",
+     "visual": "Me (black hoodie, white knight emblem, headphones) standing with crossed arms and sunglasses in a perfect circle of sunshine, smug, while every extra around me has their own little cloud.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "Top 10 respectful moments"
+    },
+    {
+     "kind": "line",
+     "text": "Until yesterday. Grandpa's birthday cake went missing. All seven layers.",
+     "visual": "Town square party under a 'HAPPY BIRTHDAY GRANDPA' banner. Grandpa (white beard, party hat) stares at an empty cake stand covered in crumbs, and the whole family gasps.",
+     "music": "none",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "CAKE: MISSING"
+    },
+    {
+     "kind": "line",
+     "text": "Mom looked right at me. I had frosting on my face.",
+     "visual": "Mom (blocky woman, ponytail, cardigan) slowly turns with a squint face. Cut to a close-up of me with a big pink frosting smear across my mouth and a sweat face.",
+     "music": "muffled",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "EVIDENCE"
+    },
+    {
+     "kind": "line",
+     "text": "And I said... the cat did it.",
+     "visual": "I point at the orange cat sitting innocently on the party table. Pop: a little grey cloud appears above my head, and one drop lands on my nose.",
+     "music": "none",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "LIE DETECTED"
+    },
+    {
+     "kind": "line",
+     "text": "The cat stared at me. Betrayed.",
+     "visual": "Slow push-in on the orange cat's face in total silence.",
+     "music": "none",
+     "sfx": [],
+     "overlay": "BETRAYED"
+    },
+    {
+     "kind": "line",
+     "text": "So I doubled down. The cat and the pigeon. The pigeon was the brains.",
+     "visual": "I point at the pigeon on the stage, and the pigeon slowly turns its head, offended. My cloud doubles in size, then triples, thunder rumbles, and rain pours on me.",
+     "music": "party",
+     "sfx": [
+      "thunder",
+      "boom"
+     ],
+     "overlay": "LIE #2 + LIE #3"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Lightning flashes and the camera shakes as my cloud swells over the whole town square. I stand there soaked, shouting.",
+     "music": "same",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "By lunch, my cloud covered the whole town. Mr. Pibbs rowed to work in a bathtub.",
+     "visual": "Wide shot in dark storm lighting: one giant cloud over every rooftop, and blue water filling main street up to the windows. A man in a fishing hat rows a white bathtub past the street lamps with a briefcase on his lap.",
+     "music": "muffled",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Goon Squad!",
+     "visual": "On my roof, three friends (red cap, big glasses, party hat) pose in inflatable swim rings. The stamped word slams in.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "scratch"
+     ],
+     "overlay": "GOON SQUAD!"
+    },
+    {
+     "kind": "line",
+     "text": "Pool party on my roof.",
+     "visual": "The Goon Squad dances in the rain, then cannonballs off the roof into the flooded street with a huge splash.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "While they're out partying, by the way.",
+     "visual": "Cut down to me standing neck-deep in water on main street with the cloud pouring straight onto my head and a sad face.",
+     "music": "muffled",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "BY THE WAY"
+    },
+    {
+     "kind": "line",
+     "text": "I tried to tell the truth. 'It was me... meow. The cat.'",
+     "visual": "I take a deep breath with a determined face, then panic and point at the cat floating past on a box. A thunder clap goes off right over me.",
+     "music": "none",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Ah, almost... almost!",
+     "visual": "Close-up of my sweaty face. The stamped word slams in.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "The town chanted from the rooftops. Drizzao! Pella pip! Pella plonk! Soggani!",
+     "visual": "Soaked townspeople on every rooftop pump their fists and chant down at me. Each word stamps onto the screen.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "DRIZZAO! PELLA PIP! PELLA PLONK! SOGGANI!"
+    },
+    {
+     "kind": "line",
+     "text": "Then, genius idea. I looked up and said, 'I am lying right now.'",
+     "visual": "Silence. I point straight up at the giant cloud with a determined face, and the camera tilts up into the cloud.",
+     "music": "none",
+     "sfx": [],
+     "overlay": "\"I AM LYING RIGHT NOW.\""
+    },
+    {
+     "kind": "line",
+     "text": "The cloud froze. If I'm lying, it's true. If it's true, I'm lying.",
+     "visual": "The cloud flickers between rain and sunshine, sputters, spins in place, and sparks crackle across it. Everyone on the rooftops tilts their heads.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "ERROR"
+    },
+    {
+     "kind": "line",
+     "text": "It spun, sparked, and exploded into the biggest rainbow in town history.",
+     "visual": "Boom: the cloud bursts into a giant blocky rainbow arching over the clock tower. The sun comes out, the water drains away, and the crowd cheers.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "I surf down main street on the bathtub as the water drains, with the cat sitting on my head and the whole town cheering under the rainbow.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mom hugged me. 'It's okay, sweetie. I'm not mad.'",
+     "visual": "Town square under the rainbow. Mom gives me a warm hug and a gentle smile.",
+     "music": "lofi",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Pop. Biggest storm in town history.",
+     "visual": "Pop: a gigantic black thundercloud appears over Mom's head, lightning everywhere and the sky going dark. Mom keeps smiling while I slowly back away with a shocked face. Screen shake.",
+     "music": "none",
+     "sfx": [
+      "pop",
+      "thunder"
+     ],
+     "overlay": "NOT MAD"
+    }
+   ],
+   "vibe": "funny",
+   "id": "funny-2",
+   "score": 38.67,
+   "notes": [
+    "Fix the muddled 'It was me... meow. The cat.' beat. The 'meow' reads like a script error and kills the laugh. Use a clean chicken-out with an obvious swerve, such as 'It was m... m... the pigeon's cousin,' with the pigeon slowly glaring. Then the thunder clap lands as a joke.",
+    "The paradox gets the kid out of the cloud without him ever owning up, so the story's real question (will he tell the truth?) is dodged. After the rainbow, add one quick beat: 'Okay. I ate the cake. All seven layers.' The sun stays out and the cat gives a satisfied nod. Mom's 'It's okay, sweetie, I'm not mad' then answers a real confession, which makes her giant storm a sharper and fairer final sting.",
+    "Plant Mom's storm. In the 'never had a cloud' shot and the birthday party shot, have Mom quietly holding a folded umbrella. Then the final 'I'm not mad' thunderstorm feels earned and rewards a rewatch instead of coming out of nowhere."
+   ]
+  },
+  {
+   "title": "Moving Night",
+   "logline": "In this town every house has legs, and once a year, on the first cold night, they all stand up and run off. The narrator falls asleep at his desk and rides his house in a stampede to a field past the edge of town, where every house stands in a circle humming. He has to get it home before school.",
+   "twist": "The narrator gets home by ringing his own doorbell. The next morning something tiny is following his house around the garden: a shed on wobbly legs. The humming was the houses having babies. Mom says he has to walk it, and Mr. Dube's house had twins: two tiny garages.",
+   "caption_hook": "My house ran away last night. I was still inside.",
+   "new_props": [
+    "house walking rig: a normal town house on four chunky cylinder legs (stand, tiptoe, gallop, fold legs)",
+    "giant chain and padlock linking a house leg to a street lamp",
+    "street lamp ripped loose, dragged and sparking behind a running house",
+    "bed on a front porch",
+    "frost on windows and rooftops",
+    "glowing doorbell button on my front door",
+    "alarm clock / countdown",
+    "sleeping bags lined up on main street",
+    "baby shed: a tiny wooden shed on four stubby wobbly legs",
+    "two tiny garages on stubby legs",
+    "dog leash",
+    "dust puffs and chimney smoke puffs"
+   ],
+   "sets": [
+    "main street - dusk, then night with houses on legs, then sunrise",
+    "kid's bedroom interior at night (bouncing camera, swinging posters, glowing monitor)",
+    "new open field past the edge of town (flat ground, fog, purple sky, houses in a ring)",
+    "town square - party night (Mr. Dube partying)",
+    "park and clock tower - stampede route",
+    "my front garden - morning"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, the houses have legs. And last night, mine ran away with me inside.",
+     "visual": "Dusk on main street. A cosy house creaks, then rises on four chunky blocky legs in puffs of dust and stretches like a cat. My bedroom window is lit, and I'm pressed against the glass, shocked.",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Once a year, on the first cold night, they stand up and leave. Nobody knows where.",
+     "visual": "Night with frost on the rooftops. A line of houses on legs tiptoes out of town past the clock tower, silhouetted against a purple sky, while extras in pyjamas watch from the street.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Rules: chain your house to a lamp post. Never be inside when it runs.",
+     "visual": "Mr. Dube (big beard, cap) wraps a giant chain from his house's leg to a street lamp and snaps the padlock shut, smug. A second rule card stamps in after.",
+     "music": "party",
+     "sfx": [
+      "knock",
+      "ding"
+     ],
+     "overlay": "RULE #1: CHAIN IT. RULE #2: GET OUT."
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Mokoena overslept once. She woke up three towns away. Still in bed.",
+     "visual": "Morning in an empty field. Grey-haired Mrs. Mokoena sits up in her bed on the porch of her house, which stands alone with its legs folded, sleepy face. A road sign behind her points the wrong way.",
+     "music": "same",
+     "sfx": [
+      "laugh"
+     ],
+     "overlay": "3 TOWNS AWAY"
+    },
+    {
+     "kind": "line",
+     "text": "So last night, I fell asleep at my desk.",
+     "visual": "Kid's bedroom at night: me asleep in my chair with my headphones on, the monitor glowing, frost creeping across the window.",
+     "music": "night",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "I woke up because my room was... bouncing.",
+     "visual": "The bedroom bobs up and down in rhythm, posters swing and the lamp wobbles. My eyes snap open (shocked).",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three big bounces: I'm thrown out of the chair, onto the bed, then onto the floor. Camera shake on each HUSS.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I looked out the window. My house was running down Main Street.",
+     "visual": "Over my shoulder through the window, street lamps whiz past and the view bounces. Cut outside: my house gallops down main street on four legs with my lit window bobbing along.",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It wasn't alone. Every house in town was running, like a herd.",
+     "visual": "Wide drone shot at night: dozens of houses on legs stampede through the park and around the clock tower, chimneys puffing and dust everywhere. The pigeon rides on a roof.",
+     "music": "same",
+     "sfx": [
+      "thump",
+      "thump",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Dube's house dragged its lamp post along.",
+     "visual": "Mr. Dube's house gallops past still chained, with the ripped-out street lamp bouncing and sparking behind it like a kite.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "While he's out partying, by the way.",
+     "visual": "Cut to the town square on party night: Mr. Dube in a party hat dances on the stage with friends, totally oblivious, while his house thunders past in the background.",
+     "music": "party",
+     "sfx": [
+      "record scratch",
+      "boom"
+     ],
+     "overlay": "BY THE WAY"
+    },
+    {
+     "kind": "line",
+     "text": "They ran past the edge of town, into a field, and stopped in a circle.",
+     "visual": "A huge empty field under a purple night sky, with fog rolling. The houses fold their legs and settle into a giant ring, mine among them.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then they all started... humming.",
+     "visual": "Every window in the ring glows purple and pulses in sync while the chimneys puff together. Slow orbiting camera.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "School was at eight. I needed my house home.",
+     "visual": "Me at my window holding an alarm clock, sweating, the purple glow on my face.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "SCHOOL IN 2 HOURS"
+    },
+    {
+     "kind": "line",
+     "text": "Then I remembered: a house always runs home when it hears its own doorbell.",
+     "visual": "Me in the think pose. Quick cut: the doorbell button on my front door lights up and glows.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I hung off the porch and pressed it.",
+     "visual": "I climb out the window and dangle off the porch roof by one hand, stretch down and jab the glowing doorbell.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "My house's whole body whips around and its legs scramble, then it bolts out of the ring as the sky starts turning to sunrise. Camera shake and a snap zoom on each HUSS.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It sprinted home so fast I flapped behind it like a flag.",
+     "visual": "I hold on to the door handle with my body flying flat behind the galloping house (crowdSurf pose), hoodie flapping, the landscape whipping past under a sunrise sky.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The whole street went wild. Dingalo! Oba stomp! Oba roofi! Porchani!",
+     "visual": "Main street at sunrise: townspeople in pyjamas and sleeping bags on the road (their houses are still gone) jump up cheering as my house skids back into its spot. Each chant word stamps on screen.",
+     "music": "party",
+     "sfx": [
+      "cheer",
+      "boom"
+     ],
+     "overlay": "DINGALO! OBA STOMP! OBA ROOFI! PORCHANI!"
+    },
+    {
+     "kind": "line",
+     "text": "This morning, something tiny was following my house around.",
+     "visual": "Daytime in my front garden. My house stands still and normal, and something small peeks out from behind one of its legs.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap close-ups: a tiny stubby leg, a tiny door, a tiny chimney puffing a tiny cloud.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A shed. On tiny legs. That's what the humming was. My house had a baby.",
+     "visual": "A tiny wooden shed on four wobbly legs bounces around my house's feet like a puppy and chases the pigeon. My house nudges it gently. I'm stunned.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "laugh"
+     ],
+     "overlay": "IT'S A SHED!"
+    },
+    {
+     "kind": "line",
+     "text": "Mom says I have to walk it. And Mr. Dube's house had twins.",
+     "visual": "I walk the tiny shed on a leash down main street, deadpan, while it tugs toward a lamp post. Final cut: Mr. Dube, still in his party hat, stunned, as two tiny garages on legs bounce around him.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "boom"
+     ],
+     "overlay": "TWINS"
+    }
+   ],
+   "vibe": "random",
+   "id": "random-2",
+   "score": 35.8,
+   "notes": [
+    "Plant the doorbell rule before it saves the day. Right now 'Then I remembered...' comes out of nowhere and feels too convenient. Add it to the rules beat ('Rule three: ring your own doorbell and your house always comes home') and show a neighbour whistling and ringing to call a house back like a dog. Then the porch-dangle rescue feels clever.",
+    "The doorbell rescue is made up on the spot ('Then I remembered...'), which is a deus ex machina at the climax. Add it to the rules section instead: 'Rule three: if your house ever runs off, ring the doorbell, and it'll come home like a dog.' Show Mrs. Mokoena not being able to reach hers from the porch bed. Then the dangling-off-the-porch doorbell jab pays off a planted rule, and the baby-shed twist can carry the surprise alone.",
+    "Plant the doorbell in the rules beat as rule three ('never ring a doorbell on Moving Night: the house bolts straight home'). Then the climax is earned, not something he only 'remembers' at the moment he needs it. Show Mr. Dube's house getting rung by accident as the quick example."
+   ]
+  },
+  {
+   "title": "The Judges",
+   "logline": "In this town, three judges in sunglasses pop out of the ground to score every fall, and you can never trip on purpose because the judges always know. I have never tripped in my life, so the judges have followed me everywhere for six years. To get rid of them, I put on a blindfold and the Goon Squad secretly moves the whole town around so I can trip by accident, on purpose.",
+   "twist": "My huge blindfolded fall scores 10, 10, 9.9 and the judges finally bow out. Then the head judge 'trips' over my blindfold, on purpose. Three tiny judges pop out of the ground and give them zero, zero, zero. Fake trips don't count, so the big judges still haven't really tripped, and now the tiny judges follow THEM everywhere.",
+   "caption_hook": "three judges have followed me for six years, waiting for me to trip",
+   "new_props": [
+    "Three judges: blocky humans in black suits, white shirts, bowties and sunglasses, each holding a white scorecard panel with big black numbers (0, 7, 7.5, 8, 9, 9.5, 9.9, 10)",
+    "Three tiny judges: the same judge rig scaled to knee height, with tiny sunglasses and tiny scorecards",
+    "Pop-up ground hole: a dark disc in the road that bursts open with brown dirt-chunk spheres flying out, then closes",
+    "Banana peel: yellow box strips on the stage floor",
+    "Bakery front on main street with a wall of framed '8' scorecards (box frames)",
+    "Tray of cupcakes (small cylinders with sphere tops) that fly into the air",
+    "Giant cake on a wheeled cart: stacked white and pink cylinders",
+    "Lightbulb idea: yellow sphere with a grey cylinder base that pops above my head",
+    "Simple dentist corner: a reclining chair (boxes), a blocky dentist in a white coat holding a thin mirror tool",
+    "'HAPPY BIRTHDAY MAYOR' banner swap for the flashback",
+    "Counter overlay: DAYS WITHOUT TRIPPING"
+   ],
+   "sets": [
+    "Main street, day, with houses and street lamps (and later at dusk)",
+    "Town square with stage and big banner: dusk flashback and the day of the big fall",
+    "Park with table and tree (breakfast and Mr. Gristle's fake flop)",
+    "Kid's bedroom at night, with the judges standing at the foot of the bed",
+    "Main street at night with the party-night town square glowing in the distance",
+    "Plain interior backdrop for a quick dentist-chair gag"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, every time you trip, three judges in sunglasses pop out of the ground and score your fall.",
+     "visual": "Main street, sunny day. A man in a cap trips over the pigeon and faceplants. Three holes burst open in the road with flying dirt chunks, and three judges in black suits, bowties and sunglasses shoot up and hold up white scorecards.",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "pop",
+      "pop",
+      "pop"
+     ],
+     "overlay": "7.5 | 8 | 7"
+    },
+    {
+     "kind": "line",
+     "text": "Seven years ago, Mayor Puddle slipped on a banana at his own birthday. Pop, pop, pop. Nine, nine, nine and a half.",
+     "visual": "Flashback in warm dusk light: town square stage with a 'HAPPY BIRTHDAY MAYOR' banner. The mayor in a top hat and sash steps on a yellow banana peel, his legs fly up and he lands flat. The judges pop up out of the stage for the very first time, and the crowd is stunned.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "thump",
+      "pop",
+      "pop",
+      "pop",
+      "ding"
+     ],
+     "overlay": "7 YEARS AGO: 9 | 9 | 9.5"
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Wobbles the baker trips eleven times a day. She has a whole wall of eights.",
+     "visual": "Bakery front on main street. A round baker in a white hat and apron trips with a tray of cupcakes that fly everywhere. Behind her, the whole shop wall is covered in framed '8' scorecards, and the judges are already standing by with their cards up.",
+     "music": "same",
+     "sfx": [
+      "thump",
+      "ding"
+     ],
+     "overlay": "TRIPS TODAY: 11"
+    },
+    {
+     "kind": "line",
+     "text": "One rule: you can't trip on purpose. The judges always know. Old Mr. Gristle tried it once. Zero, zero, zero.",
+     "visual": "Park. An old man with a grey beard and glasses winks at the camera and does a huge fake flop onto the grass. The judges slowly lower their sunglasses, shake their heads, and raise 0, 0, 0. He sits up with a sad face.",
+     "music": "muffled",
+     "sfx": [
+      "thump",
+      "scratch"
+     ],
+     "overlay": "RULE #1: NO FAKE TRIPS"
+    },
+    {
+     "kind": "line",
+     "text": "And me? I have never tripped. Not once. So the judges follow me. Everywhere.",
+     "visual": "Me (black hoodie, white knight emblem, headphones) walking down main street with a smug face. The three judges walk in a tight line right behind me, step for step, with their cards ready.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "DAYS WITHOUT TRIPPING: 2,190"
+    },
+    {
+     "kind": "line",
+     "text": "Breakfast. The dentist. They're in my bedroom right now.",
+     "visual": "Quick cuts. I eat cereal at the park table with the judges standing behind me. I'm in a dentist chair with my mouth open and the judges peering over the dentist's shoulder. Then my bedroom at night: I sit up in bed with a sweat face, and the three judges stand perfectly still at the foot of the bed in sunglasses. Slow push-in.",
+     "music": "muffled",
+     "sfx": [
+      "ding",
+      "ding",
+      "scratch"
+     ],
+     "overlay": "RIGHT NOW"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "I jump up on my bed and shout HUSS right in the judges' faces. They do not blink.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Six years of this. I needed to trip by accident... on purpose.",
+     "visual": "Bedroom. I'm in the think pose with a squint face, then I grin, and a big yellow lightbulb pops above my head.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "GENIUS PLAN"
+    },
+    {
+     "kind": "line",
+     "text": "Goon Squad!",
+     "visual": "The bedroom door bursts open and three friends (red cap, big glasses, party hat) slide in and pose. The stamped word slams onto the screen.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "scratch"
+     ],
+     "overlay": "GOON SQUAD!"
+    },
+    {
+     "kind": "line",
+     "text": "I put on a blindfold, and my squad secretly moves the whole town around me.",
+     "visual": "I tie on a blindfold. Cut to main street at quiet night: the Goon Squad tiptoes along carrying a bench, rolls a lamp post, and pushes a giant cake on a cart into the middle of the road.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "While they're out partying, by the way.",
+     "visual": "Far away, the town square glows in party-night lights with extras dancing. In the foreground, the Goon Squad freezes mid-carry with the bench and stares at the camera.",
+     "music": "muffled",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "BY THE WAY"
+    },
+    {
+     "kind": "line",
+     "text": "Next morning, I step outside. Bench. Lamp post. Mrs. Wobbles. A giant cake.",
+     "visual": "Main street, bright day. Blindfolded me walks out the front door and trips over the bench, bonks a lamp post, bumps into Mrs. Wobbles (she trips too and a judge holds up an 8 without looking), then faceplants into the giant cake. The judges sprint behind me as holes keep popping open. Screen shake on every hit.",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "thump",
+      "thump",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I bounce off the stage, and the crowd carries me across the square like a pizza.",
+     "visual": "Town square. I bounce off the edge of the stage into the crowd. About thirty extras lift me flat over their heads (crowdSurf) and pass me across the square under the big banner.",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Plonkao! Ziri dah! Ziri boba! Wompani!",
+     "visual": "The whole crowd chants and pumps their fists while I ride on top. Each word stamps onto the screen.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "PLONKAO! ZIRI DAH! ZIRI BOBA! WOMPANI!"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The crowd tosses me high into the sky. I spin in slow motion with cake on my face while the crowd cheers below. Camera shake.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The judges raise their cards. Ten. Ten. Nine point nine.",
+     "visual": "I land flat on the grass. The three judges stand in a row and slam up their cards one at a time: 10... 10... 9.9.",
+     "music": "none",
+     "sfx": [
+      "ding",
+      "ding",
+      "scratch"
+     ],
+     "overlay": "10 | 10 | 9.9"
+    },
+    {
+     "kind": "line",
+     "text": "Ah, almost... almost!",
+     "visual": "Close-up of me pushing the blindfold up with a shocked face. The stamped word slams in.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "But it counts. They bow. Top ten respect.",
+     "visual": "The judges take off their sunglasses and bow deeply. The crowd claps, and a 'Top 10 respectful moments' card slides in.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "Top 10 respectful moments: #1"
+    },
+    {
+     "kind": "line",
+     "text": "Then the head judge trips over my blindfold, and all three land in a pile.",
+     "visual": "Dusk. The judges turn to leave. The head judge does an obvious little step onto my blindfold on the ground, wobbles, and all three topple into a pile.",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The ground pops. Three tiny judges climb out. Zero. Zero. Zero.",
+     "visual": "Three tiny holes pop open. Three knee-high judges with tiny sunglasses climb out and raise tiny cards: 0, 0, 0. The big judges' faces go shocked.",
+     "music": "none",
+     "sfx": [
+      "pop",
+      "pop",
+      "pop",
+      "scratch"
+     ],
+     "overlay": "0 | 0 | 0"
+    },
+    {
+     "kind": "line",
+     "text": "Fake trips don't count. So now the tiny judges follow THEM everywhere.",
+     "visual": "Main street at dusk. The three big judges walk sadly down the road (walkSad), and the three tiny judges march right behind them with their cards ready. I wave from the front of the shot, free and grinning.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "FOLLOWED: FOREVER"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The Goon Squad and I jump around on the stage with cake everywhere. In the background, the tiny judges turn and stare right at the camera.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    }
+   ],
+   "vibe": "funny",
+   "id": "funny-1",
+   "score": 35.5,
+   "notes": [
+    "Make it clear the fake trip is deliberate, because the twist only works if kids see that. The narration just says the head judge 'trips'. Change it to 'Then the head judge \"tripped\" over my blindfold. On purpose.' and add a quick beat before it where he looks jealously at my 10 or winks at the camera. Then the 0, 0, 0 lands as a punchline instead of a puzzle.",
+    "Nothing sets up the twist: we are never told the judges have never tripped, and the head judge has no reason to fake a fall. Plant it early with a line like 'Nobody has ever seen a judge fall. Not once.' At the end, give him a motive in one beat, for example a jealous glance at my 10 card before his 'trip'. Then the tiny judges' 0-0-0 reads as earned irony that mirrors my own six years, not a random extra gag. You could also cut one of the five meme beats to make room.",
+    "Fix the timeline: the script says 'Seven years ago' and later 'Six years of this'. Then have the head judge wink at the camera before he steps on the blindfold, the same wink Mr. Gristle gave. Viewers will read the trip as fake right away, so the tiny judges' 0, 0, 0 lands as a payoff instead of needing explanation."
+   ]
+  },
+  {
+   "title": "Who Bit the Town?",
+   "logline": "In this town, every morning one house wakes up with a giant bite taken out of it. The town paints everything green to stay safe and nobody touches the string on top of the clock tower. Unpaid detective me follows the clues (the bites taste sweet, there are sprinkles on the street, the bite mark has a tooth missing), then sets a hot-sauce trap on our bubblegum-pink roof and catches the biter: a giant gap-toothed kid. He wasn't eating the town. He was checking if it was ready.",
+   "twist": "Every clue was a cake clue. The walls taste sweet, the sprinkles are sprinkles, nothing bites green because kids hate veggies, and the silver wall at the edge of town is the rim of a plate. Our town is the giant kid's birthday cake, the party is tomorrow, and the string on top of the clock tower nobody is allowed to touch is a candle wick. Last shot: a gigantic match strikes in the sky.",
+   "caption_hook": "Something takes one bite out of our town every night. The clues were there the whole time.",
+   "new_props": [
+    "Bitten-house variants: house boxes with a huge stepped half-circle bite cut out of the roof/wall corner, crumb cubes on the lawn",
+    "Bitten bakery roof, post office with its chimney bitten off, Mrs. Plum's garage cut clean in half",
+    "Bite-edge close-up wall: scalloped row of square tooth notches with one bigger gap (missing front tooth), red highlight circle",
+    "Rainbow sprinkles: hundreds of tiny colored capsule/box bits scattered across the road",
+    "Green paint rollers; all-green Mr. Bramble (green skin and clothes) and a green-tinted orange cat",
+    "Bubblegum-pink narrator house with mint trim; Mom's lawn chair",
+    "Detective corkboard with photo cards and red string; detective cap worn over the headphones; magnifying glass (ring + handle)",
+    "Thick black wick string sticking straight up from the clock tower roof (thin black cylinder), visible in every wide shot",
+    "Silver plate rim: a giant flat silver disc under the whole town with a shiny raised rim at the edge of Main Street",
+    "Hot sauce bottle (red cylinder, cone cap, flame label) and a glowing-red painted roof",
+    "Big Gus's tall pancake stack (flat cylinders)",
+    "Giant blocky pastel fingers/hand that descend from the clouds and peel a roof off like a cracker",
+    "Giant kid head built from boxes: messy hair blocks, red cheeks, tongue out, a clear gap in the front teeth, party hat; eyes simple or squeezed shut",
+    "Giant match: long wood box with a red sphere tip, a glowing flame cone and a warm point light",
+    "Red sky flash for the SPICY moment"
+   ],
+   "sets": [
+    "Main Street (sunrise/day, quiet night)",
+    "Clock tower close-up (day and night)",
+    "Town square",
+    "Kid's bedroom",
+    "Narrator's pink house roof (dusk flashback, night)",
+    "Aerial plate shot: the whole town sitting on a giant silver plate against a dark void"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, every morning, one house wakes up with a giant bite taken out of it.",
+     "visual": "Sunrise (day preset, warm). Slow push-in down Main Street to a pink house with a huge stepped half-circle bite missing from its roof corner, crumb cubes on the lawn. A crowd of extras stares; the narrator (me) in front, surprised pose, shocked face. Far behind, the shiny silver rim at the edge of town glints (plant).",
+     "music": "lofi",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "First the bakery. Then the post office. Then Mrs. Plum's garage.",
+     "visual": "Three whip-pan cuts: the bakery with its roof bitten; the post office with its chimney bitten off; Mrs. Plum (old lady, purple hair, glasses) standing in her garage, which is cut clean in half, crossArms, sweat face.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "whoosh",
+      "whoosh"
+     ],
+     "overlay": "BITES: 21"
+    },
+    {
+     "kind": "line",
+     "text": "Nobody's seen who. We just hear one giant crunch at 3 a.m.",
+     "visual": "Quiet night preset. Wide shot of Main Street, every window dark, the clock tower face at 3:00. A hard camera shake, then one window light pops on.",
+     "music": "night",
+     "sfx": [
+      "thump",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So, two rules. One: paint your house green. Nothing ever bites green.",
+     "visual": "Day. Montage of extras with big paint rollers turning houses bright green; one untouched green house stands next to two bitten pastel ones.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "RULE 1: PAINT IT GREEN"
+    },
+    {
+     "kind": "line",
+     "text": "Two: never touch the string on the clock tower. Nobody knows why.",
+     "visual": "Low-angle tilt up the clock tower to a thick black string sticking straight up from its roof (the wick, planted). Two townspeople glance up at it and shrug.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "RULE 2: DON'T TOUCH THE STRING"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Bramble painted his house green. And his cat. And himself.",
+     "visual": "Mr. Bramble (mustache, totally green: skin, clothes, everything) stands proudly in front of his green house, crossArms, smug face; a green-tinted cat sits at his feet.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "My mom refused. Our house stays bubblegum pink, because it's 'a vibe.'",
+     "visual": "The narrator's bubblegum-pink house with mint trim. Mom (sunglasses) lounges in a lawn chair out front and shrugs; the narrator facepalm-shrugs beside her.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "\"It's a vibe.\" — Mom"
+    },
+    {
+     "kind": "line",
+     "text": "So I'm investigating. Detective. Unpaid.",
+     "visual": "Kid's bedroom. The narrator in a detective cap over his headphones, at his desk in front of a corkboard of house photos and red string, think pose, smug face.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "DETECTIVE (UNPAID)"
+    },
+    {
+     "kind": "line",
+     "text": "Clue one: the bites taste sweet. Don't ask how I know.",
+     "visual": "Close-up: the narrator leans in and licks the edge of a bitten pink wall, then snaps back with a shocked face.",
+     "music": "night",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "CLUE #1: SWEET"
+    },
+    {
+     "kind": "line",
+     "text": "Clue two: rainbow sprinkles all over the street.",
+     "visual": "Low camera skims the road at sunrise, which is covered in tiny rainbow sprinkles; the narrator crouches with a magnifying glass, peer pose.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "CLUE #2: SPRINKLES"
+    },
+    {
+     "kind": "line",
+     "text": "Clue three: the bite has a gap. The biter's missing a front tooth.",
+     "visual": "Extreme close-up of the bite edge: a scalloped row of tooth notches with one big square gap. A red circle pops around the gap.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "CLUE #3: GAP TOOTH"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Bedroom. The narrator slams his fist into his palm (slam pose), huss face, a hard punch-in on each HUSS; the corkboard shakes and a photo drops.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Everyone blamed Big Gus. But Gus has all his teeth.",
+     "visual": "Town square. A crowd of extras points at Big Gus (huge guy, beard, cap) holding a tall pancake stack. Gus grins wide and shows a full, perfect row of teeth.",
+     "music": "lofi",
+     "sfx": [
+      "record scratch",
+      "laugh"
+     ],
+     "overlay": "SUSPECT: BIG GUS — CLEARED"
+    },
+    {
+     "kind": "line",
+     "text": "Then last night, the crunch was on my street.",
+     "visual": "Quiet night, the narrator's bedroom. The room shakes (camera shake), a giant shadow slides across the window, the narrator sits bolt upright in bed, shocked face.",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Good thing I'd painted our roof with Grandma's extra-spicy hot sauce.",
+     "visual": "Quick dusk flashback: the narrator on the roof of the pink house rolling glowing-red sauce over every tile with a paint roller, a giant hot sauce bottle beside him, determined face.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "GRANDMA'S EXTRA SPICY"
+    },
+    {
+     "kind": "line",
+     "text": "Giant fingers snapped our roof off like a cracker. And bit.",
+     "visual": "Night exterior. The clouds part and giant blocky pastel fingers come down, pinch the red roof, peel it off the pink house like a cracker and lift it out of frame. Heavy camera shake.",
+     "music": "none",
+     "sfx": [
+      "thunder",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then they grabbed for me.",
+     "visual": "From inside the roofless house: the narrator looks up as the giant fingers swoop straight down at him; he dives sideways.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Ah, almost... almost!",
+     "visual": "Freeze-frame: the giant fingertips an inch from the narrator's hood, him mid-dive with a sweat face. Record scratch, big stamped word.",
+     "music": "none",
+     "sfx": [
+      "record scratch",
+      "boom"
+     ],
+     "overlay": "ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "Then the sky yelled...",
+     "visual": "The fingers jerk back up into the clouds. The whole night sky flashes red; camera shake.",
+     "music": "none",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "SPICY!",
+     "visual": "A gigantic blocky kid head rises over the rooftops behind the clock tower, red cheeks, tongue out, eyes squeezed shut, fanning his mouth with a giant hand. Delivered in a separate deep, booming giant-kid voice.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The narrator stands on the roofless pink house pointing up, huss face. Lights flick on house by house down the street and townspeople pour out pointing; a camera shake on each HUSS.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A giant kid. Missing a front tooth.",
+     "visual": "Low-angle hero shot: the giant kid peeks sheepishly over the rooftops and grins, showing a big gap where a front tooth should be.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "GAP TOOTH: FOUND"
+    },
+    {
+     "kind": "line",
+     "text": "He wasn't eating our town. Just checking if it was ready.",
+     "visual": "A giant hand gently sets the red roof back on the pink house. The giant kid's face is sheepish and sweaty; the narrator watches with crossArms.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Ready for what?",
+     "visual": "Close-up of the narrator: shrug pose, squint face.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "Then I noticed the silver rim around town. Like a plate.",
+     "visual": "The camera cranes up and up above the town until we see all of it sitting on a giant round silver plate with a shiny rim. Pastel houses look like frosting decorations and sprinkles cover everything.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "CLUE #4: THE PLATE"
+    },
+    {
+     "kind": "line",
+     "text": "Our town isn't a town. It's his birthday cake.",
+     "visual": "Top-down shot: the giant kid, now wearing a party hat, leans over the plate-town grinning his gap-tooth grin.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "IT'S A CAKE"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator on his roof, stunned pose into huss face, with a punch-in on each HUSS; behind him the giant kid tries to copy the HUSS with his mouth wide open.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "His party's tomorrow. And that string on the clock tower? A wick.",
+     "visual": "Close-up on the black string on top of the clock tower. Above it a gigantic match strikes in the night sky, flares into a glowing flame cone and slowly lowers toward the wick, lighting the whole town orange.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "PARTY: TOMORROW"
+    }
+   ],
+   "vibe": "mystery",
+   "id": "mystery-1",
+   "score": 35.17,
+   "notes": [
+    "Pay off the green rule in the reveal. The script sets up 'nothing ever bites green' but never explains it. Add one line to the cake beat, such as 'And nothing bites green? No kid eats the vegetables,' over a shot of the green houses sitting like leftover garnish. That way the twist fully clicks for a 12-year-old and no thread is left loose.",
+    "The hot-sauce trap arrives after the fact ('Good thing I'd painted our roof...'), so the solution feels unearned. Plant it as an on-screen plan right after clue three. Line: 'So I set a trap. If it likes sweet, let's see how it likes SPICY.' Show the roof-painting beat then, before the night crunch. The stakes and the cake twist stay the same, but the catch now comes from the kid's own cleverness.",
+    "Swap the giant fingers from the clouds for a giant fork (a long box handle and four box tines) that stabs down and lifts the roof off. The fingers copy the reference video's 'giant hand from the clouds', and a fork works as a fifth cake clue. Also add one line that pays off the green rule ('nobody eats the veggies on a cake'), because right now the twist never explains it."
+   ]
+  },
+  {
+   "title": "One Shadow Too Many",
+   "logline": "In this town, there's always one more shadow than there are people. It showed up the night the Great Fizzwick did his vanishing trick on our stage and never came back. The town calls the shadow Shady and lives by its rules. I find three clues (a top hat, a bow on the empty stage at 8 PM showtime, footprints in spilled flour), fire a flour-loaded confetti cannon at showtime, and reveal the magician, invisible for a year.",
+   "twist": "The orange cat with the tiny bowtie has been sitting in the background of every clue scene, and tiny paw prints sat next to the boot prints in the flour. When Fizzwick sees my cat he says she's his old assistant, the one who made him disappear. I adopted her the night of the show. She winks, I vanish, and the count resets exactly like the opening: forty people, forty-one shadows. Now the extra shadow is mine, and it's wearing headphones.",
+   "caption_hook": "Count the people. Now count the shadows.",
+   "new_props": [
+    "Flat ground shadow silhouettes (dark translucent planes): one with a tall top hat and nobody above it; later one with headphones",
+    "Self-riding bicycle built from cylinders and boxes",
+    "Newspaper with a finished crossword and a pen",
+    "Park-table plate with one cookie that pops away",
+    "Stage banner reading THE GREAT FIZZWICK and a stage spotlight cone",
+    "Grey smoke-puff spheres for vanish effects",
+    "The Great Fizzwick: magician character (top hat, mustache, bowtie, sash) plus a flour-white variant (white skin, outfit, hat and mustache)",
+    "Flour patch on the street where boot prints appear one at a time, with tiny paw prints beside them",
+    "Confetti cannon on wheels with a pull-string; a big white flour-blast particle cloud",
+    "The narrator's headphones floating on their own",
+    "Tiny bowtie on the orange cat (in every scene)",
+    "Ruler prop",
+    "People/shadows counter overlay"
+   ],
+   "sets": [
+    "Town square with stage (day, dusk, party night)",
+    "Main Street (day)",
+    "Park with table and bench",
+    "Bakery front on Main Street"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, there's always one more shadow than there are people.",
+     "visual": "Late-afternoon day preset, high-angle shot over the town square. The crowd's long shadows stretch across the cobbles, and one shadow with a tall top hat has nobody standing on it. An orange cat with a tiny bowtie sits on the stage edge (plant).",
+     "music": "night"
+    },
+    {
+     "kind": "line",
+     "text": "Forty people. Forty-one shadows.",
+     "visual": "The camera pans along the row of shadows while a counter ticks up. At the end of the row, the top-hat shadow tips its hat.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "ding"
+     ],
+     "overlay": "PEOPLE: 40 / SHADOWS: 41"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator in the crowd, surprised pose into huss face, a punch-in on each HUSS; nearby extras jump back.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It showed up a year ago, the night the Great Fizzwick did his vanishing trick on our stage... and never came back.",
+     "visual": "Flashback, party night lighting. Under the banner THE GREAT FIZZWICK, a magician (top hat, mustache, bowtie, sash) bows; a puff of grey smoke spheres and he's gone. The crowd claps. On the stage edge, the orange cat with the bowtie watches.",
+     "music": "lofi",
+     "sfx": [
+      "pop",
+      "cheer"
+     ],
+     "overlay": "ONE YEAR AGO"
+    },
+    {
+     "kind": "line",
+     "text": "We call it Shady. Shady rides Mr. Pickett's bike. Shady does Mrs. Dot's crossword. In pen.",
+     "visual": "Main Street, day: a bike pedals itself down the road with the top-hat shadow underneath, while Mr. Pickett (bald, glasses) chases it, shrugging. Cut to Mrs. Dot (white hair) on a park bench staring at a completed crossword, shocked face.",
+     "music": "lofi",
+     "sfx": [
+      "ding",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Rule one: never step on Shady. Rule two: always leave the last cookie.",
+     "visual": "Kids hopscotch carefully around the top-hat shadow. Cut to the park table: a plate holding one cookie, then pop, the cookie is gone.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "THE RULES"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone says it's a ghost. But ghosts don't need bikes.",
+     "visual": "The narrator in front of the bakery, crossArms, squint face. The orange cat with the bowtie sits at his feet (plant).",
+     "music": "night"
+    },
+    {
+     "kind": "line",
+     "text": "Clue one: Shady wears a top hat. Nobody in town owns a top hat.",
+     "visual": "Low angle on the shadow lying across the cobbles, with its tall top-hat shape. The narrator kneels beside it holding a ruler up to the hat.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "CLUE #1: TOP HAT"
+    },
+    {
+     "kind": "line",
+     "text": "Clue two: every night at eight, Shady stands on the empty stage. Bowing.",
+     "visual": "Dusk preset. The empty stage under a spotlight cone, where the shadow on the stage floor slowly bows; the clock tower reads 8:00. The cat sits alone in the front row (plant).",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "CLUE #2: 8 PM SHOWTIME"
+    },
+    {
+     "kind": "line",
+     "text": "Clue three: I spilled flour outside the bakery, and footprints walked right through it.",
+     "visual": "A white flour patch on the street outside the bakery. Boot prints appear one by one walking through it, and tiny paw prints trot right next to them (viewer clue).",
+     "music": "same",
+     "sfx": [
+      "thump",
+      "thump",
+      "boom"
+     ],
+     "overlay": "CLUE #3: FOOTPRINTS"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator springs up from the flour, slam pose, huss face; flour puffs up around him with every HUSS.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Shadows don't leave footprints. Somebody invisible is standing on that shadow.",
+     "visual": "Slow push-in on the top-hat shadow. The narrator peers at the empty air above it, where faint flour dust hangs in the shape of a person.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "Then yesterday, Shady stole my headphones. Right off my head.",
+     "visual": "Main Street, day: the narrator's headphones lift off his head and float away down the street with the shadow running underneath. The narrator gives chase, shocked face.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "At eight, Shady stepped on stage. And I fired the confetti cannon. Full of flour.",
+     "visual": "Party night lighting in the square. On stage under the spotlight, the floating headphones hover above the shadow. Behind a big wheeled confetti cannon the narrator yanks the string and a huge white flour blast fills the stage. Camera shake.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The narrator's huss face through swirling white haze while the crowd gasps; with every HUSS the cloud thins a little more, revealing a white silhouette in a top hat.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And there, covered in flour, was the Great Fizzwick. Invisible for a whole year.",
+     "visual": "The flour-white magician (white skin, white top hat, white mustache, bowtie) stands on stage holding the narrator's headphones, with a sheepish smile. The crowd is stunned.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "FOUND!"
+    },
+    {
+     "kind": "line",
+     "text": "His trick worked too well. He's been trying to get noticed ever since.",
+     "visual": "Fizzwick shrugs and hands the headphones back. Mr. Pickett gets his bike back and Mrs. Dot waves her crossword at him.",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Top ten respect.",
+     "visual": "Fizzwick bows deeply to the narrator and the narrator bows back. A Top 10 respectful moments card slams in.",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "cheer"
+     ],
+     "overlay": "TOP 10 RESPECTFUL MOMENTS #1"
+    },
+    {
+     "kind": "line",
+     "text": "Then he saw my cat... and went pale. Well. Paler.",
+     "visual": "Fizzwick looks down, stunned pose, shocked face. At his feet the orange cat with the tiny bowtie sits, smug.",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "That's my assistant. She's the one who made me disappear.",
+     "visual": "Separate shaky magician voice. Fizzwick points at the cat with a trembling hand. Close-up on the cat's little bowtie, then a quick flash back to the stage a year ago with the same cat on the edge.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "\"That's my assistant.\" — The Great Fizzwick"
+    },
+    {
+     "kind": "line",
+     "text": "I adopted her the night of the show.",
+     "visual": "The narrator, sweat face, slowly turns to look at the cat; a quick memory flash of him carrying the orange cat home across the empty square that night.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "She winked. And then... I was gone.",
+     "visual": "The cat winks (wink face). Poof of grey smoke spheres; the narrator vanishes and only his headphones hang in the air, while his shadow stays on the stage floor.",
+     "music": "none",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Forty people. Forty-one shadows.",
+     "visual": "The same high-angle town square shot as the opening. The counter ticks again, and the extra shadow on the cobbles now wears headphones. The cat sits on the stage edge, smug, flicking its tail.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "PEOPLE: 40 / SHADOWS: 41"
+    }
+   ],
+   "vibe": "mystery",
+   "id": "mystery-2",
+   "score": 34.73,
+   "notes": [
+    "Make the weird part visible in the first 2 seconds. On a phone, a shadow on the ground is a subtle image, and right now the top-hat shadow only tips its hat on line 2. Move the hat-tip or a wave onto line 1, isolate that shadow on bright cobbles and pop a red circle around it, so viewers see the impossible thing before they can swipe.",
+    "Line 3 names the Great Fizzwick's vanishing trick as the shadow's origin, so all three clues only confirm what viewers already know and the flour reveal falls flat. Make the origin vague ('it showed up the night of last year's summer show'). Then let the top-hat clue lead to an old, faded Fizzwick poster on the stage. That way the flour reveal is a real reveal, and the cat twist (already well planted) lands as a second surprise rather than the only one.",
+    "Make every shadow a flattened black copy of its owner's rig, squashed along the sun direction and laid on the cobbles. Drive the magician's shadow from an invisible rig, so the extra top-hat shadow tips its hat, bows and rides the bike exactly like the real ones and reads clearly on a phone. Show it tipping its hat in the first second, before the counter, so the hook lands without the viewer having to count."
+   ]
+  },
+  {
+   "title": "Gerald's Forecast",
+   "logline": "In this town a goldfish called Gerald controls the weather: whatever he does, the sky copies. The narrator gets picked to fish-sit him, gives him a mirror so he won't be lonely, and sets off a tornado. Then a sad Gerald brings three days of rain, so the narrator buys him a tiny friend from the pet shop.",
+   "twist": "The tiny friend, Steve, has a pointy fin. He isn't a goldfish, he's a shark. Because the sky copies whatever is in the bowl, the clouds over town turn into sharks circling the clock tower. Tomorrow's forecast: cloudy with a chance of sharks.",
+   "caption_hook": "Never let a kid fish-sit the weather.",
+   "new_props": [
+    "giant glass fish bowl (big translucent sphere) on the town-square stage",
+    "Gerald: a chunky orange blocky goldfish with box fins and expressive face",
+    "tall framed mirror (shiny silver panel) showing a reflected copy of Gerald",
+    "tiny fish-food shaker",
+    "bubble hail: giant translucent spheres bouncing off people and roofs",
+    "tornado: tall spinning stack of grey cylinders, wider at the top",
+    "heavy rain streaks plus blocky umbrellas",
+    "blocky sandwich",
+    "small clear pet-shop water bag",
+    "Steve: small grey blocky fish with a tall cone fin and a white box-teeth grin",
+    "rainbow arc made of colored cylinder segments",
+    "shark-shaped clouds: long white/grey box clouds with cone fins and tails",
+    "weather-presenter pointer stick",
+    "keeper's sash reading KEEPER",
+    "handheld sign WHAT'S GERALD DOING?",
+    "town banner GERALD'S FORECAST"
+   ],
+   "sets": [
+    "town square (stage with the fish bowl, big banner) - day",
+    "main street - day, then storm (grey sky, fog, rain)",
+    "park with table and tree - day flipping to quiet night",
+    "clock tower - tornado, then dusk with shark clouds"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, the weather is controlled by a goldfish.",
+     "visual": "Slow push-in on a giant glass fish bowl on the town-square stage. A chunky orange blocky goldfish turns and stares right into the camera. Bright blue day sky, and the banner behind reads GERALD'S FORECAST.",
+     "music": "party",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "His name is Gerald. Whatever Gerald does, the sky does too.",
+     "visual": "Wide shot of the town square: a crowd of extras faces the bowl like they're watching the news. A kid holds up a sign: WHAT'S GERALD DOING? Fluffy box clouds drift overhead.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "GERALD"
+    },
+    {
+     "kind": "line",
+     "text": "Gerald swims left? The wind blows left.",
+     "visual": "Gerald darts left in the bowl. Cut to main street: every extra leans hard sideways while caps and a top hat fly off to the left and the orange cat slides past on its back.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Gerald blows bubbles? It hails bubbles.",
+     "visual": "Gerald puffs three bubbles. Giant translucent spheres rain down on main street and boing off heads and rooftops while extras look up, surprised.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Gerald takes a nap? It's night. At lunchtime.",
+     "visual": "Gerald's eyes droop (sleepy face) and the lighting snaps from day to quiet night. In the park, a man at the table freezes mid-bite with a stunned face as the street lamps flick on.",
+     "music": "lofi",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Rule one: never tap the glass. Last time someone did, the town wobbled for a week.",
+     "visual": "Flashback: a grumpy man in a cap taps the bowl with one finger. The whole town shakes, houses wobble like jelly, the clock tower tilts and everyone stands stunned. Heavy camera shake.",
+     "music": "none",
+     "sfx": [
+      "boom",
+      "thump"
+     ],
+     "overlay": "RULE #1: DON'T TAP THE GLASS"
+    },
+    {
+     "kind": "line",
+     "text": "Yesterday Gerald's keeper went on holiday, and I got picked to fish-sit.",
+     "visual": "Town square by day. The grey-haired keeper lady (sunglasses, KEEPER sash) drops a tiny fish-food shaker into my hand and waves goodbye. I point at myself, shocked.",
+     "music": "party",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "FISH-SITTER: ME"
+    },
+    {
+     "kind": "line",
+     "text": "Feed him. Don't do anything weird.",
+     "visual": "Close on me beside the bowl with arms crossed and a smug face. Gerald floats next to me, looking glum.",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "But Gerald looked lonely. So I did something weird. I gave him a mirror.",
+     "visual": "Gerald drifts sadly with a sad face. I do the think pose, then slide a tall shiny mirror right up against the bowl, and a reflected Gerald appears in it.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Triple punch-in: Gerald's shocked face, the reflection's shocked face, Gerald's face even closer. Camera shake on each HUSS.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Gerald saw another fish and lost his mind. He started spinning in circles.",
+     "visual": "Gerald spins laps around the bowl in a blur. Above the town square the clouds start to swirl and the sky turns green-grey.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So the whole town got a tornado.",
+     "visual": "A huge spinning tower of grey cylinders touches down on main street. Extras in crowdSurf pose spin up into it, the pigeon flaps backwards and the orange cat whirls past. Heavy camera shake.",
+     "music": "same",
+     "sfx": [
+      "siren",
+      "thunder"
+     ],
+     "overlay": "TORNADO WARNING"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Bello flew past the clock tower, still eating his sandwich.",
+     "visual": "Slow motion: mustached Mr. Bello in a bowtie floats flat (crowdSurf pose) past the clock tower face, calmly chewing a blocky sandwich with a neutral face.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Ah, almost... almost!",
+     "visual": "I jump for Mr. Bello's flying top hat and my fingertips miss by an inch. Freeze frame.",
+     "music": "none",
+     "sfx": [
+      "record scratch",
+      "boom"
+     ],
+     "overlay": "ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "I flipped the mirror. Gerald stopped spinning, and everyone dropped wherever they were.",
+     "visual": "I spin the mirror to face away and the tornado vanishes. Extras plop down everywhere: one stuck in the park tree, one hanging off the stage banner, Mr. Bello flat on the park table. The pigeon lands on my head.",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "thump",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now Gerald was sad. And when Gerald's sad, it rains. For three days.",
+     "visual": "Gerald sulks at the bottom of the bowl (sad face). The town sits under a dark grey sky with heavy rain and fog, and extras walk sadly under blocky umbrellas while a day counter ticks up.",
+     "music": "muffled",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "DAY 1... DAY 2... DAY 3"
+    },
+    {
+     "kind": "line",
+     "text": "The whole town tried the sunshine chant. Bloopa! Gil-dee! Finnaroo! Splashkani!",
+     "visual": "A soaked crowd in front of the stage throws their arms up (cheer pose) and chants at the bowl. Each nonsense word slams onto the screen as a stamp.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "boom"
+     ],
+     "overlay": "BLOOPA! GIL-DEE! FINNAROO! SPLASHKANI!"
+    },
+    {
+     "kind": "line",
+     "text": "Nothing. So I got Gerald a real friend from the pet shop. A tiny one called Steve.",
+     "visual": "Gerald stays sad. I hold up a small water bag and pour a tiny grey blocky fish into the bowl. Gerald perks up straight away.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "STEVE"
+    },
+    {
+     "kind": "line",
+     "text": "Gerald smiled. The sun came out. Top ten respect.",
+     "visual": "The clouds part, golden light floods the square and a blocky rainbow arcs over the clock tower. The crowd cheers, and a Top 10 card slides in.",
+     "music": "party",
+     "sfx": [
+      "cheer",
+      "ding"
+     ],
+     "overlay": "TOP 10 RESPECTFUL MOMENTS - #1: KID FIXES THE WEATHER"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The crowd lifts me and I crowd-surf across the town square under the rainbow. The camera bounces on every HUSS and extras dance below.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then I noticed Steve has a fin. A pointy one.",
+     "visual": "Slow push-in on the bowl. Tiny Steve circles Gerald with a tall grey cone fin poking up behind him.",
+     "music": "night",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Steve isn't a goldfish. Steve is a shark.",
+     "visual": "Steve turns to camera and flashes a wide grin of white box teeth (smug). Cut to me: shocked, sweating.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "SHARK"
+    },
+    {
+     "kind": "line",
+     "text": "And the sky copies whatever's in that bowl.",
+     "visual": "Slow tilt up from the bowl to the dusk sky over town. The clouds stretch into long grey shapes and begin to circle.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three hard cuts: a cloud grows a cone fin, then a tail, then a full shark-shaped cloud swoops around the clock tower while the townsfolk below look up, shocked. Camera shake on each hit.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Tomorrow's forecast? Cloudy... with a chance of sharks.",
+     "visual": "Wide shot: shark-shaped clouds circle the clock tower at dusk. I stand in front of the bowl like a weather presenter, pointing at the sky with a stick, sweating and forcing a grin. Gerald and Steve swim happily together.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "FORECAST: SHARKS"
+    }
+   ],
+   "vibe": "random",
+   "id": "random-1",
+   "score": 34.03,
+   "notes": [
+    "Set up the rule the twist depends on. The story says the sky copies what Gerald DOES, but the shark clouds need the sky to copy whatever is IN the bowl. Add one example to the rules montage, such as 'When the keeper added a toy castle, a castle-shaped cloud hung over town for a month.' Then 'Steve is a shark' leads straight to shark clouds, and the ending is earned rather than a new rule.",
+    "The shark twist depends on a new rule the story never set up. All the early rules say the sky copies what Gerald DOES, and only at the end do we hear that 'the sky copies whatever's in that bowl'. Plant it in the rules montage, for example: 'When the keeper dropped a toy castle in, a castle-shaped cloud floated over town for a month.' Also let Steve's fin poke up for a split second when he's poured in. Separately, change the closing line 'Cloudy... with a chance of sharks', because it echoes a well-known film title and breaks the no-franchise rule. Try 'Today: sunny. Tomorrow: sharky.'",
+    "State the rule as 'the sky copies whatever is in that bowl' in line 2, so the shark twist plays fair. Line 2 currently says only what Gerald does. Replace the closing pun, which echoes a well-known film title, with a stronger final image: a shark-shaped cloud's fin slicing low over the narrator's roof as he forces a grin."
+   ]
+  },
+  {
+   "title": "Out of Colour",
+   "logline": "Fifty years ago a rainbow crashed into the park, and it's the only colour this town has ever had. Colour can run out: paint your door red and somewhere a fire truck turns grey. Then the park, the bakery and the sky start going grey even though nobody used them. I mark every grey spot on a map, and the line leads straight to my own front door. My black hoodie, which I haven't taken off in five years, has been soaking up the town's colour.",
+   "twist": "I cannonball into the fountain and the colour floods back across town. Then Grandma Mabel takes off the black cardigan she's worn since the day the rainbow fell. Fifty years of mixed colour pours out as a brand-new colour nobody has ever seen, and the only word anyone can say about it is HUSS.",
+   "caption_hook": "in this town colours can run out. and somebody's been stealing them.",
+   "new_props": [
+    "desaturation effect: any house, object, patch of ground or the sky can drain from full colour to grey in a sweeping wave, and fill back up",
+    "paint roller (cylinder + handle) with wet red paint",
+    "boxy red fire truck with a ladder on top",
+    "giant rainbow arch made of seven stacked curved bands of coloured blocks that cracks and topples",
+    "burst of thousands of glowing coloured cubes",
+    "colour market stalls with small glowing colour cubes and signs BLUE: 9 COINS / YELLOW: SOLD OUT",
+    "grape bunches (clusters of small purple spheres) on a fruit stall",
+    "Grandma Mabel's black cardigan (loose black box shell over her torso that lifts off)",
+    "rocking chair and knitting needles",
+    "paper town map on the desk with a grey pencil and dots that line up",
+    "grey trail running across the ground through town",
+    "tiny glowing red, yellow and blue cubes getting sucked into the black hoodie",
+    "town fountain (stacked cylinders with a water column)",
+    "rainbow geyser of coloured cubes that rains over the town",
+    "the impossible new colour: an iridescent, hue-shifting glowing spiral column that spreads across the sky",
+    "bakery storefront with awning"
+   ],
+   "sets": [
+    "main street (day) with Mrs. Kaur's house and the fire truck",
+    "park at dusk under a pink-purple sky (flashback, rainbow crash)",
+    "town square colour market (day)",
+    "mayor's purple house and fruit stall (day)",
+    "Grandma Mabel's porch (day)",
+    "park at dusk going grey",
+    "bakery on main street under a grey sky",
+    "town square stage (day)",
+    "kid's bedroom (night)",
+    "top-down drone view of the town",
+    "town square with fountain (day)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, colours can run out. Paint your door red, and somewhere a fire truck turns grey.",
+     "visual": "Main street, day. Mrs. Kaur rolls bright red paint onto her front door. Hard cut to the end of the street, where a boxy red fire truck drains to grey from bumper to ladder while a firefighter in a helmet stares.",
+     "music": "lofi",
+     "sfx": [
+      "whoosh",
+      "ding"
+     ],
+     "overlay": "RED: -1"
+    },
+    {
+     "kind": "line",
+     "text": "Fifty years ago, a rainbow crashed into the park, and every colour we have spilled out of it.",
+     "visual": "Flashback, dusk, pink-purple sky over a grey park. A giant rainbow arch of seven bands of coloured blocks cracks and topples, bursting into thousands of glowing coloured cubes that fly onto the grey houses and paint them.",
+     "music": "night",
+     "sfx": [
+      "boom",
+      "whoosh"
+     ],
+     "overlay": "50 YEARS AGO"
+    },
+    {
+     "kind": "line",
+     "text": "There's no more where that came from. So colour is basically money.",
+     "visual": "Town square market, day. Stalls sell small glowing cubes of colour under signs BLUE: 9 COINS and YELLOW: SOLD OUT, and a kid counts out a pile of coins for one green cube.",
+     "music": "party",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "When the mayor painted his house purple, every grape in town went grey.",
+     "visual": "The mayor in a top hat and sash poses proudly in front of his freshly purple house. Cut to a fruit stall where a pile of purple grape bunches drains to grey and a shopper holds one up, disgusted.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "PURPLE: 0 LEFT"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Me next to the grey grapes shouting HUSS at the camera while the mayor shrugs in the background.",
+     "music": "party",
+     "sfx": [
+      "scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Only Grandma Mabel doesn't care. She's worn the same black cardigan since the day it fell.",
+     "visual": "Grandma Mabel (grey bun, glasses, black cardigan) knitting in a rocking chair on her porch. She looks up and winks at the camera.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "SINCE DAY ONE"
+    },
+    {
+     "kind": "line",
+     "text": "Then last week, colours started vanishing that nobody had used.",
+     "visual": "Park at dusk. The camera pans as the grass, the tree and the park table drain to grey in one slow wave.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "MONDAY: THE PARK"
+    },
+    {
+     "kind": "line",
+     "text": "Tuesday, the bakery. Wednesday, the whole sky.",
+     "visual": "The bakery front drains to grey. Then the sky over main street flattens to dead grey and townspeople freeze and look up, stunned.",
+     "music": "same",
+     "sfx": [
+      "static",
+      "thunder"
+     ],
+     "overlay": "WEDNESDAY: THE SKY"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone blamed everyone. Mrs. Kaur painted her door grey just to prove it wasn't her.",
+     "visual": "Town square stage with a shouting crowd all pointing at each other. Cut to Mrs. Kaur, arms crossed, roller in hand, next to her now-grey door.",
+     "music": "party",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I marked every grey spot on a map. And they made a line.",
+     "visual": "Kid's bedroom at night. Me at the desk with a big paper map of town and a grey pencil (the only colour left), dotting the grey spots until the dots line up.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Down Main Street. Through the park. Past the bakery. Straight to my front door.",
+     "visual": "Top-down drone shot following a grey trail across town block by block, ending at my house. The camera drops down to my front door.",
+     "music": "none",
+     "sfx": [
+      "knock"
+     ],
+     "overlay": "FOUND!"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Me standing in my doorway, slowly looking down at my own hoodie as the camera spirals in, with screen shake.",
+     "music": "muffled",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I'd been everywhere, right before it went grey.",
+     "visual": "Quick flashes: me eating a donut at the bakery, me sitting in the park, me staring at the sky. Each time, the colours drain the moment I walk away.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Black soaks up light. Every colour. That's science.",
+     "visual": "Close-up on my black hoodie. Tiny glowing red, yellow and blue cubes drift off a nearby house and get sucked into it like a vacuum, then vanish.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "BLACK ABSORBS EVERY COLOUR"
+    },
+    {
+     "kind": "line",
+     "text": "And I haven't taken this hoodie off in five years.",
+     "visual": "Me facing a crowd of townspeople outside my house with a sheepish grin, pointing at the hoodie. The crowd stares, and the pigeon on the fence looks away.",
+     "music": "none",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "SUSPECT: ME"
+    },
+    {
+     "kind": "line",
+     "text": "I tried wringing it out. Ah, almost... almost!",
+     "visual": "Me twisting the hoodie hem with both hands, straining. One blue drop falls and plinks onto the grey street, turning a single paving block blue.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "boom"
+     ],
+     "overlay": "AH, ALMOST... ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "So I cannonballed into the town fountain.",
+     "visual": "Town square fountain. Me sprinting and leaping into a cannonball while the crowd shields their faces.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The water turned rainbow and blasted every colour back where it belonged.",
+     "visual": "A huge rainbow geyser of coloured cubes erupts from the fountain and rains across town. A wave of colour rolls over the houses, the park, the bakery and the fire truck, and the sky snaps back to blue.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The whole town dances in the rainbow spray: the mayor doing dance2, and Mrs. Kaur happily rolling red back onto her door.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then Grandma Mabel took off her cardigan. For the first time in fifty years.",
+     "visual": "The square goes quiet. Grandma Mabel steps up beside the fountain and slowly lifts off her black cardigan.",
+     "music": "none",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Fifty years of colour, all mixed together, poured out as one nobody has ever seen.",
+     "visual": "A column of impossible shimmering colour (iridescent, always shifting hue) spirals up out of the cardigan and spreads across the sky, lighting up every stunned face.",
+     "music": "night",
+     "sfx": [
+      "whoosh",
+      "ding"
+     ],
+     "overlay": "NEW COLOUR"
+    },
+    {
+     "kind": "line",
+     "text": "Nobody can name it. Whoever looks at it can only say...",
+     "visual": "The whole town staring up open-mouthed. Slow push in on me, the new colour shimmering on my headphones.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Everyone in the square shouts it at the sky together, and a stamped label slaps onto the shimmering colour.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "COLOUR NAME: HUSS"
+    }
+   ],
+   "vibe": "interesting",
+   "id": "interesting-2",
+   "score": 32.97,
+   "notes": [
+    "Close the timing plot hole. I've worn the black hoodie for five years, but colours only started vanishing last week, and a sharp 12-year-old will ask why. Give one line of cause in the reveal, such as 'Last week Mom bought me the exact same hoodie. Brand new. Extra black.' Then the map leading to my door makes sense, and the avatar keeps his look.",
+    "There's a timing hole: the hoodie has been worn for five years, yet colours only started vanishing last week. Fix it with a planted cause that is also a joke: 'Last week Mom finally washed my hoodie. First time in five years. It came out empty... and thirsty.' That explains the sudden start. It also makes Grandma Mabel's never-washed 50-year cardigan the logical home of all that mixed colour, so her reveal feels fair as well as wonderful.",
+    "Don't build a desaturation shader for the whole town: the engine has none, and the materials are vertex-coloured. Limit the greying to five hero targets (fire truck, grapes, park tree, bakery, sky), each done as a crossfade to a pre-made grey copy of its material. Play the big colour-return wave as one sweeping front of coloured cubes, so every beat reads and fits in a day."
+   ]
+  },
+  {
+   "title": "Ten Seconds Early",
+   "logline": "In this town every shadow lives ten seconds in the future, so nobody ever gets surprised. Then at the summer fair every shadow in the square turns and runs. The whole town chases after them in circles for three hours, until I work out it's a loop: we run because they run, and they run because we run. I break it by leading everyone into the clock tower's giant shadow, where nobody has a shadow at all.",
+   "twist": "The bakery camera shows the first shadow to run was the pigeon's, chasing a crumb from MY hot dog (you can see it fall in the fair shot), so I started the whole thing. In the last shot I drop another crumb and every shadow in the square slowly turns to look at me.",
+   "caption_hook": "every shadow in town is 10 seconds in the future. then they all started running.",
+   "new_props": [
+    "shadow twins: a see-through matte-black copy of every character (same blocky body) that moves one step ahead of its owner and can pop out of existence",
+    "jagged lightning bolt (zigzag of thin glowing yellow boxes) with a white screen flash",
+    "banana peel (small curved yellow boxes)",
+    "two coffee mugs, one for Mr. Pike and one for his shadow twin (cylinder + box handle)",
+    "cobwebs (thin pale-grey strands) between Mr. Pike's elbow and the bench",
+    "summer fair bunting (strings of small coloured triangles) and a stage banner reading SUMMER FAIR",
+    "hot dog (bun box + sausage cylinder) and a tiny crumb cube that drops",
+    "pigeon shadow twin (see-through black copy of the pigeon)",
+    "giant clock-tower shadow: long dark see-through patch on the ground covering half the square",
+    "boxy desk monitor showing grainy black-and-white overhead footage of the square, with static and a red circle marker",
+    "circular loop-arrow graphic PEOPLE -> SHADOWS -> PEOPLE",
+    "confetti cubes"
+   ],
+   "sets": [
+    "main street (day)",
+    "clock tower (quiet night, purple sky, flashback)",
+    "park with table and bench (day)",
+    "town square summer fair (dusk) with stage banner SUMMER FAIR",
+    "town square aerial view (dusk)",
+    "kid's bedroom (night) with desk monitor",
+    "town square (day, present)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, your shadow does everything ten seconds before you do.",
+     "visual": "Main street, day. Me (black knight hoodie, headphones) standing still on the pavement. My shadow twin, a see-through matte-black copy of me one step ahead, is already waving at the camera. A beat later I do the exact same wave in the exact same spot.",
+     "music": "lofi",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "+10 SECONDS"
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago, lightning hit the clock tower, and every shadow in town jumped ten seconds into the future.",
+     "visual": "Clock tower at quiet night under a purple sky. A jagged glowing yellow lightning bolt slams into the top, white flash, camera shake. In the street below, every townsperson's black shadow twin jerks a full step out in front of them.",
+     "music": "night",
+     "sfx": [
+      "thunder",
+      "boom"
+     ],
+     "overlay": "5 YEARS AGO"
+    },
+    {
+     "kind": "line",
+     "text": "So nobody here ever gets surprised. If your shadow slips, you just walk around.",
+     "visual": "Main street, day. A man with a mustache and a cap strolls along. His shadow twin skids on a banana peel and lands flat. The man glances down, raises an eyebrow and calmly steps around the banana.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Rock, paper, scissors has been a draw for five years.",
+     "visual": "Park table. Two kids face off. Both shadow twins throw rock first, and both kids sigh and throw rock.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "DRAWS: 48,213"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Pike won't sip his coffee until his shadow does. And his shadow won't sip until he does.",
+     "visual": "Mr. Pike (bald, glasses, bowtie) on a park bench with a mug at his lips, eyes locked on his shadow twin, which has its own mug at its lips and is also waiting. Camera slowly pushes in between the two of them.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He's been holding that cup for five years.",
+     "visual": "Same shot, now five years later: cobwebs stretch from his elbow to the bench, the pigeon is nesting on his head, and he still hasn't blinked.",
+     "music": "same",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "COFFEE: STONE COLD"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Me pops into frame beside frozen Mr. Pike shouting HUSS at the camera. The pigeon flaps, and Mr. Pike doesn't move an inch.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Until Saturday, at the summer fair, when every shadow in the square turned around... and ran.",
+     "visual": "Town square at dusk with bunting and a SUMMER FAIR banner, and a crowd of extras with their shadow twins. Me biting a hot dog, and a crumb drops by my shoe where the pigeon is pecking. Suddenly every black shadow twin spins on the spot and sprints away while their owners freeze with shocked faces.",
+     "music": "muffled",
+     "sfx": [
+      "scratch",
+      "whoosh"
+     ],
+     "overlay": "SATURDAY"
+    },
+    {
+     "kind": "line",
+     "text": "So we ran too. Your shadow always knows.",
+     "visual": "The whole crowd bolts after their shadows: the mayor in his sash, a grandma, me with my hot dog flying out of my hand. Camera shake.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "We ran in circles for three hours. Every time we slowed down, our shadows were still running.",
+     "visual": "High aerial shot: the whole town running a giant ring around the stage, each person one step behind their black twin, while the sky slides from dusk toward orange.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "3 HOURS LATER"
+    },
+    {
+     "kind": "line",
+     "text": "Then it hit me. They were running because we were running. And we were running because they were.",
+     "visual": "Close on me mid-run with a think face that snaps to shocked. Glowing arrows chase each other in a circle on screen: PEOPLE -> SHADOWS -> PEOPLE.",
+     "music": "muffled",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "IT'S A LOOP"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Camera whips around the running ring faster and faster, screen shake, every face sweating, shadows always one step ahead.",
+     "music": "muffled",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "No shadow, no future. And inside a giant shadow, you don't have one.",
+     "visual": "Me looking up mid-run: the clock tower's huge dark shadow stretches across half the square. Close-up as I stick my hand into the dark patch and my shadow twin's arm vanishes.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "NO SHADOW = NO FUTURE"
+    },
+    {
+     "kind": "line",
+     "text": "So I led the whole town into the shadow of the clock tower.",
+     "visual": "Me at the front of the stampede, bending the running ring like a conga line into the giant dark patch. As each person crosses the edge, their black twin pops out of existence.",
+     "music": "muffled",
+     "sfx": [
+      "pop",
+      "pop",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "One by one, our shadows vanished. And everybody stopped.",
+     "visual": "Silence. The whole crowd standing still inside the tower's shadow, panting and staring down at their empty feet.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Pike finally sipped his five-year-old coffee. Top ten respect.",
+     "visual": "Mr. Pike, cobwebs still on his elbow, takes one long sip, gags a little, then gives a thumbs up. Stamped card: TOP 10 RESPECTFUL MOMENTS #1.",
+     "music": "lofi",
+     "sfx": [
+      "ding",
+      "cheer"
+     ],
+     "overlay": "TOP 10 RESPECT"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The crowd cheers and crowd-surfs me across the square (lying-flat pose) under falling confetti cubes.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "But a loop has to start somewhere. So I checked the bakery camera.",
+     "visual": "Kid's bedroom at night. Me at the desk in front of a boxy monitor playing grainy black-and-white overhead footage of the fair.",
+     "music": "night",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The first shadow to run wasn't a person. It was the pigeon's.",
+     "visual": "The footage zooms in. Every shadow is standing still except one tiny black pigeon-shaped shadow by the stage that darts first, and a red circle snaps around it.",
+     "music": "same",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "SUSPECT"
+    },
+    {
+     "kind": "line",
+     "text": "Chasing a crumb. From my hot dog.",
+     "visual": "The footage rewinds and zooms on the crumb falling from my hot dog right by my shoe. Cut to me at the desk, slowly turning to the camera with a sweat face.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "IT WAS ME"
+    },
+    {
+     "kind": "line",
+     "text": "So today, I'm eating very, very carefully.",
+     "visual": "Town square, day. Me nibbling a hot dog with both hands. One crumb falls. The pigeon's shadow twin snaps its head toward it, then every shadow in the square slowly turns to look at me. Smash to black.",
+     "music": "none",
+     "sfx": [
+      "scratch"
+     ]
+    }
+   ],
+   "vibe": "interesting",
+   "id": "interesting-1",
+   "score": 32.37,
+   "notes": [
+    "Open on the gag, not the explanation. 'Ten seconds in the future' is abstract for a 12-year-old. Make line 1 'In this town, my shadow trips ten seconds before I do,' and show the banana-peel moment first: my shadow wipes out, and I calmly step around the peel. The rule is understood in one picture, and the hook is funny instead of a puzzle.",
+    "At TikTok speed the bootstrap loop is hard to follow, and the pigeon reveal doesn't clearly explain why PEOPLE's shadows ran. In the rules section, add 'Rule: if any shadow runs, you run. Shadows always know.' Show it once with a dog's shadow bolting just before a flowerpot falls. Plant the clock tower's big shadow as the one 'no-future zone' in the same beat. Then the pigeon-crumb cause reads instantly as the spark, and the escape plan pays off a setup instead of appearing at the moment it's needed.",
+    "Open with the banana-slip gag (the shadow twin faceplants and the man calmly steps around the peel) instead of the wave. 'Ten seconds before you' is abstract and needs a laugh in the first 3 seconds to land. Also keep it away from mystery-2 in the schedule, since both are shadow premises."
+   ]
+  }
+ ]
+}

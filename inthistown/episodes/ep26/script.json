@@ -1,0 +1,607 @@
+{
+ "title": "In This Town — Who Bit the Town?",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {
+  "giantkid": [
+   "am_fenrir",
+   0.85,
+   "en-us",
+   [
+    0.62,
+    0.86,
+    1.2
+   ]
+  ]
+ },
+ "logline": "In this town, every morning one house wakes up with a giant bite taken out of it. The town paints everything green to stay safe and nobody touches the string on top of the clock tower. Unpaid detective me follows the clues (the bites taste sweet, there are sprinkles on the street, the bite mark has a tooth missing), then sets a hot-sauce trap on our bubblegum-pink roof and catches the biter: a giant gap-toothed kid. He wasn't eating the town. He was checking if it was ready.",
+ "twist": "Every clue was a cake clue. The walls taste sweet, the sprinkles are sprinkles, nothing bites green because kids hate veggies, and the silver wall at the edge of town is the rim of a plate. Our town is the giant kid's birthday cake, the party is tomorrow, and the string on top of the clock tower nobody is allowed to touch is a candle wick. Last shot: a gigantic match strikes in the sky.",
+ "caption_hook": "Something takes one bite out of our town every night. The clues were there the whole time.",
+ "vibe": "mystery",
+ "sets": [
+  "Main Street (sunrise/day, quiet night)",
+  "Clock tower close-up (day and night)",
+  "Town square",
+  "Kid's bedroom",
+  "Narrator's pink house roof (dusk flashback, night)",
+  "Aerial plate shot: the whole town sitting on a giant silver plate against a dark void"
+ ],
+ "newProps": [
+  "Bitten-house variants: house boxes with a huge stepped half-circle bite cut out of the roof/wall corner, crumb cubes on the lawn",
+  "Bitten bakery roof, post office with its chimney bitten off, Mrs. Plum's garage cut clean in half",
+  "Bite-edge close-up wall: scalloped row of square tooth notches with one bigger gap (missing front tooth), red highlight circle",
+  "Rainbow sprinkles: hundreds of tiny colored capsule/box bits scattered across the road",
+  "Green paint rollers; all-green Mr. Bramble (green skin and clothes) and a green-tinted orange cat",
+  "Bubblegum-pink narrator house with mint trim; Mom's lawn chair",
+  "Detective corkboard with photo cards and red string; detective cap worn over the headphones; magnifying glass (ring + handle)",
+  "Thick black wick string sticking straight up from the clock tower roof (thin black cylinder), visible in every wide shot",
+  "Silver plate rim: a giant flat silver disc under the whole town with a shiny raised rim at the edge of Main Street",
+  "Hot sauce bottle (red cylinder, cone cap, flame label) and a glowing-red painted roof",
+  "Big Gus's tall pancake stack (flat cylinders)",
+  "Giant blocky pastel fingers/hand that descend from the clouds and peel a roof off like a cracker",
+  "Giant kid head built from boxes: messy hair blocks, red cheeks, tongue out, a clear gap in the front teeth, party hat; eyes simple or squeezed shut",
+  "Giant match: long wood box with a red sphere tip, a glowing flame cone and a warm point light",
+  "Red sky flash for the SPICY moment"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, every morning, one house wakes up with a giant bite taken out of it.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:bite",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Sunrise (day preset, warm). Slow push-in down Main Street to a pink house with a huge stepped half-circle bite missing from its roof corner, crumb cubes on the lawn. A crowd of extras stares; the narrator (me) in front, surprised pose, shocked face. Far behind, the shiny silver rim at the edge of town glints (plant)."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "First the bakery. Then the post office. Then Mrs. Plum's garage.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:bakery",
+     "gain": 0.4
+    },
+    {
+     "type": "whoosh",
+     "at": "w:post",
+     "gain": 0.4
+    },
+    {
+     "type": "whoosh",
+     "at": "w:garage",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "BITES: 21",
+   "visual": "Three whip-pan cuts: the bakery with its roof bitten; the post office with its chimney bitten off; Mrs. Plum (old lady, purple hair, glasses) standing in her garage, which is cut clean in half, crossArms, sweat face.",
+   "markers": {
+    "bakery": "w:bakery",
+    "post": "w:post",
+    "garage": "w:Mrs"
+   }
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nobody has seen who. We just hear one giant crunch at three in the morning.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:crunch",
+     "gain": 0.65
+    }
+   ],
+   "visual": "Quiet night preset. Wide shot of Main Street, every window dark, the clock tower face at 3:00. A hard camera shake, then one window light pops on."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So, two rules. One: paint your house green. Nothing ever bites green.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:green",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "RULE 1: PAINT IT GREEN",
+   "visual": "Day. Montage of extras with big paint rollers turning houses bright green; one untouched green house stands next to two bitten pastel ones.",
+   "markers": {
+    "r1": "w:One"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Two: never touch the string on the clock tower. Nobody knows why.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:string",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "RULE 2: DON'T TOUCH THE STRING",
+   "visual": "Low-angle tilt up the clock tower to a thick black string sticking straight up from its roof (the wick, planted). Two townspeople glance up at it and shrug.",
+   "markers": {
+    "r2": "w:Two"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Bramble painted his house green. And his cat. And himself.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:cat",
+     "gain": 0.45
+    },
+    {
+     "type": "pop",
+     "at": "w:himself",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Mr. Bramble (mustache, totally green: skin, clothes, everything) stands proudly in front of his green house, crossArms, smug face; a green-tinted cat sits at his feet.",
+   "markers": {
+    "cat": "w:And",
+    "self": "w:himself"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My mom refused. Our house stays bubblegum pink, because it's a vibe.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:refused",
+     "gain": 0.55
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "It's a vibe.",
+    "by": "Mom"
+   },
+   "visual": "The narrator's bubblegum-pink house with mint trim. Mom (sunglasses) lounges in a lawn chair out front and shrugs; the narrator facepalm-shrugs beside her."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I'm investigating. Detective. Unpaid.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Unpaid",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "DETECTIVE (UNPAID)",
+   "visual": "Kid's bedroom. The narrator in a detective cap over his headphones, at his desk in front of a corkboard of house photos and red string, think pose, smug face."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "First clue: the bites taste sweet. Don't ask how I know.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:clue",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "CLUE #1: SWEET",
+   "visual": "Close-up: the narrator leans in and licks the edge of a bitten pink wall, then snaps back with a shocked face."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Second clue: rainbow sprinkles all over the street.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:clue",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "CLUE #2: SPRINKLES",
+   "visual": "Low camera skims the road at sunrise, which is covered in tiny rainbow sprinkles; the narrator crouches with a magnifying glass, peer pose."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Third clue: the bite has a gap. The biter's missing a front tooth.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:clue",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "CLUE #3: GAP TOOTH",
+   "visual": "Extreme close-up of the bite edge: a scalloped row of tooth notches with one big square gap. A red circle pops around the gap.",
+   "markers": {
+    "gap": "w:gap"
+   }
+  },
+  {
+   "id": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Bedroom. The narrator slams his fist into his palm (slam pose), huss face, a hard punch-in on each HUSS; the corkboard shakes and a photo drops."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone blamed Big Gus. But Gus has all his teeth.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:blamed",
+     "gain": 0.5
+    },
+    {
+     "type": "laugh",
+     "at": "w:teeth",
+     "gain": 0.4
+    }
+   ],
+   "overlay": "SUSPECT: BIG GUS — CLEARED",
+   "visual": "Town square. A crowd of extras points at Big Gus (huge guy, beard, cap) holding a tall pancake stack. Gus grins wide and shows a full, perfect row of teeth."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I made a trap. If it likes sweet, let's see how it likes spicy.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Me (MAIN.me) on the bubblegum-pink roof at dusk with a paint roller, painting the roof bright red with a giant bottle of GRANDMA'S EXTRA SPICY hot sauce beside me, a smug determined face. Flames-icon stamp.",
+   "overlay": "TRAP: EXTRA SPICY",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:spicy",
+     "gain": 0.5
+    }
+   ],
+   "markers": {
+    "paint": "w:trap"
+   }
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then last night, the crunch was on my street.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:crunch",
+     "gain": 0.65
+    }
+   ],
+   "visual": "Quiet night, the narrator's bedroom. The room shakes (camera shake), a giant shadow slides across the window, the narrator sits bolt upright in bed, shocked face."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A giant fork stabbed down and lifted our roof off like a cracker. Then it bit.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:fork",
+     "gain": 0.55
+    },
+    {
+     "type": "whoosh",
+     "at": "w:lifted",
+     "gain": 0.5
+    },
+    {
+     "type": "thump",
+     "at": "w:bit",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Night, storm-dark sky. An enormous silver fork (long box handle, four box tines) stabs down out of the clouds into our pink house, lifts the red hot-sauce roof off like a cracker and carries it up; a giant CRUNCH. Camera shake.",
+   "markers": {
+    "fork": "w:giant",
+    "lift": "w:lifted",
+    "bite": "w:bit"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the fork came back for me.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:fork",
+     "gain": 0.55
+    }
+   ],
+   "visual": "The fork swoops down at me standing in my roofless bedroom; I dive aside."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Ah, almost... almost!",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:almost",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "ALMOST!",
+   "visual": "Freeze-frame: the giant fingertips an inch from the narrator's hood, him mid-dive with a sweat face. Record scratch, big stamped word."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the sky yelled...",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:yelled",
+     "gain": 0.5
+    }
+   ],
+   "visual": "The fingers jerk back up into the clouds. The whole night sky flashes red; camera shake."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "giantkid",
+   "text": "Spicy!",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.8
+    }
+   ],
+   "visual": "A gigantic blocky kid head rises over the rooftops behind the clock tower, red cheeks, tongue out, eyes squeezed shut, fanning his mouth with a giant hand. Delivered in a separate deep, booming giant-kid voice.",
+   "overlay": "SPICY!!!"
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The narrator stands on the roofless pink house pointing up, huss face. Lights flick on house by house down the street and townspeople pour out pointing; a camera shake on each HUSS."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A giant kid. Missing a front tooth.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:tooth",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "GAP TOOTH: FOUND",
+   "visual": "Low-angle hero shot: the giant kid peeks sheepishly over the rooftops and grins, showing a big gap where a front tooth should be.",
+   "markers": {
+    "kid": "w:giant"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He wasn't eating our town. Just checking if it was ready.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:ready",
+     "gain": 0.45
+    }
+   ],
+   "visual": "A giant hand gently sets the red roof back on the pink house. The giant kid's face is sheepish and sweaty; the narrator watches with crossArms."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Ready for what?",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Close-up of the narrator: shrug pose, squint face."
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I noticed the silver rim around town. Like a plate.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:silver",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "CLUE #4: THE PLATE",
+   "visual": "The camera cranes up and up above the town until we see all of it sitting on a giant round silver plate with a shiny rim. Pastel houses look like frosting decorations and sprinkles cover everything.",
+   "markers": {
+    "rim": "w:silver"
+   }
+  },
+  {
+   "id": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Our town isn't a town. It's his birthday cake.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:cake",
+     "gain": 0.75
+    }
+   ],
+   "overlay": "IT'S A CAKE",
+   "visual": "Top-down shot: the giant kid, now wearing a party hat, leans over the plate-town grinning his gap-tooth grin.",
+   "markers": {
+    "cake": "w:birthday"
+   }
+  },
+  {
+   "id": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And nothing bites green? No kid eats the vegetables.",
+   "gapAfter": 0.3,
+   "visual": "Top-down crane over the town: the green-painted houses sit like leftover broccoli garnish on a giant cake; Mr. Bramble (painted green) waves up.",
+   "overlay": "NO KID EATS THE VEGGIES",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:vegetables",
+     "gain": 0.45
+    }
+   ]
+  },
+  {
+   "id": "b28",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The narrator on his roof, stunned pose into huss face, with a punch-in on each HUSS; behind him the giant kid tries to copy the HUSS with his mouth wide open."
+  },
+  {
+   "id": "b29",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "His party's tomorrow. And that string on the clock tower? It's a candle wick.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:wick",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "PARTY: TOMORROW",
+   "visual": "Close-up on the black string on top of the clock tower. Above it a gigantic match strikes in the night sky, flares into a glowing flame cone and slowly lowers toward the wick, lighting the whole town orange.",
+   "markers": {
+    "party": "w:party",
+    "wick": "w:wick"
+   }
+  },
+  {
+   "id": "b30",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And somebody just struck a match.",
+   "gapAfter": 0.8,
+   "music": "none",
+   "visual": "Low angle from the street up past the clock tower: in the dark sky a gigantic match strikes with a burst of orange light, and the flame lowers toward the string (wick) on top of the clock tower. Hard cut to black.",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:match",
+     "gain": 0.8
+    }
+   ],
+   "markers": {
+    "match": "w:struck"
+   }
+  }
+ ]
+}

@@ -38,12 +38,15 @@ Rules from the creator:
 | 23 | Low Moon | spooky | polish round → Wed 25 Nov 20:00 |
 | 24 | Word of the Day | meme | shots building (giant ear, not an eye) |
 | 25 | Nugget | giants / funny | script + audio ready (deep 'Ba-gawk' voice) |
+| 26 | Who Bit the Town? | MYSTERY | script + audio ready (fork, cake twist, giant-kid voice) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey)
 
-## Writers' room 3 (episodes/concepts/s3_ranked.json — mystery / funny / random / interesting): in progress
+## Writers' room 3 (episodes/concepts/s3_ranked.json — mystery / funny / random / interesting)
+Next up in rotation: Moving Night (RANDOM) · Out of Colour (INTERESTING) · The Cat Did It (FUNNY, top score) · One Shadow Too Many (MYSTERY) ·
+Gerald's Forecast (RANDOM) · Ten Seconds Early (INTERESTING) · The Judges (FUNNY)
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)
 Next up: The Arrr Pond (meme kraken) · Lost Property (mystical fog) · The Harbour Blinks (scary sea) · Don't Touch the Stars (mystical) · Captain Loudest (pirate meme)
