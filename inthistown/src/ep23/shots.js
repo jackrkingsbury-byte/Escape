@@ -537,6 +537,7 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, tony = ctx.cast.tony, P = ctx.props, tf = ctx.time('b07.w8');
       const off = t >= tf;
+      tony.pose('idle', 0); const f = humanFace(tony);          // fixed framing reference (deterministic)
       if (!off) { shoutPose(tony, t, 0.15, 0.6 + 0.4 * Math.abs(Math.sin(t * 8))); tony.face('huss', t); }
       else { tony.pose('stunned', t); tony.joints.head.rotation.x -= 0.1; tony.face('shocked', 0.3); }
       tony.root.updateMatrixWorld(true);
@@ -547,7 +548,7 @@ export const shots = [
         P.mustFly.position.copy(p0).addScaledVector(side, -1.2 * d).add(V(0.3 * d, 2.2 * d - 1.0 * d * d, 0));
         P.mustFly.rotation.set(d * 6, d * 4, d * 9);
       }
-      const f = ctx.store.f0 ??= humanFace(tony), fw = V(Math.sin(tony.root.rotation.y), 0, Math.cos(tony.root.rotation.y));
+      const fw = V(Math.sin(tony.root.rotation.y), 0, Math.cos(tony.root.rotation.y));
       const z = ease.outCubic(clamp((t - tf) / 0.25, 0, 1));
       const base = f.clone().add(up(-0.62));
       const follow = off ? ease.inOutSine(clamp((t - tf - 0.1) / 0.6, 0, 1)) * 0.45 : 0;
