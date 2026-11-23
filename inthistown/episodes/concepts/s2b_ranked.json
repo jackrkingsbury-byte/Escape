@@ -1,0 +1,2486 @@
+{
+ "ranked": [
+  {
+   "title": "In This Town \u2014 Floor Three",
+   "logline": "The clock tower has two floors, but its elevator has three buttons, and everyone who presses three comes back weird. When the elevator presses three by itself, I end up in a floating hallway of doors where one door leads home and every other door is almost home. I get three tries.",
+   "twist": "I find the door where Grandma HUSSes back, and everything looks perfect. Except the clock tower now has three floors, so I might be in an 'almost home'. And the elevator has a new button for four.",
+   "caption_hook": "the tower has 2 floors. the elevator has 3 buttons. don't press 3.",
+   "new_props": [
+    "old brass elevator inside the clock tower (box walls, sliding doors, brass panel with round buttons 1, 2 and a softly glowing 3; later a glowing 4)",
+    "Mr. Kowalski's pet cloud: a small puffy grey cloud (cluster of spheres) with tiny eyes, on a leash, that can rain (falling thin blue cylinders)",
+    "giant Coach Dana: the same character scaled to twelve feet, holding a tiny ball",
+    "town square banner with a big 3 crossed out by a red slash",
+    "grocery bags (boxes with a baguette and a leek sticking out)",
+    "overlay floor counter flicking 3, 3, 3",
+    "Floor Three set: an endless deep purple-blue backdrop with stars, fog at foot level, glowing pastel shapes drifting, and a path of floating stone tiles",
+    "hundreds of free-standing wooden doors (box frames, no walls) floating at different heights, each with a glowing keyhole; they can slam shut and vanish like dominoes",
+    "the Bellhop: a soft glowing cyan jellyfish (dome sphere with dangling thin cylinder tentacles) wearing a tiny red bellhop cap; it can flash red",
+    "three glowing tally marks floating in the air that pop away one by one",
+    "pigeon scaled up to the size of a house",
+    "thirty extras dressed exactly like me (black hoodie with white knight emblem, grey pants, white shoes, headphones) dancing in sync",
+    "an extra third row of glowing purple windows added to the clock tower"
+   ],
+   "sets": [
+    "clock tower exterior by day",
+    "inside the clock tower elevator",
+    "main street in the morning",
+    "park by day (table and tree)",
+    "town square with stage and banner by day",
+    "Floor Three (new set built from basic shapes: starry backdrop, fog, floating tiles, endless row of floating doors)",
+    "main street by day seen through the doors (giant pigeon version, everyone-is-me version, Grandma's porch version)",
+    "floor two landing outside the elevator"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, the clock tower elevator has three buttons. The tower only has two floors.",
+     "visual": "Day, outside the clock tower: the camera counts its two rows of windows. Smash cut inside an old brass elevator to a panel with buttons 1, 2 and a softly glowing 3.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "1 \u00b7 2 \u00b7 3?"
+    },
+    {
+     "kind": "line",
+     "text": "Nobody presses three.",
+     "visual": "Extreme close-up on the glowing 3 button. The pigeon sits on top of the panel, staring down at it.",
+     "music": "none"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The 3 button pulses brighter on each HUSS and the elevator lights flicker."
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Kowalski pressed it once. He came back with a pet cloud.",
+     "visual": "The elevator doors slide open. Mr. Kowalski (bald, glasses, green cardigan) steps out holding a leash. On the other end floats a small puffy grey cloud with tiny eyes (face: smug).",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He walks it every morning. It rains on anyone who's rude.",
+     "visual": "Main street in the morning: Kowalski strolls with his cloud. A guy in sunglasses points and laughs at him (pose: laugh). The cloud drifts over and rains on only him (face: shocked).",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Coach Dana pressed it. She came back twelve feet tall. Her team hasn't lost since.",
+     "visual": "Park by day: Coach Dana (tracksuit, cap, whistle) towers over the table and tree, holding a ball between two fingers like a grape. Tiny kids in matching shirts cheer around her ankles (pose: cheer).",
+     "sfx": [
+      "cheer"
+     ],
+     "overlay": "UNDEFEATED"
+    },
+    {
+     "kind": "line",
+     "text": "So the rule is simple. Never press three.",
+     "visual": "Town square: the banner over the stage shows a big 3 with a red slash through it. Townspeople nod seriously, arms crossed (pose: crossArms).",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "NEVER PRESS 3"
+    },
+    {
+     "kind": "line",
+     "text": "Yesterday, I was taking Grandma's groceries up, and the elevator pressed three by itself.",
+     "visual": "Inside the elevator, I'm holding two big grocery bags. The 3 button clicks in by itself and glows. I slowly turn to look at it (face: shocked).",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The elevator rockets upward. The camera shakes and the lights strobe on every HUSS, the floor counter flicks 3, 3, 3, and groceries float up out of the bags.",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "3"
+    },
+    {
+     "kind": "line",
+     "text": "The doors opened onto nothing.",
+     "visual": "NEW SET, Floor Three: the doors slide open onto an endless deep purple-blue starry dark. Soft fog rolls at foot level and glowing pastel shapes drift by slowly. A path of floating stone tiles leads away from the elevator.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Just doors. Hundreds of them, floating in the fog.",
+     "visual": "Wide shot: hundreds of tall wooden doors stand on their own with no walls. They float at different heights in the fog, each with a glowing keyhole, stretching off forever."
+    },
+    {
+     "kind": "line",
+     "text": "And a glowing jellyfish in a bellhop hat.",
+     "visual": "A softly glowing cyan jellyfish in a tiny red bellhop cap bobs up to me (face: wink) and bows with one tentacle.",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Welcome to floor three. One door is home. The rest are almost home.",
+     "visual": "The Bellhop says this in a polite second voice. Quote card: 'One door is home. The rest are almost home.' \u2014 The Bellhop. It sweeps a tentacle down the endless row of doors.",
+     "overlay": "\"The rest are almost home.\" \u2014 The Bellhop"
+    },
+    {
+     "kind": "line",
+     "text": "Three tries. Pick wrong, and you stay. Forever.",
+     "visual": "Three glowing tally marks appear in the air above the jellyfish. I gulp (face: sweat).",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "3 TRIES"
+    },
+    {
+     "kind": "line",
+     "text": "Door one. My street. Perfect. Except the pigeon was the size of a house.",
+     "visual": "I open the first door onto Main Street by day. A pigeon as big as a house sits in the middle of the road, cooing (the camera shakes), while tiny townspeople feed it a whole tree. I slam the door and one tally mark pops away.",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "NOPE"
+    },
+    {
+     "kind": "line",
+     "text": "Door two. Perfect again. Except everybody in town was me.",
+     "visual": "Second door: Main Street is full of thirty kids in my exact outfit (black hoodie with the white knight emblem, headphones), all doing the same dance in perfect sync. They stop and turn to stare at me at the same moment. I slam it and the second tally mark pops.",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "NOPE"
+    },
+    {
+     "kind": "line",
+     "text": "One try left. And the doors were starting to slam shut.",
+     "visual": "Down the row, doors slam shut one after another like dominoes and vanish into the fog. The jellyfish flashes red (face: sweat).",
+     "music": "night",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Every door left looked exactly like home. Same street. Same Grandma.",
+     "visual": "Three doors left, each cracked open. Each one shows the same Main Street and the same Grandma (grey bun, glasses, cardigan) on the same porch, waving."
+    },
+    {
+     "kind": "line",
+     "text": "Then I remembered. Back home, Grandma always HUSSes back.",
+     "visual": "Quick flashback, Main Street by day: I HUSS at Grandma from the sidewalk and she HUSSes right back from her porch, fist in the air (face: huss). Back in the fog, I smile (face: determined)."
+    },
+    {
+     "kind": "line",
+     "text": "So I didn't open a door. I shouted through every keyhole.",
+     "visual": "I kneel at the first glowing keyhole and cup my hands against it (pose: peer)."
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "One HUSS into each of the three keyholes, with the camera whipping from door to door and fog puffing out of each keyhole."
+    },
+    {
+     "kind": "line",
+     "text": "Nothing. Nothing. And then, from the very last door...",
+     "visual": "Silence. First door: only fog. Second door: only fog. Slow push-in on the last door's keyhole.",
+     "music": "none"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Faint and echoing from far away, Grandma HUSSes back through the last keyhole. Through it we see her on her porch with both fists up (face: huss), and the keyhole blazes gold."
+    },
+    {
+     "kind": "line",
+     "text": "I dove through.",
+     "visual": "I sprint and dive through the last door in slow motion. White flash.",
+     "music": "lofi",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Floor two. Grandma took her groceries like nothing happened. Perfect.",
+     "visual": "The elevator doors open on floor two. Grandma takes the grocery bags, pats my head (face: smile) and wanders off. I breathe out in relief (pose: shrug, face: grin)."
+    },
+    {
+     "kind": "line",
+     "text": "Except one thing. The clock tower has three floors now.",
+     "visual": "Outside, day. The camera tilts slowly up the clock tower. It now has a third row of windows that was never there before, glowing faintly purple.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And the elevator has a button for four.",
+     "visual": "Close-up on the brass panel: 1, 2, 3, and a brand-new softly glowing 4. The pigeon on top of the panel slowly turns its head to the camera. Cut to black.",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "4"
+    }
+   ],
+   "vibe": "mystic1",
+   "id": "mystic1-2",
+   "score": 37.8,
+   "notes": [
+    "Say the doubt out loud, because kids may not link 'three floors now' to 'I might be in an almost-home'. Before the last line, add a beat where I HUSS at Grandma and she answers a beat too late with a slightly wrong smile, then cut to the button for four. Trim about 10 words elsewhere to get under 240.",
+    "Plant the solution early. Open the grocery trip with the kid HUSSing up at Grandma's window and her HUSSing straight back. Then the keyhole test pays off something we saw, instead of a 'Then I remembered' flashback dropped in at the moment it's needed. Also make clear that Grandma lives on floor two of the tower.",
+    "Set up Grandma's HUSS-back habit at the start (e.g. I HUSS at her from the elevator as I head up with her groceries) instead of in a flashback right when it's needed. The keyhole solution then feels earned, not convenient."
+   ]
+  },
+  {
+   "title": "Battery 1%",
+   "logline": "In this town, one second of a mystery song makes you dance until sunrise. Someone hacks the clock tower speakers and the whole town dances nonstop. The only kid left standing has headphones on 5% battery and has to get the town to crowd-surf him to the plug.",
+   "twist": "He pulls the plug and saves the town. Then the sky turns purple and a giant spaceship comes down blasting the remix, which explains the hooded hacker with glowing green eyes. His headphone battery hits zero percent.",
+   "caption_hook": "Hear one second of this song and you dance till sunrise. My headphones were on 5%.",
+   "new_props": [
+    "DJ booth: glowing box table with two spinning black cylinder turntables and a big red button",
+    "TOWN FAIR banner text on the stage",
+    "floating glowing music notes (sphere + thin box stem)",
+    "rule cards (overlay panels)",
+    "BAKERY sign box on a main-street house",
+    "shower cap: half-sphere pulled over the narrator's headphones, plus a yellow sphere rubber duck",
+    "hooded hacker: all-black blocky figure with its face in shadow and two small glowing green sphere eyes",
+    "two big grey loudspeakers clamped to the clock face (boxes with black cylinder cones) with green spark particles",
+    "battery icon overlay on the headphones (box outline with fill bar that turns red)",
+    "lightbulb pop above the head (yellow sphere + small cylinder)",
+    "ladder up the clock tower (two thin boxes with rungs)",
+    "giant power plug and cable: glowing box plug with cylinder prongs and a thick cylinder cable",
+    "purple spaceship: huge flattened disc (cylinder) with a ring of glowing sphere lights, a glass dome, a mirror-ball sphere and four giant speaker boxes"
+   ],
+   "sets": [
+    "main street at dawn and day",
+    "town square with stage and banner (day, party night)",
+    "main street bakery house (day)",
+    "kid's bedroom (night)",
+    "clock tower (quiet night, party night)",
+    "town park picnic table (party night)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, there's a song so catchy that if you hear one second of it, you dance until sunrise.",
+     "visual": "Dawn on main street. Thirty townspeople dance in perfect sync with sweaty, sleepy faces. In the middle the narrator (my avatar with headphones) stands still, arms crossed, deadpan.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It started at the town fair, when DJ Noodle played a mystery track.",
+     "visual": "Flashback, day, town square. The stage banner reads 'TOWN FAIR'. DJ Noodle (sunglasses, gold chain, yellow cap) stands behind a glowing DJ booth with two spinning turntables.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "ONE YEAR AGO"
+    },
+    {
+     "kind": "line",
+     "text": "It only had four words.",
+     "visual": "Close-up of DJ Noodle's smug face as he slowly presses a big red button on the booth.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Bimbalo! Fezza-ree! Oonga vay! Dooblanni!",
+     "visual": "Giant stamped words slam across the screen one at a time over pulsing purple fair lights. A small note at the bottom says 'DON'T SING THIS'.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "boom",
+      "boom",
+      "boom"
+     ],
+     "overlay": "BIMBALO! FEZZA-REE! OONGA VAY! DOOBLANNI!"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The whole fair crowd snaps into dance2 at once. Party night lighting kicks in, camera shake on each HUSS.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now we have rules. Always wear headphones. Never hum. And never look a dancer in the eyes.",
+     "visual": "Main street, day. Three rule cards pop in one by one: a kid in giant headphones, a crossed-out humming face, a kid covering his eyes as he walks past a dancer.",
+     "music": "lofi",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding"
+     ],
+     "overlay": "RULE 1: HEADPHONES. RULE 2: NO HUMMING. RULE 3: NO EYE CONTACT."
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Pell hummed it in the bakery. Twelve customers danced out the door.",
+     "visual": "Main street bakery. Mrs. Pell (apron, hair bun, glasses) hums with her eyes closed. A conga line of twelve customers dances out of the door and down the street.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Officer Brandt sneezed it. The whole police station did the worm.",
+     "visual": "Officer Brandt (blue cap, mustache) sneezes. Cut to three officers lying flat (crowdSurf pose) in a row on the street, wiggling the worm in sync.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Me? I never take my headphones off. Not even in the shower.",
+     "visual": "Kid's bedroom. The narrator sleeps in bed with headphones on. Gag cut: he wears a shower cap over the headphones and holds a rubber duck, smug face.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Until yesterday... when someone hacked the clock tower speakers.",
+     "visual": "Quiet night at the clock tower. A hooded figure in all black, face in shadow except two glowing green eyes, clamps two big loudspeakers onto the clock face. Static crackles and green sparks fly.",
+     "music": "night",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "HACKED"
+    },
+    {
+     "kind": "line",
+     "text": "The whole town started dancing. Grandma. The mailman. Even the pigeon.",
+     "visual": "Party night. The speakers blast glowing music notes over town. Quick cuts: Grandma starts dancing, the mailman (blue cap, sash bag) starts dance2, the pigeon bobs its head in time.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "They danced all night... while they're out partying, by the way.",
+     "visual": "Party night montage: a conga line around the clock tower and a crowd-surfer in the square. The narrator sits alone on the park picnic table with headphones on, deadpan.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "WHILE THEY'RE OUT PARTYING, BY THE WAY"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Rapid cuts of dancers' huss faces under pink and purple strobe lights, camera shake on every HUSS.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then my headphones beeped. Battery: five percent.",
+     "visual": "Close-up on the narrator's headphones flashing red as a battery icon appears. His face turns to sweat.",
+     "music": "muffled",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "BATTERY: 5%"
+    },
+    {
+     "kind": "line",
+     "text": "Four. Three. The song leaked in. My foot started tapping. Ah, almost... almost!",
+     "visual": "The battery counter drops 4%, then 3%, and the muffled music gets louder. The narrator's foot starts tapping and he catches himself with a jolt (stunned pose).",
+     "music": "muffled",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "AH, ALMOST... ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "I had to reach the clock tower. But the streets were jammed.",
+     "visual": "Wide shot from the narrator's view: the glowing clock tower far away past a main street packed wall to wall with dancers.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "BATTERY: 2%"
+    },
+    {
+     "kind": "line",
+     "text": "Then it hit me. If they have to dance... they can dance me there.",
+     "visual": "The narrator in the think pose, then a sly grin as a lightbulb pops above his head.",
+     "music": "muffled",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I dove into the crowd. Goon Squad!",
+     "visual": "The narrator leaps backward off the picnic table into the crowd, arms out. The dancers snap to attention in sunglasses and catch him.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "whoosh"
+     ],
+     "overlay": "GOON SQUAD!"
+    },
+    {
+     "kind": "line",
+     "text": "The whole town passed me over their heads, right to the clock tower.",
+     "visual": "The narrator in the crowdSurf pose glides over a sea of dancing townspeople down main street toward the glowing clock tower, camera tracking alongside.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I climbed the ladder. One percent left. I yanked the plug.",
+     "visual": "The narrator climbs a ladder up the clock tower with the battery icon blinking red. He grabs a giant glowing power plug and yanks it out in a burst of sparks.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "BATTERY: 1%"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Total silence, then three slow-motion HUSS cuts of the narrator on top of the clock tower holding the plug up in the moonlight, huss face.",
+     "music": "none",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Everyone flopped like noodles. Then they cheered. Top ten respect.",
+     "visual": "The whole town collapses flat on the ground, then jumps up cheering and clapping at the narrator. A Top 10 card slides in.",
+     "music": "lofi",
+     "sfx": [
+      "thump",
+      "cheer"
+     ],
+     "overlay": "TOP 10 RESPECTFUL MOMENTS: #1 THE TOWN CARRIED ME"
+    },
+    {
+     "kind": "line",
+     "text": "Then the sky turned purple. A giant spaceship lowered over town... blasting the remix.",
+     "visual": "The sky flashes purple. A huge flat disc spaceship with a ring of glowing lights, a mirror ball and four giant speakers lowers over the clock tower. Glowing music notes rain down and the crowd freezes, surprised.",
+     "music": "party",
+     "sfx": [
+      "thunder",
+      "boom"
+     ],
+     "overlay": "THE REMIX"
+    },
+    {
+     "kind": "line",
+     "text": "And my battery? Zero percent.",
+     "visual": "Close-up: the narrator's headphones go dark and the battery icon hits 0%. His foot taps, his shocked face fights it, and he breaks into a reluctant dance. Cut to black.",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "boom"
+     ],
+     "overlay": "BATTERY: 0%"
+    }
+   ],
+   "vibe": "memetrend",
+   "id": "memetrend-2",
+   "score": 36.2,
+   "notes": [
+    "Earn the spaceship. The hacker's green eyes are never mentioned again, so the UFO feels random. Add one line ('Remember the hacker's green eyes? There were a thousand of them in the window.') and show the green eyes in the ship's dome. Cut the unused 'never look a dancer in the eyes' rule to make room.",
+    "Use the rule that is set up and never used: 'never look a dancer in the eyes'. At 1%, have a dancer lock eyes with the kid mid crowd-surf so his foot starts going. Then make the spaceship's portholes the same glowing green as the hacker's eyes, staring down as the battery hits zero. That ties the rule, the hacker clue and the alien twist together, so the spaceship doesn't come out of nowhere.",
+    "Fix the rule contradiction: the song makes you dance 'until sunrise', yet pulling the plug stops everyone. Change it to 'as long as it's playing'. Also pay off the unused 'never look a dancer in the eyes' rule, e.g. he has to crowd-surf with his eyes squeezed shut."
+   ]
+  },
+  {
+   "title": "The Deep Above",
+   "logline": "In this town there is no sky. A sea hangs upside down over the rooftops, fish drift past bedroom windows, and the one rule that matters is never shine a light into the deep. Then the narrator's flashlight rolls onto the roof pointing straight up, and a mountain-sized creature with one glowing eye reaches down Main Street to find it.",
+   "twist": "He works out that the creature is just following the light like a moth, and he throws the flashlight back up into the sea from the clock tower. Then, through the clear water, he sees another town hanging upside down on the far side of the deep. A kid there is holding his flashlight, and the kid's mum is shouting their rule: never shine a light into the deep, because something lives down there. She means us.",
+   "caption_hook": "never shine a light at the sky. it isn't a sky.",
+   "new_props": [
+    "upside-down sea ceiling: a huge translucent rippling blue plane just above the rooftops, with thin glowing cone light shafts and slow rising sphere bubbles",
+    "blocky fish (box bodies, cone tails, sphere eyes) in orange, teal and yellow: a school of small ones, one that peers in a window, one whale-sized one",
+    "sardine rain: lots of tiny silver boxes falling",
+    "frying pan: flat black cylinder with a box handle",
+    "three-rules banner for the town square stage, with lines that stamp on one by one",
+    "Captain Barnaby's pirate look: tricorn hat (three flattened boxes), eyepatch (small black box), long blue coat, fishing rod (thin cylinder with a taut line)",
+    "flashlight: small cylinder with a glowing cone beam",
+    "giant sea creature: huge dark sphere body, eight tentacles of chained tapering purple cylinders with glowing teal sphere suckers, one enormous yellow sphere eye with a black slit pupil and a lid that blinks",
+    "hedge for Captain Barnaby to crash into (green box)",
+    "inverted town far above the water: a row of small houses and a mini clock tower flipped upside down, glowing windows",
+    "upside-down mum and kid figures in one of the inverted windows"
+   ],
+   "sets": [
+    "Main Street at dusk and quiet night under the upside-down sea",
+    "town square stage by day (rules banner, sardine rain)",
+    "the park (Captain Barnaby casts upward), then Main Street as he is dragged along",
+    "the kid's bedroom at night, window looking out on the roof and the glowing sea",
+    "clock tower top at night",
+    "the far side of the sea: an inverted town seen through the water"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, there's no sky. There's a sea, hanging upside down over the rooftops.",
+     "visual": "Low angle on Main Street at dusk. The camera tilts up past the street lamps to show a huge glowing blue water ceiling just above the roofs, rippling, with light shafts falling through it and slow bubbles rising. A school of blocky fish drifts across.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator kid stands in the middle of Main Street with his huss face, staring up. A whale-sized blocky fish glides overhead and its glowing belly washes his face blue.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Fish swim past our bedroom windows. Every Friday, it rains sardines.",
+     "visual": "Inside the kid's bedroom, a big orange box-fish drifts up to the window and peers in. Quick cut to the town square by day: tiny silver box sardines patter down and townspeople flinch.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Okafor doesn't own an umbrella. She owns a frying pan.",
+     "visual": "Mrs. Okafor (purple dress, sunglasses, smug face) strolls down Main Street holding a big black frying pan over her head. Sardines bonk off it one after another.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "There are three rules. Never throw anything up. Never swim up. And never, ever shine a light into the deep.",
+     "visual": "Town square stage. Each rule stamps onto the big banner as it is spoken. The mayor (top hat, sash) points at it with a stern face while the crowd nods along.",
+     "music": "muffled",
+     "overlay": "1. NEVER THROW ANYTHING UP  2. NEVER SWIM UP  3. NEVER SHINE A LIGHT INTO THE DEEP",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Because something lives up there.",
+     "visual": "Night. The camera drifts slowly up toward the water ceiling. Far up in the dark blue, a colossal shadow slides past, and one faint yellow eye flickers open for half a second, then closes.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Captain Barnaby cast a fishing line straight up once. Something bit. We found him three streets away, still holding the rod.",
+     "visual": "Old Captain Barnaby (white beard, tricorn pirate hat, eyepatch, blue coat) casts his rod straight up into the sea from the park. The line snaps tight and he is yanked flat (crowdSurf pose), zooming down Main Street past the houses, and lands stunned in a hedge three streets away, still gripping the rod.",
+     "music": "lofi",
+     "overlay": "BITE!",
+     "sfx": [
+      "whoosh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Until last night.",
+     "visual": "Hard cut to the kid's bedroom at quiet night. The room is dark except for the window, which glows blue from the sea outside.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I was shining my flashlight at the fish outside my window. It slipped. Rolled down the roof. And stopped... pointing straight up.",
+     "visual": "The kid leans out the window waving a flashlight at a curious fish. The flashlight slips out of his hand, rolls down the roof tiles and wobbles to a stop on the gutter with its beam pointing straight up into the sea.",
+     "music": "night",
+     "sfx": [
+      "thump",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The whole deep lit up. And something opened one giant, glowing eye. Right above my house.",
+     "visual": "The beam hits the water and the whole sea ceiling flares up like a stage light. Above the house it shows a mountain-sized dark creature with tentacles coiled everywhere. One enormous yellow eye with a black slit pupil slowly opens until it fills the frame.",
+     "music": "muffled",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid at his window with a shocked face. Camera shake. The tentacles uncurl across the glowing sea and the street lamps flicker on and off.",
+     "music": "same",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A tentacle came down through the water. Slow. Curious. Feeling its way down Main Street, window by window.",
+     "visual": "A giant purple tentacle made of tapering cylinders, with glowing teal suckers, pushes down through the water ceiling. It curls along Main Street and its tip peeks into each lit window while neighbours duck behind their curtains.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Okafor bonked it with the frying pan. It didn't even notice.",
+     "visual": "Mrs. Okafor bursts out of her doorway and slams the frying pan onto the tentacle tip. The tentacle doesn't even twitch. She slowly backs inside with a sweat face.",
+     "music": "same",
+     "overlay": "TOP 10 RESPECT",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It wasn't hunting. It was following the light. Like a moth.",
+     "visual": "The kid, with his think face, has climbed onto the roof and holds the flashlight. He tilts the beam left and right, and the tentacle tip sways after it. High above, the giant eye follows the light too.",
+     "music": "muffled"
+    },
+    {
+     "kind": "line",
+     "text": "So I grabbed the flashlight, climbed the clock tower, and threw it as high as I could.",
+     "visual": "The kid scrambles up the clock tower at night, flashlight glowing in his hand, with the tentacle trailing curiously behind him. At the top he winds up (slam pose) and hurls the glowing flashlight up into the sea.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The tentacle followed it all the way back up. The eye closed. The deep went dark.",
+     "visual": "The flashlight's beam spirals up through the water like a shooting star going the wrong way. The tentacle coils after it back into the dark, the giant eye slowly closes, and the sea dims to calm.",
+     "music": "same"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid cheers on top of the clock tower. Below, townspeople spill out of their houses clapping, Captain Barnaby waves his bent rod, and Mrs. Okafor raises the frying pan.",
+     "music": "lofi",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Way past the deep, I saw lights. Another town. Upside down. A kid at a window, holding my flashlight.",
+     "visual": "The camera looks straight up through the clear water. Far above, a whole town hangs upside down: tiny houses, a clock tower, glowing windows. In one window a small figure holds a glowing flashlight.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And I heard his mum shout: never shine a light into the deep. Something lives down there.",
+     "visual": "Close on the upside-down window. A mum figure wags her finger at her kid and points down toward the sea, toward us. Her voice echoes faintly through the water.",
+     "music": "muffled",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Us.",
+     "visual": "Slow push-in on our kid on top of the clock tower, looking up. The light from the upside-down window glints across his stunned face.",
+     "music": "none",
+     "overlay": "US.",
+     "sfx": [
+      "boom"
+     ]
+    }
+   ],
+   "vibe": "mystic2",
+   "id": "mystic2-1",
+   "score": 36.13,
+   "notes": [
+    "The climax is too easy: he just throws the flashlight. Make it cost him something. Narrate 'So I broke rule number one. I threw something up,' and add a near-grab by the tentacle at the top of the clock tower on a HUSS run. Breaking a rule also sets up the 'we are their monster' mirror twist.",
+    "Clean up the 'Us' reveal. We have seen the creature living in the water between both towns, so the mum's warning reads as being about the creature, not about us. Plant faint upside-down lights in the opening tilt-up (the kid thinks they're glowing fish). Then end on the upside-down kid clicking the flashlight on and pointing it down at us as the giant eye reopens. That loop is sharper and fairer than the single word 'Us.'",
+    "Pay off rule one. When the kid throws the flashlight up from the clock tower, have him say 'So I broke rule one to fix rule three' (trim the Barnaby line to stay under 240 words). Right now the solution quietly breaks an established rule and nobody mentions it."
+   ]
+  },
+  {
+   "title": "Pirate Token to the Moon",
+   "logline": "In this town, everyone is obsessed with the pirate token, a gold skull coin that floats higher the more people want it. People tie them to their houses, cars and shoes. I'm the only kid who didn't buy one (I saved for a sandwich). Then the mayor says on TV that it's going to the moon, the whole town wants it at the same moment, and every house, car and the clock tower get lifted toward space. The only way down is to make everybody stop wanting it, so I say the most uncool thing in history.",
+   "twist": "I crash the hype by announcing that Principal Dunmore just bought pirate token, and the town drops back to the ground. But now he's the only one who still wants it, and he wants all of them so badly that he floats off to the moon. School is cancelled forever.",
+   "caption_hook": "everyone laughed at my sandwich until the whole town started floating into space",
+   "new_props": [
+    "blocky crashed pirate ship wedged against the town square stage (brown box hull, cone bow, cylinder mast, white box sail with a black blocky skull, a hole in the hull)",
+    "pirate tokens: flat gold cylinders with a white blocky skull face (box eyes, box teeth), glowing; one version where the left eye squashes shut in a wink",
+    "token balloons: tokens bobbing on thin cylinder strings above townspeople, houses and shoes",
+    "giant slowly spinning pirate token hovering above the clock tower with drifting sparkles",
+    "'ARR!' speech tag popping beside a token",
+    "chalk car outline on an empty driveway",
+    "giant blocky sandwich (tan bread boxes, green lettuce slab, red tomato slab)",
+    "giant TV screen on the stage (black box frame, glowing screen) showing the mayor, with a static flicker",
+    "microphone on a stand (thin black cylinders, sphere head)",
+    "floating house chunks: houses with grey rock cones underneath, lifted by token clusters; a floating car; the clock tower tilting upward",
+    "floating slab of town ground among puffy box clouds under a purple sky with sphere stars",
+    "dust puff burst (grey spheres) when the town slams down",
+    "dimmed dull-brown versions of the tokens after the crash",
+    "Principal Dunmore's giant cluster of thousands of glowing tokens",
+    "huge glowing pale moon (sphere) in the night sky with a tiny waving principal drifting past it"
+   ],
+   "sets": [
+    "town main street (day) with token balloons over everyone",
+    "clock tower (day)",
+    "town square with the crashed pirate ship and stage (dusk flashback, then day)",
+    "kid's bedroom (day) with tokens drifting past the window",
+    "the whole town floating above the clouds (purple sky, stars)",
+    "Principal Dunmore's front garden (quiet night)",
+    "night sky with a giant moon"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, everyone's obsessed with the pirate token, a gold skull coin that floats higher the more people want it.",
+     "visual": "Slow push up main street on a sunny day. Every townsperson has a small glowing gold coin with a white blocky skull face bobbing above them on a thin string, like a balloon. Above the clock tower a giant token slowly spins, shedding sparkles. Extras point up with grin faces.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "PIRATE TOKEN"
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago, a pirate ship crashed into the town square, full of them.",
+     "visual": "Flashback in dusk lighting. A chunky blocky pirate ship (brown hull, cone bow, mast, white sail with a black skull) slides into the town square and wedges against the stage. Big camera shake. Glowing gold tokens pour out of a hole in the hull and bounce across the cobbles.",
+     "sfx": [
+      "boom",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Each one winks, says arr, and floats.",
+     "visual": "Extreme close-up on one token lying on the cobbles. The skull's left eye squashes shut in a wink, an 'ARR!' tag pops beside it, and it drifts slowly up out of frame.",
+     "sfx": [
+      "pop",
+      "ding"
+     ],
+     "overlay": "ARR!"
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Higgins traded her car for one. Now it floats over her house like a balloon.",
+     "visual": "Main street, day. Mrs. Higgins (grey bun, glasses, pink cardigan, smug face) stands in her driveway next to an empty spot marked with a chalk car outline. She holds a rope that runs up to a glowing token bobbing over her roof.",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Darnell from the Goon Squad tied twelve to his shoes. He hasn't touched the ground since Tuesday.",
+     "visual": "Darnell (dark skin, sunglasses, red cap, gold chain) floats upright three meters above the street with arms crossed and a smug face. A cluster of twelve glowing tokens is tied to his white sneakers. Below him, two friends in matching sunglasses do crossArms. A big 'GOON SQUAD!' stamp slams onto the screen.",
+     "sfx": [
+      "scratch",
+      "boom"
+     ],
+     "overlay": "GOON SQUAD!"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms, closer each time: Darnell's dangling sneakers, his token cluster, then his smug face. Small camera shake on each hit."
+    },
+    {
+     "kind": "line",
+     "text": "And me? I didn't buy a single one. I saved my money for a sandwich.",
+     "visual": "Kid's bedroom, day. Me (black hoodie with white knight emblem, grey pants, white shoes, fade haircut, headphones) sits on the bed proudly holding up a huge blocky sandwich (bread, green lettuce, red tomato layers) with a determined face. Tokens drift past the window like balloons.",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Darnell floated past laughing. Enjoy your sandwich, peasant!",
+     "visual": "Darnell drifts slowly past the bedroom window on his tokens, pointing at me in the laugh pose. Me stares back with a squint face, still holding the sandwich.",
+     "sfx": [
+      "laugh"
+     ],
+     "overlay": "\"Enjoy your sandwich, peasant!\" \u2014 Darnell"
+    },
+    {
+     "kind": "line",
+     "text": "Until yesterday. The mayor went on TV and said pirate token is going to the moon.",
+     "visual": "Town square, day. A giant TV screen stands on the stage in front of the crashed ship. On it, the mayor (top hat, mustache, red sash) points straight up. The picture flickers with static, and the crowd gathers in front of it.",
+     "music": "none",
+     "sfx": [
+      "static",
+      "boom"
+     ],
+     "overlay": "TO THE MOON"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone wanted it at the same time.",
+     "visual": "The whole crowd throws their fists up in cheer poses with grin faces. Every token above every head flares bright gold at the same moment, and the strings go tight.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Every token shot into the sky, still tied to everything. Houses. Cars. The clock tower.",
+     "visual": "Wide shot of the town. Houses tear up from the ground on token clusters, with grey rock cones hanging underneath. A car floats past, and the clock tower tilts and rises. Heavy camera shake while the sky fades from blue to purple.",
+     "sfx": [
+      "whoosh",
+      "boom",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Okafor reached for a lamp post. Ah, almost... almost!",
+     "visual": "Mr. Okafor (beard, green sweater) is being lifted by tokens tied to his backpack. He stretches toward a street lamp with a sweat face, and his fingertips miss it by a hair as he drifts up. 'ALMOST!' stamps on screen.",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "ALMOST!"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap cuts: a house rising past the camera, Mrs. Higgins clinging to her floating roof, Darnell spinning upside down above the clouds."
+    },
+    {
+     "kind": "line",
+     "text": "The sky turned purple. The only way down? Make everyone stop wanting it.",
+     "visual": "The whole town floats on a huge slab of ground among puffy clouds under a purple sky with stars coming out. Me stands on the town square stage in the think pose, then switches to a determined face.",
+     "music": "muffled"
+    },
+    {
+     "kind": "line",
+     "text": "So I grabbed the mic and said the most uncool thing in history.",
+     "visual": "Me grabs a microphone on a stand at the front of the stage. The floating crowd turns to look. Slow push in on my face.",
+     "music": "none",
+     "sfx": [
+      "scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Principal Dunmore just bought pirate token.",
+     "visual": "Hard cut to Principal Dunmore (bald, glasses, grey suit, bowtie) on a floating bench, grinning and waving a token at the camera with both arms.",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "PRINCIPAL DUNMORE BOUGHT IT"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone screamed, ewww! Instant crash.",
+     "visual": "The crowd's faces flip to shocked and squint, and they all let go of their strings. Every token dims to dull brown, and the whole town drops out of the sky and slams back onto the ground. Huge camera shake and a dust puff.",
+     "sfx": [
+      "thump",
+      "boom"
+     ],
+     "overlay": "CRASH"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "One fast cut per hit: houses thudding down, the clock tower slamming upright, Darnell landing on his bottom, Mr. Okafor hugging the lamp post, the crowd cheering, me holding the mic high."
+    },
+    {
+     "kind": "line",
+     "text": "Top ten respect. Kid saves town with one sentence.",
+     "visual": "Freeze frame of me on the stage holding the mic high in front of the pirate ship. The Top 10 card slides in over it.",
+     "music": "party",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "TOP 10 RESPECTFUL MOMENTS \u2014 #1: KID SAVES TOWN WITH ONE SENTENCE"
+    },
+    {
+     "kind": "line",
+     "text": "Victory chant! Bonkaroo! Skalla mee! Doobi tash! Arrbanoo!",
+     "visual": "Me does dance2 on the stage in front of the crashed ship while the crowd dances behind. Each nonsense word stamps on screen in a different color with a camera punch.",
+     "sfx": [
+      "boom",
+      "scratch"
+     ],
+     "overlay": "BONKAROO! SKALLA MEE! DOOBI TASH! ARRBANOO!"
+    },
+    {
+     "kind": "line",
+     "text": "While they were floating, by the way, I ate my sandwich.",
+     "visual": "Me sits on the edge of the stage with a smug face, eating the giant sandwich, while dusty townspeople pick themselves up behind.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now nobody wants pirate token. Except Principal Dunmore. He wants all of them. So much.",
+     "visual": "Quiet night. Principal Dunmore stands in his front garden hugging a massive glowing cluster of thousands of tokens, with a grin face. His shoes slowly lift off the grass.",
+     "music": "night",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He lives on the moon now. School is cancelled forever.",
+     "visual": "Night sky with a huge glowing moon. A tiny Principal Dunmore drifts past it on his token cluster, waving. Cut to me in the bedroom doing the cheer pose with a laugh face.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ],
+     "overlay": "SCHOOL: CANCELLED FOREVER"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms on the moon, closer each time, until the tiny waving principal fills the frame."
+    }
+   ],
+   "vibe": "pirate",
+   "id": "pirate-1",
+   "score": 34.77,
+   "notes": [
+    "Line 1 is 21 words of abstract explanation. Open with 'In this town, our money floats.' over the shot of tokens bobbing above every head, and move 'the more people want it, the higher it goes' to line 2. Also fix 'Now it floats over her house', which is unclear about whether 'it' means the car or the coin.",
+    "Make the twist follow the story's own rule. The premise says the token floats higher 'the more people want it', but Dunmore floats away as just one person. Reword the core rule to 'the more it's wanted'. Also give Dunmore a two-second early cameo as the town's most uncool adult, so the mic line and the moon ending are both set up.",
+    "Rewrite the Mrs. Higgins beat. 'Now it floats over her house like a balloon' is confusing because every token already floats like a balloon. Make it 'she traded her car for one, and now she gets to work dangling under it', which is funnier and sets up the town lifting off."
+   ]
+  },
+  {
+   "title": "Don't Whistle",
+   "logline": "In a harbour town, whistling is banned because a giant one-eyed sea monster called the Gulp copies every sound it hears and comes up to find whoever made it. When a storm makes the cracked lighthouse whistle, the Gulp attacks the pier. The kid saves the town by yawning into the fish market megaphone until the monster copies the yawn and falls asleep.",
+   "twist": "The Gulp copies every sound, and that includes voices. That night the harbour calls the kid's name in his own voice, then the glowing eye rises under his window and shouts HUSS back at him.",
+   "caption_hook": "never whistle near the harbour. it learns your voice.",
+   "new_props": [
+    "sea: a large dark animated water plane with rolling waves and foam, filling the end of main street",
+    "wooden pier: plank boxes on cylinder posts, with lanterns on poles",
+    "lighthouse: tall white-and-red striped cylinder on box rocks, cone roof, glowing lamp room with a rotating light beam, one cracked window",
+    "the Gulp: huge dark-teal dome body with one giant glowing green eye (sphere with a black slit pupil and a box eyelid that can droop and close), plus a ring of long segmented-cylinder tentacles with round sucker spheres",
+    "old lighthouse keeper: long white beard, sailor cap that can fly off",
+    "small fishing boats: box hulls, cylinder masts, colored signal flags (thin boxes on sticks)",
+    "NO WHISTLING sign: wooden board with a whistle icon and a red cross through it",
+    "NO KETTLES sign on a lamp post",
+    "shiny kettle: cylinder body, cone spout, steam puffs (small white spheres)",
+    "Mr. Dobbs' front room as one box chunk (table, stove, window) that a tentacle can rip off the house",
+    "ice cream van: boxes with a giant cone-and-sphere ice cream on the roof and a serving window",
+    "seagull (reuse the pigeon, painted white and grey)",
+    "bakery shopfront with a striped awning and a box roof that can lift off",
+    "Grandma's bicycle: cylinder wheels and a box frame, Grandma with grey bun, glasses and a cardigan",
+    "fish market stall with a megaphone (cone plus cylinder handle)",
+    "storm: rain particles, lightning flashes, black storm clouds",
+    "snore bubbles: big rising spheres with floating Z letters",
+    "medal on a ribbon for the party",
+    "whisper glow: faint pulsing green light under the black water outside the bedroom window"
+   ],
+   "sets": [
+    "harbour town at dusk: main street slopes down to a new wooden pier and dark sea, striped lighthouse on rocks at the end",
+    "underwater view: dark blue fog, rising bubbles",
+    "top of the lighthouse (flashback, dusk)",
+    "harbour by day for the rules montage (signs, fishing boats, ice cream van)",
+    "Mr. Dobbs' waterfront house",
+    "the harbour on a stormy night (rain, lightning, fog, crashing waves)",
+    "town square at party night (stage and banner)",
+    "the kid's bedroom at night, with a window looking out on the black harbour and the lighthouse"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, you are never, ever allowed to whistle.",
+     "visual": "Harbour town at dusk. Main street slopes down to a wooden pier and dark water, and a red-and-white striped lighthouse stands on the rocks. Push in on a big wooden sign on the pier showing a whistle with a red cross through it.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "NO WHISTLING"
+    },
+    {
+     "kind": "line",
+     "text": "Because something under the harbour whistles back.",
+     "visual": "The camera sinks below the surface into dark blue fog. In the darkness, one huge green eye bigger than a house slowly opens and glows, with bubbles drifting up past it.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Me (black hoodie with white knight emblem, grey pants, white shoes, headphones) on the pier, huss face, lit green from below by the glow in the water. Camera punches in on each HUSS.",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Fifty years ago, the lighthouse keeper whistled the same tune every night.",
+     "visual": "Flashback at dusk, top of the lighthouse: an old keeper with a long white beard and a sailor cap leans on the rail whistling happily while the big glowing lamp turns behind him.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Then one night, the sea whistled it back, and a tentacle the size of a bus took his lamp.",
+     "visual": "The sea below bulges. A giant dark-teal tentacle with round suckers rises higher than the lighthouse, curls around the glowing lamp and yanks it down into the water. The keeper's cap flies off and he stands there stunned in the dark.",
+     "sfx": [
+      "whoosh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "We call it the Gulp. One giant green eye, a hundred tentacles, and it copies every sound it hears.",
+     "visual": "Full reveal at night in fog: a huge dark dome rises from the harbour with one giant glowing green eye, tentacles swaying all around it, and fishing boats looking tiny beside it. A seagull squawks, the eye flashes, and the same squawk booms back louder.",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "THE GULP"
+    },
+    {
+     "kind": "line",
+     "text": "So now there are rules. No whistling. No squeaky shoes. No kettles.",
+     "visual": "Daytime rules montage: a man tiptoes down main street in socks with his shoes in his hand, a NO KETTLES sign hangs on a lamp post, and a mum presses a finger to her lips at a kid who is about to whistle.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "NO KETTLES"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Dobbs bought a kettle anyway. His kitchen is now at the bottom of the harbour.",
+     "visual": "Mr. Dobbs (bald, big mustache, striped apron) proudly holds a shiny steaming kettle in his waterfront window. A tentacle bursts out of the harbour, wraps the whole front room and drags it into the sea. Mr. Dobbs is left standing in a doorway with nothing behind it, still holding the kettle.",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "\u201cIt was a really nice kettle.\u201d \u2014 Mr. Dobbs"
+    },
+    {
+     "kind": "line",
+     "text": "The fishermen talk with flags. The ice cream van plays its song in sign language.",
+     "visual": "Fishermen on little boats silently wave colored signal flags at each other. By the pier, an ice cream van with a giant cone on its roof is parked, and the driver does big hand signs out of the window while a line of kids nods along seriously.",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Until last week, when the biggest storm ever hit.",
+     "visual": "Stormy night: black clouds, lightning flashes, heavy rain, and huge waves smashing over the pier while the boats rock wildly.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Wind blew through the cracked lighthouse window, and the lighthouse started to whistle.",
+     "visual": "Close on the top of the lighthouse: rain streams down the cracked window, the lamp flickers, and the camera slowly pushes in as the wind howls through the crack.",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "FWEEEEE"
+    },
+    {
+     "kind": "line",
+     "text": "The harbour went dead quiet. Then the sea whistled back.",
+     "visual": "Townspeople freeze in their windows along main street with shocked faces. The harbour goes flat and still. Then the water bulges and the giant green eye rises out of the waves as tentacles unfurl all around it.",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Me sprinting down the pier in the rain with a huss face. Camera shake and a lightning flash on every HUSS while tentacles crash down left and right behind me.",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Tentacles slammed onto the pier. One grabbed the bakery. One grabbed Grandma, still on her bike.",
+     "visual": "Tentacles slam onto the pier and planks fly. One rips the roof off the bakery. Another lifts Grandma (grey bun, glasses, cardigan) high into the air still sitting on her bicycle, pedalling at nothing with a furious face.",
+     "sfx": [
+      "boom",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then I remembered. It copies everything. So I grabbed the fish market megaphone.",
+     "visual": "Me with a determined face, grabbing a big megaphone off the fish market stall and running to the very end of the pier to face the giant eye.",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And I did the biggest, longest, sleepiest yawn in history.",
+     "visual": "Close-up: I raise the megaphone with a sleepy face and do a giant yawn with my arms stretched out, while the sound rolls across the harbour.",
+     "music": "muffled",
+     "overlay": "YAWN"
+    },
+    {
+     "kind": "line",
+     "text": "The Gulp copied it. Then it yawned again. And again. Yawns are contagious, even for monsters.",
+     "visual": "The giant green eye blinks slowly. Its lid droops halfway, opens, then droops again. The tentacles go limp and sag into the water one by one.",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "CONTAGIOUS"
+    },
+    {
+     "kind": "line",
+     "text": "It put Grandma down, sank under the waves, and started snoring bubbles.",
+     "visual": "A tentacle gently sets Grandma and her bike back on the pier, and she crosses her arms. The eye closes, the Gulp sinks under the waves, and big bubbles rise with floating Z letters.",
+     "sfx": [
+      "pop",
+      "pop"
+     ],
+     "overlay": "Zzz"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "At dawn the townspeople pour onto the pier and lift me up crowd-surf style. Everyone cheers and Grandma claps. Huss face on me.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Everyone called me a hero. But I forgot one thing.",
+     "visual": "Party night in the town square: a banner over the stage and me on stage getting a medal. The music fades, I stop smiling, and I turn to look back at the dark harbour.",
+     "music": "night"
+    },
+    {
+     "kind": "line",
+     "text": "It copies every voice. And tonight, the harbour called my name. In my voice.",
+     "visual": "My bedroom at night. I'm in bed, wide awake, with a sweat face. Through the window the harbour is black and still, and a faint green glow pulses under the water as a whisper drifts up from it.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The green eye snaps open right under my window and fills the frame. Each HUSS bursts out of the water as a giant bubble, in my own voice. Cut to black.",
+     "sfx": [
+      "boom"
+     ]
+    }
+   ],
+   "vibe": "kraken",
+   "id": "kraken-1",
+   "score": 33.97,
+   "notes": [
+    "Fix the logic hole kids will point out in the comments: if the Gulp copies every sound, why is talking allowed? Add one rule line such as 'And near the water, we only whisper,' so the voice-copy twist feels set up instead of contradicting the rules. The whistle and yawn sounds also need making, because they are not in the SFX list.",
+    "Set up the name before the twist uses it. At the dawn celebration, have the whole town chant the kid's name across the water while the green glow blinks under the pier. As written, the Gulp only ever hears his yawn, so 'the harbour called my name, in my voice' is implied rather than earned. Also plant the cracked lighthouse window in the rules montage so the storm whistle feels set up.",
+    "Cut the scope: drop the ice cream van sign-language gag (blocky mitten hands can't sign legibly) and the bakery-roof grab. Then give one tentacle rig a single 'lift and hold' animation and reuse it for the lamp, Mr. Dobbs' room and Grandma on her bike. Right now it's about 20 new props, a new harbour set, a storm and four separate wrap/grab animations, which won't fit in a day."
+   ]
+  },
+  {
+   "title": "The Arrr Pond",
+   "logline": "In this town the park pond gets one meter deeper every time someone says 'Arrr'. Then a pirate-talk trend takes over, the pond turns bottomless, and a kraken climbs out. The narrator has to get the whole town to say it backwards.",
+   "twist": "The kraken shrinks down to hamster size and the narrator takes it home in a glass of water. It looks up at him and whispers 'Arrr', and the water in the glass starts getting deeper. It picked up the trend.",
+   "caption_hook": "Every time someone says 'Arrr', the pond gets one meter deeper. Then the pirate trend hit.",
+   "new_props": [
+    "park pond: flat round blue cylinder that grows wider and deeper, with teal glow from below and ripple rings",
+    "pirate eye patches: small black boxes on a thin black strap",
+    "pirate tricorn hats: flattened black boxes and cones with a tiny white sphere skull",
+    "floating streak counter above a head (box panel with number)",
+    "BAKERY sign box on a main-street house",
+    "muffin: brown cylinder with a dome on top",
+    "coach whistle: tiny silver box on a cord",
+    "kraken eyes: two huge glowing yellow spheres with black slit-box pupils",
+    "kraken head: giant purple sphere dome rising out of the pond",
+    "giant kraken tentacles: tapered stacked purple cylinders with pink sphere suckers, taller than the clock tower",
+    "torn stage banner pieces",
+    "stage microphone on a stand: thin cylinder, black sphere head, round base",
+    "speech-bubble boxes with nonsense words above the crowd",
+    "shockwave ring: expanding flat torus/cylinder edge",
+    "tiny kraken: small purple sphere with six mini cylinder tentacles and glowing yellow eyes",
+    "glass of water: transparent cylinder with a blue inner cylinder that rises and overflows"
+   ],
+   "sets": [
+    "town park with picnic table and tree (day, party night, quiet night, dusk)",
+    "town square with stage and banner (day, party night)",
+    "main street with bakery house (day)",
+    "clock tower backdrop",
+    "kid's bedroom (quiet night)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, the pond in the park is knee-deep. But every time someone says 'Arrr', it gets one meter deeper.",
+     "visual": "Day, park. The narrator (my avatar: black hoodie with white knight emblem, headphones) stands next to a small knee-deep blue pond by the picnic table and tree, pointing at it. A depth counter pops up in the corner.",
+     "music": "party",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "POND DEPTH: 0.5 m"
+    },
+    {
+     "kind": "line",
+     "text": "Nobody knew. Until last week, when the Pirate Talk trend hit.",
+     "visual": "Town square, day. The stage banner flips to 'PIRATE TALK WEEK'. Townspeople pop in one by one with eye patches and black tricorn hats, cheering.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "cheer"
+     ],
+     "overlay": "NEW TREND: PIRATE TALK"
+    },
+    {
+     "kind": "line",
+     "text": "One rule: talk like a pirate all day, or you lose your streak.",
+     "visual": "Close-up on a townsperson with glasses, a mustache and an eye patch, a big floating streak counter over his head. Smug squint.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "STREAK: 47 DAYS"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Gribble the baker: 'Arrr, want a muffin?' Pond: three meters.",
+     "visual": "Main street. Mr. Gribble (white outfit, mustache, eye patch, tricorn) stands under the BAKERY sign and hands a muffin to a kid, grinning. Quick cut to the park: the pond ripples wider.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "DEPTH: 3 m"
+    },
+    {
+     "kind": "line",
+     "text": "Coach Dimble: 'Arrr, run faster, landlubbers!' Twenty meters.",
+     "visual": "Park edge. Coach Dimble (red tracksuit, cap, whistle, eye patch) points while three kids run past. The pond spreads over the footpath.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "DEPTH: 20 m"
+    },
+    {
+     "kind": "line",
+     "text": "Then the big kids threw an all-night Arrr party in the park... while they're out partying, by the way.",
+     "visual": "Party night lighting in the park. Teen extras in pirate hats dance and dance2 around the glowing pond, one crowd-surfing. The narrator stands in front, arms crossed, deadpan.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "record scratch"
+     ],
+     "overlay": "WHILE THEY'RE OUT PARTYING, BY THE WAY"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three fast punch-ins on partying pirates mid-jump with huss faces, camera shake on each HUSS. The depth counter keeps climbing.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "DEPTH: 60 m"
+    },
+    {
+     "kind": "line",
+     "text": "Only I noticed. The picnic table was gone. The tree was gone. And the pond was glowing.",
+     "visual": "Quiet night. The narrator walks up to the pond alone in the peer pose. The picnic table and tree disappear one at a time. The water glows teal from deep below.",
+     "music": "night",
+     "sfx": [
+      "pop",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then two giant yellow eyes opened at the bottom.",
+     "visual": "Low angle down into the pond. Two huge glowing yellow sphere eyes with black slit pupils open at the bottom. Fog rolls in. Narrator's shocked face reflected in the glow.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A tentacle the size of the clock tower slammed onto the stage.",
+     "visual": "Town square. A giant purple tentacle with pink suckers rises higher than the clock tower and slams onto the stage. The banner rips, heavy camera shake.",
+     "music": "night",
+     "sfx": [
+      "boom",
+      "siren"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Townspeople scatter in walk poses in every direction. Quick cuts of surprised faces, tentacles waving behind the clock tower, the sky flashing red on each HUSS.",
+     "music": "same",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And what did the whole town scream? 'ARRRRR!'",
+     "visual": "Wide shot. The fleeing crowd freezes, turns to camera together and screams with huss faces.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "ARRRRR!"
+    },
+    {
+     "kind": "line",
+     "text": "Nine hundred meters. The kraken was climbing out.",
+     "visual": "The counter spins up to 900 m. The kraken's huge purple dome head and glowing eyes rise out of the pond as the water floods the park. Camera shake.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "DEPTH: 900 m"
+    },
+    {
+     "kind": "line",
+     "text": "A tentacle swiped right over my head. Ah, almost... almost!",
+     "visual": "Slow motion: the narrator ducks (surprised pose, sweat face) as a tentacle swooshes just over his headphones.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "record scratch"
+     ],
+     "overlay": "AH, ALMOST... ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "So I called my crew. Goon Squad!",
+     "visual": "Three friends slide into frame next to the narrator in sunglasses, arms crossed, determined faces. A party-light flash hits behind them.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "GOON SQUAD!"
+    },
+    {
+     "kind": "line",
+     "text": "If 'Arrr' makes it deeper... backwards must make it shallower.",
+     "visual": "Close-up of the narrator in the think pose, then a determined face. Floating letters 'ARRR' spin and flip into 'RRRA' above his head.",
+     "music": "muffled",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "ARRR \u2192 RRRA"
+    },
+    {
+     "kind": "line",
+     "text": "I grabbed the stage microphone. 'Everybody! Say it backwards! RRRA!'",
+     "visual": "The narrator stands on the cracked stage at a microphone stand, pointing at the crowd. Giant tentacles loom behind him.",
+     "music": "night",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "SAY IT BACKWARDS!"
+    },
+    {
+     "kind": "line",
+     "text": "Half the town got it wrong. 'Shimbo! Rakka-tay! Ooma flee! Zonkadoo!'",
+     "visual": "Crowd shot. Townspeople shout with confused squint faces as speech bubbles with the nonsense words pop up above them. The depth counter jitters.",
+     "music": "same",
+     "sfx": [
+      "record scratch",
+      "laugh"
+     ],
+     "overlay": "SHIMBO! RAKKA-TAY! OOMA FLEE! ZONKADOO!"
+    },
+    {
+     "kind": "line",
+     "text": "But Grandma nailed it. 'RRRRRA!' Top ten respect.",
+     "visual": "Grandma (grey bun, glasses, pink cardigan) steps forward and does the slam pose with a huss face. A shockwave ring blasts across the pond and a Top 10 card slides in.",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "cheer"
+     ],
+     "overlay": "TOP 10 RESPECTFUL MOMENTS: #1 GRANDMA"
+    },
+    {
+     "kind": "line",
+     "text": "The pond shrank. The kraken shrank. Smaller, smaller... until it was the size of a hamster.",
+     "visual": "Dusk. The pond shrinks back and the kraken shrinks in steps as its tentacles pull in. The counter drops 900, 50, 1, 0.1. The tree and picnic table pop back.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "pop",
+      "pop"
+     ],
+     "overlay": "DEPTH: 0.1 m"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The crowd cheers and claps. The narrator holds the hamster-sized purple kraken up in his palm, laughing. Camera bump on each HUSS.",
+     "music": "same",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I took the little guy home and put him in a glass of water.",
+     "visual": "Kid's bedroom, quiet night. The narrator sets the tiny kraken into a glass of water on his desk and smiles.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He looked up at me... and whispered, 'Arrr.'",
+     "visual": "Extreme close-up: the tiny kraken's eyes glow yellow and its mouth moves. The water in the glass jumps up and starts overflowing as a counter appears. The narrator is stunned. Cut to black.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "GLASS DEPTH: 1 m... 2 m..."
+    }
+   ],
+   "vibe": "memetrend",
+   "id": "memetrend-1",
+   "score": 33.93,
+   "notes": [
+    "The 'Goon Squad!' crew slides in and then does nothing. Give them a job: they flip giant RRRA cards for the crowd to read. That pays off the beat and makes the backwards word readable on screen, since the TTS will probably blur 'RRRA' into 'ARRR'.",
+    "Set up that the kraken grows with the pond, since the rule only covers depth but the solution also shrinks the monster. In the opening knee-deep shot, show a tiny purple wiggle in the water that the kid ignores, and let it visibly grow with each depth jump. Then 'saying it backwards shrinks it' is fair, the hamster-size reveal is a callback, and the glass-of-water twist hits harder. The Goon Squad beat also needs a job, because they arrive and then do nothing.",
+    "Close the climax logic gap: one 'RRRA' should only undo one metre, so have Grandma hold 'RRRRRRA' in one huge breath while the counter spins 900 down to 0. Also cut 'Nobody knew', which contradicts the opening line stating the rule as town fact."
+   ]
+  },
+  {
+   "title": "Lost Property",
+   "logline": "Every Thursday the fog rolls into town, and when it rolls out something is gone: Mr. Bramble's eyebrows, every left sock, once a whole Tuesday. When it floats the narrator's skateboard out of his arms, he breaks the big rule and follows it into a glowing world where a tall Lantern Man sorts everything the fog has ever taken.",
+   "twist": "The fog isn't a thief. It's lost and found, and everything goes home to whoever lost it first. His skateboard was lost by a kid called Marvin in 1999. When the fog lifts, he sees past the edge of town for the first time: the whole town is sitting on a giant shelf in a vast lost-property room, with a tag on the clock tower that says LOST: ONE TOWN, UNCLAIMED.",
+   "caption_hook": "never follow the thursday fog. i did.",
+   "new_props": [
+    "rolling fog wall: stacked large translucent white boxes and spheres with a faint pair of glowing eyes deep inside",
+    "fog ribbons creeping under the bedroom door, and knee-high glowing fog filling the room (low flat translucent boxes)",
+    "hand mirror for Mr. Bramble (disc with a handle)",
+    "clothesline in the park hung with only right socks (thin cylinder and small colored boxes)",
+    "calendar board on the town hall with MONDAY, a blank panel, and WEDNESDAY",
+    "skateboard: thin rounded box deck with four small cylinder wheels",
+    "window-montage props: table lamp, TV remote",
+    "lost-property void: soft glowing white-blue space with tall shelves (boxes) fading up into nothing",
+    "floating lost things: left socks, bushy grey eyebrows (two fuzzy boxes), wooden TUESDAY sign, umbrellas (cone and cylinder), a bicycle (cylinders), a grandfather clock (box and disc)",
+    "the Lantern Man: very tall thin figure in a long dark coat (boxes), long arms, a lantern for a head (box frame with a glowing warm sphere flame), a rubber stamp",
+    "paper tags (flat white boxes on strings) with handwritten-style text",
+    "giant shelf plank under the whole town, dim warehouse walls, a giant umbrella, a giant boot, a giant teacup, and a huge paper tag hanging from the clock tower"
+   ],
+   "sets": [
+    "Main Street at dusk with the fog rolling in",
+    "town square and park by day (Mr. Bramble, the sock clothesline, the calendar board)",
+    "house windows at dusk (montage)",
+    "the kid's bedroom at night, foggy",
+    "the inside of the fog: a glowing lost-property void",
+    "extreme wide: the whole town on a giant shelf in a vast lost-property warehouse",
+    "clock tower top"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, every Thursday, the fog rolls in. And when it rolls out, something's gone.",
+     "visual": "Main Street at dusk. A towering wall of soft white fog rolls down the street and swallows the street lamps one by one while townspeople slam their shutters.",
+     "music": "night",
+     "overlay": "THURSDAY",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator kid at his bedroom window with his huss face. Fog presses against the glass, and deep inside it two faint glowing eyes drift past.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Last week, it took Mr. Bramble's eyebrows.",
+     "visual": "Town square by day. Mr. Bramble (glasses, bowtie, big mustache) stares into a hand mirror with a surprised face. His forehead is completely smooth and blank.",
+     "music": "lofi",
+     "overlay": "EYEBROWS: GONE",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Before that, every left sock in town.",
+     "visual": "A clothesline in the park, stretched from the tree to a lamp post, hung with only right socks. A neighbour holds up a single sock and shrugs.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Once, it took a whole Tuesday. Monday, then Wednesday. Nobody noticed.",
+     "visual": "A big calendar board on the town hall flips from MONDAY straight to WEDNESDAY, with a blank panel where Tuesday should be. Townspeople stroll past without looking up.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So there are rules. When the fog comes, stay inside. Hold on to what you love. And never, ever follow it.",
+     "visual": "Quick montage of lit windows at dusk: a lady hugging her table lamp, Grandpa hugging the TV remote, a girl hugging the orange cat. On 'never, ever follow it' a big red stamp slams onto the screen.",
+     "music": "muffled",
+     "overlay": "NEVER FOLLOW IT",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Until this Thursday. I was hugging my skateboard, like the rules say. Then I fell asleep.",
+     "visual": "The kid's bedroom at night. He is in bed hugging a skateboard, with a sleepy face and his eyes slowly closing. Thin ribbons of glowing fog seep under the door.",
+     "music": "night"
+    },
+    {
+     "kind": "line",
+     "text": "I woke up to fog in my room, and my skateboard drifting out the window.",
+     "visual": "The room is filled knee-high with glowing fog. The skateboard floats up out of his arms, turning slowly, and glides toward the open window. The kid sits up with a shocked face.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I jumped. Ah, almost... almost!",
+     "visual": "The kid dives across the bed and misses the skateboard by an inch as it slips out the window. Freeze frame on his outstretched fingers with a big stamp.",
+     "music": "none",
+     "overlay": "ALMOST... ALMOST!",
+     "sfx": [
+      "scratch"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid leaps out the window onto the foggy street below. Camera shake as the street lamps fade into the white.",
+     "music": "muffled",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I broke the big rule. I followed it.",
+     "visual": "Wide shot from behind: the kid walks down a fog-drowned Main Street toward a glowing white wall where the skateboard just disappeared. The houses fade to grey around him.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Inside the fog, it was silent. Everything glowed. And everything it ever took was just... floating there.",
+     "visual": "A strange pale world: soft glowing white-blue space and endless shelves rising into nothing. Floating slowly in the air are hundreds of left socks, a pair of bushy grey eyebrows, a wooden TUESDAY sign, umbrellas, a bicycle and a grandfather clock.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Sorting it all was a tall man with a lantern for a head.",
+     "visual": "Low-angle shot of a towering thin figure in a long dark coat. A glowing lantern sits where his head should be, and his long arms stamp paper tags onto the floating objects one by one.",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Nothing here is stolen. Everything goes home to whoever lost it first.",
+     "visual": "The Lantern Man bends down to the kid and speaks in a deep, slow second voice. His lantern flame flickers brighter with each word.",
+     "music": "same",
+     "overlay": "\"Nothing here is stolen.\" \u2014 The Lantern Man"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Bramble's eyebrows? Borrowed from his grandad.",
+     "visual": "The bushy grey eyebrows float past wearing a paper tag that reads RETURN TO: GRANDAD BRAMBLE, and drift off into the glow. The kid watches with his squint face.",
+     "music": "lofi",
+     "overlay": "RETURNED",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "My skateboard had a tag too. Lost by a kid called Marvin, in nineteen ninety-nine.",
+     "visual": "The Lantern Man holds up the skateboard. Close-up on its paper tag. The kid's face goes to sweat.",
+     "music": "same",
+     "overlay": "LOST BY: MARVIN, 1999"
+    },
+    {
+     "kind": "line",
+     "text": "I got it at a yard sale for two dollars. Sorry, Marvin.",
+     "visual": "The kid gives a sheepish grin and a little wave as the skateboard floats away into the glow. The Lantern Man gives him a gentle pat on the head.",
+     "music": "same",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid and the Lantern Man shrug side by side while the floating left socks bob around them in rhythm.",
+     "music": "lofi",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The fog lifted, and for the first time, I saw past the edge of town.",
+     "visual": "The fog peels away like curtains. The camera pulls back past the clock tower, past the last house, past the end of the road.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Our whole town was sitting on a giant shelf. With a tag on the clock tower.",
+     "visual": "Extreme wide shot: the entire town sits on a giant wooden shelf in a vast dim lost-property warehouse, next to a giant umbrella, a giant boot and a giant teacup. A huge paper tag hangs from the clock tower on a string.",
+     "music": "muffled",
+     "overlay": "LOST: ONE TOWN \u2014 UNCLAIMED",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So if you lost a town with a clock tower, a pigeon, and a kid in a black hoodie... come get us.",
+     "visual": "The kid sits on top of the clock tower next to the pigeon. Both look up into the giant dark warehouse, then the kid turns to the camera and gives a small hopeful wave.",
+     "music": "night"
+    }
+   ],
+   "vibe": "mystic2",
+   "id": "mystic2-2",
+   "score": 33.17,
+   "notes": [
+    "There is no climax yet: the kid just watches his skateboard leave. Have the Lantern Man start stamping a tag that reads LOST: ONE KID. The kid flips his hoodie collar to show the name label Grandma sewed in ('IF FOUND, RETURN TO GRANDMA'), so the Lantern Man has to send him home. That gives the format its escalation and a clever solution, and makes the town-on-a-shelf reveal hit harder.",
+    "Give the inside-the-fog act a threat and a clever escape, because right now nothing is at risk there. Have the Lantern Man tie a tag on the kid himself ('LOST BY: ???') and start filing him on a shelf. He escapes by showing Grandma's name sewn inside his hoodie and gets 'returned' home. This adds the missing escalation, and the town-on-a-shelf twist then lands as a bigger version of what nearly happened to him.",
+    "There are no real stakes and no clever solution: he just loses the skateboard and shrugs. Have the Lantern Man tag ME to be sent 'home' to whoever lost me first, and I escape by proving I'm not lost (Grandma HUSSes back through the fog). That also sets up the town-on-a-shelf twist."
+   ]
+  },
+  {
+   "title": "The Harbour Blinks",
+   "logline": "In this town, the perfectly round harbour is really the closed eyelid of a sea giant that has been asleep for two hundred years. When a sand truck tips into it, the eye wakes up red and angry and tentacles thrash all around the bay. The kid rallies the whole town to give it giant eye drops (a fire truck, every hose and a pile of water balloons) until it blinks the sand out.",
+   "twist": "Far out at sea, the horizon itself splits open into an eye a thousand times bigger. The harbour monster was only the baby, and its mum just woke up.",
+   "caption_hook": "our harbour got sand in its eye. bad idea.",
+   "new_props": [
+    "round bay: a perfectly circular semi-transparent blue water plane with the town built in a ring around it",
+    "giant eye under the bay: a huge sphere with glowing iris rings that can switch gold, red or blue, and two dome eyelids along a visible seam that can slide apart, half close, slam shut and wink",
+    "long black reeds around the shoreline (thin curved black cylinders), which are the eyelashes",
+    "ring of huge dark-purple tentacles (segmented cylinders with sucker spheres) that rise around the bay and rub in circles",
+    "old-time fishermen with beards and caps, plus simple box huts being hammered together",
+    "three wooden shore signs: a boat marked SLOW, a crossed-out anchor, a hand over reeds with a red cross",
+    "Captain Pell: white beard, long red coat, captain's hat, black eyepatch (small box with a strap), with a pair of giant scissors (two long crossed boxes with ring handles)",
+    "Captain Pell's boot (box), which falls in early and flies back out at the end",
+    "boxy fishing boats",
+    "fish market stall that gets smashed",
+    "sand truck: yellow boxes with a tipping bed, plus a giant sand pile and a splash",
+    "tiny eye-drop bottle: small cylinder with a cone tip",
+    "red fire truck: boxes with a ladder and a big hose cylinder",
+    "green garden hoses (cylinders) with blue water-arc particle streams",
+    "Mrs. Penny's wheelbarrow full of colorful water balloons (spheres)",
+    "teardrops: fat blue spheres rolling off the eye",
+    "sand geyser: a yellow particle burst shooting into the sky",
+    "green storm sky",
+    "horizon eye: an enormous gold-glowing eye that opens along the line where sea meets sky, with giant lids that fill the whole sky"
+   ],
+   "sets": [
+    "round harbour by day, aerial: town in a ring around a circular bay, boats, black reeds along the shore, clock tower on the bank",
+    "underwater: the gigantic closed eye beneath the toy-sized boats",
+    "flashback: old-time fishermen building the first houses around the bay (warm day)",
+    "the harbour shore and pier by day (signs, Captain Pell's boat, sand truck)",
+    "the harbour under a green storm sky with tentacles ringing the bay and red light flooding main street",
+    "the shoreline with the whole town lined up with hoses and the fire truck",
+    "calm harbour and open sea at dusk, looking out to the horizon"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, our harbour isn't a harbour. It's an eyelid.",
+     "visual": "Aerial shot by day: a town built in a ring around a perfectly round bay of calm blue water, with little boats drifting, the clock tower on the shore and long black reeds lining the edge. Slow push down toward the water.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "EYELID"
+    },
+    {
+     "kind": "line",
+     "text": "Underneath is an eye the size of the whole town. Asleep for two hundred years.",
+     "visual": "The camera passes through the surface. Below the boats, a gigantic closed eye fills the entire bay, with a curved seam across it and faint gold light leaking out. The boats above look like toys.",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "200 YEARS ASLEEP"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Me (black hoodie with white knight emblem, grey pants, white shoes, headphones) on the pier looking down into the water, huss face, with faint gold light glowing up from below.",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The first fishermen built a town around it. One morning, the sea opened, looked at them, and closed.",
+     "visual": "Flashback on a warm day: old-time fishermen with beards and caps hammer together the first box houses around the round bay. The whole bay glows gold from below as a giant iris looks up at them, then the water dims again. The fishermen freeze with stunned faces.",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So, rules. Sail gently. No anchors. Never touch the reeds.",
+     "visual": "Three wooden signs on the shore pop up one after another: a boat marked SLOW, a crossed-out anchor, and a hand over the reeds with a red cross.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "DON'T TOUCH THE REEDS"
+    },
+    {
+     "kind": "line",
+     "text": "The reeds are eyelashes. Captain Pell tried trimming them once.",
+     "visual": "Captain Pell (white beard, long red coat, captain's hat, black eyepatch) leans out of his little boat with a pair of giant scissors and snips at the long black reeds with a smug face."
+    },
+    {
+     "kind": "line",
+     "text": "The harbour flinched, and his boat flew over the clock tower.",
+     "visual": "The whole bay jolts like a twitching eyelid. A wave flings Pell's boat high into the sky, spinning over the clock tower with him clinging on, and one of his boots falls off and plops into the middle of the bay.",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then on Tuesday, a sand truck tipped off the pier.",
+     "visual": "A yellow sand truck on the pier wobbles, tips over the edge and dumps a huge pile of sand into the middle of the bay with a giant splash.",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "TUESDAY"
+    },
+    {
+     "kind": "line",
+     "text": "Ever had sand in your eye? Now imagine you're the size of a town.",
+     "visual": "Me close to camera with a squint face, rubbing one eye, then throwing my arms wide at the whole town behind me."
+    },
+    {
+     "kind": "line",
+     "text": "The sky turned green, and giant tentacles rose around the harbour to rub it.",
+     "visual": "The sky turns green and the wind whips up. Huge dark-purple tentacles burst up all around the round bay and rub at the water in big circles, smashing boats and flattening the fish market.",
+     "music": "night",
+     "sfx": [
+      "thunder",
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Me running up main street against a fleeing crowd, huss face, camera shake on every HUSS, with tentacles swinging above the rooftops behind me.",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The eyelid split open. The eye underneath was red. And angry.",
+     "visual": "The water splits along the seam and slides apart like two eyelids, revealing a giant glowing red iris. Red light floods across every house in town.",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Everyone ran. But I knew what you need for an itchy eye.",
+     "visual": "Townspeople flee past in panic. I stop in the middle of the street with a determined face and raise one finger like I've got an idea."
+    },
+    {
+     "kind": "line",
+     "text": "Eye drops. Very, very big eye drops.",
+     "visual": "I hold up a tiny eye-drop bottle right in front of the camera while the gigantic red eye fills the whole bay behind me, a comedic scale contrast.",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "EYE DROPS"
+    },
+    {
+     "kind": "line",
+     "text": "I got the fire truck, every hose in town, and Mrs. Penny's water balloons.",
+     "visual": "The whole town lines the shore: a red fire truck with its ladder up, everyone holding green garden hoses, and Mrs. Penny (curly grey hair, sunglasses) pushing a wheelbarrow full of colorful water balloons. I'm on top of the fire truck pointing at the eye.",
+     "music": "party"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone together: Splishka! Ola drip! Ola dro! Woshani!",
+     "visual": "The whole town throws their arms up and chants. Water arcs shoot from every hose into the red eye, and water balloons fly through the air.",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "SPLISHKA!"
+    },
+    {
+     "kind": "line",
+     "text": "We sprayed. The eye watered. It started to blink...",
+     "visual": "The red eye fills with blue water, fat teardrops roll off its edge, and the lids slowly start sliding shut."
+    },
+    {
+     "kind": "line",
+     "text": "Ah, almost... almost!",
+     "visual": "The lids stop halfway, then snap back open, glowing red again. Cut to me with a shocked face, hose drooping.",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "ALMOST..."
+    },
+    {
+     "kind": "line",
+     "text": "It blinked so hard the sand shot straight back out. Plus Captain Pell's boot from forty years ago.",
+     "visual": "The giant lids slam shut and burst open, and a geyser of sand blasts out of the bay into the sky. A single old boot spins out and lands right at Captain Pell's feet. He puts it on, grinning.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The eye turned calm and blue. Then it winked at me.",
+     "visual": "The iris fades from red to calm blue and looks straight at me. One lid slowly closes and opens in a wink, and I wink back.",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The town cheers on the shore with hoses spraying up into the air like fireworks. Me on top of the fire truck with a huss face.",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then, far out at sea, the horizon opened. Another eye. A thousand times bigger.",
+     "visual": "Dusk. The camera slowly pans past the calm round harbour to the open sea. Along the horizon, the line where sky meets sea splits apart and opens, revealing a gold eye so big it fills the whole sky.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Our harbour was never the monster. It was the baby. And its mum just woke up.",
+     "visual": "The small eye in the harbour peeks open and glows happily up at the sky. The gigantic horizon eye glows brighter and turns to look at the town. Me, tiny in the corner on the pier, shocked face. Hold, then cut to black.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    }
+   ],
+   "vibe": "kraken",
+   "id": "kraken-2",
+   "score": 32.73,
+   "notes": [
+    "Make the twist come out of the plot instead of repeating the reference's 'giant thing on the horizon' ending. After the sand geyser, show the sand arcing out to sea, and end on 'And I think the sand just landed in Mum's eye' as the horizon eye turns red. That links cause to consequence and gives a scary-funny sting.",
+    "Set up the mum so the twist is fair and not just 'a bigger one shows up'. In the opening aerial, have the eye's gold glow always drift toward the open sea, and have the old fishermen's flashback hint that 'it's waiting for someone'. Then the horizon eye pays off a clue. Also replace the 'Ola drip! Ola dro!' chant: it copies the pattern of the reference's 'Ela des! Ela sobi!'.",
+    "Drop the ring-shaped town. Put the round bay at the bottom of the existing main street, with the clock tower on its shore, so the only new builds are the water halves, the iris sphere and the lids, not a whole new town layout. Also cut the sand-truck tip, which is mostly a splash and can be a sand pile landing from off-screen."
+   ]
+  },
+  {
+   "title": "In This Town \u2014 Don't Touch the Stars",
+   "logline": "Every night at nine, the stars float down Main Street, and nobody is allowed to touch one. A tiny star that's too dim to fly home lands on my windowsill. I touch it and fall into the sky, where you weigh whatever you feel. Then I have to make a star who has never laughed shine before we both sink into the fog.",
+   "twist": "Before I leave, Dim tells me that from up there, our street lamps look like stars, and sky kids aren't allowed to touch them. That night the lamp outside my house goes dim, and a small glowing sky kid floats down from the clouds, reaching out to touch it.",
+   "caption_hook": "the stars come down at 9. you're not allowed to touch one. i did.",
+   "new_props": [
+    "falling stars: small glowing five-point stars (sphere core plus five cone spikes, warm gold, glowing), hundreds of them drifting like snow",
+    "banner text for the town square: DO NOT TOUCH THE STARS",
+    "long rope tying Mr. Ferreira to a mailbox (thin cylinder rope, box mailbox on a post)",
+    "glowing version of Nia: a gold glowing material plus a soft point light so she lights up the sidewalk",
+    "Dim: a small dull grey star with big eyes and a face; later it lights up gold, then blazing white like a tiny sun",
+    "Sky Above set: an endless indigo backdrop with violet fog and big glowing shapes slowly turning (rings, cubes, spheres in cyan, pink and gold)",
+    "floating grassy islands (flattened cylinders with a tree on top)",
+    "sideways waterfall (stretched see-through blue boxes pouring sideways off an island)",
+    "ocean bubble: a huge see-through blue sphere with a box fish and a small blocky whale swimming inside",
+    "sea of swirling violet fog below, with shooting stars (streaking spheres with light trails) zipping out of it",
+    "joke card overlay: WHY DID THE STAR GO TO SCHOOL? TO GET BRIGHTER",
+    "curving path of glowing stepping-stone stars leading from the sky down to my bedroom window",
+    "small glowing sky kids (child-sized blocky figures in pale glowing colors) peering over the edge of a floating island",
+    "a beam of light from the clouds, with one small glowing sky kid floating down it, hand out",
+    "street lamp that can flicker and go grey"
+   ],
+   "sets": [
+    "main street at quiet night with a purple sky and the clock tower striking nine",
+    "town square with stage and banner (night)",
+    "Mr. Ferreira's front yard by day",
+    "main street by day",
+    "dark street at quiet night with the lamps off (Nia's glow)",
+    "my bedroom at night, looking out the window over the street",
+    "the Sky Above (new set built from basic shapes: indigo backdrop, fog, floating islands, glowing shapes, tiny town far below)",
+    "view from the sky looking down on the town at night, street lamps glowing like stars",
+    "outside my house at quiet night (street lamp and clouds)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, every night at nine, the stars come down.",
+     "visual": "Quiet night, deep purple sky. The clock tower strikes nine. Hundreds of tiny glowing gold stars drift slowly down out of the sky between the houses like glowing snow. The camera tilts down slowly from the sky to Main Street.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "9:00 PM"
+    },
+    {
+     "kind": "line",
+     "text": "They drift down Main Street, humming, until midnight.",
+     "visual": "Street level: stars bob at head height past the street lamps. A sleepy pigeon on a lamp watches one float past its beak. Kids grin from lit windows (face: grin)."
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three stars flare bright, one per HUSS. The camera punches in on each one and sparkles pop."
+    },
+    {
+     "kind": "line",
+     "text": "One rule. Look all you want. Never touch one.",
+     "visual": "Town square at night: the big banner over the stage reads DO NOT TOUCH THE STARS. Townspeople stand with their hands behind their backs, leaning away as stars drift past their noses (face: sweat).",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "NEVER TOUCH ONE"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Ferreira touched one. He floated for a week.",
+     "visual": "Day. Mr. Ferreira (mustache, cap, blue shirt) floats three meters above his front yard, tied to his mailbox by a long rope like a balloon. He spins slowly with his arms flailing (pose: surprised, face: shocked).",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "DAY 4"
+    },
+    {
+     "kind": "line",
+     "text": "His daughter walked him to work on a string.",
+     "visual": "Main street by day: his daughter (pigtails, yellow shirt) walks calmly, holding the rope. Mr. Ferreira bobs along behind her in the air, arms crossed (pose: crossArms, face: sleepy), with the pigeon riding on his head.",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Nia sneezed on one. Now she glows in the dark.",
+     "visual": "Dark street at night with the lamps off. Little Nia (curly hair, pajamas) glows bright gold from head to toe and lights up the whole sidewalk like a walking night light. She waves (pose: wave, face: grin) while neighbors read books in her glow.",
+     "sfx": [
+      "pop",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then last night, a star landed on my windowsill. It wasn't glowing.",
+     "visual": "My bedroom at night. I stand at the window. A small dull grey star with big sad eyes sits on the windowsill, not glowing at all (face: sad).",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It was too dim to float home.",
+     "visual": "Through the window, every bright star rises back up into the sky like snow falling in reverse. The grey star hops, rises a few centimeters, and plops back down on the sill."
+    },
+    {
+     "kind": "line",
+     "text": "So I did the one thing you never do.",
+     "visual": "Close-up on me (face: determined). Slow push-in as my blocky hand reaches toward the grey star.",
+     "music": "none"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "My finger touches the star. Blinding white flash, the bedroom spins, the camera shakes on every HUSS, and the walls fall away into stars.",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Whoosh. I was in the sky.",
+     "visual": "NEW SET, the Sky Above: an endless indigo backdrop with soft violet fog. Giant glowing shapes turn slowly (rings, cubes, spheres in pale cyan, pink and gold). Far, far below is our whole town, tiny, with its street lamps twinkling. I float in the middle (pose: stunned).",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Floating islands. Sideways waterfalls. A whole ocean in a bubble.",
+     "visual": "Slow pan: grassy floating islands drift past, each with a tree on top. A waterfall pours sideways off one island. A huge see-through blue sphere floats by with a box fish and a little blocky whale swimming inside."
+    },
+    {
+     "kind": "line",
+     "text": "The star's name was Dim.",
+     "visual": "The grey star floats up beside me like a guide, bobbing, and gives a shy little wave with one point (face: smile).",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "DIM"
+    },
+    {
+     "kind": "line",
+     "text": "Up here, you weigh what you feel. Happy, you float. Scared, you sink.",
+     "visual": "Dim says this in a soft, small second voice. Quote card: 'Up here, you weigh what you feel.' \u2014 Dim. Demo: I grin and bob upward, then look down (face: shocked) and drop half a meter.",
+     "overlay": "\"Up here, you weigh what you feel.\" \u2014 Dim"
+    },
+    {
+     "kind": "line",
+     "text": "So obviously, I started sinking.",
+     "visual": "I sink steadily downward, flailing (face: sweat) as the glowing shapes rise past me.",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "SINKING..."
+    },
+    {
+     "kind": "line",
+     "text": "Below us, fog. Fall in, and you're a shooting star forever.",
+     "visual": "The camera looks straight down past my white shoes into a swirling sea of violet fog. Every few seconds a streak of light shoots out of it and zips off across the dark.",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Dim was sinking too. Dim had never heard a joke.",
+     "visual": "Dim sinks beside me (face: sad), its grey points drooping."
+    },
+    {
+     "kind": "line",
+     "text": "So I told Dim the worst joke I know.",
+     "visual": "Still sinking, I point at Dim like a stand-up comic (pose: point, face: determined)."
+    },
+    {
+     "kind": "line",
+     "text": "Why did the star go to school? To get brighter.",
+     "visual": "The joke card slams in. Dim stares blankly, then one tiny flicker of gold light blinks inside it.",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "TO GET BRIGHTER"
+    },
+    {
+     "kind": "line",
+     "text": "Dim flickered. So I hit it with the big one.",
+     "visual": "I crack my knuckles, take a deep breath and cup my hands around my mouth (face: huss).",
+     "music": "none"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "With each HUSS, Dim bursts out laughing and shines brighter: grey, then gold, then blinding white. We both shoot upward with every shout.",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Dim laughed so hard it blazed like the sun, lighting a path home.",
+     "visual": "Dim shines like a tiny sun. A curving trail of glowing stepping-stone stars stretches down through the fog all the way to my bedroom window far below. I run down it laughing (pose: walk, face: laugh).",
+     "music": "lofi",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now Dim's the brightest star in town.",
+     "visual": "My bedroom at night, me at the window. High above the clock tower, one star shines brighter than all the rest, and winks."
+    },
+    {
+     "kind": "line",
+     "text": "But Dim told me a secret.",
+     "visual": "Flashback in the Sky Above: Dim leans close and whispers into my headphones as fog swirls around us.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "From up there, our street lamps look like stars. Sky kids aren't allowed to touch them.",
+     "visual": "View from the sky looking down: our town at night, its street lamps glowing exactly like a field of stars. On the edge of a floating island, a row of small glowing sky kids peer down at them (pose: peer).",
+     "music": "night",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Tonight, my street lamp went dim. And something small and glowing is reaching down to touch it.",
+     "visual": "Outside my house, the street lamp flickers and goes grey. A small glowing kid floats slowly down out of the clouds on a beam of light, one hand stretched toward the lamp. I watch from my window (face: shocked). Freeze, then cut to black.",
+     "sfx": [
+      "boom"
+     ]
+    }
+   ],
+   "vibe": "mystic1",
+   "id": "mystic1-1",
+   "score": 32.6,
+   "notes": [
+    "Line 1 is pretty but has no threat, so a 12-year-old can scroll past. Put the danger up front: 'In this town, every night at nine, the stars come down, and if you touch one, you fall UP.' Cut 'humming, until midnight' to keep the word count.",
+    "Show the twist instead of telling it. During the sky sequence, briefly show a row of glowing sky kids peering over an island edge at our street lamps, with no explanation. Then cut the 'Dim told me a secret' flashback, so the final lamp beat is something the viewer pieces together rather than exposition. Also link the sky trip to the floating rule: 'Mr. Ferreira floated a week. I floated all the way up.'",
+    "Put the danger in line one, not just the pretty snowfall: 'In this town, every night at nine, the stars come down, and if you touch one, you fall into the sky.' The first two seconds then carry stakes and set up the sky world."
+   ]
+  },
+  {
+   "title": "Captain Loudest",
+   "logline": "In this town, whoever holds the pirate token is captain, and everyone has to do whatever the captain shouts. Every sunset it jumps to someone new, and anyone who can shout louder than the captain takes it. I'm the quietest kid in town and it has never picked me. Then Brayden from the Goon Squad glues it to his hand, crowns himself captain forever, and nobody can out-shout him. So I train every night, climb the pirate ship's mast and let out the loudest HUSS this town has ever heard.",
+   "twist": "My six HUSSes rip the token off Brayden's hand and make me captain. Then the token's skull spits out a treasure map with X marked on my bedroom. Under my bed is a chest with a thousand more tokens, so now everyone in town is captain except Brayden, who has to obey all of them.",
+   "caption_hook": "he glued the pirate token to his hand so the quietest kid in town had to get LOUD",
+   "new_props": [
+    "chunky pirate ship parked in the middle of the town square (brown box hull, cone bow, tall cylinder mast with a crow's nest basket on top, white sails with a black blocky skull, a plank sticking off the side)",
+    "pirate token: glowing flat gold cylinder with a white blocky skull face and a jaw that can drop open",
+    "captain's hat (black tricorn from boxes and cones with a white skull dot) that pops onto whoever holds the token",
+    "plain black pirate hats on every townsperson",
+    "rolling wall of translucent blue water boxes carrying the ship down main street, leaving one small puddle",
+    "'NEAREST OCEAN: 900 MILES' road sign",
+    "town fountain under the plank (grey cylinder basin with blue water disc) plus a blue cube splash burst",
+    "blocky fish (orange and blue boxes with cone tails) stacked in the bakery window and on a cake stand",
+    "'LOUDEST WINS' banner over the stage",
+    "white glue blob (squashed sphere) holding the token to Brayden's palm",
+    "bedroom pillow (white box) and a wall tally sign 'DAY 1 ... DAY 30'",
+    "shockwave rings (expanding thin translucent cylinders) for the big HUSS",
+    "pirate hats blowing off the crowd",
+    "rolled parchment treasure map (beige flat box) with a big red X over a little drawing of the narrator's house",
+    "wooden treasure chest (brown box, gold trim, flip lid) that bursts with a fountain of glowing gold tokens",
+    "Brayden's sunglasses floating in the fountain"
+   ],
+   "sets": [
+    "town square with the pirate ship, plank and fountain (day and dusk)",
+    "main street (stormy dusk flashback, then dusk)",
+    "bakery storefront on main street (day)",
+    "kid's bedroom (dusk, then quiet night)",
+    "the crow's nest at the top of the pirate ship's mast (day)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, whoever holds the pirate token is captain, and everyone has to do whatever the captain shouts.",
+     "visual": "Town square on a sunny day. A chunky pirate ship sits in the middle of the square with its sails up. On the deck a townsperson in a captain's hat holds a glowing gold skull coin high, and the whole crowd below salutes at once.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "HOLD THE TOKEN = CAPTAIN"
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago, a pirate ship washed up in our town square. We don't have an ocean.",
+     "visual": "Stormy dusk flashback with a thunder flash. The ship rides a rolling wall of blue water boxes down main street and stops in the square. The water vanishes, leaving one tiny puddle. Cut to a road sign: 'NEAREST OCEAN: 900 MILES'.",
+     "sfx": [
+      "thunder",
+      "whoosh",
+      "thump"
+     ],
+     "overlay": "NEAREST OCEAN: 900 MILES"
+    },
+    {
+     "kind": "line",
+     "text": "The token was on board. Every sunset, it jumps to someone new.",
+     "visual": "Dusk lighting. The gold token hops out of a townsperson's pocket by itself, bounces down main street with little pops and lands in a different person's hand. A captain's hat pops onto their head and they grin.",
+     "sfx": [
+      "pop",
+      "pop",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grandma Pearl got it Monday. Order: everyone do the worm.",
+     "visual": "Grandma Pearl (white hair, glasses, purple cardigan, captain's hat) points down from the ship's deck with a determined face. The whole crowd below lies flat on the cobbles in the crowdSurf pose, wiggling.",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "ORDER: DO THE WORM"
+    },
+    {
+     "kind": "line",
+     "text": "Big Dez got it Tuesday. Now the bakery only sells fish.",
+     "visual": "Main street bakery. Big Dez (tall, beard, orange shirt, captain's hat, smug face) leans in the doorway. The window display is stacked with blocky orange and blue fish, and a customer walks out holding a fish with a stunned face.",
+     "sfx": [
+      "scratch"
+     ],
+     "overlay": "BAKERY: FISH ONLY"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms: the customer's stunned face, a fish sitting on a cake stand, Big Dez's smug face. Small camera shake on each."
+    },
+    {
+     "kind": "line",
+     "text": "One rule: if you shout louder than the captain, the token jumps to you.",
+     "visual": "Town square stage under a 'LOUDEST WINS' banner. Two townspeople face off and shout at each other with huss faces. The token zips from one hand to the other, and a captain's hat jumps heads with it.",
+     "sfx": [
+      "boom",
+      "whoosh"
+     ],
+     "overlay": "LOUDEST WINS"
+    },
+    {
+     "kind": "line",
+     "text": "And me? It never picked me. Not once. I'm the quietest kid in town.",
+     "visual": "Kid's bedroom at dusk. Me (black hoodie with white knight emblem, grey pants, white shoes, fade haircut, headphones) sits on the bed with a sad face. Through the window, the token bounces right past my house without stopping.",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Until Friday. The token landed on Brayden. Goon Squad!",
+     "visual": "Dusk town square. The token bounces into the hand of Brayden (pale skin, spiky red hair, sunglasses, black vest, chain), who breaks into a grin. His two friends in matching sunglasses cheer behind him. 'GOON SQUAD!' stamps on screen.",
+     "music": "none",
+     "sfx": [
+      "scratch",
+      "boom"
+     ],
+     "overlay": "GOON SQUAD!"
+    },
+    {
+     "kind": "line",
+     "text": "Brayden glued it to his hand. Captain forever.",
+     "visual": "Close-up. Brayden slaps the token onto his palm with a white glue blob and holds it up, smug. The sun sets behind him, and the token tries to hop away, wobbles and stays stuck.",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "CAPTAIN FOREVER"
+    },
+    {
+     "kind": "line",
+     "text": "Pirate hats for everyone. Clap when he walks past. Yawn, and you walk the plank.",
+     "visual": "Quick cuts, day. The whole town in black pirate hats. A row of townspeople clapping as Brayden struts by. A sleepy townsperson trudges down the plank off the side of the ship and drops into the fountain with a big blue cube splash.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "ding",
+      "thump"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms: the dripping townsperson climbing out of the fountain, Brayden's grin, the glued token gleaming on his palm."
+    },
+    {
+     "kind": "line",
+     "text": "Grandma Pearl tried to out-shout him. Big Dez tried. Ah, almost... almost!",
+     "visual": "Town square. Grandma Pearl yells at Brayden with a huss face, and the token wiggles and settles. Big Dez yells next, and the token lifts and almost peels off, then snaps back. 'ALMOST!' stamps on screen.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "ALMOST!"
+    },
+    {
+     "kind": "line",
+     "text": "So I trained. While they were clapping for Brayden, by the way, I was shouting into my pillow.",
+     "visual": "Kid's bedroom, quiet night. Montage: me pressing a white pillow to my face and shouting with a huss face, the posters shaking, the orange cat on the bed watching with a squint face, a wall tally going from 'DAY 1' to 'DAY 30'.",
+     "music": "lofi",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Saturday, I climbed the ship's mast and took the biggest breath of my life.",
+     "visual": "Town square, day. Me climbs into the crow's nest at the top of the ship's mast. Brayden and the whole crowd look up. Me inhales with a puffed chest and a determined face. Slow push in, sails flapping.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Me shouting from the crow's nest with a huss face. Each HUSS sends a shockwave ring across the square with camera shake. Pirate hats blow off, sails billow and the fountain ripples. On the sixth, the token rips off Brayden's hand and shoots into the sky."
+    },
+    {
+     "kind": "line",
+     "text": "The token ripped off his hand and flew straight to mine. Captain me.",
+     "visual": "The glowing token arcs through the air and smacks into my raised hand in the crow's nest. A captain's hat pops onto my head over the headphones. The crowd below cheers.",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "cheer"
+     ],
+     "overlay": "CAPTAIN ME"
+    },
+    {
+     "kind": "line",
+     "text": "First order: Brayden walks the plank.",
+     "visual": "Brayden, with a shocked face, shuffles down the plank off the side of the ship and drops into the fountain with a big blue splash. His sunglasses float on the water.",
+     "sfx": [
+      "thump",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Top ten respect.",
+     "visual": "Freeze frame of me saluting from the crow's nest. The Top 10 card slides in.",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "TOP 10 RESPECTFUL MOMENTS \u2014 #1: THE QUIET KID GOT LOUD"
+    },
+    {
+     "kind": "line",
+     "text": "Whole town chanted: Zabaru! Okki tonk! Flimba sway! Barnacloo!",
+     "visual": "The crowd pumps their fists and dances around the ship while I do dance2 on the deck. Each nonsense word stamps on screen in a different color with a camera punch.",
+     "sfx": [
+      "boom",
+      "scratch"
+     ],
+     "overlay": "ZABARU! OKKI TONK! FLIMBA SWAY! BARNACLOO!"
+    },
+    {
+     "kind": "line",
+     "text": "Then the token's skull spat out a treasure map. X marked my bedroom.",
+     "visual": "Close on the token in my hand. The skull's jaw drops open, and a rolled parchment map pops out and unrolls. A big red X sits over a little drawing of my house. My face goes surprised.",
+     "music": "muffled",
+     "sfx": [
+      "pop",
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Under my bed was a chest with a thousand more tokens.",
+     "visual": "Kid's bedroom. Me peers under the bed and drags out a wooden treasure chest with gold trim. The lid flips open, and a fountain of glowing gold tokens bursts up and fills the room, throwing gold light on my shocked face.",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "boom"
+     ],
+     "overlay": "x1000"
+    },
+    {
+     "kind": "line",
+     "text": "Now everyone in town is captain. Except Brayden.",
+     "visual": "Town square. Every townsperson wears a captain's hat and holds a glowing token, all pointing and shouting orders at Brayden at once. Brayden, soaking wet in a plain pirate hat, scrambles between them carrying a fish, clapping, then flopping into the worm.",
+     "music": "party",
+     "sfx": [
+      "cheer",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms on Brayden's sweaty face while he does the worm with a fish balanced on his head."
+    }
+   ],
+   "vibe": "pirate",
+   "id": "pirate-2",
+   "score": 32.03,
+   "notes": [
+    "The 'everyone is captain' ending undoes the underdog win and surprises no one. Replace it with a sting: the chest under my bed creaks open and a HUSS louder than mine booms out of it, because the token's real pirate captain wants it back. Also change 'Saturday' to 'A month later' so it matches the DAY 30 tally.",
+    "Set up the treasure twist. In the 'it never picked me' beat, have the token stop and spin at my window every sunset before bouncing on: it wasn't skipping me, it was pointing at the chest. Then the X on my bedroom pays off a clue. Also fix the timeline: 'Saturday' comes the day after 'Friday', but the DAY 1 to DAY 30 training montage needs a month, so say 'Thirty days later'.",
+    "A random chest of a thousand tokens breaks the 'one token, one captain' rule, and 'everyone is captain' gets muddled. Build the twist from a rule already set up instead (e.g. at sunset the token jumps to the pigeon and the whole town has to obey it). Also fix the DAY 1 to DAY 30 pillow tally: Brayden only takes over on Friday and I climb on Saturday."
+   ]
+  }
+ ]
+}

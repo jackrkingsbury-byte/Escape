@@ -31,11 +31,11 @@ Rules from the creator:
 | 20 | Biscuit (the T-rex) | giants / funny | script + audio ready |
 | 21 | The Deep Above | mystical | script + audio ready |
 
-## Backlog (writers' room 1, scratchpad/s2_ranked.json)
+## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Low Moon (spooky) · Big Love (homey) · Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey) · Nugget the chicken (giants)
 
-## Writers' room 2 (scratchpad/s2b_ranked.json)
+## Writers' room 2 (episodes/concepts/s2b_ranked.json)
 Next up: The Arrr Pond (meme kraken) · Lost Property (mystical fog) · The Harbour Blinks (scary sea) · Don't Touch the Stars (mystical) · Captain Loudest (pirate meme)
 
 ## Later: factual series
