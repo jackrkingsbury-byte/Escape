@@ -4,14 +4,14 @@
  "bed": true,
  "voices": {},
  "logline": "In this town every house has legs, and once a year, on the first cold night, they all stand up and run off. The narrator falls asleep at his desk and rides his house in a stampede to a field past the edge of town, where every house stands in a circle humming. He has to get it home before school.",
- "twist": "The narrator gets home by ringing his own doorbell. The next morning something tiny is following his house around the garden: a shed on wobbly legs. The humming was the houses having babies. Mom says he has to walk it, and Mr. Dube's house had twins: two tiny garages.",
+ "twist": "The narrator gets home by ringing his own doorbell. The next morning something tiny is following his house around the garden: a shed on wobbly legs. The humming was the houses having babies. Mom says he has to walk it, and Mr. Pillay's house had twins: two tiny garages.",
  "caption_hook": "My house ran away last night. I was still inside.",
  "vibe": "random",
  "sets": [
   "main street - dusk, then night with houses on legs, then sunrise",
   "kid's bedroom interior at night (bouncing camera, swinging posters, glowing monitor)",
   "new open field past the edge of town (flat ground, fog, purple sky, houses in a ring)",
-  "town square - party night (Mr. Dube partying)",
+  "town square - party night (Mr. Pillay partying)",
   "park and clock tower - stampede route",
   "my front garden - morning"
  ],
@@ -92,7 +92,7 @@
     }
    ],
    "overlay": "RULE 1: CHAIN IT · RULE 2: GET OUT · RULE 3: RING THE BELL",
-   "visual": "Mr. Dube (big beard, cap) wraps a giant chain from his house's leg to a street lamp and snaps the padlock shut, smug. A second rule card stamps in after. On rule three: Mr. Dube rings the doorbell of his runaway house from the pavement and it trots back to him like a dog, wagging its porch door.",
+   "visual": "Mr. Pillay (big beard, cap) wraps a giant chain from his house's leg to a street lamp and snaps the padlock shut, smug. A second rule card stamps in after. On rule three: Mr. Pillay rings the doorbell of his runaway house from the pavement and it trots back to him like a dog, wagging its porch door.",
    "markers": {
     "r1": "w:chain",
     "r2": "w:Never",
@@ -210,7 +210,7 @@
    "id": "b10",
    "kind": "line",
    "speaker": "narr",
-   "text": "Mr. Dube's house dragged its lamp post along.",
+   "text": "Mr. Pillay's house dragged its lamp post along.",
    "gapAfter": 0.3,
    "sfx": [
     {
@@ -219,7 +219,7 @@
      "gain": 0.5
     }
    ],
-   "visual": "Mr. Dube's house gallops past still chained, with the ripped-out street lamp bouncing and sparking behind it like a kite."
+   "visual": "Mr. Pillay's house gallops past still chained, with the ripped-out street lamp bouncing and sparking behind it like a kite."
   },
   {
    "id": "b11",
@@ -241,7 +241,7 @@
     }
    ],
    "overlay": "BY THE WAY",
-   "visual": "Cut to the town square on party night: Mr. Dube in a party hat dances on the stage with friends, totally oblivious, while his house thunders past in the background."
+   "visual": "Cut to the town square on party night: Mr. Pillay in a party hat dances on the stage with friends, totally oblivious, while his house thunders past in the background."
   },
   {
    "id": "b12",
@@ -455,7 +455,7 @@
    "id": "b23",
    "kind": "line",
    "speaker": "narr",
-   "text": "Mom says I have to walk it. And Mr. Dube's house had twins.",
+   "text": "Mom says I have to walk it. And Mr. Pillay's house had twins.",
    "gapAfter": 0.8,
    "sfx": [
     {
@@ -470,7 +470,7 @@
     }
    ],
    "overlay": "TWINS",
-   "visual": "I walk the tiny shed on a leash down main street, deadpan, while it tugs toward a lamp post. Final cut: Mr. Dube, still in his party hat, stunned, as two tiny garages on legs bounce around him.",
+   "visual": "I walk the tiny shed on a leash down main street, deadpan, while it tugs toward a lamp post. Final cut: Mr. Pillay, still in his party hat, stunned, as two tiny garages on legs bounce around him.",
    "markers": {
     "walk": "w:walk",
     "twins": "w:twins"

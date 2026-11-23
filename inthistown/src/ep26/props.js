@@ -539,17 +539,18 @@ export function makePlateCake({ R = 98, plateR = 128, depth = 7, cx = 4, cz = 0 
   const band = new THREE.Mesh(new THREE.CylinderGeometry(R, R, depth, 96, 1, true), new THREE.MeshLambertMaterial({ map: bandTex(), side: THREE.DoubleSide }));
   band.position.set(cx, -depth / 2 - 0.03, cz); g.add(band);
   const silver = new THREE.MeshStandardMaterial({ color: '#dfe4ee', metalness: 0.45, roughness: 0.22, emissive: '#6a7080', emissiveIntensity: 0.35, fog: false });
-  const plate = new THREE.Mesh(new THREE.CylinderGeometry(plateR, plateR * 0.94, 1.2, 96), silver); plate.position.set(cx, -depth - 0.6, cz); g.add(plate);
-  const rim = new THREE.Mesh(new THREE.TorusGeometry(plateR, 4.2, 12, 120).rotateX(PI / 2), silver); rim.position.set(cx, -depth + 1.8, cz); g.add(rim);
-  const lip = new THREE.Mesh(new THREE.CylinderGeometry(plateR + 1, plateR - 6, 6, 96, 1, true), silver); lip.position.set(cx, -depth + 0.5, cz); g.add(lip);
+  const plate = new THREE.Mesh(new THREE.CylinderGeometry(plateR - 8, plateR * 0.86, 1.2, 96), silver); plate.position.set(cx, -depth - 0.6, cz); g.add(plate);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(plateR, 4.2, 12, 120).rotateX(PI / 2), silver); rim.position.set(cx, 0.4, cz); g.add(rim);
+  const lip = new THREE.Mesh(new THREE.CylinderGeometry(plateR, plateR - 8, depth + 0.6, 96, 1, true), new THREE.MeshStandardMaterial({ color: '#cfd5e0', metalness: 0.45, roughness: 0.25, emissive: '#5a6070', emissiveIntensity: 0.3, fog: false, side: THREE.DoubleSide }));
+  lip.position.set(cx, -depth / 2 + 0.1, cz); g.add(lip);
   // giant sprinkles all over the frosting (avoid the streets a bit)
   const spr = makeSprinkles(1400, 2 * R, 2 * R, 1.6, { seed: 7, avoid: (x, z) => x * x + z * z > R * R * 0.96 });
   spr.position.set(cx, 0.05, cz); g.add(spr);
   const glints = [];
-  for (let i = 0; i < 6; i++) { const a = -PI * 0.9 + i * 0.35; const s = glowSprite('#ffffff', 14, 0.0); s.position.set(cx + Math.cos(a) * plateR, -depth + 6, cz + Math.sin(a) * plateR); g.add(s); glints.push(s); }
+  for (let i = 0; i < 6; i++) { const a = -PI * 0.9 + i * 0.35; const s = glowSprite('#ffffff', 14, 0.0); s.position.set(cx + Math.cos(a) * plateR, 4.2, cz + Math.sin(a) * plateR); g.add(s); glints.push(s); }
   g.userData = {
     parts: { top, band, plate, rim, lip, sprinkles: spr }, glints, silver, depth,
-    rimOnly(on) { top.visible = band.visible = spr.visible = !on; plate.visible = !on; },
+    rimOnly(on) { top.visible = band.visible = spr.visible = !on; plate.visible = lip.visible = !on; },
     glint(t, k = 1) { glints.forEach((s, i) => { s.material.opacity = k * Math.max(0, Math.sin(t * 2.2 + i * 1.7)) ** 6; }); },
   };
   return g;
