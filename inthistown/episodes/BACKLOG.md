@@ -33,10 +33,11 @@ Rules from the creator:
 | 22 | Big Love | homey | scheduled Thu 26 Nov 09:30 |
 | 23 | Low Moon | spooky | polish round → Thu 26 Nov 15:30 |
 | 24 | Word of the Day | meme | shots building (giant ear, not an eye) |
+| 25 | Nugget | giants / funny | script + audio ready (deep 'Ba-gawk' voice) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Sneeze Season (meme) · The Golden Snagglet (trend) ·
-Sunrise (homey) · Nugget the chicken (giants)
+Sunrise (homey)
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)
 Next up: The Arrr Pond (meme kraken) · Lost Property (mystical fog) · The Harbour Blinks (scary sea) · Don't Touch the Stars (mystical) · Captain Loudest (pirate meme)

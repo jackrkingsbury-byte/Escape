@@ -169,7 +169,7 @@ function moonFrame(ctx, cam, p, R = MR, o = {}) {
   const w = Array.isArray(p) ? L(p[0], p[1], p[2]) : p;
   M.position.copy(w); M.scale.setScalar(R); M.userData.face(cam.pos);
   M.userData.gaze(o.gaze ?? null);
-  M.userData.set({ pupil: o.pupil ?? 0, lid: o.lid ?? 0, glow: o.glow ?? 1.3, dilate: o.dilate ?? 1, halo: o.halo ?? 0.6 });
+  M.userData.set({ pupil: o.pupil ?? 0, lid: o.lid ?? 0, glow: o.glow ?? 1.3, dilate: o.dilate ?? 1, halo: o.halo ?? 0.6, slit: o.slit ?? 0, irisGlow: o.irisGlow ?? 1, haloColor: o.haloColor ?? '#cdd6ff' });
   const ml = P.moonLight; ml.position.copy(w); ml.target.position.copy(cam.look); ml.intensity = o.light ?? 1.0; ml.color.set(o.lightColor ?? '#cfdcff');
   if (o.dust !== false) { const fwd = cam.look.clone().sub(cam.pos).normalize(); ctx.add(P.dust); P.dust.position.copy(cam.pos).addScaledVector(fwd, Math.max(14, o.dustDist ?? 14)); P.dust.lookAt(cam.pos); P.dust.userData.set(ctx.t, o.dustA ?? 0.85); }
   return w;
@@ -895,7 +895,7 @@ export const shots = [
       windowMoon(ctx, -0.55, 1.85, 0.95);
       const f = f0;
       // pulled back + more frontal: whole head (and the bulb above it) in frame, face in the upper third
-      const c = moveCam(ctx, { pos: f.clone().add(V(3.1, -0.5, 2.4)), look: f.clone().add(V(0, -0.62, 0.1)), fov: 44 }, { pos: f.clone().add(V(2.85, -0.5, 2.15)), look: f.clone().add(V(0, -0.6, 0.1)), fov: 44 }, ease.inOutSine(clamp(lt / 1.9, 0, 1)), 1.0, '#fff0e0', 8);
+      const c = moveCam(ctx, { pos: f.clone().add(V(3.1, -0.5, 2.4)), look: f.clone().add(V(0, -0.5, 0.1)), fov: 46 }, { pos: f.clone().add(V(2.85, -0.5, 2.15)), look: f.clone().add(V(0, -0.48, 0.1)), fov: 46 }, ease.inOutSine(clamp(lt / 1.9, 0, 1)), 1.0, '#fff0e0', 8);
       pop(ctx, tr, 0.1, '#fff6c0', 0.3);
     },
   },
@@ -1174,15 +1174,28 @@ export const shots = [
     name: 'it is an eye', start: 'b22.w3-0.1', set: 'town',
     setup(ctx) { town(ctx, 'quiet_night', { glow: 0.7 }); },
     update(ctx, lt) {
-      const L = ctx.store.L, t = ctx.t, te = ctx.time('b22.w6');
+      const L = ctx.store.L, t = ctx.t, te = ctx.time('b22.w6'), ta = ctx.time('b22.w4');
       const mw = L(MO.far[0], MO.far[1], MO.far[2]);
       const pos = L(30, 1.6, 2.5);
-      const c = setCam(ctx, { pos, look: mw, fov: lerp(10, 6, ease.inOutSine(clamp(lt / 1.3, 0, 1))) });
-      const pu = ease.inOutSine(clamp((t - 76.55) / 0.6, 0, 1));
-      const sw = ease.inOutCubic(clamp((t - te + 0.3) / 0.6, 0, 1));
-      const away = mw.clone().add(V(60, 160, -120));
-      moonFrame(ctx, c, MO.far, MR, { light: 0.5, pupil: pu, gaze: away.lerp(pos, sw), dilate: 1 + 0.25 * Math.max(0, Math.sin(PI * clamp((t - te) / 0.4, 0, 1))), dust: false, halo: 0.3 });
-      ctx.cam.punch([te], t, 0.06, 0.3);
+      // "moon." slow push-in on the plain disc → "It's an" a faint iris ghosts in, glow turns cold → "eye" the iris and a
+      // slit pupil snap open (0.25 s), creepy cyan glow, punch-in.
+      const tr = te - 0.16, rv = ease.outCubic(clamp((t - tr) / 0.25, 0, 1));
+      const ghost = 0.28 * ease.inOutSine(clamp((t - ta) / 0.35, 0, 1));
+      const pu = Math.max(ghost, rv);
+      const push = ease.inOutSine(clamp(lt / 1.2, 0, 1)), snap = ease.outCubic(clamp((t - tr) / 0.3, 0, 1));
+      const c = setCam(ctx, { pos, look: mw, fov: lerp(10, 7.4, push) - 1.6 * snap });
+      const sw = ease.inOutCubic(clamp((t - tr) / 0.45, 0, 1));
+      const gz = pos.clone().add(V(-70, 95, 0)).lerp(pos, sw);   // ghost looks off up-left (~15°), then locks on us
+      const cold = clamp((t - ta) / 0.4, 0, 1);
+      const pulse = 0.25 * Math.max(0, Math.sin((t - tr) * 9)) * (t > tr ? Math.exp(-(t - tr) / 0.5) : 0);
+      moonFrame(ctx, c, MO.far, MR, {
+        light: 0.5, pupil: pu, gaze: gz, dust: false,
+        slit: ease.inOutSine(clamp((t - tr - 0.05) / 0.3, 0, 1)), dilate: 1 + 0.15 * (1 - sw),
+        irisGlow: 1 + 0.5 * rv * Math.exp(-Math.max(0, t - tr - 0.25) / 0.4) + pulse,
+        glow: lerp(1.3, 1.12, cold), halo: lerp(0.3, 0.9, Math.max(cold * 0.4, rv)), haloColor: rv > 0.01 || cold > 0 ? '#8ff3ff' : '#cdd6ff',
+      });
+      pop(ctx, tr + 0.04, 0.12, '#9ff6ff', 0.22);
+      ctx.cam.punch([tr], t, 0.07, 0.3); shakeOn(ctx, [tr], 0.25, 0.3, 77);
     },
   },
   // ── b23 "And it's looking straight at my window."  — the eye fills the window; hold; cut to black
@@ -1211,7 +1224,7 @@ export const shots = [
       const c = setCam(ctx, { pos: R(-0.5, 1.2, lerp(2.2, 1.9, k)), look: R(-1.6, 1.3, -1.6), fov: lerp(54, 52, k) - 4 * z }, 0.5, '#bff4ff', 8);
       M.userData.face(c.pos);
       M.userData.gaze(humanFace(me));
-      M.userData.set({ pupil: 1, lid: 0, glow: 1.35, dilate: 1 - 0.25 * z, halo: 0.5 });
+      M.userData.set({ pupil: 1, lid: 0, glow: 1.35, dilate: 1 - 0.2 * z, halo: 0.5, slit: 0.75 + 0.25 * z, irisGlow: 1.15 });   // same slit pupil as the reveal
       shakeOn(ctx, [tw], 0.35, 0.4, 60);
       P.eyeLight.intensity = 9 + 6 * z;
       if (t >= tcut) { ctx.fx.overlay('#000000', 1); ctx.caption.hide(true); }

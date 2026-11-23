@@ -2,7 +2,7 @@
 //
 //   makeMoonEye()            the giant moon that is secretly an eye.  Unit radius (scale it).  +Z of the group = the side
 //                            facing the viewer (call userData.face(cameraPos) every frame).  userData.set({ pupil 0..1,
-//                            lid 0 open..1 closed, glow, dilate }) and userData.gaze(worldPoint | null).  The ball carries
+//                            lid 0 open..1 closed, glow, dilate, slit 0 round..1 cat slit, irisGlow, haloColor }) and userData.gaze(worldPoint | null).  The ball carries
 //                            craters, iris and pupil; the lid (a moon-skin dome with lashes) does not rotate with the gaze.
 //   makeClockFace()          clock face disc (r 0.95, faces +Z) with 3D hands.  userData.set(minuteTurns, hourTurns)
 //                            (1 turn = full circle, clockwise from 12).
@@ -83,6 +83,7 @@ export function makeMoonEye() {
   const ball = new THREE.Group(); g.add(ball);
   const skin = moonMat('#ffffff');
   const sphere = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 40), skin); ball.add(sphere);
+  sphere.rotation.y = -PI / 2;                     // texture seam (u = 0, the −X meridian) turned to the back
   // a few raised crater bowls (darker spheres sunk into the surface)
   const cm = moonMat('#b8bedc');
   const craterGeo = new THREE.SphereGeometry(1, 20, 14);
@@ -96,9 +97,9 @@ export function makeMoonEye() {
   // iris + pupil (fade in)
   const OFF = { polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 };
   const irisM = new THREE.MeshBasicMaterial({ map: irisTex(), transparent: true, opacity: 0, fog: false, depthWrite: false, toneMapped: false, ...OFF });
-  const iris = new THREE.Mesh(capGeo(1.012, 0.62), irisM); iris.renderOrder = 6; ball.add(iris);
+  const iris = new THREE.Mesh(capGeo(1.03, 0.62), irisM); iris.renderOrder = 6; ball.add(iris);   // lifted off the skin (no z-fight)
   const pupM = basic('#06040e', { transparent: true, opacity: 0, fog: false, depthWrite: false, ...OFF, polygonOffsetFactor: -8, polygonOffsetUnits: -8 });
-  const pupil = new THREE.Mesh(capGeo(1.02, 0.27), pupM); pupil.renderOrder = 7; ball.add(pupil);
+  const pupil = new THREE.Mesh(capGeo(1.045, 0.27), pupM); pupil.renderOrder = 7; ball.add(pupil);
   const hlM = basic('#ffffff', { transparent: true, opacity: 0, fog: false, depthWrite: false, toneMapped: false });
   const hl = new THREE.Mesh(new THREE.CircleGeometry(0.07, 20), hlM); hl.renderOrder = 8; g.add(hl);
   const hl2 = new THREE.Mesh(new THREE.CircleGeometry(0.035, 16), hlM); hl2.renderOrder = 8; g.add(hl2);
@@ -130,15 +131,16 @@ export function makeMoonEye() {
       const yaw = Math.atan2(p.x, p.z), pitch = Math.atan2(p.y, Math.hypot(p.x, p.z));
       ball.rotation.set(-pitch * k, yaw * k, 0, 'YXZ');
     },
-    set({ pupil: pu = 0, lid: ld = 0, glow = 1.25, dilate = 1, halo: ha = 0.55, rimGlow = 1 } = {}) {
+    set({ pupil: pu = 0, lid: ld = 0, glow = 1.25, dilate = 1, halo: ha = 0.55, rimGlow = 1, slit = 0, irisGlow = 1, haloColor = '#cdd6ff' } = {}) {
       irisM.opacity = clamp(pu, 0, 1); pupM.opacity = clamp(pu * 1.1, 0, 1);
+      irisM.color.setScalar(irisGlow); halo.material.color.set(haloColor);
       iris.visible = pu > 0.001; pupil.visible = pu > 0.001;
       for (const c of craters) c.m.visible = !(c.inIris && pu > 0.001);
-      pupil.scale.set(dilate, dilate, 1);
+      pupil.scale.set(dilate * lerp(1, 0.3, clamp(slit, 0, 1)), dilate * lerp(1, 1.35, clamp(slit, 0, 1)), 1);   // round → cat slit
       hlM.opacity = clamp(pu, 0, 1) * 0.9;
       // highlight follows the ball a little (sits in the iris)
       const by = ball.rotation.y, bx = ball.rotation.x;
-      hl.position.set(Math.sin(by) * 0.98 - 0.12, -Math.sin(bx) * 0.98 + 0.13, 1.02); hl2.position.set(hl.position.x + 0.12, hl.position.y - 0.1, 1.02);
+      hl.position.set(Math.sin(by) * 0.98 - 0.12, -Math.sin(bx) * 0.98 + 0.13, 1.06); hl2.position.set(hl.position.x + 0.12, hl.position.y - 0.1, 1.06);
       lid.visible = ld > 0.02;
       lid.rotation.x = lerp(-PI / 2 - 0.2, PI / 2 + 0.02, clamp(ld, 0, 1));
       for (const m of [skin, cm]) m.uniforms.glow.value = glow;

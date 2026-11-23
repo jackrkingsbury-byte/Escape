@@ -2,7 +2,18 @@
  "title": "In This Town — Nugget",
  "lead_in": 0.3,
  "bed": true,
- "voices": {},
+ "voices": {
+  "deepchick": [
+   "am_fenrir",
+   0.78,
+   "en-us",
+   [
+    0.55,
+    0.85,
+    1.0
+   ]
+  ]
+ },
  "logline": "Ever since the dinosaur park's fence fell over, every kid in town rides a dinosaur to school. I ride a chicken. When I enter her in the Great Dino Race, the whole town laughs, right up until the race turns into a twelve-dinosaur pile-up.",
  "twist": "Nugget wins by slowly walking past the pile-up and ringing the bell with her face. Then she sits on top of the clock tower and lays an egg bigger than the clock tower itself. Every dinosaur runs screaming back into the dinosaur park and fixes the fence themselves, and the egg starts cracking with a very, very deep 'BAWK'.",
  "caption_hook": "everyone laughed at my chicken. then she laid an egg.",
@@ -56,7 +67,7 @@
     }
    ],
    "overlay": "IN THIS TOWN",
-   "visual": "Day lighting, main street. Kids ride past on blocky dinosaurs: Priya on a teal triceratops, Big Marcus on a purple raptor, and a long-neck whose head bobs above the rooftops. The kid narrator (light brown skin, curly black hair, yellow jacket, glasses, backpack) stands alone on the sidewalk."
+   "visual": "Day lighting, main street. Kids ride past on blocky dinosaurs: Maya on a teal triceratops, Big Marcus on a purple raptor, and a long-neck whose head bobs above the rooftops. The kid narrator (light brown skin, curly black hair, yellow jacket, glasses, backpack) stands alone on the sidewalk."
   },
   {
    "id": "b02",
@@ -121,12 +132,12 @@
    "id": "b05",
    "kind": "line",
    "speaker": "narr",
-   "text": "Priya rides a triceratops. Big Marcus has a raptor named Sprinkles. The mailman rides a long-neck and delivers to the roof.",
+   "text": "Maya rides a triceratops. Big Marcus has a raptor named Sprinkles. The mailman rides a long-neck and delivers to the roof.",
    "gapAfter": 0.3,
    "sfx": [
     {
      "type": "ding",
-     "at": "w:Priya",
+     "at": "w:Maya",
      "gain": 0.45
     },
     {
@@ -140,9 +151,9 @@
      "gain": 0.45
     }
    ],
-   "visual": "Quick character cards, each with a name tag: Priya (ponytail, pink sash) waves from her triceratops. Big Marcus (tall, sunglasses, chain) rears up on Sprinkles the raptor. The mailman (cap) sits on top of the long-neck and drops letters down a chimney.",
+   "visual": "Quick character cards, each with a name tag: Maya (ponytail, pink sash) waves from her triceratops. Big Marcus (tall, sunglasses, chain) rears up on Sprinkles the raptor. The mailman (cap) sits on top of the long-neck and drops letters down a chimney.",
    "markers": {
-    "priya": "w:Priya",
+    "priya": "w:Maya",
     "marcus": "w:Big",
     "mail": "w:mailman",
     "roof": "w:delivers"
@@ -550,8 +561,8 @@
   {
    "id": "b25",
    "kind": "line",
-   "speaker": "narr",
-   "text": "Bawk.",
+   "speaker": "deepchick",
+   "text": "Ba-gawk.",
    "gapAfter": 0.3,
    "music": "none",
    "sfx": [
@@ -561,7 +572,7 @@
      "gain": 0.85
     }
    ],
-   "overlay": "BAWK.",
+   "overlay": "BA-GAWK.",
    "visual": "Extreme close-up on the glowing crack. The line is spoken by a very deep, pitched-down extra character voice. The whole town shakes and street lamps flicker."
   },
   {
