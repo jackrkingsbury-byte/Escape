@@ -1,11 +1,13 @@
 # Season 2 production line
 
-Posting (updated): every finished episode is SCHEDULED through Buffer into the next free slot of
-09:30 / 15:30 / 19:30 South African time (3 a day, ~5 h apart — 2026 studies: afternoons/evenings best,
-space posts hours apart). Check scheduled posts with list_posts and take the first slot after the last one.
+Posting (updated Mon 23 Nov, creator's request: 3–4 a day at popular times): every finished episode is SCHEDULED through
+Buffer into the next free slot of 07:30 / 12:30 / 17:30 / 20:00 South African time (4 a day). 2026 timing data: 20:00 SAST is
+the strongest single hour (7–9 PM window), 12:00–13:00 lunch peak, 6–9 AM morning window, 14:00–18:00 after school/work.
+If fewer than 4 finished-but-unposted episodes are left, use only 07:30 / 17:30 / 20:00 (3 a day) until the buffer grows.
+Check scheduled posts with list_posts and take the first slot after the last one.
 `mode: customScheduled`, `schedulingType: automatic`, `isAiGenerated: false`, caption = "Episode N <emoji> <story hook>"
 + exactly 5 hashtags: `#animation #robloxanimation #storytime #huss #funny`. Videos are copied to `videos/` (public raw links).
-Staff Only (ep12) is reposted Mon 23 Nov 09:30 at the creator's request. Production itself never stops.
+After a usage limit, the hourly check-in resumes cut-off workflows (resumeFromRunId) and carries on. Production never stops.
 
 Rules from the creator:
 - The narrator is always the creator's avatar: cast `me` = `MAIN.me` (black hoodie, knight emblem, headphones).
@@ -16,6 +18,8 @@ Rules from the creator:
   "Goon Squad", "while they're out partying, by the way", "Top ten respect", new nonsense chants like
   "Saibao! Ela des! Ela sobi! Nubani!"). Never the word "gooning".
 - Quality: rich sets, extras, mood lighting, fog/particles, smooth camera moves, screen shake on hits.
+- Make every episode STAND OUT: rotate vibes MYSTERY → FUNNY → RANDOM → INTERESTING, a first line nobody can scroll past,
+  a twist ending, no repeated premises or reveals (no more "it was a giant eye").
 
 ## In production
 | Ep | Title | Vibe | Status |
@@ -38,6 +42,8 @@ Rules from the creator:
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey)
+
+## Writers' room 3 (episodes/concepts/s3_ranked.json — mystery / funny / random / interesting): in progress
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)
 Next up: The Arrr Pond (meme kraken) · Lost Property (mystical fog) · The Harbour Blinks (scary sea) · Don't Touch the Stars (mystical) · Captain Loudest (pirate meme)

@@ -446,7 +446,7 @@ export function buildCliffSet() {
   const h2 = simpleHouse('#c9e4f2', '#4a5d7e', 6.5, 5, 5.2); h2.position.set(-25, 0, -12.2); root.add(h2);
   const h3 = simpleHouse('#f2c4c4', '#3f7a5a', 6, 5, 4.4); h3.position.set(-18, 0, 12.5); h3.rotation.y = PI; root.add(h3);
   for (const [x, z, s, k] of [[-7, -10.5, 1.0, 0], [-8, 11, 0.9, 1], [-31, -11, 1.1, 2], [-4, -14, 1.2, 1]]) { const t = cliffTree(s, k); t.position.set(x, 0, z); root.add(t); }
-  const lamp = new THREE.Group(); lamp.add(Object.assign(cyl(0.08, 0.1, 4.2, '#2f3440', 8), { position: V(0, 2.1, 0) })); lamp.add(box(0.5, 0.35, 0.5, '#2f3440', 0, 4.35, 0, 0.05)); lamp.add(box(0.36, 0.12, 0.36, std('#fff4c0', { emissive: '#ffe08a', emissiveIntensity: 0.6 }), 0, 4.15, 0)); lamp.position.set(-9, 0.14, 5.4); root.add(lamp);
+  const lamp = new THREE.Group(); { const pole = cyl(0.08, 0.1, 4.2, '#2f3440', 8); pole.position.y = 2.1; lamp.add(pole); } lamp.add(box(0.5, 0.35, 0.5, '#2f3440', 0, 4.35, 0, 0.05)); lamp.add(box(0.36, 0.12, 0.36, std('#fff4c0', { emissive: '#ffe08a', emissiveIntensity: 0.6 }), 0, 4.15, 0)); lamp.position.set(-9, 0.14, 5.4); root.add(lamp);
   // far cliff with the road continuing
   const far = new THREE.Group(); far.position.set(78, 0, -6); root.add(far);
   far.add(box(40, 0.6, 60, '#4caf50', 20, -0.3, 0)); far.add(box(40, 60, 60, std('#8a8378', { flatShading: true }), 20.2, -30.6, 0));
