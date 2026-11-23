@@ -91,7 +91,7 @@ export function init(ctx) {
   P.shed = makeMini('shed');
   P.gar1 = makeMini('garage', { wall: '#f3e3a5', roof: '#b5543f', seed: 2 });
   P.gar2 = makeMini('garage', { wall: '#f3e3a5', roof: '#b5543f', seed: 5 });
-  P.chain = makeChain(30); P.chain2 = makeChain(14);
+  P.chain = makeChain(26, { r: 0.27, thick: 0.09 }); P.chain2 = makeChain(14, { r: 0.24, thick: 0.08 });
   P.lock = makePadlock();
   P.clock = makeAlarmClock();
   P.bags = [['#3f6fd8', '#ffd23f'], ['#e8456f', '#ffffff'], ['#5bd65b', '#ffd23f'], ['#8a5cff', '#ffe08a'], ['#ff7a2f', '#ffffff'], ['#2fb4c4', '#ffd23f']].map(([a, b]) => makeSleepingBag(a, b));
@@ -646,4 +646,3 @@ export const shots = [
       setCam(ctx, faceCam(mk, 2.6, -0.9, 0.42, 36, -0.2), 1.0, '#fff0e0');
     },
   },
-];

@@ -37,8 +37,8 @@ Rules from the creator:
 | 22 | Big Love | homey | scheduled Wed 25 Nov 17:30 |
 | 23 | Low Moon | spooky | scheduled Wed 25 Nov 20:00 |
 | 24 | Word of the Day | meme | scheduled Thu 26 Nov 07:30 |
-| 25 | Nugget | giants / funny | rendering → Thu 26 Nov 12:30 |
-| 26 | Who Bit the Town? | MYSTERY | render queued → Thu 26 Nov 17:30 |
+| 25 | Nugget | giants / funny | scheduled Thu 26 Nov 12:30 |
+| 26 | Who Bit the Town? | MYSTERY | rendering → Thu 26 Nov 17:30 |
 | 27 | Moving Night | RANDOM | shots building |
 | 28 | Out of Colour | INTERESTING | shots building (hoodie washed → thirsty) |
 
