@@ -28,12 +28,13 @@ Rules from the creator:
 | 17 | Floor Three | mystical | scheduled Tue 24 Nov 15:30 |
 | 18 | Pirate Token to the Moon | meme | scheduled Tue 24 Nov 19:30 |
 | 19 | Battery 1% | meme trend | polish pass (fix → verify loop) |
-| 20 | Biscuit (the T-rex) | giants / funny | shots building |
+| 20 | Biscuit (the T-rex) | giants / funny | review done → polish |
 | 21 | The Deep Above | mystical | shots building |
 | 22 | Big Love | homey | script + audio ready |
+| 23 | Low Moon | spooky | script + audio ready |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
-Low Moon (spooky) · Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
+Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey) · Nugget the chicken (giants)
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)

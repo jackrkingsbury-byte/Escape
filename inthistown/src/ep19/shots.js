@@ -818,8 +818,8 @@ export const shots = [
       P.plug.userData.set(on ? 0.45 : 0.1);
       // from outside the SE corner, low 3/4: the hand jamming the glowing plug into the socket, the green eyes above it, the moon behind
       const push = ease.inOutSine(clamp(lt / 0.8, 0, 1));
-      const c0 = L(TX + 2.35, DY + 2.25, SOCK.z - 2.05).lerp(L(TX + 2.15, DY + 2.1, SOCK.z - 1.8), push);
-      const c = setCam(ctx, { pos: c0.lerp(L(TX + 9.5, DY - 1.0, TZ + 3.0), tilt).add(up(3.0 * Math.sin(PI * tilt))), look: L(SOCK.x - 0.1, DY + 0.8, SOCK.z + 0.5).lerp(L(TX + 2.7, 13.4, TZ), tilt), fov: lerp(46, 50, tilt) }, 1.6, '#b8c8ff');
+      const c0 = L(TX + 3.55, DY + 2.3, SOCK.z - 0.3).lerp(L(TX + 3.3, DY + 2.2, SOCK.z - 0.15), push);
+      const c = setCam(ctx, { pos: c0.lerp(L(TX + 9.5, DY - 1.0, TZ + 3.0), tilt).add(up(3.0 * Math.sin(PI * tilt))), look: L(SOCK.x - 0.2, DY + 0.8, SOCK.z + 0.55).lerp(L(TX + 2.7, 13.4, TZ), tilt), fov: lerp(48, 50, tilt) }, 1.6, '#b8c8ff');
       if (tilt < 0.5) {
         moonBehind(ctx, c, headPt(ctx.cast.hacker, 0, 0.35, 0), { size: 20, dx: -0.06, dy: 0.1 });
         key(ctx, L(SOCK.x + 1.0, DY + 1.6, SOCK.z - 0.9), 14 * (1 - tilt * 2), '#c8ffd0');
@@ -1276,8 +1276,8 @@ export const shots = [
       P.burstY.position.copy(L(h.x, h.y, h.z + 0.2)); P.burstY.userData.set(t - ty);
       P.phones.userData.set({ led: '#ff2a2a', k: Math.floor(t * 5) % 2 ? 1 : 0.2 });
       // reverse angle from outside the south parapet: his face over the socket, the plug ripping out toward him in a spark burst
-      const cy = L(SOCK.x + 2.05, DY + 2.35, SOCK.z - 2.3);
-      setCam(ctx, { pos: cy, look: L(SOCK.x + 0.15, DY + 1.0, SOCK.z + 0.55), fov: 50 }, 1.4, '#ffd8c8');
+      const cy = L(SOCK.x + 2.3, DY + 2.7, SOCK.z - 2.55);
+      setCam(ctx, { pos: cy, look: L(SOCK.x + 0.3, DY + 1.05, SOCK.z + 0.7), fov: 48 }, 1.4, '#ffd8c8');
       key(ctx, L(SOCK.x + 0.9, DY + 2.2, SOCK.z - 0.4), 12, '#ffe0b0');
       if (off) { flash(ctx, ty, 0.2, '#fff3b0', 0.35); stamp(ctx, 'YANK!', ty, { y: 0.14, size: 160, fill: '#ffd23f', stroke: '#1d1d22' }); if (t - ty < 0.5) ctx.cam.shake(0.8 * (1 - (t - ty) / 0.5), t, 8); }
       battery(ctx, 1, { y: 0.075, s: 0.6, blink: true });
@@ -1350,9 +1350,11 @@ export const shots = [
       // hero at the SE corner of the deck, turned to the lens; the town cheers from the park lawn below (south of the tower)
       const me = put(ctx, 'me', L(TX + 1.55, DY, TZ - 1.15), L.yaw + 0.95); phonesOn(ctx, me);
       const ids = CROWD.slice(0, 26);
-      const list = ids.map((id, k) => { const c = k % 6, r = Math.floor(k / 6); const x = TX - 1.2 + c * 1.02 + (r % 2 ? 0.5 : 0) + (hash(k) - 0.5) * 0.3, z = TZ - 5.0 - r * 1.2 + (hash(k * 2) - 0.5) * 0.3;
+      const list = ids.map((id, k) => { const c = k % 6, r = Math.floor(k / 6); const x = TX - 0.9 + c * 0.98 + (r % 2 ? 0.45 : 0) + (hash(k) - 0.5) * 0.3, z = TZ - 8.6 - r * 1.25 + (hash(k * 2) - 0.5) * 0.3;
         return { ch: put(ctx, id, L(x, 0, z), L.yaw + (hash(k * 3) - 0.5) * 0.5), k, x, z, ph: hash(k) * 3 }; });
-      filler(ctx, [...ringFill(TX, TZ, 4.2, 15, 190, { seed: 3, face: 'in' })].filter((p) => !(p.z < TZ - 4.3 && p.z > TZ - 10.4 && p.x > TX - 2.0 && p.x < TX + 4.6)));
+      filler(ctx, [...ringFill(TX, TZ, 4.2, 15, 190, { seed: 3, face: 'in' })].filter((p) => !(p.z < TZ - 7.8 && p.z > TZ - 14.6 && p.x > TX - 1.8 && p.x < TX + 4.6)));
+      // tuck the (now dead) speaker rig out of this angle so the clock face doesn't clutter the cheering lawn
+      const P = ctx.props; P.spk.forEach((sp) => { sp.position.y -= 200; }); P.cabB.userData.set(V(TX, -200, TZ), V(TX, -201, TZ), 0.1); P.cabC.userData.set(V(TX, -200, TZ), V(TX, -201, TZ), 0.1);
       ctx.store = { ...ctx.store, L, list };
     },
     update(ctx, lt) {
@@ -1367,12 +1369,12 @@ export const shots = [
       P.filler.userData.set(t, { arms: 'cheer', flop: (i) => 1 - ease.outCubic(clamp((t - tu + 0.2 - 0.3 * hash(i * 2.3)) / 0.4, 0, 1)) });
       me.pose('cheer', t, { intensity: 0.6 }); armsUp(me, 1, 0.1 * Math.sin(t * 4)); me.face('laugh', t);
       // the plug held high in the right hand, out to the side (clear of the face); its cable trails off behind him on the deck
-      me.joints.armR.rotation.set(-2.55, 0, 0.75 + 0.08 * Math.sin(t * 5)); if (me.joints.foreArmR) me.joints.foreArmR.rotation.x = -0.1;
-      { const loc = ctx.set.root.worldToLocal(handPos(me, 'R')); plugAt(ctx, V(loc.x, loc.y + 0.45, loc.z), me.root.rotation.y, -PI / 2);
+      me.joints.armL.rotation.set(-2.45, 0, -1.0 - 0.08 * Math.sin(t * 5)); if (me.joints.foreArmL) me.joints.foreArmL.rotation.x = -0.1;
+      { const hw = handPos(me, 'L'), hc = headPt(me, 0, 0.3, 0), out = hw.clone().sub(hc).setY(0).normalize(); const loc = ctx.set.root.worldToLocal(hw.addScaledVector(out, 0.35)); plugAt(ctx, V(loc.x, loc.y + 1.2, loc.z), me.root.rotation.y, -PI / 2);   // (plug body hangs below its prong end: grip at the cord end)
         P.plug.updateMatrixWorld(true); const back = ctx.set.root.worldToLocal(P.plug.userData.back.getWorldPosition(V())); P.cabA.userData.set(back, V(TX - 1.8, DY + 0.05, TZ - 2.0), 0.9); }
       // drone spot outside the east parapet, above the deck: hero big in the upper half, the cheering lawn below him
       const push = ease.inOutSine(clamp(lt / 2.2, 0, 1));
-      const c = setCam(ctx, { pos: L(TX + 5.4, DY + 4.2, TZ + 2.4).lerp(L(TX + 5.1, DY + 3.9, TZ + 2.0), push), look: L(TX + 1.8, DY - 0.2, TZ - 2.6), fov: 56 }, 1.4, '#e0e8ff');
+      const c = setCam(ctx, { pos: L(TX + 4.6, DY + 4.4, TZ + 2.6).lerp(L(TX + 4.35, DY + 4.15, TZ + 2.25), push), look: L(TX + 1.4, DY + 0.1, TZ - 2.7), fov: 56 }, 1.4, '#e0e8ff');
       key(ctx, headPt(me, 0, 0.3, 0).add(L(1.6, 1.4, 1.4).sub(L(0, 0, 0))), 16);
       // a warm flood on the lawn so the cheering faces read
       const sl = P.shipLight; ctx.add(sl, ctx.set.root); sl.position.set(TX + 4.5, 8.0, TZ - 5.0); sl.color.set('#ffe8d0'); sl.intensity = 45;
