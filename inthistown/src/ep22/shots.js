@@ -881,13 +881,19 @@ export const shots = [
         w.root.scale.setScalar(s); w.root.rotation.set(0, L.yaw + PI / 2, 0); w.root.position.copy(L(st.x, 0, st.z));
         bigCatSit(w, t, { face: n < 3 ? 'shocked' : 'smile', faceT: 0.3, headPitch: n === 3 ? 0.25 : 0 });
       }
-      P.puffs.forEach((p, k) => { const d = t - g[k]; if (d < 0 || d > 0.7) { p.root.position.set(0, -99, 0); p.update(0); return; } const st = stages[k + 1]; p.root.position.copy(V(st.x, st.s * 0.3, st.z)); p.root.scale.setScalar(st.s * 0.5); p.update(d / 0.7); });
+      P.puffs.forEach((p, k) => { const d = t - g[k]; if (d < 0 || d > 0.3) { p.root.position.set(0, -99, 0); p.update(0); return; } const st = stages[k + 1]; p.root.position.copy(V(st.x + st.s * 0.12, st.s * 0.04, st.z)); p.root.scale.setScalar(st.s * 0.25); p.update(d / 0.3); });
       P.sparkles.userData.set(t, n > 0 ? 1 : 0);
       P.filler.userData.set(t, { arms: n > 0 ? 'up' : 'catch', bounce: n > 0 ? 0.3 : 0.05, speed: 0.6 });
-      const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
-      const c = setCam(ctx, { pos: L(-21 + 3 * k, 4.6 + 1.5 * k, 0.6), look: L(-56, 9 + 6 * k, -2.5), fov: 54 + 6 * k }, 0);
-      P.torches.userData.set(t, c.pos); P.clouds.userData.set(t, 0);
-      for (const h of g) { shakeOn(ctx, [h], 0.7, 0.4, 17); pop(ctx, h, 0.12, '#ffd6f0', 0.5); }
+      // crane with the growth: the look target follows his head height, the lens widens
+      const tgt = (m) => (m === 0 ? V(-50.2, 10.2, 1.4) : V(stages[m].x, 0.55 * stages[m].s, stages[m].z));
+      const fovs = [50, 54, 59, 64];
+      let look = tgt(0), fov = fovs[0];
+      if (n > 0) { const kk = ease.inOutCubic(clamp((t - g[n - 1]) / 0.32, 0, 1)); look = tgt(n - 1).lerp(tgt(n), kk); fov = lerp(fovs[n - 1], fovs[n], kk); }
+      const kc = n === 0 ? 0 : (n - 1 + ease.inOutCubic(clamp((t - g[n - 1]) / 0.32, 0, 1))) / 3;
+      const c = setCam(ctx, { pos: L(-18 - 1.0 * kc, lerp(3.4, 6.5, kc), 1.2), look: L(look.x, look.y, look.z), fov }, 0.8, '#e4dcff');
+      const part = n >= 2 ? 0.6 * ease.inOutCubic(clamp((t - g[1]) / 0.9, 0, 1)) : 0;
+      P.torches.userData.set(t, c.pos); P.clouds.userData.set(t, part, -59, -6);
+      for (const h of g) { shakeOn(ctx, [h], 0.7, 0.4, 17); pop(ctx, h, 0.1, '#ffd6f0', 0.3); }
       stormFrame(ctx, c, [], { rainA: 1 });
       const words = ['GREW', 'AND GREW', 'AND GREW!'];
       if (n > 0) tag(ctx, words[n - 1], g[n - 1], Infinity, { y: 0.13, size: 80 + n * 10, bg: 'rgba(255,79,163,0.92)' });
@@ -911,7 +917,7 @@ export const shots = [
       P.filler.userData.set(t, { arms: 'up', bounce: 0.2, speed: 0.6 });
       P.sparkles.userData.set(t, 1);
       const part = ease.inOutCubic(clamp((t - ctx.time('b18.w6')) / 1.4, 0, 1));
-      P.clouds.userData.set(t, part, -64, -4);
+      P.clouds.userData.set(t, 0.6 + 0.4 * part, -59, -6);
       const sky = ctx.set.root.getObjectByName('sky');
       if (sky?.material?.uniforms?.uZenith) { const u = sky.material.uniforms; u.uZenith.value.copy(STORM.zenith).lerp(new THREE.Color('#1a2a6a'), part); u.uMid.value.copy(STORM.mid).lerp(new THREE.Color('#5a4aa8'), part); u.uHorizon.value.copy(STORM.horizon).lerp(new THREE.Color('#c890d8'), part); }
       const c = moveCam(ctx, { pos: L(-29.5, 1.1, 0.6), look: L(-54, 13, -3.5), fov: 60 }, { pos: L(-30, 1.0, 0.6), look: L(-54, 14.5, -3.8), fov: 62 }, clamp(lt / 2, 0, 1), 1.6, '#e4dcff');
@@ -926,7 +932,7 @@ export const shots = [
       const L = town(ctx, 'quiet_night', { glow: 1, exposure: 1.3 }); const P = ctx.props; towerHands(ctx);
       put(ctx, 'waffles', L(CAT_BIG.x - 8, 0, CAT_BIG.z), L.yaw + PI / 2, 40);
       addTo(ctx, P.dust.root, 0, -99, 0);
-      const list = blockFill(-43, -38, 1, 8, 50, { seed: 19, faceX: -48, faceZ: -10 });
+      const list = blockFill(-44, -36, -5, 1, 50, { seed: 19, faceX: -48, faceZ: -10 });
       filler(ctx, list);
     },
     update(ctx, lt) {
@@ -939,9 +945,10 @@ export const shots = [
       const d = t - tc; const bounce = d > 0 && d < 0.6 ? 0.18 * Math.sin(d * 30) * (1 - d / 0.6) : 0;
       ctx.set.root.position.y = ctx.props.rootY0 + bounce; ctx.set.root.updateMatrixWorld(true);
       const paw = J.armR.localToWorld(V(0, -0.18, 0));
-      if (d >= 0 && d < 0.9) { P.dust.root.position.copy(paw.clone().applyMatrix4(L.M.clone().invert()).setY(0.5)); P.dust.root.scale.setScalar(6); P.dust.update(d / 0.9); } else P.dust.update(0);
+      if (d >= 0 && d < 0.9) { P.dust.root.position.copy(paw.clone().applyMatrix4(L.M.clone().invert()).setY(0.5)); P.dust.root.scale.setScalar(3); P.dust.update(d / 0.9); } else P.dust.update(0);
       P.filler.userData.set(t, { arms: d > 0 ? 'cheer' : 'up', bounce: 0.3, speed: 0.6 });
-      const c = setCam(ctx, { pos: L(-30, 1.6, 4.5), look: L(-48, 8, -10), fov: 58 }, 0);
+      const cx = CAT_BIG.x - 8 + 8 * ease.inOutSine(k);
+      const c = setCam(ctx, { pos: L(-22, 1.6, 4.8), look: L(cx + 1.5, 10, CAT_BIG.z + 1), fov: 66 }, 0);
       shakeOn(ctx, [tc], 0.9, 0.5, 21);
       tag(ctx, 'CASUAL', ctx.time('b19.w3'), Infinity, { y: 0.13, size: 90, bg: 'rgba(30,30,40,0.9)', fill: '#3ee0c8' });
     },
@@ -972,8 +979,8 @@ export const shots = [
         { pos: L(-29, 1.5, 0.0), look: L(-45, 7, -10), fov: 58 },
         { pos: L(-27.9, 4.2, 3.4), look: f.clone().add(up(-0.38)), fov: 34 },
         { pos: L(-18, 15, 14), look: L(-36, 2, -2), fov: 50 },
-        { pos: L(-27.0, 0.8, 5.2), look: L(-34, 7.5, -3), fov: 58 },
-        { pos: L(-21, 3.5, 5.2), look: L(-38, 6, -3), fov: 56 },
+        { pos: L(-25.2, 1.0, 7.6), look: L(-33, 5.0, 1.0), fov: 58 },
+        { pos: L(-21, 3.5, 5.2), look: L(-36, 1.6, -1), fov: 62 },
       ];
       setCam(ctx, cams[i], 0.8, '#ffe0f0');
       ctx.cam.punch(hits, t, 0.12, 0.2); shakeOn(ctx, hits, 0.12, 0.25, 31);
@@ -994,7 +1001,7 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props;
       bigCatSit(ctx.cast.waffles, t, { face: 'smile', faceT: 0.3, lick: 0.5 });
-      barnesFrame(ctx, t, { face: 'sad', faceT: 0.3 });
+      barnesFrame(ctx, t, { face: 'sad', faceT: 0.3, hand: 'handL' });
       P.tears.userData.set(t);
       P.filler.userData.set(t, { arms: 'dance', bounce: 0.6, speed: 0.8 });
       const b = ctx.cast.barnes, f = humanFace(b), { f: fw, s } = ctx.store.bn;
@@ -1015,11 +1022,11 @@ export const shots = [
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tg = ctx.time('b21.w7');
       const gs = lerp(0.06, 0.17, ease.outBack(clamp((t - tg) / 0.4, 0, 1)));
       P.dog.scale.setScalar(gs);
-      barnesFrame(ctx, t, { face: 'sad', faceT: 0.3, hop: t > tg + 0.3 ? 1 : 0, thick: 0.5 });
+      barnesFrame(ctx, t, { face: 'sad', faceT: 0.3, hop: t > tg + 0.3 ? 1 : 0, thick: 0.5, hand: 'handL' });
       P.tears.userData.set(t);
       const { dp, f } = ctx.store.bn;
       const d = L(dp.x, 0, dp.z);
-      ctx.cam.move({ pos: d.clone().addScaledVector(f, 0.32).add(V(0.06, 0.07, 0.1)), look: d.clone().add(up(0.03)), fov: 36 }, { pos: d.clone().addScaledVector(f, 0.42).add(V(0.08, 0.1, 0.12)), look: d.clone().add(up(0.05)), fov: 38 }, clamp((t - tg) / 0.5, 0, 1));
+      ctx.cam.move({ pos: d.clone().addScaledVector(f, 0.32).add(V(0.06, 0.11, 0.1)), look: d.clone().add(up(-0.03)), fov: 36 }, { pos: d.clone().addScaledVector(f, 0.42).add(V(0.08, 0.14, 0.12)), look: d.clone().add(up(-0.01)), fov: 38 }, clamp((t - tg) / 0.5, 0, 1));
       fill(ctx, d.clone().addScaledVector(f, 0.6).add(up(0.3)), 0.6, '#ffe8d8', 4);
       tag(ctx, '+3 INCHES', ctx.time('b21.w9'), ctx.time('b21.w11') - 0.1, { y: 0.15, size: 90, bg: 'rgba(60,180,90,0.95)' });
       top10Card(ctx, 3, ctx.time('b21.w11') - 0.02, Infinity, { popAt: ctx.time('b21.w12') });
