@@ -261,7 +261,7 @@ export function makeElevatorCar() {
         const gv = n === 3 ? glow3 : n === 4 ? glow4 : 0;
         const on = gv > 0.02;
         lit[n].faceStd.visible = !on; lit[n].faceLit.visible = on;
-        lit[n].faceLit.material.color.setScalar(0.55 + 0.9 * gv);
+        lit[n].faceLit.material.color.setScalar(0.55 + 0.9 * Math.min(gv, 0.75));
         glows[n].material.opacity = clamp(gv * 0.75, 0, 1); glows[n].scale.setScalar(0.25 + 0.22 * gv);
         btn[n].position.z = 0.045 - 0.016 * (n === 3 ? press3 : n === 4 ? press4 : 0);
         const vis = n < 4 || show4;
@@ -787,7 +787,7 @@ function doorGeos() {
   _doorGeo = { frame, leaf: leafKnob };
   return _doorGeo;
 }
-const keyTex = () => cachedTex('keyhole', 64, 128, (g, w, h) => { g.clearRect(0, 0, w, h); g.fillStyle = '#ffffff'; g.beginPath(); g.arc(w / 2, h * 0.32, w * 0.3, 0, PI * 2); g.fill(); g.beginPath(); g.moveTo(w * 0.36, h * 0.38); g.lineTo(w * 0.64, h * 0.38); g.lineTo(w * 0.76, h * 0.94); g.lineTo(w * 0.24, h * 0.94); g.closePath(); g.fill(); });
+const keyTex = () => cachedTex('keyhole', 256, 512, (g, w, h) => { g.clearRect(0, 0, w, h); g.fillStyle = '#ffffff'; g.beginPath(); g.arc(w / 2, h * 0.32, w * 0.3, 0, PI * 2); g.fill(); g.beginPath(); g.moveTo(w * 0.36, h * 0.38); g.lineTo(w * 0.64, h * 0.38); g.lineTo(w * 0.76, h * 0.94); g.lineTo(w * 0.24, h * 0.94); g.closePath(); g.fill(); });
 const DOOR_COLS = ['#7a4a2a', '#8a5532', '#6b3d22', '#9a6038', '#5e3a24', '#3f7a7a', '#7a3f5a', '#4a5d8a', '#8a7a3a', '#a0522d'];
 function portalMaterial() {
   return new THREE.ShaderMaterial({
@@ -958,9 +958,9 @@ export function buildFloorThree() {
   const HD = [
     { name: 'd1', x: -2.15, y: 0, z: 7.0, yaw: PI / 2, color: '#8a5532' },
     { name: 'd2', x: 2.15, y: 0, z: 11.5, yaw: -PI / 2, color: '#3f7a7a' },
-    { name: 'd3', x: -2.6, y: 0.0, z: 18.2, yaw: PI - 0.32, color: '#7a4a2a', keyY: 1.32 },
+    { name: 'd3', x: -2.0, y: 0.0, z: 18.4, yaw: PI - 0.36, color: '#7a4a2a', keyY: 1.32 },
     { name: 'd4', x: 0, y: 0.0, z: 19.1, yaw: PI, color: '#6b3d22', keyY: 1.32 },
-    { name: 'd5', x: 2.6, y: 0.0, z: 18.2, yaw: PI + 0.32, color: '#9a6038', keyY: 1.32 },
+    { name: 'd5', x: 2.0, y: 0.0, z: 18.4, yaw: PI + 0.36, color: '#9a6038', keyY: 1.32 },
   ];
   const anchors = {};
   const mk = (name, x, y, z, yaw = 0) => { const o = new THREE.Object3D(); o.position.set(x, y, z); o.rotation.y = yaw; root.add(o); anchors[name] = o; return o; };
@@ -992,7 +992,7 @@ export function buildFloorThree() {
     list.push({ x, y, z, yaw: hash(i * 5.5) * PI * 2, open: 0.05 + 0.5 * hash(i * 6.6), color: DOOR_COLS[i % DOOR_COLS.length], s: 0.9 + 0.5 * hash(i * 7.7), ph: hash(i * 8.8) * 6, row: false });
   }
   // vanish order: rows by distance along the path, scattered ones later
-  list.forEach((d, i) => { d.tv = d.row ? Math.max(0, (d.z - 2) * 0.028) + 0.02 * hash(i) : 0.5 + 1.2 * hash(i * 9.9); });
+  list.forEach((d, i) => { d.tv = d.row ? Math.max(0, (d.z - 2) * 0.012) + 0.02 * hash(i) : 0.35 + 0.9 * hash(i * 9.9); });
   const field = makeDoorField(list); root.add(field);
   // pastel floaters
   const pastel = ['#ffb3d9', '#b3f0ff', '#d4b3ff', '#ffd9a8', '#b8ffcc'].map((c) => new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.75, roughness: 0.4 }));

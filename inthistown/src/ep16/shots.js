@@ -87,6 +87,14 @@ export function init(ctx) {
   P.duvet = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.24, 1.55), new THREE.MeshStandardMaterial({ color: '#4f7fbf', roughness: 0.9 })); P.duvet.castShadow = true;
   P.drips = makeDrips(12);
   P.eyeGlow = glowSprite('#5aff7a', 10, 0.8);
+  P.ripped = makeRipped();
+}
+/** what is left of Dobbs' front room: splintered floor-plank ends and broken pink wall stubs at the doorway (origin = house front). */
+function makeRipped() {
+  const g = new THREE.Group(), wood = new THREE.MeshStandardMaterial({ color: '#8a6a4a', roughness: 0.85 }), dark = new THREE.MeshStandardMaterial({ color: '#5a4030', roughness: 0.9 }), pink = new THREE.MeshStandardMaterial({ color: '#f2c4c4', roughness: 0.8 });
+  for (let k = 0; k < 9; k++) { const L = 0.35 + 1.1 * hash(k * 2.7), b = new THREE.Mesh(new THREE.BoxGeometry(L, 0.12, 0.4), k % 3 ? wood : dark); b.position.set(0.1 + L / 2, 0.06, -1.7 + k * 0.42); b.rotation.z = (hash(k) - 0.5) * 0.12; b.castShadow = true; g.add(b); }
+  for (const sd of [-1, 1]) for (let k = 0; k < 4; k++) { const h = 2.6 - k * 0.6 - 0.3 * hash(k + sd), w = new THREE.Mesh(new THREE.BoxGeometry(0.3, h, 0.16), pink); w.position.set(0.2 + k * 0.3, h / 2, sd * 1.9); g.add(w); }
+  return g;
 }
 function shoe() { const g = new THREE.Group(); const b = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.11, 0.3), new THREE.MeshStandardMaterial({ color: '#1d1d22', roughness: 0.6 })); g.add(b); const s = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.04, 0.31), new THREE.MeshStandardMaterial({ color: '#ffffff' })); s.position.y = -0.06; g.add(s); return g; }
 function flag(c) { const g = new THREE.Group(); const st = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.75, 6), new THREE.MeshStandardMaterial({ color: '#6b4a3a' })); st.position.y = 0.3; g.add(st); const f = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.32, 0.42), new THREE.MeshStandardMaterial({ color: c, roughness: 0.6 })); f.position.set(0, 0.52, 0.22); g.add(f); return g; }
@@ -126,7 +134,6 @@ const iris = (ctx, t0, cy = 0.45, dur = 0.4, cx = 0.5) => { const k = clamp((ctx
 /** project a world point through a camera spec {pos, look, fov} (portrait 9:16) → {x, y} in 0..1 */
 const _pc = new THREE.PerspectiveCamera(40, 9 / 16, 0.1, 1000);
 function toScreen(c, p) { _pc.fov = c.fov; _pc.updateProjectionMatrix(); _pc.position.copy(c.pos); _pc.lookAt(c.look); _pc.updateMatrixWorld(true); const v = p.clone().project(_pc); return { x: clamp((v.x + 1) / 2, 0.05, 0.95), y: clamp((1 - v.y) / 2, 0.05, 0.95) }; }
-const DEBUG_EYE = true;
 /** lightning: returns flash 0..1 for strikes at the given times */
 function strikeK(t, times, dur = 0.22) { let k = 0; for (const s of times) { const d = t - s; if (d >= 0 && d < dur) k = Math.max(k, (d < 0.05 ? 1 : 1 - (d - 0.05) / (dur - 0.05)) * (d > 0.08 && d < 0.11 ? 0.4 : 1)); } return k; }
 function lightning(ctx, times, { bolt = true, at = [70, 46, -40], shake = 0.25 } = {}) {
@@ -206,8 +213,9 @@ function bikeAt(ctx, p, yaw, tilt = 0) {
 }
 /** Mum's shush: finger to the lips. */
 function shush(ch, t) {
-  ch.pose('idle', t, { intensity: 0.3 });
-  const J = ch.joints; J.armR.rotation.x = -2.1; J.armR.rotation.z = 0.55; J.foreArmR.rotation.x = -1.9; J.head.rotation.x += 0.12; J.torso.rotation.x += 0.08;
+  ch.pose('think', 0.3, { intensity: 1 });                 // hand up at the chin…
+  const F = ch._fingers?.R; if (F) { F.visible = true; F.scale.setScalar(1); }   // …index finger up over the lips
+  ch.joints.head.rotation.x += 0.1; ch.joints.head.rotation.y -= 0.12;
   ch.face('determined', 1.5);
 }
 /** Whisper: hand beside the mouth, leaning in. */
@@ -258,9 +266,19 @@ function limpOpts(ctx, t) {
 const HARB = (lighting, options = {}, extra = {}) => ({ set: 'harbour', lighting, options, ...extra });
 const A = (ctx, a) => ctx.time(a);
 const WX = -22;
-const SNORE_AT = { x: 1.2, z: DOBBS.z - 0.6 };
+const SNORE_AT = { x: 1.3, z: DOBBS.z + 0.6 };
 /** Mr. Dobbs' quote card: up from 'harbour' until 'fishermen' (spans the cut into the flags shot). */
-function dobbsCard(ctx) { const t0 = A(ctx, 'b08.w15') - 0.05; quoteCard(ctx, 'It was a really nice kettle.', 'Mr. Dobbs', t0, A(ctx, 'b09.w1'), { y: 0.14, byAt: t0 + 0.45 }); }
+function dobbsCard(ctx) { const t0 = A(ctx, 'b08.w12') - 0.05; quoteCardKeepCaps(ctx, 'It was a really nice kettle.', 'Mr. Dobbs', t0, A(ctx, 'b09.w2'), { y: 0.11, byAt: t0 + 0.6 }); }
+/** cards.js quoteCard, copied: lighter dim and the word captions stay on (the card sits in the top band). */
+function quoteCardKeepCaps(ctx, quote, by, t0, t1, { y = 0.12, size = 74, byAt = null } = {}) {
+  const t = ctx.t; if (t < t0 || t > t1) return false;
+  const d = t - t0, a = clamp(Math.min(d / 0.12, (t1 - t) / 0.12), 0, 1);
+  ctx.fx.overlay('#000000', 0.38 * a);
+  const pop = d < 0.2 ? ease.outBack(clamp(d / 0.2, 0, 1)) : 1;
+  ctx.fx.text('\u201c' + quote.replace('really nice', 'really nice\n') + '\u201d', { y, size, font: 'narr', fill: '#ffffff', stroke: '#000000', line: 10, scale: 0.6 + 0.4 * pop, alpha: a, rot: -0.02 });
+  ctx.fx.text('\u2014 ' + by, { y: y + 1.9 * size * 1.05 / 1920, size: size * 0.62, font: 'narr', fill: '#ffe14a', stroke: '#000000', line: 8, alpha: clamp((t - byAt) / 0.12, 0, 1) * a, rot: -0.02 });
+  return true;
+}
 
 // ═════════════════════════════════════════════════════════════════════════════════════════ SHOTS
 export const shots = [
@@ -364,9 +382,10 @@ export const shots = [
       const k = ctx.cast.keeper; keeperLean(k, ctx.t, false); k.face(ctx.t > A(ctx, 'b05.w5') ? 'shocked' : 'neutral', 1);
       k.joints.head.rotation.x += 0.35;
       const bx = 46, bz = -10, bh = 3.4 * smooth(clamp((ctx.t - A(ctx, 'b05.w3')) / 1.0, 0, 1));
-      ctx.set.bulge(bx, bz, bh, 6); ctx.set.seaGlow(bx, bz, 0.22 * bh / 3.4, 5);
+      ctx.set.bulge(bx, bz, bh, 6); ctx.set.seaGlow(bx, bz, 0.7 * bh / 3.4, 6);
+      { const L = ctx.set.lights.glow2; L.color.set('#40ff70'); L.position.set(bx - 2, SEA_Y + bh + 1.2, bz + 2); L.intensity = 45 * bh / 3.4; L.distance = 12; }
       const N = ctx.props.notesG; N.position.set(bx, SEA_Y + bh, bz); N.userData.set(ctx.t, clamp((ctx.t - A(ctx, 'b05.w5')) / 0.3, 0, 1), [0.5, 1.6, -0.6], 1.6, 0.4);
-      const c = { pos: V(37, 1.6, 1.5), look: V(LH.x - 3, 6, LH.z + 2), fov: 54 };
+      const c = { pos: V(34, 2.4, 4), look: V(52, 9, -18), fov: 58 };
       ctx.cam.set(c); fill(ctx, c.pos, 0.5);
       ctx.fx.vignette(0.5);
     },
@@ -465,10 +484,10 @@ export const shots = [
       const flash = Math.max(0, 1 - Math.abs(ctx.t - tb) / 0.25);
       const eye = gulpSet(ctx, { rise: 1, glow: 1 + flash, flash, sway: 1, lookX: 0.35 }); eyeLight(ctx, eye, 1 + flash * 1.5);
       if (ctx.t > tq && ctx.t < tq + 0.4) { g.pose('huss', ctx.t); g.face('huss', 0); } else if (ctx.t > tb) { g.pose('flap', ctx.t); g.face('shocked', 0); } else { g.pose('idle', ctx.t); g.face('neutral', 0); }
-      const c = { pos: V(PIER.x1 - 4.2, 0.9, PIER.endHalf + 1.6), look: V(PIER.x1 + 2.5, 5.5, 2.6), fov: 52 };
+      const gp = V(PIER.x1 - 0.08, 1.3, PIER.endHalf - 0.08), c = { pos: V(PIER.x1 - 2.3, 1.5, PIER.endHalf + 0.8), look: gp.lerp(eye, 0.5), fov: 60 };
       ctx.cam.set(c); fill(ctx, c.pos, 0.6);
       if (ctx.t > tq && ctx.t < tb) tag(ctx, 'squawk', tq, tb, { x: 0.62, y: 0.42, size: 54, bg: null, rot: 0.1 });
-      if (ctx.t > tb) { stamp(ctx, 'SQUAWK!!', tb, { y: 0.2, size: 170, fill: '#5aff7a', stroke: '#06301a' }); ctx.cam.shake(0.5 * Math.max(0, 1 - (ctx.t - tb) / 0.6), ctx.t, 11); }
+      if (ctx.t > tb) { stamp(ctx, 'SQUAWK!!', tb, { y: 0.12, size: 170, fill: '#5aff7a', stroke: '#06301a' }); ctx.cam.shake(0.5 * Math.max(0, 1 - (ctx.t - tb) / 0.6), ctx.t, 11); }
       ctx.fx.vignette(0.4);
     },
   },
@@ -587,9 +606,10 @@ export const shots = [
   {
     name: 'dobbs in the doorway', start: 'b08.w12-0.1', ...HARB('day', { seaAmp: 0.14, lamp: 'off', frontRoom: false }),
     setup(ctx) {
-      const d = put(ctx, 'dobbs', [DOBBS.x + 0.35, 0.03, DOBBS.z], PI / 2);
+      const d = put(ctx, 'dobbs', [DOBBS.x + 0.35, 0.12, DOBBS.z], PI / 2);
       const K = ctx.props.kettle; ctx.add(K, d.joints.handR); K.position.set(0, -0.12, 0.08); K.rotation.set(PI / 2, 0, 0); K.scale.setScalar(1.35);
       const S = ctx.props.snore; ctx.add(S); S.position.set(SNORE_AT.x, SEA_Y, SNORE_AT.z);
+      const R = ctx.props.ripped; ctx.add(R); R.position.set(DOBBS.x, 0, DOBBS.z);
     },
     update(ctx, lt) {
       const d = ctx.cast.dobbs; d.pose('idle', ctx.t, { intensity: 0.2 }); d.face('neutral', 1.2);
@@ -597,7 +617,7 @@ export const shots = [
       ctx.props.kettle.userData.set(ctx.t, 0.6);
       ctx.props.snore.userData.set(ctx.t, 0.4, 2.5, 4, 0.5);
       ctx.set.bulge(SNORE_AT.x, SNORE_AT.z, 0.15 * Math.sin(ctx.t * 5), 3);
-      ctx.cam.move({ pos: V(DOBBS.x + 6.5, 2.0, DOBBS.z + 5), look: V(DOBBS.x + 0.6, 1.2, DOBBS.z), fov: 46 }, { pos: V(DOBBS.x + 6.0, 1.9, DOBBS.z + 4.6), look: V(DOBBS.x + 0.6, 1.25, DOBBS.z), fov: 44 }, clamp(lt / 1.3, 0, 1));
+      ctx.cam.move({ pos: V(5.4, 4.4, -10.6), look: V(-1.8, 1.0, -13.8), fov: 52 }, { pos: V(5.0, 4.2, -11.0), look: V(-1.8, 1.0, -13.8), fov: 49 }, clamp(lt / 1.6, 0, 1));
       dobbsCard(ctx);
     },
   },
@@ -851,11 +871,12 @@ export const shots = [
       const me = ctx.cast.me, ty = ctx.markers.yawn, k = smooth(clamp((ctx.t - ty + 0.1) / 0.35, 0, 1));
       const eye = gulpSet(ctx, { rise: 1, glow: 1, sway: 1 }); eyeLight(ctx, eye, 0.8);
       yawnPose(me, ctx.t, k); me.face('huss', 0);
-      const M = megaPose(ctx, me, eye, 1, 0.3);
+      const M = megaPose(ctx, me, eye, 1, 0.42);
       const R = ctx.props.rings;
       R.position.copy(M.localToWorld(V(0, 0, 0.55))); R.lookAt(eye); R.userData.set(ctx.t - ty, k, 24, 0.9);
-      const c0 = { pos: V(42.6, 1.4, -3.8), look: V(45, 2.2, 0.6), fov: 52 }, c1 = { pos: V(42.4, 1.45, -3.6), look: V(45, 2.3, 0.6), fov: 50 };
-      ctx.cam.move(c0, c1, clamp(lt / 1, 0, 1)); fill(ctx, V(43.5, 2.0, -2.5), 0.9); stormTail(ctx, false, c0.pos);
+      const f = humanFace(me), lk = f.clone().add(V(0.35, 0.3, 0.2));
+      const c0 = { pos: V(43.9, 2.75, -2.8), look: lk, fov: 50 }, c1 = { pos: V(44.2, 2.9, -3.1), look: lk, fov: 52 };
+      ctx.cam.move(c0, c1, clamp(lt / 1.1, 0, 1)); fill(ctx, V(44.0, 2.4, -2.2), 1.1); stormTail(ctx, false, c0.pos);
       stamp(ctx, 'YAWN', ty, { y: 0.17, size: 200, fill: '#ffe14a', stroke: '#3a2a00', rot: -0.06 });
       ctx.fx.vignette(0.4);
     },
@@ -929,8 +950,9 @@ export const shots = [
       bikeAt(ctx, pos, -PI / 2);
       B.userData.set(ctx.t, down < 1 ? 1 : 0);
       if (ctx.t > td + 0.2) { g.pose('crossArms', ctx.t, { seated: true, seatHeight: 0.8 }); g.face('determined', 1); } else { rider(g, ctx.t, 1.2, 0.2); g.face('sweat', 1); }
-      const c = { pos: V(29.6, 1.5, 3.6), look: pos.clone().add(up(1.0)), fov: lerp(46, 52, 1 - down) };
-      ctx.cam.set(c); fill(ctx, c.pos, 0.9);
+      const c = { pos: V(31.0, lerp(2.4, 1.6, down), 4.2), look: pos.clone().add(up(0.9)), fov: lerp(44, 48, 1 - down) };
+      ctx.cam.set(c); fill(ctx, c.pos, 2.0);
+      { const L2 = ctx.set.lights.glow2; L2.color.set('#d8e4ff'); L2.position.copy(pos).add(V(1.5, 2.5, -2.5)); L2.intensity = 30; L2.distance = 12; }
       ctx.fx.vignette(0.4);
     },
   },
@@ -938,15 +960,18 @@ export const shots = [
     name: 'gulp sinks, snoring bubbles', start: 'b18.w4-0.1', ...HARB('night', { seaAmp: 0.2, lamp: 'off' }),
     setup(ctx) { gulpAt(ctx, GULP_POS.x, GULP_POS.z, 15); const S = ctx.props.snore; ctx.add(S); S.position.set(56, SEA_Y, 3); },
     update(ctx, lt) {
-      const ts = A(ctx, 'b18.w4'), sink = smooth(clamp((ctx.t - ts) / 0.8, 0, 1)), tb = ts + 0.7;
-      const eye = gulpSet(ctx, { rise: 1 - sink, glow: 0.6, sway: 0.2, lid: 0.8 + 0.2 * smooth(clamp((ctx.t - ts) / 0.4, 0, 1)), limp: 1 }); eyeLight(ctx, eye, 0.4 * (1 - sink));
+      const ts = A(ctx, 'b18.w4'), u = ctx.t - ts, tb = ts + 0.45;
+      // slow first (the eye closes as the water reaches it), then it drops away
+      const rise = u < 0.9 ? 1 - 0.3 * smooth(clamp(u / 0.9, 0, 1)) : lerp(0.7, 0, smooth(clamp((u - 0.9) / 0.5, 0, 1))), sink = 1 - rise;
+      const eye = gulpSet(ctx, { rise, glow: 0.6, sway: 0.2, lid: 0.45 + 0.55 * smooth(clamp((u - 0.15) / 0.65, 0, 1)), limp: 1 }); eyeLight(ctx, eye, 0.5 * (1 - sink));
       // ripples over the spot, then the snore bubbles + a slow green pulse under the water
       const rip = smooth(clamp((ctx.t - ts - 0.3) / 0.5, 0, 1));
       ctx.set.bulge(GULP_POS.x - 8, GULP_POS.z, 1.5 * sink * (1 - sink) * 4 + rip * 0.35 * Math.sin(ctx.t * 4), 12);
       const S = ctx.props.snore, a = clamp((ctx.t - tb) / 0.3, 0, 1); S.userData.set(ctx.t, a, 12, 13, 1.7);
-      if (ctx.t > ts + 0.4) ctx.set.seaGlow(56, 3, rip * (0.35 + 0.15 * Math.sin(ctx.t * 2)), 8);
-      const c0 = { pos: V(40, 1.6, -2.2), look: V(60, 3.5, 2.5), fov: 48 }, c1 = { pos: V(42.5, 2.4, -2.6), look: V(56, 5.5, 3), fov: 46 };
-      ctx.cam.move(c0, c1, clamp(lt / 2.5, 0, 1), ease.inOutSine); fill(ctx, c1.pos, 0.3);
+      ctx.set.seaGlow(56, 3, (0.25 + 0.5 * rip) * (0.8 + 0.2 * Math.sin(ctx.t * 2)), 9);
+      { const L = ctx.set.lights.glow2; L.color.set('#40ff70'); L.position.set(54, SEA_Y + 0.5, 3); L.intensity = 40 * rip; L.distance = 16; }
+      const c0 = { pos: V(40, 1.6, -2.2), look: V(60, 3.5, 2.5), fov: 48 }, c1 = { pos: V(44.5, 2.2, -2.2), look: V(56, 3.0, 3), fov: 46 };
+      ctx.cam.move(c0, c1, clamp((ctx.t - ts - 0.3) / 1.4, 0, 1), ease.inOutSine); fill(ctx, c1.pos, 0.3);
       tag(ctx, 'Zzz', A(ctx, 'b18.w10'), Infinity, { y: 0.17, size: 110, bg: null, fill: '#bfefff', stroke: '#1d3a5a' });
       ctx.fx.vignette(0.38);
     },
@@ -1058,19 +1083,18 @@ export const shots = [
       const open = ease.outBack(clamp((ctx.t - hits[0] + 0.08) / 0.15, 0, 1));
       const eye = gulpSet(ctx, { rise: 0.62, lid: 1 - open, glow: 1.2, tentOn: 0, lookY: 0.35, lookX: 0, brow: 1 });
       eyeLight(ctx, eye, 1.4); ctx.set.lights.glow.position.copy(eye).add(V(-3, 1, 0)); ctx.set.lights.glow.distance = 25;
-      if (DEBUG_EYE && i === 0) console.log('EYE', eye.toArray().map((v) => v.toFixed(2)).join(','));
       // HUSS bubbles burst up beside the eye (kept clear of the camera and of the caption band)
-      const bp = [V(eye.x + 1.8, SEA_Y, eye.z + 3.2), V(eye.x + 3.2, SEA_Y, eye.z - 1.0), V(eye.x + 0.6, SEA_Y, eye.z - 3.6)];
-      P.hussB.forEach((b, k) => { b.position.copy(bp[k]); b.scale.setScalar(1.1); b.userData.set((ctx.t - hits[k]) / 0.8); });
-      const win = V(-3.55, 4.6, 13), mid = eye.clone().lerp(win, 0.5);
+      const bp = [V(eye.x + 3.0, SEA_Y, eye.z - 1.5), V(eye.x + 3.8, SEA_Y, eye.z + 1.8), V(eye.x + 1.2, SEA_Y, eye.z - 4.0)];
+      if (i === 2) { bp[0].set(eye.x + 2.6, SEA_Y, eye.z - 1.3); bp[1].set(eye.x + 3.6, SEA_Y, eye.z + 1.3); bp[2].set(eye.x + 1.6, SEA_Y, eye.z - 2.4); }
+      P.hussB.forEach((b, k) => { b.position.copy(bp[k]); b.scale.setScalar(i === 2 ? 0.9 : 1.1); b.userData.set((ctx.t - hits[k]) / 0.8); });
       const cams = [
-        { pos: eye.clone().add(V(-5, 2.5, 4)), look: eye, fov: 46 },
+        { pos: V(-1.9, 1.7, 13.25), look: eye.clone().add(up(0.35)), fov: 38 },
         { pos: V(-3.2, 2.7, 15.6), look: eye, fov: 46 },
-        { pos: V(-1, 9, 21), look: mid, fov: 50 },
+        { pos: V(13, 8.5, 20), look: eye.clone().lerp(V(-3.55, 4.4, 13), 0.5), fov: 46 },
       ];
       cam(ctx, cams[i], 0.3); ctx.cam.punch(hits, ctx.t, 0.14, 0.2);
       ctx.fx.vignette(0.5);
-      if (i === 2) { ctx.caption.hide(true); const sp = toScreen(cams[2], eye); iris(ctx, A(ctx, 'b22.end') + 0.15, sp.y, 0.35, sp.x); }
+      if (i === 2) { ctx.caption.hide(true); const sp = toScreen(cams[2], V(-3.55, 4.4, 13)); iris(ctx, A(ctx, 'b22.end') + 0.15, sp.y, 0.35, sp.x); }
     },
   })),
 ];

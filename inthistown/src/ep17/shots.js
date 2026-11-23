@@ -34,12 +34,12 @@ export const cast = {
   rude: { id: 'rude', skin: '#e0ac69', hair: { style: 'spiky', color: '#1a120c' }, top: { style: 'tee', color: '#ff7a2f', accent: '#ffffff', emblem: 'star' },
     bottom: { style: 'shorts', color: '#2f4d8a' }, shoes: '#f2f2f2', accessories: ['sunglasses'], scale: 1.0 },
   dana: { id: 'dana', skin: '#c68642', hair: { style: 'long', color: '#3b2416' }, top: { style: 'hoodie', color: '#e8232b', accent: '#ffffff', emblem: 'stripe' },
-    bottom: { style: 'pants', color: '#e8232b' }, shoes: '#f2f2f2', accessories: ['cap'], capColor: '#1d1d22', scale: 3.6 },
+    bottom: { style: 'pants', color: '#1c2a5a' }, shoes: '#f2f2f2', accessories: ['cap'], capColor: '#1d1d22', scale: 3.6 },
   grandma: { id: 'grandma', skin: '#f4d0b5', hair: { style: 'bun', color: '#c9c9d0' }, top: { style: 'cardigan', color: '#c0607a', accent: '#ffe0e8' },
     bottom: { style: 'skirt', color: '#6a4a7a' }, shoes: '#7a1f2b', accessories: ['glasses'], scale: 0.92 },
   ...Object.fromEntries(KID_IDS.map((id, i) => [id, { id, skin: ['#f1c7a1', '#8d5524', '#e0ac69', '#c68642', '#ffdbac', '#a86b4a'][i],
     hair: { style: ['curly', 'short', 'bun', 'spiky', 'afro', 'long'][i], color: ['#1a120c', '#3b2416', '#c0392b', '#e8c46a', '#111111', '#7a4a24'][i] },
-    top: { style: 'tee', color: '#e8232b', accent: '#ffffff', emblem: 'number' }, number: i + 2, bottom: { style: 'shorts', color: '#f2f2f2' },
+    top: { style: 'tee', color: '#ffd23f', accent: '#1d4fa8', emblem: 'number' }, number: i + 2, bottom: { style: 'shorts', color: '#f2f2f2' },
     shoes: '#1d1d22', scale: 0.62 + 0.04 * (i % 3) }])),
   ...EXTRAS,
   ...Object.fromEntries(CLONE_IDS.map((id) => [id, { ...MAIN.me, id, lod: 'low' }])),
@@ -58,7 +58,7 @@ export async function init(ctx) {
   P.cloud = makePetCloud(); P.leash = makeLeash(12);
   P.bagA = makeGroceryBag('bread'); P.bagB = makeGroceryBag('leek');
   P.items = makeGroceryItems();
-  P.ball = makeBall(); P.whistle = makeWhistle(); P.banner3 = makeBanner3(); P.feedTree = makeFeedTree();
+  P.ball = makeBall(); P.ballGlow = glowSprite('#ffffff', 0.7, 0.6); P.whistle = makeWhistle(); P.banner3 = makeBanner3(); P.feedTree = makeFeedTree();
   P.bell = makeBellhop(); P.tally = makeTally();
   P.puff = makePuff(); P.bubble = makeBubble(); P.blob = makeBlob(0.45); P.blob2 = makeBlob(0.4);
   P.fill = new THREE.PointLight('#c8d8ff', 5, 9, 1.4);
@@ -224,13 +224,16 @@ function parkLife(ctx) {
   ids.forEach((id) => townRoot(ctx).add(ctx.cast[id].root));
   return ids;
 }
+// walkers stay far from the camera → tower corridor: one strolls off to the left past the tower porch, one off to the
+// right, one waves from the far-left lawn.  [x0, z, dir, phase]
+const PARK_PATHS = [[-53.6, -2.6, -1, 0.0], [-47.4, -3.4, 1, 0.0], [-56.2, -1.2, 0, 5]];
 function parkLifeAnim(ctx, ids) {
   const t = ctx.t;
-  const paths = [[-58.0, -5.4, 1, 0.0], [-57.5, -6.6, 1, 3.0], [-58.4, -14, 0, 5]];
+  const paths = PARK_PATHS;
   ids.forEach((id, i) => {
     const ch = ctx.cast[id], [x0, z0, dir, ph] = paths[i];
-    if (dir === 0) { ch.root.position.set(x0, 0, z0); ch.root.rotation.set(0, PI * 0.6, 0); ch.pose('wave', t + ph); ch.face('smile', t + ph); return; }
-    const u = ((t + ph * 3) * WALK_SPEED * 0.8) % 14;
+    if (dir === 0) { ch.root.position.set(x0, 0, z0); ch.root.rotation.set(0, -0.3, 0); ch.pose('wave', t + ph); ch.face('smile', t + ph); return; }
+    const u = (t * WALK_SPEED * 0.8) % 30;
     ch.root.position.set(x0 + dir * u, 0, z0); ch.root.rotation.set(0, dir > 0 ? PI / 2 : -PI / 2, 0);
     ch.pose('walk', t + ph, { speed: 0.8 }); ch.face('smile', t + ph);
   });
@@ -314,9 +317,9 @@ export const shots = [
       const t = ctx.t, car = ctx.set.car, t3 = ctx.time('b01.w8');
       carState(ctx, { glow3: t > t3 ? 0.9 + 0.3 * Math.sin(t * 6) : 0.35, floor: '1' });
       const p2 = panelPoint(car, 2);
-      ctx.cam.move({ pos: p2.clone().add(V(0.35, 0.12, -1.25)), look: p2.clone().add(up(0.05)), fov: 40 }, { pos: p2.clone().add(V(0.25, 0.1, -0.95)), look: p2.clone().add(up(0.06)), fov: 38 }, clamp(lt / 1.5, 0, 1), ease.outCubic);
+      ctx.cam.move({ pos: p2.clone().add(V(0.35, 0.0, -2.0)), look: p2.clone().add(up(-0.25)), fov: 36 }, { pos: p2.clone().add(V(0.28, 0.0, -1.8)), look: p2.clone().add(up(-0.24)), fov: 36 }, clamp(lt / 1.5, 0, 1), ease.outCubic);
       const d = ctx.time('b01.w7');
-      ctx.fx.text('1 · 2 · 3?', { x: 0.5, y: 0.17, size: 120, fill: '#ffe14a', stroke: '#000', line: 12, rot: -0.03, scale: t < d ? 0.01 : ease.outBack(clamp((t - d) / 0.2, 0, 1)) });
+      ctx.fx.text('1 · 2 · 3?', { x: 0.5, y: 0.075, size: 104, fill: '#ffe14a', stroke: '#000', line: 12, rot: -0.03, scale: t < d ? 0.01 : ease.outBack(clamp((t - d) / 0.2, 0, 1)) });
     },
   },
   {
@@ -327,9 +330,9 @@ export const shots = [
       const u = clamp(lt / 1.6, 0, 1);
       const cam = { pos: TL(2.4, 1.6, 10.0), look: TL(0, lerp(3.8, 7.6, ease.inOutSine(u)), 0), fov: 48 };
       ctx.cam.set(cam);
-      label(ctx, cam, TL(-1.75, 4.0, 1.9), 'FLOOR 1', ctx.time('b01.w11'), { x: undefined });
-      label(ctx, cam, TL(-1.75, 7.2, 1.9), 'FLOOR 2', ctx.time('b01.w14'));
-      if (ctx.t > ctx.time('b01.w15')) label(ctx, cam, TL(0, 10.9, 1.9), 'THAT\'S IT.', ctx.time('b01.w15') + 0.1, { fill: '#ffffff', size: 54 });
+      label(ctx, cam, TL(-2.3, 4.0, 1.9), 'FLOOR 1', ctx.time('b01.w11'), { size: 80 });
+      label(ctx, cam, TL(-2.3, 7.2, 1.9), 'FLOOR 2', ctx.time('b01.w14'), { size: 80 });
+      if (ctx.t > ctx.time('b01.w15')) label(ctx, cam, TL(2.6, 10.6, 1.9), 'THAT\'S IT.', ctx.time('b01.w15') + 0.1, { fill: '#ffffff', size: 78, rot: 0.05 });
     },
   },
   // ── b02 "Nobody presses three."
@@ -356,12 +359,12 @@ export const shots = [
       p.pose(dh < 0.2 ? 'flap' : 'idle', t, { headPitch: 0.45 }); p.face(dh < 0.2 ? 'shocked' : 'squint', t);
       const b3 = panelPoint(car, 3);
       const cams = [
-        { pos: b3.clone().add(V(0.12, 0.05, -0.62)), look: b3, fov: 34 },
+        { pos: b3.clone().add(V(0.15, 0.05, -0.95)), look: b3.clone().add(up(-0.13)), fov: 36 },
         { pos: b3.clone().add(V(-0.35, -0.25, -0.9)), look: b3.clone().add(up(0.45)), fov: 42 },
-        { pos: V(0.55, 1.55, -2.7), look: V(-0.35, 1.45, 0.6), fov: 46 },
+        { pos: b3.clone().add(V(0.4, 0.3, -1.3)), look: b3.clone().add(up(0.3)), fov: 46 },
       ];
       ctx.cam.set(cams[i]); ctx.cam.punch(hits, t, 0.12, 0.2);
-      if (pulse > 0) ctx.fx.overlay('#b46cff', 0.25 * pulse);
+      if (pulse > 0) ctx.fx.overlay('#b46cff', 0.1 * pulse);
     },
   })),
   // ── b04 "Mr. Kowalski pressed it once. He came back with a pet cloud."
@@ -383,10 +386,10 @@ export const shots = [
       k.face(t > ctx.time('b04.w10') ? 'smug' : 'smile', t);
       k.joints.armR.rotation.x = -0.5; k.joints.foreArmR.rotation.x = -0.6;
       const hand = k.joints.handR.getWorldPosition(V());
-      const cp = V(0.45 + 0.4 * wu, 1.85 + 0.15 * wu, k.root.position.z - 0.3);
+      const cp = V(0.95 + 0.3 * wu, 1.6 + 0.12 * Math.sin(t * 2.2), k.root.position.z - 0.1);
       P.cloud.position.copy(cp); P.cloud.rotation.y = 0.3; P.cloud.userData.set(t, { mood: 'smug' });
       P.leash.userData.set(hand, P.cloud.userData.ring.getWorldPosition(V()), 0.2);
-      ctx.cam.move({ pos: V(-1.2, 1.4, 7.2), look: V(0.2, 1.35, 0.6), fov: 46 }, { pos: V(-1.5, 1.3, 6.6), look: V(0.35, 1.45, 1.6), fov: 48 }, clamp(lt / 3, 0, 1), ease.inOutSine);
+      ctx.cam.move({ pos: V(-0.9, 1.45, 5.0), look: V(0.25, 1.3, 0.6), fov: 44 }, { pos: V(-1.0, 1.4, 5.4), look: V(0.45, 1.35, 2.0), fov: 44 }, clamp(lt / 3, 0, 1), ease.inOutSine);
       fill(ctx, { pos: V(-1, 1.6, 4.5) }, 0.5, '#ffe6c8');
     },
   },
@@ -434,25 +437,25 @@ export const shots = [
     name: 'rain on the rude', start: 'b05.w5-0.15', set: 'town',
     setup(ctx) {
       day(ctx); const P = ctx.props;
-      placeL(ctx, 'kowalski', -9.4, 0.12, -6.4, PI / 2); placeL(ctx, 'rude', -6.4, 0.12, -6.7, -PI / 2 - 0.6);
-      placeL(ctx, TOWN_IDS[4], -5.4, 0.12, -7.8, -PI / 2 - 0.8);
+      placeL(ctx, 'kowalski', -8.4, 0.12, -6.4, PI / 2); placeL(ctx, 'rude', -6.2, 0.12, -6.7, -PI / 2 + 0.4);
+      placeL(ctx, TOWN_IDS[4], -7.2, 0.12, -8.1, 0.3);
       ctx.add(P.cloud, townRoot(ctx)); ctx.add(P.leash, townRoot(ctx));
     },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, k = ctx.cast.kowalski, r = ctx.cast.rude, W = TW(ctx);
       const tRain = ctx.time('b05.w6') + 0.1, tShock = ctx.time('b05.w10') - 0.1;
-      k.root.position.set(-9.4 + lt * 0.35, 0.12, -6.4); k.pose(t < tRain ? 'walk' : 'idle', t, { speed: 0.6 }); k.face(t > tRain ? 'smug' : 'neutral', t);
+      k.root.position.set(-8.4 + lt * 0.3, 0.12, -6.4); k.pose(t < tRain ? 'walk' : 'idle', t, { speed: 0.6 }); k.face(t > tRain ? 'smug' : 'neutral', t);
       k.joints.armR.rotation.x = -0.8; k.joints.foreArmR.rotation.x = -0.3;
       const bystander = ctx.cast[TOWN_IDS[4]]; bystander.pose(t > tShock ? 'laugh' : 'idle', t); bystander.face(t > tShock ? 'laugh' : 'neutral', t);
       if (t < tShock) { r.pose('pointLaugh', t); r.face('laugh', t); } else { r.pose('surprised', t - tShock); r.face('shocked', 0.3); }
       const hand = k.joints.handR.getWorldPosition(V());
       const kLoc = townRoot(ctx).worldToLocal(hand.clone());
-      const over = V(-6.4, 0.12 + 2.75, -6.65);
+      const over = V(-6.2, 0.12 + 2.75, -6.65);
       const u = ease.inOutCubic(clamp((t - (tRain - 0.35)) / 0.45, 0, 1));
       const cl = kLoc.clone().add(V(-0.6, 1.2, 0.2)).lerp(over, u);
       P.cloud.position.copy(cl); P.cloud.rotation.y = -PI / 2 + 0.3; P.cloud.userData.set(t, { mood: u > 0.5 ? 'angry' : 'happy', rain: t > tRain ? 1 : 0, fall: 1.1 });
       P.leash.userData.set(hand, P.cloud.userData.ring.getWorldPosition(V()), u > 0.5 ? 0.05 : 0.2);
-      ctx.cam.move({ pos: W(-8.0, 1.0, -2.4), look: W(-6.9, 1.8, -6.6), fov: 48 }, { pos: W(-7.8, 0.95, -2.9), look: W(-6.7, 2.0, -6.6), fov: 46 }, clamp(lt / 1.8, 0, 1), ease.inOutSine);
+      ctx.cam.move({ pos: W(-7.2, 1.3, -0.9), look: W(-7.1, 1.75, -6.6), fov: 50 }, { pos: W(-7.0, 1.25, -1.3), look: W(-7.0, 1.85, -6.6), fov: 50 }, clamp(lt / 1.8, 0, 1), ease.inOutSine);
       if (t > tShock) tag(ctx, 'RUDE.', tShock + 0.05, Infinity, { y: 0.16, bg: 'rgba(40,110,220,0.9)' });
     },
   },
@@ -463,7 +466,8 @@ export const shots = [
       day(ctx); const P = ctx.props;
       const a = ctx.anchor('park.table'); const ap = a.getWorldPosition(V()); const Fp = frame(townRoot(ctx).worldToLocal(V(ap.x, 0, ap.z)), yawOf(a));
       const dana = placeL(ctx, 'dana', ...Fp(1.9, 0, -0.6).toArray(), Fp.yaw - 0.15);
-      ctx.add(P.ball, dana.joints.handR); P.ball.position.set(0.02, 0.06, 0.07); P.ball.scale.setScalar(1 / 3.6);
+      ctx.add(P.ball, dana.joints.handR); P.ball.position.set(0.02, 0.1, 0.07); P.ball.scale.setScalar(1.5 / 3.6);
+      ctx.add(P.ballGlow, P.ball); P.ballGlow.position.set(0, 0, 0);
       ctx.add(P.whistle, dana.joints.torso); P.whistle.position.set(0, 0, 0); P.whistle.scale.setScalar(1);
       const dl = Fp(1.9, 0, -0.6);
       const kids = KID_IDS.map((id, i) => { const ang = -1.5 + i * 0.62 + (i > 2 ? 1.2 : 0), r = 1.7 + 0.35 * (i % 2); const kp = Fp(1.9 + Math.sin(ang) * r, 0, -0.6 + Math.cos(ang) * r); return placeL(ctx, id, kp.x, 0, kp.z, yawTo(kp, dl)); });
@@ -472,7 +476,8 @@ export const shots = [
     update(ctx, lt) {
       const { Fp, kids } = ctx.store, t = ctx.t, d = ctx.cast.dana, W = (x, y, z) => townRoot(ctx).localToWorld(Fp(x, y, z));
       d.pose('idle', t, { intensity: 0.5, headPitch: 0.35 }); d.face('grin', t);
-      d.joints.armR.rotation.x = -1.25; d.joints.armR.rotation.z = 0.25; d.joints.foreArmR.rotation.x = -1.1;
+      d.joints.armR.rotation.x = -1.5; d.joints.armR.rotation.z = 0.5; d.joints.foreArmR.rotation.x = -0.2;
+      ctx.props.ballGlow.material.opacity = 0.55 + 0.15 * Math.sin(t * 5);
       kids.forEach((k, i) => { k.pose(i % 2 ? 'cheer' : 'clap', t + i * 0.3, { lookAt: humanFace(d) }); k.face(i % 3 ? 'grin' : 'laugh', t + i); });
       if (kind === 'kids') {
         ctx.cam.move({ pos: W(1.0, 0.45, 4.6), look: W(1.9, 1.5, -0.6), fov: 50 }, { pos: W(1.3, 0.4, 3.9), look: W(1.9, 2.0, -0.6), fov: 50 }, clamp(lt / 1.4, 0, 1), ease.inOutSine);

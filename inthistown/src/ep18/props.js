@@ -694,11 +694,14 @@ export function buildSkySet() {
     setLighting() {},
     setMode(m) {
       mode = m;
+      island.children.forEach((c) => { c.visible = true; });   // shots may hide parts: always start from a full island
+      houses.forEach((h) => { h.visible = true; }); tower.visible = car.visible = car2.visible = shipMini.visible = street.visible = true;
+      gp.visible = true; ground.children.forEach((c) => { c.visible = true; });
       slab.visible = m !== 'ground'; ground.visible = m === 'ground';
       island.visible = m !== 'night';
       moon.visible = moonGlow.visible = m === 'night';
       cloudsLow.forEach((c) => { c.visible = m !== 'ground'; });
-      clouds.forEach((c, i) => { c.visible = m !== 'ground' || i % 3 === 0; });
+      clouds.forEach((c, i) => { c.visible = m === 'sky' || (m === 'ground' && i % 3 === 0); });
       island.position.set(0, 0, 0); island.rotation.set(0, 0, 0);
       houses.forEach((h, i) => { h.position.copy(h.userData.home); h.rotation.set(0, h.userData.yaw, 0); h.userData.under.visible = m !== 'ground'; holes[i].visible = false; });
       tower.position.set(-18.5, 0, 0); tower.rotation.set(0, 0, 0); tower.userData.under.visible = false;
