@@ -379,7 +379,7 @@ export const shots = [
       peek.forEach((c, i) => { c.ch.root.position.y = L(0, 0, 0).y + hop(t, hits, 1.6 + 0.2 * i, 0.45); c.ch.pose(t > tSat ? 'surprised' : 'idle', t + c.ph); c.ch.face(t > tSat ? 'shocked' : 'neutral', t + c.ph); });
       ctx.props.filler.userData.set(t, { arms: t > tSat ? 'up' : 'limp', bounce: t > tSat ? 1 : 0.2 });
       const pk = humanFace(peek[2].ch), e = eyeMid(ctx), u = clamp(lt / 4, 0, 1);
-      setCam(ctx, frame2(L(lerp(-25.5, -26.3, u), 1.6 + y, lerp(22.0, 21.5, u)), pk, 0.76, e, 0.30));
+      setCam(ctx, frame2(L(lerp(-29.6, -30.4, u), 1.5 + y, lerp(20.4, 19.8, u)), pk, 0.76, e, 0.30, { x: 0.57 }));
       shakeOn(ctx, hits, 0.8, 0.45);
       ctx.fx.overlay('#ffb347', 0.12); ctx.fx.vignette(0.35);
       tag(ctx, '12 YEARS AGO', lt > 0 ? ctx.time('b02.w4') : 0, ctx.time('b02.w13'), { y: 0.06, size: 50, bg: 'rgba(120,70,20,0.85)' });
