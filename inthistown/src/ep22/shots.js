@@ -483,7 +483,7 @@ export const shots = [
         if (d < 0) { h.position.set(0, -50, 0); return; }
         // two columns beside his head (never over the eyes), drifting up inside the tight window frame
         const side = k % 2 ? 1 : -1, j = Math.floor(k / 2), rise = Math.min(0.3, 0.45 * d);
-        h.position.set(fc.x + side * (0.5 + 0.06 * j), fc.y - 0.3 + 0.17 * j + rise + 0.04 * Math.sin(t * 4 + k), fc.z + 0.35); h.scale.setScalar(0.17 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
+        h.position.set(fc.x + side * (0.48 + 0.05 * j), fc.y - 0.3 + 0.17 * j + rise + 0.04 * Math.sin(t * 4 + k), W.z + 0.3);   // just outside the glass, in front of the curtains h.scale.setScalar(0.17 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
       });
       const k = ease.inOutSine(clamp(lt / 3.6, 0, 1));
       // push in until the window fills the frame; face in the upper third (y≈0.3), hamster + hearts below/around it
