@@ -326,7 +326,25 @@ export function makeTablet() {
   const scrM = new THREE.MeshBasicMaterial({ map: texs.folder, toneMapped: false });
   const scr = new THREE.Mesh(new THREE.PlaneGeometry(0.47, 0.31), scrM); scr.position.z = 0.0135; g.add(scr);
   const glow = glowSprite('#7fd8ff', 0.9, 0.35); glow.position.z = 0.03; g.add(glow);
-  g.userData = { screen() { g.updateMatrixWorld(true); return scr.getWorldPosition(V()); }, set(mode = 'folder') { scrM.map = texs[mode] || texs.folder; } };
+  // live counter screen: redrawn only when the number changes (deterministic: depends on n alone)
+  let cnt = null, lastN = -1;
+  const drawCount = (n) => {
+    cnt ??= canvasTexture(768, 512, () => {});
+    const c = cnt.image.getContext('2d'), w = 768, h = 512;
+    const gr = c.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#16203a'); gr.addColorStop(1, '#0b1020'); c.fillStyle = gr; c.fillRect(0, 0, w, h);
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = '#ffc93a'; c.beginPath(); c.roundRect(w / 2 - 90, 36, 70, 30, 8); c.fill(); c.beginPath(); c.roundRect(w / 2 - 90, 52, 180, 104, 12); c.fill();
+    c.fillStyle = '#1d1d22'; let s = fitFont(c, 'SHOUTS', FONT_D, 160, 52); c.font = FONT_D(s); c.fillText('SHOUTS', w / 2, 108);
+    const txt = n.toLocaleString('en-US');
+    c.fillStyle = n >= 1825 ? '#3cff6b' : '#ffffff'; s = fitFont(c, txt, FONT_D, w * 0.86, 210); c.font = FONT_D(s); c.fillText(txt, w / 2, 300);
+    c.fillStyle = '#7fe3ff'; s = fitFont(c, 'files recorded', FONT_T, w * 0.8, 56); c.font = FONT_T(s); c.fillText('files recorded', w / 2, 448);
+    cnt.needsUpdate = true;
+  };
+  g.userData = {
+    screen() { g.updateMatrixWorld(true); return scr.getWorldPosition(V()); },
+    set(mode = 'folder') { scrM.map = texs[mode] || texs.folder; },
+    count(n) { n = Math.max(0, Math.round(n)); if (n !== lastN) { drawCount(n); lastN = n; } scrM.map = cnt; },
+  };
   return g;
 }
 
