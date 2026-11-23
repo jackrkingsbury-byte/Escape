@@ -24,18 +24,18 @@ Rules from the creator:
 ## In production
 | Ep | Title | Vibe | Status |
 |----|-------|------|--------|
-| 12 | Staff Only | unknown / funny | posted Nov 22, repost Mon 23 Nov 09:30 |
+| 12 | Staff Only | unknown / funny | posted Nov 22, reposted Mon 23 Nov 09:30 |
 | 13 | Zero Aura | trend / meme | posted Nov 22 |
-| 14 | Tape Duty | spooky | scheduled Mon 23 Nov 15:30 |
-| 15 | The 3:33 | mysterious | scheduled Mon 23 Nov 19:30 |
-| 16 | Don't Whistle | scary sea monster | scheduled Tue 24 Nov 09:30 |
-| 17 | Floor Three | mystical | scheduled Tue 24 Nov 15:30 |
-| 18 | Pirate Token to the Moon | meme | scheduled Tue 24 Nov 19:30 |
-| 19 | Battery 1% | meme trend | scheduled Wed 25 Nov 09:30 |
-| 20 | Biscuit (the T-rex) | giants / funny | scheduled Wed 25 Nov 15:30 |
-| 21 | The Deep Above | mystical | scheduled Wed 25 Nov 19:30 |
-| 22 | Big Love | homey | scheduled Thu 26 Nov 09:30 |
-| 23 | Low Moon | spooky | polish round → Thu 26 Nov 15:30 |
+| 14 | Tape Duty | spooky | scheduled Mon 23 Nov 17:30 |
+| 15 | The 3:33 | mysterious | scheduled Mon 23 Nov 20:00 |
+| 16 | Don't Whistle | scary sea monster | scheduled Tue 24 Nov 07:30 |
+| 17 | Floor Three | mystical | scheduled Tue 24 Nov 12:30 |
+| 18 | Pirate Token to the Moon | meme | scheduled Tue 24 Nov 17:30 |
+| 19 | Battery 1% | meme trend | scheduled Tue 24 Nov 20:00 |
+| 20 | Biscuit (the T-rex) | giants / funny | scheduled Wed 25 Nov 07:30 |
+| 21 | The Deep Above | mystical | scheduled Wed 25 Nov 12:30 |
+| 22 | Big Love | homey | scheduled Wed 25 Nov 17:30 |
+| 23 | Low Moon | spooky | polish round → Wed 25 Nov 20:00 |
 | 24 | Word of the Day | meme | shots building (giant ear, not an eye) |
 | 25 | Nugget | giants / funny | script + audio ready (deep 'Ba-gawk' voice) |
 
