@@ -1,0 +1,3804 @@
+{
+ "fps": 30,
+ "duration": 76.147,
+ "audio": "episodes/ep27/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, the houses have legs. And last night, mine ran away with me inside.",
+   "start": 0.3,
+   "end": 4.623,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "the",
+     "start": 1.112,
+     "end": 1.269
+    },
+    {
+     "text": "houses",
+     "start": 1.269,
+     "end": 1.651
+    },
+    {
+     "text": "have",
+     "start": 1.651,
+     "end": 1.864
+    },
+    {
+     "text": "legs",
+     "start": 1.864,
+     "end": 2.134
+    },
+    {
+     "text": "And",
+     "start": 2.444,
+     "end": 2.642
+    },
+    {
+     "text": "last",
+     "start": 2.642,
+     "end": 2.892
+    },
+    {
+     "text": "night",
+     "start": 2.892,
+     "end": 3.143
+    },
+    {
+     "text": "mine",
+     "start": 3.273,
+     "end": 3.515
+    },
+    {
+     "text": "ran",
+     "start": 3.515,
+     "end": 3.706
+    },
+    {
+     "text": "away",
+     "start": 3.706,
+     "end": 3.948
+    },
+    {
+     "text": "with",
+     "start": 3.948,
+     "end": 4.14
+    },
+    {
+     "text": "me",
+     "start": 4.14,
+     "end": 4.281
+    },
+    {
+     "text": "inside",
+     "start": 4.281,
+     "end": 4.623
+    }
+   ],
+   "visual": "Dusk on main street. A cosy house creaks, then rises on four chunky blocky legs in puffs of dust and stretches like a cat. My bedroom window is lit, and I'm pressed against the glass, shocked."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Once a year, on the first cold night, they stand up and leave. Nobody knows where.",
+   "start": 4.938,
+   "end": 9.029,
+   "words": [
+    {
+     "text": "Once",
+     "start": 4.953,
+     "end": 5.227
+    },
+    {
+     "text": "a",
+     "start": 5.227,
+     "end": 5.387
+    },
+    {
+     "text": "year",
+     "start": 5.387,
+     "end": 5.604
+    },
+    {
+     "text": "on",
+     "start": 5.734,
+     "end": 5.866
+    },
+    {
+     "text": "the",
+     "start": 5.866,
+     "end": 5.998
+    },
+    {
+     "text": "first",
+     "start": 5.998,
+     "end": 6.223
+    },
+    {
+     "text": "cold",
+     "start": 6.223,
+     "end": 6.496
+    },
+    {
+     "text": "night",
+     "start": 6.496,
+     "end": 6.722
+    },
+    {
+     "text": "they",
+     "start": 6.852,
+     "end": 7.024
+    },
+    {
+     "text": "stand",
+     "start": 7.024,
+     "end": 7.286
+    },
+    {
+     "text": "up",
+     "start": 7.286,
+     "end": 7.413
+    },
+    {
+     "text": "and",
+     "start": 7.413,
+     "end": 7.585
+    },
+    {
+     "text": "leave",
+     "start": 7.585,
+     "end": 7.757
+    },
+    {
+     "text": "Nobody",
+     "start": 8.067,
+     "end": 8.525
+    },
+    {
+     "text": "knows",
+     "start": 8.525,
+     "end": 8.806
+    },
+    {
+     "text": "where",
+     "start": 8.806,
+     "end": 9.029
+    }
+   ],
+   "visual": "Night with frost on the rooftops. A line of houses on legs tiptoes out of town past the clock tower, silhouetted against a purple sky, while extras in pyjamas watch from the street."
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Rules: chain your house to a lamp post. Never be inside when it runs. And if it runs off, ring its doorbell. It comes home like a dog.",
+   "start": 9.344,
+   "end": 16.437,
+   "words": [
+    {
+     "text": "Rules",
+     "start": 9.359,
+     "end": 9.614
+    },
+    {
+     "text": "chain",
+     "start": 9.614,
+     "end": 9.923
+    },
+    {
+     "text": "your",
+     "start": 9.923,
+     "end": 10.125
+    },
+    {
+     "text": "house",
+     "start": 10.125,
+     "end": 10.38
+    },
+    {
+     "text": "to",
+     "start": 10.38,
+     "end": 10.529
+    },
+    {
+     "text": "a",
+     "start": 10.529,
+     "end": 10.678
+    },
+    {
+     "text": "lamp",
+     "start": 10.678,
+     "end": 10.933
+    },
+    {
+     "text": "post",
+     "start": 10.933,
+     "end": 11.242
+    },
+    {
+     "text": "Never",
+     "start": 11.552,
+     "end": 11.798
+    },
+    {
+     "text": "be",
+     "start": 11.798,
+     "end": 11.942
+    },
+    {
+     "text": "inside",
+     "start": 11.942,
+     "end": 12.292
+    },
+    {
+     "text": "when",
+     "start": 12.292,
+     "end": 12.487
+    },
+    {
+     "text": "it",
+     "start": 12.487,
+     "end": 12.631
+    },
+    {
+     "text": "runs",
+     "start": 12.631,
+     "end": 12.877
+    },
+    {
+     "text": "And",
+     "start": 13.187,
+     "end": 13.372
+    },
+    {
+     "text": "if",
+     "start": 13.372,
+     "end": 13.507
+    },
+    {
+     "text": "it",
+     "start": 13.507,
+     "end": 13.643
+    },
+    {
+     "text": "runs",
+     "start": 13.643,
+     "end": 13.876
+    },
+    {
+     "text": "off",
+     "start": 13.876,
+     "end": 14.012
+    },
+    {
+     "text": "ring",
+     "start": 14.142,
+     "end": 14.368
+    },
+    {
+     "text": "its",
+     "start": 14.368,
+     "end": 14.593
+    },
+    {
+     "text": "doorbell",
+     "start": 14.593,
+     "end": 14.997
+    },
+    {
+     "text": "It",
+     "start": 15.307,
+     "end": 15.44
+    },
+    {
+     "text": "comes",
+     "start": 15.44,
+     "end": 15.668
+    },
+    {
+     "text": "home",
+     "start": 15.668,
+     "end": 15.896
+    },
+    {
+     "text": "like",
+     "start": 15.896,
+     "end": 16.123
+    },
+    {
+     "text": "a",
+     "start": 16.123,
+     "end": 16.256
+    },
+    {
+     "text": "dog",
+     "start": 16.256,
+     "end": 16.437
+    }
+   ],
+   "overlay": "RULE 1: CHAIN IT \u00b7 RULE 2: GET OUT \u00b7 RULE 3: RING THE BELL",
+   "visual": "Mr. Dube (big beard, cap) wraps a giant chain from his house's leg to a street lamp and snaps the padlock shut, smug. A second rule card stamps in after. On rule three: Mr. Dube rings the doorbell of his runaway house from the pavement and it trots back to him like a dog, wagging its porch door."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mrs. Mokoena overslept once. She woke up three towns away. Still in bed.",
+   "start": 16.752,
+   "end": 21.507,
+   "words": [
+    {
+     "text": "Mrs",
+     "start": 16.767,
+     "end": 17.274
+    },
+    {
+     "text": "Mokoena",
+     "start": 17.584,
+     "end": 18.051
+    },
+    {
+     "text": "overslept",
+     "start": 18.051,
+     "end": 18.637
+    },
+    {
+     "text": "once",
+     "start": 18.637,
+     "end": 18.925
+    },
+    {
+     "text": "She",
+     "start": 19.235,
+     "end": 19.384
+    },
+    {
+     "text": "woke",
+     "start": 19.384,
+     "end": 19.639
+    },
+    {
+     "text": "up",
+     "start": 19.639,
+     "end": 19.788
+    },
+    {
+     "text": "three",
+     "start": 19.788,
+     "end": 19.99
+    },
+    {
+     "text": "towns",
+     "start": 19.99,
+     "end": 20.298
+    },
+    {
+     "text": "away",
+     "start": 20.298,
+     "end": 20.554
+    },
+    {
+     "text": "Still",
+     "start": 20.864,
+     "end": 21.134
+    },
+    {
+     "text": "in",
+     "start": 21.134,
+     "end": 21.292
+    },
+    {
+     "text": "bed",
+     "start": 21.292,
+     "end": 21.507
+    }
+   ],
+   "overlay": "3 TOWNS AWAY",
+   "visual": "Morning in an empty field. Grey-haired Mrs. Mokoena sits up in her bed on the porch of her house, which stands alone with its legs folded, sleepy face. A road sign behind her points the wrong way."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So last night, I fell asleep at my desk.",
+   "start": 21.822,
+   "end": 23.842,
+   "words": [
+    {
+     "text": "So",
+     "start": 21.837,
+     "end": 22.04
+    },
+    {
+     "text": "last",
+     "start": 22.04,
+     "end": 22.297
+    },
+    {
+     "text": "night",
+     "start": 22.297,
+     "end": 22.555
+    },
+    {
+     "text": "I",
+     "start": 22.685,
+     "end": 22.821
+    },
+    {
+     "text": "fell",
+     "start": 22.821,
+     "end": 23.005
+    },
+    {
+     "text": "asleep",
+     "start": 23.005,
+     "end": 23.287
+    },
+    {
+     "text": "at",
+     "start": 23.287,
+     "end": 23.423
+    },
+    {
+     "text": "my",
+     "start": 23.423,
+     "end": 23.608
+    },
+    {
+     "text": "desk",
+     "start": 23.608,
+     "end": 23.842
+    }
+   ],
+   "visual": "Kid's bedroom at night: me asleep in my chair with my headphones on, the monitor glowing, frost creeping across the window."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I woke up because my room was... bouncing.",
+   "start": 24.157,
+   "end": 26.645,
+   "words": [
+    {
+     "text": "I",
+     "start": 24.172,
+     "end": 24.328
+    },
+    {
+     "text": "woke",
+     "start": 24.328,
+     "end": 24.595
+    },
+    {
+     "text": "up",
+     "start": 24.595,
+     "end": 24.751
+    },
+    {
+     "text": "because",
+     "start": 24.751,
+     "end": 25.074
+    },
+    {
+     "text": "my",
+     "start": 25.074,
+     "end": 25.286
+    },
+    {
+     "text": "room",
+     "start": 25.286,
+     "end": 25.497
+    },
+    {
+     "text": "was",
+     "start": 25.497,
+     "end": 25.709
+    },
+    {
+     "text": "bouncing",
+     "start": 26.079,
+     "end": 26.645
+    }
+   ],
+   "visual": "The bedroom bobs up and down in rhythm, posters swing and the lamp wobbles. My eyes snap open (shocked)."
+  },
+  {
+   "id": "b07",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 26.96,
+   "end": 27.62,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 26.96,
+     "end": 27.22
+    },
+    {
+     "text": "HUSS!",
+     "start": 27.17,
+     "end": 27.43
+    },
+    {
+     "text": "HUSS!",
+     "start": 27.36,
+     "end": 27.62
+    }
+   ],
+   "visual": "Three big bounces: I'm thrown out of the chair, onto the bed, then onto the floor. Camera shake on each HUSS."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I looked out the window. My house was running down Main Street.",
+   "start": 27.96,
+   "end": 30.983,
+   "words": [
+    {
+     "text": "I",
+     "start": 27.975,
+     "end": 28.105
+    },
+    {
+     "text": "looked",
+     "start": 28.105,
+     "end": 28.328
+    },
+    {
+     "text": "out",
+     "start": 28.328,
+     "end": 28.505
+    },
+    {
+     "text": "the",
+     "start": 28.505,
+     "end": 28.635
+    },
+    {
+     "text": "window",
+     "start": 28.635,
+     "end": 28.951
+    },
+    {
+     "text": "My",
+     "start": 29.261,
+     "end": 29.455
+    },
+    {
+     "text": "house",
+     "start": 29.455,
+     "end": 29.701
+    },
+    {
+     "text": "was",
+     "start": 29.701,
+     "end": 29.896
+    },
+    {
+     "text": "running",
+     "start": 29.896,
+     "end": 30.193
+    },
+    {
+     "text": "down",
+     "start": 30.193,
+     "end": 30.439
+    },
+    {
+     "text": "Main",
+     "start": 30.439,
+     "end": 30.685
+    },
+    {
+     "text": "Street",
+     "start": 30.685,
+     "end": 30.983
+    }
+   ],
+   "visual": "Over my shoulder through the window, street lamps whiz past and the view bounces. Cut outside: my house gallops down main street on four legs with my lit window bobbing along."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It wasn't alone. Every house in town was running, like a herd.",
+   "start": 31.298,
+   "end": 34.517,
+   "words": [
+    {
+     "text": "It",
+     "start": 31.313,
+     "end": 31.457
+    },
+    {
+     "text": "wasn't",
+     "start": 31.457,
+     "end": 31.756
+    },
+    {
+     "text": "alone",
+     "start": 31.756,
+     "end": 32.056
+    },
+    {
+     "text": "Every",
+     "start": 32.366,
+     "end": 32.612
+    },
+    {
+     "text": "house",
+     "start": 32.612,
+     "end": 32.859
+    },
+    {
+     "text": "in",
+     "start": 32.859,
+     "end": 33.003
+    },
+    {
+     "text": "town",
+     "start": 33.003,
+     "end": 33.249
+    },
+    {
+     "text": "was",
+     "start": 33.249,
+     "end": 33.444
+    },
+    {
+     "text": "running",
+     "start": 33.444,
+     "end": 33.742
+    },
+    {
+     "text": "like",
+     "start": 33.872,
+     "end": 34.144
+    },
+    {
+     "text": "a",
+     "start": 34.144,
+     "end": 34.302
+    },
+    {
+     "text": "herd",
+     "start": 34.302,
+     "end": 34.517
+    }
+   ],
+   "visual": "Wide drone shot at night: dozens of houses on legs stampede through the park and around the clock tower, chimneys puffing and dust everywhere. The pigeon rides on a roof."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mr. Dube's house dragged its lamp post along.",
+   "start": 34.832,
+   "end": 37.479,
+   "words": [
+    {
+     "text": "Mr",
+     "start": 34.847,
+     "end": 35.348
+    },
+    {
+     "text": "Dube's",
+     "start": 35.658,
+     "end": 35.911
+    },
+    {
+     "text": "house",
+     "start": 35.911,
+     "end": 36.163
+    },
+    {
+     "text": "dragged",
+     "start": 36.163,
+     "end": 36.469
+    },
+    {
+     "text": "its",
+     "start": 36.469,
+     "end": 36.669
+    },
+    {
+     "text": "lamp",
+     "start": 36.669,
+     "end": 36.921
+    },
+    {
+     "text": "post",
+     "start": 36.921,
+     "end": 37.226
+    },
+    {
+     "text": "along",
+     "start": 37.226,
+     "end": 37.479
+    }
+   ],
+   "visual": "Mr. Dube's house gallops past still chained, with the ripped-out street lamp bouncing and sparking behind it like a kite."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While he's out partying, by the way.",
+   "start": 37.794,
+   "end": 39.422,
+   "words": [
+    {
+     "text": "While",
+     "start": 37.809,
+     "end": 38.039
+    },
+    {
+     "text": "he's",
+     "start": 38.039,
+     "end": 38.221
+    },
+    {
+     "text": "out",
+     "start": 38.221,
+     "end": 38.402
+    },
+    {
+     "text": "partying",
+     "start": 38.402,
+     "end": 38.776
+    },
+    {
+     "text": "by",
+     "start": 38.906,
+     "end": 39.094
+    },
+    {
+     "text": "the",
+     "start": 39.094,
+     "end": 39.233
+    },
+    {
+     "text": "way",
+     "start": 39.233,
+     "end": 39.422
+    }
+   ],
+   "overlay": "BY THE WAY",
+   "visual": "Cut to the town square on party night: Mr. Dube in a party hat dances on the stage with friends, totally oblivious, while his house thunders past in the background."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "They ran past the edge of town, into a field, and stopped in a circle.",
+   "start": 39.737,
+   "end": 43.178,
+   "words": [
+    {
+     "text": "They",
+     "start": 39.752,
+     "end": 39.948
+    },
+    {
+     "text": "ran",
+     "start": 39.948,
+     "end": 40.143
+    },
+    {
+     "text": "past",
+     "start": 40.143,
+     "end": 40.39
+    },
+    {
+     "text": "the",
+     "start": 40.39,
+     "end": 40.534
+    },
+    {
+     "text": "edge",
+     "start": 40.534,
+     "end": 40.73
+    },
+    {
+     "text": "of",
+     "start": 40.73,
+     "end": 40.874
+    },
+    {
+     "text": "town",
+     "start": 40.874,
+     "end": 41.121
+    },
+    {
+     "text": "into",
+     "start": 41.251,
+     "end": 41.549
+    },
+    {
+     "text": "a",
+     "start": 41.549,
+     "end": 41.723
+    },
+    {
+     "text": "field",
+     "start": 41.723,
+     "end": 42.021
+    },
+    {
+     "text": "and",
+     "start": 42.151,
+     "end": 42.337
+    },
+    {
+     "text": "stopped",
+     "start": 42.337,
+     "end": 42.621
+    },
+    {
+     "text": "in",
+     "start": 42.621,
+     "end": 42.757
+    },
+    {
+     "text": "a",
+     "start": 42.757,
+     "end": 42.894
+    },
+    {
+     "text": "circle",
+     "start": 42.894,
+     "end": 43.178
+    }
+   ],
+   "visual": "A huge empty field under a purple night sky, with fog rolling. The houses fold their legs and settle into a giant ring, mine among them."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then they all started... humming.",
+   "start": 43.493,
+   "end": 45.274,
+   "words": [
+    {
+     "text": "Then",
+     "start": 43.508,
+     "end": 43.708
+    },
+    {
+     "text": "they",
+     "start": 43.708,
+     "end": 43.907
+    },
+    {
+     "text": "all",
+     "start": 43.907,
+     "end": 44.055
+    },
+    {
+     "text": "started",
+     "start": 44.055,
+     "end": 44.465
+    },
+    {
+     "text": "humming",
+     "start": 44.835,
+     "end": 45.274
+    }
+   ],
+   "visual": "Every window in the ring glows purple and pulses in sync while the chimneys puff together. Slow orbiting camera."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "School was at eight. I needed my house home.",
+   "start": 45.589,
+   "end": 47.875,
+   "words": [
+    {
+     "text": "School",
+     "start": 45.604,
+     "end": 45.874
+    },
+    {
+     "text": "was",
+     "start": 45.874,
+     "end": 46.088
+    },
+    {
+     "text": "at",
+     "start": 46.088,
+     "end": 46.246
+    },
+    {
+     "text": "eight",
+     "start": 46.246,
+     "end": 46.46
+    },
+    {
+     "text": "I",
+     "start": 46.77,
+     "end": 46.91
+    },
+    {
+     "text": "needed",
+     "start": 46.91,
+     "end": 47.202
+    },
+    {
+     "text": "my",
+     "start": 47.202,
+     "end": 47.393
+    },
+    {
+     "text": "house",
+     "start": 47.393,
+     "end": 47.634
+    },
+    {
+     "text": "home",
+     "start": 47.634,
+     "end": 47.875
+    }
+   ],
+   "overlay": "SCHOOL IN 2 HOURS",
+   "visual": "Me at my window holding an alarm clock, sweating, the purple glow on my face."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then I remembered rule three. The doorbell.",
+   "start": 48.19,
+   "end": 50.331,
+   "words": [
+    {
+     "text": "Then",
+     "start": 48.205,
+     "end": 48.408
+    },
+    {
+     "text": "I",
+     "start": 48.408,
+     "end": 48.557
+    },
+    {
+     "text": "remembered",
+     "start": 48.557,
+     "end": 49.025
+    },
+    {
+     "text": "rule",
+     "start": 49.025,
+     "end": 49.228
+    },
+    {
+     "text": "three",
+     "start": 49.228,
+     "end": 49.43
+    },
+    {
+     "text": "The",
+     "start": 49.74,
+     "end": 49.913
+    },
+    {
+     "text": "doorbell",
+     "start": 49.913,
+     "end": 50.331
+    }
+   ],
+   "visual": "Me in the think pose. Quick cut: the doorbell button on my front door lights up and glows."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I hung off the porch and pressed it.",
+   "start": 50.646,
+   "end": 52.22,
+   "words": [
+    {
+     "text": "So",
+     "start": 50.661,
+     "end": 50.835
+    },
+    {
+     "text": "I",
+     "start": 50.835,
+     "end": 50.962
+    },
+    {
+     "text": "hung",
+     "start": 50.962,
+     "end": 51.135
+    },
+    {
+     "text": "off",
+     "start": 51.135,
+     "end": 51.263
+    },
+    {
+     "text": "the",
+     "start": 51.263,
+     "end": 51.391
+    },
+    {
+     "text": "porch",
+     "start": 51.391,
+     "end": 51.655
+    },
+    {
+     "text": "and",
+     "start": 51.655,
+     "end": 51.828
+    },
+    {
+     "text": "pressed",
+     "start": 51.828,
+     "end": 52.092
+    },
+    {
+     "text": "it",
+     "start": 52.092,
+     "end": 52.22
+    }
+   ],
+   "visual": "I climb out the window and dangle off the porch roof by one hand, stretch down and jab the glowing doorbell."
+  },
+  {
+   "id": "b17",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 52.535,
+   "end": 54.175,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 52.535,
+     "end": 52.795
+    },
+    {
+     "text": "HUSS!",
+     "start": 52.745,
+     "end": 53.005
+    },
+    {
+     "text": "HUSS!",
+     "start": 52.935,
+     "end": 53.195
+    },
+    {
+     "text": "HUSS!",
+     "start": 53.515,
+     "end": 53.775
+    },
+    {
+     "text": "HUSS!",
+     "start": 53.725,
+     "end": 53.985
+    },
+    {
+     "text": "HUSS!",
+     "start": 53.915,
+     "end": 54.175
+    }
+   ],
+   "visual": "My house's whole body whips around and its legs scramble, then it bolts out of the ring as the sky starts turning to sunrise. Camera shake and a snap zoom on each HUSS."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It sprinted home so fast I flapped behind it like a flag.",
+   "start": 54.515,
+   "end": 57.568,
+   "words": [
+    {
+     "text": "It",
+     "start": 54.53,
+     "end": 54.68
+    },
+    {
+     "text": "sprinted",
+     "start": 54.68,
+     "end": 55.153
+    },
+    {
+     "text": "home",
+     "start": 55.153,
+     "end": 55.41
+    },
+    {
+     "text": "so",
+     "start": 55.41,
+     "end": 55.614
+    },
+    {
+     "text": "fast",
+     "start": 55.614,
+     "end": 55.872
+    },
+    {
+     "text": "I",
+     "start": 55.872,
+     "end": 56.022
+    },
+    {
+     "text": "flapped",
+     "start": 56.022,
+     "end": 56.334
+    },
+    {
+     "text": "behind",
+     "start": 56.334,
+     "end": 56.752
+    },
+    {
+     "text": "it",
+     "start": 56.752,
+     "end": 56.903
+    },
+    {
+     "text": "like",
+     "start": 56.903,
+     "end": 57.16
+    },
+    {
+     "text": "a",
+     "start": 57.16,
+     "end": 57.311
+    },
+    {
+     "text": "flag",
+     "start": 57.311,
+     "end": 57.568
+    }
+   ],
+   "visual": "I hold on to the door handle with my body flying flat behind the galloping house (crowdSurf pose), hoodie flapping, the landscape whipping past under a sunrise sky."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The whole street went wild. Dingalo! Oba stomp! Oba roofi! Porchani!",
+   "start": 57.883,
+   "end": 62.81,
+   "words": [
+    {
+     "text": "The",
+     "start": 57.898,
+     "end": 58.036
+    },
+    {
+     "text": "whole",
+     "start": 58.036,
+     "end": 58.272
+    },
+    {
+     "text": "street",
+     "start": 58.272,
+     "end": 58.558
+    },
+    {
+     "text": "went",
+     "start": 58.558,
+     "end": 58.794
+    },
+    {
+     "text": "wild",
+     "start": 58.794,
+     "end": 59.079
+    },
+    {
+     "text": "Dingalo!",
+     "start": 59.389,
+     "end": 59.938
+    },
+    {
+     "text": "Oba",
+     "start": 60.228,
+     "end": 60.532
+    },
+    {
+     "text": "stomp!",
+     "start": 60.532,
+     "end": 60.9
+    },
+    {
+     "text": "Oba",
+     "start": 61.19,
+     "end": 61.546
+    },
+    {
+     "text": "roofi!",
+     "start": 61.546,
+     "end": 61.901
+    },
+    {
+     "text": "Porchani!",
+     "start": 62.191,
+     "end": 62.81
+    }
+   ],
+   "overlay": "DINGALO! OBA STOMP! OBA ROOFI! PORCHANI!",
+   "visual": "Main street at sunrise: townspeople in pyjamas and sleeping bags on the road (their houses are still gone) jump up cheering as my house skids back into its spot. Each chant word stamps on screen."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "This morning, something tiny was following my house around.",
+   "start": 63.125,
+   "end": 66.091,
+   "words": [
+    {
+     "text": "This",
+     "start": 63.14,
+     "end": 63.352
+    },
+    {
+     "text": "morning",
+     "start": 63.352,
+     "end": 63.733
+    },
+    {
+     "text": "something",
+     "start": 63.863,
+     "end": 64.245
+    },
+    {
+     "text": "tiny",
+     "start": 64.245,
+     "end": 64.572
+    },
+    {
+     "text": "was",
+     "start": 64.572,
+     "end": 64.785
+    },
+    {
+     "text": "following",
+     "start": 64.785,
+     "end": 65.224
+    },
+    {
+     "text": "my",
+     "start": 65.224,
+     "end": 65.438
+    },
+    {
+     "text": "house",
+     "start": 65.438,
+     "end": 65.708
+    },
+    {
+     "text": "around",
+     "start": 65.708,
+     "end": 66.091
+    }
+   ],
+   "visual": "Daytime in my front garden. My house stands still and normal, and something small peeks out from behind one of its legs."
+  },
+  {
+   "id": "b21",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 66.406,
+   "end": 67.066,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 66.406,
+     "end": 66.666
+    },
+    {
+     "text": "HUSS!",
+     "start": 66.616,
+     "end": 66.876
+    },
+    {
+     "text": "HUSS!",
+     "start": 66.806,
+     "end": 67.066
+    }
+   ],
+   "visual": "Three snap close-ups: a tiny stubby leg, a tiny door, a tiny chimney puffing a tiny cloud."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "A shed. On tiny legs. That's what the humming was. My house had a baby.",
+   "start": 67.406,
+   "end": 71.719,
+   "words": [
+    {
+     "text": "A",
+     "start": 67.421,
+     "end": 67.627
+    },
+    {
+     "text": "shed",
+     "start": 67.627,
+     "end": 67.906
+    },
+    {
+     "text": "On",
+     "start": 68.216,
+     "end": 68.389
+    },
+    {
+     "text": "tiny",
+     "start": 68.389,
+     "end": 68.748
+    },
+    {
+     "text": "legs",
+     "start": 68.748,
+     "end": 69.045
+    },
+    {
+     "text": "That's",
+     "start": 69.355,
+     "end": 69.596
+    },
+    {
+     "text": "what",
+     "start": 69.596,
+     "end": 69.787
+    },
+    {
+     "text": "the",
+     "start": 69.787,
+     "end": 69.927
+    },
+    {
+     "text": "humming",
+     "start": 69.927,
+     "end": 70.219
+    },
+    {
+     "text": "was",
+     "start": 70.219,
+     "end": 70.409
+    },
+    {
+     "text": "My",
+     "start": 70.719,
+     "end": 70.9
+    },
+    {
+     "text": "house",
+     "start": 70.9,
+     "end": 71.129
+    },
+    {
+     "text": "had",
+     "start": 71.129,
+     "end": 71.309
+    },
+    {
+     "text": "a",
+     "start": 71.309,
+     "end": 71.443
+    },
+    {
+     "text": "baby",
+     "start": 71.443,
+     "end": 71.719
+    }
+   ],
+   "overlay": "IT'S A SHED!",
+   "visual": "A tiny wooden shed on four wobbly legs bounces around my house's feet like a puppy and chases the pigeon. My house nudges it gently. I'm stunned."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mom says I have to walk it. And Mr. Dube's house had twins.",
+   "start": 72.034,
+   "end": 75.332,
+   "words": [
+    {
+     "text": "Mom",
+     "start": 72.049,
+     "end": 72.219
+    },
+    {
+     "text": "says",
+     "start": 72.219,
+     "end": 72.39
+    },
+    {
+     "text": "I",
+     "start": 72.39,
+     "end": 72.516
+    },
+    {
+     "text": "have",
+     "start": 72.516,
+     "end": 72.687
+    },
+    {
+     "text": "to",
+     "start": 72.687,
+     "end": 72.813
+    },
+    {
+     "text": "walk",
+     "start": 72.813,
+     "end": 72.984
+    },
+    {
+     "text": "it",
+     "start": 72.984,
+     "end": 73.11
+    },
+    {
+     "text": "And",
+     "start": 73.42,
+     "end": 73.649
+    },
+    {
+     "text": "Mr",
+     "start": 73.649,
+     "end": 73.998
+    },
+    {
+     "text": "Dube's",
+     "start": 74.308,
+     "end": 74.564
+    },
+    {
+     "text": "house",
+     "start": 74.564,
+     "end": 74.82
+    },
+    {
+     "text": "had",
+     "start": 74.82,
+     "end": 75.023
+    },
+    {
+     "text": "twins",
+     "start": 75.023,
+     "end": 75.332
+    }
+   ],
+   "overlay": "TWINS",
+   "visual": "I walk the tiny shed on a leash down main street, deadpan, while it tugs toward a lamp post. Final cut: Mr. Dube, still in his party hat, stunned, as two tiny garages on legs bounce around him."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 1.112,
+   "end": 1.269,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "houses",
+   "start": 1.269,
+   "end": 1.651,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "have",
+   "start": 1.651,
+   "end": 1.864,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "legs",
+   "start": 1.864,
+   "end": 2.134,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "And",
+   "start": 2.444,
+   "end": 2.642,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "last",
+   "start": 2.642,
+   "end": 2.892,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "night",
+   "start": 2.892,
+   "end": 3.143,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "mine",
+   "start": 3.273,
+   "end": 3.515,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "ran",
+   "start": 3.515,
+   "end": 3.706,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "away",
+   "start": 3.706,
+   "end": 3.948,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "with",
+   "start": 3.948,
+   "end": 4.14,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "me",
+   "start": 4.14,
+   "end": 4.281,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "inside",
+   "start": 4.281,
+   "end": 4.623,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Once",
+   "start": 4.953,
+   "end": 5.227,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "a",
+   "start": 5.227,
+   "end": 5.387,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "year",
+   "start": 5.387,
+   "end": 5.604,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "on",
+   "start": 5.734,
+   "end": 5.866,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 5.866,
+   "end": 5.998,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "first",
+   "start": 5.998,
+   "end": 6.223,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "cold",
+   "start": 6.223,
+   "end": 6.496,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "night",
+   "start": 6.496,
+   "end": 6.722,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "they",
+   "start": 6.852,
+   "end": 7.024,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "stand",
+   "start": 7.024,
+   "end": 7.286,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "up",
+   "start": 7.286,
+   "end": 7.413,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "and",
+   "start": 7.413,
+   "end": 7.585,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "leave",
+   "start": 7.585,
+   "end": 7.757,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Nobody",
+   "start": 8.067,
+   "end": 8.525,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "knows",
+   "start": 8.525,
+   "end": 8.806,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "where",
+   "start": 8.806,
+   "end": 9.029,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Rules",
+   "start": 9.359,
+   "end": 9.614,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "chain",
+   "start": 9.614,
+   "end": 9.923,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "your",
+   "start": 9.923,
+   "end": 10.125,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "house",
+   "start": 10.125,
+   "end": 10.38,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "to",
+   "start": 10.38,
+   "end": 10.529,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 10.529,
+   "end": 10.678,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "lamp",
+   "start": 10.678,
+   "end": 10.933,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "post",
+   "start": 10.933,
+   "end": 11.242,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Never",
+   "start": 11.552,
+   "end": 11.798,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "be",
+   "start": 11.798,
+   "end": 11.942,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "inside",
+   "start": 11.942,
+   "end": 12.292,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "when",
+   "start": 12.292,
+   "end": 12.487,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "it",
+   "start": 12.487,
+   "end": 12.631,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "runs",
+   "start": 12.631,
+   "end": 12.877,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "And",
+   "start": 13.187,
+   "end": 13.372,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "if",
+   "start": 13.372,
+   "end": 13.507,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "it",
+   "start": 13.507,
+   "end": 13.643,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "runs",
+   "start": 13.643,
+   "end": 13.876,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "off",
+   "start": 13.876,
+   "end": 14.012,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "ring",
+   "start": 14.142,
+   "end": 14.368,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "its",
+   "start": 14.368,
+   "end": 14.593,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "doorbell",
+   "start": 14.593,
+   "end": 14.997,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 21
+  },
+  {
+   "text": "It",
+   "start": 15.307,
+   "end": 15.44,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 22
+  },
+  {
+   "text": "comes",
+   "start": 15.44,
+   "end": 15.668,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 23
+  },
+  {
+   "text": "home",
+   "start": 15.668,
+   "end": 15.896,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 24
+  },
+  {
+   "text": "like",
+   "start": 15.896,
+   "end": 16.123,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 25
+  },
+  {
+   "text": "a",
+   "start": 16.123,
+   "end": 16.256,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 26
+  },
+  {
+   "text": "dog",
+   "start": 16.256,
+   "end": 16.437,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 27
+  },
+  {
+   "text": "Mrs",
+   "start": 16.767,
+   "end": 17.274,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Mokoena",
+   "start": 17.584,
+   "end": 18.051,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "overslept",
+   "start": 18.051,
+   "end": 18.637,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "once",
+   "start": 18.637,
+   "end": 18.925,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "She",
+   "start": 19.235,
+   "end": 19.384,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "woke",
+   "start": 19.384,
+   "end": 19.639,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "up",
+   "start": 19.639,
+   "end": 19.788,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "three",
+   "start": 19.788,
+   "end": 19.99,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "towns",
+   "start": 19.99,
+   "end": 20.298,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "away",
+   "start": 20.298,
+   "end": 20.554,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Still",
+   "start": 20.864,
+   "end": 21.134,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "in",
+   "start": 21.134,
+   "end": 21.292,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "bed",
+   "start": 21.292,
+   "end": 21.507,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "So",
+   "start": 21.837,
+   "end": 22.04,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "last",
+   "start": 22.04,
+   "end": 22.297,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "night",
+   "start": 22.297,
+   "end": 22.555,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "I",
+   "start": 22.685,
+   "end": 22.821,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "fell",
+   "start": 22.821,
+   "end": 23.005,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "asleep",
+   "start": 23.005,
+   "end": 23.287,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "at",
+   "start": 23.287,
+   "end": 23.423,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "my",
+   "start": 23.423,
+   "end": 23.608,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "desk",
+   "start": 23.608,
+   "end": 23.842,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "I",
+   "start": 24.172,
+   "end": 24.328,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "woke",
+   "start": 24.328,
+   "end": 24.595,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "up",
+   "start": 24.595,
+   "end": 24.751,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "because",
+   "start": 24.751,
+   "end": 25.074,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "my",
+   "start": 25.074,
+   "end": 25.286,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "room",
+   "start": 25.286,
+   "end": 25.497,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "was",
+   "start": 25.497,
+   "end": 25.709,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "bouncing",
+   "start": 26.079,
+   "end": 26.645,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "HUSS!",
+   "start": 26.96,
+   "end": 27.22,
+   "beat": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 27.17,
+   "end": 27.43,
+   "beat": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 27.36,
+   "end": 27.62,
+   "beat": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "I",
+   "start": 27.975,
+   "end": 28.105,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "looked",
+   "start": 28.105,
+   "end": 28.328,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 28.328,
+   "end": 28.505,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 28.505,
+   "end": 28.635,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "window",
+   "start": 28.635,
+   "end": 28.951,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "My",
+   "start": 29.261,
+   "end": 29.455,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "house",
+   "start": 29.455,
+   "end": 29.701,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "was",
+   "start": 29.701,
+   "end": 29.896,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "running",
+   "start": 29.896,
+   "end": 30.193,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "down",
+   "start": 30.193,
+   "end": 30.439,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Main",
+   "start": 30.439,
+   "end": 30.685,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Street",
+   "start": 30.685,
+   "end": 30.983,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "It",
+   "start": 31.313,
+   "end": 31.457,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "wasn't",
+   "start": 31.457,
+   "end": 31.756,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "alone",
+   "start": 31.756,
+   "end": 32.056,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Every",
+   "start": 32.366,
+   "end": 32.612,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "house",
+   "start": 32.612,
+   "end": 32.859,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "in",
+   "start": 32.859,
+   "end": 33.003,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "town",
+   "start": 33.003,
+   "end": 33.249,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "was",
+   "start": 33.249,
+   "end": 33.444,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "running",
+   "start": 33.444,
+   "end": 33.742,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "like",
+   "start": 33.872,
+   "end": 34.144,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "a",
+   "start": 34.144,
+   "end": 34.302,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "herd",
+   "start": 34.302,
+   "end": 34.517,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Mr",
+   "start": 34.847,
+   "end": 35.348,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Dube's",
+   "start": 35.658,
+   "end": 35.911,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "house",
+   "start": 35.911,
+   "end": 36.163,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "dragged",
+   "start": 36.163,
+   "end": 36.469,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "its",
+   "start": 36.469,
+   "end": 36.669,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "lamp",
+   "start": 36.669,
+   "end": 36.921,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "post",
+   "start": 36.921,
+   "end": 37.226,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "along",
+   "start": 37.226,
+   "end": 37.479,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "While",
+   "start": 37.809,
+   "end": 38.039,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "he's",
+   "start": 38.039,
+   "end": 38.221,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "out",
+   "start": 38.221,
+   "end": 38.402,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "partying",
+   "start": 38.402,
+   "end": 38.776,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 38.906,
+   "end": 39.094,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 39.094,
+   "end": 39.233,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 39.233,
+   "end": 39.422,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "They",
+   "start": 39.752,
+   "end": 39.948,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ran",
+   "start": 39.948,
+   "end": 40.143,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "past",
+   "start": 40.143,
+   "end": 40.39,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 40.39,
+   "end": 40.534,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "edge",
+   "start": 40.534,
+   "end": 40.73,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "of",
+   "start": 40.73,
+   "end": 40.874,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "town",
+   "start": 40.874,
+   "end": 41.121,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "into",
+   "start": 41.251,
+   "end": 41.549,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "a",
+   "start": 41.549,
+   "end": 41.723,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "field",
+   "start": 41.723,
+   "end": 42.021,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "and",
+   "start": 42.151,
+   "end": 42.337,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "stopped",
+   "start": 42.337,
+   "end": 42.621,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "in",
+   "start": 42.621,
+   "end": 42.757,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "a",
+   "start": 42.757,
+   "end": 42.894,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "circle",
+   "start": 42.894,
+   "end": 43.178,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Then",
+   "start": 43.508,
+   "end": 43.708,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they",
+   "start": 43.708,
+   "end": 43.907,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "all",
+   "start": 43.907,
+   "end": 44.055,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "started",
+   "start": 44.055,
+   "end": 44.465,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "humming",
+   "start": 44.835,
+   "end": 45.274,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "School",
+   "start": 45.604,
+   "end": 45.874,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "was",
+   "start": 45.874,
+   "end": 46.088,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "at",
+   "start": 46.088,
+   "end": 46.246,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "eight",
+   "start": 46.246,
+   "end": 46.46,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "I",
+   "start": 46.77,
+   "end": 46.91,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "needed",
+   "start": 46.91,
+   "end": 47.202,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "my",
+   "start": 47.202,
+   "end": 47.393,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "house",
+   "start": 47.393,
+   "end": 47.634,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "home",
+   "start": 47.634,
+   "end": 47.875,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Then",
+   "start": 48.205,
+   "end": 48.408,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 48.408,
+   "end": 48.557,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "remembered",
+   "start": 48.557,
+   "end": 49.025,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "rule",
+   "start": 49.025,
+   "end": 49.228,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "three",
+   "start": 49.228,
+   "end": 49.43,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "The",
+   "start": 49.74,
+   "end": 49.913,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "doorbell",
+   "start": 49.913,
+   "end": 50.331,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "So",
+   "start": 50.661,
+   "end": 50.835,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 50.835,
+   "end": 50.962,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hung",
+   "start": 50.962,
+   "end": 51.135,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "off",
+   "start": 51.135,
+   "end": 51.263,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 51.263,
+   "end": 51.391,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "porch",
+   "start": 51.391,
+   "end": 51.655,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "and",
+   "start": 51.655,
+   "end": 51.828,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "pressed",
+   "start": 51.828,
+   "end": 52.092,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "it",
+   "start": 52.092,
+   "end": 52.22,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.535,
+   "end": 52.795,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.745,
+   "end": 53.005,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 52.935,
+   "end": 53.195,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 53.515,
+   "end": 53.775,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 53.725,
+   "end": 53.985,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 53.915,
+   "end": 54.175,
+   "beat": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "It",
+   "start": 54.53,
+   "end": 54.68,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "sprinted",
+   "start": 54.68,
+   "end": 55.153,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "home",
+   "start": 55.153,
+   "end": 55.41,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "so",
+   "start": 55.41,
+   "end": 55.614,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "fast",
+   "start": 55.614,
+   "end": 55.872,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "I",
+   "start": 55.872,
+   "end": 56.022,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "flapped",
+   "start": 56.022,
+   "end": 56.334,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "behind",
+   "start": 56.334,
+   "end": 56.752,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "it",
+   "start": 56.752,
+   "end": 56.903,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "like",
+   "start": 56.903,
+   "end": 57.16,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "a",
+   "start": 57.16,
+   "end": 57.311,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "flag",
+   "start": 57.311,
+   "end": 57.568,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "The",
+   "start": 57.898,
+   "end": 58.036,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "whole",
+   "start": 58.036,
+   "end": 58.272,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "street",
+   "start": 58.272,
+   "end": 58.558,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "went",
+   "start": 58.558,
+   "end": 58.794,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "wild",
+   "start": 58.794,
+   "end": 59.079,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Dingalo!",
+   "start": 59.389,
+   "end": 59.938,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Oba",
+   "start": 60.228,
+   "end": 60.532,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "stomp!",
+   "start": 60.532,
+   "end": 60.9,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Oba",
+   "start": 61.19,
+   "end": 61.546,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "roofi!",
+   "start": 61.546,
+   "end": 61.901,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Porchani!",
+   "start": 62.191,
+   "end": 62.81,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "This",
+   "start": 63.14,
+   "end": 63.352,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "morning",
+   "start": 63.352,
+   "end": 63.733,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "something",
+   "start": 63.863,
+   "end": 64.245,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "tiny",
+   "start": 64.245,
+   "end": 64.572,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "was",
+   "start": 64.572,
+   "end": 64.785,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "following",
+   "start": 64.785,
+   "end": 65.224,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "my",
+   "start": 65.224,
+   "end": 65.438,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "house",
+   "start": 65.438,
+   "end": 65.708,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "around",
+   "start": 65.708,
+   "end": 66.091,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "HUSS!",
+   "start": 66.406,
+   "end": 66.666,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 66.616,
+   "end": 66.876,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 66.806,
+   "end": 67.066,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "A",
+   "start": 67.421,
+   "end": 67.627,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "shed",
+   "start": 67.627,
+   "end": 67.906,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "On",
+   "start": 68.216,
+   "end": 68.389,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "tiny",
+   "start": 68.389,
+   "end": 68.748,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "legs",
+   "start": 68.748,
+   "end": 69.045,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "That's",
+   "start": 69.355,
+   "end": 69.596,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "what",
+   "start": 69.596,
+   "end": 69.787,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 69.787,
+   "end": 69.927,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "humming",
+   "start": 69.927,
+   "end": 70.219,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "was",
+   "start": 70.219,
+   "end": 70.409,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "My",
+   "start": 70.719,
+   "end": 70.9,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "house",
+   "start": 70.9,
+   "end": 71.129,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "had",
+   "start": 71.129,
+   "end": 71.309,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "a",
+   "start": 71.309,
+   "end": 71.443,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "baby",
+   "start": 71.443,
+   "end": 71.719,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Mom",
+   "start": 72.049,
+   "end": 72.219,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "says",
+   "start": 72.219,
+   "end": 72.39,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I",
+   "start": 72.39,
+   "end": 72.516,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "have",
+   "start": 72.516,
+   "end": 72.687,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "to",
+   "start": 72.687,
+   "end": 72.813,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "walk",
+   "start": 72.813,
+   "end": 72.984,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "it",
+   "start": 72.984,
+   "end": 73.11,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "And",
+   "start": 73.42,
+   "end": 73.649,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Mr",
+   "start": 73.649,
+   "end": 73.998,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Dube's",
+   "start": 74.308,
+   "end": 74.564,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "house",
+   "start": 74.564,
+   "end": 74.82,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "had",
+   "start": 74.82,
+   "end": 75.023,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "twins",
+   "start": 75.023,
+   "end": 75.332,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 4.858,
+   "mode": "night"
+  },
+  {
+   "t": 9.264,
+   "mode": "party"
+  },
+  {
+   "t": 21.742,
+   "mode": "night"
+  },
+  {
+   "t": 24.077,
+   "mode": "none"
+  },
+  {
+   "t": 26.88,
+   "mode": "none"
+  },
+  {
+   "t": 27.88,
+   "mode": "party"
+  },
+  {
+   "t": 37.714,
+   "mode": "party"
+  },
+  {
+   "t": 39.657,
+   "mode": "none"
+  },
+  {
+   "t": 43.413,
+   "mode": "none"
+  },
+  {
+   "t": 45.509,
+   "mode": "night"
+  },
+  {
+   "t": 50.566,
+   "mode": "none"
+  },
+  {
+   "t": 52.455,
+   "mode": "party"
+  },
+  {
+   "t": 57.803,
+   "mode": "party"
+  },
+  {
+   "t": 63.045,
+   "mode": "lofi"
+  },
+  {
+   "t": 66.326,
+   "mode": "none"
+  },
+  {
+   "t": 67.326,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "r1": 9.614,
+  "r2": 11.552,
+  "r3": 14.142,
+  "dog": 15.44,
+  "bed": 20.864,
+  "window": 28.105,
+  "run": 29.896,
+  "circle": 42.337,
+  "press": 51.828,
+  "flag": 56.022,
+  "dingalo": 59.389,
+  "stomp": 60.532,
+  "roofi": 61.546,
+  "porch": 62.191,
+  "shed": 67.627,
+  "baby": 70.719,
+  "walk": 72.813,
+  "twins": 75.023
+ },
+ "title": "In This Town \u2014 Moving Night"
+}

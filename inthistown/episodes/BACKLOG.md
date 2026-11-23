@@ -36,7 +36,7 @@ Rules from the creator:
 | 21 | The Deep Above | mystical | scheduled Wed 25 Nov 12:30 |
 | 22 | Big Love | homey | scheduled Wed 25 Nov 17:30 |
 | 23 | Low Moon | spooky | scheduled Wed 25 Nov 20:00 |
-| 24 | Word of the Day | meme | rendering → Thu 26 Nov 07:30 |
+| 24 | Word of the Day | meme | scheduled Thu 26 Nov 07:30 |
 | 25 | Nugget | giants / funny | shots building (deep 'Ba-gawk' voice) |
 | 26 | Who Bit the Town? | MYSTERY | shots building |
 

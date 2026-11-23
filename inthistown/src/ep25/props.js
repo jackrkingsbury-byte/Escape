@@ -564,8 +564,8 @@ export function makeEgg() {
   function addPath(list, order0) {
     for (let i = 0; i < list.length - 1; i++) {
       const a = surf(...list[i]), b = surf(...list[i + 1]), mid = a.clone().add(b).multiplyScalar(0.5), len = a.distanceTo(b);
-      const seg = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, len + 0.03), glowM);
-      const edge = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.11, len + 0.06), darkM);
+      const seg = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.03, len + 0.02), glowM);
+      const edge = new THREE.Mesh(new THREE.BoxGeometry(0.065, 0.05, len + 0.04), darkM);
       const holder = grp(body); holder.position.copy(mid); holder.lookAt(b); holder.add(edge); holder.add(seg);   // +Z along a→b
       const n = mid.clone().setY(mid.y - H * 0.5).normalize(); holder.position.addScaledVector(n, 0.01);
       segs.push({ holder, k: order0 + i });
@@ -580,7 +580,7 @@ export function makeEgg() {
     set(t, o = {}) {
       const c = o.crack ?? 0, g = o.glow ?? c, w = o.wobble ?? 0, sh = o.shake ?? 0;
       segs.forEach((s) => { const vis = c * maxK > s.k; s.holder.visible = vis; s.holder.scale.set(1 + g * 0.6, 1 + g * 0.6, 1); });
-      glowM.color.setRGB(1, 0.95, 0.62).multiplyScalar(1 + 2.2 * g);
+      glowM.color.setRGB(1, 0.95, 0.62).multiplyScalar(1 + 0.9 * g);
       glow.intensity = g * (o.lightK ?? 30);
       body.rotation.set(sh * 0.02 * Math.sin(t * 47), 0, w * 0.06 * Math.sin(t * 7) + sh * 0.03 * Math.sin(t * 53));
     },

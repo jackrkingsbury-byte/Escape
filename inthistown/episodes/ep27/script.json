@@ -1,0 +1,480 @@
+{
+ "title": "In This Town — Moving Night",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town every house has legs, and once a year, on the first cold night, they all stand up and run off. The narrator falls asleep at his desk and rides his house in a stampede to a field past the edge of town, where every house stands in a circle humming. He has to get it home before school.",
+ "twist": "The narrator gets home by ringing his own doorbell. The next morning something tiny is following his house around the garden: a shed on wobbly legs. The humming was the houses having babies. Mom says he has to walk it, and Mr. Dube's house had twins: two tiny garages.",
+ "caption_hook": "My house ran away last night. I was still inside.",
+ "vibe": "random",
+ "sets": [
+  "main street - dusk, then night with houses on legs, then sunrise",
+  "kid's bedroom interior at night (bouncing camera, swinging posters, glowing monitor)",
+  "new open field past the edge of town (flat ground, fog, purple sky, houses in a ring)",
+  "town square - party night (Mr. Dube partying)",
+  "park and clock tower - stampede route",
+  "my front garden - morning"
+ ],
+ "newProps": [
+  "house walking rig: a normal town house on four chunky cylinder legs (stand, tiptoe, gallop, fold legs)",
+  "giant chain and padlock linking a house leg to a street lamp",
+  "street lamp ripped loose, dragged and sparking behind a running house",
+  "bed on a front porch",
+  "frost on windows and rooftops",
+  "glowing doorbell button on my front door",
+  "alarm clock / countdown",
+  "sleeping bags lined up on main street",
+  "baby shed: a tiny wooden shed on four stubby wobbly legs",
+  "two tiny garages on stubby legs",
+  "dog leash",
+  "dust puffs and chimney smoke puffs"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, the houses have legs. And last night, mine ran away with me inside.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:legs",
+     "gain": 0.55
+    },
+    {
+     "type": "thump",
+     "at": "w:ran",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Dusk on main street. A cosy house creaks, then rises on four chunky blocky legs in puffs of dust and stretches like a cat. My bedroom window is lit, and I'm pressed against the glass, shocked."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Once a year, on the first cold night, they stand up and leave. Nobody knows where.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:stand",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Night with frost on the rooftops. A line of houses on legs tiptoes out of town past the clock tower, silhouetted against a purple sky, while extras in pyjamas watch from the street."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Rules: chain your house to a lamp post. Never be inside when it runs. And if it runs off, ring its doorbell. It comes home like a dog.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:chain",
+     "gain": 0.5
+    },
+    {
+     "type": "pop",
+     "at": "w:inside",
+     "gain": 0.45
+    },
+    {
+     "type": "ding",
+     "at": "w:doorbell",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "RULE 1: CHAIN IT · RULE 2: GET OUT · RULE 3: RING THE BELL",
+   "visual": "Mr. Dube (big beard, cap) wraps a giant chain from his house's leg to a street lamp and snaps the padlock shut, smug. A second rule card stamps in after. On rule three: Mr. Dube rings the doorbell of his runaway house from the pavement and it trots back to him like a dog, wagging its porch door.",
+   "markers": {
+    "r1": "w:chain",
+    "r2": "w:Never",
+    "r3": "w:ring",
+    "dog": "w:comes"
+   }
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Mokoena overslept once. She woke up three towns away. Still in bed.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:towns",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "3 TOWNS AWAY",
+   "visual": "Morning in an empty field. Grey-haired Mrs. Mokoena sits up in her bed on the porch of her house, which stands alone with its legs folded, sleepy face. A road sign behind her points the wrong way.",
+   "markers": {
+    "bed": "w:Still"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So last night, I fell asleep at my desk.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "visual": "Kid's bedroom at night: me asleep in my chair with my headphones on, the monitor glowing, frost creeping across the window."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I woke up because my room was... bouncing.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:bouncing",
+     "gain": 0.6
+    }
+   ],
+   "visual": "The bedroom bobs up and down in rhythm, posters swing and the lamp wobbles. My eyes snap open (shocked)."
+  },
+  {
+   "id": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Three big bounces: I'm thrown out of the chair, onto the bed, then onto the floor. Camera shake on each HUSS."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I looked out the window. My house was running down Main Street.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:running",
+     "gain": 0.55
+    },
+    {
+     "type": "whoosh",
+     "at": "w:Main",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Over my shoulder through the window, street lamps whiz past and the view bounces. Cut outside: my house gallops down main street on four legs with my lit window bobbing along.",
+   "markers": {
+    "window": "w:looked",
+    "run": "w:running"
+   }
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It wasn't alone. Every house in town was running, like a herd.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:herd",
+     "gain": 0.55
+    },
+    {
+     "type": "whoosh",
+     "at": "w:Every",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Wide drone shot at night: dozens of houses on legs stampede through the park and around the clock tower, chimneys puffing and dust everywhere. The pigeon rides on a roof."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Dube's house dragged its lamp post along.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:dragged",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Mr. Dube's house gallops past still chained, with the ripped-out street lamp bouncing and sparking behind it like a kite."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While he's out partying, by the way.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:partying",
+     "gain": 0.55
+    },
+    {
+     "type": "boom",
+     "at": "w:way",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "BY THE WAY",
+   "visual": "Cut to the town square on party night: Mr. Dube in a party hat dances on the stage with friends, totally oblivious, while his house thunders past in the background."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "They ran past the edge of town, into a field, and stopped in a circle.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:field",
+     "gain": 0.45
+    }
+   ],
+   "visual": "A huge empty field under a purple night sky, with fog rolling. The houses fold their legs and settle into a giant ring, mine among them.",
+   "markers": {
+    "circle": "w:stopped"
+   }
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then they all started... humming.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:humming",
+     "gain": 0.35
+    }
+   ],
+   "visual": "Every window in the ring glows purple and pulses in sync while the chimneys puff together. Slow orbiting camera."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "School was at eight. I needed my house home.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:eight",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "SCHOOL IN 2 HOURS",
+   "visual": "Me at my window holding an alarm clock, sweating, the purple glow on my face."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I remembered rule three. The doorbell.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:doorbell",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Me in the think pose. Quick cut: the doorbell button on my front door lights up and glows."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I hung off the porch and pressed it.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:pressed",
+     "gain": 0.7
+    }
+   ],
+   "visual": "I climb out the window and dangle off the porch roof by one hand, stretch down and jab the glowing doorbell.",
+   "markers": {
+    "press": "w:pressed"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "My house's whole body whips around and its legs scramble, then it bolts out of the ring as the sky starts turning to sunrise. Camera shake and a snap zoom on each HUSS."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It sprinted home so fast I flapped behind it like a flag.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:sprinted",
+     "gain": 0.6
+    }
+   ],
+   "visual": "I hold on to the door handle with my body flying flat behind the galloping house (crowdSurf pose), hoodie flapping, the landscape whipping past under a sunrise sky.",
+   "markers": {
+    "flag": "w:flapped"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole street went wild. Dingalo! Oba stomp! Oba roofi! Porchani!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "w:wild",
+     "gain": 0.45
+    },
+    {
+     "type": "boom",
+     "at": "w:Dingalo",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "DINGALO! OBA STOMP! OBA ROOFI! PORCHANI!",
+   "visual": "Main street at sunrise: townspeople in pyjamas and sleeping bags on the road (their houses are still gone) jump up cheering as my house skids back into its spot. Each chant word stamps on screen.",
+   "markers": {
+    "dingalo": "w:Dingalo",
+    "stomp": "w:stomp",
+    "roofi": "w:roofi",
+    "porch": "w:Porchani"
+   }
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "This morning, something tiny was following my house around.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:tiny",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Daytime in my front garden. My house stands still and normal, and something small peeks out from behind one of its legs."
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Three snap close-ups: a tiny stubby leg, a tiny door, a tiny chimney puffing a tiny cloud."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A shed. On tiny legs. That's what the humming was. My house had a baby.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:shed",
+     "gain": 0.55
+    },
+    {
+     "type": "laugh",
+     "at": "w:baby",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "IT'S A SHED!",
+   "visual": "A tiny wooden shed on four wobbly legs bounces around my house's feet like a puppy and chases the pigeon. My house nudges it gently. I'm stunned.",
+   "markers": {
+    "shed": "w:shed",
+    "baby": "w:My"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom says I have to walk it. And Mr. Dube's house had twins.",
+   "gapAfter": 0.8,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:walk",
+     "gain": 0.45
+    },
+    {
+     "type": "boom",
+     "at": "w:twins",
+     "gain": 0.65
+    }
+   ],
+   "overlay": "TWINS",
+   "visual": "I walk the tiny shed on a leash down main street, deadpan, while it tugs toward a lamp post. Final cut: Mr. Dube, still in his party hat, stunned, as two tiny garages on legs bounce around him.",
+   "markers": {
+    "walk": "w:walk",
+    "twins": "w:twins"
+   }
+  }
+ ]
+}
