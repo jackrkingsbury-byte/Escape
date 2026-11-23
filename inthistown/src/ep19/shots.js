@@ -271,6 +271,16 @@ function noteStream(ctx, notes, p, dir, t, { n = 12, len = 3, spread = 0.6, s = 
     notes.userData.add(q, { s: s * Math.sin(PI * Math.min(1, u * 1.15)), rot: 0.4 * Math.sin(t * 3 + i), ci: i + seed });
   }
 }
+/** "ME" pointer over the narrator (crowd shots) + a warm light on him */
+function meArrow(ctx, cam) {
+  const me = ctx.cast.me, h = headPt(me, 0, 0.3, 0), P = ctx.props;
+  ctx.add(P.pink); P.pink.color.set('#ffd8a0'); P.pink.intensity = 12; P.pink.position.copy(h).add(up(1.6));
+  const sp = screenOf(cam, h);
+  const below = sp.y > 0.42 && sp.y < 0.7, bob = 0.01 * Math.abs(Math.sin(ctx.t * 6));
+  const y = below ? sp.y + 0.05 + bob : sp.y - 0.06 - bob, dir = below ? -1 : 1;
+  ctx.fx.draw((g, W, H) => { g.translate(sp.x * W, y * H); g.scale(1, dir); g.fillStyle = '#ffe14a'; g.strokeStyle = '#000'; g.lineWidth = 8; g.beginPath(); g.moveTo(-26, -30); g.lineTo(26, -30); g.lineTo(0, 6); g.closePath(); g.stroke(); g.fill(); });
+  ctx.fx.text('ME', { x: sp.x, y: y - 0.04 * dir, size: 64, fill: '#ffe14a', stroke: '#000000', bg: null, rot: 0 });
+}
 function climbPose(ch, t, k = 1) {
   ch.pose('idle', t, { intensity: 0.2 });
   const J = ch.joints, a = Math.sin(t * 6);
@@ -423,7 +433,8 @@ export const shots = [
     update(ctx, lt) {
       const { L } = ctx.store;
       dawnTick(ctx);
-      moveCam(ctx, { pos: L(16, 10.5, 2.8), look: L(-8, 0.6, 0), fov: 46 }, { pos: L(5.5, 3.6, 1.2), look: L(-8, 1.3, 0), fov: 44 }, ease.inOutSine(clamp(lt / 2.9, 0, 1)));
+      const c = moveCam(ctx, { pos: L(16, 10.5, 2.8), look: L(-8, 0.6, 0), fov: 46 }, { pos: L(5.5, 3.6, 1.2), look: L(-8, 1.3, 0), fov: 44 }, ease.inOutSine(clamp(lt / 2.9, 0, 1)));
+      if (lt > 0.6) meArrow(ctx, c);
       tag(ctx, '6:00 AM', 0.2, Infinity, { y: 0.12, size: 58, bg: 'rgba(255,120,60,0.85)' });
     },
   },
@@ -744,8 +755,8 @@ export const shots = [
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t;
       hackerTick(ctx, { plug: 0 }); rigTick(ctx, { on: 0, notes: 0, rings: 0, glow: 0 });
-      const c = moveCam(ctx, { pos: L(TX + 2.1, DY + 1.55, TZ - 2.35), look: L(TX + 0.0, DY + 0.85, TZ - 0.65), fov: 48 }, { pos: L(TX + 1.95, DY + 1.5, TZ - 2.2), look: L(TX + 0.0, DY + 0.9, TZ - 0.65), fov: 44 }, ease.inOutSine(clamp(lt / 1.4, 0, 1)), 0.6, '#9fb4ff');
-      moonBehind(ctx, c, L(TX, DY + 2, TZ - 2), { dx: -0.1, dy: 0.16, size: 22 });
+      const c = moveCam(ctx, { pos: L(TX + 2.05, DY + 1.55, TZ - 1.75), look: L(TX + 0.05, DY + 1.0, TZ - 0.8), fov: 50 }, { pos: L(TX + 1.9, DY + 1.5, TZ - 1.65), look: L(TX + 0.05, DY + 1.05, TZ - 0.8), fov: 46 }, ease.inOutSine(clamp(lt / 1.4, 0, 1)), 1.4, '#a8c0ff');
+      moonBehind(ctx, c, L(TX + 0.05, DY + 1.0, TZ - 0.8), { dx: 0.0, dy: 0.2, size: 24 });
       ctx.fx.vignette(0.6);
     },
   },
@@ -756,8 +767,9 @@ export const shots = [
       const t = ctx.t, h = ctx.cast.hacker;
       const k = clamp((t - ctx.markers.green + 0.1) / 0.25, 0, 1);
       hackerTick(ctx, { plug: 0, eyes: 0.25 + 0.75 * k });
+      h.root.position.copy(ctx.store.L(TX - 0.7, DY, TZ + 0.9)); h.root.rotation.set(0, ctx.store.L.yaw + PI / 2, 0); h.pose('idle', 0.5, { intensity: 0.2, headPitch: 0.15 });
       const f = headPt(h, 0, 0.33, 0.3), fwd = headPt(h, 0, 0.33, 1.0).sub(f).normalize();
-      setCam(ctx, { pos: f.clone().addScaledVector(fwd, 1.25).add(V(0, 0.02, 0)), look: f, fov: 30 - 3 * k });
+      const c = setCam(ctx, { pos: f.clone().addScaledVector(fwd, 1.25).add(V(0, 0.02, 0)), look: f, fov: 30 - 3 * k }); moonBehind(ctx, c, f, { size: 22, dx: 0.2, dy: 0.12 });
       ctx.fx.vignette(0.75);
     },
   },
@@ -773,7 +785,7 @@ export const shots = [
       rigTick(ctx, { on, notes: t > ts ? clamp((t - ts) / 0.6, 0, 1) : 0, rings: t > ts ? 1 : 0, glow: on });
       const h = holeLocal(ctx);
       P.burst.position.copy(L(h.x, h.y, h.z + 0.3)); P.burst.userData.set(t - tp);
-      ctx.add(P.green, ctx.set.root); P.green.position.set(h.x + 0.5, h.y + 0.5, h.z + 0.9); P.green.intensity = on * (6 + 10 * Math.exp(-(t - tp) * 3));
+      ctx.add(P.green, ctx.set.root); P.green.position.set(h.x + 0.5, h.y + 0.5, h.z + 0.9); P.green.intensity = on * (3 + 6 * Math.exp(-(t - tp) * 3));
       const tilt = ease.inOutCubic(clamp((t - ts) / 0.7, 0, 1));
       const c = setCam(ctx, { pos: L(TX + 2.2, DY + 1.7, TZ + 0.4).lerp(L(TX + 9.5, DY - 1.0, TZ + 3.0), tilt), look: L(SOCK.x - 0.1, DY + 0.85, SOCK.z + 0.2).lerp(L(TX + 2.7, 13.4, TZ), tilt), fov: lerp(46, 50, tilt) }, 0.7, '#9fb4ff');
       if (t > tp) { stamp(ctx, 'HACKED', tp, { y: 0.2, size: 170, fill: '#e8232b', stroke: '#000000', rot: -0.1 }); flash(ctx, tp, 0.25, '#7dff6a', 0.6); }
@@ -864,12 +876,12 @@ export const shots = [
       rigTick(ctx);
       ctx.props.filler.userData.set(t, { arms: 'up' });
       ids.forEach((id, k) => {
-        const a = -t * 0.32 - k * 0.24, r = 5.4, ch = ctx.cast[id];
+        const a = -t * 0.26 - k * 0.2, r = 6.6, ch = ctx.cast[id];
         ch.root.position.copy(L(TX + Math.cos(a) * r, 0.25 + 0.06 * Math.abs(Math.sin(t * 6.6 + k)), TZ + Math.sin(a) * r));
         ch.root.rotation.y = L.yaw + Math.atan2(Math.sin(a), -Math.cos(a)) + PI;
         ch.pose('walk', t * 1.2 + k * 0.3, { speed: 0.8 }); armsForward(ch, 1, -1.5); ch.face(k % 2 ? 'laugh' : 'grin', t + k);
       });
-      moveCam(ctx, { pos: L(TX + 8, 8.0, TZ + 7.5), look: L(TX, 1.2, TZ), fov: 56 }, { pos: L(TX + 7, 8.6, TZ + 8.2), look: L(TX, 1.6, TZ), fov: 56 }, clamp(lt / 1.4, 0, 1), 0.6);
+      moveCam(ctx, { pos: L(TX + 19, 6.5, TZ + 11), look: L(TX + 1, 2.2, TZ), fov: 50 }, { pos: L(TX + 18, 7.2, TZ + 12), look: L(TX + 1, 2.8, TZ), fov: 50 }, clamp(lt / 1.4, 0, 1), 0.6);
       tag(ctx, 'ALL NIGHT', ctx.time('b12.w2'), Infinity, { y: 0.13, size: 76, bg: 'rgba(120,20,140,0.9)' });
     },
   },
@@ -1017,7 +1029,7 @@ export const shots = [
       me.pose('idle', t, { intensity: 0.4 }); me.face('sweat', 0.6);
       P.phones.userData.set({ led: '#ff2a2a', k: Math.floor(t * 4) % 2 ? 1 : 0.25 });
       P.towerGlow.material.opacity = 0.45 + 0.15 * beat(t);
-      moveCam(ctx, { pos: L(BENCH_X + 1.9, 2.3, PIC.z + 0.45), look: L(-30, 1.8, 0.8), fov: 40 }, { pos: L(BENCH_X + 1.7, 2.3, PIC.z + 0.42), look: L(-30, 2.6, 0.8), fov: 36 }, ease.inOutSine(clamp(lt / 2.6, 0, 1)));
+      moveCam(ctx, { pos: L(BENCH_X + 1.9, 2.3, PIC.z + 0.45), look: L(-30, 1.8, 0.8), fov: 40 }, { pos: L(BENCH_X + 1.7, 2.3, PIC.z + 0.42), look: L(-30, 3.6, 0.8), fov: 28 }, ease.inOutSine(clamp(lt / 2.6, 0, 1)));
       battery(ctx, 2, { y: 0.13, s: 0.9, t0: ctx.time('b16') - 0.05, blink: true });
       tag(ctx, 'CLOCK TOWER', ctx.time('b16.w5'), Infinity, { y: 0.24, size: 56, bg: 'rgba(20,20,30,0.85)', rot: 0 });
       if (t > ctx.time('b16.w11')) stamp(ctx, 'JAMMED', ctx.time('b16.w11'), { y: 0.35, size: 120, fill: '#e8232b', stroke: '#ffffff', rot: -0.06 });
@@ -1116,7 +1128,7 @@ export const shots = [
       const { L } = ctx.store, t = ctx.t, me = ctx.cast.me;
       const x = 13 - (t - ctx.time('b19')) * 5.2;
       surfTick(ctx, x);
-      setCam(ctx, { pos: L(x + 3.0, 5.6, 4.0), look: L(x - 1.5, 2.2, 0.0), fov: 46 }, 1.6, '#e0e8ff');
+      setCam(ctx, { pos: L(x + 4.6, 6.0, 5.2), look: L(x - 0.4, 2.7, 0.0), fov: 42 }, 1.6, '#e0e8ff');
       tag(ctx, 'NEXT STOP: CLOCK TOWER', ctx.time('b19.w3'), Infinity, { y: 0.14, size: 54, bg: 'rgba(20,20,30,0.85)' });
     },
   },
@@ -1127,7 +1139,8 @@ export const shots = [
       const { L } = ctx.store, t = ctx.t;
       const x = -30 - (t - ctx.time('b19.w8')) * 6.5;
       surfTick(ctx, x);
-      moveCam(ctx, { pos: L(-27, 6.5, 4.5), look: L(TX + 3, 6.5, TZ), fov: 54 }, { pos: L(-30, 6.8, 4.2), look: L(TX + 2, 7.5, TZ), fov: 54 }, clamp(lt / 1.4, 0, 1), 1.0);
+      const c = moveCam(ctx, { pos: L(-17.5, 8.6, 4.2), look: L(TX + 6, 5.6, TZ), fov: 60 }, { pos: L(-20.5, 9.0, 3.8), look: L(TX + 5, 6.0, TZ), fov: 60 }, clamp(lt / 1.4, 0, 1), 1.2);
+      meArrow(ctx, c);
       battery(ctx, 2, { y: 0.1, s: 0.75, blink: true });
     },
   },
@@ -1212,7 +1225,7 @@ export const shots = [
       P.phones.userData.set({ led: '#ff2a2a', k: 0.6 });
       const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5);
       const loc = ctx.set.root.worldToLocal(mid.clone());
-      plugAt(ctx, V(loc.x, loc.y + 0.25, loc.z), me.root.rotation.y, -PI / 2); P.plug.userData.set(0.7);
+      plugAt(ctx, V(loc.x, loc.y + 0.7, loc.z), me.root.rotation.y, -PI / 2); P.plug.userData.set(0.7);
       const f = humanFace(me);
       const cams = [
         { pos: L(SOCK.x + 1.7, DY + 0.45, SOCK.z + 3.3), look: L(SOCK.x + 0.2, DY + 2.1, SOCK.z + 1.9), fov: 58 },
@@ -1246,7 +1259,7 @@ export const shots = [
       });
       P.filler.userData.set(t, { arms: 'limp', flop: (i) => ease.outCubic(clamp((t - tf - 0.15 * hash(i * 2.3)) / 0.45, 0, 1)), bounce: t < tf ? 1 : 0 });
       me.pose('idle', t, { intensity: 0.3 }); armsUp(me, 1); me.face('shocked', 0.5);
-      const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5); const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y + 0.25, loc.z), me.root.rotation.y, -PI / 2);
+      const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5); const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y + 0.7, loc.z), me.root.rotation.y, -PI / 2);
       setCam(ctx, { pos: L(SOCK.x + 0.5, DY + 3.3, SOCK.z + 3.6), look: L(TX + 11, 0, TZ + 0.5), fov: 54 }, 0.6);
       if (t > tf) stamp(ctx, 'FLOP', tf + 0.15, { y: 0.18, size: 140, fill: '#ffffff', stroke: '#1d1d22', rot: 0.1 });
     },
@@ -1272,7 +1285,7 @@ export const shots = [
       });
       P.filler.userData.set(t, { arms: 'cheer', flop: (i) => 1 - ease.outCubic(clamp((t - tu + 0.2 - 0.3 * hash(i * 2.3)) / 0.4, 0, 1)) });
       me.pose('cheer', t, { intensity: 0.6 }); armsUp(me, 1, 0.1 * Math.sin(t * 4)); me.face('laugh', t);
-      const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5); const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y + 0.25, loc.z), me.root.rotation.y, -PI / 2);
+      const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5); const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y + 0.7, loc.z), me.root.rotation.y, -PI / 2);
       setCam(ctx, { pos: L(TX + 19.5, 0.9, TZ + 4.5), look: L(TX + 1.5, 11.0, TZ), fov: 52 }, 1.2);
       top10Card(ctx, 1, ctx.time('b22.w7') - 0.05, Infinity, { title: 'TOP 10\nRESPECTFUL MOMENTS', popAt: ctx.markers.top10 - 0.05 });
       tag(ctx, 'THE TOWN CARRIED ME', ctx.markers.top10 + 0.1, Infinity, { y: 0.37, size: 58, bg: 'rgba(20,20,30,0.88)' });
@@ -1522,7 +1535,7 @@ function surfTick(ctx, x) {
     m.ch.setAccessory?.('sunglasses', true);
   });
   P.filler.userData.set(t, { arms: 'up', shades: true });
-  me.root.position.copy(L(x, 2.3 + 0.08 * Math.sin(t * 9) + 0.05 * Math.sin(t * 5.3), 0.6 * Math.sin(t * 1.3) * 0.3 + (x < -29 ? 1.2 : 0)));
+  me.root.position.copy(L(x, 2.85 + 0.08 * Math.sin(t * 9) + 0.05 * Math.sin(t * 5.3), 0.6 * Math.sin(t * 1.3) * 0.3 + (x < -29 ? 1.2 : 0)));
   me.root.rotation.set(0.06 * Math.sin(t * 7), L.yaw - PI / 2, 0.08 * Math.sin(t * 5));
   me.pose('crowdSurf', t, { lift: 0, intensity: 0.7 }); me.face('huss', 0.5);
   P.phones.userData.set({ led: '#ff2a2a', k: Math.floor(t * 5) % 2 ? 1 : 0.25 });
