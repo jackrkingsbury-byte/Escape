@@ -21,7 +21,7 @@ import { makeShockRing } from '../ep20/props.js';
 import { makeHedge } from '../ep21/props.js';
 import {
   makeMoonEye, makeClockFace, makeBendLamp, makeNoMusicSign, makeMustache, makeKazoo, makeSpeakerTower, makeTablet,
-  makeSickFacade, makeDoorway, makeRoofTile, makeThermometer, makeBlanket,
+  makeSickFacade, makeDoorway, makeRoofTile, makeThermometer, makeBlanket, makeRoadCase, makeCableCoil,
 } from './props.js';
 
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -68,6 +68,7 @@ const FACADE = { x: -3, z: -8.75 };
 const STAGE_Y = 0.8;
 const SPK = { x: 51.5, z: 1.65 };                      // speaker towers at (SPK.x, ±SPK.z), facing −x
 const KID_STAGE = { x: 50.35, z: 0 };
+const DRAG = { x0: 50.95, z: 2.5, sz: 3.35, gap: 1.45, ax: 50.35, az: 0.75 };          // b18 haul: kid walks +x at z, speaker trails at sz
 const HEDGE = { x: -25.5, z: 8.9 };
 const OTIS_ST = { x: 2, z: 1.2 };                      // dad + Otis on the street (b09/b10)
 const OTIS_SQ = { x: 41.2, z: 0.4 };                   // dad + Otis in the square (b12)
@@ -81,7 +82,7 @@ export function init(ctx) {
   P.mustHead = makeMustache('#4a3426'); P.mustFly = makeMustache('#4a3426');
   P.kazoo = makeKazoo(); P.kazoo.scale.setScalar(1.8); P.notes = makeNotes(6, '#ffffff');
   P.spkA = makeSpeakerTower(); P.spkB = makeSpeakerTower();
-  P.tablet = makeTablet();
+  P.tablet = makeTablet(); P.roadCase = makeRoadCase(); P.coil = makeCableCoil();
   P.facade = makeSickFacade();
   P.doors = [0, 1, 2, 3, 4].map((i) => makeDoorway(['#3f7a5a', '#b5543f', '#2f4d8a', '#7a1f2b', '#e0a43a'][i]));
   P.tiles = [makeRoofTile(), makeRoofTile()];
@@ -173,7 +174,7 @@ function moonFrame(ctx, cam, p, R = MR, o = {}) {
   const w = Array.isArray(p) ? L(p[0], p[1], p[2]) : p;
   M.position.copy(w); M.scale.setScalar(R); M.userData.face(cam.pos);
   M.userData.gaze(o.gaze ?? null);
-  M.userData.set({ pupil: o.pupil ?? 0, lid: o.lid ?? 0, glow: o.glow ?? 1.3, dilate: o.dilate ?? 1, halo: o.halo ?? 0.6, slit: o.slit ?? 0, irisGlow: o.irisGlow ?? 1, haloColor: o.haloColor ?? '#cdd6ff' });
+  M.userData.set({ shadow: o.shadow ?? 0, pupil: o.pupil ?? 0, lid: o.lid ?? 0, glow: o.glow ?? 1.3, dilate: o.dilate ?? 1, halo: o.halo ?? 0.6, slit: o.slit ?? 0, irisGlow: o.irisGlow ?? 1, haloColor: o.haloColor ?? '#cdd6ff' });
   const ml = P.moonLight; ml.position.copy(w); ml.target.position.copy(cam.look); ml.intensity = o.light ?? 1.0; ml.color.set(o.lightColor ?? '#cfdcff');
   if (o.dust !== false) { const fwd = cam.look.clone().sub(cam.pos).normalize(); ctx.add(P.dust); P.dust.position.copy(cam.pos).addScaledVector(fwd, Math.max(14, o.dustDist ?? 14)); P.dust.lookAt(cam.pos); P.dust.userData.set(ctx.t, o.dustA ?? 0.85); }
   return w;
@@ -955,40 +956,43 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'quiet_night', { glow: 0.45 });
       const P = ctx.props;
-      addTo(ctx, P.spkA, 51.6, STAGE_Y, -1.25, -PI / 2);                  // the first one, already in place
-      addTo(ctx, P.spkB, 50.2, STAGE_Y, 1.05, PI / 2);                    // the one being hauled (cones toward us)
-      put(ctx, 'me', L(52.0, STAGE_Y, 0.7), PI / 2);
+      addTo(ctx, P.spkA, DRAG.ax, STAGE_Y, DRAG.az, PI / 2 - 0.35);         // the first one, already in place (glowing, cones to us)
+      addTo(ctx, P.spkB, DRAG.x0 - DRAG.gap, STAGE_Y, DRAG.sz, PI / 2);       // the one being hauled (cones toward us)
+      put(ctx, 'me', L(DRAG.x0, STAGE_Y, DRAG.z), PI / 2 + 0.35);
       P.haul.forEach((m) => ctx.add(m)); P.drops.forEach((m) => ctx.add(m));
-      addTo(ctx, P.poof.root, 50.2, STAGE_Y + 0.05, 1.05, 0, 0.45);
+      addTo(ctx, P.poof.root, DRAG.x0 - 1.2, STAGE_Y + 0.05, DRAG.sz, 0, 0.5);
+      addTo(ctx, P.roadCase, 53.9, STAGE_Y, 1.35, PI / 2 + 0.25); addTo(ctx, P.coil, 53.7, STAGE_Y, 3.15, 0);
       ctx.add(P.warm);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, me = ctx.cast.me, t0 = ctx.time('b18.w1');
-      const k = ease.inOutSine(clamp((t - t0 + 0.25) / 1.9, 0, 1));
-      const kx = lerp(51.75, 53.0, k), jerk = 0.05 * Math.max(0, Math.sin((t - t0) * 7.5));
-      me.root.position.copy(L(kx, STAGE_Y, 0.7));
-      haulPose(me, t); me.face('sweat', 0.5);
-      // the speaker scrapes along behind him, tipped onto its front edge
-      const sx = kx - 1.85 - jerk;
-      P.spkB.position.copy(L(sx, STAGE_Y, 1.05)); P.spkB.rotation.set(0, L.yaw + PI / 2, 0); P.spkB.rotateX(0.1 + 0.03 * Math.sin(t * 15));
-      P.spkA.userData.set(0, 0.45); P.spkB.userData.set(0, 0.7);
+      // he hauls toward us in heavy lurches (one per step), leaning hard into the strap
+      const st = Math.max(0, t - t0 + 0.3) * 2.6, lurch = Math.floor(st) + ease.inOutCubic(st % 1);
+      const kx = DRAG.x0 + 0.13 * lurch, jerk = 0.06 * Math.max(0, Math.sin((st % 1) * PI));
+      me.root.position.copy(L(kx, STAGE_Y, DRAG.z)); me.root.rotation.y = L.yaw + PI / 2 + 0.35;
+      haulPose(me, t); me.joints.torso.rotation.x += 0.14 + 0.12 * jerk / 0.06; me.joints.head.rotation.x -= 0.1; me.face('sweat', 0.5);
+      // the speaker scrapes along behind him, tipped onto its front edge toward the strap
+      const sx = kx - DRAG.gap - jerk;
+      P.spkB.position.copy(L(sx, STAGE_Y, DRAG.sz)); P.spkB.rotation.set(0, L.yaw + PI / 2 - 0.25, 0); P.spkB.rotateX(0.24 + 0.04 * Math.sin(t * 15));
+      P.spkA.userData.set(0.12 * Math.abs(Math.sin(t * 3)), 0.9); P.spkB.userData.set(0, 0.6);
       // strap: hands → over the right shoulder → the speaker's top front edge
       me.root.updateMatrixWorld(true);
       const hand = me.joints.handR.getWorldPosition(V()).lerp(me.joints.handL.getWorldPosition(V()), 0.4);
-      const sh = me.joints.armR.getWorldPosition(V()).add(up(0.22)).add(L(kx - 0.25, 0, 0.7).sub(L(kx, 0, 0.7)));
+      const sh = me.joints.armR.getWorldPosition(V()).add(up(0.2));
       P.spkB.updateMatrixWorld(true);
-      const hook = P.spkB.localToWorld(V(0, 2.55, 0.52));
-      beam(P.haul[0], hand, sh, 0.11); beam(P.haul[1], sh, hook, 0.11);
+      const hook = P.spkB.localToWorld(V(0, 2.5, 0.52));
+      beam(P.haul[0], hand, sh, 0.14); beam(P.haul[1], sh, hook, 0.14);
       // sweat flying off his head
       const hc = headPt(me, 0.45, 0);
       P.drops.forEach((d, i) => { const u = ((t * 1.6 + i * 0.25) % 1), side = i % 2 ? 1 : -1;
-        d.visible = u < 0.8; d.position.copy(hc).add(L(kx + 0.35 * u, 0, 0.7 + side * (0.35 + 0.45 * u)).sub(L(kx, 0, 0.7))).add(up(0.35 * u - 0.9 * u * u)); });
-      P.poof.root.position.copy(L(sx + 0.55, STAGE_Y + 0.05, 1.05)); P.poof.update((t * 1.7) % 1);
+        d.visible = u < 0.8; d.position.copy(hc).add(L(kx + 0.2 * u, 0, DRAG.z + side * (0.4 + 0.5 * u)).sub(L(kx, 0, DRAG.z))).add(up(0.35 * u - 0.9 * u * u)); });
+      P.poof.root.position.copy(L(sx + 0.5, STAGE_Y + 0.05, DRAG.sz)); P.poof.update((st * 0.5) % 1);
       // warm key from front-right, moonlight rimming him from behind, a soft fill on the camera
-      P.warm.position.copy(L(54.3, 3.4, 2.5)); P.warm.intensity = 16; P.warm.distance = 10; P.warm.color.set('#ffc070');
-      const c = moveCam(ctx, { pos: L(55.95, 1.45, -0.15), look: L(44, 5.4, 0.05), fov: 60 }, { pos: L(55.9, 1.5, -0.05), look: L(44, 5.5, 0.15), fov: 57 }, ease.inOutSine(clamp(lt / 2.1, 0, 1)), 0.9, '#f0f2ff', 12);
-      moonFrame(ctx, c, MO.tower, MR, { light: 1.8, dustDist: 9, dustA: 0.6 });
-      ctx.cam.shake(0.03, t, 18);
+      P.warm.position.copy(L(kx + 1.4, 2.9, DRAG.z - 1.3)); P.warm.intensity = 20; P.warm.distance = 6.5; P.warm.color.set('#ffc070');
+      const k = ease.inOutSine(clamp(lt / 2.1, 0, 1));
+      const c = moveCam(ctx, { pos: L(55.6, 1.15, 2.6), look: L(44, 3.75, 2.25), fov: 54 }, { pos: L(55.45, 1.15, 2.6), look: L(44, 3.9, 2.25), fov: 51 }, k, 0.8, '#f0f2ff', 9);
+      moonFrame(ctx, c, MO.tower, MR, { light: 1.6, dustDist: 9, dustA: 0.6 });
+      ctx.cam.shake(0.03, t, 18); shakeOn(ctx, [0, 1, 2, 3, 4, 5].map((i) => t0 - 0.3 + i / 2.6), 0.08, 0.2, 19);
       tag(ctx, "DAD'S SPEAKERS", ctx.time('b18.w3'), Infinity, { y: 0.09, size: 64, bg: 'rgba(30,30,40,0.9)', fill: '#3ee0c8' });
     },
   },
@@ -1208,22 +1212,23 @@ export const shots = [
       const L = ctx.store.L, t = ctx.t, te = ctx.time('b22.w6'), ta = ctx.time('b22.w4');
       const mw = L(MO.far[0], MO.far[1], MO.far[2]);
       const pos = L(30, 1.6, 2.5);
-      // "moon." slow push-in on the plain disc → "It's an" a faint iris ghosts in, glow turns cold → "eye" the iris and a
-      // slit pupil snap open (0.25 s), creepy cyan glow, punch-in.
+      // "not a moon." slow push-in; a dark round shadow swims up under the surface from the lower left and the halo turns
+      // cold → "It's an" the shadow drifts to the centre and darkens → "eye" the iris and a slit pupil snap open (0.25 s,
+      // ending on the word), creepy cyan glow, punch-in.
+      const tm = ctx.time('b22.w3');
       const tr = te - 0.16, rv = ease.outCubic(clamp((t - tr) / 0.25, 0, 1));
-      const ghost = 0.28 * ease.inOutSine(clamp((t - ta) / 0.35, 0, 1));
-      const pu = Math.max(ghost, rv);
+      const sh = (1 - rv) * (0.16 * ease.inOutSine(clamp((t - tm + 0.1) / 0.45, 0, 1)) + 0.22 * ease.inOutSine(clamp((t - ta) / 0.3, 0, 1)));
       const push = ease.inOutSine(clamp(lt / 1.2, 0, 1)), snap = ease.outCubic(clamp((t - tr) / 0.3, 0, 1));
       const c = setCam(ctx, { pos, look: mw, fov: lerp(10, 7.4, push) - 1.6 * snap });
-      const sw = ease.inOutCubic(clamp((t - tr) / 0.45, 0, 1));
-      const gz = pos.clone().add(V(-70, 95, 0)).lerp(pos, sw);   // ghost looks off up-left (~15°), then locks on us
-      const cold = clamp((t - ta) / 0.4, 0, 1);
+      const sw = ease.inOutCubic(clamp((t - tr) / 0.45, 0, 1)), drift = ease.inOutSine(clamp((t - tm + 0.1) / 0.9, 0, 1));
+      const gz = pos.clone().add(V(-300 * (1 - drift) - 30, -230 * (1 - drift) + 50, 0)).lerp(pos, sw);   // shadow swims from lower-left, then locks on us
+      const cold = clamp((t - tm) / 0.6, 0, 1);
       const pulse = 0.25 * Math.max(0, Math.sin((t - tr) * 9)) * (t > tr ? Math.exp(-(t - tr) / 0.5) : 0);
       moonFrame(ctx, c, MO.far, MR, {
-        light: 0.5, pupil: pu, gaze: gz, dust: false,
-        slit: ease.inOutSine(clamp((t - tr - 0.05) / 0.3, 0, 1)), dilate: 1 + 0.15 * (1 - sw),
+        light: 0.5, pupil: rv, shadow: sh, gaze: gz, dust: false,
+        slit: ease.inOutSine(clamp((t - tr - 0.05) / 0.3, 0, 1)), dilate: lerp(1.35, 1, rv),
         irisGlow: 1 + 0.5 * rv * Math.exp(-Math.max(0, t - tr - 0.25) / 0.4) + pulse,
-        glow: lerp(1.3, 1.12, cold), halo: lerp(0.3, 0.9, Math.max(cold * 0.4, rv)), haloColor: rv > 0.01 || cold > 0 ? '#8ff3ff' : '#cdd6ff',
+        glow: lerp(1.3, 1.1, cold), halo: lerp(0.3, 0.9, Math.max(cold * 0.5, rv)), haloColor: cold > 0 ? '#8ff3ff' : '#cdd6ff',
       });
       pop(ctx, tr + 0.04, 0.12, '#9ff6ff', 0.22);
       ctx.cam.punch([tr], t, 0.07, 0.3); shakeOn(ctx, [tr], 0.25, 0.3, 77);

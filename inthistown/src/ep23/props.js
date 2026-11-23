@@ -131,10 +131,11 @@ export function makeMoonEye() {
       const yaw = Math.atan2(p.x, p.z), pitch = Math.atan2(p.y, Math.hypot(p.x, p.z));
       ball.rotation.set(-pitch * k, yaw * k, 0, 'YXZ');
     },
-    set({ pupil: pu = 0, lid: ld = 0, glow = 1.25, dilate = 1, halo: ha = 0.55, rimGlow = 1, slit = 0, irisGlow = 1, haloColor = '#cdd6ff' } = {}) {
-      irisM.opacity = clamp(pu, 0, 1); pupM.opacity = clamp(pu * 1.1, 0, 1);
+    set({ pupil: pu = 0, lid: ld = 0, glow = 1.25, dilate = 1, halo: ha = 0.55, rimGlow = 1, slit = 0, irisGlow = 1, haloColor = '#cdd6ff', shadow = 0 } = {}) {
+      // `shadow`: only the dark pupil, faint, drifting under the surface (a hint before the iris opens)
+      irisM.opacity = clamp(pu, 0, 1); pupM.opacity = clamp(Math.max(pu * 1.1, shadow), 0, 1);
       irisM.color.setScalar(irisGlow); halo.material.color.set(haloColor);
-      iris.visible = pu > 0.001; pupil.visible = pu > 0.001;
+      iris.visible = pu > 0.001; pupil.visible = pu > 0.001 || shadow > 0.001;
       for (const c of craters) c.m.visible = !(c.inIris && pu > 0.001);
       pupil.scale.set(dilate * lerp(1, 0.3, clamp(slit, 0, 1)), dilate * lerp(1, 1.35, clamp(slit, 0, 1)), 1);   // round → cat slit
       hlM.opacity = clamp(pu, 0, 1) * 0.9;
@@ -406,5 +407,27 @@ export function makeDoorway(color = '#7a1f2b') {
   const knob = sph(0.05, std('#ffd23f', { metalness: 0.4, roughness: 0.3 }), 10, 8); knob.position.set(0.85, 1.0, 0.06); hinge.add(knob);
   g.userData = { set(open = 0) { hinge.rotation.y = -1.9 * clamp(open, 0, 1); glow.material.opacity = 0.7 * clamp(open * 2, 0, 1); } };
   g.userData.set(0);
+  return g;
+}
+
+// ═════════════════════════════════════════════════════════════════════════════ stage clutter (b18): road case + cable coil
+/** a black flight case with silver corners and a stencilled lid; origin at the floor centre */
+export function makeRoadCase(w = 1.1, h = 0.75, d = 0.7) {
+  const g = new THREE.Group(); g.name = 'roadCase';
+  g.add(box(w, h, d, std('#1e1f26', { roughness: 0.5 }), 0, h / 2, 0, 0.03));
+  const mt = std('#b9bec8', { metalness: 0.6, roughness: 0.3 });
+  for (const sx of [-1, 1]) for (const sy of [0, 1]) for (const sz of [-1, 1]) g.add(box(0.12, 0.12, 0.12, mt, sx * (w / 2 - 0.04), 0.04 + sy * (h - 0.08), sz * (d / 2 - 0.04)));
+  g.add(box(w + 0.02, 0.05, d + 0.02, mt, 0, h * 0.72, 0));
+  const lab = new THREE.Mesh(new THREE.PlaneGeometry(w * 0.6, h * 0.3), new THREE.MeshBasicMaterial({ map: canvasTexture(256, 96, (c, W, H) => {
+    c.fillStyle = '#ffd23f'; c.fillRect(0, 0, W, H); c.fillStyle = '#1d1d22'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = '900 52px sans-serif'; c.fillText("DAD'S", W / 2, H / 2 + 2);
+  }) }));
+  lab.position.set(0, h * 0.4, d / 2 + 0.01); g.add(lab);
+  return g;
+}
+/** a fat black cable coil lying flat; origin at the floor centre */
+export function makeCableCoil(r = 0.38) {
+  const g = new THREE.Group(); g.name = 'cableCoil';
+  const m = std('#15151a', { roughness: 0.45 });
+  for (let i = 0; i < 4; i++) { const t = new THREE.Mesh(new THREE.TorusGeometry(r - i * 0.05, 0.035, 8, 40), m); t.rotation.x = Math.PI / 2; t.position.y = 0.035 + i * 0.05; g.add(t); }
   return g;
 }
