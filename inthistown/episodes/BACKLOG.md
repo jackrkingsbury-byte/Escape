@@ -26,10 +26,10 @@ Rules from the creator:
 | 15 | The 3:33 | mysterious | scheduled Mon 23 Nov 19:30 |
 | 16 | Don't Whistle | scary sea monster | scheduled Tue 24 Nov 09:30 |
 | 17 | Floor Three | mystical | scheduled Tue 24 Nov 15:30 |
-| 18 | Pirate Token to the Moon | meme | rendering → Tue 24 Nov 19:30 |
-| 19 | Battery 1% | meme trend | shots building |
+| 18 | Pirate Token to the Moon | meme | scheduled Tue 24 Nov 19:30 |
+| 19 | Battery 1% | meme trend | polish pass (fix → verify loop) |
 | 20 | Biscuit (the T-rex) | giants / funny | shots building |
-| 21 | The Deep Above | mystical | script + audio ready |
+| 21 | The Deep Above | mystical | shots building |
 | 22 | Big Love | homey | script + audio ready |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)

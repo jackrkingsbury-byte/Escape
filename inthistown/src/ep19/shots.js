@@ -681,12 +681,14 @@ export const shots = [
       else { const k = Math.exp(-d * 4); b.joints.head.rotation.x += 0.4 * k; b.joints.torso.rotation.x += 0.25 * k; b.face(d < 0.5 ? 'huss' : 'shocked', 0.5); }
       const f = humanFace(b), fw = fwdOf(b), sd = sideOf(b);
       const f0 = b.root.position.clone().add(up(1.75));   // stable reference (head bobs with the sneeze)
-      setCam(ctx, { pos: f0.clone().addScaledVector(sd, 2.4).addScaledVector(fw, 1.0).add(up(-0.3)), look: f0.clone().add(up(-0.5)).addScaledVector(fw, 0.35), fov: 40 });
+      // 3/4 front, face upper-left of centre; the sneeze sprays across the frame to the right (away from the lens side)
+      setCam(ctx, { pos: f0.clone().addScaledVector(fw, 3.1).addScaledVector(sd, 1.5).add(up(-0.35)), look: f0.clone().add(up(-0.55)).addScaledVector(sd, -0.5).addScaledVector(fw, 0.2), fov: 48 }, 0.6, '#fff0e0');
       if (d > 0) {
-        const mouth = f.clone().add(up(-0.12)).addScaledVector(fw, 0.5);
-        const pf = P.sneeze; ctx.add(pf.root); pf.root.position.copy(mouth.clone().addScaledVector(fw, 0.35 * clamp(d / 0.5, 0, 1))); pf.update(clamp(d / 0.8, 0, 1));
-        const n = P.notes2; ctx.add(n); n.userData.begin(); noteStream(ctx, n, mouth, fw.clone().add(up(0.15)).normalize(), t, { n: 10, len: 2.2 * clamp(d / 0.4, 0, 1), spread: 0.5, s: 0.4, rate: 0.6 }); n.userData.end();
-        stamp(ctx, 'ACHOO!', ts, { y: 0.15, size: 150, fill: '#9fe8ff', stroke: '#1d1d22', rot: -0.1 });
+        const sdir = fw.clone().multiplyScalar(0.6).addScaledVector(sd, -0.8).normalize();
+        const mouth = f.clone().add(up(-0.2)).addScaledVector(fw, 0.2).addScaledVector(sdir, 0.62);
+        const pf = P.sneeze; ctx.add(pf.root); pf.root.position.copy(mouth.clone().addScaledVector(sdir, 0.4 * clamp(d / 0.5, 0, 1))); pf.update(clamp(d / 0.8, 0, 1));
+        const n = P.notes2; ctx.add(n); n.userData.begin(); noteStream(ctx, n, mouth, sdir.clone().add(up(0.15)).normalize(), t, { n: 10, len: 2.2 * clamp(d / 0.4, 0, 1), spread: 0.5, s: 0.4, rate: 0.6 }); n.userData.end();
+        stamp(ctx, 'ACHOO!', ts, { y: 0.13, size: 150, fill: '#9fe8ff', stroke: '#1d1d22', rot: -0.1 });
       }
     },
   },
@@ -814,7 +816,15 @@ export const shots = [
       ctx.add(P.green, ctx.set.root); P.green.position.set(h.x + 0.5, h.y + 0.5, h.z + 0.9); P.green.intensity = on * (0.8 + 2 * Math.exp(-(t - tp) * 3));
       const tilt = ease.inOutCubic(clamp((t - ts) / 0.7, 0, 1));
       P.plug.userData.set(on ? 0.45 : 0.1);
-      const c = setCam(ctx, { pos: L(TX + 1.6, DY + 1.9, TZ + 1.5).lerp(L(TX + 9.5, DY - 1.0, TZ + 3.0), tilt).add(up(3.0 * Math.sin(PI * tilt))), look: L(SOCK.x - 0.25, DY + 0.7, SOCK.z + 0.65).lerp(L(TX + 2.7, 13.4, TZ), tilt), fov: lerp(44, 50, tilt) }, 0.9, '#9fb4ff');
+      // from outside the SE corner, low 3/4: the hand jamming the glowing plug into the socket, the green eyes above it, the moon behind
+      const push = ease.inOutSine(clamp(lt / 0.8, 0, 1));
+      const c0 = L(TX + 2.35, DY + 2.25, SOCK.z - 2.05).lerp(L(TX + 2.15, DY + 2.1, SOCK.z - 1.8), push);
+      const c = setCam(ctx, { pos: c0.lerp(L(TX + 9.5, DY - 1.0, TZ + 3.0), tilt).add(up(3.0 * Math.sin(PI * tilt))), look: L(SOCK.x - 0.1, DY + 0.8, SOCK.z + 0.5).lerp(L(TX + 2.7, 13.4, TZ), tilt), fov: lerp(46, 50, tilt) }, 1.6, '#b8c8ff');
+      if (tilt < 0.5) {
+        moonBehind(ctx, c, headPt(ctx.cast.hacker, 0, 0.35, 0), { size: 20, dx: -0.06, dy: 0.1 });
+        key(ctx, L(SOCK.x + 1.0, DY + 1.6, SOCK.z - 0.9), 14 * (1 - tilt * 2), '#c8ffd0');
+        rim(ctx, L(SOCK.x - 1.4, DY + 2.0, SOCK.z + 2.2), 16 * (1 - tilt * 2), '#a8d0ff');
+      }
       if (t > tp) { stamp(ctx, 'HACKED', tp, { y: 0.16, size: 170, fill: '#e8232b', stroke: '#000000', rot: -0.1 }); flash(ctx, tp, 0.25, '#7dff6a', 0.35); }
       ctx.fx.vignette(0.5);
     },
@@ -930,7 +940,7 @@ export const shots = [
     name: `strobe huss #${i + 1}`, start: i === 0 ? 'b13.h0-0.12' : `b13.h${i}-0.03`, set: 'town',
     setup(ctx) {
       const L = town(ctx, { light: 'party_night', party: true });
-      const spots = [[-6, 4.5], [6, -4.6], [-14, -4.2], [10, 3.8], [20, -3.5], [-2, 5.4]];
+      const spots = [[-6, 4.5], [6, -4.6], [-14, -4.2], [10, 3.8], [14, -4.4], [-2, 5.4]];   // (keep clear of the parked cars at x 20/−22/−30/26)
       const [x, z] = spots[i];
       const yw = (z > 0 ? PI : 0) + 0.25;
       put(ctx, id, L(x, id === 'pigeon' ? CURB : 0, z), L.yaw + yw);
@@ -938,7 +948,11 @@ export const shots = [
       // keep the line of sight to the camera clear (wide cut #4 sits 5.6 m out)
       const fx = Math.sin(yw), fz = Math.cos(yw), reach = i === 3 ? 6.8 : 3.2;
       const blocked = (xx, zz) => { const u = clamp((xx - x) * fx + (zz - z) * fz, 0, reach); return Math.hypot(xx - (x + fx * u), zz - (z + fz * u)) < (i === 3 ? 1.8 : 1.2); };
-      filler(ctx, streetFill(x - 14, x + 6, { cols: 10, near: x + 6, seed: 20 + i, avoid: (xx, zz) => Math.hypot(xx - x, zz - z) < 2.6 || (z > 0 ? zz > z : zz < z) || blocked(xx, zz) }));
+      // and nobody standing on or right next to the lens (approx. camera spot of this cut: [ahead, side] of the dancer)
+      const [ca, cs] = [[2.6, 0.6], [2.4, -0.7], [1.9, 1.9], [5.6, -1.2], [2.6, -0.6], [1.15, 0.3]][i];
+      const cx = x + fx * ca + fz * cs, cz = z + fz * ca - fx * cs;
+      const nearCam = (xx, zz) => Math.hypot(xx - cx, zz - cz) < 2.2;
+      filler(ctx, streetFill(x - 14, x + 6, { cols: 10, near: x + 6, seed: 20 + i, avoid: (xx, zz) => Math.hypot(xx - x, zz - z) < 2.6 || (z > 0 ? zz > z : zz < z) || blocked(xx, zz) || nearCam(xx, zz) }));
       ctx.store = { ...ctx.store, L, x, z };
     },
     update(ctx) {
@@ -1093,8 +1107,13 @@ export const shots = [
       P.bulb.position.copy(hd).add(up(0.65 + 0.05 * Math.sin(t * 3))); P.bulb.userData.set(k); P.bulb.rotation.y = me.root.rotation.y;
       const f = humanFace(me);
       const f0 = L(BENCH_X - 0.5, 0, PIC.z).add(up(f.y - L(0, 0, 0).y));
-      setCam(ctx, { pos: L(BENCH_X - 4.4, 1.15, PIC.z - 0.8), look: f0.clone().add(up(-0.25)), fov: 46 }, 1.0, '#e0e8ff');
-      flash(ctx, th, 0.2, '#fff6a0', 0.6);
+      const cam = setCam(ctx, { pos: L(BENCH_X - 4.4, 1.15, PIC.z - 0.8), look: f0.clone().add(up(-0.25)), fov: 46 }, 1.0, '#e0e8ff');
+      // the "idea" pop: a quick radial burst around the bulb only (no full-frame wash)
+      const dp = t - th;
+      if (dp >= 0 && dp < 0.16) {
+        const sp = screenOf(cam, P.bulb.position), a = 0.75 * (1 - dp / 0.16), rr = 0.1 + 0.25 * (dp / 0.16);
+        ctx.fx.draw((g, W, H) => { const gr = g.createRadialGradient(sp.x * W, sp.y * H, 0, sp.x * W, sp.y * H, rr * W); gr.addColorStop(0, `rgba(255,250,200,${a})`); gr.addColorStop(1, 'rgba(255,240,160,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H); });
+      }
       battery(ctx, 2, { x: 0.5, y: 0.93, s: 0.55, blink: true });
     },
   },
@@ -1115,14 +1134,16 @@ export const shots = [
   // ── b18 "I squeezed my eyes shut ... and dove into the crowd. Goon Squad!"
   {
     name: 'eyes shut', start: 'b18-0.1', set: 'town',
-    setup(ctx) { tableStand(ctx, { clear: [[PIC.x + 0.9, PIC.z - 3.6, 2.4]] }); },
+    setup(ctx) { tableStand(ctx, { clear: [[PIC.x + 3.4, PIC.z - 1.3, 2.0], [PIC.x + 1.6, PIC.z - 0.6, 1.2]] }); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, me = ctx.cast.me;
       tableTick(ctx);
       me.pose('idle', t, { intensity: 0.3 }); me.face(t > ctx.time('b18.w1') ? 'huss' : 'determined', 0.5);
       const f = humanFace(me), LV = (x, y, z) => L(x, y, z).sub(L(0, 0, 0));
       const f0 = L(PIC.x - 0.2, 0, PIC.z).add(up(f.y - L(0, 0, 0).y));
-      moveCam(ctx, { pos: f0.clone().add(LV(1.1, -0.45, -4.0)), look: f0.clone().add(up(-0.45)), fov: 40 }, { pos: f0.clone().add(LV(0.95, -0.45, -3.5)), look: f0.clone().add(up(-0.45)), fov: 40 }, clamp(lt / 1.6, 0, 1), 1.0, '#e0e8ff');
+      // front 3/4 (he faces +x): both eyes squeezed shut, one headphone cup at the edge of the head, face above the captions
+      moveCam(ctx, { pos: f0.clone().add(LV(3.6, -0.55, -1.45)), look: f0.clone().add(up(-0.5)), fov: 42 }, { pos: f0.clone().add(LV(3.1, -0.5, -1.25)), look: f0.clone().add(up(-0.48)), fov: 42 }, clamp(lt / 1.6, 0, 1), 1.0, '#e0e8ff');
+      key(ctx, f0.clone().add(LV(1.6, 0.9, -0.6)), 10, '#ffe0c0');
       tag(ctx, 'NO EYE CONTACT', ctx.time('b18.w5'), Infinity, { y: 0.13, size: 62, bg: 'rgba(210,20,45,0.9)' });
     },
   },
@@ -1254,8 +1275,11 @@ export const shots = [
       if (!off) plugAt(ctx, 'socket'); else { const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y, loc.z + 0.35), PI, -0.3 * y); }
       P.burstY.position.copy(L(h.x, h.y, h.z + 0.2)); P.burstY.userData.set(t - ty);
       P.phones.userData.set({ led: '#ff2a2a', k: Math.floor(t * 5) % 2 ? 1 : 0.2 });
-      setCam(ctx, { pos: L(SOCK.x - 2.9, DY + 1.5, SOCK.z + 3.1), look: L(SOCK.x + 0.1, DY + 1.2, SOCK.z + 1.0), fov: 48 }, 1.0, '#ffd8c8');
-      if (off) { flash(ctx, ty, 0.3, '#ffffff', 0.45); stamp(ctx, 'YANK!', ty, { y: 0.18, size: 160, fill: '#ffd23f', stroke: '#1d1d22' }); if (t - ty < 0.5) ctx.cam.shake(0.8 * (1 - (t - ty) / 0.5), t, 8); }
+      // reverse angle from outside the south parapet: his face over the socket, the plug ripping out toward him in a spark burst
+      const cy = L(SOCK.x + 2.05, DY + 2.35, SOCK.z - 2.3);
+      setCam(ctx, { pos: cy, look: L(SOCK.x + 0.15, DY + 1.0, SOCK.z + 0.55), fov: 50 }, 1.4, '#ffd8c8');
+      key(ctx, L(SOCK.x + 0.9, DY + 2.2, SOCK.z - 0.4), 12, '#ffe0b0');
+      if (off) { flash(ctx, ty, 0.2, '#fff3b0', 0.35); stamp(ctx, 'YANK!', ty, { y: 0.14, size: 160, fill: '#ffd23f', stroke: '#1d1d22' }); if (t - ty < 0.5) ctx.cam.shake(0.8 * (1 - (t - ty) / 0.5), t, 8); }
       battery(ctx, 1, { y: 0.075, s: 0.6, blink: true });
     },
   },
@@ -1323,33 +1347,35 @@ export const shots = [
     name: 'cheer for me', start: 'b22.w4-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, { light: 'quiet_night', rig: 'off', ladder: true, glow: 0.8 });
-      const me = put(ctx, 'me', L(SOCK.x + 1.6, DY, SOCK.z + 2.6), L.yaw + PI / 2); phonesOn(ctx, me);
-      const ids = CROWD.slice(0, 20);
-      const CX = TX + 16.5, CZ = TZ + 4;     // camera spot: keep it clear
-      const spots = ids.map((id, k) => { const c = k % 5, r = Math.floor(k / 5); return { id, k, x: TX + 10.2 + r * 1.25 + (hash(k) - 0.5) * 0.4, z: TZ + 3.6 + (c - 2) * 1.3 + (hash(k * 2) - 0.5) * 0.4 }; }).filter((m) => Math.hypot(m.x - CX, m.z - CZ) > 1.8);
-      const list = spots.map(({ id, k, x, z }) => ({ ch: put(ctx, id, L(x, 0, z), L.yaw - PI / 2 + (hash(k * 3) - 0.5) * 0.6), k, x, z, ph: hash(k) * 3 }));
-      // three fans right in front of the lens: raised arms fill the lower third
-      const fans = [[-1.9, -0.95], [-1.8, 1.0], [-3.4, 0.05]].map(([dx, dz], k) => ({ ch: put(ctx, CROWD[22 + k], L(CX + dx, 0, CZ + dz), L.yaw - PI / 2 + 0.25 + (k - 1) * 0.3), k: 40 + k, ph: k * 0.7 }));
-      filler(ctx, [...ringFill(TX, TZ, 4, 13, 170, { seed: 3, face: 'in' })].filter((p) => Math.hypot(p.x - CX, p.z - CZ) > 1.6));
-      ctx.store.fans = fans;
+      // hero at the SE corner of the deck, turned to the lens; the town cheers from the park lawn below (south of the tower)
+      const me = put(ctx, 'me', L(TX + 1.55, DY, TZ - 1.15), L.yaw + 0.95); phonesOn(ctx, me);
+      const ids = CROWD.slice(0, 26);
+      const list = ids.map((id, k) => { const c = k % 6, r = Math.floor(k / 6); const x = TX - 1.2 + c * 1.02 + (r % 2 ? 0.5 : 0) + (hash(k) - 0.5) * 0.3, z = TZ - 5.0 - r * 1.2 + (hash(k * 2) - 0.5) * 0.3;
+        return { ch: put(ctx, id, L(x, 0, z), L.yaw + (hash(k * 3) - 0.5) * 0.5), k, x, z, ph: hash(k) * 3 }; });
+      filler(ctx, [...ringFill(TX, TZ, 4.2, 15, 190, { seed: 3, face: 'in' })].filter((p) => !(p.z < TZ - 4.3 && p.z > TZ - 10.4 && p.x > TX - 2.0 && p.x < TX + 4.6)));
       ctx.store = { ...ctx.store, L, list };
     },
     update(ctx, lt) {
       const { L, list } = ctx.store, t = ctx.t, me = ctx.cast.me, P = ctx.props, tu = ctx.time('b22.w5');
       rigTick(ctx, { on: 0, notes: 0, rings: 0, glow: 0 });
-      const top = L(TX, DY + 2, TZ);
+      const top = L(TX + 1.5, DY + 2, TZ - 1.2);
       list.forEach((m) => {
         const k = ease.outBack(clamp((t - tu + 0.25 - 0.05 * hash(m.k)) / 0.35, 0, 1));
         if (k < 0.3) { m.ch.pose('stunned', 0.5); m.ch.root.rotation.x = -PI / 2 * 0.96 * (1 - k / 0.3); m.ch.face('sleepy', 0.5); }
-        else { m.ch.pose(m.k % 3 ? 'cheer' : 'clap', t + m.ph, { lookAt: top }); m.ch.root.rotation.x = 0; m.ch.face(m.k % 2 ? 'laugh' : 'grin', t + m.ph); }
+        else { m.ch.pose(m.k % 3 ? 'cheer' : 'clap', t + m.ph, { lookAt: top }); m.ch.root.rotation.x = 0; m.ch.face(m.k % 2 ? 'laugh' : 'grin', t + m.ph); if (m.k % 3) armsUp(m.ch, 0.8, 0.25 * Math.sin(t * 6 + m.k)); }
       });
       P.filler.userData.set(t, { arms: 'cheer', flop: (i) => 1 - ease.outCubic(clamp((t - tu + 0.2 - 0.3 * hash(i * 2.3)) / 0.4, 0, 1)) });
-      ctx.store.fans.forEach((m) => { m.ch.pose('cheer', t * 1.2 + m.ph, { intensity: 0.8 }); armsUp(m.ch, 1, 0.2 * Math.sin(t * 5 + m.k)); m.ch.face('laugh', t + m.ph); });
       me.pose('cheer', t, { intensity: 0.6 }); armsUp(me, 1, 0.1 * Math.sin(t * 4)); me.face('laugh', t);
-      const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5); const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y + 0.7, loc.z), me.root.rotation.y, -PI / 2);
-      const c = setCam(ctx, { pos: L(TX + 16.5, 0.8, TZ + 4), look: L(TX + 1.5, 18.0, TZ + 0.6), fov: 70 }, 1.2);
-      moonBehind(ctx, c, headPt(me, 0, 0.6, 0), { size: 12, dx: 0.05, dy: 0.04 });
-      key(ctx, headPt(me, 0, 0.3, 0).add(L(2.2, 1.0, 1.5).sub(L(0, 0, 0))), 16);
+      // the plug held high in the right hand, out to the side (clear of the face); its cable trails off behind him on the deck
+      me.joints.armR.rotation.set(-2.55, 0, 0.75 + 0.08 * Math.sin(t * 5)); if (me.joints.foreArmR) me.joints.foreArmR.rotation.x = -0.1;
+      { const loc = ctx.set.root.worldToLocal(handPos(me, 'R')); plugAt(ctx, V(loc.x, loc.y + 0.45, loc.z), me.root.rotation.y, -PI / 2);
+        P.plug.updateMatrixWorld(true); const back = ctx.set.root.worldToLocal(P.plug.userData.back.getWorldPosition(V())); P.cabA.userData.set(back, V(TX - 1.8, DY + 0.05, TZ - 2.0), 0.9); }
+      // drone spot outside the east parapet, above the deck: hero big in the upper half, the cheering lawn below him
+      const push = ease.inOutSine(clamp(lt / 2.2, 0, 1));
+      const c = setCam(ctx, { pos: L(TX + 5.4, DY + 4.2, TZ + 2.4).lerp(L(TX + 5.1, DY + 3.9, TZ + 2.0), push), look: L(TX + 1.8, DY - 0.2, TZ - 2.6), fov: 56 }, 1.4, '#e0e8ff');
+      key(ctx, headPt(me, 0, 0.3, 0).add(L(1.6, 1.4, 1.4).sub(L(0, 0, 0))), 16);
+      // a warm flood on the lawn so the cheering faces read
+      const sl = P.shipLight; ctx.add(sl, ctx.set.root); sl.position.set(TX + 4.5, 8.0, TZ - 5.0); sl.color.set('#ffe8d0'); sl.intensity = 45;
       top10Card(ctx, 1, ctx.time('b22.w7') - 0.05, Infinity, { title: 'TOP 10\nRESPECTFUL MOMENTS', popAt: ctx.markers.top10 - 0.05 });
       tag(ctx, 'THE TOWN CARRIED ME', ctx.markers.top10 + 0.1, Infinity, { y: 0.66, size: 58, bg: 'rgba(20,20,30,0.88)' });
     },
@@ -1441,25 +1467,28 @@ export const shots = [
       const f0 = me.root.position.clone().add(up(f.y - me.root.position.y));
       moveCam(ctx, { pos: f0.clone().addScaledVector(fw, 2.75).addScaledVector(sd, 0.55).add(up(-0.65)), look: f0.clone().add(up(-0.3)), fov: 42 }, { pos: f0.clone().addScaledVector(fw, 2.55).addScaledVector(sd, 0.5).add(up(-0.62)), look: f0.clone().add(up(-0.3)), fov: 41 }, clamp(lt / 1.4, 0, 1), 1.0, '#e0c0ff');
       battery(ctx, dead ? 0 : 1, { y: 0.12, s: 1.1, t0: ctx.time('b24') - 0.05, blink: true });
-      if (dead) { stamp(ctx, '0%', tz, { y: 0.8, size: 220, fill: '#ff2a2a', stroke: '#ffffff' }); flash(ctx, tz, 0.2, '#000000', 0.7); }
       ctx.cam.punch([tz], t, 0.12, 0.25);
     },
   },
   {
-    name: 'reluctant dance', start: 'zero+0.2', set: 'town',
+    // cut on "Zero": the 0% hit lands here and the dance starts at once, so it plays ~1.5 s before the iris closes
+    name: 'reluctant dance', start: 'zero-0.04', set: 'town',
     setup(ctx) { shipSetup(ctx, { near: true }); },
     update(ctx, lt) {
-      const { L } = ctx.store, t = ctx.t, me = ctx.cast.me, P = ctx.props, t0 = ctx.markers.zero + 0.2;
+      const { L } = ctx.store, t = ctx.t, me = ctx.cast.me, P = ctx.props, tz = ctx.markers.zero, t0 = tz + 0.04;
       shipTick(ctx, 33, { pump: 1, eyes: 1 });
-      const k = ease.inOutSine(clamp((t - t0) / 0.3, 0, 1));
+      const k = ease.inOutSine(clamp((t - t0) / 0.18, 0, 1));
       me.poseMix('stunned', t, {}, 'dance2', t, { speed: 1.2 }, k); me.face('sweat', t);
       plugAt(ctx, V(TX + 0.5, DY + 0.25, TZ + 1.7), L.yaw + 0.9, 0);    // dropped on the deck
       P.phones.userData.set({ led: '#ff2a2a', k: 0 });
-      const ti = ctx.timeline.duration - 0.4;
+      const ti = ctx.timeline.duration - 0.3;
       setCam(ctx, { pos: L(TX + 2.25, DY + 0.9, TZ + 1.5), look: L(TX - 0.4, DY + 1.5, TZ + 0.6), fov: 54 }, 1.0, '#e0c0ff');
-      battery(ctx, 0, { y: 0.1, s: 0.8, blink: true });
-      tag(ctx, 'NOOO', t0 + 0.1, ti, { y: 0.8, size: 90, fill: '#ffffff', bg: null, rot: -0.12 });
-      iris(ctx, ti, 0.4, 0.35);
+      battery(ctx, 0, { y: 0.1, s: 0.8, blink: true, t0: tz - 0.05 });
+      if (t < tz + 0.5) stamp(ctx, '0%', tz, { y: 0.8, size: 220, fill: '#ff2a2a', stroke: '#ffffff' });
+      else tag(ctx, 'NOOO', tz + 0.5, ti, { y: 0.8, size: 90, fill: '#ffffff', bg: null, rot: -0.12 });
+      ctx.cam.punch([tz], t, 0.12, 0.25);
+      if (t >= ti) ctx.caption.hide(true);      // nothing on top of the black ending
+      iris(ctx, ti, 0.4, 0.28);
     },
   },
 ];
