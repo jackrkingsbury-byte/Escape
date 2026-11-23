@@ -663,7 +663,7 @@ export const shots = [
       const L = town(ctx, 'day', { party: true });
       addTo(ctx, ctx.props.podium, PODIUM.x, STAGE_Y, PODIUM.z, -PI / 2);
       put(ctx, 'mayor', L(MAYOR_ST.x, STAGE_Y, MAYOR_ST.z), -PI / 2);
-      ctx.store.press = crowd(ctx, X.slice(0, 6), [[46.85, 0, -0.9, PI / 2 - 0.1], [48.0, 0, 1.0, PI / 2 + 0.2], [47.6, 0, 2.6, PI / 2], [47.9, 0, -2.6, PI / 2], [45.3, 0, 2.0, PI / 2], [44.6, 0, -3.6, PI / 2]]);
+      ctx.store.press = crowd(ctx, X.slice(0, 6), [[46.3, 0, -1.25, PI / 2], [48.0, 0, 1.0, PI / 2 + 0.2], [47.6, 0, 2.6, PI / 2], [47.9, 0, -2.6, PI / 2], [45.3, 0, 2.0, PI / 2], [44.6, 0, -3.6, PI / 2]]);
       addBubbles(ctx, ctx.props.bub.flimbo);
     },
     update(ctx, lt) {
@@ -674,7 +674,7 @@ export const shots = [
       ctx.store.press.forEach((w) => { raiseHand(w.ch, t + w.ph, 1, 1); w.ch.face('grin', t + w.ph); });
       { const J = ctx.store.press[0].ch.joints; J.armL.rotation.set(-2.7 + 0.12 * Math.sin(t * 8), 0, 0.15); J.foreArmL.rotation.set(-0.15, 0, 0); }
       // just behind a reporter (raised hand in the foreground), the Mayor pointing left / right with a FLIMBO! beside his head
-      const c = { pos: L(45.0, 2.15, -2.0), look: humanFace(m).add(up(-0.75)), fov: 48 }; ctx.cam.set(c);
+      const c = { pos: L(43.6, 2.75, -2.3), look: humanFace(m).add(up(-0.85)), fov: 46 }; ctx.cam.set(c);
       const R = camRight(c), side = flip ? 1 : -1;
       bubble(ctx, ctx.props.bub.flimbo[0], humanFace(m).addScaledVector(R, side > 0 ? 0.55 : -1.45).add(up(0.25)), ctx.time('b08.w3') + 0.1, { k: 0.42, t1: te - 0.05 });
       bubble(ctx, ctx.props.bub.flimbo[1], humanFace(m).addScaledVector(R, 0.55).add(up(0.25)), te - 0.05, { k: 0.46 });
@@ -1287,11 +1287,11 @@ export const shots = [
       const hd = ctx.set.root.worldToLocal(me.joints.head.localToWorld(V(0, 0.3, 0)));
       const side = V(dir.z, 0, -dir.x);
       if (i === 0) cam = { pos: L(34.4, 6.6, 8.6), look: L(46.5, -1.2, -2.2), fov: 56 };                                  // wide: the surfer in the upper third
-      else if (i === 1) cam = { pos: L(hd.x + side.x * 2.5 - dir.x * 0.4, 2.75, hd.z + side.z * 2.5 - dir.z * 0.4), look: L(hd.x, hd.y - 0.35, hd.z), fov: 44 };   // side-on, his face
+      else if (i === 1) cam = { pos: L(hd.x + side.x * 3.0 - dir.x * 0.4, 2.8, hd.z + side.z * 3.0 - dir.z * 0.4), look: L(hd.x, hd.y - 0.45, hd.z), fov: 44 };   // side-on, his face
       else if (i === 2) cam = { pos: L(45.6, 1.35, 7.6), look: L(47.9, 1.9, -0.4), fov: 54 };
       else if (i === 3) cam = { pos: L(49.4, 3.3, 0.0), look: L(43.5, 1.6, -0.2), fov: 52 };
       else if (i === 4) cam = { pos: L(sp.x - dir.x * 1.3, 6.4, sp.z - dir.z * 1.3), look: L(sp.x + dir.x * 0.5, 1.6, sp.z + dir.z * 0.5), fov: 50 };   // top-down, head at the top
-      else cam = { pos: L(43.0, 2.3, 6.4), look: L(47.7, 0.05, 0), fov: 60 };                                                  // the H-U-S-S row
+      else cam = { pos: L(43.8, 3.9, 6.6), look: L(47.7, 0.1, 0), fov: 58 };                                                  // the H-U-S-S row
       setCam(ctx, cam, 0.8);
       if (i === 3) { const cr = ctx.store.cr; [0, 1, 2].forEach((ci, k) => bubble(ctx, P.bub.huss[k], headTop(cr[ci].ch).add(up(0.15)), hits[3] - 0.04 + k * 0.05, { k: 0.4 })); }
       ctx.cam.punch(hits, t, 0.12, 0.2); shakeOn(ctx, hits.slice(0, 4), 0.45, 0.28, 50 + i);
