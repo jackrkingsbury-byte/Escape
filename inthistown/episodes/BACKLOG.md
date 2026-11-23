@@ -35,9 +35,9 @@ Rules from the creator:
 | 20 | Biscuit (the T-rex) | giants / funny | scheduled Wed 25 Nov 07:30 |
 | 21 | The Deep Above | mystical | scheduled Wed 25 Nov 12:30 |
 | 22 | Big Love | homey | scheduled Wed 25 Nov 17:30 |
-| 23 | Low Moon | spooky | polish round → Wed 25 Nov 20:00 |
+| 23 | Low Moon | spooky | rendering → Wed 25 Nov 20:00 |
 | 24 | Word of the Day | meme | shots building (giant ear, not an eye) |
-| 25 | Nugget | giants / funny | script + audio ready (deep 'Ba-gawk' voice) |
+| 25 | Nugget | giants / funny | shots building (deep 'Ba-gawk' voice) |
 | 26 | Who Bit the Town? | MYSTERY | script + audio ready (fork, cake twist, giant-kid voice) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
