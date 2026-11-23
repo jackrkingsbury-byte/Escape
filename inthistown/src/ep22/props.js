@@ -264,13 +264,13 @@ export function makeLeash(n = 14, r = 0.012, color = '#e8232b') {
   const segs = []; for (let i = 0; i < n; i++) { const s = new THREE.Mesh(geo, m); g.add(s); segs.push(s); }
   const a = V(), b = V(), up = V(0, 1, 0), q = new THREE.Quaternion(), d = V();
   g.userData = {
-    set(A, B, sag = 0.15) {
+    set(A, B, sag = 0.15, thick = 1) {
       for (let i = 0; i < n; i++) {
         const u0 = i / n, u1 = (i + 1) / n;
         a.copy(A).lerp(B, u0); a.y -= sag * 4 * u0 * (1 - u0);
         b.copy(A).lerp(B, u1); b.y -= sag * 4 * u1 * (1 - u1);
         d.subVectors(b, a); const L = d.length();
-        segs[i].position.copy(a); q.setFromUnitVectors(up, d.normalize()); segs[i].quaternion.copy(q); segs[i].scale.set(1, Math.max(1e-4, L), 1);
+        segs[i].position.copy(a); q.setFromUnitVectors(up, d.normalize()); segs[i].quaternion.copy(q); segs[i].scale.set(thick, Math.max(1e-4, L), thick);
       }
     },
   };
