@@ -36,7 +36,7 @@ const BS = 5;                                  // Biscuit scale (unit model ≈ 
 const BIS = { x: -86, z: -14 };                 // his usual spot, behind the clock tower, facing down the street (+x)
 const MTN = { x: -250, z: -60, s: 1.35 };      // the big hill behind town
 const WT = { x: -124, z: -52 };                // water tower (next to his tail)
-const DEBUG = false;
+const DEBUG = true;
 
 // ───────────────────────────────────────────────────────────────────────────────────────── cast
 const MORE = Object.fromEntries(Object.values(extraSpecs(10, 207)).map((s, i) => { const id = `y${String(i).padStart(2, '0')}`; return [id, { ...s, id, lod: 'low' }]; }));
@@ -174,6 +174,9 @@ function frame2(pos, A, yA, B, yB, { x = 0.5, fovMin = 18, fovMax = 78 } = {}) {
   const d = V(0, 0, -1).applyEuler(new THREE.Euler(p, yw, 0, 'YXZ'));
   return { pos: pos.clone(), look: pos.clone().addScaledVector(d, 10), fov };
 }
+/** screen y (0 top … 1 bottom) of world point p for camera spec c (portrait 9:16) */
+function projX(c, p) { const k = _fc; k.position.copy(c.pos); k.fov = c.fov; k.updateProjectionMatrix(); k.up.set(0, 1, 0); k.lookAt(c.look); k.updateMatrixWorld(true); return (p.clone().project(k).x + 1) / 2; }
+function projY(c, p) { const k = _fc; k.position.copy(c.pos); k.fov = c.fov; k.updateProjectionMatrix(); k.up.set(0, 1, 0); k.lookAt(c.look); k.updateMatrixWorld(true); return (1 - p.clone().project(k).y) / 2; }
 /** midpoint of Biscuit's two googly eyes (world) */
 const eyeMid = (ctx) => { const u = ctx.props.bis.userData; return u.eyeWorld('L').add(u.eyeWorld('R')).multiplyScalar(0.5); };
 /** Biscuit's horizontal forward (world) */
@@ -390,23 +393,39 @@ export const shots = [
     name: `huss street #${i + 1}`, start: H('b03', i), set: 'town',
     setup(ctx) {
       const L = town(ctx);
-      bisAt(ctx, -98, -11, PI / 2);
-      put(ctx, 'me', L(-38, 0, 0), L.yaw + PI / 2);
+      // three angles ~3–4 m from the kid: low left, higher right, dutch.  Biscuit is re-placed per frame (update) so his
+      // head looms just beside/above the kid's head as seen from that camera.
+      ctx.store.H = [
+        { dx: 3.3, z: 1.7, y: 0.25, bx: -150, side: 16, lean: 0.35, kx: 0.64, yaw: -0.35, hy: -0.15, ht: -0.3, lx: -0.5, roll: 0 },     // low, Biscuit upper left
+        { dx: 3.4, z: 0.3, y: 0.9, bx: -205, side: -17, lean: 0.5, bl: 0.1, kx: 0.34, yaw: -0.1, hy: -0.45, ht: 0.3, lx: 0.5, roll: 0 },        // higher, Biscuit upper right
+        { dx: 3.2, z: 2.3, y: 0.6, bx: -150, side: 13, lean: 0.4, kx: 0.6, yaw: -0.4, hy: 0.1, ht: -0.45, lx: -0.6, roll: 0.2 },      // dutch
+      ][i];
+      bisAt(ctx, ctx.store.H.bx, 0, PI / 2);
+      put(ctx, 'me', L(-38, 0, 0), L.yaw + PI / 2 + ctx.store.H.yaw);
       filler(ctx, streetFill(-34, -6, { seed: 8, step: 2.0 }));
     },
     update(ctx) {
-      const { L } = ctx.store, t = ctx.t, me = ctx.cast.me, hits = ctx.hussTimes('b03').map((h) => h + 0.03);
-      bset(ctx, { sit: 1, lean: 1, bodyLean: 0.7, headPitch: -1.0, headTilt: 0.35 + 0.1 * i, lookY: -0.7, lookX: 0, wag: 0.3, jaw: 0.1 });
+      const { L, H } = ctx.store, t = ctx.t, me = ctx.cast.me, b = ctx.props.bis, hits = ctx.hussTimes('b03').map((h) => h + 0.03);
+      const kx = -38;
+      bset(ctx, { sit: 1, lean: H.lean, bodyLean: H.bl ?? 0.1, headPitch: -0.45, headYaw: H.hy, headTilt: H.ht, lookY: -0.8, lookX: H.lx, wag: 0.3, jaw: 0.25 });
       me.pose('slam', t, { hits }); me.face('huss', t);
       ctx.props.filler.userData.set(t, { arms: 'up' });
-      const f = humanFace(me), feet = me.root.getWorldPosition(V()), e = eyeMid(ctx);
-      // ~3.3 m from the kid: low left, high right, dutch — face ≈ 0.36, feet ≈ 0.9, Biscuit's head over him in the top third
-      const P = [L(-34.9, 0.3, -1.3), L(-35.1, 2.5, 1.5), L(-34.6, 1.0, 0.2)][i];
-      const c = frame2(P, f, [0.36, 0.38, 0.35][i], feet, [0.9, 0.92, 0.88][i], { x: [0.56, 0.44, 0.5][i] });
-      c.roll = [0, 0, -0.2][i];
+      const f = humanFace(me), feet = me.root.getWorldPosition(V());
+      b.position.copy(L(H.bx, 0, 0)); b.updateMatrixWorld(true);
+      const eL = toLocal(L, eyeMid(ctx)), hx = eL.x;          // where his eyes are along the street, and their z offset from his body
+      // pick the kid distance so face ≈ 0.36, feet ≈ 0.9 AND Biscuit's eyes land ≈ 0.13 (his whole head in the top third)
+      let best = null;
+      for (let d = H.dx - 0.5; d <= H.dx + 1.5; d += 0.1) {
+        const cx = kx + d, bz = H.z + (0 - H.z) * (hx - cx) / (kx - cx) + H.side - eL.z;
+        b.position.copy(L(H.bx, 0, bz)); b.updateMatrixWorld(true);
+        const c = frame2(L(cx, H.y, H.z), f, 0.36, feet, 0.9, { x: H.kx });
+        const ey = projY(c, eyeMid(ctx)), sc = Math.abs(ey - 0.13);
+        if (!best || sc < best.sc) best = { c, sc, ey, d, bz };
+      }
+      b.position.copy(L(H.bx, 0, best.bz)); b.updateMatrixWorld(true);
+      const c = best.c; c.roll = H.roll;
       setCam(ctx, c); ctx.cam.punch(hits, t, 0.1, 0.2);
-      const cams = [c];
-      dbg(ctx, ['eyes ' + f1(toLocal(L, e)), 'face ' + f1(toLocal(L, f)), 'cam ' + f1(toLocal(L, cams[i].pos)) + ' fov ' + cams[i].fov.toFixed(1), 'look ' + f1(toLocal(L, cams[i].look))]);
+      dbg(ctx, ['d ' + best.d.toFixed(2) + ' eyeY ' + best.ey.toFixed(2) + ' fov ' + c.fov.toFixed(1), 'eyes ' + f1(toLocal(L, eyeMid(ctx)))]);
     },
   })),
   // ── b04 "His arms are way too short,"  — tiny arms can't reach the itch
@@ -623,30 +642,45 @@ export const shots = [
     name: 'soggy kids', start: 'kids-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx);
-      bisAt(ctx, -4, -1, PI / 2);
+      bisAt(ctx, -48, -2.0, PI / 2);
       const P = ctx.props; addTo(ctx, P.bus, 34, 0, -1.2, 0); P.bus.scale.setScalar(1);
       ctx.add(P.drips);
       ctx.add(P.busDrips, ctx.set.root); P.busDrips.position.set(0, 0, 0);
       ctx.store.kids = KIDS.map((id, i) => put(ctx, id, L(37.6, 0, 0.6), L.yaw));
+      ctx.store.fh = humanFace(ctx.store.kids[2]).y - L(0, 0, 0).y;
       filler(ctx, streetFill(22, 30, { seed: 11, step: 2.0, zs: [-6.4, -5.6] }));
     },
     update(ctx, lt) {
       const { L, kids } = ctx.store, t = ctx.t, P = ctx.props, tk = ctx.markers.kids;
-      bset(ctx, { sit: 0.2, lean: 1, bodyLean: 0.6, headPitch: -0.9, wag: 0.9, wagSpeed: 9, tongue: 1, jaw: 0.5, lookY: -0.8, lookX: 0, lid: 0.05 });
+      bset(ctx, { sit: 0.15, lean: 0.9, bodyLean: 0.55, headPitch: -0.7, wag: 0.9, wagSpeed: 9, tongue: 1, jaw: 0.5, lookY: -0.8, lookX: 0.2, lid: 0.05, eyeScale: 1.1, headTilt: 0.15 });
+      // low by the bus door: dripping kids' faces above the caption (face ≈ 0.38, feet ≈ 0.84), the bus behind them, and Biscuit
+      // placed down the sight line so his whole head hangs over the bus in the top band (eyes ≈ 0.13)
+      const u = clamp(lt / 2, 0, 1), cp = L(lerp(43.4, 43.0, u), 0.6, lerp(2.9, 2.8, u)), fh = ctx.store.fh;
+      const rf = L(38.4, fh, 1.7), rfe = L(38.4, 0, 1.7), c = frame2(cp, rf, 0.37, rfe, 0.68, { x: 0.56 });
+      { const b = P.bis, cl = toLocal(L, cp), ll = toLocal(L, c.look); b.position.copy(L(-40, 0, 0)); b.updateMatrixWorld(true);
+        // sight line at screen x ≈ 0.6 (over the bus, right of the kids)
+        const fx = ll.x - cl.x, fz = ll.z - cl.z, fn = Math.hypot(fx, fz), hf = 2 * Math.atan(Math.tan(c.fov * PI / 360) * 9 / 16), a = (0.3 - 0.5) * hf;
+        const dx = (fx * Math.cos(a) - fz * Math.sin(a)) / fn, dz = (fz * Math.cos(a) + fx * Math.sin(a)) / fn;
+        const off = toLocal(L, eyeMid(ctx)).sub(V(-40, 0, 0)); let best = null;
+        for (let bx = -230; bx <= -10; bx += 2) {
+          const ex = bx + off.x, ez = cl.z + dz / dx * (ex - cl.x);
+          b.position.copy(L(bx, 0, ez - off.z)); b.updateMatrixWorld(true);
+          const sc = Math.abs(projY(c, eyeMid(ctx)) - 0.12); if (!best || sc < best.sc) best = { sc, bx, bz: ez - off.z, ey: projY(c, eyeMid(ctx)) };
+        }
+        b.position.copy(L(best.bx, 0, best.bz)); b.updateMatrixWorld(true); dbg(ctx, ['bx ' + best.bx + ' ey ' + best.ey.toFixed(2) + ' ex ' + projX(c, eyeMid(ctx)).toFixed(2), 'rf ' + projY(c, rf).toFixed(2) + ' rfe ' + projY(c, rfe).toFixed(2) + ' fov ' + c.fov.toFixed(1) + ' fh ' + fh.toFixed(2) + ' k2 ' + projY(c, humanFace(kids[2])).toFixed(2)]); }
       { const jaw = P.bis.userData.parts.jaw; P.bis.updateMatrixWorld(true); P.drips.userData.set(t, [jaw.localToWorld(V(-0.8, -0.5, 3.6)), jaw.localToWorld(V(0.8, -0.5, 3.6)), jaw.localToWorld(V(0, -0.6, 3.9))], 14); }
       const door = ease.outCubic(clamp((t - tk + 0.05) / 0.3, 0, 1)); P.bus.userData.set({ door });
       kids.forEach((c, i) => {
         const t0 = tk + 0.1 + i * 0.32, u = clamp((t - t0) / 1.4, 0, 1);
         const out = t > t0;
-        const p = out ? L(37.6 + (i - 2) * 0.9 * u + (i % 2 ? 0.3 : -0.2) * Math.sin(t * 6) * 0.1, 0, 0.9 + u * (2.2 + 0.4 * (i % 3))) : L(37.6, -3, 0.0);
-        c.root.position.copy(p); c.root.rotation.set(0, L.yaw + (i - 2) * 0.35 + 0.15 * Math.sin(t * 5 + i), 0.12 * Math.sin(t * 7 + i));
+        // they stumble out of the door toward the camera (south-east), fanning out
+        const p = out ? L(37.6 + u * (1.3 + 0.55 * (i - 2)) + 0.04 * Math.sin(t * 6 + i), 0, 0.8 + u * (1.5 + 0.35 * (i % 3)) - 0.25 * Math.abs(i - 2) * u) : L(37.6, -3, 0.0);
+        c.root.position.copy(p); c.root.rotation.set(0, L.yaw + 0.85 + (i - 2) * 0.2 + 0.15 * Math.sin(t * 5 + i), 0.12 * Math.sin(t * 7 + i));
         c.pose(u > 0.85 ? 'shrug' : 'walkSad', t + i, { speed: 1.4 }); c.face('sweat', t + i);
       });
       P.busDrips.userData.set(t, [V(32.5, 2.9, 0.1), V(35.5, 2.9, 0.1), V(30, 2.9, 0.1), V(33.8, 2.9, -2.5), V(37.6, 2.4, 0.1)], 1.6);
       ctx.props.filler.userData.set(t, { arms: 'limp', bounce: 0.2 });
-      const e = eyeMid(ctx), kd = L(37.6, 1.0, 2.0), u = clamp(lt / 2, 0, 1);
-      setCam(ctx, frame2(L(lerp(59.6, 59, u), 3.2, lerp(14.2, 13.8, u)), e, 0.25, kd, 0.84));
-      dbg(ctx, ['eyes ' + f1(toLocal(L, e))]);
+      setCam(ctx, c, 0.6);
       tag(ctx, 'ATTENDANCE: 100% SOGGY', ctx.markers.drool, Infinity, { y: 0.06, size: 52, bg: 'rgba(40,120,220,0.9)' });
     },
   },

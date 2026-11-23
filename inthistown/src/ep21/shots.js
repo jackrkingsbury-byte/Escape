@@ -27,7 +27,7 @@ const up = (y) => V(0, y, 0);
 const PI = Math.PI;
 const TX = TOWER.x, TZ = TOWER.z, DY = TOWER.deck;
 const LAMPS = [[-33, -5.15], [-21, -5.15], [-9, -5.15], [3, -5.15], [15, -5.15], [27, -5.15], [-27, 5.15], [-15, 5.15], [-3, 5.15], [9, 5.15], [21, 5.15]];
-const UPTOWN = { x: -40, y: 80, z: 1.5 };          // the inverted town's ground (world), flipped upside down
+const UPTOWN = { x: TX + 64, y: 60, z: TZ - 28 }; // the inverted town's ground (world), flipped upside down: its street runs along x north of our tower
 
 // ───────────────────────────────────────────────────────────────────────────────────────── cast
 const SPECIAL = {
@@ -87,6 +87,7 @@ export function init(ctx) {
   P.apron = new THREE.Mesh(new THREE.BoxGeometry(4.1, 1.25, 0.1), new THREE.MeshStandardMaterial({ color: '#6b4a2f', roughness: 0.8 }));
   P.ripple = makeRipple(3); P.fishShadow = makeFishShadow();
   P.star = glowSprite('#fff6d0', 4, 0.9);
+  P.eyeHalo = glowSprite('#ffc23a', 30, 0); P.eyeHalo.material.depthTest = false; P.eyeHalo.renderOrder = 11;
   P.trail.forEach((s) => { s.material.depthTest = false; s.renderOrder = 12; });
   P.star.material.depthTest = false; P.star.renderOrder = 13;
 }
@@ -191,8 +192,8 @@ function tick(ctx, o = {}) {
   if (P.lamps.parent) P.lamps.userData.set(t, o.lamps ?? M.lamps, o.flicker ?? 0);
 }
 /** the creature: eye at world point `eye`, facing yaw (π = facing −z toward the north side), scale s */
-function deepAt(ctx, eye, { yaw = PI, s = 15, set = {} } = {}) {
-  const D = ctx.props.deep; addW(ctx, D, V(), yaw); D.scale.setScalar(s);
+function deepAt(ctx, eye, { yaw = PI, s = 15, set = {}, pitch = 0 } = {}) {
+  const D = ctx.props.deep; addW(ctx, D, V(), yaw); D.rotation.order = 'YXZ'; D.rotation.set(pitch, yaw, 0); D.scale.setScalar(s);
   D.userData.set(ctx.t, set); D.updateMatrixWorld(true);
   const e = D.userData.eyeWorld(); D.position.add(eye.clone().sub(e)); D.updateMatrixWorld(true);
   return D;
@@ -770,33 +771,36 @@ export const shots = [
       flash(ctx, tl, 0.12, '#cff8ff', 0.6); shakeOn(ctx, [tl], 0.2, 0.3);
     },
   },
-  // ── "And something opened one giant, glowing eye."
+  // ── "And something opened one giant, glowing eye."  — WIDE: the lit water ceiling above the rooftops, the creature's bulk a
+  // dark shadow behind the water, one huge yellow eye parting its lids through the surface; my house + the beam small below.
   {
     name: 'eye opens', start: 'b10.w5-0.1', set: 'town',
     setup(ctx) {
       town(ctx, 'flare', { bubX: -28, bubZ: 6 });
-      const W = kidWin(ctx); bayIn(ctx, W, 0.9); ctx.store.W = W; ctx.add(ctx.props.torch);
+      const W = kidWin(ctx); bayIn(ctx, W, 0.9); ctx.store.W = W; ctx.add(ctx.props.torch); ctx.add(ctx.props.eyeHalo);
     },
     update(ctx, lt) {
       const { W, L } = ctx.store, t = ctx.t, P = ctx.props, te = ctx.markers.eye;
-      tick(ctx, { sea: { flare: 1.0, flarePos: W(0.15, SEA_Y, 2.2), flareR: 5 } });
+      const open = ease.inOutCubic(clamp((t - te + 0.05) / 0.45, 0, 1));
+      const eyeP = L(-27, SEA_Y + 2.2, 6.0);
+      tick(ctx, { sea: { flare: 0.7 + 0.9 * open, flarePos: eyeP, flareR: 4 + 6 * open, opacity: 0.62, light: mixHex('#9fe8ff', '#ffc84a', open), glow: 0.75, caus: 0.55 } });
       const g = W.roof(0.15, 2.2).add(up(0.2));
       P.torch.position.copy(g); P.torch.rotation.order = 'YXZ'; P.torch.rotation.set(-PI / 2, W.yaw, 0); P.torch.userData.set(1, SEA_Y - g.y - 0.3, 1.3);
-      const open = ease.inOutCubic(clamp((t - te) / 0.8, 0, 1));
-      deepAt(ctx, L(-27, SEA_Y - 0.4, 3.0), { yaw: PI, s: 15, set: { lid: 1 - open, glow: 0.6 + 0.8 * open, coil: 1, reach: 0 } });
-      moveCam(ctx, { pos: L(-19, 1.4, -4.0), look: L(-26, 15, 4), fov: 66 }, { pos: L(-19.5, 1.5, -3.2), look: L(-27, 16.5, 3.5), fov: 60 }, lt / 1.4, 0.4);
+      deepAt(ctx, eyeP, { yaw: PI, pitch: 0.55, s: 15, set: { lid: 1 - Math.max(open, 0.32), glow: 0.6 + 0.9 * open, coil: 1, reach: 0, lookY: 0.3 } });
+      P.eyeHalo.position.copy(eyeP).add(up(-1.5)); P.eyeHalo.material.opacity = 0.15 + 0.5 * open; P.eyeHalo.scale.setScalar(16 + 18 * open);
+      moveCam(ctx, { pos: L(-23.2, 2.2, -9.3), look: L(-27, 12.5, 6), fov: 70 }, { pos: L(-23.6, 2.1, -9.1), look: L(-27, 13.2, 6), fov: 68 }, lt / 1.4, 0.3);
       shakeOn(ctx, [te + 0.5], 0.35, 0.4);
     },
   },
   // ── eye fills the frame
   {
-    name: 'eye close-up', start: 'b10.w9-0.1', set: 'town',
+    name: 'eye close-up', start: 'b10.w10-0.1', set: 'town',
     setup(ctx) { town(ctx, 'flare'); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, P = ctx.props; tick(ctx, { sea: { flare: 1.0, flarePos: L(-30, SEA_Y, 3), flareR: 5 } });
       const D = deepAt(ctx, L(-27, SEA_Y - 0.4, 3.0), { yaw: PI, s: 15, set: { lid: 0, glow: 1.4, lookX: 0.15 * Math.sin(t * 2), lookY: 0.5, coil: 1 } });
       const e = D.userData.eyeWorld();
-      moveCam(ctx, { pos: e.clone().add(V(1.5, -15, -12.5)), look: e.clone().add(up(-2.0)), fov: 42 }, { pos: e.clone().add(V(1.2, -14, -11)), look: e.clone().add(up(-2.0)), fov: 40 }, lt / 1.0);
+      moveCam(ctx, { pos: e.clone().add(V(1.5, -15, -12.5)), look: e.clone().add(up(-2.0)), fov: 42 }, { pos: e.clone().add(V(1.2, -14, -11)), look: e.clone().add(up(-2.0)), fov: 40 }, lt / 0.9);
       ctx.fx.vignette(0.45);
     },
   },
@@ -865,16 +869,26 @@ export const shots = [
       setCam(ctx, { pos: L(0.5, 1.0, 5.5), look: L(-5.0, lerp(12, 9, k), -2.5), fov: 72 }, 0.3);
     },
   },
-  // ── "Slow. Curious."
+  // ── "Slow. Curious."  — street level, looking east down Main Street: the tip creeps along between the houses at
+  // upper-window height, past lit windows and a lamp, the long tentacle hanging out of the glowing water above.
   {
     name: 'slow curious', start: 'b12.w6-0.1', set: 'town',
-    setup(ctx) { town(ctx, 'flare'); },
+    setup(ctx) {
+      const L = town(ctx, 'flare'); ctx.add(ctx.props.key2);
+      ctx.store.c = crowdAt(ctx, [EXTRA_IDS[3], EXTRA_IDS[9]], [{ p: L(-4.6, 0.12, -6.5), yaw: L.yaw - 1.0 }, { p: L(-5.9, 0.12, -7.1), yaw: L.yaw - 0.55 }]);
+    },
     update(ctx, lt) {
-      const { L } = ctx.store, t = ctx.t; tick(ctx, { sea: { flare: 1.2, flarePos: L(-24, SEA_Y, 2), flareR: 5 } });
-      const base = L(-6, SEA_Y + 1, 0), tip = L(-5 + 0.5 * Math.sin(t * 1.2), 6.0 + 0.4 * Math.sin(t * 0.9), -4.0);
-      const T0 = tentOn(ctx, base, tip, t, { wig: 0.5, r0: 1.4 });
+      const { L } = ctx.store, t = ctx.t, P = ctx.props; tick(ctx, { sea: { flare: 1.2, flarePos: L(-8, SEA_Y, 0), flareR: 5 } });
+      const u = ease.inOutSine(clamp(lt / 1.4, 0, 1));
+      const tip = L(lerp(-0.8, -4.2, u) + 0.3 * Math.sin(t * 1.3), 4.3 + 0.3 * Math.sin(t * 0.9 + 1), -6.4 + 0.25 * Math.sin(t * 0.7));
+      const T0 = tentOn(ctx, L(-2, SEA_Y + 1, 1.0), tip, t, { wig: 0.45, r0: 1.5, r1: 0.3, approach: L(-1, 0, -0.5).sub(L(0, 0, 0)).normalize() });
       const tp = T0.userData.tipWorld();
-      moveCam(ctx, { pos: tp.clone().add(V(2.6, -1.2, 3.2)), look: tp.clone().add(V(0, 0.6, 0)), fov: 42 }, { pos: tp.clone().add(V(2.0, -1.0, 2.6)), look: tp.clone().add(V(0, 0.6, 0)), fov: 40 }, lt / 1.3, 0.6);
+      P.key2.position.copy(tp).add(L(-2.5, -0.5, 2.5).sub(L(0, 0, 0))); P.key2.intensity = 18; P.key2.distance = 10; P.key2.color.set('#bfe8ff');
+      animC(ctx.store.c, t, 'surprised', 'shocked', { intensity: 0.6, headPitch: -0.7 });
+      for (const c of ctx.store.c) c.ch.joints.torso.rotation.x -= 0.15;
+      const c0 = { pos: L(-12.8, 2.2, -1.6), look: tp.clone().add(L(0, -1.9, 0.8).sub(L(0, 0, 0))), fov: 58 };
+      const c1 = { pos: L(-12.1, 2.2, -1.8), look: tp.clone().add(L(0, -1.8, 0.8).sub(L(0, 0, 0))), fov: 54 };
+      moveCam(ctx, c0, c1, lt / 1.3, 0.5);
     },
   },
   // ── "Feeling its way down Main Street, window by window."  — the tip peeks into lit windows, curtains snap shut
@@ -1164,47 +1178,57 @@ export const shots = [
     setup(ctx) { deepTown(ctx); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, me = ctx.cast.me; deepTick(ctx);
+      me.root.rotation.y = L.yaw + 1.99;
       me.pose('idle', t, { intensity: 0.3, headPitch: -0.4 }); me.face('shocked', t);
-      const f = humanFace(me);
-      // over his shoulder, ~40° off vertical, up at the inverted houses beyond the water layers
+      const f = humanFace(me), fw = fwdOf(me.root.rotation.y), lf = leftOf(me.root.rotation.y);
       const O = L(0, 0, 0), dir = (x, y, z) => L(x, y, z).sub(O);
-      const pos = f.clone().add(dir(-1.8, -0.75, 0.45));
-      moveCam(ctx, { pos, look: pos.clone().add(dir(10, 9.5, -0.4)), fov: 60 }, { pos: pos.clone().add(up(0.1)), look: pos.clone().add(dir(10, 10.2, -0.4)), fov: 56 }, lt / 2, 0);
-      fill(ctx, f.clone().add(dir(-1.2, 0.2, 0.9)), 0.9, '#9fd0ff');
+      // over his shoulder, up through the haze at the far lights (the inverted town hangs north-east of the tower)
+      const pos = f.clone().addScaledVector(fw, -1.9).addScaledVector(lf, -1.25).add(up(-0.55));
+      const look0 = f.clone().addScaledVector(fw, 10).add(up(5.0)), look1 = f.clone().addScaledVector(fw, 10).add(up(5.8));
+      moveCam(ctx, { pos, look: look0, fov: 58 }, { pos: pos.clone().add(up(0.1)), look: look1, fov: 52 }, ease.inOutSine(clamp(lt / 2, 0, 1)), 0);
+      fill(ctx, f.clone().addScaledVector(fw, -0.8).addScaledVector(lf, -1.0).add(up(0.4)), 0.9, '#9fd0ff');
     },
   },
-  // ── "Another town. Upside down."
+  // ── "Another town. Upside down."  — from just off our tower top, looking up the mirror line: our tower + the kid (small,
+  // looking up) at the bottom, their mini clock tower hanging straight down above it, their roofs pointing down at us.
   {
     name: 'another town upside down', start: 'town-0.1', set: 'town',
-    setup(ctx) { deepTown(ctx); },
+    setup(ctx) { deepTown(ctx); ctx.add(ctx.props.key2); },
     update(ctx, lt) {
-      const { L } = ctx.store, t = ctx.t; deepTick(ctx);
+      const { L } = ctx.store, t = ctx.t, P = ctx.props; deepTick(ctx);
       const k = ease.inOutSine(clamp(lt / 2.2, 0, 1)), me = ctx.cast.me;
-      me.pose('idle', t, { intensity: 0.3, headPitch: -0.5 }); me.face('shocked', 0.5);
-      const O = L(0, 0, 0), dir = (x, y, z) => L(x, y, z).sub(O), f = humanFace(me);
-      const pos = f.clone().add(dir(1.8, -0.75, 0.45));
-      setCam(ctx, { pos, look: L(UPTOWN.x - 62, lerp(UPTOWN.y - 16.5, UPTOWN.y - 14.5, k), UPTOWN.z), fov: lerp(54, 48, k) }, 0);
-      tag(ctx, 'UPSIDE DOWN', ctx.markers.town + 0.6, Infinity, { y: 0.15, rot: PI - 0.03, bg: 'rgba(13,79,134,0.9)' });
+      me.pose('idle', t, { intensity: 0.3, headPitch: -0.42 }); me.face('shocked', 0.5); me.joints.torso.rotation.x -= 0.1;
+      const f = humanFace(me);
+      P.key2.position.copy(f).add(L(-2.0, 0.6, 1.2).sub(L(0, 0, 0))); P.key2.intensity = 14; P.key2.distance = 8; P.key2.color.set('#cfe6ff');
+      const c0 = { pos: L(TX - 2.0, DY + 0.4, TZ + 5.0), look: L(TX + 3.0, DY + 8.0, TZ - 4), fov: 84 };
+      const c1 = { pos: L(TX - 2.0, DY + 0.45, TZ + 4.7), look: L(TX + 3.0, DY + 8.6, TZ - 4), fov: 80 };
+      moveCam(ctx, c0, c1, k, 0);
+      me.root.rotation.y = L.yaw - 0.25;
+      tag(ctx, 'UPSIDE DOWN', ctx.markers.town + 0.6, Infinity, { y: 0.12, rot: PI - 0.03, bg: 'rgba(13,79,134,0.9)' });
     },
   },
-  // ── "A kid at a window, holding my flashlight."
+  // ── "A kid at a window, holding my flashlight."  — push in from the hanging house to a medium on the lit window
   {
     name: 'kid with my flashlight', start: 'kid-0.1', set: 'town',
     setup(ctx) { deepTown(ctx, { people: true }); },
     update(ctx, lt) {
-      const t = ctx.t; deepTick(ctx, { people: true });
-      const b = ctx.store.bay;
-      moveCam(ctx, { pos: b.clone().add(V(0, -9, -24)), look: b.clone().add(V(0, -1.4, 0)), fov: 44 }, { pos: b.clone().add(V(0, -1.6, -5.0)), look: b.clone().add(V(0, -1.3, 0)), fov: 40 }, ease.inOutSine(clamp(lt / 2.2, 0, 1)), 1.0);
+      const t = ctx.t, k = ease.inOutSine(clamp(lt / 2.0, 0, 1)); deepTick(ctx, { people: true, close: k > 0.5 });
+      const b = ctx.store.bay, kf = humanFace(ctx.cast.kidB), mf = humanFace(ctx.cast.mumB), mid = kf.clone().lerp(mf, 0.4);
+      const c0 = { pos: b.clone().add(V(1.5, 3.5, -15)), look: b.clone().add(V(0, -2.0, 0)), fov: 44 };
+      const c1 = { pos: mid.clone().add(V(0.8, 1.5, -4.2)), look: mid.clone().add(V(0.1, -0.9, 0)), fov: 38 };
+      setCam(ctx, camLerp(c0, c1, k), 0);
+      fill(ctx, mid.clone().add(V(0.4, -0.6, -1.8)), 0.45, '#ffe2c0');
     },
   },
-  // ── b19 "And I heard his mum shout:"  — close on the upside-down window: she wags her finger
+  // ── b19 "And I heard his mum shout:"  — medium two-shot from the mum's side: she wags her finger, he winces
   {
     name: 'his mum shouts', start: 'b19-0.1', set: 'town',
     setup(ctx) { deepTown(ctx, { people: true }); },
     update(ctx, lt) {
-      const t = ctx.t; deepTick(ctx, { people: true, wag: true });
-      const b = ctx.store.bay;
-      moveCam(ctx, { pos: b.clone().add(V(-0.2, -1.3, -3.3)), look: b.clone().add(V(0, -1.1, 0)), fov: 38 }, { pos: b.clone().add(V(-0.15, -1.3, -2.9)), look: b.clone().add(V(0, -1.1, 0)), fov: 38 }, lt / 1.3, 1.0);
+      const t = ctx.t; deepTick(ctx, { people: true, wag: true, close: true });
+      const kf = humanFace(ctx.cast.kidB), mf = humanFace(ctx.cast.mumB), mid = kf.clone().lerp(mf, 0.55);
+      moveCam(ctx, { pos: mid.clone().add(V(-1.2, 1.45, -4.0)), look: mid.clone().add(V(0, -0.9, 0)), fov: 37 }, { pos: mid.clone().add(V(-1.05, 1.4, -3.7)), look: mid.clone().add(V(0, -0.9, 0)), fov: 36 }, lt / 1.3, 0);
+      fill(ctx, mid.clone().add(V(-0.5, -0.6, -1.8)), 0.45, '#ffe2c0');
     },
   },
   // ── "Never shine a light into the deep. Something lives down there."  — she points down at us; we fall back down to our town
@@ -1212,10 +1236,10 @@ export const shots = [
     name: 'something lives down there', start: 'b19.w6-0.12', set: 'town',
     setup(ctx) { deepTown(ctx, { people: true }); },
     update(ctx, lt) {
-      const { L } = ctx.store, t = ctx.t; deepTick(ctx, { people: true, point: true });
-      const b = ctx.store.bay, ts = ctx.time('b19.w13') - 0.1;
-      const k = ease.inOutCubic(clamp((t - ts) / 0.75, 0, 1));
-      const c0 = { pos: b.clone().add(V(0.8, -1.3, -5.5)), look: b.clone().add(V(0, -0.4, 0)), fov: 42 };
+      const { L } = ctx.store, t = ctx.t, ts = ctx.time('b19.w13') - 0.1;
+      const k = ease.inOutCubic(clamp((t - ts) / 0.75, 0, 1)); deepTick(ctx, { people: true, point: true, close: k < 0.5 });
+      const b = ctx.store.bay;
+      const c0 = { pos: b.clone().add(V(0.9, 1.8, -5.2)), look: b.clone().add(V(0, -0.2, 0)), fov: 42 };
       const kidF = L(TX + 0.3, DY + 1.7, TZ + 0.4);
       const c1 = { pos: kidF.clone().add(V(0.6, 5.5, 3.0)), look: kidF, fov: 50 };
       const c = camLerp(c0, c1, k); setCam(ctx, c, 1.0);
@@ -1306,22 +1330,24 @@ function deepTown(ctx, { people = false } = {}) {
     const place = (id, lx, lz, yaw) => { const p = U.localToWorld(hero.pos.clone().add(V(lx, 0, lz))); ctx.place(id, p); const r = ctx.cast[id].root; r.quaternion.copy(q).multiply(new THREE.Quaternion().setFromAxisAngle(V(0, 1, 0), yaw)); return ctx.cast[id]; };
     place('mumB', -0.45, -0.05, hero.yaw + 0.35); place('kidB', 0.5, 0.2, hero.yaw - 0.3);
     ctx.add(P.torchB);
-    ctx.add(P.key2); P.key2.position.copy(ctx.store.bay).add(V(0, -1.5, -2.5)); P.key2.intensity = 30;
+    ctx.add(P.key2); P.key2.position.copy(ctx.store.bay).add(V(0.4, -1.8, -2.2)); P.key2.intensity = 9; P.key2.distance = 7; P.key2.color.set('#ffd8a8');
   }
 }
-function deepTick(ctx, { people = false, wag = false, point = false } = {}) {
+function deepTick(ctx, { people = false, wag = false, point = false, close = false } = {}) {
   const t = ctx.t, P = ctx.props;
   tick(ctx, { sea: { opacity: 0.32, glow: 1.0, deep: '#0d3a78', shallow: '#2a8ad0', light: '#9ff4ff' }, shafts: 0, bubbles: 0.4 });
   P.layers.userData.set(2.0, '#3aa8f0'); P.motes.userData.set(t, 1); P.uptown.userData.set(t, 1.25);
+  const hero = P.uptown.userData.hero;
+  if (close) { hero.halo.material.opacity = 0.12; hero.backM.color.set('#d89a55'); } else hero.backM.color.set('#ffcf7a');
   if (people) {
     const mum = ctx.cast.mumB, kid = ctx.cast.kidB;
     mum.pose('idle', t, { intensity: 0.4 }); mum.face(wag || point ? 'determined' : 'neutral', t);
-    if (wag) { const w = Math.sin(t * 5.5); mum.joints.armR.rotation.set(-2.5, 0.0, -0.25 + 0.6 * w); mum.joints.foreArmR.rotation.set(-0.7 - 0.35 * w, 0, 0); mum.joints.armL.rotation.set(-0.3, 0, 0.7); mum.joints.foreArmL.rotation.set(-1.7, 0, 0); }
+    if (wag) { const w = Math.sin(t * 7.0); mum.joints.armR.rotation.set(-1.9, 0.0, -0.1 + 0.45 * w); mum.joints.foreArmR.rotation.set(-0.9, 0, 0); mum.joints.armL.rotation.set(-0.3, 0, 0.7); mum.joints.foreArmL.rotation.set(-1.7, 0, 0); }
     if (point) { mum.joints.armR.rotation.set(-3.0, 0, -0.15); mum.joints.foreArmR.rotation.set(0, 0, 0); mum.joints.armL.rotation.set(-0.6, 0, 0.6); mum.joints.foreArmL.rotation.set(-1.6, 0, 0); }
     kid.pose('idle', t, { intensity: 0.4 }); kid.face(wag || point ? 'sad' : 'smile', t);
-    kid.joints.armR.rotation.set(-1.3, 0, 0.1); kid.joints.foreArmR.rotation.set(-0.4, 0, 0);
+    if (close) { kid.joints.armR.rotation.set(-1.15, 0, 0.35); kid.joints.foreArmR.rotation.set(-1.1, 0, 0); } else { kid.joints.armR.rotation.set(-1.3, 0, 0.1); kid.joints.foreArmR.rotation.set(-0.4, 0, 0); }
     kid.root.updateMatrixWorld(true);
     const down = V(0, -1, 0);
-    holdAlong(P.torchB, kid, V(1, 0.25, 0.35).normalize()); P.torchB.userData.set(0.55, 0.9, 0.3);
+    holdAlong(P.torchB, kid, close ? V(0.45, -0.25, 0.85).normalize() : V(1, 0.25, 0.35).normalize()); P.torchB.userData.set(close ? 0.4 : 0.55, close ? 0.7 : 0.9, close ? 0.22 : 0.3);
   }
 }

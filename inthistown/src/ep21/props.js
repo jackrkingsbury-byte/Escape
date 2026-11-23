@@ -627,7 +627,7 @@ const ROOF_COLS = ['#b5543f', '#4a5d7e', '#6b4a3a', '#3f7a5a'];
 /** Upright local coords: ground top at y = 0, two rows facing each other across a street along X. Flip with rotation.x = π. */
 export function makeUpsideTown() {
   const g = new THREE.Group();
-  g.add(box(150, 1.0, 70, glowStd('#3c6a4a'), 0, -0.5, 0));
+  g.add(box(420, 1.0, 320, glowStd('#3c6a4a'), 0, -0.5, 0));
   g.add(box(150, 0.04, 9, '#3a3d46', 0, 0.02, 0));
   const winM = new THREE.MeshBasicMaterial({ color: '#ffe08a', toneMapped: false });
   const winGeo = new THREE.PlaneGeometry(1.6, 1.8), skyGeo = new THREE.PlaneGeometry(1.7, 1.5), halos = [];
@@ -656,6 +656,11 @@ export function makeUpsideTown() {
         if ((k + wx) % 2 === 0 || isHero || wy < 3) { const hl = glowSprite('#ffc46a', 4.2, 0.7); hl.position.set(wx, wy, d / 2 + 0.3); hg.add(hl); halos.push(hl); }
       }
       hg.add(box(1.1, 2.1, 0.08, '#7d5232', 0, 1.05, d / 2 + 0.03));
+      // lit back windows too: hung upside down, the town is seen from every side
+      for (const [wx, wy] of [[-2.8, 4.35], [0, 4.35], [2.8, 4.35], [-2.8, 1.55], [0, 1.55], [2.8, 1.55]]) {
+        const m = new THREE.Mesh(winGeo, winM); m.position.set(wx, wy, -d / 2 - 0.02); m.rotation.y = PI; hg.add(m);
+        if ((k + wx + wy) % 3 < 1.5) { const hl = glowSprite('#ffc46a', 3.8, 0.6); hl.position.set(wx, wy, -d / 2 - 0.3); hg.add(hl); halos.push(hl); }
+      }
       // lit windows on both gable ends too, so the town reads when seen up (down) the street
       for (const sx of [-1, 1]) for (const [wz, wy] of [[-1.7, 4.35], [1.7, 4.35], [-1.7, 1.55], [1.7, 1.55]]) {
         const m = new THREE.Mesh(winGeo, winM); m.position.set(sx * (w / 2 + 0.02), wy, wz); m.rotation.y = sx * PI / 2; hg.add(m);
@@ -665,13 +670,15 @@ export function makeUpsideTown() {
         // an open lit bay for the mum + kid
         const bay = new THREE.Group(); bay.position.set(0, 2.9, d / 2); hg.add(bay);
         const back = box(2.6, 2.2, 0.05, basic('#ffcf7a', { toneMapped: false }), 0, 1.1, 0.05); back.castShadow = false; bay.add(back);
-        for (const s of [-1, 1]) bay.add(box(0.2, 2.6, 1.6, HOUSE_COLS[k % 6], s * 1.4, 1.3, 0.8));
-        bay.add(box(3.0, 0.22, 1.6, '#fbf6ea', 0, 2.6, 0.8));
-        bay.add(box(2.6, 0.9, 0.14, HOUSE_COLS[k % 6], 0, 0.45, 1.5));
-        bay.add(box(3.0, 0.12, 0.4, '#fbf6ea', 0, 0.95, 1.55));
-        for (const s of [-1, 1]) { const c = box(0.3, 2.0, 0.06, '#e8232b', s * 1.12, 1.4, 1.45); c.castShadow = false; bay.add(c); }
-        const hl = glowSprite('#ffd27a', 6, 0.7); hl.position.set(0, 1.3, 1.0); bay.add(hl); halos.push(hl);
-        hero.pos.set(x, 2.9, z + d / 2 + 0.7); hero.yaw = yaw; hero.bayLocal = V(x, 2.9 + 1.1, z + d / 2 + 1.5);
+        // a shallow bay (0.75 m deep) so the mum + kid stand right in the window opening
+        const BD = 0.75;
+        for (const s of [-1, 1]) bay.add(box(0.2, 2.6, BD, HOUSE_COLS[k % 6], s * 1.4, 1.3, BD / 2));
+        bay.add(box(3.0, 0.22, BD, '#fbf6ea', 0, 2.6, BD / 2));
+        bay.add(box(2.6, 0.9, 0.14, HOUSE_COLS[k % 6], 0, 0.45, BD - 0.07));
+        bay.add(box(3.0, 0.12, 0.3, '#fbf6ea', 0, 0.95, BD - 0.05));
+        for (const s of [-1, 1]) { const c = box(0.3, 2.0, 0.06, '#e8232b', s * 1.12, 1.4, BD - 0.12); c.castShadow = false; bay.add(c); }
+        const hl = glowSprite('#ffd27a', 6, 0.7); hl.position.set(0, 1.3, 0.5); bay.add(hl); halos.push(hl);
+        hero.pos.set(x, 2.9, z + d / 2 + 0.3); hero.yaw = yaw; hero.bayLocal = V(x, 2.9 + 1.1, z + d / 2 + BD - 0.1); hero.halo = hl; hero.backM = back.material;
       }
     }
   }

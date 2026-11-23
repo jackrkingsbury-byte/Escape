@@ -1217,9 +1217,11 @@ export const shots = [
       const { L } = ctx.store, t = ctx.t;
       const x = -30 - (t - ctx.time('b19.w8')) * 6.5;
       surfTick(ctx, x);
-      const c = setCam(ctx, { pos: L(x + 4.0, 3.7, 1.9), look: L(x - 6, 5.0, 1.1), fov: 60 }, 1.4);
-      meArrow(ctx, c);
-      battery(ctx, 2, { y: 0.88, s: 0.75, blink: true });
+      // flip him head-first toward the tower; camera high above his feet end (above the bunting), looking past his up-turned face to the tower
+      ctx.cast.me.root.rotation.y = L.yaw + PI / 2;
+      const c = setCam(ctx, { pos: L(x + 2.8, 6.4, 1.4), look: L(x - 4, 2.2, 1.1), fov: 58 }, 1.4, '#e0e8ff');
+      key(ctx, headPt(ctx.cast.me, 0, 0.3, 0).add(L(1.2, 1.6, 0.8).sub(L(0, 0, 0))), 14);
+      battery(ctx, 2, { y: 0.1, s: 0.75, blink: true });
     },
   },
   // ── b20 "I climbed the ladder. One percent left. I yanked the plug."
@@ -1361,11 +1363,11 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, { light: 'quiet_night', rig: 'off', ladder: true, glow: 0.8 });
       // hero at the SE corner of the deck, turned to the lens; the town cheers from the park lawn below (south of the tower)
-      const me = put(ctx, 'me', L(TX + 1.55, DY, TZ - 1.15), L.yaw + 0.95); phonesOn(ctx, me);
-      const ids = CROWD.slice(0, 26);
-      const list = ids.map((id, k) => { const c = k % 6, r = Math.floor(k / 6); const x = TX - 0.9 + c * 0.98 + (r % 2 ? 0.45 : 0) + (hash(k) - 0.5) * 0.3, z = TZ - 8.6 - r * 1.25 + (hash(k * 2) - 0.5) * 0.3;
+      const me = put(ctx, 'me', L(TX + 1.6, DY, TZ - 1.5), L.yaw + 0.24); phonesOn(ctx, me);
+      const ids = CROWD.slice(0, 30);
+      const list = ids.map((id, k) => { const c = k % 5, r = Math.floor(k / 5); const x = TX + 2.75 + c * 0.85 + (r % 2 ? 0.4 : 0) + (hash(k) - 0.5) * 0.3, z = TZ - 6.8 - r * 1.15 + (hash(k * 2) - 0.5) * 0.3;
         return { ch: put(ctx, id, L(x, 0, z), L.yaw + (hash(k * 3) - 0.5) * 0.5), k, x, z, ph: hash(k) * 3 }; });
-      filler(ctx, [...ringFill(TX, TZ, 4.2, 15, 190, { seed: 3, face: 'in' })].filter((p) => !(p.z < TZ - 7.8 && p.z > TZ - 14.6 && p.x > TX - 1.8 && p.x < TX + 4.6)));
+      filler(ctx, [...ringFill(TX, TZ, 4.2, 15, 190, { seed: 3, face: 'in' })].filter((p) => !(p.z < TZ - 6.0 && p.z > TZ - 14.0 && p.x > TX + 2.4 && p.x < TX + 8.0)));
       // tuck the (now dead) speaker rig out of this angle so the clock face doesn't clutter the cheering lawn
       const P = ctx.props; P.spk.forEach((sp) => { sp.position.y -= 200; }); P.cabB.userData.set(V(TX, -200, TZ), V(TX, -201, TZ), 0.1); P.cabC.userData.set(V(TX, -200, TZ), V(TX, -201, TZ), 0.1);
       ctx.store = { ...ctx.store, L, list };
@@ -1382,17 +1384,17 @@ export const shots = [
       P.filler.userData.set(t, { arms: 'cheer', flop: (i) => 1 - ease.outCubic(clamp((t - tu + 0.2 - 0.3 * hash(i * 2.3)) / 0.4, 0, 1)) });
       me.pose('cheer', t, { intensity: 0.6 }); armsUp(me, 1, 0.1 * Math.sin(t * 4)); me.face('laugh', t);
       // the plug held high in the right hand, out to the side (clear of the face); its cable trails off behind him on the deck
-      me.joints.armL.rotation.set(-2.45, 0, -1.0 - 0.08 * Math.sin(t * 5)); if (me.joints.foreArmL) me.joints.foreArmL.rotation.x = -0.1;
-      { const hw = handPos(me, 'L'), hc = headPt(me, 0, 0.3, 0), out = hw.clone().sub(hc).setY(0).normalize(); const loc = ctx.set.root.worldToLocal(hw.addScaledVector(out, 0.35)); plugAt(ctx, V(loc.x, loc.y + 1.2, loc.z), me.root.rotation.y, -PI / 2);   // (plug body hangs below its prong end: grip at the cord end)
-        P.plug.updateMatrixWorld(true); const back = ctx.set.root.worldToLocal(P.plug.userData.back.getWorldPosition(V())); P.cabA.userData.set(back, V(TX - 1.8, DY + 0.05, TZ - 2.0), 0.9); }
+      me.joints.armR.rotation.set(-2.45, 0, 1.0 + 0.08 * Math.sin(t * 5)); if (me.joints.foreArmR) me.joints.foreArmR.rotation.x = -0.1;
+      { const hw = handPos(me, 'R'), hc = headPt(me, 0, 0.3, 0), out = hw.clone().sub(hc).setY(0).normalize(); const loc = ctx.set.root.worldToLocal(hw.addScaledVector(out, 0.9)); plugAt(ctx, V(loc.x, loc.y + 0.85, loc.z), me.root.rotation.y, -PI / 2);   // (plug body hangs below its prong end: grip at the cord end)
+        P.plug.updateMatrixWorld(true); const back = ctx.set.root.worldToLocal(P.plug.userData.back.getWorldPosition(V())); P.cabA.userData.set(back, V(TX + 2.0, DY + 0.05, TZ - 2.0), 0.9); }
       // drone spot outside the east parapet, above the deck: hero big in the upper half, the cheering lawn below him
       const push = ease.inOutSine(clamp(lt / 2.2, 0, 1));
-      const c = setCam(ctx, { pos: L(TX + 4.6, DY + 4.4, TZ + 2.6).lerp(L(TX + 4.35, DY + 4.15, TZ + 2.25), push), look: L(TX + 1.4, DY + 0.1, TZ - 2.7), fov: 56 }, 1.4, '#e0e8ff');
+      const c = setCam(ctx, { pos: L(TX + 2.75, DY + 4.6, TZ + 2.95).lerp(L(TX + 2.6, DY + 4.4, TZ + 2.6), push), look: L(TX + 2.3, DY - 2.0, TZ - 3.4), fov: 62 }, 1.4, '#e0e8ff');
       key(ctx, headPt(me, 0, 0.3, 0).add(L(1.6, 1.4, 1.4).sub(L(0, 0, 0))), 16);
       // a warm flood on the lawn so the cheering faces read
-      const sl = P.shipLight; ctx.add(sl, ctx.set.root); sl.position.set(TX + 4.5, 8.0, TZ - 5.0); sl.color.set('#ffe8d0'); sl.intensity = 45;
+      const sl = P.shipLight; ctx.add(sl, ctx.set.root); sl.position.set(TX + 6.0, 7.0, TZ - 6.5); sl.color.set('#ffe8d0'); sl.intensity = 45;
       top10Card(ctx, 1, ctx.time('b22.w7') - 0.05, Infinity, { title: 'TOP 10\nRESPECTFUL MOMENTS', popAt: ctx.markers.top10 - 0.05 });
-      tag(ctx, 'THE TOWN CARRIED ME', ctx.markers.top10 + 0.1, Infinity, { y: 0.66, size: 58, bg: 'rgba(20,20,30,0.88)' });
+      tag(ctx, 'THE TOWN CARRIED ME', ctx.markers.top10 + 0.1, Infinity, { x: 0.34, y: 0.86, size: 50, bg: 'rgba(20,20,30,0.88)' });   // on the empty deck, clear of the cheering faces
     },
   },
   // ── b23 "Then the sky turned purple. A giant spaceship came down, blasting the remix. And in every window, glowing green eyes."
