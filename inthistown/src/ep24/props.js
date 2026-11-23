@@ -13,7 +13,7 @@
 //   makeSpikyHair()       ridiculous tall spiky block hair with frosted tips (parent to joints.head, y = 0.56).
 //   makePodium()          PRESS podium with two mics (origin bottom centre, faces +Z).
 //   makeBridgeSign()      wooden post + arrow board pointing +X reading BRIDGE (origin post base, text faces +Z).
-//   makeHand()            giant blocky hand in a purple star-sleeve reaching down (fingers toward −Y, palm faces +Z).
+//   makeHand()            giant blocky hand in a blue shirt sleeve (white cuff stripes) reaching down (fingers toward −Y, palm faces +Z).
 //                         unit = palm width.  userData.hold (Object3D where a pencil sits, along local X).  renderOrder 6.
 //   makePencil()          yellow hex pencil, unit length along +Y (tip at +Y, eraser at −Y), origin centre.
 //   makeTears(n)          pool of blue tear drops.  userData.set(t, sources [{ pos, side (unit Vector3), mode }], k)
@@ -306,13 +306,13 @@ export function makeBridgeSign() {
 export function makeHand() {
   const g = new THREE.Group(); g.name = 'giantHand';
   const skin = std('#f6c9a4', { emissive: '#ff9a6a', emissiveIntensity: 0.18, roughness: 0.6 });
-  const sleeve = std('#5b3fa8', { emissive: '#2a1060', emissiveIntensity: 0.3, roughness: 0.7 });
-  const goldM = std('#ffd23f', { emissive: '#a06a00', emissiveIntensity: 0.6 });
+  const sleeve = std('#3f86e0', { emissive: '#10306a', emissiveIntensity: 0.3, roughness: 0.7 });   // plain blue shirt sleeve (no stars: read as a wizard hat)
   g.add(box(1.0, 1.1, 0.38, skin, 0, 0, 0, 0.1));                        // palm
   g.add(box(0.86, 0.32, 0.34, skin, 0, 0.62, -0.02, 0.1));              // wrist
-  const arm = cyl(0.6, 0.62, 30, sleeve, 12); arm.position.y = 0.7 + 15; g.add(arm);
-  const cuff = cyl(0.66, 0.66, 0.34, goldM, 16); cuff.position.y = 0.88; g.add(cuff);
-  for (let k = 0; k < 18; k++) { const st = box(0.12, 0.12, 0.04, goldM, 0, 0, 0); const a = hash(k * 2.3) * PI * 2, y = 1.4 + hash(k * 5.1) * 12; st.position.set(Math.sin(a) * 0.62, y, Math.cos(a) * 0.62); st.rotation.set(0, a, PI / 4); g.add(st); }
+  // a bare blocky forearm (reads as an ARM at phone size), then a shirt cuff and the sleeve far up
+  g.add(box(0.8, 4.2, 0.36, skin, 0, 0.7 + 2.1, -0.02, 0.1));
+  const cuff = box(1.0, 0.45, 0.6, std('#ffffff', { roughness: 0.6 }), 0, 5.1, -0.02, 0.08); g.add(cuff);
+  const arm = box(1.05, 26, 0.62, sleeve, 0, 5.3 + 13, -0.02, 0.1); g.add(arm);
   // fingers: proximal hanging down, distal curled toward +Z
   const fingers = [];
   [-0.36, -0.12, 0.12, 0.36].forEach((x, k) => {
