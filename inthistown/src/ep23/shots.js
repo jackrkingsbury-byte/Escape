@@ -59,7 +59,7 @@ const X = EXTRA_IDS;
 // ───────────────────────────────────────────────────────────────────────────────────────── layout (town-local)
 const MR = 22;                                         // moon radius
 const MO = {
-  base: [-90, 40, 6], tower: [-52, 37.4, 1.5], far: [-330, 215, -40],
+  base: [-90, 40, 6], flash: [-330, 110, -30], doors: [-90, 30, 2], tower: [-52, 37.4, 1.5], far: [-330, 215, -40],
   up: [[-52, 37.4, 1.5], [-60, 56, 0], [-82, 82, -5], [-122, 112, -12], [-185, 150, -22], [-262, 190, -32], [-330, 215, -40]],
 };
 const TW = { x: -51, z: 1.5, face: -49.58, cy: 11 };
@@ -94,9 +94,11 @@ export function init(ctx) {
   P.dustNear = makeSparkles({ n: 40, w: 5, h: 4, d: 4, color: '#f4f6ff', size: 0.035 });
   P.rings = makeSoundRings(5); P.ringsB = makeSoundRings(5);
   P.shock = makeShockRing();
-  P.leaves = makePuff({ color: '#4caf50', count: 22, radius: 1.2, seed: 5 });
+  P.leaves = makePuff({ color: '#4caf50', count: 16, radius: 0.6, seed: 5 });
   P.poof = makePuff({ color: '#d8d0c0', count: 18, radius: 0.8, seed: 8 });
   P.bulb = makeBulb();
+  P.stand = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1, 10), new THREE.MeshStandardMaterial({ color: '#2a2a30', roughness: 0.5, metalness: 0.4 }));
+  P.flash = makeShockRing();
   P.strap = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 1), new THREE.MeshStandardMaterial({ color: '#e8232b', roughness: 0.6 }));
   P.sky = new THREE.Mesh(new THREE.PlaneGeometry(14, 8), new THREE.MeshBasicMaterial({ color: '#0a0d24' }));
   P.moonLight = new THREE.DirectionalLight('#cfdcff', 0.9);
@@ -169,7 +171,7 @@ function moonFrame(ctx, cam, p, R = MR, o = {}) {
   M.userData.gaze(o.gaze ?? null);
   M.userData.set({ pupil: o.pupil ?? 0, lid: o.lid ?? 0, glow: o.glow ?? 1.3, dilate: o.dilate ?? 1, halo: o.halo ?? 0.6 });
   const ml = P.moonLight; ml.position.copy(w); ml.target.position.copy(cam.look); ml.intensity = o.light ?? 1.0; ml.color.set(o.lightColor ?? '#cfdcff');
-  if (o.dust !== false) { const fwd = cam.look.clone().sub(cam.pos).normalize(); ctx.add(P.dust); P.dust.position.copy(cam.pos).addScaledVector(fwd, o.dustDist ?? 9); P.dust.userData.set(ctx.t, o.dustA ?? 0.85); }
+  if (o.dust !== false) { const fwd = cam.look.clone().sub(cam.pos).normalize(); ctx.add(P.dust); P.dust.position.copy(cam.pos).addScaledVector(fwd, Math.max(14, o.dustDist ?? 14)); P.dust.userData.set(ctx.t, o.dustA ?? 0.85); }
   return w;
 }
 function crowd(ctx, ids, spots) {
@@ -297,18 +299,18 @@ export const shots = [
     name: 'moon street crane', start: 0, set: 'town',
     setup(ctx) {
       const L = town(ctx);
-      ctx.store.walk = crowd(ctx, [X[0], X[1], X[2], X[3]], [[4, 0.12, 6.3, -PI / 2], [-4.2, 0.12, -6.2, -PI / 2 - 0.4], [-5.4, 0.12, -6.6, -PI / 2 + 0.3], [1.5, 0.12, -6.4, -PI / 2 - 0.2]]);
+      ctx.store.walk = crowd(ctx, [X[0], X[1], X[2], X[3]], [[4.5, 0.12, 2.6, PI / 2 + 0.55], [2, 0.12, -2.4, 0.45], [-2, 0.12, 3.0, 2.35], [-2.6, 0.12, -2.6, 0.55]]);
     },
     update(ctx, lt, u) {
       const L = ctx.store.L, t = ctx.t;
-      const c = moveCam(ctx, { pos: L(13.5, 0.8, 1.6), look: L(-10, 3.2, 0.8), fov: 50 }, { pos: L(13, 7.5, 0.9), look: L(-60, 20, 4), fov: 46 }, ease.inOutSine(u), 0.6);
+      const c = moveCam(ctx, { pos: L(13.5, 0.8, 0.6), look: L(-10, 3.2, 0.4), fov: 58 }, { pos: L(13, 7.5, 0.9), look: L(-60, 20, 4), fov: 46 }, ease.inOutSine(u), 0.6);
       const grow = ease.inOutCubic(clamp((t - 3.0) / 0.7, 0, 1));
       moonFrame(ctx, c, MO.base, MR * (0.94 + 0.1 * grow), { dustDist: 12 });
       const mw = L(MO.base[0], MO.base[1], MO.base[2]);
       ctx.store.walk.forEach((w, i) => {
-        if (i === 0) { w.ch.root.position.copy(L(w.x - WALK_SPEED * 0.9 * lt, 0.12, w.z)); w.ch.pose('walk', t + w.ph, { speed: 0.9, lookAt: mw }); w.ch.face('shocked', 0.4); }
-        else if (i === 1) { w.ch.pose('point', t + w.ph, { lookAt: mw }); w.ch.face('shocked', 0.4); }
-        else { w.ch.pose('idle', t + w.ph, { lookAt: mw }); w.ch.face(i === 2 ? 'sweat' : 'shocked', t + w.ph); }
+        if (i === 0) { const sp = WALK_SPEED * 0.6 * lt; w.ch.root.position.copy(L(w.x + sp * Math.sin(w.yw), 0.12, w.z + sp * Math.cos(w.yw))); w.ch.pose('walk', t + w.ph, { speed: 0.6, headPitch: -0.35 }); w.ch.face('shocked', 0.4); }
+        else if (i === 1) { w.ch.pose('point', t + w.ph, { headPitch: -0.45, headYaw: -0.3 }); w.ch.face('shocked', 0.4); }
+        else { w.ch.pose('idle', t + w.ph, { headPitch: -0.5 }); w.ch.face(i === 2 ? 'sweat' : 'shocked', 0.4); }
       });
       if (t > 3.3) ctx.cam.shake(0.08, t, 3);
     },
@@ -327,9 +329,9 @@ export const shots = [
       me.face('determined', t);
       const ex = ctx.cast[X[4]]; ex.pose('idle', t, { lookAt: L(-90, 40, 6) }); ex.face('sweat', t);
       const k = ease.inOutSine(clamp(lt / 2.4, 0, 1));
-      const c = moveCam(ctx, { pos: L(-16.9, 0.32, 5.1), look: L(-19.6, 2.15, 5.45), fov: 46 }, { pos: L(-17.25, 0.25, 5.2), look: L(-19.8, 2.25, 5.45), fov: 46 }, k, 1.3);
+      const c = moveCam(ctx, { pos: L(-16.9, 0.32, 5.1), look: L(-19.6, 1.25, 5.45), fov: 46 }, { pos: L(-17.25, 0.25, 5.2), look: L(-19.8, 1.3, 5.45), fov: 46 }, k, 1.3);
       moonFrame(ctx, c, [MO.base[0], lerp(40, 37, k), MO.base[2]]);
-      tag(ctx, 'SHOUTING', ctx.time('b02.w9') + 0.05, Infinity, { y: 0.13, bg: 'rgba(200,0,40,0.9)' });
+      tag(ctx, 'SHOUTING', ctx.time('b02.w9') + 0.05, Infinity, { y: 0.1, size: 90, bg: 'rgba(200,0,40,0.9)' });
     },
   },
   // ── b03 HUSS ×6 — the town square shouts; the moon jolts up one notch per HUSS
@@ -349,9 +351,9 @@ export const shots = [
         { pos: L(37.0, 1.2, 1.2), look: L(41.0, 1.45, 0.2), fov: 46 },
         { pos: L(49, 6.5, 2.2), look: mw.clone().add(up(-16)), fov: 42 },
         { pos: L(37.7, 1.5, -1.3), look: L(40.9, 1.5, -0.7), fov: 40 },
-        { pos: L(45.5, 4.6, 0.6), look: mw.clone().add(up(-6)), fov: 28 },
+        { pos: L(45.5, 4.6, 0.6), look: mw.clone().add(up(-18)), fov: 40 },
         { pos: L(47.5, 10, 10), look: L(0, 16, 3), fov: 54 },
-        { pos: L(37.5, 0.45, -0.4), look: L(41.2, 2.6, 0.2), fov: 54 },
+        { pos: L(43.7, 2.75, 1.1), look: L(12, 11.5, 3.5), fov: 56 },
       ];
       const c = setCam(ctx, cams[i], 1.6);
       moonFrame(ctx, c, mp, MR, { light: 1.2 });
@@ -364,17 +366,17 @@ export const shots = [
     name: 'five years ago', start: 'b04-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'dusk', { glow: 0.5 });
-      ctx.store.cr = crowd(ctx, [X[4], X[5], X[6], X[7], X[8]], [[-7, 0.12, 6.0, PI / 2], [1.5, 0.12, 6.5, -PI / 2 + 0.3], [-1.5, 0.12, -6.2, PI - 0.3], [-9, 0.12, -6.5, PI / 2], [6, 0.12, 5.8, -PI / 2]]);
+      ctx.store.cr = crowd(ctx, [X[4], X[5], X[6], X[7], X[8]], [[-9, 0.12, 6.2, PI / 2], [1.2, 0.12, 6.3, 0.95], [-2.2, 0.12, -5.7, 0.75], [-12, 0.12, -6.4, PI / 2], [-15, 0.12, -6.0, PI / 2]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, cr = ctx.store.cr;
       cr.forEach((c, i) => {
         if (i === 0 || i === 3) { c.ch.root.position.copy(L(c.x + WALK_SPEED * 0.8 * lt, 0.12, c.z)); c.ch.pose('walk', t + c.ph, { speed: 0.8 }); c.ch.face('smile', t + c.ph); }
-        else if (i === 4) { c.ch.root.position.copy(L(c.x - WALK_SPEED * 0.8 * lt, 0.12, c.z)); c.ch.pose('walk', t + c.ph, { speed: 0.8 }); c.ch.face('smile', t + c.ph); }
+        else if (i === 4) { c.ch.root.position.copy(L(c.x + WALK_SPEED * 0.7 * lt, 0.12, c.z)); c.ch.pose('walk', t + c.ph, { speed: 0.7 }); c.ch.face('smile', t + c.ph); }
         else { c.ch.pose('wave', t + c.ph); c.ch.face('grin', t + c.ph); }
       });
-      const c = moveCam(ctx, { pos: L(7.5, 1.6, 9.0), look: L(-1.5, 1.35, 5.2), fov: 44 }, { pos: L(6.0, 1.55, 8.6), look: L(-2.5, 1.35, 5.0), fov: 44 }, lt / 2.1, 0.5, '#fff0d8');
-      moonFrame(ctx, c, MO.far, MR, { light: 0.2, dust: false, halo: 0.4 });
+      const c = moveCam(ctx, { pos: L(8.5, 1.3, 7.6), look: L(-6, 3.8, 4), fov: 46 }, { pos: L(7.6, 1.3, 7.4), look: L(-6, 3.9, 4), fov: 46 }, lt / 2.1, 0.5, '#fff0d8');
+      moonFrame(ctx, c, MO.flash, 13, { light: 0.2, dust: false, halo: 0.5 });
       ctx.fx.overlay('#ffb070', 0.1); ctx.fx.vignette(0.45);
       tag(ctx, '5 YEARS AGO', ctx.time('b04') - 0.05, Infinity, { y: 0.12, bg: 'rgba(120,70,20,0.9)' });
     },
@@ -383,22 +385,26 @@ export const shots = [
     name: 'tiny polite moon', start: 'b04.w8-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'dusk', { glow: 0.5 });
-      ctx.store.cr = crowd(ctx, [X[5], X[6]], [[-1.5, 0.12, -6.0, PI / 2 + 0.6], [0.2, 0.12, -6.4, -PI / 2 - 0.5]]);
+      ctx.store.cr = crowd(ctx, [X[5], X[6]], [[-1.5, 0.12, -6.0, 1.0], [0.2, 0.12, -6.4, -0.15]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       ctx.store.cr.forEach((c) => { c.ch.pose('wave', t + c.ph); c.ch.face('grin', t + c.ph); });
-      const mw = L(MO.far[0], MO.far[1], MO.far[2]);
-      const k = ease.inOutCubic(clamp((lt - 0.15) / 1.6, 0, 1));
       const pos = L(3.0, 1.5, 1.0);
-      const look = L(-0.6, 1.5, -6.2).lerp(mw, k);
-      const c = setCam(ctx, { pos, look, fov: lerp(44, 30, k) }, 0.5, '#fff0d8');
-      moonFrame(ctx, c, MO.far, MR, { light: 0.2, dust: false, halo: 0.5 });
+      const mw = L(MO.flash[0], MO.flash[1], MO.flash[2]);
+      // end look: ~10° below the moon along its bearing, so the moon sits at y ≈ 0.25 above the rooftops / lamp tips
+      const dm = mw.clone().sub(pos), hd = Math.hypot(dm.x, dm.z), el = Math.atan2(dm.y, hd) - 0.175;
+      const endLook = pos.clone().add(V(dm.x / hd * 40, Math.tan(el) * 40, dm.z / hd * 40));
+      const k = ease.inOutCubic(clamp((lt - 0.15) / 1.4, 0, 1));
+      const look = L(-0.6, 1.2, -6.2).lerp(endLook, k);
+      const c = setCam(ctx, { pos, look, fov: lerp(46, 44, k) }, 0.5, '#fff0d8');
+      moonFrame(ctx, c, MO.flash, 13, { light: 0.2, dust: false, halo: 0.6 });
       ctx.fx.overlay('#ffb070', 0.1); ctx.fx.vignette(0.45);
-      tag(ctx, '5 YEARS AGO', ctx.time('b04') - 0.05, Infinity, { y: 0.12, bg: 'rgba(120,70,20,0.9)' });
-      tag(ctx, 'TINY', ctx.time('b04.w8'), Infinity, { y: 0.66, x: 0.3, size: 58, bg: 'rgba(255,255,255,0.9)', fill: '#1d1d22', stroke: '#ffffff', rot: -0.08 });
-      tag(ctx, 'POLITE', ctx.time('b04.w9'), Infinity, { y: 0.73, x: 0.68, size: 58, bg: 'rgba(255,255,255,0.9)', fill: '#1d1d22', stroke: '#ffffff', rot: 0.06 });
-      tag(ctx, 'FAR AWAY', ctx.time('b04.w10'), Infinity, { y: 0.8, x: 0.4, size: 58, bg: 'rgba(255,255,255,0.9)', fill: '#1d1d22', stroke: '#ffffff', rot: -0.04 });
+      tag(ctx, '5 YEARS AGO', ctx.time('b04') - 0.05, ctx.time('b04.w8') - 0.02, { y: 0.12, bg: 'rgba(120,70,20,0.9)' });
+      const W = { bg: 'rgba(255,255,255,0.92)', fill: '#1d1d22', stroke: '#ffffff', size: 80 };
+      tag(ctx, 'TINY', ctx.time('b04.w8'), Infinity, { ...W, y: 0.1, x: 0.24, rot: -0.08 });
+      tag(ctx, 'POLITE', ctx.time('b04.w9'), Infinity, { ...W, y: 0.19, x: 0.77, rot: 0.06 });
+      tag(ctx, 'FAR AWAY', ctx.time('b04.w10'), Infinity, { ...W, y: 0.36, x: 0.5, rot: -0.04 });
     },
   },
   // ── b05 "Then the mayor banned loud music."  — the sign slams into the square
@@ -457,7 +463,7 @@ export const shots = [
       const mm = t < tn ? -0.035 * clamp((tn - t) / 2.0, 0, 1) - (t < tn - 0.05 ? 0.004 : 0) : 0;
       ctx.props.clock.userData.set(mm, 0.75 + mm / 12);
       ctx.props.shock.userData.set(t - tn, 7);
-      const c = moveCam(ctx, { pos: L(-37.0, 8.4, 5.6), look: L(-49.6, 11.6, 1.6), fov: 40 }, { pos: L(-40.5, 9.4, 4.6), look: L(-49.6, 11.8, 1.6), fov: 36 }, ease.inOutSine(lt / 2.3), 0.8);
+      const c = moveCam(ctx, { pos: L(-37.0, 8.4, 5.6), look: L(-49.6, 13.3, 1.6), fov: 40 }, { pos: L(-40.5, 9.4, 4.6), look: L(-49.6, 12.7, 1.6), fov: 36 }, ease.inOutSine(lt / 2.3), 0.8);
       moonFrame(ctx, c, MO.base, MR);
       pop(ctx, tn, 0.12, '#ffffff', 0.45); shakeOn(ctx, [tn], 0.3, 0.3, 8);
       tag(ctx, '9:00 PM', tn, Infinity, { y: 0.13, size: 96, fill: '#ffe14a', bg: 'rgba(20,20,40,0.85)' });
@@ -492,13 +498,11 @@ export const shots = [
         const ch = ctx.cast[PJ_IDS[i]], w = clamp((t - to - 0.15) / 0.9, 0, 1);
         ch.root.position.copy(h.p.clone().addScaledVector(h.f, lerp(-1.6, 1.3, w)));
         if (w < 1) { ch.pose('walk', t + i, { speed: 1.2 }); ch.face('sleepy', 0.3); }
-        else { ch.pose('idle', t + i, { headPitch: -0.5, headYaw: 0.35 }); ch.face('shocked', 0.3); }
+        else { ch.pose('idle', t + i, { headPitch: -0.45, headYaw: 0.45 }); ch.face('shocked', 0.3); }
       });
-      ctx.store.nb.forEach((ch, k) => { ch.pose(k ? 'idle' : 'point', t + k, { headPitch: -0.5, headYaw: k ? 0.5 : 0.2 }); ch.face(k ? 'sweat' : 'shocked', 0.3); });
-      const h0 = ctx.store.houses[0], sd = ctx.store.side;
-      const cp = (d, lat) => h0.p.clone().addScaledVector(h0.f, d).addScaledVector(sd, lat);
-      const c = moveCam(ctx, { pos: cp(8.6, -1.2).setY(1.3), look: cp(1.2, 0.0).setY(1.55), fov: 52 }, { pos: cp(7.6, -1.0).setY(1.35), look: cp(1.2, 0.0).setY(1.6), fov: 52 }, lt / 2.0, 1.2, '#f0f2ff', 14);
-      moonFrame(ctx, c, MO.base, MR, { dust: false });
+      ctx.store.nb.forEach((ch, k) => { ch.pose(k ? 'idle' : 'point', t + k, { headPitch: -0.45, headYaw: k ? 0.55 : 0.35 }); ch.face(k ? 'sweat' : 'shocked', 0.3); });
+      const c = moveCam(ctx, { pos: L(15, 0.55, -2.4), look: L(-20, -0.9, -4.6), fov: 56 }, { pos: L(14, 0.55, -2.5), look: L(-20, -0.7, -4.6), fov: 56 }, lt / 2.0, 1.4, '#f0f2ff', 16);
+      moonFrame(ctx, c, MO.doors, MR, { dust: false });
       tag(ctx, '9:00 PM', ctx.time('b06') + 0.5, Infinity, { y: 0.12, size: 64, fill: '#ffe14a' });
     },
   },
@@ -516,7 +520,7 @@ export const shots = [
       const sh = t > ts - 0.1;
       if (sh) { shoutPose(tony, t, 0.2, 0.5 + 0.5 * Math.abs(Math.sin(t * 7))); tony.face('huss', t); } else { fistsPose(tony, t); tony.face('determined', t); }
       ctx.store.cr.forEach((c) => { shoutPose(c.ch, t + c.ph, 0.5, 0.3); c.ch.face('huss', t + c.ph); });
-      const c = moveCam(ctx, { pos: L(-2.4, 0.9, 2.0), look: L(-6, 2.0, 2.15), fov: 46 }, { pos: L(-2.9, 0.9, 2.05), look: L(-6, 2.0, 2.15), fov: 46 }, lt / 1.8, 1.5);
+      const c = moveCam(ctx, { pos: L(-2.4, 0.9, 2.0), look: L(-6, 1.45, 2.15), fov: 46 }, { pos: L(-2.9, 0.9, 2.05), look: L(-6, 1.45, 2.15), fov: 46 }, lt / 1.8, 1.5);
       moonFrame(ctx, c, MO.base, MR);
       if (sh) ctx.cam.shake(0.18, t, 6);
     },
@@ -540,15 +544,18 @@ export const shots = [
       P.mustHead.visible = !off; P.mustFly.visible = off;
       if (off) {
         const d = t - tf, side = V(Math.cos(tony.root.rotation.y), 0, -Math.sin(tony.root.rotation.y));
-        P.mustFly.position.copy(p0).addScaledVector(side, -2.4 * d).add(V(0.8 * d, 3.2 * d - 2.0 * d * d, 0));
-        P.mustFly.rotation.set(d * 9, d * 6, d * 14);
+        P.mustFly.position.copy(p0).addScaledVector(side, -1.2 * d).add(V(0.3 * d, 2.2 * d - 1.0 * d * d, 0));
+        P.mustFly.rotation.set(d * 6, d * 4, d * 9);
       }
-      const f = humanFace(tony), fw = V(Math.sin(tony.root.rotation.y), 0, Math.cos(tony.root.rotation.y));
-      const z = ease.outCubic(clamp((t - tf) / 0.2, 0, 1));
-      const c = setCam(ctx, { pos: f.clone().addScaledVector(fw, lerp(3.2, 2.7, z)).add(V(0, -0.5, 0)).addScaledVector(V(fw.z, 0, -fw.x), 0.45), look: f.clone().add(up(-0.62)), fov: lerp(38, 34, z) }, 1.6);
+      const f = ctx.store.f0 ??= humanFace(tony), fw = V(Math.sin(tony.root.rotation.y), 0, Math.cos(tony.root.rotation.y));
+      const z = ease.outCubic(clamp((t - tf) / 0.25, 0, 1));
+      const base = f.clone().add(up(-0.62));
+      const follow = off ? ease.inOutSine(clamp((t - tf - 0.1) / 0.6, 0, 1)) * 0.45 : 0;
+      const look = base.clone().lerp(P.mustFly.position.clone().add(up(-0.55)), follow);
+      const c = setCam(ctx, { pos: f.clone().addScaledVector(fw, lerp(4.2, 3.8, z)).add(V(0, -0.6, 0)).addScaledVector(V(fw.z, 0, -fw.x), 0.5), look, fov: 44 }, 1.6);
       moonFrame(ctx, c, MO.base, MR);
       pop(ctx, tf, 0.1, '#ffffff', 0.35); shakeOn(ctx, [tf], 0.4, 0.25, 9);
-      stamp(ctx, 'POP!', tf, { y: 0.08, x: 0.7, size: 110, fill: '#ffe14a', stroke: '#1d1d22', rot: 0.1 });
+      stamp(ctx, 'POP!', tf, { y: 0.1, x: 0.25, size: 110, fill: '#ffe14a', stroke: '#1d1d22', rot: -0.1 });
     },
   },
   // ── b08 "Grandma Rose can't shout, so she brings a kazoo."
@@ -566,7 +573,7 @@ export const shots = [
       const raise = t > tb;
       if (raise) { kazooPose(r, t); r.face('smug', 0.3); } else { r.pose('idle', t, { headYaw: 0.5 * Math.sin(t * 2.2) }); r.face('neutral', t); }
       ctx.props.kazoo.visible = raise;
-      const c = moveCam(ctx, { pos: L(-14, 1.0, -1.7), look: L(-14, 1.35, -7), fov: 42 }, { pos: L(-14, 1.0, -2.4), look: L(-14, 1.35, -7), fov: 42 }, lt / 2, 1.6);
+      const c = moveCam(ctx, { pos: L(-14, 1.0, -1.7), look: L(-14, 0.85, -7), fov: 42 }, { pos: L(-14, 1.0, -2.4), look: L(-14, 0.85, -7), fov: 42 }, lt / 2, 1.6);
       moonFrame(ctx, c, MO.base, MR);
     },
   },
@@ -594,7 +601,7 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx);
       const r = put(ctx, 'rose', L(-14, 0.12, -7.0), 0);
-      ctx.store.cr = crowd(ctx, [X[11], X[12]], [[-15.15, 0.12, -7.25, 0.35], [-12.85, 0.12, -7.25, -0.35]]);
+      ctx.store.cr = crowd(ctx, [X[11], X[12]], [[-14.9, 0.12, -7.3, 0.55], [-13.1, 0.12, -7.3, 0.15]]);
       const P = ctx.props; ctx.add(P.kazoo, r.joints.head); P.kazoo.position.set(0, 0.13, 0.28); P.kazoo.rotation.set(0.15, 0, 0);
       ctx.add(P.notes, P.kazoo); P.notes.position.set(0, 0, 0.3);
     },
@@ -603,7 +610,7 @@ export const shots = [
       kazooPose(r, t); r.face('smug', 0.3);
       ctx.store.cr.forEach((c, i) => { earsPose(c.ch, t + c.ph); c.ch.face(i ? 'squint' : 'sweat', 0.4); });
       ctx.props.notes.userData.set(t, 1, [0.9, 0.7, 0.6], 0.22, 1.4);
-      const c = moveCam(ctx, { pos: L(-12.6, 1.15, -2.4), look: L(-14.1, 1.3, -7.1), fov: 44 }, { pos: L(-12.9, 1.1, -2.9), look: L(-14.1, 1.3, -7.1), fov: 44 }, lt / 1.6, 1.6);
+      const c = moveCam(ctx, { pos: L(-11.4, 0.7, -1.5), look: L(-14, 0.62, -7.1), fov: 52 }, { pos: L(-11.7, 0.7, -2.0), look: L(-14, 0.62, -7.1), fov: 52 }, lt / 1.6, 1.6);
       moonFrame(ctx, c, MO.base, MR, { dust: false });
       ctx.cam.shake(0.08, t, 12);
       tag(ctx, 'WORSE', ctx.time('b08.w10'), Infinity, { y: 0.14, size: 92, bg: 'rgba(200,0,40,0.92)', rot: 0.06 });

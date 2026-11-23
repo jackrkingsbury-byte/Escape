@@ -402,7 +402,10 @@ export const shots = [
     name: 'barnes leash', start: 'b04-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'day'); bowlStreet(ctx);
-      barnesRig(ctx, { pose: 'crossArms' });
+      const bn = barnesRig(ctx, { pose: 'crossArms' });
+      // the dog sits a little closer to his shoes here, so the shoe-level macro can frame both (scale cue)
+      bn.dp = { x: BN.x + bn.f.x * 0.75 - bn.s.x * 0.12, z: BN.z + bn.f.z * 0.75 - bn.s.z * 0.12 };
+      ctx.props.dog.position.set(bn.dp.x, 0, bn.dp.z);
       ctx.store.walk = crowd(ctx, [X[7], X[8]], [[20, 6.3, -PI / 2], [4, -6.3, PI / 2]]);
     },
     update(ctx) {
@@ -418,9 +421,14 @@ export const shots = [
       const dw2 = { x: dp.x + f.x * 0.3 - s.x * 0.06, z: dp.z + f.z * 0.3 - s.z * 0.06 };
       const macroA = { pos: L(dw2.x, 0.11, dw2.z), look: L(dp.x, -0.01, dp.z), fov: 32 };
       const macro = { pos: L(dw.x, 0.075, dw.z), look: L(dp.x, -0.01, dp.z), fov: 30 };
-      const tn = ctx.time('b04.w8');
+      // shoe level: his towering brown shoes + the leash, the dog a speck in front of them; then ease into the macro (w10–w12)
+      const shoe = { x: BN.x + f.x * 0.2, z: BN.z + f.z * 0.2 };
+      const low = { pos: L(dp.x + f.x * 0.55 - s.x * 0.04, 0.13, dp.z + f.z * 0.55 - s.z * 0.04), look: L(shoe.x - s.x * 0.1, 0.12, shoe.z - s.z * 0.1), fov: 56 };
+      const low2 = { pos: L(dp.x + f.x * 0.48 - s.x * 0.04, 0.125, dp.z + f.z * 0.48 - s.z * 0.04), look: L(shoe.x - s.x * 0.1, 0.11, shoe.z - s.z * 0.1), fov: 54 };
+      const tn = ctx.time('b04.w8'), t10 = ctx.time('b04.w10'), t12 = ctx.time('b04.w12');
       if (t < tn) moveCam(ctx, med, med2, (t - 9.5) / 3);
-      else moveCam(ctx, macroA, macro, ease.outCubic(clamp((t - tn) / 0.7, 0, 1)));
+      else if (t < t10) moveCam(ctx, low, low2, (t - tn) / (t10 - tn));
+      else { const u = ease.inOutCubic(clamp((t - t10) / (t12 - t10), 0, 1)); moveCam(ctx, low2, macroA, u); if (u >= 1) moveCam(ctx, macroA, macro, ease.outCubic(clamp((t - t12) / 0.4, 0, 1))); }
       tag(ctx, 'ACTUAL SIZE', ctx.time('b04.w10'), Infinity, { y: 0.12, size: 80, bg: 'rgba(200,0,40,0.9)' });
       if (t > ctx.time('b04.w10')) ctx.fx.text('↓', { x: 0.5, y: 0.2, size: 110, fill: '#ffffff', stroke: '#000000', line: 10 });
     },
@@ -478,16 +486,18 @@ export const shots = [
       const inv = L.M.clone().invert(); hm.applyMatrix4(inv);
       P.hamS.position.copy(hm); P.hamS.rotation.set(0, 0.3 * hug, 0); P.hamS.userData.set(t, { cheeks: 0.6 + 0.5 * hug, wiggle: 1 });
       const fc = humanFace(m).applyMatrix4(inv);
-      P.hearts.forEach((h, k) => {
-        const d = t - (tl + 0.08 + k * 0.09);
+      const k = ease.inOutSine(clamp(lt / 3.6, 0, 1)), cz = W.z + lerp(5.0, 3.0, k), cx = W.x + 0.5;
+      const hz = W.z + 0.3, rr = (cz - hz) / (cz - fc.z);   // hearts just outside the glass, placed so they read beside his head
+      P.hearts.forEach((h, n) => {
+        const d = t - (tl + 0.08 + n * 0.09);
         if (d < 0) { h.position.set(0, -50, 0); return; }
         // two columns beside his head (never over the eyes), drifting up inside the tight window frame
-        const side = k % 2 ? 1 : -1, j = Math.floor(k / 2), rise = Math.min(0.3, 0.45 * d);
-        h.position.set(fc.x + side * (0.48 + 0.05 * j), fc.y - 0.3 + 0.17 * j + rise + 0.04 * Math.sin(t * 4 + k), W.z + 0.3);   // just outside the glass, in front of the curtains h.scale.setScalar(0.17 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
+        const side = n % 2 ? 1 : -1, j = Math.floor(n / 2), rise = Math.min(0.3, 0.45 * d);
+        const tx = fc.x + side * (0.44 + 0.04 * j), ty = fc.y - 0.35 + 0.17 * j + rise + 0.04 * Math.sin(t * 4 + n);
+        h.position.set(cx + (tx - cx) * rr, 1.5 + (ty - 1.5) * rr, hz); h.scale.setScalar(rr * 0.17 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + n)));
       });
-      const k = ease.inOutSine(clamp(lt / 3.6, 0, 1));
       // push in until the window fills the frame; face in the upper third (y≈0.3), hamster + hearts below/around it
-      ctx.cam.set({ pos: L(W.x + 0.5, 1.5, W.z + lerp(5.0, 3.0, k)), look: fc.clone().applyMatrix4(L.M).add(up(-0.5)), fov: 32 });
+      ctx.cam.set({ pos: L(cx, 1.5, cz), look: fc.clone().applyMatrix4(L.M).add(up(-0.5)), fov: 32 });
       // flashback treatment
       ctx.fx.overlay('#d89a4a', 0.2); ctx.fx.vignette(0.75);
       ctx.fx.draw((g, Wd, Hd) => { g.save(); const mm = Wd * 0.04; g.fillStyle = 'rgba(40,22,8,0.9)'; g.beginPath(); g.rect(0, 0, Wd, Hd); g.roundRect(mm, mm * 1.6, Wd - 2 * mm, Hd - 3.2 * mm, Wd * 0.06); g.fill('evenodd'); g.restore(); });
@@ -1022,7 +1032,7 @@ export const shots = [
         { pos: L(-26.2, 2.4, 4.6), look: f.clone().add(up(-0.5)), fov: 40 },
         { pos: L(-29, 1.5, 0.0), look: L(-45, 7, -10), fov: 58 },
         { pos: L(-27.9, 4.2, 3.4), look: f.clone().add(up(-0.38)), fov: 34 },
-        { pos: L(-18, 15, 14), look: L(-36, 2, -2), fov: 50 },
+        { pos: L(-15, 19, 17), look: L(-34, -2, -1), fov: 56 },
         { pos: L(-25.2, 1.0, 7.6), look: L(-33, 5.0, 1.0), fov: 58 },
         { pos: L(-21, 3.5, 5.2), look: L(-36, 1.6, -1), fov: 62 },
       ];

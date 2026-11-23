@@ -86,16 +86,19 @@ export function makeMoonEye() {
   // a few raised crater bowls (darker spheres sunk into the surface)
   const cm = moonMat('#b8bedc');
   const craterGeo = new THREE.SphereGeometry(1, 20, 14);
+  const craters = [];
   for (const [yw, pt, r] of [[0.55, 0.45, 0.16], [-0.62, 0.2, 0.12], [0.25, -0.55, 0.2], [-0.35, -0.42, 0.1], [0.9, -0.15, 0.13], [-0.95, 0.55, 0.15], [0.1, 0.78, 0.11]]) {
     const m = new THREE.Mesh(craterGeo, cm);
     const d = V(Math.sin(yw) * Math.cos(pt), Math.sin(pt), Math.cos(yw) * Math.cos(pt));
     m.position.copy(d.multiplyScalar(0.985)); m.scale.set(r, r, r * 0.25); m.lookAt(0, 0, 0); ball.add(m);
+    craters.push({ m, inIris: Math.acos(clamp(Math.cos(yw) * Math.cos(pt), -1, 1)) < 0.62 + r });
   }
   // iris + pupil (fade in)
-  const irisM = new THREE.MeshBasicMaterial({ map: irisTex(), transparent: true, opacity: 0, fog: false, depthWrite: false, toneMapped: false });
-  const iris = new THREE.Mesh(capGeo(1.006, 0.62), irisM); iris.renderOrder = 6; ball.add(iris);
-  const pupM = basic('#06040e', { transparent: true, opacity: 0, fog: false, depthWrite: false });
-  const pupil = new THREE.Mesh(capGeo(1.011, 0.27), pupM); pupil.renderOrder = 7; ball.add(pupil);
+  const OFF = { polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 };
+  const irisM = new THREE.MeshBasicMaterial({ map: irisTex(), transparent: true, opacity: 0, fog: false, depthWrite: false, toneMapped: false, ...OFF });
+  const iris = new THREE.Mesh(capGeo(1.012, 0.62), irisM); iris.renderOrder = 6; ball.add(iris);
+  const pupM = basic('#06040e', { transparent: true, opacity: 0, fog: false, depthWrite: false, ...OFF, polygonOffsetFactor: -8, polygonOffsetUnits: -8 });
+  const pupil = new THREE.Mesh(capGeo(1.02, 0.27), pupM); pupil.renderOrder = 7; ball.add(pupil);
   const hlM = basic('#ffffff', { transparent: true, opacity: 0, fog: false, depthWrite: false, toneMapped: false });
   const hl = new THREE.Mesh(new THREE.CircleGeometry(0.07, 20), hlM); hl.renderOrder = 8; g.add(hl);
   const hl2 = new THREE.Mesh(new THREE.CircleGeometry(0.035, 16), hlM); hl2.renderOrder = 8; g.add(hl2);
@@ -129,6 +132,8 @@ export function makeMoonEye() {
     },
     set({ pupil: pu = 0, lid: ld = 0, glow = 1.25, dilate = 1, halo: ha = 0.55, rimGlow = 1 } = {}) {
       irisM.opacity = clamp(pu, 0, 1); pupM.opacity = clamp(pu * 1.1, 0, 1);
+      iris.visible = pu > 0.001; pupil.visible = pu > 0.001;
+      for (const c of craters) c.m.visible = !(c.inIris && pu > 0.001);
       pupil.scale.set(dilate, dilate, 1);
       hlM.opacity = clamp(pu, 0, 1) * 0.9;
       // highlight follows the ball a little (sits in the iris)
@@ -219,7 +224,7 @@ export function makeNoMusicSign() {
     c.fillStyle = '#1d1d22';
     const s = fitFont(c, 'NO LOUD MUSIC', FONT_D, w * 0.84, 104); c.font = FONT_D(s); c.fillText('NO LOUD MUSIC', cx, h * 0.78);
   });
-  const pole = cyl(0.06, 0.06, 2.6, '#7a7f88', 10); pole.position.y = 1.3; g.add(pole);
+  const pole = cyl(0.06, 0.06, 2.6, '#7a7f88', 10); pole.position.set(0, 1.3, -0.1); g.add(pole);   // behind the board
   const board = box(1.56, 1.06, 0.06, '#e8e2d4', 0, 2.25, 0); g.add(board);
   const face = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.0), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.7, emissive: '#ffffff', emissiveMap: tex, emissiveIntensity: 0.25 }));
   face.position.set(0, 2.25, 0.035); g.add(face);
