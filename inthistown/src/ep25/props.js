@@ -337,7 +337,7 @@ export function makeStego(color = '#e85a4a', { plate = '#ffd23f', saddle = '#2f4
   return root;
 }
 
-export function makeLongneck(color = '#7bc96f') {
+export function makeLongneck(color = '#f0b44a') {
   const root = new THREE.Group(); root.name = 'longneck';
   const skin = std(color, { roughness: 0.65 }), dark = std(shade(color, 0.72)), bel = std(shade(color, 1.25));
   const pivot = grp(root, 1.45, 0, 0);          // tip-over hinge line (outer +X foot edge)

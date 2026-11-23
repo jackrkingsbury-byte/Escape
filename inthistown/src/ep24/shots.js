@@ -1291,7 +1291,7 @@ export const shots = [
       else if (i === 2) cam = { pos: L(45.6, 1.35, 7.6), look: L(47.9, 1.9, -0.4), fov: 54 };
       else if (i === 3) cam = { pos: L(49.4, 3.3, 0.0), look: L(43.5, 1.6, -0.2), fov: 52 };
       else if (i === 4) cam = { pos: L(sp.x - dir.x * 1.3, 6.4, sp.z - dir.z * 1.3), look: L(sp.x + dir.x * 0.5, 1.6, sp.z + dir.z * 0.5), fov: 50 };   // top-down, head at the top
-      else cam = { pos: L(43.8, 3.9, 6.6), look: L(47.7, 0.1, 0), fov: 58 };                                                  // the H-U-S-S row
+      else { cam = { pos: L(35.4, 6.9, 0.0), look: L(47.7, -1.4, 0), fov: 54 }; me.root.visible = false; }   // the H-U-S-S row head-on over the crowd                                                  // the H-U-S-S row
       setCam(ctx, cam, 0.8);
       if (i === 3) { const cr = ctx.store.cr; [0, 1, 2].forEach((ci, k) => bubble(ctx, P.bub.huss[k], headTop(cr[ci].ch).add(up(0.15)), hits[3] - 0.04 + k * 0.05, { k: 0.4 })); }
       ctx.cam.punch(hits, t, 0.12, 0.2); shakeOn(ctx, hits.slice(0, 4), 0.45, 0.28, 50 + i);
