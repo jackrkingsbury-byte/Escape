@@ -912,7 +912,7 @@ export const shots = [
       const a = handPos(me, 'L'), b = handPos(me, 'R'), m = a.clone().lerp(b, 0.5);
       ctx.add(P.sandwich); P.sandwich.position.copy(m).add(up(0.05)); P.sandwich.rotation.set(0, me.root.rotation.y, 0); P.sandwich.scale.setScalar(0.7);
       P.sandwich.userData.setBite(t > ta ? 1 : 0);
-      moveCam(ctx, { pos: S(1.3, 0.7, 5.2), look: S(0, 1.15, 3.2), fov: 54 }, { pos: S(1.15, 0.7, 5.0), look: S(0, 1.2, 3.2), fov: 52 }, clamp(lt / 2.6, 0, 1));
+      moveCam(ctx, { pos: S(1.6, 1.0, 5.3), look: S(0, 1.35, 3.2), fov: 56 }, { pos: S(1.45, 1.0, 5.1), look: S(0, 1.4, 3.2), fov: 54 }, clamp(lt / 2.6, 0, 1));
       if (t > ta) tag(ctx, 'CHOMP', ta, Infinity, { y: 0.16, size: 80, bg: 'rgba(200,120,0,0.9)' });
     },
   },
@@ -952,7 +952,7 @@ export const shots = [
       d.pose('idle', t, { intensity: 0.3 }); d.face('grin', 1.0);
       hugArms(d);
       const cc = clusterCenter(d);
-      const c = moveCam(ctx, { pos: L(-21.9, 1.0, 4.2), look: L(-21, 2.4, 8.2), fov: 56 }, { pos: L(-21.8, 0.6, 4.6), look: L(-21, 3.0, 8.2), fov: 60 }, ease.inOutSine(clamp(lt / 3.6, 0, 1)));
+      const c = moveCam(ctx, { pos: L(-21.9, 1.0, 4.2), look: humanFace(d).add(up(0.7)), fov: 56 }, { pos: L(-21.8, 0.7, 4.5), look: humanFace(d).add(up(0.9)), fov: 60 }, ease.inOutSine(clamp(lt / 3.6, 0, 1)));
       bigCluster(ctx, cc, 1.25, c.pos, t);
       P.goldLight.position.copy(cc); P.goldLight.intensity = 9; P.flare.position.copy(cc); P.flare.scale.setScalar(4.5);
       fill(ctx, c.pos, 0.6);

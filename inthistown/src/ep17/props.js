@@ -787,7 +787,12 @@ function doorGeos() {
   _doorGeo = { frame, leaf: leafKnob };
   return _doorGeo;
 }
-const keyTex = () => cachedTex('keyhole', 256, 512, (g, w, h) => { g.clearRect(0, 0, w, h); g.fillStyle = '#ffffff'; g.beginPath(); g.arc(w / 2, h * 0.32, w * 0.3, 0, PI * 2); g.fill(); g.beginPath(); g.moveTo(w * 0.36, h * 0.38); g.lineTo(w * 0.64, h * 0.38); g.lineTo(w * 0.76, h * 0.94); g.lineTo(w * 0.24, h * 0.94); g.closePath(); g.fill(); });
+const keyTex = () => cachedTex('keyhole', 256, 512, (g, w, h) => {
+  g.clearRect(0, 0, w, h);
+  const shape = (k) => { g.beginPath(); g.arc(w / 2, h * 0.32, w * 0.3 * k, 0, PI * 2); g.fill(); g.beginPath(); g.moveTo(w * (0.5 - 0.14 * k), h * 0.38); g.lineTo(w * (0.5 + 0.14 * k), h * 0.38); g.lineTo(w * (0.5 + 0.26 * k), h * (0.94 + 0.02 * (k - 1))); g.lineTo(w * (0.5 - 0.26 * k), h * (0.94 + 0.02 * (k - 1))); g.closePath(); g.fill(); };
+  g.fillStyle = '#000000'; shape(1.45);   // dark iron rim so the glowing keyhole reads against the brass plate
+  g.fillStyle = '#ffffff'; shape(1.0);
+});
 const DOOR_COLS = ['#7a4a2a', '#8a5532', '#6b3d22', '#9a6038', '#5e3a24', '#3f7a7a', '#7a3f5a', '#4a5d8a', '#8a7a3a', '#a0522d'];
 function portalMaterial() {
   return new THREE.ShaderMaterial({
@@ -812,7 +817,7 @@ export function makeDoor({ color = '#7a4a2a', seed = 1, keyY = 0.92, base = true
   const leaf = new THREE.Mesh(G.leaf, leafM); leaf.castShadow = true; pivot.add(leaf);
   const keyM = new THREE.MeshBasicMaterial({ map: keyTex(), color: '#ffcf6a', transparent: true, toneMapped: false, depthWrite: false });
   const kh = [];
-  for (const s of [-1, 1]) { const k = new THREE.Mesh(new THREE.PlaneGeometry(0.075, 0.15), keyM); k.position.set(1.04, keyY, s * 0.047); if (s < 0) k.rotation.y = PI; pivot.add(k); kh.push(k); }
+  for (const s of [-1, 1]) { const k = new THREE.Mesh(new THREE.PlaneGeometry(0.075, 0.15), keyM); k.position.set(1.04, keyY, s * 0.056); if (s < 0) k.rotation.y = PI; pivot.add(k); kh.push(k); }
   const plateM = brassM();
   for (const s of [-1, 1]) { const p = box(0.12, 0.26, 0.012, plateM, 1.04, keyY + 0.04, s * 0.042); pivot.add(p); }
   const keyGlow = glowSprite('#ffc94a', 0.5, 0.6); keyGlow.position.set(1.04, keyY, 0.1); pivot.add(keyGlow);
@@ -844,7 +849,7 @@ function makeDoorField(list) {
   const G = doorGeos(), n = list.length;
   const frames = new THREE.InstancedMesh(G.frame, std('#4a2c18', { roughness: 0.7 }), n);
   const leaves = new THREE.InstancedMesh(G.leaf, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.65 }), n);
-  const keyGeo = new THREE.PlaneGeometry(0.075, 0.15); keyGeo.translate(1.04, 0.92, 0.047);
+  const keyGeo = new THREE.PlaneGeometry(0.075, 0.15); keyGeo.translate(1.04, 0.92, 0.056);
   const keys = new THREE.InstancedMesh(keyGeo, new THREE.MeshBasicMaterial({ map: keyTex(), color: '#ffcf6a', transparent: true, toneMapped: false, depthWrite: false }), n);
   const c = new THREE.Color();
   list.forEach((d, i) => leaves.setColorAt(i, c.set(d.color)));
@@ -992,7 +997,7 @@ export function buildFloorThree() {
     list.push({ x, y, z, yaw: hash(i * 5.5) * PI * 2, open: 0.05 + 0.5 * hash(i * 6.6), color: DOOR_COLS[i % DOOR_COLS.length], s: 0.9 + 0.5 * hash(i * 7.7), ph: hash(i * 8.8) * 6, row: false });
   }
   // vanish order: rows by distance along the path, scattered ones later
-  list.forEach((d, i) => { d.tv = d.row ? Math.max(0, (d.z - 2) * 0.012) + 0.02 * hash(i) : 0.35 + 0.9 * hash(i * 9.9); });
+  list.forEach((d, i) => { d.tv = d.row ? Math.max(0, (d.z - 20) * 0.05) + 0.02 * hash(i) : 0.35 + 0.9 * hash(i * 9.9); });
   const field = makeDoorField(list); root.add(field);
   // pastel floaters
   const pastel = ['#ffb3d9', '#b3f0ff', '#d4b3ff', '#ffd9a8', '#b8ffcc'].map((c) => new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.75, roughness: 0.4 }));

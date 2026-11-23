@@ -1,0 +1,490 @@
+{
+ "title": "In This Town — Biscuit",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "A T-rex the size of a skyscraper has lived on our street for twelve years, and the town looks after him because his arms are too short. When his hiccups start bouncing the whole town into the air, I'm the one who climbs the clock tower to scare them out of him.",
+ "twist": "Biscuit screams at the mirror because he has never seen himself before. For twelve years he thought he was a golden retriever, which explains the dog name, the tail-wagging at 'walk', fetching the bus and the leg-thumping back scratches. The town dresses up as dinosaurs so he won't feel weird, but Grandma (who suggested scaring him in the first place) has a costume so good that he's now terrified of Grandma.",
+ "caption_hook": "nobody had the heart to tell him he was a dinosaur",
+ "vibe": "giants",
+ "sets": [
+  "town main street (day) with houses, street lamps and a water tower",
+  "town square with stage, mic and big banner (day)",
+  "clock tower exterior and top platform (day)",
+  "park beside the clock tower where Biscuit sits",
+  "mountain/hill behind town (dusk) for hiding",
+  "foot of the mountain the next day (day)"
+ ],
+ "newProps": [
+  "Biscuit the T-rex: skyscraper-tall, green, made of boxes. Big box head with a hinged jaw, huge white googly eyes, pink box tongue, tiny useless arms, thick legs, long tail that can wag",
+  "giant street-sweeper toothbrush (long pole with a wide bristle box)",
+  "red fire truck (boxes, cylinder wheels) with an extending ladder",
+  "water tower (tall cylinder tank on four legs) that tips over, with blue cube splash",
+  "yellow school bus (box with window strips) that Biscuit carries in his jaws",
+  "blue drool drips (small translucent blue spheres)",
+  "bird's nest on a lamp post holding Grandpa's false teeth",
+  "bakery house stacked on top of the library roof",
+  "marching band tubas (gold cylinders with cone bells)",
+  "tall silver barbershop mirror with frame (reflective plane, or a fake reflection from a mirrored copy of Biscuit's head behind it)",
+  "roar shockwave ring and white box clouds that slide off-screen",
+  "big hill/mountain behind the town",
+  "green dinosaur costume hoods with cone spikes for the townspeople",
+  "Grandma's huge dinosaur costume with glowing red eyes and a clacking jaw",
+  "'DINOSAUR PARK' arrow sign at the edge of town"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, a T-rex the size of a skyscraper lives at the end of my street.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:T",
+     "gain": 0.6
+    },
+    {
+     "type": "thump",
+     "at": "w:skyscraper",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:street",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "IN THIS TOWN",
+   "visual": "Day lighting. Low camera on main street: the kid narrator (tan skin, spiky brown hair, red cap, blue hoodie) waves in front of his house. The camera tilts up past the rooftops and keeps going to a giant blocky green T-rex towering over the houses, ten times taller than the street lamps, blinking huge googly eyes."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "His name is Biscuit. Twelve years ago, he walked out of the dinosaur park, sat down, and never left.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:sat",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:never",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "BISCUIT: 300 FT. AGE: UNKNOWN",
+   "visual": "Wide shot from the park: Biscuit plods in past a 'DINOSAUR PARK' arrow sign at the edge of town and plops down behind the clock tower. Every house hops up off the ground, the camera shakes, and townspeople peek out of their windows."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "party",
+   "visual": "Kid in the middle of the street, huss face, slam pose. Biscuit's giant head leans down curiously behind him. Quick punch-in on each HUSS."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "His arms are way too short, so the whole town takes care of him.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:short",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Close-up of Biscuit's tiny arms wiggling uselessly at his chest, trying to reach an itch. Cut to the crowd below looking up (think pose), holding brooms and ladders."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mr. Okafor brushes his teeth with a street sweeper. Firefighters scratch his back with a ladder.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:sweeper",
+     "gain": 0.5
+    },
+    {
+     "type": "thump",
+     "at": "w:scratch",
+     "gain": 0.6
+    },
+    {
+     "type": "thump",
+     "at": "we:ladder",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Biscuit's jaw opens wide like a garage door. Mr. Okafor (dark skin, mustache, overalls) stands on the pink tongue scrubbing a tooth with a giant brush. Cut to a red fire truck with its ladder raised, scratching Biscuit's back while his huge leg thumps the ground like a happy dog.",
+   "markers": {
+    "fire": "w:Firefighters"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every time somebody says walk, his tail wags so hard it knocks over the water tower.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:wags",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:water",
+     "gain": 0.75
+    }
+   ],
+   "overlay": "NEVER SAY W-A-L-K",
+   "visual": "A townsperson in the park points and mouths 'walk'. Biscuit's tail whips across the skyline and knocks over the water tower, which tips over with a splash of blue cubes. Everyone ducks (surprised pose).",
+   "markers": {
+    "tower": "w:water"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And every morning, he fetches the school bus. Full of kids. Covered in drool.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:bus",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:drool",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "ATTENDANCE: 100% SOGGY",
+   "visual": "Biscuit trots into the town square with the yellow school bus in his mouth and sets it down gently. The door opens and dripping kids stumble out (sweat faces, shrug poses) as blue drool drips from the roof.",
+   "markers": {
+    "kids": "w:Full",
+    "drool": "w:Covered"
+   }
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then yesterday, he got the hiccups.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:hiccups",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Close-up of Biscuit's face. His eyes go suddenly wide and the frame freezes."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every hiccup bounced the whole town ten feet into the air.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:bounced",
+     "gain": 0.75
+    },
+    {
+     "type": "thump",
+     "at": "w:ten",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:air",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "HIC!",
+   "visual": "Wide shot of the street: Biscuit jolts, and every house, lamp post and townsperson pops ten feet into the air and slams back down. Heavy camera shake, then it happens again."
+  },
+  {
+   "id": "b10",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid hangs mid-air above the street, arms flailing (surprised pose, huss face), with houses floating behind him. Another bounce on each HUSS."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandpa's teeth landed in a bird's nest. The bakery landed on the library.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:nest",
+     "gain": 0.6
+    },
+    {
+     "type": "ding",
+     "at": "w:library",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Grandpa (white beard, glasses) in shock with no teeth. Pan up to the pigeon sitting proudly on his false teeth in a nest on a lamp post. Cut to the bakery house stacked on the library roof, with the baker on top shrugging.",
+   "markers": {
+    "bakery": "w:bakery"
+   }
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The only cure for hiccups? Scare it.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Scare",
+     "gain": 0.5
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "You gotta scare it.",
+    "by": "Grandma"
+   },
+   "visual": "Town square. Grandma (grey bun, glasses, purple cardigan) at the stage mic, pointing dramatically up at Biscuit while the crowd nods."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The mayor yelled boo. The band played their loudest note. Ah, almost. Almost. He just yawned.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:boo",
+     "gain": 0.6
+    },
+    {
+     "type": "airhorn",
+     "at": "w:loudest",
+     "gain": 0.45
+    },
+    {
+     "type": "boom",
+     "at": "w:almost",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "SCARE ATTEMPTS: 47 — FAILED",
+   "visual": "The mayor (top hat, sash) cups his hands on the stage and yells. A marching band blasts gold tubas up at Biscuit. Biscuit gives an enormous slow yawn, then hiccups again and everyone bounces.",
+   "markers": {
+    "band": "w:band",
+    "almost": "w:almost",
+    "yawn": "w:yawned"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I dragged the barbershop mirror to the top of the clock tower.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:dragged",
+     "gain": 0.6
+    },
+    {
+     "type": "thump",
+     "at": "w:top",
+     "gain": 0.6
+    }
+   ],
+   "visual": "The kid hauls a tall silver-framed mirror up the outside of the clock tower, sweating (sweat face, determined). At the top he heaves it up right in front of Biscuit's gigantic eye."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He leaned down, looked into it, and screamed so loud the clouds left town.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:screamed",
+     "gain": 0.8
+    },
+    {
+     "type": "whoosh",
+     "at": "w:clouds",
+     "gain": 0.6
+    },
+    {
+     "type": "thunder",
+     "at": "w:left",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Biscuit leans in and his reflection appears in the mirror. His eyes go huge, his jaw drops and he ROARS. A shockwave ring pushes all the clouds off-screen, hats fly off the crowd, and the camera shakes hard.",
+   "markers": {
+    "look": "w:looked",
+    "scream": "w:screamed"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.5
+    }
+   ],
+   "visual": "The kid clutches the mirror on top of the clock tower with a huss face. Biscuit tumbles backwards into the park in slow motion while the crowd below cheers and confetti flies."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The hiccups stopped. But then I realized something.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Quiet. Biscuit sits in the park staring at the mirror propped against the clock tower, tilting his head like a confused dog. The kid looks up at him (think pose)."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He had never seen himself before. For twelve years, he thought he was a golden retriever.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:golden",
+     "gain": 0.55
+    },
+    {
+     "type": "ding",
+     "at": "w:retriever",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "GOOD BOY?",
+   "visual": "Quick warm-tinted flashback montage: Biscuit wagging his tail, tongue out, fetching the bus, leg thumping during the back scratch.",
+   "markers": {
+    "golden": "w:golden"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now he's hiding behind the mountain and won't come out.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "visual": "Dusk lighting. Only Biscuit's two huge sad eyes and the tip of his tail peek over the big hill behind town. Townspeople walk away below (walkSad)."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So today, the whole town dressed up as dinosaurs, so he wouldn't feel weird.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "w:dinosaurs",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Next day. The whole town lines up at the foot of the mountain in green dinosaur hoods with cone spikes and arms tucked in tiny, doing dance poses. Biscuit peeks out and his tail starts to wag."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It totally worked. Except Grandma's costume is so good, now he's scared of Grandma. Top ten respect.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:scared",
+     "gain": 0.7
+    },
+    {
+     "type": "laugh",
+     "at": "w:Grandma",
+     "gain": 0.45
+    },
+    {
+     "type": "dundun",
+     "at": "w:respect",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "GRANDMA: 1  BISCUIT: 0",
+   "visual": "Grandma steps forward in an enormous, terrifyingly realistic dinosaur costume with glowing red eyes and a clacking jaw, and roars. Biscuit yelps, leaps behind the clock tower and covers his face with his tiny arms, trembling.",
+   "markers": {
+    "grandma": "w:Except",
+    "scared": "w:scared",
+    "respect": "w:Top"
+   }
+  },
+  {
+   "id": "b22",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.8,
+   "music": "party",
+   "visual": "Grandma in costume strikes a slam pose, lifts the dino mask to show a huss face and winks at the camera. Biscuit shakes as he peeks out from behind the clock tower."
+  }
+ ]
+}
