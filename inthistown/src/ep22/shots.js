@@ -84,6 +84,7 @@ export function init(ctx) {
   P.dust = makePuff({ color: '#c8b8a0', count: 24, radius: 1, seed: 9 });
   P.sparkles = makeSparkles({ n: 40, w: 30, h: 26, d: 14, color: '#ffd6f0', size: 0.25 });
   P.sun = glowSprite('#ffb060', 60, 0.9); P.sunCore = glowSprite('#fff0c0', 18, 1.0);
+  P.loop = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.028, 8, 24), new THREE.MeshStandardMaterial({ color: '#e8232b', roughness: 0.45 }));
   P.fill = new THREE.PointLight('#fff2e0', 5, 12, 1.4);
   P.zap = new THREE.PointLight('#d8d0ff', 0, 0, 0);
   P.key = new THREE.PointLight('#ffffff', 0, 60, 1.2);
@@ -143,19 +144,19 @@ function storm(ctx, { clouds = true, exposure = 1.25 } = {}) {
   return L;
 }
 /** per-frame storm: rain in front of the camera, lightning (bolts + light) at the given strike times */
-function stormFrame(ctx, cam, strikes = [], { slant = 0.25, rainA = 1, boltAt = null } = {}) {
+function stormFrame(ctx, cam, strikes = [], { slant = 0.25, rainA = 1, boltAt = null, rainDist = 7, popA = 0.45, popDur = 0.12, zapMax = 6 } = {}) {
   const P = ctx.props, t = ctx.t;
   const fwd = cam.look.clone().sub(cam.pos).normalize();
-  P.rain.position.copy(cam.pos).addScaledVector(fwd, 7); P.rain.userData.set(t, rainA, slant);
+  P.rain.position.copy(cam.pos).addScaledVector(fwd, rainDist); P.rain.userData.set(t, rainA, slant);
   let z = 0; for (const s of strikes) { const d = t - s; if (d >= 0 && d < 0.35) z = Math.max(z, (d < 0.06 ? 1 : 0.5 * Math.exp(-(d - 0.06) / 0.08))); }
-  P.zap.intensity = 6 * z;
+  P.zap.intensity = zapMax * z;
   const last = lastBefore(strikes, t);
   for (const [b, k] of [[P.bolt, 0], [P.bolt2, 1]]) {
     const show = last != null && t - last < 0.16 && (strikes.indexOf(last) % 2) === k;
     if (show) { ctx.add(b); const bp = boltAt ? boltAt(strikes.indexOf(last)) : cam.pos.clone().addScaledVector(fwd, 90).add(up(40)); b.position.copy(bp); b.lookAt(cam.pos.x, bp.y, cam.pos.z); b.scale.setScalar(1.4); }
     else ctx.remove(b);
   }
-  if (last != null) pop(ctx, last, 0.12, '#e8e0ff', 0.45);
+  if (last != null && popA > 0) pop(ctx, last, popDur, '#e8e0ff', popA);
 }
 
 // ─── the bowl street
@@ -181,22 +182,22 @@ function barnesRig(ctx, { dogScale = 0.06, pose = 'crossArms', x = BN.x, z = BN.
   ctx.store.bn = { b, f, s, dp, pose };
   return ctx.store.bn;
 }
-function barnesFrame(ctx, t, { face = 'squint', faceT = 0.5, hop = 0, glance = 0, thick = 1 } = {}) {
+function barnesFrame(ctx, t, { face = 'squint', faceT = 0.5, hop = 0, glance = 0, thick = 1, hand: hj = 'handR', end = null } = {}) {
   const P = ctx.props, { b, pose } = ctx.store.bn;
   if (pose === 'heart') heartPose(b, t); else b.pose(pose, t, { headYaw: glance });
   b.face(face, faceT);
   P.dog.userData.set(t, { wag: 1, hop });
   b.root.updateMatrixWorld(true);
-  const hand = b.joints.handR.getWorldPosition(V());
+  const hand = b.joints[hj].getWorldPosition(V());
   const inv = ctx.store.L.M.clone().invert();
-  P.leash.userData.set(hand.applyMatrix4(inv), P.dog.userData.collarWorld().applyMatrix4(inv), 0.12, thick);
+  P.leash.userData.set(hand.applyMatrix4(inv), end ? end.clone() : P.dog.userData.collarWorld().applyMatrix4(inv), 0.12, thick);
 }
 /** right hand on the heart (left chest), a little sob */
 function heartPose(ch, t) {
   ch.pose('idle', t, { intensity: 0.4 });
   const J = ch.joints, sob = 0.04 * Math.sin(t * 14) * (Math.sin(t * 2.2) > 0 ? 1 : 0.3);
-  J.armR.rotation.set(-0.9, 0.5, -0.55); J.foreArmR.rotation.set(-1.7, 0, 0);
-  J.armL.rotation.set(-0.2, 0, 0.15); J.foreArmL.rotation.set(-0.3, 0, 0);
+  J.armR.rotation.set(-0.5, 0, 0.95); J.foreArmR.rotation.set(-1.9, 0, 0);
+  J.armL.rotation.set(-0.25, 0, 0.12); J.foreArmL.rotation.set(-0.35, 0, 0);
   J.torso.rotation.x += 0.05 + sob; J.head.rotation.x += 0.12 + sob * 2;
 }
 /** cat clinging to the clock hand: body vertical, front paws up on the hand tip, face toward +x (the street) */

@@ -585,11 +585,13 @@ export const shots = [
       const x = lerp(-34, 9, lt / 1.15);
       b.root.position.copy(L(x, 2.0 + 0.25 * Math.sin(t * 9), 0.4));
       b.pose('crowdSurf', t, { intensity: 1 }); b.face('shocked', t);
+      // crowdSurf lies face-up; pitch the body so he flies head-first, leaning forward, face toward the travel direction (+x)
+      b.root.rotation.order = 'YXZ'; b.root.rotation.set(2.07 + 0.06 * Math.sin(t * 7), L.yaw + PI / 2, 0.08 * Math.sin(t * 5));
       b.joints.armR.rotation.set(-3.0, 0, -0.1); b.joints.foreArmR.rotation.set(-0.1, 0, 0);
       const pull = L(x + 14, SEA_Y + 0.3, 0.6);
       const h = handW(b); holdAlong(P.rod, b, pull.clone().sub(h).normalize()); P.rod.userData.set(0.5);
       const tip = P.rod.userData.tip.getWorldPosition(V()); P.line.visible = true; stretchLine(P.line, tip, pull);
-      setCam(ctx, { pos: L(x - 1.2, 1.7, 4.4), look: L(x + 0.5, 2.5, 0.4), fov: 52 });
+      setCam(ctx, { pos: L(x + 3.4, 1.3, 4.0), look: L(x + 0.6, 1.5, 0.4), fov: 58 });   // ahead of him: he flies head-first at the lens, face 3/4
       ctx.fx.draw((g, W, Hh) => { g.strokeStyle = 'rgba(255,255,255,0.5)'; g.lineWidth = 6; for (let i = 0; i < 14; i++) { const y = Hh * (0.1 + 0.8 * hash(i * 3.1 + Math.floor(t * 20))); const x0 = W * hash(i * 1.7 + Math.floor(t * 20) * 0.3); g.beginPath(); g.moveTo(x0, y); g.lineTo(x0 - 200, y); g.stroke(); } });
     },
   },
@@ -838,19 +840,19 @@ export const shots = [
       const reach = clamp((t - ctx.time('b11')) / 1.6, 0, 1);
       // #4 cheats the eye back over the roof so it looms above his head from the porch roof
       const eyeAt = i === 3 ? L(-27, SEA_Y - 0.4, 13.5) : L(-27, SEA_Y - 0.4, 3.0);
-      const unfurl = i === 4 ? ease.outCubic(clamp((t - hits[4] + 0.05) / 0.3, 0, 1)) : 0;
+      const unfurl = i === 4 ? ease.outCubic(clamp((t - hits[4] + 0.2) / 0.35, 0, 1)) : 0;   // already mid-lash at the cut
       deepAt(ctx, eyeAt, { yaw: PI, s: 15, set: { lid: 0, glow: 1.3, coil: 1 - 0.6 * reach - 0.4 * unfurl, reach: Math.max(reach, unfurl), lookY: i === 3 ? -0.3 : 0.4, sway: 2 } });
       me.pose('surprised', t, { intensity: 1, headPitch: -0.45 }); me.face(dh < 0.22 ? 'huss' : 'shocked', t); me.joints.torso.rotation.x += 0.25;
       const f = humanFace(me);
       if (i === 2) P.lamps.userData.set(t, 1, 0, (j, p) => Math.sin(t * 22 - p.x * 0.28) > -0.1);
-      if (i === 4) { const tip = L(-12, SEA_Y - 1.5, 3).lerp(L(10, SEA_Y - 4.5, -1.5), unfurl); tentOn(ctx, L(-14, SEA_Y + 1.5, 3), tip, t, { wig: 0.8, r0: 1.6, r1: 0.2 }); }
+      if (i === 4) { const tip = L(-3, SEA_Y - 2, 3).lerp(L(9, SEA_Y - 5, -1.5), unfurl); tentOn(ctx, L(-14, SEA_Y + 1.5, 3), tip, t, { wig: 0.8, r0: 1.8, r1: 0.35, emi: 1.0 }); }
       const rp = W(-1.6, W.floor + 0.35, 4.6);   // #4: off to the side so the vertical torch beam passes to his right, not across his face
       const cams = [
         { pos: f.clone().addScaledVector(W.fwd, 3.7).addScaledVector(W.left, -0.7).add(up(0.85)), look: f.clone().add(up(-0.6)), fov: 44 },
         { pos: L(-14, 1.2, -2.0), look: L(-26, 16, 3), fov: 68 },
         { pos: L(-1.5, 1.3, -1.8), look: L(-30, 7.5, -3.5), fov: 60 },
         { pos: rp, look: lookMix(rp, f.clone().add(up(0.1)), eyeAt, 0.3), fov: 58 },
-        { pos: L(-7, 0.7, 3.0), look: L(6, 14, -1.5), fov: 70 },
+        { pos: L(-8, 0.9, 4.5), look: L(1.5, 10.5, 0.5), fov: 74 },   // aim between the arc and the roof line (scale)
         { pos: L(-36, 1.6, -1), look: L(-27, 12, 8), fov: 66 },
       ];
       setCam(ctx, cams[i], 0.9); ctx.cam.punch(hits, t, 0.1, 0.2); shakeOn(ctx, hits, 0.35, 0.25);
@@ -946,12 +948,12 @@ export const shots = [
       else {
         // frame so the impact sits at y≈0.4 and her face at ≈0.2 (just under the BONK! stamp)
         const H = Math.max(0.9, 2 * (f.y - tipAt.y)), dd = H / Math.tan(23 * PI / 180);
-        const mid = f.clone().lerp(tipAt, 0.5), lk = mid.clone(); lk.y = tipAt.y - 0.2 * H;
+        const mid = f.clone().lerp(tipAt, 0.5), lk = mid.clone(); lk.y = tipAt.y + 0.1 * H;
         const cp = mid.clone().addScaledVector(fw, dd * 0.93).addScaledVector(leftOf(yaw), -dd * 0.36); cp.y = f.y + 0.1;
         cam = setCam(ctx, { pos: cp, look: lk, fov: 46 }, 0.8);
       }
       const d = t - tb; P.dings[0].position.copy(pc).add(up(0.3)); P.dings[0].lookAt(cam.pos); P.dings[0].userData.set(d > 0 ? d / 0.5 : 0); P.dings[0].scale.multiplyScalar(0.3); P.dings[0].position.lerp(tipAt, 0.5); P.dings[1].visible = false;
-      if (i === 1) { stamp(ctx, 'BONK!', tb, { y: 0.11, size: 120, fill: '#ffffff', stroke: '#7b3fbf' }); shakeOn(ctx, [tb], 0.4, 0.25); flash(ctx, tb, 0.08, '#ffffff', 0.4); }
+      if (i === 1) { stamp(ctx, 'BONK!', tb, { y: 0.07, size: 110, fill: '#ffffff', stroke: '#7b3fbf' }); shakeOn(ctx, [tb], 0.4, 0.25); flash(ctx, tb, 0.08, '#ffffff', 0.4); }
     },
   })),
   // ── "It didn't even notice."  — the tip doesn't twitch; she backs inside with a sweat face
@@ -1103,18 +1105,18 @@ export const shots = [
     },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, P = ctx.props, me = ctx.cast.me, tt = ctx.markers.throw + 0.05;
-      const d = t - tt, p = throwPos(L, d);
-      tick(ctx, { sea: { flare: 0.5 * clamp((SEA_Y + 1 - p.y) / 3, 0, 1), flarePos: p, flareR: 1.6, glow: 0.42, caus: 0.22, opacity: 0.95, deep: '#051a42', shallow: '#0c3672', light: '#4aa0d8' }, shafts: 0 });
+      const d = t - tt, p = throwPos(L, d, true);
+      tick(ctx, { sea: { flare: 0.6, flarePos: p, flareR: 2.2, glow: 0.7, caus: 0.5, opacity: 0.62, deep: '#0e2a6a', shallow: '#1d64b8', light: '#5aa8e8' }, shafts: 0.3 });
       P.torch.position.copy(p); P.torch.rotation.set(d * 9, d * 5, 0); P.torch.userData.set(1, 3, 0.8);
-      trailOn(ctx, L, d);
+      trailOn(ctx, L, d, 0.5, true);   // camera is close: a smaller star keeps the tentacle readable
       me.root.rotation.y = L.yaw + 1.0; me.pose('idle', t, { intensity: 0.4, headPitch: -0.9 }); me.face('shocked', 0.5); me.joints.armR.rotation.set(-2.6, 0, -0.2);
-      const k = ease.inOutSine(clamp(lt / 2.4, 0, 1));
-      // the tip chases the star and finally slips up into the water after it
-      const tip = throwPos(L, d - 0.45).add(V(2.0, 0, -2.0)); tip.y = clamp(tip.y, DY + 5, lerp(SEA_Y - 1.2, SEA_Y + 1, clamp((lt - 1.4) / 1.0, 0, 1)));
-      tentOn(ctx, L(TX - 16, SEA_Y + 2, TZ - 10), tip, t, { wig: 0.7, r0: 1.6, approach: V(0.7, 0, 0.5).normalize(), emi: 0.45 });
-      // dolly back + tilt after the star so star, tentacle and the sea ceiling all stay in frame
-      const pos = L(TX + 7.0, DY + 1.5, TZ + 5.0).lerp(L(TX + 15, DY + 0.8, TZ + 12), k);
-      setCam(ctx, { pos, look: lookMix(pos, humanFace(me), p, 0.55), fov: lerp(74, 82, k) }, 0);
+      // the tip chases the star across the frame, right into the water after it, then whips back up out of sight (~66.0)
+      const tip = throwPos(L, d - 0.35, true).add(V(0.8, -0.4, -0.6));
+      const ret = ease.inCubic(clamp((t - ctx.markers.close + 0.47) / 0.35, 0, 1)); tip.add(up(14 * ret));
+      tentOn(ctx, L(TX - 14, SEA_Y + 1.5, TZ - 8), tip, t, { wig: 0.7, r0: 1.8, r1: 0.3, approach: V(0.7, 0, 0.5).normalize(), emi: 0.9 });
+      // near-static low 3/4 just off the tower: star, chasing tip and the glowing ceiling all in frame
+      const pos = L(TX + 6, DY + 0.8, TZ + 7.5);
+      setCam(ctx, { pos, look: lookMix(pos, p, tip, 0.5).add(up(-2.6)), fov: 72 }, 0);   // aim under them: star + tip ride the upper third, tower in the bottom
       fill(ctx, humanFace(me).add(V(0, 0.4, 0)).addScaledVector(fwdOf(me.root.rotation.y), 1.2), 1.4);
     },
   },
@@ -1171,7 +1173,7 @@ export const shots = [
         { pos: L(-47, 1.4, 0.5), look: L(-41, 1.5, 2.5), fov: 60 },
         null,
       ];
-      if (i === 2) { c.forEach((m, k) => m.ch.root.position.copy(L(-45.5 + (k % 3) * 1.5, 0.12, 3.2 + Math.floor(k / 3) * 1.2 + (k % 2) * 0.3))); const cp = L(-33, 15.2, 8.5); cams[2] = { pos: cp, look: lookMix(cp, f.clone().add(up(0.3)), L(-44, 1.2, 4.4), 0.45), fov: 70 }; }
+      if (i === 2) cams[2] = { pos: L(TX + 2.6, DY + 2.3, TZ + 6.0), look: L(TX + 0.3, DY + 1.05, TZ + 0.4), fov: 50 };   // 3/4 medium-wide just off the deck
       setCam(ctx, cams[i], 0.8); ctx.cam.punch(hits, t, 0.1, 0.2);
       if (i === 2) { ctx.add(P.key2); P.key2.position.copy(f).add(V(2.5, 1.5, 2.5)); P.key2.intensity = 40; P.key2.distance = 14; }
     },
@@ -1297,14 +1299,15 @@ function pemBonkPose(pb, t, tb) {
   J.armR.rotation.set(x, 0, -0.15); J.foreArmR.rotation.set(-0.25, 0, 0);
   J.torso.rotation.x += d < -0.12 ? -0.1 * raise : 0.18 * hit;
 }
-function trailOn(ctx, L, d, sc = 1) {
+function trailOn(ctx, L, d, sc = 1, slow = false) {
   const P = ctx.props, n = P.trail.length;
-  P.trail.forEach((s, k) => { const dd = d - (k + 1) * 0.05; s.visible = dd > 0; s.position.copy(throwPos(L, dd)); s.material.opacity = 0.95 * (1 - k / n); s.scale.setScalar(3.6 * sc * (1 - 0.6 * k / n)); });
-  P.star.visible = d > 0; P.star.position.copy(throwPos(L, Math.max(0, d))); P.star.material.opacity = 0.95; P.star.scale.setScalar(5 * sc);
+  P.trail.forEach((s, k) => { const dd = d - (k + 1) * 0.05; s.visible = dd > 0; s.position.copy(throwPos(L, dd, slow)); s.material.opacity = 0.95 * (1 - k / n); s.scale.setScalar(3.6 * sc * (1 - 0.6 * k / n)); });
+  P.star.visible = d > 0; P.star.position.copy(throwPos(L, Math.max(0, d), slow)); P.star.material.opacity = 0.95; P.star.scale.setScalar(5 * sc);
 }
-function throwPos(L, d) {
+/** the thrown flashlight's spiral climb; `slow` (b16): starts right at the surface and climbs only ~2 m/s so it stays just inside the water */
+function throwPos(L, d, slow = false) {
   if (d <= 0) return L(TX + 0.4, DY + 2.0, TZ + 0.5);
-  const y = DY + 2.0 + 5 * d + 0.6 * d * d, r = 0.6 + 1.2 * d, a = d * 6;
+  const y = slow ? SEA_Y - 0.6 + 2.0 * (d - 1.2) : DY + 2.0 + 5 * d + 0.6 * d * d, r = 0.6 + 1.2 * d, a = d * 6;
   return L(TX + 0.4 + Math.cos(a) * r + 1.6 * d, y, TZ + 0.5 + Math.sin(a) * r - 0.8 * d);
 }
 function quoteCard(ctx, quote, by, t0, t1, { y = 0.3, size = 84, byAt = null } = {}) {
