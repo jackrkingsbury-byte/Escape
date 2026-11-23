@@ -40,13 +40,14 @@ Rules from the creator:
 | 25 | Nugget | giants / funny | rendering → Thu 26 Nov 12:30 |
 | 26 | Who Bit the Town? | MYSTERY | render queued → Thu 26 Nov 17:30 |
 | 27 | Moving Night | RANDOM | shots building |
+| 28 | Out of Colour | INTERESTING | shots building (hoodie washed → thirsty) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey)
 
 ## Writers' room 3 (episodes/concepts/s3_ranked.json — mystery / funny / random / interesting)
-Next up in rotation: Out of Colour (INTERESTING) · The Cat Did It (FUNNY, top score) · One Shadow Too Many (MYSTERY) ·
+Next up in rotation: The Cat Did It (FUNNY, top score) · One Shadow Too Many (MYSTERY) ·
 Gerald's Forecast (RANDOM) · Ten Seconds Early (INTERESTING) · The Judges (FUNNY)
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)

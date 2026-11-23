@@ -421,7 +421,7 @@ function mokSetup(ctx) {
 function mokTick(ctx, t) {
   const L = ctx.store.L, P = ctx.props, mk = ctx.cast.mokoena, { b, yaw } = ctx.store.bed;
   skyMood(ctx, 'sunrise', 0.45);
-  hset(P.herd[7], t, { rise: 0.1, glow: 0, smoke: 0.5, spread: 0.6 });
+  hset(P.herd[7], t, { rise: 0.16, glow: 0, smoke: 0.5, spread: 1.0 });
   const yw = L.yaw + yaw;
   mk.root.position.copy(L(b.x, 0, b.z)).add(V(Math.sin(yw), 0, Math.cos(yw)).multiplyScalar(-0.55)); mk.root.rotation.set(0, yw, 0);
 }
@@ -435,7 +435,7 @@ export const shots = [
       const L = town(ctx, 'dusk', { glow: 0.55, hide: [HOME], lamps: [0] });
       hs(ctx, ctx.props.home, -27, 14, PI);
       put(ctx, 'me', V(), 0);
-      ctx.store.w = crowd(ctx, [X[0], X[1], X[2]], [[-31, 0.12, 6.2, PI / 2], [-19.5, 0.12, -6.0, -PI / 2], [-22, 0, 1.8, PI / 2 + 0.2]]);
+      ctx.store.w = crowd(ctx, [X[0], X[1], X[2]], [[-34, 0.12, 6.4, PI / 2], [-16.5, 0.12, 6.6, -PI / 2], [-32, 0.12, 7.4, PI / 2]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, h = ctx.props.home, me = ctx.cast.me;
@@ -454,7 +454,7 @@ export const shots = [
       hset(h, t, { rise: r, glow: 0.9, bayLight: 1, porch: 1, smoke: 0.7, stretch: ease.inOutSine(st), roll: 0.03 * Math.sin(t * 13) * (1 - r) });
       inBay(ctx, me, h, 0, 0.05); pressGlass(me, t, r); me.face('shocked', 0.4);
       for (let i = 0; i < 4; i++) dustW(ctx, i, h.userData.foot(i), (t - tl - 0.05) / 1.1, 1.2);
-      moveCam(ctx, { pos: L(-17.5, 0.8, 1.0), look: L(-27, 6.0, 13), fov: 60 }, { pos: L(-17.0, 0.7, 0.0), look: L(-27, 7.2, 13), fov: 62 }, ease.inOutSine(clamp(lt / 1.4, 0, 1)), 1.2, '#ffd8b0', 24);
+      moveCam(ctx, { pos: L(-33.0, 0.9, 1.6), look: L(-27, 6.0, 13), fov: 62 }, { pos: L(-33.6, 0.8, 0.6), look: L(-27, 7.0, 13), fov: 64 }, ease.inOutSine(clamp(lt / 1.4, 0, 1)), 1.2, '#ffd8b0', 24);
       shakeOn(ctx, [tl + 0.05], 0.5, 0.6, 3);
     },
   },
@@ -484,10 +484,10 @@ export const shots = [
       const L = ctx.store.L, t = ctx.t, h = ctx.props.home, P = ctx.props;
       skyMood(ctx, 'cold', 0.9);
       const fk = clamp(lt / 1.6, 0, 1);
-      hset(h, t, { rise: 0, glow: 0.35, glowColor: '#9fc8ff', porch: 0.6, frost: 1, smoke: 0.5 });
+      hset(h, t, { rise: 0, glow: 0.35, glowColor: '#9fc8ff', porch: 0.6, frost: 1, smoke: 0.5, bayLight: 0.35 });
       P.frost.userData.set(0.15 + 0.85 * fk);
       P.snow.userData.set(t, 1);
-      moveCam(ctx, { pos: L(-23.6, 3.6, 3.2), look: L(-27, 6.4, 11), fov: 50 }, { pos: L(-24.6, 4.0, 4.6), look: L(-27, 6.6, 11), fov: 46 }, ease.inOutSine(lt / 2.2), 2.0, '#c8dcff', 20);
+      moveCam(ctx, { pos: L(-21.0, 2.4, 0.2), look: L(-27, 6.2, 12), fov: 54 }, { pos: L(-22.2, 2.8, 1.8), look: L(-27, 6.4, 12), fov: 50 }, ease.inOutSine(lt / 2.2), 2.0, '#c8dcff', 20);
       ctx.fx.overlay('#3a6ac8', 0.08);
       tag(ctx, 'FIRST COLD NIGHT', ctx.time('b02.w6') - 0.05, Infinity, { y: 0.11, size: 62, bg: 'rgba(40,90,180,0.9)' });
     },
@@ -498,15 +498,15 @@ export const shots = [
       const P = ctx.props;
       town(ctx, 'quiet_night', { glow: 0.3, hide: [0, 5] });
       ctx.store.line = [P.herd[0], P.herd[1], P.herd[2], P.herd[3]];
-      ctx.store.line.forEach((h) => hs(ctx, h, -47, 0, PI));
-      ctx.store.w = crowd(ctx, ['pj1', 'pj2', 'pj3'], [[-33.0, 0.12, 5.6, -PI / 2 - 0.5], [-34.6, 0.12, 6.4, -PI / 2 - 0.2], [-33.6, 0.0, 2.6, -PI / 2 + 0.3]]);
+      ctx.store.line.forEach((h) => hs(ctx, h, -60, 0, PI));
+      ctx.store.w = crowd(ctx, ['pj1', 'pj2', 'pj3'], [[-35.6, 0.12, 6.8, -PI / 2 + 0.9], [-34.2, 0.0, 2.6, -PI / 2 - 0.9], [-36.6, 0.12, 7.8, -PI / 2 + 0.6]]);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
-      skyMood(ctx, 'purple', 0.85);
-      ctx.store.line.forEach((h, i) => { place(h, -46.5 + (i % 2) * 2, 22 - i * 13 - 3.2 * t + 3.2 * 6.6, PI); hset(h, t + i * 0.3, { ...gait(3.2, 'tiptoe'), glow: 0.25, glowColor: '#ffd27a', frost: 1, porch: 0.3, smoke: 0.4 }); });
-      ctx.store.w.forEach((w, i) => { w.ch.pose(i === 1 ? 'point' : 'idle', t + w.ph, { headYaw: i === 2 ? 0.5 : 0 }); w.ch.face(i === 1 ? 'shocked' : 'squint', 0.4); });
-      moveCam(ctx, { pos: L(-29.2, 1.3, 7.6), look: L(-46, 7.5, -1.5), fov: 60 }, { pos: L(-29.8, 1.4, 7.2), look: L(-46, 8.0, -2.5), fov: 58 }, lt / 1.3, 1.4, '#c8b8ff', 9);
+      skyMood(ctx, 'purple', 0.9);
+      ctx.store.line.forEach((h, i) => { place(h, -61 + (i % 2) * 3, 16 - i * 12.5 - 3.2 * lt, PI); hset(h, t + i * 0.3, { ...gait(3.2, 'tiptoe'), glow: 0.4, glowColor: '#ffd27a', frost: 1, porch: 0.3, smoke: 0.5 }); });
+      ctx.store.w.forEach((w, i) => { w.ch.pose(i === 0 ? 'point' : 'idle', t + w.ph, { headYaw: i === 1 ? 0.6 : -0.4 }); w.ch.face(i === 0 ? 'shocked' : 'squint', 0.4); });
+      moveCam(ctx, { pos: L(-30.5, 1.5, 6.4), look: L(-52, 8.5, -0.5), fov: 58 }, { pos: L(-31.2, 1.6, 6.0), look: L(-52, 9.0, -1.0), fov: 56 }, lt / 1.3, 1.4, '#c8b8ff', 9);
     },
   },
   {
@@ -545,7 +545,7 @@ export const shots = [
       P.lock.position.copy(b).add(V(0.18, -0.38, -0.02)); P.lock.rotation.set(0, L.yaw + 0.5, 0); P.lock.userData.set(t < tl ? clamp((t - tl + 0.6) / 0.6, 0, 0.6) * 0 : 1);
       pl.root.position.copy(L(-14.1, 0.12, 4.4)); pl.root.rotation.set(0, L.yaw + yawTo(-14.1, 4.4, -13.4, 0), 0);
       if (t < tl) { holdUp(pl, t); pl.face('determined', t); } else { pl.pose('crossArms', t); pl.face('smug', 0.5); }
-      moveCam(ctx, { pos: L(-11.4, 1.7, 0.2), look: L(-14.6, 3.0, 8.0), fov: 56 }, { pos: L(-11.8, 1.6, 0.9), look: L(-14.6, 3.0, 8.0), fov: 54 }, lt / 2.2);
+      moveCam(ctx, { pos: L(-9.0, 1.2, -1.4), look: L(-14.4, 3.2, 8.0), fov: 62 }, { pos: L(-9.6, 1.2, -0.4), look: L(-14.4, 3.2, 8.0), fov: 60 }, lt / 2.2);
       pop(ctx, tl, 0.1, '#ffffff', 0.35);
       stamp(ctx, 'CLICK!', tl, { y: 0.27, size: 110, fill: '#ffd23f', stroke: '#1d1d22', rot: 0.08, x: 0.62 });
       tag(ctx, 'RULE 1: CHAIN IT', ctx.markers.r1 - 0.05, Infinity, { y: 0.11, size: 64, bg: 'rgba(40,110,200,0.93)' });
@@ -579,21 +579,22 @@ export const shots = [
     setup(ctx) {
       const P = ctx.props;
       town(ctx, 'day', { hide: [PIL] });
-      hs(ctx, P.pil, -9, 0.6, 0.15);
+      hs(ctx, P.pil, -9, 1.0, PI / 2);
       put(ctx, 'pillay', V(), 0);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, pl = ctx.cast.pillay, tr = ctx.markers.r3;
       const ring = clamp((t - tr) / 0.12, 0, 1);
-      hset(P.pil, t, { rise: 0.3, crouch: 0, pitch: 0.06 + 0.03 * Math.sin(t * 3), glow: 0, smoke: 0.4, bell: ring * (0.8 + 0.2 * Math.sin(t * 20)), mode: t < tr ? 'walk' : 'stand', freq: 0.6, stride: 0.15, lift: 0.15, wag: ring * 0.6 });
+      hset(P.pil, t, { rise: 0.3, pitch: 0.06 + 0.03 * Math.sin(t * 3), glow: 0, smoke: 0.4, bell: ring * (0.8 + 0.2 * Math.sin(t * 20)), mode: t < tr ? 'walk' : 'stand', freq: 0.6, stride: 0.15, lift: 0.15, wag: ring * 0.6 });
       const bell = P.pil.userData.pt('bell');
-      pl.root.position.copy(L(-7.15, 0.12, 5.55)); pl.root.rotation.set(0, L.yaw + yawTo(-7.15, 5.55, -8.0, 3.9), 0);
+      const pp = bell.clone().add(V(0.95, 0, 0.45)); pp.y = L(0, 0.12, 0).y;
+      pl.root.position.copy(pp); pl.root.rotation.set(0, Math.atan2(bell.x - pp.x, bell.z - pp.z), 0);
       pl.pose('point', t, { lookAt: bell });
       const J = pl.joints, k = clamp((t - tr + 0.35) / 0.3, 0, 1);
-      J.armR.rotation.x = lerp(-1.4, -2.0, k) + 0.15 * Math.sin(clamp(t - tr, 0, 0.3) * 30);
+      J.armR.rotation.x = lerp(-1.4, -1.85, k) + 0.15 * Math.sin(clamp(t - tr, 0, 0.3) * 30);
       pl.face(t < tr ? 'determined' : 'smug', 0.5);
-      const c = setCam(ctx, { pos: L(-2.6, 1.7, 3.0), look: L(-7.8, 2.0, 4.6), fov: 48 });
-      if (t > tr) { const g = P.glow; ctx.add(g); g.position.copy(bell); g.material.color.set('#fff27a'); g.scale.setScalar(2.4 * (1 + 0.15 * Math.sin(t * 25))); }
+      setCam(ctx, { pos: pp.clone().add(V(2.6, 1.9, 2.4)), look: bell.clone().add(V(-0.6, 0.6, -0.8)), fov: 52 });
+      if (t > tr) { const g = P.glow; ctx.add(g); g.position.copy(bell).add(V(0.2, 0, 0)); g.material.color.set('#fff27a'); g.scale.setScalar(2.4 * (1 + 0.15 * Math.sin(t * 25))); }
       pop(ctx, tr, 0.1, '#fff6c0', 0.3);
       stamp(ctx, 'DING!', tr, { y: 0.27, x: 0.4, size: 120, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.1 });
       tag(ctx, 'RULE 3: RING THE BELL', ctx.markers.r3 - 0.05, Infinity, { y: 0.11, size: 60, bg: 'rgba(230,160,0,0.95)' });
@@ -604,18 +605,18 @@ export const shots = [
     setup(ctx) {
       const P = ctx.props;
       town(ctx, 'day', { hide: [PIL] });
-      hs(ctx, P.pil, -9, 3, 0);
+      hs(ctx, P.pil, -6, 1.5, -PI / 2);
       put(ctx, 'pillay', V(), 0);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, pl = ctx.cast.pillay;
-      const u = ease.inOutSine(clamp(lt / 1.15, 0, 1));
-      const x = lerp(-6, -14.6, u), z = lerp(1.0, 8.6, u);
-      place(P.pil, x, z, lerp(-PI / 2 - 0.4, PI - 0.15, ease.inOutSine(clamp(lt / 0.9, 0, 1))));
-      hset(P.pil, t, { rise: 0.55, mode: u < 1 ? 'walk' : 'stand', freq: 2.4, stride: 0.5, lift: 0.5, wag: 1, glow: 0, smoke: 0.6, pitch: -0.05, bob: 0.25 });
-      pl.root.position.copy(L(-16.6, 0.12, 5.4)); pl.root.rotation.set(0, L.yaw + yawTo(-16.6, 5.4, -15, 8), 0);
-      if (u < 1) { pl.pose('clap', t, {}); pl.face('grin', 0.4); } else { patPose(pl, t); pl.face('smile', 0.4); }
-      moveCam(ctx, { pos: L(-21.5, 1.9, -0.6), look: L(-13, 3.4, 7.4), fov: 58 }, { pos: L(-21.0, 1.8, 0.2), look: L(-14.6, 3.2, 8.0), fov: 54 }, ease.inOutSine(lt / 1.3));
+      const u = ease.inOutSine(clamp(lt / 1.1, 0, 1));
+      const x = lerp(-4, -15, u), z = lerp(1.5, 12, ease.inOutSine(clamp((lt - 0.35) / 0.75, 0, 1)));
+      place(P.pil, x, z, lerp(-PI / 2, -PI, ease.inOutSine(clamp((lt - 0.3) / 0.7, 0, 1))));
+      hset(P.pil, t, { rise: 0.55, mode: u < 1 ? 'walk' : 'stand', freq: 2.6, stride: 0.5, lift: 0.5, wag: 1, glow: 0, smoke: 0.6, pitch: -0.05, bob: 0.25 });
+      pl.root.position.copy(L(-18.2, 0.12, 6.2)); pl.root.rotation.set(0, L.yaw + yawTo(-18.2, 6.2, -14, -3), 0);
+      pl.pose('clap', t, { lookAt: P.pil.userData.pt('door') }); pl.face('grin', 0.4);
+      moveCam(ctx, { pos: L(-12.6, 2.2, -5.2), look: L(-16.0, 3.8, 7.5), fov: 62 }, { pos: L(-13.2, 2.0, -4.2), look: L(-16.0, 3.6, 7.5), fov: 60 }, ease.inOutSine(lt / 1.3));
       tag(ctx, 'RULE 3: RING THE BELL', -1, Infinity, { y: 0.11, size: 60, bg: 'rgba(230,160,0,0.95)', scale: 1 });
       stamp(ctx, 'GOOD HOUSE', ctx.markers.dog + 0.4, { y: 0.24, size: 96, fill: '#5bd65b', stroke: '#ffffff', rot: 0.06 });
     },
