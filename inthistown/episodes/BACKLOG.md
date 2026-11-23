@@ -32,7 +32,7 @@ Rules from the creator:
 | 21 | The Deep Above | mystical | scheduled Wed 25 Nov 19:30 |
 | 22 | Big Love | homey | rendering → Thu 26 Nov 09:30 |
 | 23 | Low Moon | spooky | shots building |
-| 24 | Word of the Day | meme | script + audio ready (giant ear, not an eye) |
+| 24 | Word of the Day | meme | shots building (giant ear, not an eye) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
 Sneeze Season (meme) · The Golden Snagglet (trend) ·
