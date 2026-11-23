@@ -268,9 +268,10 @@ export const shots = [
   {
     name: 'tilt up to the sea', start: 0, set: 'town',
     setup(ctx) {
-      const L = town(ctx, 'dusk');
+      const L = town(ctx, 'dusk', { shaftX: -34, shaftZ: 6 });   // no shaft right over the camera (its open end showed as a hard ellipse)
       ctx.set.exposure = 1.15;
-      addW(ctx, ctx.props.school, L(-26, 15.5, 0), L.yaw);
+      addW(ctx, ctx.props.school, L(-18, 17.5, -3), L.yaw); ctx.props.school.scale.setScalar(1.8);
+      addW(ctx, ctx.props.fish, L(-20, 18.3, 3), L.yaw + PI); ctx.props.fish.scale.setScalar(3.6);   // one big fish cruising across, over the roofs
       ctx.store.w = walkers(ctx, L, EXTRA_IDS.slice(0, 6), { x0: -32, x1: -8, seed: 2 });
       // a few people crossing / strolling down the middle of the street, right in frame
       ctx.store.sw = [[-14.5, 2.4, -1], [-16.5, -0.6, 1], [-19.0, 1.5, -1], [-21.5, -2.0, 1]].map(([x, z, dir], i) =>
@@ -278,12 +279,14 @@ export const shots = [
       const P = ctx.props; ctx.add(P.warm); P.warm.position.copy(L(-13, 5.5, 1.5)); P.warm.intensity = 90; P.warm.distance = 34;
     },
     update(ctx, lt) {
-      const { L, w, sw } = ctx.store, t = ctx.t; tick(ctx);
+      const { L, w, sw } = ctx.store, t = ctx.t; tick(ctx, { sea: { caus: 0.55, light: '#9fc8ff', glow: 1.1 }, shafts: 0.55 });
       ctx.props.school.userData.set(t, { speed: 2.4 }); animWalkers(w, L, t, 20);
+      const fk = clamp((t - 2.5) / 1.9, 0, 1), F = ctx.props.fish;
+      F.position.copy(L(-20 + 0.3 * fk, 18.3 + 0.25 * Math.sin(t * 1.7), lerp(4, -7, fk))); F.userData.set(t, { wag: 1, speed: 0.6 });
       for (const m of sw) { m.ch.root.position.copy(L(m.x + m.dir * 0.85 * t, 0, m.z)); m.ch.pose('walk', t + m.i * 0.4); m.ch.face('smile', t + m.i); }
       const k = ease.inOutCubic(clamp((t - 1.0) / 3.4, 0, 1));
       const pos = L(-4, lerp(1.0, 1.5, k), lerp(3.8, 2.6, k));
-      const look = L(-30, 4.5, -2.5).lerp(L(-25, 19, -8.5), k);
+      const look = L(-30, 4.5, -2.5).lerp(L(-22, 17, -6), k);
       setCam(ctx, { pos, look, fov: lerp(48, 60, k) });
     },
   },
@@ -977,7 +980,12 @@ export const shots = [
       panAlong(ctx, pb);
       tentOn(ctx, L(-14, SEA_Y + 1, 2), tipAt, t, { wig: 0.2, r0: 1.4, approach: fw.clone().negate() });
       const f = humanFace(pb);
-      moveCam(ctx, { pos: f.clone().addScaledVector(fw, 3.2).addScaledVector(leftOf(yaw), 1.4).add(up(-0.4)), look: f.clone().add(up(-0.3)).addScaledVector(fw, 0.6), fov: 42 }, { pos: f.clone().addScaledVector(fw, 2.6).addScaledVector(leftOf(yaw), 1.1).add(up(-0.4)), look: f.clone().add(up(-0.3)).addScaledVector(fw, 0.6), fov: 40 }, lt / 2, 0.8);
+      // wider 2-shot from the tentacle side: her face high in frame, pan + the motionless tip in the lower-left third
+      // framed on where she stood (not tracking her), so the tip stays put in frame while she backs away from it
+      const fa = f.clone().addScaledVector(fw, 0.7 * back), dist = lerp(4.9, 4.4, ease.inOutSine(clamp(lt / 2, 0, 1)));
+      const cp = fa.clone().addScaledVector(fw, dist).addScaledVector(leftOf(yaw), 2.2 * dist / 5.0).add(up(-0.5));
+      const lk = fa.clone().lerp(tipAt, 0.35); lk.y = fa.y - 0.8;   // face ≈0.25, pan + tip ≈0.45 (above the caption band)
+      setCam(ctx, { pos: cp, look: lk, fov: 40 }, 0.8);
     },
   },
   // ── "Top ten respect."
@@ -1091,7 +1099,15 @@ export const shots = [
       else { me.joints.armR.rotation.set(-3.0, 0, -0.1); me.joints.foreArmR.rotation.set(-0.1, 0, 0); }
       if (d < 0) torchIn(ctx, me, V(0, 1, 0.2).normalize(), { len: 3, width: 0.8 });
       else { const p = throwPos(L, d); P.torch.position.copy(p); P.torch.rotation.set(d * 9, d * 5, 0); P.torch.userData.set(1, 3, 0.8); }
-      setCam(ctx, { pos: L(TX + 1.0, DY + 0.55, TZ + 4.9), look: L(TX + 0.4, DY + 4.4, TZ + 0.2), fov: 64 }, 0);
+      // 3/4 front, a little above the deck: whole kid (wind-up + release) in frame, face in the upper half;
+      // after the release the look drifts up after the rising torch so it + its trail enter the top third
+      const look0 = L(TX + 0.35, DY + 1.0, TZ + 0.4);
+      const look = look0.clone();
+      if (d > 0) {   // tilt up only so far: the kid stays in the bottom of frame while the torch shoots out of the top
+        const tz = throwPos(L, Math.min(d, 0.6)), u = ease.inOutCubic(clamp((d - 0.18) / 0.2, 0, 1));   // quick whip-tilt: the face crosses the caption band in ~3 frames
+        look.y = lerp(look0.y, DY + 3.2, u); look.x = lerp(look0.x, tz.x, 0.3 * u); look.z = lerp(look0.z, tz.z, 0.3 * u);
+      }
+      setCam(ctx, { pos: L(TX + 1.8, DY + 2.5, TZ + 5.9), look, fov: 58 }, 0);
       fill(ctx, humanFace(me).addScaledVector(fwdOf(me.root.rotation.y), 1.6), 0.9);
       shakeOn(ctx, [tt], 0.3, 0.25);
     },
@@ -1243,11 +1259,13 @@ export const shots = [
     setup(ctx) { deepTown(ctx, { people: true }); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, ts = ctx.time('b19.w13') - 0.1;
-      const k = ease.inOutCubic(clamp((t - ts) / 0.75, 0, 1)); deepTick(ctx, { people: true, point: true, close: k < 0.5 });
+      // the fall starts under the fading quote card, and the word captions stay hidden until the camera has left the window
+      const k = ease.inOutCubic(clamp((t - ts + 0.2) / 0.75, 0, 1)); deepTick(ctx, { people: true, point: true, close: k < 0.5 });
+      if (k < 0.35) ctx.caption.hide(true);
       const b = ctx.store.bay;
       const c0 = { pos: b.clone().add(V(0.9, 1.8, -5.2)), look: b.clone().add(V(0, -0.2, 0)), fov: 42 };
       const kidF = L(TX + 0.3, DY + 1.7, TZ + 0.4);
-      const c1 = { pos: kidF.clone().add(V(0.6, 5.5, 3.0)), look: kidF, fov: 50 };
+      const c1 = { pos: kidF.clone().add(V(0.6, 5.5, 3.0)), look: kidF.clone().add(V(0.1, -0.9, 1.0)), fov: 50 };   // kid lands above the caption band
       const c = camLerp(c0, c1, k); setCam(ctx, c, 1.0);
       quoteCard(ctx, 'Never shine a light into the deep.', 'his mum', ctx.time('b19.w6') - 0.05, ts - 0.05, { y: 0.24, byAt: ctx.time('b19.w12') });
     },
@@ -1262,11 +1280,11 @@ export const shots = [
       const f = humanFace(me);
       const gl = Math.max(0, Math.sin((t - ctx.time('b20')) * 3.2));
       ctx.add(P.key2); P.key2.position.copy(f).add(V(0.6, 2.2, 1.2)); P.key2.intensity = 6 + 18 * gl;
-      const c0 = { pos: f.clone().add(V(0.5, -1.0, 3.2)), look: f.clone().add(up(-0.2)), fov: 46 }, c1 = { pos: f.clone().add(V(0.3, -0.6, 1.9)), look: f.clone().add(up(-0.3)), fov: 40 };
+      const c0 = { pos: f.clone().add(V(0.5, -1.0, 3.2)), look: f.clone().add(up(-0.55)), fov: 46 }, c1 = { pos: f.clone().add(V(0.3, -0.6, 2.5)), look: f.clone().add(up(-0.3)), fov: 40 };   // face ≈0.35, the US. stamp above his head
       moveCam(ctx, c0, c1, ease.inOutSine(clamp(lt / 1.9, 0, 1)), 0.9);
       const tu = ctx.time('b20'), endT = ctx.timeline.duration;
       const a = clamp(1 - (t - (endT - 0.3)) / 0.1, 0, 1);
-      if (t > tu && a > 0) ctx.fx.text('US.', { x: 0.5, y: 0.2, size: 190, fill: '#ffe14a', stroke: '#000000', line: 14, rot: -0.06, scale: t - tu < 0.12 ? lerp(2, 1, (t - tu) / 0.12) : 1, alpha: a });
+      if (t > tu && a > 0) ctx.fx.text('US.', { x: 0.5, y: 0.12, size: 190, fill: '#ffe14a', stroke: '#000000', line: 14, rot: -0.06, scale: t - tu < 0.12 ? lerp(2, 1, (t - tu) / 0.12) : 1, alpha: a });
       if (t > tu && t - tu < 0.15) ctx.cam.shake(0.3, t, 5);
       const fade = clamp((t - (endT - 0.2)) / 0.18, 0, 1); if (fade > 0) { ctx.fx.overlay('#000000', fade); ctx.caption.hide(true); }
     },

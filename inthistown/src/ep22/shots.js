@@ -377,7 +377,7 @@ export const shots = [
       const lip = P.barrow.userData.lipWorld().applyMatrix4(L.M.clone().invert());
       P.flakes.userData.set(clamp((t - tf - 0.1) / 0.75, 0, 1), lip, mouthW.add(up(0.2)), 0.7);
       const linP = ctx.cast.lin.root.position.clone().applyMatrix4(L.M.clone().invert());
-      const foc = V(lerp(linP.x, mouthW.x, 0.62), mouthW.y - 2.3, lerp(linP.z, mouthW.z, 0.62));
+      const foc = V(lerp(linP.x, mouthW.x, 0.8), mouthW.y - 2.6, lerp(linP.z, mouthW.z, 0.8));
       ctx.cam.set({ pos: L(B.x - 5.0, 13.6, B.z + 8.6), look: L(foc.x, foc.y, foc.z), fov: 52 });
       stamp(ctx, 'GULP!', tw + 0.12, { size: 140, fill: '#ff7a1a', rot: 0.1, y: 0.16 });
     },
@@ -642,7 +642,7 @@ export const shots = [
       ty.pose(t > ts ? 'pointLaugh' : 'idle', t, { lookAt: humanFace(me) }); ty.face(t > ts ? 'laugh' : 'smug', t);
       animList(ctx.store.kids, t, (c) => (t > ts + 0.4 + c.k * 0.1 ? (c.k % 2 ? 'laugh' : 'pointLaugh') : 'idle'), (c) => (t > ts + 0.4 ? 'laugh' : 'smile'));
       me.pose('idle', t, { intensity: 0.3 }); me.face('neutral', 0.4);
-      ctx.cam.move({ pos: L(35.0, 1.75, 2.45), look: L(43, 0.95, 0.3), fov: 35 }, { pos: L(35.5, 1.75, 2.35), look: L(43, 1.0, 0.3), fov: 32 }, clamp(lt / 2.6, 0, 1));
+      ctx.cam.move({ pos: L(35.2, 1.75, 2.72), look: L(43, 0.95, 0.4), fov: 35 }, { pos: L(35.6, 1.75, 2.62), look: L(43, 1.0, 0.4), fov: 32 }, clamp(lt / 2.6, 0, 1));
     },
   },
   {
@@ -681,7 +681,7 @@ export const shots = [
       const f = humanFace(me);
       const cams = [
         { pos: L(35.6, 0.6, 2.6), look: f.clone().add(up(-0.45)), fov: 40 },
-        { pos: L(34.6, 1.6, -0.2), look: f.clone().add(up(-0.35)), fov: 46 },
+        { pos: L(33.2, 1.5, -0.9), look: f.clone().add(up(-0.5)), fov: 50 },
         { pos: L(35.0, 1.7, 3.0), look: f.clone().add(up(-0.4)), fov: 32 },
       ];
       ctx.cam.set(cams[i]); ctx.cam.punch(hits, t, 0.12, 0.2);
@@ -723,7 +723,7 @@ export const shots = [
       else if (kj < 1) { w.pose('hop', t, { u: kj, height: 0.6 }); w.face('determined', 0.3); const a = L(TW.face + 0.22, 9.95, TW.z - 0.4), b = tip.clone().add(V(0.15, -0.55, 0)); w.root.position.copy(a.lerp(b, kj)); w.root.rotation.set(0, L.yaw + PI / 2 - 0.6, 0); }
       else hangCat(ctx, w, tip, t, { face: 'shocked' });
       const k = ease.inOutSine(clamp(lt / 2.6, 0, 1));
-      const c = setCam(ctx, { pos: L(lerp(-41.6, -42.2, k), lerp(9.0, 9.8, k), lerp(7.8, 7.4, k)), look: L(-49.7, lerp(10.4, 11.0, k), 1.5), fov: 30 }, 1.2, '#e0d8ff');
+      const c = setCam(ctx, { pos: L(lerp(-40.2, -40.6, k), lerp(9.2, 9.8, k), lerp(-3.4, -3.0, k)), look: L(-49.7, lerp(10.8, 11.3, k), 1.0), fov: 32 }, 1.2, '#e0d8ff');
       ctx.props.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [t0 + 0.05, ctx.time('b13.w15') - 0.05], { boltAt: (kk) => L(-90, 50, kk ? -25 : 20) });
           },
@@ -768,7 +768,7 @@ export const shots = [
       const slip = ease.outCubic(clamp((t - ts) / 0.18, 0, 1));
       const wind = clamp((t - tw) / 0.8, 0, 1);
       hangCat(ctx, ctx.cast.waffles, ctx.store.tip, t, { slip, swing: 0.12 + 0.25 * wind, face: slip > 0 ? 'shocked' : 'sweat', faceT: 0.3 });
-      const cc = ctx.cast.waffles.joints.hips.getWorldPosition(V()); const c = setCam(ctx, { pos: cc.clone().add(V(2.2, -1.3, 1.2)), look: cc.clone().add(up(0.15)), fov: 34 }, 0.8, '#e0d8ff');
+      const cc = ctx.cast.waffles.joints.hips.getWorldPosition(V()); const c = setCam(ctx, { pos: cc.clone().add(V(2.6, -1.8, 1.9)), look: cc.clone().add(up(0.2)), fov: 34 }, 0.8, '#e0d8ff');
       ctx.cam.shake(0.08 + 0.25 * wind + 0.5 * slip * Math.max(0, 1 - (t - ts) / 0.4), t, 11);
       P.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [tw + 0.05, ts + 0.02], { rainDist: 2, popA: 0.25, popDur: 0.08, slant: 0.25 + 0.6 * wind, boltAt: (k) => L(-20, 30, k ? -30 : 25) });
@@ -948,9 +948,10 @@ export const shots = [
       if (d >= 0 && d < 0.9) { P.dust.root.position.copy(paw.clone().applyMatrix4(L.M.clone().invert()).setY(0.5)); P.dust.root.scale.setScalar(3); P.dust.update(d / 0.9); } else P.dust.update(0);
       P.filler.userData.set(t, { arms: d > 0 ? 'cheer' : 'up', bounce: 0.3, speed: 0.6 });
       const cx = CAT_BIG.x - 8 + 8 * ease.inOutSine(k);
-      const c = setCam(ctx, { pos: L(-22, 1.6, 4.8), look: L(cx + 1.5, 10, CAT_BIG.z + 1), fov: 66 }, 0);
+      const hp = headPt(w, 0); void cx;
+      const c = setCam(ctx, { pos: L(-25.5, 1.6, 4.2), look: V(lerp(cx, hp.x, 0.6), 10.5, lerp(CAT_BIG.z, hp.z, 0.6)), fov: 66 }, 0);
       shakeOn(ctx, [tc], 0.9, 0.5, 21);
-      tag(ctx, 'CASUAL', ctx.time('b19.w3'), Infinity, { y: 0.13, size: 90, bg: 'rgba(30,30,40,0.9)', fill: '#3ee0c8' });
+      tag(ctx, 'CASUAL', ctx.time('b19.w3'), Infinity, { y: 0.08, size: 90, bg: 'rgba(30,30,40,0.9)', fill: '#3ee0c8' });
     },
   },
   // ── b20 HUSS ×6 — party lights snap on; the town dances round his paws; me on the fire truck
@@ -1037,22 +1038,27 @@ export const shots = [
     name: 'nuzzle', start: 'b22-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'dusk'); const P = ctx.props;
-      put(ctx, 'waffles', L(-61, -6.2, -2.5), L.yaw + PI / 2, 40);
-      put(ctx, 'me', L(-44.0, 0, -0.6), L.yaw - PI / 2 + 1.25);
+      put(ctx, 'waffles', L(-61, -3.4, -2.5), L.yaw + PI / 2, 40);
+      put(ctx, 'me', L(-38.6, 0, 0.6), L.yaw - PI / 2 + 1.25);
       addTo(ctx, P.purr, 0, 0, 0);
       P.hearts.forEach((h) => addTo(ctx, h, 0, -50, 0));
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, w = ctx.cast.waffles, me = ctx.cast.me, tp = ctx.time('b22.w8');
       const low = ease.inOutSine(clamp((t - ctx.time('b22.w3')) / 1.0, 0, 1));
-      w.pose('loaf', t); const J = w.joints; J.head.rotation.x += 0.05 + 0.12 * low; J.head.rotation.y += -0.3 * low + (t > tp ? 0.08 * Math.sin((t - tp) * 5) : 0);
-      w.face(t > tp ? 'sleepy' : 'smile', 0.3);
-      me.pose('idle', t, { lookAt: headPt(w, 0.05) }); me.face(t > tp ? 'grin' : 'smile', 0.4);
-      const nose = headPt(me, 0.45).applyMatrix4(L.M.clone().invert());
-      P.purr.position.copy(nose.clone().add(V(-0.9, 0.3, 0.6))); P.purr.rotation.y = PI / 2; P.purr.scale.setScalar(1.6); P.purr.userData.set(t, t > tp ? 1 : 0);
-      P.hearts.forEach((h, k) => { const d = t - (tp + 0.1 + k * 0.12); if (d < 0) { h.position.set(0, -50, 0); return; } h.position.set(nose.x - 1.2 + (k % 3) * 0.5, nose.y + 0.6 + d * 1.2, nose.z + 0.4 + (k % 2) * 0.6); h.scale.setScalar(0.45 * Math.min(1, d / 0.2)); });
-      ctx.cam.move({ pos: L(-36.6, 1.1, 5.4), look: L(-45.6, 4.6, -2.0), fov: 54 }, { pos: L(-38.0, 1.0, 4.4), look: L(-45.4, 4.4, -2.0), fov: 52 }, clamp(lt / 2.8, 0, 1), 'inOutSine');
-      fill(ctx, L(-42.4, 1.6, 1.4), 1.4, '#ffe0c8', 8);
+      w.pose('loaf', t); const J = w.joints; J.head.rotation.x += 0.05 + 0.12 * low; J.head.rotation.y += 0.3 * low + (t > tp ? 0.08 * Math.sin((t - tp) * 5) : 0);
+      w.face(t > tp ? 'smile' : 'neutral', 0.3);
+      const ch = L(-44.4, 7.6, -2.7), mp = me.root.position;   // the giant face (fixed: deterministic)
+      me.root.rotation.set(0, L.yaw - 0.2, 0); void mp;   // 3/4 to camera, gazing up-left at the giant face
+      me.pose('idle', t, { lookAt: L(-39.6, 6.0, 2.9) }); me.face(t > tp ? 'grin' : 'smile', 0.4);
+      const kf = humanFace(me), inv = L.M.clone().invert();
+      const kfl = kf.clone().applyMatrix4(inv), chl = ch.clone().applyMatrix4(inv);
+      const mid = kfl.clone().lerp(chl, 0.5);
+      P.purr.position.copy(mid.clone().add(V(0.4, -0.6, 2.2))); P.purr.rotation.y = 0.5; P.purr.scale.setScalar(2.4); void chl; P.purr.userData.set(t, t > tp ? 1 : 0);
+      P.hearts.forEach((h, k) => { const d = t - (tp + 0.1 + k * 0.12); if (d < 0) { h.position.set(0, -50, 0); return; } h.position.set(mid.x + (k % 3 - 1) * 1.2, kfl.y + 1.2 + d * 1.5 + (k % 2) * 0.7, mid.z + 1.2 + (k % 2) * 0.6); h.scale.setScalar(0.8 * Math.min(1, d / 0.2)); });
+      const k = ease.inOutSine(clamp(lt / 2.8, 0, 1));
+      ctx.cam.set({ pos: L(lerp(-34.4, -35.0, k), lerp(1.2, 1.1, k), lerp(7.8, 7.1, k)), look: L(-42.6, 3.8, -1.9), fov: 58 });
+      fill(ctx, kf.clone().add(V(1.2, 0.2, 2.5)), 1.4, '#ffe0c8', 8);
     },
   },
   // ── "And I started to grow."
@@ -1082,23 +1088,24 @@ export const shots = [
       const fy = yawTo(MESA.x, MESA.z, -20, -2);
       const fw = V(Math.sin(fy), 0, Math.cos(fy)), sd = V(Math.cos(fy), 0, -Math.sin(fy));
       const edge = V(MESA.x, 0, MESA.z).addScaledVector(fw, 17.5);
-      const kid = edge.clone().addScaledVector(sd, -5);
+      const kid = edge.clone().addScaledVector(sd, -3.2);
       put(ctx, 'me', L(kid.x, 9.3 - 0.55 * 9, kid.z), L.yaw + fy, 9);
-      const cat = edge.clone().addScaledVector(sd, 5).addScaledVector(fw, -4);
-      put(ctx, 'waffles', L(cat.x, 9.3, cat.z), L.yaw + fy - 0.25, 30);
+      const cat = edge.clone().addScaledVector(sd, 3.4).addScaledVector(fw, -1.0);
+      put(ctx, 'waffles', L(cat.x, 9.3, cat.z), L.yaw + fy - 0.2, 22);
+      ctx.store.edge = edge;
       addTo(ctx, P.sun, MESA.x - 60, 34, MESA.z + 70); addTo(ctx, P.sunCore, MESA.x - 60, 34, MESA.z + 70);
-      const list = blockFill(-26, -14, 4.5, 7.5, 50, { seed: 31, faceX: MESA.x, faceZ: MESA.z });
+      const list = blockFill(-37, -26, 3.5, 9.5, 70, { seed: 31, faceX: MESA.x, faceZ: MESA.z });
       filler(ctx, list);
       ctx.store.fy = fy;
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, me = ctx.cast.me, w = ctx.cast.waffles;
       me.pose('sit', t, { hands: 'lap' }); me.face('smile', 0.4);
-      const J = me.joints; J.armR.rotation.set(-0.3, 0, -1.25); J.foreArmR.rotation.set(-0.5, 0, 0); J.head.rotation.y += -0.25;
-      bigCatSit(w, t, { face: 'sleepy', faceT: 0.3, headPitch: 0.1, headYaw: 0.3 });
+      const J = me.joints; J.armL.rotation.set(-0.3, 0, 1.25); J.foreArmL.rotation.set(-0.5, 0, 0); J.head.rotation.y += 0.15;
+      bigCatSit(w, t, { face: 'smile', faceT: 0.3, headPitch: 0.1, headYaw: -0.2 });
       P.filler.userData.set(t, { arms: 'up', bounce: 0.3, speed: 0.8 });
-      const k = ease.inOutSine(clamp(lt / 3.3, 0, 1));
-      ctx.cam.set({ pos: L(-12 - 3 * k, 5 + 2 * k, -10), look: L(MESA.x + 6, 16 + 1.5 * k, MESA.z - 6), fov: 38 - 3 * k });
+      const k = ease.inOutSine(clamp(lt / 3.3, 0, 1)), e = ctx.store.edge, cy = 5 + 0.8 * k;
+      ctx.cam.set({ pos: L(-12 - 3 * k, cy, -10), look: L(e.x, cy + 3.5, e.z), fov: 40 - 2 * k });
       const tw = ctx.time('b23.w5'), te = ctx.time('b23.w8') + 0.32;
       tag(ctx, 'IT WORKS BOTH WAYS', tw, te, { y: 0.13, size: 76, bg: 'rgba(255,122,60,0.92)' });
       iris(ctx, te + 0.02, 0.42, 0.45);

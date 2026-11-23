@@ -30,8 +30,8 @@ Rules from the creator:
 | 19 | Battery 1% | meme trend | scheduled Wed 25 Nov 09:30 |
 | 20 | Biscuit (the T-rex) | giants / funny | scheduled Wed 25 Nov 15:30 |
 | 21 | The Deep Above | mystical | final polish round → Wed 25 Nov 19:30 |
-| 22 | Big Love | homey | shots building |
-| 23 | Low Moon | spooky | script + audio ready |
+| 22 | Big Love | homey | polish round → Thu 26 Nov 09:30 |
+| 23 | Low Moon | spooky | shots building |
 | 24 | Word of the Day | meme | script + audio ready (giant ear, not an eye) |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
