@@ -36,7 +36,7 @@ const BS = 5;                                  // Biscuit scale (unit model ≈ 
 const BIS = { x: -86, z: -14 };                 // his usual spot, behind the clock tower, facing down the street (+x)
 const MTN = { x: -250, z: -60, s: 1.35 };      // the big hill behind town
 const WT = { x: -124, z: -52 };                // water tower (next to his tail)
-const DEBUG = false;
+const DEBUG = true;
 
 // ───────────────────────────────────────────────────────────────────────────────────────── cast
 const MORE = Object.fromEntries(Object.values(extraSpecs(10, 207)).map((s, i) => { const id = `y${String(i).padStart(2, '0')}`; return [id, { ...s, id, lod: 'low' }]; }));
@@ -140,6 +140,27 @@ const dbg = (ctx, lines) => { if (DEBUG) ctx.fx.text(lines.join('\n'), { x: 0.5,
 /** a look point between two targets by ANGLE (w 0 → a, 1 → b) as seen from pos */
 function lookMix(pos, a, b, w) { const da = a.clone().sub(pos).normalize(), db = b.clone().sub(pos).normalize(); return pos.clone().add(da.lerp(db, w).normalize().multiplyScalar(10)); }
 const f1 = (v) => `${v.x.toFixed(1)},${v.y.toFixed(1)},${v.z.toFixed(1)}`;
+/** Solve a camera at pos so world point A lands at screen (x, yA) and B at (x, yB) (0 = top, 1 = bottom), portrait 9:16.
+ *  Returns { pos, look, fov }.  Horizontal: the mean of A and B is put at screen x. */
+const _fc = new THREE.PerspectiveCamera(50, 9 / 16, 0.1, 5000);
+function frame2(pos, A, yA, B, yB, { x = 0.5, fovMin = 18, fovMax = 78 } = {}) {
+  const c = _fc; c.position.copy(pos); c.rotation.order = 'YXZ';
+  const mid = A.clone().add(B).multiplyScalar(0.5).sub(pos);
+  let yw = Math.atan2(-mid.x, -mid.z), p = Math.atan2(mid.y, Math.hypot(mid.x, mid.z)), fov = 50;
+  const pa = V(), pb = V();
+  for (let it = 0; it < 60; it++) {
+    c.fov = fov; c.updateProjectionMatrix(); c.rotation.set(p, yw, 0); c.updateMatrixWorld(true);
+    pa.copy(A).project(c); pb.copy(B).project(c);
+    const ay = (1 - pa.y) / 2, by = (1 - pb.y) / 2, ax = ((pa.x + pb.x) / 2 + 1) / 2;
+    const fr = fov * PI / 180;
+    p -= (((ay + by) / 2) - (yA + yB) / 2) * fr * 0.9;
+    yw -= (ax - x) * fr * 0.56 * 0.9;
+    const sep = Math.abs(by - ay), want = Math.max(0.02, Math.abs(yB - yA));
+    if (sep > 1e-4) fov = clamp(fov * Math.pow(sep / want, 0.6), fovMin, fovMax);
+  }
+  const d = V(0, 0, -1).applyEuler(new THREE.Euler(p, yw, 0, 'YXZ'));
+  return { pos: pos.clone(), look: pos.clone().addScaledVector(d, 10), fov };
+}
 /** midpoint of Biscuit's two googly eyes (world) */
 const eyeMid = (ctx) => { const u = ctx.props.bis.userData; return u.eyeWorld('L').add(u.eyeWorld('R')).multiplyScalar(0.5); };
 /** Biscuit's horizontal forward (world) */
@@ -297,15 +318,15 @@ export const shots = [
     },
     update(ctx, lt) {
       const { L, walkers } = ctx.store, me = ctx.cast.me, t = ctx.t;
-      bset(ctx, { sit: 1, wag: 0.4, lookX: 0.1, lookY: -0.3, tongue: 0.25, jaw: 0.12 });
+      bset(ctx, { sit: 1, wag: 0.4, lean: 0.35, headPitch: 0.3, lookX: 0.1, lookY: -0.6, tongue: 0.25, jaw: 0.12 });
       me.pose('wave', t); me.face('grin', t);
       walkers.forEach((w, i) => { w.root.position.copy(L(-14 + i * 4 + ((t * 0.9 * (i % 2 ? -1 : 1)) % 6), 0.12, i % 2 ? 6.2 : -6.2)); w.pose('walk', t + i); w.face('smile', t + i); });
       ctx.props.filler.userData.set(t, { arms: 'limp', bounce: 0.2 });
       const face = humanFace(me), head = eyeMid(ctx);
       const k = ease.inOutCubic(clamp((t - 1.15) / 2.6, 0, 1));
-      const pos = L(-20.6, 2.0, 2.2).lerp(L(-11, 0.8, 4.4), k);
-      const look = k < 1e-4 ? face.clone().add(up(-0.25)) : lookMix(pos, face.clone().add(up(-0.25)), head.clone().add(up(-3)), ease.inOutSine(k) * 0.8);
-      setCam(ctx, { pos, look, fov: lerp(28, 58, k) });
+      const c0 = { pos: L(-20.6, 2.0, 2.2), look: face.clone().add(up(-0.25)), fov: 28 };
+      const c1 = frame2(L(-11, 0.8, 4.4), face, 0.84, head, 0.2);
+      moveCam(ctx, c0, c1, k);
       shakeOn(ctx, [ctx.time('b01.w4'), ctx.time('b01.w9')], 0.25, 0.3); shakeOn(ctx, [ctx.time('b01.w16')], 0.5, 0.4);
       tag(ctx, 'IN THIS TOWN', 0.25, 2.2, { y: 0.15, size: 80, bg: 'rgba(200,0,40,0.9)' });
       dbg(ctx, ['head ' + f1(head)]);
@@ -314,13 +335,12 @@ export const shots = [
   // ── b02 "His name is Biscuit."  hero close-up on the face + collar tag
   {
     name: 'name tag', start: 'b02-0.1', set: 'town',
-    setup(ctx) { town(ctx); bisAt(ctx, BIS.x, BIS.z, PI / 2); },
+    setup(ctx) { town(ctx, { cloudAt: [-10, 34, 40] }); bisAt(ctx, BIS.x, BIS.z, PI / 2); ctx.props.bis.userData.parts.tagG.position.z = 1.95; },
     update(ctx, lt) {
       const { B } = ctx.store, t = ctx.t;
-      bset(ctx, { sit: 1, wag: 0.6, headTilt: 0.18 * Math.sin(lt * 1.4), tongue: 0.35, jaw: 0.18, lookX: 0, lookY: -0.4 });
+      bset(ctx, { sit: 1, wag: 0.6, headPitch: 0.25, headTilt: 0.18 * Math.sin(lt * 1.4), tongue: 0.35, jaw: 0.18, lookX: 0, lookY: -0.4 });
       const tagP = ctx.props.bis.userData.parts.tagG.getWorldPosition(V()), eyes = eyeMid(ctx);
-      const look = tagP.clone().lerp(eyes, 0.55);
-      moveCam(ctx, { pos: B(1.2, 5.2, 12), look, fov: 52 }, { pos: B(0.9, 5.6, 10.4), look, fov: 50 }, lt / 1.5);
+      moveCam(ctx, frame2(B(1.2, 8.6, 14), eyes, 0.3, tagP, 0.74), frame2(B(0.9, 8.8, 12.5), eyes, 0.28, tagP, 0.76), lt / 1.5);
       tag(ctx, 'BISCUIT: 300 FT.  AGE: UNKNOWN', ctx.time('b02.w3') - 0.05, Infinity, { y: 0.14, size: 54 });
     },
   },
@@ -367,7 +387,7 @@ export const shots = [
       ctx.props.filler.userData.set(t, { arms: 'up' });
       const f = humanFace(me), e = eyeMid(ctx);
       const P0 = L(-34.6, 0.35, 0.9), P1 = L(-34.5, 1.0, -2.8), P2 = L(-35.2, 1.3, 1.6);
-      const cams = [{ pos: P0, look: lookMix(P0, f, e, -0.5), fov: 56 }, { pos: P1, look: lookMix(P1, f, e, 0.2), fov: 60 }, { pos: P2, look: lookMix(P2, f, e, -0.3), fov: 54 }];
+      const cams = [frame2(P0, f, 0.37, e, 0.12), frame2(P1, f, 0.4, e, 0.12), frame2(P2, f, 0.34, e, 0.1)];
       setCam(ctx, cams[i]); ctx.cam.punch(hits, t, 0.1, 0.2);
       dbg(ctx, ['eyes ' + f1(toLocal(L, e))]);
     },
