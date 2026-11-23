@@ -23,7 +23,7 @@ import { makeTrafficCone } from '../ep3/props3.js';
 import {
   BOWL, makeFishBowl, makeScaffold, makeWheelbarrow, makeFlakes, makeMiniDog, makeLeash, makeMayorHouse, makeWindowRoom,
   makeHamster, makeDebris, makeRulesBoard, makeNoGrandmaSign, makePuppy, makeRoadClosed, makeStormClouds, makeClockHand,
-  makeTorchField, makeTears, makeMesa, makePurrLines,
+  makeTorchField, makeTears, makeMesa, makePurrLines, makeGroundConfetti,
 } from './props.js';
 
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -78,7 +78,7 @@ export function init(ctx) {
   P.filler = makeFillerCrowd(160); P.torches = makeTorchField(90);
   P.lights = [0, 1, 2, 3].map(() => makeFlashlight());
   P.tears = makeTears(); P.sweat = makeSweatDrop({ size: 0.14 });
-  P.mesa = makeMesa(); P.purr = makePurrLines();
+  P.mesa = makeMesa(); P.purr = makePurrLines(); P.confetti = makeGroundConfetti(110, 0.8, 0.024);
   P.hearts = Array.from({ length: 8 }, () => makeHeart());
   P.bigHearts = Array.from({ length: 10 }, () => makeHeart());
   P.puffs = [0, 1, 2].map((i) => makePuff({ color: '#ffe8f4', count: 22, radius: 1, seed: 3 + i }));
@@ -722,7 +722,7 @@ export const shots = [
     name: 'chase up', start: 'b13.w6-0.1', set: 'town',
     setup(ctx) {
       const L = storm(ctx, { exposure: 1.3 }); ctx.store.tip = towerHands(ctx);
-      put(ctx, 'waffles', L(TW.face + 0.22, 9.95, TW.z - 0.4), L.yaw + PI / 2, 1);
+      put(ctx, 'waffles', L(TW.face + 0.22, 9.95, TW.z - 0.4), L.yaw + PI / 2, 1.2);   // a touch bigger in this close-up
       put(ctx, 'pigeon', L(TW.face + 0.3, 10.2, TW.z + 0.9), L.yaw + PI / 2 + 0.5, 1.5);
       const P = ctx.props; ctx.add(P.key); P.key.color.set('#ffe6c8');
     },
@@ -733,17 +733,19 @@ export const shots = [
       const kc = clamp((t - (tc - 0.05)) / (tf - tc + 0.05), 0, 1), ky = ease.inOutSine(kc);
       const cy = lerp(10.2, 11.72, ky) + (kc < 1 ? 0.05 * Math.abs(Math.sin(t * 11)) : 0);
       if (t < tc - 0.05) { w.pose('stare', t, { lookAt: pg.root.position.clone() }); w.face('stare', 0.3); w.root.position.copy(L(TW.face + 0.22, 9.95, TW.z - 0.1)); w.root.rotation.set(0, L.yaw + PI / 2 - 0.9, 0); }
-      else if (kc < 1) climbCat(ctx, w, L(TW.face + 0.06, cy, TW.z - 0.05), t, { look: 0.5, turn: 0.6 });
-      else { climbCat(ctx, w, L(TW.face + 0.06, cy, TW.z - 0.05), t, { gait: 0.25, look: 0.9, turn: 0.6, face: 'shocked' }); const J = w.joints; J.armL.rotation.x = -2.2 + 0.4 * Math.sin(t * 16); J.armR.rotation.x = -1.6; }
+      else if (kc < 1) climbCat(ctx, w, L(TW.face + 0.06, cy, TW.z - 0.05), t, { look: 1.0, turn: 0.0 });
+      else { climbCat(ctx, w, L(TW.face + 0.06, cy, TW.z - 0.05), t, { gait: 0.25, look: 1.2, turn: 0.0, face: 'shocked' }); const J = w.joints; J.armL.rotation.x = -2.2 + 0.4 * Math.sin(t * 16); J.armR.rotation.x = -1.6; }
       // the pigeon: perched by the cat → flaps up, always ~0.8 m above him → lands smug on the roof trim
       const kp = clamp((t - tc) / (tf - tc - 0.15), 0, 1), land = kp >= 1;
-      const py = land ? 12.31 : Math.min(12.31, lerp(10.0, 12.2, ease.outCubic(kp)) + 0.12 * Math.sin(t * 22));
-      pg.root.position.copy(L(TW.face + (land ? 0.3 : lerp(0.35, 0.75, Math.min(1, kp * 3))), py, TW.z + lerp(0.35, 0.25, kp)));
+      const py = land ? 12.31 : t < tc ? 10.0 : Math.min(12.31, lerp(10.0, cy + 0.95, ease.outCubic(Math.min(1, (t - tc) / 0.6)))) + 0.1 * Math.sin(t * 22);
+      pg.root.position.copy(L(TW.face + (land ? 0.3 : lerp(0.35, 0.55, Math.min(1, kp * 3))), py, TW.z + lerp(0.45, -0.25, Math.min(1, kp * 2))));
       pg.root.rotation.set(0, L.yaw + PI / 2 + (land ? -0.7 : 0.3), 0);
       pg.pose(t >= tc && !land ? 'flap' : 'idle', t); pg.face(t >= tc && !land ? 'shocked' : land ? 'smug' : 'neutral', 0.3);
       // camera: low on the north-east corner looking up the face; cranes up with the climb (cat stays in the upper middle)
       const cyc = lerp(10.2, 11.72, ease.inOutSine(clamp((t - tc + 0.2) / (tf - tc + 0.2), 0, 1)));
-      const c = setCam(ctx, { pos: L(-47.75, cyc - 0.85, -0.25), look: L(-49.7, cyc + 0.02, 1.3), fov: 60 }, 1.5, '#ffe8d8');
+      const lo = lerp(-0.3, 0.02, ease.inOutSine(clamp((t - tc) / 0.9, 0, 1)));
+      const kin = ease.inOutSine(clamp((t - tw) / 1.2, 0, 1));   // starts a little wider (rain + roof), settles in close
+      const c = setCam(ctx, { pos: L(lerp(-46.2, -47.0, kin), cyc - lerp(0.6, 1.0, kin), lerp(-0.2, 0.25, kin)), look: L(-49.7, cyc + lo + 0.15 * (1 - kin), 1.35), fov: 63 }, 1.5, '#ffe8d8');
       P.key.position.copy(L(-46.5, 12.5, 2.5)); P.key.intensity = 14; P.key.distance = 14; P.key.decay = 1.2;
       P.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [tc + 0.02, tf - 0.02], { rainDist: 3, popA: 0.3, popDur: 0.1, boltAt: (kk) => L(-90, 48, kk ? -28 : -6) });
@@ -879,45 +881,54 @@ export const shots = [
       tag(ctx, 'I LOVE YOU, WAFFLES!', ctx.time('b17') + 0.05, Infinity, { y: 0.15, size: 84, fill: '#ff4fa3', stroke: '#ffffff', bg: null, line: 12 });
     },
   },
-  // ── b18 "Waffles grew. And grew. And grew."  — three jumps
+  // ── b18 "Waffles grew. And grew. And grew."  — "Waffles": close on him hanging; on each "grew" a locked wide down the
+  //    street with the clock tower as the scale ruler beside him: ~house height → ~half the tower → ears at the tower top.
+  //    The camera only pulls back / tilts up slowly; each pink puff clears in 0.15 s so his face reads on the word.
   {
     name: 'grew', start: 'b18-0.1', set: 'town',
     setup(ctx) {
       const L = storm(ctx); const P = ctx.props; ctx.store.tip = towerHands(ctx);
       put(ctx, 'waffles', L(0, 0, 0), 0, 1);
-      const list = blockFill(-36, -26, -4, 7, 110, { seed: 13, faceX: -55, faceZ: -2 });
+      const list = blockFill(-43, -33.5, -4.5, 4.0, 110, { seed: 13, faceX: -52, faceZ: -1.5 });
       filler(ctx, list); addTo(ctx, P.torches, 0, 0, 0); P.torches.userData.layout(list.filter((_, k) => k % 2 === 0));
       P.puffs.forEach((p) => addTo(ctx, p.root, 0, -99, 0));
-      P.sparkles && addTo(ctx, P.sparkles, -58, 14, -3);
+      P.sparkles && addTo(ctx, P.sparkles, -53, 9, -3);
+      ctx.add(P.key); P.key.color.set('#ffe2d0');
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, w = ctx.cast.waffles;
       const g = [ctx.time('b18.w1'), ctx.time('b18.w3'), ctx.time('b18.w5')];
-      const stages = [{ s: 1 }, { s: 9, x: -55.5, z: -5.5 }, { s: 20, x: -59, z: -6.5 }, { s: 40, x: -64, z: -6 }];
+      // sit next to the tower, same depth: front of the cat ≈ the tower front, flank clear of the tower's north side
+      const stage = (sc) => ({ s: sc, x: -49.6 - 0.22 * sc, z: -0.6 - 0.13 * sc });
+      const stages = [{ s: 1 }, stage(10), stage(15), stage(25)];
       let n = 0; for (const h of g) if (t >= h) n++;
       if (n === 0) hangCat(ctx, w, ctx.store.tip, t, { slip: 1, swing: 0.3, face: 'shocked' });
       else {
-        const st = stages[n], prev = stages[n - 1], k = ease.outBack(clamp((t - g[n - 1]) / 0.28, 0, 1));
-        const s = n === 1 ? lerp(2, st.s, k) : lerp(prev.s, st.s, k);
-        w.root.scale.setScalar(s); w.root.rotation.set(0, L.yaw + PI / 2, 0); w.root.position.copy(L(st.x, 0, st.z));
-        bigCatSit(w, t, { face: n < 3 ? 'shocked' : 'smile', faceT: 0.3, headPitch: n === 3 ? 0.25 : 0 });
+        const st = stages[n], k = ease.outBack(clamp((t - g[n - 1]) / 0.16, 0, 1));
+        const s0 = n === 1 ? 3 : stages[n - 1].s;
+        w.root.scale.setScalar(lerp(s0, st.s, k)); w.root.rotation.set(0, L.yaw + PI / 2 - 0.12, 0); w.root.position.copy(L(st.x, 0, st.z));
+        bigCatSit(w, t, { face: n < 3 ? 'shocked' : 'smile', faceT: 0.3, headPitch: -0.12 - 0.04 * n });
       }
-      P.puffs.forEach((p, k) => { const d = t - g[k]; if (d < 0 || d > 0.3) { p.root.position.set(0, -99, 0); p.update(0); return; } const st = stages[k + 1]; p.root.position.copy(V(st.x + st.s * 0.12, st.s * 0.04, st.z)); p.root.scale.setScalar(st.s * 0.25); p.update(d / 0.3); });
+      // quick pink puff round his paws (never over the face), gone in 0.15 s
+      P.puffs.forEach((p, k) => { const d = t - g[k]; if (d < 0 || d > 0.15) { p.root.position.set(0, -99, 0); p.update(0); return; } const st = stages[k + 1]; p.root.position.copy(L(st.x + st.s * 0.2, st.s * 0.06, st.z)); p.root.scale.setScalar(st.s * 0.2); p.update(0.35 + 0.65 * d / 0.15); });
       P.sparkles.userData.set(t, n > 0 ? 1 : 0);
       P.filler.userData.set(t, { arms: n > 0 ? 'up' : 'catch', bounce: n > 0 ? 0.3 : 0.05, speed: 0.6 });
-      // crane with the growth: the look target follows his head height, the lens widens
-      const tgt = (m) => (m === 0 ? V(-50.2, 10.2, 1.4) : V(stages[m].x, 0.55 * stages[m].s, stages[m].z));
-      const fovs = [50, 54, 59, 64];
-      let look = tgt(0), fov = fovs[0];
-      if (n > 0) { const kk = ease.inOutCubic(clamp((t - g[n - 1]) / 0.32, 0, 1)); look = tgt(n - 1).lerp(tgt(n), kk); fov = lerp(fovs[n - 1], fovs[n], kk); }
-      const kc = n === 0 ? 0 : (n - 1 + ease.inOutCubic(clamp((t - g[n - 1]) / 0.32, 0, 1))) / 3;
-      const c = setCam(ctx, { pos: L(-18 - 1.0 * kc, lerp(3.4, 6.5, kc), 1.2), look: L(look.x, look.y, look.z), fov }, 0.8, '#e4dcff');
+      let c;
+      if (n === 0) {   // "Waffles" — close on him dangling from the minute hand, a pink glow gathering
+        const cc = w.joints.hips.getWorldPosition(V()).lerp(w.joints.head.getWorldPosition(V()), 0.5);
+        c = setCam(ctx, { pos: cc.clone().add(V(3.0, -1.0, -0.6)), look: cc.clone().add(up(-0.3)), fov: 36 }, 1.2, '#ffd6f0');
+        P.key.position.copy(cc).add(V(1.5, 0.5, -1.5)); P.key.intensity = 5; P.key.distance = 6; P.key.decay = 1.2; P.key.color.set('#ff9fd0');
+      } else {         // the locked wide: tower left, Waffles right; slow pull-back + tilt-up across the three words
+        const u = ease.inOutSine(clamp((t - g[0]) / (ctx.time('b18.w6') - g[0]), 0, 1));
+        c = setCam(ctx, { pos: L(lerp(-28.5, -24.5, u), lerp(3.4, 3.2, u), -0.4), look: L(-52, lerp(4.4, 7.4, u), -2.0), fov: 58 }, 0.8, '#e4dcff');
+        P.key.position.copy(L(-34, 16, -10)); P.key.intensity = 60; P.key.distance = 0; P.key.decay = 1.0; P.key.color.set('#ffe2d0');
+      }
       const part = n >= 2 ? 0.6 * ease.inOutCubic(clamp((t - g[1]) / 0.9, 0, 1)) : 0;
-      P.torches.userData.set(t, c.pos); P.clouds.userData.set(t, part, -59, -6);
-      for (const h of g) { shakeOn(ctx, [h], 0.7, 0.4, 17); pop(ctx, h, 0.1, '#ffd6f0', 0.3); }
+      P.torches.userData.set(t, c.pos); P.clouds.userData.set(t, part, -55, -4);
+      for (const h of g) { shakeOn(ctx, [h], 0.6, 0.35, 17); pop(ctx, h, 0.1, '#ffd6f0', 0.3); }
       stormFrame(ctx, c, [], { rainA: 1 });
       const words = ['GREW', 'AND GREW', 'AND GREW!'];
-      if (n > 0) tag(ctx, words[n - 1], g[n - 1], Infinity, { y: 0.13, size: 80 + n * 10, bg: 'rgba(255,79,163,0.92)' });
+      if (n > 0) tag(ctx, words[n - 1], g[n - 1], Infinity, { y: 0.09, size: 76 + n * 8, bg: 'rgba(255,79,163,0.92)' });
     },
   },
   // ── "Until he was taller than the clock tower."  — the clouds part
@@ -930,6 +941,7 @@ export const shots = [
       const list = blockFill(-42, -37, -4, 6, 70, { seed: 17, faceX: -60, faceZ: -4 });
       filler(ctx, list);
       addTo(ctx, P.sparkles, -58, 16, -3);
+      ctx.add(P.key); P.key.color.set('#ffe2d0'); P.key.position.copy(L(-40, 18, -12)); P.key.intensity = 60; P.key.distance = 0; P.key.decay = 1.0;   // same key as the 'grew' wide
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, w = ctx.cast.waffles;
@@ -1032,25 +1044,36 @@ export const shots = [
       fill(ctx, f.clone().addScaledVector(fw, 2), 1.0, '#ffe8d8');
     },
   },
-  // ── "His dog grew three whole inches. Top ten respect."
+  // ── "His dog grew three whole inches. Top ten respect."  — at shoe level: Barnes's big brown shoes and the red leash for
+  //    scale, the pea-sized dog lit in the upper middle of the frame, then the pop to mouse size
   {
     name: 'mouse dog', start: 'b21.w5-0.12', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'party_night', { party: true, fireworks: false, exposure: 1.05 }); const P = ctx.props;
-      barnesRig(ctx, { pose: 'heart', x: -30, z: 3.0, yaw: -PI / 2 + 0.35, dogScale: 0.06 });
+      const bn = barnesRig(ctx, { pose: 'heart', x: -30, z: 3.0, yaw: -PI / 2 + 0.35, dogScale: 0.06 });
+      // the dog sits right at his toes for this close-up
+      bn.dp = { x: -30 + bn.f.x * 0.5 + bn.s.x * 0.05, z: 3.0 + bn.f.z * 0.5 + bn.s.z * 0.05 };
+      P.dog.position.set(bn.dp.x, 0, bn.dp.z); P.dog.rotation.set(0, -PI / 2 + 0.35 + 0.25, 0);
+      addTo(ctx, P.confetti, bn.dp.x + bn.f.x * 0.1, 0, bn.dp.z + bn.f.z * 0.1, 0); P.confetti.userData.clear(bn.f.x * 0.25, bn.f.z * 0.25, 0.14);   // none under the lens
       ctx.add(P.tears, ctx.cast.barnes.joints.head);
+      ctx.add(P.key); P.key.color.set('#ffe8d0');
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, tg = ctx.time('b21.w7');
-      const gs = lerp(0.06, 0.17, ease.outBack(clamp((t - tg) / 0.4, 0, 1)));
+      const gk = ease.outBack(clamp((t - tg) / 0.3, 0, 1)), gs = lerp(0.06, 0.17, gk);
       P.dog.scale.setScalar(gs);
       barnesFrame(ctx, t, { face: 'sad', faceT: 0.3, hop: t > tg + 0.3 ? 1 : 0, thick: 0.5, hand: 'handL' });
       P.tears.userData.set(t);
-      const { dp, f } = ctx.store.bn;
+      const { dp, f, s: sd } = ctx.store.bn;
       const d = L(dp.x, 0, dp.z);
-      ctx.cam.move({ pos: d.clone().addScaledVector(f, 0.32).add(V(0.06, 0.11, 0.1)), look: d.clone().add(up(-0.03)), fov: 36 }, { pos: d.clone().addScaledVector(f, 0.42).add(V(0.08, 0.14, 0.12)), look: d.clone().add(up(-0.01)), fov: 38 }, clamp((t - tg) / 0.5, 0, 1));
-      fill(ctx, d.clone().addScaledVector(f, 0.6).add(up(0.3)), 0.6, '#ffe8d8', 4);
-      tag(ctx, '+3 INCHES', ctx.time('b21.w9'), ctx.time('b21.w11') - 0.1, { y: 0.15, size: 90, bg: 'rgba(60,180,90,0.95)' });
+      // low in front of the dog, looking slightly down past it: dog upper-middle, shoes above it, leash from the top
+      const u = ease.inOutCubic(clamp((t - tg) / 0.45, 0, 1)), kcard = ease.inOutCubic(clamp((t - ctx.time('b21.w11') + 0.1) / 0.35, 0, 1));   // tilt up under the top-10 card
+      const cam = (back, h, fov) => ({ pos: d.clone().addScaledVector(f, back).addScaledVector(sd, 0.12 * back).add(up(h)), look: d.clone().addScaledVector(f, lerp(0.24 * back, 0.02, kcard)).add(up(0.012 * kcard)), fov });
+      ctx.cam.move(cam(0.32, 0.105, 52), cam(0.46, 0.115, 52), u);
+      fill(ctx, d.clone().addScaledVector(f, 0.45).add(up(0.05)), 0.9, '#ffe8d8', 3);
+      P.key.position.copy(d).addScaledVector(f, 0.25).addScaledVector(sd, -0.35).add(up(0.5)); P.key.intensity = 1.6; P.key.distance = 2.5; P.key.decay = 1.5;
+      if (t >= tg) pop(ctx, tg, 0.1, '#ffffff', 0.35);
+      tag(ctx, '+3 INCHES', ctx.time('b21.w9'), ctx.time('b21.w11') - 0.1, { y: 0.1, size: 90, bg: 'rgba(60,180,90,0.95)' });
       top10Card(ctx, 3, ctx.time('b21.w11') - 0.02, Infinity, { popAt: ctx.time('b21.w12') });
     },
   },

@@ -1192,7 +1192,7 @@ export const shots = [
       ];
       if (i === 2) cams[2] = { pos: L(TX + 2.6, DY + 2.3, TZ + 6.0), look: L(TX + 0.3, DY + 1.05, TZ + 0.4), fov: 50 };   // 3/4 medium-wide just off the deck
       setCam(ctx, cams[i], 0.8); ctx.cam.punch(hits, t, 0.1, 0.2);
-      if (i === 2) { ctx.add(P.key2); P.key2.position.copy(f).add(V(2.5, 1.5, 2.5)); P.key2.intensity = 40; P.key2.distance = 14; }
+      if (i === 2) { ctx.add(P.key2); P.key2.position.copy(f).add(V(2.5, 1.5, 2.5)); P.key2.intensity = 14; P.key2.distance = 10; P.key2.color.set('#cfe6ff'); }
     },
   })),
   // ── b18 "Way past the deep, I saw lights."
@@ -1268,7 +1268,7 @@ export const shots = [
       const kidF = L(TX + 0.3, DY + 1.7, TZ + 0.4);
       const c1 = { pos: kidF.clone().add(V(0.6, 5.5, 3.0)), look: kidF.clone().add(V(0.1, -0.9, 1.0)), fov: 50 };   // kid lands above the caption band
       const c = camLerp(c0, c1, k); setCam(ctx, c, 1.0);
-      quoteCard(ctx, 'Never shine a light into the deep.', 'his mum', ctx.time('b19.w6') - 0.05, ts - 0.05, { y: 0.24, byAt: ctx.time('b19.w12') });
+      quoteCard(ctx, 'Never shine a light into the deep.', 'his mum', ctx.time('b19.w6') - 0.05, ts - 0.05, { y: 0.24, byAt: ctx.time('b19.w8') });
     },
   },
   // ── b20 "Us."  — slow push on our kid on the tower, stunned, the far window's light glinting on his face
@@ -1280,7 +1280,7 @@ export const shots = [
       me.pose('stunned', t, { intensity: 0.4, headPitch: -0.55 }); me.face('shocked', 0.5);
       const f = humanFace(me);
       const gl = Math.max(0, Math.sin((t - ctx.time('b20')) * 3.2));
-      ctx.add(P.key2); P.key2.position.copy(f).add(V(0.6, 2.2, 1.2)); P.key2.intensity = 6 + 18 * gl;
+      ctx.add(P.key2); P.key2.position.copy(f).add(V(0.6, 2.2, 1.2)); P.key2.color.set('#dfeaff'); P.key2.intensity = 5 + 9 * gl;
       const c0 = { pos: f.clone().add(V(0.5, -1.0, 3.2)), look: f.clone().add(up(-0.55)), fov: 46 }, c1 = { pos: f.clone().add(V(0.3, -0.6, 2.5)), look: f.clone().add(up(-0.3)), fov: 40 };   // face ≈0.35, the US. stamp above his head
       moveCam(ctx, c0, c1, ease.inOutSine(clamp(lt / 1.9, 0, 1)), 0.9);
       const tu = ctx.time('b20'), endT = ctx.timeline.duration;

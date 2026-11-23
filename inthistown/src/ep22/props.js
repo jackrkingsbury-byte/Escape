@@ -22,6 +22,7 @@
 //   makeTears()           two tear drops for a human head (head-local); userData.set(t)
 //   makeMesa()            the hill behind town for the final shot: flat top at y 9, radius 20
 //   makePurrLines()       vibrating "purr" arcs: userData.set(t, a)
+//   makeGroundConfetti()  flat party confetti squares scattered on the road (static)
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { clamp, lerp, ease, hash, canvasTexture } from '../lib/util.js';
@@ -684,5 +685,33 @@ export function makePurrLines() {
   const arcs = [];
   for (let i = 0; i < 3; i++) { const a = new THREE.Mesh(new THREE.TorusGeometry(0.4 + i * 0.25, 0.04, 6, 24, PI * 0.6), m); a.rotation.z = PI * 0.2; g.add(a); arcs.push(a); }
   g.userData = { set(t, a = 1) { m.opacity = a; g.visible = a > 0.01; arcs.forEach((r, i) => { r.position.x = 0.04 * Math.sin(t * 40 + i); r.scale.setScalar(1 + 0.08 * Math.sin(t * 20 + i)); }); } };
+  return g;
+}
+
+/** party confetti lying on the road: a disc of radius r of small flat paper squares (prop-local, y = 0 is the ground).
+ *  userData.clear(x, z, rad) hides the squares within rad of prop-local (x, z) (e.g. right under a low camera). */
+export function makeGroundConfetti(n = 70, r = 0.9, size = 0.035) {
+  const g = new THREE.Group(); g.name = 'groundConfetti';
+  const cols = ['#ff4fa3', '#ffd23f', '#3ee0c8', '#8a5cff', '#ffffff', '#ff7a2f'];
+  const geo = new THREE.BoxGeometry(size, 0.003, size * 0.7);
+  const items = [];
+  cols.forEach((c, ci) => {
+    const idx = []; for (let i = 0; i < n; i++) if (i % cols.length === ci) idx.push(i);
+    const im = new THREE.InstancedMesh(geo, std(c, { roughness: 0.6 }), idx.length); im.receiveShadow = true;
+    const e = new THREE.Euler();
+    idx.forEach((i, j) => {
+      const a = hash(i * 1.71 + 3) * PI * 2, rr = r * Math.sqrt(hash(i * 2.93 + 1));
+      e.set(0.15 * (hash(i * 5.1) - 0.5), hash(i * 3.7) * PI, 0.15 * (hash(i * 6.3) - 0.5));
+      items.push({ im, j, p: V(Math.cos(a) * rr, 0.003, Math.sin(a) * rr), q: new THREE.Quaternion().setFromEuler(e) });
+    });
+    g.add(im);
+  });
+  const m4 = new THREE.Matrix4(), one = V(1, 1, 1), zero = V(1e-4, 1e-4, 1e-4);
+  g.userData = {
+    clear(x = 0, z = 0, rad = 0) {
+      for (const it of items) { const hide = Math.hypot(it.p.x - x, it.p.z - z) < rad; m4.compose(it.p, it.q, hide ? zero : one); it.im.setMatrixAt(it.j, m4); it.im.instanceMatrix.needsUpdate = true; }
+    },
+  };
+  g.userData.clear();
   return g;
 }
