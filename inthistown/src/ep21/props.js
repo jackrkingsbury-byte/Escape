@@ -78,7 +78,7 @@ const SEA_VS = /* glsl */`
     #include <fog_vertex>
   }`;
 const SEA_FS = /* glsl */`
-  uniform float uTime, uGlow, uOpacity, uFlare, uFlareR;
+  uniform float uTime, uGlow, uOpacity, uFlare, uFlareR, uCaus;
   uniform vec3 uDeep, uShallow, uLight, uFlarePos;
   varying vec3 vW;
   #include <fog_pars_fragment>
@@ -90,22 +90,26 @@ const SEA_FS = /* glsl */`
     float t = uTime * 0.55;
     vec2 p = vW.xz * 0.16;
     float c = lines(p, t) * 0.75 + lines(p * 1.9 + vec2(3.1, 1.7), t * 1.3) * 0.45;
+    float fade = 1.0 - smoothstep(35.0, 110.0, distance(cameraPosition, vW));
+    c *= uCaus * mix(0.18, 1.0, fade);
     float patchy = 0.5 + 0.5 * sin(vW.x * 0.021 + t * 0.25) * sin(vW.z * 0.027 - t * 0.2);
     vec3 col = mix(uDeep, uShallow, 0.25 + 0.55 * patchy);
     col += uLight * c * 0.85;
     col *= uGlow;
     float d = length(vW.xz - uFlarePos.xz);
-    col += uLight * uFlare * (exp(-d / uFlareR) * 2.2 + exp(-d / (uFlareR * 7.0)) * 0.7);
+    col += uLight * uFlare * (exp(-d / uFlareR) * 2.2 + exp(-d / (uFlareR * 7.0)) * 0.3);
     gl_FragColor = vec4(col, uOpacity);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
     #include <fog_fragment>
   }`;
+/** the sea surface's wave offset (world y) at world x, z — same formula as the vertex shader */
+export function seaWave(x, z, t, amp = 1) { return (Math.sin(x * 0.09 + t * 0.7) * 0.5 + Math.sin(z * 0.12 - t * 0.55) * 0.4 + Math.sin((x + z) * 0.05 + t * 0.3) * 0.6) * amp; }
 export function makeSea({ w = 900, seg = 96 } = {}) {
   const g = new THREE.Group();
   const geo = new THREE.PlaneGeometry(w, w, seg, seg); geo.rotateX(PI / 2);   // normal → −Y (faces the town)
   const uniforms = THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {
-    uTime: { value: 0 }, uAmp: { value: 1 }, uGlow: { value: 1 }, uOpacity: { value: 0.96 }, uFlare: { value: 0 }, uFlareR: { value: 6 },
+    uTime: { value: 0 }, uAmp: { value: 1 }, uGlow: { value: 1 }, uCaus: { value: 1 }, uOpacity: { value: 0.96 }, uFlare: { value: 0 }, uFlareR: { value: 6 },
     uDeep: { value: new THREE.Color('#1f6fc0') }, uShallow: { value: new THREE.Color('#5fd8f0') }, uLight: { value: new THREE.Color('#e8ffff') },
     uFlarePos: { value: V() },
   }]);
@@ -118,6 +122,7 @@ export function makeSea({ w = 900, seg = 96 } = {}) {
       u.uTime.value = t;
       u.uAmp.value = o.amp ?? 1;
       u.uGlow.value = o.glow ?? 1;
+      u.uCaus.value = o.caus ?? 1;
       u.uOpacity.value = o.opacity ?? 0.96;
       u.uFlare.value = o.flare ?? 0; u.uFlareR.value = o.flareR ?? 6;
       if (o.deep) u.uDeep.value.set(o.deep);
@@ -209,7 +214,7 @@ export function makeFish({ body = '#ff8a2a', fin = '#ffd23f', belly = '#ffe0b0',
   const bm = std(body, { roughness: 0.55 }), fm = std(fin, { roughness: 0.55 });
   inner.add(box(0.5, 0.56, 0.86, bm, 0, 0, 0));
   inner.add(box(0.42, 0.46, 0.2, bm, 0, -0.01, 0.48));                                          // snout
-  const bel = box(0.44, 0.1, 0.76, glow ? new THREE.MeshStandardMaterial({ color: belly, emissive: belly, emissiveIntensity: 1.4, roughness: 0.4 }) : std(belly), 0, -0.29, 0.02); inner.add(bel);
+  const bel = box(0.44, 0.1, 0.76, glow ? new THREE.MeshStandardMaterial({ color: belly, emissive: belly, emissiveIntensity: 0.55, roughness: 0.4 }) : std(belly), 0, -0.29, 0.02); inner.add(bel);
   for (const z of [-0.12, 0.16]) inner.add(box(0.52, 0.5, 0.06, std(stripe, { roughness: 0.6 }), 0, 0.01, z));
   const dorsal = box(0.08, 0.26, 0.38, fm, 0, 0.38, -0.05); dorsal.rotation.x = -0.25; inner.add(dorsal);
   const tail = new THREE.Group(); tail.position.set(0, 0, -0.43); inner.add(tail);
@@ -278,8 +283,16 @@ export function makeSchool(n = 36, { len = 40, spread = [8, 3, 6], cols = ['#ff8
 }
 export function makeSardines(n = 260, { w = 24, d = 16, top = 16, bottom = 0 } = {}) {
   const g = new THREE.Group();
-  const mat = new THREE.MeshStandardMaterial({ color: '#d6dee6', metalness: 0.55, roughness: 0.25, emissive: '#3a4652', emissiveIntensity: 0.4 });
-  const im = new THREE.InstancedMesh(new THREE.BoxGeometry(0.07, 0.04, 0.22), mat, n); im.frustumCulled = false; im.castShadow = true; g.add(im);
+  const mat = new THREE.MeshStandardMaterial({ color: '#f4f8ff', metalness: 0.35, roughness: 0.18, emissive: '#a9c4dc', emissiveIntensity: 0.75 });
+  const tailM = new THREE.MeshStandardMaterial({ color: '#cfdcea', metalness: 0.3, roughness: 0.3, emissive: '#7f9ab4', emissiveIntensity: 0.6 });
+  const bodyGeo = new THREE.BoxGeometry(0.07, 0.05, 0.19);
+  const tailGeo = new THREE.ConeGeometry(0.055, 0.09, 4); tailGeo.rotateX(-PI / 2); tailGeo.rotateZ(PI / 4); tailGeo.scale(0.35, 1, 1); tailGeo.translate(0, 0, -0.13);
+  const backGeo = new THREE.BoxGeometry(0.075, 0.02, 0.17); backGeo.translate(0, 0.03, 0.005);
+  const eyeGeo = new THREE.BoxGeometry(0.076, 0.018, 0.018); eyeGeo.translate(0, 0.008, 0.065);
+  const im = new THREE.InstancedMesh(bodyGeo, mat, n), it = new THREE.InstancedMesh(tailGeo, tailM, n);
+  const ib = new THREE.InstancedMesh(backGeo, new THREE.MeshStandardMaterial({ color: '#2f5f8f', roughness: 0.3, metalness: 0.3, emissive: '#1a3a5a', emissiveIntensity: 0.5 }), n);
+  const ie = new THREE.InstancedMesh(eyeGeo, basic('#111116'), n);
+  for (const m of [im, it, ib, ie]) { m.frustumCulled = false; m.castShadow = m !== ie; g.add(m); }
   const H = top - bottom;
   g.userData = {
     set(t, { k = 1, fall = 9 } = {}) {
@@ -288,17 +301,19 @@ export function makeSardines(n = 260, { w = 24, d = 16, top = 16, bottom = 0 } =
         const u = (hash(i * 1.9) + t * fall * (0.8 + 0.4 * hash(i * 5.3)) / H) % 1;
         const show = hash(i * 8.8) < k;
         _p.set((hash(i * 2.3) - 0.5) * w, top - u * H, (hash(i * 3.1) - 0.5) * d);
-        const sc = show ? 1 : 0;
-        _m.compose(_p, _q.setFromEuler(_e.set(t * 6 + i, t * 4 + i * 2, t * 5)), _s.set(sc, sc, sc)); im.setMatrixAt(i, _m);
+        const sc = show ? 1.45 : 0;
+        // nose down (≈ −Y), wiggling, spinning slowly about the vertical
+        _m.compose(_p, _q.setFromEuler(_e.set(0.75 + 0.3 * Math.sin(t * 9 + i), hash(i * 4.4) * 6.28 + t * (1 + hash(i)), 0.5 * Math.sin(t * 13 + i * 2), 'YXZ')), _s.set(sc, sc, sc));
+        im.setMatrixAt(i, _m); it.setMatrixAt(i, _m); ib.setMatrixAt(i, _m); ie.setMatrixAt(i, _m);
       }
-      im.instanceMatrix.needsUpdate = true;
+      for (const m of [im, it, ib, ie]) m.instanceMatrix.needsUpdate = true;
     },
   };
   return g;
 }
 export function makeBonkSardine() {
   const g = new THREE.Group();
-  g.add(box(0.08, 0.05, 0.24, new THREE.MeshStandardMaterial({ color: '#dfe6ee', metalness: 0.55, roughness: 0.25, emissive: '#3a4652', emissiveIntensity: 0.4 })));
+  g.add(box(0.08, 0.05, 0.24, new THREE.MeshStandardMaterial({ color: '#f4f8ff', metalness: 0.35, roughness: 0.18, emissive: '#a9c4dc', emissiveIntensity: 0.75 })));
   const tail = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.08, 4), std('#aeb8c2')); tail.rotation.x = -PI / 2; tail.position.z = -0.15; g.add(tail);
   return g;
 }
@@ -307,11 +322,12 @@ export function makeBonkSardine() {
 export function makePan() {
   const g = new THREE.Group();
   const iron = std('#1f1f26', { roughness: 0.35, metalness: 0.35 });
-  const handle = box(0.05, 0.04, 0.34, std('#6b3f22', { roughness: 0.7 }), 0, 0, 0.05); g.add(handle);
+  const handle = box(0.06, 0.05, 0.36, std('#9a5a2a', { roughness: 0.6 }), 0, 0, 0.05); g.add(handle);
   g.add(box(0.035, 0.03, 0.12, iron, 0, 0.005, 0.27));
   const pan = new THREE.Group(); pan.position.set(0, 0.0, 0.53); g.add(pan);
   const outer = cyl(0.26, 0.22, 0.07, iron, 28); pan.add(outer);
-  const inner = cyl(0.225, 0.225, 0.01, std('#3a3a44', { roughness: 0.3, metalness: 0.4 }), 28); inner.position.y = 0.032; pan.add(inner);
+  const inner = cyl(0.225, 0.225, 0.01, std('#8a8a9a', { roughness: 0.22, metalness: 0.5 }), 28); inner.position.y = 0.032; pan.add(inner);
+  const shine = cyl(0.07, 0.07, 0.012, basic('#e8eef8'), 16); shine.position.set(-0.07, 0.036, -0.06); shine.scale.set(1, 1, 0.5); pan.add(shine);
   g.userData = { pan, faceCenter: V(0, 0.04, 0.53) };
   return g;
 }
@@ -454,12 +470,12 @@ export function makeTorch() {
 // ═══════════════════════════════════════════════════════════════════════════════ the creature
 function eyeTex() {
   return canvasTexture(512, 256, (g, w, h) => {
-    g.fillStyle = '#7a3a00'; g.fillRect(0, 0, w, h);
+    g.fillStyle = '#e07a00'; g.fillRect(0, 0, w, h);
     const cx = w * 0.75, cy = h / 2;
     const gr = g.createRadialGradient(cx, cy, 4, cx, cy, h * 0.62);
-    gr.addColorStop(0, '#fffbd0'); gr.addColorStop(0.2, '#ffe94a'); gr.addColorStop(0.55, '#ffc21a'); gr.addColorStop(0.85, '#e07a00'); gr.addColorStop(1, '#7a3a00');
+    gr.addColorStop(0, '#ffffe8'); gr.addColorStop(0.25, '#fff35a'); gr.addColorStop(0.6, '#ffd81e'); gr.addColorStop(0.88, '#ffa40a'); gr.addColorStop(1, '#e07a00');
     g.fillStyle = gr; g.fillRect(cx - h, 0, h * 2, h);
-    g.strokeStyle = 'rgba(160,80,0,0.45)'; g.lineWidth = 3;
+    g.strokeStyle = 'rgba(200,110,0,0.35)'; g.lineWidth = 3;
     for (let k = 0; k < 28; k++) { const a = k / 28 * PI * 2; g.beginPath(); g.moveTo(cx + Math.cos(a) * 26, cy + Math.sin(a) * 26); g.lineTo(cx + Math.cos(a) * 110, cy + Math.sin(a) * 110); g.stroke(); }
   });
 }
@@ -487,7 +503,7 @@ export function makeDeepOne() {
   const lidM = new THREE.MeshStandardMaterial({ color: '#4a2878', roughness: 0.5, side: THREE.DoubleSide, emissive: '#1c0a36', emissiveIntensity: 0.6 });
   const lidU = new THREE.Mesh(lidGeo, lidM); eye.add(lidU);
   const lidL = new THREE.Mesh(lidGeo, lidM); eye.add(lidL);
-  const glow = glowSprite('#ffd84a', 1.6, 0.5); glow.position.set(0, 0, 0.55); eye.add(glow);
+  const glow = glowSprite('#ffd84a', 1.6, 0.5); glow.position.set(0, 0, 0.6); eye.add(glow);
   // eight tentacles round the lower body
   const tent = makeTentacles(8, { nSeg: 12, color: '#5a2a8e', sucker: '#5fffe0' });
   tent.userData.mat.emissive.set('#2a0f50'); tent.userData.mat.emissiveIntensity = 0.7;
@@ -504,8 +520,8 @@ export function makeDeepOne() {
       const c = clamp(lid, 0, 1);
       lidU.rotation.x = lerp(-1.4, PI / 2 - 0.02, c);
       lidL.rotation.x = lerp(PI + 1.3, PI + PI / 2 + 0.02, c);
-      eyeM.color.setScalar(clamp(0.35 + 0.75 * gl, 0, 2));
-      glow.material.opacity = clamp(0.55 * gl, 0, 1) * (1 - c * 0.9); glow.scale.setScalar(1.3 + 0.6 * gl);
+      eyeM.color.setRGB(1, 0.94, 0.8).multiplyScalar(clamp(0.45 + 0.75 * gl, 0, 1.7));
+      glow.material.opacity = clamp(0.34 * gl, 0, 1) * (1 - c * 0.95); glow.scale.setScalar(1.6 + 0.9 * gl);
       if (!tentOn) { for (let k = 0; k < 8; k++) tent.userData.hide(k); return; }
       defs.forEach((d, k) => {
         const base = baseMatrix(Math.sin(d.a) * 0.95, -0.35, Math.cos(d.a) * 0.9, d.a, 1.2 + 0.25 * reach, 0, 1);
@@ -605,15 +621,16 @@ export function makeKidWindow(wall = '#bfd8ee', roof = '#3b4f78') {
   };
   return g;
 }
+const glowStd = (c) => std(c, { emissive: c, emissiveIntensity: 0.75 });
 const HOUSE_COLS = ['#e9d8b5', '#c9e4f2', '#f2c4c4', '#d6e8c4', '#f3e3a5', '#cbbfe6'];
 const ROOF_COLS = ['#b5543f', '#4a5d7e', '#6b4a3a', '#3f7a5a'];
 /** Upright local coords: ground top at y = 0, two rows facing each other across a street along X. Flip with rotation.x = π. */
 export function makeUpsideTown() {
   const g = new THREE.Group();
-  g.add(box(150, 1.0, 70, '#3c6a4a', 0, -0.5, 0));
+  g.add(box(150, 1.0, 70, glowStd('#3c6a4a'), 0, -0.5, 0));
   g.add(box(150, 0.04, 9, '#3a3d46', 0, 0.02, 0));
-  const winM = new THREE.MeshBasicMaterial({ color: '#ffd27a', toneMapped: false });
-  const winGeo = new THREE.PlaneGeometry(1.0, 1.2), halos = [];
+  const winM = new THREE.MeshBasicMaterial({ color: '#ffe08a', toneMapped: false });
+  const winGeo = new THREE.PlaneGeometry(1.6, 1.8), halos = [];
   const prism = (w, h, d) => { const s = new THREE.Shape(); s.moveTo(-d / 2, 0); s.lineTo(d / 2, 0); s.lineTo(0, h); s.closePath(); const geo = new THREE.ExtrudeGeometry(s, { depth: w, bevelEnabled: false }); geo.rotateY(PI / 2); geo.translate(-w / 2, 0, 0); return geo; };
   const hero = { pos: V(), yaw: 0 };
   const rows = [[-11, 0], [11, PI]];
@@ -623,13 +640,13 @@ export function makeUpsideTown() {
       const x = -48 + i * 12;
       const hg = new THREE.Group(); hg.position.set(x, 0, z); hg.rotation.y = yaw; g.add(hg);
       const w = 8.6, d = 7, H = 5.8;
-      hg.add(box(w, H, d, HOUSE_COLS[k % 6], 0, H / 2, 0));
-      const rf = new THREE.Mesh(prism(w + 0.8, 2.9, d + 0.8), std(ROOF_COLS[k % 4])); rf.position.y = H; hg.add(rf);
+      hg.add(box(w, H, d, glowStd(HOUSE_COLS[k % 6]), 0, H / 2, 0));
+      const rf = new THREE.Mesh(prism(w + 0.8, 2.9, d + 0.8), glowStd(ROOF_COLS[k % 4])); rf.position.y = H; hg.add(rf);
       const isHero = z < 0 && i === 4;
       for (const [wx, wy] of [[-2.8, 4.35], [0, 4.35], [2.8, 4.35], [-2.6, 1.55], [2.6, 1.55]]) {
         if (isHero && wx === 0 && wy > 3) continue;
         const m = new THREE.Mesh(winGeo, winM); m.position.set(wx, wy, d / 2 + 0.02); hg.add(m);
-        if ((k + wx) % 2 === 0 || isHero) { const hl = glowSprite('#ffc46a', 2.6, 0.6); hl.position.set(wx, wy, d / 2 + 0.3); hg.add(hl); halos.push(hl); }
+        if ((k + wx) % 2 === 0 || isHero || wy < 3) { const hl = glowSprite('#ffc46a', 4.2, 0.7); hl.position.set(wx, wy, d / 2 + 0.3); hg.add(hl); halos.push(hl); }
       }
       hg.add(box(1.1, 2.1, 0.08, '#7d5232', 0, 1.05, d / 2 + 0.03));
       if (isHero) {
@@ -648,7 +665,7 @@ export function makeUpsideTown() {
   }
   // mini clock tower at the west end
   const tw = new THREE.Group(); tw.position.set(-62, 0, 0); g.add(tw);
-  tw.add(box(4.4, 15, 4.4, '#e8d9b8', 0, 7.5, 0));
+  tw.add(box(4.4, 15, 4.4, glowStd('#e8d9b8'), 0, 7.5, 0));
   const cone = new THREE.Mesh(new THREE.ConeGeometry(3.4, 4, 4), std('#3f7a5a')); cone.position.y = 17; cone.rotation.y = PI / 4; tw.add(cone);
   for (let i = 0; i < 4; i++) { const f = new THREE.Mesh(new THREE.CircleGeometry(1.3, 24), basic('#fff6dc', { toneMapped: false })); const a = i * PI / 2; f.position.set(Math.sin(a) * 2.22, 12.5, Math.cos(a) * 2.22); f.rotation.y = a; tw.add(f); }
   const th = glowSprite('#fff0c0', 7, 0.5); th.position.set(0, 12.5, 2.6); tw.add(th);
@@ -656,7 +673,7 @@ export function makeUpsideTown() {
   for (let i = 0; i < 12; i++) { const x = -54 + i * 10, z = i % 2 ? 4.8 : -4.8; tw.parent.add(box(0.2, 4.4, 0.2, '#2a2a30', x, 2.2, z)); const l = glowSprite('#ffe2a0', 2.2, 0.8); l.position.set(x, 4.6, z); g.add(l); halos.push(l); }
   g.userData = {
     hero, halos,
-    set(t, k = 1) { winM.color.set('#ffd27a').multiplyScalar(k); halos.forEach((h, i) => { h.material.opacity = k * (0.5 + 0.2 * Math.sin(t * 2 + i * 1.7)); }); },
+    set(t, k = 1) { winM.color.set('#ffe08a').multiplyScalar(k); halos.forEach((h, i) => { h.material.opacity = k * (0.5 + 0.2 * Math.sin(t * 2 + i * 1.7)); }); },
   };
   return g;
 }
@@ -664,11 +681,12 @@ export function makeLampGlows(points) {
   const g = new THREE.Group(), list = [];
   for (const p of points) { const s = glowSprite('#ffd890', 3.2, 0.7); s.position.copy(p); g.add(s); list.push(s); const c = glowSprite('#fff6e0', 0.8, 1); c.position.copy(p); g.add(c); list.push(c); }
   g.userData = {
-    set(t, k = 1, flicker = 0) {
+    set(t, k = 1, flicker = 0, seq = null) {
       list.forEach((s, i) => {
         const j = i >> 1;
         let on = 1;
-        if (flicker > 0) { const ph = Math.floor(t * 9 + j * 3.7); on = hash(ph * 1.7 + j) < 0.45 * flicker ? 0.05 : 1; }
+        if (seq) on = seq(j, s.position) ? 1 : 0;
+        else if (flicker > 0) { const ph = Math.floor(t * 9 + j * 3.7); on = hash(ph * 1.7 + j) < 0.45 * flicker ? 0.05 : 1; }
         s.material.opacity = k * on * (i % 2 ? 1 : 0.7);
       });
     },
@@ -708,5 +726,35 @@ export function makeDingStar() {
   const inner = new THREE.Mesh(new THREE.ShapeGeometry(shp), basic('#ffffff', { toneMapped: false, transparent: true, side: THREE.DoubleSide, depthTest: false })); inner.scale.setScalar(0.55); inner.position.z = 0.01; g.add(inner);
   outer.renderOrder = inner.renderOrder = 9;
   g.userData = { set(u) { g.visible = u > 0 && u < 1; const s = ease.outBack(clamp(u * 3, 0, 1)) * (1 - clamp((u - 0.6) / 0.4, 0, 1) * 0.3); g.scale.setScalar(Math.max(0.01, s)); outer.material.opacity = inner.material.opacity = 1 - clamp((u - 0.7) / 0.3, 0, 1); g.rotation.z = u * 0.6; } };
+  return g;
+}
+/** expanding ripple rings for the underside of the sea (rings lie flat, visible from below). userData.set(t, k) */
+export function makeRipple(n = 3, color = '#e8ffff') {
+  const g = new THREE.Group(), list = [];
+  for (let i = 0; i < n; i++) {
+    const m = new THREE.Mesh(new THREE.RingGeometry(0.86, 1, 48).rotateX(PI / 2), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: false, toneMapped: false }));
+    m.renderOrder = 7; g.add(m); list.push(m);
+  }
+  const core = glowSprite('#ffffff', 2.2, 0.0); g.add(core);
+  g.userData = {
+    core,
+    set(t, k = 1, { size = 4, speed = 0.9 } = {}) {
+      g.visible = k > 0.001;
+      list.forEach((m, i) => { const u = (t * speed + i / n) % 1; m.scale.setScalar(0.3 + size * u); m.material.opacity = k * 0.8 * (1 - u) * Math.min(1, u * 6); });
+      core.material.opacity = 0.6 * k; core.scale.setScalar(size * 0.5);
+    },
+  };
+  return g;
+}
+/** a dark fish-shaped shadow seen through the water from below (flat, +Z = nose). userData.set(t, k) */
+export function makeFishShadow(color = '#04101e') {
+  const g = new THREE.Group();
+  const s = new THREE.Shape();
+  s.moveTo(0, 1.0); s.quadraticCurveTo(0.42, 0.55, 0.36, -0.1); s.quadraticCurveTo(0.25, -0.55, 0.06, -0.72); s.lineTo(0.38, -1.15); s.lineTo(-0.38, -1.15); s.lineTo(-0.06, -0.72);
+  s.quadraticCurveTo(-0.25, -0.55, -0.36, -0.1); s.quadraticCurveTo(-0.42, 0.55, 0, 1.0);
+  const geo = new THREE.ShapeGeometry(s, 16); geo.rotateX(-PI / 2); geo.scale(1, 1, -1);
+  const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide, fog: false });
+  const m = new THREE.Mesh(geo, mat); m.renderOrder = 6; g.add(m);
+  g.userData = { set(t, k = 1) { mat.opacity = 0.65 * k; m.rotation.y = 0.12 * Math.sin(t * 6); g.visible = k > 0.001; } };
   return g;
 }

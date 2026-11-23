@@ -23,7 +23,7 @@
 //   makeSpaceship()          the purple party saucer (centre at origin, radius ≈ 16, underside at y ≈ −2.6).
 //                            userData.set(t, { pump, eyes, beams, lights })
 //   makeFillerCrowd(n)       instanced blocky dancers for far crowds: layout(list), set(t, opts)
-//   makeSparkBurst(n, cols)  deterministic spark burst: userData.set(u) (u = seconds since the burst)
+//   makeSparkBurst(n, cols)  deterministic spark burst: userData.set(u) (u = seconds since the burst); userData.aim(dir, k) bends it into a jet
 //   makeMoon()               big moon disc with craters + halo
 //   makeGrassPatch(w, d)     a small lawn with a few flowers
 //   buildBath()              custom set: a tiled shower stall (anchor 'bath.spot' at the floor centre, facing +Z)
@@ -424,14 +424,14 @@ export function makeSpaceship() {
     const m = new THREE.Mesh(lgeo, basic(lcols[i % 4], { toneMapped: false })); m.position.set(Math.cos(a) * (R + 0.35), -1.25, Math.sin(a) * (R + 0.35)); g.add(m); lights.push(m);
   }
   // portholes with green eyes on the rim side
-  const NP = 18, eyeM = basic('#7dff6a', { toneMapped: false }), eyeGlows = [];
+  const NP = 28, eyeM = basic('#7dff6a', { toneMapped: false }), eyeGlows = [];
   const portM = std('#1a0a33', { roughness: 0.3 }), frameM = std('#d9d9e0', { roughness: 0.3, metalness: 0.5 });
   for (let i = 0; i < NP; i++) {
     const a = ((i + 0.5) / NP) * PI * 2, n = V(Math.cos(a), 0, Math.sin(a));
     const p = new THREE.Group(); p.position.copy(n).multiplyScalar(R + 0.02); p.position.y = 0.25; p.lookAt(n.clone().multiplyScalar(R + 10).setY(0.25)); p.scale.setScalar(0.85); g.add(p);
     const disc = new THREE.Mesh(new THREE.CircleGeometry(0.8, 24), portM); disc.position.z = 0.02; p.add(disc);
     const fr = new THREE.Mesh(new THREE.TorusGeometry(0.82, 0.12, 6, 24), frameM); fr.position.z = 0.04; p.add(fr);
-    for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.18, 10, 8), eyeM); e.scale.set(1.3, 0.7, 0.5); e.position.set(s * 0.28, 0.05, 0.1); p.add(e); }
+    for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 8), eyeM); e.scale.set(1.2, 0.8, 0.9); e.position.set(s * 0.3, 0.05, 0.12); p.add(e); }   // big enough to read at phone size
     const gl = glowSprite('#5dff6a', 2.6, 0.9); gl.position.z = 0.3; p.add(gl); eyeGlows.push(gl);
   }
   // four giant speakers on top
@@ -555,7 +555,13 @@ export function makeSparkBurst(n = 46, cols = ['#d4ffb0', '#7dff6a', '#3cff6b', 
   }
   const flash = glowSprite(cols[1], 2.4, 1); g.add(flash);
   const _d = V();
+  list.forEach((p) => { p.v0 = p.v.clone(); });
   g.userData = {
+    // aim(dir, k): bend every spark's launch direction toward the (group-local) dir by k (0 = round burst, 1 = a jet); idempotent
+    aim(dir, k = 0.7) {
+      const d = dir.clone().normalize();
+      list.forEach((p) => { const m = p.v0.length(); p.v.copy(p.v0).divideScalar(m).multiplyScalar(1 - k).addScaledVector(d, k).normalize().multiplyScalar(m); });
+    },
     set(u) {
       g.visible = u > 0 && u < 1.0;
       if (!g.visible) return;
