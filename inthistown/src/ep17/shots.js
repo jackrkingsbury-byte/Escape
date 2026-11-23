@@ -485,7 +485,7 @@ export const shots = [
       day(ctx); const P = ctx.props;
       const a = ctx.anchor('park.table'); const ap = a.getWorldPosition(V()); const Fp = frame(townRoot(ctx).worldToLocal(V(ap.x, 0, ap.z)), yawOf(a));
       const dana = placeL(ctx, 'dana', ...Fp(1.9, 0, -0.6).toArray(), Fp.yaw - 0.15);
-      ctx.add(P.ball, dana.joints.handR); P.ball.position.set(0.0, 0.17, 0.0); P.ball.scale.setScalar(2.4 / 3.6);
+      ctx.add(P.ball, dana.joints.handR); P.ball.position.set(0.0, -0.17, 0.02); P.ball.scale.setScalar(2.0 / 3.6);
       ctx.add(P.ballGlow, P.ball); P.ballGlow.position.set(0, 0, 0);
       ctx.add(P.whistle, dana.joints.torso); P.whistle.position.set(0, 0, 0); P.whistle.scale.setScalar(1);
       const dl = Fp(1.9, 0, -0.6);
@@ -495,14 +495,14 @@ export const shots = [
     update(ctx, lt) {
       const { Fp, kids } = ctx.store, t = ctx.t, d = ctx.cast.dana, W = (x, y, z) => townRoot(ctx).localToWorld(Fp(x, y, z));
       d.pose('idle', t, { intensity: 0.5, headPitch: 0.35 }); d.face('grin', t);
-      d.joints.armR.rotation.x = -1.25; d.joints.armR.rotation.z = 0.25; d.joints.foreArmR.rotation.x = -1.1;
+      d.joints.armR.rotation.x = -1.3; d.joints.armR.rotation.z = -0.65; d.joints.foreArmR.rotation.x = -1.0;
       ctx.props.ballGlow.material.opacity = 0.55 + 0.15 * Math.sin(t * 5);
       kids.forEach((k, i) => { k.pose(i % 2 ? 'cheer' : 'clap', t + i * 0.3, { lookAt: humanFace(d) }); k.face(i % 3 ? 'grin' : 'laugh', t + i); });
       if (kind === 'kids') {
         ctx.cam.move({ pos: W(1.0, 0.45, 4.6), look: W(1.9, 1.5, -0.6), fov: 50 }, { pos: W(1.3, 0.4, 3.9), look: W(1.9, 2.0, -0.6), fov: 50 }, clamp(lt / 1.4, 0, 1), ease.inOutSine);
       } else if (kind === 'crane') {
         const u = ease.inOutCubic(clamp(lt / 1.4, 0, 1));
-        ctx.cam.move({ pos: W(1.6, 0.5, 4.6), look: W(1.9, 1.2, -0.6), fov: 52 }, { pos: W(1.0, 1.2, 6.8), look: W(1.9, 5.6, -0.6), fov: 56 }, u);
+        ctx.cam.move({ pos: W(1.6, 0.5, 4.6), look: W(1.9, 1.2, -0.6), fov: 52 }, { pos: W(1.0, 1.2, 7.2), look: W(1.2, 5.5, -0.6), fov: 58 }, u);
         if (ctx.t > ctx.time('b06.w7')) tag(ctx, '12 FEET', ctx.time('b06.w7'), Infinity, { y: 0.14, size: 90, bg: 'rgba(232,35,43,0.92)' });
       } else {
         ctx.cam.move({ pos: W(-1.2, 0.6, 9.5), look: W(1.2, 3.6, -0.6), fov: 54 }, { pos: W(-1.0, 0.55, 8.8), look: W(1.3, 3.9, -0.6), fov: 54 }, clamp(lt / 1.4, 0, 1));

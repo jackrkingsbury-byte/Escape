@@ -696,6 +696,7 @@ export function buildSkySet() {
       mode = m;
       island.children.forEach((c) => { c.visible = true; });   // shots may hide parts: always start from a full island
       houses.forEach((h) => { h.visible = true; }); tower.visible = car.visible = car2.visible = shipMini.visible = street.visible = true;
+      street.children.forEach((c) => { c.visible = true; });
       gp.visible = true; ground.children.forEach((c) => { c.visible = true; });
       slab.visible = m !== 'ground'; ground.visible = m === 'ground';
       island.visible = m !== 'night';
@@ -707,6 +708,8 @@ export function buildSkySet() {
       tower.position.set(-18.5, 0, 0); tower.rotation.set(0, 0, 0); tower.userData.under.visible = false;
       car.position.set(3, 0, 1.6); car.rotation.set(0, 0, 0); car2.position.set(-7, 0, -1.6); car2.rotation.set(0, PI, 0);
       tokensOn = m !== 'night';
+      swarm.root.visible = m !== 'night';
+      if (m === 'night') { swarm.begin(null); swarm.end(); }   // never keep a previous shot's clusters
       setSky(m === 'ground' ? 0 : m === 'night' ? 2 : 1);
     },
     showTokens(on) { tokensOn = on; },

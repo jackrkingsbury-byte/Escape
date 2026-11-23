@@ -1,0 +1,384 @@
+{
+ "title": "In This Town — The Deep Above",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town there is no sky. A sea hangs upside down over the rooftops, fish drift past bedroom windows, and the one rule that matters is never shine a light into the deep. Then the narrator's flashlight rolls onto the roof pointing straight up, and a mountain-sized creature with one glowing eye reaches down Main Street to find it.",
+ "twist": "He works out that the creature is just following the light like a moth, and he throws the flashlight back up into the sea from the clock tower. Then, through the clear water, he sees another town hanging upside down on the far side of the deep. A kid there is holding his flashlight, and the kid's mum is shouting their rule: never shine a light into the deep, because something lives down there. She means us.",
+ "caption_hook": "never shine a light into the deep",
+ "vibe": "mystic2",
+ "sets": [
+  "Main Street at dusk and quiet night under the upside-down sea",
+  "town square stage by day (rules banner, sardine rain)",
+  "the park (Captain Barnaby casts upward), then Main Street as he is dragged along",
+  "the kid's bedroom at night, window looking out on the roof and the glowing sea",
+  "clock tower top at night",
+  "the far side of the sea: an inverted town seen through the water"
+ ],
+ "newProps": [
+  "upside-down sea ceiling: a huge translucent rippling blue plane just above the rooftops, with thin glowing cone light shafts and slow rising sphere bubbles",
+  "blocky fish (box bodies, cone tails, sphere eyes) in orange, teal and yellow: a school of small ones, one that peers in a window, one whale-sized one",
+  "sardine rain: lots of tiny silver boxes falling",
+  "frying pan: flat black cylinder with a box handle",
+  "three-rules banner for the town square stage, with lines that stamp on one by one",
+  "Captain Barnaby's pirate look: tricorn hat (three flattened boxes), eyepatch (small black box), long blue coat, fishing rod (thin cylinder with a taut line)",
+  "flashlight: small cylinder with a glowing cone beam",
+  "giant sea creature: huge dark sphere body, eight tentacles of chained tapering purple cylinders with glowing teal sphere suckers, one enormous yellow sphere eye with a black slit pupil and a lid that blinks",
+  "hedge for Captain Barnaby to crash into (green box)",
+  "inverted town far above the water: a row of small houses and a mini clock tower flipped upside down, glowing windows",
+  "upside-down mum and kid figures in one of the inverted windows"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, there's no sky. There's a sea, hanging upside down over the rooftops.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:sea",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Low angle on Main Street at dusk. The camera tilts up past the street lamps to show a huge glowing blue water ceiling just above the roofs, rippling, with light shafts falling through it and slow bubbles rising. A school of blocky fish drifts across."
+  },
+  {
+   "id": "b02",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The narrator kid stands in the middle of Main Street with his huss face, staring up. A whale-sized blocky fish glides overhead and its glowing belly washes his face blue."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Fish swim past our bedroom windows. Every Friday, it rains sardines.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:sardines",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Inside the kid's bedroom, a big orange box-fish drifts up to the window and peers in. Quick cut to the town square by day: tiny silver box sardines patter down and townspeople flinch."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Pemberton doesn't own an umbrella. She owns a frying pan.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:frying",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Mrs. Pemberton (purple dress, sunglasses, smug face) strolls down Main Street holding a big black frying pan over her head. Sardines bonk off it one after another."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "There are three rules. Never throw anything up. Never swim up. And never, ever shine a light into the deep.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:three",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "1. NEVER THROW ANYTHING UP  2. NEVER SWIM UP  3. NEVER SHINE A LIGHT INTO THE DEEP",
+   "visual": "Town square stage. Each rule stamps onto the big banner as it is spoken. The mayor (top hat, sash) points at it with a stern face while the crowd nods along.",
+   "markers": {
+    "r1": "w:throw",
+    "r2": "w:swim",
+    "r3": "w:shine"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Because something lives up there.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:lives",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Night. The camera drifts slowly up toward the water ceiling. Far up in the dark blue, a colossal shadow slides past, and one faint yellow eye flickers open for half a second, then closes."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Captain Barnaby cast a fishing line straight up once. Something bit. We found him three streets away, still holding the rod.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:cast",
+     "gain": 0.5
+    },
+    {
+     "type": "thump",
+     "at": "w:bit",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "BITE!",
+   "visual": "Old Captain Barnaby (white beard, tricorn pirate hat, eyepatch, blue coat) casts his rod straight up into the sea from the park. The line snaps tight and he is yanked flat (crowdSurf pose), zooming down Main Street past the houses, and lands stunned in a hedge three streets away, still gripping the rod.",
+   "markers": {
+    "bit": "w:Something",
+    "found": "w:found"
+   }
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Until last night.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Hard cut to the kid's bedroom at quiet night. The room is dark except for the window, which glows blue from the sea outside."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I was shining my flashlight at the fish outside my window. It slipped. Rolled down the roof. And stopped... pointing straight up.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:slipped",
+     "gain": 0.5
+    },
+    {
+     "type": "pop",
+     "at": "w:stopped",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The kid leans out the window waving a flashlight at a curious fish. The flashlight slips out of his hand, rolls down the roof tiles and wobbles to a stop on the gutter with its beam pointing straight up into the sea.",
+   "markers": {
+    "slip": "w:slipped",
+    "up": "w:pointing"
+   }
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole deep lit up. And something opened one giant, glowing eye. Right above my house.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:eye",
+     "gain": 0.75
+    }
+   ],
+   "visual": "The beam hits the water and the whole sea ceiling flares up like a stage light. Above the house it shows a mountain-sized dark creature with tentacles coiled everywhere. One enormous yellow eye with a black slit pupil slowly opens until it fills the frame.",
+   "markers": {
+    "lit": "w:lit",
+    "eye": "w:opened"
+   }
+  },
+  {
+   "id": "b11",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid at his window with a shocked face. Camera shake. The tentacles uncurl across the glowing sea and the street lamps flicker on and off."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A tentacle came down through the water. Slow. Curious. Feeling its way down Main Street, window by window.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:tentacle",
+     "gain": 0.5
+    }
+   ],
+   "visual": "A giant purple tentacle made of tapering cylinders, with glowing teal suckers, pushes down through the water ceiling. It curls along Main Street and its tip peeks into each lit window while neighbours duck behind their curtains."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Pemberton bonked it with the frying pan. It didn't even notice. Top ten respect.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:bonked",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "TOP 10 RESPECT",
+   "visual": "Mrs. Pemberton bursts out of her doorway and slams the frying pan onto the tentacle tip. The tentacle doesn't even twitch. She slowly backs inside with a sweat face.",
+   "markers": {
+    "bonk": "w:bonked",
+    "respect": "w:Top"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It wasn't hunting. It was following the light. Like a moth.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "visual": "The kid, with his think face, has climbed onto the roof and holds the flashlight. He tilts the beam left and right, and the tentacle tip sways after it. High above, the giant eye follows the light too."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I grabbed the flashlight, climbed the clock tower, and threw it as high as I could.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:threw",
+     "gain": 0.55
+    }
+   ],
+   "visual": "The kid scrambles up the clock tower at night, flashlight glowing in his hand, with the tentacle trailing curiously behind him. At the top he winds up (slam pose) and hurls the glowing flashlight up into the sea.",
+   "markers": {
+    "climb": "w:climbed",
+    "throw": "w:threw"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The tentacle followed it all the way back up. The eye closed. The deep went dark.",
+   "gapAfter": 0.3,
+   "visual": "The flashlight's beam spirals up through the water like a shooting star going the wrong way. The tentacle coils after it back into the dark, the giant eye slowly closes, and the sea dims to calm.",
+   "markers": {
+    "close": "w:eye",
+    "dark": "w:deep"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The kid cheers on top of the clock tower. Below, townspeople spill out of their houses clapping, Captain Barnaby waves his bent rod, and Mrs. Pemberton raises the frying pan."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Way past the deep, I saw lights. Another town. Upside down. A kid at a window, holding my flashlight.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:lights",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The camera looks straight up through the clear water. Far above, a whole town hangs upside down: tiny houses, a clock tower, glowing windows. In one window a small figure holds a glowing flashlight.",
+   "markers": {
+    "town": "w:Another",
+    "kid": "w:kid"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And I heard his mum shout: never shine a light into the deep. Something lives down there.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:shout",
+     "gain": 0.35
+    }
+   ],
+   "visual": "Close on the upside-down window. A mum figure wags her finger at her kid and points down toward the sea, toward us. Her voice echoes faintly through the water."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Us.",
+   "gapAfter": 0.8,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.8
+    }
+   ],
+   "overlay": "US.",
+   "visual": "Slow push-in on our kid on top of the clock tower, looking up. The light from the upside-down window glints across his stunned face."
+  }
+ ]
+}

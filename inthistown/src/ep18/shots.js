@@ -65,7 +65,7 @@ export function init(ctx) {
   P.chalk = makeChalkCar();
   P.paper = makeNewspaper(); P.bag = makeHandbag(); P.pack = makeBackpack();
   P.mic = makeMicStand({ height: 1.45, tilt: 0.5 });
-  P.micHand = makeMicStand({ height: 0.2, tilt: 0 });
+  P.micHand = makeHandMic();
   P.cars = [makeCar('#4fb3ff'), makeCar('#ffd23f'), makeCar('#5bd65b')];
   P.garden = makeGarden(); P.bench = makeBench(); P.bin = makeBin();
   P.puffs = [0, 1, 2, 3].map((i) => makePuff({ count: 22, radius: 1, seed: 3 + i * 7 }));
@@ -79,6 +79,16 @@ export function init(ctx) {
   P.flare = glowSprite('#ffd060', 6, 0.9);
 }
 
+// a handheld mic built along −Y of the hand joint (= out of the fist, away from the wrist)
+function makeHandMic() {
+  const g = new THREE.Group(); g.name = 'handMic';
+  const blk = new THREE.MeshStandardMaterial({ color: '#16171b', roughness: 0.35, metalness: 0.3 });
+  const grey = new THREE.MeshStandardMaterial({ color: '#b8bcc6', roughness: 0.35, metalness: 0.7, emissive: '#30343c', emissiveIntensity: 0.4 });
+  const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.022, 0.26, 14), blk); handle.position.y = -0.06; g.add(handle);
+  const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.046, 0.036, 0.03, 16), grey); ring.position.y = -0.2; g.add(ring);
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(0.062, 18, 12), grey); ball.position.y = -0.255; g.add(ball);
+  return g;
+}
 // ────────────────────────────────────────────────────────────────────────────────────── helpers
 const CURB = 0.12;
 const SHIP_POS = [60, 1.2, 8.5];         // town-local; beside the stage's south edge, bow wedged into its front corner
@@ -208,26 +218,28 @@ export const shots = [
       dayTown(ctx);
       const L = T(ctx), P = ctx.props;
       const walkers = [];
-      const lanes = [[6.6, -1], [-6.6, 1], [6.9, 1], [-6.9, -1]];
+      // [z, dir, x0]: a near group on the south road edge / pavement right in front of the lens, the rest further down
+      const lanes = [[4.5, -1, 0.5], [4.6, 1, -4.0], [6.6, -1, -1.5], [3.9, 1, -10.5], [6.7, 1, -7.5], [4.4, -1, -13.0],
+        [-4.0, 1, -17.0], [6.6, -1, -19.0], [-4.4, -1, -24.0], [4.3, 1, -27.0], [-6.6, 1, -30.0], [6.8, -1, -33.0]];
       CROWD.slice(0, 12).forEach((id, k) => {
-        const [z, dir] = lanes[k % 4];
-        walkers.push({ id, z, dir, x0: -26 + ((k * 7.3) % 30), sp: 0.9 + 0.3 * hash(k), k });
-        put(ctx, id, L(0, CURB, z), 0);
+        const [z, dir, x0] = lanes[k];
+        walkers.push({ id, z, dir, x0, sp: 0.75 + 0.25 * hash(k), k });
+        put(ctx, id, L(0, z > 5.15 || z < -5.15 ? CURB : 0, z), 0);
       });
       const houses = (ctx.set.anchors.houses || []).slice(0, 14);
       ctx.add(P.swA.root); ctx.add(P.swB.root);
       const G = P.giant; ctx.add(G); G.scale.setScalar(8); G.position.copy(L(-51, 23.5, 1.5));
       ctx.add(P.sparkBig); P.sparkBig.position.copy(L(-51, 23, 1.5));
-      P.cars.slice(0, 2).forEach((c, i) => { ctx.add(c); c.position.copy(L(-6 - 16 * i, 0, i ? -3.3 : 3.3)); c.rotation.set(0, L.yaw + (i ? PI : 0), 0); });
+      P.cars.slice(0, 2).forEach((c, i) => { ctx.add(c); c.position.copy(L(-18 - 8 * i, 0, i ? -3.0 : 1.9)); c.rotation.set(0, L.yaw + (i ? PI : 0), 0); });
       ctx.store.L = L; ctx.store.walkers = walkers; ctx.store.houses = houses;
     },
     update(ctx, lt, u) {
       const { L, walkers, houses } = ctx.store, P = ctx.props, t = ctx.t;
-      const cam = moveCam(ctx, { pos: L(10, 2.0, 2.0), look: L(-40, 7.5, 0.4), fov: 50 }, { pos: L(5, 2.7, 1.6), look: L(-40, 9.5, 0.4), fov: 48 }, ease.inOutSine(clamp(lt / 2.2, 0, 1)));
+      const cam = moveCam(ctx, { pos: L(10, 1.7, 3.4), look: L(-40, 7.5, 0.9), fov: 50 }, { pos: L(6, 2.3, 3.1), look: L(-40, 9.5, 0.9), fov: 48 }, ease.inOutSine(clamp(lt / 2.2, 0, 1)));
       P.swA.begin(cam.pos);
       walkers.forEach((w) => {
         const ch = ctx.cast[w.id]; const x = w.x0 + w.dir * t * w.sp * 0.9;
-        ch.root.position.copy(L(x, CURB, w.z)); ch.root.rotation.y = L.yaw + (w.dir > 0 ? PI / 2 : -PI / 2);
+        ch.root.position.copy(L(x, Math.abs(w.z) > 5.15 ? CURB : 0, w.z)); ch.root.rotation.y = L.yaw + (w.dir > 0 ? PI / 2 : -PI / 2);
         ch.pose('walk', t + w.k, { speed: w.sp }); ch.face('smile', t + w.k);
         const b = balloon(ch, t, w.k); P.swA.add(b.pos, { from: b.from, spin: 0.4 * Math.sin(t + w.k) });
       });
@@ -312,7 +324,7 @@ export const shots = [
       const { L, S, crowd } = ctx.store, P = ctx.props, t = ctx.t, ship = P.ship;
       const t0 = ctx.time('b03') + 0.05, t1 = ctx.time('b03.w6');   // lands on "crashed"
       const u = clamp((t - t0) / (t1 - t0), 0, 1), uu = Math.pow(u, 1.35);
-      const P0 = L(104, 40, 20), P1 = L(76, 6, 12), P2 = L(...SHIP_POS);
+      const P0 = L(98, 24, 18), P1 = L(76, 6, 12), P2 = L(...SHIP_POS);
       const p = P0.clone().multiplyScalar((1 - uu) * (1 - uu)).add(P1.clone().multiplyScalar(2 * uu * (1 - uu))).add(P2.clone().multiplyScalar(uu * uu));
       const dt = t - t1;
       const wob = dt > 0 ? 0.08 * Math.exp(-dt * 4) * Math.sin(dt * 18) : 0;
@@ -321,7 +333,7 @@ export const shots = [
       const pf = puffAt(ctx, 0, L(51.5, 0.4, 7.0), 2.4); pf.update(clamp(dt / 1.4, 0, 1));
       const pf2 = puffAt(ctx, 1, L(58, 0.3, 11.0), 2.0); pf2.update(clamp((dt - 0.05) / 1.3, 0, 1));
       crowd.forEach((ch, k) => { if (dt < -0.6) { ch.pose('idle', t + k); ch.face('neutral', t); } else { ch.pose('surprised', t + k * 0.1); ch.face('shocked', 1); } });
-      ctx.cam.set({ pos: L(46.5, 5.5, 18.5), look: p.clone().lerp(L(56, 2.6, 7.5), 0.5 + 0.5 * u), fov: 60 });
+      ctx.cam.set({ pos: L(44, 5.8, 21), look: p.clone().lerp(L(56, 2.6, 7.5), ease.inOutSine(clamp((u - 0.7) / 0.3, 0, 1))), fov: 62 });
       ctx.fx.overlay('#ffb070', 0.12); ctx.fx.vignette(0.55);
       tag(ctx, '5 YEARS AGO', ctx.time('b03') - 0.05, Infinity, { y: 0.14, size: 66, fill: '#fff4d8', bg: 'rgba(60,30,10,0.85)', rot: 0 });
     },
@@ -407,7 +419,7 @@ export const shots = [
       const c = moveCam(ctx, { pos: L(-11.2, 1.7, 8.6), look: L(-14, 0.2, 3.0), fov: 48 }, { pos: L(-11.0, 1.4, 8.8), look: L(-14, 4.0, 2.7), fov: 52 }, k);
       const b = balloon(h, t, 0, { len: 1.5 }); P.swA.begin(c.pos).add(b.pos, { from: b.from, s: 2.2 }).end().setDim(0);
       tag(ctx, 'MRS. HIGGINS', ctx.time('b05.w1'), Infinity, { y: 0.15, size: 66 });
-      if (t > ctx.time('b05.w4') - 0.1 && t < ctx.time('b05.w1') + 0.2) tag(ctx, 'HER CAR', ctx.time('b05.w4') - 0.1, Infinity, { y: 0.24, size: 56 });
+      tag(ctx, 'HER CAR', ctx.time('b05.w4') - 0.1, ctx.time('b05.w7'), { y: 0.24, size: 56 });
     },
   },
   {
@@ -443,7 +455,7 @@ export const shots = [
     setup(ctx) { darnellSetup(ctx); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t;
-      const c = moveCam(ctx, { pos: L(2.0, 0.45, 9.4), look: L(2, 2.7, 1.0), fov: 52 }, { pos: L(2.0, 0.5, 8.4), look: L(2, 2.9, 1.0), fov: 50 }, clamp(lt / 2.8, 0, 1));
+      const c = moveCam(ctx, { pos: L(1.6, 0.45, 7.3), look: L(2, 2.7, 1.0), fov: 54 }, { pos: L(1.8, 0.5, 6.7), look: L(2, 2.9, 1.0), fov: 52 }, clamp(lt / 2.8, 0, 1));
       darnellUpdate(ctx, c);
       stamp(ctx, 'GOON SQUAD!', ctx.markers.goon, { y: 0.17, size: 120, fill: '#ffd23f', stroke: '#1d1d22' });
     },
@@ -453,7 +465,7 @@ export const shots = [
     setup(ctx) { darnellSetup(ctx); },
     update(ctx, lt) {
       const { L } = ctx.store;
-      const c = moveCam(ctx, { pos: L(-3.8, 1.0, -3.6), look: L(2.2, 3.3, 1.0), fov: 56 }, { pos: L(-3.2, 1.1, -3.1), look: L(2.2, 3.5, 1.0), fov: 54 }, clamp(lt / 2, 0, 1));
+      const c = moveCam(ctx, { pos: L(5.8, 1.0, 6.2), look: L(2, 3.3, 1.0), fov: 56 }, { pos: L(5.3, 1.1, 5.6), look: L(2, 3.5, 1.0), fov: 54 }, clamp(lt / 2, 0, 1));
       darnellUpdate(ctx, c);
       tag(ctx, '3 METRES UP', ctx.time('b06.w12'), Infinity, { y: 0.15, size: 58 });
       stamp(ctx, 'SINCE TUESDAY', ctx.time('b06.w16'), { y: 0.25, size: 96, fill: '#ffffff', stroke: '#e8232b' });
@@ -468,9 +480,9 @@ export const shots = [
       const { L } = ctx.store, hits = ctx.hussTimes('b07').map((h) => h + 0.03), d = ctx.cast.darnell;
       d.root.updateMatrixWorld(true);
       const f = footPos(d, 'R').lerp(footPos(d, 'L'), 0.5), face = humanFace(d);
-      const cams = [{ pos: f.clone().add(V(0.9, -0.15, 2.2)), look: f.clone().add(up(0.05)), fov: 34 },
+      const cams = [{ pos: f.clone().add(V(0.9, -0.15, 2.2)), look: f.clone().add(up(-0.34)), fov: 34 },
         { pos: f.clone().add(V(-1.1, 0.4, 2.6)), look: f.clone().add(up(0.55)), fov: 40 },
-        { pos: face.clone().add(V(0.35, -0.15, 2.1)), look: face.clone().add(up(-0.05)), fov: 32 }];
+        { pos: face.clone().add(V(0.35, -0.15, 2.1)), look: face.clone().add(up(-0.3)), fov: 34 }];
       darnellUpdate(ctx, cams[i], { huss: hits });
       ctx.cam.set(cams[i]); ctx.cam.punch(hits, ctx.t, 0.1, 0.2);
     },
@@ -482,7 +494,7 @@ export const shots = [
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t;
       roomTick(ctx, { hold: 'lap', face: t > ctx.time('b08.w3') ? 'determined' : 'smile' });
-      moveCam(ctx, { pos: R(1.5, 1.5, 1.9), look: R(-1.0, 1.05, -1.2), fov: 50 }, { pos: R(1.1, 1.4, 1.5), look: R(-1.1, 1.05, -1.2), fov: 48 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)));
+      moveCam(ctx, { pos: R(0.85, 1.4, 1.75), look: R(-1.45, 1.0, -0.95), fov: 50 }, { pos: R(0.7, 1.35, 1.5), look: R(-1.45, 1.0, -0.95), fov: 50 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)));
       tag(ctx, '0 TOKENS', ctx.time('b08.w5'), Infinity, { y: 0.15, size: 70, bg: 'rgba(200,0,40,0.9)' });
     },
   },
@@ -494,8 +506,9 @@ export const shots = [
       const up1 = ease.outBack(clamp((t - ts + 0.35) / 0.4, 0, 1));
       roomTick(ctx, { hold: 'up', raise: up1, face: 'determined', faceT: 1.0 });
       const me = ctx.cast.me, f = humanFace(me);
-      moveCam(ctx, { pos: R(0.6, 0.7, -0.2), look: f.clone().add(V(0, 0.3, 0)), fov: 52 }, { pos: R(0.35, 0.65, -0.3), look: f.clone().add(V(0, 0.4, 0)), fov: 50 }, clamp(lt / 1.8, 0, 1));
-      if (t > ts) stamp(ctx, 'SANDWICH', ts, { y: 0.17, size: 120, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.06 });
+      const c = moveCam(ctx, { pos: R(0.65, 1.0, 0.4), look: f.clone().add(V(0, 0.3, 0)), fov: 52 }, { pos: R(0.5, 1.0, 0.25), look: f.clone().add(V(0, 0.35, 0)), fov: 52 }, clamp(lt / 1.8, 0, 1));
+      fill(ctx, c.pos, 0.6, '#ffe8c8');
+      if (t > ts) stamp(ctx, 'SANDWICH', ts, { y: 0.12, size: 110, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.06 });
     },
   },
   // ── b09 "Darnell floated past laughing. Enjoy your sandwich, peasant!"
@@ -513,9 +526,10 @@ export const shots = [
     setup(ctx) { roomSetup(ctx, { darnell: true }); },
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t;
-      roomTick(ctx, { hold: 'lap', face: 'squint', faceT: 1.0 });
-      const f = humanFace(ctx.cast.me);
-      ctx.cam.set({ pos: f.clone().add(V(1.9, 0.05, 0.8)), look: f.clone().add(V(0, -0.15, 0)), fov: 46 });
+      // Darnell hovers in the window, laughing, while he delivers the line; slow push-in through the glass
+      roomTick(ctx, { hold: 'lap', face: 'squint', faceT: 1.0, dx: -0.95 + 0.18 * lt + 0.05 * Math.sin(t * 1.7) });
+      const c = moveCam(ctx, { pos: R(-0.45, 1.45, 0.1), look: R(-0.8, 1.95, -2.7), fov: 48 }, { pos: R(-0.62, 1.5, -0.6), look: R(-0.8, 1.98, -2.7), fov: 46 }, ease.inOutSine(clamp(lt / 1.9, 0, 1)));
+      fill(ctx, c.pos, 1.3, '#ffe8c8');
       quoteCard(ctx, 'Enjoy your sandwich, peasant!', 'Darnell', ctx.time('b09.w4') - 0.08, ctx.time('b09.end') + 0.15, { y: 0.27, byAt: ctx.time('b09.w7') - 0.1 });
     },
   },
@@ -525,7 +539,7 @@ export const shots = [
     setup(ctx) { dunmoreSchool(ctx); },
     update(ctx, lt) {
       const { L } = ctx.store;
-      const c = moveCam(ctx, { pos: L(5.2, 1.4, 6.0), look: L(6.4, 1.2, 0.0), fov: 44 }, { pos: L(5.4, 1.4, 5.2), look: L(6.6, 1.3, 0.0), fov: 42 }, clamp(lt / 2.2, 0, 1));
+      const c = moveCam(ctx, { pos: L(2.0, 1.3, 2.6), look: L(7.2, 1.4, -0.2), fov: 48 }, { pos: L(2.4, 1.3, 2.3), look: L(7.2, 1.45, -0.2), fov: 46 }, clamp(lt / 2.2, 0, 1));
       dunmoreSchoolTick(ctx, c, { scatter: false });
       tag(ctx, 'PRINCIPAL DUNMORE', ctx.time('b10.w1'), Infinity, { y: 0.15, size: 60, bg: 'rgba(122,90,58,0.92)' });
     },
@@ -535,7 +549,7 @@ export const shots = [
     setup(ctx) { dunmoreSchool(ctx); },
     update(ctx, lt) {
       const { L } = ctx.store;
-      const c = moveCam(ctx, { pos: L(5.6, 1.5, 5.0), look: L(7.2, 1.25, 0.0), fov: 42 }, { pos: L(3.6, 4.2, 10.5), look: L(7.2, 0.9, 0.0), fov: 44 }, ease.inOutSine(clamp((lt - 0.6) / 1.9, 0, 1)));
+      const c = moveCam(ctx, { pos: L(10.5, 3.2, 4.5), look: L(5, 0.6, 0), fov: 50 }, { pos: L(10.2, 7.0, 7.0), look: L(6.6, 0.8, -0.2), fov: 50 }, ease.inOutSine(clamp((lt - 0.7) / 1.8, 0, 1)));
       dunmoreSchoolTick(ctx, c, { scatter: true });
       tag(ctx, 'NOBODY', ctx.time('b10.w5'), Infinity, { y: 0.15, size: 80, bg: 'rgba(60,60,80,0.9)' });
     },
@@ -594,8 +608,8 @@ export const shots = [
     update(ctx, lt) {
       const { S, crowd } = ctx.store, P = ctx.props, t = ctx.t, t0 = ctx.time('b13.w2');
       const k = clamp((t - t0) / 0.5, 0, 1);
-      townPurple(ctx, clamp((t - ctx.time('b13')) / 4, 0, 0.35));
-      const c = { pos: S(1.2, 0.8, 13.5), look: S(0, 3.4 + 3 * k, 6.5), fov: 56 };
+      townPurple(ctx, 0.62 * clamp((t - ctx.time('b13')) / 2.1, 0, 1));
+      const c = { pos: S(4.5, 1.2, 16), look: S(0, 2 + 2.5 * k, 6), fov: 56 };
       ctx.cam.set(c);
       P.swA.begin(c.pos);
       crowd.forEach((m) => {
@@ -632,11 +646,11 @@ export const shots = [
   },
   {
     name: 'car floats', start: 'b13.w11-0.12', set: 'sky',
-    setup(ctx) { liftSetup(ctx); },
+    setup(ctx) { liftSetup(ctx); ctx.set.street.children.forEach((c) => { if (c.position.z > 4.5 && c.position.z < 5.5) c.visible = false; }); },   // south lamp line would cut the car
     update(ctx, lt) {
       const sk = ctx.set; liftTick(ctx, null);
       const cp = sk.car.position.clone();
-      const c = { pos: V(cp.x + 1.5, cp.y + 0.6, cp.z + 6.5), look: cp.clone().add(V(-0.4, 1.3, 0)), fov: 50 };
+      const c = { pos: V(cp.x + 2.5, cp.y + 0.7, cp.z + 6.3), look: cp.clone().add(V(-0.2, 1.3, 0)), fov: 50 };
       liftTick(ctx, c); ctx.cam.set(c);
       stamp(ctx, 'CARS', ctx.time('b13.w11'), { y: 0.17, size: 110, fill: '#ffffff', stroke: '#6a2fb8', rot: 0.05 });
     },
@@ -657,8 +671,10 @@ export const shots = [
     name: 'okafor rising', start: 'b14-0.1', set: 'town',
     setup(ctx) { okaforSetup(ctx); },
     update(ctx, lt) {
-      const { L } = ctx.store;
-      const c = moveCam(ctx, { pos: L(-5.6, 0.5, -0.8), look: L(-8.6, 2.6, -5.0), fov: 52 }, { pos: L(-5.9, 0.6, -1.2), look: L(-8.6, 3.2, -5.0), fov: 52 }, clamp(lt / 2.5, 0, 1));
+      const { L } = ctx.store, o = ctx.cast.okafor;
+      okaforTick(ctx, null);
+      const y = o.root.position.y - L(0, 0, 0).y;
+      const c = moveCam(ctx, { pos: L(-12.2, 1.2, -1.6), look: L(-8.6, y + 1.4, -4.8), fov: 50 }, { pos: L(-12.0, 1.5, -1.9), look: L(-8.6, y + 1.5, -4.8), fov: 50 }, clamp(lt / 2.5, 0, 1));
       okaforTick(ctx, c);
       tag(ctx, 'MR. OKAFOR', ctx.time('b14.w1'), Infinity, { y: 0.15, size: 66 });
     },
@@ -670,11 +686,13 @@ export const shots = [
       const { L } = ctx.store, o = ctx.cast.okafor;
       okaforTick(ctx, null);
       const hp = handPos(o, 'R');
-      const c = { pos: hp.clone().add(V(1.7, -0.25, 3.0)), look: hp.clone().add(V(-0.45, 0.05, -0.2)), fov: 46 };
+      const post = L(-9, 0, -5.15); post.y = hp.y;
+      const c = { pos: L(-11.4, 0, -2.2).setY(hp.y + 0.2), look: hp.clone().lerp(post, 0.5), fov: 40 };
       okaforTick(ctx, c); ctx.cam.set(c);
-      stamp(ctx, 'ALMOST!', ctx.markers.almost, { y: 0.18, size: 130, fill: '#ffd23f', stroke: '#1d1d22' });
-      if (ctx.t > ctx.time('b14.w8')) stamp(ctx, 'ALMOST!!', ctx.time('b14.w8'), { y: 0.28, size: 150, fill: '#e8232b', stroke: '#ffffff', rot: 0.08 });
-      ctx.cam.punch([ctx.markers.almost, ctx.time('b14.w8')], ctx.t, 0.08, 0.25);
+      const t2 = ctx.time('b14.w9');
+      stamp(ctx, 'ALMOST!', ctx.markers.almost, { y: 0.15, size: 120, fill: '#ffd23f', stroke: '#1d1d22' });
+      if (ctx.t > t2) stamp(ctx, 'ALMOST!!', t2, { y: 0.27, size: 140, fill: '#e8232b', stroke: '#ffffff', rot: 0.08 });
+      ctx.cam.punch([ctx.markers.almost, t2], ctx.t, 0.08, 0.25);
     },
   },
   // ── b15 HUSS ×3: house past camera, Mrs Higgins on a roof, Darnell upside down above the clouds
@@ -684,8 +702,8 @@ export const shots = [
     update(ctx) {
       const sk = ctx.set, t = ctx.t, h = sk.houses[3], hit = ctx.store.hits[0];
       h.userData.under.visible = true;
-      h.position.set(6.2, -4 + (t - hit) * 16, -7.3); h.rotation.set(0.12, 0.3, 0.08);
-      const c = { pos: V(10.5, 3.5, 2.5), look: V(6.2, 3.0, -7.3), fov: 56 };
+      h.position.set(6.2, 0.5 + (t - hit) * 10, -7.3); h.rotation.set(0.12, 0.3, 0.08);
+      const c = { pos: V(13, 3.5, 4), look: V(6.2, 3.0, -7.3), fov: 58 };
       ctx.cam.set(c); sk.tokens(t, c.pos, { flare: 0.4 });
       ctx.cam.punch(ctx.store.hits, t, 0.1, 0.2); ctx.cam.shake(0.3, t, 5);
     },
@@ -703,7 +721,7 @@ export const shots = [
       const sk = ctx.set, t = ctx.t, hg = ctx.cast.higgins, { ridge } = ctx.store;
       hg.pose('sit', t, { seatHeight: 0, hands: 'none' }); hg.face('sweat', t);
       hg.joints.armL.rotation.x = -1.4; hg.joints.armR.rotation.x = -1.4; hg.joints.armL.rotation.z = -0.4; hg.joints.armR.rotation.z = 0.4;
-      const c = { pos: ridge.clone().add(V(3.4, 1.2, 3.6)), look: ridge.clone().add(V(0, 0.9, 0)), fov: 44 };
+      const c = { pos: ridge.clone().add(V(-3.0, 1.4, 3.4)), look: ridge.clone().add(up(0.35)), fov: 44 };
       ctx.cam.set(c); sk.tokens(t, c.pos);
       ctx.cam.punch(ctx.store.hits, t, 0.1, 0.2); ctx.cam.shake(0.15, t, 6);
     },
@@ -807,7 +825,7 @@ export const shots = [
       const w = Math.sin(t * 9);
       d.joints.armL.rotation.set(-2.6 + 0.3 * w, 0, -0.35); d.joints.armR.rotation.set(-2.6 - 0.3 * w, 0, 0.35);
       d.face('grin', 1.0);
-      const c = moveCam(ctx, { pos: BP.clone().add(V(1.1, 1.7, 4.4)), look: BP.clone().add(V(0, 1.45, 0)), fov: 44 }, { pos: BP.clone().add(V(0.9, 1.6, 3.7)), look: BP.clone().add(V(0, 1.5, 0)), fov: 42 }, clamp(lt / 2.2, 0, 1));
+      const c = moveCam(ctx, { pos: BP.clone().add(V(1.1, 1.5, 4.4)), look: BP.clone().add(V(0, 1.0, 0)), fov: 46 }, { pos: BP.clone().add(V(0.9, 1.45, 3.8)), look: BP.clone().add(V(0, 1.05, 0)), fov: 44 }, clamp(lt / 2.2, 0, 1));
       sk.tokens(t, c.pos);
       const hp = handPos(d, 'R'); P.hero.position.copy(hp).add(up(0.25)); P.hero.scale.setScalar(0.8); P.hero.rotation.set(0, Math.atan2(c.pos.x - hp.x, c.pos.z - hp.z), 0); P.hero.userData.set(t, {});
       P.bench.updateMatrixWorld(true);
@@ -815,7 +833,7 @@ export const shots = [
       for (const s of [-1, 1]) { const f = P.bench.localToWorld(V(s * 0.85, 0.7, -0.05)); for (let k = 0; k < 5; k++) P.swA.add(f.clone().add(V(s * (0.2 + 0.5 * hash(k)), 1.8 + 0.7 * hash(k * 3) + 0.1 * Math.sin(t * 2 + k), -0.4 + 0.3 * k)), { from: f, s: 1.0 }); }
       P.swA.end().setDim(0);
       stamp(ctx, 'PRINCIPAL DUNMORE', ctx.time('b18.w1') - 0.2, { y: 0.13, size: 86, fill: '#ffffff', stroke: '#7a5a3a', rot: -0.04 });
-      if (t > ctx.time('b18.w3')) stamp(ctx, 'BOUGHT IT', ctx.time('b18.w3'), { y: 0.25, size: 130, fill: '#e8232b', stroke: '#ffffff', rot: 0.06 });
+      if (t > ctx.time('b18.w3')) stamp(ctx, 'BOUGHT IT', ctx.time('b18.w3'), { y: 0.72, size: 130, fill: '#e8232b', stroke: '#ffffff', rot: 0.06 });
       ctx.cam.punch([ctx.time('b18.w3')], t, 0.12, 0.3);
     },
   },
@@ -851,9 +869,9 @@ export const shots = [
       sk.island.position.y = 34 * s * s;
       const dt = t - tc;
       if (dt > 0) { sk.slab.visible = false; sk.houses.forEach((h) => { h.userData.under.visible = false; }); }
-      const c = { pos: V(34, 3.0, 40), look: V(0, 6 + 12 * s, 0), fov: 52 };
+      const c = { pos: V(16, 2.0, 22), look: V(0, 3 + 14 * s, 0), fov: 56 };
       ctx.cam.set(c); sk.tokens(t, c.pos, { dim: clamp((t - ctx.time('b19.w4')) / 0.4, 0, 1) });
-      if (dt > 0) { ctx.cam.shake(1.1 * Math.exp(-dt * 2.5), t, 9); const pf = puffAt(ctx, 0, V(0, 0, 4), 14, '#d8ccb6'); pf.update(clamp(dt / 1.0, 0, 1)); const pf2 = puffAt(ctx, 1, V(-12, 0, -3), 10, '#d8ccb6'); pf2.update(clamp((dt - 0.05) / 1.0, 0, 1)); }
+      if (dt > 0) { ctx.cam.shake(1.7 * Math.exp(-dt * 2.5), t, 9); const pf = puffAt(ctx, 0, V(7, 0, 10.5), 8, '#d8ccb6'); pf.update(clamp(dt / 1.0, 0, 1)); const pf2 = puffAt(ctx, 1, V(-8, 0, 1), 11, '#d8ccb6'); pf2.update(clamp((dt - 0.05) / 1.0, 0, 1)); const pf3 = puffAt(ctx, 2, V(2, 0, -4), 10, '#d8ccb6'); pf3.update(clamp((dt - 0.02) / 1.0, 0, 1)); }
       if (dt > 0) stamp(ctx, 'CRASH', tc, { y: 0.2, size: 190, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.08 });
       flash(ctx, tc, 0.18, '#ffffff', 0.7);
     },
@@ -867,7 +885,7 @@ export const shots = [
   // ── b21 "Top ten respect. Kid saves town with one sentence."  — freeze frame
   {
     name: 'top ten freeze', start: 'b21-0.1', set: 'town',
-    setup(ctx) { stageSetup(ctx, { mic: true, party: true, floating: false, dull: true }); },
+    setup(ctx) { stageSetup(ctx, { mic: false, party: true, floating: false, dull: true }); },
     update(ctx, lt) {
       const { S } = ctx.store, me = ctx.cast.me, tf = 3.3;
       stageTick(ctx, { freeze: tf, cheer: true });
@@ -876,7 +894,6 @@ export const shots = [
       flash(ctx, ctx.time('b21') - 0.1, 0.3, '#ffffff', 0.85);
       ctx.fx.overlay('#2a1a40', 0.12);
       top10Card(ctx, 1, ctx.time('b21') - 0.02, Infinity, { popAt: ctx.markers.top10 });
-      tag(ctx, 'KID SAVES TOWN\nWITH ONE SENTENCE', ctx.time('b21.w3'), Infinity, { y: 0.4, size: 54, bg: 'rgba(20,20,30,0.85)' });
     },
   },
   // ── b22 "Victory chant! Bonkaroo! Skalla mee! Doobi tash! Arrbanoo!"
@@ -890,8 +907,8 @@ export const shots = [
       const { S } = ctx.store, t = ctx.t, me = ctx.cast.me;
       stageTick(ctx, { dance: true });
       me.pose('dance2', t, { speed: 1.1 }); me.face(i % 2 ? 'laugh' : 'grin', t);
-      const cams = [{ pos: S(1.4, 1.6, 9.5), look: S(0, 1.8, 1.5), fov: 48 }, { pos: S(-0.9, 0.4, 5.6), look: S(0, 1.6, 2.2), fov: 44 },
-        { pos: S(4.5, 3.0, 6.5), look: S(-0.3, 1.2, 1.8), fov: 44 }, { pos: S(0.5, 1.4, 5.0), look: S(0, 1.5, 2.4), fov: 40 }, { pos: S(-2.5, 4.5, 11), look: S(0, 2.0, 1.0), fov: 50 }];
+      const cams = [{ pos: S(1.2, 1.9, 6.3), look: S(0, 0.6, 2.5), fov: 46 }, { pos: S(-0.9, 0.5, 4.2), look: S(0, 1.6, 2.2), fov: 44 },
+        { pos: S(4.5, 3.0, 6.5), look: S(-0.3, 1.2, 1.8), fov: 44 }, { pos: S(0.5, 1.4, 5.0), look: S(0, 1.75, 2.4), fov: 40 }, { pos: S(-2.5, 4.5, 11), look: S(0, 2.0, 1.0), fov: 50 }];
       const c = cams[i]; ctx.cam.set(c);
       if (word) { const tw = ctx.time(start) + 0.1; stamp(ctx, word, tw, { y: 0.2, size: 140, fill: col, stroke: '#1d1d22', rot: i % 2 ? 0.1 : -0.1 }); ctx.cam.punch([tw], t, 0.12, 0.25); }
       else tag(ctx, 'VICTORY CHANT', ctx.time('b22'), Infinity, gold({ y: 0.16, size: 76 }));
@@ -929,7 +946,7 @@ export const shots = [
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, w = ctx.cast[CROWD[2]];
       w.root.position.copy(L(-7.5 + 1.0 * lt, 0, 3.9)); w.pose('walk', t); w.face('neutral', t, { lookAt: null });
-      const c = moveCam(ctx, { pos: L(-1.5, 1.2, 8.0), look: L(-3.6, 0.95, 5.7), fov: 48 }, { pos: L(-1.8, 1.1, 7.8), look: L(-3.6, 0.95, 5.7), fov: 46 }, clamp(lt / 2, 0, 1));
+      const c = moveCam(ctx, { pos: L(-1.5, 1.5, 6.8), look: L(-3.6, 1.1, 5.7), fov: 48 }, { pos: L(-1.7, 1.45, 6.65), look: L(-3.6, 1.1, 5.7), fov: 46 }, clamp(lt / 2, 0, 1));
       fill(ctx, c.pos, 1.2);
       tag(ctx, 'NOBODY', ctx.time('b24.w1'), Infinity, { y: 0.15, size: 76, bg: 'rgba(30,40,60,0.9)' });
     },
@@ -941,18 +958,19 @@ export const shots = [
       const L = T(ctx), P = ctx.props;
       const GP = L(-21, 0.02, 8.4);
       ctx.add(P.garden); P.garden.position.copy(GP); P.garden.rotation.set(0, L.yaw + PI, 0);
-      const D = put(ctx, 'dunmore', GP.clone().add(V(0, 0.1, 0)), L.yaw + PI);
+      const DP = L(-21, 0.12, 6.9);   // front of the garden, clear of the tree canopy behind
+      put(ctx, 'dunmore', DP, L.yaw + PI);
       ctx.add(P.swBig.root); ctx.add(P.goldLight); ctx.add(P.flare);
-      ctx.store = { ...ctx.store, L, GP };
+      ctx.store = { ...ctx.store, L, GP: DP };
     },
     update(ctx, lt) {
       const { L, GP } = ctx.store, P = ctx.props, t = ctx.t, d = ctx.cast.dunmore;
       const lift = Math.pow(clamp((t - ctx.time('b24.w8')) / 2.2, 0, 1), 1.6) * 0.9;
-      d.root.position.copy(GP).add(V(0, 0.1 + lift, 0));
+      d.root.position.copy(GP).add(V(0, lift, 0));
       d.pose('idle', t, { intensity: 0.3 }); d.face('grin', 1.0);
       hugArms(d);
       const cc = clusterCenter(d);
-      const c = moveCam(ctx, { pos: L(-21.9, 1.0, 4.2), look: humanFace(d).add(up(0.7)), fov: 56 }, { pos: L(-21.8, 0.7, 4.5), look: humanFace(d).add(up(0.9)), fov: 60 }, ease.inOutSine(clamp(lt / 3.6, 0, 1)));
+      const c = moveCam(ctx, { pos: L(-21.9, 1.0, 3.3), look: humanFace(d).add(up(0.75)), fov: 58 }, { pos: L(-21.8, 0.8, 3.5), look: humanFace(d).add(up(0.9)), fov: 62 }, ease.inOutSine(clamp(lt / 3.6, 0, 1)));
       bigCluster(ctx, cc, 1.25, c.pos, t);
       P.goldLight.position.copy(cc); P.goldLight.intensity = 9; P.flare.position.copy(cc); P.flare.scale.setScalar(4.5);
       fill(ctx, c.pos, 0.6);
@@ -972,11 +990,11 @@ export const shots = [
       const R = ctx.store.R, t = ctx.t, me = ctx.cast.me;
       me.root.position.copy(R(0.2, 0, -0.2)); me.root.rotation.y = ctx.store.Ryaw + 0.15;
       me.pose('cheer', t, { speed: 1.3 }); me.face('laugh', t);
-      const c = moveCam(ctx, { pos: R(0.6, 1.3, 3.2), look: R(0.15, 1.3, -0.2), fov: 44 }, { pos: R(0.5, 1.25, 2.7), look: R(0.15, 1.35, -0.2), fov: 44 }, clamp(lt / 1.5, 0, 1));
+      const c = moveCam(ctx, { pos: R(0.6, 1.4, 3.0), look: R(0.15, 1.75, -0.2), fov: 48 }, { pos: R(0.5, 1.4, 2.6), look: R(0.15, 1.75, -0.2), fov: 48 }, clamp(lt / 1.5, 0, 1));
       fill(ctx, c.pos, 0.8, '#ffe8c8');
       roomTokens(ctx, c);
-      stamp(ctx, 'SCHOOL:', ctx.time('b25.w6'), { y: 0.14, size: 100, fill: '#ffffff', stroke: '#1d1d22', rot: -0.04 });
-      if (t > ctx.time('b25.w8')) stamp(ctx, 'CANCELLED\nFOREVER', ctx.time('b25.w8'), { y: 0.27, size: 120, fill: '#e8232b', stroke: '#ffffff', rot: -0.08 });
+      stamp(ctx, 'SCHOOL:', ctx.time('b25.w6'), { y: 0.1, size: 84, fill: '#ffffff', stroke: '#1d1d22', rot: -0.04 });
+      if (t > ctx.time('b25.w8')) stamp(ctx, 'CANCELLED\nFOREVER', ctx.time('b25.w8'), { y: 0.2, size: 92, fill: '#e8232b', stroke: '#ffffff', rot: -0.08 });
     },
   },
   // ── b26 HUSS ×3: snap zooms on the moon until the tiny waving principal fills the frame
@@ -986,10 +1004,10 @@ export const shots = [
     update(ctx) {
       const hits = ctx.hussTimes('b26').map((h) => h + 0.03), d = ctx.cast.dunmore;
       moonTick(ctx, null);
-      const p = d.root.position.clone().add(up([1.6, 2.0, 2.0][i]));
-      moonTick(ctx, { pos: V(0, 10, 30), look: p, fov: [14, 6.5, 3.2][i] });
+      const p = d.root.position.clone().add(up([1.6, 0.9, 0.9][i]));
+      moonTick(ctx, { pos: V(0, 10, 30), look: p, fov: [14, 7, 4.5][i] });
       ctx.cam.punch(hits, ctx.t, 0.12, 0.2);
-      if (i === 2) { stamp(ctx, 'BYE!', hits[2] + 0.15, { y: 0.2, size: 150, fill: '#ffd23f', stroke: '#1d1d22' }); iris(ctx, ctx.timeline.duration - 0.55, 0.45, 0.5); }
+      if (i === 2) { stamp(ctx, 'BYE!', hits[2] + 0.15, { y: 0.11, size: 140, fill: '#ffd23f', stroke: '#1d1d22' }); iris(ctx, ctx.timeline.duration - 0.55, 0.45, 0.5); }
     },
   })),
 ];
@@ -1051,20 +1069,20 @@ function roomTokens(ctx, cam) {
   }
   P.swA.end().setDim(0);
 }
-function roomTick(ctx, { hold = 'lap', raise = 0, face = 'determined', faceT = null, look = false } = {}) {
+function roomTick(ctx, { hold = 'lap', raise = 0, face = 'determined', faceT = null, look = false, dx = null } = {}) {
   const { R, Ryaw } = ctx.store, P = ctx.props, t = ctx.t, me = ctx.cast.me;
   me.pose('sit', t, { seatHeight: 0.55, hands: 'none', intensity: 0.4 });
   const J = me.joints;
   if (hold === 'lap') { J.armL.rotation.set(-0.75, 0, -0.15); J.armR.rotation.set(-0.75, 0, 0.15); if (J.foreArmL) { J.foreArmL.rotation.x = -0.75; J.foreArmR.rotation.x = -0.75; } }
   else if (hold === 'chest') { J.armL.rotation.set(-1.0, 0, -0.3); J.armR.rotation.set(-1.0, 0, 0.3); if (J.foreArmL) { J.foreArmL.rotation.x = -1.1; J.foreArmR.rotation.x = -1.1; } }
-  else { const a = lerp(-0.75, -2.5, raise); J.armL.rotation.set(a, 0, -0.28); J.armR.rotation.set(a, 0, 0.28); if (J.foreArmL) { J.foreArmL.rotation.x = lerp(-0.75, -0.35, raise); J.foreArmR.rotation.x = lerp(-0.75, -0.35, raise); } }
+  else { const a = lerp(-0.75, -2.9, raise); J.armL.rotation.set(a, 0, -0.28); J.armR.rotation.set(a, 0, 0.28); if (J.foreArmL) { J.foreArmL.rotation.x = lerp(-0.75, -0.35, raise); J.foreArmR.rotation.x = lerp(-0.75, -0.35, raise); } }
   if (look && ctx.store.darnell) { const df = humanFace(ctx.cast.darnell); J.head.rotation.y = -0.9; J.head.rotation.x = -0.1; }
   me.face(face, faceT ?? t);
   const a = handPos(me, 'L'), b = handPos(me, 'R'), m = a.clone().lerp(b, 0.5);
   P.sandwich.position.copy(m).add(up(0.06)); P.sandwich.rotation.set(0, Ryaw + PI / 2 + PI / 2, 0);
   if (ctx.store.darnell) {
     const d = ctx.cast.darnell, t0 = ctx.time('b09') - 0.6;
-    d.root.position.copy(R(-2.6 + 1.25 * (t - t0), 0.15 + 0.08 * Math.sin(t * 2), -2.72));
+    d.root.position.copy(R(dx ?? -2.6 + 1.25 * (t - t0), 0.15 + 0.08 * Math.sin(t * 2), -2.72));
     d.pose('pointLaugh', t); d.face('laugh', t);
   }
   roomTokens(ctx, ctx.cam.state || { pos: R(1, 1.4, 1.5) });
@@ -1282,7 +1300,7 @@ function landTick(ctx, i) {
     const sk = ctx.set; sk.tokens(t, V(18, 1.2, 14), { dim: 1 });
     sk.houses.forEach((h, k) => { const drop = k % 3 === i % 3 ? Math.max(0, -dh) * 14 : 0; h.position.set(h.userData.home.x, drop, h.userData.home.z); });
     const h = sk.houses[1];
-    const c = { pos: V(h.userData.home.x + 4.5, 0.8, h.userData.home.z + 9), look: V(h.userData.home.x, 2.0, h.userData.home.z), fov: 54 };
+    const c = { pos: V(h.userData.home.x + 7, 1.4, h.userData.home.z + 12), look: V(h.userData.home.x, 2.2, h.userData.home.z), fov: 50 };
     ctx.cam.set(c); sk.tokens(t, c.pos, { dim: 1 });
     const pf = P.puffs[0]; pf.root.position.set(h.userData.home.x, 0, h.userData.home.z + 2.5); pf.root.scale.setScalar(4); pf.update(clamp(dh / 1.0, 0, 1));
     if (dh > 0) ctx.cam.shake(0.6 * Math.exp(-dh * 6), t, 21);
@@ -1319,7 +1337,7 @@ function landTick(ctx, i) {
     const { S } = ctx.store, me = ctx.cast.me;
     stageTick(ctx, { cheer: true });
     micHigh(ctx, me, t);
-    ctx.cam.set({ pos: S(0.9, 0.35, 4.9), look: S(0, 2.7, 2.2), fov: 60 });
+    ctx.cam.set({ pos: S(0.9, 0.35, 4.9), look: S(0, 1.15, 2.2), fov: 60 });
   }
   ctx.cam.punch(hits, t, 0.1, 0.2);
 }
@@ -1342,7 +1360,7 @@ function bigCluster(ctx, c, r, camPos, t, { s = 0.62, n = 420 } = {}) {
   P.swBig.end().setDim(0, 0.35);
 }
 function moonSetup(ctx) {
-  const sk = ctx.set; sk.setMode('night');
+  const sk = ctx.set; sk.setMode('night'); sk.showTokens(false); sk.tokens(ctx.t, V(0, 0, 0)); sk.swarm.root.visible = false;
   put(ctx, 'dunmore', V(0, 21, -30), 0);
   ctx.add(ctx.props.swBig.root); ctx.add(ctx.props.swA.root);
 }
