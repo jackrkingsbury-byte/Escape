@@ -480,16 +480,21 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx);
       bisAt(ctx, BIS.x, BIS.z, PI / 2);
-      put(ctx, 'walker', L(-40, 0, -3.5), L.yaw - PI / 2 - 0.3);
+      put(ctx, 'walker', L(-26, 0, 0.5), L.yaw + 1.6);
       const sp = ctx.props.speech; ctx.add(sp);
+      filler(ctx, streetFill(-40, -4, { seed: 31, step: 2.4 }));
     },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, w = ctx.cast.walker, tw = ctx.time('b06.w4');
       const happy = t > tw + 0.12;
       bset(ctx, happy ? { sit: 1, eyeScale: 1.15, pupil: 1.25, tongue: 1, jaw: 0.55, wag: 1, wagSpeed: 12, lookY: -0.3, lookX: 0.3, headTilt: 0.2, lid: 0 } : { sit: 1, wag: 0.2, lookY: -0.2, lid0: 0.3 });
-      w.pose(t > tw - 0.3 ? 'point' : 'idle', t); w.face(t > tw - 0.2 ? 'grin' : 'smile', t);
-      const sp = ctx.props.speech; sp.position.copy(headPt(w, 0.3, 0.75, 0)); sp.userData.set(t > tw - 0.05 ? ease.outBack(clamp((t - tw + 0.05) / 0.2, 0, 1)) : 0);
-      const wh = headPt(w, 0, 0.3, 0), bh = bHead(ctx), p0 = L(-34.2, 1.2, 1.6), p1 = L(-34.6, 1.25, 1.3); moveCam(ctx, { pos: p0, look: lookMix(p0, wh, bh, 0.5), fov: 64 }, { pos: p1, look: lookMix(p1, wh, bh, 0.52), fov: 62 }, lt / 1.8);
+      const pointing = t > tw - 0.3;
+      w.pose('idle', t, { intensity: 0.5 }); w.face(t > tw - 0.2 ? 'grin' : 'smile', t);
+      if (pointing) { const J = w.joints; J.armR.rotation.set(-2.75, 0, -0.25); J.foreArmR.rotation.set(-0.15, 0, 0); J.head.rotation.x -= 0.15; }
+      const sp = ctx.props.speech; sp.position.copy(headPt(w, -0.25, 0.95, 0)); sp.userData.set(t > tw - 0.05 ? ease.outBack(clamp((t - tw + 0.05) / 0.2, 0, 1)) : 0);
+      ctx.props.filler.userData.set(t, { arms: happy ? 'up' : 'limp', bounce: happy ? 0.6 : 0.2 });
+      const wh = humanFace(w), e = eyeMid(ctx), p0 = L(-14.5, 0.6, 3.6), p1 = L(-15.3, 0.65, 3.4);
+      moveCam(ctx, { pos: p0, look: lookMix(p0, wh, e, 0.55), fov: 64 }, { pos: p1, look: lookMix(p1, wh, e, 0.55), fov: 62 }, lt / 1.8);
       tag(ctx, 'NEVER SAY W-A-L-K', tw + 0.15, Infinity, { y: 0.15, size: 62, bg: 'rgba(200,0,40,0.9)' });
     },
   },
