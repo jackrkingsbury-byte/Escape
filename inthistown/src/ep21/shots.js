@@ -159,9 +159,9 @@ const MOODS = {
   day: { preset: 'day', bg: '#8ad6ee', fog: [70, 330], hemi: ['#c8f2ff', '#86996a', 1.5], exposure: 1.0, windows: 0, shafts: 1, bubbles: 0.8, lamps: 0,
     sea: { deep: '#1a78c8', shallow: '#62dcf2', light: '#f0ffff', glow: 1.0, opacity: 0.97 } },
   dusk: { preset: 'dusk', bg: '#ee9a8a', fog: [60, 300], hemi: ['#ffc0d0', '#5d3c5c', 1.35], exposure: 1.05, windows: 0.7, shafts: 0.9, bubbles: 0.7, lamps: 0.7,
-    sea: { deep: '#24308e', shallow: '#3a78d4', light: '#9a8ad0', glow: 0.95, opacity: 0.97, caus: 0.3, amp: 0.6 } },
-  night: { preset: 'quiet_night', bg: '#0b2242', fog: [35, 210], hemi: ['#3a74b8', '#121a28', 1.15], exposure: 1.12, windows: 0.85, shafts: 0.55, bubbles: 0.6, lamps: 1,
-    sea: { deep: '#051636', shallow: '#0c3a78', light: '#4aa8d8', glow: 0.55, opacity: 0.97, caus: 0.5 } },
+    sea: { deep: '#24308e', shallow: '#3a78d4', light: '#6a78d8', glow: 0.95, opacity: 0.97, caus: 0.16, amp: 0.6 } },
+  night: { preset: 'quiet_night', bg: '#0b2242', fog: [35, 210], hemi: ['#3a74b8', '#121a28', 1.15], exposure: 1.12, windows: 0.85, shafts: 0.3, bubbles: 0.6, lamps: 1,
+    sea: { deep: '#041230', shallow: '#0a2e62', light: '#2f78b0', glow: 0.45, opacity: 0.97, caus: 0.26 } },
   flare: { preset: 'quiet_night', bg: '#0f2f58', fog: [40, 230], hemi: ['#5aa8e8', '#18243a', 1.45], exposure: 1.08, windows: 0.9, shafts: 0.7, bubbles: 0.7, lamps: 1,
     sea: { deep: '#0e2a6a', shallow: '#1d64b8', light: '#9fe8ff', glow: 0.9, opacity: 0.97, caus: 0.75 } },
 };
@@ -311,7 +311,7 @@ export const shots = [
         null,
       ];
       if (i === 0) { const cp = L(-14.0, 0.5, 2.3); cams[0] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.2)), P.whale.position, 0.55), fov: 72 }; }
-      if (i === 2) { const cp = L(-16.6, 0.5, 3.8); cams[2] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.3)), P.whale.position, 0.58), fov: 74 }; }
+      if (i === 2) { const cp = L(-19, 0.6, 3.5); cams[2] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.2)), P.whale.position, 0.52), fov: 80 }; }
       setCam(ctx, cams[i], 0.6); ctx.cam.punch(hits, t, 0.1, 0.2);
       ctx.fx.overlay('#2a8cff', 0.12 * clamp(1 - Math.abs(wx + 16) / 14, 0, 1));
     },
@@ -514,7 +514,7 @@ export const shots = [
       const len = clamp((t - tc) / 0.6, 0, 1) * (SEA_Y - tip.y + 0.5);
       if (len > 0.05) { P.line.visible = true; stretchLine(P.line, tip, tip.clone().add(V(0.15, len, 0.3))); } else P.line.visible = false;
       const f = humanFace(b);
-      moveCam(ctx, { pos: f.clone().add(V(2.0, -0.3, 4.6)), look: f.clone().add(up(1.0)), fov: 54 }, { pos: f.clone().add(V(1.8, -0.4, 4.1)), look: f.clone().add(up(1.0)), fov: 56 }, lt / 2);
+      moveCam(ctx, { pos: f.clone().add(V(1.9, -0.45, 4.3)), look: f.clone().add(up(-0.45)), fov: 58 }, { pos: f.clone().add(V(1.7, -0.5, 3.8)), look: f.clone().add(up(-0.45)), fov: 58 }, lt / 2);
     },
   },
   // ── "…straight up once."  — low angle up the line into the water
@@ -739,7 +739,7 @@ export const shots = [
       ctx.add(ctx.props.torch);
     },
     update(ctx, lt) {
-      const { W } = ctx.store, t = ctx.t, P = ctx.props, me = ctx.cast.me; tick(ctx, { sea: { flare: clamp(lt / 0.8, 0, 1) * 0.8, flarePos: W(0.15, SEA_Y, 2.2), flareR: 2.5 } });
+      const { W } = ctx.store, t = ctx.t, P = ctx.props, me = ctx.cast.me; tick(ctx, { sea: { flare: clamp(lt / 0.8, 0, 1) * 0.45, flarePos: W(0.15, SEA_Y, 2.2), flareR: 2.0 } });
       me.pose('idle', t, { intensity: 0.3, headPitch: 0.5 }); me.face('shocked', t); me.joints.torso.rotation.x += 0.35;
       const g = W.roof(0.15, 2.2).add(up(0.2));
       P.torch.position.copy(g); P.torch.rotation.order = 'YXZ'; P.torch.rotation.set(-PI / 2, W.yaw, 0);
@@ -761,8 +761,8 @@ export const shots = [
       const { W, L } = ctx.store, t = ctx.t, P = ctx.props, me = ctx.cast.me, tl = ctx.markers.lit;
       const k = ease.outCubic(clamp((t - tl + 0.15) / 0.6, 0, 1));
       const pk = Math.exp(-Math.max(0, t - tl) * 3) * k;   // a hard flare that settles into the lit-up deep
-      tick(ctx, { sea: { flare: 0.8 + 0.6 * k + 0.6 * pk, flarePos: W(0.15, SEA_Y, 2.2), flareR: 2.5 + 4 * k, glow: lerp(0.55, 0.95, k) + 0.5 * pk, caus: lerp(0.5, 0.8, k),
-        deep: mixHex('#051636', '#0e2a6a', k), shallow: mixHex('#0c3a78', '#1d64b8', k), light: mixHex('#4aa8d8', '#9fe8ff', k) }, shafts: 0.3 + 0.5 * k });
+      tick(ctx, { sea: { flare: 0.8 + 0.6 * k + 0.6 * pk, flarePos: W(0.15, SEA_Y, 2.2), flareR: 2.5 + 4 * k, glow: lerp(0.45, 0.95, k) + 0.6 * pk, caus: lerp(0.26, 0.8, k),
+        deep: mixHex('#041230', '#0e2a6a', k), shallow: mixHex('#0a2e62', '#1d64b8', k), light: mixHex('#2f78b0', '#9fe8ff', k) }, shafts: 0.2 + 0.6 * k });
       me.pose('surprised', t, { intensity: 0.5, headPitch: -0.5 }); me.face('shocked', t); me.joints.torso.rotation.x += 0.2;
       const g = W.roof(0.15, 2.2).add(up(0.2));
       P.torch.position.copy(g); P.torch.rotation.order = 'YXZ'; P.torch.rotation.set(-PI / 2, W.yaw, 0); P.torch.userData.set(1, SEA_Y - g.y - 0.3, 1.3);
@@ -862,7 +862,7 @@ export const shots = [
       const base = L(-6, SEA_Y + 1, 0), tip = L(-6, SEA_Y - 1, 0).lerp(L(-5, 6.0, -4.0), k);
       tentOn(ctx, base, tip, t, { wig: 0.4, r0: 1.6 });
       const rp = L(-6, 0, -0.3); P.ripple.position.set(rp.x, SEA_Y + seaWave(rp.x, rp.z, t) - 0.3, rp.z); P.ripple.userData.set(t, 1, { size: 6, speed: 1.0 });
-      setCam(ctx, { pos: L(-0.5, 0.75, 3.2), look: L(-5.5, lerp(13, 9.5, k), -1.5), fov: 70 }, 0.3);
+      setCam(ctx, { pos: L(0.5, 1.0, 5.5), look: L(-5.0, lerp(12, 9, k), -2.5), fov: 72 }, 0.3);
     },
   },
   // ── "Slow. Curious."
@@ -1003,17 +1003,18 @@ export const shots = [
       tick(ctx, { sea: { flare: 1.2, flarePos: L(-27, SEA_Y, 2), flareR: 5 } });
       const sw = Math.sin((t - ctx.time('b14')) * 2.4);
       me.pose('think', t, { intensity: 0.6, headYaw: 0.25 * sw }); me.face(i === 0 ? 'think' : 'determined', 0.5);
-      armFwd(me, 1, 'R', -1.9, 0.55 * sw);
-      const h = handW(me), beamDir = i === 0 ? up(1).addScaledVector(W.left, -0.7 * sw).addScaledVector(W.fwd, 0.3).normalize() : W.fwd.clone().applyAxisAngle(V(0, 1, 0), -0.55 * sw).add(up(0.7)).normalize();
+      if (i === 0) armUp(me, 1, 'R', 0.3); else armFwd(me, 1, 'R', -1.9, 0.55 * sw);
+      const h = handW(me), beamDir = i === 0 ? up(1).addScaledVector(W.left, -0.3 * sw).addScaledVector(W.fwd, -0.12).normalize() : W.fwd.clone().applyAxisAngle(V(0, 1, 0), -0.55 * sw).add(up(0.7)).normalize();
       torchIn(ctx, me, beamDir, { len: 4.5, width: 0.9 });
-      const tip = h.clone().addScaledVector(beamDir, i === 0 ? 4.2 : 3.4).add(V(0, 0.1 * Math.sin(t * 2), 0));
+      const tip = i === 0 ? humanFace(me).addScaledVector(W.left, -0.45 - 0.2 * sw).addScaledVector(W.fwd, 0.5).add(V(0, 1.0 + 0.1 * Math.sin(t * 2), 0))
+        : h.clone().addScaledVector(beamDir, 3.4).add(V(0, 0.1 * Math.sin(t * 2), 0));
       tentOn(ctx, L(-20, SEA_Y + 1, 0), tip, t, { wig: 0.25, r0: 1.4, approach: beamDir.clone().negate().setY(0).normalize() });
       deepAt(ctx, i === 2 ? L(-31, SEA_Y + 1, 6.5) : L(-27, SEA_Y + 3, 3.0), { yaw: i === 2 ? PI - 0.5 : PI, s: 15, set: { lid: 0, glow: 1.2, coil: 0.6, reach: 0.5, lookX: -0.9 * sw, lookY: 0.5 } });
       const f = humanFace(me);
       if (i === 0) {
-        const c0 = f.clone().addScaledVector(W.fwd, 2.7).addScaledVector(W.left, 1.1).add(up(-0.85)), c1 = f.clone().addScaledVector(W.fwd, 2.4).addScaledVector(W.left, 1.0).add(up(-0.8));
+        const c0 = f.clone().addScaledVector(W.fwd, 3.6).addScaledVector(W.left, 1.0).add(up(-0.4)), c1 = f.clone().addScaledVector(W.fwd, 3.3).addScaledVector(W.left, 0.9).add(up(-0.4));
         const cp = c0.lerp(c1, clamp(lt / 1.2, 0, 1));
-        setCam(ctx, { pos: cp, look: f.clone().add(up(-0.42)), fov: 56 }, 0.8);
+        setCam(ctx, { pos: cp, look: f.clone().add(up(-0.5)), fov: 62 }, 0.8);
       } else if (i === 1) setCam(ctx, { pos: W(3, 1.8, 7), look: W(-0.4, 5.0, 2.5), fov: 60 }, 0.5);
       else { const e = P.deep.userData.eyeWorld(); const pos = W(3.5, 0.8, 9.5); setCam(ctx, { pos, look: lookMix(pos, f, e, 0.5), fov: 76 }, 0.5); tag(ctx, 'LIKE A MOTH', ctx.time('b14.w8'), Infinity, { y: 0.13, size: 86 }); }
     },
@@ -1065,15 +1066,15 @@ export const shots = [
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, P = ctx.props, me = ctx.cast.me, tt = ctx.markers.throw + 0.05;
       const d = t - tt, tp = throwPos(L, Math.max(0, d));
-      tick(ctx, { sea: { flare: 0.7, flarePos: tp, flareR: 2.5, glow: 0.7, caus: 0.5, deep: '#0a2458', shallow: '#164f96' }, shafts: 0.25 });
-      trailOn(ctx, L, d);
+      tick(ctx, { sea: { flare: 0.35 * clamp((SEA_Y + 1 - tp.y) / 3, 0, 1), flarePos: tp, flareR: 1.6, glow: 0.5, caus: 0.22, opacity: 0.95, deep: '#051a42', shallow: '#0c3672', light: '#4aa0d8' }, shafts: 0 });
+      trailOn(ctx, L, d, 0.45);
       me.pose(d < 0 ? 'idle' : 'cheer', t, { intensity: 0.6, headPitch: -0.25 }); me.face(d < 0 ? 'determined' : 'huss', t);
       const wind = clamp((d + 0.3) / 0.3, 0, 1);
       if (d < 0) { me.joints.armR.rotation.set(lerp(-1.0, 0.9, wind), 0, -0.2); me.joints.foreArmR.rotation.set(-1.2, 0, 0); me.joints.torso.rotation.x += -0.12 * wind; }
       else { me.joints.armR.rotation.set(-3.0, 0, -0.1); me.joints.foreArmR.rotation.set(-0.1, 0, 0); }
       if (d < 0) torchIn(ctx, me, V(0, 1, 0.2).normalize(), { len: 3, width: 0.8 });
       else { const p = throwPos(L, d); P.torch.position.copy(p); P.torch.rotation.set(d * 9, d * 5, 0); P.torch.userData.set(1, 3, 0.8); }
-      setCam(ctx, { pos: L(TX + 4.2, DY + 0.9, TZ + 5.2), look: L(TX + 0.5, DY + 5, TZ), fov: 60 }, 0);
+      setCam(ctx, { pos: L(TX + 1.0, DY + 0.55, TZ + 4.9), look: L(TX + 0.4, DY + 4.4, TZ + 0.2), fov: 64 }, 0);
       fill(ctx, humanFace(me).addScaledVector(fwdOf(me.root.rotation.y), 1.6), 0.9);
       shakeOn(ctx, [tt], 0.3, 0.25);
     },
@@ -1088,16 +1089,15 @@ export const shots = [
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t, P = ctx.props, me = ctx.cast.me, tt = ctx.markers.throw + 0.05;
       const d = t - tt, p = throwPos(L, d);
-      tick(ctx, { sea: { flare: 0.7, flarePos: p, flareR: 2.5, glow: 0.7, opacity: 0.9, caus: 0.45, deep: '#0a2458', shallow: '#164f96' }, shafts: 0.2 });
+      tick(ctx, { sea: { flare: 0.5 * clamp((SEA_Y + 1 - p.y) / 3, 0, 1), flarePos: p, flareR: 1.6, glow: 0.42, caus: 0.22, opacity: 0.95, deep: '#051a42', shallow: '#0c3672', light: '#4aa0d8' }, shafts: 0 });
       P.torch.position.copy(p); P.torch.rotation.set(d * 9, d * 5, 0); P.torch.userData.set(1, 3, 0.8);
       trailOn(ctx, L, d);
-      me.pose('idle', t, { intensity: 0.4, headPitch: -0.9 }); me.face('shocked', t); me.joints.armR.rotation.set(-2.6, 0, -0.2);
-      const tip = throwPos(L, d - 0.45).add(V(2.5, 1.0, -2.5)); tip.y = Math.max(tip.y, DY + 7);
-      tentOn(ctx, L(TX + 16, SEA_Y + 2, TZ - 5), tip, t, { wig: 0.5, r0: 1.4, approach: V(-0.6, 0, 0.6).normalize(), emi: 0.25 });
-      deepAt(ctx, L(TX + 17, SEA_Y + 5 + 2 * clamp(lt / 2.4, 0, 1), TZ - 6), { yaw: -0.4, s: 15, set: { lid: 0, glow: 1.2, coil: 1, reach: 0, lookY: 0.6 } });
+      me.root.rotation.y = L.yaw + 1.0; me.pose('idle', t, { intensity: 0.4, headPitch: -0.9 }); me.face('shocked', 0.5); me.joints.armR.rotation.set(-2.6, 0, -0.2);
+      const tip = throwPos(L, d - 0.45).add(V(2.0, 0, -2.0)); tip.y = clamp(tip.y, DY + 5, SEA_Y - 1.2);
+      tentOn(ctx, L(TX - 16, SEA_Y + 2, TZ - 10), tip, t, { wig: 0.7, r0: 1.6, approach: V(0.7, 0, 0.5).normalize(), emi: 0.3 });
       const k = ease.inOutSine(clamp(lt / 2.4, 0, 1));
-      setCam(ctx, { pos: L(TX + 5.5, DY + 0.2, TZ + 7.0), look: L(TX + 1.2, lerp(DY + 7, DY + 10, k), TZ - 1.0), fov: 66 }, 0);
-      fill(ctx, humanFace(me).add(V(0, 0.4, 0)).addScaledVector(fwdOf(me.root.rotation.y), 1.2), 1.0);
+      setCam(ctx, { pos: L(TX + 7.0, DY + 1.5, TZ + 5.0), look: L(TX - 0.5, lerp(DY + 5.5, DY + 7.5, k), TZ - 1.5), fov: 72 }, 0);
+      fill(ctx, humanFace(me).add(V(0, 0.4, 0)).addScaledVector(fwdOf(me.root.rotation.y), 1.2), 1.4);
     },
   },
   // ── "The eye closed."
@@ -1124,8 +1124,8 @@ export const shots = [
       ctx.set.set('windowGlow', lerp(0.85, 0.12, k));
       me.pose('idle', t, { intensity: 0.3, headPitch: -0.5 }); me.face('neutral', 0.5);
       const kf = humanFace(me);
-      setCam(ctx, { pos: L(TX + 3.0, DY + 1.0, TZ + 3.4), look: kf.clone().add(V(0, 1.5, 0)), fov: 58 }, 0);
-      fill(ctx, kf.clone().add(V(0.6, 0.5, 1.2)), 0.5, '#8fb8ff');
+      setCam(ctx, { pos: L(TX + 1.1, DY + 0.9, TZ + 3.7), look: kf.clone().add(V(0, 1.3, 0)), fov: 62 }, 0);
+      fill(ctx, kf.clone().add(V(0.6, 0.5, 1.2)), lerp(0.6, 0.35, k), '#8fb8ff');
     },
   },
   // ── b17 HUSS ×3 — cheering on the tower; the town spills out; wide
@@ -1151,8 +1151,9 @@ export const shots = [
       const cams = [
         { pos: f.clone().add(V(-0.5, -1.1, 2.0)), look: f.clone().add(up(-0.2)), fov: 52 },
         { pos: L(-47, 1.4, 0.5), look: L(-41, 1.5, 2.5), fov: 60 },
-        { pos: L(-37.5, 2.6, 8.5), look: L(-47.5, 10.5, 0.5), fov: 70 },
+        null,
       ];
+      if (i === 2) { c.forEach((m, k) => m.ch.root.position.copy(L(-45.5 + (k % 3) * 1.5, 0.12, 3.2 + Math.floor(k / 3) * 1.2 + (k % 2) * 0.3))); const cp = L(-33, 15.2, 8.5); cams[2] = { pos: cp, look: lookMix(cp, f.clone().add(up(0.3)), L(-44, 1.2, 4.4), 0.45), fov: 70 }; }
       setCam(ctx, cams[i], 0.8); ctx.cam.punch(hits, t, 0.1, 0.2);
       if (i === 2) { ctx.add(P.key2); P.key2.position.copy(f).add(V(2.5, 1.5, 2.5)); P.key2.intensity = 40; P.key2.distance = 14; }
     },
@@ -1166,9 +1167,10 @@ export const shots = [
       me.pose('idle', t, { intensity: 0.3, headPitch: -0.4 }); me.face('shocked', t);
       const f = humanFace(me);
       // over his shoulder, ~40° off vertical, up at the inverted houses beyond the water layers
-      const pos = f.clone().add(V(1.0, -0.15, 0.9));
-      moveCam(ctx, { pos, look: pos.clone().add(V(-7.0, 9.0, -0.6)), fov: 66 }, { pos: pos.clone().add(up(0.1)), look: pos.clone().add(V(-7.4, 9.0, -0.8)), fov: 62 }, lt / 2, 0);
-      fill(ctx, f.clone().add(V(0.5, -0.8, -1.0)), 0.25, '#9fd0ff');
+      const O = L(0, 0, 0), dir = (x, y, z) => L(x, y, z).sub(O);
+      const pos = f.clone().add(dir(-1.8, -0.75, 0.45));
+      moveCam(ctx, { pos, look: pos.clone().add(dir(10, 9.5, -0.4)), fov: 60 }, { pos: pos.clone().add(up(0.1)), look: pos.clone().add(dir(10, 10.2, -0.4)), fov: 56 }, lt / 2, 0);
+      fill(ctx, f.clone().add(dir(-1.2, 0.2, 0.9)), 0.9, '#9fd0ff');
     },
   },
   // ── "Another town. Upside down."
@@ -1177,9 +1179,11 @@ export const shots = [
     setup(ctx) { deepTown(ctx); },
     update(ctx, lt) {
       const { L } = ctx.store, t = ctx.t; deepTick(ctx);
-      const k = ease.inOutSine(clamp(lt / 2.2, 0, 1));
-      const pos = L(TX + 3.2, DY - 1.2, TZ + 5.5);
-      setCam(ctx, { pos, look: L(-100, lerp(58, 62, k), -1.5).lerp(pos, 0.0), fov: 62 }, 0);
+      const k = ease.inOutSine(clamp(lt / 2.2, 0, 1)), me = ctx.cast.me;
+      me.pose('idle', t, { intensity: 0.3, headPitch: -0.5 }); me.face('shocked', 0.5);
+      const O = L(0, 0, 0), dir = (x, y, z) => L(x, y, z).sub(O), f = humanFace(me);
+      const pos = f.clone().add(dir(1.8, -0.75, 0.45));
+      setCam(ctx, { pos, look: L(UPTOWN.x - 62, lerp(UPTOWN.y - 16.5, UPTOWN.y - 14.5, k), UPTOWN.z), fov: lerp(54, 48, k) }, 0);
       tag(ctx, 'UPSIDE DOWN', ctx.markers.town + 0.6, Infinity, { y: 0.15, rot: PI - 0.03, bg: 'rgba(13,79,134,0.9)' });
     },
   },
@@ -1200,7 +1204,7 @@ export const shots = [
     update(ctx, lt) {
       const t = ctx.t; deepTick(ctx, { people: true, wag: true });
       const b = ctx.store.bay;
-      moveCam(ctx, { pos: b.clone().add(V(-0.3, -1.25, -4.4)), look: b.clone().add(V(0, -1.05, 0)), fov: 40 }, { pos: b.clone().add(V(-0.25, -1.2, -3.9)), look: b.clone().add(V(0, -1.05, 0)), fov: 40 }, lt / 1.3, 1.0);
+      moveCam(ctx, { pos: b.clone().add(V(-0.2, -1.3, -3.3)), look: b.clone().add(V(0, -1.1, 0)), fov: 38 }, { pos: b.clone().add(V(-0.15, -1.3, -2.9)), look: b.clone().add(V(0, -1.1, 0)), fov: 38 }, lt / 1.3, 1.0);
     },
   },
   // ── "Never shine a light into the deep. Something lives down there."  — she points down at us; we fall back down to our town
@@ -1265,10 +1269,10 @@ function pemBonkPose(pb, t, tb) {
   J.armR.rotation.set(x, 0, -0.15); J.foreArmR.rotation.set(-0.25, 0, 0);
   J.torso.rotation.x += d < -0.12 ? -0.1 * raise : 0.18 * hit;
 }
-function trailOn(ctx, L, d) {
+function trailOn(ctx, L, d, sc = 1) {
   const P = ctx.props, n = P.trail.length;
-  P.trail.forEach((s, k) => { const dd = d - (k + 1) * 0.05; s.visible = dd > 0; s.position.copy(throwPos(L, dd)); s.material.opacity = 0.85 * (1 - k / n); s.scale.setScalar(3.6 * (1 - 0.6 * k / n)); });
-  P.star.visible = d > 0; P.star.position.copy(throwPos(L, Math.max(0, d))); P.star.material.opacity = 0.95; P.star.scale.setScalar(5);
+  P.trail.forEach((s, k) => { const dd = d - (k + 1) * 0.05; s.visible = dd > 0; s.position.copy(throwPos(L, dd)); s.material.opacity = 0.95 * (1 - k / n); s.scale.setScalar(3.6 * sc * (1 - 0.6 * k / n)); });
+  P.star.visible = d > 0; P.star.position.copy(throwPos(L, Math.max(0, d))); P.star.material.opacity = 0.95; P.star.scale.setScalar(5 * sc);
 }
 function throwPos(L, d) {
   if (d <= 0) return L(TX + 0.4, DY + 2.0, TZ + 0.5);
@@ -1308,7 +1312,7 @@ function deepTown(ctx, { people = false } = {}) {
 function deepTick(ctx, { people = false, wag = false, point = false } = {}) {
   const t = ctx.t, P = ctx.props;
   tick(ctx, { sea: { opacity: 0.32, glow: 1.0, deep: '#0d3a78', shallow: '#2a8ad0', light: '#9ff4ff' }, shafts: 0, bubbles: 0.4 });
-  P.layers.userData.set(1.3, '#3a9ae8'); P.motes.userData.set(t, 1); P.uptown.userData.set(t, 1.25);
+  P.layers.userData.set(2.0, '#3aa8f0'); P.motes.userData.set(t, 1); P.uptown.userData.set(t, 1.25);
   if (people) {
     const mum = ctx.cast.mumB, kid = ctx.cast.kidB;
     mum.pose('idle', t, { intensity: 0.4 }); mum.face(wag || point ? 'determined' : 'neutral', t);

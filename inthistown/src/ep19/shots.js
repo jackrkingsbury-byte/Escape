@@ -735,10 +735,10 @@ export const shots = [
       const { duvet, fold } = ctx.store; duvet.position.copy(R(-1.95, 0.8, hl.z + 0.12 + 0.75)); fold.position.copy(R(-1.95, 1.06, hl.z + 0.2));
       const fl = set.worldToLocal(f.clone());
             // aim at the chest so the face rises into the upper third and the caption lands on the duvet fold
-      const c = moveCam(ctx, { pos: R(fl.x + 0.38, fl.y + 2.05, fl.z + 1.15), look: R(fl.x + 0.14, fl.y - 0.05, fl.z + 0.42), fov: 50 }, { pos: R(fl.x + 0.34, fl.y + 1.9, fl.z + 1.06), look: R(fl.x + 0.14, fl.y - 0.05, fl.z + 0.42), fov: 49 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)), 0.9, '#ffe8c8');
+      const c = moveCam(ctx, { pos: R(fl.x + 0.38, fl.y + 2.05, fl.z + 1.15), look: R(fl.x + 0.14, fl.y - 0.05, fl.z + 0.45), fov: 56 }, { pos: R(fl.x + 0.34, fl.y + 1.9, fl.z + 1.06), look: R(fl.x + 0.14, fl.y - 0.05, fl.z + 0.45), fov: 55 }, ease.inOutSine(clamp(lt / 2.3, 0, 1)), 0.9, '#ffe8c8');
       // Z floats in the dark gap up-left of his head (clear of the 24/7 tag), turned to the lens
       P.zzz.position.copy(R(fl.x - 0.36, fl.y + 0.25 + 0.06 * Math.sin(t * 2), fl.z - 0.12)); P.zzz.lookAt(c.pos);
-      tag(ctx, '24/7', ctx.time('b09.w5'), Infinity, { y: 0.14, size: 80, bg: 'rgba(30,40,80,0.9)' });
+      tag(ctx, '24/7', ctx.time('b09.w5'), Infinity, { y: 0.095, size: 74, bg: 'rgba(30,40,80,0.9)' });
     },
   },
   {
@@ -1205,7 +1205,7 @@ export const shots = [
       const x = 13 - (t - ctx.time('b19')) * 5.2;
       surfTick(ctx, x);
       // high above his feet end (he faces up, head toward +x), pitched down so his up-turned face reads upright (like 'goon squad')
-      setCam(ctx, { pos: L(x - 2.6, 5.8, 1.4), look: L(x + 0.3, 2.6, 0.15), fov: 46 }, 1.2, '#e0e8ff');
+      setCam(ctx, { pos: L(x - 2.6, 5.8, 0.9), look: L(x + 0.15, 2.6, 0.1), fov: 49 }, 1.2, '#e0e8ff');
       key(ctx, headPt(me, 0, 0.3, 0).add(L(1.2, 1.6, 2.2).sub(L(0, 0, 0))), 14);
       tag(ctx, 'NEXT STOP: CLOCK TOWER', ctx.time('b19.w3'), Infinity, { y: 0.14, size: 54, bg: 'rgba(20,20,30,0.85)' });
     },
@@ -1281,15 +1281,15 @@ export const shots = [
       const a = handPos(me, 'L'), b = handPos(me, 'R'), mid = a.lerp(b, 0.5);
       const h = holeLocal(ctx);
       if (!off) plugAt(ctx, 'socket'); else { const loc = ctx.set.root.worldToLocal(mid.clone()); plugAt(ctx, V(loc.x, loc.y + 0.05, loc.z - 0.3), PI, -0.3 * y); } // body between his hands, prongs out toward the socket
-      // sparks jet up and away from both the lens and his face (screen-right / behind the socket)
+      // sparks jet up out of the socket, away from the lens, on the screen-right side clear of his face
       P.burstY.position.copy(L(h.x, h.y, h.z + 0.2)); P.burstY.rotation.set(0, 0, 0);
-      P.burstY.userData.aim(L(-1.0, 1.0, -0.4).sub(L(0, 0, 0)), 0.75); P.burstY.userData.set(t - ty);
+      P.burstY.userData.aim(L(-0.5, 1.0, -0.15).sub(L(0, 0, 0)), 0.75); P.burstY.userData.set(t - ty);
       P.phones.userData.set({ led: '#ff2a2a', k: Math.floor(t * 5) % 2 ? 1 : 0.2 });
       // his front 3/4 at hand height, off the socket's axis: the plug rips out above the socket line toward him
-      setCam(ctx, { pos: L(SOCK.x + 1.5, DY + 2.5, SOCK.z - 1.3), look: L(SOCK.x + 0.15, DY + 1.42, SOCK.z + 0.9), fov: 50 }, 1.4, '#ffd8c8');
+      setCam(ctx, { pos: L(SOCK.x + 2.0, DY + 2.0, SOCK.z - 0.6), look: L(SOCK.x + 0.0, DY + 1.32, SOCK.z + 1.05), fov: 52 }, 1.4, '#ffd8c8');
       key(ctx, L(SOCK.x + 0.9, DY + 2.2, SOCK.z - 0.4), 12, '#ffe0b0');
       if (off) { flash(ctx, ty, 0.2, '#fff3b0', 0.35); stamp(ctx, 'YANK!', ty, { y: 0.1, size: 160, fill: '#ffd23f', stroke: '#1d1d22' }); if (t - ty < 0.5) ctx.cam.shake(0.8 * (1 - (t - ty) / 0.5), t, 8); }
-      battery(ctx, 1, { y: 0.075, s: 0.6, blink: true });
+      if (!off) battery(ctx, 1, { y: 0.075, s: 0.6, blink: true });
     },
   },
   // ── b21 HUSS ×3: silence, slow motion, plug held up in the moonlight

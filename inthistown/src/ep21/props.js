@@ -630,7 +630,7 @@ export function makeUpsideTown() {
   g.add(box(150, 1.0, 70, glowStd('#3c6a4a'), 0, -0.5, 0));
   g.add(box(150, 0.04, 9, '#3a3d46', 0, 0.02, 0));
   const winM = new THREE.MeshBasicMaterial({ color: '#ffe08a', toneMapped: false });
-  const winGeo = new THREE.PlaneGeometry(1.6, 1.8), halos = [];
+  const winGeo = new THREE.PlaneGeometry(1.6, 1.8), skyGeo = new THREE.PlaneGeometry(1.7, 1.5), halos = [];
   const prism = (w, h, d) => { const s = new THREE.Shape(); s.moveTo(-d / 2, 0); s.lineTo(d / 2, 0); s.lineTo(0, h); s.closePath(); const geo = new THREE.ExtrudeGeometry(s, { depth: w, bevelEnabled: false }); geo.rotateY(PI / 2); geo.translate(-w / 2, 0, 0); return geo; };
   const hero = { pos: V(), yaw: 0 };
   const rows = [[-11, 0], [11, PI]];
@@ -642,6 +642,13 @@ export function makeUpsideTown() {
       const w = 8.6, d = 7, H = 5.8;
       hg.add(box(w, H, d, glowStd(HOUSE_COLS[k % 6]), 0, H / 2, 0));
       const rf = new THREE.Mesh(prism(w + 0.8, 2.9, d + 0.8), glowStd(ROOF_COLS[k % 4])); rf.position.y = H; hg.add(rf);
+      // lit skylights on both roof slopes: hung upside down, the roofs are what you see from below
+      { const a = Math.atan2(2.9, (d + 0.8) / 2), nrm = V(0, Math.cos(a), Math.sin(a));
+        for (const sz of [-1, 1]) for (const sx of [-2.6, 0, 2.6]) {
+          const m = new THREE.Mesh(skyGeo, winM); m.rotation.order = 'YXZ'; m.rotation.set(-(PI / 2 - a), sz > 0 ? 0 : PI, 0);
+          m.position.set(sx, H + 1.25, sz * 2.25).add(V(0, nrm.y, sz * nrm.z).multiplyScalar(0.05)); hg.add(m);
+          if (sx === 0) { const hl = glowSprite('#ffc46a', 4.0, 0.6); hl.position.copy(m.position).add(V(0, nrm.y, sz * nrm.z).multiplyScalar(0.5)); hg.add(hl); halos.push(hl); }
+        } }
       const isHero = z < 0 && i === 4;
       for (const [wx, wy] of [[-2.8, 4.35], [0, 4.35], [2.8, 4.35], [-2.6, 1.55], [2.6, 1.55]]) {
         if (isHero && wx === 0 && wy > 3) continue;
@@ -649,6 +656,11 @@ export function makeUpsideTown() {
         if ((k + wx) % 2 === 0 || isHero || wy < 3) { const hl = glowSprite('#ffc46a', 4.2, 0.7); hl.position.set(wx, wy, d / 2 + 0.3); hg.add(hl); halos.push(hl); }
       }
       hg.add(box(1.1, 2.1, 0.08, '#7d5232', 0, 1.05, d / 2 + 0.03));
+      // lit windows on both gable ends too, so the town reads when seen up (down) the street
+      for (const sx of [-1, 1]) for (const [wz, wy] of [[-1.7, 4.35], [1.7, 4.35], [-1.7, 1.55], [1.7, 1.55]]) {
+        const m = new THREE.Mesh(winGeo, winM); m.position.set(sx * (w / 2 + 0.02), wy, wz); m.rotation.y = sx * PI / 2; hg.add(m);
+        if (wy > 3) { const hl = glowSprite('#ffc46a', 3.6, 0.6); hl.position.set(sx * (w / 2 + 0.3), wy, wz); hg.add(hl); halos.push(hl); }
+      }
       if (isHero) {
         // an open lit bay for the mum + kid
         const bay = new THREE.Group(); bay.position.set(0, 2.9, d / 2); hg.add(bay);

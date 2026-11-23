@@ -379,10 +379,10 @@ export const shots = [
       peek.forEach((c, i) => { c.ch.root.position.y = L(0, 0, 0).y + hop(t, hits, 1.6 + 0.2 * i, 0.45); c.ch.pose(t > tSat ? 'surprised' : 'idle', t + c.ph); c.ch.face(t > tSat ? 'shocked' : 'neutral', t + c.ph); });
       ctx.props.filler.userData.set(t, { arms: t > tSat ? 'up' : 'limp', bounce: t > tSat ? 1 : 0.2 });
       const pk = humanFace(peek[2].ch), e = eyeMid(ctx), u = clamp(lt / 4, 0, 1);
-      setCam(ctx, frame2(L(lerp(-27.3, -28.3, u), 1.6 + y, lerp(22.2, 21.6, u)), pk, 0.76, e, 0.28));
+      setCam(ctx, frame2(L(lerp(-25.5, -26.3, u), 1.6 + y, lerp(22.0, 21.5, u)), pk, 0.76, e, 0.30));
       shakeOn(ctx, hits, 0.8, 0.45);
       ctx.fx.overlay('#ffb347', 0.12); ctx.fx.vignette(0.35);
-      tag(ctx, '12 YEARS AGO', lt > 0 ? ctx.time('b02.w4') : 0, ctx.time('b02.w13'), { y: 0.14, size: 58, bg: 'rgba(120,70,20,0.85)' });
+      tag(ctx, '12 YEARS AGO', lt > 0 ? ctx.time('b02.w4') : 0, ctx.time('b02.w13'), { y: 0.06, size: 50, bg: 'rgba(120,70,20,0.85)' });
     },
   },
   // ── b03 HUSS ×3 — the kid slams in the street, Biscuit's head leans down curiously behind him
@@ -642,9 +642,9 @@ export const shots = [
       P.busDrips.userData.set(t, [V(32.5, 2.9, 0.1), V(35.5, 2.9, 0.1), V(30, 2.9, 0.1), V(33.8, 2.9, -2.5), V(37.6, 2.4, 0.1)], 1.6);
       ctx.props.filler.userData.set(t, { arms: 'limp', bounce: 0.2 });
       const e = eyeMid(ctx), kd = L(37.6, 1.0, 2.0), u = clamp(lt / 2, 0, 1);
-      setCam(ctx, frame2(L(lerp(50.6, 50, u), 2.2, lerp(8.9, 8.5, u)), e, 0.30, kd, 0.82));
+      setCam(ctx, frame2(L(lerp(59.6, 59, u), 3.2, lerp(14.2, 13.8, u)), e, 0.25, kd, 0.84));
       dbg(ctx, ['eyes ' + f1(toLocal(L, e))]);
-      tag(ctx, 'ATTENDANCE: 100% SOGGY', ctx.markers.drool, Infinity, { y: 0.15, size: 58, bg: 'rgba(40,120,220,0.9)' });
+      tag(ctx, 'ATTENDANCE: 100% SOGGY', ctx.markers.drool, Infinity, { y: 0.06, size: 52, bg: 'rgba(40,120,220,0.9)' });
     },
   },
   // ── b08 "Then yesterday, he got the hiccups."  — close on the face; eyes snap wide, freeze
@@ -814,9 +814,9 @@ export const shots = [
       const L = town(ctx);
       bisAt(ctx, -84, -8, PI / 2, { y: -8 });
       const P = ctx.props;
-      ctx.store.band = BAND.map((id, i) => { const c = put(ctx, id, L(-41 - (i % 2) * 0.6, 0, -8.5 + i * 1.5), L.yaw + 0.85 + 0.12 * (i - 1.5)); const tu = P.tubas[i]; ctx.add(tu, c.joints.torso); tu.position.set(-0.42, 0.3, 0.26); tu.rotation.set(0.25, 0, 0.3); tu.scale.setScalar(1.15); return c; });
+      ctx.store.band = BAND.map((id, i) => { const c = put(ctx, id, L(-41 - (i % 2) * 0.6, 0, -8.5 + i * 1.5), L.yaw + 0.95 + 0.12 * (i - 1.5)); const tu = P.tubas[i]; ctx.add(tu, c.joints.torso); tu.position.set(-0.42, 0.3, 0.26); tu.rotation.set(0.25, 0, 0.3); tu.scale.setScalar(1.15); return c; });
       P.rings.forEach((r) => ctx.add(r));
-      filler(ctx, streetFill(-38, -16, { seed: 16, step: 1.8 }));
+      filler(ctx, streetFill(-29, -12, { seed: 16, step: 1.8 }));
     },
     update(ctx, lt) {
       const { L, band } = ctx.store, t = ctx.t, P = ctx.props, tl = ctx.time('b13.w8');
@@ -833,7 +833,7 @@ export const shots = [
       ctx.props.filler.userData.set(t, { arms: loud > 0.5 ? 'up' : 'limp', bounce: 0.2 });
       // low angle from in front of the band: faces in the upper-middle, Biscuit's huge face leaning down over them in the sky
       { const fm = band.reduce((a, c) => a.add(humanFace(c)), V()).multiplyScalar(1 / band.length), u = clamp(lt / 1.6, 0, 1);
-        setCam(ctx, frame2(L(lerp(-36.6, -37.4, u), 0.6, lerp(-2.0, -2.4, u)), eyeMid(ctx), 0.15, fm, 0.40, { fovMax: 80 })); }
+        setCam(ctx, frame2(L(lerp(-33.4, -34.0, u), 0.45, lerp(-3.4, -3.6, u)), eyeMid(ctx), 0.11, fm, 0.40, { fovMax: 72 })); }
       if (t > tl - 0.05) ctx.cam.shake(0.25, t, 5);
       tag(ctx, 'LOUDEST NOTE', tl, Infinity, { y: 0.15, size: 64, bg: 'rgba(200,150,0,0.92)' });
     },
@@ -1232,16 +1232,16 @@ export const shots = [
     name: 'totally worked', start: 'b21-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, { clouds: false, wt: false });
-      bisAt(ctx, -210, -4, PI / 2);
+      bisAt(ctx, -216, -4, PI / 2, { y: -5 });
       const ids = ['x00', 'x01', 'x02', 'x03', 'x04', 'x05', 'x06', 'x07', 'x08', 'x09', 'x10', 'x11', 'grandpa', 'okafor', 'mayor', 'baker'];
-      ctx.store.cr = ids.map((id, i) => put(ctx, id, L(-176 - Math.floor(i / 8) * 1.8 + (hash(i) - 0.5), 0, -14 + (i % 8) * 1.7), L.yaw - PI / 2 + 0.9 + (hash(i) - 0.5) * 0.5));
+      ctx.store.cr = ids.map((id, i) => put(ctx, id, L(-176 - Math.floor(i / 8) * 1.8 + (hash(i) - 0.5), 0, -14 + (i % 8) * 1.7), L.yaw + 0.3 + (hash(i) - 0.5) * 0.5));
       const P = ctx.props; ctx.store.cr.forEach((c, i) => { const h = P.hoods[i]; ctx.add(h, c.joints.head); h.position.set(0, 0, 0); });
     },
     update(ctx, lt) {
       const { L, cr } = ctx.store, t = ctx.t;
-      bset(ctx, { sit: 1, wag: 1.1, wagSpeed: 12, tongue: 1, jaw: 0.55, lid: 0, eyeScale: 1.1, pupil: 1.2, headTilt: 0.2 * Math.sin(t * 5), arms: 0.8 });
+      bset(ctx, { sit: 1, wag: 1.1, wagSpeed: 12, tongue: 1, jaw: 0.5, lid: 0, eyeScale: 1.15, pupil: 1.2, headPitch: 0.5, lookY: -0.55, headTilt: 0.2 * Math.sin(t * 5), arms: 0.8 });
       cr.forEach((c, i) => { c.pose('cheer', t + i * 0.37); c.face('laugh', t + i); });
-      { const u = clamp(lt / 1.2, 0, 1); setCam(ctx, frame2(L(lerp(-159.4, -160.4, u), 1.5, lerp(3.3, 2.8, u)), eyeMid(ctx), 0.22, L(-176, 1.6, -4), 0.82, { fovMax: 66 })); }
+      { const u = clamp(lt / 1.2, 0, 1); setCam(ctx, frame2(L(lerp(-159.4, -160.4, u), 1.5, lerp(3.3, 2.8, u)), eyeMid(ctx), 0.2, L(-176, 1.6, -5), 0.83, { fovMax: 72 })); }
     },
   },
   // ── "Except Grandma's costume is so good,"  — low hero angle, glowing red eyes, clacking jaw, ROAR
