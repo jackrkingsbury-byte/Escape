@@ -116,7 +116,7 @@ export function makeLegHouse(o = {}) {
     vc.box('#ffd23f', -0.42, 4.35, bz + 0.05, 0.42, 0.56, 0.02);          // poster
     vc.box('#1d1d22', -0.42, 4.35, bz + 0.06, 0.3, 0.42, 0.02);
     vc.box('#ffffff', 0.45, 4.55, bz + 0.05, 0.36, 0.26, 0.02);
-    for (const s of [-1, 1]) { vc.box('#ffd23f', s * (hw - 0.16), (y0 + y1) / 2 + 0.05, dz - 0.25, 0.22, y1 - y0 - 0.12, 0.12); }   // curtains
+    for (const s of [-1, 1]) { vc.box('#ffd23f', s * (hw - 0.07), (y0 + y1) / 2 + 0.05, dz - 0.12, 0.1, y1 - y0 - 0.12, 0.08); }   // curtains
     // frame
     vc.box(trim, 0, y1 + 0.08, dz + 0.04, hw * 2 + 0.3, 0.16, 0.12);
     vc.box(trim, 0, y0 - 0.06, dz + 0.1, hw * 2 + 0.46, 0.1, 0.26);

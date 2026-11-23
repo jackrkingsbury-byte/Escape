@@ -447,13 +447,12 @@ export function makeHoodie() {
 export function makeCardigan(scale = 1) {
   const g = new THREE.Group(); g.name = 'cardigan';
   const m = std('#1d1d22', { roughness: 0.95 }), btn = std('#e8e0d0');
-  const W = 0.7 * scale, Hh = 0.66 * scale, D = 0.42 * scale, T = 0.05;
-  const y = 0.3 * scale;
+  const W = 0.78 * scale, Hh = 0.54 * scale, D = 0.46 * scale, T = 0.05;
+  const y = 0.25 * scale;
   g.add(box(W, Hh, T, m, 0, y, -D / 2, 0.02));                   // back
   for (const s of [-1, 1]) g.add(box(T, Hh, D, m, s * W / 2, y, 0, 0.02));
-  for (const s of [-1, 1]) { g.add(box(W * 0.42, Hh, T, m, s * W * 0.29, y, D / 2, 0.02)); for (let i = 0; i < 3; i++) { const b = cyl(0.025, 0.025, 0.02, btn, 8); b.rotation.x = PI / 2; b.position.set(s * 0.06, y + 0.18 - i * 0.16, D / 2 + 0.03); g.add(b); } }
-  g.add(box(W + 0.02, 0.1, D + 0.02, m, 0, y + Hh / 2 - 0.03, 0, 0.04));  // shoulders/collar
-  for (const s of [-1, 1]) { const sl = box(0.2 * scale, 0.5 * scale, 0.22 * scale, m, s * (W / 2 + 0.1), y + 0.02, 0, 0.04); g.add(sl); }
+  for (const s of [-1, 1]) { g.add(box(W * 0.42, Hh, T, m, s * W * 0.29, y, D / 2, 0.02)); for (let i = 0; i < 3; i++) { const b = cyl(0.025, 0.025, 0.02, btn, 8); b.rotation.x = PI / 2; b.position.set(s * 0.06, y + 0.16 - i * 0.14, D / 2 + 0.03); g.add(b); } }
+  g.add(box(W + 0.02, 0.08, D + 0.02, m, 0, y + Hh / 2 - 0.03, 0, 0.03));  // shoulders/collar
   return g;
 }
 export function makeHelmet() {

@@ -272,7 +272,7 @@
    "id": "b13",
    "kind": "line",
    "speaker": "narr",
-   "text": "By lunch, my cloud covered the whole town. Mr. Pibbs rowed to work in a bathtub.",
+   "text": "By lunch, my cloud covered the whole town. Mr. Biggs rowed to work in a bathtub.",
    "gapAfter": 0.3,
    "music": "muffled",
    "sfx": [
@@ -314,13 +314,13 @@
    "id": "b15",
    "kind": "line",
    "speaker": "narr",
-   "text": "Pool party on my roof.",
+   "text": "And a pool party on my roof.",
    "gapAfter": 0.3,
    "music": "party",
    "sfx": [
     {
      "type": "cheer",
-     "at": "w:Pool",
+     "at": "w:pool",
      "gain": 0.45
     }
    ],
@@ -505,13 +505,13 @@
    "id": "b26",
    "kind": "line",
    "speaker": "narr",
-   "text": "Pop. Biggest storm in town history.",
+   "text": "Then... pop. Biggest storm in town history.",
    "gapAfter": 0.8,
    "music": "none",
    "sfx": [
     {
      "type": "pop",
-     "at": "w:Pop",
+     "at": "w:pop",
      "gain": 0.6
     },
     {

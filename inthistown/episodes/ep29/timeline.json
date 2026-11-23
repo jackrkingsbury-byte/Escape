@@ -1,6 +1,6 @@
 {
  "fps": 30,
- "duration": 87.582,
+ "duration": 88.6,
  "audio": "episodes/ep29/mix.wav",
  "beats": [
   {
@@ -764,9 +764,9 @@
    "id": "b13",
    "speaker": "narr",
    "kind": "line",
-   "text": "By lunch, my cloud covered the whole town. Mr. Pibbs rowed to work in a bathtub.",
+   "text": "By lunch, my cloud covered the whole town. Mr. Biggs rowed to work in a bathtub.",
    "start": 40.851,
-   "end": 45.546,
+   "end": 45.567,
    "words": [
     {
      "text": "By",
@@ -814,39 +814,39 @@
      "end": 43.791
     },
     {
-     "text": "Pibbs",
+     "text": "Biggs",
      "start": 44.101,
-     "end": 44.344
+     "end": 44.347
     },
     {
      "text": "rowed",
-     "start": 44.344,
-     "end": 44.586
+     "start": 44.347,
+     "end": 44.593
     },
     {
      "text": "to",
-     "start": 44.586,
-     "end": 44.728
+     "start": 44.593,
+     "end": 44.737
     },
     {
      "text": "work",
-     "start": 44.728,
-     "end": 44.92
+     "start": 44.737,
+     "end": 44.931
     },
     {
      "text": "in",
-     "start": 44.92,
-     "end": 45.061
+     "start": 44.931,
+     "end": 45.075
     },
     {
      "text": "a",
-     "start": 45.061,
-     "end": 45.203
+     "start": 45.075,
+     "end": 45.219
     },
     {
      "text": "bathtub",
-     "start": 45.203,
-     "end": 45.546
+     "start": 45.219,
+     "end": 45.567
     }
    ],
    "visual": "Wide shot in dark storm lighting: one giant cloud over every rooftop, and blue water filling main street up to the windows. A man in a fishing hat rows a white bathtub past the street lamps with a briefcase on his lap."
@@ -856,18 +856,18 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Goon Squad!",
-   "start": 45.861,
-   "end": 46.58,
+   "start": 45.882,
+   "end": 46.6,
    "words": [
     {
      "text": "Goon",
-     "start": 45.876,
-     "end": 46.155
+     "start": 45.897,
+     "end": 46.176
     },
     {
      "text": "Squad!",
-     "start": 46.155,
-     "end": 46.58
+     "start": 46.176,
+     "end": 46.6
     }
    ],
    "overlay": "GOON SQUAD!",
@@ -877,34 +877,44 @@
    "id": "b15",
    "speaker": "narr",
    "kind": "line",
-   "text": "Pool party on my roof.",
-   "start": 46.895,
-   "end": 48.081,
+   "text": "And a pool party on my roof.",
+   "start": 46.915,
+   "end": 48.302,
    "words": [
     {
-     "text": "Pool",
-     "start": 46.91,
-     "end": 47.132
+     "text": "And",
+     "start": 46.93,
+     "end": 47.126
+    },
+    {
+     "text": "a",
+     "start": 47.126,
+     "end": 47.271
+    },
+    {
+     "text": "pool",
+     "start": 47.271,
+     "end": 47.467
     },
     {
      "text": "party",
-     "start": 47.132,
-     "end": 47.472
+     "start": 47.467,
+     "end": 47.766
     },
     {
      "text": "on",
-     "start": 47.472,
-     "end": 47.636
+     "start": 47.766,
+     "end": 47.91
     },
     {
      "text": "my",
-     "start": 47.636,
-     "end": 47.858
+     "start": 47.91,
+     "end": 48.106
     },
     {
      "text": "roof",
-     "start": 47.858,
-     "end": 48.081
+     "start": 48.106,
+     "end": 48.302
     }
    ],
    "visual": "The Goon Squad dances in the rain, then cannonballs off the roof into the flooded street with a huge splash."
@@ -914,43 +924,43 @@
    "speaker": "narr",
    "kind": "line",
    "text": "While they're out partying, by the way.",
-   "start": 48.396,
-   "end": 50.042,
+   "start": 48.617,
+   "end": 50.263,
    "words": [
     {
      "text": "While",
-     "start": 48.411,
-     "end": 48.634
+     "start": 48.632,
+     "end": 48.855
     },
     {
      "text": "they're",
-     "start": 48.634,
-     "end": 48.857
+     "start": 48.855,
+     "end": 49.078
     },
     {
      "text": "out",
-     "start": 48.857,
-     "end": 49.033
+     "start": 49.078,
+     "end": 49.255
     },
     {
      "text": "partying",
-     "start": 49.033,
-     "end": 49.396
+     "start": 49.255,
+     "end": 49.617
     },
     {
      "text": "by",
-     "start": 49.526,
-     "end": 49.714
+     "start": 49.747,
+     "end": 49.936
     },
     {
      "text": "the",
-     "start": 49.714,
-     "end": 49.853
+     "start": 49.936,
+     "end": 50.075
     },
     {
      "text": "way",
-     "start": 49.853,
-     "end": 50.042
+     "start": 50.075,
+     "end": 50.263
     }
    ],
    "overlay": "BY THE WAY",
@@ -961,73 +971,73 @@
    "speaker": "narr",
    "kind": "line",
    "text": "I tried to tell the truth. It was m... m... the pigeon's cousin.",
-   "start": 50.357,
-   "end": 54.407,
+   "start": 50.578,
+   "end": 54.628,
    "words": [
     {
      "text": "I",
-     "start": 50.372,
-     "end": 50.496
+     "start": 50.593,
+     "end": 50.718
     },
     {
      "text": "tried",
-     "start": 50.496,
-     "end": 50.754
+     "start": 50.718,
+     "end": 50.976
     },
     {
      "text": "to",
-     "start": 50.754,
-     "end": 50.878
+     "start": 50.976,
+     "end": 51.1
     },
     {
      "text": "tell",
-     "start": 50.878,
-     "end": 51.047
+     "start": 51.1,
+     "end": 51.269
     },
     {
      "text": "the",
-     "start": 51.047,
-     "end": 51.172
+     "start": 51.269,
+     "end": 51.393
     },
     {
      "text": "truth",
-     "start": 51.172,
-     "end": 51.385
+     "start": 51.393,
+     "end": 51.607
     },
     {
      "text": "It",
-     "start": 51.695,
-     "end": 51.888
+     "start": 51.917,
+     "end": 52.11
     },
     {
      "text": "was",
-     "start": 51.888,
-     "end": 52.15
+     "start": 52.11,
+     "end": 52.372
     },
     {
      "text": "m",
-     "start": 52.15,
-     "end": 52.343
+     "start": 52.372,
+     "end": 52.565
     },
     {
      "text": "m",
-     "start": 52.713,
-     "end": 53.112
+     "start": 52.935,
+     "end": 53.333
     },
     {
      "text": "the",
-     "start": 53.482,
-     "end": 53.64
+     "start": 53.703,
+     "end": 53.861
     },
     {
      "text": "pigeon's",
-     "start": 53.64,
-     "end": 54.08
+     "start": 53.861,
+     "end": 54.301
     },
     {
      "text": "cousin",
-     "start": 54.08,
-     "end": 54.407
+     "start": 54.301,
+     "end": 54.628
     }
    ],
    "visual": "I take a deep breath, determined, then panic and point at the pigeon, who slowly turns and glares at me. A thunder clap goes off right over me."
@@ -1037,23 +1047,23 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Ah, almost... almost!",
-   "start": 54.722,
-   "end": 56.813,
+   "start": 54.943,
+   "end": 57.034,
    "words": [
     {
      "text": "Ah",
-     "start": 54.737,
-     "end": 55.119
+     "start": 54.958,
+     "end": 55.341
     },
     {
      "text": "almost",
-     "start": 55.249,
-     "end": 55.832
+     "start": 55.471,
+     "end": 56.054
     },
     {
      "text": "almost!",
-     "start": 56.202,
-     "end": 56.813
+     "start": 56.424,
+     "end": 57.034
     }
    ],
    "overlay": "ALMOST!",
@@ -1064,68 +1074,68 @@
    "speaker": "narr",
    "kind": "line",
    "text": "The town chanted from the rooftops. Drizzao! Pella pip! Pella plonk! Soggani!",
-   "start": 57.128,
-   "end": 62.186,
+   "start": 57.349,
+   "end": 62.407,
    "words": [
     {
      "text": "The",
-     "start": 57.143,
-     "end": 57.289
+     "start": 57.364,
+     "end": 57.51
     },
     {
      "text": "town",
-     "start": 57.289,
-     "end": 57.538
+     "start": 57.51,
+     "end": 57.76
     },
     {
      "text": "chanted",
-     "start": 57.538,
-     "end": 57.944
+     "start": 57.76,
+     "end": 58.166
     },
     {
      "text": "from",
-     "start": 57.944,
-     "end": 58.194
+     "start": 58.166,
+     "end": 58.415
     },
     {
      "text": "the",
-     "start": 58.194,
-     "end": 58.339
+     "start": 58.415,
+     "end": 58.561
     },
     {
      "text": "rooftops",
-     "start": 58.339,
-     "end": 58.745
+     "start": 58.561,
+     "end": 58.967
     },
     {
      "text": "Drizzao!",
-     "start": 59.055,
-     "end": 59.562
+     "start": 59.277,
+     "end": 59.784
     },
     {
      "text": "Pella",
-     "start": 59.852,
-     "end": 60.17
+     "start": 60.074,
+     "end": 60.391
     },
     {
      "text": "pip!",
-     "start": 60.17,
-     "end": 60.421
+     "start": 60.391,
+     "end": 60.643
     },
     {
      "text": "Pella",
-     "start": 60.711,
-     "end": 61.01
+     "start": 60.933,
+     "end": 61.232
     },
     {
      "text": "plonk!",
-     "start": 61.01,
-     "end": 61.372
+     "start": 61.232,
+     "end": 61.594
     },
     {
      "text": "Soggani!",
-     "start": 61.662,
-     "end": 62.186
+     "start": 61.884,
+     "end": 62.407
     }
    ],
    "overlay": "DRIZZAO! PELLA PIP! PELLA PLONK! SOGGANI!",
@@ -1136,73 +1146,73 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Then, genius idea. I looked up and said: I am lying right now.",
-   "start": 62.501,
-   "end": 66.38,
+   "start": 62.722,
+   "end": 66.602,
    "words": [
     {
      "text": "Then",
-     "start": 62.516,
-     "end": 62.883
+     "start": 62.737,
+     "end": 63.105
     },
     {
      "text": "genius",
-     "start": 63.013,
-     "end": 63.499
+     "start": 63.235,
+     "end": 63.721
     },
     {
      "text": "idea",
-     "start": 63.499,
-     "end": 63.861
+     "start": 63.721,
+     "end": 64.082
     },
     {
      "text": "I",
-     "start": 64.171,
-     "end": 64.334
+     "start": 64.392,
+     "end": 64.555
     },
     {
      "text": "looked",
-     "start": 64.334,
-     "end": 64.613
+     "start": 64.555,
+     "end": 64.834
     },
     {
      "text": "up",
-     "start": 64.613,
-     "end": 64.776
-    },
-    {
-     "text": "and",
-     "start": 64.776,
+     "start": 64.834,
      "end": 64.997
     },
     {
-     "text": "said",
+     "text": "and",
      "start": 64.997,
      "end": 65.218
     },
     {
-     "text": "I",
+     "text": "said",
      "start": 65.218,
-     "end": 65.38
+     "end": 65.439
+    },
+    {
+     "text": "I",
+     "start": 65.439,
+     "end": 65.602
     },
     {
      "text": "am",
-     "start": 65.38,
-     "end": 65.543
+     "start": 65.602,
+     "end": 65.765
     },
     {
      "text": "lying",
-     "start": 65.543,
-     "end": 65.88
+     "start": 65.765,
+     "end": 66.102
     },
     {
      "text": "right",
-     "start": 65.88,
-     "end": 66.159
+     "start": 66.102,
+     "end": 66.381
     },
     {
      "text": "now",
-     "start": 66.159,
-     "end": 66.38
+     "start": 66.381,
+     "end": 66.602
     }
    ],
    "overlay": "\"I AM LYING RIGHT NOW.\"",
@@ -1213,73 +1223,73 @@
    "speaker": "narr",
    "kind": "line",
    "text": "The cloud froze. If I'm lying, it's true. If it's true, I'm lying.",
-   "start": 66.695,
-   "end": 71.073,
+   "start": 66.917,
+   "end": 71.295,
    "words": [
     {
      "text": "The",
-     "start": 66.71,
-     "end": 66.884
+     "start": 66.932,
+     "end": 67.106
     },
     {
      "text": "cloud",
-     "start": 66.884,
-     "end": 67.245
+     "start": 67.106,
+     "end": 67.466
     },
     {
      "text": "froze",
-     "start": 67.245,
-     "end": 67.605
+     "start": 67.466,
+     "end": 67.827
     },
     {
      "text": "If",
-     "start": 67.915,
-     "end": 68.08
+     "start": 68.137,
+     "end": 68.301
     },
     {
      "text": "I'm",
-     "start": 68.08,
-     "end": 68.303
+     "start": 68.301,
+     "end": 68.525
     },
     {
      "text": "lying",
-     "start": 68.303,
-     "end": 68.644
+     "start": 68.525,
+     "end": 68.865
     },
     {
      "text": "it's",
-     "start": 68.774,
-     "end": 69.065
+     "start": 68.995,
+     "end": 69.286
     },
     {
      "text": "true",
-     "start": 69.065,
-     "end": 69.356
+     "start": 69.286,
+     "end": 69.577
     },
     {
      "text": "If",
-     "start": 69.666,
-     "end": 69.853
+     "start": 69.887,
+     "end": 70.074
     },
     {
      "text": "it's",
-     "start": 69.853,
-     "end": 70.107
+     "start": 70.074,
+     "end": 70.328
     },
     {
      "text": "true",
-     "start": 70.107,
-     "end": 70.36
+     "start": 70.328,
+     "end": 70.582
     },
     {
      "text": "I'm",
-     "start": 70.49,
-     "end": 70.721
+     "start": 70.712,
+     "end": 70.943
     },
     {
      "text": "lying",
-     "start": 70.721,
-     "end": 71.073
+     "start": 70.943,
+     "end": 71.295
     }
    ],
    "overlay": "ERROR",
@@ -1290,68 +1300,68 @@
    "speaker": "narr",
    "kind": "line",
    "text": "It spun, sparked, and exploded into the biggest rainbow in town history.",
-   "start": 71.388,
-   "end": 75.535,
+   "start": 71.61,
+   "end": 75.757,
    "words": [
     {
      "text": "It",
-     "start": 71.403,
-     "end": 71.601
+     "start": 71.625,
+     "end": 71.823
     },
     {
      "text": "spun",
-     "start": 71.601,
-     "end": 71.94
+     "start": 71.823,
+     "end": 72.162
     },
     {
      "text": "sparked",
-     "start": 72.07,
-     "end": 72.577
+     "start": 72.292,
+     "end": 72.799
     },
     {
      "text": "and",
-     "start": 72.707,
-     "end": 72.913
+     "start": 72.929,
+     "end": 73.134
     },
     {
      "text": "exploded",
-     "start": 72.913,
-     "end": 73.498
+     "start": 73.134,
+     "end": 73.72
     },
     {
      "text": "into",
-     "start": 73.498,
-     "end": 73.758
+     "start": 73.72,
+     "end": 73.98
     },
     {
      "text": "the",
-     "start": 73.758,
-     "end": 73.91
+     "start": 73.98,
+     "end": 74.131
     },
     {
      "text": "biggest",
-     "start": 73.91,
-     "end": 74.278
+     "start": 74.131,
+     "end": 74.5
     },
     {
      "text": "rainbow",
-     "start": 74.278,
-     "end": 74.701
+     "start": 74.5,
+     "end": 74.922
     },
     {
      "text": "in",
-     "start": 74.701,
-     "end": 74.853
+     "start": 74.922,
+     "end": 75.074
     },
     {
      "text": "town",
-     "start": 74.853,
-     "end": 75.113
+     "start": 75.074,
+     "end": 75.334
     },
     {
      "text": "history",
-     "start": 75.113,
-     "end": 75.535
+     "start": 75.334,
+     "end": 75.757
     }
    ],
    "visual": "Boom: the cloud bursts into a giant blocky rainbow arching over the clock tower. The sun comes out, the water drains away, and the crowd cheers."
@@ -1361,38 +1371,38 @@
    "speaker": "me",
    "kind": "huss",
    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
-   "start": 75.85,
-   "end": 77.49,
+   "start": 76.072,
+   "end": 77.712,
    "words": [
     {
      "text": "HUSS!",
-     "start": 75.85,
-     "end": 76.11
+     "start": 76.072,
+     "end": 76.332
     },
     {
      "text": "HUSS!",
-     "start": 76.06,
-     "end": 76.32
+     "start": 76.282,
+     "end": 76.542
     },
     {
      "text": "HUSS!",
-     "start": 76.25,
-     "end": 76.51
+     "start": 76.472,
+     "end": 76.732
     },
     {
      "text": "HUSS!",
-     "start": 76.83,
-     "end": 77.09
+     "start": 77.052,
+     "end": 77.312
     },
     {
      "text": "HUSS!",
-     "start": 77.04,
-     "end": 77.3
+     "start": 77.262,
+     "end": 77.522
     },
     {
      "text": "HUSS!",
-     "start": 77.23,
-     "end": 77.49
+     "start": 77.452,
+     "end": 77.712
     }
    ],
    "visual": "I surf down main street on the bathtub as the water drains, with the cat sitting on my head and the whole town cheering under the rainbow."
@@ -1402,48 +1412,48 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Okay. I ate the trifle. All seven layers.",
-   "start": 77.83,
-   "end": 80.72,
+   "start": 78.052,
+   "end": 80.942,
    "words": [
     {
      "text": "Okay",
-     "start": 77.845,
-     "end": 78.357
+     "start": 78.067,
+     "end": 78.579
     },
     {
      "text": "I",
-     "start": 78.667,
-     "end": 78.807
+     "start": 78.889,
+     "end": 79.028
     },
     {
      "text": "ate",
-     "start": 78.807,
-     "end": 78.996
+     "start": 79.028,
+     "end": 79.218
     },
     {
      "text": "the",
-     "start": 78.996,
-     "end": 79.136
+     "start": 79.218,
+     "end": 79.358
     },
     {
      "text": "trifle",
-     "start": 79.136,
-     "end": 79.525
+     "start": 79.358,
+     "end": 79.747
     },
     {
      "text": "All",
-     "start": 79.835,
-     "end": 80.007
+     "start": 80.057,
+     "end": 80.229
     },
     {
      "text": "seven",
-     "start": 80.007,
-     "end": 80.364
+     "start": 80.229,
+     "end": 80.585
     },
     {
      "text": "layers",
-     "start": 80.364,
-     "end": 80.72
+     "start": 80.585,
+     "end": 80.942
     }
    ],
    "visual": "Under the rainbow, sun out, I look at the camera and confess with a sheepish grin, custard still on my face. No cloud appears. The orange cat nods once, satisfied.",
@@ -1454,53 +1464,53 @@
    "speaker": "narr",
    "kind": "line",
    "text": "Mom hugged me. It's okay, sweetie. I'm not mad.",
-   "start": 81.035,
-   "end": 84.364,
+   "start": 81.257,
+   "end": 84.586,
    "words": [
     {
      "text": "Mom",
-     "start": 81.05,
-     "end": 81.294
+     "start": 81.272,
+     "end": 81.516
     },
     {
      "text": "hugged",
-     "start": 81.294,
-     "end": 81.603
+     "start": 81.516,
+     "end": 81.824
     },
     {
      "text": "me",
-     "start": 81.603,
-     "end": 81.783
+     "start": 81.824,
+     "end": 82.004
     },
     {
      "text": "It's",
-     "start": 82.093,
-     "end": 82.353
+     "start": 82.314,
+     "end": 82.574
     },
     {
      "text": "okay",
-     "start": 82.353,
-     "end": 82.749
+     "start": 82.574,
+     "end": 82.97
     },
     {
      "text": "sweetie",
-     "start": 82.879,
-     "end": 83.382
+     "start": 83.1,
+     "end": 83.603
     },
     {
      "text": "I'm",
-     "start": 83.692,
-     "end": 83.916
+     "start": 83.913,
+     "end": 84.137
     },
     {
      "text": "not",
-     "start": 83.916,
-     "end": 84.14
+     "start": 84.137,
+     "end": 84.361
     },
     {
      "text": "mad",
-     "start": 84.14,
-     "end": 84.364
+     "start": 84.361,
+     "end": 84.586
     }
    ],
    "visual": "Town square under the rainbow. Mom gives me a warm hug and a gentle smile."
@@ -1509,39 +1519,44 @@
    "id": "b26",
    "speaker": "narr",
    "kind": "line",
-   "text": "Pop. Biggest storm in town history.",
-   "start": 84.679,
-   "end": 86.767,
+   "text": "Then... pop. Biggest storm in town history.",
+   "start": 84.901,
+   "end": 87.785,
    "words": [
     {
-     "text": "Pop",
-     "start": 84.694,
-     "end": 85.092
+     "text": "Then",
+     "start": 84.916,
+     "end": 85.342
+    },
+    {
+     "text": "pop",
+     "start": 85.712,
+     "end": 86.11
     },
     {
      "text": "Biggest",
-     "start": 85.402,
-     "end": 85.733
+     "start": 86.42,
+     "end": 86.751
     },
     {
      "text": "storm",
-     "start": 85.733,
-     "end": 86.016
+     "start": 86.751,
+     "end": 87.034
     },
     {
      "text": "in",
-     "start": 86.016,
-     "end": 86.152
+     "start": 87.034,
+     "end": 87.171
     },
     {
      "text": "town",
-     "start": 86.152,
-     "end": 86.386
+     "start": 87.171,
+     "end": 87.405
     },
     {
      "text": "history",
-     "start": 86.386,
-     "end": 86.767
+     "start": 87.405,
+     "end": 87.785
     }
    ],
    "overlay": "NOT MAD",
@@ -2738,9 +2753,9 @@
    "i": 8
   },
   {
-   "text": "Pibbs",
+   "text": "Biggs",
    "start": 44.101,
-   "end": 44.344,
+   "end": 44.347,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2748,8 +2763,8 @@
   },
   {
    "text": "rowed",
-   "start": 44.344,
-   "end": 44.586,
+   "start": 44.347,
+   "end": 44.593,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2757,8 +2772,8 @@
   },
   {
    "text": "to",
-   "start": 44.586,
-   "end": 44.728,
+   "start": 44.593,
+   "end": 44.737,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2766,8 +2781,8 @@
   },
   {
    "text": "work",
-   "start": 44.728,
-   "end": 44.92,
+   "start": 44.737,
+   "end": 44.931,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2775,8 +2790,8 @@
   },
   {
    "text": "in",
-   "start": 44.92,
-   "end": 45.061,
+   "start": 44.931,
+   "end": 45.075,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2784,8 +2799,8 @@
   },
   {
    "text": "a",
-   "start": 45.061,
-   "end": 45.203,
+   "start": 45.075,
+   "end": 45.219,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2793,8 +2808,8 @@
   },
   {
    "text": "bathtub",
-   "start": 45.203,
-   "end": 45.546,
+   "start": 45.219,
+   "end": 45.567,
    "beat": "b13",
    "kind": "line",
    "speaker": "narr",
@@ -2802,8 +2817,8 @@
   },
   {
    "text": "Goon",
-   "start": 45.876,
-   "end": 46.155,
+   "start": 45.897,
+   "end": 46.176,
    "beat": "b14",
    "kind": "line",
    "speaker": "narr",
@@ -2811,62 +2826,80 @@
   },
   {
    "text": "Squad!",
-   "start": 46.155,
-   "end": 46.58,
+   "start": 46.176,
+   "end": 46.6,
    "beat": "b14",
    "kind": "line",
    "speaker": "narr",
    "i": 1
   },
   {
-   "text": "Pool",
-   "start": 46.91,
-   "end": 47.132,
+   "text": "And",
+   "start": 46.93,
+   "end": 47.126,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
    "i": 0
   },
   {
-   "text": "party",
-   "start": 47.132,
-   "end": 47.472,
+   "text": "a",
+   "start": 47.126,
+   "end": 47.271,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
    "i": 1
   },
   {
-   "text": "on",
-   "start": 47.472,
-   "end": 47.636,
+   "text": "pool",
+   "start": 47.271,
+   "end": 47.467,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
    "i": 2
   },
   {
-   "text": "my",
-   "start": 47.636,
-   "end": 47.858,
+   "text": "party",
+   "start": 47.467,
+   "end": 47.766,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
    "i": 3
   },
   {
-   "text": "roof",
-   "start": 47.858,
-   "end": 48.081,
+   "text": "on",
+   "start": 47.766,
+   "end": 47.91,
    "beat": "b15",
    "kind": "line",
    "speaker": "narr",
    "i": 4
   },
   {
+   "text": "my",
+   "start": 47.91,
+   "end": 48.106,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "roof",
+   "start": 48.106,
+   "end": 48.302,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
    "text": "While",
-   "start": 48.411,
-   "end": 48.634,
+   "start": 48.632,
+   "end": 48.855,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2874,8 +2907,8 @@
   },
   {
    "text": "they're",
-   "start": 48.634,
-   "end": 48.857,
+   "start": 48.855,
+   "end": 49.078,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2883,8 +2916,8 @@
   },
   {
    "text": "out",
-   "start": 48.857,
-   "end": 49.033,
+   "start": 49.078,
+   "end": 49.255,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2892,8 +2925,8 @@
   },
   {
    "text": "partying",
-   "start": 49.033,
-   "end": 49.396,
+   "start": 49.255,
+   "end": 49.617,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2901,8 +2934,8 @@
   },
   {
    "text": "by",
-   "start": 49.526,
-   "end": 49.714,
+   "start": 49.747,
+   "end": 49.936,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2910,8 +2943,8 @@
   },
   {
    "text": "the",
-   "start": 49.714,
-   "end": 49.853,
+   "start": 49.936,
+   "end": 50.075,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2919,8 +2952,8 @@
   },
   {
    "text": "way",
-   "start": 49.853,
-   "end": 50.042,
+   "start": 50.075,
+   "end": 50.263,
    "beat": "b16",
    "kind": "line",
    "speaker": "narr",
@@ -2928,8 +2961,8 @@
   },
   {
    "text": "I",
-   "start": 50.372,
-   "end": 50.496,
+   "start": 50.593,
+   "end": 50.718,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2937,8 +2970,8 @@
   },
   {
    "text": "tried",
-   "start": 50.496,
-   "end": 50.754,
+   "start": 50.718,
+   "end": 50.976,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2946,8 +2979,8 @@
   },
   {
    "text": "to",
-   "start": 50.754,
-   "end": 50.878,
+   "start": 50.976,
+   "end": 51.1,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2955,8 +2988,8 @@
   },
   {
    "text": "tell",
-   "start": 50.878,
-   "end": 51.047,
+   "start": 51.1,
+   "end": 51.269,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2964,8 +2997,8 @@
   },
   {
    "text": "the",
-   "start": 51.047,
-   "end": 51.172,
+   "start": 51.269,
+   "end": 51.393,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2973,8 +3006,8 @@
   },
   {
    "text": "truth",
-   "start": 51.172,
-   "end": 51.385,
+   "start": 51.393,
+   "end": 51.607,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2982,8 +3015,8 @@
   },
   {
    "text": "It",
-   "start": 51.695,
-   "end": 51.888,
+   "start": 51.917,
+   "end": 52.11,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -2991,8 +3024,8 @@
   },
   {
    "text": "was",
-   "start": 51.888,
-   "end": 52.15,
+   "start": 52.11,
+   "end": 52.372,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -3000,8 +3033,8 @@
   },
   {
    "text": "m",
-   "start": 52.15,
-   "end": 52.343,
+   "start": 52.372,
+   "end": 52.565,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -3009,8 +3042,8 @@
   },
   {
    "text": "m",
-   "start": 52.713,
-   "end": 53.112,
+   "start": 52.935,
+   "end": 53.333,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -3018,8 +3051,8 @@
   },
   {
    "text": "the",
-   "start": 53.482,
-   "end": 53.64,
+   "start": 53.703,
+   "end": 53.861,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -3027,8 +3060,8 @@
   },
   {
    "text": "pigeon's",
-   "start": 53.64,
-   "end": 54.08,
+   "start": 53.861,
+   "end": 54.301,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -3036,8 +3069,8 @@
   },
   {
    "text": "cousin",
-   "start": 54.08,
-   "end": 54.407,
+   "start": 54.301,
+   "end": 54.628,
    "beat": "b17",
    "kind": "line",
    "speaker": "narr",
@@ -3045,8 +3078,8 @@
   },
   {
    "text": "Ah",
-   "start": 54.737,
-   "end": 55.119,
+   "start": 54.958,
+   "end": 55.341,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -3054,8 +3087,8 @@
   },
   {
    "text": "almost",
-   "start": 55.249,
-   "end": 55.832,
+   "start": 55.471,
+   "end": 56.054,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -3063,8 +3096,8 @@
   },
   {
    "text": "almost!",
-   "start": 56.202,
-   "end": 56.813,
+   "start": 56.424,
+   "end": 57.034,
    "beat": "b18",
    "kind": "line",
    "speaker": "narr",
@@ -3072,8 +3105,8 @@
   },
   {
    "text": "The",
-   "start": 57.143,
-   "end": 57.289,
+   "start": 57.364,
+   "end": 57.51,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3081,8 +3114,8 @@
   },
   {
    "text": "town",
-   "start": 57.289,
-   "end": 57.538,
+   "start": 57.51,
+   "end": 57.76,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3090,8 +3123,8 @@
   },
   {
    "text": "chanted",
-   "start": 57.538,
-   "end": 57.944,
+   "start": 57.76,
+   "end": 58.166,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3099,8 +3132,8 @@
   },
   {
    "text": "from",
-   "start": 57.944,
-   "end": 58.194,
+   "start": 58.166,
+   "end": 58.415,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3108,8 +3141,8 @@
   },
   {
    "text": "the",
-   "start": 58.194,
-   "end": 58.339,
+   "start": 58.415,
+   "end": 58.561,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3117,8 +3150,8 @@
   },
   {
    "text": "rooftops",
-   "start": 58.339,
-   "end": 58.745,
+   "start": 58.561,
+   "end": 58.967,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3126,8 +3159,8 @@
   },
   {
    "text": "Drizzao!",
-   "start": 59.055,
-   "end": 59.562,
+   "start": 59.277,
+   "end": 59.784,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3135,8 +3168,8 @@
   },
   {
    "text": "Pella",
-   "start": 59.852,
-   "end": 60.17,
+   "start": 60.074,
+   "end": 60.391,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3144,8 +3177,8 @@
   },
   {
    "text": "pip!",
-   "start": 60.17,
-   "end": 60.421,
+   "start": 60.391,
+   "end": 60.643,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3153,8 +3186,8 @@
   },
   {
    "text": "Pella",
-   "start": 60.711,
-   "end": 61.01,
+   "start": 60.933,
+   "end": 61.232,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3162,8 +3195,8 @@
   },
   {
    "text": "plonk!",
-   "start": 61.01,
-   "end": 61.372,
+   "start": 61.232,
+   "end": 61.594,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3171,8 +3204,8 @@
   },
   {
    "text": "Soggani!",
-   "start": 61.662,
-   "end": 62.186,
+   "start": 61.884,
+   "end": 62.407,
    "beat": "b19",
    "kind": "line",
    "speaker": "narr",
@@ -3180,8 +3213,8 @@
   },
   {
    "text": "Then",
-   "start": 62.516,
-   "end": 62.883,
+   "start": 62.737,
+   "end": 63.105,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3189,8 +3222,8 @@
   },
   {
    "text": "genius",
-   "start": 63.013,
-   "end": 63.499,
+   "start": 63.235,
+   "end": 63.721,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3198,8 +3231,8 @@
   },
   {
    "text": "idea",
-   "start": 63.499,
-   "end": 63.861,
+   "start": 63.721,
+   "end": 64.082,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3207,8 +3240,8 @@
   },
   {
    "text": "I",
-   "start": 64.171,
-   "end": 64.334,
+   "start": 64.392,
+   "end": 64.555,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3216,8 +3249,8 @@
   },
   {
    "text": "looked",
-   "start": 64.334,
-   "end": 64.613,
+   "start": 64.555,
+   "end": 64.834,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3225,8 +3258,8 @@
   },
   {
    "text": "up",
-   "start": 64.613,
-   "end": 64.776,
+   "start": 64.834,
+   "end": 64.997,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3234,8 +3267,8 @@
   },
   {
    "text": "and",
-   "start": 64.776,
-   "end": 64.997,
+   "start": 64.997,
+   "end": 65.218,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3243,8 +3276,8 @@
   },
   {
    "text": "said",
-   "start": 64.997,
-   "end": 65.218,
+   "start": 65.218,
+   "end": 65.439,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3252,8 +3285,8 @@
   },
   {
    "text": "I",
-   "start": 65.218,
-   "end": 65.38,
+   "start": 65.439,
+   "end": 65.602,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3261,8 +3294,8 @@
   },
   {
    "text": "am",
-   "start": 65.38,
-   "end": 65.543,
+   "start": 65.602,
+   "end": 65.765,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3270,8 +3303,8 @@
   },
   {
    "text": "lying",
-   "start": 65.543,
-   "end": 65.88,
+   "start": 65.765,
+   "end": 66.102,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3279,8 +3312,8 @@
   },
   {
    "text": "right",
-   "start": 65.88,
-   "end": 66.159,
+   "start": 66.102,
+   "end": 66.381,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3288,8 +3321,8 @@
   },
   {
    "text": "now",
-   "start": 66.159,
-   "end": 66.38,
+   "start": 66.381,
+   "end": 66.602,
    "beat": "b20",
    "kind": "line",
    "speaker": "narr",
@@ -3297,8 +3330,8 @@
   },
   {
    "text": "The",
-   "start": 66.71,
-   "end": 66.884,
+   "start": 66.932,
+   "end": 67.106,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3306,8 +3339,8 @@
   },
   {
    "text": "cloud",
-   "start": 66.884,
-   "end": 67.245,
+   "start": 67.106,
+   "end": 67.466,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3315,8 +3348,8 @@
   },
   {
    "text": "froze",
-   "start": 67.245,
-   "end": 67.605,
+   "start": 67.466,
+   "end": 67.827,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3324,8 +3357,8 @@
   },
   {
    "text": "If",
-   "start": 67.915,
-   "end": 68.08,
+   "start": 68.137,
+   "end": 68.301,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3333,8 +3366,8 @@
   },
   {
    "text": "I'm",
-   "start": 68.08,
-   "end": 68.303,
+   "start": 68.301,
+   "end": 68.525,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3342,8 +3375,8 @@
   },
   {
    "text": "lying",
-   "start": 68.303,
-   "end": 68.644,
+   "start": 68.525,
+   "end": 68.865,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3351,8 +3384,8 @@
   },
   {
    "text": "it's",
-   "start": 68.774,
-   "end": 69.065,
+   "start": 68.995,
+   "end": 69.286,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3360,8 +3393,8 @@
   },
   {
    "text": "true",
-   "start": 69.065,
-   "end": 69.356,
+   "start": 69.286,
+   "end": 69.577,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3369,8 +3402,8 @@
   },
   {
    "text": "If",
-   "start": 69.666,
-   "end": 69.853,
+   "start": 69.887,
+   "end": 70.074,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3378,8 +3411,8 @@
   },
   {
    "text": "it's",
-   "start": 69.853,
-   "end": 70.107,
+   "start": 70.074,
+   "end": 70.328,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3387,8 +3420,8 @@
   },
   {
    "text": "true",
-   "start": 70.107,
-   "end": 70.36,
+   "start": 70.328,
+   "end": 70.582,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3396,8 +3429,8 @@
   },
   {
    "text": "I'm",
-   "start": 70.49,
-   "end": 70.721,
+   "start": 70.712,
+   "end": 70.943,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3405,8 +3438,8 @@
   },
   {
    "text": "lying",
-   "start": 70.721,
-   "end": 71.073,
+   "start": 70.943,
+   "end": 71.295,
    "beat": "b21",
    "kind": "line",
    "speaker": "narr",
@@ -3414,8 +3447,8 @@
   },
   {
    "text": "It",
-   "start": 71.403,
-   "end": 71.601,
+   "start": 71.625,
+   "end": 71.823,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3423,8 +3456,8 @@
   },
   {
    "text": "spun",
-   "start": 71.601,
-   "end": 71.94,
+   "start": 71.823,
+   "end": 72.162,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3432,8 +3465,8 @@
   },
   {
    "text": "sparked",
-   "start": 72.07,
-   "end": 72.577,
+   "start": 72.292,
+   "end": 72.799,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3441,8 +3474,8 @@
   },
   {
    "text": "and",
-   "start": 72.707,
-   "end": 72.913,
+   "start": 72.929,
+   "end": 73.134,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3450,8 +3483,8 @@
   },
   {
    "text": "exploded",
-   "start": 72.913,
-   "end": 73.498,
+   "start": 73.134,
+   "end": 73.72,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3459,8 +3492,8 @@
   },
   {
    "text": "into",
-   "start": 73.498,
-   "end": 73.758,
+   "start": 73.72,
+   "end": 73.98,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3468,8 +3501,8 @@
   },
   {
    "text": "the",
-   "start": 73.758,
-   "end": 73.91,
+   "start": 73.98,
+   "end": 74.131,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3477,8 +3510,8 @@
   },
   {
    "text": "biggest",
-   "start": 73.91,
-   "end": 74.278,
+   "start": 74.131,
+   "end": 74.5,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3486,8 +3519,8 @@
   },
   {
    "text": "rainbow",
-   "start": 74.278,
-   "end": 74.701,
+   "start": 74.5,
+   "end": 74.922,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3495,8 +3528,8 @@
   },
   {
    "text": "in",
-   "start": 74.701,
-   "end": 74.853,
+   "start": 74.922,
+   "end": 75.074,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3504,8 +3537,8 @@
   },
   {
    "text": "town",
-   "start": 74.853,
-   "end": 75.113,
+   "start": 75.074,
+   "end": 75.334,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3513,8 +3546,8 @@
   },
   {
    "text": "history",
-   "start": 75.113,
-   "end": 75.535,
+   "start": 75.334,
+   "end": 75.757,
    "beat": "b22",
    "kind": "line",
    "speaker": "narr",
@@ -3522,8 +3555,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 75.85,
-   "end": 76.11,
+   "start": 76.072,
+   "end": 76.332,
    "beat": "b23",
    "kind": "huss",
    "speaker": "me",
@@ -3531,8 +3564,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 76.06,
-   "end": 76.32,
+   "start": 76.282,
+   "end": 76.542,
    "beat": "b23",
    "kind": "huss",
    "speaker": "me",
@@ -3540,8 +3573,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 76.25,
-   "end": 76.51,
+   "start": 76.472,
+   "end": 76.732,
    "beat": "b23",
    "kind": "huss",
    "speaker": "me",
@@ -3549,8 +3582,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 76.83,
-   "end": 77.09,
+   "start": 77.052,
+   "end": 77.312,
    "beat": "b23",
    "kind": "huss",
    "speaker": "me",
@@ -3558,8 +3591,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 77.04,
-   "end": 77.3,
+   "start": 77.262,
+   "end": 77.522,
    "beat": "b23",
    "kind": "huss",
    "speaker": "me",
@@ -3567,8 +3600,8 @@
   },
   {
    "text": "HUSS!",
-   "start": 77.23,
-   "end": 77.49,
+   "start": 77.452,
+   "end": 77.712,
    "beat": "b23",
    "kind": "huss",
    "speaker": "me",
@@ -3576,8 +3609,8 @@
   },
   {
    "text": "Okay",
-   "start": 77.845,
-   "end": 78.357,
+   "start": 78.067,
+   "end": 78.579,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3585,8 +3618,8 @@
   },
   {
    "text": "I",
-   "start": 78.667,
-   "end": 78.807,
+   "start": 78.889,
+   "end": 79.028,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3594,8 +3627,8 @@
   },
   {
    "text": "ate",
-   "start": 78.807,
-   "end": 78.996,
+   "start": 79.028,
+   "end": 79.218,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3603,8 +3636,8 @@
   },
   {
    "text": "the",
-   "start": 78.996,
-   "end": 79.136,
+   "start": 79.218,
+   "end": 79.358,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3612,8 +3645,8 @@
   },
   {
    "text": "trifle",
-   "start": 79.136,
-   "end": 79.525,
+   "start": 79.358,
+   "end": 79.747,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3621,8 +3654,8 @@
   },
   {
    "text": "All",
-   "start": 79.835,
-   "end": 80.007,
+   "start": 80.057,
+   "end": 80.229,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3630,8 +3663,8 @@
   },
   {
    "text": "seven",
-   "start": 80.007,
-   "end": 80.364,
+   "start": 80.229,
+   "end": 80.585,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3639,8 +3672,8 @@
   },
   {
    "text": "layers",
-   "start": 80.364,
-   "end": 80.72,
+   "start": 80.585,
+   "end": 80.942,
    "beat": "b24",
    "kind": "line",
    "speaker": "narr",
@@ -3648,8 +3681,8 @@
   },
   {
    "text": "Mom",
-   "start": 81.05,
-   "end": 81.294,
+   "start": 81.272,
+   "end": 81.516,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3657,8 +3690,8 @@
   },
   {
    "text": "hugged",
-   "start": 81.294,
-   "end": 81.603,
+   "start": 81.516,
+   "end": 81.824,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3666,8 +3699,8 @@
   },
   {
    "text": "me",
-   "start": 81.603,
-   "end": 81.783,
+   "start": 81.824,
+   "end": 82.004,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3675,8 +3708,8 @@
   },
   {
    "text": "It's",
-   "start": 82.093,
-   "end": 82.353,
+   "start": 82.314,
+   "end": 82.574,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3684,8 +3717,8 @@
   },
   {
    "text": "okay",
-   "start": 82.353,
-   "end": 82.749,
+   "start": 82.574,
+   "end": 82.97,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3693,8 +3726,8 @@
   },
   {
    "text": "sweetie",
-   "start": 82.879,
-   "end": 83.382,
+   "start": 83.1,
+   "end": 83.603,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3702,8 +3735,8 @@
   },
   {
    "text": "I'm",
-   "start": 83.692,
-   "end": 83.916,
+   "start": 83.913,
+   "end": 84.137,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3711,8 +3744,8 @@
   },
   {
    "text": "not",
-   "start": 83.916,
-   "end": 84.14,
+   "start": 84.137,
+   "end": 84.361,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
@@ -3720,66 +3753,75 @@
   },
   {
    "text": "mad",
-   "start": 84.14,
-   "end": 84.364,
+   "start": 84.361,
+   "end": 84.586,
    "beat": "b25",
    "kind": "line",
    "speaker": "narr",
    "i": 8
   },
   {
-   "text": "Pop",
-   "start": 84.694,
-   "end": 85.092,
+   "text": "Then",
+   "start": 84.916,
+   "end": 85.342,
    "beat": "b26",
    "kind": "line",
    "speaker": "narr",
    "i": 0
   },
   {
-   "text": "Biggest",
-   "start": 85.402,
-   "end": 85.733,
+   "text": "pop",
+   "start": 85.712,
+   "end": 86.11,
    "beat": "b26",
    "kind": "line",
    "speaker": "narr",
    "i": 1
   },
   {
-   "text": "storm",
-   "start": 85.733,
-   "end": 86.016,
+   "text": "Biggest",
+   "start": 86.42,
+   "end": 86.751,
    "beat": "b26",
    "kind": "line",
    "speaker": "narr",
    "i": 2
   },
   {
-   "text": "in",
-   "start": 86.016,
-   "end": 86.152,
+   "text": "storm",
+   "start": 86.751,
+   "end": 87.034,
    "beat": "b26",
    "kind": "line",
    "speaker": "narr",
    "i": 3
   },
   {
-   "text": "town",
-   "start": 86.152,
-   "end": 86.386,
+   "text": "in",
+   "start": 87.034,
+   "end": 87.171,
    "beat": "b26",
    "kind": "line",
    "speaker": "narr",
    "i": 4
   },
   {
-   "text": "history",
-   "start": 86.386,
-   "end": 86.767,
+   "text": "town",
+   "start": 87.171,
+   "end": 87.405,
    "beat": "b26",
    "kind": "line",
    "speaker": "narr",
    "i": 5
+  },
+  {
+   "text": "history",
+   "start": 87.405,
+   "end": 87.785,
+   "beat": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
   }
  ],
  "music": [
@@ -3820,55 +3862,55 @@
    "mode": "muffled"
   },
   {
-   "t": 45.781,
+   "t": 45.802,
    "mode": "party"
   },
   {
-   "t": 46.815,
+   "t": 46.835,
    "mode": "party"
   },
   {
-   "t": 48.316,
+   "t": 48.537,
    "mode": "muffled"
   },
   {
-   "t": 50.277,
+   "t": 50.498,
    "mode": "none"
   },
   {
-   "t": 54.642,
+   "t": 54.863,
    "mode": "none"
   },
   {
-   "t": 57.048,
+   "t": 57.269,
    "mode": "party"
   },
   {
-   "t": 62.421,
+   "t": 62.642,
    "mode": "none"
   },
   {
-   "t": 66.615,
+   "t": 66.837,
    "mode": "none"
   },
   {
-   "t": 71.308,
+   "t": 71.53,
    "mode": "party"
   },
   {
-   "t": 75.77,
+   "t": 75.992,
    "mode": "party"
   },
   {
-   "t": 77.75,
+   "t": 77.972,
    "mode": "lofi"
   },
   {
-   "t": 80.955,
+   "t": 81.177,
    "mode": "lofi"
   },
   {
-   "t": 84.599,
+   "t": 84.821,
    "mode": "none"
   }
  ],
@@ -3879,13 +3921,13 @@
   "flood": 40.866,
   "respect": 23.029,
   "cat": 32.77,
-  "pigeon": 53.64,
+  "pigeon": 53.861,
   "brains": 39.185,
   "pibbs": 43.29,
-  "d1": 59.055,
-  "d2": 60.17,
-  "d3": 61.01,
-  "d4": 61.662
+  "d1": 59.277,
+  "d2": 60.391,
+  "d3": 61.232,
+  "d4": 61.884
  },
  "title": "In This Town \u2014 The Cat Did It"
 }

@@ -447,7 +447,7 @@ function partySquare(ctx) {
   const pl = put(ctx, 'pillay', L(50.4, 0.8, -0.5), L.yaw - PI / 2); pl.setAccessory('cap', false); pl.setAccessory('partyHat', true);
   ctx.store.fr = crowd(ctx, [X[3], X[4], X[5]], [[50.9, 0.8, 1.9, -PI / 2 - 0.35], [51.0, 0.8, -2.9, -PI / 2 + 0.35], [51.8, 0.8, 4.0, -PI / 2 - 0.2]]);
   ctx.store.fr.forEach((c) => c.ch.setAccessory('partyHat', true));
-  const list = []; for (let i = 0; i < 44; i++) { const x = 44.6 + (i % 4) * 1.1 + hash(i * 3.1) * 0.5, z = -7.5 + Math.floor(i / 4) * 1.4 + hash(i * 1.7) * 0.4; if (Math.abs(z - 4) < 1.0 && x < 45) continue; list.push({ x, y: 0, z, yaw: PI / 2 + (hash(i) - 0.5) * 0.6, k: i, s: 0.9 + 0.2 * hash(i * 2.3) }); }
+  const list = []; for (let i = 0; i < 44; i++) { const x = 46.2 + (i % 3) * 1.05 + hash(i * 3.1) * 0.5, z = -7.5 + Math.floor(i / 4) * 1.4 + hash(i * 1.7) * 0.4; if (Math.abs(z - 4) < 1.0 && x < 45) continue; list.push({ x, y: 0, z, yaw: PI / 2 + (hash(i) - 0.5) * 0.6, k: i, s: 0.9 + 0.2 * hash(i * 2.3) }); }
   filler(ctx, list);
   hs(ctx, P.pil, 70, -30, 0);
 }
@@ -456,8 +456,8 @@ function partyTick(ctx, t, lt) {
   pl.pose('dance', t, { speed: 1.2 }); pl.face('laugh', 0.3);
   ctx.store.fr.forEach((c, i) => { c.ch.pose(i % 2 ? 'dance2' : 'cheer', t + c.ph, {}); c.ch.face(i % 2 ? 'grin' : 'laugh', t + c.ph); });
   P.filler.userData.set(t, { arms: 'up', bounce: 1 });
-  place(P.pil, 69, -36 + 18 * lt, 0);
-  hset(P.pil, t, { ...gait(18), glow: 0.5, porch: 0.6, smoke: 1, smokeDrift: 5 });
+  place(P.pil, 72, -14 + 20 * lt, 0);
+  hset(P.pil, t, { ...gait(20), glow: 0.5, porch: 0.6, smoke: 1, smokeDrift: 5 });
 }
 /** every ring house hums: purple pulsing windows + halos, chimneys puffing together */
 function ringHum(ctx, t, { bell = 0, skip = [] } = {}) {
@@ -523,7 +523,7 @@ function crowdTick(ctx, t, ts) {
 }
 /** my front garden, morning: the house stands relaxed in its slot */
 function garden(ctx) {
-  const L = town(ctx, 'day', { hide: [HOME] });
+  const L = town(ctx, 'day', { hide: [HOME], lamps: [0] });
   const P = ctx.props; hs(ctx, P.home, -27, 14, PI); hs(ctx, P.shed, -27, 9, PI); P.shed.visible = true;
   return L;
 }
@@ -647,9 +647,9 @@ export const shots = [
       const a = P.pil.userData.foot(1).add(up(1.1)), b = L(-15, 1.05, 5.15);
       P.chain.userData.set(a, b, 0.35);
       P.lock.position.copy(b).add(V(0.25, -0.45, -0.35)); P.lock.rotation.set(0, L.yaw + 0.5, 0); P.lock.scale.setScalar(1.5); P.lock.userData.set(t < tl ? clamp((t - tl + 0.6) / 0.6, 0, 0.6) * 0 : 1);
-      pl.root.position.copy(L(-14.1, 0.12, 4.4)); pl.root.rotation.set(0, L.yaw + yawTo(-14.1, 4.4, -13.4, 0), 0);
+      pl.root.position.copy(L(-13.3, 0.12, 5.7)); pl.root.rotation.set(0, L.yaw + yawTo(-13.3, 5.7, -11.5, 0.5), 0);
       if (t < tl) { holdUp(pl, t); pl.face('determined', t); } else { pl.pose('crossArms', t); pl.face('smug', 0.5); }
-      moveCam(ctx, { pos: L(-11.6, 1.0, 1.0), look: L(-15.6, 2.6, 8.0), fov: 62 }, { pos: L(-12.0, 1.0, 1.8), look: L(-15.6, 2.6, 8.0), fov: 60 }, lt / 2.2);
+      moveCam(ctx, { pos: L(-10.6, 1.1, 0.4), look: L(-15.8, 2.4, 8.0), fov: 62 }, { pos: L(-11.0, 1.1, 1.2), look: L(-15.8, 2.4, 8.0), fov: 60 }, lt / 2.2);
       pop(ctx, tl, 0.1, '#ffffff', 0.35);
       stamp(ctx, 'CLICK!', tl, { y: 0.27, size: 110, fill: '#ffd23f', stroke: '#1d1d22', rot: 0.08, x: 0.62 });
       tag(ctx, 'RULE 1: CHAIN IT', ctx.markers.r1 - 0.05, Infinity, { y: 0.11, size: 64, bg: 'rgba(40,110,200,0.93)' });
@@ -698,7 +698,8 @@ export const shots = [
       J.armR.rotation.x = lerp(-1.4, -1.85, k) + 0.15 * Math.sin(clamp(t - tr, 0, 0.3) * 30);
       pl.face(t < tr ? 'determined' : 'smug', 0.5);
       setCam(ctx, { pos: pp.clone().add(V(1.6, 1.5, -3.2)), look: bell.clone().add(V(0.3, -0.1, 0.4)), fov: 54 });
-      if (t > tr) { const g = P.glow; ctx.add(g); g.position.copy(bell).add(V(0.2, 0, 0)); g.material.color.set('#fff27a'); g.scale.setScalar(2.4 * (1 + 0.15 * Math.sin(t * 25))); }
+      if (t > tr) { const g = P.glow; ctx.add(g); g.position.copy(bell).add(V(0.2, 0, 0)); g.material.color.set('#ffd23f'); g.scale.setScalar(3.2 * (1 + 0.15 * Math.sin(t * 25))); }
+      { const S = P.shock; ctx.add(S); S.position.copy(bell).add(V(0.15, 0, 0)); S.rotation.set(0, PI / 2, 0); S.userData.set(clamp((t - tr) / 0.45, 0, 1)); }
       pop(ctx, tr, 0.1, '#fff6c0', 0.3);
       stamp(ctx, 'DING!', tr, { y: 0.27, x: 0.4, size: 120, fill: '#ffd23f', stroke: '#1d1d22', rot: -0.1 });
       tag(ctx, 'RULE 3: RING THE BELL', ctx.markers.r3 - 0.05, Infinity, { y: 0.11, size: 60, bg: 'rgba(230,160,0,0.95)' });
@@ -757,9 +758,9 @@ export const shots = [
     update(ctx, lt) {
       const R = ctx.store.R, t = ctx.t, P = ctx.props, me = ctx.cast.me;
       sleepPose(me, t); me.face('sleepy', 0.05);
-      P.frost.userData.set(clamp(0.1 + lt / 2.3, 0, 1)); P.monitor.userData.set(t, 1);
+      P.frost.userData.set(clamp(0.1 + lt / 2.3, 0, 1)); P.monitor.userData.set(t, 1); key(ctx, R(1.95, 1.25, -1.55), 0.12, '#7ab8ff', 4);
       P.posters.forEach((p) => p.userData.set(0));
-      moveCam(ctx, { pos: R(2.15, 2.35, 1.3), look: R(0.6, 0.85, -1.5), fov: 58 }, { pos: R(2.0, 2.15, 0.7), look: R(0.8, 0.85, -1.5), fov: 54 }, ease.inOutSine(lt / 2.4), 1.0, '#9fb8ff', 6);
+      moveCam(ctx, { pos: R(0.4, 1.7, 1.1), look: R(-0.7, 1.55, -2.0), fov: 52 }, { pos: R(0.35, 1.75, 0.9), look: R(1.5, 0.95, -1.4), fov: 54 }, ease.inOutSine(clamp((lt - 0.5) / 1.4, 0, 1)), 0.7, '#9fb8ff', 6);
       const hp = scr(ctx, humanFace(me));
       ctx.fx.text('z z Z', { x: clamp(hp.x + 0.08, 0.2, 0.8), y: clamp(hp.y - 0.12 - 0.02 * Math.sin(t * 3), 0.1, 0.3), size: 64, fill: '#cfe2ff', stroke: '#1d1d22', rot: -0.15 });
     },
@@ -775,7 +776,7 @@ export const shots = [
       sleepPose(me, t); me.face('sleepy', 0.05);
       P.frost.userData.set(1); P.monitor.userData.set(t, 1);
       P.posters.forEach((p, i) => p.userData.set(0.45 * Math.sin(t * 7.4 + i * 1.3)));
-      setCam(ctx, { pos: R0(2.15, 2.25, 1.5), look: R0(0.3, 0.95, -1.4), fov: 62 }, 1.0, '#9fb8ff', 6);
+      setCam(ctx, { pos: R0(0.25, 1.8, 1.2), look: R0(1.45, 0.95, -1.4), fov: 60 }, 0.8, '#9fb8ff', 6); key(ctx, R(1.95, 1.25, -1.55), 0.12, '#7ab8ff', 4);
       const ph = (t % 0.42) / 0.42; if (ph < 0.18) ctx.cam.shake(0.35 * (1 - ph / 0.18), t, 3);
     },
   },
@@ -844,9 +845,9 @@ export const shots = [
       const t = ctx.t, h = ctx.props.home, me = ctx.cast.me;
       place(h, 6 - 11 * lt, 0.6, -PI / 2);
       hset(h, t, { ...gait(11), glow: 0.9, bayLight: 1, porch: 1, smoke: 0.8, smokeDrift: 4 });
-      inBay(ctx, me, h, -0.34, -0.1); me.pose('idle', t, { headPitch: -0.05, headYaw: -0.25 }); me.face('shocked', 0.3);
+      inBay(ctx, me, h, -0.18, -0.1); me.pose('idle', t, { headPitch: -0.05, headYaw: -0.25 }); me.face('shocked', 0.3);
       const J = me.joints; J.armL.rotation.set(-1.9, 0, -0.3); J.foreArmL.rotation.set(-0.5, 0, 0);
-      const c = houseCam(h, [0.5, 4.3, 3.5 - 1.35], [0.1, 4.05, 3.5 + 10], 70);
+      const c = houseCam(h, [0.45, 4.42, 3.5 - 1.36], [0.35, 4.0, 3.5 + 10], 68);
       setCam(ctx, c, 0.5, '#ffd8b0', 4);
     },
   },
@@ -940,7 +941,7 @@ export const shots = [
       place(P.pil, x, 1.5, -PI / 2);
       hset(P.pil, t, { ...gait(11), glow: 0.6, porch: 0.6, smoke: 0.9, smokeDrift: 4, frost: 0.6 });
       dragLamp(ctx, t, x + 10.5, 1.8);
-      setCam(ctx, { pos: L(x + 6.5, 3.2, 25), look: L(x + 5.5, 3.8, 1.5), fov: 58 }, 0);
+      setCam(ctx, { pos: L(x + 5.0, 3.0, 29), look: L(x + 5.0, 4.6, 1.5), fov: 58 }, 0);
       key(ctx, L(x - 4, 9, 9), 1.2, '#c8b0ff', 40);
       ctx.cam.shake(0.1, t, 3);
     },
@@ -954,7 +955,7 @@ export const shots = [
       place(P.pil, x, 1.5, -PI / 2);
       hset(P.pil, t, { ...gait(11), glow: 0.6, porch: 0.6, smoke: 0.9, smokeDrift: 4, frost: 0.6 });
       dragLamp(ctx, t, lx, 1.8);
-      setCam(ctx, { pos: L(lx + 1.2, 1.5, 6.2), look: L(lx + 0.6, 0.8, 1.8), fov: 60 }, 1.6, '#ffd8b0', 12);
+      setCam(ctx, { pos: L(lx + 1.4, 1.3, 4.3), look: L(lx + 0.4, 0.6, 1.8), fov: 62 }, 1.6, '#ffd8b0', 12);
       key(ctx, L(lx, 4, 6), 1.2, '#ffb060', 20);
       ctx.cam.shake(0.25, t, 6);
       speedLines(ctx, 0.6, 1);
@@ -967,7 +968,7 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t;
       partyTick(ctx, t, lt);
-      moveCam(ctx, { pos: L(40.5, 3.0, 4.0), look: L(51.5, 5.2, -0.6), fov: 56 }, { pos: L(41.5, 2.9, 3.6), look: L(51.5, 5.4, -0.6), fov: 54 }, lt / 1.2, 1.2, '#ffd0f0', 14);
+      moveCam(ctx, { pos: L(44.2, 2.9, 2.6), look: L(51.5, 4.6, -0.6), fov: 58 }, { pos: L(44.8, 2.8, 2.3), look: L(51.5, 4.8, -0.6), fov: 56 }, lt / 1.2, 1.2, '#ffd0f0', 14);
     },
   },
   {
@@ -1040,7 +1041,7 @@ export const shots = [
   // ── b14 "School was at eight. I needed my house home."
   {
     name: 'alarm clock', start: 'b14-0.12', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); const me = put(ctx, 'me', V(), 0); clockInHands(ctx, me); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); const me = put(ctx, 'me', V(), 0); clockInHands(ctx, me); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, me = ctx.cast.me, h = P.home;
       ringHum(ctx, t);
@@ -1054,7 +1055,7 @@ export const shots = [
   },
   {
     name: 'sweating at window', start: 'b14.w4-0.15', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); const me = put(ctx, 'me', V(), 0); clockInHands(ctx, me); ctx.add(ctx.props.sweat, me.joints.head); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); const me = put(ctx, 'me', V(), 0); clockInHands(ctx, me); ctx.add(ctx.props.sweat, me.joints.head); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, me = ctx.cast.me, h = P.home;
       ringHum(ctx, t);
@@ -1069,32 +1070,33 @@ export const shots = [
   // ── b15 "Then I remembered rule three. The doorbell."
   {
     name: 'rule three', start: 'b15-0.12', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); ctx.add(ctx.props.bulb); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); ctx.add(ctx.props.bulb); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, me = ctx.cast.me, h = P.home, tb = ctx.time('b15.w3');
       ringHum(ctx, t);
       inBay(ctx, me, h, 0.1, 0.05); me.pose('think', t); me.face(t < tb ? 'determined' : 'grin', 0.3);
       const k = t < tb ? 0 : ease.outBack(clamp((t - tb) / 0.25, 0, 1));
-      P.bulb.position.copy(hb(h, 0.55, 5.35, 3.5 + 0.45)); P.bulb.userData.set(k * 1.1);
+      P.bulb.position.copy(hb(h, 0.62, 4.72, 3.5 + 0.5)); P.bulb.userData.set(k * 0.9);
       setCam(ctx, houseCam(h, [-1.0, 3.75, 3.5 + 3.2], [0.05, 4.15, 3.5], 42), 0.35, '#e0c0ff', 6);
       tag(ctx, 'RULE 3: RING THE BELL', tb - 0.05, Infinity, { y: 0.1, size: 60, bg: 'rgba(230,160,0,0.95)' });
     },
   },
   {
     name: 'doorbell glows', start: 'b15.w5-0.12', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, h = P.home, tb = ctx.time('b15.w6');
       ringHum(ctx, t, { bell: clamp((t - tb) / 0.15, 0, 1) * (0.85 + 0.15 * Math.sin(t * 14)) });
       const k = ease.inOutSine(clamp(lt / 0.9, 0, 1));
-      setCam(ctx, houseCam(h, [2.1 - 0.5 * k, 1.35, 3.5 + 2.0 - 0.7 * k], [0.8, 1.2, 3.5], 42), 0.3, '#e0c0ff', 6);
+      setCam(ctx, houseCam(h, [2.0 - 0.4 * k, 1.45, 3.5 + 2.3 - 0.7 * k], [0.55, 1.2, 3.5], 44), 0.3, '#e0c0ff', 6);
+      { const S = P.shock; ctx.add(S); S.position.copy(h.userData.pt('bell')); S.quaternion.copy(h.userData.quat()); S.userData.set(clamp((t - tb) / 0.5, 0, 1)); }
       pop(ctx, tb, 0.1, '#fff6c0', 0.25);
     },
   },
   // ── b16 "So I hung off the porch and pressed it."
   {
     name: 'hang off porch', start: 'b16-0.12', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, h = P.home, me = ctx.cast.me;
       ringHum(ctx, t, { bell: 0.8 + 0.2 * Math.sin(t * 14) });
@@ -1106,7 +1108,7 @@ export const shots = [
   },
   {
     name: 'press', start: 'press-0.1', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); addTo(ctx, ctx.props.shock, 0, 0, 0); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); addTo(ctx, ctx.props.shock, 0, 0, 0); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, h = P.home, me = ctx.cast.me, tp = ctx.markers.press;
       const hit = clamp((t - tp) / 0.06, 0, 1);
@@ -1166,7 +1168,7 @@ export const shots = [
   },
   {
     name: 'huss cling', start: H('b17', 3), set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.6 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.6, exposure: 0.95 }); ctx.store.ring = fieldRing(ctx); put(ctx, 'me', V(), 0); },
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, h = P.home, me = ctx.cast.me, hh = hussHits(ctx, 'b17');
       ringHum(ctx, t, { skip: [0] });
@@ -1191,8 +1193,8 @@ export const shots = [
       const s = ringSlot(0), z = s.z + 2 + 12 * lt;
       place(h, s.x, z, 0);
       hset(h, t, { ...gait(12), glow: 0.9, glowColor: '#ffd27a', porch: 1, smoke: 1, smokeDrift: 4, bayLight: 1 });
-      for (let i = 0; i < 4; i++) { const u = ((t * gait(12).freq + [0, 0.12, 0.5, 0.62][i] + 0.5) % 1); dustW(ctx, i, h.userData.foot(i), u * 1.2, 1.4); }
-      setCam(ctx, { pos: L(s.x - 13, 1.4, s.z + 4.5), look: L(s.x, 5.0, s.z + 2.5), fov: 62 }, 0.6, '#ffd8c0', 30);
+      for (let i = 0; i < 4; i++) { const u = ((t * gait(12).freq + [0, 0.12, 0.5, 0.62][i] + 0.5) % 1); dustW(ctx, i, h.userData.foot(i), u * 1.2, 0.7); }
+      setCam(ctx, { pos: L(s.x - 14, 2.2, s.z + 5.0), look: L(s.x, 6.5, s.z + 3.0), fov: 64 }, 0.6, '#ffd8c0', 30);
       ctx.cam.punch(hh, t, 0.1, 0.2); shakeOn(ctx, hh, 0.8, 0.3, 9);
     },
   },
@@ -1207,14 +1209,14 @@ export const shots = [
       place(h, s.x, z, 0);
       hset(h, t, { ...gait(12), glow: 0.9, glowColor: '#ffd27a', porch: 1, smoke: 1, smokeDrift: 4, bayLight: 1 });
       P.sun.position.copy(L(60, 14, 160)); P.sun.material.opacity = 0.9;
-      setCam(ctx, { pos: L(s.x - 2, 9.5, s.z - 20), look: L(s.x + 2, 4.5, s.z + 30), fov: 56 }, 0);
+      setCam(ctx, { pos: L(s.x + 11, 2.2, s.z + 15), look: L(s.x, 6.0, s.z + 6), fov: 62 }, 0.5, '#ffd8c0', 30);
       ctx.cam.punch(hh, t, 0.1, 0.2); shakeOn(ctx, hh, 0.8, 0.3, 11);
     },
   },
   // ── b18 "It sprinted home so fast I flapped behind it like a flag."
   {
     name: 'sprint home', start: 'b18-0.12', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.5, exposure: 1.1 }); ctx.add(ctx.props.sun); put(ctx, 'me', V(), 0); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.5, exposure: 1.1 }); ctx.add(ctx.props.sun); hs(ctx, ctx.props.home, 0, -46, PI / 2); put(ctx, 'me', V(), 0); },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, h = P.home, me = ctx.cast.me;
       fieldTick(ctx, t);
@@ -1223,7 +1225,7 @@ export const shots = [
       place(h, x, -46, PI / 2);
       hset(h, t, { ...g, glow: 0.4, porch: 0.6, smoke: 1, smokeDrift: 5 });
       flagOn(ctx, me, h, t); me.face('shocked', 0.3);
-      for (let i = 0; i < 4; i++) { const u = ((t * g.freq + [0, 0.12, 0.5, 0.62][i] + 0.5) % 1); dustW(ctx, i, h.userData.foot(i), u * 1.2, 1.6); }
+      for (let i = 0; i < 4; i++) { const u = ((t * g.freq + [0, 0.12, 0.5, 0.62][i] + 0.5) % 1); dustW(ctx, i, h.userData.foot(i), u * 1.2, 0.8); }
       P.sun.position.copy(L(160, 16, -60)); P.sun.material.opacity = 0.9;
       setCam(ctx, { pos: L(x + 17, 2.2, -46 - 9), look: L(x, 5.0, -46), fov: 58 }, 0.5, '#ffd8c0', 30);
       ctx.cam.shake(0.15, t, 3); speedLines(ctx, 0.5, 1, 3);
@@ -1231,7 +1233,7 @@ export const shots = [
   },
   {
     name: 'like a flag', start: 'flag-0.12', set: 'town',
-    setup(ctx) { fieldNight(ctx, { fog: 0.5, exposure: 1.05 }); ctx.add(ctx.props.sun); put(ctx, 'me', V(), 0); },
+    setup(ctx) { fieldNight(ctx, { fog: 0.5, exposure: 1.05 }); ctx.add(ctx.props.sun); hs(ctx, ctx.props.home, 0, -46, PI / 2); put(ctx, 'me', V(), 0); },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, h = P.home, me = ctx.cast.me;
       fieldTick(ctx, t);
@@ -1259,7 +1261,7 @@ export const shots = [
       hset(h, t, { ...gait(u < 0.95 ? 12 * (1 - u) + 0.5 : 0.01, u < 0.95 ? 'gallop' : 'stand'), pitch: -0.12 * clamp((t - ts + 0.3) / 0.3, 0, 1) * (1 - clamp((t - ts) / 0.4, 0, 1)), glow: 0, smoke: 1 });
       dust(ctx, 0, -24.5, 0.2, 2.2, (t - ts + 0.3) / 1.0, 1.3); dust(ctx, 1, -30, 0.2, 3.5, (t - ts + 0.25) / 1.0, 1.1);
       crowdTick(ctx, t, ts);
-      moveCam(ctx, { pos: L(-12, 2.0, -6.8), look: L(-22, 3.6, 3), fov: 62 }, { pos: L(-13, 1.9, -6.4), look: L(-24, 3.4, 3), fov: 60 }, lt / 1.5, 0);
+      moveCam(ctx, { pos: L(-11, 2.4, -7.4), look: L(-22, 5.0, 3), fov: 64 }, { pos: L(-12, 2.3, -7.0), look: L(-24, 5.2, 3), fov: 62 }, lt / 1.5, 0);
       shakeOn(ctx, [ts], 0.5, 0.5, 3);
     },
   },
@@ -1360,7 +1362,7 @@ export const shots = [
       gardenTick(ctx, t);
       shedAt(ctx, -27.6, 9.2, PI, t, { wobble: 0.8, smoke: 0.6 });
       const lp = P.shed.userData.pt('leg0');
-      setCam(ctx, { pos: lp.clone().add(V(-0.55, 0.28, -1.25)), look: lp.clone().add(V(0.05, 0.12, 0)), fov: 40 }, 0.6, '#fff6e8', 4);
+      setCam(ctx, { pos: lp.clone().add(V(-0.4, 0.22, -0.78)), look: lp.clone().add(V(0.05, 0.1, 0)), fov: 42 }, 0.6, '#fff6e8', 4);
       ctx.cam.punch(hh, t, 0.12, 0.2); shakeOn(ctx, hh, 0.5, 0.25, 2);
     },
   },
@@ -1382,9 +1384,9 @@ export const shots = [
     update(ctx, lt) {
       const t = ctx.t, P = ctx.props, hh = hussHits(ctx, 'b21');
       gardenTick(ctx, t);
-      shedAt(ctx, -27.6, 9.2, PI, t, { wobble: 0.5, smoke: 1.0 });
+      shedAt(ctx, -27.6, 9.2, PI, t, { wobble: 0.5, smoke: 0.7 });
       const cp = P.shed.userData.pt('chimney');
-      setCam(ctx, { pos: cp.clone().add(V(0.45, -0.05, -1.1)), look: cp.clone().add(V(0, 0.12, 0)), fov: 42 }, 0.6, '#fff6e8', 4);
+      setCam(ctx, { pos: cp.clone().add(V(0.4, 0.15, -0.95)), look: cp.clone().add(V(0, -0.05, 0)), fov: 44 }, 0.6, '#fff6e8', 4);
       ctx.cam.punch(hh, t, 0.12, 0.2); shakeOn(ctx, hh, 0.5, 0.25, 6);
     },
   },
@@ -1407,11 +1409,11 @@ export const shots = [
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, me = ctx.cast.me, pg = ctx.cast.pigeon;
       gardenTick(ctx, t);
-      const a = t * 2.6, cx = -27.4, cz = 9.9, r = 1.9;
+      const a = t * 2.6, cx = -27.9, cz = 9.7, r = 1.6;
       shedAt(ctx, cx + Math.sin(a) * r, cz + Math.cos(a) * r, a + PI / 2, t, { run: 1, freq: 4, hop: 0.5, wobble: 0.6, smoke: 0.8 });
       const b = a + 0.9; pg.root.position.copy(L(cx + Math.sin(b) * r, 0, cz + Math.cos(b) * r)); pg.root.rotation.set(0, L.yaw + b + PI / 2, 0); pg.pose('strut', t, { speed: 2 }); pg.face('shocked', t);
-      me.root.position.copy(L(-24.3, 0.12, 6.6)); me.root.rotation.set(0, L.yaw + PI + 0.55, 0); me.pose('stunned', t, { lookAt: P.shed.userData.pt('door') }); me.face('shocked', 0.3);
-      setCam(ctx, { pos: L(-26.4, 1.7, 2.6), look: L(-26.4, 1.05, 8.6), fov: 54 }, 0.8, '#fff6e8', 8);
+      me.root.position.copy(L(-25.0, 0, 9.3)); me.root.rotation.set(0, L.yaw + PI + 0.35, 0); me.pose('stunned', t, { lookAt: P.shed.userData.pt('door') }); me.face('shocked', 0.3);
+      setCam(ctx, { pos: L(-25.9, 2.0, 4.4), look: L(-26.4, 1.0, 9.4), fov: 54 }, 0.8, '#fff6e8', 8);
     },
   },
   {
@@ -1423,8 +1425,8 @@ export const shots = [
       gardenTick(ctx, t, { crouch: 0.9 * nz, pitch: 0.2 * nz + 0.04 * Math.sin(t * 4) * nz });
       shedAt(ctx, -27.0, 9.0, PI, t, { hop: 0.6, wobble: 0.8, wag: 1, smoke: 1 });
       P.gold.userData.set(t, 0.9);
-      me.root.position.copy(L(-24.6, 0.12, 6.4)); me.root.rotation.set(0, L.yaw + PI + 0.7, 0); me.pose('stunned', t, {}); me.face('shocked', 0.3);
-      setCam(ctx, { pos: L(-28.6, 1.5, 2.0), look: L(-26.6, 2.0, 9.0), fov: 58 }, 1.0, '#fff6e8', 8);
+      me.root.position.copy(L(-24.9, 0, 9.0)); me.root.rotation.set(0, L.yaw + PI + 0.5, 0); me.pose('stunned', t, {}); me.face('shocked', 0.3);
+      setCam(ctx, { pos: L(-28.4, 2.0, 3.4), look: L(-26.3, 1.9, 9.6), fov: 58 }, 1.0, '#fff6e8', 8);
       tag(ctx, 'IT\'S A BABY', ctx.markers.baby + 0.6, Infinity, { y: 0.12, size: 70, bg: 'rgba(255,90,160,0.92)' });
     },
   },
@@ -1445,13 +1447,13 @@ export const shots = [
       P.shed.position.y = 0.12;
       me.root.updateMatrixWorld(true);
       P.leash.userData.set(me.joints.handR.getWorldPosition(V()), P.shed.userData.pt('collar'), 0.08);
-      setCam(ctx, { pos: L(-29.4, 1.3, 5.3), look: L(mx + 0.2, 1.05, 6.2), fov: 46 }, 0);
+      setCam(ctx, { pos: L(-29.2, 1.35, 6.9), look: L(mx + 0.2, 1.0, 6.0), fov: 46 }, 0);
     },
   },
   {
     name: 'twins', start: 'b23.w7-0.12', set: 'town',
     setup(ctx) {
-      town(ctx, 'day', { hide: [PIL] }); const P = ctx.props; hs(ctx, P.pil, -15, 14, PI); hs(ctx, P.gar1, 0, 0, 0); hs(ctx, P.gar2, 0, 0, 0);
+      town(ctx, 'day', { hide: [PIL], lamps: [1] }); const P = ctx.props; hs(ctx, P.pil, -15, 14, PI); hs(ctx, P.gar1, 0, 0, 0); hs(ctx, P.gar2, 0, 0, 0);
       const pl = put(ctx, 'pillay', V(), 0); pl.setAccessory('cap', false); pl.setAccessory('partyHat', true);
     },
     update(ctx, lt) {
