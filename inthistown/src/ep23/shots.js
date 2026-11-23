@@ -100,6 +100,10 @@ export function init(ctx) {
   P.stand = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1, 10), new THREE.MeshStandardMaterial({ color: '#2a2a30', roughness: 0.5, metalness: 0.4 }));
   P.flash = makeShockRing();
   P.strap = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 1), new THREE.MeshStandardMaterial({ color: '#e8232b', roughness: 0.6 }));
+  { const sm = new THREE.MeshStandardMaterial({ color: '#ffb703', roughness: 0.55, emissive: '#5a3a00', emissiveIntensity: 0.6 });
+    P.haul = [0, 1].map(() => new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), sm)); }
+  { const dm = new THREE.MeshBasicMaterial({ color: '#bfefff', toneMapped: false });
+    P.drops = [0, 1, 2, 3].map(() => { const m = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 8), dm); m.scale.set(1, 1.5, 1); return m; }); }
   P.sky = new THREE.Mesh(new THREE.PlaneGeometry(14, 8), new THREE.MeshBasicMaterial({ color: '#0a0d24' }));
   P.moonLight = new THREE.DirectionalLight('#cfdcff', 0.9);
   P.fill = new THREE.PointLight('#f0f2ff', 5, 12, 1.4);
@@ -223,6 +227,16 @@ function dragPose(ch, t) {
   J.torso.rotation.x += 0.22; J.head.rotation.x -= 0.12;
   J.armR.rotation.set(0.85, 0, -0.12); J.foreArmR.rotation.set(-0.1, 0, 0);
 }
+/** hauling a heavy load with a strap over the right shoulder: leaning hard into it, both hands gripping at the shoulder */
+function haulPose(ch, t) {
+  ch.pose('walk', t, { speed: 0.5 });
+  const J = ch.joints, w = 0.05 * Math.sin(t * 22);
+  J.torso.rotation.x += 0.36; J.head.rotation.x -= 0.34; J.head.rotation.z = 0.06 * Math.sin(t * 6);
+  J.armR.rotation.set(-2.55 + w, 0, 0.1); J.foreArmR.rotation.set(-1.75, 0, 0);
+  J.armL.rotation.set(-2.2 - w, 0, -0.5); J.foreArmL.rotation.set(-1.55, 0, 0);
+}
+/** a box mesh stretched between two world points (thickness th) */
+function beam(m, a, b, th = 0.09) { m.position.copy(a).lerp(b, 0.5); m.lookAt(b); m.scale.set(th, th * 0.55, Math.max(0.01, a.distanceTo(b))); }
 function kazooPose(ch, t) {
   ch.pose('idle', t, { intensity: 0.4 });
   const J = ch.joints;
@@ -941,24 +955,41 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'quiet_night', { glow: 0.45 });
       const P = ctx.props;
-      addTo(ctx, P.spkA, SPK.x, STAGE_Y, -SPK.z, -PI / 2); addTo(ctx, P.spkB, SPK.x + 2.6, STAGE_Y, SPK.z, -PI / 2);
-      put(ctx, 'me', L(52.8, STAGE_Y, SPK.z - 0.4), -PI / 2);
-      ctx.add(P.strap);
+      addTo(ctx, P.spkA, 51.6, STAGE_Y, -1.25, -PI / 2);                  // the first one, already in place
+      addTo(ctx, P.spkB, 50.2, STAGE_Y, 1.05, PI / 2);                    // the one being hauled (cones toward us)
+      put(ctx, 'me', L(52.0, STAGE_Y, 0.7), PI / 2);
+      P.haul.forEach((m) => ctx.add(m)); P.drops.forEach((m) => ctx.add(m));
+      addTo(ctx, P.poof.root, 50.2, STAGE_Y + 0.05, 1.05, 0, 0.45);
+      ctx.add(P.warm);
     },
     update(ctx, lt) {
       const L = ctx.store.L, t = ctx.t, P = ctx.props, me = ctx.cast.me, t0 = ctx.time('b18.w1');
-      const k = ease.inOutSine(clamp((t - t0) / 1.6, 0, 1));
-      const kx = lerp(52.8, 50.5, k);
-      me.root.position.copy(L(kx, STAGE_Y, SPK.z - 0.45));
-      if (k > 0 && k < 1) { dragPose(me, t); me.face('determined', t); } else { me.pose('idle', t); me.joints.armR.rotation.set(0.6, 0, -0.1); me.face(k >= 1 ? 'smile' : 'determined', t); }
-      P.spkB.position.copy(L(kx + 1.25 + 0.35, STAGE_Y, SPK.z));
-      P.spkA.userData.set(0, 0.3); P.spkB.userData.set(0, 0.3);
+      const k = ease.inOutSine(clamp((t - t0 + 0.25) / 1.9, 0, 1));
+      const kx = lerp(51.75, 53.0, k), jerk = 0.05 * Math.max(0, Math.sin((t - t0) * 7.5));
+      me.root.position.copy(L(kx, STAGE_Y, 0.7));
+      haulPose(me, t); me.face('sweat', 0.5);
+      // the speaker scrapes along behind him, tipped onto its front edge
+      const sx = kx - 1.85 - jerk;
+      P.spkB.position.copy(L(sx, STAGE_Y, 1.05)); P.spkB.rotation.set(0, L.yaw + PI / 2, 0); P.spkB.rotateX(0.1 + 0.03 * Math.sin(t * 15));
+      P.spkA.userData.set(0, 0.45); P.spkB.userData.set(0, 0.7);
+      // strap: hands → over the right shoulder → the speaker's top front edge
       me.root.updateMatrixWorld(true);
-      const hand = me.joints.handR.getWorldPosition(V()), hook = P.spkB.localToWorld(V(-0.3, 1.0, 0.52));
-      P.strap.position.copy(hand).lerp(hook, 0.5); P.strap.lookAt(hook); P.strap.scale.set(1.7, 1.7, hand.distanceTo(hook));
-      const c = moveCam(ctx, { pos: L(48.6, 1.75, 6.6), look: L(51.6, 1.45, 0.6), fov: 50 }, { pos: L(48.3, 1.75, 6.3), look: L(51.2, 1.45, 0.6), fov: 50 }, lt / 2.1, 1.6, '#f0f2ff', 14);
-      moonFrame(ctx, c, MO.tower, MR, { light: 1.6 });
-      tag(ctx, "DAD'S SPEAKERS", ctx.time('b18.w3'), Infinity, { y: 0.13, size: 64, bg: 'rgba(30,30,40,0.9)', fill: '#3ee0c8' });
+      const hand = me.joints.handR.getWorldPosition(V()).lerp(me.joints.handL.getWorldPosition(V()), 0.4);
+      const sh = me.joints.armR.getWorldPosition(V()).add(up(0.22)).add(L(kx - 0.25, 0, 0.7).sub(L(kx, 0, 0.7)));
+      P.spkB.updateMatrixWorld(true);
+      const hook = P.spkB.localToWorld(V(0, 2.55, 0.52));
+      beam(P.haul[0], hand, sh, 0.11); beam(P.haul[1], sh, hook, 0.11);
+      // sweat flying off his head
+      const hc = headPt(me, 0.45, 0);
+      P.drops.forEach((d, i) => { const u = ((t * 1.6 + i * 0.25) % 1), side = i % 2 ? 1 : -1;
+        d.visible = u < 0.8; d.position.copy(hc).add(L(kx + 0.35 * u, 0, 0.7 + side * (0.35 + 0.45 * u)).sub(L(kx, 0, 0.7))).add(up(0.35 * u - 0.9 * u * u)); });
+      P.poof.root.position.copy(L(sx + 0.55, STAGE_Y + 0.05, 1.05)); P.poof.update((t * 1.7) % 1);
+      // warm key from front-right, moonlight rimming him from behind, a soft fill on the camera
+      P.warm.position.copy(L(54.3, 3.4, 2.5)); P.warm.intensity = 16; P.warm.distance = 10; P.warm.color.set('#ffc070');
+      const c = moveCam(ctx, { pos: L(55.95, 1.45, -0.15), look: L(44, 5.4, 0.05), fov: 60 }, { pos: L(55.9, 1.5, -0.05), look: L(44, 5.5, 0.15), fov: 57 }, ease.inOutSine(clamp(lt / 2.1, 0, 1)), 0.9, '#f0f2ff', 12);
+      moonFrame(ctx, c, MO.tower, MR, { light: 1.8, dustDist: 9, dustA: 0.6 });
+      ctx.cam.shake(0.03, t, 18);
+      tag(ctx, "DAD'S SPEAKERS", ctx.time('b18.w3'), Infinity, { y: 0.09, size: 64, bg: 'rgba(30,30,40,0.9)', fill: '#3ee0c8' });
     },
   },
   // ── "…and pressed play."

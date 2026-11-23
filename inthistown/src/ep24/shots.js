@@ -177,7 +177,7 @@ function crackInView(ctx, cam, { sx = 0, sy = 0.45, dist = 75, H = CRACK_H } = {
   const tv = Math.tan(cam.fov * PI / 360), th = tv * 9 / 16;
   const d = f.clone().addScaledVector(u, tv * sy).addScaledVector(r, th * sx).normalize();
   const w = cam.pos.clone().addScaledVector(d, dist);
-  C.position.copy(ctx.set.root.worldToLocal(w)); C.scale.setScalar(H); C.rotation.set(0, 0, 0); C.lookAt(cam.pos.clone().setY(cam.pos.y * 0.5 + w.y * 0.5 - (w.y - cam.pos.y) * 0.5));
+  C.position.copy(ctx.set.root.worldToLocal(w)); C.scale.setScalar(H); C.rotation.set(0, 0, 0); C.lookAt(cam.pos);
   C.userData.ear.visible = false;
   return C;
 }
@@ -341,7 +341,7 @@ export const shots = [
       const cw = crackWorld(ctx, 0, -0.05), from = ctx.props.crack.position.clone().add(V(-3, -4, 0)).toArray();
       const zs = ROW(6), order = [2, 3, 1, 4, 0, 5];
       const lands = [];
-      order.forEach((bi, k) => { const tl = 3.0 + k * 0.13; lands.push(tl); const d = fallBlock(ctx, P.blocks[bi], [from[0], from[1], from[2] + (zs[bi] * 0.6)], [BLOCK_X, BLOCK_TOP, zs[bi]], tl, 0.75, k % 2 ? -1 : 1); const pf = P.puffs[k]; pf.position.copy(V(BLOCK_X, 0.1, zs[bi])); pf.update(d < 0 ? 0 : d / 0.7); });
+      order.forEach((bi, k) => { const tl = 3.0 + k * 0.13; lands.push(tl); const d = fallBlock(ctx, P.blocks[bi], [from[0], from[1], from[2] + (zs[bi] * 0.6)], [BLOCK_X, BLOCK_TOP, zs[bi]], tl, 0.75, k % 2 ? -1 : 1); const pf = P.puffs[k]; pf.root.position.copy(V(BLOCK_X, 0.1, zs[bi])); pf.update(d < 0 ? 0 : d / 0.7); });
       ctx.store.extras.forEach((e, k) => { e.ch.pose(t > 3.1 ? 'surprised' : 'idle', t + e.ph, { headPitch: -0.5 }); e.ch.face(t > 3.0 ? 'shocked' : 'smile', 0.4); });
       P.glowLight.position.copy(cw); P.glowLight.intensity = 30 * len;
       setCam(ctx, { pos: L(38.6, 0.55, 0.25), look: L(68, 15.5, -1.2), fov: 62 });
@@ -460,10 +460,10 @@ export const shots = [
     name: 'doorways peer up', start: 'b05.w7-0.1', set: 'town',
     setup(ctx) {
       const L = town(ctx, 'quiet_night', { glow: 0.9 });
-      const P = ctx.props, xs = [-15, -3, 9];
-      xs.forEach((x, k) => addTo(ctx, P.doors[k], x + (k === 1 ? 0.6 : 0), 0, -10.42, 0));
+      const P = ctx.props, xs = [-15, -3.6, 9];
+      xs.forEach((x, k) => addTo(ctx, P.doors[k], x, 0, -10.42, 0));
       P.doors.forEach((d) => d.userData.set?.(1));
-      ctx.store.peer = crowd(ctx, ['grandma', X[2], X[4], 'dunbar'], [[-15, 0, -9.7, 0.35], [-2.4, 0, -9.7, 0.2], [-1.6, 0, -9.3, 0.6], [9, 0, -9.7, 0.4]]);
+      ctx.store.peer = crowd(ctx, ['grandma', X[2], X[4], 'dunbar'], [[-15, 0, -9.75, 0.35], [-3.6, 0, -9.75, 0.2], [-2.7, 0, -9.3, 0.6], [9, 0, -9.75, 0.4]]);
       ctx.add(P.glowLight);
     },
     update(ctx, lt) {
@@ -542,7 +542,7 @@ export const shots = [
       const F = (x, y, z) => a.localToWorld(V(x, y, z));
       const me = put(ctx, 'me', F(0, 0, 0), yw - 0.35);
       ctx.add(ctx.props.hair, me.joints.head); ctx.props.hair.position.set(0, 0.56, -0.02);
-      put(ctx, 'grandma', F(1.25, 0, 1.15), yw + PI + 0.25);
+      put(ctx, 'grandma', F(1.25, 0, 1.15), yw - 1.5);
       addBubbles(ctx, [ctx.props.bub.gubbins]);
     },
     update(ctx, lt) {
@@ -643,7 +643,7 @@ export const shots = [
     setup(ctx) {
       const s = ctx.set; s.exposure = 1.0;
       const P = ctx.props; ctx.add(P.sign, s.root); P.sign.position.set(-1.7, 0.14, -5.7); P.sign.rotation.set(0, 0, 0);
-      ctx.place('pigeon', V(-1.7, 3.2, -5.7)); ctx.cast.pigeon.root.rotation.set(0, 0.5, 0);
+      ctx.place('pigeon', V(-2.35, 3.16, -5.54)); ctx.cast.pigeon.root.rotation.set(0, 0.6, 0);
     },
     update(ctx, lt) {
       const t = ctx.t, p = ctx.cast.pigeon;
@@ -1058,7 +1058,7 @@ export const shots = [
       const cam = cams[i]; ctx.store.cam = cam;
       if (i === 0) crackInView(ctx, cam, { sy: 0.66, dist: 70, H: 26 });
       else if (i === 1) crackInView(ctx, cam, { sy: 0.62, sx: 0.15, dist: 75, H: 30 });
-      else { const C = ctx.props.crack; addTo(ctx, C, 78, 33, -7, 0, 22); C.lookAt(L(50.4, 1.5, 0)); C.translateZ(-1); }
+      else { const C = ctx.props.crack; addTo(ctx, C, 78, 33, -7, 0, 22); C.lookAt(L(50.4, 1.5, 0)); }
       ctx.props.rings.forEach((r) => ctx.add(r, ctx.set.root));
       plazaFiller(ctx, { n: 100, seed: 33, x0: 36, x1: 47 });
       ctx.add(ctx.props.redLight);
@@ -1156,7 +1156,7 @@ export const shots = [
       P.huss.forEach((b) => addTo(ctx, b, 0, 0, 0));
       P.puffs.slice(0, 4).forEach((p) => addTo(ctx, p, 0, 0, 0));
       if (i === 0 || i === 2 || i === 5) { tower(ctx); crack(ctx); }
-      ctx.add(P.confetti.root, ctx.set.root); P.confetti.root.position.set(0, 0, 0);
+      ctx.add(P.confetti.root, ctx.set.root); P.confetti.root.position.set(43, 0, 0);
       if (i === 3) addBubbles(ctx, P.bub.huss.slice(0, 3));
     },
     update(ctx) {
@@ -1169,7 +1169,7 @@ export const shots = [
       surfer(ctx, me, L(sp.x, 0, sp.z), V(1, 0, 0.8).normalize(), t, 2.35 + 0.12 * Math.sin(t * 9)); me.face(dh < 0.2 ? 'huss' : 'laugh', t);
       // H-U-S-S blocks land on hits 0..3 in a row in front of the stage
       const zs = ROW(4), from = [100, 38, -4];
-      P.huss.forEach((b, k) => { const d = fallBlock(ctx, b, [from[0], from[1], from[2] + zs[k]], [47.7, BLOCK_TOP, zs[k]], hits[k], 0.55, k % 2 ? 1 : -1); b.userData.set(1.6); P.puffs[k].position.copy(L(47.7, 0.1, zs[k])); P.puffs[k].update(d < 0 ? 0 : d / 0.6); });
+      P.huss.forEach((b, k) => { const d = fallBlock(ctx, b, [from[0], from[1], from[2] + zs[k]], [47.7, BLOCK_TOP, zs[k]], hits[k], 0.55, k % 2 ? 1 : -1); b.userData.set(1.6); P.puffs[k].root.position.set(47.7, 0.1, zs[k]); P.puffs[k].update(d < 0 ? 0 : d / 0.6); });
       if (i === 0 || i === 2 || i === 5) crackState(ctx, { len: 1, open: 0.5 + 0.2 * hitPulse(hits, t, 0.2), glow: 1.8, gold: 1 });
       P.confetti.update?.(t - hits[0] + 0.3);
       let cam;
