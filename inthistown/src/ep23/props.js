@@ -104,13 +104,13 @@ export function makeMoonEye() {
   const lidM = moonMat('#9da3c4');
   const dome = new THREE.Mesh(new THREE.SphereGeometry(1.04, 64, 24, 0, PI * 2, 0, PI / 2), lidM); lid.add(dome);
   const rimM = basic('#2a2848', { fog: false });
-  const rim = new THREE.Mesh(new THREE.TorusGeometry(1.04, 0.035, 8, 96), rimM); rim.rotation.x = PI / 2; lid.add(rim);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(1.04, 0.05, 8, 96), rimM); rim.rotation.x = PI / 2; lid.add(rim);
   const lashM = basic('#1a1830', { fog: false });
-  for (let i = 0; i < 11; i++) {
-    const a = PI / 2 + (i - 5) * 0.17;
+  for (let i = 0; i < 15; i++) {
+    const a = PI / 2 + (i - 7) * 0.13;
     const p = V(Math.cos(a), 0, Math.sin(a));
-    const l = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.035, 0.2), lashM);
-    l.position.copy(p.clone().multiplyScalar(1.12)); l.position.y = -0.05;
+    const l = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.018, 0.26), lashM);
+    l.position.copy(p.clone().multiplyScalar(1.15)); l.position.y = -0.06;
     l.lookAt(p.clone().multiplyScalar(3).add(V(0, -1.2, 0))); lid.add(l);
   }
   // glow halo

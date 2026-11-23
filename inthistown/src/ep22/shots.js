@@ -202,13 +202,14 @@ function heartPose(ch, t) {
   J.torso.rotation.x += 0.05 + sob; J.head.rotation.x += 0.12 + sob * 2;
 }
 /** cat clinging to the clock hand: body vertical, front paws up on the hand tip, face toward +x (the street) */
-function hangCat(ctx, cat, tip, t, { slip = 0, swing = 0.12, face = 'shocked', faceT = 0.3 } = {}) {
+function hangCat(ctx, cat, tip, t, { slip = 0, swing = 0.12, face = 'shocked', faceT = 0.3, headPitch = 1.25, spread = 0, reach = 1 } = {}) {
   cat.pose('idle', t);
   const J = cat.joints;
   J.hips.rotation.set(0, 0, 0);
-  J.armL.rotation.set(-PI / 2 - 0.25 + 1.6 * slip, 0, 0.15); J.armR.rotation.set(-PI / 2 - 0.25, 0, -0.15);
+  J.armL.rotation.set(-PI / 2 - 0.25 + 1.6 * slip, 0, 0.15 + spread); J.armR.rotation.set(-PI / 2 - 0.25, 0, -0.15 - spread);
+  if (reach !== 1) { J.armL.scale.set(1, reach, 1); J.armR.scale.set(1, reach, 1); }
   J.legL.rotation.set(PI / 2 - 0.25 + 0.4 * Math.sin(t * 7), 0, 0.1); J.legR.rotation.set(PI / 2 - 0.25 + 0.4 * Math.sin(t * 7 + 2), 0, -0.1);
-  J.head.rotation.set(1.25, 0, 0);
+  J.head.rotation.set(headPitch, 0, 0);
   J.tail1.rotation.set(0.2 * Math.sin(t * 3), 0.4 * Math.sin(t * 2.3), 0);
   cat.face(face, faceT);
   const r = cat.root; r.rotation.order = 'YXZ';
@@ -458,7 +459,7 @@ export const shots = [
     setup(ctx) {
       const L = town(ctx, 'day');
       const P = ctx.props, W = { x: 70, z: 70 };
-      addTo(ctx, P.winRoom, W.x, 0, W.z, 0); P.winRoom.children[9].visible = false;   // no cross bar over his face
+      addTo(ctx, P.winRoom, W.x, 0, W.z, 0); P.winRoom.children[9].visible = false; P.winRoom.children[8].visible = false;   // no cross bar / mullion over his face
       put(ctx, 'mayor', L(W.x, 0, W.z - 1.25), L.yaw);
       addTo(ctx, P.hamS, 0, 0, 0, 0, 0.11);
       ctx.store.W = W;
@@ -480,11 +481,13 @@ export const shots = [
       P.hearts.forEach((h, k) => {
         const d = t - (tl + 0.08 + k * 0.09);
         if (d < 0) { h.position.set(0, -50, 0); return; }
-        const a = (k / 8 - 0.5) * 2.2, rise = Math.min(0.55, 0.7 * d);
-        h.position.set(fc.x + Math.sin(a) * 0.32, fc.y + 0.3 + rise + 0.05 * Math.sin(t * 4 + k), fc.z + 0.35); h.scale.setScalar(0.2 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
+        // two columns beside his head (never over the eyes), drifting up inside the tight window frame
+        const side = k % 2 ? 1 : -1, j = Math.floor(k / 2), rise = Math.min(0.3, 0.45 * d);
+        h.position.set(fc.x + side * (0.5 + 0.06 * j), fc.y - 0.3 + 0.17 * j + rise + 0.04 * Math.sin(t * 4 + k), fc.z + 0.35); h.scale.setScalar(0.17 * Math.min(1, d / 0.15) * (1 + 0.1 * Math.sin(t * 9 + k)));
       });
       const k = ease.inOutSine(clamp(lt / 3.6, 0, 1));
-      ctx.cam.set({ pos: L(W.x + 0.7, 1.2, W.z + lerp(7.6, 4.4, k)), look: L(W.x + 0.45, 1.15, W.z - 1.2), fov: 36 });
+      // push in until the window fills the frame; face in the upper third (y≈0.3), hamster + hearts below/around it
+      ctx.cam.set({ pos: L(W.x + 0.5, 1.5, W.z + lerp(5.0, 3.0, k)), look: fc.clone().applyMatrix4(L.M).add(up(-0.5)), fov: 32 });
       // flashback treatment
       ctx.fx.overlay('#d89a4a', 0.2); ctx.fx.vignette(0.75);
       ctx.fx.draw((g, Wd, Hd) => { g.save(); const mm = Wd * 0.04; g.fillStyle = 'rgba(40,22,8,0.9)'; g.beginPath(); g.rect(0, 0, Wd, Hd); g.roundRect(mm, mm * 1.6, Wd - 2 * mm, Hd - 3.2 * mm, Wd * 0.06); g.fill('evenodd'); g.restore(); });
@@ -790,12 +793,19 @@ export const shots = [
       const L = ctx.store.L, t = ctx.t, P = ctx.props, ts = ctx.time('b14.w10'), tw = ctx.time('b14.w6');
       const slip = ease.outCubic(clamp((t - ts) / 0.18, 0, 1));
       const wind = clamp((t - tw) / 0.8, 0, 1);
-      hangCat(ctx, ctx.cast.waffles, ctx.store.tip, t, { slip, swing: 0.12 + 0.25 * wind, face: slip > 0 ? 'shocked' : 'sweat', faceT: 0.3 });
-      const cc = ctx.cast.waffles.joints.hips.getWorldPosition(V()); const c = setCam(ctx, { pos: cc.clone().add(V(2.6, -1.8, 1.9)), look: cc.clone().add(up(0.2)), fov: 34 }, 0.8, '#e0d8ff');
+      // wide grip (face clear of the paws): both paws on the hand, then the last paw slides out to the tip
+      const hd = ctx.props.hands.getWorldPosition(V()).sub(ctx.store.tip).normalize();
+      const grip = ctx.store.tip.clone().addScaledVector(hd, slip > 0.5 ? lerp(0.36, 0.06, (slip - 0.5) * 2) : 0.18);
+      hangCat(ctx, ctx.cast.waffles, grip, t, { slip, swing: (0.12 + 0.25 * wind) * (1 - 0.65 * slip), face: slip > 0 ? 'shocked' : 'sweat', faceT: 0.3, headPitch: 1.35, spread: 0.45, reach: 1.6 });
+      // in front of his face, in the town frame (street side of the clock face): face upper third, paw + clock hand above it
+      const hp = ctx.cast.waffles.joints.head.getWorldPosition(V());
+      const Lx = V(1, 0, 0).transformDirection(L.M), Lz = V(0, 0, 1).transformDirection(L.M);
+      // the slip spins him ~20° toward town −z: the lens follows so the shocked face stays front-on
+      const c = setCam(ctx, { pos: hp.clone().addScaledVector(Lx, 1.8).addScaledVector(Lz, lerp(0.45, -0.75, slip)).add(up(0.2)), look: hp.clone().add(up(-0.17)), fov: 34 }, 0.8, '#e0d8ff');
       ctx.cam.shake(0.08 + 0.25 * wind + 0.5 * slip * Math.max(0, 1 - (t - ts) / 0.4), t, 11);
       P.clouds.userData.set(t, 0);
       stormFrame(ctx, c, [tw + 0.05, ts + 0.02], { rainDist: 2, popA: 0.25, popDur: 0.08, slant: 0.25 + 0.6 * wind, boltAt: (k) => L(-20, 30, k ? -30 : 25) });
-      tag(ctx, 'SLIPPING!', ts + 0.05, Infinity, { y: 0.14, bg: 'rgba(200,0,40,0.9)' });
+      tag(ctx, 'SLIPPING!', ts + 0.05, Infinity, { y: 0.075, size: 76, bg: 'rgba(200,0,40,0.9)' });
     },
   },
   // ── b15 HUSS ×6 — me in the rain, looking up; lightning on every HUSS
