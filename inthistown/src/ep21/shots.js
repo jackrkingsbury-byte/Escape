@@ -66,7 +66,7 @@ export function init(ctx) {
   P.pan = makePan();
   P.board = makeRulesBoard();
   P.tricorn = makeTricorn(); P.patch = makeEyepatch(); P.rod = makeRod(); P.line = makeLine('#f4f8ff', 0.014);
-  P.torch = makeTorch(); P.torchB = makeTorch();
+  P.torch = makeTorch(); P.torchB = makeTorch(); P.torchGlow = glowSprite('#ffd890', 0.8, 0.0); P.torchGlow.renderOrder = 7;
   P.deep = makeDeepOne();
   P.tent = makeCurveTentacle(44);
   P.hedge = makeHedge(); P.stars = makeStars(5); P.leaves = makeLeafBurst(26);
@@ -301,8 +301,9 @@ export const shots = [
       const h = lastBefore(hits, t), dh = h != null ? t - h : 9;
       me.pose('idle', t, { intensity: 0.3, headPitch: -0.55 }); me.face(dh < 0.25 ? 'huss' : 'shocked', t);
       const wx = lerp(-8, -24, (t - 5.0) / 0.9);
-      if (i === 2) me.root.rotation.y = L.yaw - 0.76;
-      P.whale.position.copy(L(wx, 16.0, -6.5)); P.whale.rotation.set(0.04, L.yaw - PI / 2, 0); P.whale.userData.set(t, { wag: 0.6, speed: 0.5 });
+      if (i === 2) me.root.rotation.y = L.yaw + 0.35;   // #1/#3: low hero angle, he faces the lens 3/4, whale right behind him
+      if (i === 0) me.root.rotation.y = L.yaw - 0.35;
+      P.whale.position.copy(L(wx, i === 1 ? 16.0 : 11.0, -6.5)); P.whale.rotation.set(0.04, L.yaw - PI / 2, 0); P.whale.userData.set(t, { wag: 0.6, speed: 0.5 });
       P.whaleLight.position.copy(L(-14.5, 4.5, 0.5)); P.whaleLight.intensity = 50 * clamp(1 - Math.abs(wx + 16) / 22, 0, 1);
       P.school.userData.set(t, { speed: 3 });
       const f = humanFace(me);
@@ -311,8 +312,8 @@ export const shots = [
         faceCam(me, 3.0, { side: 0.5, h: -0.35, fov: 38, below: 0.58 }),
         null,
       ];
-      if (i === 0) { const cp = L(-14.0, 0.5, 2.3); cams[0] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.2)), P.whale.position, 0.55), fov: 72 }; }
-      if (i === 2) { const cp = L(-19, 0.6, 3.5); cams[2] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.2)), P.whale.position, 0.52), fov: 80 }; }
+      if (i === 0) { const cp = L(-17.2, 0.3, 2.15); cams[0] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.75)), P.whale.position, 0.14), fov: 78 }; }
+      if (i === 2) { const cp = L(-14.8, 0.3, 2.15); cams[2] = { pos: cp, look: lookMix(cp, f.clone().add(up(-0.75)), P.whale.position, 0.14), fov: 78 }; }
       setCam(ctx, cams[i], 0.6); ctx.cam.punch(hits, t, 0.1, 0.2);
       ctx.fx.overlay('#2a8cff', 0.12 * clamp(1 - Math.abs(wx + 16) / 14, 0, 1));
     },
@@ -843,12 +844,12 @@ export const shots = [
       const f = humanFace(me);
       if (i === 2) P.lamps.userData.set(t, 1, 0, (j, p) => Math.sin(t * 22 - p.x * 0.28) > -0.1);
       if (i === 4) { const tip = L(-12, SEA_Y - 1.5, 3).lerp(L(10, SEA_Y - 4.5, -1.5), unfurl); tentOn(ctx, L(-14, SEA_Y + 1.5, 3), tip, t, { wig: 0.8, r0: 1.6, r1: 0.2 }); }
-      const rp = W(0.6, W.floor + 0.25, 4.3);
+      const rp = W(-1.6, W.floor + 0.35, 4.6);   // #4: off to the side so the vertical torch beam passes to his right, not across his face
       const cams = [
         { pos: f.clone().addScaledVector(W.fwd, 3.7).addScaledVector(W.left, -0.7).add(up(0.85)), look: f.clone().add(up(-0.6)), fov: 44 },
         { pos: L(-14, 1.2, -2.0), look: L(-26, 16, 3), fov: 68 },
         { pos: L(-1.5, 1.3, -1.8), look: L(-30, 7.5, -3.5), fov: 60 },
-        { pos: rp, look: lookMix(rp, f.clone().add(up(0.1)), eyeAt, 0.5), fov: 68 },
+        { pos: rp, look: lookMix(rp, f.clone().add(up(0.1)), eyeAt, 0.3), fov: 58 },
         { pos: L(-7, 0.7, 3.0), look: L(6, 14, -1.5), fov: 70 },
         { pos: L(-36, 1.6, -1), look: L(-27, 12, 8), fov: 66 },
       ];
@@ -1107,10 +1108,13 @@ export const shots = [
       P.torch.position.copy(p); P.torch.rotation.set(d * 9, d * 5, 0); P.torch.userData.set(1, 3, 0.8);
       trailOn(ctx, L, d);
       me.root.rotation.y = L.yaw + 1.0; me.pose('idle', t, { intensity: 0.4, headPitch: -0.9 }); me.face('shocked', 0.5); me.joints.armR.rotation.set(-2.6, 0, -0.2);
-      const tip = throwPos(L, d - 0.45).add(V(2.0, 0, -2.0)); tip.y = clamp(tip.y, DY + 5, SEA_Y - 1.2);
-      tentOn(ctx, L(TX - 16, SEA_Y + 2, TZ - 10), tip, t, { wig: 0.7, r0: 1.6, approach: V(0.7, 0, 0.5).normalize(), emi: 0.3 });
       const k = ease.inOutSine(clamp(lt / 2.4, 0, 1));
-      setCam(ctx, { pos: L(TX + 7.0, DY + 1.5, TZ + 5.0), look: L(TX - 0.5, lerp(DY + 5.5, DY + 7.5, k), TZ - 1.5), fov: 72 }, 0);
+      // the tip chases the star and finally slips up into the water after it
+      const tip = throwPos(L, d - 0.45).add(V(2.0, 0, -2.0)); tip.y = clamp(tip.y, DY + 5, lerp(SEA_Y - 1.2, SEA_Y + 1, clamp((lt - 1.4) / 1.0, 0, 1)));
+      tentOn(ctx, L(TX - 16, SEA_Y + 2, TZ - 10), tip, t, { wig: 0.7, r0: 1.6, approach: V(0.7, 0, 0.5).normalize(), emi: 0.45 });
+      // dolly back + tilt after the star so star, tentacle and the sea ceiling all stay in frame
+      const pos = L(TX + 7.0, DY + 1.5, TZ + 5.0).lerp(L(TX + 15, DY + 0.8, TZ + 12), k);
+      setCam(ctx, { pos, look: lookMix(pos, humanFace(me), p, 0.55), fov: lerp(74, 82, k) }, 0);
       fill(ctx, humanFace(me).add(V(0, 0.4, 0)).addScaledVector(fwdOf(me.root.rotation.y), 1.2), 1.4);
     },
   },
@@ -1213,7 +1217,7 @@ export const shots = [
     setup(ctx) { deepTown(ctx, { people: true }); },
     update(ctx, lt) {
       const t = ctx.t, k = ease.inOutSine(clamp(lt / 2.0, 0, 1)); deepTick(ctx, { people: true, close: k > 0.5 });
-      const b = ctx.store.bay, kf = humanFace(ctx.cast.kidB), mf = humanFace(ctx.cast.mumB), mid = kf.clone().lerp(mf, 0.4);
+      const b = ctx.store.bay, kf = humanFace(ctx.cast.kidB), mf = humanFace(ctx.cast.mumB), mid = kf.clone().lerp(ctx.store.torchLens, 0.5);
       const c0 = { pos: b.clone().add(V(1.5, 3.5, -15)), look: b.clone().add(V(0, -2.0, 0)), fov: 44 };
       const c1 = { pos: mid.clone().add(V(0.8, 1.5, -4.2)), look: mid.clone().add(V(0.1, -0.9, 0)), fov: 38 };
       setCam(ctx, camLerp(c0, c1, k), 0);
@@ -1333,6 +1337,7 @@ function deepTown(ctx, { people = false } = {}) {
     ctx.add(P.key2); P.key2.position.copy(ctx.store.bay).add(V(0.4, -1.8, -2.2)); P.key2.intensity = 9; P.key2.distance = 7; P.key2.color.set('#ffd8a8');
   }
 }
+const TORCH_SIDE = 0.42, TORCH_UP = 0.4;
 function deepTick(ctx, { people = false, wag = false, point = false, close = false } = {}) {
   const t = ctx.t, P = ctx.props;
   tick(ctx, { sea: { opacity: 0.32, glow: 1.0, deep: '#0d3a78', shallow: '#2a8ad0', light: '#9ff4ff' }, shafts: 0, bubbles: 0.4 });
@@ -1348,6 +1353,18 @@ function deepTick(ctx, { people = false, wag = false, point = false, close = fal
     if (close) { kid.joints.armR.rotation.set(-1.15, 0, 0.35); kid.joints.foreArmR.rotation.set(-1.1, 0, 0); } else { kid.joints.armR.rotation.set(-1.3, 0, 0.1); kid.joints.foreArmR.rotation.set(-0.4, 0, 0); }
     kid.root.updateMatrixWorld(true);
     const down = V(0, -1, 0);
-    holdAlong(P.torchB, kid, close ? V(0.45, -0.25, 0.85).normalize() : V(1, 0.25, 0.35).normalize()); P.torchB.userData.set(close ? 0.4 : 0.55, close ? 0.7 : 0.9, close ? 0.22 : 0.3);
+    if (close) {
+      // held up in front of his chest, lens toward the viewer and off to one side, a warm glow at the lens
+      const q = kid.root.getWorldQuaternion(new THREE.Quaternion());
+      const fwd = V(0, 0, 1).applyQuaternion(q), kup = V(0, 1, 0).applyQuaternion(q);
+      const kf = humanFace(kid), mf = humanFace(mum);
+      const s = shoulderW(kid, 'L').distanceTo(mf) < shoulderW(kid, 'R').distanceTo(mf) ? 'L' : 'R';   // the arm on the mum's side
+      aimArm(kid, s, kf.clone().lerp(mf, TORCH_SIDE).addScaledVector(fwd, 0.55).addScaledVector(kup, TORCH_UP), 0);
+      const away = kf.clone().sub(mf).normalize();
+      holdAlong(P.torchB, kid, fwd.clone().multiplyScalar(0.85).addScaledVector(kup, 0.55).addScaledVector(away, 0.3).normalize(), s);   // at the viewer, tipped toward the sill, away from mum
+      P.torchB.userData.set(1, 1.2, 0.35);
+      const lens = P.torchB.localToWorld(V(0, 0, 0.23)); ctx.add(P.torchGlow); P.torchGlow.position.copy(lens); P.torchGlow.material.opacity = 0.6 + 0.08 * Math.sin(t * 9);
+      ctx.store.torchLens = lens;
+    } else { holdAlong(P.torchB, kid, V(1, 0.25, 0.35).normalize()); P.torchB.userData.set(0.55, 0.9, 0.3); ctx.store.torchLens = P.torchB.localToWorld(V(0, 0, 0.23)); }
   }
 }

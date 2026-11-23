@@ -28,7 +28,7 @@ Rules from the creator:
 | 17 | Floor Three | mystical | scheduled Tue 24 Nov 15:30 |
 | 18 | Pirate Token to the Moon | meme | scheduled Tue 24 Nov 19:30 |
 | 19 | Battery 1% | meme trend | rendering → Wed 25 Nov 09:30 |
-| 20 | Biscuit (the T-rex) | giants / funny | polish pass |
+| 20 | Biscuit (the T-rex) | giants / funny | render queued → Wed 25 Nov 15:30 |
 | 21 | The Deep Above | mystical | polish pass |
 | 22 | Big Love | homey | shots building |
 | 23 | Low Moon | spooky | script + audio ready |

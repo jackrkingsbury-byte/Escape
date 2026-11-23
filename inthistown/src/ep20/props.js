@@ -171,7 +171,7 @@ export function makeBiscuit() {
   // cheeks blush
   for (const s of [-1, 1]) { const b = box(0.06, 0.45, 0.8, std('#ff9ab0', { roughness: 0.8 }), s * 1.51, 0.55, 2.0, 0.03); head.add(b); }
   // mouth roof + upper teeth
-  head.add(box(2.1, 0.12, 3.2, mouthM, 0, -0.04, 2.35));
+  head.add(box(2.1, 0.12, 3.2, mouthM, 0, -0.07, 2.35));
   const toothGeo = new THREE.ConeGeometry(0.13, 0.42, 4);
   const addTooth = (parent, x, y, z, down) => { const t = new THREE.Mesh(toothGeo, toothM); t.position.set(x, y, z); t.rotation.set(down ? PI : 0, PI / 4, 0); parent.add(t); return t; };
   for (let i = 0; i < 6; i++) addTooth(head, -1.0 + i * 0.4, -0.25, 4.0, true);
