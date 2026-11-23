@@ -464,10 +464,11 @@ export const shots = [
     update(ctx, lt) {
       const { L, B } = ctx.store, t = ctx.t, P = ctx.props;
       const t0 = ctx.time('b05.w10');
-      bset(ctx, { sit: 1, thump: t > t0 - 0.2 ? 1 : 0.3, thumpT0: t0, lid: 0.85, tongue: 0.9, jaw: 0.35, wag: 0.3, headTilt: 0.15, lookY: 0.4 });
+      bset(ctx, { sit: 1, thump: t > t0 - 0.2 ? 2.4 : 0.4, thumpT0: t0, lid: 1, tongue: 1, jaw: 0.45, wag: 0.8, wagSpeed: 9, headTilt: 0.3, headPitch: -0.15, lookY: 0.4 });
       P.truck.userData.set({ yaw: 0, raise: 0.87, extend: 0.8, t, scrub: 1 });
       ['ff1', 'ff2'].forEach((id, i) => { const c = ctx.cast[id]; c.pose(i ? 'point' : 'cheer', t + i); c.face('grin', t + i); });
-      moveCam(ctx, { pos: L(BIS.x + 6, 2, BIS.z + 42), look: L(BIS.x - 10, 13, BIS.z + 6), fov: 62 }, { pos: L(BIS.x + 5, 2, BIS.z + 40), look: L(BIS.x - 10, 13, BIS.z + 6), fov: 62 }, lt / 2.2);
+      const look = L(BIS.x - 2, 21, BIS.z + 4);
+      moveCam(ctx, { pos: L(BIS.x + 40, 4, BIS.z + 44), look, fov: 62 }, { pos: L(BIS.x + 37, 4, BIS.z + 41), look, fov: 62 }, lt / 2.2);
       const hits = []; for (let k = 0; k < 8; k++) hits.push(t0 + k / 2.6);
       shakeOn(ctx, hits.filter((h) => h > t0 - 0.01), 0.25, 0.2);
       tag(ctx, 'THUMP THUMP THUMP', t0 + 0.05, Infinity, { y: 0.15, size: 58, bg: 'rgba(200,40,30,0.9)' });
