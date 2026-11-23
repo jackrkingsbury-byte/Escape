@@ -30,9 +30,10 @@ Rules from the creator:
 | 19 | Battery 1% | meme trend | shots building |
 | 20 | Biscuit (the T-rex) | giants / funny | shots building |
 | 21 | The Deep Above | mystical | script + audio ready |
+| 22 | Big Love | homey | script + audio ready |
 
 ## Backlog (writers' room 1, episodes/concepts/s2_ranked.json)
-Low Moon (spooky) · Big Love (homey) · Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
+Low Moon (spooky) · Word of the Day (meme) · Sneeze Season (meme) · The Golden Snagglet (trend) ·
 Sunrise (homey) · Nugget the chicken (giants)
 
 ## Writers' room 2 (episodes/concepts/s2b_ranked.json)

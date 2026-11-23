@@ -1,0 +1,3898 @@
+{
+ "fps": 30,
+ "duration": 77.689,
+ "audio": "episodes/ep22/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, every pet grows exactly as big as you love it.",
+   "start": 0.3,
+   "end": 3.432,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "every",
+     "start": 1.112,
+     "end": 1.377
+    },
+    {
+     "text": "pet",
+     "start": 1.377,
+     "end": 1.587
+    },
+    {
+     "text": "grows",
+     "start": 1.587,
+     "end": 1.907
+    },
+    {
+     "text": "exactly",
+     "start": 1.907,
+     "end": 2.394
+    },
+    {
+     "text": "as",
+     "start": 2.394,
+     "end": 2.548
+    },
+    {
+     "text": "big",
+     "start": 2.548,
+     "end": 2.758
+    },
+    {
+     "text": "as",
+     "start": 2.758,
+     "end": 2.913
+    },
+    {
+     "text": "you",
+     "start": 2.913,
+     "end": 3.068
+    },
+    {
+     "text": "love",
+     "start": 3.068,
+     "end": 3.277
+    },
+    {
+     "text": "it",
+     "start": 3.277,
+     "end": 3.432
+    }
+   ],
+   "visual": "Wide day shot of main street: a giant orange goldfish floating in a house-sized glass bowl towers over the houses. In front, a grumpy old man holds a leash that seems to go to nothing."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mrs. Lin loves her goldfish so much, it's the size of a school bus.",
+   "start": 3.747,
+   "end": 7.663,
+   "words": [
+    {
+     "text": "Mrs",
+     "start": 3.762,
+     "end": 4.269
+    },
+    {
+     "text": "Lin",
+     "start": 4.579,
+     "end": 4.8
+    },
+    {
+     "text": "loves",
+     "start": 4.8,
+     "end": 5.078
+    },
+    {
+     "text": "her",
+     "start": 5.078,
+     "end": 5.24
+    },
+    {
+     "text": "goldfish",
+     "start": 5.24,
+     "end": 5.75
+    },
+    {
+     "text": "so",
+     "start": 5.75,
+     "end": 5.97
+    },
+    {
+     "text": "much",
+     "start": 5.97,
+     "end": 6.248
+    },
+    {
+     "text": "it's",
+     "start": 6.378,
+     "end": 6.569
+    },
+    {
+     "text": "the",
+     "start": 6.569,
+     "end": 6.71
+    },
+    {
+     "text": "size",
+     "start": 6.71,
+     "end": 6.95
+    },
+    {
+     "text": "of",
+     "start": 6.95,
+     "end": 7.091
+    },
+    {
+     "text": "a",
+     "start": 7.091,
+     "end": 7.232
+    },
+    {
+     "text": "school",
+     "start": 7.232,
+     "end": 7.473
+    },
+    {
+     "text": "bus",
+     "start": 7.473,
+     "end": 7.663
+    }
+   ],
+   "overlay": "SIZE: SCHOOL BUS",
+   "visual": "Mrs. Lin (grey bun, glasses, green cardigan) waves up at the giant goldfish, which blinks its big black eyes down at her. Camera tilts up the whole height of the bowl."
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "She feeds it with a wheelbarrow.",
+   "start": 7.978,
+   "end": 9.285,
+   "words": [
+    {
+     "text": "She",
+     "start": 7.993,
+     "end": 8.133
+    },
+    {
+     "text": "feeds",
+     "start": 8.133,
+     "end": 8.374
+    },
+    {
+     "text": "it",
+     "start": 8.374,
+     "end": 8.514
+    },
+    {
+     "text": "with",
+     "start": 8.514,
+     "end": 8.704
+    },
+    {
+     "text": "a",
+     "start": 8.704,
+     "end": 8.844
+    },
+    {
+     "text": "wheelbarrow",
+     "start": 8.844,
+     "end": 9.285
+    }
+   ],
+   "visual": "Mrs. Lin tips a full wheelbarrow of yellow flake cubes into the bowl. The fish's mouth opens wide and the whole pile vanishes in one gulp."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Grumpy Mr. Barnes owns a dog. We think. Nobody has ever actually seen it.",
+   "start": 9.6,
+   "end": 14.226,
+   "words": [
+    {
+     "text": "Grumpy",
+     "start": 9.615,
+     "end": 9.997
+    },
+    {
+     "text": "Mr",
+     "start": 9.997,
+     "end": 10.322
+    },
+    {
+     "text": "Barnes",
+     "start": 10.632,
+     "end": 10.95
+    },
+    {
+     "text": "owns",
+     "start": 10.95,
+     "end": 11.213
+    },
+    {
+     "text": "a",
+     "start": 11.213,
+     "end": 11.366
+    },
+    {
+     "text": "dog",
+     "start": 11.366,
+     "end": 11.574
+    },
+    {
+     "text": "We",
+     "start": 11.884,
+     "end": 12.073
+    },
+    {
+     "text": "think",
+     "start": 12.073,
+     "end": 12.396
+    },
+    {
+     "text": "Nobody",
+     "start": 12.706,
+     "end": 13.091
+    },
+    {
+     "text": "has",
+     "start": 13.091,
+     "end": 13.278
+    },
+    {
+     "text": "ever",
+     "start": 13.278,
+     "end": 13.466
+    },
+    {
+     "text": "actually",
+     "start": 13.466,
+     "end": 13.9
+    },
+    {
+     "text": "seen",
+     "start": 13.9,
+     "end": 14.087
+    },
+    {
+     "text": "it",
+     "start": 14.087,
+     "end": 14.226
+    }
+   ],
+   "overlay": "ACTUAL SIZE",
+   "visual": "Mr. Barnes (bald, mustache, brown vest, crossArms, squint face) stands holding the leash. Camera zooms all the way down the leash to a pea-sized brown dog wagging its tail."
+  },
+  {
+   "id": "b05",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 14.541,
+   "end": 15.201,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 14.541,
+     "end": 14.801
+    },
+    {
+     "text": "HUSS!",
+     "start": 14.751,
+     "end": 15.011
+    },
+    {
+     "text": "HUSS!",
+     "start": 14.941,
+     "end": 15.201
+    }
+   ],
+   "visual": "The narrator kid (red hoodie, backwards cap) jumps into frame on main street, huss face, slam pose. Extras behind him point at the tiny dog and laugh."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It started five years ago, when the mayor told his hamster, I love you.",
+   "start": 15.541,
+   "end": 19.046,
+   "words": [
+    {
+     "text": "It",
+     "start": 15.556,
+     "end": 15.697
+    },
+    {
+     "text": "started",
+     "start": 15.697,
+     "end": 16.09
+    },
+    {
+     "text": "five",
+     "start": 16.09,
+     "end": 16.332
+    },
+    {
+     "text": "years",
+     "start": 16.332,
+     "end": 16.574
+    },
+    {
+     "text": "ago",
+     "start": 16.574,
+     "end": 16.816
+    },
+    {
+     "text": "when",
+     "start": 16.946,
+     "end": 17.133
+    },
+    {
+     "text": "the",
+     "start": 17.133,
+     "end": 17.27
+    },
+    {
+     "text": "mayor",
+     "start": 17.27,
+     "end": 17.506
+    },
+    {
+     "text": "told",
+     "start": 17.506,
+     "end": 17.791
+    },
+    {
+     "text": "his",
+     "start": 17.791,
+     "end": 17.978
+    },
+    {
+     "text": "hamster",
+     "start": 17.978,
+     "end": 18.312
+    },
+    {
+     "text": "I",
+     "start": 18.442,
+     "end": 18.622
+    },
+    {
+     "text": "love",
+     "start": 18.622,
+     "end": 18.866
+    },
+    {
+     "text": "you",
+     "start": 18.866,
+     "end": 19.046
+    }
+   ],
+   "overlay": "5 YEARS AGO",
+   "visual": "Through a house window: the mayor (top hat, gold sash) holds a normal-sized hamster up to his face and hugs it. Hearts pop above them."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It burst straight through his roof.",
+   "start": 19.361,
+   "end": 20.564,
+   "words": [
+    {
+     "text": "It",
+     "start": 19.376,
+     "end": 19.505
+    },
+    {
+     "text": "burst",
+     "start": 19.505,
+     "end": 19.726
+    },
+    {
+     "text": "straight",
+     "start": 19.726,
+     "end": 20.039
+    },
+    {
+     "text": "through",
+     "start": 20.039,
+     "end": 20.214
+    },
+    {
+     "text": "his",
+     "start": 20.214,
+     "end": 20.389
+    },
+    {
+     "text": "roof",
+     "start": 20.389,
+     "end": 20.564
+    }
+   ],
+   "overlay": "BOOM",
+   "visual": "The roof flies off the mayor's house. A giant round hamster head pops out of the top, cheeks puffed. Camera shake, debris cubes everywhere."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So now there are rules. No saying I love you indoors. And keep grandmas away from the pet shop.",
+   "start": 20.879,
+   "end": 25.877,
+   "words": [
+    {
+     "text": "So",
+     "start": 20.894,
+     "end": 21.09
+    },
+    {
+     "text": "now",
+     "start": 21.09,
+     "end": 21.285
+    },
+    {
+     "text": "there",
+     "start": 21.285,
+     "end": 21.481
+    },
+    {
+     "text": "are",
+     "start": 21.481,
+     "end": 21.625
+    },
+    {
+     "text": "rules",
+     "start": 21.625,
+     "end": 21.872
+    },
+    {
+     "text": "No",
+     "start": 22.182,
+     "end": 22.397
+    },
+    {
+     "text": "saying",
+     "start": 22.397,
+     "end": 22.724
+    },
+    {
+     "text": "I",
+     "start": 22.724,
+     "end": 22.882
+    },
+    {
+     "text": "love",
+     "start": 22.882,
+     "end": 23.096
+    },
+    {
+     "text": "you",
+     "start": 23.096,
+     "end": 23.255
+    },
+    {
+     "text": "indoors",
+     "start": 23.255,
+     "end": 23.638
+    },
+    {
+     "text": "And",
+     "start": 23.948,
+     "end": 24.15
+    },
+    {
+     "text": "keep",
+     "start": 24.15,
+     "end": 24.351
+    },
+    {
+     "text": "grandmas",
+     "start": 24.351,
+     "end": 24.817
+    },
+    {
+     "text": "away",
+     "start": 24.817,
+     "end": 25.071
+    },
+    {
+     "text": "from",
+     "start": 25.071,
+     "end": 25.326
+    },
+    {
+     "text": "the",
+     "start": 25.326,
+     "end": 25.474
+    },
+    {
+     "text": "pet",
+     "start": 25.474,
+     "end": 25.675
+    },
+    {
+     "text": "shop",
+     "start": 25.675,
+     "end": 25.877
+    }
+   ],
+   "overlay": "RULE #1: NO 'I LOVE YOU' INDOORS",
+   "visual": "Town square banner flips to show the town rules. Townspeople nod seriously. A big red X stamps over a little pet shop sign."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Grandma Pearl hugged one puppy. We had to close the highway.",
+   "start": 26.192,
+   "end": 29.143,
+   "words": [
+    {
+     "text": "Grandma",
+     "start": 26.207,
+     "end": 26.675
+    },
+    {
+     "text": "Pearl",
+     "start": 26.675,
+     "end": 26.903
+    },
+    {
+     "text": "hugged",
+     "start": 26.903,
+     "end": 27.191
+    },
+    {
+     "text": "one",
+     "start": 27.191,
+     "end": 27.419
+    },
+    {
+     "text": "puppy",
+     "start": 27.419,
+     "end": 27.707
+    },
+    {
+     "text": "We",
+     "start": 28.017,
+     "end": 28.144
+    },
+    {
+     "text": "had",
+     "start": 28.144,
+     "end": 28.317
+    },
+    {
+     "text": "to",
+     "start": 28.317,
+     "end": 28.444
+    },
+    {
+     "text": "close",
+     "start": 28.444,
+     "end": 28.707
+    },
+    {
+     "text": "the",
+     "start": 28.707,
+     "end": 28.834
+    },
+    {
+     "text": "highway",
+     "start": 28.834,
+     "end": 29.143
+    }
+   ],
+   "overlay": "ROAD CLOSED",
+   "visual": "A giant grey puppy sleeps curled across the road behind a striped ROAD CLOSED barrier. Tiny Grandma Pearl (purple cardigan, glasses, white hair) pats its huge paw lovingly."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then there's me and my cat, Waffles. He's normal-sized. Because I'm way too cool to say it.",
+   "start": 29.458,
+   "end": 34.385,
+   "words": [
+    {
+     "text": "Then",
+     "start": 29.473,
+     "end": 29.655
+    },
+    {
+     "text": "there's",
+     "start": 29.655,
+     "end": 29.884
+    },
+    {
+     "text": "me",
+     "start": 29.884,
+     "end": 30.018
+    },
+    {
+     "text": "and",
+     "start": 30.018,
+     "end": 30.199
+    },
+    {
+     "text": "my",
+     "start": 30.199,
+     "end": 30.381
+    },
+    {
+     "text": "cat",
+     "start": 30.381,
+     "end": 30.563
+    },
+    {
+     "text": "Waffles",
+     "start": 30.693,
+     "end": 31.274
+    },
+    {
+     "text": "He's",
+     "start": 31.584,
+     "end": 31.822
+    },
+    {
+     "text": "normal-sized",
+     "start": 31.822,
+     "end": 32.564
+    },
+    {
+     "text": "Because",
+     "start": 32.874,
+     "end": 33.172
+    },
+    {
+     "text": "I'm",
+     "start": 33.172,
+     "end": 33.367
+    },
+    {
+     "text": "way",
+     "start": 33.367,
+     "end": 33.563
+    },
+    {
+     "text": "too",
+     "start": 33.563,
+     "end": 33.707
+    },
+    {
+     "text": "cool",
+     "start": 33.707,
+     "end": 33.902
+    },
+    {
+     "text": "to",
+     "start": 33.902,
+     "end": 34.046
+    },
+    {
+     "text": "say",
+     "start": 34.046,
+     "end": 34.241
+    },
+    {
+     "text": "it",
+     "start": 34.241,
+     "end": 34.385
+    }
+   ],
+   "visual": "Kid's bedroom: the orange cat Waffles, normal size, sits on the bed. The kid stands next to him in sunglasses, crossArms, smug face, refusing to look at the cat."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "At school, Tyler said, Your cat's so small, your love must be tiny.",
+   "start": 34.7,
+   "end": 38.323,
+   "words": [
+    {
+     "text": "At",
+     "start": 34.715,
+     "end": 34.915
+    },
+    {
+     "text": "school",
+     "start": 34.915,
+     "end": 35.258
+    },
+    {
+     "text": "Tyler",
+     "start": 35.388,
+     "end": 35.768
+    },
+    {
+     "text": "said",
+     "start": 35.768,
+     "end": 36.017
+    },
+    {
+     "text": "Your",
+     "start": 36.147,
+     "end": 36.359
+    },
+    {
+     "text": "cat's",
+     "start": 36.359,
+     "end": 36.626
+    },
+    {
+     "text": "so",
+     "start": 36.626,
+     "end": 36.837
+    },
+    {
+     "text": "small",
+     "start": 36.837,
+     "end": 37.104
+    },
+    {
+     "text": "your",
+     "start": 37.234,
+     "end": 37.431
+    },
+    {
+     "text": "love",
+     "start": 37.431,
+     "end": 37.628
+    },
+    {
+     "text": "must",
+     "start": 37.628,
+     "end": 37.877
+    },
+    {
+     "text": "be",
+     "start": 37.877,
+     "end": 38.022
+    },
+    {
+     "text": "tiny",
+     "start": 38.022,
+     "end": 38.323
+    }
+   ],
+   "visual": "Town square, day. Tyler (blond spiky hair, blue jacket) points at the kid and laughs. A crowd of kids behind him laugh too. The kid's face goes to sweat."
+  },
+  {
+   "id": "b12",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 38.638,
+   "end": 39.298,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 38.638,
+     "end": 38.898
+    },
+    {
+     "text": "HUSS!",
+     "start": 38.848,
+     "end": 39.108
+    },
+    {
+     "text": "HUSS!",
+     "start": 39.038,
+     "end": 39.298
+    }
+   ],
+   "visual": "Tight shot of the kid, huss face, fists clenched. The crowd laughs in the background and the camera punches in on each HUSS."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then last night, a storm hit. Waffles chased the mayor's pigeon all the way up the clock tower.",
+   "start": 39.638,
+   "end": 44.805,
+   "words": [
+    {
+     "text": "Then",
+     "start": 39.653,
+     "end": 39.873
+    },
+    {
+     "text": "last",
+     "start": 39.873,
+     "end": 40.151
+    },
+    {
+     "text": "night",
+     "start": 40.151,
+     "end": 40.429
+    },
+    {
+     "text": "a",
+     "start": 40.559,
+     "end": 40.709
+    },
+    {
+     "text": "storm",
+     "start": 40.709,
+     "end": 41.02
+    },
+    {
+     "text": "hit",
+     "start": 41.02,
+     "end": 41.224
+    },
+    {
+     "text": "Waffles",
+     "start": 41.534,
+     "end": 41.949
+    },
+    {
+     "text": "chased",
+     "start": 41.949,
+     "end": 42.364
+    },
+    {
+     "text": "the",
+     "start": 42.364,
+     "end": 42.535
+    },
+    {
+     "text": "mayor's",
+     "start": 42.535,
+     "end": 42.889
+    },
+    {
+     "text": "pigeon",
+     "start": 42.889,
+     "end": 43.304
+    },
+    {
+     "text": "all",
+     "start": 43.304,
+     "end": 43.474
+    },
+    {
+     "text": "the",
+     "start": 43.474,
+     "end": 43.645
+    },
+    {
+     "text": "way",
+     "start": 43.645,
+     "end": 43.877
+    },
+    {
+     "text": "up",
+     "start": 43.877,
+     "end": 44.048
+    },
+    {
+     "text": "the",
+     "start": 44.048,
+     "end": 44.219
+    },
+    {
+     "text": "clock",
+     "start": 44.219,
+     "end": 44.512
+    },
+    {
+     "text": "tower",
+     "start": 44.512,
+     "end": 44.805
+    }
+   ],
+   "visual": "Stormy night, purple sky, lightning flash. The pigeon flaps to the top of the clock tower with tiny orange Waffles clinging behind it on the clock hand. Rain streaks fall."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The fire ladder was too short. The wind got stronger. Waffles started slipping.",
+   "start": 45.12,
+   "end": 49.149,
+   "words": [
+    {
+     "text": "The",
+     "start": 45.135,
+     "end": 45.278
+    },
+    {
+     "text": "fire",
+     "start": 45.278,
+     "end": 45.524
+    },
+    {
+     "text": "ladder",
+     "start": 45.524,
+     "end": 45.769
+    },
+    {
+     "text": "was",
+     "start": 45.769,
+     "end": 45.964
+    },
+    {
+     "text": "too",
+     "start": 45.964,
+     "end": 46.107
+    },
+    {
+     "text": "short",
+     "start": 46.107,
+     "end": 46.353
+    },
+    {
+     "text": "The",
+     "start": 46.663,
+     "end": 46.816
+    },
+    {
+     "text": "wind",
+     "start": 46.816,
+     "end": 47.079
+    },
+    {
+     "text": "got",
+     "start": 47.079,
+     "end": 47.287
+    },
+    {
+     "text": "stronger",
+     "start": 47.287,
+     "end": 47.714
+    },
+    {
+     "text": "Waffles",
+     "start": 48.024,
+     "end": 48.381
+    },
+    {
+     "text": "started",
+     "start": 48.381,
+     "end": 48.792
+    },
+    {
+     "text": "slipping",
+     "start": 48.792,
+     "end": 49.149
+    }
+   ],
+   "visual": "A red fire truck's ladder stretches up but stops halfway. The crowd below holds glowing flashlights. Close-up: Waffles's paw slides off the clock hand. Camera shake."
+  },
+  {
+   "id": "b15",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 49.464,
+   "end": 51.104,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 49.464,
+     "end": 49.724
+    },
+    {
+     "text": "HUSS!",
+     "start": 49.674,
+     "end": 49.934
+    },
+    {
+     "text": "HUSS!",
+     "start": 49.864,
+     "end": 50.124
+    },
+    {
+     "text": "HUSS!",
+     "start": 50.444,
+     "end": 50.704
+    },
+    {
+     "text": "HUSS!",
+     "start": 50.654,
+     "end": 50.914
+    },
+    {
+     "text": "HUSS!",
+     "start": 50.844,
+     "end": 51.104
+    }
+   ],
+   "visual": "The kid in the rain, shocked huss face, looking up. Lightning flashes on every HUSS and the camera shakes harder each time."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "There was only one way to save him. In front of the whole town.",
+   "start": 51.444,
+   "end": 54.428,
+   "words": [
+    {
+     "text": "There",
+     "start": 51.459,
+     "end": 51.641
+    },
+    {
+     "text": "was",
+     "start": 51.641,
+     "end": 51.822
+    },
+    {
+     "text": "only",
+     "start": 51.822,
+     "end": 52.1
+    },
+    {
+     "text": "one",
+     "start": 52.1,
+     "end": 52.281
+    },
+    {
+     "text": "way",
+     "start": 52.281,
+     "end": 52.463
+    },
+    {
+     "text": "to",
+     "start": 52.463,
+     "end": 52.597
+    },
+    {
+     "text": "save",
+     "start": 52.597,
+     "end": 52.826
+    },
+    {
+     "text": "him",
+     "start": 52.826,
+     "end": 53.008
+    },
+    {
+     "text": "In",
+     "start": 53.318,
+     "end": 53.448
+    },
+    {
+     "text": "front",
+     "start": 53.448,
+     "end": 53.719
+    },
+    {
+     "text": "of",
+     "start": 53.719,
+     "end": 53.85
+    },
+    {
+     "text": "the",
+     "start": 53.85,
+     "end": 53.98
+    },
+    {
+     "text": "whole",
+     "start": 53.98,
+     "end": 54.204
+    },
+    {
+     "text": "town",
+     "start": 54.204,
+     "end": 54.428
+    }
+   ],
+   "visual": "Slow push-in on the kid, face going from sweat to determined. Behind him the whole crowd, about 30 extras including Tyler and Mr. Barnes, turns to stare in silence."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I love you, Waffles!",
+   "start": 54.743,
+   "end": 56.084,
+   "words": [
+    {
+     "text": "I",
+     "start": 54.758,
+     "end": 54.941
+    },
+    {
+     "text": "love",
+     "start": 54.941,
+     "end": 55.189
+    },
+    {
+     "text": "you",
+     "start": 55.189,
+     "end": 55.371
+    },
+    {
+     "text": "Waffles!",
+     "start": 55.501,
+     "end": 56.084
+    }
+   ],
+   "overlay": "I LOVE YOU, WAFFLES!",
+   "visual": "The kid throws his arms up in cheer pose and shouts at the sky. Lightning freezes the frame."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Waffles grew. And grew. And grew. Until he was taller than the clock tower.",
+   "start": 56.399,
+   "end": 60.934,
+   "words": [
+    {
+     "text": "Waffles",
+     "start": 56.414,
+     "end": 56.914
+    },
+    {
+     "text": "grew",
+     "start": 56.914,
+     "end": 57.194
+    },
+    {
+     "text": "And",
+     "start": 57.504,
+     "end": 57.777
+    },
+    {
+     "text": "grew",
+     "start": 57.777,
+     "end": 58.049
+    },
+    {
+     "text": "And",
+     "start": 58.359,
+     "end": 58.632
+    },
+    {
+     "text": "grew",
+     "start": 58.632,
+     "end": 58.905
+    },
+    {
+     "text": "Until",
+     "start": 59.215,
+     "end": 59.514
+    },
+    {
+     "text": "he",
+     "start": 59.514,
+     "end": 59.658
+    },
+    {
+     "text": "was",
+     "start": 59.658,
+     "end": 59.853
+    },
+    {
+     "text": "taller",
+     "start": 59.853,
+     "end": 60.1
+    },
+    {
+     "text": "than",
+     "start": 60.1,
+     "end": 60.296
+    },
+    {
+     "text": "the",
+     "start": 60.296,
+     "end": 60.44
+    },
+    {
+     "text": "clock",
+     "start": 60.44,
+     "end": 60.687
+    },
+    {
+     "text": "tower",
+     "start": 60.687,
+     "end": 60.934
+    }
+   ],
+   "visual": "Waffles swells in three big jumps until the clock tower is like a little post next to his paw. Crowd in surprised pose, jaws dropped. The storm clouds part around his giant head."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "He stepped down like it was a curb.",
+   "start": 61.249,
+   "end": 62.729,
+   "words": [
+    {
+     "text": "He",
+     "start": 61.264,
+     "end": 61.395
+    },
+    {
+     "text": "stepped",
+     "start": 61.395,
+     "end": 61.665
+    },
+    {
+     "text": "down",
+     "start": 61.665,
+     "end": 61.889
+    },
+    {
+     "text": "like",
+     "start": 61.889,
+     "end": 62.113
+    },
+    {
+     "text": "it",
+     "start": 62.113,
+     "end": 62.244
+    },
+    {
+     "text": "was",
+     "start": 62.244,
+     "end": 62.421
+    },
+    {
+     "text": "a",
+     "start": 62.421,
+     "end": 62.552
+    },
+    {
+     "text": "curb",
+     "start": 62.552,
+     "end": 62.729
+    }
+   ],
+   "overlay": "CASUAL",
+   "visual": "Giant Waffles casually lifts one paw and steps down onto main street. Houses wobble and street lamps bounce. He sits and licks his paw."
+  },
+  {
+   "id": "b20",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 63.044,
+   "end": 64.684,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 63.044,
+     "end": 63.304
+    },
+    {
+     "text": "HUSS!",
+     "start": 63.254,
+     "end": 63.514
+    },
+    {
+     "text": "HUSS!",
+     "start": 63.444,
+     "end": 63.704
+    },
+    {
+     "text": "HUSS!",
+     "start": 64.024,
+     "end": 64.284
+    },
+    {
+     "text": "HUSS!",
+     "start": 64.234,
+     "end": 64.494
+    },
+    {
+     "text": "HUSS!",
+     "start": 64.424,
+     "end": 64.684
+    }
+   ],
+   "visual": "Party-night lighting snaps on. The whole crowd cheers and dances in the street around Waffles's giant paws while the kid does huss face on top of the fire truck."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Even grumpy Mr. Barnes cried. His dog grew three whole inches. Top ten respect.",
+   "start": 65.024,
+   "end": 70.206,
+   "words": [
+    {
+     "text": "Even",
+     "start": 65.039,
+     "end": 65.304
+    },
+    {
+     "text": "grumpy",
+     "start": 65.304,
+     "end": 65.678
+    },
+    {
+     "text": "Mr",
+     "start": 65.678,
+     "end": 65.998
+    },
+    {
+     "text": "Barnes",
+     "start": 66.308,
+     "end": 66.675
+    },
+    {
+     "text": "cried",
+     "start": 66.675,
+     "end": 67.043
+    },
+    {
+     "text": "His",
+     "start": 67.353,
+     "end": 67.584
+    },
+    {
+     "text": "dog",
+     "start": 67.584,
+     "end": 67.816
+    },
+    {
+     "text": "grew",
+     "start": 67.816,
+     "end": 68.047
+    },
+    {
+     "text": "three",
+     "start": 68.047,
+     "end": 68.279
+    },
+    {
+     "text": "whole",
+     "start": 68.279,
+     "end": 68.571
+    },
+    {
+     "text": "inches",
+     "start": 68.571,
+     "end": 68.985
+    },
+    {
+     "text": "Top",
+     "start": 69.295,
+     "end": 69.52
+    },
+    {
+     "text": "ten",
+     "start": 69.52,
+     "end": 69.744
+    },
+    {
+     "text": "respect",
+     "start": 69.744,
+     "end": 70.206
+    }
+   ],
+   "overlay": "+3 INCHES",
+   "visual": "Mr. Barnes with sad/teary face, hand on heart. At his feet the pea-sized dog is now mouse-sized and hopping happily."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "But then Waffles looked down at me, and purred. And I started to grow.",
+   "start": 70.521,
+   "end": 73.992,
+   "words": [
+    {
+     "text": "But",
+     "start": 70.536,
+     "end": 70.726
+    },
+    {
+     "text": "then",
+     "start": 70.726,
+     "end": 70.917
+    },
+    {
+     "text": "Waffles",
+     "start": 70.917,
+     "end": 71.258
+    },
+    {
+     "text": "looked",
+     "start": 71.258,
+     "end": 71.499
+    },
+    {
+     "text": "down",
+     "start": 71.499,
+     "end": 71.74
+    },
+    {
+     "text": "at",
+     "start": 71.74,
+     "end": 71.881
+    },
+    {
+     "text": "me",
+     "start": 71.881,
+     "end": 72.021
+    },
+    {
+     "text": "and",
+     "start": 72.151,
+     "end": 72.425
+    },
+    {
+     "text": "purred",
+     "start": 72.425,
+     "end": 72.698
+    },
+    {
+     "text": "And",
+     "start": 73.008,
+     "end": 73.178
+    },
+    {
+     "text": "I",
+     "start": 73.178,
+     "end": 73.303
+    },
+    {
+     "text": "started",
+     "start": 73.303,
+     "end": 73.652
+    },
+    {
+     "text": "to",
+     "start": 73.652,
+     "end": 73.777
+    },
+    {
+     "text": "grow",
+     "start": 73.777,
+     "end": 73.992
+    }
+   ],
+   "visual": "Dusk. Giant Waffles lowers his huge head and nuzzles the kid. The kid looks at his own hands, surprised face, as he shoots up past the street lamps and rooftops."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Turns out, in this town, it works both ways.",
+   "start": 74.306,
+   "end": 76.874,
+   "words": [
+    {
+     "text": "Turns",
+     "start": 74.321,
+     "end": 74.661
+    },
+    {
+     "text": "out",
+     "start": 74.661,
+     "end": 74.93
+    },
+    {
+     "text": "in",
+     "start": 75.06,
+     "end": 75.223
+    },
+    {
+     "text": "this",
+     "start": 75.223,
+     "end": 75.446
+    },
+    {
+     "text": "town",
+     "start": 75.446,
+     "end": 75.726
+    },
+    {
+     "text": "it",
+     "start": 75.856,
+     "end": 76.022
+    },
+    {
+     "text": "works",
+     "start": 76.022,
+     "end": 76.306
+    },
+    {
+     "text": "both",
+     "start": 76.306,
+     "end": 76.59
+    },
+    {
+     "text": "ways",
+     "start": 76.59,
+     "end": 76.874
+    }
+   ],
+   "overlay": "IT WORKS BOTH WAYS",
+   "visual": "Final wide shot: the giant kid and giant Waffles sit side by side on the hill behind the tiny town, orange sunset sky, the kid's arm around the cat. Townspeople wave up from below."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "every",
+   "start": 1.112,
+   "end": 1.377,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "pet",
+   "start": 1.377,
+   "end": 1.587,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "grows",
+   "start": 1.587,
+   "end": 1.907,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "exactly",
+   "start": 1.907,
+   "end": 2.394,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "as",
+   "start": 2.394,
+   "end": 2.548,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "big",
+   "start": 2.548,
+   "end": 2.758,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "as",
+   "start": 2.758,
+   "end": 2.913,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "you",
+   "start": 2.913,
+   "end": 3.068,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "love",
+   "start": 3.068,
+   "end": 3.277,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "it",
+   "start": 3.277,
+   "end": 3.432,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Mrs",
+   "start": 3.762,
+   "end": 4.269,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Lin",
+   "start": 4.579,
+   "end": 4.8,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "loves",
+   "start": 4.8,
+   "end": 5.078,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "her",
+   "start": 5.078,
+   "end": 5.24,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "goldfish",
+   "start": 5.24,
+   "end": 5.75,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "so",
+   "start": 5.75,
+   "end": 5.97,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "much",
+   "start": 5.97,
+   "end": 6.248,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "it's",
+   "start": 6.378,
+   "end": 6.569,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 6.569,
+   "end": 6.71,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "size",
+   "start": 6.71,
+   "end": 6.95,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "of",
+   "start": 6.95,
+   "end": 7.091,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "a",
+   "start": 7.091,
+   "end": 7.232,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "school",
+   "start": 7.232,
+   "end": 7.473,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "bus",
+   "start": 7.473,
+   "end": 7.663,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "She",
+   "start": 7.993,
+   "end": 8.133,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "feeds",
+   "start": 8.133,
+   "end": 8.374,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "it",
+   "start": 8.374,
+   "end": 8.514,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "with",
+   "start": 8.514,
+   "end": 8.704,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 8.704,
+   "end": 8.844,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "wheelbarrow",
+   "start": 8.844,
+   "end": 9.285,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Grumpy",
+   "start": 9.615,
+   "end": 9.997,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Mr",
+   "start": 9.997,
+   "end": 10.322,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Barnes",
+   "start": 10.632,
+   "end": 10.95,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "owns",
+   "start": 10.95,
+   "end": 11.213,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 11.213,
+   "end": 11.366,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "dog",
+   "start": 11.366,
+   "end": 11.574,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "We",
+   "start": 11.884,
+   "end": 12.073,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "think",
+   "start": 12.073,
+   "end": 12.396,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Nobody",
+   "start": 12.706,
+   "end": 13.091,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "has",
+   "start": 13.091,
+   "end": 13.278,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "ever",
+   "start": 13.278,
+   "end": 13.466,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "actually",
+   "start": 13.466,
+   "end": 13.9,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "seen",
+   "start": 13.9,
+   "end": 14.087,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "it",
+   "start": 14.087,
+   "end": 14.226,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "HUSS!",
+   "start": 14.541,
+   "end": 14.801,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 14.751,
+   "end": 15.011,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 14.941,
+   "end": 15.201,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "It",
+   "start": 15.556,
+   "end": 15.697,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "started",
+   "start": 15.697,
+   "end": 16.09,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "five",
+   "start": 16.09,
+   "end": 16.332,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "years",
+   "start": 16.332,
+   "end": 16.574,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "ago",
+   "start": 16.574,
+   "end": 16.816,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "when",
+   "start": 16.946,
+   "end": 17.133,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 17.133,
+   "end": 17.27,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "mayor",
+   "start": 17.27,
+   "end": 17.506,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "told",
+   "start": 17.506,
+   "end": 17.791,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "his",
+   "start": 17.791,
+   "end": 17.978,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "hamster",
+   "start": 17.978,
+   "end": 18.312,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "I",
+   "start": 18.442,
+   "end": 18.622,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "love",
+   "start": 18.622,
+   "end": 18.866,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "you",
+   "start": 18.866,
+   "end": 19.046,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "It",
+   "start": 19.376,
+   "end": 19.505,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "burst",
+   "start": 19.505,
+   "end": 19.726,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "straight",
+   "start": 19.726,
+   "end": 20.039,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "through",
+   "start": 20.039,
+   "end": 20.214,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "his",
+   "start": 20.214,
+   "end": 20.389,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "roof",
+   "start": 20.389,
+   "end": 20.564,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "So",
+   "start": 20.894,
+   "end": 21.09,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "now",
+   "start": 21.09,
+   "end": 21.285,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "there",
+   "start": 21.285,
+   "end": 21.481,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "are",
+   "start": 21.481,
+   "end": 21.625,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "rules",
+   "start": 21.625,
+   "end": 21.872,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "No",
+   "start": 22.182,
+   "end": 22.397,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "saying",
+   "start": 22.397,
+   "end": 22.724,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 22.724,
+   "end": 22.882,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "love",
+   "start": 22.882,
+   "end": 23.096,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "you",
+   "start": 23.096,
+   "end": 23.255,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "indoors",
+   "start": 23.255,
+   "end": 23.638,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "And",
+   "start": 23.948,
+   "end": 24.15,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "keep",
+   "start": 24.15,
+   "end": 24.351,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "grandmas",
+   "start": 24.351,
+   "end": 24.817,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "away",
+   "start": 24.817,
+   "end": 25.071,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "from",
+   "start": 25.071,
+   "end": 25.326,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "the",
+   "start": 25.326,
+   "end": 25.474,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "pet",
+   "start": 25.474,
+   "end": 25.675,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "shop",
+   "start": 25.675,
+   "end": 25.877,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "Grandma",
+   "start": 26.207,
+   "end": 26.675,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Pearl",
+   "start": 26.675,
+   "end": 26.903,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hugged",
+   "start": 26.903,
+   "end": 27.191,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "one",
+   "start": 27.191,
+   "end": 27.419,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "puppy",
+   "start": 27.419,
+   "end": 27.707,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "We",
+   "start": 28.017,
+   "end": 28.144,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "had",
+   "start": 28.144,
+   "end": 28.317,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "to",
+   "start": 28.317,
+   "end": 28.444,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "close",
+   "start": 28.444,
+   "end": 28.707,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 28.707,
+   "end": 28.834,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "highway",
+   "start": 28.834,
+   "end": 29.143,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Then",
+   "start": 29.473,
+   "end": 29.655,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "there's",
+   "start": 29.655,
+   "end": 29.884,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "me",
+   "start": 29.884,
+   "end": 30.018,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "and",
+   "start": 30.018,
+   "end": 30.199,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "my",
+   "start": 30.199,
+   "end": 30.381,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "cat",
+   "start": 30.381,
+   "end": 30.563,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Waffles",
+   "start": 30.693,
+   "end": 31.274,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "He's",
+   "start": 31.584,
+   "end": 31.822,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "normal-sized",
+   "start": 31.822,
+   "end": 32.564,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Because",
+   "start": 32.874,
+   "end": 33.172,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "I'm",
+   "start": 33.172,
+   "end": 33.367,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "way",
+   "start": 33.367,
+   "end": 33.563,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "too",
+   "start": 33.563,
+   "end": 33.707,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "cool",
+   "start": 33.707,
+   "end": 33.902,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "to",
+   "start": 33.902,
+   "end": 34.046,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "say",
+   "start": 34.046,
+   "end": 34.241,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "it",
+   "start": 34.241,
+   "end": 34.385,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "At",
+   "start": 34.715,
+   "end": 34.915,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "school",
+   "start": 34.915,
+   "end": 35.258,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Tyler",
+   "start": 35.388,
+   "end": 35.768,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "said",
+   "start": 35.768,
+   "end": 36.017,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Your",
+   "start": 36.147,
+   "end": 36.359,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "cat's",
+   "start": 36.359,
+   "end": 36.626,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "so",
+   "start": 36.626,
+   "end": 36.837,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "small",
+   "start": 36.837,
+   "end": 37.104,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "your",
+   "start": 37.234,
+   "end": 37.431,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "love",
+   "start": 37.431,
+   "end": 37.628,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "must",
+   "start": 37.628,
+   "end": 37.877,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "be",
+   "start": 37.877,
+   "end": 38.022,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "tiny",
+   "start": 38.022,
+   "end": 38.323,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.638,
+   "end": 38.898,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 38.848,
+   "end": 39.108,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 39.038,
+   "end": 39.298,
+   "beat": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Then",
+   "start": 39.653,
+   "end": 39.873,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "last",
+   "start": 39.873,
+   "end": 40.151,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "night",
+   "start": 40.151,
+   "end": 40.429,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 40.559,
+   "end": 40.709,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "storm",
+   "start": 40.709,
+   "end": 41.02,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "hit",
+   "start": 41.02,
+   "end": 41.224,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Waffles",
+   "start": 41.534,
+   "end": 41.949,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "chased",
+   "start": 41.949,
+   "end": 42.364,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 42.364,
+   "end": 42.535,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "mayor's",
+   "start": 42.535,
+   "end": 42.889,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "pigeon",
+   "start": 42.889,
+   "end": 43.304,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "all",
+   "start": 43.304,
+   "end": 43.474,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "the",
+   "start": 43.474,
+   "end": 43.645,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "way",
+   "start": 43.645,
+   "end": 43.877,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "up",
+   "start": 43.877,
+   "end": 44.048,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "the",
+   "start": 44.048,
+   "end": 44.219,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "clock",
+   "start": 44.219,
+   "end": 44.512,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "tower",
+   "start": 44.512,
+   "end": 44.805,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "The",
+   "start": 45.135,
+   "end": 45.278,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "fire",
+   "start": 45.278,
+   "end": 45.524,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "ladder",
+   "start": 45.524,
+   "end": 45.769,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "was",
+   "start": 45.769,
+   "end": 45.964,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "too",
+   "start": 45.964,
+   "end": 46.107,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "short",
+   "start": 46.107,
+   "end": 46.353,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 46.663,
+   "end": 46.816,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "wind",
+   "start": 46.816,
+   "end": 47.079,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "got",
+   "start": 47.079,
+   "end": 47.287,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "stronger",
+   "start": 47.287,
+   "end": 47.714,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Waffles",
+   "start": 48.024,
+   "end": 48.381,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "started",
+   "start": 48.381,
+   "end": 48.792,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "slipping",
+   "start": 48.792,
+   "end": 49.149,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "HUSS!",
+   "start": 49.464,
+   "end": 49.724,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 49.674,
+   "end": 49.934,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 49.864,
+   "end": 50.124,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.444,
+   "end": 50.704,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.654,
+   "end": 50.914,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 50.844,
+   "end": 51.104,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "There",
+   "start": 51.459,
+   "end": 51.641,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "was",
+   "start": 51.641,
+   "end": 51.822,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "only",
+   "start": 51.822,
+   "end": 52.1,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "one",
+   "start": 52.1,
+   "end": 52.281,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "way",
+   "start": 52.281,
+   "end": 52.463,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "to",
+   "start": 52.463,
+   "end": 52.597,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "save",
+   "start": 52.597,
+   "end": 52.826,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "him",
+   "start": 52.826,
+   "end": 53.008,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "In",
+   "start": 53.318,
+   "end": 53.448,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "front",
+   "start": 53.448,
+   "end": 53.719,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "of",
+   "start": 53.719,
+   "end": 53.85,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 53.85,
+   "end": 53.98,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "whole",
+   "start": 53.98,
+   "end": 54.204,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "town",
+   "start": 54.204,
+   "end": 54.428,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "I",
+   "start": 54.758,
+   "end": 54.941,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "love",
+   "start": 54.941,
+   "end": 55.189,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "you",
+   "start": 55.189,
+   "end": 55.371,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Waffles!",
+   "start": 55.501,
+   "end": 56.084,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Waffles",
+   "start": 56.414,
+   "end": 56.914,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "grew",
+   "start": 56.914,
+   "end": 57.194,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "And",
+   "start": 57.504,
+   "end": 57.777,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "grew",
+   "start": 57.777,
+   "end": 58.049,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "And",
+   "start": 58.359,
+   "end": 58.632,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "grew",
+   "start": 58.632,
+   "end": 58.905,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Until",
+   "start": 59.215,
+   "end": 59.514,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "he",
+   "start": 59.514,
+   "end": 59.658,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "was",
+   "start": 59.658,
+   "end": 59.853,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "taller",
+   "start": 59.853,
+   "end": 60.1,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "than",
+   "start": 60.1,
+   "end": 60.296,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 60.296,
+   "end": 60.44,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "clock",
+   "start": 60.44,
+   "end": 60.687,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "tower",
+   "start": 60.687,
+   "end": 60.934,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "He",
+   "start": 61.264,
+   "end": 61.395,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "stepped",
+   "start": 61.395,
+   "end": 61.665,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "down",
+   "start": 61.665,
+   "end": 61.889,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "like",
+   "start": 61.889,
+   "end": 62.113,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "it",
+   "start": 62.113,
+   "end": 62.244,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "was",
+   "start": 62.244,
+   "end": 62.421,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "a",
+   "start": 62.421,
+   "end": 62.552,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "curb",
+   "start": 62.552,
+   "end": 62.729,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "HUSS!",
+   "start": 63.044,
+   "end": 63.304,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 63.254,
+   "end": 63.514,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 63.444,
+   "end": 63.704,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 64.024,
+   "end": 64.284,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 64.234,
+   "end": 64.494,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 64.424,
+   "end": 64.684,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Even",
+   "start": 65.039,
+   "end": 65.304,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "grumpy",
+   "start": 65.304,
+   "end": 65.678,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Mr",
+   "start": 65.678,
+   "end": 65.998,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Barnes",
+   "start": 66.308,
+   "end": 66.675,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "cried",
+   "start": 66.675,
+   "end": 67.043,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "His",
+   "start": 67.353,
+   "end": 67.584,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "dog",
+   "start": 67.584,
+   "end": 67.816,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "grew",
+   "start": 67.816,
+   "end": 68.047,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "three",
+   "start": 68.047,
+   "end": 68.279,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "whole",
+   "start": 68.279,
+   "end": 68.571,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "inches",
+   "start": 68.571,
+   "end": 68.985,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Top",
+   "start": 69.295,
+   "end": 69.52,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "ten",
+   "start": 69.52,
+   "end": 69.744,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "respect",
+   "start": 69.744,
+   "end": 70.206,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "But",
+   "start": 70.536,
+   "end": 70.726,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "then",
+   "start": 70.726,
+   "end": 70.917,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Waffles",
+   "start": 70.917,
+   "end": 71.258,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "looked",
+   "start": 71.258,
+   "end": 71.499,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "down",
+   "start": 71.499,
+   "end": 71.74,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "at",
+   "start": 71.74,
+   "end": 71.881,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "me",
+   "start": 71.881,
+   "end": 72.021,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "and",
+   "start": 72.151,
+   "end": 72.425,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "purred",
+   "start": 72.425,
+   "end": 72.698,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "And",
+   "start": 73.008,
+   "end": 73.178,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "I",
+   "start": 73.178,
+   "end": 73.303,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "started",
+   "start": 73.303,
+   "end": 73.652,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "to",
+   "start": 73.652,
+   "end": 73.777,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "grow",
+   "start": 73.777,
+   "end": 73.992,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Turns",
+   "start": 74.321,
+   "end": 74.661,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "out",
+   "start": 74.661,
+   "end": 74.93,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "in",
+   "start": 75.06,
+   "end": 75.223,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "this",
+   "start": 75.223,
+   "end": 75.446,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "town",
+   "start": 75.446,
+   "end": 75.726,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "it",
+   "start": 75.856,
+   "end": 76.022,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "works",
+   "start": 76.022,
+   "end": 76.306,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "both",
+   "start": 76.306,
+   "end": 76.59,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "ways",
+   "start": 76.59,
+   "end": 76.874,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 15.461,
+   "mode": "lofi"
+  },
+  {
+   "t": 19.281,
+   "mode": "party"
+  },
+  {
+   "t": 29.378,
+   "mode": "lofi"
+  },
+  {
+   "t": 38.558,
+   "mode": "none"
+  },
+  {
+   "t": 39.558,
+   "mode": "night"
+  },
+  {
+   "t": 45.04,
+   "mode": "muffled"
+  },
+  {
+   "t": 49.384,
+   "mode": "muffled"
+  },
+  {
+   "t": 51.364,
+   "mode": "none"
+  },
+  {
+   "t": 54.663,
+   "mode": "none"
+  },
+  {
+   "t": 56.319,
+   "mode": "party"
+  },
+  {
+   "t": 62.964,
+   "mode": "party"
+  },
+  {
+   "t": 64.944,
+   "mode": "lofi"
+  },
+  {
+   "t": 70.441,
+   "mode": "lofi"
+  },
+  {
+   "t": 74.226,
+   "mode": "lofi"
+  }
+ ],
+ "markers": {
+  "dog4": 11.366,
+  "nobody": 12.706,
+  "r1": 21.09,
+  "r2": 24.15,
+  "hug": 26.903,
+  "road": 28.444,
+  "cool": 33.707,
+  "chase": 41.949,
+  "tower": 44.219,
+  "ladder": 45.278,
+  "wind": 46.816,
+  "slip": 48.792,
+  "g1": 56.914,
+  "tall": 59.215,
+  "cry": 66.675,
+  "dog21": 67.353,
+  "respect": 69.295,
+  "purr": 72.425,
+  "grow": 73.303
+ },
+ "title": "In This Town \u2014 Big Love"
+}

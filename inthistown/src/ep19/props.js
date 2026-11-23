@@ -410,29 +410,29 @@ export function makeSpaceship() {
   const topSlope = new THREE.Mesh(new THREE.CylinderGeometry(R * 0.62, R, 1.6, 64), hullM); topSlope.position.y = 1.8; g.add(topSlope);
   const under = new THREE.Mesh(new THREE.CylinderGeometry(R, R * 0.45, 2.2, 64), darkM); under.position.y = -2.1; g.add(under);
   const ringM = std('#ffd23f', { roughness: 0.4, emissive: '#ff9a00', emissiveIntensity: 0.4 });
-  const band = new THREE.Mesh(new THREE.TorusGeometry(R + 0.15, 0.4, 8, 72), ringM); band.rotation.x = PI / 2; band.position.y = -1.0; g.add(band);
+  const band = new THREE.Mesh(new THREE.TorusGeometry(R + 0.15, 0.4, 8, 72), ringM); band.rotation.x = PI / 2; band.position.y = -1.25; g.add(band);
   // glass dome with a soft glow inside
   const dome = new THREE.Mesh(new THREE.SphereGeometry(R * 0.5, 32, 16, 0, PI * 2, 0, PI / 2), new THREE.MeshStandardMaterial({ color: '#9ef5ff', emissive: '#3ee0c8', emissiveIntensity: 0.35, transparent: true, opacity: 0.55, roughness: 0.05 }));
   dome.position.y = 2.6; g.add(dome);
   const domeGlow = glowSprite('#9ef5ff', 14, 0.35); domeGlow.position.y = 5; g.add(domeGlow);
   // ring of glowing lights around the rim
   const NL = 28, lights = [];
-  const lgeo = new THREE.SphereGeometry(0.62, 12, 8);
+  const lgeo = new THREE.SphereGeometry(0.5, 12, 8);
   const lcols = ['#ff4fa3', '#ffd23f', '#3ee0c8', '#7dff6a'];
   for (let i = 0; i < NL; i++) {
     const a = (i / NL) * PI * 2;
-    const m = new THREE.Mesh(lgeo, basic(lcols[i % 4], { toneMapped: false })); m.position.set(Math.cos(a) * (R + 0.35), -1.0, Math.sin(a) * (R + 0.35)); g.add(m); lights.push(m);
+    const m = new THREE.Mesh(lgeo, basic(lcols[i % 4], { toneMapped: false })); m.position.set(Math.cos(a) * (R + 0.35), -1.25, Math.sin(a) * (R + 0.35)); g.add(m); lights.push(m);
   }
   // portholes with green eyes on the rim side
   const NP = 18, eyeM = basic('#7dff6a', { toneMapped: false }), eyeGlows = [];
   const portM = std('#1a0a33', { roughness: 0.3 }), frameM = std('#d9d9e0', { roughness: 0.3, metalness: 0.5 });
   for (let i = 0; i < NP; i++) {
     const a = ((i + 0.5) / NP) * PI * 2, n = V(Math.cos(a), 0, Math.sin(a));
-    const p = new THREE.Group(); p.position.copy(n).multiplyScalar(R + 0.02); p.position.y = 0.15; p.lookAt(n.clone().multiplyScalar(R + 10).setY(0.15)); g.add(p);
+    const p = new THREE.Group(); p.position.copy(n).multiplyScalar(R + 0.02); p.position.y = 0.25; p.lookAt(n.clone().multiplyScalar(R + 10).setY(0.25)); p.scale.setScalar(0.85); g.add(p);
     const disc = new THREE.Mesh(new THREE.CircleGeometry(0.8, 24), portM); disc.position.z = 0.02; p.add(disc);
     const fr = new THREE.Mesh(new THREE.TorusGeometry(0.82, 0.12, 6, 24), frameM); fr.position.z = 0.04; p.add(fr);
-    for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.13, 10, 8), eyeM); e.scale.set(1.3, 0.7, 0.5); e.position.set(s * 0.25, 0.05, 0.1); p.add(e); }
-    const gl = glowSprite('#5dff6a', 2.0, 0.7); gl.position.z = 0.3; p.add(gl); eyeGlows.push(gl);
+    for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.18, 10, 8), eyeM); e.scale.set(1.3, 0.7, 0.5); e.position.set(s * 0.28, 0.05, 0.1); p.add(e); }
+    const gl = glowSprite('#5dff6a', 2.6, 0.9); gl.position.z = 0.3; p.add(gl); eyeGlows.push(gl);
   }
   // four giant speakers on top
   const woofers = [];
@@ -471,7 +471,7 @@ export function makeSpaceship() {
       lights.forEach((m, i) => { const on = (Math.floor(t * 8) + i) % 4 === 0 ? 1 : 0.35; m.scale.setScalar(0.8 + 0.4 * on * lk); m.material.color.set(lcols[(i + Math.floor(t * 4)) % 4]).multiplyScalar(0.4 + 0.6 * lk * on + 0.2); });
       const b = Math.max(0, Math.sin(t * 2 * PI * 2.15));
       woofers.forEach((w, i) => { const s = 1 + 0.18 * pump * b; w.scale.set(s, s, 1 + 1.5 * pump * b); });
-      eyeM.color.set('#7dff6a').multiplyScalar(Math.max(0.02, eyes)); eyeGlows.forEach((s) => { s.material.opacity = 0.75 * eyes; s.visible = eyes > 0.02; });
+      eyeM.color.set('#7dff6a').multiplyScalar(Math.max(0.02, eyes)); eyeGlows.forEach((s) => { s.material.opacity = Math.min(1, 1.1 * eyes); s.visible = eyes > 0.02; });
       beams.forEach((p, i) => { p.rotation.set(0.35 * Math.sin(t * 1.1 + i), 0, 0.35 * Math.cos(t * 0.9 + i * 1.7)); p.children[0].material.opacity = 0.16 * bk; p.visible = bk > 0.01; });
       ball.rotation.y = t * 0.8; ballGlow.material.opacity = 0.3 + 0.2 * Math.sin(t * 7);
       domeGlow.material.opacity = 0.3 + 0.15 * b * pump;

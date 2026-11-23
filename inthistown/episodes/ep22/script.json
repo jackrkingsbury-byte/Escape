@@ -1,0 +1,472 @@
+{
+ "title": "In This Town — Big Love",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town every pet grows exactly as big as its owner loves it. A kid who is too cool to admit he loves his normal-sized cat Biscuit has to shout it in front of the whole town when Biscuit gets stuck on top of the clock tower in a storm.",
+ "twist": "Saying it out loud makes Biscuit taller than the clock tower and saves him. Then the giant cat purrs at the kid and the kid starts growing too, because in this town it works both ways. Last shot: a giant kid and a giant cat sitting side by side over the tiny town.",
+ "caption_hook": "in my town your pet is as big as you love it… mine was embarrassingly small",
+ "vibe": "homey",
+ "sets": [
+  "Main street, day (goldfish bowl, Mr. Hollis and the invisible dog)",
+  "Mayor's house on main street with the roof popped off",
+  "Road outside town with the sleeping giant kitten",
+  "Kid's bedroom (Biscuit on the bed)",
+  "Town square, day (classmate laughs)",
+  "Clock tower, stormy night with purple sky",
+  "Main street and clock tower, party-night lighting after the rescue",
+  "Hill behind the town at dusk (final wide shot)"
+ ],
+ "newProps": [
+  "Giant goldfish (orange sphere body, cone tail fin, big glossy black sphere eyes) floating in a house-sized clear glass cylinder bowl",
+  "Wheelbarrow (box tray, cylinder wheel, two thin box handles) full of tiny yellow flake cubes",
+  "Pea-sized brown dog (3 tiny boxes and a cone tail) on a long red leash line",
+  "Giant round hamster (stacked tan spheres, small sphere ears, pink sphere nose) bursting out of a house with the roof popped off",
+  "Giant sleeping grey kitten (spheres and box paws) curled across the road",
+  "ROAD CLOSED sign (striped box barrier on two posts)",
+  "Red fire truck (boxes) with an extending ladder (thin box rails) that reaches only halfway up the clock tower",
+  "Scalable orange cat creature (Biscuit) that grows from normal to taller than the clock tower",
+  "Purple storm sky with lightning flashes and rain streaks (thin falling cylinders)",
+  "Flashlights (small glowing cylinders) held by the crowd",
+  "Scale-up rig for the narrator kid so he towers over the houses"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, every pet grows exactly as big as you love it.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:grows",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Wide day shot of main street: a giant orange goldfish floating in a house-sized glass bowl towers over the houses. In front, a grumpy old man holds a leash that seems to go to nothing."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Lin loves her goldfish so much, it's the size of a school bus.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:school",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "SIZE: SCHOOL BUS",
+   "visual": "Mrs. Lin (grey bun, glasses, green cardigan) waves up at the giant goldfish, which blinks its big black eyes down at her. Camera tilts up the whole height of the bowl."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "She feeds it with a wheelbarrow.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:feeds",
+     "gain": 0.45
+    },
+    {
+     "type": "ding",
+     "at": "w:wheelbarrow",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Mrs. Lin tips a full wheelbarrow of yellow flake cubes into the bowl. The fish's mouth opens wide and the whole pile vanishes in one gulp."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grumpy Mr. Barnes owns a dog. We think. Nobody has ever actually seen it.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:Nobody",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "ACTUAL SIZE",
+   "visual": "Mr. Barnes (bald, mustache, brown vest, crossArms, squint face) stands holding the leash. Camera zooms all the way down the leash to a pea-sized brown dog wagging its tail.",
+   "markers": {
+    "dog4": "w:dog",
+    "nobody": "w:Nobody"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "The narrator kid (red hoodie, backwards cap) jumps into frame on main street, huss face, slam pose. Extras behind him point at the tiny dog and laugh."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It started five years ago, when the mayor told his hamster, I love you.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:hamster",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "5 YEARS AGO",
+   "visual": "Through a house window: the mayor (top hat, gold sash) holds a normal-sized hamster up to his face and hugs it. Hearts pop above them."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It burst straight through his roof.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:burst",
+     "gain": 0.8
+    }
+   ],
+   "overlay": "BOOM",
+   "visual": "The roof flies off the mayor's house. A giant round hamster head pops out of the top, cheeks puffed. Camera shake, debris cubes everywhere."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So now there are rules. No saying I love you indoors. And keep grandmas away from the pet shop.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:indoors",
+     "gain": 0.45
+    },
+    {
+     "type": "thump",
+     "at": "w:grandmas",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "RULE #1: NO 'I LOVE YOU' INDOORS",
+   "visual": "Town square banner flips to show the town rules. Townspeople nod seriously. A big red X stamps over a little pet shop sign.",
+   "markers": {
+    "r1": "w:No",
+    "r2": "w:keep"
+   }
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandma Pearl hugged one puppy. We had to close the highway.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:highway",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "ROAD CLOSED",
+   "visual": "A giant grey puppy sleeps curled across the road behind a striped ROAD CLOSED barrier. Tiny Grandma Pearl (purple cardigan, glasses, white hair) pats its huge paw lovingly.",
+   "markers": {
+    "hug": "w:hugged",
+    "road": "w:close"
+   }
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then there's me and my cat, Waffles. He's normal-sized. Because I'm way too cool to say it.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:normal",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Kid's bedroom: the orange cat Waffles, normal size, sits on the bed. The kid stands next to him in sunglasses, crossArms, smug face, refusing to look at the cat.",
+   "markers": {
+    "cool": "w:cool"
+   }
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "At school, Tyler said, Your cat's so small, your love must be tiny.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:tiny",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Town square, day. Tyler (blond spiky hair, blue jacket) points at the kid and laughs. A crowd of kids behind him laugh too. The kid's face goes to sweat."
+  },
+  {
+   "id": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Tight shot of the kid, huss face, fists clenched. The crowd laughs in the background and the camera punches in on each HUSS."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then last night, a storm hit. Waffles chased the mayor's pigeon all the way up the clock tower.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:storm",
+     "gain": 0.6
+    },
+    {
+     "type": "whoosh",
+     "at": "w:chased",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Stormy night, purple sky, lightning flash. The pigeon flaps to the top of the clock tower with tiny orange Waffles clinging behind it on the clock hand. Rain streaks fall.",
+   "markers": {
+    "chase": "w:chased",
+    "tower": "w:clock"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The fire ladder was too short. The wind got stronger. Waffles started slipping.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "siren",
+     "at": "w:fire",
+     "gain": 0.4
+    },
+    {
+     "type": "thunder",
+     "at": "w:wind",
+     "gain": 0.5
+    }
+   ],
+   "visual": "A red fire truck's ladder stretches up but stops halfway. The crowd below holds glowing flashlights. Close-up: Waffles's paw slides off the clock hand. Camera shake.",
+   "markers": {
+    "ladder": "w:fire",
+    "wind": "w:wind",
+    "slip": "w:slipping"
+   }
+  },
+  {
+   "id": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The kid in the rain, shocked huss face, looking up. Lightning flashes on every HUSS and the camera shakes harder each time."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "There was only one way to save him. In front of the whole town.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "Slow push-in on the kid, face going from sweat to determined. Behind him the whole crowd, about 30 extras including Tyler and Mr. Barnes, turns to stare in silence."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I love you, Waffles!",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "I LOVE YOU, WAFFLES!",
+   "visual": "The kid throws his arms up in cheer pose and shouts at the sky. Lightning freezes the frame."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Waffles grew. And grew. And grew. Until he was taller than the clock tower.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:grew",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:And",
+     "gain": 0.6
+    },
+    {
+     "type": "boom",
+     "at": "w:Until",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Waffles swells in three big jumps until the clock tower is like a little post next to his paw. Crowd in surprised pose, jaws dropped. The storm clouds part around his giant head.",
+   "markers": {
+    "g1": "w:grew",
+    "tall": "w:Until"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He stepped down like it was a curb.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:curb",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "CASUAL",
+   "visual": "Giant Waffles casually lifts one paw and steps down onto main street. Houses wobble and street lamps bounce. He sits and licks his paw."
+  },
+  {
+   "id": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Party-night lighting snaps on. The whole crowd cheers and dances in the street around Waffles's giant paws while the kid does huss face on top of the fire truck."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Even grumpy Mr. Barnes cried. His dog grew three whole inches. Top ten respect.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:inches",
+     "gain": 0.45
+    },
+    {
+     "type": "dundun",
+     "at": "w:respect",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "+3 INCHES",
+   "visual": "Mr. Barnes with sad/teary face, hand on heart. At his feet the pea-sized dog is now mouse-sized and hopping happily.",
+   "markers": {
+    "cry": "w:cried",
+    "dog21": "w:His",
+    "respect": "w:Top"
+   }
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "But then Waffles looked down at me, and purred. And I started to grow.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:purred",
+     "gain": 0.45
+    },
+    {
+     "type": "boom",
+     "at": "w:grow",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Dusk. Giant Waffles lowers his huge head and nuzzles the kid. The kid looks at his own hands, surprised face, as he shoots up past the street lamps and rooftops.",
+   "markers": {
+    "purr": "w:purred",
+    "grow": "w:started"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Turns out, in this town, it works both ways.",
+   "gapAfter": 0.8,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:ways",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "IT WORKS BOTH WAYS",
+   "visual": "Final wide shot: the giant kid and giant Waffles sit side by side on the hill behind the tiny town, orange sunset sky, the kid's arm around the cat. Townspeople wave up from below."
+  }
+ ]
+}
