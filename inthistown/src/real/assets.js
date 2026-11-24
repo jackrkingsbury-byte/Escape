@@ -144,8 +144,8 @@ async function loadModel(name) {
   const scene = gltf.scene;
   scene.name = name;
   const parts = {};
+  for (const c of scene.children) parts[c.name] = c;        // top-level nodes = the Blender objects
   scene.traverse((o) => {
-    if (o !== scene && o.name && !parts[o.name]) parts[o.name] = o;
     if (o.isMesh) {
       o.castShadow = true; o.receiveShadow = true;
       for (const m of Array.isArray(o.material) ? o.material : [o.material]) {

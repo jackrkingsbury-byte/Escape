@@ -1,4 +1,54 @@
 {
+ "atlases": {
+  "palm": {
+   "files": {
+    "color": "tex/foliage_palm_color.png",
+    "normal": "tex/foliage_palm_normal.png"
+   },
+   "res": 1024,
+   "cells": [
+    "frond_a",
+    "frond_b"
+   ],
+   "coverage": 0.268,
+   "bytes": 1744848,
+   "note": "sRGB albedo + alpha (alphaTest 0.5); OpenGL normal; layout in tex/foliage_atlas.json"
+  },
+  "canopy": {
+   "files": {
+    "color": "tex/foliage_canopy_color.png",
+    "normal": "tex/foliage_canopy_normal.png"
+   },
+   "res": 1024,
+   "cells": [
+    "cluster_a",
+    "cluster_b",
+    "cluster_c",
+    "cluster_d"
+   ],
+   "coverage": 0.203,
+   "bytes": 548840,
+   "note": "sRGB albedo + alpha (alphaTest 0.5); OpenGL normal; layout in tex/foliage_atlas.json"
+  },
+  "under": {
+   "files": {
+    "color": "tex/foliage_under_color.png",
+    "normal": "tex/foliage_under_normal.png"
+   },
+   "res": 1024,
+   "cells": [
+    "banana",
+    "fern_a",
+    "fern_b",
+    "heart",
+    "vine_a",
+    "vine_b"
+   ],
+   "coverage": 0.267,
+   "bytes": 1043774,
+   "note": "sRGB albedo + alpha (alphaTest 0.5); OpenGL normal; layout in tex/foliage_atlas.json"
+  }
+ },
  "env": {
   "storm_day": {
    "file": "env/storm_day.hdr",
@@ -27,7 +77,7 @@
   "cave_arch": {
    "file": "glb/cave_arch.glb",
    "tris": 9750,
-   "bytes": 10560012,
+   "bytes": 10572012,
    "size_m": [
     13.64,
     9.31,
@@ -148,7 +198,7 @@
   "rock_block": {
    "file": "glb/rock_block.glb",
    "tris": 3152,
-   "bytes": 2087696,
+   "bytes": 2088592,
    "size_m": [
     0.63,
     0.57,
@@ -160,7 +210,7 @@
   "rock_boulder": {
    "file": "glb/rock_boulder.glb",
    "tris": 3742,
-   "bytes": 2633128,
+   "bytes": 2494672,
    "size_m": [
     1.37,
     0.87,
@@ -172,7 +222,7 @@
   "rock_mossy": {
    "file": "glb/rock_mossy.glb",
    "tris": 3742,
-   "bytes": 2731748,
+   "bytes": 2696168,
    "size_m": [
     1.56,
     0.94,
@@ -184,7 +234,7 @@
   "rock_mossy_big": {
    "file": "glb/rock_mossy_big.glb",
    "tris": 3890,
-   "bytes": 2232592,
+   "bytes": 2234032,
    "size_m": [
     2.75,
     1.66,
@@ -196,7 +246,7 @@
   "rock_slab": {
    "file": "glb/rock_slab.glb",
    "tris": 3546,
-   "bytes": 1877132,
+   "bytes": 2083812,
    "size_m": [
     1.83,
     0.46,
@@ -208,7 +258,7 @@
   "rock_spire": {
    "file": "glb/rock_spire.glb",
    "tris": 3840,
-   "bytes": 2401056,
+   "bytes": 2401632,
    "size_m": [
     0.89,
     1.55,

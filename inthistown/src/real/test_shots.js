@@ -26,7 +26,7 @@ import { makeRain, makeSplashes, makeDrips, makeFogCards, makeLightShafts, makeL
 import { makeReal } from './realchar.js';
 
 export const cast = { me: MAIN.me };
-export const lazySets = true;
+export const lazySets = false;   // build every set at init in declaration order: set build order then never depends on where rendering starts (bit-exact determinism)
 export const captionOptions = {};
 
 // ───────────────────────────────────────────────────────────────────────────── set wrapper

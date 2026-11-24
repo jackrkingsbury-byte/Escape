@@ -56,6 +56,15 @@ def process(name):
     os.makedirs(os.path.join(ROOT, 'out', 'blender_preview'), exist_ok=True)
     Image.fromarray((prev * 255).astype(np.uint8)).save(os.path.join(ROOT, 'out', 'blender_preview', f'foliage_{name}.jpg'), quality=88)
     print(f'[leaves_post] {name}: coverage {a2.mean():.3f}', flush=True)
+    import json
+    mp = os.path.join(ROOT, 'src', 'real', 'assets', 'manifest.json')
+    man = json.load(open(mp)) if os.path.exists(mp) else {}
+    cells = json.load(open(os.path.join(TEX, 'foliage_atlas.json')))[name]['cells']
+    files = {'color': f'tex/foliage_{name}_color.png', 'normal': f'tex/foliage_{name}_normal.png'}
+    man.setdefault('atlases', {})[name] = dict(files=files, res=int(a2.shape[0]), cells=sorted(cells), coverage=round(float(a2.mean()), 3),
+                                               bytes=sum(os.path.getsize(os.path.join(TEX, os.path.basename(f))) for f in files.values()),
+                                               note='sRGB albedo + alpha (alphaTest 0.5); OpenGL normal; layout in tex/foliage_atlas.json')
+    json.dump(dict(sorted(man.items())), open(mp, 'w'), indent=1)
 
 
 if __name__ == '__main__':
