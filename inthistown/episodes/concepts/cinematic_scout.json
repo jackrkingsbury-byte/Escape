@@ -1,0 +1,940 @@
+{
+ "premises": [
+  {
+   "name": "The Island That Isn't There",
+   "source": "Two real items combined. (1) Sandy Island, Coral Sea: it was drawn on charts and atlases for more than a century and still showed on Google Maps until 26 Nov 2012. That month the Australian research ship RV Southern Surveyor sailed to the charted spot and found open ocean about 1,400 m deep. National Geographic removed it from its maps on 29 Nov 2012. One theory traces it to an 1876 sighting by the whaler Velocity. Sources: https://en.wikipedia.org/wiki/Sandy_Island,_New_Caledonia | https://phys.org/news/2012-11-aussie-scientists-un-discover-pacific-island.pdf | https://www.news.uwa.edu.au/201211235241/research/mythbusting-scientists-undiscover-fantasy-island | https://www.npr.org/sections/krulwich/2013/03/13/174203234/pacific-island-bigger-than-manhattan-vanishes | https://bigthink.com/strange-maps/588-no-land-ho-sandy-island-and-the-age-of-un-discovery/ (2) Hy-Brasil, an Irish legend: a phantom island west of Ireland, hidden in fog and seen for only one day every seven years. It appeared on maps from around 1325 into the 1800s, and in a 1674 tale Captain John Nisbet landed there after a sudden fog. Sources: https://blogs.loc.gov/maps/2020/06/hy-brasil-the-supernatural-island/ | https://en.wikipedia.org/wiki/Brasil_(mythical_island) | https://www.leventhalmap.org/digital-exhibitions/hy-brasil/ . Sandy Island is a documented fact. Hy-Brasil is folklore only.",
+   "hook": "\"My map says I'm standing in fourteen hundred metres of water. ...So why am I not wet?\" A storm wrecks his little boat and he wakes up on black sand. On his phone, the GPS dot sits in empty blue ocean. He explores the rainforest and finds an old lighthouse whose logbook has a new handwriting every seven years. The last entry is dated exactly seven years ago. On a lightning night he keeps a campfire going, and a rescue boat finds him. The crew tell him: \"Kid, there's no island here. We followed a fire burning on the open sea.\" He looks back and the fog swallows the island. Last line: \"See you in seven years.\"",
+   "why_interesting": "Rank 1/8. Few people know that Google Maps showed an island that didn't exist until 2012, so the story starts from a true and very strange fact. It flips the usual castaway story: the scary part isn't being lost, it's that the ground under you doesn't exist. Rewatch hooks: hidden 7s in every scene, the logbook dates, and whether the island is there in the first shot. Comment bait: \"wait, Sandy Island was REAL?\" It also sets up a sequel and is fully kid-friendly.",
+   "fits_look": "It uses everything the renderer does best: storm and wreckage, black beach with white foam, rainforest with fog and light shafts, a lighthouse on a cliff, a cave with water and carved tally marks, night lightning and a campfire. At the end the fog literally eats the island, which gives a clean white-out transition in the cold monochrome grade."
+  },
+  {
+   "name": "The Giant in the Fog",
+   "source": "Real optical effect plus a Scottish legend. The Brocken spectre is your own shadow thrown onto fog or cloud when a light is behind you. It looks huge and far away, and it is often ringed by a rainbow halo called a 'glory'. The sun, a full moon or even a lantern can cause it. The legend is Am Fear Liath Mòr, the Big Grey Man of Ben Macdui. The poet James Hogg reported a figure about 30 ft tall there in 1791. In 1925 Professor Norman Collie told the Cairngorm Club that in 1891 he heard huge crunching footsteps behind him in the mist and ran in terror. Skeptics explain it as a Brocken spectre plus fear. Sources: https://en.wikipedia.org/wiki/Am_Fear_Liath_M%C3%B2r | https://skeptoid.com/episodes/4292 | https://www.scotsman.com/arts-and-culture/the-big-grey-man-of-ben-macdui-2507058 | https://www.thebmc.co.uk/britains-five-most-haunted-hills | https://www.yourweather.co.uk/news/trending/discover-the-mystery-the-big-grey-man-ben-macdui-uk.html . The effect is real science. The Grey Man is folklore.",
+   "hook": "\"There's something standing in the fog. It's thirty feet tall. And every time I move... it moves.\" On a foggy clifftop at night, with the lighthouse beam behind him, he sees a giant blocky shape with a glowing ring around its head. Crunching footsteps follow him, one step for every three of his. He runs through the rainforest and the giant keeps pace across the fog banks. Cornered at the cliff edge, he slowly raises one hand, and the giant raises its hand. The headphones and hood are his own shape: it's his shadow, and the ring is a 'glory'. He laughs with relief. Then the beam swings away, and the shadow should disappear. It doesn't. It waves. Cut to black.",
+   "why_interesting": "Rank 2/8. The twist is built for this avatar: the blocky silhouette with headphones reads instantly as a giant shadow, so the monster is literally him. Viewers learn a real word, Brocken spectre, which gives a satisfying science reveal. The final wave then reopens the mystery, which drives comments like \"so who waved??\". Rewatch hook: from the first frame the shadow copies him exactly, except for one hidden frame where it doesn't. Genuinely scary with zero gore.",
+   "fits_look": "Hard light beams (lighthouse, lightning, flashlight) cutting through fog are exactly what a volumetric renderer does well. A black silhouette on white fog is the perfect high-contrast, near-monochrome poster frame, with cliffs, rainforest edges and lightning flashes that throw sudden new spectres."
+  },
+  {
+   "name": "The Night the Sea Turned White",
+   "source": "Milky seas. For centuries sailors described the whole ocean glowing a steady white to the horizon at night. The likely cause is glowing bacteria linked to algae blooms, but scientists still haven't fully solved it, and only one study has ever been made from inside one (1985). On 25 Jan 1995 the British merchant ship SS Lima logged sailing through one off Somalia. In 2005 Steven Miller's team found the same glow in archived satellite images: a patch of about 15,000 km², roughly the size of Connecticut, visible from space. Newer VIIRS satellite data found 12 more cases between 2012 and 2021. Sources: https://science.nasa.gov/earth/earth-observatory/hunting-milky-seas-by-satellite-149017/ | https://www.scientificamerican.com/article/the-mystery-of-milky-seas-is-finally-being-solved/ | https://phys.org/news/2005-10-scientists-milky-sea-phenomena.pdf | https://biolum.eemb.ucsb.edu/organism/milkysea.html | https://cosmosmagazine.com/earth/oceans/milky-seas-satellite-imagery . Campfire motif: the Tromelin castaways (1761–1776) were said to have kept one fire alive for 15 years, though archaeologists think they more likely relit it with flint: https://archaeology.org/issues/september-october-2014/features/tromelin-island-castaways/",
+   "hook": "\"On my fortieth night on this island, the ocean started to glow. Not the waves. ALL of it.\" After a shipwreck he keeps a signal fire going every night, but the rain keeps killing it, and he marks the days on a cave wall. Ship lights pass by without seeing him. Then one silent night the whole sea turns white to the horizon, and he's terrified the ocean is waking up. He remembers his grandpa's sailor story and realises the glow is so big that satellites can see it, so someone will come to look. He drags dark wreck planks into letters on the bright shoreline. At dawn a research ship arrives: \"We came to study the glow. We didn't expect to find you.\"",
+   "why_interesting": "Rank 3/8. This is a real phenomenon most viewers have never heard of, which brings \"wait, this is REAL?\" comments and people googling it. The thing that scares him turns into the thing that saves him, so the story ends on wonder and hope. The 'visible from space' fact is a clever twist that is also true. The fire-keeping gives the emotional core, and the glowing horizon is an image people screenshot and rewatch.",
+   "fits_look": "A glowing white ocean under a black sky is a unique hero shot that only works in a cold, near-monochrome grade (an emissive ocean surface). It also uses the wrecked beach, rain killing the campfire, the cave tally, lightning nights before the glow, and white foam."
+  },
+  {
+   "name": "Three Chairs, One Coat",
+   "source": "Flannan Isles Lighthouse (Eilean Mòr, Scotland, 1900) plus rogue waves. The steamer Archtor saw the light was out on 15 Dec 1900. The relief ship Hesperus only arrived on 26 Dec, and relief keeper Joseph Moore found the station empty. The keepers, James Ducat (43), Thomas Marshall (28) and Donald MacArthur (40), were never found. Most accounts say one set of oilskins was still hanging inside, meaning one man ran out in his shirtsleeves, and that the clock had stopped, though details vary by source. Superintendent Robert Muirhead found severe storm damage at the West Landing (twisted railings, a block of stone over a ton knocked loose) and concluded the men were swept away. The famous spooky logbook entries are later fabrications. Rogue waves were long dismissed as sailors' tales until a laser on the Draupner platform measured a 25.6 m wave on 1 Jan 1995. Sources: https://en.wikipedia.org/wiki/Flannan_Isles_Lighthouse | https://blog.nrscotland.gov.uk/2023/12/12/flannan-isles-lighthouse-keepers-the-disappearance/ | https://www.rmg.co.uk/stories/maritime-history/what-caused-disappearance-flannan-isle-lighthouse-keepers | https://skeptoid.com/episodes/610 | https://www.history.co.uk/articles/the-flannan-isle-mystery-the-three-lighthouse-keepers-who-vanished | https://en.wikipedia.org/wiki/Draupner_wave | https://aps.org/apsnews/2018/01/existence-rogue-waves . nrscotland.gov.uk could not be fetched directly in this session, so these facts come from search results and secondary sources.",
+   "hook": "\"The light went out on December fifteenth. When they finally got here, the chairs were empty, the clock had stopped... and one coat was still hanging by the door.\" In the fictional version he shelters from a storm in an old lighthouse on a rock. He finds three mugs, a tipped-over chair, a stopped clock and one coat on its peg. Then the sea goes strangely quiet as the water pulls back. He hears it before he sees it: a wall of white water taller than the cliff. He does what the keeper without a coat had no time to do and climbs to the lantern room. The wave hits. At dawn he relights the lamp and a passing ship sees it. Closing line: \"Sailors said waves like that were fairy tales. Then in 1995, a machine measured one.\"",
+   "why_interesting": "Rank 4/8. It's a classic real unsolved case with one great clue: one coat left behind means someone ran out in a hurry, but why? Telling viewers the famous spooky diary was fake sparks comment debates. The rogue-wave payoff gives a satisfying, true scientific answer that stays scary, and the tense build-up ends in a giant-wave money shot.",
+   "fits_look": "Lighthouse on rock cliffs, a night storm with lightning, the lamp beam through rain, and a towering white wave with exploding foam, which suits the high-contrast monochrome grade. The small interior adds a quiet, eerie contrast before the wave."
+  },
+  {
+   "name": "The Only Witness Was a Cat",
+   "source": "The Carroll A. Deering, a five-masted schooner, was found aground on Diamond Shoals off Cape Hatteras, North Carolina, on 31 Jan 1921 (some sources say the 29th). Her sails were set, food was reportedly laid out, the lifeboats were gone, and the crew were never found. Period newspapers say the only living thing aboard was a cat, and later local lore says it had six toes. The case was never solved; theories include pirates, mutiny and the 'Bermuda Triangle'. The wreck was dynamited in March 1921. A modern echo is the Kaz II, found drifting off Queensland in April 2007 with the engine running, a laptop on, reportedly the table laid, and all three crew gone. Sources: https://www.nps.gov/caha/learn/historyculture/theghostship.htm | https://mycg.uscg.mil/News/Article/3946247/ghostship-carroll-a-deering | https://en.wikipedia.org/wiki/Carroll_A._Deering | https://www.dncr.nc.gov/blog/2016/01/31/carroll-deering-ghost-ship | https://ncpedia.org/node/11726 | https://en.wikipedia.org/wiki/Kaz_II | https://www.irishtimes.com/news/crewless-yacht-found-drifting-off-australia-1.805929 . The cat comes from period clippings, and the six toes from local lore and the Graveyard of the Atlantic Museum. nps.gov could not be fetched directly, so the NPS facts come from search results.",
+   "hook": "\"The ship hit the sandbank with every sail still up and dinner on the table. Everyone was gone. The only one left... was the cat.\" Lightning shows a ghost ship stuck on the shoals. At low tide he climbs aboard: plates still set, a lantern swinging, lifeboat ropes cut, the logbook's last page torn out. A cat appears and leads him through the dark ship, always staring at the sea. The tide turns and the hull groans. The cat leads him up and out onto the rocks just before the ship breaks apart. At home the cat sleeps on his bed and he counts its toes: six. Last line: \"It still won't tell me what it saw.\"",
+   "why_interesting": "Rank 5/8. A real ghost ship whose only survivor was a real cat is creepy and cute at once. It gives the kid a companion, so the story is scary without being bleak. Rewatch hook: count the toes, and spot the cat in the background before it 'appears'. Theory comments come naturally (pirates? mutiny? Bermuda Triangle?).",
+   "fits_look": "Wreck on the shoals with breakers, stormy ocean, lightning reveals, masts in fog, and a dark ship interior lit by a swinging lantern, all in a cold palette with white foam. Note: it needs one new asset, a cat."
+  },
+  {
+   "name": "Follow the Water",
+   "source": "Juliane Koepcke, aged 17, was the only survivor of LANSA Flight 508, which broke apart in a thunderstorm over the Peruvian Amazon on 24 Dec 1971. She survived about 11 days alone by following a small stream downstream to bigger water, advice from her biologist father, until she reached a loggers' hut and was rescued. The exact wording of his advice varies between retellings. Second source: in 2023 four Colombian siblings (13, 9, about 4 and 1) survived 40 days in the Amazon after a plane crash, with the eldest, Lesly, caring for the others. Army search dog Wilson, a Belgian Shepherd, reportedly found them first and stayed with them for several days, then disappeared into the jungle and was never found. He was awarded a medal. Sources: https://en.wikipedia.org/wiki/Juliane_Koepcke | https://explorersweb.com/juliane-koepckes-impossible-peruvian-survival/ | https://www.irishtimes.com/life-and-style/people/she-fell-3km-out-of-the-sky-and-walked-away-1.4600329 | https://www.npr.org/2023/06/16/1182630213/how-4-children-lost-in-the-amazon-jungle-for-40-days-were-able-to-stay-alive | https://www.cbsnews.com/news/amazon-jungle-crash-survivors-recovering-as-soldiers-search-for-missing-rescue-dog | https://www.aljazeera.com/news/2023/6/27/colombia-awards-medals-for-rescue-of-children-40-days-in-jungle . Both are real tragedies, so the story should be fictional and show no crash or victims.",
+   "hook": "\"My dad told me one thing: if you're ever lost, find water and follow it. Water always knows the way home.\" A lightning storm separates him from his group in the rainforest. Alone in the fog, every sound scares him. He finds a trickle and follows it as it grows into a creek, then a waterfall, then a river. He spends nights in a hollow tree while the rain pours. A dog steps out of the fog and walks beside him for a whole day, then vanishes. The river reaches a beach with a hut and a boat, and he's rescued. He looks back and sees the dog on a ridge in a shaft of light, then it's gone. \"Nobody ever found that dog. I like to think he's still out there, walking lost kids to the water.\"",
+   "why_interesting": "Rank 6/8. Viewers learn and remember a real survival rule. The dad memory makes it deeply emotional, and the mystery dog adds magic. Rewatch hook: the dog is hidden in the fog in earlier shots. It's a hopeful survival story, very shareable and fully kid-friendly if the crash stays offscreen.",
+   "fits_look": "Rainforest with fog and light shafts, heavy rain, lightning, and a stream that grows into a river and then reaches a stormy ocean beach, with a campfire at the hut. The cold monochrome grade with white mist and white water suits it."
+  },
+  {
+   "name": "Day Nine",
+   "source": "The Tham Luang cave rescue, Thailand, 2018. On 23 June twelve boys from the Wild Boars football team, aged 11 to 16, and their coach went into the cave, and monsoon rain flooded the passages behind them. The ledge where divers expected them was underwater, so they had moved to higher ground about 4 km in. On 2 July British cave divers Rick Stanton and John Volanthen surfaced and found all 13 alive; Stanton said he counted heads until he reached 13. Everyone was brought out between 8 and 10 July. Former Thai Navy SEAL Saman Kunan died during the operation. Sources: https://en.wikipedia.org/wiki/Tham_Luang_cave_rescue | https://newsinfo.inquirer.net/1010006/british-diver-recalls-massive-massive-relief-when-he-found-missing-thai-boys | https://www.nationthailand.com/international/30350020 | https://bbc.in/2KCg8XW . The widely quoted 'How many of you?' exchange was not verified in these sources, so use original dialogue.",
+   "hook": "\"The rain started while I was inside. By the time I turned around... the way out was underwater.\" In the fictional version he shelters from a storm in a river cave in the rainforest. The water rises behind him and he retreats deeper to a high ledge. His flashlight is dying, and he marks the days with scratches. He keeps his rules: breathe slowly, stay calm, drink the drips. On day nine he sees a light glowing under the black water, and a diver surfaces. \"Just you?\" \"...Just me.\" The final shot is daylight and rain on his face for the first time in nine days.",
+   "why_interesting": "Rank 7/8. Real flood rescues like this are among the most gripping survival stories in the world. Claustrophobic fear builds to a huge emotional release, and the narrator is a relatable kid. The light rising through dark water is an unforgettable image. Because a rescuer died in the real event, the tone should honour the rescuers and never treat it as a thrill.",
+   "fits_look": "Cave with water, heavy rain, flashlight beams in mist, and a white light blooming under black water, which is a pure high-contrast monochrome moment. Rain outside bookends the story."
+  },
+  {
+   "name": "The Boat at the End of the World",
+   "source": "The Bouvet Island lifeboat. Bouvet is a Norwegian island in the South Atlantic, often called the most remote island on Earth. On 2 April 1964 a survey team from HMS Protector, led by Lt Cdr Allan Crawford, found an abandoned ship's lifeboat in a small lagoon. It had no markings, no motor and no sail. Oars lay on the shore with a flattened copper tank and a barrel, and there was no sign that anyone had camped or died there. When a survey team came two years later, the boat was not mentioned and appears to have been gone. Where it came from is still unproven. Clue device borrowed from Roanoke: in 1590 John White returned to find the colony gone, with no sign of struggle and one word, 'CROATOAN', carved on a post. A storm stopped him from searching, and he never came back. Sources: https://mikedashhistory.com/2011/02/13/an-abandoned-lifeboat-at-worlds-end/ | https://en.wikipedia.org/wiki/Bouvet_Island | https://www.historicmysteries.com/lifeboat-on-bouvet-island/ | https://www.nps.gov/fora/learn/historyculture/1590-voyage.htm | https://www.britannica.com/story/the-lost-colony-of-roanoke | https://www.nationalgeographic.com/magazine/article/lost-colony-roanoke-history-theories-croatoan . The real Bouvet is mostly glacier, so recast it as a rainy volcanic island.",
+   "hook": "\"Nobody lives on this island. Nobody has EVER lived on this island. So who left this boat here?\" He lands on a cliff-ringed island and finds an unmarked lifeboat in a lagoon, oars laid neatly side by side, a barrel, and no footprints. In a cave behind the lagoon he finds one word carved into the rock. A storm is coming and he can't stay, so he takes the lifeboat to escape, and carves his knight emblem on a post before he goes. Two years later, another explorer lands. The boat is gone, and on the post is the knight emblem.",
+   "why_interesting": "Rank 8/8. It's a little-known true mystery with a real detail of a boat that vanished between visits, which makes a neat time-loop twist: the kid is the reason the boat disappeared. Rewatch hook: the knight emblem is already faintly carved on the post in the opening shot. Comment bait: \"WAIT he's the one who took it.\" It also borrows the famous carved-word clue from Roanoke.",
+   "fits_look": "Sea cliffs, a fog-filled lagoon, wreckage, stormy ocean, a cave, and a rain-lashed escape in a small boat through white surf. The cold, desolate palette suits the near-monochrome grade."
+  },
+  {
+   "name": "The Other Me (Backwards Knight) [RECOMMENDED PICK]",
+   "source": "2025-26 doppelganger/mimic wave: FNAF 'Secret of the Mimic' TikTok trend, where something copies you back louder (https://dailydot.com/secret-of-the-mimic-tiktok , https://thetab.com/2026/01/15/right-heres-what-the-secret-of-the-mimic-trend-on-tiktok-actually-means , https://knowyourmeme.com/memes/subcultures/five-nights-at-freddys-secret-of-the-mimic). Mandela Catalogue TikTok trend built on the warning 'if you see someone identical to you, run' (https://rozrywka.spidersweb.pl/the-mandela-catalogue-trend-na-tiktoku). The hidden-detail/easter-egg tactic for rewatches and comment hunts (https://sproutsocial.com/insights/?p=164611 , https://www.influencers-time.com/boost-video-engagement-master-easter-eggs-for-rewatches/). Looping endings that run back into the opening for replays (https://virvid.ai/blog/looping-structure-shorts-retention-2026 , https://faceless.so/blog/looping-short-videos-tutorial-story-seamless-loops). The premise itself is original.",
+   "hook": "0-2 s: black screen. One lightning flash shows him on a wrecked beach with a second blocky kid far behind him. VO: \"Every time the lightning hits, there's another me on this beach. And every time... he's closer.\" Beats: each flash freezes a new frame and the double is nearer. The double calls in HIS voice: \"The cave is safe, go in.\" He hides in a sea cave with a still pool. His reflection moves half a second late. Blackout (~0:55). Then, calmly: \"I made it out. Storm's gone. I'm home now. Mom says I seem... different.\" Last shot: he waves at camera. The white knight on his hoodie is MIRRORED and has been since the blackout. Final flash cuts to the pool, where the real kid's reflection mouths \"that's not me\". That flash loops back to the opening flash.",
+   "why_interesting": "Viewers can check the twist themselves: they rewatch to find the exact cut where the knight flips, and comment \"LOOK AT THE HOODIE\" / \"0:55!!\". The creator's real emblem becomes the clue, which makes it memorable and on-brand. A double of yourself is about the scariest idea there is that needs zero gore. The ending argues with itself (who is narrating?), which drives debate. The last frame flows into the first, so it gets passive replays.",
+   "fits_look": "Night lightning used as a strobe is the main device. Each flash is a frozen, high-contrast white-on-black frame, which is cheap and striking to render. Opens on stormy beach and wreckage in heavy rain. The cave with water gives a natural mirror for the swap. In a near-monochrome grade the white emblem is the brightest detail on screen, so the flip reads clearly on a phone."
+  },
+  {
+   "name": "The Island That Only Exists When It Rains",
+   "source": "Real phantom islands. Hy-Brasil: Irish legend of an island hidden in mist and visible once every seven years; on maps until 1865, last 'sighting' 1872 (https://iflscience.com/hy-brasil-the-phantom-island-that-hasnt-been-seen-since-1872-64607 , https://www.history.com/articles/phantom-islands-mythical-places). Sandy Island: on Google Maps and charts until it was 'undiscovered' in 2012, now thought to have been a pumice raft (https://bigthink.com/strange-maps/588-no-land-ho-sandy-island-and-the-age-of-un-discovery/ , https://en.wikipedia.org/wiki/Phantom_island , https://www.iflscience.com/the-phantom-islands-that-appear-to-have-vanished-into-the-ocean-68431). Liminal 'similar but different world' aesthetic (https://www.dazeddigital.com/science-tech/article/52477/1/inside-the-uncanny-world-of-liminal-spaces-tiktok-reddit-nostalgia), now mainstream through A24's Backrooms film, May 2026 (https://www.fangoria.com/a24-backrooms-release-date/). Mystery hooks need to land in 1-3 s (https://fluxnote.io/guides/tiktok-mystery-strategy).",
+   "hook": "VO over rain on a black sea: \"This island was on Google Maps until 2012. Then they deleted it. I found out why. It's only there when it rains.\" On-screen weather widget: 'Rain ends in 3:00', counting down the whole video. As the rain thins, distant trees turn to fog and vanish (\"the island is un-loading\"). Only the lighthouse stays solid because its light is on. Inside is a visitors' log with one entry every seven years, each signed 'see you next rain'. The last entry is in his own handwriting, dated seven years from today. At 0:00 the sun breaks through and he's standing alone on a floating raft of grey stone (pumice, the real Sandy Island explanation). VO: \"So if it ever rains for a really long time where you live... look at the sea.\"",
+   "why_interesting": "The first line is a real fact people can check, which brings 'I googled it, it's REAL' comments. The countdown gives built-in retention. Phantom islands are far less used on Shorts than the Backrooms, so it feels fresh. The pumice ending is a real-science reveal that makes the scary story feel satisfying. The seven-year log sets up a sequel and 'is he coming back?' comments.",
+   "fits_look": "Heavy rain is the story mechanic itself. Volumetric fog that dissolves parts of the island shows off the renderer. Stormy ocean, lighthouse, cold grade throughout. The only warm, sunlit shot comes at the very end, for a big contrast payoff."
+  },
+  {
+   "name": "The Lifeboat With No Name",
+   "source": "Real unsolved case: on 2 April 1964 a survey team from HMS Protector found an unmarked, half-swamped lifeboat in a lagoon on Bouvet Island, the most remote island on Earth. Oars were on shore with a flattened copper tank and a barrel, and there was no trace of anyone. By the 1966 survey it was gone (https://mikedashhistory.com/2011/02/13/an-abandoned-lifeboat-at-worlds-end/ , https://geographical.co.uk/news/phenomena-the-mystery-of-bouvet-island , https://www.historicmysteries.com/lifeboat-on-bouvet-island/ , https://atlasobscura.com/places/bouvet-island). The twist is a story loop (bootstrap paradox) (https://faceless.so/blog/looping-short-videos-tutorial-story-seamless-loops). The real Bouvet is mostly glacier, so the video uses the fact as the hook and sets the action on 'the island the boat came from'.",
+   "hook": "VO: \"In 1964, sailors found an empty lifeboat on the loneliest island on Earth. No name. No crew. Two years later, it was gone. I know where it went... because I'm the one who took it.\" Beats: he wakes in rain next to a half-sunk lifeboat. The oars and a dented copper tank on the sand are the real details. He explores foggy rainforest and finds a campfire that's still warm. Carved into the boat's bench is a tiny knight, his emblem, carved by... him? At night, lightning shows a ship's lights far out. He rows into the fog toward it. End card: a grainy black-and-white 'archive photo' of the lagoon. Zoom in and the knight carving is on the bench. VO: \"They never found the crew. Because the crew was a kid... and he wasn't finished yet.\"",
+   "why_interesting": "The twist is 'I am the answer to a real unsolved mystery', and the loop makes people comment 'WAIT he IS the mystery'. Real details (oars, copper tank) reward viewers who look it up. The knight carving appears in the very first shot before he notices it, which pays off on a rewatch. The ending is open, so it can become a series.",
+   "fits_look": "Wreckage on a stormy beach, rainforest with fog and light shafts, a campfire, night lightning over a stormy ocean. The black-and-white archive end frame fits the near-monochrome grade naturally."
+  },
+  {
+   "name": "Where the Guests Went",
+   "source": "Roblox really removed Guest mode in October 2017 (official DevForum post https://devforum.roblox.com/t/removal-of-guest-mode/54517 ; https://roblox.fandom.com/wiki/Guests). It builds on Roblox creepypasta like Guest 666 and John Doe (https://www.sportskeeda.com/roblox-news/8-scariest-roblox-myths-legends , https://www.exitlag.com/blog/who-is-john-doe-in-roblox/) and flips Guest 666 from villain to kind. The searches found no documented trend specifically called 'Roblox avatar in a photoreal world'. The closest relatives: TikTok's Roblox-avatar filter (https://www.aol.com/news/heres-turn-yourself-giant-roblox-201439474.html), Roblox's 2026 photoreal 'Roblox Reality' world models (https://about.roblox.com/newsroom/2026/04/roblox-reality-hybrid-architecture-democratizing-photorealistic-multiplayer-gaming), Roblox serial stories on TikTok (https://mel.fm/zhizn/razbor/7280145-on-obeshchal-zhdat-menya-no-cherez-5-let-ego-novaya-nazvala-menya-nishchetoy-kak-robloks-serialy-zak), and the 2025 first-person AI vlog format, e.g. Veo 3 Bigfoot vlogs (https://knowyourmeme.com/memes/ai-vlogs).",
+   "hook": "VO: \"In 2017, Roblox deleted every Guest. Millions of them. Nobody ever asked where they went. I found out, because last night I got logged out... and woke up here.\" Beats: real rain doesn't feel like a game. A foggy shore is covered in washed-up, faded blocky hats and gear. A lighthouse blinks 'connecting...'. The keeper is a classic Guest avatar who has kept the light on for nine years so lost avatars can find their way home. He's gentle, not scary. The Guest shows him the way back (the light is the login). The kid asks him to come too: \"We can't. Nobody remembers our names.\" The kid tells the Guest his own name and promises to remember. The Guest smiles and fades into the beam. Final: the kid wakes in bed with wet sand on his hoodie and a notification: 'Guest_1 sent you a friend request.'",
+   "why_interesting": "Roblox-native nostalgia plus a flipped creepypasta draws huge comment bait from the core audience ('I remember guests', 'Guest gang', theories about Guest 666). The story explains why a blocky avatar is in a photoreal world, which makes the creator's visual style part of the plot. It starts scary and ends heartfelt, and it's fully kid-safe.",
+   "fits_look": "The contrast between photoreal rain and ocean and blocky avatars IS the premise. Lighthouse beam through fog, a shoreline of washed-up 'wreckage' (old avatar items), cold high-contrast grade. The beam and the white fade-out give the white highlights."
+  },
+  {
+   "name": "Three Keepers, One Coat",
+   "source": "Flannan Isles lighthouse, December 1900. Keepers James Ducat, Thomas Marshall and Donald MacArthur vanished. The steamer Archtor saw the light was out on the night of 15 December, and the relief ship Hesperus found the station empty on 26 December. Commonly reported details include one set of oilskins left behind. A dramatic 'storm logbook' later circulated, but it's widely reported as fabricated; the official view is that the men were swept away by a wave (https://en.wikipedia.org/wiki/Flannan_Isles_Lighthouse , https://www.rmg.co.uk/stories/maritime-history/what-caused-disappearance-flannan-isle-lighthouse-keepers , https://www.history.co.uk/articles/the-flannan-isle-mystery-the-three-lighthouse-keepers-who-vanished , https://www.iflscience.com/the-flannan-isle-mystery-what-happened-to-three-lighthouse-keepers-123-years-ago-68462 , https://news.stv.tv/highlands-islands/mystery-of-eilean-mor-lighthouse-keepers-disappearance-as-records-released-for-first-time). The video presents itself clearly as fiction inspired by the case.",
+   "hook": "VO: \"In December 1900, three lighthouse keepers vanished from an island like this one. Their coats were gone. All except one. Tonight... I found that coat.\" Beats: he shelters from a storm in an old stone lighthouse. Inside: a table set for three, a stopped clock, one oilskin coat on a hook. A logbook describes a storm that hasn't happened yet, and it happens outside line by line as he reads. Through the rain, three lantern lights move along the cliff toward him. They're waving at HIM, warning him off the rocks. He gets back inside just as a giant wave smashes where he was standing. The lights are gone. The last log line is still wet: \"15 Dec. A boy on the rocks. Went to help.\" He puts on the coat, climbs the stairs and relights the lamp. VO: \"Somebody has to keep the light on.\"",
+   "why_interesting": "A ghost story turns into a rescue story. That emotional flip drives 'chills', 'they saved him' and 'I'm crying' comments. It stays respectful to real people: no deaths shown, and the keepers become heroes. Real dates and ships give it weight, and viewers will post the true history in the comments, which is good for engagement. The logbook is a pause-to-read device.",
+   "fits_look": "Lighthouse plus small old stone building, rock cliffs, huge waves, heavy rain, lantern lights in fog, night lightning. The final shot of the lamp relit gives a white beam over a black sea."
+  },
+  {
+   "name": "Rules for the Rain Island",
+   "source": "'Rules' horror format: a list of instructions where the broken or last rule is the payoff (https://fluxnote.io/guides/horror-tiktok-video-ideas). 'If you see this...' warning-style hooks and TikTok creepypasta told as if real (https://time.com/5825674/horror-tiktok-videos/). Ongoing TikTok horror trend tracking (https://www.hooked.so/trends/tiktok/horror_scary). Comments come from questions and disagreement, and comment-reading time keeps a Short looping (https://www.socialmediaexaminer.com/youtube-shorts-hooks-and-curiosity-loops-that-explode-your-views/).",
+   "hook": "VO: \"There's a sign nailed to the shipwreck on this beach. It says: 'If you can read this, the storm picked you. Follow the rules.'\" The rules appear on screen as freeze-frame bait. 1) Keep the fire burning until morning. 2) The lighthouse is empty. If its light turns on, don't look at it. 3) There are 12 rocks on the beach. If you count 13, stop counting. 4) If the cave says your name, answer with a different name. 5) Don't swim, even if someone waves at you. 6) [torn off]. Each rule gets a scene: fire, counting 13 rocks, the cave voice, the lighthouse switching on. He breaks rule 4 because the voice sounds scared, and it's a lost kid who helps him. At dawn he finds rule 6 in his own pocket, in his own handwriting: \"Rule 2 is a lie. LOOK at the light.\" He turns. Cut to black.",
+   "why_interesting": "Rules lists make people pause and read, which boosts watch time. Viewers argue strategy ('I'd never break rule 4') and decode the torn rule, which feeds comment threads. The format serializes easily (Rules Part 2), and each rule is its own short set piece. It's scary without gore, and breaking a rule out of kindness gives a kid-friendly moral.",
+   "fits_look": "Campfire, a beach of dark rocks, a cave with water, a lighthouse switching on at night, wreckage with a nailed sign, constant rain. The white sign text pops against the monochrome grade."
+  },
+  {
+   "name": "The Lighthouse Made of Lightning",
+   "source": "Catatumbo lightning over Lake Maracaibo, Venezuela: storms on roughly 140 to 300 nights a year (sources vary), always in the same area. Historically called the 'Lighthouse of Maracaibo' because sailors steered by it, including Admiral Padilla's fleet on 24 July 1823 (https://en.wikipedia.org/wiki/Catatumbo_lightning , https://www.smithsonianmag.com/smart-news/researchers-announce-worlds-new-lightning-hot-spot-180958994/ , https://explorersweb.com/natural-wonders-catatumbo-lightning/ , https://skybrary.aero/index.php/Catatumbo_Lightning). Also the world's oldest message in a bottle: thrown from the barque Paula on 12 June 1886 and found in Western Australia in 2018 (https://www.npr.org/sections/thetwo-way/2018/03/06/591177889/oldest-known-message-in-a-bottle-found-in-australia , https://www.anmm.gov.au/2018/03/07/message-in-a-bottle).",
+   "hook": "VO, adrift on wreckage at night: \"There's a place where lightning strikes almost every night, in the same spot. Sailors used it as a lighthouse. Tonight, it's the only light I've got.\" Beats: he paddles toward the flashes. Each flash freezes one frame showing rocks, then a cliff, then a cave mouth. Inside the cave, by an old fire, is everything the sea ever lost: bottles with old letters (one dated 1886), toys, a single shoe, and his OWN lost things, like the headphones he lost at the beach years ago. One bottle is addressed to him. It's the wish he threw in the sea when he was six: 'I want a real adventure.' VO: \"The sea never loses anything. It just takes the long way back.\" He writes a new note and throws it into the storm. The final close-up shows the note half readable, inviting viewers to decode it in the comments.",
+   "why_interesting": "A real natural wonder most kids have never heard of opens with a sense of awe. The 1886 bottle fact adds 'wait, that's real?' comments. The emotional payoff (his own childhood wish answered) gives a 'this got me' rewatch. The half-hidden note is the rewatch and comment hook.",
+   "fits_look": "Night with lightning drives the whole piece. Each flash is a white strobe tableau on a stormy ocean, with rock cliffs, a cave with water and a campfire glow inside. Near-monochrome, with the lightning as the only bright light source."
+  },
+  {
+   "name": "Last of Their Kind",
+   "source": "Real rediscovery: the Lord Howe Island stick insect ('tree lobster') was thought extinct after rats wiped it out around 1920. In 2001 climbers found a tiny population living under a single shrub on Ball's Pyramid, a sea stack in the Pacific. Two pairs were taken in 2003 and Melbourne Zoo now breeds them (https://www.npr.org/blogs/krulwich/2012/02/24/147367644/six-legged-giant-finds-secret-hideaway-hides-for-80-years , https://en.wikipedia.com/wiki/Tree_lobster , https://a-z-animals.com/blog/supposedly-extinct-for-71-years-the-tree-lobster-clung-to-one-bush/ , https://www.sciencenews.org/?p=23060). A moral-dilemma ending drives comments through disagreement (https://www.socialmediaexaminer.com/youtube-shorts-hooks-and-curiosity-loops-that-explode-your-views/).",
+   "hook": "VO, clinging to a sea-cliff ledge in a storm: \"Everyone thinks these animals went extinct a hundred years ago. There are about two dozen left, living under one bush, on one rock, in the middle of the ocean. And I just found them.\" Beats: big dark insects glint in the lightning, which is eerie at first. Waves start tearing at the bush, so he shields it with his hoodie all night in the rain. At dawn a rescue boat appears. The dilemma: tell the world and they get protected, or tell no one and keep people away? He looks at the camera: \"What would you do?\" End card: \"This really happened. In 2001, climbers found them. Today there are thousands, bred in zoos.\"",
+   "why_interesting": "It starts as a creepy creature story and turns tender. The 'this is real' end card makes people google it and comment. The direct moral question splits the comments. It's the most wholesome option and suits an emotional episode between scarier ones.",
+   "fits_look": "Rock cliffs, stormy ocean, rain, night lightning, light shafts at dawn. It needs one small creature asset, a big stick insect, which can be stylized or blocky."
+  }
+ ],
+ "scripts": [
+  {
+   "title": "The Island That Isn't There",
+   "premise_source": "Combines premise 1 (The Island That Isn't There) with the seven-year logbook from premise 10. Two real sources sit underneath it. (1) Sandy Island in the Coral Sea is a documented fact: it sat on charts and on Google Maps for over a century until November 2012, when the research ship RV Southern Surveyor sailed to the charted spot and found open ocean about 1,400 m deep, and the island was removed from maps. (2) Hy-Brasil is Irish folklore about a phantom island hidden in fog and seen once every seven years, with its last reported 'sighting' in 1872. The logbook's seven-year entries run from 1872 to 2019, and 2012 lands exactly on that cycle, so the 'Nov 2012' entry lines up with the real ship that found nothing. The story itself is original fiction, and the last frame says so.",
+   "logline": "A storm wrecks a kid's boat on a black-sand island. His GPS says he's standing in 1,400 metres of open ocean, at the real Sandy Island that was deleted from maps in 2012. He finds square footprints leading to where he slept, a logbook with one entry every seven years, a cave wall covered in tally marks, and a figure in the fog that never comes closer. They all lead to the lonely kid who has been keeping the fire lit.",
+   "twist": "The figure watching from the fog isn't hunting him. It's the castaway behind the 2019 entry, the only one that says just 'Day one' and never 'Rescued'. He has been on the island for 2,555 days, which is exactly seven years, and he fed the narrator's fire all night so a boat would see it. The rescuers saw no island, only 'a fire burning on the open sea'. As the fog swallows the island, the kid by the fire, wearing headphones like the narrator's, waves goodbye. The clues are fair and planted early: square footprints walk up to where he slept and leave again, dry firewood is stacked neatly in a downpour, the 2019 entry has no 'Rescued', the scratch count comes to 2,555, the figure never gets closer, and the fire is fed while he sleeps.",
+   "caption_hook": "This island really was on Google Maps until 2012. Scientists sailed there and found 1,400 m of ocean. Look it up. Then count the scratches.",
+   "why_it_hits": "The opening line is a real, checkable fact, so viewers will comment 'wait, Sandy Island was REAL?' and 'I googled it'. The 2012 log entry about a ship sailing right through him lines up with the actual 2012 survey ship, which gives people chills when they look it up. The scary build of footprints, a reflection, a figure in the lightning and a fire that feeds itself turns into a gut-punch: the 'monster' is a lonely kid who spent seven years keeping strangers alive. The narrator never explains the number 2,555, so commenters will work out that it is 7 x 365. Rewatch hooks: the phone clock reads 07:07, the lighthouse has seven windows, a figure is hidden at the treeline in the second shot, and for one frame a silhouette shows in the window reflection during the 2012 page. The ending ('I'm not leaving without him. See you in seven years.') sets up a sequel and starts 'who is he?' and 'is it him from the future?' threads. It fits the renderer: storm, wreckage, black beach with white foam, foggy rainforest with light shafts, a lighthouse on a cliff, a sea cave lit by a flashlight, lightning used as a strobe at night, a campfire, and fog that eats the island into a pure white frame. It's kid-safe, with no gore and every entity shown only as a suggestion.",
+   "beats": [
+    {
+     "kind": "line",
+     "text": "My map says I'm standing in fourteen hundred metres of water.",
+     "visual": "Black frame snaps to an extreme close-up, macro-lens feel: a cracked, rain-beaded phone screen in the kid's blocky hand. Map app: a pulsing blue dot alone in flat empty blue ocean, depth label '-1,400 m', clock in the corner reads 07:07. Very shallow focus; behind the phone, soft white foam slides over black volcanic sand. Heavy backlit rain streaks, cold steel-blue near-monochrome grade.",
+     "amb": "rain_beach",
+     "music": "cine_drone",
+     "sfx": [
+      "thunder_far"
+     ],
+     "overlay": "CORAL SEA"
+    },
+    {
+     "kind": "line",
+     "text": "So... what am I standing on?",
+     "visual": "Rack focus off the phone; camera tilts slowly down to his blocky sneakers sinking into wet black sand as a sheet of white foam swirls around them and drains away. Slow pedestal up and back reveals the kid from behind in his black hoodie and headphones, tiny against a wall of grey storm sea. Far left, deep in the fog at the jungle edge, a small dark shape stands perfectly still (hidden rewatch clue, barely readable).",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "splash"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A storm flipped my boat last night.",
+     "visual": "Wide, low, steady handheld: his small boat upside down in the surf, splintered hull ribs, a torn grey tarp snapping in the wind, rope tangled across the black sand. Waves burst white over the wreck. Overcast dawn, sheets of rain, lightning flickering on the horizon.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "creak",
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "This island was on Google Maps until 2012. Then scientists sailed here... and found only ocean.",
+     "visual": "Top-down phone insert: the map zooms out, and a faint dotted island outline fades from the blue like a ghost, leaving empty ocean. Hard cut to a slow aerial pull-back from the kid on the beach: the island looks completely solid (black beach, dense rainforest, a rock cliff) wrapped in fog, with nothing else to the horizon.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "riser"
+     ],
+     "overlay": "SANDY ISLAND - REMOVED FROM MAPS 2012"
+    },
+    {
+     "kind": "line",
+     "text": "Then I saw footprints. Square ones. Like mine.",
+     "visual": "Top-down drone shot descending slowly over black sand: the body-shaped dent where he lay and his drag marks from the surf. Beside them, a separate trail of small square blocky footprints comes out of the fog at the jungle edge, each print filling with rainwater. White foam line at the bottom of frame.",
+     "amb": "rain_beach",
+     "music": "cine_heart",
+     "sfx": [
+      "stinger"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Right up to where I slept... and back again.",
+     "visual": "Ground level, lens almost touching the sand, pushing along the footprints: they stop right beside the dent, turn, and lead back into the white fog wall of the rainforest. Raindrops ripple in each print. At the treeline, one huge fern frond is still swaying, as if someone just passed.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "heartbeat",
+      "branch_snap"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "They led to a lighthouse. On an island that doesn't exist.",
+     "visual": "Tracking behind the kid through giant ferns and buttress roots, thick fog, god-ray light shafts piercing the canopy, rain dripping off leaves. Crane up through the fog to reveal an old white-stone lighthouse on a black rock cliff, lamp dark, seven small windows up the tower, waves exploding white below.",
+     "amb": "rain_forest",
+     "music": "cine_swell",
+     "sfx": [
+      "footsteps_mud",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Inside, someone had stacked firewood. Dry.",
+     "visual": "Interior: small round stone room, grey light through a salt-crusted window, rain streaming down the glass. A neat wall of dry split logs stacked to the ceiling beside a cold iron stove; dust drifting in a light shaft. A thick leather logbook lies on a wooden table. Slow dolly in.",
+     "amb": "rain_beach",
+     "music": "cine_drone",
+     "sfx": [
+      "creak",
+      "drip"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And a logbook. One entry every seven years, back to 1872.",
+     "visual": "Top-down macro: the kid's blocky hands turn heavy yellowed pages. Each spread has a different handwriting and ink, and the dates flick past: 1872... 1907... 1956... 1998... 2005. Cold window light, page edges fluttering.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "1872"
+    },
+    {
+     "kind": "line",
+     "text": "Every one says: lost at sea. Kept the fire. Rescued.",
+     "visual": "Slow lateral slide across three entries in three handwritings (quill, pencil, ballpoint), each ending with the same underlined word: 'Rescued.' Shallow focus, the paper grain razor sharp.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "But 2012 says: 'A ship sailed right through me. They said nothing was here.'",
+     "visual": "The 2012 page: shaky ballpoint, ink smeared by drips. Slow push in on the words. A lightning flash through the window bleaches the page white. For that single frame, the window glass reflects a small silhouette standing right behind the kid; he doesn't turn.",
+     "amb": "rain_beach",
+     "music": "cine_heart",
+     "sfx": [
+      "thunder_crack",
+      "stinger"
+     ],
+     "overlay": "NOV 2012"
+    },
+    {
+     "kind": "line",
+     "text": "The last entry is from seven years ago. No 'rescued.' Just... 'Day one.'",
+     "visual": "The final written page: big, blocky, kid handwriting: '2019 - Day 1.' Nothing else. The camera holds, then tilts slowly down across empty ruled lines and blank pages. The rain sound falls away to near silence.",
+     "amb": "none",
+     "music": "cine_silence",
+     "sfx": [
+      "heartbeat"
+     ],
+     "overlay": "2019"
+    },
+    {
+     "kind": "line",
+     "text": "In the cave below, someone had been counting days. Two thousand, five hundred and fifty-five.",
+     "visual": "Dark sea cave under the cliff, black water lapping, mist hanging. The kid's flashlight beam slides across a rock wall completely covered in tally marks in groups of five, row after row, the newest scratches pale and fresh. Drips fall through the beam; the kid is a small silhouette against the wall.",
+     "amb": "cave",
+     "music": "cine_drone",
+     "sfx": [
+      "drip",
+      "splash"
+     ],
+     "overlay": "2,555"
+    },
+    {
+     "kind": "line",
+     "text": "That night I lit a fire. The rain kept trying to kill it.",
+     "visual": "Night, wide on the black beach: a small campfire, the kid hunched over it, holding his hoodie open like a shield against sideways rain, sparks ripped away by the wind. Distant lightning outlines the stormy sea and the dark lighthouse on the cliff. Firelight is the only warm tone, kept desaturated.",
+     "amb": "campfire",
+     "music": "same",
+     "sfx": [
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Every lightning flash... someone was standing at the edge of the trees.",
+     "visual": "Lightning as a strobe. Static wide from behind the fire toward the jungle. Flash 1: treeline empty, fog. Black. Flash 2: a small blocky silhouette stands at the treeline in the fog, perfectly still. Black. Flash 3: still there, same spot.",
+     "amb": "night_jungle",
+     "music": "cine_heart",
+     "sfx": [
+      "thunder_crack",
+      "stinger"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It never came closer. It just watched.",
+     "visual": "Close-up of the kid's face, side-lit by the fire, rain beading on his headphones, eyes locked on the dark. Over his shoulder, out of focus, each lightning flash shows the silhouette in exactly the same place. He slowly pulls his hood up; the fire dims; his eyes droop. Fade to black.",
+     "amb": "campfire",
+     "music": "same",
+     "sfx": [
+      "heartbeat",
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "When I woke, the fire was roaring. Someone had fed it all night.",
+     "visual": "Pre-dawn blue: the fire is huge and bright, fresh split logs from the lighthouse stack hissing in the rain. Around it, a perfect ring of small square footprints in the wet sand. The kid sits up into frame, ash on his shoulder; smoke and steam climb into the fog.",
+     "amb": "campfire",
+     "music": "cine_swell",
+     "sfx": [
+      "riser"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then a searchlight cut through the fog.",
+     "visual": "From the shore: a hard white searchlight beam sweeps through dense sea fog, catching rain like needles. A dark boat silhouette rises over the swell. The kid stands by the fire waving both arms, his shadow thrown long across the black sand.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "radio",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "'Kid... there's no island here. We followed a fire. Burning on the open sea.'",
+     "visual": "On the boat deck in rain: the kid wrapped in a grey blanket, seen from behind; a sailor is only a faceless silhouette in the searchlight glare. Insert: the boat's depth sounder glowing in the dark, reading '1,400 m'.",
+     "amb": "storm_sea",
+     "music": "cine_silence",
+     "sfx": [
+      "radio"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I looked back. Fog was eating the island.",
+     "visual": "From the stern, long lens: a white fog bank rolls over the island like a slow wave. The beach goes, then the jungle, then the cliff. The lighthouse is swallowed last, from the bottom up.",
+     "amb": "storm_sea",
+     "music": "cine_swell",
+     "sfx": [
+      "whoosh",
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "But by the fire stood a kid. Headphones, like mine. He waved.",
+     "visual": "Extreme long lens through rain: the campfire is the last point of light in a wall of white fog. Beside it, a small blocky silhouette with headphones raises one hand and holds it there. The fog closes over him; the frame goes pure white.",
+     "amb": "surf",
+     "music": "cine_sad",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "He wasn't watching me. He was keeping me alive.",
+     "visual": "Close-up of the narrator at the railing, rain running off his hood, the firelight reflection fading from his eyes; he slowly raises one hand back. Three quick memory flashes: the '2019 - Day 1' page, the wall of 2,555 scratches, the ring of square footprints.",
+     "amb": "surf",
+     "music": "same",
+     "sfx": [
+      "heartbeat"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "When the island comes back... I'm not leaving without him.",
+     "visual": "Dawn: the fog thins to reveal flat grey ocean all the way to the horizon, no island at all. A single shaft of light hits the water where the lighthouse stood. The kid at the rail, small and still against the empty sea.",
+     "amb": "surf",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "See you in seven years.",
+     "visual": "Final insert: his phone lying on the wet deck, map app open, the blue dot drifting away over empty ocean. For one frame, a faint island outline flickers on the map behind it, then it's gone. Cut to black.",
+     "amb": "none",
+     "music": "cine_silence",
+     "sfx": [
+      "thunder_far"
+     ],
+     "overlay": "Inspired by Sandy Island, a real phantom island. This story is fiction."
+    }
+   ],
+   "id": "scout-1"
+  },
+  {
+   "title": "The Other Me",
+   "premise_source": "The main story is premise 9, 'The Other Me (Backwards Knight)'. It is combined with premise 1, 'The Island That Isn't There': his phone shows open ocean where he is standing, and after the rescue the island melts into fog. That nods to the real Sandy Island, which stayed on maps and Google Maps until a research ship found deep ocean there in 2012. This is original fiction, and the video never claims any of it happened.",
+   "logline": "A kid is shipwrecked at night on an island his phone says doesn't exist. Every lightning strike shows another version of himself, a little closer each time, until it drives him into a sea cave with a perfectly still pool. A boy is rescued at sunrise, and it isn't him.",
+   "twist": "The kid who goes home is not the real one. When the lightning hits the cave pool, he and his reflection swap places. From that white-out on, the narrator is the thing from the water. The clues are fair and can be checked:\n1. In the close-up where he talks about Mom (b5), the knight on his hoodie faces LEFT. After the white-out, and on the double in the b10 flash, it faces RIGHT.\n2. The double tells him to go into the cave, which breaks Dad's rule that the real kid knows.\n3. Drips fall into the pool without making ripples.\n4. The reflection moves half a second late, then smiles while he doesn't.\n5. After the blackout the narration stops hesitating, and he holds the radio and waves with his LEFT hand. He used his right hand all night.\n6. He slips: 'The cave was safe. Just like I said.' The real kid never said that. The double did.\nIn the last frame the real kid is trapped under the pool's surface, mouthing 'Mom... that's not me.' The overlay reads 3:12 AM again, and the flash cuts back to the opening frame, where a second kid stands far down the beach. That raises the question of whether he was the last one this happened to.",
+   "caption_hook": "Something on me changes halfway through. Did you catch it?",
+   "why_it_hits": "- **Viewers can prove the twist themselves.** They scrub back from the final wave to the knight close-up, find the exact cut where it flips, and catch the 'just like I said' slip. That drives comments like \"LOOK AT THE HOODIE\" and \"he never said that, the OTHER one did\".\n- **The clue is the creator's own emblem,** so the episode stays on-brand and memorable.\n- **A copy of yourself is about the scariest idea that needs no gore.** This one only moves in the dark, speaks in his voice, stands in the ashes of his fire and smiles from the water.\n- **The emotional hit comes from Mom's line.** She said \"knights always find their way home\", and the wrong knight comes home. Mom hears that something is off. The real kid can only mouth \"that's not me\".\n- **The phantom-island details bring in real-world comments.** The empty-ocean GPS dot and the island dissolving into fog make people who know Sandy Island post about it, but the video never claims it happened.\n- **The ending loops.** The 3:12 AM flash runs straight into the opening flash, so the video replays on its own, and the far-off second kid in shot one means something new on rewatch.\n- **Every set piece plays to the renderer's strengths:** lightning strobe tableaux, rain on black sand, wreckage, campfire, a sea cave with a mirror pool, and fog swallowing an island under dawn light shafts.",
+   "beats": [
+    {
+     "kind": "line",
+     "text": "Every time the lightning hits... there's another me on this beach.",
+     "visual": "Opens on 1.5 s of pure black with only rain hiss. Then ONE lightning flash freezes the frame for 6 frames. Locked-off vertical wide, 24 mm feel, camera at knee height on a black-sand beach in heavy rain. Lower right: the kid (blocky avatar, black hoodie, headphones), seen three-quarter from behind, rain streaking off his hood. Splintered ribs of a wrecked hull frame the left edge. Far behind him, a tiny second identical blocky kid stands dead still in the white foam line, facing camera. The flash decays to black.",
+     "amb": "rain_beach",
+     "music": "cine_drone",
+     "sfx": [
+      "thunder_crack"
+     ],
+     "overlay": "3:12 AM"
+    },
+    {
+     "kind": "line",
+     "text": "And every time... he's closer.",
+     "visual": "Black, then a second flash in the identical frame with the same rain. Our kid hasn't moved. The second kid is now halfway up the beach, in exactly the same frozen pose, arms at his sides, face lost in silhouette. In the darkness between flashes the camera creeps about 2% closer.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "thunder_crack"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The storm flipped my boat. I woke up here, on black sand.",
+     "visual": "Earlier, at blue-black storm dusk. Overhead drone shot, slowly descending: the kid lies face-down on black sand among broken planks, a snapped mast and tangled rope. White foam slides up around him and drains away through the sand while rain pocks the beach. He pushes up onto his elbows and coughs.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "thunder_far"
+     ],
+     "overlay": "9:40 PM"
+    },
+    {
+     "kind": "line",
+     "text": "My phone says there's no island here. Just deep ocean.",
+     "visual": "Macro insert, 100 mm feel, shallow focus. His blocky RIGHT hand holds a cracked, rain-beaded phone. The map shows a pulsing blue location dot in the middle of flat, empty blue ocean, with no coastline anywhere on screen. A raindrop rolls across the dot. Rack focus past the phone to the dark rainforest tree line behind, where fog breathes between the trunks.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Mom sewed this knight on my hoodie. She says knights always find their way home.",
+     "visual": "Close-up with a slow 5% push-in on his chest as he wipes rain off the emblem with his RIGHT hand. The white chess-knight emblem fills a third of the frame. The stitching is uneven and hand-sewn. The horse head clearly faces LEFT. This is the reference frame for the twist, so the direction must be unmistakable. Cold rim light comes from distant lightning flicker.",
+     "amb": "rain_beach",
+     "music": "cine_sad",
+     "sfx": [
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I built a fire under the wreck. And I waited.",
+     "visual": "Medium wide, 35 mm feel, camera low behind the flames. The kid huddles under the overturned hull, hugging his knees beside a small campfire that hisses in the rain. The fire is the only warm tone in the grade, kept muted amber. Beyond the hull, black sea and white foam heave under a lightning-lit sky. Rewatch detail, never mentioned: at the edge of the firelight, a line of blocky sneaker prints walks up out of the surf toward him and stops.",
+     "amb": "campfire",
+     "music": "same",
+     "sfx": [
+      "creak"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then the lightning came back.",
+     "visual": "Back in the present. Reverse angle over his shoulder from beside the fire, looking out at the beach. Black, then a flash: the second kid stands about 30 m away, frozen. In the foreground our kid's head snaps toward him.",
+     "amb": "rain_beach",
+     "music": "cine_heart",
+     "sfx": [
+      "thunder_crack"
+     ],
+     "overlay": "3:12 AM"
+    },
+    {
+     "kind": "line",
+     "text": "He never moves when it's bright. Only in the dark.",
+     "visual": "Strobe sequence on the same over-the-shoulder lens. Flash: the double at 25 m, frozen. Ten frames of black. Flash: 20 m, in the exact same pose, like a photo pasted closer. Black. Flash: 16 m. In the dark between flashes we hear a single wet footstep in the sand that isn't our kid's.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "footsteps_mud",
+      "heartbeat"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then he called to me. In my voice.",
+     "visual": "Extreme close-up, 85 mm, side-lit by the dying fire: his blocky face, rain on his cheek, eyes wide. One headphone cup slips off his ear as he turns toward the dark. Behind him, far out of focus, a hooded shape stands in the rain.",
+     "amb": "campfire",
+     "music": "same",
+     "sfx": [
+      "heartbeat"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "\"The cave is safe. Go in.\"",
+     "visual": "Lightning flash. Long lens, 135 mm compression, from his POV. The double stands motionless about 15 m away, rain bouncing off his hood, face in shadow. One arm is raised, pointing behind him at a black sea cave in the cliff that swallows surging white foam. Pause-only detail: the double's knight emblem faces RIGHT (mirrored). Audio note: whisper this line with a faint delayed echo double.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "thunder_crack"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I'd never say that. Dad's rule: never go in a sea cave in a storm.",
+     "visual": "Wide establishing shot from the waterline, 24 mm, lit by the storm. Waves explode white into the sea-cave mouth at the base of the cliff and suck back out. The cave is a black void. The kid is tiny on the left by the hull. The double has vanished from the frame and is somewhere in the dark, and that absence is the scare.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "thunder_far",
+      "splash"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then the rain killed my fire.",
+     "visual": "Close on the campfire. A gust drives a sheet of rain into the flames. They hiss, gutter down to embers and die. Steam curls up and the frame drops to near black, leaving only a last ember glow and the sheen of rain.",
+     "amb": "campfire",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Next flash... he was standing right where it used to be.",
+     "visual": "One beat of total black and silence, then a FLASH. Static low angle at sand level. The smoking dead fire pit fills the foreground, and two blocky sneakers stand right in the ashes, the double's legs rising out of frame. Hold 8 frames, then black.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "thunder_crack",
+      "stinger"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I ran. The only place left... was the cave.",
+     "visual": "Shaky handheld tracking shot, 28 mm, running behind the kid as he sprints across the black sand through sheets of rain toward the cave. His footprints fill with water behind him. Lightning strobes the cliff as it looms larger, and he ducks into the cave mouth just as a wave drains back out.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "footsteps_mud",
+      "splash"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Inside was a pool. Perfectly still. Like a mirror.",
+     "visual": "Inside the sea cave the noise suddenly drops away. His flashlight, held in his RIGHT hand, cuts through mist onto a perfectly flat black tide pool walled by wet rock. Drips fall from the ceiling but leave no ripples on the pool. The camera cranes slowly down to water level.",
+     "amb": "cave",
+     "music": "cine_drone",
+     "sfx": [
+      "drip"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I raised my hand. My reflection raised his... half a second late.",
+     "visual": "Symmetrical split-level shot, 50 mm, camera at the pool's edge. Top half: the kid kneels and slowly raises his right hand. Bottom half: his reflection in the black water raises its hand exactly half a second later. The flashlight glow lights both faces from below.",
+     "amb": "cave",
+     "music": "same",
+     "sfx": [
+      "drip"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then he smiled. I wasn't smiling.",
+     "visual": "Slow push into the reflection only, with the real face soft at the top edge of the frame. In the water, the reflected blocky face slowly curves into a wide smile. Above it, the real face stays frozen and afraid. The flashlight flickers.",
+     "amb": "cave",
+     "music": "same",
+     "sfx": [
+      "heartbeat"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then the lightning hit the water.",
+     "visual": "A lightning bolt strikes the sea just outside the cave. The cave and the pool flare pure white for a 12-frame white-out, then hard cut to absolute black and 1.5 s of dead silence. This is the swap cut: in every shot after it, the knight emblem is mirrored.",
+     "amb": "none",
+     "music": "cine_silence",
+     "sfx": [
+      "thunder_crack",
+      "impact"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A fishing boat found me at sunrise.",
+     "visual": "Dawn after the storm, flat silver light, no rain. Wide shot from the stern of a small wooden fishing boat gliding over a calm grey sea. The kid sits on a coil of rope wrapped in a grey blanket, back to camera, perfectly still. Low fog lies on the water.",
+     "amb": "surf",
+     "music": "cine_swell",
+     "sfx": [],
+     "overlay": "6:51 AM"
+    },
+    {
+     "kind": "line",
+     "text": "Behind us, the island melted into the fog. Like it was never there.",
+     "visual": "Long lens from the boat looking back at the black cliffs, the cave and the rainforest ridge, lit by pale light shafts through the fog. The fog rolls over them and the whole island dissolves layer by layer until only flat grey sea and white fog remain. Slow, beautiful, wrong.",
+     "amb": "surf",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "The cave was safe. Just like I said.",
+     "visual": "Medium close profile, 85 mm. The kid watches the empty fog, completely calm and no longer shivering. A small smile tugs at one corner of his mouth. The blanket hides the emblem so the reveal is held back.",
+     "amb": "surf",
+     "music": "cine_silence",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "The captain let me call Mom. She cried so hard.",
+     "visual": "Close, 50 mm. He holds a weathered boat-radio handset to his ear with his LEFT hand (he used his right all night). His breath steams. Out of focus behind him, the captain's silhouette stands at the wheel. Mom's crying is heard only as muffled radio static, with no words.",
+     "amb": "surf",
+     "music": "cine_sad",
+     "sfx": [
+      "radio"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then she went quiet. And said I sound different.",
+     "visual": "Slow push into his eyes as the radio static cuts to total silence. He doesn't blink. Behind him there is only grey fog.",
+     "amb": "none",
+     "music": "same",
+     "sfx": [
+      "radio"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I'm not different, Mom. I'm coming home.",
+     "visual": "He lowers the handset, turns to camera and smiles the exact wide smile from the pool reflection, then waves at the lens with his LEFT hand. The blanket slips off and the camera tilts down to his chest: the white knight emblem now faces RIGHT, mirrored. Hold 1 s on the emblem.",
+     "amb": "surf",
+     "music": "same",
+     "sfx": [
+      "riser"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mom... that's not me.",
+     "visual": "Lightning flash. Hard cut back inside the cave, top-down onto the still black pool. Under the surface the REAL kid, with his knight facing LEFT the original way, presses both blocky palms flat against the underside of the water as if it were glass and mouths the words. There are no ripples. The flash whites out, then hard cut to the exact opening frame of beat 1 (black-sand beach, second figure far off in the foam) so the video loops. Audio note: whispered and shaky, the original scared voice returning.",
+     "amb": "cave",
+     "music": "cine_silence",
+     "sfx": [
+      "thunder_crack"
+     ],
+     "overlay": "3:12 AM"
+    }
+   ],
+   "id": "scout-2"
+  },
+  {
+   "title": "The Island That Isn't There",
+   "premise_source": "Two of the researched premises combined, plus one idea from two others. The base is #1, The Island That Isn't There. It mixes a real fact with a legend. The fact: Sandy Island sat on charts and Google Maps until November 2012, when a research ship sailed to the spot and found open ocean about 1,400 m deep. The legend: Hy-Brasil, a phantom island hidden in fog that can be seen only once every seven years. The emotional core borrows from two others. From #3 comes the castaway keeping a signal fire alive. From #6 comes a dad's survival rule that the kid remembers. The kid's lost father, the logbook and the ending are all original fiction, and nothing in the video claims it really happened.",
+   "logline": "A storm wrecks his little boat and he wakes on a black-sand island. His GPS says he is standing in 1,400 metres of open ocean. In a dead lighthouse he finds a logbook with a new handwriting every seven years. The last entry, from seven years ago, is in the handwriting of the dad who never came home.",
+   "twist": "His own campfire dies while he sleeps. Even so, the rescue crew tell him there is no island here: they followed a fire burning on the open sea. He looks back and sees a big fire on the cliff, with a tall figure beside it slowly raising one hand. Then the fog swallows the whole island. Dad was beside him the whole time. He made the big footprints that stop exactly where the kid stands. He is the silhouette in the forest fog and the figure at the edge of the firelight. Dad kept the fire, and this time somebody came. The kid's goodbye is a promise: the island comes back every seven years, and so will he.",
+   "caption_hook": "my GPS says I'm standing in the middle of the ocean. then I found my dad's handwriting.",
+   "why_it_hits": "The first line comes from a real, checkable fact: Sandy Island was on Google Maps until 2012, and the spot is 1,400 m of open ocean. That brings 'wait, this was REAL?' comments and people googling it. Hy-Brasil's seven-year return gives the story its rule. The emotional pull is a lost kid looking for home who finds the trace of a lost dad. The gut-punch uses the creator's own white knight emblem: Dad drew it on everything, and it is under his last log entry. The creepy moments are footprints that stop right where he is standing, a cave wall with thousands of scratch marks, and a figure that appears in one lightning flash and is gone in the next. All three flip from scary to heartbreaking once the twist lands. The twist plays fair because it is set up in the opening shots: Dad's rule ('light a fire, someone will come'), the bigger footprints, and the silhouette hidden in the forest fog. Rewatch hooks: the figure in the fog at the forest shot, hidden 7s (a 7 on the boat's bow, seven lighthouse windows, seven fire stones), and a 2012 logbook line that says 'They took us off the map.' The last frame is the same GPS screen as the first, with a flame icon that flickers for one frame, so the video loops. Expected comments: 'the footprints stop where he's standing... his dad was RIGHT THERE', 'who kept the fire?', 'part 2 in seven years'. It stays kid-safe: no gore, and Dad's fate is left gentle and open.",
+   "beats": [
+    {
+     "kind": "line",
+     "text": "My phone says I'm standing in the middle of the ocean.",
+     "visual": "Black screen. A lightning flash freezes an extreme macro close-up of a cracked phone in his blocky hand, rain exploding on the glass. The map shows a pulsing blue GPS dot alone in flat, empty blue ocean, with no land anywhere. The cold screen glow is the only light; everything around it is black.",
+     "amb": "rain_beach",
+     "music": "cine_drone",
+     "sfx": [
+      "thunder_crack"
+     ],
+     "overlay": "DEPTH: 1,400 m"
+    },
+    {
+     "kind": "line",
+     "text": "Fourteen hundred metres deep. So what am I standing on?",
+     "visual": "Slow tilt down and crane back (35mm) from the phone to his blocky sneakers on wet black volcanic sand, white foam sliding around them. The camera keeps rising into a high wide shot: a tiny kid in a black hoodie alone on a black beach under a bruised, near-monochrome storm sky, heavy diagonal rain.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Last night, the storm broke my boat in half.",
+     "visual": "Low wide-angle dolly (24mm) along his small wooden boat lying split in two on the sand: splintered planks, a torn tarp snapping in the wind, a faded hand-painted 7 on the bow. White surf explodes behind it and lightning flickers along the horizon.",
+     "amb": "storm_sea",
+     "music": "same",
+     "sfx": [
+      "creak",
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "All I saved was Dad's lighter.",
+     "visual": "Macro insert: his blocky hand opens to reveal an old brass flip lighter with a small knight engraved on it, rain beading on the scratched metal. Very shallow depth of field, cold rim light, surf a grey blur behind.",
+     "amb": "rain_beach",
+     "music": "cine_sad",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "He always said, if you're lost, light a fire. Someone will come.",
+     "visual": "Handheld medium close-up of the kid under his hood, headphones around his neck, rain dripping off the hood edge. He grips the lighter to his chest and looks up toward a wall of jungle and cliffs swallowed by fog.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The forest here isn't on any map.",
+     "visual": "Wide push-in (21mm) into dense rainforest: giant ferns, buttress roots, thick white fog, hard light shafts slicing down through the canopy with rain falling through them. Rewatch detail: deep in the fog on the right third, a tall, motionless adult silhouette stands between two trunks, barely readable.",
+     "amb": "rain_forest",
+     "music": "cine_drone",
+     "sfx": [
+      "branch_snap"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Footprints in the mud beside mine. Bigger. Fresh.",
+     "visual": "Top-down crane over dark mud. Next to the kid's small blocky footprints runs a line of larger adult boot prints with crisp edges, rainwater only just starting to fill them. Fog drifts across the frame.",
+     "amb": "rain_forest",
+     "music": "same",
+     "sfx": [
+      "footsteps_mud",
+      "heartbeat"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "They stop right where I'm standing.",
+     "visual": "Low tracking shot along the big prints. They end abruptly right beside the kid's feet, as if someone is standing next to him. The camera holds on the empty patch of mud while fog curls through it. Nothing is there.",
+     "amb": "rain_forest",
+     "music": "cine_silence",
+     "sfx": [
+      "stinger"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Up on the cliff, a dark lighthouse.",
+     "visual": "Low-angle wide shot from the base of a black rock cliff. On top stands an old white stone lighthouse with seven small windows spiralling up, its lamp room dark and glassless, clouds racing behind. A lightning flash turns it into a hard black silhouette.",
+     "amb": "rain_beach",
+     "music": "cine_drone",
+     "sfx": [
+      "thunder_crack",
+      "creak"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Inside, a logbook. A new handwriting every seven years.",
+     "visual": "Interior of a dim stone room lit only by his phone flashlight cutting through dust and mist. A swollen leather logbook lies on a wooden table and he opens it. Macro on yellowed pages, each entry in totally different handwriting, with readable dates 1991, 1998, 2005 and 2012. The 2012 entry adds the line 'They took us off the map.'",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "creak"
+     ],
+     "overlay": "1991 · 1998 · 2005 · 2012"
+    },
+    {
+     "kind": "line",
+     "text": "Every entry ends the same. 'Kept the fire. Someone came.'",
+     "visual": "Slow rack focus down the pages. In each hand, the final line repeats: 'Kept the fire. Someone came.' The flashlight beam trembles slightly.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "The last one is from seven years ago.",
+     "visual": "Slow page turn to the final entry, the date 2019 coming into sharp focus. Rain sheets down the dark window behind the book.",
+     "amb": "rain_beach",
+     "music": "cine_heart",
+     "sfx": [
+      "heartbeat"
+     ],
+     "overlay": "2019"
+    },
+    {
+     "kind": "line",
+     "text": "'Kept the fire. Nobody came.'",
+     "visual": "Extreme close-up of shaky, pressed-hard ink: 'Kept the fire. Nobody came.' The flashlight flickers once.",
+     "amb": "rain_beach",
+     "music": "cine_silence",
+     "sfx": [
+      "heartbeat"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Under it, a tiny knight. Dad drew that knight on everything.",
+     "visual": "Macro push-in on a small hand-drawn knight under the words, then a match cut to the white knight emblem on the kid's black hoodie: same pose, same lines, filling the frame. Hold.",
+     "amb": "rain_beach",
+     "music": "cine_sad",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Seven years ago, Dad's boat didn't come home.",
+     "visual": "Close-up of the kid's blocky face lit from below by the phone, completely still. Behind him the dark window flashes white with distant lightning.",
+     "amb": "rain_beach",
+     "music": "same",
+     "sfx": [
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "In the cave, scratches cover the walls. I stop counting at two thousand.",
+     "visual": "A sea cave with black, still water. His flashlight sweeps slowly across a wall covered floor to ceiling in carved tally marks in groups of five, thousands of them, glistening wet. Drips fall into the pool and send rings outward. Slow lateral dolly.",
+     "amb": "cave",
+     "music": "cine_drone",
+     "sfx": [
+      "drip"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He waited. Seven years. Nobody came.",
+     "visual": "Wide shot from deep inside the cave looking out: the kid is a tiny silhouette against the bright, foggy cave mouth, his reflection perfectly mirrored in the black water. Hold.",
+     "amb": "cave",
+     "music": "cine_sad",
+     "sfx": [
+      "drip"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I keep the fire going. For both of us.",
+     "visual": "Night on the beach below the cliff, low angle (35mm). He flicks Dad's brass lighter and a small fire catches inside a ring of seven stones under a plank lean-to. The white-hot flame is the brightest thing in the frame, and rain hisses into it.",
+     "amb": "campfire",
+     "music": "cine_heart",
+     "sfx": []
+    },
+    {
+     "kind": "huss",
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Fast handheld montage in the storm, one hard cut per HUSS: he drags a long wreck plank through rain and foam; hurls it onto the fire and sparks erupt upward; slams down another; a close-up of blocky fists gripping wet wood. The fire roars higher against the black.",
+     "amb": "campfire",
+     "music": "cine_swell",
+     "sfx": [
+      "impact",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Night three. Lightning. Someone's standing at the edge of the firelight.",
+     "visual": "Static wide shot: the kid by the fire, darkness beyond. A lightning flash freezes the frame, and for that one frame a tall, faceless silhouette stands at the very edge of the firelight behind him, wrapped in fog.",
+     "amb": "rain_beach",
+     "music": "cine_drone",
+     "sfx": [
+      "thunder_crack",
+      "stinger"
+     ],
+     "overlay": "NIGHT 3"
+    },
+    {
+     "kind": "line",
+     "text": "Next flash... gone.",
+     "visual": "Same locked-off frame on the next lightning flash: the spot is empty, with only fog drifting through it. The kid whips around toward the camera, wide-eyed.",
+     "amb": "rain_beach",
+     "music": "cine_silence",
+     "sfx": [
+      "thunder_crack"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I don't remember falling asleep. I wake up... my fire is cold.",
+     "visual": "Cold grey dawn, overhead shot: the kid curled asleep on the black sand beside a dead ring of soaked black ash, a last thread of smoke rising. The rain has stopped and white foam lines lace the beach.",
+     "amb": "surf",
+     "music": "cine_sad",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "But there's a light on the water.",
+     "visual": "His POV out to sea: a boat's white searchlight cuts through thick mist toward the beach, sweeping across the frame and flaring the lens.",
+     "amb": "surf",
+     "music": "cine_swell",
+     "sfx": [
+      "radio",
+      "riser"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A man on the boat says, 'Kid, there's no island here.'",
+     "visual": "Medium shot on a rescue boat deck: crew in rain jackets silhouetted against the searchlight, faces unseen. A large gloved hand rests on the kid's shoulder; he is wrapped in a silver foil blanket.",
+     "amb": "surf",
+     "music": "cine_heart",
+     "sfx": [
+      "radio"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "'We followed a fire. Burning on the open sea.'",
+     "visual": "Close-up of the kid's face slowly turning from the crewman toward the stern, foil blanket crinkling, mist streaming past.",
+     "amb": "surf",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "I look back. On the cliff, a fire. And someone tall beside it... raising one hand.",
+     "visual": "Over-the-shoulder from the boat's stern, long lens: the island looms in the fog. High on the cliff beside the dark lighthouse a big bright fire is burning, and next to it a tall silhouette slowly raises one hand. Slow push-in.",
+     "amb": "surf",
+     "music": "cine_swell",
+     "sfx": [
+      "thunder_far"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then the fog swallows everything.",
+     "visual": "A white wall of fog rolls across the sea. Cliffs, forest and lighthouse dissolve into pure white. The fire glows last, a single point, and then it is gone. Only flat, empty ocean remains. Near white-out.",
+     "amb": "surf",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Dad kept the fire. Somebody came.",
+     "visual": "Close-up of the kid on deck, Dad's brass lighter clutched against the knight on his chest, eyes glassy, staring at the empty sea. Soft cold backlight.",
+     "amb": "none",
+     "music": "cine_sad",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Keep it going, Dad. See you in seven years.",
+     "visual": "Final extreme close-up of his cracked phone: the blue GPS dot alone in empty ocean, exactly like the first frame. For one single frame a tiny flame icon flickers on the empty blue, then it is gone. Hard cut to black, which loops back to the opening flash.",
+     "amb": "none",
+     "music": "same",
+     "sfx": [
+      "stinger"
+     ]
+    }
+   ],
+   "id": "scout-3"
+  }
+ ]
+}
