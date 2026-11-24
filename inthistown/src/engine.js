@@ -35,6 +35,10 @@
  *     lighting: 'dusk'       → set.setLighting('dusk') before setup
  *     options: { k: v }      → set.set(k, v) for each, before setup
  *     captions: false        → no captions during this shot
+ *   renderFrame(ctx)         optional: replaces renderer.render(scene, camera) for every frame (post-processing, e.g.
+ *                            src/real/post.js). Must leave the final image in the default framebuffer (glCanvas); the
+ *                            2D composite, fx overlays and captions are drawn on top afterwards as usual. ctx.size =
+ *                            { w, h } is the internal 3D resolution; timing.render includes the hook's cost.
  *
  * ─── Shot switching (random-access safe) ──────────────────────────────────────────────────────────
  *   When the active shot changes — or time jumps backwards — the engine:
@@ -682,7 +686,7 @@ export function createEngine(opts = {}) {
   };
 
   const ctx = {
-    THREE, scene, camera, renderer, canvas, glCanvas,
+    THREE, scene, camera, renderer, canvas, glCanvas, size: { w: IW, h: IH }, timing,
     t: 0, dt: 1 / 30, lt: 0, u: 0, shot: null, shotIndex: -1, frame: 0,
     set: null, getSet, cast, props, store: {}, use, place, anchor, point, add, remove,
     time, since: (a) => ctx.t - time(a),
@@ -826,7 +830,11 @@ export function createEngine(opts = {}) {
     camera.fov = clamp(saveFov * (1 - clamp(fx.zoom, -0.9, 0.9)), 1, 170);
     camera.updateProjectionMatrix();
     T1 = performance.now();
-    renderer.render(scene, camera);
+    // optional film-level render hook (e.g. a post-processing composer, src/real/post.js): the shots module may export
+    // renderFrame(ctx) to draw ctx.scene/ctx.camera into the default framebuffer (glCanvas) itself. Absent → plain render.
+    if (mod && typeof mod.renderFrame === 'function') {
+      try { mod.renderFrame(ctx); } catch (e) { reportError('renderFrame', e); renderer.setRenderTarget(null); renderer.render(scene, camera); }
+    } else renderer.render(scene, camera);
     timing.render = performance.now() - T1;
     T1 = performance.now();
     // composite
