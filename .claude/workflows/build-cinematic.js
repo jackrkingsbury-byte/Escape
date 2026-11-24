@@ -13,7 +13,7 @@ const P = '/home/user/Escape/inthistown'
 const EP = args && args.ep
 const TITLE = (args && args.title) || EP
 const ACTS = (args && args.acts) || []
-// effort: sets + act builders run at 'high'; the critic, fixers and verifiers run at 'xhigh' (the user approved extra effort where it matters)
+// effort: everything at 'high' while the all-models usage limit is tight; switch the critic/fixers/verifiers to 'xhigh' for a final polish when there is room
 const MAXR = (args && args.maxRounds) || 2
 if (!EP || !ACTS.length) throw new Error('args.ep and args.acts are required')
 const D = `${P}/src/${EP}`
@@ -53,7 +53,7 @@ phase('Review')
 const REVIEW = { type: 'object', properties: { problems: { type: 'array', items: { type: 'object', properties: { time: { type: 'number' }, beat: { type: 'string' }, severity: { type: 'string', enum: ['critical', 'high', 'medium', 'low'] }, problem: { type: 'string' }, fix: { type: 'string' }, file: { type: 'string' } }, required: ['time', 'beat', 'severity', 'problem', 'fix', 'file'] } }, verdict: { type: 'string' } }, required: ['problems', 'verdict'] }
 const crit = (dir) => `${BRIEF}
 You are the INDEPENDENT CRITIC (you did not build this). Render the WHOLE film: --preview 1.0 --scale 0.5 --previewDir ${dir}, plus --scale 0.75 single frames at every lightning flash, every clue moment in the script's clue_list, the hook (first 3 s) and the ending. Judge like a film director and a TikTok viewer on a phone: does every beat's image match its narration and 'visual' note; is the story (and the twist) readable without sound; are the clues fair and visible; does anything look fake, plastic, blank, black, inside geometry, or badly lit; is there continuity (same wreck, same hoodie, the emblem direction exactly as the clues require, weather/time of day consistent); are overlays clean and away from faces; is the opening frame a scroll-stopper? Severity: critical = blank/black/broken/inside geometry/subject missing or a clue shown wrong; high = a viewer would not understand the beat or the image looks clearly fake/ugly; medium = weak but works; low = nitpick. Give a concrete fix and the file (act1.js / act2.js / ... / sets.js / kit.js) for each. Do NOT edit files.`
-const review = await agent(crit(`out/${EP}_critic`), { label: 'critic', phase: 'Review', schema: REVIEW, model: 'fable', effort: 'xhigh' })
+const review = await agent(crit(`out/${EP}_critic`), { label: 'critic', phase: 'Review', schema: REVIEW, model: 'fable', effort: 'high' })
 const FIXER = (probs, round) => `${BRIEF}
 ${round}: fix every problem below in the film files under ${D}/ (you may now edit any of kit.js, sets.js, shots.js, act*.js; nobody else is editing). For each, render the affected time(s) before and after, and re-check ±1 s so you do not break neighbouring shots. Finish with one full --preview 2 --scale 0.5 pass and look at all of it.
 Problems:
@@ -61,17 +61,17 @@ ${JSON.stringify(probs, null, 1)}
 Report what you changed per problem and anything you could not fix.`
 let fixes = []
 if (review && review.problems && review.problems.length) {
-  fixes.push(await agent(FIXER(review.problems.filter((p) => p.severity !== 'low'), 'CRITIC ROUND'), { label: 'fixer', phase: 'Review', model: 'fable', effort: 'xhigh' }))
+  fixes.push(await agent(FIXER(review.problems.filter((p) => p.severity !== 'low'), 'CRITIC ROUND'), { label: 'fixer', phase: 'Review', model: 'fable', effort: 'high' }))
 }
 
 phase('Polish')
 let round = 0, last = null
 while (round < MAXR) {
   round++
-  last = await agent(crit(`out/${EP}_verify_r${round}`) + `\nThis is VERIFY round ${round}: earlier problems were fixed; report what is still wrong (be strict about critical/high, do not inflate preferences).`, { label: `verify r${round}`, phase: 'Polish', schema: REVIEW, model: 'fable', effort: 'xhigh' })
+  last = await agent(crit(`out/${EP}_verify_r${round}`) + `\nThis is VERIFY round ${round}: earlier problems were fixed; report what is still wrong (be strict about critical/high, do not inflate preferences).`, { label: `verify r${round}`, phase: 'Polish', schema: REVIEW, model: 'fable', effort: 'high' })
   const todo = (last && last.problems || []).filter((p) => p.severity === 'critical' || p.severity === 'high')
   log(`verify round ${round}: ${todo.length} critical/high`)
   if (!todo.length) break
-  fixes.push(await agent(FIXER(todo, `POLISH ROUND ${round}`), { label: `polish fix r${round}`, phase: 'Polish', model: 'fable', effort: 'xhigh' }))
+  fixes.push(await agent(FIXER(todo, `POLISH ROUND ${round}`), { label: `polish fix r${round}`, phase: 'Polish', model: 'fable', effort: 'high' }))
 }
 return { sets, built, review, fixes, last, remaining: (last && last.problems || []).filter((p) => p.severity === 'critical' || p.severity === 'high'), mediumLow: (last && last.problems || []).filter((p) => p.severity === 'medium' || p.severity === 'low') }
