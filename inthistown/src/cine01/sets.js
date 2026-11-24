@@ -57,6 +57,39 @@ function wetGLB(obj, { rough = 0.6, dark = 0.75, env = 1 } = {}) {
   return obj;
 }
 
+// ═════════════════════════════════════════════ weather patches ════════════════════════════════════════════════════
+/**
+ * Rain streaks have a constant WORLD width, so one that falls a metre from the lens is a thick white bar across the
+ * frame. Here the width shrinks with distance below `full` metres (to `min` × at the lens) and the kit's near fade
+ * (uNear: invisible under near/2, full at near) is driven per shot by the set option `rainNear`.
+ */
+function thinNearRain(rain, { full = 6, min = 0.22 } = {}) {
+  const m = rain.mesh.material;
+  m.vertexShader = m.vertexShader.replace('side * position.x * uWidth', `side * position.x * uWidth * clamp(length(wp - cameraPosition) / ${full.toFixed(1)}, ${min.toFixed(2)}, 1.0)`);
+  m.needsUpdate = true;
+  return rain;
+}
+/**
+ * Rain hitting the ground. The kit's rings were thin perfect circles with a bright dot (the crown's base): HUD markers.
+ * Here: a soft, short-lived ring broken by noise (three or four arcs, never a full circle), no dot, a fainter crown.
+ */
+function softSplashes(sp) {
+  const m = sp.mesh.material;
+  m.vertexShader = m.vertexShader
+    .replace('varying float vKind;', 'varying float vKind; varying float vSeed;')
+    .replace('vUv = uv;', 'vUv = uv; vSeed = fract(aPos.x * 12.71 + aPos.z * 7.37) * 6.2832;');
+  m.fragmentShader = m.fragmentShader
+    .replace('varying float vKind;', 'varying float vKind; varying float vSeed;')
+    .replace('a = smoothstep(0.08, 0.0, abs(r - 0.8)) * (1.0 - vAge);', `{
+      float ang = atan(d.y, d.x), life = clamp(vAge * 1.7, 0.0, 1.0);
+      float brk = smoothstep(-0.25, 0.55, sin(ang * 2.0 + vSeed) + 0.6 * sin(ang * 5.0 - vSeed * 2.3));
+      a = smoothstep(0.2, 0.0, abs(r - 0.72)) * (1.0 - life) * (1.0 - life) * brk * 0.42; }`)
+    .replace('a += smoothstep(0.18, 0.0, length(d - vec2(0.0, -0.3))) * (1.0 - vAge);', '')
+    .replace('a *= 0.45;', 'a *= 0.3;');
+  m.needsUpdate = true;
+  return sp;
+}
+
 // ═════════════════════════════════════════════ shore foam band ════════════════════════════════════════════════════
 const FOAM_V = /* glsl */`varying vec3 vWP; void main() { vec4 wp = modelMatrix * vec4(position, 1.0); vWP = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }`;
 const FOAM_F = /* glsl */`
@@ -99,6 +132,7 @@ function makeFoamBand(heightAt, { x0 = -150, x1 = 70 } = {}) {
 // ═════════════════════════════════════════════ the beach world (shared by beachNight / beachDusk) ═════════════════
 // the wreck: centre [x, z] and the yaw of its open side (the lean-to opens toward CN: inland and a little toward frame A)
 const WRECK = [-8.2, 4.6], CAMP_YAW = 0.7, CN = [Math.sin(CAMP_YAW), Math.cos(CAMP_YAW)];
+const RAIN_NEAR = 2.8;        // beach rain: nothing nearer than 1.4 m, full strength from 2.8 m (set option `rainNear`)
 let _world = null;
 function beachWorld(ctx) {
   if (_world) return _world;
@@ -169,6 +203,25 @@ function beachWorld(ctx) {
   const fireFill = fire.root.children.find((o) => o.isPointLight && o !== fire.light);
   const fireAsh = fire.root.children.find((o) => o.isMesh && o.geometry.type === 'CircleGeometry');
   fire.light.distance = 16; fire.light.decay = 2;
+  { // softer, hotter-orange flames: the kit's tongues are cut out with a hard threshold (white paper spikes when the fire is big in frame)
+    const fm = fire.flames.material;
+    fm.fragmentShader = fm.fragmentShader
+      .replace('float body = 1.0 - smoothstep(width * 0.7, width, abs(x));', 'float body = 1.0 - smoothstep(width * 0.3, width, abs(x));')
+      .replace('float tongue = smoothstep(0.42, 0.62, n + 0.55 - uv.y * 0.95);', 'float tongue = smoothstep(0.3, 0.8, n + 0.55 - uv.y * 0.95);')
+      .replace('float core = smoothstep(0.55, 1.0, flame) * smoothstep(0.75, 0.15, uv.y);', 'float core = smoothstep(0.7, 1.0, flame) * smoothstep(0.6, 0.1, uv.y);')
+      .replace('col = mix(col, vec3(1.0, 0.93, 0.78), core);', 'col = mix(col, vec3(1.0, 0.8, 0.5), core);')
+      .replace('(0.9 + core * 1.6)', '(0.9 + core * 0.9) * smoothstep(0.0, 0.25, flame)');
+    fm.needsUpdate = true;
+  }
+  { // the kit's stone ring is 11 faceted low-poly lumps: swap them for small Blender rocks (smooth, textured, wet)
+    fire.root.children.forEach((o) => { if (o.isGroup && o.children.length === 1 && o.children[0].isMesh && Math.abs(Math.hypot(o.position.x, o.position.z) - 0.44) < 0.03) o.visible = false; });
+    const rs = rng(733), kinds = [['rock_boulder', 0.2], ['rock_block', 0.38], ['rock_mossy', 0.17], ['rock_boulder', 0.17], ['rock_slab', 0.15]];
+    for (let k = 0; k < 11; k++) {
+      const a = (k / 11) * Math.PI * 2 + 0.12 * (rs() - 0.5), [n, sc] = kinds[k % kinds.length], rad = 0.47 + 0.05 * (rs() - 0.5), sk = sc * (0.85 + 0.35 * rs());
+      const st = put(root, n, [A.fire.x + Math.cos(a) * rad, A.fire.y - 0.035, A.fire.z + Math.sin(a) * rad], rs() * 6.28, sk, { shadow: false });
+      wetGLB(st, { rough: 0.55, dark: 0.7 });
+    }
+  }
 
   // ── debris
   const deb = [
@@ -228,8 +281,8 @@ function beachWorld(ctx) {
     windSway(m.material, { amp, freq: 1.7, heightScale: 1, flutter: 0.025 }); } }); }
 
   // ── weather
-  const rain = add(makeRain({ count: 6500, box: [26, 17, 26], speed: 10.5, wind: [-3.2, 1.2], length: 0.62, opacity: 0.32, lightDir: [-0.75, 0.3, -0.5], backlight: 3.2, far: 24 }));
-  const splashes = add(makeSplashes({ count: 650, radius: 9, heightAt: (x, z) => Math.max(H0(x, z), SEA), size: 0.1, opacity: 0.4 }));
+  const rain = add(thinNearRain(makeRain({ count: 6500, box: [26, 17, 26], speed: 10.5, wind: [-3.2, 1.2], length: 0.62, opacity: 0.32, lightDir: [-0.75, 0.3, -0.5], backlight: 3.2, near: RAIN_NEAR, far: 24 })));
+  const splashes = add(softSplashes(makeSplashes({ count: 650, radius: 9, heightAt: (x, z) => Math.max(H0(x, z), SEA), size: 0.1, opacity: 0.4 })));
   const fogSea = add(makeFogCards({ count: 18, area: [150, 70], center: [-55, -22], y: [1.0, 7], size: [22, 46], opacity: 0.16, drift: [0.12, 0, 0.04], color: '#59646b', seed: 7, fadeNear: 6 }));
   const fogLand = add(makeFogCards({ count: 12, area: [120, 26], center: [-40, 20], y: [1.5, 9], size: [18, 34], opacity: 0.12, drift: [0.08, 0, -0.02], color: '#4d575d', seed: 17, fadeNear: 6 }));
 
@@ -270,12 +323,14 @@ function beachSet(ctx, state, cfg) {
   /**
    * options (shot `options: {…}` or ctx.set.set(k, v) in setup; restored by the engine at every shot change):
    *   fire   −1 no campfire at all · 0 dead (charred logs, a wisp of smoke) · 0..1 burning level (light + flames)
-   *   rain   × on the rain opacity (1) ; rainBack: backlight × (1)
+   *   rain   × on the rain opacity (1) ; rainBack: backlight × (1) ; rainNear: no streak nearer than rainNear / 2 m,
+   *          full strength from rainNear (2.8; raise it to the subject distance on long-lens close-ups)
+   *   splash × on the rain-splash rings on the ground (1; 0 = none: top-down shots)
    *   wash   extra reach of the foam wash up the beach, metres (0)
    *   jungle true: palms / giants visible
    *   wet    rain-soak 0..1 of the kid and the double (0.95)
    */
-  set.options = { fire: state === 'dusk' ? -1 : 1, rain: 1, rainBack: 1, wash: 0, jungle: true, wet: 0.95 };
+  set.options = { fire: state === 'dusk' ? -1 : 1, rain: 1, rainBack: 1, rainNear: RAIN_NEAR, splash: 1, wash: 0, jungle: true, wet: 0.95 };
   set.set = (k, v) => { set.options[k] = v; };
   const baseUpdate = set.update;
   const fc = new THREE.Color();
@@ -287,7 +342,8 @@ function beachSet(ctx, state, cfg) {
     w.rig.key.intensity = S.key; w.rig.fill.intensity = S.fill; w.rig.rim.intensity = S.rim;
     w.foam.uniforms.uAmbient.value = S.foamAmb; w.foam.uniforms.uWash.value = o.wash; w.ocean.uniforms.uFoam.value = S.seaFoam;
     w.fogSea.uniforms.uColor.value.set(S.fog); w.fogSea.uniforms.uOpacity.value = S.fogOp[0]; w.fogLand.uniforms.uColor.value.set(S.fog); w.fogLand.uniforms.uOpacity.value = S.fogOp[1];
-    w.rain.uniforms.uOpacity.value = S.rain * o.rain; w.rain.uniforms.uBacklight.value = 3.2 * o.rainBack;
+    w.rain.uniforms.uOpacity.value = S.rain * o.rain; w.rain.uniforms.uBacklight.value = 3.2 * o.rainBack; w.rain.uniforms.uNear.value = o.rainNear;
+    w.splashes.mesh.visible = o.splash > 0; w.splashes.mesh.material.uniforms.uOpacity.value = 0.4 * o.splash;
     w.veg.visible = !!o.jungle;
     // campfire level (fire.update(t) already ran with level 1)
     const lv = o.fire;
@@ -298,7 +354,7 @@ function beachSet(ctx, state, cfg) {
     if (w.fireAsh) w.fireAsh.material.emissiveIntensity = 0.6 * (0.12 + 0.88 * L);
     w.fire.flames.scale.set(1, 0.35 + 0.65 * L, 1);
     if (w.fire.embers) w.fire.embers.visible = L > 0.02;
-    if (w.fire.smoke) w.fire.smoke.material.uniforms.uOpacity.value = lerp(0.2, 0.32, L);
+    if (w.fire.smoke) { w.fire.smoke.material.uniforms.uOpacity.value = lerp(0.2, 0.32, L); w.fire.smoke.material.uniforms.uColor.value.set('#2a2a2c'); }
     fc.setRGB(1.0, 0.42, 0.12).multiplyScalar(0.5 * L * (lv >= 0 ? 1 : 0));
     w.foam.uniforms.uFireCol.value.copy(fc); w.foam.uniforms.uFirePos.value.copy(w.anchors.fire);
   };
@@ -307,6 +363,57 @@ function beachSet(ctx, state, cfg) {
 }
 
 // ═════════════════════════════════════════════ cave ═══════════════════════════════════════════════════════════════
+/**
+ * The kit cuts the cave mouth by dropping whole triangles, so its silhouette against the fog is a staircase. This builds a
+ * lumpy rock collar along the actual hole: the boundary vertices of the wall mesh, ordered round the arch, smoothed, and
+ * swept with a noisy tube (radius 0.45–1.2 m) that buries the steps. Dark wet rock, same triplanar set as the walls.
+ */
+function mouthCollar(walls, { a, b }) {
+  const g = walls.geometry, idx = g.index.array, p = g.attributes.position, edges = new Map();
+  for (let t = 0; t < idx.length; t += 3) for (let k = 0; k < 3; k++) {
+    const i = idx[t + k], j = idx[t + (k + 1) % 3], key = i < j ? i * 100000 + j : j * 100000 + i;
+    edges.set(key, (edges.get(key) || 0) + 1);
+  }
+  const seen = new Set(), pts = [];
+  for (const [key, n] of edges) {
+    if (n !== 1) continue;
+    for (const i of [Math.floor(key / 100000), key % 100000]) {
+      if (seen.has(i)) continue; seen.add(i);
+      const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+      if (z > 4 && y > -0.05) pts.push({ x, y, z, th: Math.atan2(y / b, x / a) });
+    }
+  }
+  pts.sort((u, v) => u.th - v.th);
+  // resample by angle + smooth (the raw boundary zig-zags by one triangle)
+  const NS = 72, sm = [];
+  for (let k = 0; k <= NS; k++) {
+    const th = 0.02 + (Math.PI - 0.04) * (k / NS); let sx = 0, sy = 0, sz = 0, sw = 0;
+    for (const q of pts) { const d = (q.th - th) / 0.085, w = Math.exp(-d * d); sx += q.x * w; sy += q.y * w; sz += q.z * w; sw += w; }
+    sm.push(V3(sx / sw, sy / sw, sz / sw));
+  }
+  const first = sm[0], last = sm[sm.length - 1];
+  const path = [V3(first.x * 1.02, -1.6, first.z), V3(first.x * 1.01, -0.7, first.z), ...sm, V3(last.x * 1.01, -0.7, last.z), V3(last.x * 1.02, -1.6, last.z)];
+  const curve = new THREE.CatmullRomCurve3(path, false, 'centripetal');
+  const SEG = 260, RAD = 18, tg = new THREE.TubeGeometry(curve, SEG, 1, RAD, false);
+  const tp = tg.attributes.position, N = makePerlin(412), c = V3(), v = V3();
+  for (let i = 0; i <= SEG; i++) {
+    curve.getPointAt(i / SEG, c);
+    const u = i / SEG * 26;
+    const big = 0.78 + 0.42 * fbm(N, u * 0.55 + 1.3, 0.37, 3, 256) + 0.22 * Math.max(0, Math.sin(u * 2.1 + 1.0)) * Math.sin(u * 0.77);
+    for (let j = 0; j <= RAD; j++) {
+      const k = i * (RAD + 1) + j, w = (j % RAD) / RAD * 9;
+      v.set(tp.getX(k) - c.x, tp.getY(k) - c.y, tp.getZ(k) - c.z);
+      const r = clamp(big * (1 + 0.38 * fbm(N, u * 1.7 + 7.1, w * 0.8 + 3.3, 4, 256) + 0.12 * fbm(N, u * 6.1, w * 2.6 + 9.0, 2, 256)), 0.4, 1.35);
+      tp.setXYZ(k, c.x + v.x * r, c.y + v.y * r, c.z + v.z * r * 1.25);
+    }
+  }
+  tg.computeVertexNormals();
+  const mat = new THREE.MeshStandardMaterial({ color: '#6f6c67', roughness: 0.85 });
+  triplanar(mat, 'rock', { scale: 0.3, bump: 2.0, sharpness: 5 });
+  wetSurface(mat, { wet: 0.85 });
+  const m = new THREE.Mesh(tg, mat); m.name = 'mouthCollar'; m.receiveShadow = true; m.castShadow = false;
+  return m;
+}
 function caveSet(ctx) {
   const POOL = { c: [0, -2.6], rx: 3.0, rz: 2.3, y: -0.14 };
   return K.realSet(ctx, {
@@ -315,7 +422,7 @@ function caveSet(ctx) {
     exposure: 1.15,
     post: {
       // fog only beyond the chamber: the mouth becomes a soft grey veil (and goes white in a flash)
-      fog: { color: [0.11, 0.135, 0.16], density: 0.07, height: 0, falloff: 0.05, start: 12.5, noise: 0.5, noiseScale: 0.08, wind: [0.2, 0, 0.3], sunDir: [0, 0.25, 1], sunColor: [0.8, 0.9, 1], glow: 0.7, glowPower: 3, sky: 1 },
+      fog: { color: [0.11, 0.135, 0.16], density: 0.042, height: 0, falloff: 0.05, start: 12.5, noise: 0.5, noiseScale: 0.08, wind: [0.2, 0, 0.3], sunDir: [0, 0.25, 1], sunColor: [0.8, 0.9, 1], glow: 0.7, glowPower: 3, sky: 0.84 },
       bloom: { strength: 0.1, threshold: 1.25 },
       grade: { saturation: 0.3, temperature: -0.34 },
     },
@@ -323,6 +430,7 @@ function caveSet(ctx) {
       const R = 9, L = 1.6, HT = 0.62;
       const cave = add(makeCave({ radius: R, length: L, height: HT, seed: 8, pool: false, drips: 12 }));
       cave.root.traverse((o) => { if (o.isMesh && o.geometry.type === 'CircleGeometry') o.visible = false; });   // the kit's flat floor → ours with a basin
+      root.add(mouthCollar(cave.walls, { a: R * 0.5, b: R * HT * 0.75 }));
       // floor with the pool basin
       const N = makePerlin(88);
       const ell = (x, z) => Math.hypot((x - POOL.c[0]) / POOL.rx, (z - POOL.c[1]) / POOL.rz);

@@ -18,7 +18,8 @@
  *                               palms on the glass, rag on his RIGHT, knight the original way. "3:12 AM".
  *    9  b27 a   97.33 → 99.03  same axis, tighter: his face and palms under the glass, mouth moving on the words.
  *   10  b27 b   99.03 → 101.36 the locked wide again: the torch gutters out, the palms slide off and he sinks into
- *                               black; drip rings; the cave-mouth flash ramps to ~60 % and cuts into frame 0 (the loop).
+ *                               black (level, as one thing: the water closes over him — see poolKid); drip rings; the
+ *                               cave-mouth flash ramps to ~60 % and cuts into frame 0 (the loop).
  *
  * Props built here (init): the grey blanket (procedural cloth: seated wrap / one-shoulder wrap / slide-off), the radio
  * handset with its coiled cord and the radio box, and two "talking" face decals for the kid under the pool.
@@ -31,6 +32,9 @@ import { textureSet } from '../real/assets.js';
 
 const A1 = await import('./act1.js').catch(() => ({}));
 const EMBLEM_DY = A1.EMBLEM_DY ?? -0.055;         // the b06 macro's vertical offset: b25 must match it exactly
+// the b06 macro's lights (offsets [toward the lens, up, screen-LEFT]): b25 mirrors them left ↔ right with the rest of him
+const KNIGHT_LIGHT = A1.KNIGHT_LIGHT ?? { kick: 4.6, kickP: [0.2, 0.55, 1.05], low: 0.7, lowP: [0.45, -0.45, -0.5], fill: 0.7, fillP: [1.2, 0.1, 0.25], weave: 2.3 };
+const BOAT_GAIN = 1.8;                            // beach exposure 1.9 vs boat 1.05: the same lamps, the same picture
 
 const PI = Math.PI, TAU = PI * 2;
 const A = (ctx, n) => ctx.set.anchors[n];
@@ -52,7 +56,7 @@ function makeBlanket() {
   const pos = new Float32Array(n * 3), uv = new Float32Array(n * 2), col = new Float32Array(n * 3), idx = [];
   for (let j = 0; j <= NV; j++) for (let i = 0; i <= NU; i++) {
     const k = j * (NU + 1) + i, v = j / NV;
-    uv[k * 2] = (i / NU) * 12; uv[k * 2 + 1] = v * 5;
+    uv[k * 2] = (i / NU) * 6.5; uv[k * 2 + 1] = v * 2.8;      // a coarse wool weave (the fine one shimmered into moiré in the close-ups)
     // two darker woven bands near the hem (a ship's wool blanket)
     const band = Math.max(sramp(v, 0.76, 0.775) * (1 - sramp(v, 0.83, 0.845)), sramp(v, 0.875, 0.885) * (1 - sramp(v, 0.905, 0.915)));
     const c = lerp(1, 0.42, band); col[k * 3] = c; col[k * 3 + 1] = c; col[k * 3 + 2] = c;
@@ -62,8 +66,8 @@ function makeBlanket() {
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   geo.setAttribute('color', new THREE.BufferAttribute(col, 3)); geo.setIndex(idx);
   const ts = textureSet('wet_fabric');
-  const nm = ts.normalMap.clone(); nm.wrapS = nm.wrapT = THREE.RepeatWrapping; nm.repeat.set(1, 1); nm.needsUpdate = true;
-  const mat = new THREE.MeshPhysicalMaterial({ color: '#90969c', roughness: 0.94, metalness: 0, normalMap: nm, normalScale: new THREE.Vector2(0.75, 0.75),
+  const nm = ts.normalMap.clone(); nm.wrapS = nm.wrapT = THREE.RepeatWrapping; nm.repeat.set(1, 1); nm.anisotropy = 8; nm.needsUpdate = true;
+  const mat = new THREE.MeshPhysicalMaterial({ color: '#90969c', roughness: 0.94, metalness: 0, normalMap: nm, normalScale: new THREE.Vector2(0.45, 0.45),
     sheen: 0.7, sheenRoughness: 0.55, sheenColor: new THREE.Color('#b9c1c8'), vertexColors: true, side: THREE.DoubleSide, envMapIntensity: 0.9 });
   const mesh = new THREE.Mesh(geo, mat); mesh.name = 'a4blanket'; mesh.castShadow = true; mesh.receiveShadow = true; mesh.frustumCulled = false;
   return { mesh, geo };
@@ -208,7 +212,7 @@ function mouthAt(ctx, beats) {
 
 // ═════════════════════════════════════════════ act props (built once) ═════════════════════════════════════════════
 export async function init(ctx) {
-  ctx.props.a4 = { blanket: makeBlanket(), handset: makeHandset(), radio: makeRadioBox(), cord: makeCord(), film: makeFilm(), talk: buildTalkFaces(ctx) };
+  ctx.props.a4 = { blanket: makeBlanket(), handset: makeHandset(), radio: makeRadioBox(), cord: makeCord(), film: makeFilm(), veil: makeVeil(), talk: buildTalkFaces(ctx) };
 }
 const P = (ctx) => ctx.props.a4;
 
@@ -245,8 +249,10 @@ function seaCam(ctx, spec, k = 1) {
 function seatCopy(ctx, headYaw = 0, headPitch = 0) {
   const c = ctx.cast.copy;
   c.pose('sit', 0, { seatHeight: ctx.set.seatH, hands: 'none', headYaw, headPitch });
-  for (const s of ['L', 'R']) { const sg = s === 'L' ? 1 : -1; K.joint(c, 'arm' + s, 0.12, 0, -sg * 0.3); K.joint(c, 'foreArm' + s, -1.78, 0, 0); }
-  if (c.rag) c.rag.visible = false;                     // both hands stay under the blanket (the engine restores visibility per shot)
+  for (const s of ['L', 'R']) { const sg = s === 'L' ? 1 : -1; K.joint(c, 'arm' + s, -0.08, 0, -sg * 0.3); K.joint(c, 'foreArm' + s, -1.6, 0, 0); }
+  // the rag's knot and tails must not poke out of the wrap. Shrinking the hand JOINT is safe: joints are in the engine's
+  // cast snapshot (restored at every shot change); ch.rag itself is not (it was added in init), so rag.visible would leak.
+  c.joints.handR.scale.setScalar(0.001);
   blanketUpdate(P(ctx).blanket, { seated: 1 });
 }
 /** the captain at the wheel (a silhouette: only the outline matters) */
@@ -275,7 +281,7 @@ function callSetup(ctx, { captain = [0, -4.05, PI] } = {}) {
   ctx.add(p.cord.mesh);
 }
 // handset poses in torso space [x, y, z, rotX, rotY, rotZ] (rig right = −x = the copy's visible LEFT = screen-right)
-const HS_CHEST = [-0.33, 0.27, 0.47, -0.25, 0.5, 0.1], HS_EAR = [-0.385, 0.735, 0.13, -0.72, 0.12, 0.0], HS_DOWN = [-0.5, 0.02, 0.22, 0.25, 0.9, 0.1];
+const HS_CHEST = [-0.33, 0.27, 0.47, -0.25, 0.5, 0.1], HS_EAR = [-0.385, 0.735, 0.13, -0.72, 0.12, 0.0], HS_DOWN = [-0.45, -0.14, 0.24, 0.2, 0.9, 0.12];
 const mix6 = (a, b, u) => a.map((v, i) => lerp(v, b[i], u));
 /**
  * The standing copy on the call. up 0..1 = handset from chest height to his ear (rag hand = rig R = his visible LEFT),
@@ -291,7 +297,7 @@ function callPose(ctx, { up = 1, fall = 0, headYaw = 0, headPitch = 0, breathe =
   hs[2] += 0.1 * Math.sin(PI * e) * (1 - lo);                                // the lift swings out round the blanket
   p.handset.position.set(hs[0], hs[1], hs[2]); p.handset.rotation.set(hs[3], hs[4], hs[5]);
   // the rag hand grips the handset from outside
-  torsoPoint(c, hs[0] - 0.085, hs[1] - 0.005, hs[2] + 0.005, _a);
+  torsoPoint(c, hs[0] - lerp(0.085, 0.03, lo), hs[1] + lerp(-0.005, 0.13, lo), hs[2] + 0.005, _a);
   reach(c, 'R', _a, [lerp(-0.6, -0.9, e), lerp(0.2, 0.5, e), lerp(-0.1, -0.5, e), lerp(-1.7, -2.3, e)]);
   blanketUpdate(p.blanket, { toga: 1, fall });
   // cord: handset gland → radio box
@@ -308,7 +314,7 @@ const POOL_KID_Z = 1.6, POOL_TILT = 0.2;              // he hangs just off the s
 const FILM_V = /* glsl */`varying vec2 vW; void main() { vec4 wp = modelMatrix * vec4(position, 1.0); vW = wp.xz; gl_Position = projectionMatrix * viewMatrix * wp; }`;
 const FILM_F = /* glsl */`
 precision highp float;
-uniform vec3 uPhone; uniform vec4 uPool; uniform vec4 uSrc[3]; uniform vec4 uPalm; uniform vec3 uRel; uniform float uTime, uFlash, uRings, uLight;
+uniform vec3 uPhone; uniform vec4 uPool; uniform vec4 uSrc[3]; uniform vec4 uPalm; uniform vec3 uRel; uniform float uTime, uFlash, uRings, uLight, uClock;
 varying vec2 vW;
 float h1(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float n2(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
@@ -334,18 +340,47 @@ void main() {
     float wob = 0.75 + 0.25 * n2(vW * 5.0 + float(i) * 3.7);
     rg += (exp(-x * x * 3200.0) + 0.5 * exp(-(x + 0.06) * (x + 0.06) * 3200.0)) * e * wob + 0.6 * exp(-rr * rr * 4000.0) * exp(-age * 9.0);
   }
-  float lit = 0.035 + 0.3 * glow + 0.02 * uLight + 0.16 * uFlash;
+  // THIS IS A SURFACE: the cave ceiling mirrored in it as slow pale blotches, dust specks riding the film, a thin bright
+  // meniscus where the water meets the rock. All of it faint; a lightning flash rakes across it and the whole sheet shows.
+  float er = length((vW - uPool.xy) / uPool.zw);
+  float cell = n2(vW * 0.85 + 3.0 + vec2(0.016, 0.011) * uClock);
+  float ceilR = smoothstep(0.38, 0.82, cell) * (0.55 + 0.45 * n2(vW * 3.3 + 7.0 - vec2(0.01, 0.02) * uClock));
+  vec2 gp = vW * 8.0 + vec2(0.012, 0.007) * uClock; vec2 gi = floor(gp), gf = fract(gp) - 0.5;
+  vec2 go = (vec2(h1(gi + 3.1), h1(gi + 7.7)) - 0.5) * 0.7;
+  float speck = step(0.93, h1(gi)) * exp(-dot(gf - go, gf - go) * 1100.0) * (0.5 + 0.5 * h1(gi + 1.3));
+  float edge = exp(-pow((er - 0.972) / 0.016, 2.0)) * (0.6 + 0.4 * n2(vW * 6.0));
+  float sheet = 0.4 + 0.6 * n2(vW * 1.3 + 9.0 + vec2(0.03, 0.02) * uClock);
+  float surf = 0.1 * ceilR + speck * (0.16 + 0.5 * glow) + 0.11 * edge
+    + uFlash * (0.34 * sheet + 0.3 * ceilR + 0.35 * edge + 0.5 * speck);
+  float lit = 0.15 + 0.26 * glow + 0.03 * uLight + 0.3 * uFlash;
   vec3 col = vec3(0.72, 0.84, 1.0) * (0.22 * glow * glow + uRings * rg * lit + (uPalm.x > -900.0 ? 1.0 : 0.0) * (pm * uRel.y * 0.16 + rel * uRel.z * 0.12) * (0.25 + 0.75 * uLight)
-    + 0.1 * uFlash * n2(vW * 1.3 + 9.0));
+    + surf);
   gl_FragColor = vec4(col * mask, 1.0);
 }`;
 /** a faint film on the pool surface: torch spill, dust specks, and (b27) drip rings spreading from the shore edge */
 function makeFilm() {
   const uniforms = { uPhone: { value: V() }, uPool: { value: new THREE.Vector4() }, uSrc: { value: [new THREE.Vector4(), new THREE.Vector4(), new THREE.Vector4()] },
-    uPalm: { value: new THREE.Vector4(-999, 0, -999, 0) }, uRel: { value: V(0, 1, 0) }, uTime: { value: 0 }, uFlash: { value: 0 }, uRings: { value: 0 }, uLight: { value: 1 } };
+    uPalm: { value: new THREE.Vector4(-999, 0, -999, 0) }, uRel: { value: V(0, 1, 0) }, uTime: { value: 0 }, uFlash: { value: 0 }, uRings: { value: 0 }, uLight: { value: 1 }, uClock: { value: 0 } };
   const m = new THREE.Mesh(new THREE.PlaneGeometry(8, 7).rotateX(-PI / 2), new THREE.ShaderMaterial({ vertexShader: FILM_V, fragmentShader: FILM_F, uniforms,
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, toneMapped: false }));
   m.renderOrder = 9; m.name = 'a4film'; m.frustumCulled = false;
+  return { mesh: m, uniforms };
+}
+/**
+ * The water closing over him: a level, soft-edged sheet of the pool's own black lying ON the surface (drawn after him and
+ * the murk, before the glass and the film). Its opacity is the whole sink: every part of him — face, palms, headphones,
+ * knight — goes to black together, and nothing has to pass through a plane to do it.
+ */
+function makeVeil() {
+  const uniforms = { uColor: { value: new THREE.Color('#010304') }, uA: { value: 0 } };
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(2, 2).rotateX(-PI / 2), new THREE.ShaderMaterial({ uniforms, transparent: true, depthWrite: false, fog: false,
+    vertexShader: /* glsl */`varying vec2 vU; void main() { vU = uv * 2.0 - 1.0; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+    fragmentShader: /* glsl */`uniform vec3 uColor; uniform float uA; varying vec2 vU;
+      void main() { vec2 q = abs(vU); gl_FragColor = vec4(uColor, uA * (1.0 - smoothstep(0.72, 0.92, q.x)) * (1.0 - smoothstep(0.82, 1.0, q.y)));
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }` }));
+  m.renderOrder = 7; m.name = 'a4veil'; m.frustumCulled = false; m.visible = false;
   return { mesh: m, uniforms };
 }
 function poolSetup(ctx) {
@@ -360,11 +395,23 @@ function poolSetup(ctx) {
   ctx.store.phone = [px, pz];
   // the torch off the ceiling onto the wet rock round the phone, and the flash raking in from the cave mouth
   const bo = ctx.store.bounce = ctx.add(new THREE.PointLight('#cfdcf0', 0, 5, 2)); bo.position.set(px - 0.3, H(px, pz) + 2.0, pz + 0.1);
-  const rk = ctx.store.rake = ctx.add(new THREE.PointLight('#e2ecff', 0, 30, 2)); rk.position.set(c.x + 1.6, ctx.set.waterY + 1.5, c.z + 8.5);
+  const rk = ctx.store.rake = ctx.add(new THREE.PointLight('#e2ecff', 0, 30, 2)); rk.position.set(c.x + 1.6, ctx.set.waterY + 2.6, c.z + 8.5);
   // his light: from ABOVE the water and off the lens axis, cold; a weaker one from the other side so the far palm reads
   const k = ctx.store.key = ctx.add(new THREE.PointLight('#a9c6e6', 0, 7, 2)); k.position.set(c.x + 1.9, ctx.set.waterY + 1.3, c.z + 0.9);
   const fl = ctx.store.fill = ctx.add(new THREE.PointLight('#7f9fc4', 0, 6, 2)); fl.position.set(c.x - 1.7, ctx.set.waterY + 1.0, c.z + 0.5);
+  // the rock lip he knelt on, along the bottom of the frame: a low grey lamp that outlives the torch
+  const rl = ctx.store.rimL = ctx.add(new THREE.PointLight('#9fb4cc', 0, 5, 2)); rl.position.set(c.x - 0.7, ctx.set.waterY + 0.75, pz + 0.5);
+  // the phone itself: a grey case back with its camera island (the bare black slab vanished into the rock) and a grazing lamp
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(0.0775, 0.1575), new THREE.MeshStandardMaterial({ color: '#3b4048', roughness: 0.5, metalness: 0.3 }));
+  back.position.z = -0.0053; back.rotation.y = PI; ctx.add(back, ph.root);
+  const isle = new THREE.Mesh(new THREE.PlaneGeometry(0.034, 0.034), new THREE.MeshStandardMaterial({ color: '#15171a', roughness: 0.25, metalness: 0.5 }));
+  isle.position.set(0.017, 0.056, -0.0058); isle.rotation.y = PI; ctx.add(isle, ph.root);
+  const pl = ctx.store.phoneL = ctx.add(new THREE.PointLight('#cfdcf0', 0, 0.9, 2)); pl.position.set(px + 0.2, H(px, pz) + 0.14, pz + 0.12);
   ctx.add(f.mesh); f.mesh.position.set(c.x, ctx.set.waterY + 0.004, c.z);
+  // the veil: a soft-edged box over all of him and nothing else (head top 0.98 m up-frame of his hips, feet 0.85 m down-frame,
+  // palms out to ±0.52 m; solid to ±0.62 × ±1.03 m, gone by ±0.79 m: the faint sunken rock at the frame edges stays as it was)
+  { const v = P(ctx).veil; ctx.add(v.mesh); v.mesh.position.set(c.x, ctx.set.waterY + 0.002, c.z + POOL_KID_Z - 0.05); v.mesh.scale.set(0.86, 1, 1.25);
+    v.mesh.visible = false; v.uniforms.uA.value = 0; }
   f.uniforms.uPool.value.set(c.x, c.z, ps.rx * 1.1, ps.rz * 1.1);
   const S = [[-0.62, 2.18, 2.3, 0.05], [0.4, 2.3, 3.1, 0.45], [0.95, 2.05, 2.7, 0.8]];
   S.forEach((q, i) => f.uniforms.uSrc.value[i].set(c.x + q[0], c.z + q[1], q[2], q[3]));
@@ -377,8 +424,9 @@ function poolFilm(ctx, level, { rings = 0, t0 = 0, light = 1, release = -1 } = {
   const pp = release < 0 ? [_a.x, _a.z, _b.x, _b.z] : ctx.store.palm;        // after the release: where they were (from setup)
   u.uPalm.value.set(pp[0], pp[1], pp[2], pp[3]);
   u.uRel.value.set(Math.max(0, release), release < 0 ? 1 : Math.max(0, 1 - release / 0.25), release < 0 ? 0 : 1);
-  ctx.store.bounce.intensity = 34 * level; ctx.store.rake.intensity = 380 * (ctx.store.flash || 0);
-  u.uPhone.value.set(p[0], p[1], level * 2); u.uTime.value = Math.max(0, ctx.t - t0); u.uFlash.value = ctx.store.flash || 0; u.uRings.value = rings; u.uLight.value = light;
+  ctx.store.bounce.intensity = 34 * level; ctx.store.rake.intensity = 1300 * (ctx.store.flash || 0);
+  ctx.store.rimL.intensity = 3.2 + 5 * level; ctx.store.phoneL.intensity = 0.5 * level + 0.05;      // the wet rock lip never goes fully black
+  u.uPhone.value.set(p[0], p[1], level * 2); u.uClock.value = ctx.t; u.uTime.value = Math.max(0, ctx.t - t0); u.uFlash.value = ctx.store.flash || 0; u.uRings.value = rings; u.uLight.value = light;
 }
 /** torch level: a tired LED, then guttering out between g0 and g1 (seconds, film time) */
 function torchLevel(t, g0 = 1e9, g1 = 1e9) {
@@ -391,20 +439,35 @@ function torchLevel(t, g0 = 1e9, g1 = 1e9) {
 const _zero = new THREE.Matrix4().makeScale(0, 0, 0);
 /** hide a character's falling drips for this frame (real.update rewrites them; un-updated they are 1 m spheres) */
 function noDrips(r) { const d = r && r.drips; if (!d) return; for (let i = 0; i < d.count; i++) d.setMatrixAt(i, _zero); d.instanceMatrix.needsUpdate = true; }
-/** the kid under the glass. sink 0..1 = palms sliding off and the body going down into the murk. */
-function poolKid(ctx, { sink = 0, light = 1 } = {}) {
-  const me = ctx.cast.me, t = ctx.t, c = A(ctx, 'poolCenter'), wy = ctx.set.waterY;
-  const s = smooth(sink);
-  K.filmPose(me, 'supine', t, { reach: lerp(1, 0.5, s), spread: lerp(0.09, 0.3, s), breathe: 0.3, tilt: POOL_TILT * (1 - 0.6 * s) });
+// the sink (seconds after the palms let go): they slide apart for `slide` s while he recedes; the water closes over him
+// between fade[0] and fade[1]
+const SINK = { slide: 1.0, fade: [0.2, 1.0], shrink: 0.12, spread: 0.22 };
+/**
+ * The kid under the glass. release = seconds since his palms let go (< 0: still pressing); dim 0..1 turns his two lamps down.
+ * The sink never moves him THROUGH anything: he stays level at the depth he hung at (the old version tilted him down
+ * through the murk sheets: a hard edge across the face, then two palms floating on their own). His palms slide apart,
+ * he recedes straight down under the lens (top-down, that is exactly a shrink toward his hips: x/z scale, no change in
+ * height), and the veil on the surface takes all of him to black as one thing.
+ */
+function poolKid(ctx, { light = 1, release = -1, dim = 0 } = {}) {
+  const me = ctx.cast.me, t = ctx.t, c = A(ctx, 'poolCenter'), wy = ctx.set.waterY, veil = P(ctx).veil;
+  const e = release > 0 ? sramp(release, 0, SINK.slide) : 0;
+  const v = release > 0 ? 1 - Math.pow(1 - sramp(release, SINK.fade[0], SINK.fade[1]), 1.5) : 0;    // ≈ 0.6 s of visible fade: a ghost on "me", gone as the word ends
+  const pose = (spread) => K.filmPose(me, 'supine', t, { reach: 1, spread, breathe: 0.3, tilt: POOL_TILT });
   // hang him from his palms: flat against the underside of the surface (the supine pose alone leaves them 20 cm above it)
-  me.root.position.set(c.x, wy - 1, c.z + POOL_KID_Z + 0.1 * s);
-  const hy = handWorld(me, 'L', _a).y;
-  me.root.position.y += (wy - 0.078) - hy - 1.2 * s * s - 0.01 * Math.sin(t * 1.3) * s;
+  pose(0.09);
+  me.root.position.set(c.x, wy - 1, c.z + POOL_KID_Z);
+  me.root.position.y += (wy - 0.078) - handWorld(me, 'L', _a).y;
+  if (e > 0) pose(lerp(0.09, SINK.spread, e));            // the height stays the pressing pose's: only the hands move
+  const k = 1 - SINK.shrink * e;
+  me.root.scale.set(k, 1, k);
+  me.root.visible = v < 1;
+  veil.mesh.visible = v > 0; veil.uniforms.uA.value = v;
   real(ctx).me.update(t); noDrips(real(ctx).me);
   me.face('sad', t);
   const m = mouthAt(ctx, ['b26', 'b27']);
   if (m) faceMesh(me).material.map = P(ctx).talk[m - 1];
-  ctx.store.key.intensity = 24 * light * (1 - 0.75 * s); ctx.store.fill.intensity = 7 * light * (1 - 0.8 * s);
+  ctx.store.key.intensity = 34 * light * (1 - 0.75 * dim); ctx.store.fill.intensity = 9 * light * (1 - 0.8 * dim);   // his lamps also graze the rim rocks: `dim` is the room's slow fade, not his
 }
 
 // ═════════════════════════════════════════════ shots ══════════════════════════════════════════════════════════════
@@ -413,14 +476,14 @@ export const shots = [
   {
     name: 'a4.1 a fishing boat at sunrise (b20)', start: 'swap', set: 'boat', cast: ['copy', 'captain'],
     setup(ctx) {
-      ctx.place('copy', 'seat', { yaw: PI + 0.25 });
+      ctx.place('copy', 'seat', { yaw: PI + 0.72 });      // three-quarter back: an ear, the edge of a cheek, one headphone cup
       ctx.place('captain', 'wheel', { yaw: PI });
       ctx.add(P(ctx).blanket.mesh, ctx.cast.copy.joints.torso);
       const s = A(ctx, 'seat');
-      const sky = ctx.add(new THREE.PointLight('#cfd9e2', 15, 8, 2)); sky.position.set(s.x - 1.9, s.y + 2.3, s.z + 1.5);   // the sky astern, raking across his back
+      const sky = ctx.add(new THREE.PointLight('#cfd9e2', 8.5, 8, 2)); sky.position.set(s.x - 2.3, s.y + 1.9, s.z - 1.1);   // the bright fog over the bow, on the turned cheek and shoulder; the nape stays dark
     },
     update(ctx, lt) {
-      seatCopy(ctx, 0.3, 0.05); helm(ctx);
+      seatCopy(ctx, 0.22, 0.05); helm(ctx);
       const dy = ctx.set.deckY, u = smooth(lt / 2.4);
       seaCam(ctx, { pos: [-0.6, dy + 1.36, 4.82 - 0.14 * u], look: [0.71, dy + 1.08, -1.2], fov: 46 });
       K.stamp(ctx, '6:51 AM', { at: 'tl', alpha: ramp(lt, 0.05, 0.4) * (1 - ramp(lt, 1.95, 2.3)) });
@@ -472,7 +535,7 @@ export const shots = [
     setup(ctx) {
       callSetup(ctx);
       const dy = ctx.set.deckY;
-      const key = ctx.add(new THREE.PointLight('#dfe6ee', 7.5, 5.5, 2)); key.position.set(CALL.x - 1.25, dy + 2.35, CALL.z + 1.35);
+      const key = ctx.add(new THREE.PointLight('#dfe6ee', 8.5, 3.4, 2)); key.position.set(CALL.x - 1.25, dy + 2.35, CALL.z + 1.35);
     },
     update(ctx, lt) {
       const c = ctx.cast.copy, t = ctx.t, dy = ctx.set.deckY;
@@ -491,11 +554,11 @@ export const shots = [
 
   // ─────────────────────────────────────────── 5 · b24 · "You sound different." ────────────────────────────────────
   {
-    name: 'a4.5 then she went quiet (b24)', start: 'b24-0.11', set: 'boat', cast: ['copy'],
+    name: 'a4.5 then she went quiet (b24)', start: 'b24-0.11', set: 'boat', cast: ['copy'], options: { wet: 0.08 },
     setup(ctx) {
       callSetup(ctx, { captain: null });
       const dy = ctx.set.deckY;
-      const key = ctx.add(new THREE.PointLight('#dfe6ee', 5.5, 5, 2)); key.position.set(CALL.x - 1.15, dy + 2.2, CALL.z + 1.2);
+      const key = ctx.add(new THREE.PointLight('#dfe6ee', 8.5, 4, 2)); key.position.set(CALL.x - 1.55, dy + 1.95, CALL.z + 0.45);   // raking across the face
     },
     update(ctx, lt) {
       const c = ctx.cast.copy;
@@ -517,18 +580,19 @@ export const shots = [
       callSetup(ctx);
       const dy = ctx.set.deckY;
       const key = ctx.add(new THREE.PointLight('#dfe6ee', 7.5, 5.5, 2)); key.position.set(CALL.x - 1.2, dy + 2.2, CALL.z + 1.5);
+      const kick = ctx.add(new THREE.PointLight('#e6edf5', 3.2, 3, 2)); kick.position.set(CALL.x + 1.0, dy + 1.25, CALL.z + 1.1);   // the rag hand
     },
     update(ctx, lt) {
       const c = ctx.cast.copy, dy = ctx.set.deckY;
       const turn = sramp(lt, 0.5, 1.1), lower = sramp(lt, 0.25, 1.2), fall = ramp(lt, 1.28, 1.95);
-      const camP = [CALL.x + 0.04, dy + 1.5, CALL.z + 3.15];
+      const camP = [CALL.x + 0.1, dy + 1.5, CALL.z + 3.15];
       // body and head come round from the far-off look of the call to dead on the lens
       const yaw = lerp(CALL.yaw, -0.1, turn), yawToLens = Math.atan2(camP[0] - CALL.x, camP[2] - CALL.z) - yaw;
       c.root.rotation.y = yaw;
       callPose(ctx, { up: 1, lower, fall, headYaw: lerp(0.1, yawToLens, turn), headPitch: lerp(-0.02, 0.04, turn), breathe: 0.25 });
-      c.face(lt > 0.98 ? 'grin' : 'neutral', noBlinkT(c));
+      c.face('neutral', noBlinkT(c)); if (lt > 0.98) K.filmFace(c, lt > 1.14 ? 'creep' : 'creep1');      // the pool smile: closed, too wide
       helm(ctx);
-      seaCam(ctx, { pos: camP, look: [CALL.x + 0.05, dy + 1.22, CALL.z], fov: 34 }, 0.5);
+      seaCam(ctx, { pos: camP, look: [CALL.x + 0.1, dy + 1.22, CALL.z], fov: 34 }, 0.5);
       ctx.store.focus = K.dist(ctx, K.eyePoint(c));
     },
     post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 3.1, aperture: 1.2, maxBlur: 16 } })),
@@ -539,8 +603,9 @@ export const shots = [
     name: 'a4.7 the knight, nose screen-right (b25b)', start: 'match25-0.08', set: 'boat', cast: ['copy'],
     setup(ctx) {
       ctx.place('copy', [CALL.x, ctx.set.deckY, CALL.z], { yaw: 0 });
-      ctx.store.kick = ctx.add(new THREE.PointLight('#dfe8f2', 4.4, 6, 2));
-      ctx.store.low = ctx.add(new THREE.PointLight('#a9c4ff', 1.0, 3, 2));
+      ctx.store.kick = ctx.add(new THREE.PointLight('#dfe8f2', KNIGHT_LIGHT.kick * BOAT_GAIN, 6, 2));
+      ctx.store.low = ctx.add(new THREE.PointLight('#a9c4ff', KNIGHT_LIGHT.low * BOAT_GAIN, 3, 2));
+      ctx.store.fill = ctx.add(new THREE.PointLight('#dfe8f2', KNIGHT_LIGHT.fill * BOAT_GAIN, 4, 2));
     },
     update(ctx, lt) {
       const c = ctx.cast.copy, t = ctx.t;
@@ -558,8 +623,9 @@ export const shots = [
       }
       ctx.cam.set(f); ctx.store.focus = f.focus;
       // b06's two lights, mirrored left ↔ right with the rest of him
-      ctx.store.kick.position.set(f.look[0], f.look[1] + 0.75, f.look[2]).addScaledVector(n, 0.5).addScaledVector(sr, 1.1);
-      ctx.store.low.position.set(f.look[0], f.look[1] - 0.45, f.look[2]).addScaledVector(n, 0.45).addScaledVector(sr, 0.5);
+      const KL = KNIGHT_LIGHT, at = (l, o) => l.position.set(f.look[0], f.look[1] + o[1], f.look[2]).addScaledVector(n, o[0]).addScaledVector(sr, o[2]);
+      at(ctx.store.kick, KL.kickP); at(ctx.store.low, KL.lowP); at(ctx.store.fill, KL.fillP);
+      K.weave(ctx, 'copy', KL.weave);
     },
     post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 1.7, aperture: 1.2, maxBlur: 16 } })),
   },
@@ -572,7 +638,7 @@ export const shots = [
       const lv = torchLevel(ctx.t), light = 0.25 + 0.75 * sramp(lt, 0.1, 0.75);
       poolKid(ctx, { light });
       ctx.props.phone.setLevel(lv);
-      K.flash(ctx, [{ at: 'flash26', power: 0.9 }], { bolt: null });
+      K.flash(ctx, [{ at: 'flash26', power: 1.0, hold: 0.42, decay: 0.3 }], { bolt: null, post: 0.5 });      // 12 frames across the surface film
       poolFilm(ctx, lv, { light });
       K.stamp(ctx, '3:12 AM', { at: 'tl', alpha: ramp(lt, 0.5, 0.9) });
     },
@@ -588,7 +654,7 @@ export const shots = [
       poolKid(ctx, { light: 1.15 });
       ctx.props.phone.setLevel(lv);
       poolFilm(ctx, lv, { light: 1.15 });
-      ctx.cam.set(K.poolTop(ctx.set, { height: POOL_TOP.height, fov: 32 - 0.7 * (lt / 1.7), dz: 1.24 }));
+      ctx.cam.set(K.poolTop(ctx.set, { height: POOL_TOP.height, fov: 32 - 0.7 * (lt / 1.7), dz: 1.31 }));
       K.stamp(ctx, '3:12 AM', { at: 'tl' });
     },
     post: K.shotPost({}),
@@ -600,16 +666,21 @@ export const shots = [
     setup(ctx) { poolSetup(ctx); ctx.cam.set(K.poolTop(ctx.set, POOL_TOP)); },
     update(ctx, lt) {
       const t = ctx.t, t0 = ctx.time('b27.w5'), tl = ctx.time('loopflash'), end = ctx.timeline.duration;
-      const sink = ramp(t, t0 + 0.55, t0 + 2.0), lv = torchLevel(t, t0 + 0.15, t0 + 1.25);
-      poolKid(ctx, { sink });
+      // the torch gutters all the way to the loop flash (it used to be dead a second before it: 0.8 s of black before the loop)
+      const tr = t0 + 0.55;                              // his palms let go
+      const sink = ramp(t, tr, t0 + 2.0), lv = Math.max(torchLevel(t, t0 + 0.15, tl + 0.05), 0.045 * (1 - ramp(t, tl - 0.1, tl + 0.1)));
+      poolKid(ctx, { release: t - tr, dim: smooth(sink) });
       ctx.props.phone.setLevel(lv);
-      // the flash that starts in the cave mouth and is cut off at ~60 %: frame 0 of the film is its peak
-      const u = ramp(t, tl, end - 1 / 30);
+      // a storm glow finds the cave mouth on "found", and the flash that grows out of it is cut off at ~60 %: frame 0 of the
+      // film is its peak
+      const u = ramp(t, tl, end - 1 / 30), tg = ctx.time('b27.w9');
+      const glow = (0.17 + 0.04 * Math.sin(t * 9.0) * Math.sin(t * 3.1)) * sramp(t, tg - 0.7, tg + 0.1);
       ctx.store.loop = u;
-      if (u > 0) K.applyFlash(ctx, 0.62 * Math.pow(u, 1.4), { bolt: null });
-      poolFilm(ctx, lv, { rings: sramp(t, t0 + 0.2, t0 + 0.6), t0: t0 + 0.2, light: 1 - 0.75 * smooth(sink), release: sink > 0 ? t - (t0 + 0.55) : -1 });   // only the drip rings remain
+      K.applyFlash(ctx, Math.max(glow, 0.62 * Math.pow(u, 1.4)), { bolt: null, post: 0.6 });
+      // what remains: the drip rings at the rock edge, the wet rock lip, the dust on the film (never below a third of the light)
+      poolFilm(ctx, lv, { rings: sramp(t, t0 + 0.2, t0 + 0.6), t0: t0 + 0.2, light: Math.max(0.36, 1 - 0.75 * smooth(sink)), release: sink > 0 ? t - tr : -1 });
       K.stamp(ctx, '3:12 AM', { at: 'tl' });
     },
-    post: K.shotPost((ctx) => (ctx.store.loop > 0 ? { fade: { color: '#dfe6ee', amount: 0.3 * Math.pow(ctx.store.loop, 2) } } : {})),
+    post: K.shotPost((ctx) => (ctx.store.loop > 0 ? { fade: { color: '#e4eaf0', amount: 0.56 * Math.pow(ctx.store.loop, 1.6) } } : {})),
   },
 ];

@@ -28,6 +28,7 @@ for (const n of [1, 2, 3, 4]) {
 export async function init(ctx) {
   await K.loadFilm();
   K.initCast(ctx);                          // ctx.props.real.{me, copy, captain} + the white rag on handR
+  K.initFilmFaces(ctx);                     // 'creep1' / 'creep' / 'shout' face decals (K.filmFace)
   ctx.props.phone = K.makePhone();          // the kid's phone (map / torch): K.hold(ch, ctx.props.phone, 'R', ctx)
   for (const a of acts) if (typeof a.init === 'function') { try { await a.init(ctx); } catch (e) { console.error('[cine01] act init failed', e); } }
 }

@@ -22,6 +22,7 @@ import * as THREE from 'three';
 import * as K from './kit.js';
 import { makeRain } from '../real/weather.js';
 import { groundBlob } from './sets.js';
+import { rbox } from '../lib/util.js';
 
 const PI = Math.PI, DEG = PI / 180;
 const A = (ctx, n) => ctx.set.anchors[n];
@@ -102,7 +103,7 @@ function fireBounce(ctx) {
  * The trail of square sneaker prints: up out of the surf, aimed at the kid, stopping one step short of his toes.
  * Call in setup AFTER placing the kid at the camp. Returns { mesh, toes [x, z], u [x, z] (unit, toes → surf), gap }.
  */
-function campPrints(ctx, gap = 0.72, stride = 0.62) {
+function campPrints(ctx, gap = 0.72, stride = 0.62, maxD = 1e9) {
   const me = ctx.cast.me, H = ctx.set.heightAt;
   K.filmPose(me, 'huddle', 0, {});
   me.root.updateWorldMatrix(true, true);
@@ -110,13 +111,12 @@ function campPrints(ctx, gap = 0.72, stride = 0.62) {
   const cy = ctx.set.campYaw, toes = [(fl.x + fr.x) / 2 + Math.sin(cy) * 0.14, (fl.z + fr.z) / 2 + Math.cos(cy) * 0.14];
   const S = [-3.0, 0.3], L = Math.hypot(S[0] - toes[0], S[1] - toes[1]), u = [(S[0] - toes[0]) / L, (S[1] - toes[1]) / L];
   const yaw = Math.atan2(-u[0], -u[1]), px = Math.cos(yaw), pz = -Math.sin(yaw), pts = [];
-  for (let i = 0; gap + i * stride < L; i++) {
+  for (let i = 0; gap + i * stride < Math.min(L, maxD); i++) {
     const d = gap + i * stride, sd = i % 2 ? 1 : -1;
     pts.push([toes[0] + u[0] * d + px * sd * 0.1, toes[1] + u[1] * d + pz * sd * 0.1, yaw, sd]);
   }
   const mesh = ctx.add(K.makeFootprints(pts, { heightAt: H, size: 0.34, opacity: 0.96 }));
-  mesh.material.roughness = 0.3; mesh.material.clearcoatRoughness = 0.25;
-  return (ctx.store.trail = { mesh, toes, u, gap });
+  return (ctx.store.trail = { mesh, toes, u, gap, len: L, last: gap + (pts.length - 1) * stride });
 }
 
 // ═════════════════════════════════════════════ shots ══════════════════════════════════════════════════════════════
@@ -129,33 +129,40 @@ export const shots = [
       ctx.place('me', [k.x, k.y, k.z + KID_DZ], { yaw: -PI / 2 - 0.3 });    // a hand's width inland: the rag hand stays in frame
       ctx.cam.set(K.frameA(ctx.set));
       // his own rim: the sky over the sea catching the top of the hood, the headphones, the right shoulder and the rag
-      const rim = ctx.store.rim = ctx.add(new THREE.PointLight('#dfe9ff', 0, 6, 2)); rim.position.set(k.x - 0.3, k.y + 3.0, k.z - 2.1);
-      const edge = ctx.store.edge = ctx.add(new THREE.PointLight('#dfe9ff', 0, 5, 2)); edge.position.set(k.x - 1.6, k.y + 2.2, k.z + 1.7);
-      const rag = ctx.store.ragL = ctx.add(new THREE.PointLight('#dfe9ff', 0, 1.7, 2)); rag.position.set(k.x + 0.55, k.y + 0.5, k.z - 1.05);   // low, lens side: the white cloth on his right hand
+      const rim = ctx.store.rim = ctx.add(new THREE.PointLight('#dfe9ff', 0, 6, 2)); rim.position.set(k.x + 0.9, k.y + 2.9, k.z - 1.7);     // (behind him, sea side: the faces the lens can see)
+      const edge = ctx.store.edge = ctx.add(new THREE.PointLight('#dfe9ff', 0, 5, 2)); edge.position.set(k.x + 1.2, k.y + 2.3, k.z + 2.0);   // (behind him, inland side)
+      ctx.store.ragL = ctx.add(new THREE.PointLight('#dfe9ff', 0, 1.9, 2));   // low, lens side: the white cloth on his right hand (follows the hand)
       groundBlob(ctx, [k.x, k.y, k.z + KID_DZ], 0.7, 0.5);
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me, copy = ctx.cast.copy;
-      K.filmPose(me, 'stand', t, { breathe: 1, headYaw: 0.38, armR: [0.06, 0, 0.04], foreR: -0.2 });
+      K.filmPose(me, 'stand', t, { breathe: 1, headYaw: 0.38, armR: FRAME_A_ARM, foreR: -0.3 });   // the rag fist held back, behind his hip: white on black, inside the frame
       real(ctx).me.update(t);
-      const f = K.flash(ctx, [{ at: 'flash1', bolt: 0 }, { at: 'b01.w6-0.05', power: 0.32, hold: 0.22, decay: 0.3, bolt: null, seed: 9 }, { at: 'flash2', bolt: 1 }], {});
+      const f = K.flash(ctx, [{ at: 'flash1', bolt: 0 }, { at: 'b01.w6-0.05', power: 0.32, hold: 0.22, decay: 0.3, bolt: null, seed: 9 }, { at: 'flash2', bolt: 1 }], { post: 0.55 });
+      // between the strikes the storm never goes fully dark: sheet lightning far out at sea keeps a floor under the picture
+      // (the double stays hidden: he needs a real flash)
+      const floor = 0.11 + 0.03 * Math.sin(t * 1.9 + 1) + 0.08 * K.flicker(t, 7, 1.1);
+      if (f < floor) K.applyFlash(ctx, floor, { bolt: null, light: 0.45, post: 1.0, sky: 3.2 });
       // the double: 18 m, then 12 m. He only exists while the sky is lit; he moves in the dark.
       if (t < ctx.time('b02')) ctx.place('copy', 'double18', { yaw: PI / 2 });
       else ctx.place('copy', [-12, ctx.set.heightAt(-12, 1.25), 1.25], { yaw: PI / 2 });   // on the lip of the wash, clear of the kid's head
       K.filmPose(copy, 'stand', 0);
       copy.root.visible = f > 0.035;
-      ctx.store.rim.intensity = 0.45 + 19 * f;
-      ctx.store.edge.intensity = 0.15 + 6 * f;
-      ctx.store.ragL.intensity = 0.2 + 1.3 * f;
+      ctx.store.rim.intensity = 3.8 + 9 * f;
+      ctx.store.edge.intensity = 3.2 + 4 * f;
+      const hw = handWorld(me, 'R', _h);
+      ctx.store.ragL.position.set(hw.x + 0.5, hw.y + 0.12, hw.z - 0.12); ctx.store.ragL.intensity = 0.8 + 1.0 * f;
+      ctx.set.foam.uniforms.uAmbient.value = 0.34;
       K.stamp(ctx, '3:12 AM', { at: 'tl', alpha: 1 - ramp(lt, 2.9, 3.4) });
       ctx.cam.shake(0.03, t, 3);
     },
-    post: K.shotPost({}),
+    // in a flash the fog thins and the cloud deck shows through it: black rock and wreck against a torn white sky, not a grey veil
+    post: K.shotPost((ctx) => { const f = Math.min(1, ctx.store.flash || 0); return { fog: { sky: lerp(0.9, 0.42, f), density: 0.012 * (1 - 0.4 * f) }, grade: { contrast: 1.4 + 0.12 * f } }; }),
   },
 
   // ─────────────────────────────────────────── 2 · b03 · washed up, 9:40 PM ────────────────────────────────────────
   {
-    name: 'a1.2 washed up, sneakers in the foam (b03)', start: 'b03-0.6', set: 'beachDusk', cast: ['me', 'copy'], options: { fire: -1, rain: 1.2 },
+    name: 'a1.2 washed up, sneakers in the foam (b03)', start: 'b03-0.6', set: 'beachDusk', cast: ['me', 'copy'], options: { fire: -1, rain: 1.2, splash: 0 },
     setup(ctx) {
       const H = ctx.set.heightAt;
       const kx = 7.6, kz = 2.85, dx = 8.05, dz = 0.2;
@@ -164,12 +171,12 @@ export const shots = [
       ctx.store.knee = V(dx - 0.2, H(dx, dz) + 0.62, dz);             // the top edge of frame cuts the legs here
       ctx.add(ctx.props.a1foam.mesh);
       const l = ctx.add(new THREE.PointLight('#cfe0f5', 3.0, 10, 2)); l.position.set(kx + 1.6, H(kx, kz) + 3.6, kz - 1.2);   // dusk sky off the sea
-      const l2 = ctx.add(new THREE.PointLight('#cfe0f5', 4.2, 4, 2)); l2.position.set(dx - 0.4, H(dx, dz) + 1.1, dz + 1.3);   // the grey of his trousers
+      const l2 = ctx.add(new THREE.PointLight('#cfe0f5', 2.5, 4, 2)); l2.position.set(dx - 0.4, H(dx, dz) + 1.1, dz + 1.3);   // the grey of his trousers
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me;
       const up = sramp(lt, 0.7, 1.75);
-      K.filmPose(me, 'prone', t, { up, headPitch: lerp(0.1, -0.45, sramp(lt, 0.85, 2.0)), headYaw: lerp(-0.7, -0.1, sramp(lt, 0.6, 1.6)) });   // cheek in the sand, toward the rag hand
+      K.filmPose(me, 'prone', t, { up, headPitch: lerp(0.1, -0.45, sramp(lt, 0.85, 2.0)), headYaw: lerp(-0.75, -0.55, sramp(lt, 0.6, 1.6)) });   // cheek in the sand, toward the rag hand; pushed up, the ear and cheek still show
       // the rag arm thrown wide, so the white cloth is never under his head
       K.joint(me, 'armR', lerp(-2.55, -1.55, up), 0, lerp(-1.0, -0.8, up)); K.joint(me, 'foreArmR', lerp(-0.45, -0.95, up), 0, 0);
       K.filmPose(ctx.cast.copy, 'stand', 0);
@@ -186,9 +193,9 @@ export const shots = [
       const pos = [kp.x - 0.1, kp.y + Math.sin(a) * s, kp.z + Math.cos(a) * s];
       ctx.cam.set({ pos, look: [pos[0], pos[1] - Math.sin(th) * 4, pos[2] - Math.cos(th) * 4], fov: 54 });
       ctx.cam.shake(0.02, t, 7);
-      K.stamp(ctx, '9:40 PM', { at: 'bl' });
+      K.stamp(ctx, '9:40 PM', { at: 'tl' });
     },
-    post: K.shotPost({ exposure: 1.95 }),
+    post: K.shotPost({ exposure: 1.6 }),
   },
 
   // ─────────────────────────────────────────── 3 · b04a · the map ──────────────────────────────────────────────────
@@ -199,8 +206,9 @@ export const shots = [
       ctx.cast.copy.root.visible = false;
       ctx.props.phone.setMode('map').setLevel(1);
       ctx.add(ctx.props.a1rain.root);
-      ctx.store.kick = ctx.add(new THREE.PointLight('#cfdcf0', 0.22, 2.5, 2));
+      ctx.store.kick = ctx.add(new THREE.PointLight('#cfdcf0', 0.13, 2.5, 2));     // the cloth stays light grey, never a white panel
       ctx.add(makeGlassBeads(), ctx.props.phone.root);
+      ctx.add(makeGrip(ctx.cast.me), ctx.props.phone.root);
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me, ph = ctx.props.phone;
@@ -264,15 +272,16 @@ export const shots = [
 
   // ─────────────────────────────────────────── 5 · b05 · one voicemail ─────────────────────────────────────────────
   {
-    name: 'a1.5 one voicemail: Mom (b05)', start: 'b05-0.15', set: 'beachNight', cast: ['me', 'copy'], options: { fire: -1, rain: 1.5 },
+    name: 'a1.5 one voicemail: Mom (b05)', start: 'b05-0.15', set: 'beachNight', cast: ['me', 'copy'], options: { fire: -1, rain: 1.5 }, captionY: 0.665, momY: 0.725,
     setup(ctx) {
       const H = ctx.set.heightAt;
       ctx.place('me', 'phoneSpot', { yaw: PI / 2 });
       ctx.place('copy', [-14.5, H(-14.5, 0.7), 0.7], { yaw: PI / 2 });
       const ph = ctx.props.phone;
-      K.hold(ctx.cast.me, ph, 'R', ctx, { pos: [0, -0.02, 0.1], rot: [-1.0, 0, 0] }); ph.setMode('map').setLevel(1);
-      // the screen as a practical: cold light from below
-      const l = ctx.store.glow = ctx.add(new THREE.PointLight('#b4c8ff', 0.6, 3.2, 2), ph.root); l.position.set(0, 0.03, 0.12);
+      ph.setMode('map').setLevel(1);
+      // the screen as a practical: cold light from below. It hangs between the phone and his chin, NOT on the glass: a light
+      // 10 cm from the white rag burned the hand out into a blob
+      ctx.store.glow = ctx.add(new THREE.PointLight('#b4c8ff', 0.25, 1.9, 2));
       const p = A(ctx, 'phoneSpot');
       const rim = ctx.store.rim = ctx.add(new THREE.PointLight('#dfe9ff', 1.3, 5, 2)); rim.position.set(p.x - 1.3, p.y + 2.5, p.z - 1.4);
       ctx.add(ctx.props.a1rain.root);
@@ -282,28 +291,36 @@ export const shots = [
       const mom = ctx.time('mom1');
       K.filmPose(me, 'stand', t, { breathe: 1, headPitch: lerp(0.4, 0.3, sramp(t, mom + 0.9, mom + 2.2)) });
       me.face('sad', t);
-      K.joint(me, 'armR', -0.78, 0, -0.2); K.joint(me, 'foreArmR', -1.1, 0, 0);   // the phone in the rag hand, low in front of his chest
+      K.joint(me, 'armR', -0.78, 0, 0.06); K.joint(me, 'foreArmR', -1.1, 0, 0);   // the phone in the rag hand, low in front of his chest
       K.filmPose(ctx.cast.copy, 'stand', 0);
       real(ctx).me.update(t); ctx.props.phone.update(t); macroRain(ctx, 0.3);
       const p = A(ctx, 'phoneSpot'), u = smooth(lt / 4.85);
       const d = lerp(3.55, 3.15, u);
-      ctx.cam.set({ pos: [p.x + d, p.y + 1.62, p.z - 0.3], look: [p.x, p.y + 1.3, p.z - 0.1], fov: 40 });
+      const camP = V(p.x + d, p.y + 1.62, p.z - 0.3);
+      ctx.cam.set({ pos: camP, look: [p.x, p.y + 1.25, p.z - 0.1], fov: 40 });
+      // the phone in the rag hand, its screen turned between his face and the lens: we see the glowing map from the side, and its edge
+      const eye = K.eyePoint(me, V());
+      const ph = ctx.props.phone, tgt = eye.clone().lerp(camP, 0.42);
+      K.phoneToward(ctx, me, ph, 'R', tgt, { lift: 0.09 });
+      ph.light.intensity = 0.12;
+      const g = ctx.store.glow; g.position.copy(ph.root.position).lerp(eye, 0.38); g.position.x += 0.1;
       ctx.store.focus = d - 0.25;
       ctx.set.foam.uniforms.uAmbient.value = 0.24;
       K.applyFlash(ctx, sheet(ctx, mom + 1.15, 0.2, 6));
       ctx.cam.shake(0.016, t, 13);
     },
-    post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 3, aperture: 1.3, maxBlur: 16 } })),
+    post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 3, aperture: 1.3, maxBlur: 16 }, bloom: { threshold: 1.6, strength: 0.12 } })),
   },
 
   // ─────────────────────────────────────────── 6 · b06 · the knight (reference frame for b25) ──────────────────────
   {
-    name: 'a1.6 the knight, nose screen-left (b06)', start: 'b06-0.08', set: 'beachNight', cast: ['me'], options: { fire: -1, rain: 1.6 },
+    name: 'a1.6 the knight, nose screen-left (b06)', start: 'b06-0.08', set: 'beachNight', cast: ['me'], options: { fire: -1, rain: 1.6 }, momY: 0.76,   // (Mom's bubble is still fading as "She sewed…" starts)
     setup(ctx) {
       ctx.place('me', 'phoneSpot', { yaw: PI / 2 });
       ctx.add(ctx.props.a1rain.root);
-      ctx.store.kick = ctx.add(new THREE.PointLight('#dfe8f2', 2.1, 6, 2));
-      ctx.store.low = ctx.add(new THREE.PointLight('#a9c4ff', 0.5, 3, 2));
+      ctx.store.kick = ctx.add(new THREE.PointLight('#dfe8f2', KNIGHT_LIGHT.kick, 6, 2));
+      ctx.store.low = ctx.add(new THREE.PointLight('#a9c4ff', KNIGHT_LIGHT.low, 3, 2));
+      ctx.store.fill = ctx.add(new THREE.PointLight('#dfe8f2', KNIGHT_LIGHT.fill, 4, 2));
       const em = ctx.cast.me.root.getObjectByName('emblem');
       ctx.store.beads = ctx.add(makeBeads(), em);
     },
@@ -326,8 +343,13 @@ export const shots = [
       updateBeads(ctx.store.beads, lt, w);
       real(ctx).me.update(t); noDrips(ctx); macroRain(ctx, 0.5);
       ctx.cam.set(f); ctx.store.focus = f.focus;
-      ctx.store.kick.position.set(f.look[0] + 0.5, f.look[1] + 0.75, f.look[2] + 1.1);
-      ctx.store.low.position.set(f.look[0] + 0.45, f.look[1] - 0.45, f.look[2] - 0.5);
+      // (camera on +X of the chest; +Z = screen-left.) The kick rakes ALONG the cloth from the upper left, so the knit and the
+      // thread of the knight stand up; the low fill opens the shadows; b25 mirrors all three with KNIGHT_LIGHT
+      const KL = KNIGHT_LIGHT;
+      ctx.store.kick.position.set(f.look[0] + KL.kickP[0], f.look[1] + KL.kickP[1], f.look[2] + KL.kickP[2]);
+      ctx.store.low.position.set(f.look[0] + KL.lowP[0], f.look[1] + KL.lowP[1], f.look[2] + KL.lowP[2]);
+      ctx.store.fill.position.set(f.look[0] + KL.fillP[0], f.look[1] + KL.fillP[1], f.look[2] + KL.fillP[2]);
+      K.weave(ctx, 'me', KL.weave);
       K.applyFlash(ctx, 0.12 * K.flicker(t, 3, 1.1));
     },
     post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 1.7, aperture: 1.2, maxBlur: 16 } })),
@@ -343,8 +365,9 @@ export const shots = [
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me;
       K.filmPose(me, 'huddle', t, { headPitch: 0.1, shiver: 0.5 }); me.face('sad', t);
-      real(ctx).me.update(t);
-      fireScale(ctx, fireCatch(t - ctx.time('b07') + 0.7), 0.7);
+      real(ctx).me.update(t); noDrips(ctx);
+      fireScale(ctx, Math.min(0.66, fireCatch(t - ctx.time('b07') + 0.7)), 0.26);   // a small fire: orange tongues, never a white burst
+      ctx.store.bounceK = 13;
       // low, just off the fire's axis: flames lower left, the kid under the hull, the prints and the sea to the right
       const k = A(ctx, 'camp'), cy = ctx.set.campYaw, fx = Math.sin(cy), fz = Math.cos(cy), lx = fz, lz = -fx, u = smooth(lt / 2.4);
       const fw = 4.4 - 0.25 * u, sd = 0.5;
@@ -352,31 +375,35 @@ export const shots = [
       ctx.set.foam.uniforms.uAmbient.value = 0.22;
       ctx.cam.shake(0.03, t, 2);
     },
-    post: K.shotPost((ctx) => ({ dof: { focus: K.dist(ctx, A(ctx, 'camp')) - 0.9, aperture: 0.14, maxBlur: 8 }, bloom: { threshold: 1.5, strength: 0.12 }, grade: { highlightAmt: 0.5, saturation: 0.42 } })),
+    post: K.shotPost((ctx) => ({ dof: { focus: K.dist(ctx, A(ctx, 'camp')) - 0.9, aperture: 0.14, maxBlur: 8 }, bloom: { threshold: 1.4, strength: 0.12 }, grade: { highlightAmt: 0.7, saturation: 0.72, temperature: -0.08, shadowAmt: 0.08 } })),
   },
 
   // ─────────────────────────────────────────── 8 · b07b · "And I wait." ────────────────────────────────────────────
   {
-    name: 'a1.8 prints out of the surf (b07b)', start: 'b07.w7-0.1', set: 'beachNight', cast: ['me'], options: { fire: 1 },
+    name: 'a1.8 prints out of the surf (b07b)', start: 'b07.w7-0.1', set: 'beachNight', cast: ['me'], options: { fire: 1, splash: 0, rainNear: 4 }, captionY: 0.66,
     setup(ctx) {
       ctx.place('me', 'camp', { yaw: ctx.set.campYaw });
-      const tr = campPrints(ctx); fireBounce(ctx); ctx.store.bounceK = 14;
-      const H = ctx.set.heightAt, bx = tr.toes[0] + tr.u[0] * 1.3, bz = tr.toes[1] + tr.u[1] * 1.3;
-      ctx.store.bounce.position.set(bx - 0.5, H(bx, bz) + 2.2, bz + 0.6);            // the firelight, carried out over the trail
-      const cx = tr.toes[0] + tr.u[0] * 3.4, cz = tr.toes[1] + tr.u[1] * 3.4;
-      const sky = ctx.add(new THREE.PointLight('#a9bcd6', 10, 9, 2)); sky.position.set(cx + 0.6, H(cx, cz) + 3.2, cz - 0.8);   // the surf's grey glow on the nearest prints
+      const tr = campPrints(ctx, 0.72, 0.62, 4.6); fireBounce(ctx); ctx.store.bounceK = 5;   // the uprush has taken the prints below the seventh
+      const H = ctx.set.heightAt, at = (d, side = 0) => [tr.toes[0] + tr.u[0] * d + tr.u[1] * side, tr.toes[1] + tr.u[1] * d - tr.u[0] * side];
+      const b = at(1.4); ctx.store.bounce.position.set(b[0] - 0.5, H(b[0], b[1]) + 2.2, b[1] + 0.6);            // the firelight, carried out over the trail
+      // the surf's grey glow, even along the whole trail: three soft lamps high over it (no print brighter than the next)
+      for (const d of [1.2, 2.4, 3.6, 4.8]) { const c = at(d, 0.9); const sky = ctx.add(new THREE.PointLight('#a9bcd6', 7.5, 8, 2)); sky.position.set(c[0], H(c[0], c[1]) + 2.5, c[1]); }
+      ctx.store.at = at;
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me;
       K.filmPose(me, 'huddle', t, { headPitch: 0.1, shiver: 0.5 }); me.face('sad', t);
       real(ctx).me.update(t);
-      fireScale(ctx, 1, 0.7);
-      // the wake-up shot's angle again, from the surf side: his sneakers at the top edge, and a line of prints that walks up the
-      // frame and stops one step short of them
-      const tr = ctx.store.trail, th = 53 * DEG, hh = lerp(1.84, 1.75, lt / 1.31), back = 3.23;   // (prints land at y 0.18 / 0.32 / 0.52 / 0.79: clear of the caption)
-      const c = [tr.toes[0] + tr.u[0] * back, tr.toes[1] + tr.u[1] * back], h = ctx.set.heightAt(c[0], c[1]), g = hh / Math.tan(th);
-      ctx.cam.set({ pos: [c[0], h + hh, c[1]], look: [c[0] - tr.u[0] * g, h, c[1] - tr.u[1] * g], fov: 54 });
-      ctx.set.foam.uniforms.uAmbient.value = 0.26;
+      fireScale(ctx, 0.66, 0.26);
+      // from over the wash, looking up the beach: the foam's edge along the bottom of the frame with the first print half under
+      // it, the trail walking up the left of the frame, and one step of bare sand before his sneakers at the top
+      const tr = ctx.store.trail, at = ctx.store.at, th = 42 * DEG, hh = lerp(2.36, 2.28, lt / 1.31);
+      const back = tr.last + 1.42, c = at(back, 0.42), h = Math.max(ctx.set.heightAt(c[0], c[1]), 0), g = hh / Math.tan(th), l = at(back - g, 0.42);
+      ctx.cam.set({ pos: [c[0], h + hh, c[1]], look: [l[0], h, l[1]], fov: 48 });
+      // the wash: its lip lies across the last print (the one nearest the sea)
+      const last = at(tr.last + 0.02);
+      ctx.set.foam.uniforms.uWash.value = last[1] - ctx.set.washEdge(last[0], t) + 0.42 + 0.08 * Math.sin(lt * 2.2);
+      ctx.set.foam.uniforms.uAmbient.value = 0.17;
       ctx.cam.shake(0.02, t, 4);
     },
     post: K.shotPost((ctx) => ({ bloom: { threshold: 1.5, strength: 0.12 }, grade: { highlightAmt: 0.5, saturation: 0.42 } })),
@@ -386,6 +413,9 @@ export const shots = [
 
 // the knight sits a touch above centre so the caption line (y 0.62) clears its base; b25 must use the same dy
 export const EMBLEM_DY = -0.055;
+// the knight macro's light, shared with b25 (act 4 mirrors the screen-left/right component). Offsets from the emblem as
+// [toward the lens, up, screen-left]
+export const KNIGHT_LIGHT = { kick: 4.6, kickP: [0.2, 0.55, 1.05], low: 0.7, lowP: [0.45, -0.45, -0.5], fill: 0.7, fillP: [1.2, 0.1, 0.25], weave: 2.3 };
 /** wipe choreography in emblem space: { k 0..1 (blend from the hanging arm), a (m, + = screen-right), b (m, up) } */
 function wipeAt(lt) {
   const inn = sramp(lt, 0.3, 0.85), out = sramp(lt, 1.55, 2.15);
@@ -396,7 +426,7 @@ function wipeAt(lt) {
 /** fire level after the spark (seconds since ignition): catches, flares, settles */
 function fireCatch(x) {
   if (x <= 0) return 0.04;
-  return 0.04 + 0.96 * smooth(x / 1.1) + 0.25 * Math.exp(-Math.pow((x - 0.55) / 0.22, 2));
+  return 0.04 + 0.96 * smooth(x / 1.1) + 0.06 * Math.exp(-Math.pow((x - 0.55) / 0.22, 2));
 }
 /** hide the kid's falling drips for this frame (macro shots: a drip is an egg at this scale). real.update rewrites them. */
 const _zero = new THREE.Matrix4().makeScale(0, 0, 0);
@@ -428,7 +458,33 @@ function updateBeads(mesh, lt, w) {
 
 // frame A: the kid stands this far inland of anchors.kidA (keeps the rag hand inside the right edge)
 const KID_DZ = 0.12;
+// frame A: his right arm (upper-arm euler): swung back and in, so the rag fist sits behind his hip, toward the lens
+const FRAME_A_ARM = K.FRAME_A_ARM;
 
+/**
+ * b04a: the hand that holds the phone (phone-local metres, screen = +Z). The phone hangs 10 cm in front of the fist for
+ * the macro, so the grip is built on the phone itself: a thumb lying over the left bezel, three fingertips wrapping the
+ * right edge, and a turn of the rag across the knuckles behind them, its loose end trailing off the bottom corner.
+ */
+function makeGrip(ch) {
+  const g = new THREE.Group(); g.name = 'a1grip';
+  // (lit by the screen they hold: a little cold emissive, since any real light in front of the glass mirrors into the lens)
+  const skin = new THREE.MeshStandardMaterial({ color: (ch.spec && ch.spec.skin) || '#e8b998', roughness: 0.6, emissive: new THREE.Color('#5d7396'), emissiveIntensity: 0.16 });
+  const box = (w, h, d, x, y, z, rx = 0, ry = 0, rz = 0, mat = skin) => { const m = new THREE.Mesh(rbox(w, h, d, 0.011), mat); m.position.set(x, y, z); m.rotation.set(rx, ry, rz); g.add(m); return m; };
+  box(0.016, 0.036, 0.016, -0.0415, -0.064, 0.006, 0, 0.2, -0.25);                           // thumb over the bottom-left bezel (clear of the map)
+  for (let i = 0; i < 3; i++) box(0.019, 0.017, 0.026, 0.0445, -0.022 - i * 0.0215, -0.004, 0, -0.45, 0.07 * (i - 1));   // fingertips round the right edge
+  const cloth = new THREE.MeshStandardMaterial({ color: '#cfccc4', roughness: 0.9, side: THREE.DoubleSide, vertexColors: true });
+  // a strip of rag across the back of the fingers and the heel of the thumb (behind the glass), wrinkled, with a tail
+  const sg = new THREE.PlaneGeometry(0.15, 0.05, 30, 6), p = sg.attributes.position, c = new Float32Array(p.count * 3);
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), f = Math.sin(y * 150 + 2.4 * Math.sin(x * 40)) * 0.6 + 0.4 * Math.sin(x * 90 + y * 60);
+    p.setXYZ(i, x, y + 0.006 * Math.sin(x * 38), -0.012 - 0.02 * Math.cos(x * 15) + 0.0028 * f);
+    const sh = 0.7 + 0.3 * (0.5 + 0.5 * f); c[i * 3] = c[i * 3 + 1] = c[i * 3 + 2] = sh;
+  }
+  sg.setAttribute('color', new THREE.BufferAttribute(c, 3)); sg.computeVertexNormals();
+  const strip = new THREE.Mesh(sg, cloth); strip.position.set(0.004, -0.045, 0); strip.rotation.z = 0.22; g.add(strip);
+  return g;
+}
 // the phone is held a little off square (rotateY, rotateX): a clean screen, the sky's glare parked on a corner
 const PHONE_TILT = [0.21, -0.15];
 /** rain beads on the phone glass (phone-local metres; the screen is 72 x 149 mm, facing +Z) */

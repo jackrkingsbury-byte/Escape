@@ -34,9 +34,10 @@
  *   setMirror(ch, on)                mirror / un-mirror a character in X (emblem nose + rag hand swap sides).
  *   filmPose(ch, name, t, p)         'stand' | 'kneel' | 'huddle' | 'prone' | 'supine' film poses (see FILM_POSES);
  *   joint(ch, name, x, y, z)         tweak one joint after a pose; follow(ctx, prop, joint, o) = held but not parented.
+ *   filmFace(ch, 'creep1'|'creep'|'shout')   film-only faces, swapped in after ch.face() (see buildFilmFace).
  *   makePhone()                      cracked phone: map screen / torch, light, beam. hold(ch, phone, 'L'|'R', ctx);
  *   phoneToward(ctx, ch, phone, side, target)   phone raised in the hand, screen to the eyes (POV macro); eyePoint(ch).
- *   makeFootprints(points, o)        square sneaker-print decals; printTrail(from, to, o) → points.
+ *   makeFootprints(points, o)        sneaker-sole decals (wet depressions, L/R mirrored); printTrail(from, to, o) → points.
  *   makeMirrorPool(ctx, o)           planar-reflection still pool with actor substitution + see-through mode.
  */
 import * as THREE from 'three';
@@ -48,6 +49,7 @@ import { RU, setFrame, PRE_RENDER, inScene } from '../real/materials.js';
 import { makeSky, bakeEnvironment } from '../real/env.js';
 import { loadAssets, getAsset, loadHDR, textureSet } from '../real/assets.js';
 import { makeReal } from '../real/realchar.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const V3 = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
 const arr3 = (v) => (Array.isArray(v) ? V3(v[0], v[1], v[2]) : v.clone());
@@ -161,6 +163,8 @@ export function realSet(ctx, { hdr = null, sky = null, env = {}, bg = {}, exposu
     // call setWet in update().
     const R = ctx.props && ctx.props.real;
     if (R && set.options && set.options.wet != null) { if (R.me) R.me.setWet(set.options.wet); if (R.copy) R.copy.setWet(set.options.wet); }
+    // fabric weave strength: 1 unless a shot raises it THIS frame (the knight macros): K.weave(ctx, id, k) in update()
+    if (R) for (const id of ['me', 'copy']) if (R[id]) R[id].uniforms.uDetail.value = 1;
     for (const p of parts) p.update(t, ctx.camera);
     if (set.onUpdate) set.onUpdate(t);
   };
@@ -240,6 +244,8 @@ export function frameA(set) {
   // the foam line runs up the middle and the double stands on it just above the caption line
   return { pos: [k.x + 4.0, k.y + 2.3, k.z + 0.75], look: [k.x - 18, k.y + 1.72, k.z - 0.2], fov: 48 };
 }
+/** frame A: the kid's right upper-arm euler (K.filmPose 'stand' armR): swung back and in, so the white rag fist sits behind his hip, toward the lens, inside the frame */
+export const FRAME_A_ARM = [0.42, 0, 0.26];
 const _e = V3(), _n = V3(), _q = new THREE.Quaternion();
 const KNIGHT_W = 0.165;     // width of the drawn knight on its 0.25 m decal
 /**
@@ -298,7 +304,8 @@ function buildPhrases(tl) {
     const exact = toks.length === ws.length;
     const kind = (ws[0].speaker || b.speaker) === 'copy' ? 'copy' : 'narr';
     let cur = [];
-    const flush = () => { if (cur.length) out.push({ kind, items: cur, start: cur[0].w.start, end: cur[cur.length - 1].w.end }); cur = []; };
+    let punct = false;
+    const flush = () => { if (cur.length) out.push({ kind, items: cur, start: cur[0].w.start, end: cur[cur.length - 1].w.end, brk: punct }); cur = []; punct = false; };
     ws.forEach((w, i) => {
       const raw = exact ? toks[i] : String(w.text);
       const brk = exact && PUNCT_BREAK.test(raw);
@@ -308,12 +315,19 @@ function buildPhrases(tl) {
       const gap = next.start - w.end, left = ws.length - 1 - i;
       const chars = cur.reduce((n, c) => n + c.text.length + 1, 0);
       const nextEnds = left === 1 || (exact && PUNCT_BREAK.test(toks[i + 1]));      // don't strand a single word
-      if (brk || gap > 0.26) return flush();
+      if (brk || gap > 0.26) { punct = true; return flush(); }
       if (cur.length >= 4 || (cur.length >= 3 && chars >= 15 && !nextEnds) || (cur.length >= 2 && chars >= 20)) return flush();
     });
     flush();
   }
   out.sort((a, b) => a.start - b.start);
+  // the hook: the film's first phrase runs to its first punctuation ("Every time the lightning hits") and is on screen,
+  // whole, from frame 0 (the words still brighten one by one as they are spoken)
+  while (out.length > 1 && out[0].kind === 'narr' && out[1].kind === 'narr' && out[0].start < 0.6 && out[0].items.length + out[1].items.length <= 6
+    && !out[0].brk && out[1].start - out[0].end < 0.3) {
+    const m = out.shift(); out[0].items = m.items.concat(out[0].items); out[0].start = m.start;
+  }
+  if (out.length && out[0].start < 0.6) { out[0].pre = true; out[0].start = 0; }
   out.forEach((p, i) => { const nx = out[i + 1]; p.until = Math.min(nx ? nx.start : Infinity, p.end + (p.kind === 'huss' ? 0.6 : 0.5)); });
   return out;
 }
@@ -333,7 +347,10 @@ export function drawCaptions(g, tl, t, state = {}) {
   const opts = state.options || {};
   if (!tl.__cinePhrases) tl.__cinePhrases = buildPhrases(tl);
   const cw = g.canvas.width, chh = g.canvas.height, k = cw / W;
-  const cx = cw / 2, cy = chh * (opts.y ?? 0.62);
+  // per-shot placement: shot.captionY (0..1) moves the spoken line (e.g. 0.82 on frame A, where the subject stands at
+  // y 0.5–0.75), shot.momY the phone bubble
+  const shot = state.ctx && state.ctx.shot ? state.ctx.shot : null;
+  const cx = cw / 2, cy = chh * ((shot && shot.captionY) ?? opts.y ?? 0.62);
   g.save();
   g.textBaseline = 'alphabetic'; g.textAlign = 'left'; g.lineJoin = 'round';
   try { g.letterSpacing = '0px'; } catch (e) { /* */ }
@@ -381,12 +398,12 @@ export function drawCaptions(g, tl, t, state = {}) {
       let x = cx - total / 2;
       ph.items.forEach((it, i) => {
         const lt = t - it.w.start;
-        if (lt >= 0) {
+        if (lt >= 0 || ph.pre) {
           const e = ease.outCubic(clamp(lt / 0.09, 0, 1));
-          g.globalAlpha = e * out;
+          g.globalAlpha = (ph.pre ? lerp(0.72, 1, e) : e) * out;
           if (copy) { g.fillStyle = '#000000'; g.fillText(it.text, x, base); }
           else {
-            const dy = (1 - e) * 7 * k;
+            const dy = ph.pre ? 0 : (1 - e) * 7 * k;
             g.shadowColor = 'rgba(0,0,0,0.9)'; g.shadowBlur = 16 * k; g.shadowOffsetY = 2 * k;
             g.fillStyle = '#ffffff';
             g.fillText(it.text, x, base + dy);
@@ -415,7 +432,7 @@ export function drawCaptions(g, tl, t, state = {}) {
     const tw = Math.max(...lines.map((l) => g.measureText(l).width));
     const padX = 34 * k, padY = 24 * k, lh = size * 1.28;
     const bw = tw + padX * 2, bh = lines.length * lh + padY * 2 - (lh - size) * 0.6;
-    const bx = 96 * k, by = chh * (opts.momY ?? 0.665) - bh / 2;
+    const bx = 96 * k, by = chh * ((shot && shot.momY) ?? opts.momY ?? 0.665) - bh / 2;
     g.translate(bx, by + bh); g.scale(lerp(0.9, 1, inn), lerp(0.9, 1, inn)); g.translate(-bx, -(by + bh));
     g.globalAlpha = inn * outA;
     // sender label
@@ -451,23 +468,62 @@ export const castSpecs = {
   captain: { id: 'captain', skin: '#c99a7a', hair: { style: 'short', color: '#3a3a3a' }, top: { style: 'cardigan', color: '#23262b', accent: '#3a3f46' },
     bottom: { style: 'pants', color: '#1c1e22' }, shoes: '#15171a', accessories: ['cap', 'beard'], capColor: '#1a1c20', scale: 1.12, build: 1.15 },
 };
+/**
+ * The white sailcloth rag on a right hand (hand-local metres; the 0.14 m hand block is centred on the joint, +Y = wrist).
+ * A torn strip wound round the fist: four overlapping turns that wander up and down as they go round, each with its own
+ * wrinkles (displaced along the wrap, darker in the folds), one of them crossing the knuckles on the diagonal, a knot on
+ * the outside and two loose tails. No flat panels, no clean frame round the hand.
+ */
 function makeRag() {
   const ts = textureSet('wet_fabric');
-  const nm = ts.normalMap.clone(); nm.repeat.set(0.5, 0.5); nm.needsUpdate = true;
-  const mat = new THREE.MeshStandardMaterial({ color: '#e6e3da', roughness: 0.8, normalMap: nm, normalScale: new THREE.Vector2(0.5, 0.5),
-    emissive: new THREE.Color('#e6e3da'), emissiveIntensity: 0.035, side: THREE.DoubleSide });
+  const nm = ts.normalMap.clone(); nm.wrapS = nm.wrapT = THREE.RepeatWrapping; nm.repeat.set(2.2, 1.2); nm.needsUpdate = true;
+  const mat = new THREE.MeshStandardMaterial({ color: '#cfccc3', roughness: 0.88, normalMap: nm, normalScale: new THREE.Vector2(0.32, 0.32), vertexColors: true,
+    emissive: new THREE.Color('#e6e3da'), emissiveIntensity: 0.022, side: THREE.DoubleSide });
   const g = new THREE.Group(); g.name = 'rag';
-  const band = new THREE.Mesh(new THREE.BoxGeometry(0.168, 0.085, 0.172, 2, 1, 2), mat); band.position.set(0, 0.018, 0); band.rotation.z = 0.12; g.add(band);
-  const band2 = new THREE.Mesh(new THREE.BoxGeometry(0.172, 0.05, 0.165, 2, 1, 2), mat); band2.position.set(0, -0.02, 0.002); band2.rotation.z = -0.2; g.add(band2);
-  const knot = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.045, 0.04), mat); knot.position.set(-0.088, 0.02, 0.03); knot.rotation.set(0.4, 0.2, 0.5); g.add(knot);
-  const tail = (len, rx, rz, x, z) => {
-    const tg = new THREE.PlaneGeometry(0.05, len, 1, 5); tg.translate(0, -len / 2, 0);
-    const p = tg.attributes.position;
-    for (let i = 0; i < p.count; i++) { const yy = -p.getY(i) / len; p.setZ(i, 0.03 * Math.sin(yy * 4.2) * yy); p.setX(i, p.getX(i) * (1 - 0.45 * yy) + 0.012 * Math.sin(yy * 9)); }
-    tg.computeVertexNormals();
-    const m = new THREE.Mesh(tg, mat); m.position.set(x, 0.0, z); m.rotation.set(rx, 0.5, rz); g.add(m); return m;
+  const SE = (c) => Math.sign(c) * Math.pow(Math.abs(c), 0.42);                    // rounded-square cross-section
+  const turn = ({ y0, amp, ph, w, off, seed, a0 = 0, a1 = Math.PI * 2 }) => {
+    const NU = 56, NV = 6, pos = [], col = [], uv = [], idx = [];
+    for (let i = 0; i <= NU; i++) {
+      const u = i / NU, th = a0 + (a1 - a0) * u, cs = Math.cos(th), sn = Math.sin(th);
+      const wv = w * (1 + 0.16 * Math.sin(th * 3 + seed) + 0.07 * Math.sin(th * 7 + seed * 2.3));
+      const yc = y0 + amp * Math.sin(th + ph) + 0.004 * Math.sin(th * 4 + seed);
+      for (let j = 0; j <= NV; j++) {
+        const v = j / NV, fold = Math.sin(v * Math.PI * 2.6 + 2.2 * Math.sin(th * 2 + seed) + seed) * 0.6 + 0.4 * Math.sin(v * 9 + th * 5 + seed * 3);
+        const edge = 0.0015 * Math.sin(th * 11 + seed + j);                         // frayed, uneven edges
+        const r = 0.07 + off + 0.0034 * fold + 0.0015 * Math.sin(th * 9 + v * 4 + seed);
+        pos.push(SE(cs) * r, yc + (v - 0.5) * wv + (j === 0 || j === NV ? edge : 0), SE(sn) * r);
+        const c = 0.74 + 0.26 * (0.5 + 0.5 * fold) - (j === 0 || j === NV ? 0.06 : 0);
+        col.push(c, c, c * 0.985); uv.push(u * 6, v);
+      }
+    }
+    for (let i = 0; i < NU; i++) for (let j = 0; j < NV; j++) { const a = i * (NV + 1) + j, b = a + NV + 1; idx.push(a, b, a + 1, a + 1, b, b + 1); }
+    const bg = new THREE.BufferGeometry();
+    bg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); bg.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    bg.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); bg.setIndex(idx); bg.computeVertexNormals();
+    g.add(new THREE.Mesh(bg, mat));
   };
-  tail(0.2, 0.25, 0.35, -0.095, 0.03); tail(0.13, -0.3, 0.75, -0.1, 0.025);
+  turn({ y0: 0.03, amp: 0.012, ph: 0.4, w: 0.062, off: 0.006, seed: 1.3 });
+  turn({ y0: -0.02, amp: -0.014, ph: 1.9, w: 0.058, off: 0.009, seed: 4.1 });
+  turn({ y0: 0.004, amp: 0.036, ph: 2.6, w: 0.036, off: 0.0125, seed: 7.7 });       // the diagonal turn across the knuckles
+  turn({ y0: 0.066, amp: 0.006, ph: 5.0, w: 0.034, off: 0.0105, seed: 9.2 });       // the last turn, up on the wrist
+  const knot = new THREE.Mesh(new THREE.IcosahedronGeometry(0.024, 1), mat); knot.position.set(-0.09, 0.024, 0.028); knot.scale.set(0.8, 1.05, 1.2); knot.rotation.set(0.4, 0.2, 0.5);
+  { const kg = knot.geometry, kp = kg.attributes.position, kc = new Float32Array(kp.count * 3);
+    for (let i = 0; i < kp.count; i++) { const d = 1 + 0.16 * Math.sin(kp.getX(i) * 190 + kp.getY(i) * 140) * Math.cos(kp.getZ(i) * 170); kp.setXYZ(i, kp.getX(i) * d, kp.getY(i) * d, kp.getZ(i) * d); kc[i * 3] = kc[i * 3 + 1] = kc[i * 3 + 2] = 0.72 + 0.2 * d * 0.5; }
+    kg.setAttribute('color', new THREE.BufferAttribute(kc, 3)); kg.computeVertexNormals(); }
+  g.add(knot);
+  const tail = (len, rx, rz, x, z, seed) => {
+    const tg = new THREE.PlaneGeometry(0.046, len, 3, 10); tg.translate(0, -len / 2, 0);
+    const p = tg.attributes.position, c = new Float32Array(p.count * 3);
+    for (let i = 0; i < p.count; i++) {
+      const yy = -p.getY(i) / len, xx = p.getX(i) / 0.023;
+      const curl = 0.034 * Math.sin(yy * 4.2 + seed) * yy + 0.006 * xx * xx + 0.004 * Math.sin(yy * 13 + xx * 2 + seed);     // hangs, twists, cups
+      p.setZ(i, curl); p.setX(i, p.getX(i) * (1 - 0.5 * yy) + 0.014 * Math.sin(yy * 8 + seed)); p.setY(i, p.getY(i) + 0.004 * xx * Math.sin(yy * 6 + seed) - (yy > 0.97 ? 0.004 * Math.sin(xx * 5 + seed) : 0));
+      const sh = 0.8 + 0.2 * Math.sin(yy * 13 + xx * 2 + seed); c[i * 3] = c[i * 3 + 1] = c[i * 3 + 2] = sh;
+    }
+    tg.setAttribute('color', new THREE.BufferAttribute(c, 3)); tg.computeVertexNormals();
+    const m = new THREE.Mesh(tg, mat); m.position.set(x, 0.008, z); m.rotation.set(rx, 0.5, rz); g.add(m); return m;
+  };
+  tail(0.19, 0.25, 0.35, -0.095, 0.03, 1.0); tail(0.12, -0.3, 0.75, -0.1, 0.022, 3.4);
   g.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   return g;
 }
@@ -478,9 +534,173 @@ export function initCast(ctx) {
   real.copy = makeReal(ctx.cast.copy, { wet: 0.9, drips: 0 });
   if (ctx.cast.captain) real.captain = makeReal(ctx.cast.captain, { wet: 0.4, drips: 0 });
   for (const id of ['me', 'copy']) { const rag = makeRag(); ctx.cast[id].joints.handR.add(rag); ctx.cast[id].rag = rag; }
+  for (const id of Object.keys(real)) matteFace(ctx.cast[id], real[id]);
+  for (const id of ['me', 'copy']) { smoothHeadphones(ctx.cast[id], real[id]); sewnEmblem(ctx.cast[id]); }
   ctx.props.real = real;
   return real;
 }
+/**
+ * The face decal is INK ON SKIN, not wet cloth: take it out of the kit's wet-gloss path. makeReal leaves it with a pore
+ * bump and (soaked) roughness 0.18, so a key light at a grazing angle turned the black eyes and brows into a mottled grey
+ * sheen. Here: no bump, roughness 0.92, almost no environment reflection, and setWet no longer touches it.
+ */
+function matteFace(ch, real) {
+  const fm = ch.root.getObjectByName('face'); if (!fm || !fm.material) return;
+  const m = fm.material, i = real.decals.findIndex((d) => d.mat === m);
+  if (i >= 0) { m.color.copy(real.decals[i].color); real.decals.splice(i, 1); }
+  m.roughness = 0.92; m.metalness = 0; m.envMapIntensity = 0.04;
+  m.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+  { vec2 e = abs(vMapUv - 0.5) * 2.0; diffuseColor.rgb *= mix(1.0, 0.74, smoothstep(0.62, 1.0, max(e.x, e.y))) * vec3(1.0, 0.97, 0.95); }`);
+  };
+  m.customProgramCacheKey = () => 'cineFace';
+  m.needsUpdate = true;
+}
+
+/** the stock headphone cups are 14-sided cylinders (polygons in the b06 / b25 macro): rebuild the set with round ones */
+function smoothHeadphones(ch, real) {
+  const grp = ch.root.getObjectByName('acc:headphones'), em = ch.root.getObjectByName('emblem'); if (!grp || !em) return;
+  const front = em.position.z - 0.004, cx = 0.19 * (0.9 + 0.1 * ((ch.spec && ch.spec.build) ?? 1));
+  const geos = [], col = new THREE.Color(), q = new THREE.Quaternion(), m4 = new THREE.Matrix4();
+  const add = (geo, color, pos = [0, 0, 0], rot = [0, 0, 0]) => {
+    const g = geo.index ? geo.toNonIndexed() : geo;
+    for (const k of Object.keys(g.attributes)) if (k !== 'position' && k !== 'normal') g.deleteAttribute(k);
+    g.applyMatrix4(m4.compose(V3(pos[0], pos[1], pos[2]), q.setFromEuler(new THREE.Euler(rot[0], rot[1], rot[2])), V3(1, 1, 1)));
+    col.set(color);
+    const n = g.attributes.position.count, c = new Float32Array(n * 3), id = new Float32Array(n).fill(6);
+    for (let i = 0; i < n; i++) { c[i * 3] = col.r; c[i * 3 + 1] = col.g; c[i * 3 + 2] = col.b; }
+    g.setAttribute('color', new THREE.BufferAttribute(c, 3)); g.setAttribute('aMat', new THREE.BufferAttribute(id, 1));
+    geos.push(g);
+  };
+  const white = '#f4f4f6', pad = '#3a3b42', pts = [[cx, 0.4, 0.17], [cx + 0.03, 0.46, 0.05], [0.17, 0.48, -0.12], [0, 0.48, -0.2], [-0.17, 0.48, -0.12], [-cx - 0.03, 0.46, 0.05], [-cx, 0.4, 0.17]].map((p) => V3(p[0], p[1], p[2]));
+  add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 48, 0.024, 14, false), white);
+  for (const sx of [-1, 1]) {
+    const rot = [-1.15, 0, sx * 0.5];
+    add(new THREE.CylinderGeometry(0.078, 0.078, 0.055, 56), white, [sx * (cx + 0.01), 0.36, front + 0.035], rot);
+    add(new THREE.CylinderGeometry(0.064, 0.064, 0.03, 48), pad, [sx * (cx + 0.005), 0.385, front + 0.012], rot);
+    add(new THREE.CylinderGeometry(0.05, 0.05, 0.012, 48), '#d8d8da', [sx * (cx + 0.016), 0.34, front + 0.055], rot);
+  }
+  const mesh = new THREE.Mesh(mergeGeometries(geos), real.material); mesh.castShadow = true; mesh.receiveShadow = true; mesh.name = 'headphonesSmooth';
+  for (const o of grp.children.slice()) if (o.isMesh) grp.remove(o);
+  grp.add(mesh);
+}
+/**
+ * "She sewed this knight on my hoodie": the stock emblem is a 256 px flat white vector. Film version (1024 px): the same
+ * knight, re-sharpened, in off-white satin stitch (fine thread rows with a little wander), and a ring of uneven hand
+ * stitches round its outline. One texture, shared by the kid and the double (the double's is mirrored with his body).
+ */
+let _sewnTex = null;
+function sewnEmblem(ch) {
+  const em = ch.root.getObjectByName('emblem'); if (!em || !em.material || !em.material.map) return;
+  if (!_sewnTex) {
+    const src = em.material.map.image, S = 1024, r = rng(2606);
+    _sewnTex = canvasTexture(S, S, (g) => {
+      g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+      g.drawImage(src, 0, 0, S, S);
+      const im = g.getImageData(0, 0, S, S), d = im.data, A = new Float32Array(S * S);
+      for (let i = 0; i < S * S; i++) A[i] = clamp((d[i * 4 + 3] / 255 - 0.5) * 6 + 0.5, 0, 1);      // re-sharpen the upscaled edge
+      // blurred coverage → distance-ish field for the stitch ring (two separable box blurs)
+      const blur = (src0, rad) => { const t = new Float32Array(S * S), o = new Float32Array(S * S);
+        for (let y = 0; y < S; y++) { let acc = 0; for (let x = -rad; x < S; x++) { if (x + rad < S) acc += src0[y * S + x + rad]; if (x - rad - 1 >= 0) acc -= src0[y * S + x - rad - 1]; if (x >= 0) t[y * S + x] = acc / (2 * rad + 1); } }
+        for (let x = 0; x < S; x++) { let acc = 0; for (let y = -rad; y < S; y++) { if (y + rad < S) acc += t[(y + rad) * S + x]; if (y - rad - 1 >= 0) acc -= t[(y - rad - 1) * S + x]; if (y >= 0) o[y * S + x] = acc / (2 * rad + 1); } }
+        return o; };
+      const B = blur(blur(A, 13), 13);
+      const row = new Float32Array(S); for (let y = 0; y < S; y++) row[y] = r();
+      for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+        const i = y * S + x, a = A[i], o = i * 4;
+        // satin stitch: thread rows ~5 px apart running slightly uphill, each row a touch lighter or darker
+        const ty = y + 0.18 * x + 3 * Math.sin(x * 0.021 + y * 0.013), th = 0.5 + 0.5 * Math.sin(ty * 1.25), rk = row[Math.floor(ty / 5.03) & 1023];
+        let v = 0.8 + 0.15 * th + 0.07 * (rk - 0.5), al = a;
+        // the hand-stitched edge: dashes in a band just outside the outline, spaced along whichever axis the edge runs
+        const b = B[i];
+        if (a < 0.5 && b > 0.045 && b < 0.2) {
+          const gx = B[Math.min(S * S - 1, i + 1)] - B[Math.max(0, i - 1)], gy = B[Math.min(S * S - 1, i + S)] - B[Math.max(0, i - S)];
+          const along = Math.abs(gx) < Math.abs(gy) ? x : y, ph = (along + 9 * Math.sin((x + y) * 0.017)) / 30, dash = ph - Math.floor(ph);
+          const inBand = clamp((b - 0.045) / 0.03, 0, 1) * clamp((0.2 - b) / 0.04, 0, 1);
+          const on = clamp((0.62 - dash) / 0.06, 0, 1) * clamp(dash / 0.06, 0, 1);
+          al = Math.max(al, 0.9 * inBand * on); v = 0.78 + 0.1 * Math.sin(dash * 9);
+        }
+        d[o] = d[o + 1] = 255 * v; d[o + 2] = 255 * v * 0.985; d[o + 3] = 255 * al;
+      }
+      g.putImageData(im, 0, 0);
+    });
+    _sewnTex.anisotropy = 8;
+  }
+  em.material.map = _sewnTex; em.material.roughness = 0.82; em.material.needsUpdate = true;
+}
+
+// ───────────────────────────────────────────── film faces
+// Expressions the stock face kit only has as cartoons. Built once per character from its own 'neutral' face (so eye,
+// brow and skin colours match), then swapped in AFTER ch.face(): K.filmFace(ch, 'creep').
+//   'creep1'  the reflection's smile starting: closed mouth, corners just lifting, eyes dead (no sparkle)
+//   'creep'   the too-wide closed smile of beats 18 / 19 / 25: no teeth, no blush, fixed pupils, brows flat
+//   'shout'   the HUSS: eyes squeezed to plain lines, heavy brows, a dark open mouth. No anger mark, no blush.
+const _filmFaces = new Map();
+function buildFilmFace(ch, name) {
+  const fm = ch.root.getObjectByName('face');
+  ch.face('neutral', 1.5 - (ch.blinkPhase || 0));                       // an open-eyed neutral
+  const src = fm.material.map.image;
+  const LINE = '#151515', EX = [148, 364], EY = 232, BY = 156, MY = 374;
+  return canvasTexture(512, 512, (g) => {
+    g.drawImage(src, 0, 0);
+    const px = (x, y) => { const d = g.getImageData(x, y, 1, 1).data; return `rgb(${d[0]},${d[1]},${d[2]})`; };
+    const eyeC = px(EX[0] + 14, EY + 22), browC = px(EX[0], BY);
+    g.clearRect(40, 284, 140, 66); g.clearRect(332, 284, 140, 66);       // blush
+    g.clearRect(150, 336, 212, 110);                                      // mouth
+    g.lineCap = 'round'; g.lineJoin = 'round';
+    const ell = (x, y, rx, ry) => { g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); };
+    if (name === 'creep' || name === 'creep1') {
+      const wide = name === 'creep';
+      for (const x of EX) {                                               // flat black eyes: one small fixed catch-light, dead centre
+        g.clearRect(x - 50, EY - 52, 100, 104);
+        g.fillStyle = eyeC; ell(x, EY, 31, wide ? 43 : 41); g.fill();
+        g.fillStyle = 'rgba(255,255,255,0.78)'; ell(x, EY - 4, 4.5, 4.5); g.fill();
+      }
+      g.strokeStyle = LINE; g.lineWidth = wide ? 13 : 13;
+      g.beginPath();
+      if (wide) { g.moveTo(138, MY - 30); g.bezierCurveTo(176, MY + 34, 336, MY + 34, 374, MY - 30); }
+      else { g.moveTo(204, MY - 4); g.quadraticCurveTo(256, MY + 22, 308, MY - 4); }
+      g.stroke();
+      if (wide) {                                                         // the corners dig in
+        g.lineWidth = 8;
+        g.beginPath(); g.moveTo(128, MY - 42); g.quadraticCurveTo(140, MY - 30, 136, MY - 16); g.stroke();
+        g.beginPath(); g.moveTo(384, MY - 42); g.quadraticCurveTo(372, MY - 30, 376, MY - 16); g.stroke();
+      }
+    } else if (name === 'shout') {
+      g.clearRect(84, 96, 344, 190);                                      // eyes + brows (the nose arc at y ≈ 290–306 stays)
+      EX.forEach((x, k) => {
+        const inn = k === 0 ? 1 : -1;                                     // toward the nose
+        g.strokeStyle = browC; g.lineWidth = 23;
+        g.beginPath(); g.moveTo(x - inn * 42, BY - 4); g.lineTo(x + inn * 36, BY + 34); g.stroke();
+        g.strokeStyle = LINE; g.lineWidth = 15;                           // the eye: one hard line, pinched toward the nose
+        g.beginPath(); g.moveTo(x - inn * 34, EY - 2); g.quadraticCurveTo(x, EY + 12, x + inn * 32, EY + 16); g.stroke();
+        g.lineWidth = 7;
+        g.beginPath(); g.moveTo(x - inn * 30, EY + 18); g.quadraticCurveTo(x - inn * 4, EY + 30, x + inn * 20, EY + 30); g.stroke();
+      });
+      const path = () => { g.beginPath(); g.moveTo(194, MY - 30); g.quadraticCurveTo(256, MY - 44, 318, MY - 30); g.quadraticCurveTo(334, MY + 30, 302, MY + 60);
+        g.quadraticCurveTo(256, MY + 72, 210, MY + 60); g.quadraticCurveTo(178, MY + 30, 194, MY - 30); g.closePath(); };
+      path(); g.fillStyle = '#1c070b'; g.fill();
+      g.save(); path(); g.clip(); g.fillStyle = '#3a0e16'; ell(256, MY + 62, 44, 20); g.fill(); g.restore();
+      path(); g.lineWidth = 12; g.strokeStyle = LINE; g.stroke();
+    }
+  });
+}
+/** hoodie weave bump × for this frame (reset to 1 by the set every frame) */
+export function weave(ctx, id, k) { const r = ctx.props.real && ctx.props.real[id]; if (r) r.uniforms.uDetail.value = k; }
+/** swap a film face in for this frame (call AFTER ch.face(...): face() rewrites the map every call) */
+export function filmFace(ch, name) {
+  const key = (ch.id || ch.spec?.id || '?') + '|' + name;
+  let t = _filmFaces.get(key);
+  if (!t) {
+    const fm = ch.root.getObjectByName('face'), keep = fm.material.map, expr = ch.expression;
+    t = buildFilmFace(ch, name); _filmFaces.set(key, t);
+    fm.material.map = keep; ch.expression = expr;
+  }
+  ch.root.getObjectByName('face').material.map = t;
+  return ch;
+}
+/** build every film face at init (texture creation order must not depend on which frame is rendered first) */
+export function initFilmFaces(ctx) { for (const id of ['me', 'copy']) for (const n of ['creep1', 'creep', 'shout']) if (ctx.cast[id]) filmFace(ctx.cast[id], n); for (const id of ['me', 'copy']) if (ctx.cast[id]) ctx.cast[id].face('neutral', 0); }
 
 // ───────────────────────────────────────────── film poses
 const HIP_Y = 0.92, THIGH = 0.265, SHIN = 0.585, ANKLE_H = 0.07, LEG_D = 0.21;
@@ -728,35 +948,66 @@ export function phoneToward(ctx, ch, phone, side = 'R', target = null, o = {}) {
 
 let _printTex = null;
 /**
- * Square sneaker-print decals (beats 7 and 14). points: [[x, z, yaw, side(±1)]…]; o: { heightAt, size 0.3, opacity 0.9 }.
- * Dark, water-filled, glossy: they read as wet stamps in firelight and in a flash. Returns a Mesh (ctx.add it, or keep it
- * in the set). printTrail(from [x,z], to [x,z], { stride 0.62, gauge 0.2 }) → points walking from → to.
+ * Sneaker-print decals (beats 7 and 14). points: [[x, z, yaw, side(±1)]…]; o: { heightAt, size 0.3, opacity 0.9 }.
+ * A sole, not a stamp: rounded toe, a waist, a separate heel, soft tread bars. Rendered as a wet dark DEPRESSION: the
+ * sand inside is darker (alpha), and a normal map pressed from the same shape gives the rim a thin highlight on the side
+ * that faces the light (fire / flash). Left and right feet are mirrored. Returns a Mesh (ctx.add it, or keep it in the
+ * set). printTrail(from [x,z], to [x,z], { stride 0.62, gauge 0.2 }) → points walking from → to.
  */
+function printTextures() {
+  if (_printTex) return _printTex;
+  const Wd = 128, Hd = 256;
+  // the sole outline (a right foot: the big-toe side is the left edge of the canvas; toe at the top)
+  const sole = (g) => {
+    g.beginPath();                                   // forefoot + waist
+    g.moveTo(34, 150); g.bezierCurveTo(22, 110, 18, 60, 36, 30); g.bezierCurveTo(50, 8, 86, 8, 100, 34);
+    g.bezierCurveTo(114, 62, 106, 112, 98, 150); g.bezierCurveTo(80, 160, 52, 160, 34, 150); g.closePath(); g.fill();
+    g.beginPath();                                   // heel (a gap of bare sand between them: the arch)
+    g.moveTo(40, 172); g.bezierCurveTo(56, 164, 80, 164, 94, 172); g.bezierCurveTo(100, 200, 96, 232, 82, 244);
+    g.bezierCurveTo(70, 252, 58, 250, 50, 242); g.bezierCurveTo(38, 228, 36, 198, 40, 172); g.closePath(); g.fill();
+  };
+  const mk = (fn) => { const c = document.createElement('canvas'); c.width = Wd; c.height = Hd; const g = c.getContext('2d'); fn(g); return c; };
+  // alpha: soft-edged sole; faint lighter tread bars (ridges of sand left standing between the lugs)
+  const alphaC = mk((g) => {
+    g.fillStyle = '#000'; g.fillRect(0, 0, Wd, Hd);
+    g.filter = 'blur(2.2px)'; g.fillStyle = '#fff'; sole(g); g.filter = 'none';
+    g.globalCompositeOperation = 'multiply'; g.strokeStyle = 'rgba(120,120,120,1)'; g.lineWidth = 3.2; g.lineCap = 'round'; g.filter = 'blur(1.2px)';
+    for (let i = 0; i < 6; i++) { const y = 44 + i * 19; g.beginPath(); g.moveTo(30, y + 5); g.quadraticCurveTo(66, y - 6, 104, y + 5); g.stroke(); }
+    for (let i = 0; i < 3; i++) { const y = 188 + i * 18; g.beginPath(); g.moveTo(44, y + 3); g.quadraticCurveTo(68, y - 4, 92, y + 3); g.stroke(); }
+    g.filter = 'none'; g.globalCompositeOperation = 'source-over';
+  });
+  // height (white = sand level, black = pressed in) → normal map: a bevelled rim
+  const hC = mk((g) => { g.fillStyle = '#fff'; g.fillRect(0, 0, Wd, Hd); g.filter = 'blur(3.5px)'; g.fillStyle = '#000'; sole(g); g.filter = 'none'; });
+  const hd = hC.getContext('2d').getImageData(0, 0, Wd, Hd).data;
+  const nC = mk((g) => {
+    const im = g.createImageData(Wd, Hd), d = im.data, hAt = (x, y) => hd[(clamp(y, 0, Hd - 1) * Wd + clamp(x, 0, Wd - 1)) * 4] / 255;
+    for (let y = 0; y < Hd; y++) for (let x = 0; x < Wd; x++) {
+      const dx = (hAt(x + 1, y) - hAt(x - 1, y)) * 3.2, dy = (hAt(x, y + 1) - hAt(x, y - 1)) * 3.2, l = Math.hypot(dx, dy, 1), o = (y * Wd + x) * 4;
+      d[o] = (-dx / l * 0.5 + 0.5) * 255; d[o + 1] = (dy / l * 0.5 + 0.5) * 255; d[o + 2] = (1 / l * 0.5 + 0.5) * 255; d[o + 3] = 255;
+    }
+    g.putImageData(im, 0, 0);
+  });
+  const alpha = new THREE.CanvasTexture(alphaC); alpha.anisotropy = 4;
+  const normal = new THREE.CanvasTexture(nC); normal.anisotropy = 4;
+  return (_printTex = { alpha, normal });
+}
 export function makeFootprints(points, o = {}) {
-  if (!_printTex) {
-    _printTex = canvasTexture(128, 256, (g, w, h) => {
-      g.clearRect(0, 0, w, h);
-      g.fillStyle = '#fff'; rr(g, 22, 12, w - 44, h - 24, 16); g.fill();
-      g.globalCompositeOperation = 'destination-out';
-      for (let i = 0; i < 7; i++) g.fillRect(22, 40 + i * 28, w - 44, 7);
-      g.fillRect(22, 150, w - 44, 16);
-      g.globalCompositeOperation = 'source-over';
-    });
-  }
+  const T = printTextures();
   const size = o.size ?? 0.3, hA = o.heightAt || (() => 0);
   const pos = [], uv = [], idx = [];
-  points.forEach(([x, z, yaw = 0], i) => {
-    const c = Math.cos(yaw), s = Math.sin(yaw), hw = size * 0.26, hl = size * 0.5;
+  points.forEach(([x, z, yaw = 0, side = 1], i) => {
+    const c = Math.cos(yaw), s = Math.sin(yaw), hw = size * 0.25, hl = size * 0.5;
     const cs = [[-hw, -hl], [hw, -hl], [hw, hl], [-hw, hl]];
     for (const [a, b] of cs) { const px = x + a * c + b * s, pz = z - a * s + b * c; pos.push(px, hA(px, pz) + 0.012, pz); }
-    uv.push(0, 0, 1, 0, 1, 1, 0, 1);
+    if (side < 0) uv.push(1, 0, 0, 0, 0, 1, 1, 1); else uv.push(0, 0, 1, 0, 1, 1, 0, 1);      // left foot = mirrored sole
     const k = i * 4; idx.push(k, k + 2, k + 1, k, k + 3, k + 2);
   });
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx);
   g.computeVertexNormals();
-  const m = new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ color: '#020303', roughness: 0.08, clearcoat: 1, clearcoatRoughness: 0.05, alphaMap: _printTex, transparent: true,
-    opacity: o.opacity ?? 0.9, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3, envMapIntensity: 1.6 }));
+  const m = new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ color: '#060707', roughness: 0.5, clearcoat: 0.22, clearcoatRoughness: 0.42, alphaMap: T.alpha, transparent: true,
+    normalMap: T.normal, normalScale: new THREE.Vector2(1.6, 1.6), clearcoatNormalMap: T.normal, clearcoatNormalScale: new THREE.Vector2(1.6, 1.6),
+    opacity: o.opacity ?? 0.9, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3, envMapIntensity: 0.5 }));
   m.renderOrder = 3; m.name = 'footprints'; m.receiveShadow = true;
   return m;
 }
