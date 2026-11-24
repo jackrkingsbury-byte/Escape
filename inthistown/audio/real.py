@@ -1195,17 +1195,23 @@ def sfx_drip(p, seed):
     return peak_norm(space(stereo(k, p.get('pan', 0.5)), p.get('space') or 'cave', p.get('wet', 1.1), 0.6, seed=seed), 0.8)
 
 
-def radio_chain(v, rng, snr_db=8.0):
-    """Process a voice like a weak handheld radio: band-limit, drive, decimate, fading drop-outs."""
-    v = bp(v / (np.abs(v).max() + 1e-9), 380, 2900, order=3)
-    v = bq(v, 'peak', 1500, 1.0, 6.0)
-    v = sat(v * 3.0, 2.0)
-    hold = 4   # 12 kHz sample-and-hold (crunchy)
+def radio_chain(v, rng, snr_db=8.0, clean=False):
+    """Process a voice like a weak handheld radio: band-limit, drive, decimate, fading drop-outs.
+    clean=True: a phone line — same band-limit and grit, but no drop-outs and a steadier level (every word survives)."""
+    v = bp(v / (np.abs(v).max() + 1e-9), 380, 2900 if not clean else 3400, order=3)
+    v = bq(v, 'peak', 1500, 1.0, 6.0 if not clean else 3.0)
+    v = sat(v * (3.0 if not clean else 1.8), 2.0)
+    hold = 4 if not clean else 2   # sample-and-hold (crunchy)
     v = np.repeat(v[::hold], hold)[:len(v)]
+    if clean:
+        return v * db(-snr_db / 2)
     fade = np.clip(ctrl(len(v), 3.0, rng, 0.1, 1.6), 0, 1)
     gate = (ctrl(len(v), 9.0, rng, 0, 1) > 0.18).astype(float)
     gate = uniform_filter1d(gate, ns(0.01))
     return v * fade * gate * db(-snr_db / 2)
+
+
+RADIO_VOICE_AT = 0.35   # where the voice starts inside sfx_radio (s)
 
 
 def _babble(n, rng):
@@ -1245,10 +1251,13 @@ def sfx_radio(p, seed, voice=None):
     k = ns(0.12)
     sq[:k] = bp(rng.standard_normal(k), 800, 4000) * 1.6
     sq[-k:] = bp(rng.standard_normal(k), 800, 4000) * 1.6
-    vt = 0.35
+    vt = RADIO_VOICE_AT
+    clean = bool(p.get('clean'))
+    if clean:   # quieter static under a phone line
+        st *= 0.45; cr *= 0.5
     if voice is not None:
         v = np.zeros(n)
-        add_at(v, radio_chain(np.asarray(voice, float), rng), vt * SR)
+        add_at(v, radio_chain(np.asarray(voice, float), rng, clean=clean), vt * SR)
     else:
         v = np.zeros(n)
         add_at(v, radio_chain(_babble(ns(vdur), rng), rng), vt * SR)

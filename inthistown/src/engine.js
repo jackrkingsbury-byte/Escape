@@ -24,6 +24,7 @@
  *     init(ctx)              called once after cast + sets are built (create props here, deterministically)
  *     makeCharacter / makeCreature   factories used for `cast` specs (else /src/characters.js is imported)
  *     captionOptions         { uppercase:false, y:0.57, keepPunctuation:false, speakerColors:{}, speakerNames:{} }
+ *     drawCaptions(g2d, tl, t, state)   optional: replaces the built-in caption renderer (state.ctx = the shot ctx)
  *     lazySets               true → build sets on first use instead of all at init (default: all at init,
  *                            in declaration order, so build order never depends on where rendering starts)
  *   cast values may be: a character spec (→ makeCharacter / makeCreature when spec.creature is set),
@@ -873,7 +874,8 @@ export function createEngine(opts = {}) {
       });
       g2.restore();
     }
-    try { drawCaptions(g2, tl, t, { ...cap, options: captionOptions }); } catch (e) { reportError('captions', e); }
+    // a shots module may draw its own captions: export function drawCaptions(g2d, timeline, t, state) (state = { hidden, style, sfx, options, ctx })
+    try { if (typeof mod.drawCaptions === 'function') mod.drawCaptions(g2, tl, t, { ...cap, options: captionOptions, ctx }); else drawCaptions(g2, tl, t, { ...cap, options: captionOptions }); } catch (e) { reportError('captions', e); }
     if (opts.debug) {
       g2.save(); g2.font = `700 30px monospace`; g2.fillStyle = 'rgba(0,0,0,0.55)'; g2.fillRect(0, 0, W, 46);
       g2.fillStyle = '#fff'; g2.textBaseline = 'middle';

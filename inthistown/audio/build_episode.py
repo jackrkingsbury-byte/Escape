@@ -33,7 +33,9 @@ CINEMATIC LAYER (audio/real.py) — used only when a script asks for it, so olde
   sfx types from real.py: thunder_far thunder_crack impact braam whoosh_low riser heartbeat heartbeat_loop footsteps_mud
                branch_snap wood_creak drip radio stinger splash wave_crash fire_ignite   (extra keys: dur, n, bpm, bpm_end,
                pan, size, space, wet, "align": "peak" = the climax (riser end, whoosh centre) lands on "at";
-               radio: "text" (+ "speaker" or a Kokoro "voice") = a real line through the radio, else babble).
+               radio: "text" (+ "speaker" or a Kokoro "voice") = a real line through the radio, else babble; "clean": true =
+               no drop-outs (phone line); "sub": "<style>" = subtitle style written to timeline "subs" [{t0,t1,text,style,beat}]).
+  beat "echo": [delay_s, gain]   a faint doubled copy of that beat's voice (e.g. [0.08, 0.35]).
   When any of this is used the sfx bus is also ducked ~4 dB under the narration, and the master is BS.1770 loudness-normalized to "lufs" (default -16) with a -1.5 dBTP
   true-peak limiter instead of the ffmpeg loudnorm pass, and an "amb" stem is written.
 
@@ -104,6 +106,8 @@ def main(ep):
                 else:
                     h = BA.real_huss(i)
                 th = t + onsets[i]
+                if b.get('space'):   # cinematic: the shout rings out in a space ("spaceWet" sets how much)
+                    h = RL.voice_in_space(h, b['space'], b.get('spaceWet'))
                 voice_track.append((th, h))
                 words.append({'text': 'HUSS!', 'start': round(th, 3), 'end': round(th + 0.26, 3)})
                 huss_events.append((th, bid, i, b['speaker']))
@@ -121,7 +125,11 @@ def main(ep):
                 else:
                     a = BA.trim(BA.up(BA.tts(ph, b['speaker'])))
                 dur = len(a) / SR
-                voice_track.append((t, RL.voice_in_space(a, b['space']) if b.get('space') else a))
+                av = a
+                if b.get('echo'):   # [delay_s, gain]: a faint doubled copy of the voice (an "other me" speaking along)
+                    ed, eg = b['echo']; k = int(ed * SR)
+                    av = np.zeros(len(a) + k, np.float32); av[:len(a)] += a; av[k:] += eg * a
+                voice_track.append((t, RL.voice_in_space(av, b['space']) if b.get('space') else av))
                 ws = ph.split()
                 wts = np.array([BA.phone_weight(w) for w in ws])
                 edges = np.concatenate([[0], np.cumsum(wts) / wts.sum()]) * (dur - 0.03) + 0.015
@@ -157,6 +165,7 @@ def main(ep):
             S.place(sfx[:, 0], x, at, g * (1 - pan) * 2 ** 0.5); S.place(sfx[:, 1], x, at, g * pan * 2 ** 0.5)
 
     markers = {}
+    subs = []   # on-screen subtitles for lines that are not narration (radio/phone voices): {t0, t1, text, style, beat}
     cine_sfx = False
     for b0 in beats:
         tb = beat[b0['id']]
@@ -216,6 +225,9 @@ def main(ep):
                 x = RL.sfx(typ, fx, seed=RL.seed_of(typ, round(at, 3)), voice=vx, space_name=b0.get('space'))
                 if fx.get('align') == 'peak':
                     at -= RL.peak_time(typ, fx)
+                if vx is not None:
+                    v0 = at + RL.RADIO_VOICE_AT
+                    subs.append({'t0': round(v0, 3), 't1': round(v0 + len(vx) / SR, 3), 'text': fx['text'], 'style': fx.get('sub', 'radio'), 'beat': b0['id']})
                 put(x, at, g, fx.get('pan', 0.5))
                 cine_sfx = True
             else:
@@ -323,6 +335,8 @@ def main(ep):
           'music': [{'t': round(t0, 3), 'mode': m} for t0, m in seg], 'markers': markers, 'title': script.get('title')}
     if amb_segs:
         tl['amb'] = [{'t': round(t0, 3), 'bed': spec} for t0, spec, _ in amb_segs]
+    if subs:
+        tl['subs'] = subs
     json.dump(tl, open(os.path.join(epdir, 'timeline.json'), 'w'), indent=1)
     print('duration', duration, 'words', len(words), 'markers', markers)
 

@@ -1,0 +1,742 @@
+{
+ "title": "The Other Me",
+ "lead_in": 0.12,
+ "lufs": -15,
+ "master": "cine",
+ "voices": {
+  "narr": [
+   "am_fenrir",
+   1.0,
+   "en-us",
+   [
+    1.45,
+    1.12,
+    1.15
+   ]
+  ],
+  "copy": [
+   "am_fenrir",
+   0.97,
+   "en-us",
+   [
+    1.43,
+    1.12,
+    0.55
+   ]
+  ]
+ },
+ "caption_hook": "Something on me changes halfway through. Most people miss it. (The story is fiction. The island part is real: look up Sandy Island.)",
+ "logline": "A kid is shipwrecked at night on an island that was wiped off the map. Every lightning flash shows a second copy of himself standing a little closer, until it herds him into a sea cave with the only still water on the island. A boy is rescued at sunrise and calls his mom. It isn't him.",
+ "twist": "The kid who goes home is the reflection. The double comes out of the water and can only trade places through still water, and on a rain-hammered beach the cave pool is the only water the rain can't reach. So it never chases him: flash by flash it stands between him and the trees and leaves the cave open. When the lightning whites out the pool (the last flash, where he is as close as he can get), they swap. From that cut the narrator is the copy: calm voice, past tense, no hesitations, boxed captions, the whole character mirrored (knight facing the other way, white rag on the other hand). It slips (\"The cave was safe. Just like I said.\"), then quotes the kid's own knight line to Mom, who hears it: \"You sound different.\" The real kid is under the pool, palms on the surface, at 3:12 AM forever: \"They stopped looking for me. Because they think they found me.\" The last flash cuts into the first frame, so the video loops.\n\nBuild notes.\n- Runtime: 229 narration words (including the double's line and one HUSS). Target 90 to 92 s at about 3 words per second, gaps of 0.3 s or less except the 2.5 s hold after the HUSS and the 1.2 s blackout after the white-out. Mom's three radio lines sit in gaps.\n- Voices and captions: REAL (shaky, present tense, plain white captions), COPY (same voice, flat and calm, black text on a white box, used on beat 11 and beats 20 to 25), MOM (radio sfx with TTS text, phone-bubble caption). Beats 26 and 27 return to REAL with space cave.\n- Photosensitivity: never more than one flash per second, each flash 12 frames with an 8-frame decay, one white-out only (beat 19, capped near 90 %), foam and fog glow between flashes so the frame is never pure black.\n- Mirror: flip the whole character with scale x = -1 after beat 19. The knight path in src/characters.js is asymmetric with the nose at texture-left; confirm the on-model direction and redraw it bolder if it is thin at phone size.\n- Prototype the pool first (mirrored clone under a dark tinted water plane); it is used in three locked shots only (17, 18, 26/27).\n- Footprint decals only in beats 7 and 14. No hull exterior of the fishing boat, no breaking waves, no run cycle.\n- The must-fix notes written for the runner-up (signal fires, boot prints, day counts, boat lamps) have no counterpart in this story. Their principles are applied: honest present-tense narration, three tell-apart voices, a motive for the HUSS, and a silent hold before the answer.",
+ "clue_list": [
+  "Beats 1, 2, 8: the double always stands on the foam line. It came out of the water.",
+  "Beat 3: never mentioned, two sneakers and grey legs stand in the foam at the top edge of the wake-up shot. It was there from the start.",
+  "Beat 7: square sneaker prints walk up out of the surf and stop one step from his feet at the edge of the firelight.",
+  "White rag: on his right hand all night (beats 1, 3, 4, 6, 17). On the double it is on the opposite hand (beat 11). After the white-out it is on his left (beats 23, 25). On the kid under the pool it is back on the right (beat 26).",
+  "Knight emblem: nose points screen-left in the beat 6 macro and screen-right in the beat 25 macro, shot with the identical lens and framing so they match-cut. Under the pool it faces the original way.",
+  "Beats 5 and 6: the double is in the background, listening, while Mom's voicemail plays and he says the knight line. That is how the copy can quote it in beat 25.",
+  "Beat 8 rule: 'He never moves when it's bright. Only in the dark.' The swap happens in the one moment too bright to see anything, and it is the last step of 'every flash he's closer'.",
+  "Beats 9 to 11: he shouts so something answers. What answers is his own voice, saying something he would never say, because it breaks Mom's rule about sea caves.",
+  "Beat 15: in all three flashes the double is between him and the trees and never between him and the cave. He is being herded to the pool.",
+  "Beat 16: the pool is the only water the rain can't reach, so it is the only still surface on the island.",
+  "Beats 17 and 18: the reflection is half a second late, then smiles alone. The same wide smile returns on the rescued boy in beat 25.",
+  "After beat 19 the narration changes: past tense, calm, no pauses, and the captions switch to the boxed style first seen on 'The cave is safe. Go in.'",
+  "Beat 22 slip: 'The cave was safe. Just like I said.' Only the double ever said the cave was safe.",
+  "Beats 23 and 24: Mom says it herself: 'You sound different.'",
+  "Beat 4 and beat 21: the phone shows a dot in empty ocean with a dotted outline of a missing island, and at dawn the island dissolves into fog.",
+  "The 3:12 AM overlay on beat 1 returns on the trapped kid in beat 26, and the final flash is the opening flash."
+ ],
+ "real_fact_note": "Sandy Island in the Coral Sea appeared on charts for more than a century and on Google Maps until November 2012, when the Australian research ship RV Southern Surveyor sailed to the charted spot and found open ocean about 1,400 m deep; this story is fiction inspired by that.",
+ "caption_styles": {
+  "narr": "REAL: plain white, clean thin sans (Inter), soft shadow, phrase-style",
+  "copy": "COPY: black text on a solid white box",
+  "mom": "MOM (timeline.subs style 'mom'): small rounded phone bubble",
+  "huss": "the HUSS shout: big but cinematic (white, slight shake), not the cartoon yellow"
+ },
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every time the lightning hits, there's another me on this beach.",
+   "amb": "rain_beach",
+   "music": "cine_drone",
+   "gapAfter": 0.9,
+   "markers": {
+    "flash1": "start-0.12"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "start-0.12",
+     "gain": 0.85
+    }
+   ],
+   "visual": "FRAME 0 IS THE FLASH, no black lead-in. Locked-off vertical wide (frame A: fov 48, camera at knee height 1.5 m behind him, DOF off), night black-sand beach, heavy rain. Lower right and large (head and shoulders fill the bottom third): the kid three-quarter from behind, black hoodie, headphones rim-lit white, a torn strip of white sailcloth knotted round his RIGHT hand. Left edge: splintered ribs of the wreck_boat hull. The shore foam band runs straight up-frame; on it, 18 m away, a second identical kid stands dead still facing camera, backlit by flash-lit fog, about 130 px tall. Flash peaks on frame 0, holds 12 frames, decays over 8 more; flash exposure capped so the sand does not clip. Between flashes the foam and fog keep a faint grey glow, never pure black. Hook burned in as a caption from frame 0 (REAL caption style: plain white). Narration starts at 0.1 s, one breath, finished by about 3 s. Audio: thunder_crack on frame 0.",
+   "overlay": "3:12 AM"
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And every time... he's closer.",
+   "gapAfter": 0.9,
+   "pauses": [
+    0.55
+   ],
+   "markers": {
+    "flash2": "w:closer-0.05"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "w:closer-0.05",
+     "gain": 0.75
+    }
+   ],
+   "visual": "Same locked frame A, same rain. Second flash lands on the word 'closer', at least 1.5 s after the first has died. Our kid has not moved. The second kid is now 12 m away on the foam line in exactly the same frozen pose, arms at his sides, face lost in silhouette, like a photo pasted nearer. 12-frame flash with decay, grey foam glow after."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The storm flipped my boat.",
+   "gapAfter": 0.6,
+   "sfx": [
+    {
+     "type": "wave_crash",
+     "at": "start-0.6",
+     "align": "peak",
+     "gain": 0.4,
+     "size": 1.2
+    },
+    {
+     "type": "thunder_far",
+     "at": "end+0.1",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Earlier. Blue-black storm dusk (storm_night sky, exposure raised), rain. Top-down 35 mm, descending slowly 1 m, DOF off. The kid lies face-down on wet black sand among plank_broken, hull_fragment, the wreck_mast and a rope_coil; no palms in frame. White foam slides up around him and drains away. He pushes up on his elbows; the white sailcloth strip is tangled round his RIGHT hand. Never mentioned: at the very top edge of frame, standing in the foam, two white sneakers and grey trouser legs cropped at the knee, perfectly still.",
+   "overlay": "9:40 PM"
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "This island was on Google Maps until twenty twelve. Then scientists sailed here... and found only ocean.",
+   "gapAfter": 0.6,
+   "markers": {
+    "rack4": "w:scientists"
+   },
+   "sfx": [
+    {
+     "type": "thunder_far",
+     "at": "w:ocean",
+     "gain": 0.3
+    }
+   ],
+   "visual": "Macro insert, 100 mm feel, shallow depth of field (focus 0.4 m). His RIGHT hand, white rag across the knuckles, holds a cracked, rain-beaded phone: a generic map UI on an emissive plane with glass clearcoat, no app branding. A pulsing blue dot sits in flat empty blue with a faint dotted outline of a missing island around it. Hold 2 s sharp, bloom threshold raised so the screen does not blow out. On 'scientists', rack focus past the phone to the foam line 15 m behind: the second kid stands there, small and sharp, while the phone becomes a soft blue blob. One far lightning flicker in the clouds, soft, not a full-frame flash."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "One voicemail. Mom.",
+   "music": "cine_sad",
+   "gapAfter": 3.0,
+   "pauses": [
+    0.45
+   ],
+   "markers": {
+    "mom1": "end+0.3"
+   },
+   "sfx": [
+    {
+     "type": "radio",
+     "at": "end+0.3",
+     "text": "Hi sweetheart. It's Mom. Come home.",
+     "speed": 0.9,
+     "gain": 0.72,
+     "voice": "af_heart",
+     "clean": true,
+     "sub": "mom"
+    }
+   ],
+   "visual": "Reverse medium close-up, 50 mm at 2.8 m, focus on his face. The phone lights him from below (practical point light), rain on his cheeks, eyes down at the screen. Over his shoulder, out of focus, the foam line and the small still figure: it is listening. Audio: right after the line, sfx radio with text 'Hi sweetheart. It's Mom. Come home.' (adult female voice, tinny phone filter, low gain, centre). MOM caption style: small rounded phone bubble."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "She sewed this knight on my hoodie. She says knights always find their way home.",
+   "gapAfter": 1.0,
+   "visual": "REFERENCE FRAME for the twist. Locked frontal macro of his chest, 85 mm feel, camera 1.2 m, closeup light rig with a practical, focus on the emblem. The white chess-knight emblem fills 45 % of frame width, hand-stitched edge, the horse's nose clearly pointing SCREEN-LEFT. His RIGHT hand with the white rag enters from SCREEN-LEFT, wipes the rain off the knight once and leaves. Clean hold on the emblem for at least 1.2 s. Rain streaks sharp in front, soft cold flicker from far lightning. Beat 25 reuses this exact lens, distance and framing."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I light a fire under the wreck. And I wait.",
+   "amb": "campfire+rain_beach",
+   "ambFade": 1.2,
+   "gapAfter": 0.8,
+   "pauses": [
+    0.5
+   ],
+   "sfx": [
+    {
+     "type": "fire_ignite",
+     "at": "start-0.7",
+     "gain": 0.6
+    },
+    {
+     "type": "wood_creak",
+     "at": "end+0.15",
+     "gain": 0.22,
+     "dur": 1.6,
+     "pitch": 0.9
+    }
+   ],
+   "visual": "Medium wide, 35 mm, camera low behind the flames, fire kept inside the focus range (focus 2.5 m, small aperture). The kid huddles under the overturned wreck_boat hull, hugging his knees beside a small campfire; its light is the practical on his face. The fire is the only warm tone, muted amber. Beyond the hull: black sea, the foam band, rain. Never mentioned: at the edge of the firelight a line of square sneaker prints (decal stamp) comes up out of the surf and stops one step from his feet."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He never moves when it's bright. Only in the dark.",
+   "music": "cine_heart",
+   "gapAfter": 1.3,
+   "pauses": [
+    0.5
+   ],
+   "markers": {
+    "flash8a": "start-0.25",
+    "flash8b": "w:bright",
+    "flash8c": "end+0.95",
+    "step8": "end+0.45"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "start-0.25",
+     "gain": 0.7
+    },
+    {
+     "type": "thunder_far",
+     "at": "w:bright",
+     "gain": 0.6
+    },
+    {
+     "type": "footsteps_mud",
+     "at": "end+0.45",
+     "n": 1,
+     "bpm": 90,
+     "gain": 0.8,
+     "pan": 0.35
+    },
+    {
+     "type": "thunder_crack",
+     "at": "end+0.95",
+     "gain": 0.8
+    }
+   ],
+   "visual": "Back to locked frame A, identical camera to beat 1, with the fire glow now warming the right edge. Three flashes, each 12 frames with decay, at least 1.3 s apart (never more than one per second). The double is 9 m away, then 7 m, then 5 m up the foam line (at 5 m about 35 % of frame height), in the identical frozen pose each time. Our kid's head is turned toward him. In the dark between flash two and flash three, one wet footstep that is not his."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "When I'm scared, I yell my word. So something answers.",
+   "gapAfter": 0.35,
+   "sfx": [
+    {
+     "type": "heartbeat",
+     "at": "start+0.1",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Extreme close-up, 85 mm, shallow depth of field, background black. His blocky face is side-lit amber by the low fire (practical), rain on his cheek, eyes wide. He turns his face toward the dark beach and fills his lungs."
+  },
+  {
+   "id": "b10",
+   "kind": "huss",
+   "speaker": "narr",
+   "text": "HUSS!",
+   "n": 1,
+   "music": "cine_silence",
+   "gate": false,
+   "knock": false,
+   "space": "beach",
+   "spaceWet": 0.35,
+   "gapAfter": 2.0,
+   "visual": "Low-angle front close-up, 35 mm: he shouts once into the dark (a single shout, n = 1, his real voice), headphones jolting, rain flying off his hood. Hard cut to locked frame A with no flash: only the grey foam glow and the rain. Nobody is on the foam line. Hold 2.5 s. Music is dead; only rain and the low fire. Nothing answers."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "The cave is safe. Go in.",
+   "music": "cine_heart",
+   "space": "beach",
+   "gapAfter": 0.7,
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "flash11": "start-0.3"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "start-0.3",
+     "gain": 0.75
+    },
+    {
+     "type": "stinger",
+     "at": "start-0.3",
+     "gain": 0.45
+    }
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "One flash. From his eye-line, 50 mm: the double is 4 m away, off the foam line now, filling 60 % of frame height, frontal, backlit three-quarter by flash-lit fog and rain so the face and chest stay black. One arm is raised, pointing up-frame at the cliff. The white rag catches the rim light on the raised hand at SCREEN-RIGHT, the opposite hand to our kid's. The emblem stays unreadable in shadow on purpose. Audio: the kid's own TTS voice but flat and calm with no pauses, space beach, plus a faint 80 ms doubled echo. COPY caption style appears here for the first time: black text on a solid white box."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My voice. But I'd never say that. Mom's rule. No sea caves in a storm.",
+   "music": "cine_drone",
+   "gapAfter": 0.6,
+   "pauses": [
+    0.45,
+    0.35,
+    0.3
+   ],
+   "sfx": [
+    {
+     "type": "thunder_far",
+     "at": "end+0.15",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Wide from the waterline, fov 48, DOF off, lit by soft far flicker. Upper frame: the cliff_wall with the cave_arch mouth as a black void at its base, the shore foam band leading to it, fog glowing faintly. No breaking waves. The kid is tiny at lower left beside the hull and the small fire. The double is gone from the frame. REAL captions."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the rain kills my fire.",
+   "amb": "rain_beach+storm_wind",
+   "ambFade": 2.0,
+   "gapAfter": 0.7,
+   "markers": {
+    "firedie": "w:kills"
+   },
+   "sfx": [
+    {
+     "type": "whoosh_low",
+     "at": "w:rain",
+     "align": "peak",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Close on the campfire, in focus. A gust drives a sheet of rain through the flames. They gutter down to embers and die; a wisp of smoke curls up. The frame drops to a last ember glow and the sheen of rain on sand."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Next flash... he's standing in the ashes.",
+   "gapAfter": 0.9,
+   "pauses": [
+    0.6
+   ],
+   "markers": {
+    "flash14": "w:standing-0.25"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "w:standing-0.25",
+     "gain": 0.85
+    },
+    {
+     "type": "stinger",
+     "at": "w:standing-0.25",
+     "gain": 0.45
+    }
+   ],
+   "visual": "0.6 s of dim ember dark, then one flash. Static low angle at sand level, 35 mm. The smoking dead fire pit fills the foreground. Planted in the ashes: two white square sneakers, grey legs rising out of frame. Fresh square prints (decal stamp) lead in from the surf side. Hold 12 frames, decay over 8 to the grey foam glow."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every flash, he cuts me off. The only place left... is the cave.",
+   "music": "cine_swell",
+   "gapAfter": 0.9,
+   "pauses": [
+    null,
+    0.45
+   ],
+   "markers": {
+    "flash15a": "start-0.1",
+    "flash15b": "w:only-0.1",
+    "flash15c": "end+0.55"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "start-0.1",
+     "gain": 0.65
+    },
+    {
+     "type": "thunder_far",
+     "at": "w:only-0.1",
+     "gain": 0.55
+    },
+    {
+     "type": "thunder_crack",
+     "at": "end+0.55",
+     "gain": 0.8
+    },
+    {
+     "type": "footsteps_mud",
+     "at": "start+0.3",
+     "n": 6,
+     "bpm": 150,
+     "gain": 0.4
+    },
+    {
+     "type": "heartbeat_loop",
+     "at": "start",
+     "dur": 5.0,
+     "bpm": 100,
+     "bpm_end": 140,
+     "gain": 0.35
+    }
+   ],
+   "visual": "Locked high side wide, fov 48, DOF off. The beach runs up-frame to the black cave mouth at the top; palm_a and kapok silhouettes line the left edge. Three flashes at least 1.3 s apart, frozen stills, no run cycle. Flash one: the kid mid-beach, backing away, the double standing between him and the trees. Flash two: the kid ten metres nearer the cave, the double again between him and the trees. Flash three: the kid a small silhouette inside the cave mouth, the double on the sand outside. He is never between the kid and the cave."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Inside, a pool the rain can't reach. Still as a mirror.",
+   "amb": "cave",
+   "ambFade": 0.4,
+   "music": "cine_drone",
+   "space": "cave",
+   "gapAfter": 0.6,
+   "sfx": [
+    {
+     "type": "drip",
+     "at": "w:pool+0.3",
+     "gain": 0.55,
+     "pan": 0.7
+    },
+    {
+     "type": "drip",
+     "at": "end+0.35",
+     "gain": 0.45,
+     "pan": 0.3,
+     "f_lo": 1300,
+     "f_hi": 1500
+    }
+   ],
+   "visual": "Hard cut; the storm drops away (ambFade 0.4, space cave). Inside the sea cave (makeCave with the cave_arch), the bright grey mouth behind him. He holds his phone torch in his LEFT hand (practical point light); the beam cuts through mist onto a flat black pool walled by wet rock. Drip rings touch only the far rock edge; the centre is glass-still. The camera cranes down 1 m to water level, 35 mm, focus on the kid at 3 m."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I raise my hand. My reflection is half a second late.",
+   "space": "cave",
+   "gapAfter": 0.9,
+   "pauses": [
+    0.55
+   ],
+   "markers": {
+    "raise17": "start+0.1",
+    "lag17": "w:half"
+   },
+   "sfx": [
+    {
+     "type": "drip",
+     "at": "end+0.45",
+     "gain": 0.4,
+     "pan": 0.6
+    }
+   ],
+   "visual": "Locked symmetrical split-level, 50 mm, camera at the pool's edge with the waterline through the middle of frame. Top half: the kid kneels and slowly raises his RIGHT hand, the white rag bright in the torchlight. Bottom half: the reflection (a Y-mirrored clone actor under a dark tinted semi-transparent water plane, animation offset 0.5 s) raises its hand half a second later. The phone torch lights both faces from below."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then he smiles. I'm not smiling.",
+   "space": "cave",
+   "gapAfter": 0.9,
+   "pauses": [
+    0.5
+   ],
+   "markers": {
+    "smile18": "start+0.2"
+   },
+   "sfx": [
+    {
+     "type": "heartbeat",
+     "at": "end+0.1",
+     "gain": 0.55
+    },
+    {
+     "type": "riser",
+     "at": "end+0.9",
+     "align": "peak",
+     "dur": 2.6,
+     "gain": 0.5
+    }
+   ],
+   "visual": "Same locked set-up, tighter (65 mm) on the reflection only, the real face soft at the top edge of frame, frozen and afraid. In the water the face decal changes to a wide smile over 10 frames. The torch dims once to 60 % and recovers (a dip, not a flash). Riser peaks on the cut to the next beat."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the lightning hits the water.",
+   "amb": "none",
+   "ambFade": 0.5,
+   "music": "cine_silence",
+   "space": "cave",
+   "gapAfter": 1.7,
+   "markers": {
+    "strike19": "w:water",
+    "swap": "end+1.7"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "w:water",
+     "gain": 1.0
+    },
+    {
+     "type": "impact",
+     "at": "w:water",
+     "gain": 0.8
+    }
+   ],
+   "visual": "From behind him toward the cave mouth, 35 mm. A bolt strikes the sea just outside the mouth. The mouth, the mist and the pool ramp to white over 8 frames, hold 6 frames (capped near 90 %, the only white-out in the film), then decay over 10 frames to black with a faint blue glint on the pool. 1.2 s of dead silence. THE SWAP CUT: in every shot after this the whole character is mirrored (scale x = -1), so the rag is on his left hand and the knight's nose points screen-right, and the narrator is the calm voice with COPY captions."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "A fishing boat found me at sunrise.",
+   "amb": "surf",
+   "ambFade": 2.0,
+   "music": "cine_swell",
+   "gapAfter": 0.6,
+   "sfx": [
+    {
+     "type": "wood_creak",
+     "at": "start+0.4",
+     "gain": 0.28,
+     "dur": 2.2,
+     "pitch": 0.85
+    }
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "Dawn, flat silver light, no rain (storm_day sky, heavy fog, exposure raised). Tight on deck only, never the hull exterior: a deck set built from planks with a rail, a rope_coil and the crate. 35 mm from the stern, camera bobbing gently, horizon rocking 2 degrees. The kid sits on the rope coil wrapped in a grey blanket, three-quarter back to camera, perfectly still, not shivering. The captain is an out-of-focus backlit avatar silhouette at the wheel, deep in the fog. Voice: calm, even, past tense. COPY captions.",
+   "overlay": "6:51 AM"
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "The island melted into the fog. Like it was never there.",
+   "gapAfter": 1.3,
+   "sfx": [
+    {
+     "type": "whoosh_low",
+     "at": "end+0.3",
+     "gain": 0.3
+    }
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "Over the stern rail (rail and rope soft in the foreground, depth of field off). Long view back at the island: the black cliff_wall, the sea_stack and a kapok ridge as stacked silhouettes behind fog cards and pale light shafts. Post fog density ramps over 4 s until the island dissolves layer by layer into flat grey sea and white fog."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "The cave was safe. Just like I said.",
+   "music": "cine_silence",
+   "gapAfter": 0.9,
+   "pauses": [
+    0.4
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "Medium close profile, 85 mm, focus 2.8 m, fog behind. He watches the empty fog, completely calm. A small smile pulls at one corner of his mouth. The blanket covers the emblem and both hands, holding the reveal back. The music cuts dead under the line. COPY captions."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "The captain let me call Mom.",
+   "music": "cine_sad",
+   "gapAfter": 3.3,
+   "markers": {
+    "mom2": "end+0.3"
+   },
+   "sfx": [
+    {
+     "type": "radio",
+     "at": "end+0.3",
+     "text": "Sweetheart? Oh... is that really you?",
+     "speed": 0.88,
+     "gain": 0.72,
+     "voice": "af_heart",
+     "clean": true,
+     "sub": "mom"
+    }
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "Close, 50 mm, frontal three-quarter. He lifts a weathered radio handset on a coiled cord to his ear with the rag hand, which is now his LEFT, so the white rag sits on the opposite side of frame from every earlier shot. The blanket is still closed over his chest. The captain is a soft silhouette behind. Audio: right after the line, sfx radio with text 'Sweetheart? Oh... is that really you?' (the same Mom voice, breaking, through static). MOM caption style."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "Then she went quiet.",
+   "amb": "none",
+   "ambFade": 1.2,
+   "music": "cine_silence",
+   "gapAfter": 3.2,
+   "markers": {
+    "mom3": "end+0.75"
+   },
+   "sfx": [
+    {
+     "type": "radio",
+     "at": "end+0.75",
+     "text": "You sound different.",
+     "speed": 0.8,
+     "gain": 0.7,
+     "voice": "af_heart",
+     "clean": true,
+     "sub": "mom"
+    }
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "Slow push in on his eyes, 85 mm, 4 % over the beat. He does not blink. The static cuts out and the sea sound drops to nothing. In the silence: sfx radio with text 'You sound different.' (slow, small). Hold 1 s on his eyes after it. Grey fog behind him."
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "copy",
+   "text": "I'm not different, Mom. Knights always find their way home.",
+   "amb": "surf",
+   "ambFade": 1.0,
+   "music": "cine_drone",
+   "gapAfter": 1.4,
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "match25": "w:Knights"
+   },
+   "sfx": [
+    {
+     "type": "riser",
+     "at": "end+1.4",
+     "align": "peak",
+     "dur": 2.6,
+     "gain": 0.5
+    }
+   ],
+   "echo": [
+    0.08,
+    0.2
+   ],
+   "visual": "He lowers the handset, turns to the lens and smiles the exact wide smile from the pool (same face decal). The blanket slides off his shoulders. MATCH CUT to the beat 6 frame with the identical lens, distance and framing: the emblem fills 45 % of frame width, the horse's nose now points SCREEN-RIGHT, and the rag hand enters from SCREEN-RIGHT to smooth it. Hold the emblem 1.5 s. Riser peaks on the cut to the next beat. COPY captions."
+  },
+  {
+   "id": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom... that's not me.",
+   "amb": "cave",
+   "ambFade": 0.3,
+   "music": "cine_silence",
+   "space": "cave",
+   "gapAfter": 0.6,
+   "pauses": [
+    0.6
+   ],
+   "markers": {
+    "flash26": "start-0.35"
+   },
+   "sfx": [
+    {
+     "type": "thunder_crack",
+     "at": "start-0.35",
+     "gain": 0.8
+    },
+    {
+     "type": "drip",
+     "at": "end+0.3",
+     "gain": 0.4
+    }
+   ],
+   "visual": "One flash, hard cut into the cave. Locked top-down on the still black pool, 35 mm. Under the surface (clone under the tinted water plane, weak point light from below) is the REAL kid: knight nose pointing the original way, white rag on his RIGHT hand, both blocky palms pressed flat against the underside of the water as if it were glass, mouth decal moving on the words. No ripples. His phone lies at the pool's edge, its torch dying. Voice: the original shaky voice, space cave. REAL captions return.",
+   "overlay": "3:12 AM"
+  },
+  {
+   "id": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "They stopped looking for me. Because they think they found me.",
+   "music": "cine_sad",
+   "space": "cave",
+   "gapAfter": 0.8,
+   "pauses": [
+    0.45
+   ],
+   "markers": {
+    "loopflash": "end+0.6"
+   },
+   "sfx": [
+    {
+     "type": "drip",
+     "at": "w:because",
+     "gain": 0.35,
+     "pan": 0.65
+    },
+    {
+     "type": "thunder_crack",
+     "at": "end+0.6",
+     "gain": 0.9
+    }
+   ],
+   "visual": "Same locked top-down. The phone torch gutters out. His palms slide off the surface and sink into black; only drip rings at the rock edge remain. On the last word a flash starts in the cave mouth and ramps to about 60 % over 6 frames, then HARD CUT to frame 0 of beat 1, which is already at flash peak, so the two read as one flash and the video loops. No end card, no logo. Audio: thunder_crack starts 0.2 s before the cut and rolls across the loop."
+  }
+ ]
+}
