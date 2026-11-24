@@ -55,8 +55,8 @@
  *   profile   false
  *
  * Determinism: no clocks or Math.random affect pixels (grain is hashed from gl_FragCoord + a seed derived from ctx.t).
- * Cost (SwiftShader, 810×1440): see the README table in test_shots.js; grade ≈ one full-screen pass, atmos ≈ 1.2–2 passes,
- * DOF the most expensive (≈24 taps), bloom ≈ 0.7 of a full-screen pass in total.
+ * Cost (SwiftShader, 810×1440): see the table in test_shots.js header: atmos ≈ 0.2–0.3 s, DOF ≈ 0.25–0.3 s, bloom ≈ 0.06 s,
+ * grade ≈ 0.12 s, FX layer ≈ rain fill-rate only. The scene render itself dominates (0.8–2.9 s).
  */
 import * as THREE from 'three';
 import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
@@ -195,7 +195,7 @@ varying vec2 vUv;
 uniform sampler2D tColor;
 uniform vec2 resolution;
 uniform float maxBlur;
-#define TAPS 28
+#define TAPS 22
 void main() {
   vec4 c0 = texture2D(tColor, vUv);
   float cc = c0.a;

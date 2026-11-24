@@ -143,8 +143,9 @@ vec3 triW(vec3 n) { vec3 w = pow(abs(n), vec3(uTriSharp)); return w / (w.x + w.y
 vec4 triTex(sampler2D t, vec3 p, vec3 w) {
   return texture2D(t, p.zy) * w.x + texture2D(t, p.xz) * w.y + texture2D(t, p.xy) * w.z;
 }
+// bump height: only the dominant projection (1 tap instead of 3; the blend zone is narrow with sharpness ≥ 4)
 float triH(vec3 p, vec3 w) {
-  return texture2D(tTriData, p.zy).b * w.x + texture2D(tTriData, p.xz).b * w.y + texture2D(tTriData, p.xy).b * w.z;
+  return w.x > w.y && w.x > w.z ? texture2D(tTriData, p.zy).b : (w.y > w.z ? texture2D(tTriData, p.xz).b : texture2D(tTriData, p.xy).b);
 }`);
     fs = inject(fs, '#include <map_fragment>', /* glsl */`
   vec3 triP = ${P} * uTriScale;

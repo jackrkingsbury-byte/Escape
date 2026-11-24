@@ -5,6 +5,16 @@
  * Shots: 0 rainforest wide (rain, fog, light shafts) · 1 avatar close-up in rain (DOF, wet hoodie, drips) ·
  *        2 stormy beach at dusk (waves, foam, wreck, palms, cliff) · 3 night lightning on the beach · 4 campfire in a cave.
  *
+ * Cost (SwiftShader 4 CPU, scale 0.75 = 810×1440, msaa 0 + FXAA, 1 worker; steady-state in-page ms/frame, then the
+ * profiled per-pass split (profiling forces GPU syncs) — render.mjs adds ~40–100 ms JPEG capture, plus ffmpeg contention):
+ *   shot              frame   scene  atmos(fog+CoC)  dof(22 taps)  bloom  grade(+FXAA,CA,grain)
+ *   rainforest wide   ~3.2 s  2.1–2.5 s   0.23–0.26     0.26–0.29   0.07   0.12–0.14
+ *   closeup rain      ~3.5 s  2.7–2.9 s   0.23–0.30     0.23–0.28   0.05   0.11
+ *   beach dusk        ~1.6 s  1.0 s       0.27          —           0.06   0.14
+ *   night lightning   ~1.4 s  0.8 s       0.24          —           0.06   0.13
+ *   cave campfire     ~2.7 s  1.9–2.1 s   0.20–0.22     0.26–0.29   0.07   0.12–0.14
+ *   (render.mjs video mode measured 2.8–6.2 s/frame on a loaded host; MSAA 4 instead of FXAA costs +1–2 s/frame.)
+ *
  * Pattern for real shots (copy this):
  *   - sets are built with env.js / weather.js builders inside a `realSet(ctx, build)` wrapper that bakes the PMREM
  *     environment, keeps a list of updatables and calls setFrame({t}) every frame;
