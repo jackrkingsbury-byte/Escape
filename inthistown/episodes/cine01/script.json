@@ -246,7 +246,7 @@
    "id": "b09",
    "kind": "line",
    "speaker": "narr",
-   "text": "When I'm scared, I yell my word. So something answers.",
+   "text": "When I'm scared, I yell my word. To see if anything answers.",
    "gapAfter": 0.35,
    "sfx": [
     {
@@ -349,7 +349,7 @@
    "id": "b14",
    "kind": "line",
    "speaker": "narr",
-   "text": "Next flash... he's standing in the ashes.",
+   "text": "Lightning again... and he's standing in the ashes.",
    "gapAfter": 0.9,
    "pauses": [
     0.6
@@ -689,7 +689,7 @@
    "space": "cave",
    "gapAfter": 0.6,
    "pauses": [
-    0.6
+    0.5
    ],
    "markers": {
     "flash26": "start-0.35"
