@@ -19,6 +19,28 @@ PREVIEW = os.path.join(ROOT, 'out', 'blender_preview')
 for d in (TEX, GLB, ENV, BUILD, PREVIEW):
     os.makedirs(d, exist_ok=True)
 
+# Blender's glTF exporter imports numpy, which this system Blender's bundled Python lacks: keep a private copy
+# (cp312 wheel) in out/blender_build/pylib (gitignored) — installed on first use, nothing system-wide changes.
+PYLIB = os.path.join(BUILD, 'pylib')
+
+
+def ensure_numpy():
+    if PYLIB not in sys.path:
+        sys.path.insert(0, PYLIB)
+    try:
+        import numpy  # noqa
+        return True
+    except ImportError:
+        import subprocess
+        ver = '%d.%d' % sys.version_info[:2]
+        subprocess.check_call(['python3', '-m', 'pip', 'install', '--quiet', '--target', PYLIB, '--python-version', ver,
+                               '--only-binary=:all:', '--platform', 'manylinux2014_x86_64', '--implementation', 'cp',
+                               'numpy==1.26.4'])
+        import importlib
+        importlib.invalidate_caches()
+        import numpy  # noqa
+        return True
+
 TAU = math.tau
 
 
@@ -334,10 +356,9 @@ class G:
         self.set(nd.inputs['Vector'], vec)
         if w is not None:
             self.set(nd.inputs['W'], w)
-        self.set(nd.inputs['Scale'], scale)
-        self.set(nd.inputs['Randomness'], rand)
-        self.set(nd.inputs['Detail'], detail)
-        self.set(nd.inputs['Roughness'], rough)
+        for k, v in (('Scale', scale), ('Randomness', rand), ('Detail', detail), ('Roughness', rough)):
+            if k in nd.inputs and nd.inputs[k].enabled:
+                self.set(nd.inputs[k], v)
         if feature == 'SMOOTH_F1':
             self.set(nd.inputs['Smoothness'], smooth)
         return nd  # outputs: Distance, Color, Position, W, Radius
@@ -489,19 +510,14 @@ def pbr_material(name, color, normal=None, orm=None, rough=None, ao=None, uv_map
     return mat
 
 
-_gltf_grp = None
-
-
 def gltf_settings_group():
-    """The custom node group the Blender glTF exporter reads ambient occlusion from."""
-    global _gltf_grp
-    if _gltf_grp and _gltf_grp.name in bpy.data.node_groups:
-        return _gltf_grp
-    grp = bpy.data.node_groups.get('glTF Material Output') or bpy.data.node_groups.new('glTF Material Output', 'ShaderNodeTree')
-    if 'Occlusion' not in grp.interface.items_tree:
+    """The custom node group the Blender glTF exporter reads ambient occlusion from (looked up by name: data-
+    blocks do not survive reset_scene)."""
+    grp = bpy.data.node_groups.get('glTF Material Output')
+    if grp is None:
+        grp = bpy.data.node_groups.new('glTF Material Output', 'ShaderNodeTree')
         grp.interface.new_socket('Occlusion', in_out='INPUT', socket_type='NodeSocketFloat')
         grp.interface.new_socket('Thickness', in_out='INPUT', socket_type='NodeSocketFloat')
-    _gltf_grp = grp
     return grp
 
 
@@ -656,6 +672,7 @@ def export_glb(path, objs, external_tex=True):
     """Export objs as glTF-separate into a temp dir, then pack a .glb: images whose file name matches a PNG in
     src/real/assets/tex/ are referenced externally ("../tex/<name>.png", shared between models, deduped by
     assets.js); every other image is embedded. Draco off, no quantization, Y-up, metres."""
+    ensure_numpy()
     tmp = os.path.join(BUILD, 'gltf_' + os.path.splitext(os.path.basename(path))[0])
     shutil.rmtree(tmp, ignore_errors=True)
     os.makedirs(tmp)
@@ -667,7 +684,7 @@ def export_glb(path, objs, external_tex=True):
     bpy.ops.export_scene.gltf(
         filepath=gpath, export_format='GLTF_SEPARATE', use_selection=True, export_apply=True,
         export_texcoords=True, export_normals=True, export_tangents=False, export_materials='EXPORT',
-        export_image_format='AUTO', export_texture_dir='', export_keep_originals=False,
+        export_image_format='AUTO', export_texture_dir='', export_keep_originals=True,
         export_draco_mesh_compression_enable=False, export_yup=True, export_cameras=False, export_lights=False,
         export_animations=False, export_skins=False, export_morph=False, export_extras=False,
         export_attributes=False, export_colors=False)
@@ -676,16 +693,17 @@ def export_glb(path, objs, external_tex=True):
     binp = os.path.join(tmp, gj['buffers'][0]['uri'])
     with open(binp, 'rb') as f:
         bin_data = bytearray(f.read())
-    tex_files = set(os.listdir(TEX))
+    texdir = os.path.realpath(TEX)
     for im in gj.get('images', []):
         uri = im.get('uri')
         if not uri:
             continue
-        base = os.path.basename(uri)
-        if external_tex and base in tex_files and _same_png(os.path.join(tmp, uri), os.path.join(TEX, base)):
-            im['uri'] = '../tex/' + base
+        src = os.path.realpath(os.path.join(tmp, uri.replace('%20', ' ')))
+        base = os.path.basename(src)
+        if external_tex and os.path.dirname(src) == texdir:
+            im['uri'] = '../tex/' + base           # shared texture: referenced, not duplicated
             continue
-        with open(os.path.join(tmp, uri), 'rb') as f:
+        with open(src, 'rb') as f:
             data = f.read()
         while len(bin_data) % 4:
             bin_data.append(0)
@@ -707,17 +725,6 @@ def export_glb(path, objs, external_tex=True):
         f.write(struct.pack('<II', len(js), 0x4E4F534A)); f.write(js)
         f.write(struct.pack('<II', len(bin_data), 0x004E4942)); f.write(bin_data)
     return os.path.getsize(path)
-
-
-def _same_png(a, b):
-    """the exporter copies untouched source images byte-for-byte; anything it re-encoded must be embedded."""
-    try:
-        if os.path.getsize(a) == os.path.getsize(b):
-            with open(a, 'rb') as fa, open(b, 'rb') as fb:
-                return fa.read() == fb.read()
-    except OSError:
-        pass
-    return False
 
 
 def write_manifest_entry(name, info):

@@ -14,10 +14,28 @@ Everything episode-specific lives in episodes/<ep>/script.json:
                  "markers": { "name": "w:<wordprefix>[+0.1] | start | end[+0.2]" },
                  "sfx": [ { "type": "laugh|knock|whoosh|coo|thump|cheer|boom|scratch|ding|pop|thunder|siren|static|rumble|airhorn|dundun|sting|wahwah", "at": "w:<word>|start|end[+x]", "gain": 0.8 } ],
                  "card": {...}, "visual": "..." } ],   # passed through untouched for the shot list
-    "bed": true | { "path": "audio/beds/reference_bed.wav", "gain": 0.8, "offset": 0 } }   # optional
+    "bed": true | { "path": "audio/beds/reference_bed.wav", "gain": 0.8, "offset": 0 },   # optional
+    "lufs": -16, "master": "cine" }                       # optional, cinematic episodes only (see below)
       # bed = the sampled background loop (audio/bed.py). It REPLACES the procedural music and follows the music
       # modes (party full / muffled through the wall / lofi soft / night faint / none silent), keeps playing under
       # the HUSS runs (no synthetic organ then). BED=0 in the environment disables it.
+
+CINEMATIC LAYER (audio/real.py) — used only when a script asks for it, so older episodes build exactly as before:
+  beat "amb":  "rain_forest" | "rain_beach" | "storm_wind" | "storm_sea" | "surf" | "cave" | "jungle_night" | "campfire"
+               | "a+b" (layered) | {"name": "...", "gain": 0.8} | "none"      ambience bed from this beat on; equal-power
+               crossfade of "ambFade" s (default 1.5) centred just before the beat; sits ~14 dB under the narration
+               while it talks (sidechain duck + speech-band dip) and swells back ~6 dB in the gaps.
+  beat "music": also "cine_drone" | "cine_swell" | "cine_heart" | "cine_sad" | "cine_silence"   (cinematic score; cues are
+               rendered for their own segment length, so a swell builds exactly to the next music change; a cue cuts
+               dead into "cine_silence"/"none").
+  beat "space": "cave" | "forest" | "hall" | "ship" | "room" | "beach"   subtle reverb on that beat's narration, and the
+               default acoustic space of that beat's real.py sfx.
+  sfx types from real.py: thunder_far thunder_crack impact braam whoosh_low riser heartbeat heartbeat_loop footsteps_mud
+               branch_snap wood_creak drip radio stinger splash wave_crash fire_ignite   (extra keys: dur, n, bpm, bpm_end,
+               pan, size, space, wet, "align": "peak" = the climax (riser end, whoosh centre) lands on "at";
+               radio: "text" (+ "speaker" or a Kokoro "voice") = a real line through the radio, else babble).
+  When any of this is used the sfx bus is also ducked ~4 dB under the narration, and the master is BS.1770 loudness-normalized to "lufs" (default -16) with a -1.5 dBTP
+  true-peak limiter instead of the ffmpeg loudnorm pass, and an "amb" stem is written.
 
 Rules (from the user's notes): the only meme SOUND EFFECT is the real HUSS sample. Meme words (top ten,
 respect, goon…) are normal narrated words. Foley (crowd laugh, chess knocks, cat whoosh) and music are fine.
@@ -33,6 +51,7 @@ sys.path.insert(0, HERE)
 import build_audio as BA  # noqa: E402  (Kokoro, youthify, real_huss, crowd_laugh, trim, …)
 import synth as S          # noqa: E402
 import bed as BED          # noqa: E402  (sampled background bed → soundtrack)
+import real as RL          # noqa: E402  (cinematic ambience beds / score / sfx — only used when a script asks)
 
 SR = BA.SR
 DEFAULT_GAP = 0.28
@@ -102,7 +121,7 @@ def main(ep):
                 else:
                     a = BA.trim(BA.up(BA.tts(ph, b['speaker'])))
                 dur = len(a) / SR
-                voice_track.append((t, a))
+                voice_track.append((t, RL.voice_in_space(a, b['space']) if b.get('space') else a))
                 ws = ph.split()
                 wts = np.array([BA.phone_weight(w) for w in ws])
                 edges = np.concatenate([[0], np.cumsum(wts) / wts.sum()]) * (dur - 0.03) + 0.015
@@ -138,6 +157,7 @@ def main(ep):
             S.place(sfx[:, 0], x, at, g * (1 - pan) * 2 ** 0.5); S.place(sfx[:, 1], x, at, g * pan * 2 ** 0.5)
 
     markers = {}
+    cine_sfx = False
     for b0 in beats:
         tb = beat[b0['id']]
         for name, spec in (b0.get('markers') or {}).items():
@@ -185,6 +205,19 @@ def main(ep):
                 put(S.whistle_tune(), at, g)
             elif typ == 'windwhistle':
                 put(S.wind_whistle(fx.get('dur', 2.5)), at, g)
+            elif typ in RL.SFX:   # cinematic foley / hits (audio/real.py)
+                vx = None
+                if typ == 'radio' and fx.get('text'):
+                    if fx.get('voice'):
+                        vx = BA.tts_voice(fx['text'], fx['voice'], fx.get('speed', 1.0), fx.get('lang', 'en-us'))
+                    else:
+                        vx = BA.tts(fx['text'], fx.get('speaker', 'narr'))
+                    vx = BA.trim(BA.up(vx))
+                x = RL.sfx(typ, fx, seed=RL.seed_of(typ, round(at, 3)), voice=vx, space_name=b0.get('space'))
+                if fx.get('align') == 'peak':
+                    at -= RL.peak_time(typ, fx)
+                put(x, at, g, fx.get('pan', 0.5))
+                cine_sfx = True
             else:
                 raise ValueError(f'unknown sfx type {typ}')
     for (th, bid, i, spk) in huss_events:
@@ -236,22 +269,60 @@ def main(ep):
 
     bed = np.zeros((N, 2), np.float32)   # (the bed now lives inside `music`; stem kept for compatibility)
 
-    mix = np.tanh((music + bed + sfx + np.stack([voice, voice], 1)) * 1.1) / 1.1
+    # cinematic layer (audio/real.py): ambience beds + cinematic score cues, both sidechain-ducked under the narration.
+    # Only when the script uses it — older episodes never enter this block and keep their exact mix.
+    amb_segs = []
+    for b0 in beats:
+        if 'amb' in b0:
+            t0 = 0.0 if not amb_segs and beat[b0['id']]['start'] < 0.6 else max(0.0, beat[b0['id']]['start'] - 0.1)
+            if amb_segs and amb_segs[-1][1] == b0['amb']:
+                continue
+            amb_segs.append((t0, b0['amb'], float(b0.get('ambFade', 1.5))))
+    cine_music = any(md in RL.SCORE for _, md in seg)
+    cine = bool(amb_segs) or cine_music or cine_sfx or script.get('master') == 'cine'
+    ambst = None
+    if cine:
+        act = RL.sidechain(voice)
+        vl = RL.loudness(np.stack([voice, voice], 1))
+        if cine_music:
+            ssegs = [(t0, seg[k + 1][0] if k + 1 < len(seg) else duration, md, seg[k + 1][1] if k + 1 < len(seg) else None)
+                     for k, (t0, md) in enumerate(seg)]
+            music = music + RL.score_track(ssegs, N, act, vl)
+        if amb_segs:
+            asegs = [(t0, amb_segs[k + 1][0] if k + 1 < len(amb_segs) else duration, spec, fd) for k, (t0, spec, fd) in enumerate(amb_segs)]
+            ambst = RL.amb_track(asegs, N, act, vl)
+        sfx = RL.duck(sfx, act, 4.0, 2.0).astype(np.float32)   # effects stay under the words (hits in the gaps keep their punch)
+
+    if cine:
+        mix = music + bed + sfx + np.stack([voice, voice], 1) + (ambst if ambst is not None else 0)
+    else:
+        mix = np.tanh((music + bed + sfx + np.stack([voice, voice], 1)) * 1.1) / 1.1
     os.makedirs(os.path.join(epdir, 'stems'), exist_ok=True)
     for name, arr in (('voice', voice), ('music', music), ('bed', bed), ('sfx', sfx)):
         sf.write(os.path.join(epdir, f'stems/{name}.wav'), arr, SR)
-    raw = os.path.join(epdir, 'stems/mix_raw.wav'); sf.write(raw, mix, SR)
     out = os.path.join(epdir, 'mix.wav')
-    m = subprocess.run(['ffmpeg', '-hide_banner', '-i', raw, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json', '-f', 'null', '-'],
-                       capture_output=True, text=True).stderr
-    js = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
-    af = (f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={js['input_i']}:measured_TP={js['input_tp']}:"
-          f"measured_LRA={js['input_lra']}:measured_thresh={js['input_thresh']}:offset={js['target_offset']}:linear=true")
-    subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', raw, '-af', af, '-ar', str(SR), '-c:a', 'pcm_s16le', out], check=True)
+    raw = os.path.join(epdir, 'stems/mix_raw.wav')
+    if cine:   # BS.1770 loudness + true-peak limiter (audio/real.py), no soft-clip: cinematic dynamics survive
+        if ambst is not None:
+            sf.write(os.path.join(epdir, 'stems/amb.wav'), ambst, SR)
+        sf.write(raw, mix, SR, subtype='FLOAT')
+        mm, rep = RL.master(mix, script.get('lufs', -16.0), script.get('ceiling', -1.5))
+        sf.write(out, mm, SR, subtype='PCM_16')
+        print('master', rep)
+    else:
+        sf.write(raw, mix, SR)
+        m = subprocess.run(['ffmpeg', '-hide_banner', '-i', raw, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json', '-f', 'null', '-'],
+                           capture_output=True, text=True).stderr
+        js = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
+        af = (f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={js['input_i']}:measured_TP={js['input_tp']}:"
+              f"measured_LRA={js['input_lra']}:measured_thresh={js['input_thresh']}:offset={js['target_offset']}:linear=true")
+        subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', raw, '-af', af, '-ar', str(SR), '-c:a', 'pcm_s16le', out], check=True)
 
     words = [{**w, 'beat': b['id'], 'kind': b['kind'], 'speaker': b['speaker'], 'i': i} for b in tl_beats for i, w in enumerate(b['words'])]
     tl = {'fps': 30, 'duration': duration, 'audio': f'episodes/{ep}/mix.wav', 'beats': tl_beats, 'words': words,
           'music': [{'t': round(t0, 3), 'mode': m} for t0, m in seg], 'markers': markers, 'title': script.get('title')}
+    if amb_segs:
+        tl['amb'] = [{'t': round(t0, 3), 'bed': spec} for t0, spec, _ in amb_segs]
     json.dump(tl, open(os.path.join(epdir, 'timeline.json'), 'w'), indent=1)
     print('duration', duration, 'words', len(words), 'markers', markers)
 

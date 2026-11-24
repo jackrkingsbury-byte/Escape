@@ -1,0 +1,477 @@
+{
+ "env": {
+  "storm_day": {
+   "file": "env/storm_day.hdr",
+   "size": [
+    2048,
+    1024
+   ],
+   "bytes": 3305532,
+   "break_azimuth_deg": -90.0,
+   "light_elevation_deg": 7.0,
+   "note": "azimuth measured in three.js space from +X toward +Z; -90 = -Z"
+  },
+  "storm_night": {
+   "file": "env/storm_night.hdr",
+   "size": [
+    2048,
+    1024
+   ],
+   "bytes": 3182331,
+   "break_azimuth_deg": -60.0,
+   "light_elevation_deg": 32.0,
+   "note": "azimuth measured in three.js space from +X toward +Z; -90 = -Z"
+  }
+ },
+ "models": {
+  "cave_arch": {
+   "file": "glb/cave_arch.glb",
+   "tris": 9750,
+   "bytes": 10560012,
+   "size_m": [
+    13.64,
+    9.31,
+    10.61
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 2048px",
+   "kind": "cave"
+  },
+  "cliff_wall": {
+   "file": "glb/cliff_wall.glb",
+   "tris": 9652,
+   "bytes": 11057948,
+   "size_m": [
+    15.37,
+    10.27,
+    7.4
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 2048px",
+   "kind": "cliff"
+  },
+  "crate": {
+   "file": "glb/crate.glb",
+   "tris": 492,
+   "bytes": 29656,
+   "size_m": [
+    0.78,
+    0.73,
+    0.68
+   ],
+   "kind": "prop",
+   "parts": null,
+   "textures": "referenced ../tex/ (wood_planks, driftwood, wet_fabric, rope)"
+  },
+  "driftwood_logs": {
+   "file": "glb/driftwood_logs.glb",
+   "tris": 2400,
+   "bytes": 85096,
+   "size_m": [
+    3.42,
+    1.22,
+    2.82
+   ],
+   "kind": "prop",
+   "parts": [
+    "driftwood_log",
+    "driftwood_twisted",
+    "driftwood_root"
+   ],
+   "textures": "referenced ../tex/ (wood_planks, driftwood, wet_fabric, rope)"
+  },
+  "fern_a": {
+   "file": "glb/fern_a.glb",
+   "tris": 336,
+   "bytes": 25088,
+   "size_m": [
+    2.27,
+    0.88,
+    2.15
+   ],
+   "kind": "fern",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "fern_b": {
+   "file": "glb/fern_b.glb",
+   "tris": 432,
+   "bytes": 31808,
+   "size_m": [
+    1.91,
+    0.73,
+    2.08
+   ],
+   "kind": "fern",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "palm_a": {
+   "file": "glb/palm_a.glb",
+   "tris": 6252,
+   "bytes": 159088,
+   "size_m": [
+    8.04,
+    12.43,
+    8.07
+   ],
+   "kind": "palm",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "palm_b": {
+   "file": "glb/palm_b.glb",
+   "tris": 6172,
+   "bytes": 156428,
+   "size_m": [
+    6.69,
+    9.57,
+    6.42
+   ],
+   "kind": "palm",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "planks": {
+   "file": "glb/planks.glb",
+   "tris": 476,
+   "bytes": 27048,
+   "size_m": [
+    2.4,
+    0.07,
+    2.8
+   ],
+   "kind": "prop",
+   "parts": [
+    "plank_long",
+    "plank_broken",
+    "plank_splintered",
+    "plank_short",
+    "hull_fragment"
+   ],
+   "textures": "referenced ../tex/ (wood_planks, driftwood, wet_fabric, rope)"
+  },
+  "rock_block": {
+   "file": "glb/rock_block.glb",
+   "tris": 3152,
+   "bytes": 2087696,
+   "size_m": [
+    0.63,
+    0.57,
+    0.71
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 1024px",
+   "kind": "rock"
+  },
+  "rock_boulder": {
+   "file": "glb/rock_boulder.glb",
+   "tris": 3742,
+   "bytes": 2633128,
+   "size_m": [
+    1.37,
+    0.87,
+    1.06
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 1024px",
+   "kind": "rock"
+  },
+  "rock_mossy": {
+   "file": "glb/rock_mossy.glb",
+   "tris": 3742,
+   "bytes": 2731748,
+   "size_m": [
+    1.56,
+    0.94,
+    1.37
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 1024px",
+   "kind": "rock"
+  },
+  "rock_mossy_big": {
+   "file": "glb/rock_mossy_big.glb",
+   "tris": 3890,
+   "bytes": 2232592,
+   "size_m": [
+    2.75,
+    1.66,
+    2.09
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 1024px",
+   "kind": "rock"
+  },
+  "rock_slab": {
+   "file": "glb/rock_slab.glb",
+   "tris": 3546,
+   "bytes": 1877132,
+   "size_m": [
+    1.83,
+    0.46,
+    1.22
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 1024px",
+   "kind": "rock"
+  },
+  "rock_spire": {
+   "file": "glb/rock_spire.glb",
+   "tris": 3840,
+   "bytes": 2401056,
+   "size_m": [
+    0.89,
+    1.55,
+    0.78
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 1024px",
+   "kind": "rock"
+  },
+  "rope_coil": {
+   "file": "glb/rope_coil.glb",
+   "tris": 2872,
+   "bytes": 71068,
+   "size_m": [
+    1.38,
+    0.05,
+    0.9
+   ],
+   "kind": "prop",
+   "parts": null,
+   "textures": "referenced ../tex/ (wood_planks, driftwood, wet_fabric, rope)"
+  },
+  "sea_stack": {
+   "file": "glb/sea_stack.glb",
+   "tris": 9456,
+   "bytes": 9711236,
+   "size_m": [
+    6.61,
+    12.58,
+    5.76
+   ],
+   "textures": "embedded basecolor(jpg)+normal+ORM, 2048px",
+   "kind": "cliff"
+  },
+  "tree_fig": {
+   "file": "glb/tree_fig.glb",
+   "tris": 16904,
+   "bytes": 750512,
+   "size_m": [
+    27.13,
+    22.87,
+    22.4
+   ],
+   "kind": "tree",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "tree_kapok": {
+   "file": "glb/tree_kapok.glb",
+   "tris": 17136,
+   "bytes": 783588,
+   "size_m": [
+    30.19,
+    30.43,
+    28.35
+   ],
+   "kind": "tree",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "undergrowth_broadleaf": {
+   "file": "glb/undergrowth_broadleaf.glb",
+   "tris": 520,
+   "bytes": 25580,
+   "size_m": [
+    2.37,
+    1.32,
+    2.72
+   ],
+   "kind": "fern",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "vines_hanging": {
+   "file": "glb/vines_hanging.glb",
+   "tris": 872,
+   "bytes": 38412,
+   "size_m": [
+    2.56,
+    7.86,
+    1.55
+   ],
+   "kind": "vine",
+   "textures": "referenced ../tex/ (bark sets + foliage atlases)"
+  },
+  "wreck_boat": {
+   "file": "glb/wreck_boat.glb",
+   "tris": 8148,
+   "bytes": 320516,
+   "size_m": [
+    5.45,
+    1.68,
+    3.0
+   ],
+   "kind": "prop",
+   "parts": [
+    "wreck_boat",
+    "wreck_mast"
+   ],
+   "textures": "referenced ../tex/ (wood_planks, driftwood, wet_fabric, rope)"
+  }
+ },
+ "textures": {
+  "beach_pebbles": {
+   "tile_m": 1.5,
+   "height_m": 0.05,
+   "res": 1024,
+   "desc": "wet rounded beach pebbles/cobbles over coarse sand",
+   "files": {
+    "color": "tex/beach_pebbles_color.png",
+    "normal": "tex/beach_pebbles_normal.png",
+    "rough": "tex/beach_pebbles_rough.png",
+    "ao": "tex/beach_pebbles_ao.png",
+    "height": "tex/beach_pebbles_height.png",
+    "orm": "tex/beach_pebbles_orm.png"
+   },
+   "bytes": 2469848
+  },
+  "cliff_rock": {
+   "tile_m": 4.0,
+   "height_m": 0.3,
+   "res": 1024,
+   "desc": "layered sea-cliff rock: faceted fracture planes, strata ledges, wet run-off streaks",
+   "files": {
+    "color": "tex/cliff_rock_color.png",
+    "normal": "tex/cliff_rock_normal.png",
+    "rough": "tex/cliff_rock_rough.png",
+    "ao": "tex/cliff_rock_ao.png",
+    "height": "tex/cliff_rock_height.png",
+    "orm": "tex/cliff_rock_orm.png"
+   },
+   "bytes": 5770915
+  },
+  "driftwood": {
+   "tile_m": 1.0,
+   "height_m": 0.012,
+   "res": 1024,
+   "desc": "sun-bleached, sea-worn driftwood: deep grain grooves and checking cracks",
+   "files": {
+    "color": "tex/driftwood_color.png",
+    "normal": "tex/driftwood_normal.png",
+    "rough": "tex/driftwood_rough.png",
+    "ao": "tex/driftwood_ao.png",
+    "height": "tex/driftwood_height.png",
+    "orm": "tex/driftwood_orm.png"
+   },
+   "bytes": 4225271
+  },
+  "forest_mud": {
+   "tile_m": 2.0,
+   "height_m": 0.035,
+   "res": 1024,
+   "desc": "wet rainforest mud with layered leaf litter, twigs and puddles",
+   "files": {
+    "color": "tex/forest_mud_color.png",
+    "normal": "tex/forest_mud_normal.png",
+    "rough": "tex/forest_mud_rough.png",
+    "ao": "tex/forest_mud_ao.png",
+    "height": "tex/forest_mud_height.png",
+    "orm": "tex/forest_mud_orm.png"
+   },
+   "bytes": 5477484
+  },
+  "mossy_rock": {
+   "tile_m": 2.0,
+   "height_m": 0.07,
+   "res": 1024,
+   "desc": "wet dark volcanic rock with moss cushions and lichen",
+   "files": {
+    "color": "tex/mossy_rock_color.png",
+    "normal": "tex/mossy_rock_normal.png",
+    "rough": "tex/mossy_rock_rough.png",
+    "ao": "tex/mossy_rock_ao.png",
+    "height": "tex/mossy_rock_height.png",
+    "orm": "tex/mossy_rock_orm.png"
+   },
+   "bytes": 6188999
+  },
+  "palm_bark": {
+   "tile_m": 1.0,
+   "height_m": 0.02,
+   "res": 1024,
+   "desc": "coconut-palm trunk: leaf-scar rings, vertical fibres, algae",
+   "files": {
+    "color": "tex/palm_bark_color.png",
+    "normal": "tex/palm_bark_normal.png",
+    "rough": "tex/palm_bark_rough.png",
+    "ao": "tex/palm_bark_ao.png",
+    "height": "tex/palm_bark_height.png",
+    "orm": "tex/palm_bark_orm.png"
+   },
+   "bytes": 3904117
+  },
+  "rope": {
+   "tile_m": 0.25,
+   "height_m": 0.008,
+   "res": 1024,
+   "desc": "three-strand hemp rope (u along the rope, v around it), wet",
+   "files": {
+    "color": "tex/rope_color.png",
+    "normal": "tex/rope_normal.png",
+    "rough": "tex/rope_rough.png",
+    "ao": "tex/rope_ao.png",
+    "height": "tex/rope_height.png",
+    "orm": "tex/rope_orm.png"
+   },
+   "bytes": 6410204
+  },
+  "tree_bark": {
+   "tile_m": 1.5,
+   "height_m": 0.045,
+   "res": 1024,
+   "desc": "rainforest hardwood bark: interlaced vertical fissures, plates, lichen and moss",
+   "files": {
+    "color": "tex/tree_bark_color.png",
+    "normal": "tex/tree_bark_normal.png",
+    "rough": "tex/tree_bark_rough.png",
+    "ao": "tex/tree_bark_ao.png",
+    "height": "tex/tree_bark_height.png",
+    "orm": "tex/tree_bark_orm.png"
+   },
+   "bytes": 5316584
+  },
+  "wet_fabric": {
+   "tile_m": 0.25,
+   "height_m": 0.0015,
+   "res": 1024,
+   "desc": "soaked canvas/sailcloth plain weave with stains and mildew",
+   "files": {
+    "color": "tex/wet_fabric_color.png",
+    "normal": "tex/wet_fabric_normal.png",
+    "rough": "tex/wet_fabric_rough.png",
+    "ao": "tex/wet_fabric_ao.png",
+    "height": "tex/wet_fabric_height.png",
+    "orm": "tex/wet_fabric_orm.png"
+   },
+   "bytes": 6102700
+  },
+  "wet_sand": {
+   "tile_m": 2.0,
+   "height_m": 0.012,
+   "res": 1024,
+   "desc": "wet beach sand: swash ripples, rain-drop pits, standing-water films, shell grit",
+   "files": {
+    "color": "tex/wet_sand_color.png",
+    "normal": "tex/wet_sand_normal.png",
+    "rough": "tex/wet_sand_rough.png",
+    "ao": "tex/wet_sand_ao.png",
+    "height": "tex/wet_sand_height.png",
+    "orm": "tex/wet_sand_orm.png"
+   },
+   "bytes": 5572018
+  },
+  "wood_planks": {
+   "tile_m": 1.2,
+   "height_m": 0.01,
+   "res": 1024,
+   "desc": "weathered boat planking: 6 boards, worn grain, chipped paint, rusty nails",
+   "files": {
+    "color": "tex/wood_planks_color.png",
+    "normal": "tex/wood_planks_normal.png",
+    "rough": "tex/wood_planks_rough.png",
+    "ao": "tex/wood_planks_ao.png",
+    "height": "tex/wood_planks_height.png",
+    "orm": "tex/wood_planks_orm.png"
+   },
+   "bytes": 4324027
+  }
+ }
+}

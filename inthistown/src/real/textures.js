@@ -53,11 +53,11 @@ export function makePerlin(seed = 1) {
   for (let i = 255; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const t = p[i]; p[i] = p[j]; p[j] = t; }
   const gx = new Float32Array(256), gy = new Float32Array(256);
   for (let i = 0; i < 256; i++) { const a = r() * Math.PI * 2; gx[i] = Math.cos(a); gy[i] = Math.sin(a); }
-  return function perlin(x, y, per = 256) {
+  return function perlin(x, y, per = 256, perY = per) {
     const xi = Math.floor(x), yi = Math.floor(y);
     const xf = x - xi, yf = y - yi;
-    const X0 = ((xi % per) + per) % per, Y0 = ((yi % per) + per) % per;
-    const X1 = (X0 + 1) % per, Y1 = (Y0 + 1) % per;
+    const X0 = ((xi % per) + per) % per, Y0 = ((yi % perY) + perY) % perY;
+    const X1 = (X0 + 1) % per, Y1 = (Y0 + 1) % perY;
     const h00 = p[(p[X0 & 255] + Y0) & 255], h10 = p[(p[X1 & 255] + Y0) & 255];
     const h01 = p[(p[X0 & 255] + Y1) & 255], h11 = p[(p[X1 & 255] + Y1) & 255];
     const d00 = gx[h00] * xf + gy[h00] * yf;
@@ -69,14 +69,15 @@ export function makePerlin(seed = 1) {
     return (a + (b - a) * v) * 1.41;
   };
 }
-export function fbm(n, x, y, oct, per, lac = 2, gain = 0.5) {
+// perY: lattice period along y when the y frequency differs from x (keeps anisotropic noise tileable)
+export function fbm(n, x, y, oct, per, lac = 2, gain = 0.5, perY = per) {
   let s = 0, a = 1, f = 1, norm = 0;
-  for (let o = 0; o < oct; o++) { s += a * n(x * f, y * f, Math.max(1, Math.round(per * f))); norm += a; a *= gain; f *= lac; }
+  for (let o = 0; o < oct; o++) { s += a * n(x * f, y * f, Math.max(1, Math.round(per * f)), Math.max(1, Math.round(perY * f))); norm += a; a *= gain; f *= lac; }
   return s / norm;
 }
-export function ridged(n, x, y, oct, per) {
+export function ridged(n, x, y, oct, per, perY = per) {
   let s = 0, a = 1, f = 1, norm = 0;
-  for (let o = 0; o < oct; o++) { const v = 1 - Math.abs(n(x * f, y * f, Math.max(1, Math.round(per * f)))); s += a * v * v; norm += a; a *= 0.5; f *= 2; }
+  for (let o = 0; o < oct; o++) { const v = 1 - Math.abs(n(x * f, y * f, Math.max(1, Math.round(per * f)), Math.max(1, Math.round(perY * f)))); s += a * v * v; norm += a; a *= 0.5; f *= 2; }
   return s / norm;
 }
 export function makeWorley(seed, cells) {
@@ -175,11 +176,11 @@ GEN.bark = ({ seed = 11, size = 512 } = {}) => {
   const base = hex3('#3a332c'), dark = hex3('#14110e'), lichen = hex3('#8d917f'), moss = hex3('#2f3a1e');
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
     const u = x / w, v = y / h;
-    const warp = fbm(N2, u * 4, v * 2, 3, 4) * 0.35;
+    const warp = fbm(N2, u * 4, v * 2, 3, 4, 2, 0.5, 2) * 0.35;
     // vertical fissures: ridged noise strongly stretched along v
-    const fis = ridged(N, (u + warp * 0.12) * 10, v * 1.5, 4, 10);
-    const plates = fbm(N, u * 6, v * 3, 4, 6);
-    const fine = fbm(N2, u * 48, v * 24, 3, 48);
+    const fis = ridged(N, (u + warp * 0.12) * 10, v * 2, 4, 10, 2);
+    const plates = fbm(N, u * 6, v * 3, 4, 6, 2, 0.5, 3);
+    const fine = fbm(N2, u * 48, v * 24, 3, 48, 2, 0.5, 24);
     let ht = 0.55 * fis + 0.25 * (plates * 0.5 + 0.5) + 0.12 * (fine * 0.5 + 0.5);
     const crack = clamp((0.62 - fis) * 3, 0, 1);
     ht -= crack * 0.25;
@@ -188,7 +189,7 @@ GEN.bark = ({ seed = 11, size = 512 } = {}) => {
     let c = mix3(base, dark, crack * 0.85 + clamp(-plates, 0, 1) * 0.3);
     const lm = clamp((fbm(N2, u * 3 + 9, v * 3, 4, 3) - 0.18) * 3.5, 0, 1) * (1 - crack);
     c = mix3(c, lichen, lm * 0.55 * (0.7 + 0.3 * fine));
-    const mm = clamp(crack * 1.4 - 0.2, 0, 1) * clamp(fbm(N, u * 5 + 3, v * 2, 3, 5) * 2 + 0.6, 0, 1);
+    const mm = clamp(crack * 1.4 - 0.2, 0, 1) * clamp(fbm(N, u * 5 + 3, v * 2, 3, 5, 2, 0.5, 2) * 2 + 0.6, 0, 1);
     c = mix3(c, moss, mm * 0.8);
     const k = 0.85 + 0.3 * (fine * 0.5 + 0.5);
     A[i * 4] = srgbByte(c[0] * k); A[i * 4 + 1] = srgbByte(c[1] * k); A[i * 4 + 2] = srgbByte(c[2] * k); A[i * 4 + 3] = 255;
@@ -290,7 +291,7 @@ GEN.rock = ({ seed = 31, size = 512 } = {}) => {
     const f = fbm(N, u * 4, v * 4, 6, 4);
     const [a1, a2] = Wy(u + f * 0.04, v + f * 0.04);
     const [b1, b2] = Wy2(u, v);
-    const facet = clamp((a2 - a1) * 4, 0, 1);       // 0 at cell borders = cracks
+    const facet = clamp((a2 - a1) * 4 + 0.45 * (fbm(N2, u * 7, v * 7, 3, 7) + 0.3), 0, 1);       // 0 at cell borders = cracks (broken up by noise)
     const pits = clamp((b1 - 0.12) * 6, 0, 1);
     const strata = Math.sin((v * 22 + f * 3) * Math.PI) * 0.5 + 0.5;
     const fine = fbm(N2, u * 64, v * 64, 3, 64);
@@ -299,7 +300,7 @@ GEN.rock = ({ seed = 31, size = 512 } = {}) => {
     H[i] = clamp(ht, 0, 1);
     let c = mix3(c1, c0, clamp(f * 0.8 + 0.55, 0, 1));
     c = mix3(c, c2, clamp((fine + f) * 0.6 - 0.1, 0, 0.5));
-    c = mix3(c, c1, (1 - Math.pow(facet, 0.4)) * 0.8);
+    c = mix3(c, c1, (1 - Math.pow(facet, 0.4)) * 0.55);
     c = mix3(c, algae, clamp(fbm(N2, u * 3 + 7, v * 3, 3, 3) * 2.2 - 0.25, 0, 0.55));
     const k = 0.85 + 0.25 * (fine * 0.5 + 0.5);
     A[i * 4] = srgbByte(c[0] * k); A[i * 4 + 1] = srgbByte(c[1] * k); A[i * 4 + 2] = srgbByte(c[2] * k); A[i * 4 + 3] = 255;
@@ -321,9 +322,9 @@ GEN.sand = ({ seed = 41, size = 512 } = {}) => {
     const f = fbm(N, u * 6, v * 6, 5, 6);
     const warp = fbm(N2, u * 3, v * 3, 3, 3);
     const rip = Math.sin((v * 14 + warp * 1.6 + u * 1) * Math.PI * 2);
-    const ripple = Math.pow(rip * 0.5 + 0.5, 1.6);
+    const ripple = Math.pow(rip * 0.5 + 0.5, 1.6) * clamp(0.35 + fbm(N2, u * 5 + 4, v * 5, 3, 5) * 1.2, 0, 1);
     const g = grain[i];
-    H[i] = clamp(0.35 * ripple + 0.2 * (f * 0.5 + 0.5) + 0.45 * g, 0, 1);
+    H[i] = clamp(0.16 * ripple + 0.22 * (f * 0.5 + 0.5) + 0.55 * g, 0, 1);
     let c = mix3(s1, s0, clamp(f * 0.7 + 0.55 + (g - 0.5) * 0.6, 0, 1));
     if (white[i] > 0.985) c = mix3(c, grit, 0.7);
     else if (white[i] < 0.006) c = mix3(c, shell, 0.8);
@@ -347,8 +348,8 @@ GEN.planks = ({ seed = 51, size = 512, boards = 4 } = {}) => {
     const seam = Math.min(bv, 1 - bv);
     const gw = fbm(N, u * 2, v * boards * 0.5 + bOff[bi], 3, 2);
     const grain = Math.sin((bv * 9 + gw * 6 + bOff[bi]) * Math.PI * 2) * 0.5 + 0.5;
-    const streak = fbm(N2, u * 3, v * 60, 3, 3) * 0.5 + 0.5;
-    const knotsN = fbm(N, u * 6 + bOff[bi], bv * 2, 2, 6);
+    const streak = fbm(N2, u * 3, v * 60, 3, 3, 2, 0.5, 60) * 0.5 + 0.5;
+    const knotsN = fbm(N, u * 6 + bOff[bi], bv * 2, 2, 6, 2, 0.5, 2);
     const edge = clamp(seam * 40, 0, 1);
     let ht = 0.55 + 0.18 * grain * streak + 0.1 * streak - (1 - edge) * 0.45;
     let c = mix3(wd1, wd0, clamp(0.35 + streak * 0.5 + bTone[bi] * 0.3, 0, 1));
@@ -451,11 +452,11 @@ function drawBlade(ga, gh, L, W, col, r, { veins = 9, tipBend = 0, tear = 0 } = 
   gh.fillStyle = hg; path(gh); gh.fill();
   // veins
   ga.save(); gh.save(); path(ga); ga.clip(); path(gh); gh.clip();
-  ga.strokeStyle = 'rgba(210,225,170,0.35)'; ga.lineWidth = Math.max(1, W * 0.05);
+  ga.strokeStyle = 'rgba(170,185,140,0.22)'; ga.lineWidth = Math.max(1, W * 0.035);
   gh.strokeStyle = 'rgb(235,90,0)'; gh.lineWidth = Math.max(1, W * 0.06);
   for (const g of [ga, gh]) { g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(tipBend * 0.2, L * 0.5, tipBend, L); g.stroke(); }
   ga.lineWidth = gh.lineWidth = Math.max(1, W * 0.022);
-  ga.strokeStyle = 'rgba(20,30,10,0.35)'; gh.strokeStyle = 'rgb(120,80,0)';
+  ga.strokeStyle = 'rgba(20,30,10,0.16)'; gh.strokeStyle = 'rgb(150,80,0)';
   for (let k = 1; k < veins; k++) {
     const yy = (k / veins) * L * 0.92;
     for (const s of [-1, 1]) for (const g of [ga, gh]) {
@@ -595,7 +596,7 @@ export function getCloudTex(seed = 7, size = 1024) {
       const wx = fbm(N3, u * 3, v * 3, 3, 3) * 0.25;
       const big = fbm(N, (u + wx) * 3, (v + wx) * 3, 6, 3);
       const det = fbm(N2, u * 12, v * 12, 5, 12);
-      const streak = fbm(N3, u * 2, v * 10, 4, 2);
+      const streak = fbm(N3, u * 2, v * 10, 4, 2, 2, 0.5, 10);
       d[i] = srgbByte(big * 0.75 + 0.5); d[i + 1] = srgbByte(det * 0.75 + 0.5); d[i + 2] = srgbByte(streak * 0.75 + 0.5); d[i + 3] = 255;
     }
     return makeDataTexture(d, size, size, {});
@@ -608,8 +609,8 @@ export function getOceanNormalTex(seed = 3, size = 512) {
     for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
       const u = x / size, v = y / size;
       // choppy: sharpened crests (1-|n|) mixed with smooth swell detail, slightly anisotropic (wind along +u)
-      const a = 1 - Math.abs(fbm(N, u * 6, v * 9, 5, 6));
-      const b = fbm(N2, u * 16, v * 20, 4, 16);
+      const a = 1 - Math.abs(fbm(N, u * 6, v * 9, 5, 6, 2, 0.5, 9));
+      const b = fbm(N2, u * 16, v * 20, 4, 16, 2, 0.5, 20);
       H[y * size + x] = a * a * 0.7 + b * 0.3;
     }
     return makeDataTexture(heightToNormal(H, size, size, 2.2, true), size, size, {});

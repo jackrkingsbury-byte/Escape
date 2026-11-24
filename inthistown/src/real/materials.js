@@ -4,7 +4,9 @@
  * ─── Global per-frame uniforms ─────────────────────────────────────────────────────────────────────────────────────
  *   RU = { uTime, uWind (vec2 m/s), uFlash (0..1 lightning), uRain (0..1 wetness/rain intensity) }  shared uniform objects:
  *   every material patched by this kit references them, so ONE call per frame updates everything:
- *   setFrame({ t, wind?, flash?, rain? })  (test_shots.js calls it from each shot's update; env/weather update() call it too)
+ *   setFrame({ t, wind?, flash?, rain? })  once per frame, early (test_shots.js: in set.update). Omitted fields reset to defaults.
+ *
+ *   PRE_RENDER / runPreRender(scene, camera, t) / inScene(obj, scene): render-time CPU hooks (see below; post.js runs them).
  *
  * ─── Material factories ────────────────────────────────────────────────────────────────────────────────────────────
  *   pbr(name, opts) → MeshStandardMaterial (or MeshPhysicalMaterial if opts.physical) with the textures.js set `name`
@@ -25,6 +27,8 @@
  *   windSway(material, opts) → material. Vertex wind for vegetation (works with InstancedMesh): displacement grows with
  *     local height^2, phase from instance position, gusts from RU.uTime. opts: amp 0.15 (m at height 1), freq 1.3,
  *     heightScale 1 (local units per "1 height"), flutter 0.02 (leaf-card jitter), axis 'y'.
+ *   foliage(material, opts) → material. Leaf look: light transmitted through the blade (emissive term ∝ albedo, so backlit
+ *     leaves glow instead of going black) and a wet sheen. opts: translucency 0.12 (scene-light level), wet 0.5.
  *   All patches chain: each helper appends to material.userData.realPatches and recompiles via a shared onBeforeCompile;
  *   customProgramCacheKey includes the patch list so programs are shared between identical materials.
  */
@@ -34,11 +38,21 @@ import { getPBR, getNoiseTex } from './textures.js';
 export const RU = {
   uTime: { value: 0 }, uWind: { value: new THREE.Vector2(1.5, 0.4) }, uFlash: { value: 0 }, uRain: { value: 1 },
 };
-export function setFrame({ t, wind, flash, rain } = {}) {
+// Render-time hooks: functions (camera, t) run by post.js right before the scene is drawn, i.e. after the shot has placed
+// the camera. Anything that must follow the *rendering* camera on the CPU (splash layout, ocean re-centring) registers
+// here instead of computing in update(t) (which runs before the camera is final → one-frame lag → non-determinism).
+// Each hook receives { camera, t, scene } and should early-out when its object is not in the scene.
+export const PRE_RENDER = new Set();
+export function runPreRender(scene, camera, t) { for (const f of PRE_RENDER) f({ scene, camera, t }); }
+export function inScene(obj, scene) { for (let o = obj; o; o = o.parent) { if (o === scene) return true; if (!o.visible) return false; } return false; }
+// Every field not given is RESET to its default (wind [1.5, 0.4], flash 0, rain 1): these uniforms are global, so a
+// value left over from another shot (e.g. a lightning flash) must never leak into the next frame. Call it once per frame
+// (realSet-style set.update does) BEFORE anything that sets flash (makeLightning.update) runs.
+export function setFrame({ t, wind = [1.5, 0.4], flash = 0, rain = 1 } = {}) {
   if (t != null) RU.uTime.value = t;
-  if (wind) RU.uWind.value.set(wind[0], wind[1]);
-  if (flash != null) RU.uFlash.value = flash;
-  if (rain != null) RU.uRain.value = rain;
+  RU.uWind.value.set(wind[0], wind[1]);
+  RU.uFlash.value = flash;
+  RU.uRain.value = rain;
 }
 
 // ═════════════════════════════════════════════ patch plumbing ═══════════════════════════════════════════════════
@@ -88,7 +102,7 @@ vec3 rPerturb(vec3 surf_pos, vec3 surf_norm, vec2 dHdxy, float faceDirection) {
   vec3 vGrad = sign(fDet) * (dHdxy.x * R1 + dHdxy.y * R2);
   return normalize(abs(fDet) * surf_norm - vGrad);
 }
-float rHash(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }`);
+float rHash(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }`, false);
 }
 
 // ═════════════════════════════════════════════ factories ═════════════════════════════════════════════════════════
@@ -227,5 +241,18 @@ export function windSway(material, opts = {}) {
     transformed += dw;
     transformed += normal * sin(uTime * 7.0 + ph * 13.0 + position.x * 5.0 + position.z * 3.0) * uFlutter * hh;
   }`);
+  });
+}
+
+export function foliage(material, opts = {}) {
+  const { translucency = 0.12, wet = 0.5 } = opts;
+  material.userData.folUniforms = { uTransl: { value: translucency }, uLeafWet: { value: wet } };
+  return addPatch(material, 'foliage:', (shader) => {
+    Object.assign(shader.uniforms, material.userData.folUniforms);
+    let fs = shader.fragmentShader;
+    fs = inject(fs, '#include <common>', 'uniform float uTransl, uLeafWet;');
+    fs = inject(fs, '#include <emissivemap_fragment>', 'totalEmissiveRadiance += diffuseColor.rgb * vec3(0.9, 1.05, 0.7) * uTransl * (1.0 + uFlash * 6.0);');
+    fs = inject(fs, '#include <roughnessmap_fragment>', 'roughnessFactor = mix(roughnessFactor, roughnessFactor * 0.55, uLeafWet);');
+    shader.fragmentShader = fs;
   });
 }

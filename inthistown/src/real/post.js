@@ -5,6 +5,9 @@
  *        ──► [ATMOS pre-pass]  depth-reconstructed height fog with drifting noise wisps + light in-scattering glow,
  *                              optional depth-only SSAO ("SAO-lite"), writes the depth-of-field CoC into alpha
  *        ──► [DOF]             single-pass scatter-as-gather bokeh (golden-angle disk, near/far aware)
+ *        ──► [FX]              objects on layer 10 (FX_LAYER_DEFAULT; rain by default) rendered AFTER the DOF into their own
+ *                              target, depth-tested against the scene depth, composited premultiplied in the grade pass —
+ *                              so near rain streaks stay crisp instead of inheriting the background's blur
  *        ──► [BLOOM]           dual-filter (Kawase) down/up chain with soft-knee threshold, 5 mips from ½ res
  *        ──► [GRADE → screen]  edge chromatic aberration, bloom add, exposure + lightning flash, ACES filmic, sRGB, then
  *                              in display space: cold white balance, bleach-bypass desaturation, S-curve contrast,
@@ -13,7 +16,8 @@
  *   Every pass but the scene and grade is skipped when its feature is off for the frame.
  *
  * ─── API ────────────────────────────────────────────────────────────────────────────────────────────────────────────
- *   createPost(ctx, opts?) → post        opts: { msaa: 4 (samples of the HDR target; 0 = off), profile: false }
+ *   createPost(ctx, opts?) → post        opts: { msaa: 0 (samples of the HDR target; 2/4 = real MSAA, very slow on SwiftShader), profile: false,
+ *                                        shadowType 'pcf' | 'soft' (renderer shadow filter; default switches to PCF) }
  *   post.defaults(cfg)                   persistent film-level config (deep-merged into the built-in defaults)
  *   post.set(cfg)                        per-FRAME overrides (deep-merged); cleared after every post.render()
  *   post.render(ctx)                     draw ctx.scene / ctx.camera to the default framebuffer (glCanvas)
@@ -46,6 +50,8 @@
  *   grain     0.055      film grain amplitude (display space, strongest in mid-tones)
  *   letterbox 0          bar height as a fraction of the frame height (top and bottom each)
  *   fade      null | { color '#000000', amount 0..1 }   final colour fade (for cuts to black / white)
+ *   fx        true       render the FX layer (layer 10) after DOF; false skips it (those objects are then not drawn)
+ *   fxaa      true       cheap edge anti-aliasing in the grade pass (use with msaa 0: SwiftShader MSAA costs ~1–2 s/frame)
  *   profile   false
  *
  * Determinism: no clocks or Math.random affect pixels (grain is hashed from gl_FragCoord + a seed derived from ctx.t).
@@ -55,7 +61,9 @@
 import * as THREE from 'three';
 import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
 import { getNoiseTex } from './textures.js';
+import { runPreRender } from './materials.js';
 
+export const FX_LAYER_DEFAULT = 10;
 const DEFAULTS = {
   exposure: 1, flash: 0,
   fog: null, ao: null, dof: null,
@@ -64,7 +72,7 @@ const DEFAULTS = {
     temperature: -0.25, tint: 0, saturation: 0.45, bleach: 0.35, contrast: 1.3, pivot: 0.42, blackPoint: 0.025, whitePoint: 1.0,
     lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], shadowTint: '#2b6f78', shadowAmt: 0.22, highlightTint: '#ffd2a0', highlightAmt: 0,
   },
-  ca: 0.0035, vignette: 0.5, grain: 0.055, letterbox: 0, fade: null, profile: false,
+  ca: 0.0035, vignette: 0.5, grain: 0.055, letterbox: 0, fade: null, fxaa: true, profile: false,
 };
 const FOG_DEFAULTS = { color: '#9aa4a8', density: 0.03, height: 0, falloff: 0.12, start: 0, max: 1, sky: 1, noise: 0.6, noiseScale: 0.045,
   wind: [1.2, 0, 0.4], sunDir: [0, 1, 0], sunColor: '#ffffff', glow: 0, glowPower: 6 };
@@ -99,7 +107,7 @@ uniform vec2 resolution;
 uniform float time, cameraNear, cameraFar;
 uniform vec3 fogColor, sunDir, sunColor, wind;
 uniform float fogDensity, fogHeight, fogFalloff, fogStart, fogMax, fogSky, fogNoise, fogNoiseScale, glow, glowPower;
-uniform float aoRadius, aoIntensity, aoBias;
+uniform float aoRadius, aoIntensity, aoBias, flashF;
 uniform float dofFocus, dofAperture, dofMax;
 
 vec3 viewPos(vec2 uv, float d) {
@@ -170,7 +178,7 @@ void main() {
   integ *= max(0.0, 1.0 + fogNoise * (nz - 0.5) * 2.6);
   float fogA = clamp(1.0 - exp(-integ), 0.0, fogMax) * (sky ? fogSky : 1.0);
   float mu = max(0.0, dot(rd, normalize(sunDir)));
-  vec3 fc = fogColor * (1.0 + glow * pow(mu, glowPower) * sunColor);
+  vec3 fc = fogColor * (1.0 + glow * pow(mu, glowPower) * sunColor) + vec3(0.55, 0.6, 0.7) * flashF * 0.25;
   col = mix(col, fc, fogA);
 #endif
   float coc = 0.0;
@@ -213,52 +221,54 @@ precision highp float;
 varying vec2 vUv;
 uniform sampler2D tColor; uniform vec2 texel; uniform float threshold, knee;
 vec3 pre(vec3 c) {
+  c = min(c, vec3(24.0));
   float br = max(c.r, max(c.g, c.b));
   float rq = clamp(br - threshold + knee, 0.0, 2.0 * knee);
   rq = rq * rq / (4.0 * knee + 1e-4);
   float w = max(rq, br - threshold) / max(br, 1e-4);
   return c * w;
 }
+// Karis average: weight each 2x2 group by 1/(1+luma) so single hot pixels (specular fireflies) can't make blobs
+float kw(vec3 c) { return 1.0 / (1.0 + dot(c, vec3(0.2126, 0.7152, 0.0722))); }
 void main() {
-  vec3 a = texture2D(tColor, vUv + texel * vec2(-1.0, -1.0)).rgb;
-  vec3 b = texture2D(tColor, vUv + texel * vec2(1.0, -1.0)).rgb;
-  vec3 c = texture2D(tColor, vUv + texel * vec2(-1.0, 1.0)).rgb;
-  vec3 d = texture2D(tColor, vUv + texel * vec2(1.0, 1.0)).rgb;
-  vec3 s = (pre(a) + pre(b) + pre(c) + pre(d)) * 0.25;
-  gl_FragColor = vec4(min(s, vec3(64.0)), 1.0);
+  vec3 a = pre(texture2D(tColor, vUv + texel * vec2(-1.0, -1.0)).rgb);
+  vec3 b = pre(texture2D(tColor, vUv + texel * vec2(1.0, -1.0)).rgb);
+  vec3 c = pre(texture2D(tColor, vUv + texel * vec2(-1.0, 1.0)).rgb);
+  vec3 d = pre(texture2D(tColor, vUv + texel * vec2(1.0, 1.0)).rgb);
+  float wa = kw(a), wb = kw(b), wc = kw(c), wd = kw(d);
+  gl_FragColor = vec4((a * wa + b * wb + c * wc + d * wd) / (wa + wb + wc + wd), 1.0);
 }`;
+// 13-tap "CoD" downsample (round, alias-free)
 const BLOOM_DOWN = /* glsl */`
 precision highp float;
 varying vec2 vUv; uniform sampler2D tColor; uniform vec2 texel;
+vec3 T(vec2 o) { return texture2D(tColor, vUv + texel * o).rgb; }
 void main() {
-  vec3 s = texture2D(tColor, vUv).rgb * 4.0;
-  s += texture2D(tColor, vUv + texel * vec2(-1.0, -1.0)).rgb;
-  s += texture2D(tColor, vUv + texel * vec2(1.0, -1.0)).rgb;
-  s += texture2D(tColor, vUv + texel * vec2(-1.0, 1.0)).rgb;
-  s += texture2D(tColor, vUv + texel * vec2(1.0, 1.0)).rgb;
-  gl_FragColor = vec4(s / 8.0, 1.0);
+  vec3 A = T(vec2(-2.0, -2.0)), B = T(vec2(0.0, -2.0)), C = T(vec2(2.0, -2.0));
+  vec3 D = T(vec2(-1.0, -1.0)), E = T(vec2(1.0, -1.0));
+  vec3 F = T(vec2(-2.0, 0.0)), G = T(vec2(0.0, 0.0)), H = T(vec2(2.0, 0.0));
+  vec3 I = T(vec2(-1.0, 1.0)), J = T(vec2(1.0, 1.0));
+  vec3 K = T(vec2(-2.0, 2.0)), L = T(vec2(0.0, 2.0)), M = T(vec2(2.0, 2.0));
+  vec3 s = (D + E + I + J) * 0.125 + (A + B + G + F) * 0.03125 + (B + C + H + G) * 0.03125 + (F + G + L + K) * 0.03125 + (G + H + M + L) * 0.03125;
+  gl_FragColor = vec4(s, 1.0);
 }`;
+// 9-tap tent upsample + add the current level
 const BLOOM_UP = /* glsl */`
 precision highp float;
 varying vec2 vUv; uniform sampler2D tColor, tAdd; uniform vec2 texel; uniform float spread;
+vec3 T(vec2 o) { return texture2D(tColor, vUv + texel * o * (0.75 + spread * 0.5)).rgb; }
 void main() {
-  vec2 o = texel * (0.5 + spread);
-  vec3 s = vec3(0.0);
-  s += texture2D(tColor, vUv + vec2(-2.0 * o.x, 0.0)).rgb;
-  s += texture2D(tColor, vUv + vec2(2.0 * o.x, 0.0)).rgb;
-  s += texture2D(tColor, vUv + vec2(0.0, -2.0 * o.y)).rgb;
-  s += texture2D(tColor, vUv + vec2(0.0, 2.0 * o.y)).rgb;
-  s += texture2D(tColor, vUv + vec2(-o.x, -o.y)).rgb * 2.0;
-  s += texture2D(tColor, vUv + vec2(o.x, -o.y)).rgb * 2.0;
-  s += texture2D(tColor, vUv + vec2(-o.x, o.y)).rgb * 2.0;
-  s += texture2D(tColor, vUv + vec2(o.x, o.y)).rgb * 2.0;
-  gl_FragColor = vec4(s / 12.0 + texture2D(tAdd, vUv).rgb, 1.0);
+  vec3 s = T(vec2(0.0)) * 4.0;
+  s += (T(vec2(-1.0, 0.0)) + T(vec2(1.0, 0.0)) + T(vec2(0.0, -1.0)) + T(vec2(0.0, 1.0))) * 2.0;
+  s += T(vec2(-1.0, -1.0)) + T(vec2(1.0, -1.0)) + T(vec2(-1.0, 1.0)) + T(vec2(1.0, 1.0));
+  gl_FragColor = vec4(s / 16.0 + texture2D(tAdd, vUv).rgb, 1.0);
 }`;
 
 const GRADE_FRAG = /* glsl */`
 precision highp float;
 varying vec2 vUv;
-uniform sampler2D tColor, tBloom;
+uniform sampler2D tColor, tBloom, tFx;
+uniform float useFx;
 uniform vec2 resolution;
 uniform float useBloom, bloomStrength, exposure, flash, ca, vignette, grain, seed, letterbox, fadeAmt;
 uniform vec3 fadeColor, wb;
@@ -286,9 +296,33 @@ void main() {
   c.r = texture2D(tColor, vUv - off).r;
   c.g = texture2D(tColor, vUv).g;
   c.b = texture2D(tColor, vUv + off).b;
+#ifdef USE_FXAA
+  {
+    // FXAA-lite on perceptual luma (l / (1 + l) of the HDR input): blend along the edge normal where contrast is high
+    vec2 px = 1.0 / resolution;
+    float lM = luma(c); lM = lM / (1.0 + lM);
+    vec3 cN = texture2D(tColor, vUv + vec2(0.0, px.y)).rgb, cS = texture2D(tColor, vUv - vec2(0.0, px.y)).rgb;
+    vec3 cE = texture2D(tColor, vUv + vec2(px.x, 0.0)).rgb, cW = texture2D(tColor, vUv - vec2(px.x, 0.0)).rgb;
+    float lN = luma(cN), lS = luma(cS), lE = luma(cE), lW = luma(cW);
+    lN /= 1.0 + lN; lS /= 1.0 + lS; lE /= 1.0 + lE; lW /= 1.0 + lW;
+    float lMin = min(lM, min(min(lN, lS), min(lE, lW))), lMax = max(lM, max(max(lN, lS), max(lE, lW)));
+    float range = lMax - lMin;
+    if (range > max(0.04, lMax * 0.12)) {
+      vec2 dir = vec2(-(lN - lS), lE - lW);
+      float dl = max(abs(dir.x), abs(dir.y));
+      dir = clamp(dir / max(dl, 1e-4), -1.0, 1.0) * px;
+      vec3 a = texture2D(tColor, vUv + dir * 0.5).rgb + texture2D(tColor, vUv - dir * 0.5).rgb;
+      vec3 b = texture2D(tColor, vUv + dir * 1.5).rgb + texture2D(tColor, vUv - dir * 1.5).rgb;
+      float k = clamp(range * 3.0, 0.0, 1.0);
+      c = mix(c, (a * 0.5 + (a + b) * 0.25) * 0.5, k * 0.85);
+    }
+  }
+#endif
   if (useBloom > 0.5) c += texture2D(tBloom, vUv).rgb * bloomStrength;
+  // sharp FX layer (rain…): rendered after DOF with scene-depth occlusion, premultiplied over
+  if (useFx > 0.5) { vec4 fx = texture2D(tFx, vUv); c = c * (1.0 - clamp(fx.a, 0.0, 1.0)) + fx.rgb; }
   // lightning flash: exposure boost + lifted shadows, cold-white
-  c = c * (1.0 + flash * 2.2) + flash * 0.06 * vec3(0.85, 0.92, 1.0);
+  c = c * (1.0 + flash * 0.45) + flash * 0.02 * vec3(0.85, 0.92, 1.0);
   c *= wb;
   c = aces(c * exposure);
   c = toSRGB(c);
@@ -341,11 +375,14 @@ function mat(frag, uniforms, defines = {}) {
 export function createPost(ctx, opts = {}) {
   const renderer = ctx.renderer;
   const w = ctx.size ? ctx.size.w : renderer.domElement.width, h = ctx.size ? ctx.size.h : renderer.domElement.height;
-  const msaa = opts.msaa ?? 4;
+  const msaa = opts.msaa ?? 0;
   const depthTexture = new THREE.DepthTexture(w, h);
   depthTexture.type = THREE.UnsignedIntType;
   const sceneRT = hdrTarget(w, h, { depthBuffer: true, samples: msaa, depthTexture });
   const rtA = hdrTarget(w, h), rtB = hdrTarget(w, h);
+  // FX layer target: own colour, SHARES the scene depth texture so FX are occluded by the scene (never sampled while bound)
+  const fxRT = hdrTarget(w, h, { depthBuffer: true, depthTexture });
+  const FX_LAYER = opts.fxLayer ?? FX_LAYER_DEFAULT;
   const LEVELS = 5;
   const mips = [], ups = [];
   for (let i = 0; i < LEVELS; i++) {
@@ -360,7 +397,7 @@ export function createPost(ctx, opts = {}) {
     resolution: new THREE.Vector2(w, h), time: 0, cameraNear: 0.1, cameraFar: 1000,
     fogColor: new THREE.Vector3(), sunDir: new THREE.Vector3(0, 1, 0), sunColor: new THREE.Vector3(1, 1, 1), wind: new THREE.Vector3(),
     fogDensity: 0, fogHeight: 0, fogFalloff: 0.1, fogStart: 0, fogMax: 1, fogSky: 1, fogNoise: 0, fogNoiseScale: 0.05, glow: 0, glowPower: 6,
-    aoRadius: 0.5, aoIntensity: 1, aoBias: 0.03, dofFocus: 4, dofAperture: 1, dofMax: 16 });
+    aoRadius: 0.5, aoIntensity: 1, aoBias: 0.03, flashF: 0, dofFocus: 4, dofAperture: 1, dofMax: 16 });
   const atmosMats = new Map();
   const atmosMat = (fog, ao, dof) => {
     const key = `${+!!fog}${+!!ao}${+!!dof}`;
@@ -379,17 +416,19 @@ export function createPost(ctx, opts = {}) {
   const downMat = mat(BLOOM_DOWN, downU);
   const upU = U({ tColor: null, tAdd: null, texel: new THREE.Vector2(), spread: 1 });
   const upMat = mat(BLOOM_UP, upU);
-  const gradeU = U({ tColor: null, tBloom: null, resolution: new THREE.Vector2(w, h), useBloom: 0, bloomStrength: 0.1, exposure: 1, flash: 0,
+  const gradeU = U({ tColor: null, tBloom: null, tFx: fxRT.texture, useFx: 0, resolution: new THREE.Vector2(w, h), useBloom: 0, bloomStrength: 0.1, exposure: 1, flash: 0,
     ca: 0, vignette: 0, grain: 0, seed: 0, letterbox: 0, fadeAmt: 0, fadeColor: new THREE.Vector3(), wb: new THREE.Vector3(1, 1, 1),
     saturation: 1, bleach: 0, contrast: 1, pivot: 0.42, blackPoint: 0, whitePoint: 1, shadowAmt: 0, highlightAmt: 0,
     lift: new THREE.Vector3(), gammaV: new THREE.Vector3(1, 1, 1), gain: new THREE.Vector3(1, 1, 1),
     shadowTint: new THREE.Vector3(), highlightTint: new THREE.Vector3(1, 1, 1) });
-  const gradeMat = mat(GRADE_FRAG, gradeU);
+  const gradeMats = { 0: mat(GRADE_FRAG, gradeU), 1: mat(GRADE_FRAG, gradeU, { USE_FXAA: '' }) };
 
   renderer.info.autoReset = false;
+  // PCF (not PCF-soft): ~half the shadow-lookup cost on SwiftShader; DOF + grain hide the harder edge
+  if (opts.shadowType !== 'soft') renderer.shadowMap.type = THREE.PCFShadowMap;
   let base = merge(DEFAULTS, {});
   let frame = {};
-  const stats = { ms: { scene: 0, atmos: 0, dof: 0, bloom: 0, grade: 0, total: 0 } };
+  const stats = { ms: { scene: 0, atmos: 0, dof: 0, fx: 0, bloom: 0, grade: 0, total: 0 } };
   const gl = renderer.getContext();
   const px = new Uint8Array(4);
 
@@ -415,6 +454,9 @@ export function createPost(ctx, opts = {}) {
       renderer.info.reset();
       const prevAutoClear = renderer.autoClear;
       renderer.autoClear = true;
+      // 0. render-time CPU hooks (camera is final now): splash layout, ocean follow…
+      scene.updateMatrixWorld(); if (camera.parent === null) camera.updateMatrixWorld();
+      runPreRender(scene, camera, c.t);
       // 1. scene → HDR
       renderer.setRenderTarget(sceneRT);
       renderer.render(scene, camera);
@@ -429,7 +471,7 @@ export function createPost(ctx, opts = {}) {
         u.tColor.value = cur;
         u.projInv.value.copy(camera.projectionMatrixInverse);
         u.camWorld.value.copy(camera.matrixWorld);
-        u.time.value = c.t; u.cameraNear.value = camera.near; u.cameraFar.value = camera.far;
+        u.time.value = c.t; u.cameraNear.value = camera.near; u.cameraFar.value = camera.far; u.flashF.value = cfg.flash || 0;
         if (fog) {
           col3(fog.color, u.fogColor.value); vec3(fog.sunDir, u.sunDir.value); col3(fog.sunColor, u.sunColor.value); vec3(fog.wind, u.wind.value);
           u.fogDensity.value = fog.density; u.fogHeight.value = fog.height; u.fogFalloff.value = Math.max(1e-4, fog.falloff);
@@ -449,6 +491,22 @@ export function createPost(ctx, opts = {}) {
         cur = rtB.texture;
       }
       lap('dof');
+      // 3b. sharp FX layer (objects on layer FX_LAYER, e.g. rain): after DOF so near streaks stay crisp
+      let fxDrawn = false;
+      if (cfg.fx !== false) {
+        const saveMask = camera.layers.mask, saveBg = scene.background, saveAuto = renderer.shadowMap.autoUpdate;
+        const saveClear = renderer.getClearColor(new THREE.Color()), saveAlpha = renderer.getClearAlpha();
+        camera.layers.set(FX_LAYER);
+        scene.background = null; renderer.shadowMap.autoUpdate = false; renderer.autoClear = false;
+        renderer.setRenderTarget(fxRT);
+        renderer.setClearColor(0x000000, 0); renderer.clear(true, false, false);
+        const before = renderer.info.render.calls;
+        renderer.render(scene, camera);
+        fxDrawn = renderer.info.render.calls > before;
+        camera.layers.mask = saveMask; scene.background = saveBg; renderer.shadowMap.autoUpdate = saveAuto; renderer.autoClear = true;
+        renderer.setClearColor(saveClear, saveAlpha);
+      }
+      lap('fx');
       // 4. bloom
       const bloom = cfg.bloom && cfg.bloom.strength > 0 ? merge(DEFAULTS.bloom, cfg.bloom) : null;
       if (bloom) {
@@ -471,6 +529,7 @@ export function createPost(ctx, opts = {}) {
       // 5. grade → screen
       const g = merge(DEFAULTS.grade, cfg.grade || {});
       const u = gradeU;
+      u.useFx.value = fxDrawn ? 1 : 0;
       u.tColor.value = cur; u.useBloom.value = bloom ? 1 : 0; u.bloomStrength.value = bloom ? bloom.strength / 0.25 : 0;
       u.exposure.value = renderer.toneMappingExposure * cfg.exposure;
       u.flash.value = cfg.flash || 0;
@@ -488,14 +547,14 @@ export function createPost(ctx, opts = {}) {
       const st = new THREE.Color(g.shadowTint), ht = new THREE.Color(g.highlightTint);
       if (Array.isArray(g.shadowTint)) u.shadowTint.value.set(...g.shadowTint); else { const s = st.getRGB(new THREE.Color(), THREE.SRGBColorSpace); u.shadowTint.value.set(s.r, s.g, s.b); }
       if (Array.isArray(g.highlightTint)) u.highlightTint.value.set(...g.highlightTint); else { const s = ht.getRGB(new THREE.Color(), THREE.SRGBColorSpace); u.highlightTint.value.set(s.r, s.g, s.b); }
-      blit(gradeMat, null);
+      blit(gradeMats[cfg.fxaa ? 1 : 0], null);
       lap('grade');
       stats.ms.total = performance.now() - T0;
       renderer.autoClear = prevAutoClear;
     },
     dispose() {
-      [sceneRT, rtA, rtB, ...mips, ...ups].forEach((r) => r.dispose());
-      [...atmosMats.values(), dofMat, preMat, downMat, upMat, gradeMat].forEach((m) => m.dispose());
+      [sceneRT, rtA, rtB, fxRT, ...mips, ...ups].forEach((r) => r.dispose());
+      [...atmosMats.values(), dofMat, preMat, downMat, upMat, gradeMats[0], gradeMats[1]].forEach((m) => m.dispose());
       quad.dispose();
     },
   };

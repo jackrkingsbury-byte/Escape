@@ -56,32 +56,38 @@ def tex(name, tile, depth, desc, normal_scale=1.0):
 @tex('wet_sand', tile=2.0, depth=0.012, desc='wet beach sand: swash ripples, rain-drop pits, standing-water films, shell grit')
 def wet_sand(g, T):
     warp = T.warp(2.0, 2.0, seed=1.0)
-    # ripples: integer frequency along v + periodic warp → crests roughly along u
-    rv = g.add(g.mul(T.v, 15.0), g.mul(g.noise(*T.at(2.2, 2.2, seed=2), detail=3, rough=0.5), 1.6))
-    ph = g.frac(rv)
-    ripple = g.pow(g.sstep(0.0, 0.75, ph), 1.0)                       # long gentle stoss side …
-    ripple = g.mul(ripple, g.sub(1.0, g.sstep(0.75, 1.0, ph)))        # … short steep lee side
-    ripmask = g.sstep(0.38, 0.68, g.noise(*T.at(1.6, 1.6, seed=3), detail=2))
+    # ripples: integer frequencies + periodic warp → periodic; two trains (straight + oblique) in different zones
+    wv = g.mul(g.noise(*T.at(2.2, 2.2, seed=2), detail=3, rough=0.5), 1.6)
+    ph1 = g.frac(g.add(g.mul(T.v, 15.0), wv))
+    ph2 = g.frac(g.add(g.add(g.mul(T.v, 11.0), g.mul(T.u, 5.0)), g.mul(wv, 0.8)))
+    def prof(ph):                                                     # long gentle stoss side, short steep lee side
+        return g.mul(g.sstep(0.0, 0.78, ph), g.sub(1.0, g.sstep(0.78, 1.0, ph)))
+    zone = g.noise(*T.at(1.6, 1.6, seed=3), detail=2)
+    m1 = g.sstep(0.40, 0.55, zone)
+    m2 = g.mul(g.sub(1.0, g.sstep(0.45, 0.60, zone)), g.sstep(0.25, 0.4, zone))
+    ripple = g.add(g.mul(prof(ph1), m1), g.mul(prof(ph2), m2))
+    ph = g.lerp(ph2, ph1, m1)
+    ripmask = g.clamp01(g.add(m1, m2))
     big = g.noise(*T.at(3.0, 3.0, seed=4, warp=warp, warp_amt=0.6), detail=4, rough=0.55)
     grain = g.noise(*T.at(260, 260, seed=5), detail=2, rough=0.7)
     clump = g.noise(*T.at(40, 40, seed=6), detail=3, rough=0.6)
     # rain-drop pits (small craters with a faint rim)
-    pv, pw = T.at(70, 70, seed=7)
+    pv, pw = T.at(55, 55, seed=7)
     pit = g.voronoi(pv, pw, scale=1.0, feature='F1')
     pr = pit.outputs['Distance']
-    pit_on = g.sstep(0.55, 0.7, g.sepc(pit.outputs['Color'])[0])
-    crater = g.mul(g.sub(1.0, g.sstep(0.05, 0.22, pr)), pit_on)
-    rim = g.mul(g.mul(g.sstep(0.16, 0.24, pr), g.sub(1.0, g.sstep(0.24, 0.34, pr))), pit_on)
-    h = g.add(g.mul(big, 0.35), g.mul(g.mul(ripple, ripmask), 0.32))
-    h = g.add(h, g.mul(g.sub(clump, 0.5), 0.08))
-    h = g.add(h, g.mul(g.sub(grain, 0.5), 0.05))
-    h = g.sub(h, g.mul(crater, 0.10))
+    pit_on = g.sstep(0.45, 0.6, g.sepc(pit.outputs['Color'])[0])
+    crater = g.mul(g.sub(1.0, g.sstep(0.05, 0.25, pr)), pit_on)
+    rim = g.mul(g.mul(g.sstep(0.2, 0.28, pr), g.sub(1.0, g.sstep(0.28, 0.4, pr))), pit_on)
+    h = g.add(g.mul(big, 0.45), g.mul(ripple, 0.30))
+    h = g.add(h, g.mul(g.sub(clump, 0.5), 0.10))
+    h = g.add(h, g.mul(g.sub(grain, 0.5), 0.06))
+    h = g.sub(h, g.mul(crater, 0.09))
     h = g.add(h, g.mul(rim, 0.03))
-    # standing water in hollows: flatten + gloss
-    water_lvl = g.add(0.33, g.mul(g.noise(*T.at(1.3, 1.3, seed=8), detail=2), 0.12))
-    water = g.sstep(0.0, 0.025, g.sub(water_lvl, h))
+    # standing water only in a few low zones: flatten + gloss
+    wz = g.sstep(0.56, 0.62, g.noise(*T.at(1.3, 1.3, seed=8), detail=3))
+    water_lvl = g.add(0.33, g.mul(wz, 0.06))
+    water = g.mul(wz, g.sstep(0.0, 0.015, g.sub(water_lvl, h)))
     h = g.mx(h, g.mul(water_lvl, water))
-    h = g.add(g.mul(h, 1.2), 0.0)
     # colour: wet dark sand, lighter drier crests, dark heavy-mineral streaks in ripple troughs, shell grit
     dryness = g.clamp01(g.add(g.mul(g.sub(h, 0.42), 2.2), g.mul(g.sub(big, 0.5), 0.6)))
     wet_c = g.ramp(g.add(g.mul(clump, 0.6), g.mul(grain, 0.4)), [(0.25, (0.085, 0.070, 0.052)), (0.75, (0.135, 0.112, 0.084))])
@@ -95,54 +101,51 @@ def wet_sand(g, T):
     col = g.mixc(col, (0.42, 0.40, 0.37), sh_on)
     h = g.add(h, g.mul(sh_on, 0.04))
     col = g.mixc(col, g.mixc(col, (0.05, 0.045, 0.04), 1.0, 'MULTIPLY'), g.mul(water, 0.25))
-    rough = g.lerp(g.lerp(0.42, 0.72, dryness), 0.06, water)
+    rough = g.lerp(g.lerp(0.40, 0.70, dryness), 0.05, water)
     rough = g.add(rough, g.mul(g.sub(grain, 0.5), 0.12))
     return dict(albedo=col, rough=rough, height=h)
 
 
 @tex('beach_pebbles', tile=1.5, depth=0.05, desc='wet rounded beach pebbles/cobbles over coarse sand')
 def beach_pebbles(g, T):
-    def layer(k, seed, prof):
+    def layer(k, seed, fill):
         vec, w = T.at(k, k, seed=seed)
-        e = g.voronoi(vec, w, scale=1.0, feature='DISTANCE_TO_EDGE', rand=0.85)
-        f = g.voronoi(vec, w, scale=1.0, feature='F1', rand=0.85)
+        f = g.voronoi(vec, w, scale=1.0, feature='F1', rand=0.9)
+        nr = g.voronoi(vec, w, scale=1.0, feature='N_SPHERE_RADIUS', rand=0.9).outputs['Radius']
         rnd = g.sepc(f.outputs['Color'])
-        dome = g.pow(g.sstep(0.0, prof, e.outputs['Distance']), 0.55)
-        on = g.sstep(0.06, 0.12, rnd[2])                                    # a few cells are gaps
-        return g.mul(dome, on), rnd, f
-    d1, r1, f1 = layer(11.0, 11, 0.30)
-    d2, r2, f2 = layer(6.5, 12, 0.34)
-    d3, r3, f3 = layer(19.0, 13, 0.26)
-    h1 = g.mul(d1, g.add(0.62, g.mul(r1[0], 0.18)))
-    h2 = g.add(g.mul(d2, g.add(0.70, g.mul(r2[0], 0.25))), -0.04)
-    h3 = g.mul(d3, 0.42)
-    sand_n = g.noise(*T.at(120, 120, seed=14), detail=3, rough=0.7)
-    hs = g.add(0.12, g.mul(sand_n, 0.06))
-    def stone_col(r, sp):
-        base = g.ramp(r[1], [(0.0, (0.020, 0.020, 0.021)), (0.25, (0.055, 0.053, 0.050)), (0.45, (0.11, 0.095, 0.08)),
-                             (0.62, (0.075, 0.075, 0.078)), (0.80, (0.20, 0.19, 0.175)), (1.0, (0.33, 0.32, 0.30))], 'LINEAR')
-        speck = g.sstep(0.62, 0.7, sp)
-        return g.mixc(base, g.mixc(base, (0.5, 0.5, 0.5), 1.0, 'SCREEN'), g.mul(speck, g.sstep(0.4, 0.6, r[0])))
+        lu, lv = local_uv(g, T, vec, w, f)
+        x, y = rotate2(g, lu, lv, g.mul(rnd[0], TAU))
+        R = g.mul(nr, g.add(fill, g.mul(rnd[2], 0.25)))
+        a = g.add(0.55, g.mul(rnd[1], 0.4))                             # ellipse aspect
+        xn, yn = g.div(x, R), g.div(y, g.mul(R, a))
+        d2 = g.add(g.mul(xn, xn), g.mul(yn, yn))
+        dome = g.pow(g.clamp01(g.sub(1.0, d2)), 0.42)
+        mask = g.sstep(0.0, 0.06, g.sub(1.0, d2))
+        hgt = g.mul(dome, g.mul(R, 1.1))
+        return hgt, mask, rnd
     sp = g.noise(*T.at(300, 300, seed=15), detail=1, rough=0.5)
-    vein = g.sub(1.0, g.sstep(0.0, 0.03, g.absf(g.sub(g.noise(*T.at(16, 16, seed=16), detail=2), 0.5))))
-    c1, c2, c3 = stone_col(r1, sp), stone_col(r2, sp), stone_col(r3, sp)
-    c1 = g.mixc(c1, (0.45, 0.44, 0.42), g.mul(vein, g.sstep(0.85, 0.9, r1[2])))
-    sand_c = g.ramp(sand_n, [(0.3, (0.07, 0.06, 0.048)), (0.7, (0.12, 0.10, 0.08))])
-    # composite: highest surface wins (soft)
-    h, col, rgh = hs, sand_c, g.add(0.55, g.mul(sand_n, 0.15))
-    for hh, cc, rr in ((h3, c3, r3), (h1, c1, r1), (h2, c2, r2)):
-        t = g.sstep(-0.01, 0.01, g.sub(hh, h))
-        h = g.mx(h, hh)
-        col = g.mixc(col, cc, t)
-        rgh = g.lerp(rgh, g.add(0.16, g.mul(rr[0], 0.18)), t)
-    micro = g.noise(*T.at(200, 200, seed=17), detail=2)
-    h = g.add(h, g.mul(g.sub(micro, 0.5), 0.015))
-    # wet film darkens + glosses the lower parts
-    wet = g.sub(1.0, g.sstep(0.25, 0.5, h))
-    col = g.mixc(col, g.mixc(col, (0.55, 0.55, 0.55), 1.0, 'MULTIPLY'), wet)
-    rgh = g.lerp(rgh, 0.1, g.mul(wet, 0.6))
-    return dict(albedo=col, rough=rgh, height=h)
-
+    sand_n = g.noise(*T.at(120, 120, seed=14), detail=3, rough=0.7)
+    def stone_col(r):
+        base = g.ramp(r[1], [(0.0, (0.018, 0.018, 0.019)), (0.22, (0.045, 0.043, 0.041)), (0.42, (0.10, 0.088, 0.075)),
+                             (0.6, (0.07, 0.07, 0.073)), (0.8, (0.17, 0.165, 0.155)), (1.0, (0.30, 0.29, 0.275))])
+        speck = g.mul(g.sstep(0.64, 0.72, sp), g.sstep(0.5, 0.7, r[0]))
+        return g.mixc(base, g.mixc(base, (0.45, 0.45, 0.45), 1.0, 'SCREEN'), g.mul(speck, 0.7))
+    h = g.add(0.02, g.mul(sand_n, 0.03))
+    col = g.ramp(sand_n, [(0.3, (0.06, 0.052, 0.042)), (0.7, (0.11, 0.095, 0.075))])
+    rgh = g.add(0.55, g.mul(sand_n, 0.15))
+    for k, seed, fill in ((22.0, 13, 0.95), (14.0, 11, 0.95), (9.0, 12, 0.92), (6.0, 16, 0.9)):
+        hh, mm, rr = layer(k, seed, fill)
+        t = g.mul(mm, g.sstep(-0.004, 0.004, g.sub(hh, h)))
+        h = g.lerp(h, g.mx(h, hh), mm)
+        col = g.mixc(col, stone_col(rr), t)
+        rgh = g.lerp(rgh, g.add(0.14, g.mul(rr[0], 0.2)), t)
+    micro = g.noise(*T.at(220, 220, seed=17), detail=2)
+    h = g.add(h, g.mul(g.sub(micro, 0.5), 0.004))
+    hn = g.remap(h, 0.0, 0.16)
+    wet = g.sub(1.0, g.sstep(0.15, 0.45, hn))
+    col = g.mixc(col, g.mixc(col, (0.6, 0.6, 0.6), 1.0, 'MULTIPLY'), wet)
+    rgh = g.lerp(rgh, 0.12, g.mul(wet, 0.5))
+    return dict(albedo=col, rough=rgh, height=hn)
 
 @tex('forest_mud', tile=2.0, depth=0.035, desc='wet rainforest mud with layered leaf litter, twigs and puddles')
 def forest_mud(g, T):
@@ -152,10 +155,11 @@ def forest_mud(g, T):
     h = g.add(g.mul(mud_n, 0.3), g.mul(g.sub(mud_f, 0.5), 0.06))
     col = g.ramp(g.add(g.mul(mud_n, 0.7), g.mul(mud_f, 0.3)),
                  [(0.25, (0.022, 0.015, 0.010)), (0.55, (0.045, 0.032, 0.020)), (0.8, (0.07, 0.052, 0.034))])
-    rough = g.add(0.38, g.mul(mud_f, 0.2))
+    rough = g.add(0.5, g.mul(mud_f, 0.2))
     # puddles in the mud
-    pl = g.add(0.20, g.mul(g.noise(*T.at(1.5, 1.5, seed=23), detail=2), 0.10))
-    pud = g.sstep(0.0, 0.02, g.sub(pl, h))
+    pz = g.sstep(0.57, 0.63, g.noise(*T.at(1.5, 1.5, seed=23), detail=3))
+    pl = g.add(0.16, g.mul(pz, 0.04))
+    pud = g.mul(pz, g.sstep(0.0, 0.02, g.sub(pl, h)))
     # leaf / twig layers (bottom → top)
     layers = [(9.0, 30, 0.34, 0.40, False), (7.5, 31, 0.36, 0.42, False), (12.0, 32, 0.30, 0.38, False),
               (6.0, 33, 0.44, 0.045, True), (10.0, 34, 0.32, 0.40, False)]
@@ -192,7 +196,7 @@ def forest_mud(g, T):
                         [(0.15, (0.018, 0.012, 0.007)), (0.35, (0.060, 0.024, 0.008)), (0.55, (0.13, 0.055, 0.014)),
                          (0.70, (0.20, 0.12, 0.03)), (0.85, (0.07, 0.065, 0.025)), (1.0, (0.035, 0.03, 0.02))])
             lc = g.mixc(lc, g.mixc(lc, (0.5, 0.45, 0.4), 1.0, 'MULTIPLY'), g.mul(midrib, 0.6))
-            lr = g.add(0.26, g.mul(mott, 0.15))
+            lr = g.add(0.42, g.mul(mott, 0.18))
         # sink leaves into puddles a bit (dimmer, flatter)
         col = g.mixc(col, lc, mask)
         hl = g.lerp(hl, g.mx(hl, lh), mask)
@@ -211,24 +215,32 @@ def mossy_rock(g, T):
     rv, rw = T.at(3.0, 3.0, seed=61, warp=warp, warp_amt=0.7)
     ridge = g.musgrave(rv, rw, kind='RIDGED_MULTIFRACTAL', scale=1.0, detail=7, dim=1.1, lac=2.1, offset=1.0, gain=2.4)
     ridge = g.remap(ridge, 0.0, 1.8)
-    cv, cw = T.at(6.0, 6.0, seed=62, warp=warp, warp_amt=0.3)
-    cr = g.voronoi(cv, cw, scale=1.0, feature='DISTANCE_TO_EDGE', rand=1.0)
-    crack = g.sub(1.0, g.sstep(0.0, 0.05, cr.outputs['Distance']))
+    # chipped facets (planar per voronoi cell) at two scales
+    def facets(k, seed, slope):
+        vec, w = T.at(k, k, seed=seed, warp=warp, warp_amt=0.4)
+        f = g.voronoi(vec, w, scale=1.0, feature='F1', rand=1.0)
+        r = g.sepc(f.outputs['Color'])
+        lu, lv = local_uv(g, T, vec, w, f)
+        return g.add(g.mul(r[2], 0.4), g.add(g.mul(g.sub(r[0], 0.5), g.mul(lu, slope)), g.mul(g.sub(r[1], 0.5), g.mul(lv, slope))))
+    fa = facets(5.0, 62, 2.2)
+    fb = facets(14.0, 68, 1.6)
+    e = g.voronoi(*T.at(5.0, 5.0, seed=62, warp=warp, warp_amt=0.4), scale=1.0, feature='DISTANCE_TO_EDGE')
+    crack = g.mul(g.sub(1.0, g.sstep(0.0, 0.03, e.outputs['Distance'])), g.sstep(0.45, 0.6, g.noise(*T.at(4, 4, seed=69), detail=3)))
     fine = g.noise(*T.at(90, 90, seed=63), detail=4, rough=0.65)
-    h = g.add(g.mul(ridge, 0.55), g.mul(g.noise(rv, rw, scale=1.0, detail=3), 0.3))
-    h = g.sub(h, g.mul(crack, 0.15))
+    h = g.add(g.mul(ridge, 0.35), g.mul(fa, 0.25))
+    h = g.add(h, g.mul(fb, 0.10))
+    h = g.add(h, g.mul(g.noise(rv, rw, scale=1.0, detail=3), 0.25))
+    h = g.sub(h, g.mul(crack, 0.12))
     h = g.add(h, g.mul(g.sub(fine, 0.5), 0.07))
     rock_c = g.ramp(g.add(g.mul(fine, 0.5), g.mul(ridge, 0.5)),
-                    [(0.2, (0.020, 0.020, 0.021)), (0.5, (0.050, 0.048, 0.046)), (0.8, (0.085, 0.080, 0.074))])
+                    [(0.2, (0.022, 0.022, 0.023)), (0.5, (0.052, 0.050, 0.048)), (0.8, (0.09, 0.085, 0.078))])
     rock_c = g.mixc(rock_c, (0.010, 0.010, 0.010), g.mul(crack, 0.7))
-    # lichen dots
     lv_, lw_ = T.at(30, 30, seed=64)
     li = g.voronoi(lv_, lw_, scale=1.0, feature='F1')
     lich = g.mul(g.sub(1.0, g.sstep(0.2, 0.4, li.outputs['Distance'])), g.sstep(0.7, 0.75, g.sepc(li.outputs['Color'])[0]))
     lich = g.mul(lich, g.sstep(0.45, 0.6, h))
     col = g.mixc(rock_c, (0.20, 0.21, 0.17), g.mul(lich, 0.85))
     rough = g.lerp(g.add(0.30, g.mul(fine, 0.18)), 0.65, lich)
-    # moss cushions: on raised + patchy areas
     mn = g.noise(*T.at(4.0, 4.0, seed=65, warp=warp, warp_amt=0.5), detail=5, rough=0.6)
     mmask = g.sstep(0.50, 0.58, g.add(mn, g.mul(g.sub(h, 0.45), 0.35)))
     fuzz = g.noise(*T.at(220, 220, seed=66), detail=3, rough=0.7)
@@ -241,78 +253,78 @@ def mossy_rock(g, T):
     rough = g.lerp(rough, g.add(0.62, g.mul(fuzz, 0.2)), mmask)
     return dict(albedo=col, rough=rough, height=h)
 
-
-@tex('cliff_rock', tile=4.0, depth=0.30, desc='layered sea-cliff rock: strata ledges, vertical fractures, wet run-off streaks')
+@tex('cliff_rock', tile=4.0, depth=0.30, desc='layered sea-cliff rock: faceted fracture planes, strata ledges, wet run-off streaks')
 def cliff_rock(g, T):
     warp = T.warp(1.5, 1.5, seed=70)
-    # strata: integer layer count along v + periodic warp
-    sv = g.add(g.mul(T.v, 9.0), g.mul(g.noise(*T.at(1.2, 1.2, seed=71), detail=3), 1.3))
+    # strata: integer layer count along v + periodic warp; layer id wrapped (floored modulo) so it tiles
+    sv = g.add(g.mul(T.v, 7.0), g.mul(g.noise(*T.at(1.2, 1.2, seed=71), detail=4), 1.6))
     lay = g.frac(sv)
-    terrace = g.add(g.mul(g.sstep(0.0, 0.85, lay), 0.6), g.mul(g.sub(1.0, g.sstep(0.85, 1.0, lay)), 0.4))
-    lay_id = g.floor(sv)
-    lay_r = per_index_rand(g, g.add(lay_id, 0.0), 3.7)
-    # blocky facets (vertical-ish cells)
-    bv, bw = T.at(7.0, 3.5, seed=72, warp=warp, warp_amt=0.4)
-    blk = g.voronoi(bv, bw, scale=1.0, feature='F1')
-    blk_r = g.sepc(blk.outputs['Color'])
-    edge = g.voronoi(bv, bw, scale=1.0, feature='DISTANCE_TO_EDGE')
-    frac_l = g.sub(1.0, g.sstep(0.0, 0.06, edge.outputs['Distance']))
-    big = g.noise(*T.at(2.0, 2.0, seed=73, warp=warp, warp_amt=0.8), detail=6, rough=0.55)
-    mid = g.noise(*T.at(14, 10, seed=74), detail=5, rough=0.6)
-    fine = g.noise(*T.at(110, 110, seed=75), detail=3, rough=0.65)
-    h = g.add(g.mul(big, 0.40), g.mul(terrace, 0.25))
-    h = g.add(h, g.mul(blk_r[0], 0.16))
-    h = g.sub(h, g.mul(frac_l, 0.14))
-    h = g.add(h, g.mul(g.sub(mid, 0.5), 0.14))
-    h = g.add(h, g.mul(g.sub(fine, 0.5), 0.05))
-    # colour
-    base = g.ramp(g.add(g.mul(lay_r, 0.55), g.mul(big, 0.45)),
-                  [(0.1, (0.040, 0.038, 0.036)), (0.4, (0.085, 0.078, 0.070)), (0.65, (0.13, 0.12, 0.105)), (0.9, (0.07, 0.068, 0.066))])
-    base = g.mixc(base, g.mixc(base, (0.6, 0.6, 0.6), 1.0, 'MULTIPLY'), g.mul(frac_l, 0.9))
-    base = g.mixc(base, g.mixc(base, (1.3, 1.25, 1.2), 1.0, 'MULTIPLY'), g.mul(g.sub(fine, 0.5), 0.8))
-    # wet run-off streaks (vertical) and salt bloom on ledges
-    streak = g.sstep(0.55, 0.68, g.noise(*T.at(26, 1.2, seed=76), detail=4, rough=0.6))
-    col = g.mixc(base, g.mixc(base, (0.35, 0.35, 0.36), 1.0, 'MULTIPLY'), g.mul(streak, 0.85))
-    ledge = g.mul(g.sstep(0.75, 0.85, lay), g.sstep(0.55, 0.65, mid))
-    col = g.mixc(col, (0.22, 0.22, 0.21), g.mul(ledge, 0.35))
+    lay_id = g.m('FLOORED_MODULO', g.floor(sv), 7.0)
+    lay_r = per_index_rand(g, lay_id, 3.7)
+    ledge = g.mul(g.sstep(0.80, 0.9, lay), g.sub(1.0, g.sstep(0.9, 1.0, lay)))
+    def facets(ku, kv, seed, slope, wamt):
+        vec, w = T.at(ku, kv, seed=seed, warp=warp, warp_amt=wamt)
+        f = g.voronoi(vec, w, scale=1.0, feature='F1', rand=1.0)
+        r = g.sepc(f.outputs['Color'])
+        lu, lv = local_uv(g, T, vec, w, f)
+        pl = g.add(g.mul(g.sub(r[0], 0.5), g.mul(lu, slope)), g.mul(g.sub(r[1], 0.5), g.mul(lv, slope)))
+        return g.add(g.mul(r[2], 0.5), pl), f
+    f1, v1 = facets(5.0, 3.0, 72, 2.4, 0.5)
+    f2, v2 = facets(16.0, 11.0, 73, 2.0, 0.3)
+    e = g.voronoi(*T.at(5.0, 3.0, seed=72, warp=warp, warp_amt=0.5), scale=1.0, feature='DISTANCE_TO_EDGE')
+    crk_w = g.add(0.004, g.mul(g.noise(*T.at(8, 8, seed=77), detail=3), 0.022))
+    crack = g.mul(g.sub(1.0, g.sstep(0.0, crk_w, e.outputs['Distance'])), g.sstep(0.42, 0.55, g.noise(*T.at(3, 3, seed=78), detail=3)))
+    big = g.noise(*T.at(2.0, 2.0, seed=74, warp=warp, warp_amt=0.8), detail=6, rough=0.55)
+    fine = g.noise(*T.at(110, 110, seed=75), detail=4, rough=0.65)
+    h = g.add(g.mul(big, 0.30), g.mul(f1, 0.40))
+    h = g.add(h, g.mul(f2, 0.16))
+    h = g.add(h, g.mul(g.sstep(0.0, 0.8, lay), 0.12))
+    h = g.add(h, g.mul(ledge, 0.06))
+    h = g.sub(h, g.mul(crack, 0.10))
+    h = g.add(h, g.mul(g.sub(fine, 0.5), 0.06))
+    base = g.ramp(g.add(g.mul(lay_r, 0.5), g.mul(big, 0.5)),
+                  [(0.1, (0.045, 0.042, 0.039)), (0.4, (0.085, 0.078, 0.070)), (0.65, (0.125, 0.115, 0.10)), (0.9, (0.075, 0.072, 0.07))])
+    base = g.mixc(base, g.mixc(base, (1.35, 1.3, 1.25), 1.0, 'MULTIPLY'), g.mul(g.sub(g.sepc(v2.outputs['Color'])[0], 0.5), 0.6))
+    base = g.mixc(base, g.mixc(base, (1.3, 1.25, 1.2), 1.0, 'MULTIPLY'), g.mul(g.sub(fine, 0.5), 0.9))
+    base = g.mixc(base, (0.02, 0.019, 0.018), g.mul(crack, 0.6))
+    streak = g.sstep(0.56, 0.7, g.noise(*T.at(26, 1.2, seed=76), detail=4, rough=0.6))
+    col = g.mixc(base, g.mixc(base, (0.35, 0.35, 0.36), 1.0, 'MULTIPLY'), g.mul(streak, 0.8))
+    col = g.mixc(col, (0.20, 0.20, 0.19), g.mul(g.mul(ledge, g.sstep(0.5, 0.65, fine)), 0.4))
     rough = g.add(0.55, g.mul(fine, 0.25))
     rough = g.lerp(rough, 0.22, streak)
-    rough = g.lerp(rough, 0.85, g.mul(frac_l, 0.5))
     return dict(albedo=col, rough=rough, height=h)
 
-
-@tex('tree_bark', tile=1.5, depth=0.045, desc='rainforest hardwood bark: vertical fissured plates, lichen and moss patches')
+@tex('tree_bark', tile=1.5, depth=0.045, desc='rainforest hardwood bark: interlaced vertical fissures, plates, lichen and moss')
 def tree_bark(g, T):
-    warp = T.warp(4.0, 1.5, seed=80)
-    fv, fw = T.at(13.0, 2.6, seed=81, warp=warp, warp_amt=0.5)
-    fn = g.noise(fv, fw, scale=1.0, detail=5, rough=0.55)
-    plates = g.sstep(0.03, 0.30, g.absf(g.sub(fn, 0.5)))              # fissure where fn≈0.5
-    bv, bw = T.at(9.0, 3.0, seed=82, warp=warp, warp_amt=0.3)
-    brk = g.voronoi(bv, bw, scale=1.0, feature='DISTANCE_TO_EDGE')
-    breaks = g.sstep(0.0, 0.07, brk.outputs['Distance'])
-    cell = g.voronoi(bv, bw, scale=1.0, feature='F1')
-    cell_r = g.sepc(cell.outputs['Color'])
-    fine = g.noise(*T.at(120, 60, seed=83), detail=4, rough=0.65)
-    h = g.mul(g.mul(plates, breaks), g.add(0.55, g.mul(cell_r[0], 0.3)))
-    h = g.add(h, g.mul(g.sub(fine, 0.5), 0.12))
-    h = g.add(h, g.mul(g.noise(*T.at(3, 1.5, seed=84), detail=3), 0.2))
-    col = g.ramp(g.add(g.mul(cell_r[1], 0.5), g.mul(fine, 0.5)),
-                 [(0.2, (0.050, 0.040, 0.030)), (0.5, (0.090, 0.075, 0.058)), (0.8, (0.13, 0.115, 0.095))])
-    col = g.mixc(col, (0.016, 0.013, 0.010), g.sub(1.0, g.mul(plates, breaks)))
-    # lichen (pale grey-green) on plates
+    warp = T.warp(5.0, 1.2, seed=80)
+    n1 = g.noise(*T.at(11.0, 1.7, seed=81, warp=warp, warp_amt=0.35), detail=3, rough=0.5)
+    jit = g.noise(*T.at(70.0, 10.0, seed=87), detail=3, rough=0.6)
+    fd = g.add(g.mul(g.absf(g.sub(n1, 0.5)), 2.0), g.mul(g.sub(jit, 0.5), 0.07))
+    plates = g.sstep(0.0, 0.075, fd)                                  # deep vertical fissures (level set of n1)
+    top = g.sstep(0.0, 0.35, fd)                                      # rounded plate profile
+    n2 = g.noise(*T.at(2.5, 12.0, seed=82), detail=3, rough=0.5)
+    brk = g.sub(1.0, g.mul(g.sub(1.0, g.sstep(0.0, 0.035, g.absf(g.sub(n2, 0.5)))), g.sstep(0.5, 0.62, g.noise(*T.at(6, 3, seed=88), detail=2))))
+    solid = g.mul(plates, brk)
+    fine = g.noise(*T.at(120, 40, seed=83), detail=4, rough=0.65)
+    h = g.mul(solid, g.add(0.45, g.mul(top, 0.35)))
+    h = g.add(h, g.mul(g.sub(fine, 0.5), 0.10))
+    h = g.add(h, g.mul(g.noise(*T.at(3, 1.5, seed=84), detail=3), 0.15))
+    tone = g.noise(*T.at(6, 2, seed=89), detail=4)
+    col = g.ramp(g.add(g.mul(tone, 0.5), g.mul(fine, 0.5)),
+                 [(0.2, (0.085, 0.075, 0.062)), (0.5, (0.15, 0.135, 0.115)), (0.8, (0.22, 0.20, 0.17))])
+    col = g.mixc(col, (0.022, 0.018, 0.014), g.sub(1.0, solid))
+    col = g.mixc(col, g.mixc(col, (0.6, 0.6, 0.6), 1.0, 'MULTIPLY'), g.sub(1.0, top))
     ln = g.noise(*T.at(8, 6, seed=85), detail=6, rough=0.65)
-    lich = g.mul(g.sstep(0.58, 0.64, ln), g.mul(plates, breaks))
-    col = g.mixc(col, g.ramp(fine, [(0.3, (0.16, 0.17, 0.14)), (0.8, (0.26, 0.27, 0.22))]), lich)
-    h = g.add(h, g.mul(lich, 0.04))
-    # moss in a few fissure zones
+    lich = g.mul(g.sstep(0.6, 0.66, ln), solid)
+    col = g.mixc(col, g.ramp(fine, [(0.3, (0.24, 0.25, 0.21)), (0.8, (0.36, 0.37, 0.31))]), lich)
+    h = g.add(h, g.mul(lich, 0.03))
     mn = g.noise(*T.at(3, 2, seed=86), detail=4)
-    moss = g.mul(g.sstep(0.6, 0.66, mn), g.sub(1.0, g.mul(plates, 0.7)))
+    moss = g.mul(g.sstep(0.6, 0.66, mn), g.sub(1.0, g.mul(top, 0.6)))
     col = g.mixc(col, (0.025, 0.045, 0.010), moss)
     rough = g.add(0.55, g.mul(fine, 0.25))
-    rough = g.lerp(rough, 0.8, g.add(lich, moss))
-    rough = g.lerp(rough, 0.4, g.sub(1.0, plates))
+    rough = g.lerp(rough, 0.8, g.clamp01(g.add(lich, moss)))
+    rough = g.lerp(rough, 0.4, g.sub(1.0, solid))
     return dict(albedo=col, rough=rough, height=h)
-
 
 @tex('palm_bark', tile=1.0, depth=0.02, desc='coconut-palm trunk: leaf-scar rings, vertical fibres, algae')
 def palm_bark(g, T):
@@ -324,9 +336,9 @@ def palm_bark(g, T):
     lip = g.mul(g.sstep(0.88, 0.97, f), g.sub(1.0, g.sstep(0.97, 1.0, f)))
     fib = g.noise(*T.at(70, 3, seed=91), detail=4, rough=0.6)
     fib2 = g.noise(*T.at(200, 8, seed=92), detail=2, rough=0.6)
-    cv, cw = T.at(16, 10, seed=93)
+    cv, cw = T.at(34, 5, seed=93)
     cr = g.voronoi(cv, cw, scale=1.0, feature='DISTANCE_TO_EDGE')
-    crack = g.sub(1.0, g.sstep(0.0, 0.035, cr.outputs['Distance']))
+    crack = g.mul(g.sub(1.0, g.sstep(0.0, 0.03, cr.outputs['Distance'])), g.sstep(0.4, 0.6, g.noise(*T.at(6, 4, seed=95), detail=2)))
     h = g.add(g.mul(seg, 0.5), g.mul(lip, 0.18))
     h = g.sub(h, g.mul(groove, 0.35))
     h = g.add(h, g.mul(g.sub(fib, 0.5), 0.22))
@@ -375,9 +387,9 @@ def wood_planks(g, T):
     # chipped paint (more of it in the middle of boards, gone near seams)
     pn = g.noise(*T.at(9, 9, seed=102), detail=8, rough=0.62)
     pkeep = g.add(pn, g.mul(g.sub(bevel, 1.0), 0.25))
-    paint = g.sstep(0.53, 0.545, pkeep)
+    paint = g.sstep(0.575, 0.59, pkeep)
     pdirt = g.noise(*T.at(25, 25, seed=103), detail=4)
-    pcol = g.ramp(pdirt, [(0.2, (0.30, 0.31, 0.29)), (0.8, (0.50, 0.51, 0.48))])
+    pcol = g.ramp(pdirt, [(0.2, (0.15, 0.155, 0.15)), (0.8, (0.26, 0.265, 0.25))])
     col = g.mixc(wood, pcol, paint)
     h = g.add(h, g.mul(paint, 0.05))
     # nails at joints + rust bleed
@@ -426,24 +438,23 @@ def wet_fabric(g, T):
     return dict(albedo=col, rough=rough, height=h)
 
 
-@tex('rope', tile=0.25, depth=0.006, desc='three-strand hemp rope (u along the rope, v around it), wet')
+@tex('rope', tile=0.25, depth=0.008, desc='three-strand hemp rope (u along the rope, v around it), wet')
 def rope(g, T):
-    # strands: 3 around (v) × 5 twists per tile along (u)
-    ph = g.add(g.mul(T.v, 3.0), g.mul(T.u, 5.0))
+    ph = g.add(g.mul(T.v, 3.0), g.mul(T.u, 5.0))                      # 3 strands around × 5 twists per tile
     f = g.frac(ph)
-    strand = g.pow(g.clamp01(g.sin(g.mul(f, math.pi))), 0.55)
-    # fibres follow the strand helix: noise in (phase, along-strand) coordinates, made periodic via torus
-    fib = g.noise(*T.at(160, 60, seed=120), detail=3, rough=0.6)
-    yarn = g.add(g.mul(T.v, 18.0), g.mul(T.u, -12.0))
-    yarnl = g.pow(g.clamp01(g.sin(g.mul(g.frac(yarn), math.pi))), 0.8)
-    h = g.add(g.mul(strand, 0.75), g.mul(yarnl, 0.15))
+    strand = g.pow(g.clamp01(g.sin(g.mul(f, math.pi))), 0.35)
+    yarn = g.add(g.mul(T.v, 27.0), g.mul(T.u, -16.0))                 # yarns twisted the other way inside strands
+    yarnl = g.pow(g.clamp01(g.sin(g.mul(g.frac(yarn), math.pi))), 0.6)
+    fib = g.noise(*T.at(220, 90, seed=120), detail=3, rough=0.6)
+    hairs = g.sstep(0.62, 0.75, g.noise(*T.at(400, 160, seed=122), detail=2))
+    h = g.add(g.mul(strand, 0.7), g.mul(g.mul(yarnl, strand), 0.22))
     h = g.add(h, g.mul(g.sub(fib, 0.5), 0.12))
     stain = g.noise(*T.at(3, 3, seed=121), detail=4)
-    col = g.ramp(g.add(g.mul(fib, 0.5), g.mul(stain, 0.5)), [(0.2, (0.075, 0.060, 0.040)), (0.8, (0.17, 0.14, 0.10))])
-    col = g.mixc(col, g.mixc(col, (0.3, 0.3, 0.3), 1.0, 'MULTIPLY'), g.sub(1.0, g.sstep(0.0, 0.35, strand)))
+    col = g.ramp(g.add(g.mul(fib, 0.5), g.mul(stain, 0.5)), [(0.2, (0.07, 0.056, 0.038)), (0.8, (0.19, 0.155, 0.11))])
+    col = g.mixc(col, g.mixc(col, (0.25, 0.25, 0.25), 1.0, 'MULTIPLY'), g.sub(1.0, g.sstep(0.0, 0.5, g.mul(strand, g.add(0.6, g.mul(yarnl, 0.4))))))
+    col = g.mixc(col, (0.26, 0.23, 0.18), g.mul(hairs, 0.5))
     rough = g.add(0.62, g.mul(fib, 0.2))
     return dict(albedo=col, rough=rough, height=h)
-
 
 @tex('driftwood', tile=1.0, depth=0.012, desc='sun-bleached, sea-worn driftwood: deep grain grooves and checking cracks')
 def driftwood(g, T):

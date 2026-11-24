@@ -263,12 +263,48 @@ def poisson(dur, rate, rng, env=None):
     return ts[rng.random(len(ts)) < env[idx] / mx]
 
 
-def render_events(n, times, amps, pans, kernels, rng=None, groups=None):
+def render_events(n, times, amps, pans, kernels, rng=None, groups=None, k=6, chunk=0.25):
     """Stereo signal of many short events: impulse trains (one per kernel) convolved with the kernel bank.
-    Thousands of events per second cost a few FFT convolutions instead of a Python loop."""
+    Thousands of events per second cost a few FFT convolutions instead of a Python loop.
+    kernels = list (fixed bank) or a callable rng → kernel: then every `chunk` seconds gets a FRESH bank of k kernels,
+    so dense textures (rain, fizz, crackle) never lock onto a few resonant pitches (no tonal 'lines'), at the
+    same FFT cost as one bank."""
     out = np.zeros((n, 2))
     if len(times) == 0:
         return out
+    if callable(kernels):
+        rng = rng or R(0)
+        idx = np.clip((np.asarray(times) * SR).astype(int), 0, n - 1)
+        amps, pans = np.broadcast_to(amps, idx.shape), np.broadcast_to(pans, idx.shape)
+        gl, gr = amps * np.cos(pans * np.pi / 2), amps * np.sin(pans * np.pi / 2)
+        cs = ns(chunk)
+        ci = idx // cs
+        bounds = np.searchsorted(ci, np.arange(ci.max() + 2)) if np.all(np.diff(ci) >= 0) else None
+        order = None
+        if bounds is None:
+            order = np.argsort(ci, kind='stable')
+            idx, gl, gr, ci = idx[order], gl[order], gr[order], ci[order]
+            bounds = np.searchsorted(ci, np.arange(ci.max() + 2))
+        for c in range(ci.max() + 1):
+            a, b = bounds[c], bounds[c + 1]
+            if b <= a:
+                continue
+            bank = [kernels(rng) for _ in range(k)]
+            g = rng.integers(0, k, b - a)
+            L = max(len(kk) for kk in bank)
+            seg = np.zeros((cs + L, 2))
+            loc = idx[a:b] - c * cs
+            for j, kk in enumerate(bank):
+                m = g == j
+                if not m.any():
+                    continue
+                imp = np.zeros((cs, 2))
+                np.add.at(imp[:, 0], loc[m], gl[a:b][m])
+                np.add.at(imp[:, 1], loc[m], gr[a:b][m])
+                y = signal.oaconvolve(imp, kk[:, None], axes=0)
+                seg[:len(y)] += y
+            add_at(out, seg, c * cs)
+        return out * np.sqrt(2)
     if groups is None:
         groups = (rng or R(0)).integers(0, len(kernels), len(times))
     idx = np.clip((np.asarray(times) * SR).astype(int), 0, n - 1)
@@ -452,13 +488,13 @@ def bed_rain_forest(dur, seed, intensity=1.0):
     body = bp(noise2(n, rng, 'brown', 0.6), 40, 450) * ie
     ts = poisson(dur, 2200 * intensity, rng, inten)
     drops = render_events(n, ts, 0.25 + np.minimum(rng.pareto(2.5, len(ts)), 3), rng.uniform(0, 1, len(ts)),
-                          [k_droplet(rng) for _ in range(8)], rng)
+                          k_droplet, rng)
     ts = poisson(dur, 150 * intensity, rng, inten)
     near = rng.random(len(ts)) < 0.35
     a = np.exp(rng.normal(0, 0.5, len(ts))) * np.where(near, 1.0, 0.45)
     pans = rng.uniform(0, 1, len(ts))
-    taps_n = render_events(n, ts[near], a[near], pans[near], [k_leaf(rng) for _ in range(10)], rng)
-    taps_f = lp(render_events(n, ts[~near], a[~near], pans[~near], [k_leaf(rng) for _ in range(8)], rng), 3500)
+    taps_n = render_events(n, ts[near], a[near], pans[near], k_leaf, rng, chunk=0.5)
+    taps_f = lp(render_events(n, ts[~near], a[~near], pans[~near], k_leaf, rng, chunk=0.5), 3500)
     ts = poisson(dur, 2.8 * intensity, rng)
     kd = [k_leaf(rng, 220, 700, 0.015, 0.04) for _ in range(5)] + [k_bubble(rng, 700, 2600, 0.008, 0.02, 0.2, 0.5) for _ in range(5)]
     drips = render_events(n, ts, np.exp(rng.normal(0, 0.4, len(ts))), rng.uniform(0.1, 0.9, len(ts)), kd, rng)
@@ -478,12 +514,12 @@ def bed_rain_beach(dur, seed, intensity=1.0):
     wash = bp(noise2(n, rng, 'pink', 0.2), 400, 12500) * ie
     ts = poisson(dur, 1600 * intensity, rng, inten)
     water = render_events(n, ts, np.exp(rng.normal(0, 0.5, len(ts))), rng.uniform(0, 1, len(ts)),
-                          [k_bubble(rng, 3000, 14000, 0.0015, 0.006, 0.2, 0.8, 0.15) for _ in range(12)], rng)
+                          lambda r: k_bubble(r, 3000, 14000, 0.0015, 0.006, 0.2, 0.8, 0.15), rng, k=8)
     ts = poisson(dur, 700 * intensity, rng, inten)
-    ks = [_unit(lp(rng.standard_normal(ns(0.004)) * np.exp(-tvec(ns(0.004)) / 0.0008), rng.uniform(900, 1800))) for _ in range(6)]
+    ks = lambda r: _unit(lp(r.standard_normal(ns(0.004)) * np.exp(-tvec(ns(0.004)) / r.uniform(0.0004, 0.0012)), r.uniform(700, 2000)))
     sand = render_events(n, ts, rng.uniform(0.3, 1, len(ts)), rng.uniform(0, 1, len(ts)), ks, rng)
-    surf = lp(bed_surf(dur, seed + 7), 1300)
-    x = layer(wash, 0) + layer(water, -5) + layer(sand, -9) + layer(surf, -4)
+    surf = lp(bed_surf(dur, seed + 7), 900)
+    x = layer(wash, 0) + layer(water, -5) + layer(sand, -9) + layer(surf, -9)
     return space(x, 'beach', wet=0.15, tail=False, seed=seed)
 
 
@@ -506,11 +542,11 @@ def bed_storm_wind(dur, seed, leaves=True, whistle=1.0):
         rust = bp(noise2(n, rng, 'pink', 0.2), 1800, 10000) * G ** 2.2 * flut
         ts = poisson(dur, 90, rng, g ** 2)
         flaps = render_events(n, ts, rng.uniform(0.3, 1, len(ts)), rng.uniform(0, 1, len(ts)),
-                              [k_leaf(rng, 1500, 5000, 0.002, 0.006) for _ in range(6)], rng)
+                              lambda r: k_leaf(r, 1500, 5000, 0.002, 0.006), rng, chunk=0.5)
         x += layer(rust, -6) + layer(flaps, -14)
     ts = poisson(dur, 6, rng, g ** 3)
     x += layer(render_events(n, ts, rng.uniform(0.2, 1, len(ts)), rng.uniform(0, 1, len(ts)),
-                             [k_click(rng, 1200, 5000) for _ in range(5)], rng), -22)
+                             lambda r: k_click(r, 1200, 5000), rng, chunk=1.0), -22)
     cr = np.zeros((n, 2))
     t = rng.uniform(3, 10)
     while t < dur - 2:
@@ -545,14 +581,14 @@ def _wave(rng, size=1.0):
     hiss = bp(noise2(n, rng, 'white', 0.2), 1200, 11000) * env_w[:, None]
     ts = poisson(n / SR, 2200, rng, env_w)
     fizz = render_events(n, ts, rng.uniform(0.2, 1, len(ts)), np.clip(rng.normal(pc, 0.3, len(ts)), 0, 1),
-                         [k_bubble(rng, 2500, 12000, 0.001, 0.004, 0.2, 0.6, 0.1) for _ in range(8)], rng)
-    env_r = np.exp(-0.5 * ((t - tc - rng.uniform(4.0, 5.2)) / rng.uniform(1.2, 1.8)) ** 2)
+                         lambda r: k_bubble(r, 2500, 12000, 0.001, 0.004, 0.2, 0.6, 0.1), rng)
+    env_r = np.exp(-0.5 * ((t - tc - rng.uniform(4.0, 5.2)) / rng.uniform(1.2, 1.8)) ** 2) * np.clip((t - tc - 0.8) / 1.0, 0, 1)
     ts = poisson(n / SR, 1100, rng, env_r)
     pebbles = render_events(n, ts, np.exp(rng.normal(0, 0.6, len(ts))), np.clip(rng.normal(pc, 0.25, len(ts)), 0, 1),
-                            [k_click(rng, 1800, 7500) for _ in range(10)], rng)
+                            lambda r: k_click(r, 1800, 7500), rng)
     suck = tvf(noise2(n, rng, 'pink', 0.5), 'lp', 900 - 600 * np.clip((t - tc - 3) / 4, 0, 1), 0.8) * env_r[:, None]
-    x = (layer(build, -8) + layer(crash, 0) + layer(thump, -6) + layer(hiss, -6) + layer(fizz, -15)
-         + layer(pebbles, -13) + layer(suck, -14)) * size
+    x = fades(layer(build, -8) + layer(crash, 0) + layer(thump, -6) + layer(hiss, -6) + layer(fizz, -15)
+              + layer(pebbles, -13) + layer(suck, -14), 0.0, 2.0) * size
     x[:, 0] *= np.sqrt(2) * np.cos(pc * np.pi / 2) * 0.5 + 0.5
     x[:, 1] *= np.sqrt(2) * np.sin(pc * np.pi / 2) * 0.5 + 0.5
     return x, tc
@@ -574,7 +610,8 @@ def bed_surf(dur, seed):
         t += rng.uniform(8, 12)
         k += 1
     ref = np.mean(wl) if wl else 1.0
-    return out / ref + layer(bg, -9) + layer(bg2, -16)
+    far = bp(noise2(n, rng, 'pink', 0.2), 1500, 9000) * np.stack([ctrl(n, 0.2, rng, 0.4, 1.0)] * 2, 1)   # breakers along the beach
+    return out / ref + layer(bg, -9) + layer(bg2, -16) + layer(far, -21)
 
 
 def bed_storm_sea(dur, seed):
@@ -583,7 +620,7 @@ def bed_storm_sea(dur, seed):
     wind = bed_storm_wind(dur, seed + 1, leaves=False, whistle=1.6)
     ts = poisson(dur, 2600, rng)
     deck = render_events(n, ts, 0.3 + np.minimum(rng.pareto(2.5, len(ts)), 3), rng.uniform(0, 1, len(ts)),
-                         [k_click(rng, 2000, 8000) for _ in range(8)], rng)
+                         lambda r: k_click(r, 1500, 9000), rng)
     rain = bp(noise2(n, rng, 'pink', 0.3), 500, 12000)
     roar = lp(noise2(n, rng, 'brown', 0.6), 300) * np.stack([0.6 + 0.4 * np.sin(TAU * 0.11 * tvec(n))] * 2, 1)
     hits = np.zeros((n, 2))
@@ -616,12 +653,12 @@ def bed_cave(dur, seed):
         tone += bp(noise2(n, rng, 'brown', 0.9), f * 0.96, f * 1.04) * 0.6
     air = bp(noise2(n, rng, 'pink', 0.3), 150, 700) * np.stack([ctrl(n, 0.08, rng, 0.2, 1.0)] * 2, 1)
     drips = np.zeros((n, 2))
-    for s in range(4):
-        f0, per, pan = _loguni(rng, 800, 2600), rng.uniform(1.4, 4.5), rng.uniform(0.15, 0.85)
+    for s in range(3):
+        f0, per, pan = _loguni(rng, 800, 2600), rng.uniform(2.2, 6.0), rng.uniform(0.15, 0.85)
         dist = rng.uniform(0.35, 1.0)
         t = rng.uniform(0, per)
         while t < dur:
-            k = k_bubble(rng, f0 * 0.97, f0 * 1.03, 0.008, 0.022, 0.15, 0.45, 0.3) * rng.uniform(0.6, 1.0) / dist
+            k = k_bubble(rng, f0 * 0.9, f0 * 1.1, 0.008, 0.022, 0.15, 0.45, 0.3) * rng.uniform(0.6, 1.0) / dist
             if dist > 0.7:
                 k = lp(k, 3500)
             add_at(drips, stereo(k, pan), t * SR)
@@ -630,11 +667,11 @@ def bed_cave(dur, seed):
             t += per * rng.uniform(0.75, 1.25)
     for t in poisson(dur, 0.3, rng):
         add_at(drips, stereo(lp(k_bubble(rng, 600, 3000, 0.006, 0.02, 0.1, 0.5, 0.2), 3000) * rng.uniform(0.2, 0.5), rng.uniform(0, 1)), t * SR)
-    drips = space(drips, 'cave', wet=1.3, dry=0.5, tail=False, seed=seed)
+    drips = space(drips, 'cave', wet=0.9, dry=0.6, tail=False, seed=seed)
     ts = poisson(dur, 25, rng)
     stream = bp(noise2(n, rng, 'pink', 0.5), 250, 1400) * np.stack([ctrl(n, 0.6, rng, 0.5, 1.0)] * 2, 1)
     stream = layer(stream, 0) + layer(render_events(n, ts, rng.uniform(0.3, 1, len(ts)), rng.uniform(0.3, 0.7, len(ts)),
-                                                    [k_bubble(rng, 250, 900, 0.008, 0.02, 0.2, 0.5, 0) for _ in range(6)], rng), -3)
+                                                    lambda r: k_bubble(r, 250, 900, 0.008, 0.02, 0.2, 0.5, 0), rng, chunk=1.0), -3)
     stream = space(lp(stream, 1500), 'cave', wet=1.0, dry=0.0, tail=False, seed=seed + 1)
     rum = np.zeros((n, 2))
     t = rng.uniform(6, 20)
@@ -704,7 +741,7 @@ def bed_jungle_night(dur, seed, rain=0.35):
         ts = np.cumsum(rng.uniform(2.5, 7, int(dur / 2.5) + 2)) - rng.uniform(0, 3)
         ts = ts[(ts > 0) & (ts < dur)]
         croak += render_events(n, ts, rng.uniform(0.5, 1, len(ts)), np.full(len(ts), rng.uniform(0.1, 0.9)), [kern], rng)
-    creatures = space(layer(crit, 0) + layer(lp(croak, 1500), -6), 'forest', wet=0.4, tail=False, seed=seed)
+    creatures = space(layer(crit, 0) + layer(lp(croak, 1500), -13), 'forest', wet=0.4, tail=False, seed=seed)
     x = layer(creatures, 0) + layer(bed_rain_forest(dur, seed + 3, rain), -3) + layer(lp(noise2(n, rng, 'brown', 0.6), 300), -16)
     return x
 
@@ -721,8 +758,8 @@ def bed_campfire(dur, seed):
         ts.append(t0 + np.cumsum(rng.uniform(0.005, 0.06, int(rng.integers(1, 6)))))
     ts = np.sort(np.concatenate(ts))
     ts = ts[ts < dur]
-    crack = render_events(n, ts, np.exp(rng.normal(0, 0.9, len(ts))), np.clip(rng.normal(0.5, 0.18, len(ts)), 0, 1),
-                          [k_pop(rng) for _ in range(12)], rng)
+    crack = render_events(n, ts, np.minimum(np.exp(rng.normal(0, 0.6, len(ts))), 3.0), np.clip(rng.normal(0.5, 0.18, len(ts)), 0, 1),
+                          k_pop, rng, chunk=0.5)
     snaps = np.zeros((n, 2))
     for t0 in poisson(dur, 0.35, rng):
         m = ns(0.08)
@@ -734,7 +771,7 @@ def bed_campfire(dur, seed):
         m = ns(rng.uniform(0.6, 1.8))
         e = np.sin(np.pi * tvec(m) / (m / SR)) * ctrl(m, 18, rng, 0.2, 1.0)
         add_at(siz, stereo(bq(rng.standard_normal(m), 'bp', rng.uniform(3000, 6000), 6) * e, rng.uniform(0.4, 0.6)), t0 * SR)
-    x = layer(roar, -6) + layer(hiss, -16) + layer(crack, -3) + layer_ev(snaps, -6)
+    x = layer(roar, -4) + layer(hiss, -14) + layer(crack, -5) + layer_ev(snaps, -9)
     if np.any(siz):
         x += layer_ev(siz, -18)
     return space(x, 'forest', wet=0.1, tail=False, seed=seed)
@@ -762,7 +799,8 @@ def amb(name, dur, seed=None, preroll=3.0):
     seed = seed_of('amb', name) if seed is None else seed
     x = fn(dur + preroll, seed)[ns(preroll):][:ns(dur)]
     x = fit(x, ns(dur))
-    return (x * db(-23 + trim - loudness(x))).astype(np.float32)
+    x = x * db(-23 + trim - loudness(x))
+    return limiter(x, -6.0, 0.004).astype(np.float32)   # rare spikes (crackle, close drops) kept under -6 dBFS
 
 
 def loopable(x, xf=2.0):
@@ -834,15 +872,15 @@ def cue_drone(dur, seed, root=38, bright=0.5):
 def heartbeat(strength=1.0, gap=0.28, seed=0):
     """One 'lub-dub': pitch-dropping sine thumps + a soft valve click, saturated so it reads on small speakers."""
     rng = R(seed)
-    n = ns(gap + 0.35)
+    n = ns(gap + 0.6)
     out = np.zeros(n)
     for t0, f0, f1, d, a in ((0.0, 78, 44, 0.09, 1.0), (gap, 92, 55, 0.07, 0.7)):
-        m = ns(0.3)
+        m = ns(0.55)
         tt = tvec(m)
         x = np.sin(TAU * np.cumsum(f1 + (f0 - f1) * np.exp(-tt / 0.035)) / SR) * np.minimum(tt / 0.006, 1) * np.exp(-tt / d)
         x += lp(rng.standard_normal(m), 260) * np.exp(-tt / 0.012) * 0.25
         add_at(out, x * a * strength, t0 * SR)
-    return (sat(lp(out, 400) * 1.2, 2.2) * 0.9).astype(np.float32)
+    return (fades(sat(lp(out, 400) * 1.2, 2.2), 0, 0.15) * 0.9).astype(np.float32)
 
 
 def heartbeat_loop(dur, bpm0=72, bpm1=None, seed=0, strength=1.0):
@@ -862,7 +900,6 @@ def heartbeat_loop(dur, bpm0=72, bpm1=None, seed=0, strength=1.0):
 
 def cue_heart(dur, seed, root=38):
     """Heartbeat pulse layer (accelerating 70 → 100 bpm over the cue) over a darker, quieter drone."""
-    n = ns(dur)
     hb = heartbeat_loop(dur, 70, 100, seed)
     x = layer(stereo(hb), 0) + layer(cue_drone(dur, seed + 1, root, bright=0.25), -7)
     return fades(x, 0.4)
@@ -992,8 +1029,8 @@ def sfx_thunder_far(p, seed):
         e = np.where(tt < at, (tt / at) ** 2, np.exp(-(tt - at) / de)) * rng.uniform(0.5, 1.0)
         r = lp(noise2(m, rng, 'brown', 0.3), rng.uniform(120, 300)) * e[:, None]
         add_at(out, r, t0 * SR)
-    crack = bp(noise2(n, rng, 'pink', 0.3), 300, 1200) * np.stack([ctrl(n, 6, rng, 0, 1) ** 3] * 2, 1) * np.exp(-tvec(n) / (dur * 0.3))[:, None]
-    x = sat(layer(out, 0) + layer(crack, -14), 1.4)
+    crack = bp(noise2(n, rng, 'pink', 0.3), 300, 1200) * np.stack([np.clip(ctrl(n, 3, rng, -0.3, 1), 0, 1) ** 3] * 2, 1) * np.exp(-tvec(n) / (dur * 0.3))[:, None]
+    x = fades(sat(layer(out, 0) + layer(crack, -18), 1.4), 0, dur * 0.4)
     return peak_norm(fades(space(x, 'hall', 0.35, seed=seed), 0, 0.5), 0.8)
 
 
@@ -1015,7 +1052,7 @@ def sfx_thunder_crack(p, seed):
     roll = fit(sfx_thunder_far({'dur': dur - 0.8}, seed + 1), n - ns(0.8))
     y = layer(x, 2) + layer(rip, -3) + layer(boom, 0) + layer(sub, -4)
     y[ns(0.8):] += layer(roll, -5)
-    return peak_norm(fades(space(sat(y, 1.3), 'hall', 0.3, seed=seed), 0, 0.6), 0.95)
+    return peak_norm(fades(space(fades(sat(y, 1.3), 0, dur * 0.4), 'hall', 0.3, seed=seed), 0, 0.6), 0.95)
 
 
 def sfx_impact(p, seed):
@@ -1028,7 +1065,7 @@ def sfx_impact(p, seed):
     metal = sum(np.sin(TAU * f * t + rng.uniform(0, TAU)) * np.exp(-t / d) * a
                 for f, d, a in ((182, 0.9, 1), (471, 0.6, 0.6), (1130, 0.35, 0.4), (2210, 0.2, 0.25), (3720, 0.12, 0.15)))
     x = layer(stereo(sat(sub, 2.0)), 0) + layer(stereo(crack), -4) + layer(stereo(metal * np.exp(-t / 0.5)), -10)
-    return peak_norm(space(x, 'hall', 0.35, seed=seed), 0.95)
+    return peak_norm(space(fades(x, 0, 1.0), 'hall', 0.35, seed=seed), 0.95)
 
 
 def sfx_braam(p, seed):
@@ -1048,7 +1085,7 @@ def sfx_braam(p, seed):
     fc = 250 + 2600 * np.minimum(t / 0.12, 1) * np.exp(-t / 0.9)
     x = tvf(x, 'lp', fc, 2.0) * (np.minimum(t / 0.02, 1) * np.exp(-t / 1.4))[:, None]
     sub = stereo(np.sin(TAU * np.cumsum(30 + 50 * np.exp(-t / 0.1)) / SR) * np.exp(-t / 1.0))
-    y = sat(layer(x, 0) + layer(sub, -3), 2.2)
+    y = fades(sat(layer(x, 0) + layer(sub, -3), 2.2), 0, 1.2)
     return peak_norm(fades(space(y, 'hall', 0.4, seed=seed), 0, 0.8), 0.95)
 
 
@@ -1105,13 +1142,13 @@ def sfx_footsteps_mud(p, seed):
         t0 = k * per + rng.normal(0, 0.02)
         m = ns(0.6)
         tt = tvec(m)
-        thud = lp(rng.standard_normal(m), 300) * np.exp(-tt / 0.04) * 1.2
-        ts = 0.01 + np.cumsum(rng.uniform(0.004, 0.02, int(rng.integers(4, 9))))
+        thud = lp(rng.standard_normal(m), 220) * np.minimum(tt / 0.006, 1) * np.exp(-tt / 0.045)
+        ts = 0.012 + np.cumsum(rng.uniform(0.004, 0.018, int(rng.integers(5, 10))))
         sq = render_events(m, ts, rng.uniform(0.4, 1, len(ts)), np.full(len(ts), 0.5),
-                           [k_bubble(rng, 180, 700, 0.01, 0.03, 0.3, 0.8, 0.1) for _ in range(4)], rng)[:, 0]
-        splash = hp(rng.standard_normal(m), 900) * np.exp(-tt / 0.03) * 0.3
-        lift = bq(rng.standard_normal(m), 'bp', 400, 3) * np.exp(-0.5 * ((tt - 0.3) / 0.05) ** 2) * 0.5
-        st = layer(thud, 0) + layer(sq, -2) + layer(splash, -8) + layer(lift, -8)
+                           [k_bubble(rng, 160, 620, 0.012, 0.03, 0.3, 0.9, 0.0) for _ in range(4)], rng)[:, 0]
+        wet = bp(rng.standard_normal(m), 1200, 4500) * np.exp(-tt / 0.02)
+        lift = bq(rng.standard_normal(m), 'bp', rng.uniform(300, 500), 4) * np.exp(-0.5 * ((tt - 0.3) / 0.045) ** 2)
+        st = lp(layer(thud, 0) + layer(sq, -1) + layer(wet, -15) + layer(lift, -7), 3500)
         add_at(out, stereo(st * rng.uniform(0.8, 1.0), 0.44 + 0.12 * (k % 2)), t0 * SR)
     return peak_norm(space(out, p.get('space') or 'forest', 0.15, seed=seed), 0.85)
 
@@ -1198,7 +1235,6 @@ def sfx_radio(p, seed, voice=None):
     vdur = len(voice) / SR if voice is not None else p.get('voice_dur', 1.4)
     dur = p.get('dur', max(1.8, vdur + 0.9))
     n = ns(dur)
-    t = tvec(n)
     st = bp(rng.standard_normal(n), 400, 5200) * (0.55 + 0.45 * ctrl(n, 12, rng, 0, 1))
     cr = np.zeros(n)
     ii = rng.integers(0, n, int(dur * 40))
@@ -1298,6 +1334,13 @@ SFX = {
 }
 
 
+def peak_time(name, p=None):
+    """Seconds from an sfx's start to its climax (used by "align": "peak" so e.g. a riser ENDS on the anchor)."""
+    p = p or {}
+    return {'riser': p.get('dur', 4.0), 'whoosh_low': 0.55 * p.get('dur', 1.3),
+            'wave_crash': p.get('pre', 1.0), 'fire_ignite': 0.25}.get(name, 0.0)
+
+
 def sfx(name, p=None, seed=0, voice=None, space_name=None):
     """Render an sfx by name → stereo float32. p = the script's sfx dict (dur, n, bpm, pan, space, wet, ...).
     space_name (or p['space']) adds an acoustic space on top (drip/footsteps/branch already use theirs)."""
@@ -1387,7 +1430,7 @@ def amb_track(segs, N, act, voice_lufs, rel_db=-14.0, depth_db=6.0, mid_db=4.0):
 CUE_FADE_IN = {'cine_drone': 1.5, 'cine_swell': 0.4, 'cine_heart': 0.5, 'cine_sad': 0.8}
 
 
-def score_track(segs, N, act, voice_lufs, rel_db=-16.0, depth_db=6.0, mid_db=3.0):
+def score_track(segs, N, act, voice_lufs, rel_db=-17.0, depth_db=6.0, mid_db=3.0):
     """Build the cinematic score stem from music segments [(t0, t1, mode, next_mode)]. Cues fade out over 1.2 s,
     or cut dead (60 ms) into 'cine_silence' / 'none' so a silence lands like a held breath."""
     out = np.zeros((N, 2))
@@ -1427,8 +1470,8 @@ def master(mix, target_lufs=-16.0, ceiling_db=-1.5, seed=0):
     rng = R(seed)
     d = (rng.random(x.shape) - rng.random(x.shape)) / 32768.0   # TPDF dither for 16-bit
     x = np.clip(x + d, -1, 1)
-    return x.astype(np.float32), {'lufs': round(loudness(x), 2), 'true_peak_db': round(20 * np.log10(true_peak(x) + 1e-12), 2),
-                                  'sample_peak_db': round(20 * np.log10(np.abs(x).max() + 1e-12), 2)}
+    return x.astype(np.float32), {'lufs': round(float(loudness(x)), 2), 'true_peak_db': round(float(20 * np.log10(true_peak(x) + 1e-12)), 2),
+                                  'sample_peak_db': round(float(20 * np.log10(np.abs(x).max() + 1e-12)), 2)}
 
 
 # ============================================================================================ preview
