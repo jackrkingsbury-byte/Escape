@@ -16,7 +16,7 @@
  *
  * beachNight / beachDusk   anchors: kidA, double18/12/9/7/5/4, camp, fire, campCam, wreck, wash, washFeet, phoneSpot,
  *     wideCam, highCam, cave, caveLook, treeLine, mid1..3, cut1..3. extras: campYaw, heightAt, washEdge(x, t), rain, fire,
- *     foam, ocean, wreck, moon (dim rig), bolts[0..3]. options: fire (−1 | 0 | 0..1), rain, rainBack, wash, jungle, wet.
+ *     foam, ocean, wreck, moon (dim rig), bolts[0..4]. options: fire (−1 | 0 | 0..1), rain, rainBack, wash, jungle, wet.
  * cave   anchors: poolCenter, kneel, stand, entry, poolCam, phoneRest, mouth, strike, backCam. extras: pool (mirror rig),
  *     waterY, heightAt, bolts[0..1]. options: pool ('mirror' | 'glass'), ripple, spill, mist, wet (0.8).
  * boat   anchors: seat, deck, wheel, stern, sternCam, railCam, island, rail. extras: deckY, seatH, island, boat.
@@ -294,10 +294,13 @@ function beachWorld(ctx) {
   Object.assign(flashLight.shadow.camera, { left: -17, right: 17, top: 17, bottom: -17, near: 1, far: 140 });
   flashLight.target.position.set(-5, 0, 3); flashLight.position.set(-50, 25, -28);
   root.add(flashLight, flashLight.target);
-  // bolts over the sea up-frame (index 0, 1) and inland behind the palms (2), behind the cliff (3)
+  // bolts over the sea up-frame (index 0, 1), inland behind the palms (2), behind the cliff (3), and (4) the NEAR one of frame
+  // A: it comes down on the rocks by the cave mouth, ~65 m from the lens, top edge of the frame to the sea, in the gap between
+  // the double on the foam line and the kid's head (the film's first frame, and the last strike of beat 8)
   const lightning = makeLightning({ light: false, strikes: [
     { t: 0, pos: [-134, 88, -36], ground: [-126, 0, -25], seed: 3, power: 1, width: 0.3 }, { t: 0, pos: [-116, 84, -64], ground: [-126, 0, -46], seed: 9, power: 1, width: 0.3 },
-    { t: 0, pos: [-60, 150, 150], ground: [-48, 20, 120], seed: 5, power: 1 }, { t: 0, pos: [-190, 170, 20], ground: [-170, 30, 8], seed: 14, power: 1 } ] });
+    { t: 0, pos: [-60, 150, 150], ground: [-48, 20, 120], seed: 5, power: 1 }, { t: 0, pos: [-190, 170, 20], ground: [-170, 30, 8], seed: 14, power: 1 },
+    { t: 0, pos: [-64, 80, -6], ground: [-58, 0, -3.5], seed: 21, power: 1.3, width: 0.9 } ] });
   root.add(lightning.root);
   const bolts = lightning.bolts.map((b) => b.mesh);
 

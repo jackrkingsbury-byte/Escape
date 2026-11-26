@@ -14,12 +14,13 @@
  *   realSet(ctx, { hdr | sky, env, bg, exposure, post, build })   set wrapper (see sets.js)
  * ─── Lightning ──────────────────────────────────────────────────────────────────────────────────────────────────────
  *   flash(ctx, specs, opts) → f      call once per frame in update(). specs = [ 'flash1', 'b02.w4-0.05', 12.3,
- *                                    { at, power = 1, hold = 0.4 (12 f), decay = 0.27 (8 f), attack = 0, seed, bolt } ].
+ *                                    { at, power = 1, hold = 0.4 (12 f), decay = 0.27 (8 f), attack = 0, floor, seed, bolt,
+ *                                    + any of the opts below (a strike's own keys override them) } ].
  *                                    Runs the whole chain: rain/foam/fog-card glint (RU.uFlash), HDR sky, PMREM level,
  *                                    the set's shadow-casting flash light, the bolt mesh, and ctx.store.flash for shotPost.
  *                                    opts: { dir:[x,y,z] toward the strike, light (×), sky (×), env (+), post (× → shotPost),
  *                                    cap (max post flash, default 1), bolt: index into set.bolts | null }
- *   flashEnv(dt, o)                  the envelope alone (peak on frame 0, flickering 12-frame hold, 8-frame decay).
+ *   flashEnv(dt, o)                  the envelope alone (peak on frame 0, a 12-frame plateau, one 8-frame decay: no flicker).
  *   flicker(t, seed, rate)           soft far-lightning flicker 0..1 (cloud flicker, never a full flash).
  * ─── Camera / overlays / captions ───────────────────────────────────────────────────────────────────────────────────
  *   frameA(set)                      the locked frame A of beats 1, 2, 8, 10 (cam spec { pos, look, fov }).
@@ -55,6 +56,7 @@ const V3 = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
 const arr3 = (v) => (Array.isArray(v) ? V3(v[0], v[1], v[2]) : v.clone());
 const QS = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
 export const FONT = 'Cine Inter';
+/* DEVTMP */ export const dv = (k, d) => (QS.has(k) ? +QS.get(k) : d);
 export const W = 1080, H = 1920;
 
 // ═════════════════════════════════════════════ loading ════════════════════════════════════════════════════════════
@@ -173,15 +175,19 @@ export function realSet(ctx, { hdr = null, sky = null, env = {}, bg = {}, exposu
 
 // ═════════════════════════════════════════════ lightning ══════════════════════════════════════════════════════════
 /**
- * Flash envelope at dt seconds after the strike: peak on frame 0, a flickering hold (return strokes: never a flat white
- * plateau), then a decay. Defaults = the script's "12 frames + 8 frames". Pure function.
+ * Flash envelope at dt seconds after the strike: ONE flash = one attack (peak on frame 0), a plateau (`floor` × the peak:
+ * the script's 12 frames) and one decay (8 frames). One up-transition, one down-transition: no return strokes by default.
+ * (The old default drew 3-4 return strokes over a 0.4 floor: every strike was a 7-10 Hz flicker, which breaks the film's
+ * "one flash" rule and is a photosensitivity problem the moment a flash is really white.) o: { power 1, hold 0.4, decay
+ * 0.27, attack 0, floor 0.85, strokes 1 (> 1 = extra return strokes inside the hold, for far sheet lightning only), seed }.
+ * Pure function.
  */
 export function flashEnv(dt, o = {}) {
   const hold = o.hold ?? 0.4, decay = o.decay ?? 0.27, power = o.power ?? 1, attack = o.attack ?? 0, seed = o.seed ?? 1;
   if (dt < -attack || dt > hold + decay) return 0;
   if (dt < 0) return power * Math.pow(1 + dt / attack, 2);
   const r = rng(seed * 17 + 3);
-  const n = 3 + Math.floor(r() * 2);
+  const n = o.strokes ?? 1;
   let f = 0, tk = 0;
   for (let k = 0; k < n; k++) {
     const amp = k === 0 ? 1 : 0.6 + 0.4 * r(), tau = 0.045 + 0.05 * r(), d = dt - tk;
@@ -189,7 +195,7 @@ export function flashEnv(dt, o = {}) {
     tk += (hold / n) * (0.75 + 0.5 * r());
   }
   const env = dt <= hold ? 1 : Math.pow(1 - (dt - hold) / decay, 1.7);
-  return power * Math.max(f, o.floor ?? 0.4) * env;
+  return power * Math.max(f, o.floor ?? 0.85) * env;
 }
 /** soft far-off cloud flicker 0..1 (for "one far lightning flicker, soft, not a full-frame flash"): a few short pulses per `rate` s */
 export function flicker(t, seed = 1, rate = 2.6) {
@@ -234,18 +240,74 @@ export function applyFlash(ctx, f, o = {}) {
 /** distance from the camera state to a point (call after cam.set): dof.focus */
 export function dist(ctx, p) { return ctx.cam.state.pos.distanceTo(ctx.point(p)); }
 /**
- * FRAME A (beats 1, 2, 8, 10): locked over-the-shoulder wide down the foam line. The kid stands on anchors.kidA facing
- * −X (yaw −π/2); head and shoulders fill the lower-right third; the foam band runs up the middle; the double stands on
- * anchors `double18/12/9/7/5`; the wreck ribs cut the left edge. DOF off. Use ctx.cam.set(K.frameA(ctx.set)).
+ * FRAME A (beats 1, 2, 8, 10 and the loop target): locked long-lens over-the-shoulder down the foam line. The kid stands on
+ * anchors.kidA (+ FRAME_A_DZ) facing −X (yaw −π/2 − 0.3); the lens is 7 m behind him and 1.5 m inland, so the back of his
+ * head and his left shoulder sit in the lower-RIGHT corner (the head is cut by the frame edge) and the whole left and
+ * middle of the frame belong to the foam line and whoever stands on it: the double on anchors `double18/12/9/7/5` is
+ * 16 % → 33 % of the frame height and never nearer than ~200 px to the kid's head. The storm sky fills the top 45 %; the
+ * wreck itself is out of frame (a broken rib of it stands at the left edge). DOF off. Use ctx.cam.set(K.frameA(ctx.set)).
  */
 export function frameA(set) {
   const k = set.anchors.kidA;
-  // 4 m behind him and 0.75 m inland, just above head height, pitched 1.5° down: head + shoulders fill the lower right,
-  // the foam line runs up the middle and the double stands on it just above the caption line
-  return { pos: [k.x + 4.0, k.y + 2.3, k.z + 0.75], look: [k.x - 18, k.y + 1.72, k.z - 0.2], fov: 48 };
+  return { pos: [k.x + 7.0, k.y + 2.5, k.z + 1.5], look: [k.x - 18, k.y + 1.5, k.z - 0.9], fov: 30 };
 }
+/** frame A: the kid stands this far (m, +Z = inland) from anchors.kidA: a hand toward the sea, so his head is cut by the right edge and the foam line stays clear */
+export const FRAME_A_DZ = -0.1;
 /** frame A: the kid's right upper-arm euler (K.filmPose 'stand' armR): swung back and in, so the white rag fist sits behind his hip, toward the lens, inside the frame */
 export const FRAME_A_ARM = [0.42, 0, 0.26];
+/**
+ * Frame A's light on the kid, the same in every use (b01/b02, b08, b10b = the loop target). He is seen from behind and
+ * he is black on black, so he is drawn with EDGES, not with fill:
+ *   rim    a narrow spot at the lens's mirror position (7 m BEYOND him, lens height, a little to the sea side) aimed back at
+ *          his shoulders. Every wet horizontal face he has (the plates of his hair, the tops of his shoulders) mirrors it
+ *          straight into the lens at a grazing angle: a bright line along the top of the head and along the shoulders. His
+ *          back faces away from it (stays black), and the double, who stands behind the spot, gets nothing.
+ *   edge   a lamp beyond him on the inland side: the left side of his head and his ear.
+ *   band   a very weak lamp at his collar (range 0.9 m): the WHITE headphone band round his neck and the back of the ear
+ *          answer it; black cotton and wet black hair at the same distance do not (albedo 0.03 against 0.9).
+ * The set's moon fill (which comes from behind the lens) is switched off for the frame. Result: the back of his head and
+ * his back stay a black shape, and in a flash he is a cut-out with hot edges. Call every frame in update(), AFTER placing
+ * him, with the frame's STRIKE level f (not the storm floor). The lamps are per-shot objects (ctx.add, kept in ctx.store).
+ */
+export function frameAKid(ctx, f = 0) {
+  const k = ctx.set.anchors.kidA, S = ctx.store, z = k.z + FRAME_A_DZ;
+  if (!S.faRim) {
+    S.faRim = ctx.add(new THREE.SpotLight('#dfe9ff', 0, 0, 0.16, 0.5, 2)); ctx.add(S.faRim.target);
+    S.faEdge = ctx.add(new THREE.PointLight('#dfe9ff', 0, 4, 2));
+    S.faBand = ctx.add(new THREE.PointLight('#dfe9ff', 0, 0.9, 2));
+  }
+  S.faRim.position.set(k.x - 7.0, k.y + 2.5, z - 1.6); S.faRim.target.position.set(k.x, k.y + 1.6, z); S.faRim.intensity = dv('r0', 40) + dv('r1', 100) * f;
+  S.faEdge.position.set(k.x - 1.0, k.y + 2.3, z + 1.7); S.faEdge.intensity = dv('e0', 2) + dv('e1', 5) * f;
+  S.faBand.position.set(k.x + dv('bx', 0.5), k.y + dv('by', 1.1), z + dv('bz', 0.1)); S.faBand.intensity = dv('b0', 0.15) + dv('b1', 0) * f;
+  if (ctx.set.moon) ctx.set.moon.fill.intensity = 0;          // (the set rewrites it every frame)
+}
+/**
+ * Frame A: the double's TELLS. In a flash he is a black cut-out against the lit fog, but the three things that say "this
+ * is me" must flash white: the two headphone cups on his chest, the knight between them, his sneakers. The cups and the
+ * knight are UNLIT twins of the real ones (a disc on each cup's outer face, a copy of the emblem a millimetre in front of
+ * it), so their brightness is exactly `level` and nothing else on him is touched: a lamp from the lens side would also
+ * light his face (the script wants it lost in the silhouette) and his grey legs. The sneakers get a tiny lamp at his toes
+ * (range 1.1 m). level: ~0.1 = a dim glimmer in the storm's floor, ~0.6 = white in the flash. Call every frame in
+ * update() after placing him; everything is a per-shot object.
+ */
+export function doubleTells(ctx, level = 0) {
+  const S = ctx.store, copy = ctx.cast.copy;
+  if (!S.dt) {
+    const torso = copy.joints.torso, em = copy.root.getObjectByName('emblem');
+    const mat = new THREE.MeshBasicMaterial({ color: 0x000000, fog: false });
+    const kmat = new THREE.MeshBasicMaterial({ color: 0x000000, map: em.material.map, transparent: true, depthWrite: false, fog: false });
+    const front = em.position.z - 0.004, cx = 0.19 * (0.9 + 0.1 * ((copy.spec && copy.spec.build) ?? 1));     // (as in smoothHeadphones)
+    for (const sx of [-1, 1]) {
+      const h = ctx.add(new THREE.Group(), torso); h.position.set(sx * (cx + 0.016), 0.34, front + 0.055); h.rotation.set(-1.15, 0, sx * 0.5);
+      const d = new THREE.Mesh(new THREE.CircleGeometry(0.052, 32), mat); d.rotation.x = Math.PI / 2; d.position.y = -0.0072; h.add(d);
+    }
+    const k = ctx.add(new THREE.Mesh(em.geometry, kmat), em.parent); k.position.copy(em.position); k.position.z += 0.0015; k.quaternion.copy(em.quaternion); k.scale.copy(em.scale); k.renderOrder = 4;
+    S.dt = { mat, kmat, foot: ctx.add(new THREE.PointLight('#dfe9ff', 0, 1.1, 2)) };
+  }
+  const p = copy.root.position;
+  S.dt.mat.color.setScalar(level); S.dt.kmat.color.setScalar(level * 0.85);
+  S.dt.foot.position.set(p.x + 0.55, p.y + 0.16, p.z); S.dt.foot.intensity = dv('tf', 0.5) * level;
+}
 const _e = V3(), _n = V3(), _q = new THREE.Quaternion();
 const KNIGHT_W = 0.165;     // width of the drawn knight on its 0.25 m decal
 /**
@@ -535,9 +597,49 @@ export function initCast(ctx) {
   if (ctx.cast.captain) real.captain = makeReal(ctx.cast.captain, { wet: 0.4, drips: 0 });
   for (const id of ['me', 'copy']) { const rag = makeRag(); ctx.cast[id].joints.handR.add(rag); ctx.cast[id].rag = rag; }
   for (const id of Object.keys(real)) matteFace(ctx.cast[id], real[id]);
-  for (const id of ['me', 'copy']) { smoothHeadphones(ctx.cast[id], real[id]); sewnEmblem(ctx.cast[id]); }
+  for (const id of ['me', 'copy']) { lowFade(ctx.cast[id], real[id]); smoothHeadphones(ctx.cast[id], real[id]); sewnEmblem(ctx.cast[id]); }
   ctx.props.real = real;
   return real;
+}
+/**
+ * Film-only haircut for the kid and the double. The stock 'fade' shell (src/characters.js fadeShell) is bare skin from
+ * 52 % down on the back and the sides of the head: seen from behind (frame A, b03, b19) the hero was a white crate with
+ * a black lid. Here it becomes a LOW taper: hair down to 62 % of the shell, thinning to skin only in the last few
+ * centimetres at the nape and under the ears; wet hair (roughness 0.4, out of the kit's wet-gloss path so it matches the
+ * crop on top). The brown highlight slab on the crown goes back to the hair colour. The shared character builder is not
+ * touched: this patches the film's own copies (makeReal cloned the shell material; the vertex colours are per character).
+ */
+const hex2rgb = (h) => { const n = parseInt(h.replace('#', ''), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+const mixHex = (a, b, u) => { const A = hex2rgb(a), B = hex2rgb(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * u).toString(16).padStart(2, '0')).join(''); };
+let _lowFadeTex = null;
+function lowFade(ch, real) {
+  const S = ch.spec || {}, hc = (S.hair && S.hair.color) || '#2b1d14', skin = S.skin || '#f1c7a1';
+  const shell = ch.root.getObjectByName('fadeShell');
+  if (shell && shell.material && shell.material.map) {
+    if (!_lowFadeTex) {
+      _lowFadeTex = canvasTexture(64, 256, (g) => {
+        const gr = g.createLinearGradient(0, 0, 0, 256);
+        gr.addColorStop(0, hc); gr.addColorStop(dv('n0', 0.62), hc); gr.addColorStop(dv('n1', 0.8), mixHex(hc, skin, dv('n1m', 0.4))); gr.addColorStop(dv('n2', 0.92), mixHex(hc, skin, dv('n2m', 0.75))); gr.addColorStop(1, mixHex(hc, skin, dv('n3m', 1)));
+        g.fillStyle = gr; g.fillRect(0, 0, 64, 256);
+        const [r, gg, bb] = hex2rgb(hc);                                    // stubble in the taper (deterministic)
+        for (let i = 0; i < 700; i++) {
+          const x = hash(i * 1.3) * 64, y = 150 + hash(i * 2.7 + 5) * 100, a = 0.4 * (1 - (y - 150) / 100);
+          g.fillStyle = `rgba(${r},${gg},${bb},${a.toFixed(3)})`; g.fillRect(x, y, 1.5, 1.5);
+        }
+      });
+    }
+    const m = shell.material, i = real.decals.findIndex((d) => d.mat === m);
+    if (i >= 0) { m.color.copy(real.decals[i].color); real.decals.splice(i, 1); }      // setWet no longer rewrites it
+    m.map = _lowFadeTex; m.roughness = 0.4; m.needsUpdate = true;
+  }
+  // the highlight slab on the crown (addHair 'fade': mixHex(hc, '#7a4e33', 0.55)) read as a brown plank lying on his head
+  const from = new THREE.Color(mixHex(hc, '#7a4e33', 0.55)), to = new THREE.Color(hc);
+  ch.root.traverse((o) => {
+    const c = o.isMesh && o.geometry && o.geometry.attributes.color; if (!c) return;
+    let n = 0;
+    for (let k = 0; k < c.count; k++) if (Math.abs(c.getX(k) - from.r) < 2e-4 && Math.abs(c.getY(k) - from.g) < 2e-4 && Math.abs(c.getZ(k) - from.b) < 2e-4) { c.setXYZ(k, to.r, to.g, to.b); n++; }
+    if (n) c.needsUpdate = true;
+  });
 }
 /**
  * The face decal is INK ON SKIN, not wet cloth: take it out of the kit's wet-gloss path. makeReal leaves it with a pore

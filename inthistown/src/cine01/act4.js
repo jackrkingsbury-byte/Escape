@@ -638,7 +638,7 @@ export const shots = [
       const lv = torchLevel(ctx.t), light = 0.25 + 0.75 * sramp(lt, 0.1, 0.75);
       poolKid(ctx, { light });
       ctx.props.phone.setLevel(lv);
-      K.flash(ctx, [{ at: 'flash26', power: 1.0, hold: 0.42, decay: 0.3 }], { bolt: null, post: 0.5 });      // 12 frames across the surface film
+      K.flash(ctx, [{ at: 'flash26', power: 1.0, hold: 0.42, decay: 0.3, floor: 0.85 }], { bolt: null, post: 0.5 });      // one flash: 12 frames across the surface film, one decay
       poolFilm(ctx, lv, { light });
       K.stamp(ctx, '3:12 AM', { at: 'tl', alpha: ramp(lt, 0.5, 0.9) });
     },

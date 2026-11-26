@@ -96,6 +96,8 @@ function fogCards(ctx, k) { const w = ctx.set.world; w.fogSea.uniforms.uOpacity.
 
 // ───────────────────────────────────────────── the kid in frame A
 const KID_YAW = -PI / 2 - 0.3;
+/** the kid on his frame A mark: the same spot as in beat 1 (anchors.kidA + K.FRAME_A_DZ) */
+function placeFrameA(ctx) { const k = A(ctx, 'kidA'); ctx.place('me', [k.x, k.y, k.z + K.FRAME_A_DZ], { yaw: KID_YAW }); }
 function kidFrameA(ctx, p = {}) {
   K.filmPose(ctx.cast.me, 'stand', ctx.t, { breathe: p.breathe ?? 1.6, headYaw: p.headYaw ?? 0.45, headPitch: p.headPitch ?? 0, armR: p.armR ?? K.FRAME_A_ARM, armL: p.armL, foreR: p.foreR ?? -0.3, foreL: p.foreL });
   ctx.props.real.me.update(ctx.t);
@@ -175,7 +177,7 @@ export const shots = [
   {
     name: 'a2 b08 frame A: 9 m, 7 m, 5 m', start: 'flash8a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 1 }, captionY: 0.82,   // the words under the double, not across him
     setup(ctx) {
-      ctx.place('me', 'kidA', { yaw: KID_YAW });
+      placeFrameA(ctx);
       ctx.cam.set(K.frameA(ctx.set));
     },
     update(ctx) {
@@ -184,10 +186,11 @@ export const shots = [
       // he looks straight at the double; the head follows him in
       const where = t < T('flash8b') - 0.32 ? 'double9' : t < T('step8') ? 'double7' : 'double5';
       kidFrameA(ctx, { headYaw: where === 'double5' ? 0.36 : 0.44, breathe: 1.8 });
-      // (the last step: a touch nearer and inland of the anchor, so he stands ~1/3 of the frame tall and clear of the kid's head)
-      statue(ctx, where === 'double5' ? [-3.7, ctx.set.heightAt(-3.7, 1.75), 1.75] : where, PI / 2);
-      const f = K.flash(ctx, [{ at: 'flash8a', bolt: 1 }, { at: 'flash8b', power: 0.9, bolt: null }, { at: 'flash8c', bolt: 0 }]);
+      // (every step on its foam-line anchor: with the long lens the 5 m step is a third of the frame tall and still clear of the kid's head)
+      statue(ctx, where, PI / 2);
+      const f = K.flash(ctx, [{ at: 'flash8a', bolt: 1 }, { at: 'flash8b', power: 0.9, bolt: null }, { at: 'flash8c', bolt: 4 }]);
       ctx.cast.copy.root.visible = f > 0.004;            // he only exists in the light
+      K.frameAKid(ctx, f);                               // the same rims as in beat 1
       // the fire warms the kid's inland edge
       const k = A(ctx, 'kidA');
       fireKick(ctx, 'warm', [k.x - 0.5, k.y + 1.1, k.z + 2.3], 7, 3.4);
@@ -255,13 +258,14 @@ export const shots = [
   {
     name: 'a2 b10b frame A: nobody. Hold', start: 'b10+0.51', set: 'beachNight', cast: ['me'], options: { fire: 1 }, captions: false,
     setup(ctx) {
-      ctx.place('me', 'kidA', { yaw: KID_YAW });
+      placeFrameA(ctx);
       ctx.cam.set(K.frameA(ctx.set));
     },
     update(ctx, lt) {
       fireLevel(ctx, 0.72);
       // he listens: breathing hard, the head searches the foam line
       kidFrameA(ctx, { headYaw: 0.4 - 0.14 * sstep(0.5, 1.3, lt), breathe: 2.6 });
+      K.frameAKid(ctx, 0);                               // the same rims as in beat 1 and beat 8
       const k = A(ctx, 'kidA');
       fireKick(ctx, 'warm', [k.x - 0.5, k.y + 1.1, k.z + 2.3], 7, 3.4);
       ctx.cam.shake(0.03, ctx.t, 5);

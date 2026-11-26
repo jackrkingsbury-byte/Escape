@@ -49,7 +49,7 @@ export async function init(ctx) {
 
 // ═════════════════════════════════════════════ helpers ════════════════════════════════════════════════════════════
 /** soft far-off sheet lightning at t0 (a cloud flicker, never a full flash) */
-const sheet = (ctx, t0, power = 0.2, seed = 5) => K.flashEnv(ctx.t - ctx.time(t0), { power, hold: 0.24, decay: 0.34, seed, floor: 0.3 });
+const sheet = (ctx, t0, power = 0.2, seed = 5) => K.flashEnv(ctx.t - ctx.time(t0), { power, hold: 0.24, decay: 0.34, seed, floor: 0.6, attack: 0.07 });   // one soft swell: up, a short plateau, down
 /** macro rain on (call in update; the mesh is ctx.add-ed in setup) */
 function macroRain(ctx, opacity = 0.5) { ctx.props.a1rain.uniforms.uOpacity.value = opacity; }
 const _h = V(), _g = V();
@@ -126,43 +126,46 @@ export const shots = [
     name: 'a1.1 frame A: another me / closer (b01-b02)', start: 0, set: 'beachNight', cast: ['me', 'copy'], options: { fire: 0 },
     setup(ctx) {
       const k = A(ctx, 'kidA');
-      ctx.place('me', [k.x, k.y, k.z + KID_DZ], { yaw: -PI / 2 - 0.3 });    // a hand's width inland: the rag hand stays in frame
+      ctx.place('me', [k.x, k.y, k.z + KID_DZ], { yaw: -PI / 2 - 0.3 });
       ctx.cam.set(K.frameA(ctx.set));
-      // his own rim: the sky over the sea catching the top of the hood, the headphones, the right shoulder and the rag
-      const rim = ctx.store.rim = ctx.add(new THREE.PointLight('#dfe9ff', 0, 6, 2)); rim.position.set(k.x + 0.9, k.y + 2.9, k.z - 1.7);     // (behind him, sea side: the faces the lens can see)
-      const edge = ctx.store.edge = ctx.add(new THREE.PointLight('#dfe9ff', 0, 5, 2)); edge.position.set(k.x + 1.2, k.y + 2.3, k.z + 2.0);   // (behind him, inland side)
-      ctx.store.ragL = ctx.add(new THREE.PointLight('#dfe9ff', 0, 1.9, 2));   // low, lens side: the white cloth on his right hand (follows the hand)
       groundBlob(ctx, [k.x, k.y, k.z + KID_DZ], 0.7, 0.5);
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me, copy = ctx.cast.copy;
-      K.filmPose(me, 'stand', t, { breathe: 1, headYaw: 0.38, armR: FRAME_A_ARM, foreR: -0.3 });   // the rag fist held back, behind his hip: white on black, inside the frame
+      K.filmPose(me, 'stand', t, { breathe: 1, headYaw: 0.38, armR: FRAME_A_ARM, foreR: -0.3 });
       real(ctx).me.update(t);
-      const f = K.flash(ctx, [{ at: 'flash1', bolt: 0 }, { at: 'b01.w6-0.05', power: 0.32, hold: 0.22, decay: 0.3, bolt: null, seed: 9 }, { at: 'flash2', bolt: 1 }], { post: 0.55 });
-      // between the strikes the storm never goes fully dark: sheet lightning far out at sea keeps a floor under the picture
-      // (the double stays hidden: he needs a real flash)
-      const floor = 0.11 + 0.03 * Math.sin(t * 1.9 + 1) + 0.08 * K.flicker(t, 7, 1.1);
+      // three strikes: frame 0 (the double at 18 m), a softer one on "another me", and "closer" (12 m)
+      const f = K.flash(ctx, [{ at: 'flash1', bolt: 4, ...STRIKE_A }, { at: 'b01.w6-0.05', power: 0.8, hold: 0.3, decay: 0.3, bolt: null, seed: 9, ...STRIKE_B }, { at: 'flash2', bolt: 1, ...STRIKE_A }]);
+      ctx.set.bolts[4].material.uniforms.uI.value = K.dv('bu', 0.25) * f;      // a line, not a smear: at full level the bloom swallows the bolt
+      ctx.store.strike = f;
+      // BEAT 1: between the strikes the storm never goes dark: sheet lightning far out at sea keeps a floor under the picture,
+      // and the double STAYS: dim, dead still, 18 m up the foam line, under "there's another me on this beach".
+      // BEAT 2: "And every time…": the sky closes (he is gone: he moves in the dark), so "closer" jumps out of black.
+      const tDark = ctx.time('b02') - 0.4;
+      const lit = 1 - sramp(t, tDark - 0.35, tDark);
+      const floor = lerp(K.dv('fl0', FLOOR_DARK), K.dv('fl1', FLOOR_STORM) + 0.03 * Math.sin(t * 1.9 + 1) + 0.08 * K.flicker(t, 7, 1.1), lit);
       if (f < floor) K.applyFlash(ctx, floor, { bolt: null, light: 0.45, post: 1.0, sky: 3.2 });
-      // the double: 18 m, then 12 m. He only exists while the sky is lit; he moves in the dark.
-      if (t < ctx.time('b02')) ctx.place('copy', 'double18', { yaw: PI / 2 });
-      else ctx.place('copy', [-12, ctx.set.heightAt(-12, 1.25), 1.25], { yaw: PI / 2 });   // on the lip of the wash, clear of the kid's head
+      // the double: 18 m, then 12 m (the foam-line anchors), the identical frozen pose
+      const d = A(ctx, t < ctx.time('b02') ? 'double18' : 'double12');
+      ctx.place('copy', d, { yaw: PI / 2 });
       K.filmPose(copy, 'stand', 0);
-      copy.root.visible = f > 0.035;
-      ctx.store.rim.intensity = 3.8 + 9 * f;
-      ctx.store.edge.intensity = 3.2 + 4 * f;
-      const hw = handWorld(me, 'R', _h);
-      ctx.store.ragL.position.set(hw.x + 0.5, hw.y + 0.12, hw.z - 0.12); ctx.store.ragL.intensity = 0.8 + 1.0 * f;
-      ctx.set.foam.uniforms.uAmbient.value = 0.34;
+      copy.root.visible = f > 0.035 || t < tDark;
+      K.doubleTells(ctx, K.dv('t0', 0.1) * lit + K.dv('t1', 0.5) * f);      // his cups, knight and sneakers: a glimmer in the storm, white in the flash
+      K.frameAKid(ctx, f);            // the kid's rims (beyond him: hair top, ear, shoulder line, headphone band)
+      ctx.set.foam.uniforms.uAmbient.value = 0.34 + K.dv('fo', 1.2) * f;
       K.stamp(ctx, '3:12 AM', { at: 'tl', alpha: 1 - ramp(lt, 2.9, 3.4) });
       ctx.cam.shake(0.03, t, 3);
     },
-    // in a flash the fog thins and the cloud deck shows through it: black rock and wreck against a torn white sky, not a grey veil
-    post: K.shotPost((ctx) => { const f = Math.min(1, ctx.store.flash || 0); return { fog: { sky: lerp(0.9, 0.42, f), density: 0.012 * (1 - 0.4 * f) }, grade: { contrast: 1.4 + 0.12 * f } }; }),
+    // a hard WHITE flash: the exposure opens, the fog over the sea lights up behind the double and the cloud deck burns through
+    // it; the two of them and the wreck are black cut-outs (the fog starts beyond the 18 m mark: nothing veils them)
+    post: K.shotPost((ctx) => { const f = Math.min(1.3, ctx.store.strike || 0), g = Math.min(1, f), c = K.dv('fc', 0.5); return { exposure: 1 + K.dv('ex', 1.2) * f,
+      fog: { start: K.dv('fs', 24), sky: lerp(0.9, K.dv('fsky', 0.25), g), density: 0.012 * (1 + K.dv('fd', 0.6) * f), color: [lerp(0.055, 0.86 * c, g), lerp(0.07, 0.93 * c, g), lerp(0.085, c, g)] },
+      grade: { contrast: 1.4 + 0.12 * g } }; }),
   },
 
   // ─────────────────────────────────────────── 2 · b03 · washed up, 9:40 PM ────────────────────────────────────────
   {
-    name: 'a1.2 washed up, sneakers in the foam (b03)', start: 'b03-0.6', set: 'beachDusk', cast: ['me', 'copy'], options: { fire: -1, rain: 1.2, splash: 0 },
+    name: 'a1.2 washed up, sneakers in the foam (b03)', start: 'b03-0.45', set: 'beachDusk', cast: ['me', 'copy'], options: { fire: -1, rain: 1.2, splash: 0 },
     setup(ctx) {
       const H = ctx.set.heightAt;
       const kx = 7.6, kz = 2.85, dx = 8.05, dz = 0.2;
@@ -175,21 +178,24 @@ export const shots = [
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me;
-      const up = sramp(lt, 0.7, 1.75);
-      K.filmPose(me, 'prone', t, { up, headPitch: lerp(0.1, -0.45, sramp(lt, 0.85, 2.0)), headYaw: lerp(-0.75, -0.55, sramp(lt, 0.6, 1.6)) });   // cheek in the sand, toward the rag hand; pushed up, the ear and cheek still show
+      // the choreography below was timed for a 2.28 s shot; x is the shot's own clock stretched to that length, so the push-up,
+      // the wash and the sink always finish on the cut whatever the narration pace (1.91 s on the 94 s cut)
+      const x = lt * 2.28 / (ctx.time('b04-0.15') - ctx.time('b03-0.45'));
+      const up = sramp(x, 0.7, 1.75);
+      K.filmPose(me, 'prone', t, { up, headPitch: lerp(0.1, -0.45, sramp(x, 0.85, 2.0)), headYaw: lerp(-0.75, -0.55, sramp(x, 0.6, 1.6)) });   // cheek in the sand, toward the rag hand; pushed up, the ear and cheek still show
       // the rag arm thrown wide, so the white cloth is never under his head
       K.joint(me, 'armR', lerp(-2.55, -1.55, up), 0, lerp(-1.0, -0.8, up)); K.joint(me, 'foreArmR', lerp(-0.45, -0.95, up), 0, 0);
       K.filmPose(ctx.cast.copy, 'stand', 0);
       real(ctx).me.update(t);
       // the wash: a sheet runs up around him and drains away; a second sheet keeps the sneakers in foam
-      const edge = lerp(lerp(2.6, 3.8, sramp(lt, 0, 0.7)), 1.5, sramp(lt, 0.8, 2.3));
+      const edge = lerp(lerp(2.6, 3.8, sramp(x, 0, 0.7)), 1.5, sramp(x, 0.8, 2.3));
       ctx.set.foam.uniforms.uWash.value = edge - ctx.set.washEdge(8, t);
       const f2 = ctx.props.a1foam.uniforms;
       f2.uWash.value = 1.25 + 0.25 * Math.sin(lt * 1.3) - ctx.set.washEdge(8, t); ctx.set.foam.uniforms.uAmbient.value = 0.15; f2.uAmbient.value = 0.15;
       ctx.set.moon.key.intensity = 1.35;                                   // blue-black dusk: the back of his head must not be the whitest thing in frame
       // steep high angle, sinking 1 m along the ray that crops the double at the knee (so the crop never changes)
       const th = 69 * DEG, a = th - 27 * DEG, kp = ctx.store.knee;
-      const s = lerp(6.7, 5.3, lt / 2.3);
+      const s = lerp(6.7, 5.3, x / 2.3);
       const pos = [kp.x - 0.1, kp.y + Math.sin(a) * s, kp.z + Math.cos(a) * s];
       ctx.cam.set({ pos, look: [pos[0], pos[1] - Math.sin(th) * 4, pos[2] - Math.cos(th) * 4], fov: 54 });
       ctx.cam.shake(0.02, t, 7);
@@ -456,10 +462,15 @@ function updateBeads(mesh, lt, w) {
   mesh.instanceMatrix.needsUpdate = true;
 }
 
-// frame A: the kid stands this far inland of anchors.kidA (keeps the rag hand inside the right edge)
-const KID_DZ = 0.12;
+// frame A: the kid stands this far inland of anchors.kidA (shared with act 2: K.FRAME_A_DZ)
+const KID_DZ = K.FRAME_A_DZ;
 // frame A: his right arm (upper-arm euler): swung back and in, so the rag fist sits behind his hip, toward the lens
 const FRAME_A_ARM = K.FRAME_A_ARM;
+// frame A, beats 1-2: the storm's floor under the picture (flash units): the dim storm of beat 1, the dark before "closer"
+const FLOOR_STORM = 0.22, FLOOR_DARK = 0.05;
+// frame A: the two full strikes of the hook (frame 0 and "closer"): one white pop, a 12-frame plateau, one decay
+const STRIKE_A = { power: 1.3, hold: 0.4, decay: 0.3, floor: 0.9, post: K.dv('fp', 0.25), sky: K.dv('sk', 6), light: K.dv('li', 2.5), env: 0, glint: K.dv('gl', 1) };
+const STRIKE_B = { post: K.dv('fp', 0.25), sky: K.dv('sk', 6), light: K.dv('li', 2.5), env: 0, glint: K.dv('gl', 1) };
 
 /**
  * b04a: the hand that holds the phone (phone-local metres, screen = +Z). The phone hangs 10 cm in front of the fist for
