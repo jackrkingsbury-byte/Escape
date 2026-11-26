@@ -26,8 +26,8 @@ python3 - "$O" <<'PY'
 import sys,glob,subprocess,os
 O=sys.argv[1]; fs=sorted(glob.glob(O+'/_s/s_*.jpg'))
 for k in range(0,len(fs),12):
-    grp=fs[k:k+12]; lst=O+'/_s/list.txt'
-    open(lst,'w').write(''.join(f"file '{f}'\n" for f in grp))
-    subprocess.run(['ffmpeg','-v','error','-y','-f','concat','-safe','0','-i',lst,'-vf','tile=6x2:padding=4:color=black','-frames:v','1',f"{O}/sheet_{k//12:02d}.jpg"],check=True)
+    n=len(fs[k:k+12])
+    subprocess.run(['ffmpeg','-v','error','-y','-start_number',str(k+1),'-i',O+'/_s/s_%04d.jpg','-frames:v',str(n),
+                    '-vf','tile=6x2:padding=4:color=black','-frames:v','1',f"{O}/sheet_{k//12:02d}.jpg"],check=True)
 print(len(fs),'thumbs',(len(fs)+11)//12,'sheets')
 PY
