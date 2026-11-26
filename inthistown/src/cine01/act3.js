@@ -179,14 +179,15 @@ const B18B = 'b18.w3-0.1';     // "I'm not smiling."
 export const shots = [
   // ── b16 ─ "Inside, a pool the rain can't reach. Still as a mirror." ────────────────────────────────────────────────
   {
-    name: 'b16 the pool (crane down)', start: 'b16', set: 'cave', cast: ['me'],
+    // (the picture starts 0.3 s into the beat: the third flash of beat 15 holds 20 frames outside; "Inside" lands on the cut)
+    name: 'b16 the pool (crane down)', start: 'b16+0.3', set: 'cave', cast: ['me'],
     setup(ctx) {
       ctx.place('me', 'stand', { yaw: PI });
       ctx.props.phone.setMode('torch').setSpill(0.6).setLevel(0.85);
     },
     update(ctx, lt) {
       const t = ctx.t, me = ctx.cast.me, H = ctx.set.heightAt;
-      const dur = ctx.time('b17') - ctx.time('b16'), u = smooth(lt / dur);
+      const dur = ctx.time('b17') - ctx.time('b16+0.3'), u = smooth(lt / dur);
       const sw = sstep(0.1, 2.7, lt);                           // the beam sweeps across the water and settles on it
       K.filmPose(me, 'stand', t, { breathe: 1, headPitch: 0.26, headYaw: lerp(0.5, 0.02, sw), armL: [-0.95, 0, 0.12], foreL: -0.65 });
       me.face('sad', t);

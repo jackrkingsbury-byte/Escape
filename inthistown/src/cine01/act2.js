@@ -13,13 +13,15 @@
  *   45.80  b13   close on the fire: a sheet of rain, it gutters and dies
  *   47.62  b14a  ember dark: his face over the dead logs
  *   49.51  b14b  flash: two white sneakers planted in the ashes, prints leading in from the surf
- *   51.50  b15   high side wide, three flashes: he is cut off from the trees and herded to the cave
+ *   51.50  b15   ONE locked long lens down the beach, three flash stills: he is cut off from the trees and herded to the cave
+ *                (the kid carries the lit phone torch; the double is the black one; both stay, dim, between the strikes)
  *
  * Rules kept: every per-frame state is recomputed in update() from time alone (no leaks between shots); set options
  * only through `options`; per-shot objects through ctx.add; no Math.random.
  */
 import * as THREE from 'three';
 import * as K from './kit.js';
+import { instance } from '../real/assets.js';
 
 const PI = Math.PI;
 const { clamp, lerp, smooth } = K;
@@ -94,14 +96,8 @@ function caveGlow(ctx, I) {
 /** thin the set's fog banks for this frame (re-set by the set every frame) */
 function fogCards(ctx, k) { const w = ctx.set.world; w.fogSea.uniforms.uOpacity.value *= k; w.fogLand.uniforms.uOpacity.value *= k; }
 
-// ───────────────────────────────────────────── the kid in frame A
+// ───────────────────────────────────────────── the kid at the water's edge (b09, b10a: the close-ups; frame A itself is K.frameA…)
 const KID_YAW = -PI / 2 - 0.3;
-/** the kid on his frame A mark: the same spot as in beat 1 (anchors.kidA + K.FRAME_A_DZ) */
-function placeFrameA(ctx) { const k = A(ctx, 'kidA'); ctx.place('me', [k.x, k.y, k.z + K.FRAME_A_DZ], { yaw: KID_YAW }); }
-function kidFrameA(ctx, p = {}) {
-  K.filmPose(ctx.cast.me, 'stand', ctx.t, { breathe: p.breathe ?? 1.6, headYaw: p.headYaw ?? 0.45, headPitch: p.headPitch ?? 0, armR: p.armR ?? K.FRAME_A_ARM, armL: p.armL, foreR: p.foreR ?? -0.3, foreL: p.foreL });
-  ctx.props.real.me.update(ctx.t);
-}
 function statue(ctx, anchor, yaw, p = {}) {
   ctx.place('copy', anchor, { yaw });
   K.filmPose(ctx.cast.copy, 'stand', 0, p);
@@ -175,28 +171,28 @@ function makeGust(n = 520, seed = 77) {
 export const shots = [
   // ── b08 · "He never moves when it's bright. Only in the dark." ─────────────────────────────────────────────────────
   {
-    name: 'a2 b08 frame A: 9 m, 7 m, 5 m', start: 'flash8a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 1 }, captionY: 0.82,   // the words under the double, not across him
-    setup(ctx) {
-      placeFrameA(ctx);
-      ctx.cam.set(K.frameA(ctx.set));
-    },
+    name: 'a2 b08 frame A: 9 m, 7 m, 5 m', start: 'flash8a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 1 }, captionY: 0.765, captionX: 0.68,   // the words beside the double, across the kid's back
+    setup(ctx) { K.frameASetup(ctx); },
     update(ctx) {
       const t = ctx.t, T = (n) => ctx.time(n);
       fireLevel(ctx, 0.8);
-      // he looks straight at the double; the head follows him in
-      const where = t < T('flash8b') - 0.32 ? 'double9' : t < T('step8') ? 'double7' : 'double5';
-      kidFrameA(ctx, { headYaw: where === 'double5' ? 0.36 : 0.44, breathe: 1.8 });
-      // (every step on its foam-line anchor: with the long lens the 5 m step is a third of the frame tall and still clear of the kid's head)
-      statue(ctx, where, PI / 2);
-      const f = K.flash(ctx, [{ at: 'flash8a', bolt: 1 }, { at: 'flash8b', power: 0.9, bolt: null }, { at: 'flash8c', bolt: 4 }]);
-      ctx.cast.copy.root.visible = f > 0.004;            // he only exists in the light
-      K.frameAKid(ctx, f);                               // the same rims as in beat 1
-      // the fire warms the kid's inland edge
-      const k = A(ctx, 'kidA');
-      fireKick(ctx, 'warm', [k.x - 0.5, k.y + 1.1, k.z + 2.3], 7, 3.4);
+      // three strikes, three steps: he only exists in the light, and each time he is nearer (the identical frozen pose)
+      const d9 = A(ctx, 'double9'), d7 = A(ctx, 'double7'), d5 = A(ctx, 'double5');
+      const t7 = T('flash8b') - 0.32, t5 = T('step8');
+      const d = t < t7 ? d9 : t < t5 ? d7 : d5;
+      K.frameAPose(ctx, { look: d, breathe: 1.8 });                         // he looks straight at him; the head follows him in
+      statue(ctx, d, PI / 2);
+      const f = K.frameAFlash(ctx, [{ at: 'flash8a', bolt: 4 }, { at: 'flash8b', bolt: null, power: 0.9 }, { at: 'flash8c', bolt: 5 }]);
+      K.frameAFloor(ctx, f, 0.1 + 0.02 * Math.sin(t * 1.9 + 1));            // the dark between: foam, fog and the fire's edge on the kid, nobody on the foam line
+      ctx.cast.copy.root.visible = f > 0.004;
+      K.doubleTells(ctx, 0.35 * f);
+      K.frameAKid(ctx, f, { warm: 1, flicker: fireFl(t) });                 // the same light as in beat 1; the fire under the wreck is now his edge
+      // the lip of the wash slides up the beach with him in the dark
+      const u7 = sstep(T('flash8a') + 0.8, t7, t), u5 = sstep(T('flash8b') + 0.8, T('flash8c') - 0.1, t);
+      K.frameAFoam(ctx, d9.clone().lerp(d7, u7).lerp(d5, u5), 0.34 + 0.6 * f);
       ctx.cam.shake(0.03, t, 5);
     },
-    post: K.shotPost({ grade: { highlightAmt: 0.3 } }),
+    post: K.frameAPost({ grade: { highlightAmt: 0.3 } }),
   },
 
   // ── b09 · "When I'm scared, I yell my word. To see if anything answers." ───────────────────────────────────────────
@@ -257,20 +253,19 @@ export const shots = [
   },
   {
     name: 'a2 b10b frame A: nobody. Hold', start: 'b10+0.51', set: 'beachNight', cast: ['me'], options: { fire: 1 }, captions: false,
-    setup(ctx) {
-      placeFrameA(ctx);
-      ctx.cam.set(K.frameA(ctx.set));
-    },
+    setup(ctx) { K.frameASetup(ctx); },
     update(ctx, lt) {
+      const t = ctx.t, d5 = A(ctx, 'double5');
       fireLevel(ctx, 0.72);
-      // he listens: breathing hard, the head searches the foam line
-      kidFrameA(ctx, { headYaw: 0.4 - 0.14 * sstep(0.5, 1.3, lt), breathe: 2.6 });
-      K.frameAKid(ctx, 0);                               // the same rims as in beat 1 and beat 8
-      const k = A(ctx, 'kidA');
-      fireKick(ctx, 'warm', [k.x - 0.5, k.y + 1.1, k.z + 2.3], 7, 3.4);
-      ctx.cam.shake(0.03, ctx.t, 5);
+      // he listens: breathing hard, the head searches the foam line where the other one stood. Nobody. Only the grey glow of
+      // the foam and the fog (the storm's floor: never black) and the rain
+      K.frameAPose(ctx, { look: d5, headYaw: -0.2 * sstep(0.5, 1.3, lt), breathe: 2.6 });
+      K.frameAFloor(ctx, 0, 0.12 + 0.02 * Math.sin(t * 1.9 + 1) + 0.05 * K.flicker(t, 7, 1.1));
+      K.frameAKid(ctx, 0, { warm: 1, flicker: fireFl(t) });
+      K.frameAFoam(ctx, d5, 0.34);
+      ctx.cam.shake(0.03, t, 5);
     },
-    post: K.shotPost({ grade: { highlightAmt: 0.3 } }),
+    post: K.frameAPost({ grade: { highlightAmt: 0.3 } }),
   },
 
   // ── b11 · COPY: "The cave is safe. Go in." ─────────────────────────────────────────────────────────────────────────
@@ -313,18 +308,31 @@ export const shots = [
     name: 'a2 b12b the kid under the hull: Mom\'s rule', start: 'b12.w7-0.06', set: 'beachNight', cast: ['me'], options: { fire: 1, rain: 1.3, rainNear: 7 },
     setup(ctx) { ctx.place('me', 'camp', { yaw: ctx.set.campYaw }); },
     update(ctx, lt) {
-      const me = ctx.cast.me, t = ctx.t;
-      fireLevel(ctx, 0.55 - 0.1 * sstep(1.5, 2.9, lt));
+      const me = ctx.cast.me, t = ctx.t, k = A(ctx, 'camp'), cy = ctx.set.campYaw;
+      fireLevel(ctx, 0.7 - 0.1 * sstep(1.5, 2.9, lt));
       // Mom's rule: eyes down into the fire, a small shake of the head
       const no = Math.sin((lt - 1.15) * 7.5) * 0.12 * sstep(1.15, 1.35, lt) * (1 - sstep(2.1, 2.6, lt)), down = sstep(0.2, 1.0, lt);
       K.filmPose(me, 'huddle', t, { curl: 1, shiver: 0.7, headYaw: 0.1 + no, headPitch: lerp(0.0, 0.14, down) });
       me.face('sad', t);
       ctx.props.real.me.update(t); noDrips(ctx);            // (a falling drip is a glowing egg at this distance)
-      const u = smooth(lt / 3);
-      ctx.store.focus = faceCam(ctx, me, ctx.set.campYaw, { az: -0.5, dist: lerp(3.5, 3.2, u), fov: 28, dy: 0.05, drop: 0.4 });   // face in the upper third, clear of the words
+      // a close-up the phone can read: his face (lit by the fire) whole inside the frame, his knees and the rag fist under it,
+      // the hull over him, the storm sea behind.
+      const u = smooth(lt / 3), h = headCentre(me), fw = [Math.sin(cy), Math.cos(cy)], lf = [fw[1], -fw[0]];      // lf = his left (the sea side)
+      const ey = K.eyePoint(me), c = [ey.x, ey.y, ey.z], a = cy - 0.55, dist = lerp(3.5, 3.2, u);      // (aimed at the FACE: curled forward, it sits well ahead of the head joint)
+      ctx.cam.set({ pos: [c[0] + Math.sin(a) * dist, c[1] + 0.05, c[2] + Math.cos(a) * dist], look: [c[0], c[1] - 0.3, c[2]], fov: 28 });
+      ctx.store.focus = dist - 0.3;
+      // the fire as a practical: a warm bounce off the sand in front of him at knee height (face, knees, hands get a mid-tone;
+      // small numbers: the set's own fire light is weak, a lamp this near is not), a cold edge from the sea side, and a small
+      // kicker on the white rag
+      fireKick(ctx, 'bounce', [k.x + fw[0] * 2.0, k.y + 0.45, k.z + fw[1] * 2.0], 0.2, 7);
+      const cold = lamp(ctx, 'cold', '#9db8d8', 5, 2); cold.position.set(h[0] + fw[0] * 0.5 + lf[0] * 1.7, h[1] + 0.9, h[2] + fw[1] * 0.5 + lf[1] * 1.7); cold.intensity = 1.5;
+      const hand = me.joints.handR.getWorldPosition(_hp);
+      const rk = lamp(ctx, 'ragK', '#ffe1c4', 1.4, 2); rk.position.set(hand.x + fw[0] * 0.5, hand.y + 0.3, hand.z + fw[1] * 0.5); rk.intensity = 0.5;
+      ctx.set.foam.uniforms.uAmbient.value = 0.35;
+      K.applyFlash(ctx, 0.1 + 0.05 * K.flicker(t, 4, 1.7), { bolt: null, light: 0.45, sky: 3 });      // the storm's floor behind him: sea, foam, fog (never black)
       ctx.cam.shake(0.03, t, 15);
     },
-    post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 3, aperture: 1.3, maxBlur: 16 }, bloom: { threshold: 1.5, strength: 0.12 }, grade: { highlightAmt: 0.5, saturation: 0.42 } })),
+    post: K.shotPost((ctx) => ({ exposure: 1.15, dof: { focus: ctx.store.focus || 3, aperture: 1.3, maxBlur: 16 }, bloom: { threshold: 1.5, strength: 0.12 }, grade: { highlightAmt: 0.5, saturation: 0.42 } })),
   },
 
   // ── b13 · "Then the rain kills my fire." ───────────────────────────────────────────────────────────────────────────
@@ -349,7 +357,10 @@ export const shots = [
       ctx.store.gust.userData.update(f, [-0.95, 0.31], g, t, _hp.set(pos[0], pos[1], pos[2]));
       // what is left: a red breath in the logs and on the wet sand
       const e = lamp(ctx, 'ember', '#ff4a12', 3.5, 2); e.position.set(f.x + 0.05, f.y + 0.16, f.z - 0.12);
-      e.intensity = 1.1 * sstep(die, die + 0.5, t) * (1 - 0.45 * sstep(die + 0.6, die + 1.5, t)) * (0.85 + 0.15 * Math.sin(t * 5.1));
+      e.intensity = 2.2 * sstep(die, die + 0.5, t) * (1 - 0.3 * sstep(die + 0.6, die + 1.5, t)) * (0.85 + 0.15 * Math.sin(t * 5.1));
+      // once the flames are gone the storm takes the frame back: the grey of the sea and the foam behind the pit (never black)
+      ctx.set.foam.uniforms.uAmbient.value = 0.15 + 0.2 * sstep(die, die + 0.6, t);
+      K.applyFlash(ctx, 0.16 * sstep(die - 0.1, die + 0.6, t) + 0.05 * K.flicker(t, 6, 1.4), { bolt: null, light: 0.45, sky: 3 });
       ctx.cam.shake(0.03 + 0.08 * g, t, 17);
     },
     post: K.shotPost({ exposure: 1.35, dof: { focus: 2.7, aperture: 0.5, maxBlur: 12 }, bloom: { threshold: 1.4, strength: 0.14 }, grade: { highlightAmt: 0.6, saturation: 0.55 } }),
@@ -361,7 +372,9 @@ export const shots = [
     setup(ctx) { ctx.place('me', 'camp', { yaw: ctx.set.campYaw }); },
     update(ctx, lt) {
       const me = ctx.cast.me, t = ctx.t, f = A(ctx, 'fire');
-      fireLevel(ctx, 0, { ash: 3.0 - 1.2 * smooth(lt / 1.8), smoke: 0.6 });
+      // the embers hold his face until the last half second before the strike, then they sink: the dark before the flash
+      const dk = sstep(ctx.time('flash14') - 0.62, ctx.time('flash14') - 0.3, t);
+      fireLevel(ctx, 0, { ash: 3.0 - 1.2 * dk, smoke: 0.6 });
       const fl = K.flicker(t, 9, 1.3);
       const up = sstep(0.75, 1.15, lt);                   // "Lightning again…": the eyes go up to the sky
       K.filmPose(me, 'huddle', t, { curl: 1, shiver: 0.8, headPitch: lerp(0.18, -0.22, up), headYaw: lerp(0.05, -0.3, up) });
@@ -371,11 +384,14 @@ export const shots = [
       // the last embers under his chin
       const fw = [Math.sin(ctx.set.campYaw), Math.cos(ctx.set.campYaw)];
       const e = lamp(ctx, 'ember', '#ff4a12', 6, 2); e.position.set(f.x - fw[0] * 0.45, f.y + 0.18, f.z - fw[1] * 0.45);
-      e.intensity = (2.0 - 0.9 * smooth(lt / 1.8)) * (0.85 + 0.15 * Math.sin(t * 5.1));
-      K.applyFlash(ctx, 0.22 * fl, { post: 0.2, dir: [-0.3, 0.6, -0.7] });
+      e.intensity = lerp(2.4, 1.2, dk) * (0.85 + 0.15 * Math.sin(t * 5.1));
+      // and the storm he is looking up at: a cold breath on his forehead and on the hull behind him
+      const h = headCentre(me);
+      const c = lamp(ctx, 'cold', '#9db8d8', 6, 2); c.position.set(h[0] + fw[0] * 1.6, h[1] + 1.5, h[2] + fw[1] * 1.6 - 1.2); c.intensity = lerp(0.5, 0.3, dk) * (1 + 1.5 * fl);
+      K.applyFlash(ctx, 0.1 * (1 - 0.6 * dk) + 0.22 * fl, { post: 0.2, dir: [-0.3, 0.6, -0.7] });
       ctx.cam.shake(0.03, t, 19);
     },
-    post: K.shotPost((ctx) => ({ dof: { focus: ctx.store.focus || 2.7, aperture: 1.3, maxBlur: 16 }, grade: { highlightAmt: 0.4, saturation: 0.42 } })),
+    post: K.shotPost((ctx) => ({ exposure: 1.1, dof: { focus: ctx.store.focus || 2.7, aperture: 1.3, maxBlur: 16 }, grade: { highlightAmt: 0.4, saturation: 0.42 } })),
   },
   {
     name: 'a2 b14b flash: sneakers in the ashes', start: 'flash14', set: 'beachNight', cast: ['copy'], options: { fire: 1, splash: 0.4 },
@@ -394,7 +410,7 @@ export const shots = [
       K.filmPose(ctx.cast.copy, 'stand', 0, { foreR: -2.5, foreL: -2.5 });
       // the hardest flash of the film; afterwards the storm's glow keeps the sneakers and the pit readable through "in the ashes"
       const fl = K.flash(ctx, [{ at: 'flash14', bolt: null }], { dir: [0.5, 0.42, -0.76], light: 1.6, post: 1.3, cap: 1 });
-      const floor = 0.2 + 0.03 * Math.sin(t * 2.3) + 0.06 * K.flicker(t, 5, 0.9);
+      const floor = 0.42 + 0.03 * Math.sin(t * 2.3) + 0.06 * K.flicker(t, 5, 0.9);
       if (fl < floor) K.applyFlash(ctx, floor, { dir: [0.5, 0.42, -0.76], light: 1.6, post: 1.0, bolt: null });
       const lv = Math.max(fl, floor);
       // the smoke of the dead fire catches the light: a pale wisp climbing past his knees
@@ -414,76 +430,86 @@ export const shots = [
 
   // ── b15 · "Every flash, he cuts me off. The only place left... is the cave." ───────────────────────────────────────
   {
-    name: 'a2 b15 high side wide: herded to the cave', start: 'flash15a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 0, rainNear: 9 },
-    setup(ctx) {},
+    // ONE locked long lens for the whole beat, high over the dunes behind the wreck, looking down the beach: the black cave
+    // mouth at the top of the frame, the tree line on the left edge, the wash on the right. Three frozen stills in it, bottom
+    // → middle → top: the kid (the one with the lit phone torch, the white rag, the pale rim) and the double (the pure black
+    // one, always on the TREE side of him, never between him and the cave). Between the strikes both stay, dim, where the
+    // last flash left them: they jump on the first frame of the next one.
+    name: 'a2 b15 high side wide: herded to the cave', start: 'flash15a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 0, rainNear: 9 }, captionY: 0.63,
+    setup(ctx) {
+      ctx.cam.set(b15Cam(ctx));
+      ctx.props.phone.setMode('torch').setLevel(0.8);
+      // the edge of the tree line, cut out against the lit beach: three palm crowns leaning into the left of the frame
+      B15_PALMS.forEach(([x, z, ry, sc], i) => ctx.add(instance(i % 2 ? 'palm_b' : 'palm_a', { position: [x, ctx.set.heightAt(x, z) - 0.25, z], rotationY: ry, scale: sc })));
+    },
     update(ctx, lt) {
       const t = ctx.t, T = (n) => ctx.time(n), me = ctx.cast.me, copy = ctx.cast.copy, H = ctx.set.heightAt;
-      // three frozen stills from the same high side of the beach; each one tighter, closing on the cave.
-      // 0: flash15a   1: flash15b   2: from "is the cave" the lens is on the mouth, then flash15c
-      const st = t < T('flash15b') - 0.6 ? 0 : t < T('b15.w10') - 0.12 ? 1 : 2;
+      const t3 = T('flash15c') - B15_LEAD;                  // the third strike is seen a few frames before its thunder: 20 frames of it before the cut
+      const st = t < T('flash15b') ? 0 : t < t3 ? 1 : 2;
       fireLevel(ctx, 0, { ash: 1.5, smoke: 0.5 });
-      const kid = A(ctx, ['mid1', 'mid2', 'cave'][st]);
+      const cave = A(ctx, 'cave');
+      const kid = st < 2 ? A(ctx, ['mid1', 'mid2'][st]) : new THREE.Vector3(cave.x - 4.5, H(cave.x - 4.5, cave.z + 0.1), cave.z + 0.1);     // still 3: 4.5 m INSIDE the mouth
       const dbl = st < 2 ? A(ctx, ['cut1', 'cut2'][st]) : new THREE.Vector3(-51.4, H(-51.4, 4.7), 4.7);
+      let aim;                                             // where the torch points (a pool of light on the sand: never on the double)
       if (st === 0) {            // backing away from him, the rag hand thrown up
         ctx.place('me', kid, { yaw: yawTo(kid, dbl) + 0.2 });
         K.filmPose(me, 'stand', 0, { armR: [-0.9, 0, -0.9], armL: [-0.7, 0, 0.5], foreR: -0.9, foreL: -0.7 });
         K.joint(me, 'torso', -0.2, 0, 0); K.joint(me, 'legL', 0.35, 0, 0.05); K.joint(me, 'legR', -0.25, 0, -0.05);
+        aim = [lerp(kid.x, dbl.x, 0.3), kid.y, lerp(kid.z, dbl.z, 0.3)];
       } else if (st === 1) {     // running for the only way left, looking back
         ctx.place('me', kid, { yaw: -PI / 2 - 0.08 });
         me.pose('walk', 0.21, { speed: 1.5, headYaw: 1.2 });
         K.joint(me, 'torso', 0.3, 0, 0);
-      } else {                   // a small pale figure in the black mouth, looking back out
-        // going in, his back to us like in the two stills before, looking over his shoulder at the one who stayed outside
-        ctx.place('me', [kid.x - 1.5, H(kid.x - 1.5, kid.z + 0.1), kid.z + 0.1], { yaw: -PI / 2 + 0.25 });
+        aim = [kid.x - 2.2, kid.y, kid.z - 0.2];
+      } else {                   // inside the black mouth, his back to us, looking over his shoulder at the one who stayed outside
+        ctx.place('me', kid, { yaw: -PI / 2 + 0.25 });
         me.pose('walk', 0.21, { speed: 1.2, headYaw: -1.25 });
         K.joint(me, 'torso', 0.2, 0, 0);
+        aim = [kid.x - 1.6, kid.y, kid.z + 0.3];
       }
       ctx.place('copy', dbl, { yaw: yawTo(dbl, kid) });
       K.filmPose(copy, 'stand', 0);
       ctx.props.real.me.update(t); noDrips(ctx);
-      const c = A(ctx, 'highCam');
-      // who is who: the kid carries a pale rim and the white rag (two short-range lamps that never reach the double, who
-      // stays a pure black cut-out)
+      // WHO IS WHO: the kid holds the lit phone in his LEFT hand (it is still in that hand in the cave, the next shot)
+      const ph = ctx.props.phone, hl = me.joints.handL.getWorldPosition(_hp);
+      if (ph.root.parent !== ctx.scene) ctx.add(ph.root);
+      ph.root.position.set(hl.x, hl.y + 0.03, hl.z); ph.root.scale.setScalar(1); ph.root.up.set(0, 1, 0);
+      ph.root.lookAt(2 * hl.x - aim[0], 2 * (hl.y + 0.03) - aim[1], 2 * hl.z - aim[2]);        // the LED is on the back: −Z at the sand
+      ph.beam.material.uniforms.uI.value = 0;              // (no beam cone at this distance: the pool on the sand and the point of light say it)
+      // the strikes: 1 and 2 over the sea up-frame (cut-outs against the lit fog, shadows toward the lens); 3 from the SEA side
+      // of the headland (the arch shadows him: a small figure with a torch in the black mouth, the double a black cut-out on
+      // the lit sand outside)
+      const dir = st < 2 ? [-0.55, 0.38, -0.75] : [-0.12, 0.5, -0.85];
+      const f = K.flash(ctx, [{ at: 'flash15a', bolt: 0 }, { at: 'flash15b', power: 0.92, bolt: 1 }, { at: t3, power: 1.4, hold: 0.62, bolt: null }], { light: 0, dir, post: st < 2 ? 0.3 : 0.4, sky: st < 2 ? undefined : 3 });
+      // the floor: sheet lightning far out at sea keeps the beach, the headland and the two of them readable between the strikes
+      const fl = B15_FLOOR + 0.03 * Math.sin(t * 2.1) + 0.06 * K.flicker(t, 3, 0.8);
+      const eye = sstep(T('b15.w10') - 0.3, T('b15.w10') + 0.5, t) * (st < 2 ? 1 : 0);      // "…is the cave": the storm's glow finds the headland
+      if (f < fl) K.applyFlash(ctx, fl, { light: 0, bolt: null, dir, post: 1.0, sky: 3 });
+      ownFlash(ctx, Math.max(f, fl * 0.45), dir, st < 2 ? [-30, 0, 4] : [-50, 0, 4], 46, st < 2 ? 2.0 : 3.2);
+      ctx.props.real.copy.material.envMapIntensity = 0;    // the double takes nothing from the sky: a black cut-out (the set puts it back every frame)
+      ctx.props.real.copy.bandMesh.visible = false;        // and wears nothing white at his nape (same: per frame)
+      caveGlow(ctx, 900 * Math.max(f, fl * (0.6 + 0.8 * eye)));
+      fogCards(ctx, st < 2 ? 0.45 : 0.12);                  // thinner haze: the black mouth must read at the top of the frame (and in the last still the two of them, 80 m off, must stay cut-outs)
+      const lv = Math.max(f, fl);
+      // the kid's pale rim and the white rag (two short-range lamps that never reach the double)
       const kp = me.root.position, hand = me.joints.handR.getWorldPosition(_hp);
-      const rim = lamp(ctx, 'kidRim', '#dfe9ff', 3.2, 2), rag = lamp(ctx, 'kidRag', '#eef3ff', 1.6, 2);
-      if (st < 2) {
-        // strikes over the sea up-frame: the two of them are cut-outs against the lit fog, shadows run toward the lens
-        const dir = [-0.55, 0.38, -0.75];
-        const f = K.flash(ctx, [{ at: 'flash15a', bolt: 0 }, { at: 'flash15b', power: 0.92, bolt: 1 }], { light: 0, dir });
-        ownFlash(ctx, f, dir, [-30, 0, 4], 44, 2.0);
-        ctx.store.flashPost = 0.42; fogCards(ctx, 0.45);          // thinner haze: the black mouth must read at the top of the frame
-        me.root.visible = copy.root.visible = f > 0.004;
-        rim.position.set(kp.x + 1.4, kp.y + 2.3, kp.z - 0.7); rim.intensity = 3.4 * f;
-        rag.position.set(hand.x + 0.7, hand.y + 0.25, hand.z - 0.1); rag.intensity = 2.2 * f;
-        // long lens down the beach: the black cave mouth at the top of the frame, the palm line on the left edge, the two
-        // of them in the lower half (26 mm → 22 mm equivalent of the script's wide, so they are a tenth of the frame, not a speck)
-        const pitch = [10.4, 8.4][st] * PI / 180, fov = [26, 21][st], az = [1.0, 1.2][st] * PI / 180;
-        ctx.cam.set({ pos: c, look: [c.x - Math.cos(pitch) * Math.cos(az) * 60, c.y - Math.sin(pitch) * 60, c.z + Math.cos(pitch) * Math.sin(az) * 60], fov });
-        caveGlow(ctx, 900 * f);
-      } else {
-        // the mouth: first only a far, soft sheen on the rock and the sand, the hole is black; then the third flash, from
-        // the SEA side (the arch shadows him): he is inside, a small pale-rimmed figure in the black; the double is a black cut-out on the lit
-        // sand outside (between him and the beach, never between him and the cave)
-        const dir = [0.15, 0.5, -0.85];
-        const glow = 0.16 + 0.05 * Math.sin(t * 2.1) + 0.1 * K.flicker(t, 3, 0.8);
-        const f = K.flashEnv(t - T('flash15c'), { seed: 11 });
-        K.applyFlash(ctx, Math.max(f, glow), { light: 0, bolt: null, dir, post: f > glow ? 0.45 : 0.8, sky: 1.6 });
-        // before the strike: a storm-grey on the cliff face and the sand from far out over the beach (never black; the mouth
-        // itself stays a hole); then the strike, from the sea side
-        if (f > glow * 0.5) ownFlash(ctx, f, dir, [-50, 0, 4], 30, 2.6); else ownFlash(ctx, 1, [0.8, 0.5, 0.3], [-50, 0, 4], 30, 2.6 + 6 * glow);
-        caveGlow(ctx, 800 * glow * (1 - f) + 500 * f);
-        me.root.visible = copy.root.visible = f > 0.004;
-        rim.position.set(kp.x + 1.6, kp.y + 2.2, kp.z + 1.2); rim.intensity = 1.0 * f;        // pale in the black: he does not glow
-        rag.position.set(hand.x + 0.7, hand.y + 0.2, hand.z + 0.3); rag.intensity = 1.2 * f;
-        fogCards(ctx, 0.35);
-        const u = clamp((t - (T('b15.w10') - 0.12)) / 1.7, 0, 1);
-        ctx.cam.set({ pos: [-31 - 0.5 * u, H(-31, 9) + 7.0, 9.0], look: [-57.4, 2.2, 2.8], fov: 26 });
-      }
+      const rim = lamp(ctx, 'kidRim', '#dfe9ff', 2.2, 2), rag = lamp(ctx, 'kidRag', '#eef3ff', 1.6, 2);
+      rim.position.set(kp.x + 1.4, kp.y + 2.3, kp.z - 0.7); rim.intensity = (st < 2 ? 0.8 : 0.3) * lv;      // (in the mouth his own torch draws him)
+      rag.position.set(hand.x + 0.7, hand.y + 0.25, hand.z - 0.1); rag.intensity = (st < 2 ? 2.2 : 0.7) * lv;
       ctx.cam.shake(0.012, t, 23);
     },
-    post: K.shotPost((ctx) => (ctx.t < ctx.time('b15.w10') - 0.12 ? { fog: { density: 0.0042, start: 22 } } : { fog: { density: 0.004, start: 14 } })),
+    post: K.shotPost({ fog: { density: 0.0012, start: 40 } }),
   },
 ];
+
+// b15: the locked lens. 12.5 m up over the dunes behind the wreck, looking down the beach a little toward the sea, pitched so
+// the first still stands at the bottom of the frame and the cave mouth at the top (figures 16 % → 13 % → 10 % of the height)
+function b15Cam(ctx) {
+  const pos = [30, 12.5, 7], pitch = 9.17 * PI / 180, yaw = 1.73 * PI / 180, d = 60;
+  return { pos, look: [pos[0] - d * Math.cos(pitch) * Math.cos(yaw), pos[1] - d * Math.sin(pitch), pos[2] - d * Math.cos(pitch) * Math.sin(yaw)], fov: 13.6 };
+}
+const B15_FLOOR = 0.28, B15_LEAD = 0.13;
+const B15_PALMS = [[2, 9.35, 0.6, 1.0], [-10, 9.8, 2.4, 1.0], [-22, 10.0, 4.1, 1.05]];      // [x, z, rotY, scale]: the tree line, carried down onto the upper beach along the left edge of the frame
 
 // the double from the kid's eye-line: 4 m away, off the foam line, one arm raised toward the cliff. v 0 = wide, 1 = punch-in
 function b11(ctx, lt, v) {
@@ -495,11 +521,11 @@ function b11(ctx, lt, v) {
   K.filmPose(copy, 'stand', 0, { armR: [-0.3, 0, -2.7], foreR: 0 });      // the arm straight up-frame, over his shoulder: the cliff is behind him
   // one flash; afterwards a low cloud glow keeps his outline while the voice speaks
   const t0 = ctx.time('flash11');
-  const glow = (0.2 + 0.06 * Math.sin(t * 2.3)) * sstep(t0 + 0.35, t0 + 0.75, t) + 0.07 * K.flicker(t, 2, 0.9);
+  const glow = ((v ? 0.62 : 0.36) + 0.05 * Math.sin(t * 2.3)) * sstep(t0 + 0.35, t0 + 0.75, t) + 0.07 * K.flicker(t, 2, 0.9);
   const f1 = K.flashEnv(t - t0, { seed: 5 });
-  const f2 = v ? K.flashEnv(t - (ctx.time('b11.w4') + 0.06), { seed: 8, power: 0.5, hold: 0.25, decay: 0.3 }) : 0;
+  const f2 = v ? K.flashEnv(t - (ctx.time('b11.w4') + 0.06), { seed: 8, power: 0.75, hold: 0.25, decay: 0.3 }) : 0;
   const fd = Math.max(f1, f2), f = Math.max(fd, glow);
-  K.applyFlash(ctx, f, { bolt: f1 > 0.12 ? 0 : null, dir: [-0.62, 0.36, -0.7], light: f > 0 ? fd / f : 0, rig: 0 });
+  K.applyFlash(ctx, f, { bolt: f1 > 0.12 ? 0 : null, dir: [-0.62, 0.36, -0.7], light: f > 0 ? Math.max(fd, 0.3 * glow) / f : 0, rig: 0 });      // (the glow also lies on the wet sand and the foam behind him: he stays a cut-out to the cut)
   ctx.scene.environmentIntensity = 0.06;                  // nothing from the lens side: face and chest stay black
   // the rim that finds the rag on the raised hand
   copy.root.updateWorldMatrix(true, true);

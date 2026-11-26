@@ -249,10 +249,12 @@ function seaCam(ctx, spec, k = 1) {
 function seatCopy(ctx, headYaw = 0, headPitch = 0) {
   const c = ctx.cast.copy;
   c.pose('sit', 0, { seatHeight: ctx.set.seatH, hands: 'none', headYaw, headPitch });
-  for (const s of ['L', 'R']) { const sg = s === 'L' ? 1 : -1; K.joint(c, 'arm' + s, -0.08, 0, -sg * 0.3); K.joint(c, 'foreArm' + s, -1.6, 0, 0); }
-  // the rag's knot and tails must not poke out of the wrap. Shrinking the hand JOINT is safe: joints are in the engine's
-  // cast snapshot (restored at every shot change); ch.rag itself is not (it was added in init), so rag.visible would leak.
-  c.joints.handR.scale.setScalar(0.001);
+  // both upper arms hang INSIDE the wrap, and below the elbows there is nothing: with the forearms folded up, two bare
+  // hands stood out of the lap fold (the film's clue object shown missing one shot before it appears on the wrong hand);
+  // hanging down, a wrist showed under the hem on the seat. No skin and no rag (its knot and tails) can poke out of the
+  // cloth now. Shrinking JOINTS is safe: they are in the engine's cast snapshot (restored at every shot change); ch.rag
+  // itself is not (it was added in init), so rag.visible would leak.
+  for (const s of ['L', 'R']) { const sg = s === 'L' ? 1 : -1; K.joint(c, 'arm' + s, 0.2, 0, -sg * 0.2); c.joints['foreArm' + s].scale.setScalar(0.001); }
   blanketUpdate(P(ctx).blanket, { seated: 1 });
 }
 /** the captain at the wheel (a silhouette: only the outline matters) */
@@ -484,6 +486,7 @@ export const shots = [
     },
     update(ctx, lt) {
       seatCopy(ctx, 0.22, 0.05); helm(ctx);
+      real(ctx).copy.bandMesh.visible = false;           // seen from behind: the headphone band at his nape is under the wrap (the set shows it again every frame)
       const dy = ctx.set.deckY, u = smooth(lt / 2.4);
       seaCam(ctx, { pos: [-0.6, dy + 1.36, 4.82 - 0.14 * u], look: [0.71, dy + 1.08, -1.2], fov: 46 });
       K.stamp(ctx, '6:51 AM', { at: 'tl', alpha: ramp(lt, 0.05, 0.4) * (1 - ramp(lt, 1.95, 2.3)) });
@@ -672,8 +675,11 @@ export const shots = [
       poolKid(ctx, { release: t - tr, dim: smooth(sink) });
       ctx.props.phone.setLevel(lv);
       // a storm glow finds the cave mouth on "found", and the flash that grows out of it is cut off at ~60 %: frame 0 of the
-      // film is its peak
-      const u = ramp(t, tl, end - 1 / 30), tg = ctx.time('b27.w9');
+      // film is its peak. The ramp is tied to the film's LAST FRAME, not to the thunder marker (on the 94 s cut the marker
+      // sits 3 frames before the end: the ramp never got past a third and the loop cut from a dark frame): six frames up,
+      // the last one at full level, whatever the narration pace. (The light leads its thunder by a few frames, as it should.)
+      const fps = ctx.timeline.fps || 30, tLast = (Math.round(end * fps) - 1) / fps;
+      const u = ramp(t, tLast - 6 / fps, tLast), tg = ctx.time('b27.w9');
       const glow = (0.17 + 0.04 * Math.sin(t * 9.0) * Math.sin(t * 3.1)) * sramp(t, tg - 0.7, tg + 0.1);
       ctx.store.loop = u;
       K.applyFlash(ctx, Math.max(glow, 0.62 * Math.pow(u, 1.4)), { bolt: null, post: 0.6 });

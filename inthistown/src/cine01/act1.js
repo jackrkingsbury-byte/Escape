@@ -2,8 +2,8 @@
  * act1.js — "The Other Me", ACT 1: night beach. The hook, the wreck, Mom's voicemail, the knight, the fire.
  * Beats b01–b07, 0 → flash8a (27.79 s). Eight shots:
  *
- *   1  b01–b02  0.00 → 6.44   FRAME A, locked: flash on frame 0 (double at 18 m), soft sheet flicker on "another me",
- *                              flash on "closer" (double at 12 m). The double only exists while the sky is lit.
+ *   1  b01–b02  0.00 → 6.44   FRAME A, locked: the strike on frame 0 (double at 18 m), he stays through beat 1 (a soft sheet
+ *                              swell on "another me"), the sky closes, then the strike on "closer" (double at 12 m).
  *   2  b03      6.44 → 8.72   dusk, steep high angle sinking 1 m: the kid face-down in the wash among the wreckage,
  *                              pushes up on his elbows (rag on the RIGHT hand); top edge: two sneakers in the foam.
  *   3  b04 a    8.72 → 11.72  phone macro (POV): the map, the dot in empty blue, the dotted island. Held sharp.
@@ -123,44 +123,33 @@ function campPrints(ctx, gap = 0.72, stride = 0.62, maxD = 1e9) {
 export const shots = [
   // ─────────────────────────────────────────── 1 · b01–b02 · FRAME A ───────────────────────────────────────────────
   {
-    name: 'a1.1 frame A: another me / closer (b01-b02)', start: 0, set: 'beachNight', cast: ['me', 'copy'], options: { fire: 0 },
-    setup(ctx) {
-      const k = A(ctx, 'kidA');
-      ctx.place('me', [k.x, k.y, k.z + KID_DZ], { yaw: -PI / 2 - 0.3 });
-      ctx.cam.set(K.frameA(ctx.set));
-      groundBlob(ctx, [k.x, k.y, k.z + KID_DZ], 0.7, 0.5);
-    },
+    name: 'a1.1 frame A: another me / closer (b01-b02)', start: 0, set: 'beachNight', cast: ['me', 'copy'], options: { fire: 0 }, captionY: 0.745,   // under the double's feet, across the kid's back
+    setup(ctx) { K.frameASetup(ctx); },
     update(ctx, lt) {
-      const t = ctx.t, me = ctx.cast.me, copy = ctx.cast.copy;
-      K.filmPose(me, 'stand', t, { breathe: 1, headYaw: 0.38, armR: FRAME_A_ARM, foreR: -0.3 });
-      real(ctx).me.update(t);
-      // three strikes: frame 0 (the double at 18 m), a softer one on "another me", and "closer" (12 m)
-      const f = K.flash(ctx, [{ at: 'flash1', bolt: 4, ...STRIKE_A }, { at: 'b01.w6-0.05', power: 0.8, hold: 0.3, decay: 0.3, bolt: null, seed: 9, ...STRIKE_B }, { at: 'flash2', bolt: 1, ...STRIKE_A }]);
-      ctx.set.bolts[4].material.uniforms.uI.value = K.dv('bu', 0.25) * f;      // a line, not a smear: at full level the bloom swallows the bolt
-      ctx.store.strike = f;
-      // BEAT 1: between the strikes the storm never goes dark: sheet lightning far out at sea keeps a floor under the picture,
-      // and the double STAYS: dim, dead still, 18 m up the foam line, under "there's another me on this beach".
-      // BEAT 2: "And every time…": the sky closes (he is gone: he moves in the dark), so "closer" jumps out of black.
-      const tDark = ctx.time('b02') - 0.4;
+      const t = ctx.t, copy = ctx.cast.copy, d18 = A(ctx, 'double18'), d12 = A(ctx, 'double12');
+      // BEAT 1: frame 0 is the strike (the double at 18 m); between the strikes the storm never goes dark (sheet lightning far
+      // out at sea keeps a floor under the picture), and the double STAYS: dim, dead still, up the foam line, under "there's
+      // another me on this beach", with a softer swell of light on "another me".
+      // BEAT 2: "And every time…": the sky closes (he is gone: he moves in the dark), so "closer" jumps out of black at 12 m.
+      const tDark = ctx.time('b02') - 0.4, t2 = ctx.time('b02');
       const lit = 1 - sramp(t, tDark - 0.35, tDark);
-      const floor = lerp(K.dv('fl0', FLOOR_DARK), K.dv('fl1', FLOOR_STORM) + 0.03 * Math.sin(t * 1.9 + 1) + 0.08 * K.flicker(t, 7, 1.1), lit);
-      if (f < floor) K.applyFlash(ctx, floor, { bolt: null, light: 0.45, post: 1.0, sky: 3.2 });
-      // the double: 18 m, then 12 m (the foam-line anchors), the identical frozen pose
-      const d = A(ctx, t < ctx.time('b02') ? 'double18' : 'double12');
+      const d = t < t2 ? d18 : d12;
+      K.frameAPose(ctx, { look: d });
+      const f = K.frameAFlash(ctx, [{ at: 'flash1', bolt: 4 }, { at: 'b01.w6-0.05', bolt: null }, { at: 'flash2', bolt: 5 }]);
+      K.frameAFloor(ctx, f, lerp(FLOOR_DARK, FLOOR_STORM + 0.03 * Math.sin(t * 1.9 + 1), lit));
       ctx.place('copy', d, { yaw: PI / 2 });
-      K.filmPose(copy, 'stand', 0);
+      K.filmPose(copy, 'stand', 0);                                          // the identical frozen pose, a photo pasted nearer
       copy.root.visible = f > 0.035 || t < tDark;
-      K.doubleTells(ctx, K.dv('t0', 0.1) * lit + K.dv('t1', 0.5) * f);      // his cups, knight and sneakers: a glimmer in the storm, white in the flash
-      K.frameAKid(ctx, f);            // the kid's rims (beyond him: hair top, ear, shoulder line, headphone band)
-      ctx.set.foam.uniforms.uAmbient.value = 0.34 + K.dv('fo', 1.2) * f;
+      K.doubleTells(ctx, 0.1 * lit + 0.35 * f);                              // his cups, knight and sneakers: a glimmer in the storm, white in the flash
+      K.frameAKid(ctx, f);
+      // the foam's own glow sinks with the sky (he is taken out of the picture at its darkest, not off a bright band) and comes
+      // back to a dim grey for the wait; the lip follows him up the beach in the dark
+      const foam = lerp(0.1, 0.34, lit) + 0.1 * sramp(t, tDark + 0.3, tDark + 1.0);
+      K.frameAFoam(ctx, d18.clone().lerp(d12, sramp(t, tDark - 0.3, t2 + 0.3)), foam + 0.6 * f);
       K.stamp(ctx, '3:12 AM', { at: 'tl', alpha: 1 - ramp(lt, 2.9, 3.4) });
       ctx.cam.shake(0.03, t, 3);
     },
-    // a hard WHITE flash: the exposure opens, the fog over the sea lights up behind the double and the cloud deck burns through
-    // it; the two of them and the wreck are black cut-outs (the fog starts beyond the 18 m mark: nothing veils them)
-    post: K.shotPost((ctx) => { const f = Math.min(1.3, ctx.store.strike || 0), g = Math.min(1, f), c = K.dv('fc', 0.5); return { exposure: 1 + K.dv('ex', 1.2) * f,
-      fog: { start: K.dv('fs', 24), sky: lerp(0.9, K.dv('fsky', 0.25), g), density: 0.012 * (1 + K.dv('fd', 0.6) * f), color: [lerp(0.055, 0.86 * c, g), lerp(0.07, 0.93 * c, g), lerp(0.085, c, g)] },
-      grade: { contrast: 1.4 + 0.12 * g } }; }),
+    post: K.frameAPost(),
   },
 
   // ─────────────────────────────────────────── 2 · b03 · washed up, 9:40 PM ────────────────────────────────────────
@@ -212,7 +201,7 @@ export const shots = [
       ctx.cast.copy.root.visible = false;
       ctx.props.phone.setMode('map').setLevel(1);
       ctx.add(ctx.props.a1rain.root);
-      ctx.store.kick = ctx.add(new THREE.PointLight('#cfdcf0', 0.13, 2.5, 2));     // the cloth stays light grey, never a white panel
+      ctx.store.kick = ctx.add(new THREE.PointLight('#cfdcf0', 0.3, 2.5, 2));     // the cloth reads at 55-65 % grey with its folds, never a white panel
       ctx.add(makeGlassBeads(), ctx.props.phone.root);
       ctx.add(makeGrip(ctx.cast.me), ctx.props.phone.root);
     },
@@ -462,38 +451,55 @@ function updateBeads(mesh, lt, w) {
   mesh.instanceMatrix.needsUpdate = true;
 }
 
-// frame A: the kid stands this far inland of anchors.kidA (shared with act 2: K.FRAME_A_DZ)
-const KID_DZ = K.FRAME_A_DZ;
-// frame A: his right arm (upper-arm euler): swung back and in, so the rag fist sits behind his hip, toward the lens
-const FRAME_A_ARM = K.FRAME_A_ARM;
 // frame A, beats 1-2: the storm's floor under the picture (flash units): the dim storm of beat 1, the dark before "closer"
 const FLOOR_STORM = 0.22, FLOOR_DARK = 0.05;
-// frame A: the two full strikes of the hook (frame 0 and "closer"): one white pop, a 12-frame plateau, one decay
-const STRIKE_A = { power: 1.3, hold: 0.4, decay: 0.3, floor: 0.9, post: K.dv('fp', 0.25), sky: K.dv('sk', 6), light: K.dv('li', 2.5), env: 0, glint: K.dv('gl', 1) };
-const STRIKE_B = { post: K.dv('fp', 0.25), sky: K.dv('sk', 6), light: K.dv('li', 2.5), env: 0, glint: K.dv('gl', 1) };
 
 /**
  * b04a: the hand that holds the phone (phone-local metres, screen = +Z). The phone hangs 10 cm in front of the fist for
- * the macro, so the grip is built on the phone itself: a thumb lying over the left bezel, three fingertips wrapping the
- * right edge, and a turn of the rag across the knuckles behind them, its loose end trailing off the bottom corner.
+ * the macro, so the grip is built on the phone itself. It is his RIGHT hand, seen by its owner: the thumb lies over the
+ * bottom-right bezel, three fingertips come round the left edge, and one turn of the white rag crosses the knuckles
+ * behind the glass, both its ends in frame (the left one under the fingertips, the right one over the heel of the thumb),
+ * a loose tail off the bottom corner.
  */
 function makeGrip(ch) {
   const g = new THREE.Group(); g.name = 'a1grip';
-  // (lit by the screen they hold: a little cold emissive, since any real light in front of the glass mirrors into the lens)
-  const skin = new THREE.MeshStandardMaterial({ color: (ch.spec && ch.spec.skin) || '#e8b998', roughness: 0.6, emissive: new THREE.Color('#5d7396'), emissiveIntensity: 0.16 });
+  // (lit by the screen they hold: a cold emissive, since any real light in front of the glass mirrors into the lens)
+  const skin = new THREE.MeshStandardMaterial({ color: (ch.spec && ch.spec.skin) || '#e8b998', roughness: 0.6, emissive: new THREE.Color('#5d7396'), emissiveIntensity: 0.22 });
   const box = (w, h, d, x, y, z, rx = 0, ry = 0, rz = 0, mat = skin) => { const m = new THREE.Mesh(rbox(w, h, d, 0.011), mat); m.position.set(x, y, z); m.rotation.set(rx, ry, rz); g.add(m); return m; };
-  box(0.016, 0.036, 0.016, -0.0415, -0.064, 0.006, 0, 0.2, -0.25);                           // thumb over the bottom-left bezel (clear of the map)
-  for (let i = 0; i < 3; i++) box(0.019, 0.017, 0.026, 0.0445, -0.022 - i * 0.0215, -0.004, 0, -0.45, 0.07 * (i - 1));   // fingertips round the right edge
+  box(0.016, 0.036, 0.016, 0.0415, -0.064, 0.006, 0, -0.2, 0.25);                            // thumb over the bottom-right bezel (clear of the map)
+  for (let i = 0; i < 3; i++) box(0.019, 0.017, 0.026, -0.0445, -0.022 - i * 0.0215, -0.004, 0, 0.45, -0.07 * (i - 1));   // fingertips round the left edge
   const cloth = new THREE.MeshStandardMaterial({ color: '#cfccc4', roughness: 0.9, side: THREE.DoubleSide, vertexColors: true });
-  // a strip of rag across the back of the fingers and the heel of the thumb (behind the glass), wrinkled, with a tail
-  const sg = new THREE.PlaneGeometry(0.15, 0.05, 30, 6), p = sg.attributes.position, c = new Float32Array(p.count * 3);
-  for (let i = 0; i < p.count; i++) {
-    const x = p.getX(i), y = p.getY(i), f = Math.sin(y * 150 + 2.4 * Math.sin(x * 40)) * 0.6 + 0.4 * Math.sin(x * 90 + y * 60);
-    p.setXYZ(i, x, y + 0.006 * Math.sin(x * 38), -0.012 - 0.02 * Math.cos(x * 15) + 0.0028 * f);
-    const sh = 0.7 + 0.3 * (0.5 + 0.5 * f); c[i * 3] = c[i * 3 + 1] = c[i * 3 + 2] = sh;
-  }
-  sg.setAttribute('color', new THREE.BufferAttribute(c, 3)); sg.computeVertexNormals();
-  const strip = new THREE.Mesh(sg, cloth); strip.position.set(0.004, -0.045, 0); strip.rotation.z = 0.22; g.add(strip);
+  // the rag: a wrinkled band along a path (p0 → p1 → p2, quadratic), `w` wide, its folds running along it
+  const band = (p0, p1, p2, w, seed, nrm = [0, 0, 1]) => {
+    const NU = 34, NV = 8, pos = [], col = [], idx = [], P = (a, b, c2, u) => (1 - u) * (1 - u) * a + 2 * u * (1 - u) * b + u * u * c2;
+    for (let i = 0; i <= NU; i++) {
+      const u = i / NU, c = [0, 1, 2].map((k) => P(p0[k], p1[k], p2[k], u)), tg = [0, 1, 2].map((k) => 2 * (1 - u) * (p1[k] - p0[k]) + 2 * u * (p2[k] - p1[k]));
+      const tl = Math.hypot(tg[0], tg[1], tg[2]), t = tg.map((v) => v / tl);
+      let s = [t[1] * nrm[2] - t[2] * nrm[1], t[2] * nrm[0] - t[0] * nrm[2], t[0] * nrm[1] - t[1] * nrm[0]]; const sl = Math.hypot(s[0], s[1], s[2]); s = s.map((v) => v / sl);   // across the band
+      const n = [s[1] * t[2] - s[2] * t[1], s[2] * t[0] - s[0] * t[2], s[0] * t[1] - s[1] * t[0]];
+      const wv = w * (1 + 0.14 * Math.sin(u * 9 + seed) + 0.07 * Math.sin(u * 23 + seed * 2.1));
+      for (let j = 0; j <= NV; j++) {
+        const v = j / NV - 0.5, f = Math.sin(v * 13 + 2.6 * Math.sin(u * 7 + seed) + seed) * 0.6 + 0.4 * Math.sin(v * 27 + u * 11 + seed * 3);
+        const edge = (j === 0 || j === NV) ? 0.0012 * Math.sin(u * 61 + seed + j) : 0, h = 0.0032 * f - 0.006 * v * v * 4;      // frayed edges; the band cups round the hand
+        pos.push(c[0] + s[0] * (v * wv + edge) + n[0] * h, c[1] + s[1] * (v * wv + edge) + n[1] * h, c[2] + s[2] * (v * wv + edge) + n[2] * h);
+        const sh = 0.5 + 0.5 * (0.5 + 0.5 * f) - ((j === 0 || j === NV) ? 0.07 : 0); col.push(sh, sh, sh * 0.985);
+      }
+    }
+    for (let i = 0; i < NU; i++) for (let j = 0; j < NV; j++) { const a2 = i * (NV + 1) + j, b2 = a2 + NV + 1; idx.push(a2, b2, a2 + 1, a2 + 1, b2, b2 + 1); }
+    const bg = new THREE.BufferGeometry();
+    bg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); bg.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); bg.setIndex(idx); bg.computeVertexNormals();
+    g.add(new THREE.Mesh(bg, cloth));
+  };
+  // the heel of the thumb, below and outside the corner: wrapped (the rag goes round the hand between thumb and fingers)
+  box(0.036, 0.05, 0.03, 0.06, -0.098, -0.022, 0, -0.25, 0.42, new THREE.MeshStandardMaterial({ color: '#a9a69e', roughness: 0.92 }));
+  band([0.094, -0.066, -0.02], [0.072, -0.098, 0.032], [0.026, -0.124, -0.012], 0.03, 4.1, [0.45, 0.3, 0.84]);      // two turns over it, in front, going under the corner
+  band([0.1, -0.092, -0.022], [0.082, -0.124, 0.028], [0.04, -0.152, -0.014], 0.027, 9.2, [0.45, 0.3, 0.84]);
+  // the same cloth behind the fingertips, coming round the left edge
+  band([-0.058, 0.012, -0.014], [-0.066, -0.04, -0.002], [-0.058, -0.092, -0.014], 0.03, 2.2, [-0.5, 0, 0.87]);
+  // one turn across the knuckles, behind the glass (soft: out of the focal plane)
+  band([-0.074, -0.012, -0.03], [0.0, -0.05, -0.05], [0.07, -0.062, -0.026], 0.05, 1.3);
+  // a loose tail off the bottom corner
+  band([0.05, -0.118, 0.004], [0.066, -0.146, 0.012], [0.054, -0.185, 0.0], 0.02, 7.7);
   return g;
 }
 // the phone is held a little off square (rotateY, rotateX): a clean screen, the sky's glare parked on a corner

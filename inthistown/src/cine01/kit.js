@@ -23,15 +23,22 @@
  *   flashEnv(dt, o)                  the envelope alone (peak on frame 0, a 12-frame plateau, one 8-frame decay: no flicker).
  *   flicker(t, seed, rate)           soft far-lightning flicker 0..1 (cloud flicker, never a full flash).
  * ─── Camera / overlays / captions ───────────────────────────────────────────────────────────────────────────────────
- *   frameA(set)                      the locked frame A of beats 1, 2, 8, 10 (cam spec { pos, look, fov }).
+ *   frameA(set)                      the locked frame A of beats 1, 2, 8, 10 (cam spec { pos, look, fov }), and its helpers:
+ *                                    frameASetup(ctx) in setup; in update frameAPose(ctx, { look }), frameAFlash(ctx, strikes)
+ *                                    → f, frameAFloor(ctx, f, level), frameAKid(ctx, f, { warm }), frameAFoam(ctx, at, amb),
+ *                                    doubleTells(ctx, level); post: frameAPost(extra). All four uses share them.
  *   emblemFrame(ch, o)               the beat 6 / beat 25 macro: computed from the character's emblem → identical framing.
  *   poolSplit(set) / poolTop(set)    split-level and top-down pool set-ups (cave set).
  *   dist(ctx, p)                     camera→point distance (for dof.focus), after cam.set.
  *   stamp(ctx, text, o)              '3:12 AM' found-footage clock: thin white Inter, top-left ('tl') or bottom-left ('bl').
- *   drawCaptions(g, tl, t, state)    the film's caption renderer (REAL / COPY / MOM / HUSS).
+ *   drawCaptions(g, tl, t, state)    the film's caption renderer (REAL / COPY / MOM / HUSS). Per shot: captionY, captionX
+ *                                    (0..1, centre of the spoken line), momY. The first sentence is a two-line hook block.
  * ─── Cast / props ───────────────────────────────────────────────────────────────────────────────────────────────────
  *   castSpecs                        { me, copy (whole body mirrored: scale.x = −1), captain }
  *   initCast(ctx)                    makeReal on all three + the white rag on handR of me and copy → ctx.props.real.{id}
+ *                                    (+ the film's low-taper haircut, round headphones with a band behind the neck, the sewn
+ *                                    knight). real.{id}.bandMesh / bandBack / ragMat / material.envMapIntensity may be poked
+ *                                    in update(): the set puts them back every frame.
  *   setMirror(ch, on)                mirror / un-mirror a character in X (emblem nose + rag hand swap sides).
  *   filmPose(ch, name, t, p)         'stand' | 'kneel' | 'huddle' | 'prone' | 'supine' film poses (see FILM_POSES);
  *   joint(ch, name, x, y, z)         tweak one joint after a pose; follow(ctx, prop, joint, o) = held but not parented.
@@ -47,16 +54,16 @@ import { makeCharacter } from '../characters.js';
 import { rng, clamp, lerp, smooth, ease, hash, noise1, canvasTexture } from '../lib/util.js';
 import { createPost, makeRenderFrame } from '../real/post.js';
 import { RU, setFrame, PRE_RENDER, inScene } from '../real/materials.js';
-import { makeSky, bakeEnvironment } from '../real/env.js';
+import { makeSky, bakeEnvironment, makeContactShadow } from '../real/env.js';
 import { loadAssets, getAsset, loadHDR, textureSet } from '../real/assets.js';
 import { makeReal } from '../real/realchar.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const V3 = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
+const RAG_GLOW = 0.022;      // the rag's own faint glow (so the white cloth reads in the dark)
 const arr3 = (v) => (Array.isArray(v) ? V3(v[0], v[1], v[2]) : v.clone());
 const QS = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
 export const FONT = 'Cine Inter';
-/* DEVTMP */ export const dv = (k, d) => (QS.has(k) ? +QS.get(k) : d);
 export const W = 1080, H = 1920;
 
 // ═════════════════════════════════════════════ loading ════════════════════════════════════════════════════════════
@@ -166,7 +173,10 @@ export function realSet(ctx, { hdr = null, sky = null, env = {}, bg = {}, exposu
     const R = ctx.props && ctx.props.real;
     if (R && set.options && set.options.wet != null) { if (R.me) R.me.setWet(set.options.wet); if (R.copy) R.copy.setWet(set.options.wet); }
     // fabric weave strength: 1 unless a shot raises it THIS frame (the knight macros): K.weave(ctx, id, k) in update()
-    if (R) for (const id of ['me', 'copy']) if (R[id]) R[id].uniforms.uDetail.value = 1;
+    // per-frame pokes a shot may make on the kid and the double are undone here: fabric weave (K.weave), the glow of the
+    // headphone band behind the neck and of the rag (K.frameAKid), that band's visibility (real.bandMesh: it was added in
+    // init, so the engine's cast snapshot does not restore it), the sky's light on the body (b15: the double as a cut-out)
+    if (R) for (const id of ['me', 'copy']) if (R[id]) { R[id].uniforms.uDetail.value = 1; if (R[id].bandBack) { R[id].bandBack.emissiveIntensity = 0; R[id].bandMesh.visible = true; } if (R[id].ragMat) R[id].ragMat.emissiveIntensity = RAG_GLOW; R[id].material.envMapIntensity = 1; }
     for (const p of parts) p.update(t, ctx.camera);
     if (set.onUpdate) set.onUpdate(t);
   };
@@ -240,54 +250,152 @@ export function applyFlash(ctx, f, o = {}) {
 /** distance from the camera state to a point (call after cam.set): dof.focus */
 export function dist(ctx, p) { return ctx.cam.state.pos.distanceTo(ctx.point(p)); }
 /**
- * FRAME A (beats 1, 2, 8, 10 and the loop target): locked long-lens over-the-shoulder down the foam line. The kid stands on
- * anchors.kidA (+ FRAME_A_DZ) facing −X (yaw −π/2 − 0.3); the lens is 7 m behind him and 1.5 m inland, so the back of his
- * head and his left shoulder sit in the lower-RIGHT corner (the head is cut by the frame edge) and the whole left and
- * middle of the frame belong to the foam line and whoever stands on it: the double on anchors `double18/12/9/7/5` is
- * 16 % → 33 % of the frame height and never nearer than ~200 px to the kid's head. The storm sky fills the top 45 %; the
- * wreck itself is out of frame (a broken rib of it stands at the left edge). DOF off. Use ctx.cam.set(K.frameA(ctx.set)).
+ * FRAME A (beats 1, 2, 8, 10 and the loop target): locked long lens, 10 m behind the kid and 1.6 m inland, a little above
+ * his head. He stands on anchors.kidA (+ FRAME_A_DZ) at the water's edge with his back to us, WHOLE in the lower right
+ * (head, shoulders, both arms, the white rag fist, legs): the same silhouette as the one up the beach, which is the point
+ * of the frame. The foam line runs up the middle; the double stands on it on anchors `double18/12/9/7/5`, 16 % → 30 % of
+ * the frame height, his right edge always ~200 px clear of the kid's head. The storm sky and the headland fill the top
+ * 45 %; the wreck cuts the left edge; the near strikes (set.bolts[4], [5]) come down in the gap between the two of them.
+ * DOF off. Shots use the helpers below: frameASetup (setup), then in update frameAPose, frameAFlash / frameAFloor,
+ * frameAKid, frameAFoam, doubleTells, and `post: K.frameAPost()`.
  */
 export function frameA(set) {
-  const k = set.anchors.kidA;
-  return { pos: [k.x + 7.0, k.y + 2.5, k.z + 1.5], look: [k.x - 18, k.y + 1.5, k.z - 0.9], fov: 30 };
+  const k = set.anchors.kidA, z = k.z + FRAME_A_DZ;
+  const back = 10, side = 1.6, h = 2.55, fov = 27.8, kidX = 820, headY = 1020;
+  // the lens axis: the kid's axis sits at screen x = kidX and the top of his hair (2.2 m) at screen y = headY
+  const vf = fov * Math.PI / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * W / H), pxh = (W / 2) / Math.tan(hf / 2), pxv = (H / 2) / Math.tan(vf / 2);
+  const yaw = Math.atan2(side, back) - Math.atan((kidX - W / 2) / pxh);                 // bearing of the axis off −X, + = toward the sea
+  const pitch = Math.atan2(2.2 - h, Math.hypot(back, side)) + Math.atan((headY - H / 2) / pxv);   // + = up
+  const d = 28;
+  return { pos: [k.x + back, k.y + h, z + side], look: [k.x + back - d * Math.cos(yaw), k.y + h + d * Math.tan(pitch), z + side - d * Math.sin(yaw)], fov };
 }
-/** frame A: the kid stands this far (m, +Z = inland) from anchors.kidA: a hand toward the sea, so his head is cut by the right edge and the foam line stays clear */
+/** frame A: the kid stands this far (m, +Z = inland) from anchors.kidA */
 export const FRAME_A_DZ = -0.1;
-/** frame A: the kid's right upper-arm euler (K.filmPose 'stand' armR): swung back and in, so the white rag fist sits behind his hip, toward the lens, inside the frame */
+/** frame A: the kid's body yaw: his back to the lens, turned a little inland, so the lens sees his back and his LEFT side */
+export const FRAME_A_YAW = -Math.PI / 2 + 0.3;
+/** frame A: the kid's right upper-arm euler (K.filmPose 'stand' armR): swung back and out, so the white rag fist shows beside his hip */
 export const FRAME_A_ARM = [0.42, 0, 0.26];
-/**
- * Frame A's light on the kid, the same in every use (b01/b02, b08, b10b = the loop target). He is seen from behind and
- * he is black on black, so he is drawn with EDGES, not with fill:
- *   rim    a narrow spot at the lens's mirror position (7 m BEYOND him, lens height, a little to the sea side) aimed back at
- *          his shoulders. Every wet horizontal face he has (the plates of his hair, the tops of his shoulders) mirrors it
- *          straight into the lens at a grazing angle: a bright line along the top of the head and along the shoulders. His
- *          back faces away from it (stays black), and the double, who stands behind the spot, gets nothing.
- *   edge   a lamp beyond him on the inland side: the left side of his head and his ear.
- *   band   a very weak lamp at his collar (range 0.9 m): the WHITE headphone band round his neck and the back of the ear
- *          answer it; black cotton and wet black hair at the same distance do not (albedo 0.03 against 0.9).
- * The set's moon fill (which comes from behind the lens) is switched off for the frame. Result: the back of his head and
- * his back stay a black shape, and in a flash he is a cut-out with hot edges. Call every frame in update(), AFTER placing
- * him, with the frame's STRIKE level f (not the storm floor). The lamps are per-shot objects (ctx.add, kept in ctx.store).
- */
-export function frameAKid(ctx, f = 0) {
-  const k = ctx.set.anchors.kidA, S = ctx.store, z = k.z + FRAME_A_DZ;
-  if (!S.faRim) {
-    S.faRim = ctx.add(new THREE.SpotLight('#dfe9ff', 0, 0, 0.16, 0.5, 2)); ctx.add(S.faRim.target);
-    S.faEdge = ctx.add(new THREE.PointLight('#dfe9ff', 0, 4, 2));
-    S.faBand = ctx.add(new THREE.PointLight('#dfe9ff', 0, 0.9, 2));
-  }
-  S.faRim.position.set(k.x - 7.0, k.y + 2.5, z - 1.6); S.faRim.target.position.set(k.x, k.y + 1.6, z); S.faRim.intensity = dv('r0', 40) + dv('r1', 100) * f;
-  S.faEdge.position.set(k.x - 1.0, k.y + 2.3, z + 1.7); S.faEdge.intensity = dv('e0', 2) + dv('e1', 5) * f;
-  S.faBand.position.set(k.x + dv('bx', 0.5), k.y + dv('by', 1.1), z + dv('bz', 0.1)); S.faBand.intensity = dv('b0', 0.15) + dv('b1', 0) * f;
-  if (ctx.set.moon) ctx.set.moon.fill.intensity = 0;          // (the set rewrites it every frame)
+/** frame A set-up (call in setup): the kid on his mark, the locked lens, a soft contact shadow under him */
+export function frameASetup(ctx) {
+  const k = ctx.set.anchors.kidA;
+  ctx.place('me', [k.x, k.y, k.z + FRAME_A_DZ], { yaw: FRAME_A_YAW });
+  ctx.cam.set(frameA(ctx.set));
+  const b = makeContactShadow(0.7, 0.5); b.position.set(k.x, k.y + 0.025, k.z + FRAME_A_DZ); ctx.add(b);
+}
+/** frame A: the kid's pose for this frame (call in update). p: { look: the point he looks at (Vector3), breathe } */
+export function frameAPose(ctx, p = {}) {
+  const me = ctx.cast.me, r = me.root.position;
+  const hy = p.look ? Math.atan2(p.look.x - r.x, p.look.z - r.z) - FRAME_A_YAW : -0.3;       // head yaw relative to the body
+  filmPose(me, 'stand', ctx.t, { breathe: p.breathe ?? 1, headYaw: Math.atan2(Math.sin(hy), Math.cos(hy)) + (p.headYaw ?? 0), headPitch: p.headPitch ?? 0,
+    armR: [FRAME_A_ARM[0], 0, FRAME_A_ARM[2]], foreR: -0.3, armL: [0.02, 0, 0.1], foreL: -0.12 });
+  ctx.props.real.me.update(ctx.t);
 }
 /**
- * Frame A: the double's TELLS. In a flash he is a black cut-out against the lit fog, but the three things that say "this
- * is me" must flash white: the two headphone cups on his chest, the knight between them, his sneakers. The cups and the
+ * Frame A: the strikes. One call per frame in update(). strikes = [{ at, bolt: 4 | 5 | null, power = 1.3 }]:
+ *   with a bolt   ONE flash in two steps down: a white pop (5 frames at full level: sky, fog and sea burn out, the two
+ *                 figures are black cut-outs), then it sinks to ~45 % and holds there, the forked bolt now crisp against the
+ *                 sky, and dies over 9 frames. One rise, one fall: no flicker.
+ *   bolt: null    sheet lightning far out over the sea: one soft swell (power 0.8).
+ * Sets ctx.store.strike (the level frameAPost works from) and ctx.store.glowDir (the fog's glow sits on the foot of the
+ * strike that is lit). Returns the level.
+ */
+export function frameAFlash(ctx, strikes) {
+  const specs = [], t = ctx.t, c = ctx.cam.state.pos, feet = ctx.set.boltFeet || [];
+  let foot = null, lit = -1;
+  for (const s of strikes) {
+    const P = s.power ?? (s.bolt == null ? 0.8 : 1.3), t0 = ctx.time(s.at);
+    if (s.bolt == null) specs.push({ at: s.at, bolt: null, power: P, hold: 0.3, decay: 0.3, floor: 0.9, ...FA_LOOK });
+    else specs.push({ at: s.at, bolt: s.bolt, power: P, hold: 0.15, decay: 0.25, floor: 1, ...FA_LOOK }, { at: s.at, bolt: s.bolt, power: P * 0.42, hold: 0.55, decay: 0.3, floor: 1, ...FA_LOOK });
+    const e = flashEnv(t - t0, { power: P, hold: 0.55, decay: 0.3 });
+    if (e > lit || (lit <= 0 && t >= t0 - 0.2)) { lit = e; foot = s.bolt == null ? [-60, 12, -34] : feet[s.bolt]; }
+  }
+  const f = flash(ctx, specs);
+  for (const s of strikes) if (s.bolt != null) ctx.set.bolts[s.bolt].material.uniforms.uI.value = 0.8 * f;      // a line, not a smear: at full level the bloom swallows the bolt
+  ctx.store.strike = f;
+  if (foot) { const n = Math.hypot(foot[0] - c.x, foot[1] - c.y, foot[2] - c.z); ctx.store.glowDir = [(foot[0] - c.x) / n, (foot[1] - c.y) / n, (foot[2] - c.z) / n]; }
+  return f;
+}
+// frame A: how a strike is spread over the picture (K.flash opts): little on the grade's flash (the fog, the sky and the exposure
+// do the work: frameAPost), the storm sky x 3.2 per unit, a hard light on the wet sand, nothing extra from the environment
+const FA_LOOK = { post: 0.25, sky: 3.2, light: 3.4, env: 0 };
+/**
+ * Frame A: the storm's floor under the picture (sheet lightning far out at sea: never black). Call right after
+ * frameAFlash with its level f; `level` is the floor (flash units). The floor and the strike are joined component by
+ * component (the larger wins), so a dying strike lands on the floor without a step.
+ */
+export function frameAFloor(ctx, f, level) {
+  const set = ctx.set, m = Math.max(f, level);
+  RU.uFlash.value = m;
+  ctx.scene.backgroundIntensity = set.bg.intensity * (1 + m * FA_LOOK.sky);
+  if (set.flashLight) {
+    set.flashLight.intensity = Math.max(f * FA_LOOK.light, level * 0.45) * set.flashPower;
+    // (its direction too, every frame: a shot that has no strike never went through applyFlash, and the light would keep
+    // whatever direction the last rendered shot left it with)
+    if (set.flashDir) { _fd.fromArray(set.flashDir).normalize(); set.flashLight.position.copy(set.flashLight.target.position).addScaledVector(_fd, 60); }
+  }
+  ctx.store.flash = Math.max(f * FA_LOOK.post, level); ctx.store.flashPost = 1; ctx.store.flashCap = 1;
+}
+/**
+ * Frame A's look in a flash (use as the shot's `post`): the exposure opens a little, the fog beyond the two of them lights
+ * up with a glow round the foot of the strike, the cloud deck and the headland show through it, the bloom is pulled down so
+ * the silhouettes stay hard. `extra` is merged on top (object or (ctx, lt, u) → object).
+ */
+export const frameAPost = (extra) => shotPost((ctx, lt, u) => {
+  const f = Math.min(1.3, ctx.store.strike || 0), g = Math.min(1, f), c = 0.1, moon = [-0.7, 0.5, -0.5], gd = ctx.store.glowDir || moon;
+  const e = typeof extra === 'function' ? extra(ctx, lt, u) || {} : extra || {};
+  return deepMerge({ exposure: 1 + 0.62 * f,
+    fog: { start: lerp(9, 30, g), sky: lerp(0.9, 0.3, g), density: 0.012 * (1 + 0.6 * f), color: [lerp(0.055, 0.86 * c, g), lerp(0.07, 0.93 * c, g), lerp(0.085, c, g)],
+      sunDir: gd.map((v, i) => lerp(moon[i], v, g)), glow: lerp(0.9, 8, g), glowPower: lerp(6, 400, g) },
+    bloom: { strength: lerp(0.2, 0.07, g), threshold: lerp(0.9, 1.2, g) },
+    grade: { contrast: 1.4 + 0.12 * g } }, e);
+});
+/**
+ * Frame A: the wash. The foam's leading lip is pinned to the double's feet (he always stands ON the foam line: he came
+ * out of the water), it swings less than elsewhere on the beach, and `ambient` is its glow. Call every frame in update();
+ * `at` = where the double stands (Vector3; blend it while he "moves in the dark" so the lip slides, never jumps).
+ */
+export function frameAFoam(ctx, at, ambient = 0.34) {
+  const u = ctx.set.foam.uniforms, sw = 0.35;
+  u.uSwing.value = sw; u.uAmbient.value = ambient;
+  u.uWash.value = at.z - 0.05 - sw * (ctx.set.washEdge(at.x, ctx.t) - 0.25);       // (the shader's edge = 0.25 + uSwing × swell + uWash: the lip lands 0.2 m inland of his feet)
+}
+/**
+ * Frame A's light on the kid, the same in every use (b01/b02, b08, b10b = the loop target). He is seen from behind, in
+ * black, at night: his back stays black and he is drawn with what a back light can find:
+ *   edge   a low kicker from up the beach on the inland side: the LEFT faces of his head (the ear, the taper of his hair),
+ *          of his sleeve, hand and leg. o.warm (0..1): the campfire under the wreck is that light in beats 8 and 10.
+ *   rim    a steep back light: the plates of his hair, the roll of the hood, the tops of his shoulders.
+ *   band   the white headphone band behind his neck and the white rag on his right fist catch the sky (a little emissive:
+ *          no lamp can reach them from the lens side without also lighting his back).
+ * Nothing comes from the lens side (the set's moon fill is switched off for the frame). The two rocks that stood right
+ * behind his head are hidden: his head is cut out against the sea. In a flash he is a black shape with a hot left edge.
+ * Call every frame in update(), AFTER placing him, with the frame's STRIKE level f (not the storm floor). The lamps are
+ * per-shot objects (ctx.add, kept in ctx.store); everything else touched here is rewritten by the set every frame.
+ */
+export function frameAKid(ctx, f = 0, o = {}) {
+  const k = ctx.set.anchors.kidA, S = ctx.store, z = k.z + FRAME_A_DZ, R = ctx.props.real.me, warm = o.warm ?? 0;
+  if (!S.faRim) {
+    const spot = (ang) => { const l = ctx.add(new THREE.SpotLight('#dfe9ff', 0, 0, ang, 0.6, 2)); ctx.add(l.target); return l; };
+    S.faRim = spot(0.3); S.faEdge = spot(0.42);
+  }
+  S.faRim.position.set(k.x - 1.2, k.y + 5.0, z - 0.3); S.faRim.target.position.set(k.x, k.y + 1.55, z);
+  S.faRim.intensity = 10;
+  S.faEdge.position.set(k.x - 2.1, k.y + 0.6, z + 2.7); S.faEdge.target.position.set(k.x, k.y + 1.3, z + 0.2);
+  S.faEdge.color.set('#dfe9ff').lerp(_warm, warm);
+  S.faEdge.intensity = (8 + 6 * f) * (1 + 0.5 * warm * (o.flicker ?? 1));
+  if (ctx.set.moon) ctx.set.moon.fill.intensity = 0;
+  const w = ctx.set.world; if (w && w.rocks) { w.rocks[0].visible = false; w.rocks[2].visible = false; }
+  if (R.bandBack) R.bandBack.emissiveIntensity = 0.15 + 0.1 * f;
+  if (R.ragMat) R.ragMat.emissiveIntensity = 0.14 + 0.1 * f;
+}
+const _warm = new THREE.Color('#ff8a3c');
+/**
+ * Frame A: the double's TELLS. In a flash he is a black cut-out against the lit fog, but the things that say "this is me"
+ * must answer the light: the two headphone cups on his chest, the knight between them, his sneakers. The cups and the
  * knight are UNLIT twins of the real ones (a disc on each cup's outer face, a copy of the emblem a millimetre in front of
  * it), so their brightness is exactly `level` and nothing else on him is touched: a lamp from the lens side would also
  * light his face (the script wants it lost in the silhouette) and his grey legs. The sneakers get a tiny lamp at his toes
- * (range 1.1 m). level: ~0.1 = a dim glimmer in the storm's floor, ~0.6 = white in the flash. Call every frame in
+ * (range 1.1 m). level: ~0.1 = a dim glimmer in the storm's floor, ~0.4 = white in the flash. Call every frame in
  * update() after placing him; everything is a per-shot object.
  */
 export function doubleTells(ctx, level = 0) {
@@ -306,7 +414,7 @@ export function doubleTells(ctx, level = 0) {
   }
   const p = copy.root.position;
   S.dt.mat.color.setScalar(level); S.dt.kmat.color.setScalar(level * 0.85);
-  S.dt.foot.position.set(p.x + 0.55, p.y + 0.16, p.z); S.dt.foot.intensity = dv('tf', 0.5) * level;
+  S.dt.foot.position.set(p.x + 0.55, p.y + 0.16, p.z); S.dt.foot.intensity = 0.5 * level;
 }
 const _e = V3(), _n = V3(), _q = new THREE.Quaternion();
 const KNIGHT_W = 0.165;     // width of the drawn knight on its 0.25 m decal
@@ -383,22 +491,39 @@ function buildPhrases(tl) {
     flush();
   }
   out.sort((a, b) => a.start - b.start);
-  // the hook: the film's first phrase runs to its first punctuation ("Every time the lightning hits") and is on screen,
-  // whole, from frame 0 (the words still brighten one by one as they are spoken)
-  while (out.length > 1 && out[0].kind === 'narr' && out[1].kind === 'narr' && out[0].start < 0.6 && out[0].items.length + out[1].items.length <= 6
-    && !out[0].brk && out[1].start - out[0].end < 0.3) {
-    const m = out.shift(); out[0].items = m.items.concat(out[0].items); out[0].start = m.start;
+  // THE HOOK: the film's first sentence is on screen, whole, from frame 0, as ONE two-line block that stays until the beat
+  // is over (a muted scroller gets the whole premise at once; the words only brighten a touch as they are spoken)
+  const hb = tl.beats.find((b) => (b.words || []).length && b.kind !== 'huss');
+  if (hb && hb.words[0].start < 0.6 && (hb.words[0].speaker || hb.speaker) !== 'copy') {
+    const ws = hb.words.filter((w) => String(w.text || '').trim()), toks = String(hb.text || '').split(/\s+/).filter(Boolean), exact = toks.length === ws.length;
+    const items = ws.map((w, i) => ({ w, text: exact ? toks[i] : String(w.text) }));
+    // two lines: break after the punctuation mark nearest the middle (else at the middle word)
+    const total = items.reduce((n, it) => n + it.text.length + 1, 0);
+    let cut = Math.ceil(items.length / 2), best = 1e9, acc = 0;
+    items.forEach((it, i) => { acc += it.text.length + 1; if (i < items.length - 1 && PUNCT_BREAK.test(it.text)) { const d = Math.abs(acc - total / 2); if (d < best) { best = d; cut = i + 1; } } });
+    const end = ws[ws.length - 1].end;
+    while (out.length && out[0].start < end) out.shift();
+    out.unshift({ kind: 'narr', block: [items.slice(0, cut), items.slice(cut)], items, start: 0, end });
   }
-  if (out.length && out[0].start < 0.6) { out[0].pre = true; out[0].start = 0; }
   out.forEach((p, i) => { const nx = out[i + 1]; p.until = Math.min(nx ? nx.start : Infinity, p.end + (p.kind === 'huss' ? 0.6 : 0.5)); });
   return out;
 }
 function rr(g, x, y, w, h, r) {
   g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
+/** one REAL caption word: white, a soft dark shadow, and a 4 px 60 % black stroke under it (the shadow alone fails on a white flash, on foam, on skin) */
+function strokedWord(g, text, x, y, k) {
+  g.shadowColor = 'rgba(0,0,0,0.9)'; g.shadowBlur = 16 * k; g.shadowOffsetY = 2 * k;
+  g.lineWidth = 8 * k; g.strokeStyle = 'rgba(0,0,0,0.6)';        // (centred on the outline: 4 px show outside the glyph)
+  g.strokeText(text, x, y);
+  g.shadowBlur = 5 * k; g.shadowOffsetY = 1 * k;
+  g.fillStyle = '#ffffff';
+  g.fillText(text, x, y);
+}
 /**
  * The film's caption renderer (export it from shots.js as drawCaptions).
- *   REAL  speaker 'narr': white Inter 600, soft dark shadow, 2–4-word phrase that builds word by word, centred, y 0.62.
+ *   REAL  speaker 'narr': white Inter 600, soft dark shadow + a 4 px 60 % black stroke, 2–4-word phrase that builds word by
+ *         word, centred, y 0.62. The film's first sentence (the hook) is one two-line bold block, whole from frame 0.
  *   COPY  speaker 'copy': black Inter 700 on a solid white box (the tell that the narrator changed).
  *   MOM   tl.subs style 'mom': small rounded phone-message bubble with the whole line, t0 → t1.
  *   HUSS  the one shout: a big white word with a short shake.
@@ -409,10 +534,10 @@ export function drawCaptions(g, tl, t, state = {}) {
   const opts = state.options || {};
   if (!tl.__cinePhrases) tl.__cinePhrases = buildPhrases(tl);
   const cw = g.canvas.width, chh = g.canvas.height, k = cw / W;
-  // per-shot placement: shot.captionY (0..1) moves the spoken line (e.g. 0.82 on frame A, where the subject stands at
-  // y 0.5–0.75), shot.momY the phone bubble
+  // per-shot placement: shot.captionY / shot.captionX (0..1) move the centre of the spoken line (frame A: under the
+  // double's feet, across the kid's back), shot.momY the phone bubble
   const shot = state.ctx && state.ctx.shot ? state.ctx.shot : null;
-  const cx = cw / 2, cy = chh * ((shot && shot.captionY) ?? opts.y ?? 0.62);
+  const cx = cw * ((shot && shot.captionX) ?? 0.5), cy = chh * ((shot && shot.captionY) ?? opts.y ?? 0.62);
   g.save();
   g.textBaseline = 'alphabetic'; g.textAlign = 'left'; g.lineJoin = 'round';
   try { g.letterSpacing = '0px'; } catch (e) { /* */ }
@@ -436,6 +561,25 @@ export function drawCaptions(g, tl, t, state = {}) {
       g.shadowColor = 'rgba(0,0,0,0.8)'; g.shadowBlur = 34 * k; g.shadowOffsetY = 4 * k;
       g.fillStyle = '#ffffff';
       g.fillText(text, -tw / 2, size * 0.36); g.fillText(text, -tw / 2, size * 0.36);
+    } else if (ph.block) {
+      // the hook block: two centred lines, bold, every word there from the first frame
+      let size = 70 * k;
+      const setFont = () => { g.font = `700 ${size}px "${FONT}", sans-serif`; };
+      setFont();
+      const measure = () => ph.block.map((line) => { const sp = g.measureText(' ').width, ws = line.map((it) => g.measureText(it.text).width); return { sp, ws, total: ws.reduce((a, b) => a + b, 0) + sp * (line.length - 1) }; });
+      let M = measure();
+      const maxW = 870 * k, widest = Math.max(...M.map((m) => m.total)), bx = cx - 35 * k;      // (kept clear of the right edge: the app's icon column sits there)
+      if (widest > maxW) { size *= maxW / widest; setFont(); M = measure(); }
+      const lh = size * 1.3, y0 = cy - lh * (ph.block.length - 1) / 2 + size * 0.36;
+      ph.block.forEach((line, li) => {
+        let x = bx - M[li].total / 2;
+        line.forEach((it, i) => {
+          const e = ease.outCubic(clamp((t - it.w.start) / 0.09, 0, 1));
+          g.globalAlpha = lerp(0.85, 1, e) * out;
+          strokedWord(g, it.text, x, y0 + li * lh, k);
+          x += M[li].ws[i] + M[li].sp;
+        });
+      });
     } else {
       const copy = ph.kind === 'copy';
       let size = (copy ? 56 : 62) * k;
@@ -460,18 +604,11 @@ export function drawCaptions(g, tl, t, state = {}) {
       let x = cx - total / 2;
       ph.items.forEach((it, i) => {
         const lt = t - it.w.start;
-        if (lt >= 0 || ph.pre) {
+        if (lt >= 0) {
           const e = ease.outCubic(clamp(lt / 0.09, 0, 1));
-          g.globalAlpha = (ph.pre ? lerp(0.72, 1, e) : e) * out;
+          g.globalAlpha = e * out;
           if (copy) { g.fillStyle = '#000000'; g.fillText(it.text, x, base); }
-          else {
-            const dy = ph.pre ? 0 : (1 - e) * 7 * k;
-            g.shadowColor = 'rgba(0,0,0,0.9)'; g.shadowBlur = 16 * k; g.shadowOffsetY = 2 * k;
-            g.fillStyle = '#ffffff';
-            g.fillText(it.text, x, base + dy);
-            g.shadowBlur = 5 * k; g.shadowOffsetY = 1 * k;
-            g.fillText(it.text, x, base + dy);
-          }
+          else strokedWord(g, it.text, x, base + (1 - e) * 7 * k, k);
         }
         x += widths[i] + space;
       });
@@ -540,7 +677,7 @@ function makeRag() {
   const ts = textureSet('wet_fabric');
   const nm = ts.normalMap.clone(); nm.wrapS = nm.wrapT = THREE.RepeatWrapping; nm.repeat.set(2.2, 1.2); nm.needsUpdate = true;
   const mat = new THREE.MeshStandardMaterial({ color: '#cfccc3', roughness: 0.88, normalMap: nm, normalScale: new THREE.Vector2(0.32, 0.32), vertexColors: true,
-    emissive: new THREE.Color('#e6e3da'), emissiveIntensity: 0.022, side: THREE.DoubleSide });
+    emissive: new THREE.Color('#e6e3da'), emissiveIntensity: RAG_GLOW, side: THREE.DoubleSide });
   const g = new THREE.Group(); g.name = 'rag';
   const SE = (c) => Math.sign(c) * Math.pow(Math.abs(c), 0.42);                    // rounded-square cross-section
   const turn = ({ y0, amp, ph, w, off, seed, a0 = 0, a1 = Math.PI * 2 }) => {
@@ -595,7 +732,7 @@ export function initCast(ctx) {
   real.me = makeReal(ctx.cast.me, { wet: 0.9, drips: 12 });
   real.copy = makeReal(ctx.cast.copy, { wet: 0.9, drips: 0 });
   if (ctx.cast.captain) real.captain = makeReal(ctx.cast.captain, { wet: 0.4, drips: 0 });
-  for (const id of ['me', 'copy']) { const rag = makeRag(); ctx.cast[id].joints.handR.add(rag); ctx.cast[id].rag = rag; }
+  for (const id of ['me', 'copy']) { const rag = makeRag(); ctx.cast[id].joints.handR.add(rag); ctx.cast[id].rag = rag; real[id].ragMat = rag.children[0].material; }
   for (const id of Object.keys(real)) matteFace(ctx.cast[id], real[id]);
   for (const id of ['me', 'copy']) { lowFade(ctx.cast[id], real[id]); smoothHeadphones(ctx.cast[id], real[id]); sewnEmblem(ctx.cast[id]); }
   ctx.props.real = real;
@@ -619,7 +756,7 @@ function lowFade(ch, real) {
     if (!_lowFadeTex) {
       _lowFadeTex = canvasTexture(64, 256, (g) => {
         const gr = g.createLinearGradient(0, 0, 0, 256);
-        gr.addColorStop(0, hc); gr.addColorStop(dv('n0', 0.62), hc); gr.addColorStop(dv('n1', 0.8), mixHex(hc, skin, dv('n1m', 0.4))); gr.addColorStop(dv('n2', 0.92), mixHex(hc, skin, dv('n2m', 0.75))); gr.addColorStop(1, mixHex(hc, skin, dv('n3m', 1)));
+        gr.addColorStop(0, hc); gr.addColorStop(0.62, hc); gr.addColorStop(0.8, mixHex(hc, skin, 0.4)); gr.addColorStop(0.92, mixHex(hc, skin, 0.75)); gr.addColorStop(1, mixHex(hc, skin, 1));
         g.fillStyle = gr; g.fillRect(0, 0, 64, 256);
         const [r, gg, bb] = hex2rgb(hc);                                    // stubble in the taper (deterministic)
         for (let i = 0; i < 700; i++) {
@@ -664,7 +801,7 @@ function smoothHeadphones(ch, real) {
   const grp = ch.root.getObjectByName('acc:headphones'), em = ch.root.getObjectByName('emblem'); if (!grp || !em) return;
   const front = em.position.z - 0.004, cx = 0.19 * (0.9 + 0.1 * ((ch.spec && ch.spec.build) ?? 1));
   const geos = [], col = new THREE.Color(), q = new THREE.Quaternion(), m4 = new THREE.Matrix4();
-  const add = (geo, color, pos = [0, 0, 0], rot = [0, 0, 0]) => {
+  const prep = (geo, color, pos = [0, 0, 0], rot = [0, 0, 0]) => {
     const g = geo.index ? geo.toNonIndexed() : geo;
     for (const k of Object.keys(g.attributes)) if (k !== 'position' && k !== 'normal') g.deleteAttribute(k);
     g.applyMatrix4(m4.compose(V3(pos[0], pos[1], pos[2]), q.setFromEuler(new THREE.Euler(rot[0], rot[1], rot[2])), V3(1, 1, 1)));
@@ -672,8 +809,9 @@ function smoothHeadphones(ch, real) {
     const n = g.attributes.position.count, c = new Float32Array(n * 3), id = new Float32Array(n).fill(6);
     for (let i = 0; i < n; i++) { c[i * 3] = col.r; c[i * 3 + 1] = col.g; c[i * 3 + 2] = col.b; }
     g.setAttribute('color', new THREE.BufferAttribute(c, 3)); g.setAttribute('aMat', new THREE.BufferAttribute(id, 1));
-    geos.push(g);
+    return g;
   };
+  const add = (...a) => geos.push(prep(...a));
   const white = '#f4f4f6', pad = '#3a3b42', pts = [[cx, 0.4, 0.17], [cx + 0.03, 0.46, 0.05], [0.17, 0.48, -0.12], [0, 0.48, -0.2], [-0.17, 0.48, -0.12], [-cx - 0.03, 0.46, 0.05], [-cx, 0.4, 0.17]].map((p) => V3(p[0], p[1], p[2]));
   add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 48, 0.024, 14, false), white);
   for (const sx of [-1, 1]) {
@@ -685,6 +823,19 @@ function smoothHeadphones(ch, real) {
   const mesh = new THREE.Mesh(mergeGeometries(geos), real.material); mesh.castShadow = true; mesh.receiveShadow = true; mesh.name = 'headphonesSmooth';
   for (const o of grp.children.slice()) if (o.isMesh) grp.remove(o);
   grp.add(mesh);
+  // the band BEHIND the neck. The stock path runs inside the hoodie's collar roll, so from behind he wore no headphones at
+  // all (frame A, b03, b19). This arc lies on the outside of the roll, tucked under the back of the head: a white bar across
+  // the nape. Its own mesh and its own copy of the body material, so a shot can make it catch the sky (real.bandBack:
+  // emissiveIntensity; see K.frameAKid) or hide it for a frame (real.bandMesh.visible = false in update(): under the
+  // blanket, on the black double). Both are put back by the set every frame.
+  const R = (a, y) => V3(Math.sin(a) * 0.243, y, -0.02 - Math.cos(a) * 0.266), arc = [];
+  for (const a of [-1.3, -0.85, -0.42, 0, 0.42, 0.85, 1.3]) arc.push(R(a, 0.46 - 0.03 * Math.max(0, Math.cos(a))));
+  arc.unshift(pts[5].clone()); arc.push(pts[1].clone());        // both ends start inside the stock band, on top of the shoulders
+  const bm = real.material.clone(); bm.onBeforeCompile = real.material.onBeforeCompile; bm.customProgramCacheKey = real.material.customProgramCacheKey;
+  bm.emissive = new THREE.Color('#dfe9ff'); bm.emissiveIntensity = 0;
+  const back = new THREE.Mesh(prep(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(arc), 64, 0.024, 14, false), white), bm);
+  back.castShadow = true; back.receiveShadow = true; back.name = 'headphonesBack';
+  grp.add(back); real.bandBack = bm; real.bandMesh = back;
 }
 /**
  * "She sewed this knight on my hoodie": the stock emblem is a 256 px flat white vector. Film version (1024 px): the same
@@ -955,9 +1106,9 @@ export function makePhone() {
     for (let i = 0; i <= pts; i++) { const a = (i / pts) * Math.PI * 2; const r = 1 + 0.16 * Math.sin(a * 3 + 0.6) + 0.1 * Math.sin(a * 5 + 2.1); const x = w * 0.5 + Math.cos(a) * 44 * r, y = h * 0.47 + Math.sin(a) * 96 * r; if (i) g.lineTo(x, y); else g.moveTo(x, y); }
     g.stroke(); g.setLineDash([]);
     // generic UI: search pill + bottom sheet (no logo, no text)
-    g.fillStyle = 'rgba(255,255,255,0.9)'; rr(g, 18, 26, w - 36, 34, 17); g.fill();
+    g.fillStyle = 'rgba(255,255,255,0.63)'; rr(g, 18, 26, w - 36, 34, 17); g.fill();       // (dimmed: the white panels must not out-shine the dot and the rag)
     g.fillStyle = 'rgba(0,0,0,0.25)'; rr(g, 34, 39, 90, 8, 4); g.fill();
-    g.fillStyle = 'rgba(255,255,255,0.92)'; rr(g, 0, h - 74, w, 90, 18); g.fill();
+    g.fillStyle = 'rgba(255,255,255,0.64)'; rr(g, 0, h - 74, w, 90, 18); g.fill();
     g.fillStyle = 'rgba(0,0,0,0.3)'; rr(g, 22, h - 54, 120, 9, 4); g.fill(); g.fillStyle = 'rgba(0,0,0,0.16)'; rr(g, 22, h - 34, 80, 7, 3); g.fill();
     // cracks
     g.strokeStyle = 'rgba(255,255,255,0.55)'; g.lineWidth = 1.2;
@@ -967,9 +1118,9 @@ export function makePhone() {
   const screenMat = new THREE.MeshPhysicalMaterial({ color: '#05070a', roughness: 0.08, clearcoat: 1, clearcoatRoughness: 0.03, emissive: new THREE.Color('#ffffff'), emissiveMap: mapTex, emissiveIntensity: 0.5 });
   const screen = new THREE.Mesh(new THREE.PlaneGeometry(Wp * 0.92, Hp * 0.94), screenMat); screen.position.z = Dp / 2 + 0.0006; root.add(screen);
   // pulsing location dot (two discs: halo + core)
-  const dotMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.12, 0.35, 1.5), transparent: true, opacity: 0.35, depthWrite: false });
+  const dotMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.06, 0.3, 1.6), transparent: true, opacity: 0.35, depthWrite: false });      // (pushed toward blue: the one cold accent that survives the grade)
   const halo = new THREE.Mesh(new THREE.CircleGeometry(0.008, 24), dotMat); halo.position.set(0, Hp * 0.03, Dp / 2 + 0.0012); root.add(halo);
-  const core = new THREE.Mesh(new THREE.CircleGeometry(0.0034, 20), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.1, 0.3, 1.1) })); core.position.set(0, Hp * 0.03, Dp / 2 + 0.0016); root.add(core);
+  const core = new THREE.Mesh(new THREE.CircleGeometry(0.0034, 20), new THREE.MeshBasicMaterial({ color: new THREE.Color(0.05, 0.26, 1.3) })); core.position.set(0, Hp * 0.03, Dp / 2 + 0.0016); root.add(core);
   const led = new THREE.Mesh(new THREE.CircleGeometry(0.0045, 16), new THREE.MeshBasicMaterial({ color: new THREE.Color(0, 0, 0) })); led.position.set(Wp * 0.3, Hp * 0.4, -Dp / 2 - 0.0006); led.rotation.y = Math.PI; root.add(led);
   const light = new THREE.PointLight('#8fb4ff', 0, 4.5, 2); light.position.set(0, 0, 0.06); root.add(light);
   // torch: a spot out of the back of the phone (−Z) + the point light above as a weak spill on the holder

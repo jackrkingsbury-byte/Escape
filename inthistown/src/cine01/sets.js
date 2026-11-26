@@ -95,8 +95,8 @@ const FOAM_V = /* glsl */`varying vec3 vWP; void main() { vec4 wp = modelMatrix 
 const FOAM_F = /* glsl */`
 precision highp float;
 varying vec3 vWP;
-uniform sampler2D tFoam, tNoise; uniform float uTime, uFlash, uAmbient, uGlow, uWash, uFlashK; uniform vec3 uFirePos; uniform vec3 uFireCol;
-float washEdge(float x, float t) { return 0.25 + 0.8 * sin(t * 0.52 + x * 0.11) + 0.45 * sin(t * 0.83 + x * 0.29 + 1.7) + 0.2 * sin(t * 1.9 + x * 0.7); }
+uniform sampler2D tFoam, tNoise; uniform float uTime, uFlash, uAmbient, uGlow, uWash, uFlashK, uSwing; uniform vec3 uFirePos; uniform vec3 uFireCol;
+float washEdge(float x, float t) { return 0.25 + uSwing * (0.8 * sin(t * 0.52 + x * 0.11) + 0.45 * sin(t * 0.83 + x * 0.29 + 1.7) + 0.2 * sin(t * 1.9 + x * 0.7)); }
 void main() {
   float n = texture2D(tNoise, vWP.xz * 0.06 + vec2(0.0, uTime * 0.01)).r;
   float n2 = texture2D(tNoise, vWP.xz * 0.23 + vec2(uTime * 0.013, 0.0)).g;
@@ -121,7 +121,7 @@ function makeFoamBand(heightAt, { x0 = -150, x1 = 70 } = {}) {
   const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) p.setY(i, Math.max(heightAt(p.getX(i), p.getZ(i)), SEA) + 0.02);
   const uniforms = { tFoam: { value: getPBR('foam').map }, tNoise: { value: getNoiseTex(4, 256) }, uTime: RU.uTime, uFlash: RU.uFlash, uAmbient: { value: 0.05 },
-    uGlow: { value: 0.03 }, uWash: { value: 0 }, uFlashK: { value: 0.55 }, uFirePos: { value: V3(0, -100, 0) }, uFireCol: { value: new THREE.Color(0, 0, 0) } };
+    uGlow: { value: 0.03 }, uWash: { value: 0 }, uFlashK: { value: 0.55 }, uSwing: { value: 1 }, uFirePos: { value: V3(0, -100, 0) }, uFireCol: { value: new THREE.Color(0, 0, 0) } };
   const m = new THREE.Mesh(g, new THREE.ShaderMaterial({ vertexShader: FOAM_V, fragmentShader: FOAM_F, uniforms, transparent: true, depthWrite: false,
     blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, fog: false, toneMapped: false,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
@@ -163,7 +163,7 @@ function beachWorld(ctx) {
   const P = (x, z, dy = 0) => V3(x, H(x, z) + dy, z);
   const A = {
     kidA: P(0, 0.75),                                       // frame A: the kid, facing −X (yaw −π/2)
-    double18: P(-18, 0.55), double12: P(-12, 0.6), double9: P(-9, 0.75), double7: P(-7, 0.95), double5: P(-5, 1.3), double4: P(-3.6, 2.4),
+    double18: P(-18, 0.68), double12: P(-12, 1.07), double9: P(-9, 1.28), double7: P(-7, 1.45), double5: P(-5, 1.6), double4: P(-3.6, 2.4),
     camp: P(WRECK[0] + CN[0] * 0.75, WRECK[1] + CN[1] * 0.75),   // huddle spot under the raised gunwale, facing the fire (yaw set.campYaw)
     fire: P(WRECK[0] + CN[0] * 2.7, WRECK[1] + CN[1] * 2.7),
     campCam: P(WRECK[0] + CN[0] * 5.3, WRECK[1] + CN[1] * 5.3, 0.5),   // beat 7: low behind the flames, looking back at the kid, hull and sea
@@ -243,7 +243,7 @@ function beachWorld(ctx) {
     ['rock_mossy', [-17, 9.5], 1.5, 0.9], ['rock_boulder', [-33, 9.8], 1.9, 2.2], ['rock_mossy_big', [-53, 10.5], 2.4, 0.4], ['rock_block', [-57, 9.6], 3.4, 1.3],
     ['rock_boulder', [5.5, -3.4], 1.8, 1.0], ['rock_slab', [13, 6.2], 1.8, 0.6], ['rock_spire', [-58.5, -3.4], 3.2, 1.2], ['rock_mossy', [20, 8], 1.6, 2.6],
   ];
-  for (const [n, [x, z], s, ry] of rocks) wetGLB(put(root, n, [x, Math.min(H0(x, z), SEA) - 0.12 * s, z], ry, s), { rough: 0.55, dark: 0.7 });
+  const rockObjs = rocks.map(([n, [x, z], s, ry]) => wetGLB(put(root, n, [x, Math.min(H0(x, z), SEA) - 0.12 * s, z], ry, s), { rough: 0.55, dark: 0.7 }));
 
   // ── cliff headland + cave mouth at the −X end
   {
@@ -294,17 +294,19 @@ function beachWorld(ctx) {
   Object.assign(flashLight.shadow.camera, { left: -17, right: 17, top: 17, bottom: -17, near: 1, far: 140 });
   flashLight.target.position.set(-5, 0, 3); flashLight.position.set(-50, 25, -28);
   root.add(flashLight, flashLight.target);
-  // bolts over the sea up-frame (index 0, 1), inland behind the palms (2), behind the cliff (3), and (4) the NEAR one of frame
-  // A: it comes down on the rocks by the cave mouth, ~65 m from the lens, top edge of the frame to the sea, in the gap between
-  // the double on the foam line and the kid's head (the film's first frame, and the last strike of beat 8)
+  // bolts over the sea up-frame (index 0, 1), inland behind the palms (2), behind the cliff (3), and the two NEAR ones of
+  // frame A (long lens: only the lowest 20 m of a strike is in frame, so these are built short and kinked at that scale):
+  // (4) comes down on the rocks by the cave mouth, 62 m from the lens, in the gap between the double and the kid: the film's
+  // first frame; (5) hits the rock ridge 40 m away, beside the kid's head: "closer"
   const lightning = makeLightning({ light: false, strikes: [
     { t: 0, pos: [-134, 88, -36], ground: [-126, 0, -25], seed: 3, power: 1, width: 0.3 }, { t: 0, pos: [-116, 84, -64], ground: [-126, 0, -46], seed: 9, power: 1, width: 0.3 },
     { t: 0, pos: [-60, 150, 150], ground: [-48, 20, 120], seed: 5, power: 1 }, { t: 0, pos: [-190, 170, 20], ground: [-170, 30, 8], seed: 14, power: 1 },
-    { t: 0, pos: [-64, 80, -6], ground: [-58, 0, -3.5], seed: 21, power: 1.3, width: 0.9 } ] });
+    { t: 0, pos: [-57, 24, -6.5], ground: [-52, 0, -3], seed: 21, power: 1.3, width: 1.25 },
+    { t: 0, pos: [-34, 16, -5.5], ground: [-31, 0.6, -2.9], seed: 33, power: 1.3, width: 1.0 } ] });
   root.add(lightning.root);
-  const bolts = lightning.bolts.map((b) => b.mesh);
+  const bolts = lightning.bolts.map((b) => b.mesh), boltFeet = lightning.bolts.map((b) => [b.gnd.x, b.gnd.y + 3, b.gnd.z]);
 
-  _world = { root, parts, beach, ocean, foam, fire, fireFill, fireAsh, rain, splashes, fogSea, fogLand, rig, flashLight, bolts, wreck, anchors: A, heightAt: H, veg };
+  _world = { root, parts, beach, ocean, foam, fire, fireFill, fireAsh, rain, splashes, fogSea, fogLand, rig, flashLight, bolts, boltFeet, wreck, anchors: A, heightAt: H, veg, rocks: rockObjs };
   return _world;
 }
 
@@ -318,7 +320,7 @@ function beachSet(ctx, state, cfg) {
   const set = K.realSet(ctx, {
     ...cfg,
     build: ({ set }) => {
-      set.flashLight = world.flashLight; set.bolts = world.bolts; set.defaultBolt = null; set.flashDir = [-0.55, 0.38, -0.75]; set.flashPower = 2.0; set.flashPost = 0.75;
+      set.flashLight = world.flashLight; set.bolts = world.bolts; set.boltFeet = world.boltFeet; set.defaultBolt = null; set.flashDir = [-0.55, 0.38, -0.75]; set.flashPower = 2.0; set.flashPost = 0.75;
       set.wind = [-3.0, 1.0];
       return { world, campYaw: CAMP_YAW, anchors: world.anchors, heightAt: world.heightAt, rain: world.rain, fire: world.fire, foam: world.foam, ocean: world.ocean, wreck: world.wreck, washEdge };
     },
@@ -343,11 +345,12 @@ function beachSet(ctx, state, cfg) {
     for (const p of world.parts) p.update(t, ctx.camera);
     const o = set.options, w = world;
     w.rig.key.intensity = S.key; w.rig.fill.intensity = S.fill; w.rig.rim.intensity = S.rim;
-    w.foam.uniforms.uAmbient.value = S.foamAmb; w.foam.uniforms.uWash.value = o.wash; w.ocean.uniforms.uFoam.value = S.seaFoam;
+    w.foam.uniforms.uAmbient.value = S.foamAmb; w.foam.uniforms.uWash.value = o.wash; w.foam.uniforms.uSwing.value = 1; w.ocean.uniforms.uFoam.value = S.seaFoam;
     w.fogSea.uniforms.uColor.value.set(S.fog); w.fogSea.uniforms.uOpacity.value = S.fogOp[0]; w.fogLand.uniforms.uColor.value.set(S.fog); w.fogLand.uniforms.uOpacity.value = S.fogOp[1];
     w.rain.uniforms.uOpacity.value = S.rain * o.rain; w.rain.uniforms.uBacklight.value = 3.2 * o.rainBack; w.rain.uniforms.uNear.value = o.rainNear;
     w.splashes.mesh.visible = o.splash > 0; w.splashes.mesh.material.uniforms.uOpacity.value = 0.4 * o.splash;
     w.veg.visible = !!o.jungle;
+    for (const r of w.rocks) r.visible = true;                 // (a shot may hide one for THIS frame: frame A hides the boulder behind the kid's head)
     // campfire level (fire.update(t) already ran with level 1)
     const lv = o.fire;
     w.fire.root.visible = lv >= 0;
