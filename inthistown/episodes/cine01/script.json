@@ -6,7 +6,7 @@
  "voices": {
   "narr": [
    "am_fenrir",
-   1.0,
+   1.08,
    "en-us",
    [
     1.45,
@@ -16,7 +16,7 @@
   ],
   "copy": [
    "am_fenrir",
-   0.97,
+   1.04,
    "en-us",
    [
     1.43,
@@ -61,7 +61,7 @@
    "text": "Every time the lightning hits, there's another me on this beach.",
    "amb": "rain_beach",
    "music": "cine_drone",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "markers": {
     "flash1": "start-0.12"
    },
@@ -80,9 +80,9 @@
    "kind": "line",
    "speaker": "narr",
    "text": "And every time... he's closer.",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "pauses": [
-    0.55
+    0.47
    ],
    "markers": {
     "flash2": "w:closer-0.05"
@@ -101,7 +101,7 @@
    "kind": "line",
    "speaker": "narr",
    "text": "The storm flipped my boat.",
-   "gapAfter": 0.6,
+   "gapAfter": 0.51,
    "sfx": [
     {
      "type": "wave_crash",
@@ -124,7 +124,7 @@
    "kind": "line",
    "speaker": "narr",
    "text": "This island was on Google Maps until twenty twelve. Then scientists sailed here... and found only ocean.",
-   "gapAfter": 0.6,
+   "gapAfter": 0.51,
    "markers": {
     "rack4": "w:scientists"
    },
@@ -145,7 +145,7 @@
    "music": "cine_sad",
    "gapAfter": 3.0,
    "pauses": [
-    0.45
+    0.38
    ],
    "markers": {
     "mom1": "end+0.3"
@@ -169,7 +169,7 @@
    "kind": "line",
    "speaker": "narr",
    "text": "She sewed this knight on my hoodie. She says knights always find their way home.",
-   "gapAfter": 1.0,
+   "gapAfter": 0.85,
    "visual": "REFERENCE FRAME for the twist. Locked frontal macro of his chest, 85 mm feel, camera 1.2 m, closeup light rig with a practical, focus on the emblem. The white chess-knight emblem fills 45 % of frame width, hand-stitched edge, the horse's nose clearly pointing SCREEN-LEFT. His RIGHT hand with the white rag enters from SCREEN-LEFT, wipes the rain off the knight once and leaves. Clean hold on the emblem for at least 1.2 s. Rain streaks sharp in front, soft cold flicker from far lightning. Beat 25 reuses this exact lens, distance and framing."
   },
   {
@@ -179,9 +179,9 @@
    "text": "I light a fire under the wreck. And I wait.",
    "amb": "campfire+rain_beach",
    "ambFade": 1.2,
-   "gapAfter": 0.8,
+   "gapAfter": 0.68,
    "pauses": [
-    0.5
+    0.42
    ],
    "sfx": [
     {
@@ -205,9 +205,9 @@
    "speaker": "narr",
    "text": "He never moves when it's bright. Only in the dark.",
    "music": "cine_heart",
-   "gapAfter": 1.3,
+   "gapAfter": 1.1,
    "pauses": [
-    0.5
+    0.42
    ],
    "markers": {
     "flash8a": "start-0.25",
@@ -247,7 +247,7 @@
    "kind": "line",
    "speaker": "narr",
    "text": "When I'm scared, I yell my word. To see if anything answers.",
-   "gapAfter": 0.35,
+   "gapAfter": 0.3,
    "sfx": [
     {
      "type": "heartbeat",
@@ -278,9 +278,9 @@
    "text": "The cave is safe. Go in.",
    "music": "cine_heart",
    "space": "beach",
-   "gapAfter": 0.7,
+   "gapAfter": 0.59,
    "pauses": [
-    0.3
+    0.26
    ],
    "markers": {
     "flash11": "start-0.3"
@@ -309,11 +309,11 @@
    "speaker": "narr",
    "text": "My voice. But I'd never say that. Mom's rule. No sea caves in a storm.",
    "music": "cine_drone",
-   "gapAfter": 0.6,
+   "gapAfter": 0.51,
    "pauses": [
-    0.45,
-    0.35,
-    0.3
+    0.38,
+    0.3,
+    0.26
    ],
    "sfx": [
     {
@@ -331,7 +331,7 @@
    "text": "Then the rain kills my fire.",
    "amb": "rain_beach+storm_wind",
    "ambFade": 2.0,
-   "gapAfter": 0.7,
+   "gapAfter": 0.59,
    "markers": {
     "firedie": "w:kills"
    },
@@ -350,9 +350,9 @@
    "kind": "line",
    "speaker": "narr",
    "text": "Lightning again... and he's standing in the ashes.",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "pauses": [
-    0.6
+    0.51
    ],
    "markers": {
     "flash14": "w:standing-0.25"
@@ -377,10 +377,10 @@
    "speaker": "narr",
    "text": "Every flash, he cuts me off. The only place left... is the cave.",
    "music": "cine_swell",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "pauses": [
     null,
-    0.45
+    0.38
    ],
    "markers": {
     "flash15a": "start-0.1",
@@ -430,7 +430,7 @@
    "ambFade": 0.4,
    "music": "cine_drone",
    "space": "cave",
-   "gapAfter": 0.6,
+   "gapAfter": 0.51,
    "sfx": [
     {
      "type": "drip",
@@ -455,9 +455,9 @@
    "speaker": "narr",
    "text": "I raise my hand. My reflection is half a second late.",
    "space": "cave",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "pauses": [
-    0.55
+    0.47
    ],
    "markers": {
     "raise17": "start+0.1",
@@ -479,9 +479,9 @@
    "speaker": "narr",
    "text": "Then he smiles. I'm not smiling.",
    "space": "cave",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "pauses": [
-    0.5
+    0.42
    ],
    "markers": {
     "smile18": "start+0.2"
@@ -538,7 +538,7 @@
    "amb": "surf",
    "ambFade": 2.0,
    "music": "cine_swell",
-   "gapAfter": 0.6,
+   "gapAfter": 0.51,
    "sfx": [
     {
      "type": "wood_creak",
@@ -560,7 +560,7 @@
    "kind": "line",
    "speaker": "copy",
    "text": "The island melted into the fog. Like it was never there.",
-   "gapAfter": 1.3,
+   "gapAfter": 1.1,
    "sfx": [
     {
      "type": "whoosh_low",
@@ -580,9 +580,9 @@
    "speaker": "copy",
    "text": "The cave was safe. Just like I said.",
    "music": "cine_silence",
-   "gapAfter": 0.9,
+   "gapAfter": 0.77,
    "pauses": [
-    0.4
+    0.34
    ],
    "echo": [
     0.08,
@@ -656,9 +656,9 @@
    "amb": "surf",
    "ambFade": 1.0,
    "music": "cine_drone",
-   "gapAfter": 1.4,
+   "gapAfter": 1.19,
    "pauses": [
-    0.4
+    0.34
    ],
    "markers": {
     "match25": "w:Knights"
@@ -687,9 +687,9 @@
    "ambFade": 0.3,
    "music": "cine_silence",
    "space": "cave",
-   "gapAfter": 0.6,
+   "gapAfter": 0.51,
    "pauses": [
-    0.5
+    0.42
    ],
    "markers": {
     "flash26": "start-0.35"
@@ -716,9 +716,9 @@
    "text": "They stopped looking for me. Because they think they found me.",
    "music": "cine_sad",
    "space": "cave",
-   "gapAfter": 0.8,
+   "gapAfter": 0.68,
    "pauses": [
-    0.45
+    0.38
    ],
    "markers": {
     "loopflash": "end+0.6"
@@ -738,5 +738,6 @@
    ],
    "visual": "Same locked top-down. The phone torch gutters out. His palms slide off the surface and sink into black; only drip rings at the rock edge remain. On the last word a flash starts in the cave mouth and ramps to about 60 % over 6 frames, then HARD CUT to frame 0 of beat 1, which is already at flash peak, so the two read as one flash and the video loops. No end card, no logo. Audio: thunder_crack starts 0.2 s before the cut and rolls across the loop."
   }
- ]
+ ],
+ "ceiling": -2.0
 }
