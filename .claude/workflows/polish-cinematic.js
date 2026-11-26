@@ -1,11 +1,11 @@
 export const meta = {
   name: 'polish-cinematic',
-  description: 'Final polish of a rendered cinematic film: 3 independent reviewers watch the real video frames (story/clues, photoreal look, technical), each finding is adversarially verified, one fixer applies the confirmed fixes (Fable 5, max effort)',
+  description: 'Final polish of a rendered cinematic film: 3 independent reviewers watch the real video frames (story/clues, photoreal look, technical), a triage lead checks every finding against the frames, two fixers apply the kept fixes (Fable 5, max effort)',
   whenToUse: 'After a full render of a cinematic (photoreal kit) episode. Before launching, extract frames: <frames>/f_<sec>.png at 1 fps full-res + <frames>/sheet_*.jpg contact sheets at 2 fps. args: { ep, title, video, frames, notes? }',
   phases: [
     { title: 'Review', detail: '3 lenses watch the rendered video', model: 'fable' },
-    { title: 'Verify', detail: 'each finding adversarially checked against the frames', model: 'fable' },
-    { title: 'Fix', detail: 'one fixer applies the confirmed fixes and proves them', model: 'fable' },
+    { title: 'Verify', detail: 'triage lead checks findings against the frames', model: 'fable' },
+    { title: 'Fix', detail: 'fixer for high, then fixer for medium; each proves its fixes', model: 'fable' },
   ],
 }
 const P = '/home/user/Escape/inthistown'
@@ -42,20 +42,27 @@ for (const f of all.sort((a, b) => a.time - b.time)) {
   if (m) { m.lenses.push(f.lens); m.problem += `\n[${f.lens}] ${f.problem}`; m.fix += `\n[${f.lens}] ${f.fix}`; if (rank[f.severity] < rank[m.severity]) m.severity = f.severity }
   else merged.push({ ...f, lenses: [f.lens] })
 }
-const toVerify = merged.filter((f) => f.severity !== 'low')
-log(`${all.length} raw findings → ${merged.length} merged → ${toVerify.length} to verify (${merged.length - toVerify.length} low kept as optional)`)
+log(`${all.length} raw findings → ${merged.length} merged`)
 
 phase('Verify')
-const VER = { type: 'object', properties: { real: { type: 'boolean' }, severity: { type: 'string', enum: ['critical', 'high', 'medium', 'low'] }, reason: { type: 'string' }, betterFix: { type: 'string' } }, required: ['real', 'severity', 'reason'] }
-const verified = await parallel(toVerify.map((f, i) => () => agent(`${CTX}\n\nA reviewer reported this problem in the rendered film. Your job is to try to REFUTE it by looking at the actual frames (extract more around ${f.time.toFixed(2)} s if needed) and the script. If it is real, give its honest severity (${SEV}) and the best concrete fix (file + values). If it is not real, or it is intended by the script, say so.\nFinding: ${JSON.stringify(f, null, 1)}`, { label: `verify ${f.beat} @${f.time.toFixed(1)}`, phase: 'Verify', schema: VER, model: 'fable', effort: 'high' }).then((v) => (v && v.real ? { ...f, severity: v.severity, verifyReason: v.reason, fix: v.betterFix ? `${f.fix}\n[verifier] ${v.betterFix}` : f.fix } : null))))
-const confirmed = verified.filter(Boolean).sort((a, b) => rank[a.severity] - rank[b.severity] || a.time - b.time)
-const lows = merged.filter((f) => f.severity === 'low')
-log(`confirmed: ${confirmed.length} (${confirmed.filter((f) => f.severity === 'critical').length} critical, ${confirmed.filter((f) => f.severity === 'high').length} high, ${confirmed.filter((f) => f.severity === 'medium').length} medium); refuted: ${toVerify.length - confirmed.length}`)
+// one triage agent instead of one verifier per finding (usage limits): it checks every finding against the frames,
+// drops what is not real or is intended by the script, merges duplicates and orders the fix list by impact
+const TRIAGE = { type: 'object', properties: { fixes: { type: 'array', items: { type: 'object', properties: {
+  priority: { type: 'number', description: '1 = most important' }, severity: { type: 'string', enum: ['critical', 'high', 'medium', 'low'] },
+  time: { type: 'number' }, beat: { type: 'string' }, problem: { type: 'string' }, fix: { type: 'string' }, files: { type: 'string' } },
+  required: ['priority', 'severity', 'time', 'beat', 'problem', 'fix', 'files'] } }, dropped: { type: 'array', items: { type: 'string' } } }, required: ['fixes', 'dropped'] }
+const tri = await agent(`${CTX}\n\nYou are the TRIAGE LEAD. Three reviewers reported the findings below. Check each one against the actual frames (open the evidence files; extract more frames if needed). Drop findings that are not real, are intended by the script, or would cost a lot for little gain (say why in 'dropped'). Merge duplicates. Return ONE fix list ordered by impact on how good the film is for a TikTok viewer (the hook first), each with the most concrete fix (files, shot names, values) taken from the best reviewer suggestion or your own. ${SEV}\nFindings:\n${JSON.stringify(merged, null, 1)}`, { label: 'triage', phase: 'Verify', schema: TRIAGE, model: 'fable', effort: 'high' })
+const confirmed = (tri && tri.fixes || []).sort((a, b) => a.priority - b.priority)
+const lows = confirmed.filter((f) => f.severity === 'low')
+log(`triage: ${confirmed.length} fixes kept (${confirmed.filter((f) => f.severity === 'high' || f.severity === 'critical').length} critical/high), ${(tri && tri.dropped || []).length} dropped`)
 
 phase('Fix')
 const FIXED = { type: 'object', properties: { report: { type: 'string' }, ranges: { type: 'array', items: { type: 'object', properties: { from: { type: 'number' }, to: { type: 'number' }, why: { type: 'string' } }, required: ['from', 'to'] }, description: 'time ranges (s) whose pixels changed and must be re-rendered' }, notFixed: { type: 'array', items: { type: 'string' } } }, required: ['report', 'ranges', 'notFixed'] }
-let fix = null
-if (confirmed.length) {
-  fix = await agent(`${CTX}\n\nYou are the FIXER. Apply every confirmed fix below (critical and high first, then medium; lows only if they are trivial and safe) in ${D}/ (kit.js, sets.js, shots.js, act1-4.js; do NOT edit src/real/*, src/engine.js or other episodes). For each fix render the affected time(s) BEFORE and AFTER as single frames at --scale 0.75 and look at them:\n  cd ${P} && node render.mjs --timeline episodes/${EP}/timeline.json --shots /src/${EP}/shots.js --scale 0.75 --preview 1 --times <t1,t2,...> --previewDir out/${EP}_finalfix --workers 1 --timeout 2400\nRe-check ±1 s around each change so neighbouring shots are not broken, keep it deterministic (no state left in setup; see the rules at the top of kit.js), and keep per-frame cost under ~6 s. At the end run: node render.mjs --timeline episodes/${EP}/timeline.json --shots /src/${EP}/shots.js --check-determinism --times <6 of the times you changed> --scale 0.5 --timeout 2400.\nReturn the exact time ranges whose pixels changed (whole shots, from shot start to next shot start) so only those get re-rendered, and anything you could not fix.\nConfirmed fixes:\n${JSON.stringify(confirmed, null, 1)}\nOptional lows:\n${JSON.stringify(lows, null, 1)}`, { label: 'fixer', phase: 'Fix', schema: FIXED, model: 'fable', effort: 'max' })
-}
-return { reviews, confirmed, refuted: toVerify.length - confirmed.length, lows, fix }
+const FIXP = (list, part) => `${CTX}\n\nYou are the FIXER (${part}). Apply every fix below, in order, in ${D}/ (kit.js, sets.js, shots.js, act1-4.js; do NOT edit src/real/*, src/engine.js or other episodes). For each fix render the affected time(s) BEFORE and AFTER as single frames at --scale 0.75 and look at them:\n  cd ${P} && node render.mjs --timeline episodes/${EP}/timeline.json --shots /src/${EP}/shots.js --scale 0.75 --preview 1 --times <t1,t2,...> --previewDir out/${EP}_finalfix --workers 1 --timeout 2400\nRe-check ±1 s around each change so neighbouring shots are not broken, keep it deterministic (no state left in setup; see the rules at the top of kit.js), and keep per-frame cost under ~6 s. At the end run: node render.mjs --timeline episodes/${EP}/timeline.json --shots /src/${EP}/shots.js --check-determinism --times <6 of the times you changed> --scale 0.5 --timeout 2400.\nReturn the exact time ranges whose pixels changed (whole shots) and anything you could not fix.\nFixes:\n${JSON.stringify(list, null, 1)}`
+const fixes = []
+const hi = confirmed.filter((f) => f.severity === 'critical' || f.severity === 'high')
+const rest = confirmed.filter((f) => f.severity === 'medium' || f.severity === 'low')
+if (hi.length) fixes.push(await agent(FIXP(hi, 'part 1: the critical and high fixes'), { label: 'fixer: high', phase: 'Fix', schema: FIXED, model: 'fable', effort: 'max' }))
+if (rest.length) fixes.push(await agent(FIXP(rest, 'part 2: the medium and low fixes; part 1 already fixed the high ones, so do not undo them') , { label: 'fixer: medium', phase: 'Fix', schema: FIXED, model: 'fable', effort: 'max' }))
+const fix = { ranges: fixes.flatMap((f) => (f && f.ranges) || []), notFixed: fixes.flatMap((f) => (f && f.notFixed) || []), reports: fixes.map((f) => f && f.report) }
+return { reviews, confirmed, dropped: tri && tri.dropped, fix }
