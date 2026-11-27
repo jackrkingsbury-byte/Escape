@@ -171,7 +171,7 @@ function makeGust(n = 520, seed = 77) {
 export const shots = [
   // ── b08 · "He never moves when it's bright. Only in the dark." ─────────────────────────────────────────────────────
   {
-    name: 'a2 b08 frame A: 9 m, 7 m, 5 m', start: 'flash8a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 1 }, captionY: 0.765, captionX: 0.68,   // the words beside the double, across the kid's back
+    name: 'a2 b08 frame A: 9 m, 7 m, 5 m', start: 'flash8a', set: 'beachNight', cast: ['me', 'copy'], options: { fire: 1 }, captionY: 0.76, captionX: 0.68,   // the words beside the double, across the kid's back (and not a pixel lower: under y 0.76 the app prints its own text)
     setup(ctx) { K.frameASetup(ctx); },
     update(ctx) {
       const t = ctx.t, T = (n) => ctx.time(n);
@@ -192,7 +192,8 @@ export const shots = [
       K.frameAFoam(ctx, d9.clone().lerp(d7, u7).lerp(d5, u5), 0.34 + 0.6 * f);
       ctx.cam.shake(0.03, t, 5);
     },
-    post: K.frameAPost({ grade: { highlightAmt: 0.3 } }),
+    // (the fire's warm highlights only between the strikes: lightning is cold white, not cream)
+    post: K.frameAPost((ctx) => ({ grade: { highlightAmt: 0.3 * (1 - Math.min(1, ctx.store.strike || 0)) } })),
   },
 
   // ── b09 · "When I'm scared, I yell my word. To see if anything answers." ───────────────────────────────────────────

@@ -267,7 +267,7 @@ export const shots = [
 
   // ─────────────────────────────────────────── 5 · b05 · one voicemail ─────────────────────────────────────────────
   {
-    name: 'a1.5 one voicemail: Mom (b05)', start: 'b05-0.15', set: 'beachNight', cast: ['me', 'copy'], options: { fire: -1, rain: 1.5 }, captionY: 0.665, momY: 0.725,
+    name: 'a1.5 one voicemail: Mom (b05)', start: 'b05-0.15', set: 'beachNight', cast: ['me', 'copy'], options: { fire: -1, rain: 1.5 }, captionY: 0.665, momY: 0.7,      // (Mom's two-line plate: under the knight and the rag hand, its foot above the app's caption block)
     setup(ctx) {
       const H = ctx.set.heightAt;
       ctx.place('me', 'phoneSpot', { yaw: PI / 2 });
@@ -309,7 +309,7 @@ export const shots = [
 
   // ─────────────────────────────────────────── 6 · b06 · the knight (reference frame for b25) ──────────────────────
   {
-    name: 'a1.6 the knight, nose screen-left (b06)', start: 'b06-0.08', set: 'beachNight', cast: ['me'], options: { fire: -1, rain: 1.6 }, momY: 0.76,   // (Mom's bubble is still fading as "She sewed…" starts)
+    name: 'a1.6 the knight, nose screen-left (b06)', start: 'b06-0.08', set: 'beachNight', cast: ['me'], options: { fire: -1, rain: 1.6 }, momY: 0.7,   // (Mom's bubble is still fading as "She sewed…" starts: same place as in b05, clear of the caption line)
     setup(ctx) {
       ctx.place('me', 'phoneSpot', { yaw: PI / 2 });
       ctx.add(ctx.props.a1rain.root);

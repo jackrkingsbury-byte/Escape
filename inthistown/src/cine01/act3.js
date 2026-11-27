@@ -173,6 +173,7 @@ function pose17(ctx, ch, t, hand = hand17(ctx, t)) {
   const l = lean17(ctx, t);
   K.filmPose(ch, 'kneel', t, { sit: lerp(KNEEL.sit, 0.6, l), lean: lerp(KNEEL.lean, 0.42, l), headPitch: lerp(KNEEL.headPitch, 0.4, l), raiseR: hand });
 }
+const B19_ROLL = 1.05;          // b19: the roll of the reflection's head (where b18b's tilt ends)
 const B18A = 'b18-0.5';        // cut to his eye-line half a second before "Then he smiles"
 const B18B = 'b18.w3-0.1';     // "I'm not smiling."
 
@@ -233,7 +234,7 @@ export const shots = [
 
   // ── b18a ─ "Then he smiles." ───────────────────────────────────────────────────────────────────────────────────────
   {
-    name: 'b18a his eye-line: the reflection smiles', start: B18A, set: 'cave', cast: ['me', 'copy'], options: { ripple: 5 }, captionY: 0.8,
+    name: 'b18a his eye-line: the reflection smiles', start: B18A, set: 'cave', cast: ['me', 'copy'], options: { ripple: 5 }, captionY: 0.7,      // the dark band between the knight's base and his knees (0.8 lay under the app's caption block)
     setup(ctx) {
       ctx.place('me', 'kneel', { yaw: PI }); ctx.place('copy', 'kneel', { yaw: PI });
       K.setMirror(ctx.cast.copy, false);
@@ -318,7 +319,7 @@ export const shots = [
       if (ph.root.parent !== ctx.scene) ctx.add(ph.root);
       ph.root.position.set(r.x, r.y + 0.02, r.z); ph.root.scale.setScalar(1); ph.root.up.set(0, 1, 0);
       ph.root.lookAt(_b.copy(ph.root.position).multiplyScalar(2).sub(_c.set(sx, sy + 1.25, sz)));
-      const lvl = after ? 0.14 + 0.06 * Math.sin(t * 23) * Math.sin(t * 7.7) : 0.8;
+      const lvl = after ? 0.3 + 0.06 * Math.sin(t * 23) * Math.sin(t * 7.7) : 0.8;       // (0.14: with the room at a fifth of its exposure the swap, the film's one piece of evidence, was a black frame)
       ph.setLevel(lvl); ph.spot.intensity = 7 * lvl; torchBeam(ctx, 0.1 * lvl);
       // the one in the water still holds a light under its chin (a lamp that only exists where the reflection does)
       const chin = lamp(ctx, 'chin', '#dfeaff', 2.4, 2, copy.root); chin.position.set(-0.28, 0.42, 0.62);
@@ -330,13 +331,18 @@ export const shots = [
         K.filmPose(me, 'stand', t, { breathe: 1, headPitch: -0.1, armL: [lerp(0.12, -2.05, g), 0, lerp(0.32, 0.5, g)], foreL: lerp(-0.25, -1.2, g), armR: [0.12, 0, -0.32], foreR: -0.25 });
         ctx.place('copy', 'kneel', { yaw: PI });
         K.filmPose(copy, 'kneel', t, { ...KNEEL }); copy.face('neutral', 0.4); K.filmFace(copy, 'creep');
-        chin.intensity = 1.5;
+        // its head is still tipped over, as beat 18 left it: upside-down in the water a level grin is a frown; rolled over
+        // on its side it reads as the grin it is
+        K.joint(copy, 'head', KNEEL.headPitch - 0.1, 0, B19_ROLL);
+        chin.intensity = 2.2;
+        ragKick(ctx, me, 0.8, 'ragS');                    // the rag on his RIGHT hand, whiter than the bare left one: after the white it has changed sides
         ctx.set.pool.substitute([me], [copy]);
       } else {
         me.root.visible = false;
         ctx.place('copy', [sx, sy, sz], { yaw: 0.1 });
         K.filmPose(copy, 'stand', 0);                     // a statue
         chin.intensity = 0;
+        ragKick(ctx, copy, 1.2, 'ragS');                  // the white cloth, now on his LEFT hand: the one bright note of the cut-out
         ctx.set.pool.substitute([], []);
       }
       ctx.props.real.me.update(t);
@@ -354,7 +360,7 @@ export const shots = [
     },
     post: K.shotPost((ctx) => {
       const W = ctx.store.W || 0, dark = ctx.store.dark || 0, lift = ctx.store.lift || 0;
-      return { exposure: lerp(1, 0.22, dark), fade: { color: '#ffffff', amount: 0.9 * Math.min(1, W * 1.15) }, fog: { density: lerp(0.07, 0.03, lift), sky: lerp(1, 0.42, lift) } };
+      return { exposure: lerp(1, 0.62, dark), fade: { color: '#ffffff', amount: 0.9 * Math.min(1, W * 1.15) }, fog: { density: lerp(0.07, 0.03, lift), sky: lerp(1, 0.42, lift) } };
     }),
   },
 ];

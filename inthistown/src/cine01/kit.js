@@ -445,7 +445,7 @@ export function poolTop(set, { fov = 54, height = 3.3, dz = 1.0 } = {}) {
 }
 
 // ═════════════════════════════════════════════ overlays ═══════════════════════════════════════════════════════════
-/** Found-footage clock stamp ('3:12 AM'): small, thin, white. o: { at: 'tl' | 'bl' | 'tr', alpha = 1, size = 38, y } */
+/** Found-footage clock stamp ('3:12 AM'): small, thin, white. o: { at: 'tl' | 'bl' | 'tr', alpha = 1, size = 38, y (0.11: clear of the app's top tabs) } */
 export function stamp(ctx, text, o = {}) {
   const alpha = o.alpha ?? 1;
   if (alpha <= 0) return;
@@ -454,7 +454,7 @@ export function stamp(ctx, text, o = {}) {
     g.font = `400 ${size}px "${FONT}", sans-serif`;
     try { g.letterSpacing = `${(3.5 * k).toFixed(2)}px`; } catch (e) { /* older canvas */ }
     g.textBaseline = 'middle'; g.textAlign = at === 'tr' ? 'right' : 'left';
-    const x = at === 'tr' ? w - 72 * k : 72 * k, y = (o.y ?? (at === 'bl' ? 0.895 : 0.082)) * h;
+    const x = at === 'tr' ? w - 72 * k : 72 * k, y = (o.y ?? (at === 'bl' ? 0.74 : 0.11)) * h;      // inside the app's safe area: under its top tabs (y < 0.10), above its caption block (y > 0.76)
     g.globalAlpha = 0.92 * clamp(alpha, 0, 1);
     g.shadowColor = 'rgba(0,0,0,0.8)'; g.shadowBlur = 10 * k; g.shadowOffsetY = 1.5 * k;
     g.fillStyle = '#ffffff';
@@ -464,7 +464,7 @@ export function stamp(ctx, text, o = {}) {
 
 // ═════════════════════════════════════════════ captions ═══════════════════════════════════════════════════════════
 const PUNCT_BREAK = /(\.\.\.|…|[.,!?;:])["')]*$/;
-function buildPhrases(tl) {
+function buildPhrases(tl, cuts) {
   const out = [];
   for (const b of tl.beats) {
     const ws = (b.words || []).filter((w) => String(w.text || '').trim());
@@ -506,8 +506,40 @@ function buildPhrases(tl) {
     out.unshift({ kind: 'narr', block: [items.slice(0, cut), items.slice(cut)], items, start: 0, end });
   }
   out.forEach((p, i) => { const nx = out[i + 1]; p.until = Math.min(nx ? nx.start : Infinity, p.end + (p.kind === 'huss' ? 0.6 : 0.5)); });
+  // A caption never changes place while it is on screen. Where a cut leads to a shot with another caption position (or
+  // none), a phrase that has been spoken ENDS on the cut (it used to hang on for 2-5 frames at the new position: a
+  // flicker), and one that is still being spoken waits for the cut (it belongs to the new picture; the words already said
+  // come up with it).
+  for (const p of out) for (const c of cuts || []) {
+    if (c <= p.start + 1e-4 || c >= p.until - 1e-4) continue;
+    if (c >= p.end || c - p.start > 0.45) { p.until = c; break; }
+    p.start = c;
+  }
   return out;
 }
+/**
+ * The shot list (shots.js hands it over with K.registerShots): the caption renderer needs to know where the cuts are and
+ * where each shot puts its captions. captionCuts → the times of the cuts at which the caption placement changes.
+ */
+let _shotDefs = null;
+export function registerShots(list) { _shotDefs = list; }
+function captionCuts(ctx, opts) {
+  if (!_shotDefs || !ctx || typeof ctx.time !== 'function') return [];
+  const key = (d) => (d.captions === false ? 'off' : `${d.captionY ?? opts.y ?? 0.62}|${d.captionX ?? 0.5}`);
+  const cuts = [];
+  _shotDefs.forEach((d, i) => { if (i && key(d) !== key(_shotDefs[i - 1])) cuts.push(ctx.time(d.start ?? 0)); });
+  return cuts;
+}
+/** dev: the app's interface zones (no burned-in text there): --query "safe=1" on any preview render */
+function drawSafeZones(g) {
+  const w = g.canvas.width, h = g.canvas.height;
+  g.save(); g.fillStyle = 'rgba(255,40,40,0.28)';
+  g.fillRect(0, 0, w, h * SAFE.top); g.fillRect(0, h * SAFE.bottom, w, h * (1 - SAFE.bottom)); g.fillRect(w * SAFE.right, h * SAFE.top, w * (1 - SAFE.right), h * (SAFE.bottom - SAFE.top));
+  g.strokeStyle = 'rgba(255,60,60,0.9)'; g.lineWidth = 2; g.strokeRect(0, h * SAFE.top, w * SAFE.right, h * (SAFE.bottom - SAFE.top));
+  g.restore();
+}
+/** the house rule for burned-in text: nothing above y 0.10 (the app's tabs), below y 0.76 (handle, description, sound ticker) or right of x 0.87 (button rail) */
+export const SAFE = { top: 0.10, bottom: 0.76, right: 0.87 };
 function rr(g, x, y, w, h, r) {
   g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
@@ -525,14 +557,16 @@ function strokedWord(g, text, x, y, k) {
  *   REAL  speaker 'narr': white Inter 600, soft dark shadow + a 4 px 60 % black stroke, 2–4-word phrase that builds word by
  *         word, centred, y 0.62. The film's first sentence (the hook) is one two-line bold block, whole from frame 0.
  *   COPY  speaker 'copy': black Inter 700 on a solid white box (the tell that the narrator changed).
- *   MOM   tl.subs style 'mom': small rounded phone-message bubble with the whole line, t0 → t1.
+ *   MOM   tl.subs style 'mom': phone-message bubble with the whole line, t0 → t1: caption-sized type on a near-white
+ *         outlined plate, centred, her name on the plate.
  *   HUSS  the one shout: a big white word with a short shake.
  * state.hidden (shot `captions: false`) hides everything. captionOptions: { y (0.62), momY (0.665) }.
  */
 export function drawCaptions(g, tl, t, state = {}) {
+  if (QS.has('safe')) drawSafeZones(g);
   if (state.hidden) return;
   const opts = state.options || {};
-  if (!tl.__cinePhrases) tl.__cinePhrases = buildPhrases(tl);
+  if (!tl.__cinePhrases) tl.__cinePhrases = buildPhrases(tl, captionCuts(state.ctx, opts));
   const cw = g.canvas.width, chh = g.canvas.height, k = cw / W;
   // per-shot placement: shot.captionY / shot.captionX (0..1) move the centre of the spoken line (frame A: under the
   // double's feet, across the kid's back), shot.momY the phone bubble
@@ -615,42 +649,65 @@ export function drawCaptions(g, tl, t, state = {}) {
     }
   }
   g.restore();
-  // ── Mom's phone bubble
+  // ── Mom's phone bubble. The lines the twist turns on must read with the sound off: type as big as the spoken captions,
+  // a near-white plate with a dark outline and a drop shadow (in b24 it lies on a pale face and a pale blanket), centred,
+  // and her name ON the plate (white letters above it vanished on the white face)
   const subs = (tl.subs || []).filter((s) => s.style === 'mom' && t >= s.t0 && t < s.t1 + 0.35);
   for (const s of subs) {
     g.save();
+    g.textBaseline = 'alphabetic'; g.textAlign = 'left'; g.lineJoin = 'round';
     const inn = ease.outCubic(clamp((t - s.t0) / 0.16, 0, 1)), outA = clamp((s.t1 + 0.35 - t) / 0.2, 0, 1);
-    const size = 42 * k;
-    g.font = `500 ${size}px "${FONT}", sans-serif`;
+    const size = 56 * k, lab = 34 * k;
+    const textFont = `600 ${size}px "${FONT}", sans-serif`, labFont = `700 ${lab}px "${FONT}", sans-serif`;
+    g.font = textFont;
     try { g.letterSpacing = '0px'; } catch (e) { /* */ }
-    const maxW = 760 * k;
-    const words = String(s.text).split(/\s+/), lines = [];
-    let line = '';
-    for (const w of words) { const tr = line ? line + ' ' + w : w; if (g.measureText(tr).width > maxW && line) { lines.push(line); line = w; } else line = tr; }
-    if (line) lines.push(line);
+    const lines = wrapBalanced(g, String(s.text), 700 * k);
     const tw = Math.max(...lines.map((l) => g.measureText(l).width));
-    const padX = 34 * k, padY = 24 * k, lh = size * 1.28;
-    const bw = tw + padX * 2, bh = lines.length * lh + padY * 2 - (lh - size) * 0.6;
-    const bx = 96 * k, by = chh * ((shot && shot.momY) ?? opts.momY ?? 0.665) - bh / 2;
-    g.translate(bx, by + bh); g.scale(lerp(0.9, 1, inn), lerp(0.9, 1, inn)); g.translate(-bx, -(by + bh));
-    g.globalAlpha = inn * outA;
-    // sender label
-    g.font = `500 ${30 * k}px "${FONT}", sans-serif`;
-    g.shadowColor = 'rgba(0,0,0,0.85)'; g.shadowBlur = 10 * k;
-    g.fillStyle = 'rgba(255,255,255,0.86)';
-    g.fillText('Mom', bx + 16 * k, by - 16 * k);
-    // bubble + tail
-    g.shadowColor = 'rgba(0,0,0,0.5)'; g.shadowBlur = 22 * k; g.shadowOffsetY = 4 * k;
-    g.fillStyle = '#e9e9eb';
-    rr(g, bx, by, bw, bh, Math.min(36 * k, bh / 2)); g.fill();
+    const padX = 38 * k, padT = 20 * k, padB = 27 * k, lh = size * 1.2, labH = lab * 1.5;
+    const bw = tw + padX * 2, bh = padT + labH + (lines.length - 1) * lh + size + padB;
+    const bx = Math.min((cw - bw) / 2, cw * SAFE.right - bw - 8 * k), by = chh * ((shot && shot.momY) ?? opts.momY ?? 0.665) - bh / 2;
+    const px = bx + bw / 2, py = by + bh;                    // it grows from its bottom edge
+    g.translate(px, py); g.scale(lerp(0.9, 1, inn), lerp(0.9, 1, inn)); g.translate(-px, -py);
+    // (it makes way for the next spoken caption within a few frames: "She sewed…" starts as Mom's voicemail ends)
+    g.globalAlpha = inn * outA * (ph && ph.start > s.t0 ? clamp(1 - (t - ph.start) / 0.13, 0, 1) : 1);
+    const plate = () => { rr(g, bx, by, bw, bh, 30 * k); };
+    const tail = () => { g.beginPath(); g.moveTo(bx + 6 * k, by + bh - 34 * k); g.quadraticCurveTo(bx - 2 * k, by + bh + 2 * k, bx - 20 * k, by + bh + 6 * k);
+      g.quadraticCurveTo(bx + 14 * k, by + bh + 6 * k, bx + 40 * k, by + bh - 8 * k); g.closePath(); };
+    // drop shadow, then the outline (stroked under the fill: both shapes become one silhouette with a 2 px dark edge), then the plate
+    g.fillStyle = '#f4f4f4';
+    g.shadowColor = 'rgba(0,0,0,0.6)'; g.shadowBlur = 26 * k; g.shadowOffsetY = 5 * k;
+    tail(); g.fill(); plate(); g.fill();
     g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
-    g.beginPath(); g.moveTo(bx + 4 * k, by + bh - 26 * k); g.quadraticCurveTo(bx - 2 * k, by + bh + 2 * k, bx - 16 * k, by + bh + 4 * k);
-    g.quadraticCurveTo(bx + 10 * k, by + bh + 4 * k, bx + 30 * k, by + bh - 8 * k); g.closePath(); g.fill();
-    g.font = `500 ${size}px "${FONT}", sans-serif`;
-    g.fillStyle = '#111114';
-    lines.forEach((l, i) => g.fillText(l, bx + padX, by + padY + size * 0.82 + i * lh));
+    g.lineWidth = 4.5 * k; g.strokeStyle = 'rgba(10,12,16,0.85)';
+    tail(); g.stroke(); plate(); g.stroke();
+    tail(); g.fill(); plate(); g.fill();
+    // sender, on the plate
+    g.font = labFont; g.fillStyle = '#4f5863';
+    g.fillText('Mom', bx + padX, by + padT + lab * 0.86);
+    g.font = textFont; g.fillStyle = '#0b0c0f';
+    lines.forEach((l, i) => g.fillText(l, bx + padX, by + padT + labH + size * 0.8 + i * lh));
     g.restore();
   }
+}
+/**
+ * Wrap a line for a caption plate. One line if it fits; else two lines, broken where they come out most even, a sentence
+ * end preferred ("Hi sweetheart." / "It's Mom. Come home."); greedy for anything longer.
+ */
+function wrapBalanced(g, text, maxW) {
+  const words = text.split(/\s+/).filter(Boolean), W1 = (a) => g.measureText(a.join(' ')).width;
+  if (W1(words) <= maxW) return [words.join(' ')];
+  let best = null;
+  for (let i = 1; i < words.length; i++) {
+    const a = words.slice(0, i), b = words.slice(i), wa = W1(a), wb = W1(b);
+    if (wa > maxW || wb > maxW) continue;
+    const cost = Math.max(wa, wb) - (/[.?!…]$/.test(words[i - 1]) ? 0.25 * maxW : 0);
+    if (!best || cost < best.cost) best = { cost, lines: [a.join(' '), b.join(' ')] };
+  }
+  if (best) return best.lines;
+  const lines = []; let line = '';
+  for (const w of words) { const tr = line ? line + ' ' + w : w; if (g.measureText(tr).width > maxW && line) { lines.push(line); line = w; } else line = tr; }
+  if (line) lines.push(line);
+  return lines;
 }
 
 // ═════════════════════════════════════════════ cast ═══════════════════════════════════════════════════════════════

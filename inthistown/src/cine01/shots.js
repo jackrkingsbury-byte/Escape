@@ -34,6 +34,7 @@ export async function init(ctx) {
 }
 
 const list = acts.flatMap((a) => (Array.isArray(a.shots) ? a.shots : []));
+K.registerShots(list);                      // the caption renderer needs the cuts (a caption never changes place on screen)
 export const shots = list.length ? list : [{
   name: 'fallback (no act loaded)', start: 0, set: 'beachNight', cast: ['me'],
   setup(ctx) { ctx.place('me', 'kidA', { yaw: -Math.PI / 2 }); ctx.cam.set(K.frameA(ctx.set)); },
