@@ -59,6 +59,6 @@ true underdog stories (inventors, founders, comebacks) and "what if" science (Mo
 falling into a black hole). No guns/shooters.
 
 ## Cinematic one-off: "The Other Me" (cine01)
-- Scheduled on Buffer for Fri 27 Nov 2026, 20:00 SAST (post 6b09416e658222306cf7ed32), video = videos/cine01_the_other_me_tiktok.mp4 (94 s).
+- Scheduled on Buffer for Fri 27 Nov 2026, 19:00 SAST (moved from 20:00 so it is live as the 19:00-21:00 peak starts) (post 6b09416e658222306cf7ed32), video = videos/cine01_the_other_me_tiktok.mp4 (94 s).
 - Hashtags (user dropped #mystery): #animation #robloxanimation #storytime #scary #huss
 - Posting-time research (Nov 2026): South Africa peaks 19:00-21:00 SAST on weekdays (Wed/Fri strongest); Buffer's 7.1M-post study ranks Saturday first and evenings 18:00-23:00 local strong, afternoons 12-17 weakest; Sprout Social prefers Tue-Thu 14:00-18:00 local. 20:00 SAST = 18:00 UK = 13:00 US Eastern / 10:00 US Pacific, so it hits SA prime time first (TikTok tests new videos on nearby viewers first), the UK's evening and US daytime. TikTok Studio > Followers tab shows the account's own peak hours: use those once there is enough data.
