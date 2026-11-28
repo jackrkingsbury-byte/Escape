@@ -64,6 +64,66 @@
 //   vertical, soles on the floor (characters with scale < 1 dangle their feet a little; > 1 angle the shins).
 // Extra human actions: pointLaugh (point + laugh), crossArms.
 //
+//
+// ─── v2 (style bible v2, ep30 engine_features 5–6) — everything below is ADDITIVE; v1 specs/actions/faces are
+//     byte-identical. Look-dev: src/kits/test_cast.js (one shot per pose, front / 3/4 / profile views). ──────────
+// v2 SPEC FIELDS (makeCharacter):
+//   hair.style 'puffs' (two round puff buns, Pip) | 'tallBun' (tall round bun, Mom; reads backlit); hair.tie = band colour
+//   top.style 'jumper' (crew-neck knit) | 'pyjamas' (collar, placket, buttons, piping, pocket) | 'robe' (long robe:
+//     flared skirt to mid-shin, shawl collar, tie belt; legs are bare under it unless bottom is pants/pyjamas)
+//   top.pattern 'stripes' | 'stars' (geometry, merged into the joint mesh), top.patternColor, top.piping, top.belt
+//   bottom.style 'pyjamas' (= pants with piping cuffs), bottom.pattern / patternColor / piping
+//   shoeStyle 'wellies' (tall boot shafts) | 'boots' | 'slippers';  apronColor;  blanketColor
+//   accessories 'apron' (bib apron) | 'blanket' (quilted blanket in body space, re-shaped by every pose(); see below)
+// v2 EXPRESSIONS (big faces, save for 3–5 beats): 'crying' (squeezed eyes, two tear rivers, wailing mouth),
+//   'terrified' (pinprick pupils, clenched grimace, shiver marks, sweat), 'relieved' (closed eyes, soft smile,
+//   exhale puff), 'heartbroken' (welling glossy eyes, wobbling mouth, tear), 'angry' (vein, gritted teeth), 'scared'.
+// v2 ACTIONS (pose(action, t, params); all accept speed / intensity / headYaw / headPitch / lookAt; poses with a `u`
+//   param are tweens you drive from the shot: u = ctx.progress(a, b) or (lt − t0) / dur; for blends between any two
+//   poses use poseMix(a, ta, pa, b, tb, pb, w)). Body units below are unscaled metres (× spec.scale in the world).
+//   haul       bent-double strain over a low load in FRONT (hands straight down to the grip, face up to the camera).
+//              gripY / gripZ: world m of the grip above / ahead of the root (default 0.5·s / 0.62·s).
+//              behind:true → strap over the right shoulder, load behind, leaning into it.
+//   drag       CYCLE of haul: walks BACKWARD (move the root −Z at DRAG_SPEED·speed·scale m/s); behind:true walks
+//              forward (+Z). The S01 wardrobe drag.
+//   heave      shoulder heave lifting a heavy thing upright: u 0 (deep crouch, hands under the low end) → 0.5 (chest
+//              push) → 1 (arms extended up-forward). Strain tremble. Default u = t / 1.2 s.
+//   pushUp     shove up overhead (hatch / ceiling): u 0 knees bent, shoulders hunched → 1 legs straight, palms up
+//              beside the head (palm tops ≈ 2.05·scale above the feet: put the hatch there).
+//   stepUp     step up onto a stool: u 0 → 1, height (world m, 0.45), dist (world m, 0.4: stool centre ahead).
+//              At u = 1 the figure stands on the stool: re-place the root at the stool top and switch pose.
+//   crouch     depth 0..1; hands 'knees' | 'floor' | 'hug' (arms round knees) | 'head' | 'none'; tremble:true.
+//   cower      crouch with hands clutching the head + tremble.
+//   kneel      both knees down (feet soles up behind); oneKnee:true (left foot planted); sitBack 0..1;
+//              hands 'lap' | 'work' (both hands busy low in front: rebuilding the crib) | 'pray' | 'none'.
+//   sitWall    sit on the floor, back to a wall: u 0 (standing against it) → 1 (seated) = slide down;
+//              knees 'up' | 'flat'; hands 'knees' | 'floor' | 'lap' | 'hug'; slump 0..1. Wall plane ≈ z −0.2·scale.
+//   leanIn     ear pressed to something ahead (Pip on Mom's stomach): lean 0..1, side 'R' | 'L' (ear that leads; 'R'
+//              turns the face to the character's left), hands 'hug' | 'rest' | 'none', dist (world m, 0.5·s).
+//   hugNeck    arms round someone's neck: target (world Vector3 of their neck) or height / dist (world m, 1.3·s /
+//              0.42·s); kneel:true; side 'R'|'L' (cheek side); wrap (body units past the neck, 0.16).
+//   lie        on the back, hips at the root, feet +Z, head −Z: arms 'out' | 'up' | 'side' | 'chest' | 'flail',
+//              knees 0..1, headLift 0..1, roll (rad about the spine).   (crib crash, top-down shots)
+//   lieFront   face down, head +Z, cheek to the floor with headYaw ≈ ±0.9: arms 'cheek' | 'out' | 'side', arch 0..1.
+//   fly        static flight / crash pose (move the root along a path; body points +Z head first): variant
+//              'shoulder' (default, continuing a charge) | 'superman' | 'flail'; lift (world m, 1.0·s).
+//   fall       backward topple, flailing (lift as fly).
+//   backUp     CYCLE: walking backwards, scared, hands up (arms 'up' | 'low'); root −Z at BACKUP_SPEED·speed·scale.
+//   sprint     CYCLE: full run with flight phase; root +Z at SPRINT_SPEED·speed·scale; lean (0.3).
+//   charge     CYCLE: running shoulder-first (left shoulder leads, arm tucked); root +Z at CHARGE_SPEED·speed·scale.
+//   shove      static strain: hands 'shoulder' (left shoulder into a door ≈ 0.45·scale ahead) | 'both' (palms ≈ 0.55·s).
+// v2 HAND OVERRIDES on ANY action (applied after it): reachL / reachR = a preset name (REACH_PRESETS: 'chest',
+//   'chin' (torch under the chin), 'raised' (pan raised beside the head), 'behindBack', 'belly', 'hip', 'up', 'out'
+//   (offering forward), 'ear', 'head', 'mouth', 'point' (finger out), 'side') | THREE.Vector3 world point (place the
+//   root first) | [x,y,z] torso frame | { body:[x,y,z] }; poleL / poleR [x,y,z] torso-frame elbow direction.
+//   e.g. Mom's belly laugh: pose('laugh', t, { reachL: 'belly', reachR: 'belly' }); Dad hiding the tin:
+//   pose('idle', t, { reachL: 'behindBack', reachR: 'behindBack' }); hand on Pip's head: reachL: pipHeadTopWorld.
+// v2 BLANKET: setAccessory('blanket', true) (or spec accessories), then per pose: blanket 'drag' (default: held in
+//   blanketHand 'L' | 'R', trails ~1.1 m along the floor behind) | 'clutch' (bunched at the chest between both hands:
+//   pass reachL/reachR 'chest'; hangs down the front and puddles forward).
+// v2 exports: SPRINT_SPEED 3.3, DRAG_SPEED 0.38, BACKUP_SPEED 0.6, CHARGE_SPEED 3.0 (m/s at speed 1, scale 1),
+//   REACH_PRESETS. ACTIONS / EXPRESSIONS have the v2 names appended.
+//
 // Units: metres, Y up, feet at the origin, facing +Z.  Deterministic: pose()/face() are pure functions
 // of their arguments (no random, no clocks) — every call resets every joint from the rest pose.
 import * as THREE from 'three';
@@ -80,13 +140,18 @@ let _lowDetail = false;
 
 export const ACTIONS = ['idle', 'dance', 'dance2', 'walk', 'sit', 'sitSlam', 'slam', 'laugh', 'point', 'clap',
   'cheer', 'surprised', 'shrug', 'think', 'peer', 'crowdSurf', 'walkSad', 'stunned', 'wave', 'sitIdle',
-  'sitStand', 'pointLaugh', 'crossArms'];
+  'sitStand', 'pointLaugh', 'crossArms',
+  // v2 body acting (additive)
+  'haul', 'drag', 'heave', 'pushUp', 'stepUp', 'crouch', 'cower', 'kneel', 'sitWall', 'leanIn', 'hugNeck', 'lie',
+  'lieFront', 'fly', 'fall', 'backUp', 'sprint', 'charge', 'shove'];
 export const CREATURE_ACTIONS = {
   pigeon: ['idle', 'peck', 'strut', 'flap', 'huss', 'knock', 'sit'],
   cat: ['idle', 'hop', 'sit', 'loaf', 'stare'],
 };
 export const EXPRESSIONS = ['neutral', 'smile', 'grin', 'laugh', 'determined', 'huss', 'shocked', 'sad', 'smug',
-  'squint', 'sweat', 'sleepy', 'wink'];
+  'squint', 'sweat', 'sleepy', 'wink',
+  // v2 (additive)
+  'crying', 'terrified', 'relieved', 'heartbroken', 'angry', 'scared'];
 
 const PI = Math.PI, TAU = PI * 2;
 
@@ -216,6 +281,45 @@ class Bag {
 // While a SkinCollector is active, Bag.build() hands its parts to it instead of making meshes; the
 // collector then emits ONE SkinnedMesh per material kind for the whole figure (every joint is a Bone).
 // Draw calls are the main cost on the software GPU (~0.3 ms each), so this halves a character's cost.
+// v2 fabric patterns, built as geometry so they merge into the joint's single vertex-coloured mesh.
+// Adds the pattern on the four sides of a w×h×d box centred at (0, cy, 0) (taper = bottom/top width, like taperBox).
+const starGeo = (r) => cgeo(`star${r}`, () => {
+  const s = new THREE.Shape();
+  for (let i = 0; i < 10; i++) { const a = PI / 2 + i * PI / 5, rr = i % 2 ? r * 0.45 : r; const x = Math.cos(a) * rr, y = Math.sin(a) * rr; if (i) s.lineTo(x, y); else s.moveTo(x, y); }
+  s.closePath();
+  return new THREE.ShapeGeometry(s);
+});
+function addPattern(bag, kind, color, w, h, d, cy, seed = 1, side = 1, taper = 1) {
+  if (kind === 'stripes') {
+    const sp = 0.074, sw = 0.024, th = 0.008;
+    const wf = w * (1 + taper) / 2;
+    const nF = Math.max(1, Math.floor((wf - 0.05) / sp));
+    for (let i = 0; i < nF; i++) {
+      const x = (i - (nF - 1) / 2) * sp;
+      for (const sz of [-1, 1]) bag.add(rbox(sw, h, th, 0.003, 1), color, [x, cy, sz * (d / 2 + th / 2 - 0.002)]);
+    }
+    const nS = Math.max(1, Math.floor((d - 0.05) / sp));
+    for (let i = 0; i < nS; i++) {
+      const z = (i - (nS - 1) / 2) * sp;
+      for (const sx of [-1, 1]) bag.add(rbox(th, h, sw, 0.003, 1), color, [sx * (wf / 2 + th / 2 - 0.002), cy, z], [0, 0, sx * Math.atan2((1 - taper) * w / 2, h)]);
+    }
+  } else if (kind === 'stars') {
+    const r = 0.034, faces = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    let k = 0;
+    for (const [fx, fz] of faces) {
+      const span = fx ? d : w * (1 + taper) / 2;
+      const n = Math.max(1, Math.round((span * h) / 0.022));
+      for (let i = 0; i < n; i++, k++) {
+        const u = (hash(seed * 13.1 + k * 2.37) - 0.5) * (span - 2 * r - 0.02), v = (hash(seed * 7.7 + k * 5.13) - 0.5) * (h - 2 * r - 0.02);
+        const spin = hash(seed + k * 9.1) * TAU, sc = 0.8 + 0.45 * hash(seed * 3 + k);
+        if (fz) bag.add(starGeo(r), color, [u, cy + v, fz * (d / 2 + 0.004)], [0, fz > 0 ? 0 : PI, spin], [sc, sc, sc]);
+        else bag.add(starGeo(r), color, [fx * (w * (1 + taper) / 4 + 0.004), cy + v, u], [0, fx * PI / 2, spin], [sc, sc, sc]);
+      }
+    }
+  }
+  return bag;
+}
+
 let _collect = null;
 class SkinCollector {
   constructor() { this.parts = []; }
@@ -313,6 +417,13 @@ const HUMAN_FACES = {
   sweat:      { e: 'small',    b: 'worried', m: 'wavy', blush: 0, sweat: true, blink: 'closed' },
   sleepy:     { e: 'sleepy',   b: 'low',   m: 'yawn', blush: 0.15, blink: 'closed' },
   wink:       { e: 'open', eR: 'winkArc', b: 'soft', bR: 'raised', m: 'tongue', blush: 0.3, blink: 'closed' },
+  // v2 big faces (style bible §8: saved for 3–5 beats per episode, extreme close-up)
+  crying:     { e: 'cry',      b: 'anguish', m: 'wail', blush: 0.5, streams: true },
+  terrified:  { e: 'pin',      b: 'anguish', m: 'grimace', blush: 0, sweat: true, shiver: true, blink: 'pin' },
+  relieved:   { e: 'closed',   b: 'relief', m: 'smile', blush: 0.38, puff: true },
+  heartbroken: { e: 'welling', b: 'anguish', m: 'wobble', blush: 0.22, bigTear: true, blink: 'closed' },
+  angry:      { e: 'determined', b: 'furious', m: 'gritted', blush: 0.3, vein: true, blink: 'detClosed' },
+  scared:     { e: 'wide',     b: 'worried', m: 'wavy', blush: 0, sweat: true, blink: 'closed' },
 };
 
 function humanEye(g, kind, x, y, side, C) {
@@ -370,6 +481,25 @@ function humanEye(g, kind, x, y, side, C) {
       strokePath(g, LINE, 8, [x - inn * 40, y - 8, x - inn * 52, y - 18]);
       strokePath(g, LINE, 8, [x - inn * 41, y + 12, x - inn * 53, y + 20]);
       break;
+    // ---- v2 eyes ----
+    case 'cry':          // squeezed shut, inner corner pulled up, crease lines
+      g.beginPath(); g.moveTo(x - inn * 36, y + 8); g.quadraticCurveTo(x, y - 10, x + inn * 34, y - 14);
+      g.strokeStyle = LINE; g.lineWidth = 18; g.stroke();
+      strokeQ(g, LINE, 9, x - inn * 30, y + 26, x - inn * 4, y + 16, x + inn * 22, y + 12);
+      break;
+    case 'pin':          // huge whites, pinprick pupils
+      g.fillStyle = '#ffffff'; ell(g, x, y, 46, 52); g.fill();
+      g.lineWidth = 10; g.strokeStyle = LINE; g.stroke();
+      g.fillStyle = C.eye; ell(g, x, y + 2, 8, 9); g.fill();
+      break;
+    case 'welling':      // big glossy eyes, tears pooled on the lower lid
+      oval(34, 44);
+      g.save(); ell(g, x, y, 34, 44); g.clip();
+      g.fillStyle = 'rgba(120,205,255,0.85)'; ell(g, x, y + 40, 46, 22); g.fill();
+      g.restore();
+      g.fillStyle = '#ffffff'; ell(g, x - 11, y - 16, 14, 15); g.fill(); ell(g, x + 12, y + 6, 7, 7); g.fill();
+      ell(g, x + 4, y + 30, 16, 4); g.fill();
+      break;
     default: oval(); shine();
   }
 }
@@ -389,6 +519,8 @@ function humanBrow(g, kind, x, y, side, C) {
     case 'furrow': strokePath(g, col, 20, [x - inn * 36, y + 4, x + inn * 30, y + 22]); break;
     case 'low': strokePath(g, col, 17, [x - inn * 36, y + 18, x + inn * 30, y + 14]); break;
     case 'smug': if (side < 0) strokePath(g, col, 18, [x - 34, y + 8, x + 32, y + 10]); else strokeQ(g, col, 18, x - 34, y - 8, x, y - 30, x + 36, y - 6); break;
+    case 'anguish': strokeQ(g, col, 20, x - inn * 40, y + 10, x + inn * 6, y + 2, x + inn * 34, y - 34); break;
+    case 'relief': strokeQ(g, col, 18, x - inn * 38, y + 6, x, y - 14, x + inn * 34, y - 8); break;
     default: strokePath(g, col, 18, [x - 34, y, x + 34, y]);
   }
 }
@@ -439,6 +571,28 @@ function humanMouth(g, kind) {
       break;
     case 'wavy': strokePath(g, LINE, 12, [204, y + 8, 220, y - 6, 238, y + 10, 256, y - 6, 274, y + 10, 292, y - 6, 308, y + 8]); break;
     case 'yawn': mouthShape(g, () => { ell(g, 256, y + 12, 17, 22); }); break;
+    // ---- v2 mouths ----
+    case 'wail':          // wide open, corners pulled down, upper teeth, tongue
+      mouthShape(g, () => { g.beginPath(); g.moveTo(206, y - 22); g.quadraticCurveTo(256, y - 40, 306, y - 22); g.quadraticCurveTo(350, y + 60, 318, y + 74); g.quadraticCurveTo(256, y + 86, 194, y + 74); g.quadraticCurveTo(162, y + 60, 206, y - 22); g.closePath(); },
+        { teethTop: y - 18, tongue: [256, y + 72, 46, 24] });
+      break;
+    case 'grimace': {     // clenched teeth, wide, stretched
+      const path = () => { g.beginPath(); g.moveTo(180, y - 16); g.quadraticCurveTo(256, y - 30, 332, y - 16); g.quadraticCurveTo(342, y + 20, 324, y + 42); g.quadraticCurveTo(256, y + 52, 188, y + 42); g.quadraticCurveTo(170, y + 20, 180, y - 16); g.closePath(); };
+      path(); g.fillStyle = '#ffffff'; g.fill();
+      g.save(); path(); g.clip();
+      g.strokeStyle = '#5a5a60'; g.lineWidth = 6;
+      g.beginPath(); g.moveTo(170, y + 14); g.lineTo(342, y + 14); g.stroke();
+      for (let k = 0; k < 7; k++) { const xx = 196 + k * 20; g.beginPath(); g.moveTo(xx, y - 30); g.lineTo(xx, y + 60); g.stroke(); }
+      g.restore();
+      path(); g.lineWidth = 11; g.strokeStyle = LINE; g.stroke();
+      break;
+    }
+    case 'wobble': strokePath(g, LINE, 13, [204, y + 26, 220, y + 6, 238, y + 14, 256, y - 2, 274, y + 14, 292, y + 6, 308, y + 26]); break;
+    case 'gritted':
+      mouthShape(g, () => { g.beginPath(); g.moveTo(198, y + 4); g.quadraticCurveTo(256, y - 22, 314, y + 4); g.lineTo(306, y + 34); g.quadraticCurveTo(256, y + 22, 206, y + 34); g.closePath(); },
+        { teethTop: y + 12, teethBot: y + 12 });
+      strokePath(g, LINE, 6, [204, y + 14, 308, y + 14]);
+      break;
     case 'tongue':
       g.fillStyle = TONGUE; g.beginPath(); g.moveTo(256, y + 18); g.lineTo(296, y + 12);
       g.quadraticCurveTo(300, y + 52, 276, y + 50); g.quadraticCurveTo(256, y + 48, 256, y + 18); g.fill();
@@ -467,6 +621,26 @@ function drawHumanFace(g, expr, blink, C) {
   humanBrow(g, F.b, L, FBY, -1, C);
   humanBrow(g, F.bR || F.b, R, FBY, +1, C);
   humanMouth(g, F.m);
+  if (F.streams) {           // v2 crying: two tear rivers from the outer eye corners to the jaw
+    for (const [x0, dir] of [[L - 22, -1], [R + 22, 1]]) {
+      g.beginPath(); g.moveTo(x0 - 15, FEY + 4);
+      g.bezierCurveTo(x0 - 20 + dir * 6, FEY + 90, x0 - 24 + dir * 14, FEY + 170, x0 - 12 + dir * 18, 506);
+      g.lineTo(x0 + 26 + dir * 18, 506);
+      g.bezierCurveTo(x0 + 18 + dir * 14, FEY + 170, x0 + 20 + dir * 6, FEY + 90, x0 + 15, FEY + 4); g.closePath();
+      g.fillStyle = 'rgba(110,200,255,0.92)'; g.fill(); g.lineWidth = 5; g.strokeStyle = '#2b86c8'; g.stroke();
+      g.fillStyle = 'rgba(255,255,255,0.85)'; ell(g, x0 - 2 + dir * 4, FEY + 70, 4, 16, dir * 0.08); g.fill();
+    }
+    drop(g, L - 54, FEY + 120, 0.6); drop(g, R + 58, FEY + 150, 0.55);
+  }
+  if (F.shiver) {             // v2 terrified: tremble marks beside the head
+    for (const sx of [-1, 1]) for (const k of [0, 1]) strokeQ(g, LINE, 7, 256 + sx * (212 + k * 16), 150 + k * 10, 256 + sx * (230 + k * 16), 190, 256 + sx * (212 + k * 16), 230 - k * 10);
+  }
+  if (F.puff) {               // v2 relieved: a little exhale puff off the mouth corner
+    g.fillStyle = 'rgba(255,255,255,0.95)'; g.strokeStyle = '#9fb3c8'; g.lineWidth = 5;
+    for (const [x, y2, r] of [[350, FMY - 6, 20], [380, FMY - 22, 15], [404, FMY - 36, 10]]) { ell(g, x, y2, r, r * 0.8); g.fill(); g.stroke(); }
+    drop(g, 392, 136, 0.7);
+  }
+  if (F.bigTear) drop(g, L - 4, FEY + 96, 0.95);
   if (F.sweat) drop(g, 384, 150, 1.15);
   if (F.tear) drop(g, L - 30, FEY + 62, 0.65);
   if (F.vein) {
@@ -1285,6 +1459,418 @@ HUMAN.sitStand = (c) => {
 };
 
 // ======================================================================================================
+//  v2 body acting — IK poses + cycles (additive; see the "v2 BODY ACTING" block in the header)
+// ======================================================================================================
+export const SPRINT_SPEED = 3.3, DRAG_SPEED = 0.38, BACKUP_SPEED = 0.6, CHARGE_SPEED = 3.0;
+const SPRINT_CPS = 1.45, DRAG_CPS = 0.85, BACKUP_CPS = 1.0;
+const trem = (c, f, a, k = 0) => a * noise1(c.t * f, c.seed + 31 + k);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+// world Vector3 → body frame (unscaled; feet at the origin, +Z forward). Place the character's root first.
+function worldToBody(c, w, out) {
+  c.ch.root.updateWorldMatrix(true, false);
+  return out.copy(w).applyMatrix4(_m1.copy(c.ch.root.matrixWorld).invert()).divideScalar(c.s);
+}
+// 3-key interpolation (u 0 → a, 0.5 → b, 1 → d), smooth between keys
+function k3(u, a, b, d) { return u < 0.5 ? lerp(a, b, smooth(u * 2)) : lerp(b, d, smooth(u * 2 - 1)); }
+function k3v(u, A, B, D) { return [k3(u, A[0], B[0], D[0]), k3(u, A[1], B[1], D[1]), k3(u, A[2], B[2], D[2])]; }
+function legsTo(c, L, R, poleL, poleR) {
+  ikLeg(c, 'L', V(L[0], L[1], L[2]), poleL || V(0.15, 0, 1));
+  ikLeg(c, 'R', V(R[0], R[1], R[2]), poleR || V(-0.15, 0, 1));
+  c.x.sit = 0;
+}
+function hipsAt(c, x, y, z, rx = 0, ry = 0, rz = 0) { pos(c, 'hips', x, y, z); eul(c, 'hips', rx, ry, rz); }
+function armBody(c, side, p, pole) { ikArmBody(c, side, V(p[0], p[1], p[2]), pole ? V(pole[0], pole[1], pole[2]) : V(side === 'L' ? 0.8 : -0.8, -0.5, -0.5)); }
+function armTorso(c, side, p, pole) { ikArm(c, side, V(p[0], p[1], p[2]), pole ? V(pole[0], pole[1], pole[2]) : V(side === 'L' ? 0.8 : -0.8, -0.5, -0.5)); }
+function kneeBody(c, side, out) {
+  const sg = side === 'L' ? 1 : -1;
+  const H = hipsToBody(c, sg * c.G.hipX, 0, 0, _v1).clone();
+  return out.set(0, -THIGH, 0).applyQuaternion(_q1.copy(c.j.hips.q).multiply(c.j['leg' + side].q)).add(H);
+}
+function footPitch(c, side, a) { _q1.setFromAxisAngle(X_AXIS, a); c.j['foot' + side].q.multiply(_q1); }
+// IK stepping foot for gait cycles. dir +1: root travels +Z (forward), −1: backward. Returns [x, y, z].
+function stepFoot(c, side, cps, stride, dir, zc, lift, duty = 0.6, xo = 0.03) {
+  const sg = side === 'L' ? 1 : -1;
+  const ph = (((c.t * cps + (side === 'L' ? 0 : 0.5)) % 1) + 1) % 1;
+  let z, y = ANKLE_H;
+  if (ph < duty) { const u = ph / duty; z = zc + dir * stride * (0.5 - u); }
+  else { const u = (ph - duty) / (1 - duty); z = zc + dir * stride * (-0.5 + smooth(u)); y += lift * Math.sin(PI * u); }
+  return [sg * (c.G.hipX + xo), y, z];
+}
+
+// ---- bent-double haul (static strain) / drag (cycle) -------------------------------------------------
+//  front (default): bent double over a low load in front, arms straight down to the grip, face up toward camera;
+//    drag walks BACKWARD (root moves −Z) — the S01 wardrobe drag.  behind:true: a strap over the right shoulder,
+//    leaning into it, load behind; drag walks FORWARD.
+function haulPose(c, behind, feet, bob, tug) {
+  const I = c.I, sh = trem(c, 11, 0.012 * I), sh2 = trem(c, 8, 0.012 * I, 3);
+  if (!behind) {
+    hipsAt(c, 0, 0.64 + bob, -0.14, 0.42 + tug * 0.4, 0, sh2);
+    legsTo(c, feet.L, feet.R, V(0.25, 0, 1), V(-0.25, 0, 1));
+    eul(c, 'torso', 0.62 + tug + sh, 0, 0);
+    setHead(c, -0.75, 0, 0);
+    const gy = c.p.gripY !== undefined ? c.p.gripY / c.s : 0.45, gz = c.p.gripZ !== undefined ? c.p.gripZ / c.s : 0.62;
+    armBody(c, 'L', [0.22, gy + sh, gz], [0.6, 0.2, -1]);
+    armBody(c, 'R', [-0.22, gy - sh, gz], [-0.6, 0.2, -1]);
+  } else {
+    hipsAt(c, 0, 0.8 + bob, 0.0, 0.32 + tug * 0.5, 0.06, sh2);
+    legsTo(c, feet.L, feet.R);
+    eul(c, 'torso', 0.5 + tug + sh, -0.12, 0);
+    setHead(c, -0.62, 0.1, 0);
+    armTorso(c, 'R', [-0.1, 0.47 + sh, 0.26], [-1, -0.6, -0.2]);
+    armTorso(c, 'L', [0.02, 0.37 - sh, 0.3], [1, -0.7, -0.3]);
+  }
+}
+HUMAN.haul = (c) => {
+  const behind = !!c.p.behind;
+  const feet = behind ? { L: [0.19, ANKLE_H, 0.38], R: [-0.19, ANKLE_H, -0.42] } : { L: [0.19, ANKLE_H, 0.1], R: [-0.19, ANKLE_H, -0.42] };
+  const pulse = 0.5 + 0.5 * Math.sin(TAU * c.t * 0.7);
+  haulPose(c, behind, feet, -0.015 * pulse, 0.05 * pulse * c.I);
+};
+HUMAN.drag = (c) => {
+  const behind = !!c.p.behind, dir = behind ? 1 : -1, duty = 0.62;
+  const stride = DRAG_SPEED * duty / DRAG_CPS;
+  const zc = behind ? -0.02 : -0.16;
+  const L = stepFoot(c, 'L', DRAG_CPS, stride, dir, zc, 0.07, duty, 0.05), R = stepFoot(c, 'R', DRAG_CPS, stride, dir, zc, 0.07, duty, 0.05);
+  const g = TAU * c.t * DRAG_CPS * 2;
+  haulPose(c, behind, { L, R }, -0.022 * (0.5 + 0.5 * Math.cos(g)), 0.05 * Math.sin(g) * c.I);
+};
+
+// ---- shoulder heave: lift a heavy thing upright (u 0 → 1; default u = t / 1.2 s) -------------------------
+HUMAN.heave = (c) => {
+  const u = clamp(c.p.u ?? c.t / 1.2, 0, 1), I = c.I;
+  const sh = trem(c, 12, 0.014 * I), sh2 = trem(c, 9, 0.01 * I, 5);
+  const hp = k3v(u, [0, 0.5, -0.12], [0, 0.7, -0.06], [0, 0.88, 0]);
+  hipsAt(c, hp[0], hp[1] + sh2, hp[2], k3(u, 0.55, 0.34, 0.2), k3(u, 0.25, 0.25, 0.15), sh2);
+  legsTo(c, [0.21, ANKLE_H, 0.3], [-0.19, ANKLE_H, -0.36], V(0.3, 0, 1), V(-0.2, 0, 1));
+  eul(c, 'torso', k3(u, 0.45, 0.3, 0.2) + sh, k3(u, 0.25, 0.2, 0.1), 0);
+  setHead(c, k3(u, -0.6, -0.55, -0.5), -0.2, 0);
+  armBody(c, 'L', k3v(u, [0.26, 0.42, 0.5], [0.32, 1.05, 0.58], [0.36, 1.5, 0.62]).map((v, i) => v + (i === 1 ? sh : 0)), [0.9, -0.5, -0.3]);
+  armBody(c, 'R', k3v(u, [-0.18, 0.4, 0.52], [-0.26, 1.0, 0.58], [-0.3, 1.45, 0.6]).map((v, i) => v + (i === 1 ? -sh : 0)), [-0.9, -0.5, -0.3]);
+};
+
+// ---- push up overhead (hatch / ceiling): u 0 knees bent, shoulders hunched → 1 legs straight, arms locked ---
+HUMAN.pushUp = (c) => {
+  const u = clamp(c.p.u ?? 1, 0, 1), e = smooth(u), I = c.I;
+  const sh = trem(c, 13, 0.012 * I), sh2 = trem(c, 10, 0.008 * I, 7);
+  hipsAt(c, sh2, lerp(0.72, 0.92, e), -0.02, 0.06, 0, sh2 * 0.5);
+  legsTo(c, [c.G.hipX + 0.06, ANKLE_H, 0.04], [-(c.G.hipX + 0.06), ANKLE_H, 0.0], V(0.5, 0, 1), V(-0.5, 0, 1));
+  eul(c, 'torso', lerp(0.16, 0.03, e) + sh, 0, 0);
+  setHead(c, lerp(0.1, -0.08, e), 0, 0);
+  addPos(c, 'armL', 0, lerp(0.02, 0.07, e), 0); addPos(c, 'armR', 0, lerp(0.02, 0.07, e), 0);
+  for (const side of ['L', 'R']) {
+    const sg = side === 'L' ? 1 : -1;
+    armTorso(c, side, [sg * lerp(0.42, 0.41, e), lerp(0.8, 1.02, e) + sg * sh, lerp(0.12, 0.04, e)], [sg, -0.1, -0.3]);
+  }
+};
+
+// ---- step up onto a stool / step: u 0 → 1, height (world m, default 0.45), dist (world m, default 0.4) ------
+//  At u = 1 the figure stands on the step centred at body (0, height, dist): move the root there and switch pose.
+HUMAN.stepUp = (c) => {
+  const u = clamp(c.p.u ?? c.t / 1.0, 0, 1);
+  const h = (c.p.height ?? 0.45) / c.s, d = (c.p.dist ?? 0.4) / c.s;
+  const uL = smooth(u / 0.4), uB = smooth((u - 0.3) / 0.55), uT = smooth((u - 0.62) / 0.38);
+  const lead = [lerp(-0.16, -0.15, uL), lerp(ANKLE_H, h + ANKLE_H, uL) + 0.16 * Math.sin(PI * uL), lerp(0, d, uL)];
+  const trail = [lerp(0.17, 0.16, uT), lerp(ANKLE_H, h + ANKLE_H, uT) + 0.12 * Math.sin(PI * uT), lerp(0, d, uT)];
+  const dip = 0.04 * Math.sin(PI * clamp(u / 0.4, 0, 1)) * (1 - uB);
+  hipsAt(c, 0.03 * Math.sin(PI * uB), lerp(0.92, h + 0.92, uB) - dip - 0.05 * Math.sin(PI * uB), lerp(0, d, uB), 0.1 * Math.sin(PI * u), 0, 0);
+  legsTo(c, trail, lead, V(0.15, 0, 1), V(-0.15, 0.3, 1));
+  eul(c, 'torso', 0.12 + 0.28 * Math.sin(PI * uB), 0, 0);
+  setHead(c, 0.2 - 0.3 * uB, 0, 0);
+  const o = 0.25 * Math.sin(PI * u);
+  restArm(c, 'L', -0.2 * o, 0.04 + o, -0.4); restArm(c, 'R', 0.3 * o, 0.04 + o, -0.4);
+};
+
+// ---- crouch / cower: depth 0..1 (default 1); hands 'knees' | 'floor' | 'head' (cower) | 'hug' | 'none' ------
+HUMAN.crouch = (c) => {
+  const d = clamp(c.p.depth ?? 1, 0, 1), I = c.I, mode = c.p.hands ?? 'knees';
+  const cower = mode === 'head';
+  const sh = c.p.tremble || cower ? trem(c, 15, 0.01 * I) : 0;
+  hipsAt(c, 0, lerp(0.92, 0.4, d) + sh * 0.5, lerp(0, -0.12, d), 0.3 * d, 0, 0);
+  const fw = lerp(c.G.hipX + 0.02, c.G.hipX + 0.16, d);
+  legsTo(c, [fw, ANKLE_H, 0.06], [-fw, ANKLE_H, 0.03], V(1, 0.1, 0.7), V(-1, 0.1, 0.7));
+  footFlat(c, 'L', 0.35 * d); footFlat(c, 'R', -0.35 * d);
+  eul(c, 'torso', (0.26 + (cower ? 0.2 : 0)) * d + sh, 0, 0);
+  setHead(c, cower ? 0.22 : -0.35 * d, 0, 0);
+  const kL = kneeBody(c, 'L', V(0, 0, 0)), kR = kneeBody(c, 'R', V(0, 0, 0));
+  if (mode === 'knees') {
+    armBody(c, 'L', [kL.x + 0.02, kL.y + 0.1, kL.z + 0.04], [0.8, -0.3, -0.6]);
+    armBody(c, 'R', [kR.x - 0.02, kR.y + 0.1, kR.z + 0.04], [-0.8, -0.3, -0.6]);
+  } else if (mode === 'floor') {
+    armBody(c, 'L', [kL.x + 0.02, kL.y + 0.1, kL.z + 0.04], [0.8, -0.3, -0.6]);
+    armBody(c, 'R', [-0.2, 0.09, 0.5], [-0.8, 0.2, -0.6]);
+  } else if (mode === 'hug') {
+    armBody(c, 'L', [-0.05, kL.y - 0.05, kL.z + 0.14], [1, 0, -0.3]);
+    armBody(c, 'R', [0.05, kR.y - 0.1, kR.z + 0.14], [-1, 0, -0.3]);
+  } else if (cower) {
+    armTorso(c, 'L', [0.38, 0.86 + sh, 0.2], [1, -0.4, 0.3]);
+    armTorso(c, 'R', [-0.38, 0.88 - sh, 0.2], [-1, -0.4, 0.3]);
+  } else { restArm(c, 'L', -0.3 * d, 0.05); restArm(c, 'R', -0.3 * d, 0.05); }
+};
+HUMAN.cower = (c) => { c.p = Object.assign({}, c.p, { hands: 'head', depth: c.p.depth ?? 1 }); HUMAN.crouch(c); };
+
+// ---- kneel: oneKnee (left foot planted), sitBack 0..1, hands 'lap' | 'work' | 'pray' | 'none' -------------
+function kneelLegs(c, oneKnee, sb, pitch = 0) {
+  hipsAt(c, 0, lerp(0.37, 0.28, sb), lerp(0.06, -0.1, sb), lerp(0, 0.1, sb) + pitch, 0, 0);
+  const back = [ANKLE_H + 0.05, 0.06 - 0.53];
+  const kneelLeg = (side) => {
+    const sg = side === 'L' ? 1 : -1;
+    ikLeg(c, side, V(sg * (c.G.hipX + 0.02), back[0], back[1]), V(0, -0.4, 1));
+    footPitch(c, side, 2.6);
+  };
+  if (oneKnee) ikLeg(c, 'L', V(c.G.hipX + 0.04, ANKLE_H, 0.44), V(0.2, 0, 1)); else kneelLeg('L');
+  kneelLeg('R');
+  c.x.sit = 0;
+}
+HUMAN.kneel = (c) => {
+  const sb = clamp(c.p.sitBack ?? 0, 0, 1), mode = c.p.hands ?? 'lap', br = Math.sin(TAU * c.t / 3.4);
+  kneelLegs(c, !!c.p.oneKnee, sb);
+  eul(c, 'torso', 0.06 + 0.01 * br + (mode === 'work' ? 0.25 : 0), 0, 0);
+  setHead(c, mode === 'work' ? 0.25 : 0.02, 0, 0);
+  if (mode === 'work') {
+    const w = Math.sin(TAU * c.t * 1.3);
+    armBody(c, 'L', [0.12, 0.36 + 0.02 * w, 0.55], [0.9, -0.4, -0.5]);
+    armBody(c, 'R', [-0.1, 0.4 - 0.03 * w, 0.52 + 0.02 * Math.sin(TAU * c.t * 2.6)], [-0.9, -0.4, -0.5]);
+  } else if (mode === 'pray') {
+    armTorso(c, 'L', [0.03, 0.34, 0.3], [1, -0.6, -0.2]); armTorso(c, 'R', [-0.03, 0.34, 0.3], [-1, -0.6, -0.2]);
+  } else if (mode === 'lap') {
+    const hy = c.j.hips.p.y;
+    armBody(c, 'L', [0.16, hy + 0.12, c.j.hips.p.z + 0.24], [0.6, -0.2, -1]); armBody(c, 'R', [-0.16, hy + 0.12, c.j.hips.p.z + 0.24], [-0.6, -0.2, -1]);
+  } else { restArm(c, 'L', 0, 0.03); restArm(c, 'R', 0, 0.03); }
+};
+
+// ---- sit on the floor against a wall: u 0 (standing, back to the wall) → 1 (seated); knees 'up' | 'flat';
+//      hands 'knees' | 'floor' | 'lap' | 'hug'; slump 0..1 (default 0.5). The wall plane is at z ≈ −0.2·scale.
+HUMAN.sitWall = (c) => {
+  const u = clamp(c.p.u ?? 1, 0, 1), e = smooth(u), flat = c.p.knees === 'flat', slump = c.p.slump ?? 0.5;
+  const br = Math.sin(TAU * c.t / 3.6);
+  hipsAt(c, 0, lerp(0.92, 0.12, e), lerp(0.0, 0.0, e), lerp(0, -0.08, e), 0, 0);
+  const endL = flat ? [0.17, 0.12, 0.84] : [0.2, ANKLE_H, 0.46], endR = flat ? [-0.17, 0.12, 0.82] : [-0.22, ANKLE_H, 0.5];
+  const L = [lerp(c.G.hipX + 0.02, endL[0], e), lerp(ANKLE_H, endL[1], e), lerp(0.03, endL[2], e)];
+  const R = [lerp(-(c.G.hipX + 0.02), endR[0], e), lerp(ANKLE_H, endR[1], e), lerp(0.03, endR[2], e)];
+  legsTo(c, L, R, V(0.3, 0.6, 1), V(-0.3, 0.6, 1));
+  if (flat) { footPitch(c, 'L', -1.25 * e); footPitch(c, 'R', -1.25 * e); }
+  eul(c, 'torso', lerp(-0.03, 0.08 + 0.22 * slump, e) + 0.01 * br, 0, 0);
+  setHead(c, lerp(0, 0.28 * slump, e), 0, 0);
+  const mode = c.p.hands ?? 'knees';
+  const kL = kneeBody(c, 'L', V(0, 0, 0)), kR = kneeBody(c, 'R', V(0, 0, 0));
+  let tL, tR, pL = [0.8, -0.2, -0.6], pR = [-0.8, -0.2, -0.6];
+  if (mode === 'knees' && !flat) { tL = [kL.x + 0.02, kL.y + 0.1, kL.z + 0.02]; tR = [kR.x - 0.02, kR.y + 0.1, kR.z + 0.02]; }
+  else if (mode === 'hug' && !flat) { tL = [-0.04, kL.y - 0.02, kL.z + 0.14]; tR = [0.04, kR.y - 0.06, kR.z + 0.14]; pL = [1, 0, -0.3]; pR = [-1, 0, -0.3]; }
+  else if (mode === 'lap' || (mode !== 'floor' && flat)) { tL = [0.13, 0.32, 0.3]; tR = [-0.13, 0.32, 0.3]; }
+  else { tL = [0.4, 0.08, 0.02]; tR = [-0.4, 0.08, 0.02]; pL = [0.5, 0.3, -1]; pR = [-0.5, 0.3, -1]; }
+  const hang = (s) => [s * 0.44, 0.55, 0.02];
+  armBody(c, 'L', [lerp(hang(1)[0], tL[0], e), lerp(hang(1)[1], tL[1], e), lerp(hang(1)[2], tL[2], e)], pL);
+  armBody(c, 'R', [lerp(hang(-1)[0], tR[0], e), lerp(hang(-1)[1], tR[1], e), lerp(hang(-1)[2], tR[2], e)], pR);
+};
+
+// ---- lean in: ear against something in front (Pip's ear on Mom's stomach). lean 0..1, side 'R'|'L' (the ear
+//      that goes forward), hands 'hug' | 'rest' | 'none', dist (world m, default 0.5·scale: how far ahead the
+//      contact is). The face turns to the character's left for side 'R'.
+HUMAN.leanIn = (c) => {
+  const l = clamp(c.p.lean ?? 1, 0, 1), sd = (c.p.side ?? 'R') === 'R' ? 1 : -1, br = Math.sin(TAU * c.t / 3.2);
+  const dist = (c.p.dist ?? 0.5 * c.s) / c.s;
+  hipsAt(c, -0.02 * sd * l, 0.9 - 0.04 * l, -0.05 * l, 0.12 * l, 0.12 * sd * l, 0);
+  legsTo(c, [c.G.hipX + 0.03, ANKLE_H, 0.08], [-(c.G.hipX + 0.03), ANKLE_H, -0.14]);
+  eul(c, 'torso', 0.36 * l + 0.01 * br, 0.4 * sd * l, -0.06 * sd * l);
+  setHead(c, 0.12 * l, 1.15 * sd * l, 0.32 * sd * l);
+  const mode = c.p.hands ?? 'hug';
+  if (mode === 'hug') {
+    armBody(c, 'L', [lerp(0.4, 0.26, l), lerp(0.55, 1.02, l), lerp(0.05, dist + 0.06, l)], [1, -0.3, -0.2]);
+    armBody(c, 'R', [lerp(-0.4, -0.26, l), lerp(0.55, 0.98, l), lerp(0.05, dist + 0.1, l)], [-1, -0.3, -0.2]);
+  } else if (mode === 'rest') {
+    armBody(c, 'L', [0.18, 1.0, dist - 0.04], [0.8, -0.6, -0.3]);
+    armBody(c, 'R', [-0.18, 0.96, dist - 0.04], [-0.8, -0.6, -0.3]);
+  } else { restArm(c, 'L', -0.1, 0.03); restArm(c, 'R', -0.1, 0.03); }
+};
+
+// ---- arms round someone's neck: target (world Vector3 = the other's neck) or dist/height (world m, default
+//      0.42·s / 1.3·s); kneel:true kneels first; side 'R'|'L' (cheek side).
+HUMAN.hugNeck = (c) => {
+  const sd = (c.p.side ?? 'R') === 'R' ? 1 : -1, br = Math.sin(TAU * c.t / 3.0), kn = !!c.p.kneel;
+  const hy = kn ? 0.37 : 0.9, hz = kn ? 0.06 : -0.04;
+  pos(c, 'hips', 0, hy, hz);
+  const T = c.p.target ? worldToBody(c, c.p.target, V(0, 0, 0)) : V(0, (c.p.height ?? 1.3 * c.s) / c.s, (c.p.dist ?? 0.42 * c.s) / c.s);
+  const lean = clamp(Math.atan2(hy + SHOULDER_Y - T.y + 0.12, Math.max(0.2, T.z - hz)), 0.05, 1.3);
+  if (kn) kneelLegs(c, false, 0, lean * 0.3);
+  else { hipsAt(c, 0, hy, hz, lean * 0.35, 0, 0); legsTo(c, [c.G.hipX + 0.03, ANKLE_H, 0.1], [-(c.G.hipX + 0.03), ANKLE_H, -0.12]); }
+  eul(c, 'torso', lean * (kn ? 0.7 : 0.65) + 0.01 * br, 0, 0);
+  setHead(c, -lean * 0.55, 0.5 * sd, 0.22 * sd);
+  const wrap = c.p.wrap ?? 0.16;   // how far past the neck the hands reach (body units)
+  armBody(c, 'L', [T.x + 0.24, T.y + 0.05, T.z + wrap], [1, 0.5, -0.2]);
+  armBody(c, 'R', [T.x - 0.24, T.y + 0.07, T.z + wrap - 0.02], [-1, 0.5, -0.2]);
+};
+
+// ---- lying: lie (on the back, hips at the root, feet toward +Z, head toward −Z) / lieFront (face down, head
+//      toward +Z). arms 'out' | 'up' | 'side' | 'chest' | 'flail' (lie) and 'out' | 'side' | 'cheek' (lieFront);
+//      knees 0..1 (lie: knees up), headLift 0..1 (lie: chin to chest), roll (rad about the spine), arch 0..1
+//      (lieFront: chest lifted, default 0.6).
+HUMAN.lie = (c) => {
+  const k = clamp(c.p.knees ?? 0.25, 0, 1), hl = clamp(c.p.headLift ?? 0, 0, 1), I = c.I, br = Math.sin(TAU * c.t / 3.6);
+  pos(c, 'hips', 0, c.G.torsoD / 2 + 0.012, 0);
+  c.j.hips.q.setFromAxisAngle(X_AXIS, -PI / 2).multiply(_q1.setFromAxisAngle(Y_AXIS, c.p.roll ?? 0));
+  const L = [lerp(0.2, 0.22, k), lerp(0.12, ANKLE_H, k), lerp(0.85, 0.48, k)];
+  const R = [lerp(-0.23, -0.2, k * 0.45), lerp(0.12, ANKLE_H, k * 0.45), lerp(0.84, 0.66, k * 0.45)];
+  legsTo(c, L, R, V(0.4, 1, 0.3), V(-0.4, 1, 0.3));
+  footPitch(c, 'L', -1.3 * (1 - k)); footPitch(c, 'R', -1.3 * (1 - k * 0.45));
+  eul(c, 'torso', 0.22 * hl + 0.006 * br, 0, 0);
+  setHead(c, 0.45 * hl, 0, 0);
+  const mode = c.p.arms ?? 'out';
+  const w = mode === 'flail' ? Math.sin(TAU * c.t * 2.2) * I : 0;
+  const T = { out: [0.72, 0.09, -0.3], up: [0.34, 0.09, -1.0], side: [0.45, 0.09, 0.08], chest: [0.1, 0.38, -0.2], flail: [0.62, 0.3 + 0.2 * w, -0.45] }[mode] || [0.72, 0.09, -0.3];
+  armBody(c, 'L', [T[0], T[1], T[2]], [0.6, 0, -1]);
+  armBody(c, 'R', [-T[0], T[1] + (mode === 'flail' ? -0.4 * w : 0), T[2] + (mode === 'out' ? 0.12 : 0)], [-0.6, 0, -1]);
+};
+HUMAN.lieFront = (c) => {
+  const arch = clamp(c.p.arch ?? 0.6, 0, 1), br = Math.sin(TAU * c.t / 3.6);
+  pos(c, 'hips', 0, c.G.torsoD / 2 + 0.012, 0);
+  c.j.hips.q.setFromAxisAngle(X_AXIS, PI / 2).multiply(_q1.setFromAxisAngle(Y_AXIS, c.p.roll ?? 0));
+  legsTo(c, [0.2, 0.18, -0.84], [-0.22, 0.2, -0.8], V(0.3, 1, -0.3), V(-0.3, 1, -0.3));
+  footPitch(c, 'L', 1.25); footPitch(c, 'R', 1.1);
+  eul(c, 'torso', -0.45 * arch + 0.006 * br, 0, 0);
+  setHead(c, -0.5 * arch, 0, 0);
+  const mode = c.p.arms ?? 'cheek';
+  const T = { out: [0.42, 0.08, 0.8], side: [0.44, 0.08, -0.28], cheek: [0.2, 0.08, 0.6] }[mode] || [0.2, 0.08, 0.6];
+  armBody(c, 'L', T, [0.6, 1, 0]);
+  armBody(c, 'R', [-T[0], T[1], T[2]], [-0.6, 1, 0]);
+};
+
+// ---- static flying / crash pose (move the root along a path): variant 'shoulder' (default: shoulder-first,
+//      continuing a charge) | 'superman' | 'flail'; lift (world m above the root of the body centre, default 1.0·s).
+//      Body points +Z, head first. fall: backward topple with flailing arms (lift as above).
+HUMAN.fly = (c) => {
+  const lift = (c.p.lift ?? 1.0 * c.s) / c.s, v = c.p.variant ?? 'shoulder', I = c.I;
+  const w = Math.sin(TAU * c.t * 3.1) * I, w2 = Math.sin(TAU * c.t * 2.3 + 1) * I;
+  pos(c, 'hips', 0, lift - 0.06, -0.34);
+  eul(c, 'hips', 1.22, v === 'shoulder' ? -0.25 : 0, 0.05 * w2);
+  eul(c, 'torso', 0.06, v === 'shoulder' ? -0.3 : 0, 0);
+  setHead(c, -0.75, v === 'shoulder' ? 0.4 : 0, 0);
+  eul(c, 'legL', -0.95 + 0.08 * w, 0, 0.12); eul(c, 'shinL', 1.45, 0, 0);
+  eul(c, 'legR', 0.22 - 0.08 * w, 0, -0.08); eul(c, 'shinR', 0.35, 0, 0);
+  eul(c, 'footL', 0.5, 0, 0); eul(c, 'footR', 0.7, 0, 0);
+  if (v === 'superman') {
+    armTorso(c, 'L', [0.2, 0.98, 0.14], [1, 0, -0.4]); armTorso(c, 'R', [-0.2, 0.98, 0.14], [-1, 0, -0.4]);
+  } else if (v === 'flail') {
+    armTorso(c, 'L', [0.6, 0.72 + 0.12 * w, 0.1 + 0.1 * w2], [1, -0.4, -0.3]); armTorso(c, 'R', [-0.6, 0.7 - 0.12 * w, 0.1 - 0.1 * w2], [-1, -0.4, -0.3]);
+  } else {
+    armTorso(c, 'L', [0.1, 0.32, 0.3], [1, -0.6, 0.1]);
+    armTorso(c, 'R', [-0.6, 0.42 + 0.1 * w, -0.3], [-0.6, -0.3, 0.8]);
+  }
+  c.x.sit = 0;
+};
+HUMAN.fall = (c) => {
+  const lift = (c.p.lift ?? 1.0 * c.s) / c.s, I = c.I;
+  const w = Math.sin(TAU * c.t * 3.4) * I, w2 = Math.sin(TAU * c.t * 2.7 + 2) * I;
+  pos(c, 'hips', 0, lift - 0.1, 0.12);
+  eul(c, 'hips', -0.7, 0, 0.06 * w2);
+  eul(c, 'torso', -0.15, 0, 0.05 * w);
+  setHead(c, 0.45, 0, 0.1 * w2);
+  eul(c, 'legL', -1.1 + 0.15 * w, 0, 0.15); eul(c, 'shinL', 1.2 + 0.2 * w2, 0, 0);
+  eul(c, 'legR', -0.45 - 0.15 * w, 0, -0.12); eul(c, 'shinR', 0.6 - 0.2 * w2, 0, 0);
+  for (const side of ['L', 'R']) {
+    const sg = side === 'L' ? 1 : -1;
+    armTorso(c, side, [sg * 0.58, 0.82 + 0.12 * sg * w, 0.08 + 0.1 * w2 * sg], [sg, -0.3, -0.4]);
+  }
+  c.x.sit = 0;
+};
+
+// ---- walking backwards, scared (cycle; root moves −Z at BACKUP_SPEED·speed·scale): arms 'up' | 'low' -------
+HUMAN.backUp = (c) => {
+  const duty = 0.62, stride = BACKUP_SPEED * duty / BACKUP_CPS, I = c.I;
+  const L = stepFoot(c, 'L', BACKUP_CPS, stride, -1, 0.02, 0.08, duty), R = stepFoot(c, 'R', BACKUP_CPS, stride, -1, 0.02, 0.08, duty);
+  const g = TAU * c.t * BACKUP_CPS * 2, sh = trem(c, 14, 0.012 * I);
+  hipsAt(c, 0.02 * Math.sin(g / 2), 0.86 - 0.02 * (0.5 + 0.5 * Math.cos(g)), 0, -0.1, 0.05 * Math.sin(g / 2), 0);
+  legsTo(c, L, R);
+  eul(c, 'torso', -0.1 + sh, -0.04 * Math.sin(g / 2), 0);
+  setHead(c, 0.14, 0.05 * Math.sin(g / 2), 0);
+  if ((c.p.arms ?? 'up') === 'low') {
+    armTorso(c, 'L', [0.42, 0.1 + sh, 0.3], [1, -0.4, -0.4]); armTorso(c, 'R', [-0.42, 0.1 - sh, 0.3], [-1, -0.4, -0.4]);
+  } else {
+    armTorso(c, 'L', [0.2, 0.5 + sh, 0.36], [1, -0.6, -0.4]); armTorso(c, 'R', [-0.2, 0.48 - sh, 0.38], [-1, -0.6, -0.4]);
+  }
+};
+
+// ---- sprint / charge (cycles; root moves +Z at SPRINT_SPEED / CHARGE_SPEED ·speed·scale) ------------------
+function runCycle(c, cps, amp, lean, armAmp) {
+  const ph = TAU * c.t * cps, I = c.I, s = Math.sin(ph), co = Math.cos(ph);
+  const hp = 0.12;
+  const aL = -amp * s * I, aR = amp * s * I;
+  const kL = (0.3 + 1.6 * Math.pow(Math.max(0, co), 0.8)) * I, kR = (0.3 + 1.6 * Math.pow(Math.max(0, -co), 0.8)) * I;
+  const ext = (a, k) => THIGH * Math.cos(a + hp) + SHIN * Math.cos(a + hp + k) + ANKLE_H;
+  const hy = Math.max(ext(aL, kL), ext(aR, kR)) + 0.05 * Math.abs(s);
+  pos(c, 'hips', 0, hy, 0);
+  eul(c, 'hips', hp, -0.12 * s * I, 0.03 * co * I);
+  eul(c, 'legL', aL, 0, 0); eul(c, 'shinL', kL, 0, 0);
+  eul(c, 'legR', aR, 0, 0); eul(c, 'shinR', kR, 0, 0);
+  footFlat(c, 'L', 0); footFlat(c, 'R', 0);
+  footPitch(c, 'L', -0.5 * Math.max(0, co) * I + 0.3 * Math.max(0, -co)); footPitch(c, 'R', -0.5 * Math.max(0, -co) * I + 0.3 * Math.max(0, co));
+  eul(c, 'torso', lean, 0.14 * s * I, 0);
+  setHead(c, -lean * 0.8 + 0.03 * Math.cos(2 * ph), -0.1 * s * I, 0);
+  restArm(c, 'L', armAmp * s * I, 0.06, -1.5);
+  restArm(c, 'R', -armAmp * s * I, 0.06, -1.5);
+  c.x.sit = 0;
+  return s;
+}
+HUMAN.sprint = (c) => { runCycle(c, SPRINT_CPS, 0.78, c.p.lean ?? 0.3, 1.0); };
+HUMAN.charge = (c) => {
+  const s = runCycle(c, SPRINT_CPS * 0.95, 0.72, 0.42, 0.9);
+  eul(c, 'torso', 0.42, -0.6 + 0.06 * s, 0.05);
+  setHead(c, -0.2, 0.55, 0);
+  armTorso(c, 'L', [0.2, 0.34, 0.26], [1, -0.8, 0.2]);
+};
+
+// ---- shove: straining push against something in front. hands 'shoulder' (left shoulder into it; contact ≈
+//      0.42·scale ahead of the root at shoulder height) | 'both' (two palms; contact ≈ 0.55·scale ahead) ----------
+HUMAN.shove = (c) => {
+  const I = c.I, sh = trem(c, 12, 0.014 * I), sh2 = trem(c, 7, 0.02 * I, 9), mode = c.p.hands ?? 'shoulder';
+  if (mode === 'both') {
+    hipsAt(c, 0, 0.84 + sh * 0.5, -0.16 + sh2, 0.32, 0, 0);
+    legsTo(c, [0.18, ANKLE_H, 0.02], [-0.18, ANKLE_H, -0.62]);
+    eul(c, 'torso', 0.28 + sh, 0, 0);
+    setHead(c, -0.3, 0, 0);
+    armBody(c, 'L', [0.2, 1.26 + sh, 0.55], [1, -0.5, -0.3]);
+    armBody(c, 'R', [-0.2, 1.24 - sh, 0.55], [-1, -0.5, -0.3]);
+  } else {
+    hipsAt(c, 0, 0.82 + sh * 0.5, -0.14 + sh2, 0.3, -0.35, 0);
+    legsTo(c, [0.2, ANKLE_H, 0.06], [-0.18, ANKLE_H, -0.64]);
+    eul(c, 'torso', 0.22 + sh, -0.4, 0.04);
+    setHead(c, -0.25, 0.6, 0.05);
+    armTorso(c, 'L', [0.3, 0.6 + sh, 0.26], [1, -0.8, 0.2]);
+    armTorso(c, 'R', [-0.04, 0.6 - sh, 0.3], [-1, -0.4, -0.4]);
+  }
+};
+
+// ---- hand overrides (any action): params reachL / reachR = preset name | [x,y,z] torso frame (unscaled) |
+//      THREE.Vector3 world point | { body:[x,y,z] } (body frame, unscaled); poleL / poleR = [x,y,z] torso frame.
+export const REACH_PRESETS = {
+  chest: [0.12, 0.3, 0.3], chin: [0.08, 0.47, 0.33], raised: [0.34, 0.8, 0.2], behindBack: [0.1, -0.02, -0.27],
+  belly: [0.14, 0.1, 0.25], hip: [0.4, 0.03, 0.03], up: [0.3, 1.0, 0.1], out: [0.16, 0.26, 0.58], ear: [0.36, 0.66, 0.05],
+  head: [0.16, 1.02, 0.02], mouth: [0.05, 0.6, 0.36], point: [0.22, 0.5, 0.75], side: null,
+};
+const REACH_POLES = { behindBack: [0.6, 0.3, 0.9], hip: [1, 0.3, -0.5], ear: [1, 0.2, -0.3], head: [1, 0.3, 0.2], up: [1, 0, -0.2], point: [0.4, -1, -0.3] };
+function applyReach(c) {
+  for (const side of ['L', 'R']) {
+    const r = c.p['reach' + side];
+    if (r === undefined || r === null) continue;
+    const sg = side === 'L' ? 1 : -1;
+    const po = c.p['pole' + side];
+    let pole = po ? V(po[0], po[1], po[2]) : null;
+    if (typeof r === 'string') {
+      const p = REACH_PRESETS[r];
+      if (r === 'side' || !p) { restArm(c, side, 0.02, 0.02); continue; }
+      const q = REACH_POLES[r] || [0.8, -0.6, -0.5];
+      ikArm(c, side, V(sg * p[0], p[1], p[2]), pole || V(sg * q[0], q[1], q[2]));
+      if (r === 'point') c.x['finger' + side] = 1;
+    } else if (Array.isArray(r)) {
+      ikArm(c, side, V(r[0], r[1], r[2]), pole || V(sg * 0.8, -0.6, -0.5));
+    } else if (r.isVector3) {
+      ikArmBody(c, side, worldToBody(c, r, V(0, 0, 0)), pole || V(sg * 0.8, -0.6, -0.5));
+    } else if (r.body) {
+      ikArmBody(c, side, V(r.body[0], r.body[1], r.body[2]), pole || V(sg * 0.8, -0.6, -0.5));
+    }
+  }
+}
+
+// ======================================================================================================
 //  Human builder
 // ======================================================================================================
 const HUMAN_JOINTS = ['hips', 'torso', 'head', 'armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR',
@@ -1308,6 +1894,10 @@ function normSpec(spec) {
     capColor: spec.capColor,
     number: spec.number,
     blindfoldColor: spec.blindfoldColor,
+    // v2 (all optional; absent = v1 look)
+    shoeStyle: spec.shoeStyle,              // 'wellies' | 'boots' | 'slippers'
+    blanketColor: spec.blanketColor ?? '#b9a3e3',
+    apronColor: spec.apronColor ?? '#f4f1ea',
   };
 }
 
@@ -1329,10 +1919,15 @@ function buildHuman(spec, low) {
   G.shoulderX = G.torsoW / 2 + G.armW / 2 - 0.004;
   const skin = S.skin, hairC = S.hair.color, topC = S.top.color, acc = S.top.accent, botC = S.bottom.color;
   const topStyle = S.top.style, botStyle = S.bottom.style;
-  const skirtLike = topStyle === 'dress' || botStyle === 'skirt';
-  const legC = (botStyle === 'pants' && topStyle !== 'dress') ? botC : skin;
-  const thighC = (topStyle === 'dress' || botStyle === 'skirt') ? skin : botC;
-  const pelvisC = topStyle === 'dress' ? topC : botC;
+  const robe = topStyle === 'robe';                                     // v2
+  const pantsLike = botStyle === 'pants' || botStyle === 'pyjamas';     // v2 ('pyjamas' bottoms are pants)
+  const skirtLike = topStyle === 'dress' || botStyle === 'skirt' || robe;
+  const legC = (pantsLike && topStyle !== 'dress') ? botC : skin;
+  const thighC = (topStyle === 'dress' || botStyle === 'skirt' || (robe && !pantsLike)) ? skin : botC;
+  const pelvisC = (topStyle === 'dress' || robe) ? topC : botC;
+  const topPat = S.top.pattern, topPatC = S.top.patternColor ?? '#ffffff';       // v2 'stripes' | 'stars'
+  const botPat = S.bottom.pattern, botPatC = S.bottom.patternColor ?? topPatC;
+  const piping = S.top.piping ?? (topPat ? topPatC : shade(topC, 0.8));
 
   const root = new THREE.Group(); root.name = 'char:' + S.id;
   const body = new THREE.Group(); body.name = 'body'; body.scale.setScalar(S.scale); root.add(body);
@@ -1357,16 +1952,40 @@ function buildHuman(spec, low) {
     const tl = THIGH + LEG_D / 2 + 0.06;
     bt.add(rbox(G.legW, tl, LEG_D, 0.05), thighC, [0, 0.06 - tl / 2, 0]);
     if (botStyle === 'shorts') bt.add(rbox(G.legW + 0.016, 0.1, LEG_D + 0.016, 0.04), shade(botC, 0.9), [0, -0.33, 0]);
+    if (botPat && pantsLike && !robe) addPattern(bt, botPat, botPatC, G.legW, tl, LEG_D, 0.06 - tl / 2, seedOf(S.id) + (sg > 0 ? 11 : 23), sg);
     bt.build(J['leg' + side]);
     const bs = new Bag();
     bs.add(rbox(G.legW * 0.96, SHIN + 0.07, LEG_D * 0.96, 0.05), legC, [0, 0.07 - (SHIN + 0.07) / 2, 0]);
-    if (botStyle === 'shorts' || skirtLike) bs.add(rbox(G.legW * 0.96 + 0.012, 0.09, LEG_D * 0.96 + 0.012, 0.03), '#f4f4f4', [0, -SHIN + 0.075, 0]);
+    if (botPat && pantsLike) addPattern(bs, botPat, botPatC, G.legW * 0.96, SHIN - 0.02, LEG_D * 0.96, 0.07 - (SHIN + 0.07) / 2 + 0.04, seedOf(S.id) + (sg > 0 ? 37 : 41), sg);
+    if (botStyle === 'shorts' || (skirtLike && !(robe && pantsLike))) bs.add(rbox(G.legW * 0.96 + 0.012, 0.09, LEG_D * 0.96 + 0.012, 0.03), '#f4f4f4', [0, -SHIN + 0.075, 0]);
+    else if (botStyle === 'pyjamas') bs.add(rbox(G.legW * 0.96 + 0.016, 0.06, LEG_D * 0.96 + 0.016, 0.03), S.bottom.piping ?? botPatC, [0, -SHIN + 0.07, 0]);
     else bs.add(rbox(G.legW * 0.96 + 0.014, 0.07, LEG_D * 0.96 + 0.014, 0.03), shade(botC, 0.85), [0, -SHIN + 0.065, 0]);
+    // v2 shoe styles: boot shafts ride on the shin so they bend with the ankle like real boots
+    if (S.shoeStyle === 'wellies') {
+      bs.add(rbox(G.legW * 0.96 + 0.05, 0.3, LEG_D * 0.96 + 0.05, 0.04), shoeC, [0, -SHIN + 0.13, 0]);
+      bs.add(rbox(G.legW * 0.96 + 0.064, 0.045, LEG_D * 0.96 + 0.064, 0.02), shade(shoeC, 0.86), [0, -SHIN + 0.27, 0]);
+    } else if (S.shoeStyle === 'boots') {
+      bs.add(rbox(G.legW * 0.96 + 0.04, 0.18, LEG_D * 0.96 + 0.04, 0.04), shoeC, [0, -SHIN + 0.075, 0]);
+      bs.add(rbox(G.legW * 0.96 + 0.05, 0.035, LEG_D * 0.96 + 0.05, 0.015), shade(shoeC, 0.75), [0, -SHIN + 0.155, 0]);
+    }
     bs.build(J['shin' + side]);
     const bf = new Bag();
-    bf.add(rbox(G.legW + 0.035, 0.095, 0.30, 0.045), shoeC, [0, -0.012, 0.045]);
-    bf.add(rbox(G.legW + 0.045, 0.032, 0.31, 0.014), soleC, [0, -0.054, 0.045]);
-    if (!low) bf.add(rbox(0.012, 0.03, 0.12, 0.005), lum(shoeC) > 0.6 ? shade(acc === '#ffffff' ? '#4a6cff' : acc, 1) : '#f4f4f4', [sg * (G.legW / 2 + 0.018), -0.01, 0.03]);
+    if (S.shoeStyle === 'wellies') {
+      bf.add(rbox(G.legW + 0.06, 0.11, 0.32, 0.05), shoeC, [0, -0.008, 0.05]);
+      bf.add(rbox(G.legW + 0.066, 0.034, 0.33, 0.014), shade(shoeC, 0.62), [0, -0.054, 0.05]);
+    } else if (S.shoeStyle === 'boots') {
+      bf.add(rbox(G.legW + 0.05, 0.11, 0.33, 0.045), shoeC, [0, -0.008, 0.055]);
+      bf.add(rbox(G.legW + 0.06, 0.045, 0.34, 0.014), '#2a221c', [0, -0.058, 0.055]);
+      if (!low) for (let k = 0; k < 3; k++) bf.add(rbox(G.legW * 0.6, 0.012, 0.02, 0.004), shade(shoeC, 0.6), [0, 0.035, 0.04 + k * 0.05]);
+    } else if (S.shoeStyle === 'slippers') {
+      bf.add(rbox(G.legW + 0.04, 0.08, 0.31, 0.04), shoeC, [0, -0.02, 0.05]);
+      bf.add(rbox(G.legW + 0.05, 0.03, 0.32, 0.012), shade(shoeC, 0.7), [0, -0.054, 0.05]);
+      bf.add(rbox(G.legW + 0.05, 0.035, 0.12, 0.015), shade(shoeC, 1.25), [0, 0.022, -0.02]);
+    } else {
+      bf.add(rbox(G.legW + 0.035, 0.095, 0.30, 0.045), shoeC, [0, -0.012, 0.045]);
+      bf.add(rbox(G.legW + 0.045, 0.032, 0.31, 0.014), soleC, [0, -0.054, 0.045]);
+      if (!low) bf.add(rbox(0.012, 0.03, 0.12, 0.005), lum(shoeC) > 0.6 ? shade(acc === '#ffffff' ? '#4a6cff' : acc, 1) : '#f4f4f4', [sg * (G.legW / 2 + 0.018), -0.01, 0.03]);
+    }
     bf.build(J['foot' + side]);
   }
 
@@ -1389,9 +2008,34 @@ function buildHuman(spec, low) {
     } else if (topStyle === 'suit') {
       b.add(rbox(hw + 0.01, 0.14, hd + 0.01, 0.04), topC, [0, -0.045, 0]);
       b.add(rbox(0.012, 0.13, 0.02, 0.004), shade(topC, 0.7), [0, -0.05, hd / 2 + 0.008]);
+    } else if (topStyle === 'jumper') {                                  // v2: knit hem with a ribbed band
+      b.add(rbox(hw + 0.006, 0.1, hd + 0.006, 0.04), topC, [0, -0.02, 0]);
+      b.add(rbox(hw + 0.016, 0.06, hd + 0.016, 0.022), shade(topC, 0.84), [0, -0.075, 0]);
+      if (!low) for (let k = -4; k <= 4; k++) b.add(rbox(0.008, 0.05, 0.006, 0.002), shade(topC, 0.72), [k * hw / 10, -0.075, hd / 2 + 0.011]);
+    } else if (topStyle === 'pyjamas') {                                 // v2: shirt hem with piping, worn out
+      b.add(rbox(hw + 0.008, 0.11, hd + 0.008, 0.04), topC, [0, -0.03, 0]);
+      b.add(rbox(hw + 0.014, 0.028, hd + 0.014, 0.01), piping, [0, -0.083, 0]);
+      if (topPat) addPattern(b, topPat, topPatC, hw + 0.008, 0.09, hd + 0.008, -0.025, seedOf(S.id) + 5, 1);
+    } else if (robe) {                                                   // v2: tie belt with a knot and two tails
+      const belt = S.top.belt ?? shade(topC, 0.82);
+      b.add(rbox(hw + 0.03, 0.065, hd + 0.03, 0.025), belt, [0, 0.06, 0]);
+      b.add(rbox(0.1, 0.075, 0.05, 0.02), shade(belt, 0.9), [0.1, 0.06, hd / 2 + 0.03]);
+      b.add(rbox(0.05, 0.26, 0.03, 0.012), belt, [0.075, -0.08, hd / 2 + 0.04], [0, 0, 0.12]);
+      b.add(rbox(0.05, 0.22, 0.03, 0.012), belt, [0.13, -0.06, hd / 2 + 0.035], [0, 0, -0.18]);
     }
     b.build(J.hips);
-    if (skirtLike) {
+    if (robe) {                                                          // v2: long robe skirt to mid-shin, open-front edges
+      const hx = G.pelvisW / 2 + 0.035, rTop = hx / Math.SQRT1_2, rBot = rTop * 1.62, hh = 0.74;
+      const g = cgeo(`robeSkirt${rTop.toFixed(3)}`, () => new THREE.CylinderGeometry(rTop, rBot, hh, 4, 1));
+      const bs = new Bag();
+      const zk = (G.pelvisD + 0.07) / (G.pelvisW + 0.07);
+      bs.add(g, topC, [0, 0.04 - hh / 2, 0], [0, PI / 4, 0], [1, 1, zk], 'vc', true);
+      // the overlapping front edge (wrap) and a darker hem band
+      const fz = rBot * Math.SQRT1_2 * zk;
+      bs.add(rbox(0.05, hh - 0.04, 0.03, 0.012), shade(topC, 0.86), [-0.06, 0.04 - hh / 2, (rTop * Math.SQRT1_2 * zk + fz) / 2 + 0.012], [-Math.atan2(fz - rTop * Math.SQRT1_2 * zk, hh), 0, 0.03]);
+      bs.add(cgeo(`robeHem${rBot.toFixed(3)}`, () => new THREE.CylinderGeometry(rBot * 1.005, rBot * 1.02, 0.06, 4, 1)), shade(topC, 0.86), [0, 0.04 - hh + 0.03, 0], [0, PI / 4, 0], [1, 1, zk], 'vc', true);
+      bs.build(J.skirt);
+    } else if (skirtLike) {
       const sc = topStyle === 'dress' ? topC : botC;
       const hx = G.pelvisW / 2 + 0.025, rTop = hx / Math.SQRT1_2, rBot = rTop * 1.42;
       const g = cgeo(`skirt${rTop.toFixed(3)}`, () => new THREE.CylinderGeometry(rTop, rBot, 0.34, 4, 1));
@@ -1439,6 +2083,29 @@ function buildHuman(spec, low) {
     } else if (topStyle === 'dress') {
       b.add(rbox(tw * 0.93 + 0.014, 0.05, td + 0.014, 0.02), acc, [0, 0.07, 0]);
       b.add(rbox(0.22, 0.05, 0.03, 0.012), skin, [0, TORSO_TOP - 0.03, front - 0.008]);
+    } else if (topStyle === 'jumper') {                                  // v2: chunky crew-neck knit
+      b.add(torus(0.13, 0.034, 6, 20), shade(topC, 0.84), [0, TORSO_TOP + 0.004, 0], [PI / 2, 0, 0], [1, 0.95, 1]);
+      if (!low) {
+        for (const sx of [-1, 1]) for (let k = 0; k < 2; k++) b.add(rbox(0.03, TORSO_TOP - 0.1, 0.012, 0.006), shade(topC, k ? 0.9 : 0.84), [sx * (0.07 + k * 0.05), 0.22, front + 0.004]);
+        b.add(rbox(0.05, TORSO_TOP - 0.1, 0.014, 0.006), shade(topC, 1.06), [0, 0.22, front + 0.005]);
+      }
+    } else if (topStyle === 'pyjamas') {                                 // v2: notch collar, placket, buttons, piping, pocket
+      if (topPat) addPattern(b, topPat, topPatC, tw, TORSO_TOP - 0.06, td, (TORSO_TOP - 0.06) / 2 + 0.01, seedOf(S.id) + 3, 1, 0.93);
+      b.add(torus(0.12, 0.022, 6, 20), piping, [0, TORSO_TOP + 0.004, 0], [PI / 2, 0, 0]);
+      for (const sx of [-1, 1]) b.add(rbox(0.13, 0.08, 0.026, 0.012), shade(topC, 1.04), [sx * 0.085, TORSO_TOP - 0.035, front + 0.002], [0.25, 0, sx * 0.55]);
+      for (const sx of [-1, 1]) b.add(rbox(0.11, 0.022, 0.03, 0.008), piping, [sx * 0.09, TORSO_TOP - 0.075, front + 0.012], [0.2, 0, sx * 0.55]);
+      b.add(rbox(0.05, TORSO_TOP - 0.06, 0.02, 0.008), piping, [0, 0.2, front + 0.004]);
+      for (let i = 0; i < 3; i++) b.add(cyl(0.016, 0.016, 0.018, 10), '#f7f3e8', [0, 0.08 + i * 0.12, front + 0.016], [PI / 2, 0, 0]);
+      b.add(rbox(0.11, 0.1, 0.02, 0.008), shade(topC, 0.94), [tw * 0.24, 0.3, front + 0.006]);
+      b.add(rbox(0.115, 0.02, 0.024, 0.006), piping, [tw * 0.24, 0.35, front + 0.01]);
+    } else if (topStyle === 'robe') {                                    // v2: shawl collar V down to the belt, plump lapels
+      const inner = acc === '#ffffff' ? shade(topC, 0.72) : acc;
+      b.add(rbox(0.12, 0.22, 0.02, 0.008), inner, [0, TORSO_TOP - 0.13, front - 0.004]);
+      for (const sx of [-1, 1]) {
+        b.add(rbox(0.085, TORSO_TOP + 0.02, 0.05, 0.022), shade(topC, 1.06), [sx * 0.085, 0.24, front + 0.01], [0, 0, sx * 0.3]);
+        b.add(rbox(0.07, 0.17, 0.1, 0.03), shade(topC, 1.04), [sx * 0.17, TORSO_TOP - 0.015, 0.02], [0.1, 0, sx * 0.22]);
+      }
+      b.add(rbox(0.13, 0.09, 0.02, 0.008), shade(topC, 0.92), [-tw * 0.26, 0.11, front + 0.006]);
     }
     b.build(J.torso);
     if (S.top.emblem) {
@@ -1457,12 +2124,16 @@ function buildHuman(spec, low) {
   const fingers = {};
   for (const side of ['L', 'R']) {
     const sg = side === 'L' ? 1 : -1;
-    const longSleeve = topStyle === 'hoodie' || topStyle === 'cardigan' || topStyle === 'suit';
+    const v2Sleeve = topStyle === 'jumper' || topStyle === 'pyjamas' || robe;
+    const longSleeve = topStyle === 'hoodie' || topStyle === 'cardigan' || topStyle === 'suit' || v2Sleeve;
     const ba = new Bag();
     const aw = G.armW;
     const ul = UPPER + 0.14;
-    if (longSleeve) ba.add(rbox(aw, ul, ARM_D, 0.05), topC, [0, 0.08 - ul / 2, 0]);
-    else {
+    if (longSleeve) {
+      ba.add(rbox(aw, ul, ARM_D, 0.05), topC, [0, 0.08 - ul / 2, 0]);
+      if (topPat && topStyle === 'pyjamas') addPattern(ba, topPat, topPatC, aw, ul - 0.1, ARM_D, 0.08 - ul / 2 - 0.02, seedOf(S.id) + (sg > 0 ? 51 : 57), sg);
+      if (robe) ba.add(rbox(aw + 0.02, 0.2, ARM_D + 0.02, 0.05), shade(topC, 1.03), [0, 0.0, 0]);
+    } else {
       ba.add(rbox(aw * 0.94, ul, ARM_D * 0.94, 0.045), skin, [0, 0.08 - ul / 2, 0]);
       ba.add(rbox(aw + 0.02, topStyle === 'dress' ? 0.11 : 0.19, ARM_D + 0.02, 0.05), topC, [0, topStyle === 'dress' ? 0.03 : -0.01, 0]);
     }
@@ -1470,9 +2141,13 @@ function buildHuman(spec, low) {
     const bf = new Bag();
     const fl = FORE - HAND / 2 + 0.06;
     bf.add(rbox(aw * 0.95, fl, ARM_D * 0.95, 0.045), longSleeve ? topC : skin, [0, 0.05 - fl / 2, 0]);
-    if (longSleeve) {
+    if (longSleeve && !v2Sleeve) {
       const cuff = topStyle === 'suit' ? '#f7f7f2' : shade(topC, lum(topC) < 0.2 ? 1.2 : 0.84);
       bf.add(rbox(aw * 0.95 + 0.014, 0.05, ARM_D * 0.95 + 0.014, 0.02), cuff, [0, -FORE + HAND / 2 + 0.035, 0]);
+    } else if (v2Sleeve) {
+      if (topPat && topStyle === 'pyjamas') addPattern(bf, topPat, topPatC, aw * 0.95, fl - 0.1, ARM_D * 0.95, 0.05 - fl / 2 + 0.03, seedOf(S.id) + (sg > 0 ? 61 : 67), sg);
+      if (robe) bf.add(rbox(aw * 0.95 + 0.05, 0.12, ARM_D * 0.95 + 0.05, 0.03), shade(topC, 1.05), [0, -FORE + HAND / 2 + 0.07, 0]);
+      else bf.add(rbox(aw * 0.95 + 0.016, 0.055, ARM_D * 0.95 + 0.016, 0.02), topStyle === 'pyjamas' ? piping : shade(topC, 0.84), [0, -FORE + HAND / 2 + 0.035, 0]);
     }
     bf.add(rbox(HAND, HAND * 0.95, HAND, 0.045), skin, [0, -FORE, 0]);
     if (!low) bf.add(rbox(0.048, 0.075, 0.05, 0.02), skin, [-sg * (HAND / 2), -FORE + 0.005, 0.035], [0, 0, sg * 0.25]);
@@ -1510,7 +2185,7 @@ function buildHuman(spec, low) {
 
   // ---------------- accessories ----------------
   const accs = {};
-  const ctx = { S, G, J, hairTop, skin, hairC, acc };
+  const ctx = { S, G, J, hairTop, skin, hairC, acc, body };
   function ensureAcc(name) {
     if (accs[name] !== undefined) return accs[name];
     const grp = buildHumanAccessory(name, ctx);
@@ -1560,6 +2235,7 @@ function buildHuman(spec, low) {
     setAccessory(name, on = true) {
       const g = ensureAcc(name);
       if (g) { g.visible = !!on; if (low) g.traverse((o) => { if (o.isMesh) o.castShadow = false; }); }
+      if (name === 'blanket' && g && g.visible && lastRec) shapeBlanket(g.userData.blanket, lastRec, lastRec.x.blanketMode || 'drag', lastRec.x.blanketHand || 'L', lastRec.x.bt || 0);
       placePartyHat();
       return ch;
     },
@@ -1581,6 +2257,7 @@ function buildHuman(spec, low) {
   ch._G = G; ch._seed = seed; ch._rest = rest; ch._fingers = fingers; ch.blinkPhase = blinkPhase;
   if (S.partyHatColor !== '#ff4fa3' && accs.partyHat) ch.setPartyHatColor(S.partyHatColor);
 
+  let lastRec = null;
   function applyHuman(rec) {
     for (const n of HUMAN_JOINTS) { const o = J[n], r = rec.j[n]; o.position.copy(r.p); o.quaternion.copy(r.q); o.scale.copy(r.s); }
     const sit = rec.x.sit || 0;
@@ -1588,6 +2265,9 @@ function buildHuman(spec, low) {
     J.skirt.position.set(0, 0, 0.04 * sit);
     for (const sd of ['L', 'R']) { const on = (rec.x['finger' + sd] || 0) > 0.5; fingers[sd].scale.setScalar(on ? 1 : 1e-5); fingers[sd].visible = on; }
     if (rec.x.footZ !== undefined) ch.sitInfo.footZ = rec.x.footZ;
+    lastRec = rec;
+    const bl = accs.blanket;                                   // v2 blanket follows the hand(s)
+    if (bl && bl.visible) shapeBlanket(bl.userData.blanket, rec, rec.x.blanketMode || 'drag', rec.x.blanketHand || 'L', rec.x.bt || 0);
   }
   if (low) root.traverse((o) => { if (o.isMesh) o.castShadow = false; });
   ch.lod = low ? 'low' : 'high';
@@ -1602,6 +2282,10 @@ function computeHuman(ch, rec, action, t, params) {
     seed: ch._seed, seated: !!params.seated, s: ch.spec.scale };
   const fn = HUMAN[action] || HUMAN.idle;
   fn(c);
+  // v2 extras (only when the params are given): hand overrides + blanket shaping info
+  if (params.reachL !== undefined || params.reachR !== undefined) applyReach(c);
+  if (params.blanket !== undefined || params.blanketHand !== undefined) { c.x.blanketMode = params.blanket; c.x.blanketHand = params.blanketHand; }
+  c.x.bt = c.t;
   // head: action (pitch, yaw, roll) + lookAt / headYaw / headPitch
   let [hx, hy, hz] = c.x.head || [0, 0, 0];
   if (params.lookAt && ch.root) {
@@ -1715,6 +2399,33 @@ function addHair(b, style, hc, skin, S, extras = null) {
       b.add(rbox(W + 0.18, 0.26, Dp - 0.04, 0.1), hc, [0, Hh - 0.22, -0.1]);
       return 0.27;
     }
+    case 'puffs': {     // v2: two round puff buns high on the head (Pip) — reads as two bumps in silhouette
+      cap(0.17, Hh + 0.03);
+      b.add(rbox(W + 0.02, 0.24, 0.1, 0.05), hc, [0, Hh - 0.15, -Dp / 2 + 0.035]);
+      b.add(rbox(W * 0.7, 0.07, 0.05, 0.03), hc, [0.08, Hh - 0.035, Dp / 2 - 0.005], [0, 0, 0.12]);
+      const tie = S.hair.tie ?? (S.top.accent === '#ffffff' ? '#ff4fa3' : S.top.accent);
+      for (const sx of [-1, 1]) {
+        const px = sx * 0.25, py = Hh + 0.13, pz = -0.03;
+        b.add(sph(0.165, 16, 12), hc, [px, py, pz], [0, 0, 0], [1, 0.94, 0.94]);
+        if (!_lowDetail) for (let k = 0; k < 5; k++) {
+          const a = k / 5 * TAU + sx;
+          b.add(ico(0.07, 0), k % 2 ? dark : hc, [px + Math.cos(a) * 0.13, py + 0.03 + Math.sin(a) * 0.12, pz + 0.05 * Math.sin(a * 2)], [k, a, 0], [1, 1, 1], 'vc', true);
+        }
+        b.add(cyl(0.085, 0.09, 0.05, 14), tie, [sx * 0.19, Hh + 0.03, pz], [0, 0, sx * 0.55]);
+      }
+      return 0.27;
+    }
+    case 'tallBun': {   // v2: tall round bun (Mom) — a high cottage-loaf silhouette that reads when backlit
+      cap(0.17, Hh + 0.03);
+      b.add(rbox(W + 0.02, 0.28, 0.1, 0.05), hc, [0, Hh - 0.17, -Dp / 2 + 0.035]);
+      b.add(rbox(W * 0.6, 0.07, 0.05, 0.03), hc, [-0.12, Hh - 0.04, Dp / 2 - 0.005], [0, 0, -0.18]);
+      for (const sx of [-1, 1]) b.add(rbox(0.06, 0.2, 0.08, 0.025), hc, [sx * (W / 2 + 0.005), Hh - 0.12, 0.17], [0, 0, sx * 0.08]);
+      b.add(cyl(0.13, 0.17, 0.12, 16), hc, [0, Hh + 0.07, -0.05]);
+      b.add(sph(0.19, 18, 14), hc, [0, Hh + 0.25, -0.05], [0, 0, 0], [1, 1.08, 1]);
+      if (!_lowDetail) b.add(torus(0.13, 0.018, 6, 20), shade(hc, 0.8), [0, Hh + 0.16, -0.05], [PI / 2, 0, 0]);
+      b.add(cyl(0.1, 0.12, 0.04, 14), S.hair.tie ?? (S.top.accent === '#ffffff' ? '#ffd23f' : S.top.accent), [0, Hh + 0.125, -0.05]);
+      return 0.44;
+    }
     case 'grandpa': {
       for (const sx of [-1, 1]) b.add(rbox(0.085, 0.16, 0.32, 0.045), hc, [sx * (W / 2 + 0.02), 0.37, -0.06]);
       b.add(rbox(W * 0.84, 0.15, 0.08, 0.04), hc, [0, 0.35, -Dp / 2 - 0.005]);
@@ -1723,6 +2434,105 @@ function addHair(b, style, hc, skin, S, extras = null) {
     }
     default: cap(0.17, Hh + 0.035); return 0.035;
   }
+}
+
+// ---- v2 blanket (ribbon mesh in body space, reshaped by every pose) --------------------------------
+const BL_NL = 20, BL_NW = 6;
+const _blMat = new Map();
+function blanketMaterial(color) {
+  let m = _blMat.get(color);
+  if (m) return m;
+  const tex = canvasTexture(256, 256, (g) => {
+    g.fillStyle = color; g.fillRect(0, 0, 256, 256);
+    // quilted squares with a stitched border and little hearts
+    g.strokeStyle = shade(color, 0.8); g.lineWidth = 3; g.setLineDash([7, 6]);
+    for (let i = 0; i <= 4; i++) { g.beginPath(); g.moveTo(i * 64, 0); g.lineTo(i * 64, 256); g.stroke(); g.beginPath(); g.moveTo(0, i * 64); g.lineTo(256, i * 64); g.stroke(); }
+    g.setLineDash([]);
+    g.fillStyle = shade(color, 1.22);
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) if ((i + j) % 2 === 0) {
+      const x = i * 64 + 32, y = j * 64 + 34;
+      g.beginPath(); g.moveTo(x, y + 12); g.bezierCurveTo(x - 18, y, x - 10, y - 14, x, y - 6); g.bezierCurveTo(x + 10, y - 14, x + 18, y, x, y + 12); g.fill();
+    }
+  });
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  m = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.92, side: THREE.DoubleSide });
+  _blMat.set(color, m);
+  return m;
+}
+function makeBlanketMesh(color) {
+  const n = (BL_NL + 1) * (BL_NW + 1);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+  const uv = new Float32Array(n * 2), idx = [];
+  for (let i = 0; i <= BL_NL; i++) for (let j = 0; j <= BL_NW; j++) { const k = i * (BL_NW + 1) + j; uv[k * 2] = j / BL_NW * 1.5; uv[k * 2 + 1] = i / BL_NL * 3; }
+  for (let i = 0; i < BL_NL; i++) for (let j = 0; j < BL_NW; j++) {
+    const a = i * (BL_NW + 1) + j, b2 = a + 1, c2 = a + BL_NW + 1, d2 = c2 + 1;
+    idx.push(a, c2, b2, b2, c2, d2);
+  }
+  geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  geo.setIndex(idx);
+  geo.userData.owned = true;
+  const mesh = new THREE.Mesh(geo, blanketMaterial(color));
+  mesh.name = 'blanket'; mesh.castShadow = true; mesh.receiveShadow = true; mesh.frustumCulled = false;
+  return mesh;
+}
+// hand centre (body frame) from a pose record
+function recHand(rec, side, out) {
+  _m1.compose(rec.j.hips.p, rec.j.hips.q, _v1.set(1, 1, 1));
+  _m2.compose(rec.j.torso.p, rec.j.torso.q, _v1); _m1.multiply(_m2);
+  _m2.compose(rec.j['arm' + side].p, rec.j['arm' + side].q, _v1); _m1.multiply(_m2);
+  _m2.compose(rec.j['foreArm' + side].p, rec.j['foreArm' + side].q, _v1); _m1.multiply(_m2);
+  return out.set(0, -FORE, 0).applyMatrix4(_m1);
+}
+const _bl = { P: [], X: [], W: [] };
+for (let i = 0; i <= BL_NL; i++) { _bl.P.push(new THREE.Vector3()); _bl.X.push(new THREE.Vector3()); _bl.W.push(0); }
+// mode 'drag' (held in one hand, trails along the floor behind) | 'clutch' (bunched at the chest, hangs down the front)
+function shapeBlanket(mesh, rec, mode, hand, t) {
+  const pos = mesh.geometry.attributes.position;
+  const H = recHand(rec, hand, _v5.set(0, 0, 0)).clone();
+  const P = _bl.P, X = _bl.X, Wd = _bl.W;
+  if (mode === 'clutch') {
+    const H2 = recHand(rec, hand === 'L' ? 'R' : 'L', _v4);
+    const top = _v6.copy(H).lerp(H2, 0.5); top.y -= 0.02; top.z += 0.06;
+    const floorZ = top.z + 0.16, Lh = Math.max(0.05, top.y - 0.03), Lf = 0.36, L = Lh + Lf;
+    for (let i = 0; i <= BL_NL; i++) {
+      const s = i / BL_NL * L;
+      if (s <= Lh) { const u = s / Lh; P[i].set(top.x, top.y - Lh * u, lerp(top.z, floorZ, u * u) + 0.03 * Math.sin(PI * u)); }
+      else { const d = s - Lh; P[i].set(top.x + 0.02 * Math.sin(d * 9), 0.02 + 0.015 * Math.max(0, Math.sin(d * 14 + 1)), floorZ + d); }
+      X[i].set(1, 0, 0);
+      Wd[i] = lerp(0.2, 0.62, smooth(s / 0.35));
+    }
+  } else {
+    const top = _v6.copy(H); top.y -= 0.05;
+    const C = _v4.set(H.x * 0.6, 0.02, H.z - 0.12 - 0.12 * Math.max(0, H.y - 0.35));
+    const ctl = _v7.set(H.x * 0.9, Math.min(top.y, C.y + 0.12), top.z - 0.02);
+    const Lh = top.distanceTo(C) * 1.05, Lf = 1.15, L = Lh + Lf;
+    for (let i = 0; i <= BL_NL; i++) {
+      const s = i / BL_NL * L;
+      if (s <= Lh) {
+        const u = s / Lh, a = (1 - u) * (1 - u), b3 = 2 * u * (1 - u), c3 = u * u;
+        P[i].set(a * top.x + b3 * ctl.x + c3 * C.x, a * top.y + b3 * ctl.y + c3 * C.y, a * top.z + b3 * ctl.z + c3 * C.z);
+      } else {
+        const d = s - Lh;
+        P[i].set(C.x + 0.05 * Math.sin(d * 4.2 + 0.6 * t + 1) * Math.min(1, d * 2), 0.02 + 0.02 * Math.max(0, Math.sin(d * 11 + 0.5)), C.z - d);
+      }
+      X[i].set(1, 0, 0);
+      Wd[i] = lerp(0.1, 0.58, smooth(s / 0.5));
+    }
+  }
+  for (let i = 0; i <= BL_NL; i++) {
+    for (let j = 0; j <= BL_NW; j++) {
+      const v = j / BL_NW - 0.5, k = i * (BL_NW + 1) + j;
+      const fold = 0.035 * Math.sin(v * PI * 3 + i * 0.7) * Math.min(1, Wd[i] * 3);
+      const x = P[i].x + X[i].x * v * Wd[i];
+      let y = P[i].y + (P[i].y < 0.08 ? Math.max(0, fold) * 0.5 : 0);
+      let z = P[i].z + (P[i].y >= 0.08 ? fold : 0);
+      if (P[i].y < 0.08) y = Math.max(0.012, y - 0.01 * Math.abs(v));
+      pos.setXYZ(k, x, y, z);
+    }
+  }
+  pos.needsUpdate = true;
+  mesh.geometry.computeVertexNormals();
 }
 
 // ---- accessories -----------------------------------------------------------------------------------
@@ -1842,6 +2652,28 @@ function buildHumanAccessory(name, ctx) {
       b.add(rbox(0.05, 0.18, 0.02, 0.01), bc, [0.1, eyeY - 0.1, -HEAD_D / 2 - 0.045], [0.1, 0, 0.35]);
       b.add(rbox(0.05, 0.16, 0.02, 0.01), bc, [0.02, eyeY - 0.1, -HEAD_D / 2 - 0.05], [0.1, 0, -0.15]);
       break;
+    }
+    case 'apron': {     // v2: bib apron with neck strap and waist ties (the baker)
+      parent = J.torso;
+      const ac = S.apronColor, tw = G.torsoW;
+      b.add(rbox(tw * 0.62, 0.3, 0.02, 0.01), ac, [0, 0.26, front + 0.012]);
+      b.add(rbox(tw * 0.86, 0.5, 0.02, 0.01), ac, [0, -0.15, front + 0.03], [-0.06, 0, 0]);
+      b.add(rbox(tw * 0.3, 0.12, 0.024, 0.008), shade(ac, 0.88), [0, -0.12, front + 0.05], [-0.06, 0, 0]);
+      for (const sx of [-1, 1]) {
+        b.add(rbox(0.03, 0.2, 0.02, 0.006), ac, [sx * tw * 0.27, 0.46, front - 0.02], [-0.5, 0, sx * 0.25]);
+        b.add(rbox(0.03, G.torsoD + 0.03, 0.03, 0.008), ac, [sx * (tw * 0.465 + 0.012), 0.1, 0], [PI / 2, 0, 0]);
+      }
+      b.add(rbox(tw + 0.02, 0.03, 0.03, 0.008), ac, [0, 0.1, -G.torsoD / 2 - 0.012]);
+      b.add(rbox(0.05, 0.16, 0.02, 0.006), ac, [0.04, 0.0, -G.torsoD / 2 - 0.02], [0, 0, 0.2]);
+      break;
+    }
+    case 'blanket': {   // v2: a soft blanket held in one hand (or both) that drapes to the floor; shaped every pose()
+      const grp2 = new THREE.Group(); grp2.name = 'acc:blanket';
+      const mesh = makeBlanketMesh(S.blanketColor);
+      grp2.add(mesh);
+      grp2.userData.blanket = mesh;
+      ctx.body.add(grp2);
+      return grp2;
     }
     case 'partyHat': {
       const ph = makePartyHatMesh(S.partyHatColor);

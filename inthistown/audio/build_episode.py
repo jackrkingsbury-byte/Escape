@@ -39,6 +39,16 @@ CINEMATIC LAYER (audio/real.py) — used only when a script asks for it, so olde
   When any of this is used the sfx bus is also ducked ~4 dB under the narration, and the master is BS.1770 loudness-normalized to "lufs" (default -16) with a -1.5 dBTP
   true-peak limiter instead of the ffmpeg loudnorm pass, and an "amb" stem is written.
 
+HUSS MUSIC DIP (style bible v2 §3; opt-in per script, so older episodes build exactly as before):
+  script "hussDip": true | false | { "db": -6, "dur": 0.3, "attack": 0.02, "release": 0.06, "speakers": ["me", "pip"] }
+               With the background loop on ("bed"), the whole music bus (bed + cinematic score) is multiplied by a
+               -6 dB dip at every HUSS word of speaker me / pip: 20 ms attack from the HUSS onset, held, released over
+               60 ms so it is back at 0 dB 0.3 s after the onset; overlapping dips do not stack. A beat with
+               "dip": false is skipped (e.g. the music slams back in on that HUSS). Default: ON for v2 scripts (they
+               carry a "huss_plan"), OFF for everything else.
+  --out DIR    (command line, after the episode id) write timeline.json, mix.wav and stems/ into DIR instead of
+               episodes/<ep>/ (dry runs; the timeline's "audio" field still names episodes/<ep>/mix.wav).
+
 Rules (from the user's notes): the only meme SOUND EFFECT is the real HUSS sample. Meme words (top ten,
 respect, goon…) are normal narrated words. Foley (crowd laugh, chess knocks, cat whoosh) and music are fine.
 """
@@ -81,9 +91,36 @@ def parse_at(spec, beat):
     return t + off
 
 
-def main(ep):
+def huss_dip_cfg(script):
+    """The script's HUSS music-dip settings, or None when the dip is off (see the module doc)."""
+    cfg = script.get('hussDip')
+    if cfg is None:
+        cfg = bool(script.get('huss_plan'))
+    if not cfg:
+        return None
+    base = {'db': -6.0, 'dur': 0.3, 'attack': 0.02, 'release': 0.06, 'speakers': ['me', 'pip']}
+    return {**base, **(cfg if isinstance(cfg, dict) else {})}
+
+
+def huss_dip_gain(N, events, cfg):
+    """Gain curve (N samples) with a dip of cfg['db'] at each event time: linear attack, hold, linear release."""
+    g = np.ones(N, np.float32)
+    floor = 10 ** (cfg['db'] / 20)
+    a, rl, d = cfg['attack'], cfg['release'], cfg['dur']
+    for th in events:
+        i0, i1 = max(0, int(th * SR)), min(N, int((th + d) * SR) + 1)
+        if i1 <= i0:
+            continue
+        x = np.arange(i0, i1) / SR - th
+        env = np.clip(np.minimum(x / a, (d - x) / rl), 0, 1)
+        g[i0:i1] = np.minimum(g[i0:i1], 1 - (1 - floor) * env)
+    return g
+
+
+def main(ep, outdir=None):
     epdir = os.path.join(ROOT, 'episodes', ep)
     script = json.load(open(os.path.join(epdir, 'script.json')))
+    outdir = os.path.abspath(outdir) if outdir else epdir
     for spk, v in (script.get('voices') or {}).items():
         BA.VOICES[spk] = (v[0], v[1], v[2], tuple(v[3]) if v[3] else None)
     beats = script['beats']
@@ -305,18 +342,24 @@ def main(ep):
             ambst = RL.amb_track(asegs, N, act, vl)
         sfx = RL.duck(sfx, act, 4.0, 2.0).astype(np.float32)   # effects stay under the words (hits in the gaps keep their punch)
 
+    dipcfg = huss_dip_cfg(script) if bedcfg else None
+    if dipcfg:   # v2 HUSS dip: the music bus ducks ~6 dB for 0.3 s at every HUSS of me / pip (beat "dip": false skips)
+        dips = [th for (th, bid, i, spk) in huss_events if spk in dipcfg['speakers'] and beat[bid].get('dip', True)]
+        music = music * huss_dip_gain(N, dips, dipcfg)[:, None]
+        print('huss dip', round(dipcfg['db'], 1), 'dB at', [round(x, 3) for x in dips])
+
     if cine:
         mix = music + bed + sfx + np.stack([voice, voice], 1) + (ambst if ambst is not None else 0)
     else:
         mix = np.tanh((music + bed + sfx + np.stack([voice, voice], 1)) * 1.1) / 1.1
-    os.makedirs(os.path.join(epdir, 'stems'), exist_ok=True)
+    os.makedirs(os.path.join(outdir, 'stems'), exist_ok=True)
     for name, arr in (('voice', voice), ('music', music), ('bed', bed), ('sfx', sfx)):
-        sf.write(os.path.join(epdir, f'stems/{name}.wav'), arr, SR)
-    out = os.path.join(epdir, 'mix.wav')
-    raw = os.path.join(epdir, 'stems/mix_raw.wav')
+        sf.write(os.path.join(outdir, f'stems/{name}.wav'), arr, SR)
+    out = os.path.join(outdir, 'mix.wav')
+    raw = os.path.join(outdir, 'stems/mix_raw.wav')
     if cine:   # BS.1770 loudness + true-peak limiter (audio/real.py), no soft-clip: cinematic dynamics survive
         if ambst is not None:
-            sf.write(os.path.join(epdir, 'stems/amb.wav'), ambst, SR)
+            sf.write(os.path.join(outdir, 'stems/amb.wav'), ambst, SR)
         sf.write(raw, mix, SR, subtype='FLOAT')
         mm, rep = RL.master(mix, script.get('lufs', -16.0), script.get('ceiling', -1.5))
         sf.write(out, mm, SR, subtype='PCM_16')
@@ -337,9 +380,13 @@ def main(ep):
         tl['amb'] = [{'t': round(t0, 3), 'bed': spec} for t0, spec, _ in amb_segs]
     if subs:
         tl['subs'] = subs
-    json.dump(tl, open(os.path.join(epdir, 'timeline.json'), 'w'), indent=1)
+    json.dump(tl, open(os.path.join(outdir, 'timeline.json'), 'w'), indent=1)
     print('duration', duration, 'words', len(words), 'markers', markers)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1] if len(sys.argv) > 1 else 'ep2')
+    args = sys.argv[1:]
+    od = None
+    if '--out' in args:
+        k = args.index('--out'); od = args[k + 1]; del args[k:k + 2]
+    main(args[0] if args else 'ep2', od)

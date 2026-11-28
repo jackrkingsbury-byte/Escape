@@ -72,3 +72,113 @@ export function extraSpecs(n, seed = 11) {
 
 export const EXTRAS = extraSpecs(18);
 export const EXTRA_IDS = Object.keys(EXTRAS);
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+//  v2 FAMILY CAST (style bible v2 §8 + upgrade 9; ep30 'cast').  Additive: nothing above changed.
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+//  FAMILY        = { mom, dad, pip }            day outfits
+//  FAMILY_NIGHT  = { mom, dad, pip }            night outfits (same ids as the day versions → one character each;
+//                                               use different cast keys if both outfits appear in one film, e.g.
+//                                               cast: { mom: FAMILY.mom, momNight: FAMILY_NIGHT.mom })
+//  familySpec(who, outfit = 'day' | 'night', overrides = {}) → a fresh deep-merged spec (safe to mutate)
+//  COUSINS       = [7 specs]  child rig (scale 0.7) in seven colourways, ids cousin1…cousin7
+//  NEIGHBOUR_MOM               the Mom rig recoloured (their mom on the path)
+//  BAKER                       bun, blue tee, white bib apron (accessory 'apron')
+//  FAMILY_IDS = ['mom', 'dad', 'pip']
+//
+//  Silhouettes (they must read backlit, e.g. Mom in the fridge light):
+//    Mom  scale 1.06, slim (build 0.95), TALL ROUND BUN ('tallBun', ~0.45 m above the head) — day: teal cardigan,
+//         plum A-line skirt, teal flats; night: long cream ROBE (top style 'robe': flared skirt to mid-shin, shawl
+//         collar, tie belt), pink slippers.
+//    Dad  scale 1.06, BROAD (build 1.32), beard + glasses — day: mustard knit 'jumper', dark jeans, brown 'boots';
+//         night: blue 'pyjamas' with pale vertical stripes (top + bottom), slippers.
+//    Pip  CHILD scale 0.7, two round PUFF buns ('puffs') — day: yellow star tee, blue trousers, yellow 'wellies';
+//         night: pale-yellow 'pyjamas' with orange stars, pink slippers, and a lilac quilted 'blanket' she drags
+//         (accessory 'blanket'; shape it per frame with pose params blanket: 'drag' | 'clutch', blanketHand 'L'|'R').
+//    All share the narrator's skin tone (#f1c7a1). MAIN.me is untouched.
+//  New spec fields used here (all handled in src/characters.js, additive): hair.style 'puffs' | 'tallBun',
+//    hair.tie (band colour); top.style 'jumper' | 'pyjamas' | 'robe'; top.pattern 'stripes' | 'stars',
+//    top.patternColor, top.piping, top.belt (robe); bottom.style 'pyjamas', bottom.pattern, bottom.patternColor,
+//    bottom.piping; shoeStyle 'wellies' | 'boots' | 'slippers'; blanketColor; apronColor;
+//    accessories 'blanket', 'apron'.
+const FAMILY_SKIN = '#f1c7a1';
+const FAMILY_DEFS = {
+  mom: {
+    day: {
+      id: 'mom', skin: FAMILY_SKIN, hair: { style: 'tallBun', color: '#5a3424', tie: '#f2c14e' },
+      top: { style: 'cardigan', color: '#1f8f8a', accent: '#f3ecd8' }, bottom: { style: 'skirt', color: '#6b3f5e' },
+      shoes: '#1f8f8a', accessories: [], scale: 1.06, build: 0.95,
+    },
+    night: {
+      id: 'mom', skin: FAMILY_SKIN, hair: { style: 'tallBun', color: '#5a3424', tie: '#f2c14e' },
+      top: { style: 'robe', color: '#efe2c6', accent: '#d9c7a3', belt: '#d6bf95' }, bottom: { style: 'skirt', color: '#efe2c6' },
+      shoes: '#e7a6b5', shoeStyle: 'slippers', accessories: [], scale: 1.06, build: 0.95,
+    },
+  },
+  dad: {
+    day: {
+      id: 'dad', skin: FAMILY_SKIN, hair: { style: 'short', color: '#3a2618' },
+      top: { style: 'jumper', color: '#d9a62e', accent: '#ffffff' }, bottom: { style: 'pants', color: '#3c4a63' },
+      shoes: '#6b4428', shoeStyle: 'boots', accessories: ['beard', 'glasses'], scale: 1.06, build: 1.32,
+    },
+    night: {
+      id: 'dad', skin: FAMILY_SKIN, hair: { style: 'short', color: '#3a2618' },
+      top: { style: 'pyjamas', color: '#3f6fb8', accent: '#ffffff', pattern: 'stripes', patternColor: '#dce8f7', piping: '#dce8f7' },
+      bottom: { style: 'pyjamas', color: '#3f6fb8', pattern: 'stripes', patternColor: '#dce8f7' },
+      shoes: '#4a3b35', shoeStyle: 'slippers', accessories: ['beard', 'glasses'], scale: 1.06, build: 1.32,
+    },
+  },
+  pip: {
+    day: {
+      id: 'pip', skin: FAMILY_SKIN, hair: { style: 'puffs', color: '#2b1a12', tie: '#ff5fa2' },
+      top: { style: 'tee', color: '#ffd23f', accent: '#ffffff', emblem: 'star' }, bottom: { style: 'pants', color: '#4f7cc9' },
+      shoes: '#ffd23f', shoeStyle: 'wellies', accessories: [], scale: 0.7,
+    },
+    night: {
+      id: 'pip', skin: FAMILY_SKIN, hair: { style: 'puffs', color: '#2b1a12', tie: '#ff5fa2' },
+      top: { style: 'pyjamas', color: '#ffe680', accent: '#ffffff', pattern: 'stars', patternColor: '#ff8c1a', piping: '#ff8c1a' },
+      bottom: { style: 'pyjamas', color: '#ffe680', pattern: 'stars', patternColor: '#ff8c1a' },
+      shoes: '#ff9fc4', shoeStyle: 'slippers', accessories: ['blanket'], blanketColor: '#9b8bd6', scale: 0.7,
+    },
+  },
+};
+function cloneSpec(o) { return JSON.parse(JSON.stringify(o)); }
+function mergeSpec(a, b) {
+  const o = { ...a };
+  for (const k of Object.keys(b || {})) {
+    const v = b[k];
+    o[k] = (v && typeof v === 'object' && !Array.isArray(v) && a[k] && typeof a[k] === 'object' && !Array.isArray(a[k])) ? mergeSpec(a[k], v) : v;
+  }
+  return o;
+}
+export function familySpec(who, outfit = 'day', overrides = {}) {
+  const d = FAMILY_DEFS[who];
+  if (!d) throw new Error(`familySpec: unknown family member '${who}' (mom, dad, pip)`);
+  const base = d[outfit] || d.day;
+  return mergeSpec(cloneSpec(base), cloneSpec(overrides));
+}
+export const FAMILY_IDS = ['mom', 'dad', 'pip'];
+export const FAMILY = { mom: familySpec('mom', 'day'), dad: familySpec('dad', 'day'), pip: familySpec('pip', 'day') };
+export const FAMILY_NIGHT = { mom: familySpec('mom', 'night'), dad: familySpec('dad', 'night'), pip: familySpec('pip', 'night') };
+
+const COUSIN_LOOKS = [
+  ['puffs', '#1a120c', '#ff4fa3', '#2f4d8a'], ['curly', '#1a120c', '#3ee0c8', '#3a3d46'], ['spiky', '#3b2416', '#ff7a2f', '#2f4d8a'],
+  ['bun', '#1a120c', '#8a5cff', '#55575e'], ['afro', '#111111', '#5bd65b', '#3a3d46'], ['short', '#3b2416', '#4fb3ff', '#7a6a58'],
+  ['fade', '#1a120c', '#ff5a5a', '#2f4d8a'],
+];
+export const COUSINS = COUSIN_LOOKS.map(([hair, hc, tc, bc], i) => ({
+  id: `cousin${i + 1}`, skin: '#d9a074', hair: { style: hair, color: hc, tie: '#ffd23f' },
+  top: { style: 'tee', color: tc, accent: '#ffffff', emblem: [null, 'star', 'stripe', 'heart', null, 'star', 'stripe'][i] },
+  bottom: { style: i % 3 === 1 ? 'shorts' : 'pants', color: bc }, shoes: ['#f2f2f2', '#ffd23f', '#f2f2f2', '#ff4fa3', '#4fb3ff', '#f2f2f2', '#1d1d22'][i],
+  accessories: [], scale: 0.66 + 0.02 * (i % 3), build: 0.95 + 0.03 * (i % 2),
+}));
+export const NEIGHBOUR_MOM = {
+  id: 'neighbourMom', skin: '#d9a074', hair: { style: 'tallBun', color: '#1a120c', tie: '#ff4fa3' },
+  top: { style: 'cardigan', color: '#d6496b', accent: '#f3ecd8' }, bottom: { style: 'skirt', color: '#2f3e6b' },
+  shoes: '#2f3e6b', accessories: [], scale: 1.04, build: 0.95,
+};
+export const BAKER = {
+  id: 'baker', skin: '#e9b99a', hair: { style: 'bun', color: '#bdb3a6' },
+  top: { style: 'tee', color: '#7fa8d6', accent: '#ffffff' }, bottom: { style: 'pants', color: '#5a5048' },
+  shoes: '#5a4030', accessories: ['apron', 'glasses'], apronColor: '#f4f1ea', scale: 1.0, build: 1.1,
+};

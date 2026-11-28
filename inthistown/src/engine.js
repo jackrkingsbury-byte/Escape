@@ -18,6 +18,37 @@
  *   loadTimeline(url) / normalizeTimeline(json) / timeOf(timeline, anchor) / hussTimesOf(timeline, beatId)
  *   drawCaptions(g2d, timeline, t, state) / loadCaptionFonts()   (caption renderer, reusable)
  *   QUOTE_COLORS, CAPTION_Y
+ *   v2: CAPTION_V2 (the style-bible-v2 caption preset), RED_WORD '#ff2d2d',
+ *       drawHussStamp(g2d, { text = 'HUSS!', x = 0.5, y = CAPTION_Y, lt = 0, seed = 0, scale = 1 })  the caption HUSS!
+ *       stamp (pop + shake over lt 0…0.12 s) drawn anywhere, e.g. inside ctx.fx.draw((g) => drawHussStamp(g, {...})).
+ *
+ * ─── v2 additions (style bible v2 §8–9; all opt-in — episodes that do not use them render byte-identically) ────────
+ *   CAPTIONS   export const captionOptions = { preset: 'v2' }   → ALL CAPS, centre at y 0.59, hard swap per word (no pop),
+ *              Nunito 900 at 92 px with a thin dark outline (9 px) + soft whole-glyph shadow, HUSS! stamp ×0.92.
+ *              Any key overrides the preset: { preset: 'v2', y: 0.58, size: 88 }. Individual keys also work without
+ *              the preset: uppercase, y, pop:false, size, outline, thin, outlineColor, shadow {color, blur, y}, color,
+ *              redColor, hussScale (full list above resolveCaptionOptions in the caption section).
+ *   RED WORDS  a caption word is drawn in #ff2d2d (redColor) when its text, case-insensitive and without punctuation
+ *              ("Who's" → "whos", "5" → "5"), is in its beat's `red` list (timeline beat field, passed through from
+ *              script.json by audio/build_episode.py). Every occurrence of the word in that beat is red.
+ *              captionOptions.red = false turns it off.
+ *   CHAT BUBBLES  timeline beats may carry bubble: { who, text, at, until } (or an array of them). From time anchor
+ *              `at` (default: beat start; marker names like 'bub1' resolve through timeline.markers) until `until`
+ *              (default: beat end) a small white rounded speech bubble (Nunito 900, 44 px, dark text, tail) is drawn
+ *              over the 3D and fx, under the captions, with its tail pointing just above the speaker's head:
+ *                1. ctx.bubble.anchor(who, target) called in this frame's update wins (target: Character | cast id |
+ *                   Object3D | Vector3 | [x,y,z] world | { screen: [x, y] } 0..1 | null = no tail, fallback spot |
+ *                   false = hide this bubble in this frame);
+ *                2. else the shots module export bubbleAnchor(ctx, who) → same target forms (undefined = default);
+ *                3. else the cast member `who` if it is in the shot (head joint, ~0.12 m above the head top),
+ *                   projected through the final camera (after shake / punch);
+ *                4. no speaker on screen (or behind the camera) → no tail, at captionOptions.bubble.fallback
+ *                   ([0.5, 0.2] of the frame; null hides it).
+ *              The bubble is kept inside the frame and above y 0.5 (bubble.maxY) so it never touches the caption band.
+ *              Per shot: bubbles: false. Per frame: ctx.bubble.hide(). ctx.bubble.active → bubbles live at ctx.t.
+ *              captionOptions.bubble = { size 44, maxWidth 600, fallback [0.5, 0.2], maxY 0.5, pop false, minHold 0,
+ *              color '#fff', textColor '#1c1c1f', stroke }.
+ *   ctx.shots  [{ def, index, name, start, end }] every shot of the film (e.g. bookend() in src/direct.js reads it).
  *
  * ─── Film contract additions (all optional; see SPEC §8 for the required part) ─────────────────────
  *   shots module may also export:
@@ -248,13 +279,84 @@ function roundRect(g, x, y, w, h, r) {
   g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
 
+// ── v2 caption options (all opt-in; an episode without them renders exactly as before) ──────────────────────────
+//   captionOptions.preset 'v2' = CAPTION_V2 below (style bible v2 §9), any explicit key overrides it:
+//     uppercase  ALL CAPS            y        0.59 (caption centre, fraction of frame height)
+//     pop        false = hard swap on each word's onset (no scale/slide pop-in)
+//     size       96 → px font size at 1080 wide (narration)          outline  24 → px outline width at 1080 wide
+//     thin       true = soft shadow of the whole glyph + thin dark outline (instead of the v1 fat stroke shadow)
+//     outlineColor '#141414'   shadow { color, blur, y }   color '#ffffff' (narration fill)
+//     redColor   '#ff2d2d'  colour for red words. A word is red when its display text, case-insensitive and without
+//                punctuation, is in that beat's `red` list (timeline beats carry it from script.json). red:false disables.
+//     hussScale  1 → size multiplier of the HUSS! stamp
+//     bubble     { size: 44, maxWidth: 600, fallback: [0.5, 0.2] | null, pop: false, color, textColor, minHold: 0 }
+//                chat-bubble overlay options (see "Chat bubbles" in the header)
+export const CAPTION_V2 = Object.freeze({
+  uppercase: true, y: 0.59, pop: false, size: 92, outline: 9, thin: true, outlineColor: '#141414',
+  shadow: Object.freeze({ color: 'rgba(0,0,0,0.6)', blur: 18, y: 6 }), redColor: '#ff2d2d', hussScale: 0.92,
+});
+export const RED_WORD = '#ff2d2d';
+function resolveCaptionOptions(o) {
+  if (!o || o.preset !== 'v2') return o;
+  if (o.__resolved) return o.__resolved;
+  const r = { ...CAPTION_V2, ...o };
+  try { Object.defineProperty(o, '__resolved', { value: r, enumerable: false }); } catch {}
+  return r;
+}
+const normWord = (s) => String(s ?? '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]/g, '');
+function isRedWord(tl, w) {
+  const b = tl.byId && tl.byId.get(w.beat);
+  if (!b || !Array.isArray(b.red) || !b.red.length) return false;
+  if (!b.__redSet) Object.defineProperty(b, '__redSet', { value: new Set(b.red.map(normWord)), enumerable: false });
+  return b.__redSet.has(normWord(w.text));
+}
+
+// HUSS! stamp body (shared by drawCaptions and drawHussStamp). Caller has set lineJoin/lineCap/miterLimit/textAlign/
+// textBaseline inside a save()/restore(). Identical drawing ops to the v1 caption stamp when sizeMul = 1.
+function paintHussStamp(g, text, cx, cy, lt, seed, k, cw, maxW, sizeMul = 1) {
+  // ── HUSS! — comic sound effect: Luckiest Guy, yellow gradient, chunky black outline + extrude, tilt, shake
+  let size = 170 * k * sizeMul;
+  let font = `${size}px "${FONT_HUSS}"`;
+  g.font = font;
+  const tw = g.measureText(text).width;
+  if (tw > maxW) { size *= maxW / tw; font = `${size}px "${FONT_HUSS}"`; g.font = font; }
+  const capH = capHeight(g, font);
+  const pu = clamp(lt / 0.12, 0, 1);
+  const sc = lerp(1.55, 1.0, ease.outBack(pu));
+  const sign = (seed % 2) ? 1 : -1;
+  const tilt = sign * (2 + 4 * hash(seed * 7.13 + 1.7)) * Math.PI / 180;
+  const amp = lt < 0.12 ? 11 * k * (1 - lt / 0.12) : 0;
+  const ph = hash(seed * 3.1) * 6.283;
+  const sx = amp * Math.sin(lt * 110 + ph), sy = amp * Math.cos(lt * 137 + ph * 1.7);
+  g.translate(cx + sx, cy + sy);
+  g.rotate(tilt);
+  g.scale(sc, sc);
+  const by = capH / 2;            // baseline so the caps are vertically centred on cy
+  const ow = 30 * k, ext = 13 * k;
+  // soft drop shadow
+  g.shadowColor = 'rgba(0,0,0,0.45)'; g.shadowBlur = 26 * k; g.shadowOffsetY = 14 * k;
+  g.strokeStyle = '#111'; g.lineWidth = ow; g.fillStyle = '#111';
+  g.strokeText(text, 0, by + ext); g.fillText(text, 0, by + ext);
+  g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+  g.strokeText(text, 0, by);
+  const grd = g.createLinearGradient(0, by - capH, 0, by);
+  grd.addColorStop(0, '#fff7a8'); grd.addColorStop(0.45, '#ffe14a'); grd.addColorStop(1, '#ffb21a');
+  g.fillStyle = grd;
+  g.fillText(text, 0, by);
+  // glossy highlight stripe on the upper part of the letters
+  g.save();
+  g.beginPath(); g.rect(-cw, by - capH * 1.05, cw * 2, capH * 0.32); g.clip();
+  g.fillStyle = 'rgba(255,255,255,0.55)'; g.fillText(text, 0, by);
+  g.restore();
+}
+
 /**
  * Draw the caption for time t onto a 1080-wide 2D context (scales with g.canvas.width).
  * state: { hidden, style: 'default'|'high'|'low', sfx: bool, options: captionOptions, track/trackSfx (cached) }
  */
 export function drawCaptions(g, tl, t, state = {}) {
   if (state.hidden) return null;
-  const opts = state.options || {};
+  const opts = resolveCaptionOptions(state.options || {});
   if (!tl.__capTrack) { tl.__capTrack = buildCaptionTrack(tl, false); tl.__capTrackSfx = buildCaptionTrack(tl, true); }
   const e = findEntry(state.sfx ? tl.__capTrackSfx : tl.__capTrack, t);
   if (!e) return null;
@@ -271,40 +373,7 @@ export function drawCaptions(g, tl, t, state = {}) {
   g.textAlign = 'center'; g.textBaseline = 'alphabetic';
 
   if (w.kind === 'huss') {
-    // ── HUSS! — comic sound effect: Luckiest Guy, yellow gradient, chunky black outline + extrude, tilt, shake
-    let size = 170 * k;
-    let font = `${size}px "${FONT_HUSS}"`;
-    g.font = font;
-    const tw = g.measureText(text).width;
-    if (tw > maxW) { size *= maxW / tw; font = `${size}px "${FONT_HUSS}"`; g.font = font; }
-    const capH = capHeight(g, font);
-    const pu = clamp(lt / 0.12, 0, 1);
-    const sc = lerp(1.55, 1.0, ease.outBack(pu));
-    const sign = (seed % 2) ? 1 : -1;
-    const tilt = sign * (2 + 4 * hash(seed * 7.13 + 1.7)) * Math.PI / 180;
-    const amp = lt < 0.12 ? 11 * k * (1 - lt / 0.12) : 0;
-    const ph = hash(seed * 3.1) * 6.283;
-    const sx = amp * Math.sin(lt * 110 + ph), sy = amp * Math.cos(lt * 137 + ph * 1.7);
-    g.translate(cx + sx, cy + sy);
-    g.rotate(tilt);
-    g.scale(sc, sc);
-    const by = capH / 2;            // baseline so the caps are vertically centred on cy
-    const ow = 30 * k, ext = 13 * k;
-    // soft drop shadow
-    g.shadowColor = 'rgba(0,0,0,0.45)'; g.shadowBlur = 26 * k; g.shadowOffsetY = 14 * k;
-    g.strokeStyle = '#111'; g.lineWidth = ow; g.fillStyle = '#111';
-    g.strokeText(text, 0, by + ext); g.fillText(text, 0, by + ext);
-    g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
-    g.strokeText(text, 0, by);
-    const grd = g.createLinearGradient(0, by - capH, 0, by);
-    grd.addColorStop(0, '#fff7a8'); grd.addColorStop(0.45, '#ffe14a'); grd.addColorStop(1, '#ffb21a');
-    g.fillStyle = grd;
-    g.fillText(text, 0, by);
-    // glossy highlight stripe on the upper part of the letters
-    g.save();
-    g.beginPath(); g.rect(-cw, by - capH * 1.05, cw * 2, capH * 0.32); g.clip();
-    g.fillStyle = 'rgba(255,255,255,0.55)'; g.fillText(text, 0, by);
-    g.restore();
+    paintHussStamp(g, text, cx, cy, lt, seed, k, cw, maxW, opts.hussScale ?? 1);
   } else if (w.kind === 'sfx') {
     const size = 64 * k, font = `italic 900 ${size}px "${FONT_NARR}"`;
     g.font = font;
@@ -314,16 +383,16 @@ export function drawCaptions(g, tl, t, state = {}) {
   } else {
     // ── narration / quote — Nunito 900, white, thick outline, soft shadow, pop-in
     const isQuote = w.kind === 'quote';
-    let size = (isQuote ? 92 : 96) * k;
+    let size = (isQuote ? 92 : (opts.size ?? 96)) * k;
     let font = `900 ${size}px "${FONT_NARR}"`;
     g.font = font;
-    const outline = isQuote ? 26 * k : 24 * k;
+    const outline = isQuote ? 26 * k : (opts.outline ?? 24) * k;
     const tw = g.measureText(text).width + outline;
     if (tw > maxW) { size *= maxW / tw; font = `900 ${size}px "${FONT_NARR}"`; g.font = font; }
     const capH = capHeight(g, font);
-    const pu = clamp(lt / 0.10, 0, 1), pe = ease.outCubic(pu);
-    const sc = lerp(1.18, 1.0, pe);
-    const dy = 8 * k * (1 - pe);
+    const pu = opts.pop === false ? 1 : clamp(lt / 0.10, 0, 1), pe = ease.outCubic(pu);
+    const sc = opts.pop === false ? 1 : lerp(1.18, 1.0, pe);
+    const dy = opts.pop === false ? 0 : 8 * k * (1 - pe);
     const speaker = w.speaker || 'narr';
     const qcol = (opts.speakerColors && opts.speakerColors[speaker]) || QUOTE_COLORS[speaker] || QUOTE_COLORS.default;
     // speaker tag for quotes (pops with the first word of the beat)
@@ -354,16 +423,113 @@ export function drawCaptions(g, tl, t, state = {}) {
     g.translate(cx, cy + dy);
     g.scale(sc, sc);
     const by = capH / 2;
-    g.shadowColor = 'rgba(0,0,0,0.55)'; g.shadowBlur = 22 * k; g.shadowOffsetY = 8 * k;
-    g.strokeStyle = '#000'; g.lineWidth = outline + (isQuote ? 10 * k : 0);
-    g.strokeText(text, 0, by);
-    g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+    const red = !isQuote && opts.red !== false && isRedWord(tl, w);
+    if (opts.thin && !isQuote) {
+      // v2 (captionOptions.preset 'v2' / thin: true): soft shadow of the whole glyph, then a thin dark outline, then fill
+      const sh = opts.shadow || {};
+      g.shadowColor = sh.color ?? 'rgba(0,0,0,0.6)'; g.shadowBlur = (sh.blur ?? 18) * k; g.shadowOffsetY = (sh.y ?? 6) * k;
+      g.fillStyle = opts.outlineColor || '#141414'; g.strokeStyle = opts.outlineColor || '#141414'; g.lineWidth = outline;
+      g.fillText(text, 0, by); g.strokeText(text, 0, by);
+      g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+      g.strokeText(text, 0, by);
+    } else {
+      g.shadowColor = 'rgba(0,0,0,0.55)'; g.shadowBlur = 22 * k; g.shadowOffsetY = 8 * k;
+      g.strokeStyle = '#000'; g.lineWidth = outline + (isQuote ? 10 * k : 0);
+      g.strokeText(text, 0, by);
+      g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+    }
     if (isQuote) { g.strokeStyle = qcol; g.lineWidth = outline - 6 * k; g.strokeText(text, 0, by); }
-    g.fillStyle = w.color || (w.emph ? '#ffe14a' : '#ffffff');
+    g.fillStyle = red ? (opts.redColor || RED_WORD) : (w.color || (w.emph ? '#ffe14a' : (opts.color || '#ffffff')));
     g.fillText(text, 0, by);
   }
   g.restore();
   return { text, kind: w.kind, gi: w.gi };
+}
+
+/**
+ * drawHussStamp(g2d, { text = 'HUSS!', x = 0.5, y = CAPTION_Y, lt = 0, seed = 0, scale = 1 })
+ * The yellow comic HUSS! stamp exactly as the caption renderer draws it (pop-in + shake over the first 0.12 s of lt),
+ * anywhere on a 1080-wide 2D context. For fx.draw: ctx.fx.draw((g) => drawHussStamp(g, { lt: ctx.since('b02.h0') })).
+ */
+export function drawHussStamp(g, o = {}) {
+  const cw = g.canvas.width, ch = g.canvas.height, k = cw / W;
+  g.save();
+  g.lineJoin = 'round'; g.lineCap = 'round'; g.miterLimit = 2;
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  paintHussStamp(g, o.text || 'HUSS!', cw * (o.x ?? 0.5), ch * (o.y ?? CAPTION_Y), Math.max(0, o.lt ?? 0), o.seed ?? 0, k, cw, (W - 2 * 72) * k, o.scale ?? 1);
+  g.restore();
+}
+
+// ═══════════════════════════════════════ chat bubbles (v2) ═══════════════════════════════════════
+// Timeline beats may carry bubble: { who, text, at, until } (from script.json via audio/build_episode.py). at / until
+// are time anchors (marker names, 'b03.w4', numbers…); at defaults to the beat start, until to the beat end.
+function buildBubbleTrack(tl, opts) {
+  const out = [];
+  const minHold = (opts.bubble && opts.bubble.minHold) || 0;
+  for (const b of tl.beats || []) {
+    const list = Array.isArray(b.bubble) ? b.bubble : (b.bubble ? [b.bubble] : []);
+    for (const bb of list) {
+      if (!bb || !bb.text) continue;
+      let t0 = b.start, t1 = b.end;
+      try { if (bb.at != null) t0 = timeOf(tl, bb.at); } catch (e) { console.warn(`bubble in ${b.id}: ${e.message}`); }
+      try { if (bb.until != null) t1 = timeOf(tl, bb.until); } catch (e) { console.warn(`bubble in ${b.id}: ${e.message}`); }
+      out.push({ who: bb.who || b.speaker, text: String(bb.text), t0, t1: Math.max(t1, t0 + minHold), beat: b.id });
+    }
+  }
+  return out;
+}
+function wrapLines(g, text, maxW) {
+  const words = text.split(/\s+/).filter(Boolean), lines = [];
+  let cur = '';
+  for (const wd of words) {
+    const tryS = cur ? cur + ' ' + wd : wd;
+    if (cur && g.measureText(tryS).width > maxW) { lines.push(cur); cur = wd; } else cur = tryS;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+/** Draw one chat bubble. tip = [x, y] in 1080×1920 px (the point the tail points at: just above the speaker's head) or
+ *  null (no speaker on screen: the bubble sits at bo.fallback without a tail). lt = time since the bubble appeared. */
+function drawBubble(g, text, tip, lt, bo = {}) {
+  const cw = g.canvas.width, k = cw / W;
+  const size = (bo.size ?? 44) * k, font = `900 ${size}px "${FONT_NARR}"`;
+  g.save();
+  g.font = font; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  const lines = wrapLines(g, text, (bo.maxWidth ?? 600) * k);
+  const capH = capHeight(g, font), lh = size * 1.18;
+  const tw = Math.max(...lines.map((l) => g.measureText(l).width));
+  const padX = size * 0.62, padY = size * 0.46;
+  const bw = tw + 2 * padX, bh = (lines.length - 1) * lh + capH + 2 * padY;
+  const tail = size * 0.5, r = Math.min(bh / 2, size * 0.62);
+  const H2 = g.canvas.height;
+  let cx, by1, tipX = null, tipY = null;   // by1 = bubble bottom edge
+  if (tip) {
+    tipX = clamp(tip[0] * k, 24 * k, cw - 24 * k); tipY = clamp(tip[1] * k, (0.05 * H) * k + bh + tail, (bo.maxY ?? 0.5) * H2);
+    cx = clamp(tipX, 24 * k + bw / 2, cw - 24 * k - bw / 2);
+    by1 = tipY - tail;
+  } else {
+    const fb = bo.fallback === undefined ? [0.5, 0.2] : bo.fallback;
+    if (!fb) { g.restore(); return; }
+    cx = fb[0] * cw; by1 = fb[1] * H2 + bh / 2;
+  }
+  const bx0 = cx - bw / 2, by0 = by1 - bh;
+  const sc = bo.pop ? lerp(0.6, 1, ease.outBack(clamp(lt / 0.12, 0, 1))) : 1;
+  if (sc !== 1) { const px = tipX ?? cx, py = tipY ?? by1; g.translate(px, py); g.scale(sc, sc); g.translate(-px, -py); }
+  // body + tail as one path
+  g.beginPath();
+  g.moveTo(bx0 + r, by0); g.arcTo(bx0 + bw, by0, bx0 + bw, by1, r); g.arcTo(bx0 + bw, by1, bx0, by1, r);
+  if (tip) {
+    const tx = clamp(tipX, bx0 + r + tail * 0.6, bx0 + bw - r - tail * 0.6);
+    g.lineTo(tx + tail * 0.55, by1); g.lineTo(tipX, tipY); g.lineTo(tx - tail * 0.55, by1);
+  }
+  g.arcTo(bx0, by1, bx0, by0, r); g.arcTo(bx0, by0, bx0 + bw, by0, r); g.closePath();
+  g.shadowColor = 'rgba(0,0,0,0.38)'; g.shadowBlur = 16 * k; g.shadowOffsetY = 6 * k;
+  g.fillStyle = bo.color || '#ffffff'; g.fill();
+  g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+  g.lineWidth = 3.5 * k; g.strokeStyle = bo.stroke || 'rgba(20,20,20,0.55)'; g.stroke();
+  g.fillStyle = bo.textColor || '#1c1c1f';
+  lines.forEach((ln, i) => g.fillText(ln, cx, by0 + padY + capH + i * lh));
+  g.restore();
 }
 
 // ═══════════════════════════════════════ engine ══════════════════════════════════════════════════
@@ -428,6 +594,8 @@ export function createEngine(opts = {}) {
   let shotCam = null, cam = null, camUsedShot = false, camUsed = false;
   const fx = { pos: new THREE.Vector3(), rot: new THREE.Vector3(), zoom: 0, roll: 0, overlays: [], vignette: 0, texts: [], draws: [] };
   let capShot = null, cap = null;
+  // v2 chat bubbles: per-frame anchor overrides (ctx.bubble.anchor) + hide flag; the track is built lazily
+  const bub = { anchors: new Map(), hidden: false, track: null, draw: [] };
   const timing = { setup: 0, update: 0, render: 0, composite: 0, total: 0 };
 
   const newCamState = () => ({ pos: asVec3(CAM_DEFAULT.pos), look: asVec3(CAM_DEFAULT.look), fov: CAM_DEFAULT.fov, roll: CAM_DEFAULT.roll });
@@ -680,6 +848,14 @@ export function createEngine(opts = {}) {
     // custom 2D drawing over the 3D (under captions): fn(g2d, W, H)
     draw(fn) { fx.draws.push(fn); return fxApi; },
   };
+  // v2 chat bubbles (timeline beat.bubble). Per frame, like fx: call in update.
+  const bubbleApi = {
+    // where the bubble of cast member `who` points: Character | cast id | Object3D | Vector3 | [x,y,z] (world) |
+    // { screen: [x, y] } (0..1 of the frame) | null (no tail: fallback position) | false (hide this speaker's bubble)
+    anchor(who, target) { bub.anchors.set(who, target); return bubbleApi; },
+    hide(on = true) { bub.hidden = !!on; return bubbleApi; },
+    get active() { return activeBubbles(ctx.t).map((b) => ({ ...b })); },
+  };
   const captionApi = {
     hide(on = true) { cap.hidden = !!on; },
     style(name = 'default') { cap.style = name; },
@@ -693,9 +869,55 @@ export function createEngine(opts = {}) {
     time, since: (a) => ctx.t - time(a),
     progress: (a, b) => { const ta = time(a), tb = time(b); return tb > ta ? clamp((ctx.t - ta) / (tb - ta), 0, 1) : (ctx.t >= tb ? 1 : 0); },
     words: [], beats: [], beat: (id) => tl.byId.get(id), wordAt, hussTimes, markers: {}, timeline: null,
-    cam: camApi, fx: fxApi, caption: captionApi,
+    cam: camApi, fx: fxApi, caption: captionApi, bubble: bubbleApi,
+    get shots() { return shots.map((s) => ({ def: s.def, index: s.index, name: s.name, start: s.start, end: s.end })); },
     ease, rng, lerp, clamp, smooth, noise1, hash,
   };
+
+  // ── v2 chat bubbles
+  function activeBubbles(t) {
+    if (!bub.track) bub.track = buildBubbleTrack(tl, resolveCaptionOptions(captionOptions) || {});
+    return bub.track.length ? bub.track.filter((b) => t >= b.t0 && t < b.t1) : bub.track;
+  }
+  const BUBBLE_HEAD = new THREE.Vector3(0, 0.74, 0);   // head-joint local: ~0.12 m above the top of the block head
+  function bubbleWorld(target) {
+    if (target == null || target === false) return null;
+    if (typeof target === 'string') target = cast[target] || anchor(target);
+    if (target && target.joints && target.root) {
+      if (!target.root.parent) return null;              // not in this shot
+      target.root.updateMatrixWorld(true);
+      return target.joints.head.localToWorld(BUBBLE_HEAD.clone());
+    }
+    if (target && target.screen) return { screen: target.screen };
+    return point(target);
+  }
+  function bubbleTips(list) {
+    const out = [];
+    for (const b of list) {
+      let target = bub.anchors.has(b.who) ? bub.anchors.get(b.who) : undefined;
+      if (target === false) continue;
+      if (target === undefined && mod && typeof mod.bubbleAnchor === 'function') {
+        try { target = mod.bubbleAnchor(ctx, b.who); } catch (e) { reportError('bubbleAnchor', e); }
+        if (target === false) continue;
+      }
+      if (target === undefined) target = cast[b.who] || null;
+      let tip = null;
+      try {
+        const p = bubbleWorld(target);
+        if (p && p.screen) tip = [p.screen[0] * W, p.screen[1] * H];
+        else if (p) {
+          const c = p.clone().applyMatrix4(camera.matrixWorldInverse);
+          if (c.z < -camera.near) {
+            p.project(camera);
+            const x = (p.x + 1) / 2 * W, y = (1 - p.y) / 2 * H;
+            if (x > -0.15 * W && x < 1.15 * W && y > -0.3 * H && y < 1.1 * H) tip = [x, y];
+          }
+        }
+      } catch (e) { reportError(`bubble anchor ${b.who}`, e); }
+      out.push({ ...b, tip });
+    }
+    return out;
+  }
 
   // ── init
   const ready = (async () => {
@@ -811,6 +1033,7 @@ export function createEngine(opts = {}) {
     cam = cloneCam(shotCam); camUsed = camUsedShot;
     fx.pos.set(0, 0, 0); fx.rot.set(0, 0, 0); fx.zoom = 0; fx.roll = 0; fx.overlays.length = 0; fx.vignette = 0; fx.texts.length = 0; fx.draws.length = 0;
     cap = { ...capShot };
+    bub.anchors.clear(); bub.hidden = false; bub.draw.length = 0;
     if (activeSet) renderer.toneMappingExposure = activeSet.exposure != null ? activeSet.exposure : 1.0;
     T1 = performance.now();
     if (activeSet && typeof activeSet.update === 'function') { try { activeSet.update(t); } catch (e) { reportError(`set ${activeSet.__name}.update`, e); } }
@@ -830,6 +1053,10 @@ export function createEngine(opts = {}) {
     if (fx.rot.z || fx.roll) camera.rotateZ(fx.rot.z + fx.roll);
     camera.fov = clamp(saveFov * (1 - clamp(fx.zoom, -0.9, 0.9)), 1, 170);
     camera.updateProjectionMatrix();
+    if (!bub.hidden && s.def.bubbles !== false) {
+      const act = activeBubbles(t);
+      if (act.length) { camera.updateMatrixWorld(true); bub.draw.push(...bubbleTips(act)); }
+    }
     T1 = performance.now();
     // optional film-level render hook (e.g. a post-processing composer, src/real/post.js): the shots module may export
     // renderFrame(ctx) to draw ctx.scene/ctx.camera into the default framebuffer (glCanvas) itself. Absent → plain render.
@@ -873,6 +1100,10 @@ export function createEngine(opts = {}) {
         g2.shadowColor = 'transparent'; g2.fillStyle = o.fill || '#ffffff'; g2.fillText(ln, 0, y);
       });
       g2.restore();
+    }
+    if (bub.draw.length) {
+      const bo = (resolveCaptionOptions(captionOptions) || {}).bubble || {};
+      for (const b of bub.draw) { try { drawBubble(g2, b.text, b.tip, t - b.t0, bo); } catch (e) { reportError('bubble', e); } }
     }
     // a shots module may draw its own captions: export function drawCaptions(g2d, timeline, t, state) (state = { hidden, style, sfx, options, ctx })
     try { if (typeof mod.drawCaptions === 'function') mod.drawCaptions(g2, tl, t, { ...cap, options: captionOptions, ctx }); else drawCaptions(g2, tl, t, { ...cap, options: captionOptions }); } catch (e) { reportError('captions', e); }
