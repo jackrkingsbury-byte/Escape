@@ -42,17 +42,19 @@
 //            dist (overrides size), yaw (absolute world yaw of the camera direction from the subject), fov = 36,
 //            dof 0.7 })                medium close-up; size 0.2 ≈ medium shot, 0.45 ≈ tight close-up
 //   ecu(ctx, who, o)                     extreme close-up on the face: size 0.6, fov 30, frame [0.5, 0.33], dof 1.2
-//   ots(ctx, over, at, { side = 'R' (over's right shoulder) | 'L', back = 1.8, up = 0.1, overEdge = 0.3 / 0.7,
+//   ots(ctx, over, at, { side = 'R' (over's right shoulder) | 'L', back = 1.8, up = 0.3 (m above over's head joint ≈ ear
+//            height), overEdge = 0.3 / 0.7,
 //            sideOff = 0.72 (used only with overEdge:false), fov = 34 })
 //            over-the-shoulder PAST THE HEADPHONES: camera behind `over`'s head, aimed at `at` (framed at x 0.62 / 0.38,
 //            y 0.32); the sideways offset is solved so the inner edge of `over`'s 0.64 m block head sits at frame x
 //            overEdge — head + headphones fill the near third, soft (focus on `at`).
 //   pov(ctx, who, { at (subject to look at) | pitch = -30 (deg, without `at`), yaw = 0 (rad, rel. to facing),
-//            fov = 70, hideHead = true, eye = [0, 0.34, 0.33] (head-joint local), hands = true, handsY = 0.86 })
+//            fov = 70, hideHead = true, eye = [0, 0.34, 0.33] (head-joint local), hands = true, handsY = 0.86,
+//            atMinY = 0.2 })
 //            first-person from `who`'s eyes. hideHead hides his head joint for the shot (headphones included; the
 //            engine restores visibility at the next shot change). hands: if his hands would fall below frame y
-//            handsY the camera tilts down until they sit there (the `at` subject never goes above y 0.12). Put his
-//            hands forward with the pose, e.g. ch.pose('idle', t, { reachL: 'out', reachR: 'out' }) or reach to a
+//            handsY the camera tilts down until they sit there (the `at` face never goes above frame y atMinY). Put
+//            his hands forward with the pose, e.g. ch.pose('idle', t, { reachL: 'out', reachR: 'out' }) or reach to a
 //            world point.
 //   insert(ctx, target, { size = 0.3 (m: subject size that fills `fill` of the frame height), fill = 0.45,
 //            fov = 24 (clamped 20–28), angle (world yaw the camera looks ALONG; default: facing the target's +Z
@@ -91,6 +93,11 @@
 //            (use when captions are hidden in the shot). double:false → only the FIRST hit of the beat is treated;
 //            double:true → every hit (H1 / H4) and the slow-mo spans first → last hit + slow.
 //            The music dip is audio (audio/build_episode.py); the foley impact is a script sfx.
+//            Call hussBeat AFTER your own ch.face() for `who` (or skip your face while .on), else yours wins.
+//            Typical shot (the cut lands on the hit: start the shot at 'bNN-0.05'):
+//              update(ctx, lt, u) { const h = hussBeat(ctx, ctx.t, { double: true, beat: 'b02' });
+//                ctx.cast.me.pose('heave', h.t - ctx.time('b02-0.05'));   // body in warped time = slow-mo
+//                lowHero(ctx, 'me', { angle: -0.35, height: 0.6, u }); }
 import * as THREE from 'three';
 import { clamp, hash, ease, noise1, lerp } from './lib/util.js';
 import { drawHussStamp } from './engine.js';
@@ -379,7 +386,7 @@ function wide_(ctx, who, o = {}) {
 }
 
 function ots_(ctx, over, at, o = {}) {
-  const r = { side: 'R', back: 1.8, sideOff: 0.72, up: 0.1, fov: 34, dof: 0.75, ...o };
+  const r = { side: 'R', back: 1.8, sideOff: 0.72, up: 0.3, fov: 34, dof: 0.75, ...o };
   const H = subjectPoint(ctx, over, 'head');
   const atCh = charOf(ctx, at);
   const T = pt(ctx, at, r.part || 'face', r);
@@ -435,7 +442,8 @@ function pov_(ctx, who, o = {}) {
       const roll = r.dutch ? r.dutch * D2R : 0;
       let L2 = aimLook(eye, hp, { fov: r.fov, frame: [projectFrom(eye, L, r.fov, 0, hp)[0], hy], roll });
       // never push the looked-at subject off the top: then it sits at y 0.12 and the hands go as low as they must
-      if (r.at != null && projectFrom(eye, L2, r.fov, roll, target)[1] < 0.12) L2 = aimLook(eye, target, { fov: r.fov, frame: [frame[0], 0.12], roll });
+      const minY = r.atMinY ?? 0.2;
+      if (r.at != null && projectFrom(eye, L2, r.fov, roll, target)[1] < minY) L2 = aimLook(eye, target, { fov: r.fov, frame: [frame[0], minY], roll });
       return shoot(ctx, { ...r, pos: eye, target, look: L2, focusTarget: r.focus || (r.at != null ? (charOf(ctx, r.at) || target) : hp), part: r.at != null ? 'face' : 'hands' });
     }
   }
