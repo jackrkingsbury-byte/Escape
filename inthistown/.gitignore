@@ -1,0 +1,15 @@
+node_modules/
+out/frames/
+out/preview/
+out/*.wav
+cache/
+models/
+*.log
+audio/stems/
+audio/mix.wav
+out/
+__pycache__/
+episodes/*/stems/
+episodes/*/mix.wav
+episodes/_test/
+videos/cine01_the_other_me.mp4

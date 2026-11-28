@@ -1,0 +1,299 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Module C — props</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1d26; }
+  canvas { display: block; }
+  .lbl { position: absolute; color: #fff; font: 700 12px/1.1 system-ui, sans-serif; text-shadow: 0 1px 2px #000, 0 0 4px #000;
+         pointer-events: none; white-space: nowrap; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { makeChessSet, makeChessClock, makePartyHat, makeCake, makeTable, makeChair, makeBed, makePlate, makeSpeaker,
+  makeBalloon, makeConfetti, makeSweatDrop, makeImpactBurst } from '/src/props.js';
+import { rbox, mat } from '/src/lib/util.js';
+
+// Views: ?view=all (default contact sheet) · chess (low close-up on the toppled king) · knock (knockAll) ·
+//        pieces (piece line-up) · clock · slam · film (the director's checkmate camera)
+// Params: &u=0..1 (animation for chess/knock/slam/clock) · &chars=0 (skip the seated hero) · &bench=N (time N renders)
+const Q = new URLSearchParams(location.search);
+const VIEW = Q.get('view') || 'all';
+const W = window.innerWidth, H = window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = Q.get('shadow') !== '0';
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+
+function studio({ bg = '#c9d6e3', floor = '#ddd5c8', shadowSize = 3, sun = [2.5, 5, 3], sunColor = '#fff1dc', sunI = 2.4, hemi = 1.15 } = {}) {
+  const scene = new THREE.Scene();
+  (window.__scenes ??= []).push(scene);
+  scene.background = new THREE.Color(bg);
+  scene.add(new THREE.HemisphereLight('#eef4ff', '#8a7660', hemi));
+  const d = new THREE.DirectionalLight(sunColor, sunI);
+  d.position.set(...sun); d.castShadow = true;
+  d.shadow.mapSize.set(2048, 2048);
+  const sc = d.shadow.camera; sc.left = -shadowSize; sc.right = shadowSize; sc.top = shadowSize; sc.bottom = -shadowSize; sc.near = 0.5; sc.far = 20;
+  d.shadow.bias = -0.0003; d.shadow.normalBias = 0.01;
+  scene.add(d); scene.add(d.target);
+  const fill = new THREE.DirectionalLight('#d6e4ff', 0.6); fill.position.set(-4, 3, -2); scene.add(fill);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: floor, roughness: 0.92 }));
+  fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; scene.add(fl);
+  return { scene, sun: d };
+}
+function cam(fov, aspect, pos, look) {
+  const c = new THREE.PerspectiveCamera(fov, aspect, 0.01, 60);
+  c.position.set(...pos); c.lookAt(new THREE.Vector3(...look)); return c;
+}
+function view(scene, camera, x, y, w, h) {
+  renderer.setViewport(x, H - y - h, w, h); renderer.setScissor(x, H - y - h, w, h);
+  renderer.render(scene, camera);
+}
+function label(text, x, y) {
+  const d = document.createElement('div'); d.className = 'lbl'; d.textContent = text;
+  d.style.left = x + 'px'; d.style.top = y + 'px'; document.body.appendChild(d);
+}
+const U = (def) => (Q.has('u') ? parseFloat(Q.get('u')) : def);
+
+// a table with a chess set on it (board sits ON the table: root at top + thickness)
+function chessTable(scene, { fen = null, x = 0, z = 0, clock = true, chairs = true } = {}) {
+  const table = makeTable({ w: 0.95, d: 0.8 }); table.position.set(x, 0, z); scene.add(table);
+  const chess = makeChessSet({ size: 0.62 });
+  chess.root.position.set(x, 0.78 + chess.thickness, z); scene.add(chess.root);
+  if (fen) chess.setFEN(fen);
+  let clk = null;
+  if (clock) { clk = makeChessClock(); clk.root.position.set(x - 0.4, 0.78, z + 0.02); clk.root.rotation.y = Math.PI / 2; scene.add(clk.root); }
+  if (chairs) {
+    const a = makeChair(); a.position.set(x, 0, z - 0.62); scene.add(a);
+    const b = makeChair(); b.position.set(x, 0, z + 0.62); b.rotation.y = Math.PI; scene.add(b);
+  }
+  return { table, chess, clk };
+}
+const MATE = 'r1bqk2r/pppp1Qpp/2n2n2/2b1p3/2B1P3/8/PPPP1PPP/RNB1K1NR';   // after Qxf7#
+
+async function maybeHero() {
+  if (Q.get('chars') === '0') return null;
+  try {
+    const C = await import('/src/characters.js');
+    const me = C.makeCharacter({ id: 'me', skin: '#f1c7a1', hair: { style: 'fade', color: '#2b1d14' },
+      top: { style: 'hoodie', color: '#1d1d22', accent: '#ffffff', emblem: 'knight' }, bottom: { style: 'pants', color: '#55575e' },
+      shoes: '#f2f2f2', accessories: ['headphones'] });
+    let pigeon = null;
+    try { pigeon = C.makeCreature('pigeon', { id: 'pigeon', accessories: ['partyHat'], partyHatColor: '#3ee0c8' }); } catch (e) { /* optional */ }
+    return { me, pigeon };
+  } catch (e) { console.log('characters.js not available:', e.message); return null; }
+}
+
+const renders = [];   // functions that draw the current view (for bench)
+const t0 = performance.now();
+
+// ───────────────────────────────────────────────────────────────────────────────────── views
+if (VIEW === 'all') {
+  const st = studio({ shadowSize: 3.2 });
+  const S = st.scene;
+  const { chess, clk } = chessTable(S, { fen: MATE });
+  chess.move('g1', 'f3', 0.5);            // a knight mid-move
+  chess.topple('e8', 1);                  // the black king has fallen
+  chess.highlight('f7', '#ff4f6a'); chess.highlight('g1', '#ffd23f'); chess.highlight('f3', '#ffd23f');
+  clk.setTimes(212, 4); clk.press('L', 0.5);
+  const hero = await maybeHero();
+  const drop = makeSweatDrop(); drop.position.set(0.3, 1.62, -0.45); S.add(drop);
+  if (hero) {
+    hero.me.root.position.set(0, 0, -0.62); hero.me.pose('sitIdle', 1.0); hero.me.face('sweat', 1.0); S.add(hero.me.root);
+    hero.me.root.updateMatrixWorld(true);
+    void 0;
+  }
+
+  // cake corner
+  const ped = new THREE.Mesh(rbox(0.6, 0.5, 0.6, 0.04), mat('#f2a7c8', { roughness: 0.8 })); ped.position.set(-1.7, 0.25, 1.1); ped.castShadow = ped.receiveShadow = true; S.add(ped);
+  const cake = makeCake(); cake.root.position.set(-1.72, 0.5, 1.1); cake.update(1.37); S.add(cake.root);
+  if (hero?.pigeon) { hero.pigeon.root.position.set(-1.98, 0.5, 1.25); hero.pigeon.root.rotation.y = 0.9; hero.pigeon.pose('idle', 0.4); hero.pigeon.face?.('smile', 0.4); S.add(hero.pigeon.root); }
+  [['#ff4fa3', -2.0, 0.85, 0.62], ['#ffd23f', -1.75, 0.82, 0.5], ['#4fb3ff', -1.95, 1.3, 0.75], ['#8a5cff', -1.42, 0.85, 0.56]].forEach(([c, x, z, sl], i) => {
+    const b = makeBalloon(c, { string: sl }); b.position.set(x, 0.5, z); b.rotation.y = i * 1.3; S.add(b);
+  });
+  const hat2 = makePartyHat('#ff4fa3'); hat2.position.set(-1.48, 0.5, 1.24); hat2.rotation.set(0, 0.5, 0); S.add(hat2);
+  const hat3 = makePartyHat('#3ee0c8'); hat3.position.set(-1.5, 0.5, 0.95); hat3.rotation.set(0, 0.2, 1.75); hat3.position.y = 0.6; S.add(hat3);
+
+  // breakfast table
+  const t2 = makeTable({ w: 0.7, d: 0.6 }); t2.position.set(1.75, 0, 1.15); S.add(t2);
+  const plate = makePlate(); plate.root.position.set(1.66, 0.78, 1.2); plate.root.rotation.y = 0.3; S.add(plate.root);
+  const burst = makeImpactBurst(); burst.root.position.set(1.9, 0.782, 1.05); burst.update(0.22); S.add(burst.root);
+  const ch3 = makeChair(); ch3.position.set(1.75, 0, 0.6); S.add(ch3);
+  drop.position.set(1.5, 0.98, 1.1); drop.rotation.z = 0.25;
+
+  // speaker + confetti
+  const spk = makeSpeaker(); spk.root.position.set(1.8, 0, -1.5); spk.root.rotation.y = -0.5; spk.update(0.02); S.add(spk.root);
+  const conf = makeConfetti({ origin: [1.05, 0.0, -0.95], t0: 0, count: 220, speed: 5.5, spread: 0.7, size: 1.6 }); conf.update(0.55); S.add(conf.root);
+
+  // bedroom corner
+  const bed = makeBed(); bed.position.set(-1.7, 0, -1.6); bed.rotation.y = Math.PI / 2; S.add(bed);
+
+  const draw = () => {
+    const hA = Math.round(H * 540 / 960);
+    view(S, cam(36, W / hA, [1.5, 1.72, 0.62], [-0.1, 0.92, -0.14]), 0, 0, W, hA);
+    const pw = Math.round(W / 2), ph = Math.round(H * 210 / 960), y1 = Math.round(H * 540 / 960), y2 = y1 + ph;
+    view(S, cam(44, pw / ph, [-0.95, 1.25, 2.6], [-1.72, 0.8, 1.05]), 0, y1, pw, ph);
+    view(S, cam(34, pw / ph, [1.25, 1.35, 1.85], [1.75, 0.8, 1.1]), pw, y1, W - pw, ph);
+    view(S, cam(46, pw / ph, [0.65, 1.2, 0.25], [1.4, 0.68, -1.3]), 0, y2, pw, H - y2);
+    view(S, cam(46, pw / ph, [-0.45, 1.75, -0.05], [-1.65, 0.4, -1.6]), pw, y2, W - pw, H - y2);
+  };
+  draw(); renders.push(draw);
+  const ph = Math.round(H * 210 / 960), y1 = Math.round(H * 540 / 960);
+  label('chess set (knight mid-move, king toppled, highlights) · clock · chair · table', 8, 8);
+  label('cake · balloons · hat', 6, y1 + 6); label('plate · impact burst · sweat drop', W / 2 + 6, y1 + 6);
+  label('speaker · confetti', 6, y1 + ph + 6); label('bed', W / 2 + 6, y1 + ph + 6);
+} else if (VIEW === 'chess' || VIEW === 'film') {
+  const st = studio({ bg: '#f3b27a', floor: '#c98d5e', sun: [-1.6, 1.6, 2.2], sunColor: '#ffd2a0', sunI: 3.0, hemi: 0.75, shadowSize: 1.2 });
+  const { chess, clk } = chessTable(st.scene, { fen: MATE });
+  clk.setTimes(212, 4);
+  chess.topple('e8', U(1));
+  const k = chess.root.localToWorld(chess.squareToLocal('e8'));
+  let c;
+  if (VIEW === 'film') c = cam(32, W / H, [k.x + 0.2, k.y + 0.12, k.z - 0.35], [k.x, k.y + 0.05, k.z]);
+  else c = cam(30, W / H, [k.x + 0.36, k.y + 0.04, k.z + 0.17], [k.x - 0.01, k.y + 0.025, k.z - 0.06]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(VIEW === 'film' ? 'checkmate — director camera' : 'checkmate — low close-up', 8, 8);
+} else if (VIEW === 'knock') {
+  const st = studio({ shadowSize: 1.5 });
+  const { chess } = chessTable(st.scene, { chairs: true });
+  chess.reset();
+  const u = U(0.6);
+  chess.knockAll(u, 7);
+  const c = cam(40, W / H, [0.7, 1.45, -0.85], [0, 0.8, 0.02]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`knockAll(u=${u}, seed=7)`, 8, 8);
+} else if (VIEW === 'pieces') {
+  const st = studio({ shadowSize: 1.2, sun: [1.5, 3, -2.5] });
+  const { chess } = chessTable(st.scene, { fen: '8/8/8/8/2kqbnrp/8/2KQBNRP/8', clock: false, chairs: false });
+  const a = chess.root.localToWorld(new THREE.Vector3(0.05, 0.02, -0.1));
+  const c = cam(30, W / H, [a.x + 0.05, a.y + 0.13, a.z - 0.5], [a.x + 0.03, a.y + 0.03, a.z + 0.1]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label('K Q B N R P — ivory front, ebony back', 8, 8);
+} else if (VIEW === 'turn') {
+  // rows: K Q B N R P · columns: camera angle 0° (from white's side), 45°, 90°, 180° · &black=1 for ebony
+  const st = studio({ shadowSize: 1.2, sun: [1.5, 3, -2.5] });
+  const black = Q.get('black') === '1';
+  const fen = black ? '8/8/8/8/8/b1n5/8/k1q1b1n1' : '8/8/8/8/8/B1N5/8/K1Q1B1N1';
+  const sqs = black ? [['a1', 'k'], ['c1', 'q'], ['e1', 'b'], ['g1', 'n'], ['a3', 'r'], ['c3', 'p']] : [['a1', 'K'], ['c1', 'Q'], ['e1', 'B'], ['g1', 'N'], ['a3', 'R'], ['c3', 'P']];
+  const fen2 = black ? '8/8/8/8/8/r1p5/8/k1q1b1n1' : '8/8/8/8/8/R1P5/8/K1Q1B1N1';
+  const { chess } = chessTable(st.scene, { fen: fen2, clock: false, chairs: false });
+  const hts = { k: 0.115, q: 0.1, b: 0.095, n: 0.09, r: 0.08, p: 0.07 };
+  const cw = Math.floor(W / 4), chh = Math.floor(H / 6);
+  const cams = [];
+  sqs.forEach(([sq, code], row) => {
+    const p = chess.root.localToWorld(chess.squareToLocal(sq));
+    const ht = hts[code.toLowerCase()];
+    [0, 45, 90, 180].forEach((deg, col) => {
+      const a = (deg * Math.PI) / 180 + (black ? Math.PI : 0);
+      const c = cam(30, cw / chh, [p.x - Math.sin(a) * 0.32, p.y + ht * 0.75 + 0.04, p.z - Math.cos(a) * 0.32], [p.x, p.y + ht * 0.45, p.z]);
+      cams.push([c, col * cw, row * chh]);
+    });
+  });
+  const draw = () => { for (const [c, x, y] of cams) view(st.scene, c, x, y, cw, chh); };
+  draw(); renders.push(draw);
+  label(black ? 'ebony: 0° 45° 90° 180°' : 'ivory: 0° 45° 90° 180°', 6, 6);
+} else if (VIEW === 'burst') {
+  // the impact burst at u = 0.04 · 0.12 · 0.25 · 0.45 from a typical "board" camera
+  const st = studio({ shadowSize: 1.2 });
+  const { chess } = chessTable(st.scene, {});
+  const us = [0.04, 0.12, 0.25, 0.45];
+  const bursts = us.map(() => { const b = makeImpactBurst(); b.root.position.set(0.02, 0.78 + chess.thickness + 0.002, -0.16); st.scene.add(b.root); return b; });
+  const c = cam(38, W / (H / 2), [0.45, 1.05, -0.62], [0.0, 0.84, -0.1]);
+  const hw = W / 2, hh = H / 2;
+  const draw = () => us.forEach((u, i) => { bursts.forEach((b, j) => { b.root.visible = j === i; b.update(us[j]); }); view(st.scene, cam(38, hw / hh, [0.45, 1.05, -0.62], [0.0, 0.84, -0.1]), (i % 2) * hw, Math.floor(i / 2) * hh, hw, hh); });
+  draw(); renders.push(draw);
+  us.forEach((u, i) => label(`burst u=${u}`, (i % 2) * hw + 6, Math.floor(i / 2) * hh + 6));
+} else if (VIEW === 'test') {
+  // purity / determinism checks (results in window.__test and the console)
+  const st = studio();
+  const A = makeChessSet(), B = makeChessSet();
+  st.scene.add(A.root, B.root);
+  const snap = (cs) => cs.root.children[0].children.find((c) => c.name === 'pieces').children
+    .map((g) => g.visible ? [...g.position.toArray(), ...g.quaternion.toArray(), ...g.scale.toArray()].map((x) => (Math.abs(x) < 5e-7 ? 0 : x).toFixed(5)).join(',') : 'hidden').sort().join('|');
+  const res = {};
+  const same = (name, f1, f2) => { f1(A); f2(B); res[name] = snap(A) === snap(B); };
+  same('move twice = once', (c) => { c.reset(); c.move('e2', 'e4', 0.5); c.move('e2', 'e4', 0.5); }, (c) => { c.reset(); c.move('e2', 'e4', 0.5); });
+  same('move u order irrelevant', (c) => { c.reset(); c.move('g1', 'f3', 0.9); c.move('g1', 'f3', 0.3); }, (c) => { c.reset(); c.move('g1', 'f3', 0.3); });
+  same('move u=1 == setFEN after', (c) => { c.reset(); c.move('e2', 'e4', 1); }, (c) => { c.setFEN('rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR'); });
+  same('slam end == rest', (c) => { c.setFEN('rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR'); c.slam('e4', 0.4); c.slam('e4', 1); }, (c) => { c.setFEN('rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR'); });
+  same('topple pure', (c) => { c.setFEN(MATE); c.topple('e8', 1); c.topple('e8', 0.4); }, (c) => { c.setFEN(MATE); c.topple('e8', 0.4); });
+  same('knockAll decreasing u', (c) => { c.reset(); c.knockAll(0.9, 7); c.knockAll(0.3, 7); }, (c) => { c.reset(); c.knockAll(0.3, 7); });
+  same('knockAll repeat', (c) => { c.reset(); c.knockAll(0.6, 7); c.knockAll(0.6, 7); }, (c) => { c.reset(); c.knockAll(0.6, 7); });
+  same('capture hidden at 0.85', (c) => { c.setFEN('r1bqk2r/pppp1ppp/2n2n2/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR'); c.move('h5', 'f7', 0.86); }, (c) => { c.setFEN('r1bqk2r/pppp1ppp/2n2n2/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR'); c.move('h5', 'f7', 0.86); });
+  A.setFEN('r1bqk2r/pppp1ppp/2n2n2/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR');
+  A.move('h5', 'f7', 0.86); res['captured piece hidden'] = !A.pieceAt('f7').visible;
+  A.reset(); res['squareToLocal e4'] = A.squareToLocal('e4').toArray().map((x) => +x.toFixed(4)).join(',');
+  res['a1 at -X,-Z'] = A.squareToLocal('a1').x < 0 && A.squareToLocal('a1').z < 0;
+  res['pieceAt e1 is K'] = A.pieceInfo('e1')?.code === 'K';
+  res['thickness'] = +A.thickness.toFixed(4);
+  const c1 = makeConfetti({ count: 50, t0: 1 }), c2 = makeConfetti({ count: 50, t0: 1 });
+  c1.update(3); c1.update(1.7); c2.update(1.7);
+  const ma = c1.mesh.instanceMatrix.array, mb = c2.mesh.instanceMatrix.array; let ok = true; for (let i = 0; i < ma.length; i++) if (Math.abs(ma[i] - mb[i]) > 1e-9) ok = false;
+  res['confetti pure'] = ok;
+  window.__test = res; console.log('TEST', JSON.stringify(res));
+  const draw = () => view(st.scene, cam(40, W / H, [0.5, 0.7, -0.6], [0, 0, 0]), 0, 0, W, H);
+  draw(); renders.push(draw);
+} else if (VIEW === 'clock') {
+  const st = studio({ shadowSize: 1.0 });
+  const { clk, chess } = chessTable(st.scene, { fen: null, chairs: false });
+  chess.root.visible = false;
+  clk.root.rotation.y = 0; clk.root.position.set(0, 0.78, -0.3);
+  clk.setTimes(185, 3); clk.press('L', U(0.5));
+  const p = clk.root.position;
+  const c = cam(32, W / H, [p.x + 0.12, p.y + 0.3, p.z + 0.62], [p.x, p.y + 0.06, p.z]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label('chess clock — press("L", u)', 8, 8);
+} else if (VIEW === 'slam') {
+  const st = studio({ shadowSize: 1.2 });
+  const { chess } = chessTable(st.scene, { fen: 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR' });
+  const u = U(0.12);
+  chess.slam('e4', u);
+  const burst = makeImpactBurst({ size: 0.2 });
+  const bp = chess.root.localToWorld(new THREE.Vector3(0.02, 0.002, -0.12));
+  burst.root.position.copy(bp); burst.update(u + 0.1); st.scene.add(burst.root);
+  const e4 = chess.root.localToWorld(chess.squareToLocal('e4'));
+  const c = cam(36, W / H, [e4.x + 0.28, e4.y + 0.24, e4.z + 0.42], [e4.x, e4.y + 0.02, e4.z - 0.06]);
+  const draw = () => view(st.scene, c, 0, 0, W, H);
+  draw(); renders.push(draw);
+  label(`slam("e4", u=${u}) + impact burst`, 8, 8);
+}
+
+if (Q.get('noenv') === '1') {
+  const seen = new Set();
+  window.__scenes?.forEach((sc) => sc.traverse((o) => { const ms = Array.isArray(o.material) ? o.material : [o.material]; for (const m of ms) if (m && m.envMap && !seen.has(m)) { seen.add(m); m.envMap = null; m.needsUpdate = true; } }));
+}
+const benchN = parseInt(Q.get('bench') || '0', 10);
+if (benchN > 0) {
+  const gl = renderer.getContext(); const px = new Uint8Array(4);
+  renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  const b0 = performance.now();
+  for (let i = 0; i < benchN; i++) { renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); }
+  window.__bench = (performance.now() - b0) / benchN;
+  window.__info = renderer.info.render;
+  console.log('bench ms/frame', window.__bench.toFixed(1), 'calls', renderer.info.render.calls, 'tris', renderer.info.render.triangles);
+}
+window.__setupMs = performance.now() - t0;
+window.__ready = true;
+</script>
+</body>
+</html>

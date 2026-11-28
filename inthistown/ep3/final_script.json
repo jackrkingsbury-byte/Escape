@@ -1,0 +1,215 @@
+{
+ "title": "In This Town \u2014 Don't Blink",
+ "narrator": "'me', the ep1 chess kid, narrates (cast id 'me' = MAIN.me; no new spec and no new emblem). Voice: the same young, deadpan, sing-songy 'jinxy' narrator voice as ep1 and ep2. Speaker 'me' is the kid on all five HUSS beats. Series pull: the cat is HIS cat, Grandad is his grandad, and the DJ is ep2's Gerald ('DJ Hip Replacement'). FACE RULES: there are no new faces, so the rules below need no engine work. STARE = 'neutral' with blinking frozen: open oval eyes and flat brows, which reads as a dead, wide stare. 'determined' has diagonal lids and reads as a glare, so use it only for the staredown at the contest table (b12). HUSS = 'shocked' (wide eyes + O mouth), never 'huss', because its eyes squeeze shut. FREEZING: for 'me' and the cat, call face(expr, FROZEN_T) with a constant t outside isBlinking()'s window in every shot. The scripted exceptions: the cat at b18 (the loss) and b20 (slow blink), and the kid only in the b22 photo ('smile' at a t inside his blink window). SLEEPERS (Gerald, Grandad, the dozing crowd): face('sleepy', t inside the blink window) gives closed eyes + a yawn mouth. Plain 'sleepy' is only half-lidded. OPTIONAL one-line upgrade, if the team agrees: add HUMAN_FACES.stare = { e:'wide', b:'flat', m:'firm', blink:'closed' } and use it wherever this script says 'neutral' frozen. Music cues are music only. The only sound effect is HUSS.",
+ "narratorSpec": {
+  "id": "me",
+  "skin": "#f1c7a1",
+  "hair": {
+   "style": "fade",
+   "color": "#2b1d14"
+  },
+  "top": {
+   "style": "hoodie",
+   "color": "#1d1d22",
+   "accent": "#ffffff",
+   "emblem": "knight"
+  },
+  "bottom": {
+   "style": "pants",
+   "color": "#55575e"
+  },
+  "shoes": "#f2f2f2",
+  "accessories": [
+   "headphones"
+  ],
+  "scale": 1
+ },
+ "beats": [
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody goes out partying.",
+   "visual": "Music 'party'. Town, party_night. Crane down from street.camHigh along the party street: string lights, all 18 extras in party hats dancing (dance / dance2). Background plant for b15: Gerald (ep2's s05 senior spec) arm-pumps at his decks (makeDJDecks) behind street.crowdB. The cone is not in this shot; it gets its own beat at b04."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me.",
+   "visual": "Music 'muffled'. Push in on the lit upstairs myHouse.window, then cut inside: hero room (variant 'hero', window 'party', board off), lighting 'night'. The camera sits at the desk looking back at the kid in room.chair (sitIdle), so he faces the lens with no head-turn (lookAt yaw clamps at about 75\u00b0). Face 'neutral', frozen: a dead, open-eyed stare. Behind him on the bed (left wall), his cat sits in 'stare', also staring down the lens."
+  },
+  {
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "visual": "Cut on every HUSS. HUSS 1, 3 and 5 are the desk angle (room.camClose): the kid does a sitSlam with params.hits on the HUSS times, face 'shocked', and the toaster and desk items jump on each hit. HUSS 2 and 4 are a reverse on the cat on the bed in 'stare', completely unmoved. HUSS 6: the kid snaps to the lens, tight. His eyes never close."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A traffic cone retired. Huge party.",
+   "visual": "Music 'party'. Back on the party street, party_night, low close shot at the kerb. An orange traffic cone with a white band wears a party hat beside a small cake (makeCake) and a HAPPY RETIREMENT sign. Two extras flank it with 'sad' faces (built-in tear), one resting a hand on its tip; a third claps. Tag on 'retired': 41 YEARS OF SERVICE. On 'Huge party.' pull back to reveal that the whole dancing street from b01 is the cone's party."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I haven't blinked since March.",
+   "visual": "Music 'muffled'. Bedroom. A tag styled like a factory safety board (green and white) pops in top-left and stays up for the rest of the bedroom section: DAYS SINCE LAST BLINK: 112. Slow push-in on the kid's face, 'neutral' frozen, dead still."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I stare at toasters until they pop. Out of fear.",
+   "visual": "Desk two-shot. The kid's face is 30 cm from a blocky toaster (sitIdle, hands 'table', small headPitch; there is no chin-on-fists pose). On 'I stare at toasters' the toaster starts a faint 1 cm tremble. On 'pop' a slice of toast shoots straight up out of frame. On 'fear', and not before, a sweat drop (makeSweatDrop) appears on the toaster's side and it shivers harder. The kid doesn't flinch. Hold 0.2 s."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I'm staring at a wall.",
+   "visual": "Deadpan wide (room.cam). The kid stands 10 cm from a bare patch of the back wall beside the window, arms at his sides (idle, intensity 0), dead still. Party lights flicker in the window next to him."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It cracked first.",
+   "visual": "Insert on the wall. On 'cracked' a zig-zag crack decal grows out from the exact spot he's staring at. Silent, no SFX. Cut back: the kid is unmoved, 'neutral' frozen. Hold 0.2 s."
+  },
+  {
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "visual": "Profile two-shot of the kid and the wall. On each HUSS the kid does a standing 'slam' hit, face 'shocked', eyes wide, and the crack sprouts a new branch on that hit. By the third HUSS it reaches the corners."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Eyes are windows. Never close a window. A burglar.",
+   "visual": "Music 'muffled'. Outside, same night: the upstairs myHouse.window seen from the street, lit (windowGlow 1; town windows can't open). Below it a burglar stands in the hedge looking up at it ('peer' standing, lookAt aimed up at the window), sack on his shoulder. QUOTE CARD \"Eyes are windows. Never close a window.\" runs from the line start and ends exactly where 'A burglar.' starts (the card dims the frame). Cut to the undimmed burglar, who turns and gives the camera a friendly 'wave', face 'smile'. The reveal of who said it is the joke."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Summer Party Staring Contest.",
+   "visual": "Music 'party'. Town square, 'day' lighting, square.cam1. Banner lines: SUMMER PARTY / STARING / CONTEST. The bleachers are full of party hats; the front three rows are full characters, crowdMotion 0.6. The ep1 vsSign (T.vsSign) is retextured to ME VS CAT. The tag becomes a scoreboard: BLINKS \u2014 ME 0 | CAT 0. At the stage edge, Gerald arm-pumps at his decks (dance2)."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Defending champion? My own cat. Nine lives. Zero blinks.",
+   "visual": "'Defending champion?': the kid at square.chairA (sitIdle, hands 'table', face 'determined' frozen, a staredown glare). 'My own cat': snap-zoom across the table to the cat in 'stare', perched on TWO stacked red velvet cushions at the chairB end so his eyes are level with the kid's. Small tag: UNDEFEATED. 'Nine lives. Zero blinks.': hard profile two-shot, both dead still."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Your eyes have the right to remain open. My cat's lawyer.",
+   "visual": "QUOTE CARD \"Your eyes have the right to remain open.\" runs until 'My cat's lawyer.' starts. Then cut to the undimmed lawyer (new character) standing behind the cushions: arms crossed (crossArms), face 'smug', briefcase at his feet."
+  },
+  {
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "visual": "The contest starts. Western cut-backs, one cut per HUSS, each tighter than the last: (1) kid ECU, sitSlam on the table, face 'shocked', eyes wide; (2) cat ECU framed on head and ears (the cat face is a 512 px canvas, so don't go tighter), 'stare', the cushions bounce from the slam and the cat doesn't move; (3) the front bleacher rows lean in (peer); (4) kid, closer; (5) cat, closer; (6) both in profile, noses 40 cm apart. From HUSS 3 on, one sweat drop (makeSweatDrop) appears on the kid's forehead per HUSS: 4 by the end."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Four hours. DJ Hip Replacement fell asleep.",
+   "visual": "'Four hours.': a big text stamp, 4 HOURS LATER (SpongeBob time-card style), over a locked wide of the stalemate where nobody has moved. Lighting hard-cuts to 'dusk' with no interpolation. Don't animate the clock tower; its hands are painted into a static texture. 'DJ Hip Replacement fell asleep.': cut to the stage. Gerald is slumped over his decks: seated, headPitch about 0.9 plus a hand-set torso lean, face('sleepy', t inside its blink window) for closed eyes and a yawn. Tag (ep2 callback): DJ HIP REPLACEMENT (91). The party music cuts dead on 'asleep' (music only) and stays out until b18. Behind him the kid and the cat haven't moved; the kid has 6 sweat drops."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Blinking is a nap for cowards. My grandad. Mid-nap.",
+   "visual": "No music. party_night, string lights on, crowdMotion 0. Front bleacher row: Grandad in a party hat, asleep sitting up (seated idle, face('sleepy', t inside its blink window), slow snore bob). Half of the front three rows are asleep the same way; the back rows are faceless instanced fans, so only the front rows show faces. QUOTE CARD \"Blinking is a nap for cowards.\" runs until 'My grandad.' starts. Cut to the undimmed Grandad, asleep. On 'Mid-nap.' his head droops onto the shoulder of the burglar from b10, who sits next to him still holding his sack."
+  },
+  {
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "visual": "THE TWITCH: silence under the HUSSes, three cut-backs. (1) Kid ECU: sitSlam on the table, 'shocked', 7 sweat drops. (2) Cat ECU, head and ears: the cushions bounce and his eyes twitch (the face toggles stare, squint, stare, 2 frames each, plus a 1 cm head jitter), and one sweat drop pops on his forehead. (3) Kid ECU: 8 sweat drops, eyes wide, perfectly still. Then 0.5 s of dead silence."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the cat blinked.",
+   "visual": "Delivered into silence. Cat ECU on head and ears (or render that one cat face texture at 1024). Slow motion, about 4 frames per step: stare, smug (half-lid), closed (stare at a t inside the blink window), smug, stare. Smash cut wide on the last word: the front rows wake 'shocked', Gerald jolts upright and the party music slams back in, confetti bursts, crowdMotion 1, and the scoreboard flips to BLINKS \u2014 ME 0 | CAT 1."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: he let me win.",
+   "visual": "RANKING CARD (top10Card, which doesn't dim the frame) slides in on 'Top ten' over a two-shot of the kid and the cat across the table. The big #7 pops on 'Number seven'. On 'he let me win' the cat turns his head to the kid, unbothered."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "That's cat for GG.",
+   "visual": "Card gone, clean two-shot. The cat gives the kid a slow, deliberate blink with a little head dip (headPitch 0.3): smug, closed, smug, stare. That's a cat's real-life slow blink, which means respect; the line explains it. The kid, eyes still wide, gives one small nod back. Behind them the lawyer starts a slow 'clap'. TTS note: 'GG' is said 'gee-gee'."
+  },
+  {
+   "kind": "quote",
+   "speaker": "mayor",
+   "text": "Say cheese!",
+   "visual": "Dialogue caption in the gold-outline mayor style, not a quote card. On stage the kid stands holding the new trophy prop in handR. The cat sits on his cushions on a box stool beside him, with the lawyer and a now-awake Grandad behind. The mayor ducks behind the blocky camera on its tripod and raises one hand."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I blinked.",
+   "visual": "Camera-flash white-out in the gap before the line. The white fades into a freeze-frame photo with a white polaroid border that resolves on 'blinked'. Everyone wears 'smile' (open oval eyes; not 'grin', whose half-moon eyes read as closed at phone size), each at a t outside their own blink window. That leaves the kid with the only closed eyes in the frame: 'smile' at a t inside his blink window, his first and only blink. The cat stares dead into the lens. The tag slams back: DAYS SINCE LAST BLINK: 0. Hold 0.6 s."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "They built me a statue. Eyes closed.",
+   "visual": "Music 'party' (low). Town square, 'day'. 'They built me a statue.': a grey stone statue of the kid in the photo pose (trophy up, smiling, eyes closed) on a wide, low plinth (0.35 m) at square.center. The real kid stands on the plinth beside it, crossArms, 'neutral' frozen: a matching pair, one with eyes shut and one with eyes wide. 'Eyes closed.': push in past the statue's closed eyes to its plaque, NEVER BLINKED. Hold 0.4 s."
+  },
+  {
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "visual": "The kid turns and stares the statue in the face, nose to nose (they share the plinth, so heads are level). On each HUSS he does a standing 'slam' hit, face 'shocked'. The statue stays fully intact through all three. On the third HUSS the pigeon, in his party hat, flaps down and lands on the statue's head."
+  },
+  {
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It cracked first.",
+   "visual": "On 'cracked', and not before: a single zig-zag crack (the wall decal, scaled down) runs across the statue's face, and a small grey box chip drops off its nose. The pigeon doesn't budge. The kid turns from the statue and stares wide-eyed down the lens ('neutral' frozen) for 0.8 s, then cut to black. There is no cat slow-blink after the button; that gag is spent."
+  }
+ ],
+ "quoteCards": [
+  {
+   "quote": "Eyes are windows. Never close a window.",
+   "by": "a burglar"
+  },
+  {
+   "quote": "Your eyes have the right to remain open.",
+   "by": "my cat's lawyer"
+  },
+  {
+   "quote": "Blinking is a nap for cowards.",
+   "by": "my grandad, mid-nap"
+  }
+ ],
+ "newProps": [
+  "Toaster: rounded chrome-grey box (#c9ccd2) with two dark slot recesses and a small lever, on the hero desk from b03, where it jumps on each slam. In b06 it trembles 1 cm, fires a toast slice (flat rounded tan box) straight up on 'pop', then gets a makeSweatDrop on its side and shivers harder on 'fear'.",
+  "Wall crack decal: a dark zig-zag crack on a transparent canvas plane, revealed in stages. It grows on 'cracked' in b08 and adds a branch per HUSS in b09. Reused scaled down in b25 as ONE crack across the statue's face, revealed only on 'cracked', plus a small grey box chip that falls off the statue's nose.",
+  "Stone statue of the kid: clone of 'me' with every material stone grey (#9a9a9a), including the fade haircut's skin-fade shell. Its face canvas is drawn greyscale (ctx.filter = 'grayscale(1)'), so the 'smile' face's pink blush and skin-tone nose don't read as rouge on stone. Posed like the photo: standing, trophy raised, 'smile' at a blink t so the eyes are closed, holding a stone-grey copy of the new trophy. It stands on a wide, LOW box plinth (0.35 m, wide enough for the real kid to stand on beside it) with a plaque reading NEVER BLINKED.",
+  "Trophy: a NEW simple gold prop (cup, two handles, base) parented to the kid's handR for the photo. The town's own trophies are baked into the merged static gold mesh (src/world.js T.trophies) and can't be lifted, so keep that plinth out of the stage shots.",
+  "Camera on tripod for the mayor: box body, cylinder lens, three thin box legs.",
+  "Two stacked red velvet cushions for the cat: flattened rounded boxes (#a01830) with gold tassel cubes, at the chairB end of the square table so the cat's eyes are level with the seated kid's (a 2.0 m blocky figure). On stage in b21 they sit on a small box stool.",
+  "NEW CHARACTER, the cat's lawyer (one-line look): skin #e0ac69, hair 'short' grey #cfcfcf, top 'suit' #5a5f6b with white accent #ffffff (no emblem), pants #2a2a30, black shoes, accessories glasses + bowtie, scale 1.0. Prop: a briefcase (brown box + handle).",
+  "Burglar (restyled extra): black cap, black tee #1d1d22 with a white 'stripe' emblem, dark pants #2a2a30, and a sack prop (lumpy beige rounded box) on his shoulder. No blindfold, because it has no eye holes. Appears under the window in b10, then in the front bleacher row next to Grandad in b16.",
+  "DJ: reuse ep2's Gerald (s05 senior spec: bald, beard, sunglasses, headphones, teal cardigan) and ep2's makeDJDecks. The slump in b15 is a seated pose with headPitch about 0.9 plus a hand-set torso lean onto the decks, sleeping face. He jolts upright in b18.",
+  "Sweat drops: makeSweatDrop instances parented to the kid's head, added through the contest: 1 at contest HUSS 3, 4 at the end of b14, 6 at b15, 7 then 8 during the b17 twitch. Plus 1 on the cat's forehead at twitch HUSS 2.",
+  "Traffic cone (orange cone with a white band) in a party hat, makeCake, and a small HAPPY RETIREMENT sign. b04 only, its own close shot on the party street.",
+  "Square dressing: banner lines SUMMER PARTY / STARING / CONTEST, and the ep1 vsSign (T.vsSign) retextured to ME VS CAT.",
+  "Overlays: tags (DAYS SINCE LAST BLINK: 112 styled as a green and white safety board, then DAYS SINCE LAST BLINK: 0 at the photo; scoreboard BLINKS \u2014 ME 0 | CAT 0, then ME 0 | CAT 1; 41 YEARS OF SERVICE; UNDEFEATED; DJ HIP REPLACEMENT (91)). 3 quote cards, each ending where its attribution words begin so the narrator names the speaker over the undimmed character. top10Card with #7. Big text stamp 4 HOURS LATER. Camera-flash white-out plus a freeze-frame with a white polaroid border.",
+  "Face/timing helpers (no new art): FROZEN_T constant for 'me' and the cat. Sleeper faces = face('sleepy', t inside the blink window). Photo faces = 'smile' at a per-character t outside each blink window, except the kid's. Music beds: party / muffled / none only; HUSS is the only sound effect."
+ ],
+ "spokenWordCount": 129
+}

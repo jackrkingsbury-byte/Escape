@@ -1,0 +1,408 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Module A — characters</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1d26; }
+  canvas { display: block; }
+  .lbl { position: absolute; color: #fff; font: 700 12px/1.1 system-ui, sans-serif; text-shadow: 0 1px 2px #000, 0 0 4px #000;
+         pointer-events: none; white-space: nowrap; }
+  .lbl.big { font-size: 15px; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { makeCharacter, makeCreature, ACTIONS, CREATURE_ACTIONS, CHARACTER_OPTIONS } from '/src/characters.js';
+import { rbox, mat } from '/src/lib/util.js';
+
+// Views:  ?view=lineup (default) · face · poses · creatures · seated   (&t=seconds  &bench=N)
+const Q = new URLSearchParams(location.search);
+const VIEW = Q.get('view') || 'lineup';
+const T = parseFloat(Q.get('t') ?? '0.9');
+const W = window.innerWidth, H = window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({ antialias: Q.get('aa') !== '0', preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = Q.get('shadow') !== '0';
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+
+const CAST = {
+  me: { id: 'me', skin: '#f1c7a1', hair: { style: 'fade', color: '#2b1d14' },
+        top: { style: 'hoodie', color: '#1d1d22', accent: '#ffffff', emblem: 'knight' },
+        bottom: { style: 'pants', color: '#55575e' }, shoes: '#f2f2f2', accessories: ['headphones'] },
+  marcus: { id: 'marcus', skin: '#8d5a3b', hair: { style: 'curly', color: '#1a120c' },
+        top: { style: 'tee', color: '#ff7a2f' }, bottom: { style: 'shorts', color: '#2f4d8a' }, shoes: '#ffffff', accessories: ['chain'] },
+  brenda: { id: 'brenda', skin: '#f4d0b5', hair: { style: 'bun', color: '#c0392b' },
+        top: { style: 'dress', color: '#8a5cff', accent: '#ffd23f' }, shoes: '#ff4fa3', accessories: ['sunglasses'] },
+  grandad: { id: 'grandad', skin: '#efc9a6', hair: { style: 'grandpa', color: '#e8e8e8' },
+        top: { style: 'cardigan', color: '#6b8e5a' }, bottom: { style: 'pants', color: '#7a6a58' }, shoes: '#5a3b2a',
+        accessories: ['glasses', 'mustache'], scale: 0.95 },
+  mayor: { id: 'mayor', skin: '#f0c09a', hair: { style: 'short', color: '#9a9590' },
+        top: { style: 'suit', color: '#7a1f2b', accent: '#ffd23f' }, bottom: { style: 'pants', color: '#2a2a30' }, shoes: '#1b1b1b',
+        accessories: ['topHat', 'sash', 'mustache'], build: 1.2, scale: 1.05 },
+  heckler: { id: 'heckler', skin: '#e9b48f', hair: { style: 'spiky', color: '#f0c419' },
+        top: { style: 'tee', color: '#3ee0c8' }, bottom: { style: 'pants', color: '#3b3f6b' }, shoes: '#ff7a2f',
+        accessories: ['partyHat'], partyHatColor: '#ff4fa3' },
+};
+
+function studio({ bg = '#9fc3e6', floor = '#e8dfcf', shadowSize = 4, sun = [3, 6, 5] } = {}) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(bg);
+  scene.add(new THREE.HemisphereLight('#eaf2ff', '#7a6450', 1.25));
+  const d = new THREE.DirectionalLight('#fff1dc', 2.6);
+  d.position.set(...sun); d.castShadow = true;
+  d.shadow.mapSize.set(1024, 1024);
+  const sc = d.shadow.camera; sc.left = -shadowSize; sc.right = shadowSize; sc.top = shadowSize; sc.bottom = -shadowSize; sc.near = 0.5; sc.far = 30;
+  d.shadow.bias = -0.0004; d.shadow.normalBias = 0.02;
+  scene.add(d); scene.add(d.target);
+  const fill = new THREE.DirectionalLight('#cfe0ff', 0.7); fill.position.set(-4, 3, 3); scene.add(fill);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: floor, roughness: 0.9 }));
+  fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; scene.add(fl);
+  return { scene, sun: d };
+}
+function cam(fov, aspect, pos, look) {
+  const c = new THREE.PerspectiveCamera(fov, aspect, 0.05, 100);
+  c.position.set(...pos); c.lookAt(new THREE.Vector3(...look)); return c;
+}
+function view(scene, camera, x, y, w, h) {   // x,y from top-left
+  renderer.setViewport(x, H - y - h, w, h); renderer.setScissor(x, H - y - h, w, h);
+  renderer.render(scene, camera);
+}
+function label(text, x, y, big = false) {
+  const d = document.createElement('div'); d.className = 'lbl' + (big ? ' big' : ''); d.textContent = text;
+  d.style.left = x + 'px'; d.style.top = y + 'px'; document.body.appendChild(d);
+}
+function chairAndTable(scene, { chair = true, table = true, tableZ = 0.30 } = {}) {
+  const g = new THREE.Group();
+  const wood = mat('#b07a4a', { roughness: 0.7 }), dark = mat('#7a5232');
+  if (chair) {
+    const seat = new THREE.Mesh(rbox(0.46, 0.05, 0.45, 0.02), wood); seat.position.set(0, 0.525, 0); g.add(seat);
+    const back = new THREE.Mesh(rbox(0.46, 0.5, 0.05, 0.02), wood); back.position.set(0, 0.8, -0.21); g.add(back);
+    for (const [x, z] of [[-0.2, -0.2], [0.2, -0.2], [-0.2, 0.2], [0.2, 0.2]]) { const l = new THREE.Mesh(rbox(0.05, 0.5, 0.05, 0.015), dark); l.position.set(x, 0.25, z); g.add(l); }
+  }
+  if (table) {
+    const top = new THREE.Mesh(rbox(1.3, 0.05, 0.8, 0.02), mat('#d9b48a')); top.position.set(0, 0.755, tableZ + 0.4); g.add(top);
+    for (const [x, z] of [[-0.58, tableZ + 0.06], [0.58, tableZ + 0.06], [-0.58, tableZ + 0.74], [0.58, tableZ + 0.74]]) { const l = new THREE.Mesh(rbox(0.06, 0.73, 0.06, 0.015), dark); l.position.set(x, 0.365, z); g.add(l); }
+  }
+  g.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  scene.add(g); return g;
+}
+
+// ---------------------------------------------------------------------------------------------------
+function lineupScene() {
+  const st = studio({ shadowSize: 5 });
+  const C = {};
+  for (const k of Object.keys(CAST)) { C[k] = makeCharacter(CAST[k]); st.scene.add(C[k].root); }
+  const riser = new THREE.Mesh(rbox(7.0, 0.45, 1.3, 0.05), mat('#cdbfa8')); riser.position.set(0, 0.225, -1.25);
+  riser.receiveShadow = true; riser.castShadow = true; st.scene.add(riser);
+  const place = (ch, x, y, z, yaw = 0) => { ch.root.position.set(x, y, z); ch.root.rotation.y = yaw; };
+  // zig-zag: back row on the riser between the front row
+  place(C.grandad, -1.95, 0.45, -1.2, 0.3); C.grandad.pose('think', T); C.grandad.face('squint', T);
+  place(C.marcus, -0.66, 0.45, -1.25, 0.1); C.marcus.pose('dance', T); C.marcus.face('grin', T);
+  place(C.brenda, 0.68, 0.45, -1.25, -0.1); C.brenda.pose('dance2', T + 0.15); C.brenda.face('smile', T);
+  place(C.heckler, -1.3, 0, 0.3, 0.3); C.heckler.pose('pointLaugh', T); C.heckler.face('laugh', T);
+  place(C.me, 0.02, 0, 0.55, 0); C.me.pose('crossArms', T); C.me.face('smug', T);
+  place(C.mayor, 1.42, 0, 0.3, -0.35); C.mayor.pose('surprised', 1.2); C.mayor.face('shocked', 1.2);
+  const pigeon = makeCreature('pigeon', { id: 'pigeon', accessories: ['partyHat'], partyHatColor: '#3ee0c8' });
+  pigeon.root.position.set(-0.68, 0, 1.45); pigeon.root.rotation.y = 0.35; pigeon.root.scale.setScalar(1.25); pigeon.pose('huss', T); pigeon.face('huss', T);
+  st.scene.add(pigeon.root);
+  const cat = makeCreature('cat', { id: 'cat' });
+  cat.root.position.set(0.72, 0, 1.45); cat.root.rotation.y = -0.45; cat.pose('sit', T); cat.face('neutral', T);
+  st.scene.add(cat.root);
+  return { ...st, C, pigeon, cat };
+}
+
+async function main() {
+  if (VIEW === 'lineup' || VIEW === 'bench') {
+    const L = lineupScene();
+    const topH = VIEW === 'bench' ? H : Math.round(H * 0.66);
+    const camL = cam(27, W / topH, [-0.2, 2.8, 10.9], [-0.25, 1.32, -0.2]);
+    view(L.scene, camL, 0, 0, W, topH);
+    if (VIEW === 'lineup') {
+      label('In This Town — cast (module A)', 8, 6, true);
+      // close-ups of the hero's face
+      const st = studio({ bg: '#ffd7a8', shadowSize: 2, sun: [2, 4, 5] });
+      const hero = makeCharacter(CAST.me); st.scene.add(hero.root); hero.pose('idle', 0);
+      const bh = H - topH, bw = W / 2;
+      const camF = cam(26, bw / bh, [0.45, 1.72, 2.9], [0, 1.6, 0]);
+      hero.face('determined', 0.5); view(st.scene, camF, 0, topH, bw, bh);
+      hero.face('huss', 0.5); hero.pose('idle', 0, { headPitch: -0.08 }); view(st.scene, camF, bw, topH, bw, bh);
+      label('determined', 8, topH + 6, true); label('HUSS!', bw + 8, topH + 6, true);
+    }
+    if (Q.get('bench')) {
+      const n = +Q.get('bench');
+      const camB = cam(27, W / H, [-0.2, 2.8, 10.9], [-0.25, 1.32, -0.2]);
+      if (Q.get('merge') === '1') {   // experiment: flatten every character into one static mesh per material
+        const { mergeGeometries } = await import('three/addons/utils/BufferGeometryUtils.js');
+        const roots = [...Object.values(L.C).map((c) => c.root), L.pigeon.root, L.cat.root];
+        for (const r of roots) {
+          r.updateMatrixWorld(true);
+          const byMat = new Map();
+          r.traverseVisible((o) => { if (o.isMesh && !Array.isArray(o.material) && o.geometry.attributes.color) { const g = o.geometry.clone().applyMatrix4(o.matrixWorld); if (!byMat.has(o.material)) byMat.set(o.material, []); byMat.get(o.material).push(g); o.visible = false; } });
+          for (const [m, gs] of byMat) { const mm = new THREE.Mesh(mergeGeometries(gs), m); mm.castShadow = mm.receiveShadow = true; L.scene.add(mm); }
+        }
+      }
+      if (Q.get('chars') === '0') { for (const k in L.C) L.C[k].root.visible = false; L.pigeon.root.visible = false; L.cat.root.visible = false; }
+      const t0 = performance.now();
+      for (let i = 0; i < n; i++) {
+        const t = i / 30;
+        if (Q.get('merge') !== '1') {
+          for (const k in L.C) L.C[k].pose(['dance', 'dance2', 'think', 'pointLaugh', 'crossArms', 'surprised'][Object.keys(L.C).indexOf(k)], t);
+          L.pigeon.pose('huss', t); L.cat.pose('sit', t);
+        }
+        view(L.scene, camB, 0, 0, W, H);
+        const gl = renderer.getContext(); const px = new Uint8Array(4); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      }
+      const ms = (performance.now() - t0) / n;
+      console.warn(`BENCH ${W}x${H} avg ${ms.toFixed(1)} ms/frame; calls ${renderer.info.render.calls}`);
+    }
+  } else if (VIEW === 'face') {
+    const st = studio({ bg: '#ffd7a8', shadowSize: 2, sun: [2, 4, 5] });
+    const hero = makeCharacter(CAST.me); st.scene.add(hero.root); hero.pose('idle', 0);
+    const exprs = (Q.get('exprs') || 'neutral,determined,huss,shocked,laugh,smug').split(',');
+    const cols = 2, rows = Math.ceil(exprs.length / cols), cw = W / cols, chh = H / rows;
+    const camF = cam(24, cw / chh, [0.4, 1.74, 2.8], [0, 1.62, 0]);
+    exprs.forEach((e, i) => {
+      const x = (i % cols) * cw, y = Math.floor(i / cols) * chh;
+      hero.face(e, 0.5); view(st.scene, camF, x, y, cw, chh); label(e, x + 8, y + 6, true);
+    });
+  } else if (VIEW === 'faces2') {   // all expressions, all humans quick check
+    const st = studio({ bg: '#ffd7a8', shadowSize: 2, sun: [2, 4, 5] });
+    const who = Q.get('who') || 'me';
+    const ch = makeCharacter(CAST[who]); st.scene.add(ch.root); ch.pose('idle', 0);
+    const exprs = ['neutral', 'smile', 'grin', 'laugh', 'determined', 'huss', 'shocked', 'sad', 'smug', 'squint', 'sweat', 'sleepy', 'wink', 'neutral'];
+    const cols = 3, rows = 5, cw = W / cols, chh = H / rows;
+    const hy = 1.68 * (CAST[who].scale ?? 1);
+    const camF = cam(26, cw / chh, [0.25, hy + 0.06, 2.4], [0, hy, 0]);
+    exprs.forEach((e, i) => {
+      const x = (i % cols) * cw, y = Math.floor(i / cols) * chh;
+      const blink = i === 13;
+      ch.face(e, blink ? hashBlink(ch) : 0.5); view(st.scene, camF, x, y, cw, chh); label(blink ? 'blink' : e, x + 6, y + 4);
+    });
+  } else if (VIEW === 'poses' || VIEW === 'seated') {
+    const st = studio({ shadowSize: 3 });
+    const who = Q.get('who') || 'me';
+    const hero = makeCharacter(CAST[who]); st.scene.add(hero.root);
+    const furn = chairAndTable(st.scene);
+    let list;
+    if (Q.get('list')) {
+      list = Q.get('list').split(',').map((a) => [a.replace('*', ''), a, a.endsWith('*') ? { seated: true } : {}]);
+    } else if (VIEW === 'poses') {
+      list = ACTIONS.map((a) => [a, a, {}]);
+      list.push(['sitSlam', 'sitSlam (up)', { t: 0.85 }]);
+    } else {
+      list = ['idle', 'laugh', 'clap', 'cheer', 'point', 'think', 'peer', 'shrug', 'wave', 'crossArms', 'stunned', 'pointLaugh'].map((a) => [a, a + ' (seated)', { seated: true }]);
+    }
+    const repT = { idle: 0.5, dance: 0.02, dance2: 0.22, walk: 0.3, sit: 0, sitSlam: 0.45, slam: 0.45, laugh: 0.3, point: 0.2, clap: 0.05,
+      cheer: 0.25, surprised: 0.6, shrug: 0.4, think: 0.5, peer: 0.5, crowdSurf: 0.3, walkSad: 0.4, stunned: 0.5, wave: 0.12,
+      sitIdle: 0.5, sitStand: 0, pointLaugh: 0.3, crossArms: 0.5 };
+    const cols = +(Q.get('cols') || 4), rows = Math.ceil(list.length / cols), cw = W / cols, chh = H / rows;
+    const cyaw = +(Q.get('yaw') || 0.56);
+    list.forEach(([a, name, extra], i) => {
+      const x = (i % cols) * cw, y = Math.floor(i / cols) * chh;
+      const seatedish = !!(a.startsWith('sit') || extra.seated);
+      const tabled = a === 'sitSlam' || a === 'slam' || a === 'peer';
+      furn.children.forEach((m, k) => { m.visible = k < 6 ? seatedish : tabled; });
+      const t = extra.t ?? repT[a] ?? 0.5;
+      const params = { ...extra };
+      if (a === 'sitStand') params.u = 0.5;
+      hero.pose(a, t, params); hero.face(a === 'laugh' || a === 'pointLaugh' ? 'laugh' : a.includes('lam') ? 'huss' : 'neutral', 0.5);
+      hero.root.position.set(0, a === 'crowdSurf' ? 1.0 : 0, 0);
+      const camP = a === 'crowdSurf' ? cam(34, cw / chh, [3.4, 2.7, 3.8], [0, 1.15, 0]) : cam(32, cw / chh, [Math.sin(cyaw) * 5.05, 1.55, 0.25 + Math.cos(cyaw) * 5.05], [0, 0.98, 0.25]);
+      view(st.scene, camP, x, y, cw, chh);
+      label(name, x + 4, y + 3);
+    });
+  } else if (VIEW === 'one') {
+    const st = studio({ shadowSize: 3 });
+    const who = Q.get('who') || 'me';
+    const ch = makeCharacter(CAST[who]); st.scene.add(ch.root);
+    const a = Q.get('a') || 'idle';
+    const params = JSON.parse(Q.get('p') || '{}');
+    const furn = chairAndTable(st.scene, { chair: Q.get('chair') !== '0', table: Q.get('table') !== '0' });
+    ch.pose(a, T, params); ch.face(Q.get('f') || 'neutral', T);
+    const yaws = (Q.get('yaws') || '0.6,-1.57').split(',').map(Number);
+    const rows = yaws.length, chh = H / rows;
+    yaws.forEach((yaw, i) => {
+      const r = +(Q.get('r') || 4.2), ly = +(Q.get('ly') || 0.95);
+      const camO = cam(+(Q.get('fov') || 30), W / chh, [Math.sin(yaw) * r, +(Q.get('cy') || 1.4), Math.cos(yaw) * r + 0.2], [0, ly, 0.2]);
+      view(st.scene, camO, 0, i * chh, W, chh);
+    });
+    label(`${who}: ${a} t=${T} ${Q.get('p') || ''}`, 6, 4, true);
+  } else if (VIEW === 'abbench') {   // interleaved A/B: skinned vs per-joint meshes, medians
+    const n = +(Q.get('n') || 10);
+    CHARACTER_OPTIONS.skinned = true; const A = lineupScene();
+    CHARACTER_OPTIONS.skinned = false; const B = lineupScene();
+    CHARACTER_OPTIONS.skinned = true;
+    const E = studio({ shadowSize: 5 });
+    const camB = cam(27, W / H, [-0.2, 2.8, 10.9], [-0.25, 1.32, -0.2]);
+    const gl = renderer.getContext(), px = new Uint8Array(4);
+    const acts = ['dance', 'dance2', 'think', 'pointLaugh', 'crossArms', 'surprised'];
+    const tA = [], tB = [], tE = [];
+    const frame = (L, t) => { if (L.C) { Object.keys(L.C).forEach((k, i) => L.C[k].pose(acts[i], t)); L.pigeon.pose('huss', t); L.cat.pose('sit', t); } view(L.scene, camB, 0, 0, W, H); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); };
+    frame(A, 0); frame(B, 0); frame(E, 0);
+    for (let i = 0; i < n; i++) {
+      for (const [L, arr] of [[A, tA], [B, tB], [E, tE]]) { const t0 = performance.now(); frame(L, i / 30); arr.push(performance.now() - t0); }
+    }
+    const med = (a) => a.slice().sort((x, y) => x - y)[a.length >> 1].toFixed(1);
+    renderer.info.reset();
+    console.warn(`ABBENCH ${W}x${H} shadow=${renderer.shadowMap.enabled} aa=${Q.get('aa') !== '0'}: skinned ${med(tA)} ms | per-joint ${med(tB)} ms | empty floor ${med(tE)} ms (medians of ${n})`);
+  } else if (VIEW === 'crowd') {   // bleacher crowd test: ?lod=low|high&n=bench frames
+    const st = studio({ shadowSize: 6 });
+    const lod = Q.get('lod') || 'low';
+    const tops = ['#ff7a2f', '#3ee0c8', '#8a5cff', '#ffd23f', '#4fb3ff', '#ff4fa3', '#6b8e5a', '#e9d8b5'];
+    const hairs = ['short', 'curly', 'spiky', 'bun', 'long', 'afro', 'bald', 'grandpa', 'fade'];
+    const skins = ['#f1c7a1', '#8d5a3b', '#f4d0b5', '#c68a5e', '#e9b48f', '#5c3a26'];
+    const crowd = [];
+    for (let row = 0; row < 3; row++) {
+      const step = new THREE.Mesh(rbox(8, 0.45 + row * 0.45, 0.9, 0.03), mat('#9aa7b8')); step.position.set(0, (0.45 + row * 0.45) / 2, -row * 0.9); step.receiveShadow = true; st.scene.add(step);
+      for (let i = 0; i < 8; i++) {
+        const k = row * 8 + i;
+        const ch = makeCharacter({ id: 'fan' + k, lod, skin: skins[k % 6], hair: { style: hairs[k % 9], color: ['#2b1d14', '#c0392b', '#f0c419', '#e8e8e8', '#1a120c'][k % 5] },
+          top: { style: ['tee', 'hoodie', 'dress', 'cardigan'][k % 4], color: tops[k % 8] }, bottom: { style: k % 3 ? 'pants' : 'shorts', color: '#3b3f6b' },
+          accessories: k % 2 ? ['partyHat'] : [], partyHatColor: tops[(k + 3) % 8] });
+        ch.root.position.set(-3.3 + i * 0.95, 0.45 + row * 0.45 - 0.55, -row * 0.9 - 0.05);
+        st.scene.add(ch.root); crowd.push(ch);
+      }
+    }
+    const pose = (t) => crowd.forEach((ch, k) => { ch.pose(['cheer', 'clap', 'laugh', 'point'][k % 4], t + k * 0.13, { seated: true, seatHeight: 0.45 + Math.floor(k / 8) * 0.45 - (0.45 + Math.floor(k / 8) * 0.45 - 0.55) }); ch.face(['grin', 'laugh', 'shocked', 'smile'][k % 4], t); });
+    const camC = cam(34, W / H, [0, 3.8, 11.5], [0, 1.25, -1]);
+    pose(0.3); view(st.scene, camC, 0, 0, W, H);
+    if (Q.get('n')) {
+      const n = +Q.get('n'), gl = renderer.getContext(), px = new Uint8Array(4), ts = [];
+      for (let i = 0; i < n; i++) { const t0 = performance.now(); pose(i / 30); view(st.scene, camC, 0, 0, W, H); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); ts.push(performance.now() - t0); }
+      console.warn(`CROWD lod=${lod} 24 chars ${W}x${H}: median ${ts.sort((a, b) => a - b)[n >> 1].toFixed(1)} ms; calls ${renderer.info.render.calls}`);
+      pose(0.3); view(st.scene, camC, 0, 0, W, H);
+    }
+    label(`crowd lod=${lod}`, 6, 4, true);
+  } else if (VIEW === 'strip') {   // filmstrip of one action: ?a=walk&n=8&dt=0.15&yaw=1.57
+    const st = studio({ shadowSize: 3 });
+    const who = Q.get('who') || 'me';
+    const ch = makeCharacter(CAST[who]); st.scene.add(ch.root);
+    const a = Q.get('a') || 'walk', n = +(Q.get('n') || 8), dt = +(Q.get('dt') || 0.15), yaw = +(Q.get('yaw') || 1.5708);
+    const params = JSON.parse(Q.get('p') || '{}');
+    const furn = chairAndTable(st.scene, { chair: Q.get('chair') === '1', table: Q.get('table') === '1' });
+    const cols = +(Q.get('cols') || 4), rows = Math.ceil(n / cols), cw = W / cols, chh = H / rows;
+    for (let i = 0; i < n; i++) {
+      const t = T + i * dt;
+      const pp = { ...params }; if (Q.get('u')) pp.u = i / (n - 1);
+      ch.pose(a, t, pp); ch.face(Q.get('f') || 'neutral', t);
+      const r = +(Q.get('r') || 4.6);
+      const camS = cam(30, cw / chh, [Math.sin(yaw) * r, 1.2, Math.cos(yaw) * r + 0.2], [0, 0.95, 0.2]);
+      view(st.scene, camS, (i % cols) * cw, Math.floor(i / cols) * chh, cw, chh);
+      label(Q.get('u') ? 'u=' + pp.u.toFixed(2) : 't=' + t.toFixed(2), (i % cols) * cw + 4, Math.floor(i / cols) * chh + 3);
+    }
+  } else if (VIEW === 'test') {
+    CHARACTER_OPTIONS.skinned = Q.get('skinned') === '1';
+    const out = [`build: ${CHARACTER_OPTIONS.skinned ? 'skinned' : 'per-joint meshes'}`];
+    const log = (m) => { out.push(m); console.warn('TEST ' + m); };
+    const scene = new THREE.Scene();
+    const hero = makeCharacter(CAST.me); scene.add(hero.root);
+    hero.root.position.set(2, 0, -1); hero.root.rotation.y = 0.7; hero.root.updateMatrixWorld(true);
+    // lowest world-space y of the skinned vertices bound to the given bones
+    const minYB = (ch, names) => {   // works for both builds (skinned or per-joint meshes)
+      ch.root.updateMatrixWorld(true);
+      const v = new THREE.Vector3(); let m = Infinity;
+      const mesh = ch.body.children.find((o) => o.isSkinnedMesh);
+      if (mesh) {
+        const set = new Set(names.map((n) => mesh.skeleton.bones.indexOf(ch.joints[n])));
+        const si = mesh.geometry.attributes.skinIndex;
+        for (let i = 0; i < si.count; i++) { if (!set.has(si.getX(i))) continue; mesh.getVertexPosition(i, v); v.applyMatrix4(mesh.matrixWorld); if (v.y < m) m = v.y; }
+      } else {
+        for (const n of names) for (const o of ch.joints[n].children) {
+          if (!o.isMesh || !o.visible || o.name === 'emblem' || o.name === 'face') continue;
+          const pa = o.geometry.attributes.position;
+          for (let i = 0; i < pa.count; i++) { v.fromBufferAttribute(pa, i).applyMatrix4(o.matrixWorld); if (v.y < m) m = v.y; }
+        }
+      }
+      return m;
+    };
+    const minYOf = (j) => minYB(hero, [Object.keys(hero.joints).find((k) => hero.joints[k] === j)]);
+    // 1. sitSlam: fist lowest point exactly at the table at every hit, higher around it
+    const hits = [0.5, 1.0, 1.3, 2.05, 2.3];
+    let worst = 0, okLow = true;
+    for (const h of hits) {
+      hero.pose('sitSlam', h, { hits }); const y0 = minYOf(hero.joints.foreArmR);
+      worst = Math.max(worst, Math.abs(y0 - 0.78));
+      let lowest = Infinity, tl = 0;
+      for (let k = -30; k <= 30; k++) { const tt = h + k * 0.005; hero.pose('sitSlam', tt, { hits }); const y = minYOf(hero.joints.foreArmR); if (y < lowest - 1e-6) { lowest = y; tl = tt; } }
+      log(`sitSlam hit ${h}: fist minY at hit = ${y0.toFixed(4)}  earliest lowest in ±0.15s at t=${tl.toFixed(3)} (y=${lowest.toFixed(4)})`);
+    }
+    log(`sitSlam worst |fistY-0.78| = ${worst.toFixed(4)}`);
+    // standing slam
+    hero.pose('slam', 0.45, {}); log(`slam (standing) fist minY at default hit 0.45 = ${minYOf(hero.joints.foreArmR).toFixed(4)}`);
+    for (const who of ['mayor', 'heckler']) { const c3 = makeCharacter(CAST[who]); scene.add(c3.root); c3.pose('sitSlam', 1.0, { hits }); log(`sitSlam ${who}: fist minY at hit = ${minYB(c3, ['foreArmR', 'armR']).toFixed(4)}`); }
+    // 2. sit geometry
+    hero.pose('sit', 0);
+    const thighMin = minYB(hero, ['legL']);
+    log(`sit: thigh underside y = ${thighMin.toFixed(4)} (want 0.55); hips joint local y = ${hero.joints.hips.position.y.toFixed(4)}`);
+    log(`sit: shoe min y = ${minYOf(hero.joints.footL).toFixed(4)} / ${minYOf(hero.joints.footR).toFixed(4)} (want 0)`);
+    const qL = new THREE.Quaternion(); hero.joints.legL.getWorldQuaternion(qL);
+    const dir = new THREE.Vector3(0, -1, 0).applyQuaternion(qL);
+    log(`sit: thigh direction y component = ${dir.y.toFixed(4)} (want 0 = horizontal)`);
+    for (const who of ['mayor', 'grandad']) {
+      const c2 = makeCharacter(CAST[who]); scene.add(c2.root); c2.pose('sit', 0);
+      log(`sit ${who}: thigh underside ${minYB(c2, ['legL']).toFixed(4)}, shoe ${minYB(c2, ['footL']).toFixed(4)}`);
+    }
+    // 3. standing feet
+    for (const a of ['idle', 'dance', 'cheer', 'slam', 'peer', 'laugh']) {
+      let m = Infinity; for (let k = 0; k < 20; k++) { hero.pose(a, k * 0.137); m = Math.min(m, minYOf(hero.joints.footL), minYOf(hero.joints.footR)); }
+      log(`${a}: lowest shoe over 20 samples = ${m.toFixed(4)}`);
+    }
+    // 4. determinism
+    const snap = () => Object.values(hero.joints).map((o) => o.matrix.elements.map((v) => v.toFixed(6)).join(',')).join('|');
+    hero.pose('dance', 1.23); hero.root.updateMatrixWorld(true); const a1 = snap();
+    hero.pose('sitSlam', 0.7, { hits }); hero.pose('crowdSurf', 3); hero.pose('walk', 9.1); hero.poseMix('sit', 1, {}, 'cheer', 2, {}, 0.4);
+    hero.pose('dance', 1.23); hero.root.updateMatrixWorld(true); const a2 = snap();
+    log(`determinism dance@1.23: ${a1 === a2 ? 'IDENTICAL' : 'DIFFERENT!'}`);
+    // 5. sitStand continuity
+    hero.pose('sit', 0); hero.root.updateMatrixWorld(true); const s0 = snap();
+    hero.pose('sitStand', 0, { u: 0 }); hero.root.updateMatrixWorld(true); const s1 = snap();
+    hero.pose('sitStand', 0, { u: 0.001 }); const legA = hero.joints.legL.quaternion.clone();
+    log(`sitStand u=0 equals sit: ${s0 === s1}; u=0.001 thigh angle delta = ${(2 * Math.acos(Math.min(1, Math.abs(legA.dot(hero.joints.legL.quaternion))))).toFixed(4)}`);
+    hero.pose('sitStand', 0, { u: 1 }); log(`sitStand u=1 hips y=${hero.joints.hips.position.y.toFixed(3)} z=${hero.joints.hips.position.z.toFixed(3)} shoe=${minYOf(hero.joints.footL).toFixed(4)}`);
+    // 6. blink
+    const tex = new Set(); for (let k = 0; k < 620; k++) { hero.face('neutral', k * 0.01); tex.add(hero.joints.head.getObjectByName('face').material.map.uuid); }
+    log(`blink: ${tex.size} distinct neutral textures over 6.2 s (want 2)`);
+    document.body.insertAdjacentHTML('beforeend', `<pre style="color:#cfe;font:12px monospace;padding:8px;white-space:pre-wrap">${out.join('\n')}</pre>`);
+  } else if (VIEW === 'creatures') {
+    const st = studio({ shadowSize: 1.5 });
+    const pigeon = makeCreature('pigeon', { id: 'pigeon', accessories: ['partyHat'], partyHatColor: '#3ee0c8' });
+    const cat = makeCreature('cat', { id: 'cat' });
+    st.scene.add(pigeon.root); st.scene.add(cat.root);
+    const list = [...CREATURE_ACTIONS.pigeon.map((a) => ['pigeon', a]), ...CREATURE_ACTIONS.cat.map((a) => ['cat', a])];
+    const rt = { idle: 0.4, peck: 0.15, strut: 0.2, flap: 0.05, huss: 0.3, knock: 0.42, sit: 0.5, hop: 0.75, loaf: 0.5, stare: 0.5 };
+    const faces = { huss: 'huss', peck: 'determined', knock: 'smug', flap: 'shocked', loaf: 'sleepy', stare: 'determined', hop: 'grin' };
+    const cols = 3, rows = Math.ceil(list.length / cols), cw = W / cols, chh = H / rows;
+    list.forEach(([k, a], i) => {
+      const x = (i % cols) * cw, y = Math.floor(i / cols) * chh;
+      const c = k === 'pigeon' ? pigeon : cat;
+      pigeon.root.visible = k === 'pigeon'; cat.root.visible = k === 'cat';
+      c.pose(a, rt[a] ?? 0.5); c.face(faces[a] || 'neutral', 0.5);
+      const camC = k === 'pigeon' ? cam(30, cw / chh, [0.55, 0.42, 1.05], [0, 0.22, 0]) : cam(30, cw / chh, [0.9, 0.62, 1.35], [0, 0.26, 0]);
+      view(st.scene, camC, x, y, cw, chh);
+      label(`${k}: ${a}`, x + 4, y + 3);
+    });
+  }
+  window.__ready = true;
+}
+function hashBlink(ch) { // a t where this character is mid-blink (blink every 3.1 s, 0.12 s long)
+  return ((3.1 - ch.blinkPhase + 0.05) % 3.1 + 3.1) % 3.1;
+}
+main().catch((e) => { console.error(e.stack || e); document.body.insertAdjacentHTML('beforeend', `<pre style="color:#f66">${e.stack}</pre>`); window.__ready = true; });
+</script>
+</body>
+</html>

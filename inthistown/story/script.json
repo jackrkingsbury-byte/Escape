@@ -1,0 +1,173 @@
+{
+ "title": "In This Town — Chess (60s)",
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody goes out partying."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Pool parties. Foam parties."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Even a birthday party for the mayor's pigeon."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My grandad crowd-surfs on Wednesdays."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "But not me. I play chess."
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I don't eat breakfast. I sacrifice it."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My cat only moves in L-shapes now."
+  },
+  {
+   "id": "b11",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Summer Party Chess Match."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everybody laughed. Some goon yelled,"
+  },
+  {
+   "id": "b14",
+   "kind": "quote",
+   "speaker": "heckler",
+   "text": "Who brings a chess clock to a party?"
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My opponent? The mayor. Undefeated for forty years. Top ten scariest opponents."
+  },
+  {
+   "id": "b16",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Checkmate. In four moves. Respect."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole crowd went silent."
+  },
+  {
+   "id": "b19",
+   "kind": "quote",
+   "speaker": "marcus",
+   "text": "When did you get so good?"
+  },
+  {
+   "id": "b20",
+   "kind": "quote",
+   "speaker": "me",
+   "text": "While you were out partying."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now the whole town is grinding."
+  },
+  {
+   "id": "b22",
+   "kind": "huss",
+   "speaker": "town",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My grandad plays blindfolded. He just lost his glasses. Bro."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And my only opponent left is the mayor's pigeon."
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Honestly? He's winning."
+  },
+  {
+   "id": "b26",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
+  },
+  {
+   "id": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Respect."
+  }
+ ]
+}

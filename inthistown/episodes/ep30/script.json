@@ -1,0 +1,984 @@
+{
+ "title": "In This Town — Five Lanterns",
+ "lead_in": 0.1,
+ "bed": {
+  "gain": 0.6
+ },
+ "master": "cine",
+ "lufs": -16,
+ "voices": {
+  "narr": [
+   "am_fenrir",
+   1.22,
+   "en-us",
+   [
+    1.45,
+    1.12,
+    1.1
+   ]
+  ],
+  "narrlow": [
+   "am_fenrir",
+   1.12,
+   "en-us",
+   [
+    1.38,
+    1.12,
+    1.05
+   ]
+  ]
+ },
+ "logline": "In this town every house lights one lantern for every beating heart inside, and the lanterns are never wrong. Ours shows five and there are four of us. I hunt the fifth through my own house at night and terrify my little sister Pip doing it. Then Mom walks to the shop and two lanterns go out: it is not hiding in our house, it is following Mom.",
+ "twist": "It was never following Mom. It was inside her: the fifth heartbeat is the baby Mom and Dad have not told us about. The paint tin behind Dad's back, the shape at the fridge at midnight (Mom, dipping a pickle in ice cream) and the hammering in the room nobody opens were a nursery being built in secret; the door I could not break opens by itself and I land in the crib. The whole street knew what an extra lantern means, except me. Sting: next morning a sixth lantern lights and something thumps in the attic (twins, or the raccoons the lanterns found for the baker?).",
+ "caption_hook": "every house lights one lantern for every beating heart inside. ours says 5. there are 4 of us.",
+ "vibe": "spooky that turns warm (mystery, homey)",
+ "structure": {
+  "HOOK": "b01-b03 (H1 = b02, by 0:05)",
+  "RULE PROOF": "b04-b05",
+  "THE HIT": "b06",
+  "FIXES": "b07-b09 (H2 = b08)",
+  "MIDPOINT": "b10-b11 (the line, the light and the music all flip at the start of b11)",
+  "ESCALATION": "b12-b16 (H3 = b15)",
+  "CLIMAX": "b17-b20 (silence after b18, H4 = b19)",
+  "TWIST": "b21-b22",
+  "BUTTON": "b23-b25 (H5 = b25, Pip)"
+ },
+ "huss_plan": "5 beats, 7 hits: H1 b02 double (I heave a wardrobe upright across a door to keep it out), H2 b08 single (attic hatch, backfires), H3 b15 single (door holds), H4 b19 double (the door opens: flip of H1), H5 b25 single (Pip's pitched-up real sample, callback to H2). Every HUSS is the real sample; no other meme sound anywhere. No HUSS is staged on a wide.",
+ "lantern_counts": [
+  {
+   "where": "our porch, hook night (b01-b03)",
+   "lit": 5,
+   "hearts": "Mom, Dad, me, Pip + the baby"
+  },
+  {
+   "where": "next door (b04)",
+   "lit": "0 then 7",
+   "hearts": "seven cousins run in from the path; their mom is still outside on the path with the bags",
+   "note": "the seven light one by one on camera"
+  },
+  {
+   "where": "the baker's porch (b04)",
+   "lit": 3,
+   "hearts": "the baker + two raccoons in her attic"
+  },
+  {
+   "where": "our porch, dusk (b05)",
+   "lit": 5,
+   "hearts": "all four of us on the porch or indoors + the baby (the porch counts as inside; next door shows 7 for the seven cousins at their rail)"
+  },
+  {
+   "where": "our porch, Mom leaves (b10)",
+   "lit": "5 then 3",
+   "hearts": "Mom and the baby leave; Dad, Pip and I stay",
+   "note": "two go out on camera: lantern 1 (MOM tag) and lantern 5 (blank tag). DAD, ME and PIP stay lit"
+  },
+  {
+   "where": "our porch, Mom comes home (b12)",
+   "lit": "3 then 5",
+   "hearts": "Mom and the baby are back",
+   "note": "the MOM lantern and the blank-tag lantern relight on camera as she steps over the doorstep"
+  },
+  {
+   "where": "our porch, that night (b17, b21)",
+   "lit": 5,
+   "hearts": "everyone is home; seen only as five soft glows at the end of the hall"
+  },
+  {
+   "where": "our porch, next morning (b23-b25)",
+   "lit": "5 then 6",
+   "hearts": "the four of us + the baby (that is the '5 of us') + one unknown",
+   "note": "the sixth lights on camera; never more than 7 lanterns in a shot"
+  }
+ ],
+ "clue_list": [
+  "b01: four name tags (MOM, DAD, ME, PIP) and one blank tag: the fifth lantern belongs to someone with no name yet.",
+  "b05: Mom's belly laugh inside the wide (S14): head back, both hands on her stomach for half a second. It reads as laughing on a first watch and as pregnant on a rewatch. There is no close-up of it.",
+  "b05: the seven cousins next door grin and wave at our porch. They can count too.",
+  "b10: a parcel with a yellow ribbon on our top step (tiny knitted socks, shown in b22).",
+  "b10: TWO lanterns go out when ONE person leaves, and they are the MOM lantern and the blank one.",
+  "b12: the same two relight when Mom steps back in. Then the paint tin with yellow drips and the roller behind Dad's back.",
+  "b13: the fridge silhouette has Mom's bun and robe. A 0.6 s picture-only insert shows a pickle dipped in ice cream; the narration never says it until b20.",
+  "b14: light under the door of the room nobody opens, and hammering at midnight.",
+  "b25: the ringed tail in the attic hatch, four frames."
+ ],
+ "sets": [
+  "HALLWAY WITH PORCH AND KITCHEN ARCH (main set, one straight corridor about 7 m long and 1.8 m wide, with a ceiling). South end: a front door that is glass from 0.3 m to 2.0 m, glass sidelights and a glass transom above it (glazed opening about 1.5 m wide and 2.4 m high). 1.2 m outside, a LOW porch beam carries the lantern row at glass height: lantern centres at 1.75 m, lanterns 0.2 m across on a 0.24 m pitch, name tags hanging to 1.5 m, six hooks (the sixth stays folded until b23). Doormat with four pairs of shoes side by side, four coat hooks, hall table with a warm lamp and a framed family photo. Pip's bedroom door on the west wall about 1.5 m from the front door (a door and a dark sliver of room only; there is no bedroom set). A kitchen arch on the east wall (fridge and counter only). An attic hatch in the ceiling. The box-room door at the north end. Lighting states: night with the lamp on (hook), night with torch only (fixes), golden dusk that drops to blue night on camera (midpoint), night-dark with a single practical (escalation: fridge light, then the strip under the box-room door), morning sun with light shafts and the front door open (button).",
+  "SETUP A geometry (checked for the 9:16 frame; the engine's fov is vertical): camera on the hall centre line, 0.6 m high, 3 m inside the front door, tilted up about 5 degrees, fov 34. The lantern row is then 4.2 m away, the frame is 1.45 m wide at that distance, five lanterns span 1.16 m and each is about 150 px wide at 1080; they sit about 80 percent up the frame, clear of the captions. Anything between camera and door must stay under 1.0 m high at 2 m from the camera or it covers the lanterns, which is why the wardrobe is dragged lying on its back and I am bent double. Gate: render S01 and S04 stills first and measure; all five lanterns unobstructed, at least 80 px wide each.",
+  "STREET AND PORCHES at warm dusk (buildTown houses, each with the same porch-beam lantern kit): our porch, the porch next door, and the baker's porch, which is the same house model with a hand-painted BAKERY sign. No ep26 assets are loaded.",
+  "BOX ROOM (small, behind the north door, no window): one warm work lamp on the floor, one wall half painted yellow, paint tin, roller and tray, flat-pack crib box, half-built crib. Seen from the hallway only as the lit strip under its door; shot from inside looking out through its open door down the whole hallway to the front-door glass.",
+  "ATTIC VOID (tiny, top-down shots only, used twice): rafters, cobwebs, one cardboard box (our attic, S20); dressed with a loaf, four eye glints and two ringed tails for the baker's attic (S13)."
+ ],
+ "cast": {
+  "me": "MAIN.me unchanged: black hoodie, white knight emblem, headphones on the head in every shot (one ear cup pushed back in b03, b16 and b21, never removed). White sneakers on in every shot.",
+  "pip": "little sister, child scale 0.7, new 'puffs' hair style (two round puff buns). Night: yellow star pyjamas, drags a blanket. Day (head and shoulders at the window in S14 only): yellow T-shirt. Yellow wellies by the door. New 'crying' face decal (b09).",
+  "mom": "existing options: 'bun' hair (tall, round), 'cardigan' top in teal by day, 'dress' in long cream as the night robe. The bun and robe silhouette must read when backlit by the fridge.",
+  "dad": "existing options: 'beard' and 'glasses', broad build, mustard jumper by day, blue striped pyjamas at night.",
+  "extras": "seven small cousins next door (one child rig at scale 0.7 in seven colourways) and their mom on the path (the Mom rig recoloured); the baker in an apron. The raccoons are NOT a creature rig: four eye glints and two ringed tails in a torch beam (S13), and the same ringed tail for four frames in S57."
+ },
+ "newProps": [
+  "Porch lantern: round paper lantern 0.2 m across on a beam hook. Folded = a thin dark disc that reads as nothing; lit = unfolded and emissive (bloom threshold about 0.9). Unfolds with a flame flare, folds with a puff of smoke. One evenly spaced row per porch on a 0.24 m pitch, never more than 7 in a shot. One shared, unshadowed warm PointLight per porch, no light per lantern.",
+  "Wooden name tags (canvas textures) under our lanterns, in this order: MOM, DAD, ME, PIP, one blank; later BABY in crayon and a new blank one.",
+  "Tall blue wardrobe (dragged lying on its back, then heaved upright), step stool, broom.",
+  "Doormat with four pairs of shoes side by side (Dad's big boots, Mom's teal flats, my black wellies with a white knight sticker, Pip's tiny yellow wellies); four coats on four hooks.",
+  "Framed family photo of the four of us; hall table lamp (practical).",
+  "Torch (shadowed SpotLight) and frying pan.",
+  "Ceiling attic hatch that lifts and slams; dust fall particles.",
+  "A column of seven crayon lantern drawings taped to the hall wall beside Pip's door frame (five yellow circles each, the fifth ringed red). Optional: crayon door sign NO BROTHERS with crossed-out headphones (seen in passing in S29).",
+  "Parcel with a yellow ribbon; tiny knitted socks.",
+  "Paint tin with yellow drips, roller and tray; half-yellow wall.",
+  "Fridge that opens and lights; big pickle jar; ice-cream tub; one pickle.",
+  "Box-room door with a light strip under it and two foot shadows that walk into the strip.",
+  "Flat-pack box with a big line drawing of a crib; half-built crib whose slatted sides fall flat; screwdriver; instruction sheet.",
+  "Scan picture: glossy black card, bright fan shape, one white bean.",
+  "BAKERY sign for the baker's porch. Ringed raccoon tail (S13 twice, S57 once) and eye-glint sprites."
+ ],
+ "look": "Toy-cinema, warm, every frame through src/real/post.js with the series preset from the style bible section 8. Lanterns and practicals do the lighting; the only shadowed lights are each set's key (lamp, moon or sun) and the torch. Lantern, lamp and torch light is kept low in saturation where it falls on me and I am rimmed with cool moonlight, so the hoodie reads black in every shot (add a hoodie luminance check to the look gate). Depth of field on every close-up and insert; one focus pull on the reveal (S45). The engine has no motion blur and no dissolve: the two whips (S01, S33) are a fast yaw plus shake as in ep25 b13, and the one time jump (b23) is a dip through white with fx.overlay.",
+ "overlays": "None except captions, the HUSS! stamp and three chat bubbles (b03, b05, b21; see the bubble field on those beats: 'at' and 'until' are marker names, which build_episode resolves into the timeline). No stickers, no title card: the story has no real-phenomenon card, so there is no fact to check. Do not add a card about heartbeats.",
+ "captions": "One word at a time, caps, numbers as numerals (they are written as digits in the beat text). 'red' on a beat lists the words to draw in #ff2d2d, at most one per sentence, matched case-insensitively against the caption word (needs the drawCaptions change, engine_features 1).",
+ "timing_dry_run": "Dry-run build on 28 Nov 2026 after the script-doctor pass, with audio/build_episode.py (narr speed 1.22, outputs kept out of the repo): 67.9 s; 249 narrated words plus 7 HUSS hits; 3.99 words/s inside speech, 3.67 words/s overall. H1 4.51-4.98 s. Pip named at 7.3 s. The hit 17.3-19.8 s. H2 21.9 s. Midpoint 26.0-32.1 s: the two lanterns go out at about 28.4 s; the line 'Not 1 but 2', the light and the music all flip together at 28.99 s (marker flip = start of b11); 'It's following Mom' 31.3-32.1 s. Mom comes home 32.3 s. H3 43.1 s. Silence 47.39-47.95 s (0.56 s, music out from the start of b18). H4 47.95-48.42 s. Twist 53.7-61.1 s ('it was inside her' at about 58.3 s; S45 holds 3.05 s). Button 61.2-67.8 s. Master -16.0 LUFS. Whisper small.en on the dry-run mix, decoded five times with small gain and window changes: 97.6 to 98.4 percent of the words (misses: 'And' before Pip twice, 'Then' before hammering, one 'The'). Mix-level findings folded into the script: effects that sat on a key word were moved into gaps (the whoosh on 'her', the hammer blows, the footfalls, the lantern relight, the midpoint heartbeat), and five phrase starts the voice swallowed at this speed were reworded. 56 shots, 1.21 s average; nothing over 3 s except the 3.05 s hold on S45.",
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, every house lights one lantern for every beating heart inside. Except ours.",
+   "pauses": [
+    0.05,
+    0.07
+   ],
+   "gapAfter": 0.03,
+   "music": "lofi",
+   "amb": {
+    "name": "jungle_night",
+    "gain": 0.3
+   },
+   "slot": "HOOK",
+   "red": [
+    "heart",
+    "Except"
+   ],
+   "markers": {
+    "s02": "w:house",
+    "s03": "w:lantern",
+    "s04": "w:Except"
+   },
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "start-0.1",
+     "gain": 0.45
+    },
+    {
+     "type": "wood_creak",
+     "at": "start+0.25",
+     "dur": 0.9,
+     "gain": 0.28,
+     "space": "room"
+    },
+    {
+     "type": "fire_ignite",
+     "at": "w:heart",
+     "align": "peak",
+     "gain": 0.28
+    },
+    {
+     "type": "heartbeat",
+     "at": "w:heart+0.12",
+     "gain": 0.4
+    }
+   ],
+   "visual": "HOOK. Set: hallway, night, lit by one warm table lamp and the lantern glow through the front door. Four shots; the third starts before 2.0 s, so the first 3 s hold three shots. S01 (frame 0 to 'house', about 1.0 s): frame 0 is a whip-in (a fast yaw plus shake, as in ep25 b13) with a whoosh, narration already running. SETUP A (the episode's motif framing; numbers under sets): low hero from kid height (0.6 m), one-point toward the front door 3 m away, fov 34, slow push-in, handheld shake 0.06. Top third of the frame: the door glass with FIVE glowing paper lanterns in one evenly spaced row on the low porch beam, each about 150 px wide, a small name tag under each. Middle of the frame: I (black hoodie, white knight emblem, headphones on my head) am bent double about 2 m from the camera, walking backward and hauling a tall blue wardrobe that lies on its back, so it stays a low blue slab along the bottom of the frame and my head stays under the lantern row: drag cycle, 'determined' face toward the camera. Along the bottom edge by the door: the doormat with four pairs of shoes side by side (Dad's big boots, Mom's teal flats, my black wellies, Pip's tiny yellow wellies) and four coats on four hooks. S02 ('house' to 'lantern', about 0.9 s): extreme close-up of Pip's eye in the 5 cm crack of her door, wide and scared, five tiny lantern glints in the pupil. Shallow depth of field. S03 ('lantern' to 'Except', about 1.7 s): macro insert (fov 24) from outside, tracking along the porch beam. A small wooden name tag hangs under each lantern, hand-painted: MOM, DAD, ME, PIP. The fifth tag is BLANK. On 'heart' the fifth lantern's flame flares (emissive + bloom, soft match-strike foley and one lub-dub) and the move settles sharp on the blank tag. S04 ('Except ours.', about 0.85 s): the sound-off rule image, four against five in one frame. Camera on the hall floor (0.15 m high) 1.5 m from the doormat, tilted up about 20 degrees, fov about 60: the four pairs of shoes sharp in a row across the bottom fifth of the frame, and above them through the door glass the five lanterns (at least 100 px each; keep the blur mild so they stay five separate discs). My white sneakers skid backward into the left edge of the frame and the foot of the wardrobe scrapes in after them. Light: the lamp is the motivated key (shadows on), cool moonlight rims my hoodie through the glass, lantern light kept low in saturation so the hoodie reads black."
+  },
+  {
+   "id": "b02",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS!",
+   "n": 2,
+   "gapAfter": 0.1,
+   "space": "room",
+   "slot": "H1",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start+0.21",
+     "gain": 0.85
+    }
+   ],
+   "visual": "H1, the brand sting, by 0:05. S05: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). I get my shoulder under the top end of the wardrobe and heave it upright. On the second HUSS it thuds upright flat across Pip's door: dust puff, the table lamp wobbles, the framed family photo on the hall table rattles. Meaning of this HUSS: I block a door to keep number five OUT (H4 flips it). The reaction close-up is the first shot of the next beat."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "5 lanterns. 4 of us. My little sister Pip whispers, who's the other one?",
+   "pauses": [
+    0.1,
+    0.12,
+    0.06
+   ],
+   "gapAfter": 0.1,
+   "slot": "HOOK (personal problem, loved one named at 0:07)",
+   "red": [
+    "5",
+    "4",
+    "other"
+   ],
+   "bubble": {
+    "who": "pip",
+    "text": "Who's the other one?",
+    "at": "bub1"
+   },
+   "markers": {
+    "s07": "w:My",
+    "s08": "w:who",
+    "bub1": "w:who"
+   },
+   "sfx": [
+    {
+     "type": "wood_creak",
+     "at": "w:My-0.1",
+     "dur": 0.5,
+     "pitch": 1.3,
+     "gain": 0.18,
+     "space": "room"
+    }
+   ],
+   "visual": "Hallway, night. Three shots; the hook ends on Pip's question. S06 ('5 lanterns. 4 of us.', about 1.4 s): count shot and H1 reaction in one. Through the door glass the five lanterns pulse once each, left to right, 1-2-3-4-5; the camera tilts down to the framed photo on the hall table: Mom (tall bun), Dad (beard, glasses), me (headphones), Pip (two puff buns). Four faces under five lights in one frame. I am in the edge of frame, breathing hard against the wardrobe. S07 ('My little sister Pip whispers,'): over-the-shoulder past my headphones. I am crouched at the gap between the wardrobe and her door frame and I have pushed one ear cup back to hear her (the headphones stay on my head). Her small hand comes through the gap and holds my sleeve. My face in profile: worried. Slow push-in. S08 ('who's the other one?'): extreme close-up of Pip in the gap, one eye and her mouth, 'sad' face, lantern glints in her eye. Chat bubble 1 above her head: Who's the other one? Hold on her eye through the gap after the line."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Lanterns are never wrong. Next door, 7 cousins, 7 lanterns. The baker's alone. 3 lanterns. That's how she found the raccoons.",
+   "pauses": [
+    0.1,
+    0.05,
+    0.05,
+    0.1,
+    0.05,
+    0.1
+   ],
+   "gapAfter": 0.1,
+   "slot": "RULE PROOF",
+   "red": [
+    "never",
+    "alone",
+    "raccoons"
+   ],
+   "markers": {
+    "s10": "w:Next",
+    "s11": "w:7+0.75",
+    "s12": "w:baker-0.12",
+    "tilt12": "w:3",
+    "s13": "w:That"
+   },
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:Next",
+     "gain": 0.4
+    },
+    {
+     "type": "fire_ignite",
+     "at": "w:cousins+0.3",
+     "align": "peak",
+     "gain": 0.24
+    },
+    {
+     "type": "heartbeat",
+     "at": "w:3",
+     "gain": 0.35
+    },
+    {
+     "type": "wood_creak",
+     "at": "w:That",
+     "dur": 0.7,
+     "gain": 0.3,
+     "space": "room"
+    }
+   ],
+   "visual": "RULE PROOF. Set: our street at warm dusk (golden sky, long shadows, every porch glowing). Five shots, each a new framing, each planting something the ending uses. S09 ('Lanterns are never wrong.'): low tracking shot along the porches with me walking through the foreground carrying a step stool and a broom (my plan: fix our lantern). Behind me a porch with two lanterns and two people in the lit window. S10 ('Next door, 7 cousins,'): the porch next to ours. Their front door bangs open and a conga line of seven small cousins runs up the path and through it (their mom is still on the path with the shopping bags, outside). S11 ('7 lanterns.'): tilt up to their beam in the same low angle: seven folded paper lanterns pop open and catch one by one as each cousin crosses the doorstep, on camera, each with a small flare, until seven glow. Seven heads at the lit window underneath. Never more than seven lanterns in any shot. S12 ('The baker's alone. 3 lanterns.'): another porch on our street with a hand-painted BAKERY sign. The baker, alone at her lit window in an apron, looks up nervously; on '3' (marker tilt12) the camera tilts up to THREE lanterns over her door, one lub-dub, and she counts them on her fingers. S13 ('That's how she found the raccoons.'): top-down god shot through her attic hatch: her torch beam lands on a stolen loaf, four eye glints and two ringed tails frozen in the light (no creature rig). Hard comedy cut. Plants: the lanterns count what you cannot see, the attic, and the ringed tail."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom just laughs. It's broken, she says.",
+   "pauses": [
+    0.1,
+    0.05
+   ],
+   "gapAfter": 0.1,
+   "slot": "RULE PROOF (clue 1)",
+   "red": [
+    "broken"
+   ],
+   "bubble": {
+    "who": "mom",
+    "text": "It's broken!",
+    "at": "bub2",
+    "until": "s15"
+   },
+   "markers": {
+    "bub2": "start+0.15",
+    "s15": "w:It"
+   },
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:just",
+     "gain": 0.3
+    }
+   ],
+   "visual": "Our porch at dusk. Two shots. S14 ('Mom just laughs.'): medium-wide count shot with all four of us under our five lanterns. I stand on the step stool tapping lantern five with the broom handle; it stays lit. Mom (tall bun, teal cardigan) throws her head back in a belly laugh with BOTH HANDS ON HER STOMACH for half a second, no longer, then waves it off. Clue 1: a first watch reads laughing, a rewatch reads pregnant. No close-up of it. Pip watches from the window, Dad leans in the doorway. Chat bubble 2 over Mom: It's broken! (it ends on the cut). Out of focus at the next porch rail, all seven cousins are grinning and waving at our porch under their seven lanterns (plant for 'the whole street knew'). S15 ('It's broken, she says.', 1.0 s): macro insert from below: the BLANK name tag still swinging under lantern five after the broom tap, the lantern steady and bright above it. Shallow depth of field, soft lantern light. The tag is the question, not Mom."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And Pip hasn't slept all week. So tonight, I hunt it.",
+   "pauses": [
+    0.12,
+    0.05
+   ],
+   "gapAfter": 0.1,
+   "slot": "THE HIT",
+   "red": [
+    "slept",
+    "hunt"
+   ],
+   "markers": {
+    "s17": "w:So"
+   },
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:tonight+0.25",
+     "gain": 0.4
+    }
+   ],
+   "visual": "THE HIT: stake and clock in one sentence. Two shots, both in the hallway. S16 ('And Pip hasn't slept all week.'): hallway at night, lamp on. Close on the 5 cm gap between the wardrobe and her door frame (the S02 gap): Pip's eye over her blanket, wide open, 'sleepy' rings under it. Taped down the wall beside the frame, at kid height, a column of seven crayon drawings, one per night: five yellow circles each, the fifth ringed in red. The drawings and her eye sit at the same depth, so both are sharp. S17 ('So tonight, I hunt it.'): the lamp now off (darker state). Low hero from below: I click on a torch (the only shadowed practical, a SpotLight) and it lights my 'determined' face from under the chin. I sweep the beam behind the coats and under the hall table: nothing. Fix 1. Push-in on 'hunt'."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I get my shoulders under the attic hatch and shove.",
+   "gapAfter": 0.04,
+   "slot": "FIXES",
+   "sfx": [
+    {
+     "type": "wood_creak",
+     "at": "start",
+     "dur": 0.6,
+     "gain": 0.18,
+     "space": "room"
+    }
+   ],
+   "visual": "FIXES, fix 2. S18 (one shot, 1.7 s): hallway, torchlight only. Side-on low angle: I step up onto the step stool under the ceiling hatch (pose tween), torch clamped under my arm pointing up, and wedge both shoulders under the hatch. The camera booms up with me. 'Shove' runs straight into the HUSS (0.04 s gap)."
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS!",
+   "n": 1,
+   "gapAfter": 0.14,
+   "space": "room",
+   "slot": "H2",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.6
+    }
+   ],
+   "visual": "H2, single, bigger strain than H1. S19: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). Seen from the hall floor looking up: my legs straighten and the hatch pops up; dust pours down through the torch beam. Reaction close-up is the start of the next shot."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nothing but dust. The hatch slams shut, and Pip screams: you're scarier than it is.",
+   "pauses": [
+    0.1,
+    0.05
+   ],
+   "gapAfter": 0.1,
+   "slot": "FIXES (backfire on Pip)",
+   "red": [
+    "dust",
+    "scarier"
+   ],
+   "markers": {
+    "s21": "w:and",
+    "s22": "w:you"
+   },
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:shut+0.1",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Fix 2 backfires on Pip. Three shots. S20 ('Nothing but dust. The hatch slams shut,'): top-down god shot from inside the attic. My head and torch come up through the square of the hatch; the beam sweeps rafters, cobwebs, one cardboard box, drifting dust. Empty. On 'slams' the stool tips, I drop out of frame and the hatch bangs shut: the frame goes black for 3 frames, camera shake 0.1. S21 ('and Pip screams:'): extreme close-up, big face 1: Pip's face in the gap beside the wardrobe, the new 'crying' face, tears, mouth wide. S22 ('you're scarier than it is.'): reverse shot from the floor where I landed: Dad (beard, glasses, striped pyjamas) stands in Pip's open doorway with Pip clutching his pyjama leg; the wardrobe has been pushed aside off screen and only its blue edge shows. Both stare down at me, Pip pointing at me. Cut-in on the last two words: my face on the floorboards in the torchlight, 'sad'."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Next evening, Mom walks to the shop and 2 lanterns go out.",
+   "gapAfter": 0.1,
+   "slot": "MIDPOINT (set-up: the count breaks)",
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:walks",
+     "gain": 0.3
+    },
+    {
+     "type": "whoosh",
+     "at": "w:go",
+     "gain": 0.3
+    },
+    {
+     "type": "whoosh",
+     "at": "w:go+0.22",
+     "gain": 0.3
+    }
+   ],
+   "visual": "MIDPOINT set-up. The only time jump before the ending. Set: hallway at golden dusk, warm light through the door glass. S23 (one shot for the whole line, just under 3 s): SETUP B, over-the-shoulder past my headphones at the front door, standing height. Through the glass: Mom with a shopping bag walks across the porch and down the steps. The five lanterns hang across the top of the frame with their tags readable, MOM first and the blank one last. A small parcel with a yellow ribbon sits on the top step, unremarked (plant: a neighbour's gift). On 'go out', as Mom's foot leaves the last porch step, lantern 1 (MOM tag) and lantern 5 (blank tag) fold shut together and go dark ON CAMERA, each with a soft whuff and a curl of smoke: five becomes three, with Mom in the same frame. DAD, ME and PIP stay lit between two dark tags. The warm glow on my shoulder and headphones drops with them. The music and the light have not changed yet; they flip on the first word of the next beat.",
+   "red": [
+    "2"
+   ]
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Not 1 but 2. It isn't hiding in our house. It's following Mom.",
+   "pauses": [
+    0.14,
+    0.12
+   ],
+   "gapAfter": 0.24,
+   "music": "spooky",
+   "slot": "MIDPOINT TURN",
+   "red": [
+    "Not",
+    "following"
+   ],
+   "markers": {
+    "s24": "start",
+    "flip": "start",
+    "s25": "w:It",
+    "s26": "w:It's"
+   },
+   "sfx": [
+    {
+     "type": "whoosh_low",
+     "at": "w:following",
+     "dur": 1.3,
+     "align": "peak",
+     "gain": 0.4
+    },
+    {
+     "type": "heartbeat",
+     "at": "end",
+     "gain": 0.4
+    }
+   ],
+   "visual": "MIDPOINT TURN at 0:28 to 0:33: the line, the lighting flip and the music section change all land on the first word of this beat (marker flip). S24 ('Not 1 but 2.'): extreme close-up of my eyes, big face 2, 'shocked'. In 0.6 s the hallway falls from golden dusk to blue night, and three lantern glints replace five in my eyes. S25 ('It isn't hiding in our house.'): count shot from the back of the hallway: through the glass three lit lanterns, DAD, ME, PIP, with the MOM and blank lanterns dark at either end, and inside exactly three of us: me at the door, Dad in the kitchen arch with a tea towel, Pip peeking round her door. S26 ('It's following Mom.'): long lens through the glass: Mom, small, walking away under a street lamp into the dark. Slow push that ends on my reflection in the glass. One lub-dub in the gap after the line. A 6 degree Dutch tilt starts here and stays through the escalation."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom comes home. Number 5 follows her in. I warn Dad, but he's hiding something.",
+   "pauses": [
+    0.1,
+    0.1,
+    0.05
+   ],
+   "gapAfter": 0.1,
+   "slot": "ESCALATION 1 (the link to Mom, clue 2)",
+   "red": [
+    "5",
+    "hiding"
+   ],
+   "markers": {
+    "s27b": "w:Number",
+    "s27": "we:I",
+    "tin_turn": "w:hiding"
+   },
+   "sfx": [
+    {
+     "type": "fire_ignite",
+     "at": "w:home+0.1",
+     "align": "peak",
+     "gain": 0.2
+    },
+    {
+     "type": "knock",
+     "at": "w:hiding",
+     "gain": 0.3
+    }
+   ],
+   "visual": "ESCALATION, beat 1 of 3: it comes home with Mom, and Dad is no help. Hallway, night-dark state: lamp off, cool moon through the glass, a warm sliver from the kitchen. Dutch 6 degrees, shake 0.08. Three shots. S27a ('Mom comes home.', about 0.9 s): SETUP B again (second and last use), over-the-shoulder past my headphones at the front door. Mom steps back in over the doorstep with her shopping bag, and above her head the MOM lantern and the blank-tag lantern unfold and relight together with one flare: three becomes five. The warm glow comes back onto my shoulder. S27b ('Number 5 follows her in.', about 1.2 s): extreme close-up of my eyes (the S24 framing, second and last use): five lantern glints again where there were three; 'squint'. From here the shape that comes home in Mom's robe is 'it'. S27 ('I warn Dad, but he's hiding something.'): low two-shot from behind Dad, composed in depth. Sharp in the foreground, filling the lower third of the frame: his two hands hold a paint tin with yellow drips down its side and a paint roller behind his back. Clue 2. Beyond him I tug his pyjama sleeve and point at the front door; he backs toward the far end of the hall with a too-wide 'smile' and the 'sweat' drop. On 'hiding' (marker tin_turn) I lean to look round his hip with a 'squint' face and he turns to keep the tin out of my sight."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "At midnight, something's in our kitchen, eating straight out of the fridge. Not human.",
+   "pauses": [
+    0.05,
+    0.05,
+    0.14
+   ],
+   "gapAfter": 0.3,
+   "slot": "ESCALATION 2 (clue 3)",
+   "red": [
+    "something's",
+    "human"
+   ],
+   "markers": {
+    "s30": "w:something",
+    "s31": "w:fridge-0.12",
+    "s32": "w:Not"
+   },
+   "sfx": [
+    {
+     "type": "wood_creak",
+     "at": "start-0.1",
+     "dur": 0.8,
+     "gain": 0.28,
+     "space": "room"
+    },
+    {
+     "type": "stinger",
+     "at": "w:something",
+     "dur": 1.6,
+     "gain": 0.2
+    },
+    {
+     "type": "heartbeat_loop",
+     "at": "w:eating",
+     "dur": 2.4,
+     "bpm": 88,
+     "bpm_end": 112,
+     "gain": 0.18
+    }
+   ],
+   "visual": "ESCALATION, beat 2 of 3, shot as a scare. The darkest look of the episode: the open fridge is the single practical. Four shots. S29 ('At midnight,'): POV with my hands in frame, a frying pan gripped in the right and the dead torch in the left, creeping down the black hallway toward a cold white glow spilling from the kitchen arch. Dutch 8 degrees. Optional, in passing: Pip's shut door with a crayon sign, NO BROTHERS, headphones crossed out. S30 ('something's in our kitchen, eating straight out of the', about 2 s, slow push-in): from behind my shoulder at the arch. The fridge door is open. A hunched SILHOUETTE stands in its light, chewing: tall bun, long robe. It is Mom, and the bun and robe must be recognisable on a rewatch. S31 ('fridge.', 0.6 s at most, picture only): macro insert in the fridge light: a hand lifts a pickle, dripping, out of a tub of ice cream. Clue 3. The narration never names it. S32 ('Not human.'): extreme close-up of my face behind the raised frying pan, big face 3: 'shocked' with the 'sweat' drop, fridge light on one cheek. I back out of frame."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then hammering, from the room nobody opens. I charge the door and",
+   "pauses": [
+    0.05,
+    0.1
+   ],
+   "gapAfter": 0.04,
+   "music": "cine_swell",
+   "slot": "ESCALATION 3",
+   "red": [
+    "hammering",
+    "charge"
+   ],
+   "markers": {
+    "s33": "start-0.28",
+    "s34": "w:I"
+   },
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "start-0.28",
+     "gain": 0.6
+    },
+    {
+     "type": "knock",
+     "at": "start-0.13",
+     "gain": 0.6
+    },
+    {
+     "type": "knock",
+     "at": "start+0.02",
+     "gain": 0.6
+    },
+    {
+     "type": "knock",
+     "at": "w:room",
+     "gain": 0.2
+    },
+    {
+     "type": "knock",
+     "at": "w:nobody+0.1",
+     "gain": 0.2
+    },
+    {
+     "type": "thump",
+     "at": "w:charge",
+     "gain": 0.3
+    },
+    {
+     "type": "thump",
+     "at": "w:charge+0.17",
+     "gain": 0.34
+    },
+    {
+     "type": "thump",
+     "at": "w:charge+0.34",
+     "gain": 0.38
+    }
+   ],
+   "visual": "ESCALATION, beat 3 of 3. Two shots. Three hammer blows land in the 0.3 s gap before the line (the cut to S33 is on the first blow, marker s33), so the sound comes first and the narrator names it; two quiet taps carry on under the words. S33 ('Then hammering, from the room nobody opens.'): the one act-break whip, 180 degrees from the kitchen arch to the far end of the hall (a fast yaw plus shake, as in ep25 b13). SETUP C: one-point corridor, the box-room door at the vanishing point with a hot strip of yellow light under it. Bang, bang, bang: the strip flickers on each blow. The door handle is furred with dust. S34 ('I charge the door and'): low tracking shot beside my white sneakers as I run at it (sprint cycle); the frying pan clangs to the floor behind me. The sentence runs straight into the HUSS."
+  },
+  {
+   "id": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS!",
+   "n": 1,
+   "gapAfter": 0.08,
+   "space": "room",
+   "slot": "H3",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.95
+    }
+   ],
+   "visual": "H3, single, the biggest strain so far, and it fails. S35: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). My shoulder hits the box-room door. It shudders in its frame, dust jumps off the handle, and it holds. The light strip under it does not even flicker."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It holds. Then footsteps.",
+   "pauses": [
+    0.24
+   ],
+   "gapAfter": 0.22,
+   "slot": "ESCALATION (it fails)",
+   "red": [
+    "holds",
+    "Footsteps"
+   ],
+   "markers": {
+    "s37": "w:Then-0.1"
+   },
+   "sfx": [
+    {
+     "type": "heartbeat_loop",
+     "at": "start",
+     "dur": 3.7,
+     "bpm": 96,
+     "bpm_end": 138,
+     "gain": 0.2
+    },
+    {
+     "type": "thump",
+     "at": "end+0.02",
+     "gain": 0.35
+    },
+    {
+     "type": "thump",
+     "at": "end+0.2",
+     "gain": 0.4
+    }
+   ],
+   "visual": "Two shots. S36 ('It holds.' and the pause after it): reaction close-up. I bounce off the door and slide down it to sitting, one ear cup pushed back, ear against the wood (the headphones stay on my head). The hammering has stopped; dust hangs in the light strip. S37 ('Then footsteps.'): macro insert at floor level: the strip of yellow light under the door. Two foot-shaped shadows walk into it and stop; the two footfalls sound in the gap after the word, not on it. A heartbeat climbs under the score."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "text": "I back up the whole hallway.",
+   "gapAfter": 0.1,
+   "slot": "CLIMAX",
+   "red": [
+    "whole"
+   ],
+   "sfx": [
+    {
+     "type": "wood_creak",
+     "at": "w:back",
+     "dur": 0.6,
+     "gain": 0.2,
+     "space": "room"
+    }
+   ],
+   "visual": "CLIMAX. The one line before the climax, spoken slightly lower and slower (speaker narrlow). S38 (one shot, 1.2 s): SETUP C again (second and last use): the camera dollies back with me as I back away from the door, step by step, the whole length of the hall, until my shoulders touch the front door glass. The lit strip with the two foot shadows shrinks at the vanishing point. The five lanterns glow behind my head through the glass. 'determined' face. The score's swell peaks on the last word."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narrlow",
+   "text": "Then I run at it.",
+   "gapAfter": 0.55,
+   "music": "none",
+   "amb": "none",
+   "ambFade": 0.3,
+   "slot": "CLIMAX (silence 0.55 s)",
+   "red": [
+    "run"
+   ],
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "end+0.04",
+     "gain": 0.1
+    },
+    {
+     "type": "thump",
+     "at": "end+0.2",
+     "gain": 0.12
+    },
+    {
+     "type": "thump",
+     "at": "end+0.35",
+     "gain": 0.14
+    },
+    {
+     "type": "thump",
+     "at": "end+0.48",
+     "gain": 0.16
+    }
+   ],
+   "visual": "The deliberate near-silence. The music and ambience cut dead on this beat; after the last word there is 0.55 s with no voice and no music, only four soft footfalls. S39 (one shot, about 1.4 s, running through the silence): side-on tracking shot at 50 percent speed: my sneaker kicks off the doormat and scatters the four pairs of shoes, then I sprint the hallway straight at the box-room door, hoodie strings flying, 'huss' face building. No shake, no drift: the stillness is the point."
+  },
+  {
+   "id": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS!",
+   "n": 2,
+   "gapAfter": 0.1,
+   "space": "room",
+   "music": "party",
+   "slot": "H4",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.6
+    },
+    {
+     "type": "impact",
+     "at": "start+0.21",
+     "dur": 1.6,
+     "gain": 0.6
+    }
+   ],
+   "visual": "H4, the title drop, and the flip of H1: at 0:04 I blocked a door to keep number five out, now I break one open to find it. S40: the HUSS ritual as always (the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample), with one difference: there is no music dip here, because the music comes back from silence on this HUSS (\"dip\": false). Low hero from the door's side: I launch shoulder-first. On the second HUSS the door swings open by itself an instant before I touch it (Dad's hand is on the inside handle) and I sail through into warm yellow light. The music box score slams back in, full, on this HUSS and stays bright under the crash; it drops to its soft version at the picture (b21). Keep the light on the hoodie low in saturation: rim only, hoodie black.",
+   "dip": false
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The door just opens. I land in a half-built crib. Dad's holding a screwdriver. Mom's dipping a pickle in ice cream.",
+   "pauses": [
+    0.1,
+    0.12,
+    0.1
+   ],
+   "gapAfter": 0.1,
+   "slot": "CLIMAX (payoff)",
+   "red": [
+    "opens",
+    "crib",
+    "pickle"
+   ],
+   "markers": {
+    "s42": "w:I",
+    "s43": "w:Dad",
+    "pov_whip": "w:Mom"
+   },
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:land+0.1",
+     "gain": 0.75
+    },
+    {
+     "type": "knock",
+     "at": "w:land+0.22",
+     "gain": 0.5
+    },
+    {
+     "type": "knock",
+     "at": "w:land+0.37",
+     "gain": 0.45
+    },
+    {
+     "type": "knock",
+     "at": "w:land+0.56",
+     "gain": 0.4
+    }
+   ],
+   "visual": "The scare flips to comedy. Set: the box room, small, lit by one warm work lamp on the floor; one wall half painted yellow. Three shots. S41 ('The door just opens.'): from inside the room: the door wide, me flying through it (one static flying pose moved along a path) in slow motion that ramps back to full speed; Dad flattened against the wall behind the door, still holding the handle. S42 ('I land in a half-built crib.'): top-down god shot: I crash into a half-built wooden crib and its slatted sides fall flat around me like petals. Beside my head lies the flat-pack box with a big line drawing of a crib on it, sharp and readable. The paint tray rocks. The cost: I have wrecked their surprise. S43 ('Dad's holding a screwdriver. Mom's dipping a pickle in ice cream.'): my POV from the floor, my hands in frame. First Dad: striped pyjamas, glasses crooked, a screwdriver in his fist, 'sweat' grin, and behind him the half-yellow wall, the roller and the dripping paint tin from S27. On 'Mom' (marker pov_whip) the POV whips past him to the doorway: Mom in her robe and bun (the fridge silhouette, now in warm light), the pickle jar under one arm, the ice-cream tub in her hand and a pickle frozen halfway into it, 'shocked'. This is the laugh line: the picture from S31 finally gets its words. Pip peeks from behind her robe. All three stare down at me (reverse shot of everyone staring)."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom holds up a tiny black picture. And Pip whispers: is that the other one?",
+   "pauses": [
+    0.12
+   ],
+   "gapAfter": 0.12,
+   "music": "lofi",
+   "slot": "TWIST (prop reveal)",
+   "red": [
+    "picture",
+    "other"
+   ],
+   "bubble": {
+    "who": "pip",
+    "text": "Is that the other one?",
+    "at": "bub3"
+   },
+   "markers": {
+    "s45": "w:And-0.15",
+    "bub3": "w:is"
+   },
+   "sfx": [
+    {
+     "type": "heartbeat_loop",
+     "at": "w:tiny",
+     "dur": 2.6,
+     "bpm": 150,
+     "gain": 0.16
+    }
+   ],
+   "visual": "TWIST, the prop reveal. No HUSS anywhere near this beat; the score drops to its soft version. Two shots. S44 ('Mom holds up a tiny black picture.', 1.6 s): macro insert (fov 22): Mom's hand lifts a small glossy black card out of her robe pocket: a bright fan shape with one white bean in it. A tiny, fast heartbeat starts under the music. S45 (from 'And Pip whispers: is that the other one?' through 'It was never following Mom:' in the next beat: the one long hold of the episode, about 3 s): from INSIDE the box room at Pip's eye height, looking out through its open door: Mom and Pip in the doorway, and behind them the whole dark hallway running to the front-door glass, where our five lanterns are five soft warm glows at the far end (the motif axis, seen in reverse). Slow push-in. Pip steps out from behind the robe, blanket trailing, and looks from the picture up to Mom's stomach. Chat bubble 3 over Pip: Is that the other one? Mom nods with a 'smile'. The one focus pull of the reveal: from the picture to Pip's face as it goes from scared to a 'smile'. She leans in and presses her ear to Mom's stomach (lean-in pose) and Mom's hand rests on her head. I sit up in the wreck of the crib at the edge of frame, out of focus, one ear cup still pushed back."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It was never following Mom: it was inside her. The whole street knew. Except me.",
+   "pauses": [
+    0.2,
+    0.2
+   ],
+   "gapAfter": 0.16,
+   "slot": "TWIST (reframe)",
+   "red": [
+    "inside",
+    "me"
+   ],
+   "markers": {
+    "s46": "w:inside-0.35",
+    "s47": "w:her-0.1",
+    "s49": "w:The",
+    "s49b": "w:knew-0.05",
+    "s50": "w:Except"
+   },
+   "visual": "TWIST, the reframe: the midpoint theory is answered in its own words, and the scary line turns out to be the literal answer. 'Inside' echoes line 1. The first sentence is written with a colon so the voice says it in one breath (two separate clips swallowed the word 'It'). S45 holds through 'It was never following Mom:' (Pip's ear on Mom's stomach, five soft lantern glows down the hall behind them; the tiny heartbeat has just stopped so the line is clean). S46 (flash-cut on 'it was inside', about 0.6 s): Mom's belly laugh on the porch from S14, both hands on her stomach, now centre frame. S47 (flash-cut on 'her.' and the 0.2 s pause, about 0.45 s): the paint tin behind Dad's back (S27). S49 ('The whole street', about 0.6 s): the seven cousins next door grinning and waving at our porch (from S14), now in focus; then on 'knew' and the 0.2 s pause after it (marker s49b, about 0.4 s) a cut-in on the yellow-ribbon parcel on our top step, a pair of tiny knitted socks poking out of it. S50 ('Except me.'): top-down: I lie in the wreck of the crib; Pip, Mom and Dad lean in from three edges of the frame and Pip's arms go round my neck. My sheepish 'smile' in the middle, a crib slat stuck through my hood, headphones on."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Next morning, lantern number 6 lights up. Something thumps in the attic.",
+   "pauses": [
+    0.05,
+    0.1
+   ],
+   "gapAfter": 0.1,
+   "slot": "BUTTON",
+   "red": [
+    "6",
+    "thumps"
+   ],
+   "markers": {
+    "s52": "w:lantern",
+    "s54": "w:Something"
+   },
+   "sfx": [
+    {
+     "type": "fire_ignite",
+     "at": "w:6",
+     "align": "peak",
+     "gain": 0.3
+    },
+    {
+     "type": "heartbeat",
+     "at": "w:lights",
+     "gain": 0.4
+    },
+    {
+     "type": "thump",
+     "at": "w:thumps",
+     "gain": 0.7
+    },
+    {
+     "type": "wood_creak",
+     "at": "w:attic",
+     "dur": 0.8,
+     "gain": 0.3,
+     "space": "room"
+    }
+   ],
+   "visual": "BUTTON, the unresolved sting. A dip through white (fx.overlay, the only one) into morning, the third lighting state: sun pours down the hallway through the front door, which stands open for the first time, with light shafts in the dust. The soft music box score carries on to the last frame. Three shots. S51 ('Next morning,'): from the porch looking in through the open front door. Across the top of the frame hang our five lanterns, and the fifth tag now reads BABY in Pip's crayon. Inside: I am on my knees rebuilding the crib with Dad's screwdriver (my cost) and Pip hands me a slat; behind us Mom stands with a hand on her stomach and Dad holds the instruction sheet upside down. S52 ('lantern number 6 lights up.'): macro insert on the beam, the mirror of S03: next to BABY a sixth paper lantern unfolds and catches with a flare and one lub-dub. Its tag is blank. S54 ('Something thumps in the attic.'): top-down from the ceiling hatch: four faces snap upward at once (reverse shot of everyone staring). Dust sifts down from the edges of the hatch."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, lanterns are never wrong: 6 lanterns. 5 of us.",
+   "pauses": [
+    0.05,
+    0.12
+   ],
+   "gapAfter": 0.04,
+   "slot": "BUTTON (last line)",
+   "red": [
+    "6",
+    "5"
+   ],
+   "markers": {
+    "s56": "w:6"
+   },
+   "visual": "Last line: line 1 returns with one thing changed, and '6 lanterns. 5 of us.' mirrors '5 lanterns. 4 of us.' so the end loops into the opening. Two shots. S55 ('In this town, lanterns are never wrong:'): low hero: I plant the step stool under the hatch again. Pip is already standing on it beside me, wearing the frying pan as a helmet and holding the torch. She is hunting with me now. S56 ('6 lanterns. 5 of us.'): count shot from the hall through the open front door: six lanterns in a row in the morning sun (MOM, DAD, ME, PIP, BABY and one blank tag), and all of us in the same frame: Pip and me under the hatch with our hands flat on it, Mom and Dad behind us, Mom with both hands on her stomach (the S14 gesture, now out in the open: she is two of the five). Six lights, five of us, one blank tag."
+  },
+  {
+   "id": "b25",
+   "kind": "huss",
+   "speaker": "pip",
+   "text": "HUSS!",
+   "n": 1,
+   "pitch": 1.42,
+   "gapAfter": 0.05,
+   "space": "room",
+   "slot": "H5 (callback)",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "start",
+     "gain": 0.6
+    }
+   ],
+   "visual": "H5, the callback, and the last sound of the video: Pip's HUSS (the real HUSS sample pitched up, never a TTS voice). S57: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). The bookend: SETUP A's low angle from kid height toward the front door, second and last use, but tight (fov 38): Pip on the stool and me side by side, waist up, both of us with our palms on the hatch at the top of the frame, 'huss' faces; behind us, soft through depth of field, the sunny open front door and six lanterns where five glowed at night. Where I heaved the wardrobe alone, we shove together. The hatch lifts a hand's width, and a ringed grey tail flicks across the gap for four frames. HARD CUT TO BLACK on the sound. No outro, no end card. The question left for the comments: twins, or raccoons?"
+  }
+ ],
+ "engine_features": [
+  "1. drawCaptions (src/engine.js): draw the caption word in #ff2d2d when its display text, case-insensitive and without punctuation, matches an entry in that beat's 'red' list (the list is already passed through to timeline.beats).",
+  "2. Chat-bubble 2D overlay that reads beat.bubble {who, text, at, until}: a small rounded bubble above that character's head from marker 'at' until marker 'until' (default: the end of the beat). Three bubbles in the episode.",
+  "3. build_episode.py: with the background loop on, multiply the music by a dip of -6 dB over 0.3 s (20 ms attack) at every HUSS word of speaker 'me' or 'pip', unless the beat has \"dip\": false (b19, where the music slams back in on the HUSS instead). If this is not built, delete the dip clause from the visuals of b02, b08, b15 and b25.",
+  "4. hussBeat(ctx, t, {double}) macro in src/direct.js: punch, 0.3 s slow-motion ramp, strain face, stamp.",
+  "5. Body acting as IK poses plus tweens, with only two cycles (sprint, drag). Poses needed: bent-double haul, shoulder heave, crouch, step up onto the stool, sit against a wall, kneel, lean-in (ear on Mom's stomach; arms round my neck), lying in the crib, one static flying pose moved along a path (S41). No two-character carry or lift anywhere.",
+  "6. Faces and hair: a 'crying' face decal; a 'puffs' hair style. Mom, Dad and Pip added to src/cast.js with a day and a night outfit each.",
+  "7. Lantern prop with fold/unfold, flare and smoke, plus canvas name tags; the home kit pieces listed under sets (hallway with porch and kitchen arch, box room, attic void).",
+  "8. Camera helpers in src/direct.js: ots, pov, insert, lowHero, topDown, dutch, pushIn, and whipIn as a fast yaw plus shake; a dip-through-white helper on fx.overlay; a bookend helper for S57.",
+  "9. Look: the shared warm preset through src/real/post.js with per-shot depth of field (style bible section 8)."
+ ],
+ "shot_changes": "Shot ids are kept stable from the previous draft. Retired: S28 (Pip locks me out), S48 (third flash-cut; S43 already re-shows the fridge silhouette in warm light) and S53 (toast). Added: S27a and S27b (Mom comes home). S15 is now the blank-tag insert. 56 shots."
+}

@@ -1,0 +1,1413 @@
+{
+ "fps": 30,
+ "duration": 48.083,
+ "audio": "episodes/realdemo/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The storm came out of nowhere.",
+   "start": 0.8,
+   "end": 2.027,
+   "words": [
+    {
+     "text": "The",
+     "start": 0.815,
+     "end": 0.942
+    },
+    {
+     "text": "storm",
+     "start": 0.942,
+     "end": 1.204
+    },
+    {
+     "text": "came",
+     "start": 1.204,
+     "end": 1.421
+    },
+    {
+     "text": "out",
+     "start": 1.421,
+     "end": 1.593
+    },
+    {
+     "text": "of",
+     "start": 1.593,
+     "end": 1.72
+    },
+    {
+     "text": "nowhere",
+     "start": 1.72,
+     "end": 2.027
+    }
+   ],
+   "amb": "storm_sea",
+   "visual": "night sea, tiny boat climbing a black wave, lightning whites out the frame"
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "One wave, and the boat was gone.",
+   "start": 3.342,
+   "end": 5.011,
+   "words": [
+    {
+     "text": "One",
+     "start": 3.357,
+     "end": 3.603
+    },
+    {
+     "text": "wave",
+     "start": 3.603,
+     "end": 3.913
+    },
+    {
+     "text": "and",
+     "start": 4.043,
+     "end": 4.236
+    },
+    {
+     "text": "the",
+     "start": 4.236,
+     "end": 4.379
+    },
+    {
+     "text": "boat",
+     "start": 4.379,
+     "end": 4.624
+    },
+    {
+     "text": "was",
+     "start": 4.624,
+     "end": 4.817
+    },
+    {
+     "text": "gone",
+     "start": 4.817,
+     "end": 5.011
+    }
+   ],
+   "visual": "underwater, muffled, bubbles, the boat's light sinking away"
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I woke up on a beach I'd never seen.",
+   "start": 6.826,
+   "end": 8.497,
+   "words": [
+    {
+     "text": "I",
+     "start": 6.841,
+     "end": 6.98
+    },
+    {
+     "text": "woke",
+     "start": 6.98,
+     "end": 7.22
+    },
+    {
+     "text": "up",
+     "start": 7.22,
+     "end": 7.359
+    },
+    {
+     "text": "on",
+     "start": 7.359,
+     "end": 7.499
+    },
+    {
+     "text": "a",
+     "start": 7.499,
+     "end": 7.639
+    },
+    {
+     "text": "beach",
+     "start": 7.639,
+     "end": 7.878
+    },
+    {
+     "text": "I'd",
+     "start": 7.878,
+     "end": 8.068
+    },
+    {
+     "text": "never",
+     "start": 8.068,
+     "end": 8.307
+    },
+    {
+     "text": "seen",
+     "start": 8.307,
+     "end": 8.497
+    }
+   ],
+   "amb": "surf",
+   "ambFade": 3.0,
+   "visual": "grey dawn, wet sand, waves dragging pebbles back"
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "No boat. No dad. Just rain.",
+   "start": 10.112,
+   "end": 12.937,
+   "words": [
+    {
+     "text": "No",
+     "start": 10.127,
+     "end": 10.404
+    },
+    {
+     "text": "boat",
+     "start": 10.404,
+     "end": 10.753
+    },
+    {
+     "text": "No",
+     "start": 11.233,
+     "end": 11.518
+    },
+    {
+     "text": "dad",
+     "start": 11.518,
+     "end": 11.804
+    },
+    {
+     "text": "Just",
+     "start": 12.334,
+     "end": 12.664
+    },
+    {
+     "text": "rain",
+     "start": 12.664,
+     "end": 12.937
+    }
+   ],
+   "amb": "rain_beach",
+   "visual": "rain hitting the sea surface, the jungle edge behind"
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I walked into the trees.",
+   "start": 14.352,
+   "end": 15.659,
+   "words": [
+    {
+     "text": "So",
+     "start": 14.367,
+     "end": 14.574
+    },
+    {
+     "text": "I",
+     "start": 14.574,
+     "end": 14.726
+    },
+    {
+     "text": "walked",
+     "start": 14.726,
+     "end": 14.986
+    },
+    {
+     "text": "into",
+     "start": 14.986,
+     "end": 15.247
+    },
+    {
+     "text": "the",
+     "start": 15.247,
+     "end": 15.398
+    },
+    {
+     "text": "trees",
+     "start": 15.398,
+     "end": 15.659
+    }
+   ],
+   "amb": "rain_forest",
+   "space": "forest",
+   "visual": "under the canopy, heavy rain on giant leaves, mud"
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then something snapped behind me.",
+   "start": 17.874,
+   "end": 19.342,
+   "words": [
+    {
+     "text": "Then",
+     "start": 17.889,
+     "end": 18.093
+    },
+    {
+     "text": "something",
+     "start": 18.093,
+     "end": 18.46
+    },
+    {
+     "text": "snapped",
+     "start": 18.46,
+     "end": 18.772
+    },
+    {
+     "text": "behind",
+     "start": 18.772,
+     "end": 19.192
+    },
+    {
+     "text": "me",
+     "start": 19.192,
+     "end": 19.342
+    }
+   ],
+   "amb": "storm_wind",
+   "visual": "slow turn, trees thrashing in the wind, nothing there"
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I didn't look back. I just ran.",
+   "start": 20.757,
+   "end": 22.608,
+   "words": [
+    {
+     "text": "I",
+     "start": 20.772,
+     "end": 20.916
+    },
+    {
+     "text": "didn't",
+     "start": 20.916,
+     "end": 21.214
+    },
+    {
+     "text": "look",
+     "start": 21.214,
+     "end": 21.409
+    },
+    {
+     "text": "back",
+     "start": 21.409,
+     "end": 21.604
+    },
+    {
+     "text": "I",
+     "start": 21.914,
+     "end": 22.071
+    },
+    {
+     "text": "just",
+     "start": 22.071,
+     "end": 22.395
+    },
+    {
+     "text": "ran",
+     "start": 22.395,
+     "end": 22.608
+    }
+   ],
+   "visual": "handheld run through the trees, branches whipping the lens"
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Into a cave, where the rain couldn't reach me.",
+   "start": 24.623,
+   "end": 26.743,
+   "words": [
+    {
+     "text": "Into",
+     "start": 24.638,
+     "end": 24.922
+    },
+    {
+     "text": "a",
+     "start": 24.922,
+     "end": 25.087
+    },
+    {
+     "text": "cave",
+     "start": 25.087,
+     "end": 25.372
+    },
+    {
+     "text": "where",
+     "start": 25.502,
+     "end": 25.684
+    },
+    {
+     "text": "the",
+     "start": 25.684,
+     "end": 25.819
+    },
+    {
+     "text": "rain",
+     "start": 25.819,
+     "end": 26.05
+    },
+    {
+     "text": "couldn't",
+     "start": 26.05,
+     "end": 26.377
+    },
+    {
+     "text": "reach",
+     "start": 26.377,
+     "end": 26.608
+    },
+    {
+     "text": "me",
+     "start": 26.608,
+     "end": 26.743
+    }
+   ],
+   "amb": "cave",
+   "ambFade": 0.4,
+   "space": "cave",
+   "visual": "cave mouth, the storm outside, drips glinting in the dark"
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then my radio crackled.",
+   "start": 28.558,
+   "end": 29.759,
+   "words": [
+    {
+     "text": "Then",
+     "start": 28.573,
+     "end": 28.767
+    },
+    {
+     "text": "my",
+     "start": 28.767,
+     "end": 28.961
+    },
+    {
+     "text": "radio",
+     "start": 28.961,
+     "end": 29.36
+    },
+    {
+     "text": "crackled",
+     "start": 29.36,
+     "end": 29.759
+    }
+   ],
+   "space": "cave",
+   "visual": "close on a cracked walkie-talkie, its tiny light flickering"
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I made a fire, and thought about home.",
+   "start": 32.774,
+   "end": 34.482,
+   "words": [
+    {
+     "text": "I",
+     "start": 32.789,
+     "end": 32.922
+    },
+    {
+     "text": "made",
+     "start": 32.922,
+     "end": 33.149
+    },
+    {
+     "text": "a",
+     "start": 33.149,
+     "end": 33.281
+    },
+    {
+     "text": "fire",
+     "start": 33.281,
+     "end": 33.508
+    },
+    {
+     "text": "and",
+     "start": 33.638,
+     "end": 33.814
+    },
+    {
+     "text": "thought",
+     "start": 33.814,
+     "end": 33.99
+    },
+    {
+     "text": "about",
+     "start": 33.99,
+     "end": 34.259
+    },
+    {
+     "text": "home",
+     "start": 34.259,
+     "end": 34.482
+    }
+   ],
+   "amb": "campfire",
+   "visual": "small fire, wet face, orange light, rain beyond the cave mouth"
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "All night, the jungle was never quiet.",
+   "start": 37.097,
+   "end": 39.046,
+   "words": [
+    {
+     "text": "All",
+     "start": 37.112,
+     "end": 37.301
+    },
+    {
+     "text": "night",
+     "start": 37.301,
+     "end": 37.627
+    },
+    {
+     "text": "the",
+     "start": 37.757,
+     "end": 37.896
+    },
+    {
+     "text": "jungle",
+     "start": 37.896,
+     "end": 38.282
+    },
+    {
+     "text": "was",
+     "start": 38.282,
+     "end": 38.471
+    },
+    {
+     "text": "never",
+     "start": 38.471,
+     "end": 38.709
+    },
+    {
+     "text": "quiet",
+     "start": 38.709,
+     "end": 39.046
+    }
+   ],
+   "amb": "jungle_night",
+   "visual": "black jungle, eyes? no - just frogs. maybe."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "At sunrise, I found footprints in the sand. Not mine.",
+   "start": 41.061,
+   "end": 44.568,
+   "words": [
+    {
+     "text": "At",
+     "start": 41.076,
+     "end": 41.267
+    },
+    {
+     "text": "sunrise",
+     "start": 41.267,
+     "end": 41.798
+    },
+    {
+     "text": "I",
+     "start": 41.928,
+     "end": 42.055
+    },
+    {
+     "text": "found",
+     "start": 42.055,
+     "end": 42.318
+    },
+    {
+     "text": "footprints",
+     "start": 42.318,
+     "end": 42.763
+    },
+    {
+     "text": "in",
+     "start": 42.763,
+     "end": 42.89
+    },
+    {
+     "text": "the",
+     "start": 42.89,
+     "end": 43.017
+    },
+    {
+     "text": "sand",
+     "start": 43.017,
+     "end": 43.235
+    },
+    {
+     "text": "Not",
+     "start": 43.965,
+     "end": 44.232
+    },
+    {
+     "text": "mine",
+     "start": 44.232,
+     "end": 44.568
+    }
+   ],
+   "amb": "surf",
+   "visual": "low angle on bare footprints leading out of the sea... and into the trees"
+  }
+ ],
+ "words": [
+  {
+   "text": "The",
+   "start": 0.815,
+   "end": 0.942,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "storm",
+   "start": 0.942,
+   "end": 1.204,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "came",
+   "start": 1.204,
+   "end": 1.421,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "out",
+   "start": 1.421,
+   "end": 1.593,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "of",
+   "start": 1.593,
+   "end": 1.72,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "nowhere",
+   "start": 1.72,
+   "end": 2.027,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "One",
+   "start": 3.357,
+   "end": 3.603,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "wave",
+   "start": 3.603,
+   "end": 3.913,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "and",
+   "start": 4.043,
+   "end": 4.236,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 4.236,
+   "end": 4.379,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "boat",
+   "start": 4.379,
+   "end": 4.624,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "was",
+   "start": 4.624,
+   "end": 4.817,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "gone",
+   "start": 4.817,
+   "end": 5.011,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 6.841,
+   "end": 6.98,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "woke",
+   "start": 6.98,
+   "end": 7.22,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "up",
+   "start": 7.22,
+   "end": 7.359,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "on",
+   "start": 7.359,
+   "end": 7.499,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 7.499,
+   "end": 7.639,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "beach",
+   "start": 7.639,
+   "end": 7.878,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "I'd",
+   "start": 7.878,
+   "end": 8.068,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "never",
+   "start": 8.068,
+   "end": 8.307,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "seen",
+   "start": 8.307,
+   "end": 8.497,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "No",
+   "start": 10.127,
+   "end": 10.404,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "boat",
+   "start": 10.404,
+   "end": 10.753,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "No",
+   "start": 11.233,
+   "end": 11.518,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "dad",
+   "start": 11.518,
+   "end": 11.804,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Just",
+   "start": 12.334,
+   "end": 12.664,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "rain",
+   "start": 12.664,
+   "end": 12.937,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "So",
+   "start": 14.367,
+   "end": 14.574,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 14.574,
+   "end": 14.726,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "walked",
+   "start": 14.726,
+   "end": 14.986,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "into",
+   "start": 14.986,
+   "end": 15.247,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 15.247,
+   "end": 15.398,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "trees",
+   "start": 15.398,
+   "end": 15.659,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Then",
+   "start": 17.889,
+   "end": 18.093,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "something",
+   "start": 18.093,
+   "end": 18.46,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "snapped",
+   "start": 18.46,
+   "end": 18.772,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "behind",
+   "start": 18.772,
+   "end": 19.192,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "me",
+   "start": 19.192,
+   "end": 19.342,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "I",
+   "start": 20.772,
+   "end": 20.916,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "didn't",
+   "start": 20.916,
+   "end": 21.214,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "look",
+   "start": 21.214,
+   "end": 21.409,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "back",
+   "start": 21.409,
+   "end": 21.604,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "I",
+   "start": 21.914,
+   "end": 22.071,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "just",
+   "start": 22.071,
+   "end": 22.395,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "ran",
+   "start": 22.395,
+   "end": 22.608,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Into",
+   "start": 24.638,
+   "end": 24.922,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "a",
+   "start": 24.922,
+   "end": 25.087,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "cave",
+   "start": 25.087,
+   "end": 25.372,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "where",
+   "start": 25.502,
+   "end": 25.684,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 25.684,
+   "end": 25.819,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "rain",
+   "start": 25.819,
+   "end": 26.05,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "couldn't",
+   "start": 26.05,
+   "end": 26.377,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "reach",
+   "start": 26.377,
+   "end": 26.608,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "me",
+   "start": 26.608,
+   "end": 26.743,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Then",
+   "start": 28.573,
+   "end": 28.767,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "my",
+   "start": 28.767,
+   "end": 28.961,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "radio",
+   "start": 28.961,
+   "end": 29.36,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "crackled",
+   "start": 29.36,
+   "end": 29.759,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "I",
+   "start": 32.789,
+   "end": 32.922,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "made",
+   "start": 32.922,
+   "end": 33.149,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "a",
+   "start": 33.149,
+   "end": 33.281,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "fire",
+   "start": 33.281,
+   "end": 33.508,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "and",
+   "start": 33.638,
+   "end": 33.814,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "thought",
+   "start": 33.814,
+   "end": 33.99,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "about",
+   "start": 33.99,
+   "end": 34.259,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "home",
+   "start": 34.259,
+   "end": 34.482,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "All",
+   "start": 37.112,
+   "end": 37.301,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "night",
+   "start": 37.301,
+   "end": 37.627,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 37.757,
+   "end": 37.896,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "jungle",
+   "start": 37.896,
+   "end": 38.282,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "was",
+   "start": 38.282,
+   "end": 38.471,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "never",
+   "start": 38.471,
+   "end": 38.709,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "quiet",
+   "start": 38.709,
+   "end": 39.046,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "At",
+   "start": 41.076,
+   "end": 41.267,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "sunrise",
+   "start": 41.267,
+   "end": 41.798,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I",
+   "start": 41.928,
+   "end": 42.055,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "found",
+   "start": 42.055,
+   "end": 42.318,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "footprints",
+   "start": 42.318,
+   "end": 42.763,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "in",
+   "start": 42.763,
+   "end": 42.89,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "the",
+   "start": 42.89,
+   "end": 43.017,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "sand",
+   "start": 43.017,
+   "end": 43.235,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Not",
+   "start": 43.965,
+   "end": 44.232,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "mine",
+   "start": 44.232,
+   "end": 44.568,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  }
+ ],
+ "music": [
+  {
+   "t": 0.72,
+   "mode": "cine_drone"
+  },
+  {
+   "t": 6.746,
+   "mode": "cine_silence"
+  },
+  {
+   "t": 10.032,
+   "mode": "cine_drone"
+  },
+  {
+   "t": 14.272,
+   "mode": "cine_heart"
+  },
+  {
+   "t": 17.794,
+   "mode": "cine_silence"
+  },
+  {
+   "t": 20.677,
+   "mode": "cine_swell"
+  },
+  {
+   "t": 24.543,
+   "mode": "cine_drone"
+  },
+  {
+   "t": 32.694,
+   "mode": "cine_sad"
+  },
+  {
+   "t": 37.017,
+   "mode": "cine_drone"
+  },
+  {
+   "t": 40.981,
+   "mode": "cine_silence"
+  }
+ ],
+ "markers": {},
+ "title": "Lost (realdemo - cinematic audio test)",
+ "amb": [
+  {
+   "t": 0.7,
+   "bed": "storm_sea"
+  },
+  {
+   "t": 6.726,
+   "bed": "surf"
+  },
+  {
+   "t": 10.012,
+   "bed": "rain_beach"
+  },
+  {
+   "t": 14.252,
+   "bed": "rain_forest"
+  },
+  {
+   "t": 17.774,
+   "bed": "storm_wind"
+  },
+  {
+   "t": 24.523,
+   "bed": "cave"
+  },
+  {
+   "t": 32.674,
+   "bed": "campfire"
+  },
+  {
+   "t": 36.997,
+   "bed": "jungle_night"
+  },
+  {
+   "t": 40.961,
+   "bed": "surf"
+  }
+ ]
+}

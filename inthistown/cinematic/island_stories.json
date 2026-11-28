@@ -1,0 +1,969 @@
+[
+ {
+  "title": "Don't Answer",
+  "logline": "A storm leaves a kid shipwrecked on a rain-soaked island for 41 days. He learns its rules the hard way. Something in the trees copies every voice it hears, including the voicemail from his mum that he plays for ten seconds every night. So he never answers it. Then, on a night of thick fog, his mum's voice says words it has never heard.",
+  "twist": "The voice in the fog on night 41 was his real mum. The coast guard stopped looking on day 7, but she never did. She took a boat out herself and searched the islands through the fog, calling into the dark. The 'two white eyes' were her boat's lamps. He hid in the cave and didn't answer, because the island had taught him not to. On day one he also didn't answer her call, and that is how he got lost. Fair clues: (1) 'It only knows what it's heard.' Nobody on the island ever said 'I never stopped looking.' (2) 'It never leaves the trees.' That voice came from the sea: the camera faces the water and the voice echoes like it's carried across water. (3) The radio said 'His family won't give up', and he brushed it off. (4) The creature's eyes are two tiny points at head height in the trees. These 'eyes' are huge, low at the waterline, and throw sweeping beams. (5) 'It never leaves footprints.' Adult boot prints come out of the sea and go back into it. Final sting: he whispers 'I'll answer this time.' Behind him, out of focus, the pale figure steps out of the trees onto the sand for the first time. It only knows what it's heard, and now it has heard that.",
+  "caption_hook": "Day 41. Something on this island learned my mum's voice. Watch it twice and tell me when you knew.",
+  "why_it_hits": "HOOK: the first line is one unsettling fact that leaves something out, not a 'let me tell you about the time I...' opener. 2026 hook breakdowns rank story-setup openers lowest. A partial fact opens a loop, and a first-person POV pulls the viewer in. FORMAT: rule-based mimic horror is very shareable right now. The three rules (only knows what it's heard / never leaves the trees / never leaves footprints) are said out loud, so viewers play detective, and every rule pays off at the end. REAL DETAILS so it feels true. Castaways who cope best take stock of their supplies first. Wet tropical nights are dangerously cold. Hunger pangs fade after a few days. Three fires in a triangle is a recognised distress signal. Coast guard searches are often suspended after about a week while families keep searching privately (e.g. the Georgia fishermen, search ended after 7 days and the families kept going). Isolation research says castaways often hear loved ones' voices (the 1725 Ascension Island castaway heard a dead friend). That gives a second reading for the comments: is the thing with no footprints real, or in his head? EMOTION: the whole story turns on answering. 'I didn't answer' (his guilt) becomes 'don't answer' (the survival rule), so the one time he should answer, he doesn't. It ends on 'I'll answer this time.' The gut punch is the phone dying on 'it's M-', then 'Now only the trees have her voice.' REWATCH/COMMENTS: the 'two white eyes' scare is secretly the rescue boat. People will scream 'IT WAS HER', list the clues, and spot the figure stepping onto the sand in the last frame. That sets up Part 2: Mum is coming back tonight, and so is it. LOOK: every beat uses what the renderer does best. Storm wave, grey beach and wreck, rain jungle with fog shafts, cave pool, lightning, a beach of fires. Four reflection shots (tide pool, black phone glass, cave pool, his face inside his mum's footprint) give the cold, mirror-like, high-contrast feel. Kid-safe: no gore, no death, just dread, longing and hope. About 240 words, roughly 95 to 100 seconds at a calm, shaky pace.",
+  "beats": [
+   {
+    "kind": "line",
+    "text": "Something on this island can do my mum's voice.",
+    "visual": "NIGHT, heavy rain. Low, wide 24mm locked off at the jungle edge with a slow 6 s push-in: a black wall of dripping leaves, bright white fog breathing between the trunks. Bottom-left foreground, out of focus: the back of the kid's blocky head and headphones, rim-lit by a dying campfire. One distant lightning flicker turns every wet leaf silver for three frames and shows a tall, too-thin pale silhouette standing between two trunks deep in the fog. On the next flicker the spot is empty. Near-monochrome, crushed blacks, hard white highlights, fine grain.",
+    "amb": "night_jungle",
+    "music": "cine_drone",
+    "sfx": [
+     "thunder_far"
+    ],
+    "overlay": "DAY 41"
+   },
+   {
+    "kind": "line",
+    "text": "Forty-one days ago, I took the boat out alone.",
+    "visual": "FLASHBACK, overcast grey afternoon. High drone shot slowly descending: one tiny white dinghy alone on endless slate-grey swell, a thin wake behind it, a pale marker buoy far ahead. The kid sits at the outboard in his black hoodie with the white knight emblem, headphones round his neck. Soft bloom on the white hull, silver glints on the water, cold desaturated grade.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "My phone buzzed. Mum. I didn't answer.",
+    "visual": "Macro insert, 85mm, very shallow focus: the phone face-up on the wet fibreglass bench, rain beads on the glass, screen glowing 'MUM' over a blurred smiling contact photo. It buzzes and skids an inch. Rack focus up to his blocky face: he glances down, then looks away to the horizon. Behind him the sky is turning black.",
+    "amb": "surf",
+    "music": "cine_heart",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Then the storm came.",
+    "visual": "Handheld chaos, 24mm at the waterline: a black wall of wave rears up behind the dinghy and lightning splits the sky white. The wave breaks and fills the frame with white foam. The dinghy flips and the camera plunges into churning bubbles, then a hard white-out flash cuts to black.",
+    "amb": "storm_sea",
+    "music": "cine_swell",
+    "sfx": [
+     "thunder_crack",
+     "impact",
+     "splash",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "I woke on grey sand. A lighter. A radio. My phone. Nine percent.",
+    "visual": "DAWN, flat grey light. Top-down 35mm: the kid lies face-down on wet grey sand while white foam slides up around his blocky body and drains away. Cut to a flat-lay as his hands set three things in a neat row on a plank of broken hull: a scratched lighter, a yellow wind-up radio, a cracked phone showing 9%. Behind them the split dinghy lies on the beach like a broken eggshell, creaking in the surf.",
+    "amb": "rain_beach",
+    "music": "cine_drone",
+    "sfx": [
+     "creak"
+    ],
+    "overlay": "DAY 1"
+   },
+   {
+    "kind": "line",
+    "text": "I drink the rain. Nobody tells you an island can be this cold.",
+    "visual": "Medium close, 50mm, under a dripping palm frond in heavy rain: water runs off a broad leaf into his cupped blocky hands. He drinks, then shivers hard. His hood is soaked dark with a realistic wet sheen, and rain bounces off the white knight emblem. Behind him, soft-focus sheets of rain over grey surf. Cold blue-white key light, no warmth anywhere.",
+    "amb": "rain_beach",
+    "music": "same",
+    "sfx": [],
+    "overlay": "DAY 3"
+   },
+   {
+    "kind": "line",
+    "text": "Day five, the hunger stopped hurting. That scared me more.",
+    "visual": "Low angle at a still tide pool among black volcanic rocks: his blocky face reflected perfectly in the water under a white sky, hollow-eyed and very still. A small crab skitters across the surface and the ripples break his reflection into pieces. Slow, silent push-in.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": [],
+    "overlay": "DAY 5"
+   },
+   {
+    "kind": "line",
+    "text": "Every night, ten seconds of battery. Just to hear her.",
+    "visual": "NIGHT, a shelter under the upturned hull, rain drumming on it. Close-up 50mm: the phone screen wakes, the only light in the world, painting his face cold white-blue. On screen: '1 Voicemail - Mum'. His thumb hovers, then presses play.",
+    "amb": "rain_beach",
+    "music": "cine_heart",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "\"Hi sweetheart. It's Mum. Come home.\"",
+    "visual": "Extreme close-up of the phone speaker grille, droplets trembling on it with each word (audio: Mum's line phone-filtered, small and tinny). Slow rack focus to his eyes, wet and shining in the screen glow, mouthing the words along with her. Battery icon: 8%.",
+    "amb": "rain_beach",
+    "music": "cine_sad",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Day seven, the radio said they'd stopped looking.",
+    "visual": "DUSK, a small campfire on the beach, 35mm medium shot: he cranks the yellow radio hard. Its dial glows white and the static hiss settles into a calm newsreader's voice. Behind him the sea is flat steel, empty to the horizon. Slow dolly back so he gets smaller and smaller.",
+    "amb": "campfire",
+    "music": "cine_drone",
+    "sfx": [
+     "radio"
+    ],
+    "overlay": "DAY 7"
+   },
+   {
+    "kind": "line",
+    "text": "\"His family won't give up.\" Everybody says that.",
+    "visual": "Close on his hand letting go of the crank; the voice drains back into static. Cut wide from behind: a tiny figure, a tiny fire, an enormous grey ocean, and not one light on the horizon.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": [
+     "radio"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "So I did what I always do.",
+    "visual": "Last light at the treeline. Wide from behind, 24mm: his small blocky silhouette at the foot of a towering black rainforest wall, fog pouring out between the trunks, one last pale light shaft fading in the canopy. Rain. He fills his chest.",
+    "amb": "rain_forest",
+    "music": "cine_silence",
+    "sfx": [
+     "riser"
+    ]
+   },
+   {
+    "kind": "huss",
+    "text": "HUSS!",
+    "visual": "Low-angle front close-up, 35mm: he shouts into the jungle with everything he has, headphones jolting, rain flicking off his hood. The shout rolls away into the trees. Then dead silence, only rain.",
+    "amb": "rain_forest",
+    "music": "cine_silence",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Something shouted it back. In my voice.",
+    "visual": "Reverse shot from his eye-line into the jungle: pure black between the trunks, fog. His shout comes back out of the dark in his exact voice, a second too late and from the wrong side. Deep inside, at head height, two tiny pale points of light open, then close. Very slow push-in, holding on the black.",
+    "amb": "night_jungle",
+    "music": "cine_drone",
+    "sfx": [
+     "stinger",
+     "branch_snap"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Night twelve, the trees said: \"Hi sweetheart. It's Mum.\" Same pauses as my phone.",
+    "visual": "NIGHT, campfire, rain. Over-the-shoulder 50mm from behind the kid toward the treeline: the firelight reaches the first trunks and stops dead. In the fog beyond, the tall, thin, pale silhouette stands perfectly still, half behind a trunk, slightly too tall, head tilted. His phone lies dark in his lap. Creeping push-in toward the shape, and a far lightning flash whitens the fog for one frame. (Audio: the same voicemail line, identical, but coming from the trees with deep forest reverb.)",
+    "amb": "night_jungle",
+    "music": "cine_heart",
+    "sfx": [
+     "thunder_far",
+     "heartbeat"
+    ],
+    "overlay": "DAY 12"
+   },
+   {
+    "kind": "line",
+    "text": "It only knows what it's heard. It never leaves the trees. And it never leaves footprints.",
+    "visual": "MORNING, flat grey light, rain easing. Ground-level tracking shot along the wet mud at the treeline: his own square blocky footprints, each one filling with rainwater, up to the exact spot where the silhouette stood. That mud is smooth and untouched, dimpled only by rain. Soft white light shafts slant through the fog behind.",
+    "amb": "rain_forest",
+    "music": "cine_drone",
+    "sfx": [
+     "footsteps_mud",
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Three fires in a triangle means help.",
+    "visual": "DUSK, high wide drone shot pulling up and back: three fires burning in a perfect triangle on the grey beach, rain hissing into them, white smoke dragging sideways. 'SOS' is laid out in pale driftwood beside them, with the broken hull nearby, black rainforest and cliffs behind, and endless grey sea in front. The kid is a dot running between the fires with an armful of wood.",
+    "amb": "rain_beach",
+    "music": "cine_swell",
+    "sfx": [
+     "whoosh"
+    ],
+    "overlay": "DAY 26"
+   },
+   {
+    "kind": "line",
+    "text": "Day forty, my phone died mid-message. \"Hi sweetheart, it's M—\"",
+    "visual": "NIGHT, under the hull. Extreme close-up of the phone: the voicemail waveform moving, battery 1%. The screen snaps to black mid-word. Hold in total silence: in the black glass, his own reflection, lit only by the fire. Rack focus past the phone to the hull wall behind him: rows and rows of scratched tally marks.",
+    "amb": "rain_beach",
+    "music": "cine_silence",
+    "sfx": [],
+    "overlay": "DAY 40"
+   },
+   {
+    "kind": "line",
+    "text": "Now only the trees have her voice.",
+    "visual": "Wide static 24mm: he sits hugging his knees beside a low fire, tiny in the bottom third of the frame. The rainforest wall fills the top two-thirds, black, with fog sliding through it like breath. Rain. He does not look at it. Very slow push-in.",
+    "amb": "night_jungle",
+    "music": "cine_sad",
+    "sfx": [
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Last night, fog. And her voice. From everywhere.",
+    "visual": "NIGHT. A wall of white fog rolls in off the sea and swallows the beach, and the three fires shrink to orange-white smudges. Camera at sand level facing OUT TO SEA (not the trees): nothing but glowing white fog and the hiss of surf. A woman's voice drifts in, hollow and echoing, as if carried across water.",
+    "amb": "surf",
+    "music": "cine_drone",
+    "sfx": [
+     "riser"
+    ],
+    "overlay": "DAY 41"
+   },
+   {
+    "kind": "line",
+    "text": "It said new words. \"I'm here. I never stopped looking.\"",
+    "visual": "Close-up 85mm: his face half-lit by the fire, eyes wide, frozen, rain on his blocky cheeks. Behind him the fog glows faintly white from something we can't see. He slowly shakes his head. (Audio: Mum's line with an open-air echo over water, NOT phone-filtered.)",
+    "amb": "surf",
+    "music": "cine_heart",
+    "sfx": [
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "It's learning. So I hid. I didn't answer.",
+    "visual": "Inside the sea cave: he crouches far in the back behind a black, mirror-still pool, hands pressed over his headphones. Drips fall into the pool and rings spread through his reflection. The cave mouth is a bright rectangle of white fog. Low angle 24mm, cold blue-white.",
+    "amb": "cave",
+    "music": "same",
+    "sfx": [
+     "drip",
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Two white eyes slid through the fog. Then they turned away.",
+    "visual": "From deep in the cave looking out: two huge white lights, side by side, glide slowly left to right, low in the fog at the waterline. Their beams sweep across the cave walls, flaring white over wet rock and across his face, with a low rhythmic throb under the rain. The lights stop, swing away, and dissolve into the fog. Darkness.",
+    "amb": "cave",
+    "music": "same",
+    "sfx": [
+     "riser",
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "This morning, there were footprints.",
+    "visual": "DAWN, grey and windless, fog lifting off the water in thin white veils. Wide 35mm from the cave mouth: the beach is glassy wet, and a single line of prints crosses it.",
+    "amb": "surf",
+    "music": "cine_silence",
+    "sfx": [],
+    "overlay": "DAY 42"
+   },
+   {
+    "kind": "line",
+    "text": "Boots. Out of the sea, up the sand, and back.",
+    "visual": "Ground-level tracking shot following the prints: adult boot prints, deep and rounded, nothing like his square blocky ones. They come straight out of the white foam and walk up the sand to a scuffed circle where someone stood turning for a long time, calling into the fog. Then they walk back into the sea. A wave slides in and starts erasing the last one.",
+    "amb": "surf",
+    "music": "cine_swell",
+    "sfx": [
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "The thing in the trees never leaves footprints.",
+    "visual": "Match cut to the smooth, untouched mud at the treeline from Day 12, rain dimpling it. Cut back to the last boot print filling with seawater: his blocky face leans into frame and his reflection appears inside his mum's footprint.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Mum does.",
+    "visual": "Extreme close-up 85mm on his eyes as it sinks in; a tear runs into the rain on his cheek. For the first time in the film the sun breaks through, and one white light shaft falls across the beach and the footprints.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Tonight, every fire is burning.",
+    "visual": "NIGHT. Extreme wide from out at sea looking back at the island: a dozen fires burning along the whole beach in the rain, smoke lit white, lightning flickering over the cliffs. The kid's tiny silhouette stands at the waterline, facing us.",
+    "amb": "rain_beach",
+    "music": "cine_sad",
+    "sfx": [
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Come back, Mum. I'll answer this time.",
+    "visual": "Close 50mm: he stands knee-deep in the surf holding the dead phone to his chest, staring out into the black, whispering. Behind him, in deep soft focus at the treeline, the tall, thin, pale silhouette steps out of the trees and onto the sand for the first time. He doesn't see it. Hard cut to black.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": [
+     "branch_snap",
+     "stinger"
+    ]
+   }
+  ],
+  "id": "story-3",
+  "score": 87,
+  "fixes": [
+   "Fix the biggest plot hole. Mum's boot prints walk up to a 'scuffed circle' on the same beach as his three fires and the driftwood SOS, so she would have found his camp. Commenters will tear this apart. Show the rain drowning the fires to smoke as the fog rolls in, have the high tide wash over the SOS, and move her prints to the next cove or a sandbar the cave looks out on.",
+   "Make the ending impossible to miss. A pale figure in deep soft focus disappears on a 6-inch screen. Show it with a 3-frame lightning flash or a rack focus. Then, over the black at the end, play his own voice from the trees with forest reverb: 'Mum? I'm here.' Now everyone understands that when she comes back, the creature will answer for him.",
+   "Fix the timeline. The hook says Day 41, line 2 says 'Forty-one days ago', the phone dies on day 40 and the fog was 'last night'. Pick one: change line 2 to 'Forty days ago' or make the present day 42.",
+   "Give muted viewers the audio clue too. Show phone audio as a caption inside a phone-shaped bubble with the dark phone visible, and show the fog voice as bare floating text with the phone dark in his lap. Then people who watch without sound can still catch that the voices are different.",
+   "Sharpen the radio clue so the payoff lands. Instead of the vague 'His family won't give up', have the newsreader say 'His mother has refused to stop searching.' He shrugs it off, and rewatchers catch it.",
+   "The searchlight beam must not cross his face, or she would see him. Sweep it across the cave mouth and wet walls while he presses down behind the rim of the pool.",
+   "Give the [HUSS] shout a reason. 'So I did what I always do' is thin. Make it his way of feeling less alone ('I yell so something answers'), so the mimic replying feels like a betrayal.",
+   "Trim the middle (the day-5 tide pool, part of the three-fires beat) to stay around 85-90 s. The last 25% carries the video, so get people there faster.",
+   "Pin a comment after 24 hours: 'The voice in the fog wasn't coming from the trees.' That starts a second round of rewatches.",
+   "Plug the logic hole. Three signal fires are still visible in the fog, yet Mum walks up the beach, turns in a circle and leaves without finding him. Fix it this way: when her voice comes 'from everywhere', he kicks wet sand over all three fires to hide from it, and the beach goes black. That explains why her boat sees nothing, deepens the tragedy because he killed his own signal, and makes 'Tonight, every fire is burning' a real reversal.",
+   "Mute readability: show the voicemail as on-screen visual-voicemail text in the phone UI ('Hi sweetheart. It's Mum. Come home.'). Caption the trees' version in the identical font inside a phone-like frame. When Mum says 'I'm here. I never stopped looking.', use open, unframed captions in a different style, so even muted viewers sense that this one is different.",
+   "Give Mum one visible object. In beat 3, the contact photo shows her in a yellow raincoat or scarf. At dawn on day 41, that yellow scarf or a dropped torch lies in the scuffed circle beside the boot prints. It is the only saturated colour in the film, and it delivers the twist in one image without sound.",
+   "Lamps vs eyes: frame the lamps like the creature's eyes earlier, with the same spacing ratio and the same framing between dark shapes, but huge, low at the waterline, with sweeping beams. Build them from two SpotLights plus additive cone meshes with depth fade. post.js atmospheric in-scattering only supports a single directional light, so fake local in-scattering with the cones and let the spots flare on the wet cave walls.",
+   "Pacing: about 249 words over 29 beats comes to roughly 100–110 s. Cut about 35 words: drop 'Day five, the hunger stopped hurting' or merge it into the rain-drinking beat; merge 'His family won't give up. Everybody says that.' with 'So I did what I always do.'; and make the three-fires beat a drone shot with no voiceover.",
+   "Clarify the final sting. After 'I'll answer this time', hold 0.5 s on the figure stepping onto the sand. Then, over black, his whisper is repeated back in his own voice. The creature has learned the promise, and the ending lands without explanation.",
+   "Context for day 1: before the call, show a lock-screen text preview from Mum ('please come back, we can talk x'). That explains why he is alone in the dinghy and sets up the guilt, and it reads on mute.",
+   "There is no crab rig in the kit. In the tide-pool beat, break his reflection with a falling drip or raindrop, or build a cheap six-leg blocky crab.",
+   "Creature design: an elongated blocky avatar about 1.4× normal height, pale grey, with slightly too-long arms and a tilted head. Always show it backlit in fog or in a single lightning frame, never in firelight. That keeps it photoreal and scary at almost no cost.",
+   "Storm flip: rather than a wave filling the frame with foam, cut on a lightning white-out to a fully underwater shot (bubbles, height fog, a smeared lightning glow above). It's cheaper and lands harder."
+  ]
+ },
+ {
+  "title": "Two Sets of Footprints",
+  "logline": "A kid falls off his uncle's boat in a storm and washes up alone on a rain-drowned island. He stays alive with a strict routine. Something in the island's still water watches his reflection and learns that routine, then his voice, then the words he whispers to his mom every night. On day 40 a rescue boat comes, and it takes the copy home.",
+  "twist": "The thing lives in reflections: the cave pool, the tide pools, the rain puddles. It spends about forty days learning a person and then takes their place. The old wreck's tally marks stopping at 40 show it has done this before. It copies the kid's routine exactly. When he hides on day 40, it lights his dusk signal fire for him, so the rescue boat comes for it. Over the radio it uses his own nightly words ('Mom, it's me. I'm okay.'), and his mom cries with relief. It is a mirror copy: the knight on its hoodie faces the wrong way, and it waves with its LEFT hand, while the real kid waved at a plane with his RIGHT hand on day 6. The real kid is still on the island and alive, but nobody is looking for him anymore because everyone thinks he is home. His reflection left with the copy: when he looks into the tide pool, nothing looks back. The film then cuts hard to a black screen, so the viewer's phone becomes the last reflection. The first line ('two sets of footprints... both of them are mine') now means something new, and people rewatch to find the clues.",
+  "caption_hook": "the marks in the old wreck stopped at 40. i'm on day 41. did anyone else see the knight?",
+  "why_it_hits": "1) The hook is one impossible fact ('two sets of footprints... both mine'). It opens a question in the first 2 seconds, and that is the tactic 2026 horror-short guides keep pushing. 2) Pacing goes from calm and controlled to creeping escalation, with a new day-counter cut every 3-4 seconds. 3) The survival details come from real castaways. Routine is how they kept control: catching rain (about a pint a day in 'Adrift'), carving tally marks (Alvarenga counted moons), tending a fire. Isolation research says the brain 'invents company' (the sensed-presence effect), and the kid uses that to explain away the first scares, which makes it worse when it turns out to be real. 4) Every scare grows out of his own routine: the reflection blinks late, today's mark is already carved, prints walk out of a tide pool, the jungle yells his word before he can, and the fire burns without him. So the creature feels like it is learning him rather than hunting him ('it was practicing me'). That plays on the mimic fear of losing your identity and the people who trust you. 5) The gut-punch is his mom crying with relief at his exact nightly words, said by the copy, and the line 'They stopped looking for me. Because they think they found me.' 6) The twist is fair and hidden in plain sight: the 40 marks, the reflection lag, the right-hand vs left-hand wave, the mirrored knight. That gives people things to point out in the comments and reasons to rewatch. 7) The ending loops. 'Nobody looked back' cuts to a black screen that shows the viewer their own face, then the first line replays with a new meaning. HUSS is used once, at the scariest moment, and in his own voice.",
+  "beats": [
+   {
+    "kind": "line",
+    "text": "There are two sets of footprints on this island.",
+    "visual": "Top-down drone shot descending slowly through heavy rain over a black volcanic beach at grey dawn. Two identical parallel trails of square, blocky sneaker prints run up the sand. Each print is brimming with rainwater that mirrors the white sky. Bright white foam lines sweep in and erase the bottom of both trails. At the top of frame one trail disappears into fog-choked jungle; the other ends at the lip of a glass-still tide pool. 24mm feel, crushed blacks, cold near-monochrome grade, no character in frame.",
+    "amb": "rain_beach",
+    "music": "cine_drone",
+    "sfx": [
+     "thunder_far"
+    ],
+    "overlay": "DAY 41"
+   },
+   {
+    "kind": "line",
+    "text": "Both of them are mine.",
+    "visual": "Ground-level macro, lens almost touching the wet sand. A blocky Roblox-style sneaker (realistic soaked canvas, sand grains stuck to it) steps into a print in the left trail and fits perfectly; water squeezes out. Hard cut: the same foot steps into the right trail and fits perfectly too. Rack focus up to the kid standing between the trails: black hoodie dark with rain, crisp white knight emblem, headphones beaded with water, staring down. Shallow depth of field, backlit rain streaks glowing white.",
+    "amb": "rain_beach",
+    "music": "same",
+    "sfx": [
+     "stinger"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "I fell off my uncle's boat in a storm.",
+    "visual": "Night, open ocean. Camera at water level, lens half-submerged, 16mm, violent handheld bob. A small fishing boat climbs a black six-meter swell, deck lights swinging. A lightning crack flashes the frame almost pure white for one frame and freezes a tiny blocky figure in a black hoodie tumbling over the rail. The lens plunges underwater: muffled black-green, silver bubbles, the boat's lights smearing away above.",
+    "amb": "storm_sea",
+    "music": "cine_swell",
+    "sfx": [
+     "thunder_crack",
+     "splash",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "I woke up on grey sand. Alone.",
+    "visual": "Dawn after the storm. Extreme close-up with the camera lying in the sand: his blocky face half-buried in grey sand, white foam sliding over his cheek and pulling back, headphones twisted around his neck. His eyes open. Slow pull up and back into a wide shot: one tiny figure on an endless empty beach, white surf, a wall of rainforest in fog, an empty horizon. Flat overcast light, cold silver palette.",
+    "amb": "surf",
+    "music": "cine_drone",
+    "sfx": [],
+    "overlay": "DAY 1"
+   },
+   {
+    "kind": "line",
+    "text": "Inside an old wreck, someone had scratched forty days. Then nothing.",
+    "visual": "A rusted old fishing boat lies on its side, half-sunk in the sand, waves exploding white against the hull. The camera creeps slowly through a torn hole into the dark cabin, 18mm, one grey shaft of light from a porthole. On the rotting wooden wall, tally marks in groups of five. The camera pans along them, 30, 35, 40, then bare wood. Rain drips through the light shaft; lightning flickers once through the porthole.",
+    "amb": "surf",
+    "music": "cine_drone",
+    "sfx": [
+     "creak",
+     "drip",
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Routine keeps you alive. Rain at sunrise. Mark the tree. Fire at dusk.",
+    "visual": "Rhythmic three-shot montage, about one second each. 1) Sunrise: rain funnels off a torn tarp into a plastic bottle, macro on drops hitting the waterline. 2) His blocky hand scratches a fresh mark into a pale tree trunk with a broken shell, sap glistening. 3) Dusk: he blows on a tiny ember in coconut husk until a flame catches. This is the only warm light in the film, kept small and desaturated against the blue-grey dark.",
+    "amb": "rain_forest",
+    "music": "cine_heart",
+    "sfx": [
+     "drip",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "And every night I whisper into a dead radio, 'Mom, it's me. I'm okay.'",
+    "visual": "Night inside his palm-frond lean-to, rain hammering the leaves. Tight medium close-up, 50mm, ember light on one side of his face. He holds a cracked, waterlogged handheld radio he pulled from the wreck, presses the button with his thumb and whispers into it. The screen stays dead; only static answers. His eyes glisten. Slow push-in.",
+    "amb": "campfire",
+    "music": "cine_sad",
+    "sfx": [
+     "radio"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Day six. Crabs. Coconut. Shaking hands. Nothing is ever dry.",
+    "visual": "Grey midday downpour. Macro: his trembling blocky hands smash a coconut against a rock and it doesn't crack. Cut wide: he's soaked through, hoodie hanging heavy. He looks up: far above the clouds, a tiny plane's blinking light crosses the sky. He waves frantically with his RIGHT hand. The light keeps going. His arm slowly drops.",
+    "amb": "rain_beach",
+    "music": "cine_sad",
+    "sfx": [
+     "impact",
+     "thunder_far"
+    ],
+    "overlay": "DAY 6"
+   },
+   {
+    "kind": "line",
+    "text": "Day nine. In the cave pool, my reflection blinked... a second after me.",
+    "visual": "Inside a black sea cave, one shaft of pale light falls on a perfectly still pool. Camera looks straight down at the water: his reflection looks up, the white knight on its hoodie reversed like every reflection. A drip lands, ripples spread and settle. Cut to extreme close-up: his real eyes blink. The reflection's eyes stay open, staring, then blink one full second late.",
+    "amb": "cave",
+    "music": "cine_silence",
+    "sfx": [
+     "drip",
+     "heartbeat",
+     "stinger"
+    ],
+    "overlay": "DAY 9"
+   },
+   {
+    "kind": "line",
+    "text": "Alone too long, your brain invents company. That's what I told myself.",
+    "visual": "Night by the small fire, wide and low, 35mm. He sits hugging his knees, rocking slightly, muttering to himself. Behind him the jungle is a solid black wall with ground fog crawling along it. Very slow push-in toward the tree line; nothing is visible. Lightning flickers far out at sea and whitens the fog for a single frame.",
+    "amb": "night_jungle",
+    "music": "cine_drone",
+    "sfx": [
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Day seventeen. Today's mark was already carved. Before I woke up.",
+    "visual": "Foggy dawn. Close-up of the tally tree: sixteen marks and a seventeenth freshly cut, pale wet wood with sap still beading. His hand enters frame holding the shell and freezes an inch from the bark. Rack focus past his hand to the jungle behind: drifting fog, and for half a second a darker kid-height shape in it, then gone.",
+    "amb": "rain_forest",
+    "music": "cine_drone",
+    "sfx": [
+     "riser"
+    ],
+    "overlay": "DAY 17"
+   },
+   {
+    "kind": "line",
+    "text": "Day twenty-three. A second set of footprints. My size. Walking out of a tide pool.",
+    "visual": "Low tracking shot inches above wet black sand, 24mm, moving backward along a fresh trail of square prints beside his own. The camera follows the strange trail to where it starts: the edge of a glass-still tide pool. The prints begin at the water, as if something stepped out of it. The pool mirrors the white sky perfectly. Surf booms off-screen.",
+    "amb": "rain_beach",
+    "music": "cine_heart",
+    "sfx": [
+     "heartbeat",
+     "splash"
+    ],
+    "overlay": "DAY 23"
+   },
+   {
+    "kind": "line",
+    "text": "Every night I yell my word into the jungle, to feel brave.",
+    "visual": "Night. Wide shot from behind him: he stands at the edge of the firelight facing a black wall of rainforest, fists clenched, hoodie soaked. He throws his head back and shouts into the dark, with the shout ducked under the narration. Rain glitters gold-white in the fire glow; the echo rolls away into the trees.",
+    "amb": "night_jungle",
+    "music": "cine_drone",
+    "sfx": [
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Night thirty, the jungle yelled it first.",
+    "visual": "Same framing, same spot, heavier rain. He fills his lungs to shout and freezes with his mouth still closed. Total stillness. The camera creeps slowly toward the black trees. Fog slides between the trunks.",
+    "amb": "night_jungle",
+    "music": "cine_silence",
+    "sfx": [
+     "branch_snap"
+    ],
+    "overlay": "NIGHT 30"
+   },
+   {
+    "kind": "huss",
+    "text": "HUSS.",
+    "visual": "The shout comes from deep inside the jungle, in his exact voice. A lightning flash turns the frame white at the same moment: between two trunks stands a perfect black silhouette of a blocky kid with headphones, posed exactly like him. Next flash: empty trees. The camera jolts as if startled.",
+    "amb": "night_jungle",
+    "music": "same",
+    "sfx": [
+     "thunder_crack",
+     "stinger"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "In my voice.",
+    "visual": "Extreme close-up on his face, 85mm. Rain runs down realistic glossy-plastic skin, his pupils have shrunk to dots, the headphone cushions are dripping. Firelight flickers behind him. He isn't breathing. Very slow push-in.",
+    "amb": "night_jungle",
+    "music": "cine_heart",
+    "sfx": [
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "It wasn't hunting me. It was practicing me.",
+    "visual": "Daylight, heavy rain. Slow lateral dolly along the beach past his lean-to, then past a second lean-to twenty meters away built identically: same knots, same torn tarp, a second tally tree beside it with the same number of marks. Inside, nothing. The move ends on a tide pool where rain rings ripple over a still, blocky dark shape under the surface.",
+    "amb": "rain_beach",
+    "music": "cine_drone",
+    "sfx": [
+     "riser",
+     "creak"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Day forty. The wreck's marks stopped here. I hid in the cave. No routine.",
+    "visual": "Deep inside the sea cave. He crouches against the back wall, hood up, knees to chest, deliberately facing away from the black pool. Drips plink into the water and echo. One grey shaft of light from the entrance cuts the dark between him and the pool. Static wide shot at 21mm, then a slow push.",
+    "amb": "cave",
+    "music": "cine_drone",
+    "sfx": [
+     "drip"
+    ],
+    "overlay": "DAY 40"
+   },
+   {
+    "kind": "line",
+    "text": "But at dusk... my fire was burning anyway.",
+    "visual": "POV from the cave mouth across the bay at dusk, long lens 135mm. On the far beach his signal fire blazes, a tall column of white smoke bending in the wind. A small figure stands beside it feeding it branches, his exact outline down to the headphones, and slowly turns its head toward the cave.",
+    "amb": "surf",
+    "music": "cine_swell",
+    "sfx": [
+     "thunder_far",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Sunrise. A horn. A boat. I ran.",
+    "visual": "Grey sunrise: a plain white rescue boat with no markings slides out of the fog offshore, and its horn blast shakes water off the leaves. Hard cut to a handheld chase, low and fast through the rainforest: ferns slap the lens, mud sprays, his breath fogs, light shafts strobe through the canopy.",
+    "amb": "rain_forest",
+    "music": "cine_heart",
+    "sfx": [
+     "impact",
+     "footsteps_mud",
+     "branch_snap",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Someone was already on the beach. Black hoodie. White knight. Waving.",
+    "visual": "He bursts out of the tree line, screaming and waving both arms, but the roar of the surf swallows every sound. Long-lens 200mm compression through sheets of rain: at the waterline, a kid identical to him is helped into a small rescue skiff. It turns and waves back at the island with its LEFT hand. On its chest, the white knight faces the wrong way. Foam explodes white around the skiff.",
+    "amb": "surf",
+    "music": "cine_silence",
+    "sfx": [
+     "stinger",
+     "splash"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "The radio crackled. My voice: 'Mom, it's me. I'm okay.'",
+    "visual": "Close-up on the cracked radio in his shaking hand. For the first time its dead screen flickers white. Static, then his own voice comes out of the speaker. Rack focus past the radio to the rescue boat turning away into the fog.",
+    "amb": "surf",
+    "music": "cine_sad",
+    "sfx": [
+     "radio"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "And my mom started crying.",
+    "visual": "Faint through the static, a woman sobbing with relief. He sinks to his knees in the shallows, white foam swirling around him, the boat now a shrinking grey silhouette in the fog. The drone pulls up and away slowly until he is a black dot on a white-laced shore.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": [
+     "radio"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Nobody noticed its knight faced the wrong way. Like a reflection.",
+    "visual": "Insert on the rescue boat's deck: the copy wrapped in a silver thermal blanket, seen from behind. Slow orbit to the front and macro on the hoodie emblem: the white knight facing left, mirrored. Its face is his face. It looks straight into the lens and slowly lifts one finger to its lips.",
+    "amb": "surf",
+    "music": "cine_drone",
+    "sfx": [
+     "riser"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "They stopped looking for me. Because they think they found me.",
+    "visual": "Back on the island at dusk. Wide locked-off shot of the empty beach in steady rain: the two identical lean-tos side by side, the signal fire down to a thin grey thread of smoke, and him sitting alone between them, small, hood up. Slow push-in as the color drains to near black-and-white.",
+    "amb": "rain_beach",
+    "music": "cine_sad",
+    "sfx": [
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Day forty-one. I looked in the tide pool.",
+    "visual": "Morning. For the first time in the film the rain stops, and everything goes still. He kneels at the edge of a tide pool that turns mirror-flat. Side profile, 50mm, natural soft light; he leans slowly out over the water.",
+    "amb": "none",
+    "music": "cine_silence",
+    "sfx": [
+     "drip"
+    ],
+    "overlay": "DAY 41"
+   },
+   {
+    "kind": "line",
+    "text": "Nobody looked back.",
+    "visual": "Straight top-down over the pool: the water mirrors pale sky and clouds perfectly. The edge of his hood is in frame above the water, but there is no reflection of him at all. Hold for one beat, then hard cut to pure black (#000, no text, no logo) for two seconds, so the viewer sees their own face in the dark phone screen before the video loops back to the footprints.",
+    "amb": "none",
+    "music": "same",
+    "sfx": [
+     "stinger"
+    ]
+   }
+  ],
+  "id": "story-1",
+  "score": 86,
+  "fixes": [
+   "Rewrite the caption hook. 'the marks in the old wreck stopped at 40. i'm on day 41' refers to things a new viewer hasn't seen yet and means nothing on first read. Try something like 'a boat came on day 40. it didn't come for me.' Then make 'did anyone else see the knight?' the pinned comment, not the caption.",
+   "Rebuild the first 2 seconds. A slow drone descent with nobody in frame loses viewers. Open on the macro of the same foot fitting perfectly into both trails, with both lines said together in under 2 s, and push the drone shot to second.",
+   "Cut the narration line 'Nobody noticed its knight faced the wrong way. Like a reflection.' It hands the audience the clue the comments should find. Keep the orbit to the mirrored emblem and the finger to the lips with no words, or swap in 'It looked right at me.'",
+   "Plant the right-way knight clearly earlier: a clean macro of his real emblem around day 6, next to the right-hand wave. Then the mirrored version at the end can be checked on rewatch.",
+   "The twist can be guessed by about 60% once 'practicing me' lands. Keep the line, but add misdirection. Make him and the audience believe the thing wants to kill him on day 40, so hiding in the cave reads as surviving an attack. Then the rescue boat feels like relief before it turns.",
+   "Close the obvious 'why didn't the crew see two kids?' hole. Put the skiff already 50 m out in a rain whiteout when he breaks the tree line, and have the copy look straight at him and smile, so we know it planned the timing.",
+   "Put a faint audio sting over the 2 s of black, his whisper 'Mom, it's me...' in his voice, so viewers stay through the black and the loop back to the footprints feels deliberate.",
+   "Make the mum's sob a little clearer ('Oh my baby... you're okay') so the cruelty of the moment hits even on phone speakers.",
+   "Add small white on-screen DAY counters so the 40-day deadline is easy to follow and rewatchers can line up the clues.",
+   "Runtime: the voiceover is about 268 words over 28 beats. With the HUSS beat and the black hold that comes to roughly 105–115 s. Trim to about 210 words and 22 beats. Merge 'Alone too long, your brain invents company' into 'Every night I yell my word'. Fold the Day-6 plane wave into the routine montage as a 4th one-second shot, and cut the coconut/crab shot. Drop 'Like a reflection', because the macro already shows it. Shorten Day 40 to 'Day forty. Where the marks stopped. I hid.'",
+   "Replace the LEFT-hand-wave clue. Viewers can't read it: screen direction flips with camera side, and people wave with either hand. Use a high-contrast asymmetric mark instead. For example, on day 6 his RIGHT headphone cup snaps off, or he ties a white rag bandage on his right hand. At 200 mm the copy has it on the LEFT. This reads even in silhouette and keeps the white-on-black palette.",
+   "Plant which way the knight faces. In beat 2, hold a one-second frontal macro of the emblem with the same lens and framing that the thermal-blanket shot will use. Then cut between the two as a match cut, so muted viewers compare them directly. In the day-9 cave pool shot, put the reversed reflected knight clearly in frame.",
+   "Build reflections so they can be controlled. Use three/addons Reflector, or a half-res mirrored-camera render target with blur, for the cave pool, the tide pools and the water-filled prints. Render a separate 'reflection actor': a mirrored clone on a layer that only the reflector camera sees. The late blink then becomes a 1 s animation offset, and 'Nobody looked back' becomes a single layer toggle. Turn the reflector on only for about 5 shots, because it doubles scene render cost on SwiftShader.",
+   "Split beat 3. The half-submerged lens with a waterline meniscus is the most expensive shot in the film. Do (a) camera 30 cm above the swell, with a lightning white-out frame freezing the figure going over the rail, then (b) a hard cut to a fully underwater shot: height fog, bubble sprites and smeared deck-light bokeh. Same emotion for half the tech.",
+   "Remove the radio contrivance. On day 1, establish that the radio still receives (faint static and fishing chatter) but can't transmit. On day 41 its screen lights 'CH 16' when the rescue boat hails. Intercut one second of the copy on deck speaking into the boat's handset, so muted viewers can see who is talking in his voice.",
+   "Wreck interior: wreck_boat.glb is exterior only. Either build a simple three-wall cabin box with planks/driftwood PBR and one volumetric shaft through the porthole, or carve the tally marks on the inside of the hull, visible through the torn hole.",
+   "Rescue skiff: make the crew blocky figures in orange life jackets with hoods up, faces never shown. Stay at 200 mm through sheets of rain so wardrobe detail is hidden. Keep the boat plain white with no markings, both for the eerie effect and to avoid real coast guard livery.",
+   "Hook text: 'i'm on day 41. did anyone else see the knight?' is muddled. Use 'A boat took me home yesterday. I'm still on the island.' or put the first voiceover line on screen.",
+   "End hold: two seconds of pure black invites a swipe before the loop. Hold the empty-pool top-down for 1.5 s, then cut to black for about 1 s and loop to the footprints.",
+   "Grade discipline: keep the dusk fire as the only warm light. Set highlightAmt above 0 only on the fire shots and the signal-fire shot, and leave everything else bleach-bypass cold, so that the copy lighting his fire reads as a violation."
+  ]
+ },
+ {
+  "title": "Don't Start at One",
+  "logline": "A kid washes up on a rain-drowned island and finds footprints made by his own shoes. They lead to a camp with 211 scratches on the wall, a parrot that talks in his voice, and a message carved in his own handwriting.",
+  "twist": "The camp is his. He has been on the island for 214 days. Every big storm wipes his memory. In the night he walks back to the wreck, lies down where he first washed up, and wakes believing it's Day One. The footprints are from his own walk back. The trail rags are torn from his own hoodie. The parrot learned HUSS from him: night after night he shouted it for his little brother. The carving is a warning he left himself. The ending loops: the storm rolling in at the end is tonight's reset, so the opening shot is tomorrow morning and the cycle starts again.\n\nFair clues, all checkable on rewatch:\n1. Hook (b2): the prints come out of the jungle and end at the hollow where he lay. None come up from the sea.\n2. b4: his shoes are 'already' full of sand, the soles worn smooth and the laces re-knotted.\n3. b5: the boat is 'already' crusted in barnacles, which take months to grow, with faint tally scratches on the hull.\n4. b6: the white knight emblem is faded and cracked.\n5. b8: the rain shatters every puddle, so he has never seen his own face (and neither have we).\n6. b9: he lights a fire in the rain on the first try. The real 1965 Tongan castaways took months to get their first fire. Long matted hair pokes out of his hood, and the headphone band is tied with vine.\n7. b10/b11: his hoodie hem is torn into the same strips as the trail rags, with the same white thread.\n8. b13: the last tally mark still has fresh stone dust in it, and the scratching stone is worn to fit a hand.\n9. b17-b21: a bird only learns a word by hearing it hundreds of times.\nBonus for comment debates: the old, overgrown tally walls on the tree trunks in b27 mean earlier versions of him DID start at one. So it's been even longer than 214 days.",
+  "caption_hook": "These footprints are my shoes. I washed up an hour ago. There are 9 clues he's been here before. How many did you catch?",
+  "why_it_hits": "Hook: the research on short-form says the algorithm decides around the 1.5-second mark and rewards a concrete, specific detail in the first 3 seconds. So line one is a single strange, checkable fact (my shoes, my size) and line two makes it impossible (they stop where I woke up). The open loop is set before second 5.\n\nPacing follows the horror guidance: start calm and controlled, let the tension creep. Survival builds to the camp, the 211 marks and the voice answering in the dark. Then come two big scares: HUSS coming back in his own voice after a 3-second silence, and the carving in his handwriting. Everything is suggested, never shown: eyes in the canopy, a white shape in a lightning frame, a cut to black before the parrot speaks.\n\nThe twist reframes the whole film instead of using a gimmick, and every clue is fair and visual. The caption ('9 clues') turns rewatching into a game and the comments into a debate. The last shot loops into the first line, which is the cyclical ending that rewatch case studies credit, and it works in TikTok's auto-replay: the opening becomes 'tomorrow morning'.\n\nThe gut-punch is layered. Mom's real 'stay where you are' rule (the Hug-a-Tree advice search teams teach lost kids) set up early comes back as 'I stayed where I was, just like you said... you're still coming, right?'. The parrot reveal turns from scary to sad: he has been calling for his little brother hundreds of nights.\n\nThe details feel true because they are real:\n- drinking rain from leaves\n- dry heartwood inside a dead branch for fire in the rain\n- shivering on a tropical island, because evening storms and wind chill really do cause cold\n- a signal fire, which is how the real Tongan castaways were finally spotted\n- castaways losing track of time, which shipwreck survivor accounts describe\n- parrots really picking up human phrases, like wild Australian cockatoos learning 'hello cockie' from escaped pets\n\nThe look fits it too. It's a near-monochrome world where the only white is the foam, fog, barnacles, tally marks, parrot and lightning, and the only warmth is the fire and two short memory inserts. Hiding his face until the still tide pool turns the reflection into the reveal.",
+  "beats": [
+   {
+    "kind": "line",
+    "text": "These footprints are my shoes. My size.",
+    "visual": "COLD OPEN, no title. Extreme macro at sand level (100mm macro feel, razor-thin focus): one blocky square-tread sneaker print in wet grey-black sand, a tiny knight logo stamped in the heel, half-filled with rainwater that trembles with rain pocks. A sheet of bright white foam slides in from frame right, laces around the print and pulls back. Rack focus forward along a line of identical prints leading back toward a wall of white fog and black jungle. Cold overcast dawn, near-monochrome, crushed blacks, blown-out white foam.",
+    "amb": "rain_beach",
+    "music": "cine_drone",
+    "sfx": [
+     "thunder_far"
+    ],
+    "overlay": "DAY 1"
+   },
+   {
+    "kind": "line",
+    "text": "They stop... right where I woke up.",
+    "visual": "Slow crane up and back (24mm): the line of prints runs straight down the beach from the jungle edge and ENDS at a kid-shaped hollow pressed into the sand at the waterline. No prints come up from the sea. The kid stands over the hollow, back to camera: blocky Roblox-style avatar with realistic materials, black hoodie with a white knight emblem, headphones, hood up, face lost in hood shadow. Glassy wet sand mirrors him upside down, but every incoming wave breaks the reflection, so we never see his face. Rain needles glint in the backlight.",
+    "amb": "rain_beach",
+    "music": "same",
+    "sfx": [
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Storm flipped the boat. I don't remember the swim.",
+    "visual": "FLASHBACK, night storm at sea. Low handheld from water level (35mm): a small fishing boat silhouetted on a black wave face. A lightning white-out freezes it mid-roll, hull up. Cut underwater: murky grey-green, bubbles streaming up toward a pale smear of lightning, a blocky hand reaching, then black. Hard, fast cuts, white on black.",
+    "amb": "storm_sea",
+    "music": "cine_swell",
+    "sfx": [
+     "thunder_crack",
+     "splash",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "My shoes were already full of sand.",
+    "visual": "Back on the beach, grey morning. Close-up (50mm, soft side light): blocky hands tip one sneaker upside down and a long stream of wet grey sand pours out, far more than one wave could pack in. The sole is worn smooth at the toe and the laces are knotted and re-knotted (clue). Rain beads on the rubber.",
+    "amb": "rain_beach",
+    "music": "cine_drone",
+    "sfx": [
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "The boat, already crusted in barnacles.",
+    "visual": "Slow sideways dolly along the wrecked boat lying on its side up the beach (50mm, shallow depth of field). The hull is armoured in thick white barnacle crusts and green weed, a jungle vine has crawled over the gunwale, and faint scratched tally marks hide half under the barnacles (clue: this takes months). Surf explodes white behind it in slow motion.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": [
+     "creak"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Mom's rule: if you're lost, stay where you are. Someone will come.",
+    "visual": "Macro on his chest: the white knight emblem, rain beading on the fabric. Up close the stitching is greyed and cracked at the edges and the black fabric is sun-faded (clue). His blocky hand presses flat over it like a promise. Pull back to a medium shot: he sits on the wreck facing an empty grey horizon, hood up, face hidden.",
+    "amb": "rain_beach",
+    "music": "cine_sad",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "So I stayed.",
+    "visual": "Extreme wide, locked off (18mm): a tiny dark figure beside the wreck under an enormous grey sea and sky, white surf lines, slow curtains of rain sweeping across the frame. Long hold. Loneliness as scale.",
+    "amb": "rain_beach",
+    "music": "same",
+    "sfx": [
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "It never stops raining. I drank from leaves. Shivered all night.",
+    "visual": "Three quick shots. (1) Close-up: a huge elephant-ear leaf bent into a spout, rainwater pouring into the shadow under his hood. (2) Top-down on a puddle at his feet: rain pocks shatter his reflection into jittering fragments and no face can be made out (setup: the rain is why he never sees himself). (3) Night: he is curled under the overturned hull, breath fogging, whole body shaking, while distant lightning silently whitens the clouds.",
+    "amb": "rain_beach",
+    "music": "same",
+    "sfx": [
+     "drip",
+     "thunder_far"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Fire in the rain. First try. My hands just knew how.",
+    "visual": "Close-up on hands in firelight (65mm): a rock splits a dead branch to show pale dry heartwood inside, quick shaved curls, a spark, a tiny flame cupped against the rain. It's the first warm colour in the film. Tilt up: firelight catches the edge of the hood. A few long matted strands of hair hang out, and the headphone band is bound together with twisted vine (clues). He stares at his own hands like they belong to someone else.",
+    "amb": "campfire",
+    "music": "cine_heart",
+    "sfx": [
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "I followed the footprints. Black rags hung from the trees.",
+    "visual": "Rainforest in heavy rain. Steadicam at waist height following behind him through ferns and buttress roots, fog layered between the trunks, hard white light shafts punching through the canopy. Square-tread prints pooled with water in the mud ahead. A black rag tied to a branch hangs in the fog. From a distance it reads as a small dark figure watching him, until we pass it. As he passes, we see the bottom of his own hoodie is torn into the same ragged strips (clue).",
+    "amb": "rain_forest",
+    "music": "cine_drone",
+    "sfx": [
+     "footsteps_mud",
+     "branch_snap"
+    ],
+    "overlay": "DAY 2"
+   },
+   {
+    "kind": "line",
+    "text": "Like someone wanted to be found.",
+    "visual": "Close-up with rack focus (85mm): a rag knotted around a branch, rain dripping off it. It's black hoodie fabric with one line of white thread along the edge, the same thread as the knight emblem. Behind it more rags fade into the fog, one every few metres, marking a trail deeper in.",
+    "amb": "rain_forest",
+    "music": "same",
+    "sfx": [
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "They led to a camp. A rock wall, covered in scratches.",
+    "visual": "Push in through hanging vines (28mm) into a clearing at the mouth of a shallow rock cave: a lean-to with a sagging palm-frond roof, a cold black fire ring, a coconut-shell bowl. Behind them the black basalt wall of the cave is covered, from the floor to head height, in rows of white scratched tally marks in groups of five. A light shaft lands on the wall, and water falls from the cave lip in a bright curtain.",
+    "amb": "cave",
+    "music": "cine_swell",
+    "sfx": [
+     "riser",
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Two hundred and eleven.",
+    "visual": "Macro tracking shot across the tally rows. The top rows are weathered and packed with moss; the bottom rows are sharp and white. His blocky finger stops on the very last mark, which is still pale with fresh stone dust (clue). A white scratching stone, worn smooth to fit a hand, sits on a ledge beneath it. Silence except for drips.",
+    "amb": "cave",
+    "music": "cine_silence",
+    "sfx": [
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "I kept the fire big. Like Mom's porch light when I'm late.",
+    "visual": "Night. Wide shot from deep in the black jungle looking back at the clearing: his fire roaring, sparks spiralling up into the rain, one orange point in an ocean of black. Brief soft, warm, overexposed insert: a porch light glowing on a house at night, rain falling through its glow, the front door left ajar.",
+    "amb": "campfire",
+    "music": "cine_sad",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "That night, I yelled our signal. The one my little brother always answers.",
+    "visual": "Low angle at the edge of the firelight: he faces a solid black wall of jungle while rain hisses in the flames. Half-second warm insert: a little blocky brother on someone's shoulders at a night fair, cupping his hands to shout, coloured lights blooming out of focus. Back to the cold: the kid slowly cups his hands to his mouth.",
+    "amb": "night_jungle",
+    "music": "cine_heart",
+    "sfx": [
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "huss",
+    "text": "HUSS!",
+    "visual": "Wide from behind: his silhouette against the fire shouts into the dark. Then hold on the black treeline for exactly three seconds with nothing but rain. Then, from high in the canopy, a smaller, flatter HUSS answers in his exact voice. Audio: the same voice clip, filtered thin and distant and delayed 3 s. The camera does not move.",
+    "amb": "night_jungle",
+    "music": "cine_silence",
+    "sfx": [
+     "stinger"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Three seconds later... the jungle said it back. In my voice.",
+    "visual": "Slow push over his shoulder into the canopy. High up, something pale shifts among the black leaves, and two tiny eye-glints catch the firelight and blink. A lightning flash whites out the frame for two frames: something white is lit, wings or a face, too fast to read. Then darkness.",
+    "amb": "night_jungle",
+    "music": "cine_heart",
+    "sfx": [
+     "thunder_crack",
+     "heartbeat"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "At dawn I found it. A white parrot.",
+    "visual": "Dawn, white fog, the rain easing. Portrait lens (85mm): a white parrot with its crest raised sits on a dead branch above the cave mouth, water dripping off its feathers, a bold white shape against black leaves. It cocks its head toward camera as if it knows him.",
+    "amb": "rain_forest",
+    "music": "cine_drone",
+    "sfx": [
+     "drip"
+    ],
+    "overlay": "DAY 3"
+   },
+   {
+    "kind": "line",
+    "text": "It looked right at me... and said it again.",
+    "visual": "Extreme close-up on the bird's dark eye, then its beak slowly opening, then a HARD CUT to black and total silence before any sound comes out. We never hear it say it, and that's scarier.",
+    "amb": "none",
+    "music": "cine_silence",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Birds don't learn a word in one night.",
+    "visual": "His POV looking up at the parrot, then a slow tilt down through the curtain of drips to the tally wall in the cave behind him, the white marks glowing in the grey light.",
+    "amb": "rain_forest",
+    "music": "cine_drone",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Someone taught it. Hundreds of times.",
+    "visual": "Fast sideways track along the tally rows, marks streaming past like a fence. The camera keeps moving past the end of the wall into darkness as if the count never ends. The pulse builds.",
+    "amb": "cave",
+    "music": "same",
+    "sfx": [
+     "riser"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Under the moss, there were words. In my handwriting.",
+    "visual": "Over-the-shoulder (35mm): he scrapes thick wet moss off the bottom of the wall with a shell. Blocky carved letters emerge, white in the black stone, as a light shaft slides onto them.",
+    "amb": "cave",
+    "music": "cine_heart",
+    "sfx": [
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "If you're reading this, you're me. Don't start at one.",
+    "visual": "Full reveal with a slow push in. The carved letters read: IF YOU'RE READING THIS, YOU'RE ME. DON'T START AT 1. The '1' has been gouged over and over, deeper than anything else. His blocky hand hovers beside it, trembling. Hard stinger, then dead silence.",
+    "amb": "cave",
+    "music": "cine_silence",
+    "sfx": [
+     "stinger"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "Then the rain stopped. For the first time, I saw my reflection.",
+    "visual": "He stumbles out onto black volcanic rock at the shore. For the first time in the film the rain stops and the ambience drops to nothing. The tide pools go mirror-still, holding the white sky. The camera looks straight down (35mm) as he leans over the biggest pool. One last drip lands; rings spread and settle.",
+    "amb": "none",
+    "music": "cine_silence",
+    "sfx": [
+     "drip"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "His hair hung past his eyes. He looked so tired.",
+    "visual": "The reflection, perfectly still and sharp: the first time we see his face. It's him, not a monster. The hood has fallen back, long matted hair hangs past his eyes, and his face is thin and hollow. The hoodie is faded to grey, the knight emblem is cracked, and the headphones are held together with vine. He's older than the kid we thought we were watching. Ultra-slow push in on the reflection's eyes; a single tear drops into the pool and breaks the image.",
+    "amb": "none",
+    "music": "cine_sad",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "Every storm, I forget. I walk back to the boat... and it's Day One again.",
+    "visual": "Strobe montage in lightning white-outs, bold black silhouettes on white: in a night storm, a lone figure walks down the beach toward the wreck and lies down in the hollow. Cut to grey dawn, the same footprints, the same DAY 1. Repeat three times, faster, the silhouette thinner and more ragged each loop.",
+    "amb": "storm_sea",
+    "music": "cine_swell",
+    "sfx": [
+     "thunder_crack",
+     "whoosh"
+    ]
+   },
+   {
+    "kind": "line",
+    "text": "I picked up the stone. And I didn't start a new wall.",
+    "visual": "Back in the cave, close-up: his hand takes the white stone from the ledge and scratches three new marks right after the 211, one for each of the three days he just lived, which makes 214. Pale dust falls. Slow pull back: in the jungle behind him, two tree trunks carry their own old tally walls, half grown over, from the times he DID start at one (bonus clue).",
+    "amb": "cave",
+    "music": "cine_sad",
+    "sfx": [
+     "drip"
+    ],
+    "overlay": "DAY 214"
+   },
+   {
+    "kind": "line",
+    "text": "Mom, I stayed where I was. Just like you said.",
+    "visual": "Cliff top above the sea. He sits at the edge with his hood down and his face visible: the same tired face from the pool. Slow orbit from behind round to his profile (50mm), soft white overcast, a thin line of smoke from his camp rising behind him, white surf crashing far below.",
+    "amb": "surf",
+    "music": "same",
+    "sfx": []
+   },
+   {
+    "kind": "line",
+    "text": "You're still coming... right?",
+    "visual": "Drone-style pull-back from far out over the sea: the island shrinks to a dark shape with one thread of smoke. Behind it a black storm wall veined with lightning rolls in across the horizon. The thunder builds, a final strike whites out the frame, and the white dissolves straight into the opening macro of a footprint in wet sand with DAY 1. The video loops: the footprints he wakes up next to tomorrow are the ones he makes tonight.",
+    "amb": "storm_sea",
+    "music": "cine_silence",
+    "sfx": [
+     "thunder_far",
+     "thunder_crack"
+    ]
+   }
+  ],
+  "id": "story-2",
+  "score": 76.5,
+  "fixes": [
+   "The caption hook gives the twist away: 'There are 9 clues he's been here before' tells viewers the answer before they watch, and it mixes 'my' and 'he'. Replace it with 'There are 9 clues in this video. Most people catch 3.' and nothing about what they're clues to.",
+   "Dread is soft in the first 30 s (drinking from leaves, shivering, fire). Pull in a threat by about 0:20: a cold-open flash of the 211-mark wall, or the far-off 'HUSS' coming back faintly in his voice while he's still on the beach.",
+   "The parrot reveal lets the tension go, because the scary voice turns out harmless. Keep the bird hidden until after the carving, and replace the lost scare with a deadline. After the reveal, a black storm wall shows up on the horizon and he realises he'll forget everything tonight. He races to carve the warning deeper as lightning hits. Now the message we read was being written in front of us, which closes the loop and keeps the horror.",
+   "Tie the sleepwalking to Mom's rule. Every storm he walks back to 'where I got lost' because 'if you're lost, stay where you are' is the one thing he never forgets. Then the rule itself is the curse, which fixes the hand-waved 'why does he lie down at the wreck' and makes the emotional twist hit harder.",
+   "Fix the continuity. The caption says 'I washed up an hour ago' but the script covers about 3 days. 'Fresh stone dust' on mark 211 can't survive 3 days of nonstop rain. Smudged chalky dust protected under the ledge would work. Storm surf would also wipe out last night's prints, so have the rain ease before dawn.",
+   "Cut down the warm flashbacks. The porch light and the little brother at the fair both come in within 15 s, and together they weaken the cold mood. Keep the brother (he explains HUSS and the parrot) and drop the porch light, or merge them.",
+   "Put '214' on screen in the final cave shot and pin 'Is it really 214? Look at the trees behind him.' That gets the bonus-clue debate going.",
+   "After 24-48 hours, post a clue-timestamp reply video. Clue-hunt stories get a second wave of views from the answer video.",
+   "Fix the timeline. The hook says 'I washed up an hour ago', but the story spans three days and he adds three marks to make 214. Change it to 'I washed up three days ago'. Also change '9 clues he's been here before' to first person ('I've been here before').",
+   "Define the reset rule. 'It never stops raining' conflicts with 'every storm, I forget'. Make lightning storms the only trigger, and show a black storm wall on the horizon in act 1, so the final storm clearly reads as tonight's reset.",
+   "The opening line telegraphs the twist: 'These footprints are my shoes. My size.' leads straight to 'it's him'. Open instead with 'Someone walked out of this jungle... and lay down exactly where I woke up.' Hold back 'my shoes, my size' until the rag-thread beat.",
+   "Cut the clues down to the ones readable on a phone at speed: barnacles and vine on the wreck, the faded and cracked emblem (add one crisp-emblem flashback frame for comparison), hoodie-hem strips that match the trail rags' white thread, long hair with vine-bound headphones, and fresh stone dust on the last mark. Drop the re-knotted laces and the worn sole; they are invisible at 1080×1920 in a two-second shot.",
+   "Build risk: keeping the face hidden in the hood for about 25 shots needs a new hood-up shell on the blocky head, because the existing hoodie style has no raised hood. Light with no face key, and favour back and profile angles.",
+   "A blocky face can't sell 'older, thin, hollow'. Make the reveal a change of silhouette instead: hood down, hair past the eyes, vine-bound headphones, a hoodie bleached grey, a cracked knight. Add a darker eye-socket face decal, and cut 'he's older than the kid we thought'.",
+   "Cut the night-fair insert of the brother on someone's shoulders, which needs a crowd, a fair set and a second character. Keep the porch light only as a soft bokeh dissolve out of the fire.",
+   "Parrot: build a white cockatoo from the existing pigeon rig in makeCreature. Add a crest joint and use the wet-shader approach for soaked feathers. Keep the hard cut to silence before it speaks.",
+   "Pacing: about 263 words plus a 3 s silent hold and the strobe montage comes to roughly 110 s. Act 1 (beats 3–9) runs seven survival beats before the plot moves; compress them to four. Merge 'Birds don't learn a word in one night' and 'Someone taught it. Hundreds of times.' into one line, and trim the silent hold to 2 s.",
+   "Scare level is the weakest of the three and the user asked for scary. Strengthen the rags-as-figures idea: at the edge of the firelight on night 1, a kid-height dark shape stands motionless, and the next cut reveals it is a rag. Bring the tension back before the parrot.",
+   "Verify or drop the claim that the 1965 Tongan ('Ata) castaways took months to make their first fire before leaning on it as a clue."
+  ]
+ }
+]

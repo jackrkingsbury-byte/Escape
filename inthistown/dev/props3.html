@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Episode 3 — Don't Blink props</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1d26; }
+  canvas { display: block; }
+  .lbl { position: absolute; color: #fff; font: 700 12px/1.1 system-ui, sans-serif; text-shadow: 0 1px 2px #000, 0 0 4px #000;
+         pointer-events: none; white-space: nowrap; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { makeToaster, makeCrack, makeTrophy, makePhotoCamera, makeCushions, makeTrafficCone, makeSign, makeBriefcase,
+  makeSack, makePlinth, crackStage } from '/src/ep3/props3.js';
+import { makeTable, makePartyHat, makeSweatDrop, makeCake } from '/src/props.js';
+
+// Views: ?view=all (default contact sheet) · crack (growth 0.25 / 0.5 / 1.0 side by side on a beige wall)
+//        · detail (bigger close-ups) · scale (props with characters) · test (purity checks + sizes + draw calls → window.__test)
+// Params: &chars=0 (skip characters) · &g=0.6 (crack growth in view=all) · &bench=N
+const Q = new URLSearchParams(location.search);
+const VIEW = Q.get('view') || 'all';
+const W = window.innerWidth, H = window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+
+function studio({ bg = '#c9d6e3', floor = '#ddd5c8', shadowSize = 4, sun = [2.5, 6, 3.5], sunI = 2.2, hemi = 1.2 } = {}) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(bg);
+  scene.add(new THREE.HemisphereLight('#eef4ff', '#8a7660', hemi));
+  const d = new THREE.DirectionalLight('#fff1dc', sunI);
+  d.position.set(...sun); d.castShadow = true;
+  d.shadow.mapSize.set(2048, 2048);
+  const sc = d.shadow.camera; sc.left = -shadowSize; sc.right = shadowSize; sc.top = shadowSize; sc.bottom = -shadowSize; sc.near = 0.5; sc.far = 25;
+  d.shadow.bias = -0.0003; d.shadow.normalBias = 0.01; d.shadow.radius = 4;
+  scene.add(d); scene.add(d.target);
+  const fill = new THREE.DirectionalLight('#d6e4ff', 0.7); fill.position.set(-4, 3, 2); scene.add(fill);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshStandardMaterial({ color: floor, roughness: 0.92 }));
+  fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; scene.add(fl);
+  return { scene, sun: d };
+}
+function wallPanel(w, h, color = '#e6d6b8') {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.08), new THREE.MeshStandardMaterial({ color, roughness: 0.9 }));
+  m.position.y = h / 2; m.castShadow = true; m.receiveShadow = true;
+  const g = new THREE.Group(); g.add(m); g.userData.front = 0.04;
+  return g;
+}
+function cam(fov, aspect, pos, look) {
+  const c = new THREE.PerspectiveCamera(fov, aspect, 0.01, 80);
+  c.position.set(...pos); c.lookAt(new THREE.Vector3(...look)); return c;
+}
+function view(scene, camera, x, y, w, h) {
+  renderer.setViewport(x, H - y - h, w, h); renderer.setScissor(x, H - y - h, w, h);
+  renderer.render(scene, camera);
+}
+function label(text, x, y) {
+  const d = document.createElement('div'); d.className = 'lbl'; d.textContent = text;
+  d.style.left = x + 'px'; d.style.top = y + 'px'; document.body.appendChild(d);
+}
+async function maybeChars() {
+  if (Q.get('chars') === '0') return null;
+  try { return await import('/src/characters.js'); } catch (e) { console.log('characters.js not available:', e.message); return null; }
+}
+const ME = { id: 'me', skin: '#f1c7a1', hair: { style: 'fade', color: '#2b1d14' }, top: { style: 'hoodie', color: '#1d1d22', accent: '#ffffff', emblem: 'knight' },
+  bottom: { style: 'pants', color: '#55575e' }, shoes: '#f2f2f2', accessories: ['headphones'] };
+
+const renders = [];
+const t0 = performance.now();
+
+if (VIEW === 'all') {
+  const st = studio({ shadowSize: 3.2, sun: [2.2, 5.5, 4] });
+  const S = st.scene;
+  const G0 = parseFloat(Q.get('g') ?? '0.6');
+  // back wall + crack
+  const wall = wallPanel(2.6, 1.9); wall.position.set(0.1, 0, -1.65); S.add(wall);
+  const crack = makeCrack({}); crack.root.position.set(0.25, 1.15, -1.65 + 0.041); crack.setGrowth(G0); S.add(crack.root);
+  // plinth + trophies
+  const plinth = makePlinth({}); plinth.position.set(0, 0, -0.55); S.add(plinth);
+  const tg = makeTrophy(); tg.position.set(-0.17, plinth.userData.top, -0.5); tg.rotation.y = 0.25; S.add(tg);
+  const ts = makeTrophy({ stone: true }); ts.position.set(0.17, plinth.userData.top, -0.5); ts.rotation.y = -0.25; S.add(ts);
+  // camera on tripod
+  const pc = makePhotoCamera(); pc.position.set(-1.35, 0, 0.05); pc.rotation.y = 0.55; S.add(pc);
+  // cone + sign + cake
+  const cone = makeTrafficCone(); cone.position.set(1.15, 0, 0.25); S.add(cone);
+  const hat = makePartyHat('#ff4fa3'); hat.scale.setScalar(cone.userData.hatScale); hat.position.set(1.15, cone.userData.hatY, 0.25); S.add(hat);
+  const sign = makeSign(); sign.position.set(1.62, 0, -0.15); sign.rotation.y = -0.35; S.add(sign);
+  // cushions, briefcase, sack
+  const cush = makeCushions(); cush.position.set(0.45, 0, 0.55); cush.rotation.y = -0.3; S.add(cush);
+  const brief = makeBriefcase(); brief.position.set(-0.45, 0, 0.62); brief.rotation.y = 0.35; S.add(brief);
+  const sack = makeSack(); sack.position.set(0.0, 0.225, 1.0); sack.rotation.y = 0.6; S.add(sack);
+  // toaster on a little table, toast popped half-way
+  const tab = makeTable({ w: 0.62, d: 0.45 }); tab.position.set(-0.95, 0, -1.15); S.add(tab);
+  const toaster = makeToaster(); toaster.root.position.set(-0.95, 0.78, -1.15); toaster.root.rotation.y = 0.3;
+  toaster.toast.position.y = toaster.toastRestY + 0.07; toaster.setLever(1); S.add(toaster.root);
+  // the kid for scale
+  const C = await maybeChars();
+  if (C) { const me = C.makeCharacter(ME); me.root.position.set(2.05, 0, -1.55); me.root.rotation.y = -0.5; me.pose('idle', 0.4); me.face('neutral', 0.4); S.add(me.root); }
+
+  const hA = Math.round(H * 0.34), pw = Math.round(W / 2), ph = Math.round((H - hA) / 3);
+  const ys = [hA, hA + ph, hA + 2 * ph], a = pw / ph;
+  const draw = () => {
+    view(S, cam(40, W / hA, [0.15, 1.9, 3.7], [0.0, 0.62, -0.35]), 0, 0, W, hA);
+    const tp = toaster.root.position;
+    view(S, cam(30, a, [tp.x + 0.25, 1.12, tp.z + 0.62], [tp.x, 0.88, tp.z]), 0, ys[0], pw, ph);
+    view(S, cam(38, a, [0.4, 1.1, 0.25], [0.3, 1.0, -1.6]), pw, ys[0], W - pw, ph);
+    view(S, cam(32, a, [0.05, 0.75, 0.75], [0, 0.42, -0.55]), 0, ys[1], pw, ph);
+    view(S, cam(36, a, [0.05, 0.85, 2.05], [0.05, 0.18, 0.7]), pw, ys[1], W - pw, ph);
+    view(S, cam(34, a, [1.55, 0.75, 1.45], [1.38, 0.42, 0.0]), 0, ys[2], pw, ph);
+    view(S, cam(36, a, [-0.85, 1.05, 1.9], [-1.33, 0.75, 0.05]), pw, ys[2], W - pw, ph);
+  };
+  draw(); renders.push(draw);
+  label(`Don't Blink props — crack growth ${G0} (stage ${crackStage(G0)}/8)`, 8, 8);
+  label('toaster · toast half-popped', 6, ys[0] + 6); label(`crack on wall, g=${G0}`, pw + 6, ys[0] + 6);
+  label('plinth · trophy gold + stone', 6, ys[1] + 6); label('cushions · briefcase · sack', pw + 6, ys[1] + 6);
+  label('cone (party hat) · sign', 6, ys[2] + 6); label('camera on tripod', pw + 6, ys[2] + 6);
+} else if (VIEW === 'crack') {
+  const st = studio({ shadowSize: 4, sun: [1.5, 4, 6], bg: '#cfc6b6' });
+  const S = st.scene;
+  const wall = wallPanel(6, 2.8, '#e8d9bb'); wall.position.set(0, 0, 0); S.add(wall);
+  const gs = (Q.get('gs') || '0.25,0.5,1').split(',').map(Number);
+  const xs = [-1.5, 0, 1.5];
+  gs.forEach((g, i) => { const c = makeCrack({ seed: parseInt(Q.get('seed') || '1', 10) }); c.root.position.set(xs[i], 1.4, 0.041); c.setGrowth(g); S.add(c.root); });
+  // statue-face reuse: ONE crack across a stone head (branches: 1 → main bolt + the opposite branch through the start)
+  const pl = makePlinth({ w: 0.9, d: 0.9 }); pl.position.set(5, 0, 1); S.add(pl);
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.62, 0.56), new THREE.MeshStandardMaterial({ color: '#9a9a9a', roughness: 0.92 }));
+  head.position.set(5, 0.35 + 0.31, 1); head.castShadow = head.receiveShadow = true; S.add(head);
+  const fc = makeCrack({ w: 0.42, h: 0.4, branches: 1, start: [0.38, 0.55], seed: 3 }); fc.root.position.set(5 - 0.04, 0.68, 1 + 0.281); fc.setGrowth(1); S.add(fc.root);
+  const hA = Math.round(H * 0.18), ph = Math.round(H * 0.2), hB = H - hA - 3 * ph;
+  const draw = () => {
+    view(S, cam(40, W / hA, [0, 1.4, 4.6], [0, 1.25, 0]), 0, 0, W, hA);
+    gs.forEach((g, i) => view(S, cam(40, W / ph, [xs[i], 1.32, 1.55], [xs[i], 1.32, 0]), 0, hA + i * ph, W, ph));
+    view(S, cam(34, W / hB, [5.35, 0.85, 2.75], [5, 0.62, 1]), 0, hA + 3 * ph, W, hB);
+  };
+  draw(); renders.push(draw);
+  label('crack: same seed at three growth values', 8, 8);
+  gs.forEach((g, i) => label(`setGrowth(${g}) → stage ${crackStage(g)}/8`, 8, hA + i * ph + 6));
+  label('statue face: makeCrack({ w: 0.42, h: 0.4, branches: 1, seed: 3 })', 8, hA + 3 * ph + 6);
+} else if (VIEW === 'detail') {
+  const st = studio({ shadowSize: 2.5, sun: [1.5, 4.5, 3.5] });
+  const S = st.scene;
+  // toaster with sweat drop + tremble
+  const tab = makeTable({ w: 0.62, d: 0.45 }); S.add(tab);
+  const toaster = makeToaster(); toaster.root.position.set(0, 0.78, 0); toaster.setTremble(1.37, 0.02); S.add(toaster.root);
+  const drop = makeSweatDrop({ size: 0.045 }); toaster.sweatSpot.add(drop); drop.position.z = 0.012;
+  // trophies
+  const tg = makeTrophy(); tg.position.set(2, 0, 0); tg.rotation.y = 0.35; S.add(tg);
+  const ts = makeTrophy({ stone: true }); ts.position.set(2.3, 0, 0); ts.rotation.y = -0.35; S.add(ts);
+  // plinth
+  const pl = makePlinth({}); pl.position.set(4, 0, 0); S.add(pl);
+  // briefcase + sack + cushions
+  const br = makeBriefcase(); br.position.set(6, 0, 0); br.rotation.y = 0.3; S.add(br);
+  const sk = makeSack(); sk.position.set(7.5, 0.225, 0.05); sk.rotation.y = -0.5; S.add(sk);
+  const cu = makeCushions(); cu.position.set(12, 0, 0); cu.rotation.y = 0.35; S.add(cu);
+  // camera head, flash lit (&flash=1)
+  const pc = makePhotoCamera(); pc.position.set(8.8, 0, 0); pc.rotation.y = 0.45; pc.userData.setFlash(Q.has('flash') ? parseFloat(Q.get('flash')) : 0); S.add(pc);
+  // cone + sign + cake
+  const cone = makeTrafficCone(); cone.position.set(10, 0, 0); S.add(cone);
+  const hat = makePartyHat('#3ee0c8'); hat.scale.setScalar(cone.userData.hatScale); hat.position.set(10, cone.userData.hatY, 0); S.add(hat);
+  const cake = makeCake({ scale: 0.7 }); cake.root.position.set(10.3, 0, 0.12); cake.update(0.5); S.add(cake.root);
+  const sign = makeSign(); sign.position.set(10.62, 0, -0.1); sign.rotation.y = -0.3; S.add(sign);
+  const pw = Math.round(W / 2), ph = Math.round(H / 4), a = pw / ph;
+  const panels = [
+    ['toaster tremble(1.37, 0.02) + sweat drop', cam(30, a, [0.12, 1.02, 0.55], [0, 0.86, 0])],
+    ['trophy gold / stone', cam(30, a, [2.15, 0.3, 0.9], [2.15, 0.16, 0])],
+    ['plinth plaque', cam(30, a, [4.05, 0.42, 1.05], [4, 0.18, 0.4])],
+    ['sack', cam(30, a, [7.5, 0.35, 1.25], [7.5, 0.22, 0])],
+    ['briefcase', cam(30, a, [6.15, 0.42, 1.05], [6.02, 0.18, 0])],
+    ['cushions', cam(30, a, [12.0, 0.62, 1.15], [12, 0.1, 0])],
+    ['camera head', cam(30, a, [9.35, 1.45, 0.95], [8.82, 1.22, 0.03])],
+    ['cone · cake · sign', cam(32, a, [10.35, 0.62, 1.6], [10.32, 0.4, 0])],
+  ];
+  const draw = () => panels.forEach(([, c], i) => view(S, c, (i % 2) * pw, Math.floor(i / 2) * ph, i % 2 ? W - pw : pw, ph));
+  draw(); renders.push(draw);
+  panels.forEach(([t], i) => label(t, (i % 2) * pw + 6, Math.floor(i / 2) * ph + 6));
+} else if (VIEW === 'scale') {
+  const C = await maybeChars();
+  if (!C) throw new Error('view=scale needs /src/characters.js');
+  const st = studio({ shadowSize: 4 });
+  const S = st.scene;
+  // row A (z=0): kid holding the trophy, cat on cushions, camera on tripod
+  const me = C.makeCharacter(ME); me.root.position.set(-0.7, 0, 0); me.pose('cheer', 1.0); me.face('smile', 0.4); S.add(me.root);
+  // hand-local +Y runs up the forearm → with the arm raised, flip the trophy (rotation.x = π) so the cup points up
+  const tr = makeTrophy(); tr.scale.setScalar(1.35); tr.rotation.x = Math.PI;
+  tr.position.copy(tr.userData.grip.position).multiplyScalar(1.35).applyEuler(tr.rotation).negate(); me.joints.handR.add(tr);
+  const cush = makeCushions(); cush.position.set(0.3, 0, 0.1); S.add(cush);
+  const cat = C.makeCreature('cat', {}); cat.root.position.set(0.3, cush.userData.top, 0.1); cat.pose('stare', 0.2); S.add(cat.root);
+  const pc = makePhotoCamera(); pc.position.set(1.35, 0, 0.0); pc.rotation.y = -0.6; S.add(pc);
+  // row B (x+20): burglar holding the sack by its neck, lawyer + briefcase, cone + sign
+  const burglar = C.makeCharacter({ id: 'burglar', skin: '#d9a07a', top: { style: 'tee', color: '#1d1d22', accent: '#ffffff', emblem: 'stripe' }, bottom: { style: 'pants', color: '#2a2a30' }, shoes: '#1a1a1a', accessories: ['cap'], capColor: '#151515' });
+  burglar.root.position.set(19.3, 0, 0); burglar.pose('idle', 0.3); burglar.face('smile', 0.3); S.add(burglar.root);
+  const sack = makeSack(); sack.position.set(0, -sack.userData.neck.position.y, 0); burglar.joints.handR.add(sack);
+  const lawyer = C.makeCharacter({ id: 'lawyer', skin: '#e0ac69', hair: { style: 'short', color: '#cfcfcf' }, top: { style: 'suit', color: '#5a5f6b', accent: '#ffffff' }, bottom: { style: 'pants', color: '#2a2a30' }, shoes: '#151515', accessories: ['glasses', 'bowtie'] });
+  lawyer.root.position.set(20.4, 0, 0); lawyer.pose('crossArms', 0.3); lawyer.face('smug', 0.3); S.add(lawyer.root);
+  const br = makeBriefcase(); br.position.set(20.75, 0, 0.3); br.rotation.y = -0.3; S.add(br);
+  const cone = makeTrafficCone(); cone.position.set(21.35, 0, 0.2); S.add(cone);
+  const sign = makeSign(); sign.position.set(21.75, 0, -0.1); sign.rotation.y = -0.3; S.add(sign);
+  const hh = Math.round(H / 2);
+  const draw = () => {
+    view(S, cam(36, W / hh, [0.15, 1.3, 5.3], [0.15, 1.0, 0]), 0, 0, W, hh);
+    view(S, cam(36, W / (H - hh), [20.35, 1.25, 5.3], [20.35, 0.95, 0]), 0, hh, W, H - hh);
+  };
+  draw(); renders.push(draw);
+  label('scale: kid + trophy ×1.35 in handR · cat on cushions · camera', 8, 8);
+  label('burglar + sack (neck in handR) · lawyer + briefcase · cone · sign', 8, hh + 8);
+} else if (VIEW === 'test') {
+  const st = studio();
+  const res = {};
+  const close = (a, b) => a.every((x, i) => Math.abs(x - b[i]) < 1e-9);
+  // toaster tremble purity + rigid toast
+  const A = makeToaster(), B = makeToaster();
+  A.setTremble(7.1, 0.03); A.setTremble(1.3, 0.01); B.setTremble(1.3, 0.01);
+  A.root.updateMatrixWorld(true); B.root.updateMatrixWorld(true);
+  res['tremble pure'] = close(A.inner.matrixWorld.elements, B.inner.matrixWorld.elements) && close(A.toast.children[0].matrixWorld.elements, B.toast.children[0].matrixWorld.elements);
+  const pBody = A.toast.position.clone().add(new THREE.Vector3(0.03, 0.1, 0.005)).applyMatrix4(A.inner.matrixWorld);
+  const pToast = new THREE.Vector3(0.03, 0.1, 0.005).applyMatrix4(A.toast.children[0].matrixWorld);
+  res['toast rigid in slot (mm)'] = (pBody.distanceTo(pToast) * 1000).toFixed(4);
+  A.setTremble(3, 0); A.root.updateMatrixWorld(true);
+  res['tremble 0 = rest'] = A.inner.matrixWorld.equals(new THREE.Matrix4()) && A.toast.children[0].position.length() === 0;
+  let minY = Infinity;
+  for (let i = 0; i < 300; i++) { A.setTremble(i * 0.0333, 0.03); A.root.updateMatrixWorld(true); minY = Math.min(minY, new THREE.Box3().setFromObject(A.inner).min.y); }
+  res['tremble min body y (mm, amount .03)'] = (minY * 1000).toFixed(2);
+  res['toast parent is root'] = A.toast.parent === A.root;
+  // crack
+  const c1 = makeCrack({}), c2 = makeCrack({});
+  c1.setGrowth(1); c1.setGrowth(0.6); c2.setGrowth(0.6);
+  res['crack stage(0.6)'] = c1.stage; res['crack shared mats'] = c1.mesh.material === c2.mesh.material;
+  c1.setGrowth(0); res['crack g=0 hidden'] = c1.mesh.visible === false;
+  res['crack bounds'] = c1.bounds; res['crack schedule'] = c1.schedule;
+  // cushions squash purity
+  const k1 = makeCushions(), k2 = makeCushions();
+  const ya = k1.userData.bounce(0.05); k1.userData.bounce(0.3); const yb = k1.userData.bounce(0.05); k2.userData.bounce(0.05);
+  res['cushion bounce pure'] = ya === yb && k1.children[1].position.y === k2.children[1].position.y;
+  k1.userData.setSquash(0); res['cushion top'] = k1.userData.top.toFixed(4);
+  // sizes
+  const box = (o) => { o.updateMatrixWorld(true); const b = new THREE.Box3().setFromObject(o); return b.min.toArray().concat(b.max.toArray()).map((x) => +x.toFixed(3)); };
+  const T0 = makeToaster(); T0.toast.visible = false;
+  res.sizes = {
+    toasterBody: box(T0.root), toast: box(makeToaster().toast), trophy: box(makeTrophy()), trophyStone: box(makeTrophy({ stone: true })),
+    camera: box(makePhotoCamera()), cushions: box(makeCushions()), cone: box(makeTrafficCone()), sign: box(makeSign()),
+    briefcase: box(makeBriefcase()), sack: box(makeSack()), plinth: box(makePlinth({})),
+  };
+  const pc = makePhotoCamera(); pc.updateMatrixWorld(true); res['camera flash at'] = pc.userData.flash.getWorldPosition(new THREE.Vector3()).toArray().map((x) => +x.toFixed(3));
+  res['camera lens at'] = pc.userData.lens.getWorldPosition(new THREE.Vector3()).toArray().map((x) => +x.toFixed(3));
+  const sk = makeSack(); res['sack neck y'] = +sk.userData.neck.position.y.toFixed(3);
+  const tr = makeTrophy(); res['trophy grip y'] = tr.userData.grip.position.y;
+  // draw calls / triangles per prop (rendered alone, no shadows)
+  renderer.shadowMap.enabled = false;
+  const costs = {};
+  const probe = (name, obj) => {
+    const sc = new THREE.Scene(); sc.add(new THREE.HemisphereLight('#fff', '#444', 1)); sc.add(obj);
+    const bx = new THREE.Box3().setFromObject(obj), ctr = bx.getCenter(new THREE.Vector3()), sz = bx.getSize(new THREE.Vector3()).length();
+    const c = cam(40, 1, [ctr.x + sz, ctr.y + sz * 0.6, ctr.z + sz], ctr.toArray());
+    renderer.info.reset(); renderer.info.autoReset = false;
+    view(sc, c, 0, 0, 64, 64);
+    costs[name] = `${renderer.info.render.calls} calls, ${renderer.info.render.triangles} tris`;
+    renderer.info.autoReset = true;
+  };
+  probe('warmup', makeTrophy()); delete costs.warmup;
+  probe('toaster', makeToaster().root); const cr = makeCrack({}); cr.setGrowth(0.6); probe('crack', cr.root);
+  probe('trophy', makeTrophy()); probe('trophyStone', makeTrophy({ stone: true })); probe('camera', makePhotoCamera());
+  probe('cushions', makeCushions()); probe('cone', makeTrafficCone()); probe('sign', makeSign()); probe('briefcase', makeBriefcase());
+  probe('sack', makeSack()); probe('plinth', makePlinth({}));
+  res.costs = costs;
+  renderer.shadowMap.enabled = true;
+  window.__test = res; console.log('TEST', JSON.stringify(res));
+  const draw = () => view(st.scene, cam(40, W / H, [0.5, 0.7, -0.6], [0, 0, 0]), 0, 0, W, H);
+  draw(); renders.push(draw);
+}
+
+const benchN = parseInt(Q.get('bench') || '0', 10);
+if (benchN > 0) {
+  const gl = renderer.getContext(); const px = new Uint8Array(4);
+  renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  const b0 = performance.now();
+  for (let i = 0; i < benchN; i++) { renders[0](); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); }
+  window.__bench = (performance.now() - b0) / benchN;
+  console.log('bench ms/frame', window.__bench.toFixed(1), 'calls', renderer.info.render.calls, 'tris', renderer.info.render.triangles);
+}
+window.__setupMs = performance.now() - t0;
+window.__ready = true;
+</script>
+</body>
+</html>

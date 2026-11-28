@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Module B — world (town + rooms)</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #111318; }
+  canvas { display: block; }
+  .lbl { position: absolute; color: #fff; font: 800 12px/1.1 system-ui, sans-serif; text-shadow: 0 1px 2px #000, 0 0 4px #000;
+         pointer-events: none; white-space: nowrap; padding: 3px 5px; background: rgba(0,0,0,.35); border-radius: 3px; }
+  #stats { position: absolute; left: 6px; bottom: 6px; color: #fff; font: 600 11px/1.3 monospace; text-shadow: 0 1px 2px #000; white-space: pre; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="stats"></div>
+<script type="module">
+// Dev page for src/world.js
+//   ?view=<name>   one view at full size. Names: overview_party street pool foam square_dusk quiet_street park_day
+//                  room_night room_marcus room_grandad  (+ extras: room_brenda room_day room_dawn stage banner stands
+//                  park_night myhouse square_night street_day anchors_square anchors_park anchors_room crowdB)
+//   (no view)      contact sheet of the 12 main views (sheet=all → every view)
+//   &t=1.5         time passed to set.update(t)
+//   &anchors=1     2-unit test boxes (with a nose pointing +Z) at square.chairA/B, room.chair, park.stool1/2
+//   &chars=1       real seated characters from /src/characters.js at those anchors (if that module loads)
+//   &bench=10      render the view 10× at 720×1280 and print ms/frame + draw calls
+import * as THREE from 'three';
+import { buildTown, buildRoom } from '/src/world.js';
+
+const Q = new URLSearchParams(location.search);
+const VIEW = Q.get('view');
+const T = parseFloat(Q.get('t') ?? '1.3');
+const SHOW_ANCHORS = Q.get('anchors') === '1' || (VIEW || '').startsWith('anchors');
+const CHARS = Q.get('chars') === '1';
+const BENCH = parseInt(Q.get('bench') || '0', 10);
+const W = window.innerWidth, H = window.innerHeight;
+
+const EXP = (Q.get('exp') || '').split(',');
+const renderer = new THREE.WebGLRenderer({ antialias: !EXP.includes('noaa'), preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, 9 / 16, 0.1, 1000);
+scene.add(camera);
+
+// ── sets (built lazily, cached)
+const cache = {};
+const sets = {
+  town: () => buildTown({ seed: 3 }),
+  room: () => buildRoom({ variant: 'hero', poster: 'knight', window: 'party' }),
+  roomMarcus: () => buildRoom({ variant: 'marcus', window: 'dark' }),
+  roomBrenda: () => buildRoom({ variant: 'brenda', window: 'dark' }),
+  roomGrandad: () => buildRoom({ variant: 'grandad', window: 'dark' }),
+};
+const getSet = (n) => (cache[n] ??= sets[n]());
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const P = (s, name, off = [0, 0, 0]) => { const a = s.anchors[name]; a.updateWorldMatrix(true, false); return a.localToWorld(V(...off)); };
+
+// ── views: { set, lighting, opts, cam(set) → {pos, look, fov} }
+const TOWN_DEFAULT = { partyProps: true, foam: 0, windowGlow: 1, fireworks: false, standsCrowd: 'auto', crowdMotion: 1 };
+const VIEWS = {
+  overview_party: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: () => ({ pos: V(-60, 31, 25), look: V(4, 0, -7), fov: 50 }) },
+  street: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => ({ pos: P(s, 'street.crowdA', [1.0, 2.3, 7.5]), look: P(s, 'street.crowdA', [0, 1.9, -2]), fov: 46 }) },
+  crowdB: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => ({ pos: P(s, 'street.crowdB', [-1, 2.2, 7.5]), look: P(s, 'street.crowdB', [0, 1.5, 0]), fov: 45 }) },
+  pool: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => ({ pos: P(s, 'pool.cam'), look: P(s, 'pool.center', [0, 0.6, 0]), fov: 46 }) },
+  foam: { set: 'town', lighting: 'party_night', opts: { foam: 1 }, cam: (s) => ({ pos: P(s, 'foam.cam'), look: P(s, 'foam.center', [0, 0.9, 0]), fov: 48 }) },
+  square_dusk: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.cam1'), look: P(s, 'square.table', [0, 1.2, 0]), fov: 46 }) },
+  square_night: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => ({ pos: P(s, 'square.cam1'), look: P(s, 'square.table', [0, 1.2, 0]), fov: 46 }) },
+  stage: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.table', [-2.6, 0.9, 1.4]), look: P(s, 'square.table', [0, 0.1, 0]), fov: 44 }) },
+  banner: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.bannerCam'), look: P(s, 'square.banner'), fov: 46 }) },
+  stands: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.standA', [0, 2.4, 7.0]), look: P(s, 'square.standA', [0, 2.0, 0]), fov: 46 }) },
+  quiet_street: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: (h, w) => (((h * 3 + w * 5) % 7) < 2 ? 1 : 0.06) },
+    cam: (s) => ({ pos: P(s, 'street.center', [-1.2, 2.2, 5.5]), look: P(s, 'street.center', [3, 3, -2]), fov: 52 }) },
+  street_day: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => ({ pos: P(s, 'street.center', [0, 4.5, -9]), look: P(s, 'street.center', [0, 1.2, 4]), fov: 46 }) },
+  park_day: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => ({ pos: P(s, 'park.cam'), look: P(s, 'park.table', [0, 0.2, 0]), fov: 46 }) },
+  park_night: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => ({ pos: P(s, 'park.table', [0.4, 0.62, 2.6]), look: P(s, 'park.table', [0, -0.2, -0.6]), fov: 46 }) },
+  myhouse: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => ({ pos: P(s, 'myHouse.window', [0.6, -2.2, 9]), look: P(s, 'myHouse.window', [0, -0.6, 0]), fov: 46 }) },
+  room_night: { set: 'room', lighting: 'night', opts: { window: 'party' }, cam: (s) => ({ pos: P(s, 'room.cam'), look: P(s, 'room.center', [0, 1.05, 0]), fov: 46 }) },
+  room_day: { set: 'room', lighting: 'day', opts: { window: 'day' }, cam: (s) => ({ pos: P(s, 'room.cam'), look: P(s, 'room.center', [0, 1.05, 0]), fov: 46 }) },
+  room_dawn: { set: 'room', lighting: 'dawn', opts: { window: 'sunrise' }, cam: (s) => ({ pos: P(s, 'room.cam'), look: P(s, 'room.center', [0, 1.05, 0]), fov: 46 }) },
+  room_marcus: { set: 'roomMarcus', lighting: 'night', opts: { window: 'dark' }, cam: (s) => ({ pos: P(s, 'room.cam'), look: P(s, 'room.center', [0, 1.05, 0]), fov: 46 }) },
+  room_brenda: { set: 'roomBrenda', lighting: 'night', opts: { window: 'dark' }, cam: (s) => ({ pos: P(s, 'room.cam'), look: P(s, 'room.center', [0, 1.05, 0]), fov: 46 }) },
+  room_grandad: { set: 'roomGrandad', lighting: 'night', opts: { window: 'dark' }, cam: (s) => ({ pos: P(s, 'room.cam'), look: P(s, 'room.center', [0, 1.05, 0]), fov: 46 }) },
+  anchors_square: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.table', [3.3, 1.0, 0.0]), look: P(s, 'square.table', [0, -0.35, 0]), fov: 50 }) },
+  anchors_park: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => ({ pos: P(s, 'park.table', [-1.2, 1.3, 3.6]), look: P(s, 'park.table', [0, -0.1, 0]), fov: 44 }) },
+  anchors_room: { set: 'room', lighting: 'day', opts: { window: 'day' }, cam: (s) => ({ pos: P(s, 'room.chair', [-1.6, 1.6, -1.2]), look: P(s, 'room.chair', [0, 0.8, 0.4]), fov: 50 }) },
+};
+// ── the director's framings from src/shots.js (frame f(x,y,z): +x = the anchor's left, +z = its facing)
+function fr(s, name, extraYaw = 0, dy = 0) {
+  const a = s.anchors[name]; a.updateWorldMatrix(true, false);
+  const o = new THREE.Vector3().setFromMatrixPosition(a.matrixWorld); o.y += dy;
+  const e = new THREE.Euler().setFromQuaternion(new THREE.Quaternion().setFromRotationMatrix(a.matrixWorld), 'YXZ');
+  const yaw = e.y + extraYaw, fwd = V(Math.sin(yaw), 0, Math.cos(yaw)), left = V(Math.cos(yaw), 0, -Math.sin(yaw));
+  return (x, y, z) => o.clone().addScaledVector(left, x).addScaledVector(fwd, z).add(V(0, y, 0));
+}
+function frYaw(s, name, yawFrom, dy = 0) {   // origin of `name`, yaw of `yawFrom`
+  const a = s.anchors[name], b = s.anchors[yawFrom]; a.updateWorldMatrix(true, false); b.updateWorldMatrix(true, false);
+  const o = new THREE.Vector3().setFromMatrixPosition(a.matrixWorld); o.y += dy;
+  const yaw = new THREE.Euler().setFromQuaternion(new THREE.Quaternion().setFromRotationMatrix(b.matrixWorld), 'YXZ').y;
+  const fwd = V(Math.sin(yaw), 0, Math.cos(yaw)), left = V(Math.cos(yaw), 0, -Math.sin(yaw));
+  return (x, y, z) => o.clone().addScaledVector(left, x).addScaledVector(fwd, z).add(V(0, y, 0));
+}
+const QUIET = { windowGlow: (h, w) => (((h * 3 + w * 5) % 7) < 5 ? 1 : 0.06) };
+Object.assign(VIEWS, {
+  s_crane0: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: (s) => ({ pos: P(s, 'street.camHigh'), look: P(s, 'street.center', [0, 0.5, 0]), fov: 50 }) },
+  s_crane1: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: (s) => { const c = P(s, 'street.center'), hi = P(s, 'street.camHigh'); const d = V(hi.x - c.x, 0, hi.z - c.z).normalize(); return { pos: c.clone().addScaledVector(d, 9).add(V(0, 3.2, 0)), look: P(s, 'street.crowdA', [0, 1.2, 0]), fov: 42 }; } },
+  s_truck: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'street.crowdB'); return { pos: F(-5, 2.2, 7.5), look: F(-1, 1.3, 0), fov: 45 }; } },
+  s_marcus: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'street.crowdA'); return { pos: F(1.2, 1.6, 6.0), look: F(0, 1.3, 2.2), fov: 40 }; } },
+  s_brenda: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'pool.edge1'); return { pos: F(-1.0, 1.4, -3.6), look: F(0, 1.35, 0), fov: 40 }; } },
+  s_grandad: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'street.crowdB'); return { pos: F(-1, 2.6, 5.2), look: F(0, 2.0, 0), fov: 42 }; } },
+  s_birthday: { set: 'town', lighting: 'party_night', opts: {}, cam: (s) => { const F = fr(s, 'park.table'); return { pos: F(0.4, 1.4, 2.6), look: F(0, 0.35, -0.3), fov: 44 }; } },
+  s_sq_est0: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const c = P(s, 'square.center'), cm = P(s, 'square.cam1'); const d = V(cm.x - c.x, 0, cm.z - c.z).normalize(); return { pos: c.clone().addScaledVector(d, 30).add(V(0, 16, 0)), look: c.clone().add(V(0, 1, 0)), fov: 44 }; } },
+  s_sq_est1: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => ({ pos: P(s, 'square.cam1'), look: P(s, 'square.center', [0, 1.5, 0]), fov: 46 }) },
+  s_stands: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const F = fr(s, 'square.standA'); return { pos: F(-4, 2.4, 6.5), look: F(-2, 1.8, 0), fov: 44 }; } },
+  s_sits: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const F = fr(s, 'square.chairA'); return { pos: F(1.6, 1.9, 3.4), look: F(0, 1.1, 0.4), fov: 42 }; } },
+  s_mayor: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const F = fr(s, 'square.chairB'); return { pos: F(-0.9, 1.5, 2.9), look: F(0, 1.3, 0.1), fov: 40 }; } },
+  s_four: { set: 'town', lighting: 'dusk', opts: {}, cam: (s) => { const B = frYaw(s, 'square.table', 'square.chairA'); return { pos: B(2.6, 1.3, 0.2), look: B(0, 0.45, 0), fov: 42 }; } },
+  s_silence: { set: 'town', lighting: 'dusk', opts: { crowdMotion: 0 }, cam: (s) => { const F = fr(s, 'square.standA'); return { pos: F(0, 2.3, 7.5), look: F(0, 2.0, 0), fov: 44 }; } },
+  s_quietwalk: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: 0.06 }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(1.6, 1.9, 3.7), look: F(0, 1.3, -0.5), fov: 44 }; } },
+  s_nolights: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: 0.06 }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 1.6, 4), look: F(0, 6, -6), fov: 50 }; } },
+  s_nothing: { set: 'town', lighting: 'quiet_night', opts: { windowGlow: 0.06 }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 9, 16), look: F(0, 0.5, 0), fov: 44 }; } },
+  s_windows1: { set: 'town', lighting: 'quiet_night', opts: QUIET, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(-2, 2.2, 6), look: F(3, 3, -2), fov: 52 }; } },
+  s_windows2: { set: 'town', lighting: 'quiet_night', opts: QUIET, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 7, 14), look: F(0, 2.5, -4), fov: 52 }; } },
+  s_grinding: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 6, 12), look: F(0, 1, 0), fov: 46 }; } },
+  s_park: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = frYaw(s, 'park.table', 'park.stool1', -0.78); return { pos: F(1.5, 1.6, -3.0), look: F(0, 0.9, 0), fov: 42 }; } },
+  s_winning: { set: 'town', lighting: 'day', opts: { partyProps: false }, cam: (s) => { const F = frYaw(s, 'park.table', 'park.stool1', -0.78); return { pos: F(-1.6, 1.6, 0.6), look: F(0, 0.95, 0), fov: 44 }; } },
+  fireworks: { set: 'town', lighting: 'party_night', opts: { fireworks: true }, cam: (s) => { const F = fr(s, 'street.center'); return { pos: F(0, 1.8, -6), look: F(0, 14, 30), fov: 55 }; } },
+  s_nook: { set: 'room', lighting: 'night', opts: { window: 'party' }, cam: (s) => ({ pos: V(0, 1.55, 1.65).add(V(0.75, 0, 0)), look: V(0, 1.25, 0), fov: 40 }) },
+});
+const SHOTS_SHEET = ['s_crane0', 's_crane1', 's_truck', 's_marcus', 's_brenda', 's_grandad', 's_birthday', 's_sq_est0', 's_sq_est1', 's_stands', 's_sits', 's_mayor',
+  's_four', 's_silence', 's_quietwalk', 's_nolights', 's_nothing', 's_windows1', 's_windows2', 's_grinding', 's_park', 's_winning', 's_nook', 'banner'];
+const SHEET = ['overview_party', 'street', 'pool', 'foam', 'square_dusk', 'quiet_street', 'park_day', 'room_night', 'room_marcus', 'room_grandad', 'stage', 'banner'];
+
+// ── anchor test boxes (2 units tall, nose = +Z)
+const markers = new THREE.Group();
+const boxGeo = new THREE.BoxGeometry(0.42, 2.0, 0.26).translate(0, 1.0, 0);
+const noseGeo = new THREE.ConeGeometry(0.09, 0.32, 8).rotateX(Math.PI / 2).translate(0, 1.45, 0.3);
+const boxMat = new THREE.MeshStandardMaterial({ color: '#ff3b30', roughness: 0.6, transparent: true, opacity: 0.72 });
+const noseMat = new THREE.MeshStandardMaterial({ color: '#ffe14a', roughness: 0.6 });
+function addMarkers(s) {
+  for (const name of ['square.chairA', 'square.chairB', 'room.chair', 'park.stool1', 'park.stool2', 'room.center']) {
+    const a = s.anchors[name]; if (!a) continue;
+    const g = new THREE.Group();
+    g.add(new THREE.Mesh(boxGeo, boxMat), new THREE.Mesh(noseGeo, noseMat));
+    a.updateWorldMatrix(true, false);
+    a.matrixWorld.decompose(g.position, g.quaternion, g.scale);
+    s.root.add(g);
+  }
+}
+let charMod = null;
+async function addChars(s) {
+  try { charMod ??= await import('/src/characters.js'); } catch (e) { console.warn('characters.js failed', e.message); return; }
+  const specs = {
+    me: { skin: '#f1c7a1', hair: { style: 'fade', color: '#2b1d14' }, top: { style: 'hoodie', color: '#1d1d22', accent: '#ffffff', emblem: 'knight' }, bottom: { style: 'pants', color: '#55575e' }, accessories: ['headphones'] },
+    mayor: { skin: '#f0c09a', hair: { style: 'short', color: '#9a9590' }, top: { style: 'suit', color: '#7a1f2b', accent: '#ffd23f' }, accessories: ['topHat', 'sash', 'mustache'], build: 1.2, scale: 1.05 },
+  };
+  for (const [name, who] of [['square.chairA', 'me'], ['square.chairB', 'mayor'], ['room.chair', 'me'], ['park.stool1', 'me']]) {
+    const a = s.anchors[name]; if (!a) continue;
+    const ch = charMod.makeCharacter(specs[who]);
+    a.updateWorldMatrix(true, false); a.matrixWorld.decompose(ch.root.position, ch.root.quaternion, ch.root.scale);
+    ch.pose('sitIdle', 0.4, { hands: 'table' }); ch.face('determined', 0.4);
+    s.root.add(ch.root);
+  }
+}
+
+function applyView(v) {
+  const s = getSet(v.set);
+  for (const c of [...scene.children]) if (c !== camera) scene.remove(c);
+  scene.add(s.root);
+  if (s.anchors.houses) for (const [k, val] of Object.entries(TOWN_DEFAULT)) if (s.options[k] !== val) s.set(k, val);
+  s.setLighting(v.lighting);
+  for (const [k, val] of Object.entries(v.opts || {})) s.set(k, val);
+  s.update(T);
+  scene.background = s.background; scene.fog = s.fog;
+  const c = v.cam(s);
+  camera.position.copy(c.pos); camera.lookAt(c.look); camera.fov = c.fov; camera.updateProjectionMatrix();
+  return s;
+}
+const stats = document.getElementById('stats');
+function label(text, x, y) { const d = document.createElement('div'); d.className = 'lbl'; d.textContent = text; d.style.left = x + 'px'; d.style.top = y + 'px'; document.body.appendChild(d); }
+
+async function main() {
+  if (SHOW_ANCHORS) { addMarkers(getSet('town')); addMarkers(getSet('room')); }
+  if (CHARS) { await addChars(getSet('town')); await addChars(getSet('room')); }
+  if (VIEW) {
+    const v = VIEWS[VIEW];
+    if (!v) throw new Error('unknown view ' + VIEW + ' — known: ' + Object.keys(VIEWS).join(', '));
+    const s = applyView(v);
+    // perf experiments (&exp=a,b): noshadow nosky lights1 basic notransp noaa
+    if (EXP.includes('noshadow')) renderer.shadowMap.enabled = false;
+    if (EXP.includes('nosky')) s.root.traverse((o) => { if (o.name === 'sky' || o.name === 'stars') o.visible = false; });
+    if (EXP.includes('lights1')) s.root.traverse((o) => { if (o.isLight && !o.isHemisphereLight && o.name !== 'key' && !(o.isDirectionalLight && o.castShadow)) o.visible = false; });
+    if (EXP.includes('notransp')) s.root.traverse((o) => { if (o.material && o.material.transparent) o.visible = false; });
+    if (EXP.includes('aniso1')) s.root.traverse((o) => { for (const m of [].concat(o.material || [])) for (const k of ['map', 'emissiveMap']) if (m[k]) { m[k].anisotropy = 1; m[k].needsUpdate = true; } });
+    if (EXP.includes('nomaps')) s.root.traverse((o) => { for (const m of [].concat(o.material || [])) if (m.map && m.isMeshStandardMaterial) { m.map = null; m.needsUpdate = true; } });
+    if (EXP.includes('basic')) scene.overrideMaterial = new THREE.MeshBasicMaterial({ color: '#888888' });
+    if (EXP.includes('lambert')) s.root.traverse((o) => { if (o.isMesh && o.material && o.material.isMeshStandardMaterial) { const m = o.material; o.material = new THREE.MeshLambertMaterial({ color: m.color, map: m.map, vertexColors: m.vertexColors, emissive: m.emissive, emissiveIntensity: m.emissiveIntensity, flatShading: m.flatShading }); } });
+    renderer.render(scene, camera);
+    const info = `${VIEW}  calls ${renderer.info.render.calls}  tris ${(renderer.info.render.triangles / 1000).toFixed(0)}k  progs ${renderer.info.programs.length}`;
+    if (Q.get('det')) {   // determinism self-test: same t → same pixels, whatever happened before
+      const gl = renderer.getContext();
+      const grab = () => { renderer.render(scene, camera); const px = new Uint8Array(W * H * 4); gl.readPixels(0, 0, W, H, gl.RGBA, gl.UNSIGNED_BYTE, px); return px; };
+      const A = grab();
+      const pres = s.anchors.houses ? ['day', 'dusk', 'quiet_night'] : ['day', 'dawn'];
+      for (const [i, pr] of pres.entries()) {
+        s.setLighting(pr);
+        if (s.anchors.houses) { s.set('foam', 0.5 + i * 0.2); s.set('fireworks', i % 2 === 0); s.set('windowGlow', (h, w) => (h + w + i) % 3 ? 1 : 0); s.set('partyProps', i !== 1); s.set('crowdMotion', 0.3); }
+        else s.set('window', ['day', 'sunrise'][i % 2]);
+        s.update(T + 3.7 * (i + 1)); grab();
+      }
+      applyView(v);   // restores the view's options + lighting and calls update(T)
+      const B = grab();
+      let diff = 0; for (let i = 0; i < A.length; i++) if (A[i] !== B[i]) diff++;
+      console.log(`DETERMINISM ${VIEW}: ${diff} differing bytes of ${A.length}`);
+      stats.textContent = `determinism: ${diff} differing bytes`;
+    }
+    if (Q.get('ab')) {   // interleaved A/B variants, medians: &ab=1&n=5
+      renderer.setSize(720, 1280);
+      const gl = renderer.getContext(), px = new Uint8Array(4);
+      const lights = []; s.root.traverse((o) => { if (o.isLight) lights.push(o); });
+      const stdMeshes = []; s.root.traverse((o) => { if (o.isMesh && o.material && o.material.isMeshStandardMaterial) stdMeshes.push([o, o.material]); });
+      const lamb = new Map();
+      const toLambert = (on) => { for (const [o, m] of stdMeshes) { if (on) { if (!lamb.has(m)) lamb.set(m, new THREE.MeshLambertMaterial({ color: m.color, map: m.map, vertexColors: m.vertexColors, emissive: m.emissive, emissiveIntensity: m.emissiveIntensity, flatShading: m.flatShading, side: m.side })); o.material = lamb.get(m); } else o.material = m; } };
+      const reset = () => { renderer.shadowMap.autoUpdate = true; s.root.traverse((o) => { if (o.userData._rs !== undefined) o.receiveShadow = o.userData._rs; if (o.userData._vis !== undefined) { o.visible = o.userData._vis; delete o.userData._vis; } }); renderer.shadowMap.enabled = true; lights.forEach((l) => (l.visible = true)); toLambert(false); scene.overrideMaterial = null; renderer.shadowMap.needsUpdate = true; };
+      const hide = (pred) => () => s.root.traverse((o) => { if (pred(o)) { o.userData._vis ??= o.visible; o.visible = false; } });
+      const catVariants = {
+        base: () => {},
+        noPoints: hide((o) => o.isPoints),
+        noTransp: hide((o) => (o.isMesh || o.isInstancedMesh) && o.material && o.material.transparent),
+        noParty: hide((o) => o.name === 'partyProps'),
+        noShadowPass: () => { renderer.shadowMap.autoUpdate = false; },
+        noHouses: hide((o) => ['houses', 'roofs', 'trim', 'windows', 'windowHalos'].includes(o.name)),
+        noTrees: hide((o) => ['trunks', 'crowns', 'pines'].includes(o.name)),
+        noSky: hide((o) => ['sky', 'stars', 'clouds', 'hills'].includes(o.name)),
+        noLines: hide((o) => o.isLineSegments || o.isLine),
+      };
+      const partyVariants = {
+        base: () => {},
+        noBulbs: hide((o) => o.name === 'bulbs'),
+        noBulbHalo: hide((o) => o.name === 'bulbHalos'),
+        noFlags: hide((o) => o.name === 'bunting'),
+        noBalloons: hide((o) => o.name === 'balloons'),
+        noPStatic: hide((o) => o.name === 'partyStatic' || o.name === 'partyGloss'),
+        noWires: hide((o) => o.name === 'wires'),
+        noParty: hide((o) => o.name === 'partyProps'),
+      };
+      const variants0 = {
+        base: () => {},
+        twoLights: () => lights.forEach((l) => { l.visible = l.isHemisphereLight || l.castShadow; }),
+        noShadow: () => { renderer.shadowMap.enabled = false; },
+        lambert: () => toLambert(true),
+        lambert2L: () => { toLambert(true); lights.forEach((l) => { l.visible = l.isHemisphereLight || l.castShadow; }); },
+        basic: () => { scene.overrideMaterial = new THREE.MeshBasicMaterial({ color: '#888' }); },
+        noMaps: () => { for (const [o, m] of stdMeshes) { if (m.map) { if (!lamb.has('nm' + m.uuid)) { const c = m.clone(); c.map = null; c.emissiveMap = null; lamb.set('nm' + m.uuid, c); } o.material = lamb.get('nm' + m.uuid); } } },
+        aniso1: () => { for (const [o, m] of stdMeshes) { if (m.map) { if (!lamb.has('a1' + m.uuid)) { const c = m.clone(); c.map = m.map.clone(); c.map.anisotropy = 1; c.map.needsUpdate = true; lamb.set('a1' + m.uuid, c); } o.material = lamb.get('a1' + m.uuid); } } },
+        noRecv: () => { s.root.traverse((o) => { if (o.isMesh || o.isInstancedMesh) { o.userData._rs ??= o.receiveShadow; o.receiveShadow = false; } }); },
+      };
+      const variants = Q.get('ab') === 'cat' ? catVariants : Q.get('ab') === 'party' ? partyVariants : { ...variants0 };
+      // reference scene ≈ the characters module's "empty floor" (plane + hemi + shadowed sun, standard material)
+      const refScene = new THREE.Scene(); refScene.background = new THREE.Color('#9fc8e8');
+      { const pl = new THREE.Mesh(new THREE.PlaneGeometry(60, 60).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#d9c7a8', roughness: 0.8 })); pl.receiveShadow = true; refScene.add(pl);
+        const hl = new THREE.HemisphereLight('#ffffff', '#886644', 1.2); const dl = new THREE.DirectionalLight('#ffffff', 2); dl.position.set(3, 8, 5); dl.castShadow = true; dl.shadow.mapSize.set(1024, 1024); refScene.add(hl, dl); }
+      let useRef = false;
+      if (Q.get('ab') === 'ref') { for (const k of Object.keys(variants)) delete variants[k]; variants.base = () => {}; variants.REF = () => { useRef = true; }; }
+      const res = {}; for (const k in variants) res[k] = [];
+      const n = +(Q.get('n') || 4);
+      for (let i = -1; i < n; i++) for (const [k, f] of Object.entries(variants)) {
+        reset(); useRef = false; f(); s.root.traverse((o) => { if (o.material && !Array.isArray(o.material)) o.material.needsUpdate = true; });
+        const sc = useRef ? refScene : scene;
+        renderer.render(sc, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);   // warm (compile)
+        const t0 = performance.now(); s.update(T + i / 30); renderer.render(sc, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        if (i >= 0) res[k].push(performance.now() - t0);
+      }
+      const med = (a) => Math.min(...a).toFixed(0);
+      console.log(`BENCH AB(min) ${VIEW} 720x1280: ` + Object.entries(res).map(([k, a]) => `${k} ${med(a)}`).join(' | '));
+      reset();
+      renderer.setSize(W, H);
+    }
+    if (BENCH) {
+      renderer.setSize(720, 1280);
+      renderer.render(scene, camera);
+      const t0 = performance.now();
+      const gl = renderer.getContext(), px = new Uint8Array(4);
+      for (let i = 0; i < BENCH; i++) { s.update(T + i / 30); renderer.render(scene, camera); gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); }
+      const ms = (performance.now() - t0) / BENCH;
+      console.log(`BENCH ${VIEW} 720x1280: ${ms.toFixed(1)} ms/frame, calls ${renderer.info.render.calls}, tris ${renderer.info.render.triangles}`);
+      stats.textContent = `${info}\nbench 720x1280: ${ms.toFixed(1)} ms/frame`;
+      renderer.setSize(W, H); renderer.render(scene, camera);
+    } else stats.textContent = info + (s.info ? '\n' + JSON.stringify(s.info) : '');
+    console.log(info);
+  } else {
+    const list = Q.get('sheet') === 'all' ? Object.keys(VIEWS) : Q.get('sheet') === 'shots' ? SHOTS_SHEET : SHEET;
+    const cols = list.length > 12 ? 6 : 4, rows = Math.ceil(list.length / cols);
+    const cw = Math.floor(W / cols), chh = Math.floor(H / rows);
+    renderer.setScissorTest(true);
+    renderer.setClearColor('#111318'); renderer.clear();
+    list.forEach((name, i) => {
+      const v = VIEWS[name];
+      const cx = (i % cols) * cw, cy = Math.floor(i / cols) * chh;
+      // keep 9:16 inside each cell
+      let w = cw - 4, h = Math.round(w * 16 / 9);
+      if (h > chh - 4) { h = chh - 4; w = Math.round(h * 9 / 16); }
+      const x = cx + Math.round((cw - w) / 2), y = cy + Math.round((chh - h) / 2);
+      applyView(v);
+      renderer.setViewport(x, H - y - h, w, h); renderer.setScissor(x, H - y - h, w, h);
+      renderer.render(scene, camera);
+      label(name, x + 2, y + 2);
+    });
+    renderer.setScissorTest(false);
+  }
+  requestAnimationFrame(() => { window.__ready = true; });
+}
+main().catch((e) => { console.error(e); stats.textContent = 'ERROR: ' + e.message; window.__ready = true; });
+</script>
+</body>
+</html>

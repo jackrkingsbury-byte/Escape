@@ -1,0 +1,602 @@
+{
+ "fps": 30,
+ "duration": 30.0,
+ "audio": null,
+ "title": "v2 showcase",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, every house hangs a lantern for each of us.",
+   "start": 0.1,
+   "end": 2.45,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.1,
+     "end": 0.296
+    },
+    {
+     "text": "this",
+     "start": 0.296,
+     "end": 0.492
+    },
+    {
+     "text": "town,",
+     "start": 0.492,
+     "end": 0.688
+    },
+    {
+     "text": "every",
+     "start": 0.688,
+     "end": 0.883
+    },
+    {
+     "text": "house",
+     "start": 0.883,
+     "end": 1.079
+    },
+    {
+     "text": "hangs",
+     "start": 1.079,
+     "end": 1.275
+    },
+    {
+     "text": "a",
+     "start": 1.275,
+     "end": 1.471
+    },
+    {
+     "text": "lantern",
+     "start": 1.471,
+     "end": 1.667
+    },
+    {
+     "text": "for",
+     "start": 1.667,
+     "end": 1.863
+    },
+    {
+     "text": "each",
+     "start": 1.863,
+     "end": 2.058
+    },
+    {
+     "text": "of",
+     "start": 2.058,
+     "end": 2.254
+    },
+    {
+     "text": "us.",
+     "start": 2.254,
+     "end": 2.45
+    }
+   ],
+   "red": [
+    "lantern"
+   ]
+  },
+  {
+   "id": "b02",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS!",
+   "start": 2.78,
+   "end": 3.3,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 2.78,
+     "end": 3.04
+    },
+    {
+     "text": "HUSS!",
+     "start": 3.0,
+     "end": 3.3
+    }
+   ]
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "5 lanterns. 4 of us. Pip whispers, who's the fifth?",
+   "start": 3.6,
+   "end": 7.3,
+   "words": [
+    {
+     "text": "5",
+     "start": 3.6,
+     "end": 3.97
+    },
+    {
+     "text": "lanterns.",
+     "start": 3.97,
+     "end": 4.34
+    },
+    {
+     "text": "4",
+     "start": 4.34,
+     "end": 4.71
+    },
+    {
+     "text": "of",
+     "start": 4.71,
+     "end": 5.08
+    },
+    {
+     "text": "us.",
+     "start": 5.08,
+     "end": 5.45
+    },
+    {
+     "text": "Pip",
+     "start": 5.45,
+     "end": 5.82
+    },
+    {
+     "text": "whispers,",
+     "start": 5.82,
+     "end": 6.19
+    },
+    {
+     "text": "who's",
+     "start": 6.19,
+     "end": 6.56
+    },
+    {
+     "text": "the",
+     "start": 6.56,
+     "end": 6.93
+    },
+    {
+     "text": "fifth?",
+     "start": 6.93,
+     "end": 7.3
+    }
+   ],
+   "red": [
+    "5",
+    "fifth"
+   ],
+   "bubble": {
+    "who": "pip",
+    "text": "Who's the fifth?",
+    "at": "bub1",
+    "until": "bub1end"
+   }
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "That night my torch finds the attic, and Mom at the fridge.",
+   "start": 7.5,
+   "end": 10.6,
+   "words": [
+    {
+     "text": "That",
+     "start": 7.5,
+     "end": 7.758
+    },
+    {
+     "text": "night",
+     "start": 7.758,
+     "end": 8.017
+    },
+    {
+     "text": "my",
+     "start": 8.017,
+     "end": 8.275
+    },
+    {
+     "text": "torch",
+     "start": 8.275,
+     "end": 8.533
+    },
+    {
+     "text": "finds",
+     "start": 8.533,
+     "end": 8.792
+    },
+    {
+     "text": "the",
+     "start": 8.792,
+     "end": 9.05
+    },
+    {
+     "text": "attic,",
+     "start": 9.05,
+     "end": 9.308
+    },
+    {
+     "text": "and",
+     "start": 9.308,
+     "end": 9.567
+    },
+    {
+     "text": "Mom",
+     "start": 9.567,
+     "end": 9.825
+    },
+    {
+     "text": "at",
+     "start": 9.825,
+     "end": 10.083
+    },
+    {
+     "text": "the",
+     "start": 10.083,
+     "end": 10.342
+    },
+    {
+     "text": "fridge.",
+     "start": 10.342,
+     "end": 10.6
+    }
+   ],
+   "red": [
+    "night"
+   ]
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Pickles. Ice cream. Dad hides a paint tin behind his back.",
+   "start": 10.8,
+   "end": 13.8,
+   "words": [
+    {
+     "text": "Pickles.",
+     "start": 10.8,
+     "end": 11.073
+    },
+    {
+     "text": "Ice",
+     "start": 11.073,
+     "end": 11.345
+    },
+    {
+     "text": "cream.",
+     "start": 11.345,
+     "end": 11.618
+    },
+    {
+     "text": "Dad",
+     "start": 11.618,
+     "end": 11.891
+    },
+    {
+     "text": "hides",
+     "start": 11.891,
+     "end": 12.164
+    },
+    {
+     "text": "a",
+     "start": 12.164,
+     "end": 12.436
+    },
+    {
+     "text": "paint",
+     "start": 12.436,
+     "end": 12.709
+    },
+    {
+     "text": "tin",
+     "start": 12.709,
+     "end": 12.982
+    },
+    {
+     "text": "behind",
+     "start": 12.982,
+     "end": 13.255
+    },
+    {
+     "text": "his",
+     "start": 13.255,
+     "end": 13.527
+    },
+    {
+     "text": "back.",
+     "start": 13.527,
+     "end": 13.8
+    }
+   ],
+   "red": [
+    "hides"
+   ]
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Behind the box room door, a light.",
+   "start": 14.0,
+   "end": 15.55,
+   "words": [
+    {
+     "text": "Behind",
+     "start": 14.0,
+     "end": 14.221
+    },
+    {
+     "text": "the",
+     "start": 14.221,
+     "end": 14.443
+    },
+    {
+     "text": "box",
+     "start": 14.443,
+     "end": 14.664
+    },
+    {
+     "text": "room",
+     "start": 14.664,
+     "end": 14.886
+    },
+    {
+     "text": "door,",
+     "start": 14.886,
+     "end": 15.107
+    },
+    {
+     "text": "a",
+     "start": 15.107,
+     "end": 15.329
+    },
+    {
+     "text": "light.",
+     "start": 15.329,
+     "end": 15.55
+    }
+   ],
+   "red": [
+    "light"
+   ]
+  },
+  {
+   "id": "b07",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS!",
+   "start": 15.85,
+   "end": 16.15,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 15.85,
+     "end": 16.15
+    }
+   ]
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Dad, building a crib.",
+   "start": 16.4,
+   "end": 18.3,
+   "words": [
+    {
+     "text": "Dad,",
+     "start": 16.4,
+     "end": 16.875
+    },
+    {
+     "text": "building",
+     "start": 16.875,
+     "end": 17.35
+    },
+    {
+     "text": "a",
+     "start": 17.35,
+     "end": 17.825
+    },
+    {
+     "text": "crib.",
+     "start": 17.825,
+     "end": 18.3
+    }
+   ],
+   "red": [
+    "crib"
+   ]
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Pip presses her ear to Mom, and hears a second heartbeat.",
+   "start": 18.7,
+   "end": 21.9,
+   "words": [
+    {
+     "text": "Pip",
+     "start": 18.7,
+     "end": 18.991
+    },
+    {
+     "text": "presses",
+     "start": 18.991,
+     "end": 19.282
+    },
+    {
+     "text": "her",
+     "start": 19.282,
+     "end": 19.573
+    },
+    {
+     "text": "ear",
+     "start": 19.573,
+     "end": 19.864
+    },
+    {
+     "text": "to",
+     "start": 19.864,
+     "end": 20.155
+    },
+    {
+     "text": "Mom,",
+     "start": 20.155,
+     "end": 20.445
+    },
+    {
+     "text": "and",
+     "start": 20.445,
+     "end": 20.736
+    },
+    {
+     "text": "hears",
+     "start": 20.736,
+     "end": 21.027
+    },
+    {
+     "text": "a",
+     "start": 21.027,
+     "end": 21.318
+    },
+    {
+     "text": "second",
+     "start": 21.318,
+     "end": 21.609
+    },
+    {
+     "text": "heartbeat.",
+     "start": 21.609,
+     "end": 21.9
+    }
+   ],
+   "red": [
+    "second"
+   ]
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The fifth lantern was never for a ghost.",
+   "start": 22.2,
+   "end": 25.1,
+   "words": [
+    {
+     "text": "The",
+     "start": 22.2,
+     "end": 22.562
+    },
+    {
+     "text": "fifth",
+     "start": 22.562,
+     "end": 22.925
+    },
+    {
+     "text": "lantern",
+     "start": 22.925,
+     "end": 23.288
+    },
+    {
+     "text": "was",
+     "start": 23.288,
+     "end": 23.65
+    },
+    {
+     "text": "never",
+     "start": 23.65,
+     "end": 24.012
+    },
+    {
+     "text": "for",
+     "start": 24.012,
+     "end": 24.375
+    },
+    {
+     "text": "a",
+     "start": 24.375,
+     "end": 24.738
+    },
+    {
+     "text": "ghost.",
+     "start": 24.738,
+     "end": 25.1
+    }
+   ],
+   "red": [
+    "never"
+   ]
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In the morning, we hang a sixth one. For the baby.",
+   "start": 25.7,
+   "end": 29.4,
+   "words": [
+    {
+     "text": "In",
+     "start": 25.7,
+     "end": 26.036
+    },
+    {
+     "text": "the",
+     "start": 26.036,
+     "end": 26.373
+    },
+    {
+     "text": "morning,",
+     "start": 26.373,
+     "end": 26.709
+    },
+    {
+     "text": "we",
+     "start": 26.709,
+     "end": 27.045
+    },
+    {
+     "text": "hang",
+     "start": 27.045,
+     "end": 27.382
+    },
+    {
+     "text": "a",
+     "start": 27.382,
+     "end": 27.718
+    },
+    {
+     "text": "sixth",
+     "start": 27.718,
+     "end": 28.055
+    },
+    {
+     "text": "one.",
+     "start": 28.055,
+     "end": 28.391
+    },
+    {
+     "text": "For",
+     "start": 28.391,
+     "end": 28.727
+    },
+    {
+     "text": "the",
+     "start": 28.727,
+     "end": 29.064
+    },
+    {
+     "text": "baby.",
+     "start": 29.064,
+     "end": 29.4
+    }
+   ],
+   "red": [
+    "baby"
+   ]
+  }
+ ],
+ "markers": {
+  "bub1": 6.05,
+  "bub1end": 7.75,
+  "jump": 25.45
+ }
+}

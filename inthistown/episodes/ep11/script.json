@@ -1,0 +1,291 @@
+{
+ "title": "In This Town — Hide and Seek",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "banner": [
+  "FRIDAY NIGHT",
+  "PARTY",
+  "14.05.1982"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody parties.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Crane down the party street."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me. I'm counting.",
+   "music": "muffled",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "counting": "w:counting"
+   },
+   "gapAfter": 0.25,
+   "visual": "Empty square at night: the kid with his face against a lamppost, hands over his eyes. Counter 999,941."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "One number per HUSS; the counter ticks up."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "We started hide and seek on a Friday. It's still Friday.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "still": "w:still"
+   },
+   "gapAfter": 0.3,
+   "visual": "The square banner FRIDAY NIGHT / PARTY / 14.05.1982."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nobody hid. They threw a party instead.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "instead": "w:instead"
+   },
+   "gapAfter": 0.3,
+   "visual": "The party street, packed."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The cat hid in a box. The box went clubbing.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "box": "w:box",
+    "clubbing": "w:clubbing"
+   },
+   "gapAfter": 0.3,
+   "visual": "A cardboard box with a cat tail sticking out dances in the crowd in a party hat."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandad hid behind a lamppost. He's wider than the lamppost.",
+   "music": "lofi",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "wider": "w:wider"
+   },
+   "gapAfter": 0.3,
+   "visual": "Grandad behind a thin lamppost, sticking out both sides."
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Grandad shuffles left, right, left behind the pole on each HUSS. Still visible."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The best hiding place is in plain sight. The pigeon. Mayor.",
+   "music": "party",
+   "pauses": [
+    0.4,
+    0.25
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "The best hiding place is in plain sight.",
+    "by": "the pigeon (Mayor)"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "pigeon": "we:pigeon",
+    "mayor": "w:Mayor"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; attribution on 'The pigeon'; reveal: the pigeon in its mayor hat on the stage, perfectly visible."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Brenda's still frozen from freeze dance. Best hider in town.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "best": "w:Best"
+   },
+   "gapAfter": 0.3,
+   "visual": "Brenda still frozen mid-dance; a moth on her; tag NOBODY'S CHECKED."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number four: the moon closed its eyes too.",
+   "music": "lofi",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "top4": "w:four",
+    "eyes": "w:eyes"
+   },
+   "gapAfter": 0.3,
+   "visual": "TOP 10 card #4; the moon over the square closes its eyes."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nine hundred ninety nine thousand, nine hundred and ninety nine.",
+   "music": "none",
+   "pauses": [
+    0.25
+   ],
+   "markers": {
+    "nines": "end-0.4"
+   },
+   "gapAfter": 0.45,
+   "visual": "Silence. Slow push in on the kid at the lamppost. Counter 999,999."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "One million. Ready or not.",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "million": "w:million",
+    "ready": "w:Ready"
+   },
+   "gapAfter": 0.3,
+   "visual": "Counter 1,000,000. On 'Ready' the kid turns around."
+  },
+  {
+   "id": "b14",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "The kid tags one hider per HUSS: box, Grandad, pigeon, Brenda, Marcus, the mayor. FOUND stamp each time."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Found everyone. Four seconds.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "four": "w:Four"
+   },
+   "gapAfter": 0.25,
+   "visual": "Everyone found, standing in a line; tag 4 SECONDS."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Sixteen thousand nights of counting. Four seconds of finding.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "finding": "w:finding"
+   },
+   "gapAfter": 0.3,
+   "visual": "Split: the kid at the lamppost across many nights; then the stopwatch 0:04."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Rules are rules. A box.",
+   "pauses": [
+    0.35
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Rules are rules.",
+    "by": "a box"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "abox": "w:box"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; attribution on 'A box'; the box nods (cat tail wags)."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So now in this town, everybody counts.",
+   "music": "muffled",
+   "markers": {
+    "counts": "w:counts"
+   },
+   "gapAfter": 0.25,
+   "visual": "The whole town faces lampposts, walls and trees, eyes covered, counting."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me. I'm partying.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "partying": "w:partying"
+   },
+   "gapAfter": 0.25,
+   "visual": "The kid alone on the empty dance floor in a party hat; disco lights."
+  },
+  {
+   "id": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.6,
+   "visual": "The kid dances alone; fireworks on each HUSS; behind him the town keeps counting."
+  }
+ ]
+}

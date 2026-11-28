@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In This Town</title>
+<!--
+  The film page (MODULE D, SPEC §8). Query params:
+    ?timeline=audio/timeline.json   ?shotsModule=/src/shots.js   ?scale=0.6667 (3D internal resolution factor)
+    ?t=12.3 (render that time, then window.__ready = true)   ?ui=1 (preview player)   ?debug=1 (time/shot overlay)
+    ?aa=0 (no MSAA)   ?render=1 (no on-page error overlay; used by render.mjs)   ?reset=frame (setup every frame)
+  Demo: index.html?shotsModule=/src/shots.demo.js&timeline=audio/timeline.demo.json&ui=1
+-->
+<style>
+  @font-face { font-family: "ITT Nunito"; font-weight: 900; src: url(/node_modules/@fontsource/nunito/files/nunito-latin-900-normal.woff2) format("woff2"); }
+  @font-face { font-family: "ITT Luckiest"; font-weight: 400; src: url(/node_modules/@fontsource/luckiest-guy/files/luckiest-guy-latin-400-normal.woff2) format("woff2"); }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #frame { display: block; width: min(100vw, calc(100vh * 9 / 16)); height: min(100vh, calc(100vw * 16 / 9)); }
+  #err { position: fixed; left: 8px; right: 8px; top: 8px; display: none; z-index: 20; padding: 10px 12px; border-radius: 8px;
+         background: rgba(176, 0, 32, .93); color: #fff; font: 13px/1.35 ui-monospace, Menlo, monospace; white-space: pre-wrap; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="stage"><canvas id="frame" width="1080" height="1920"></canvas></div>
+<div id="err"></div>
+<script type="module">
+  import { boot } from '/src/engine.js';
+  boot({ canvas: document.getElementById('frame'), errorEl: document.getElementById('err') });
+</script>
+</body>
+</html>

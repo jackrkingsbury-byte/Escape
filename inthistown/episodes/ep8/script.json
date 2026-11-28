@@ -1,0 +1,343 @@
+{
+ "title": "In This Town — Pet Rock",
+ "lead_in": 0.3,
+ "voices": {
+  "gerald": [
+   "am_fenrir",
+   0.97,
+   "en-us",
+   [
+    1.45,
+    1.12,
+    1.12
+   ]
+  ],
+  "babygerald": [
+   "bm_george",
+   0.9,
+   "en-gb",
+   [
+    1.55,
+    1.18,
+    1.0
+   ]
+  ],
+  "mayor": [
+   "bm_george",
+   0.95,
+   "en-gb",
+   null
+  ]
+ },
+ "banner": [
+  "SUMMER PARTY",
+  "PET SHOW",
+  "NO PIGEONS"
+ ],
+ "narrator": "gerald (DJ Hip Replacement, 91; usual young flat jinxy narrator voice, sincere, no irony). One-off spec: babygerald = Gerald's existing rig at 35% scale with the same cardigan, glasses, mustache, headphones round his neck and a party hat, plus a creaky little old-man voice. He is used once for the hatchling and about 20 times for the shelf button. Mum is a prop (boulder), not a rig.",
+ "newProps": [
+  "Keith: football-sized grey rock (low-poly sphere) that splits into two halves, with a wall-crack decal applied to it",
+  "dog tag reading 'KEITH'",
+  "lead/leash (thin cylinder)",
+  "stick",
+  "biscuit (flat disc)",
+  "tiny knitted cardigan for the rock (coloured wrap box)",
+  "long wall shelf holding about 20 small grey rocks that each burst on cue",
+  "steam wisp (white translucent puff)",
+  "confetti cannon (cylinder)",
+  "round dark stain decal with two dot eyes and a smug mouth",
+  "score cards reading '2'",
+  "big grey boulder",
+  "rocking chair (boxes)",
+  "pearl necklace (ring of small spheres)",
+  "grey bun (sphere)",
+  "knitting needles (two thin cylinders)",
+  "giant party hat for the clock tower (scaled-up cone)",
+  "sign: 'DJ HIP REPLACEMENT - IN BED SINCE 7PM'"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody parties.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Party street, party_night. Crane down past lamp posts, balloons and confetti while extras dance (dance/dance2). The camera settles on the DJ decks at the corner. Nobody is there: just headphones on the decks and a sign reading 'DJ HIP REPLACEMENT - IN BED SINCE 7PM'."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me. I'm ninety one.",
+   "music": "muffled",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "age": "w:ninety"
+   },
+   "gapAfter": 0.25,
+   "visual": "Push through a lit window into the Grandad-variant bedroom (night), restyled for Gerald: cardigan, headphones round his neck, nightcap. Gerald sits up in bed (sitIdle, face: smile). Beside him under the duvet, on its own little pillow, lies a grey rock the size of a football. Behind the bed is a long wall shelf of about 20 plain small rocks, clearly in frame and lit but never mentioned."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "gerald",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Gerald puts one accessory on the rock per HUSS (slam, face: huss). Each one lands with a dust puff and a camera punch: 1 party hat, 2 glasses, 3 mustache, 4 bowtie, 5 headphones, 6 tiny knitted cardigan. In the last frame the rock looks exactly like a small Gerald, which plants the hatch."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The clock tower had a birthday. It won't say how old.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "old": "w:won't"
+   },
+   "gapAfter": 0.3,
+   "visual": "Clock tower, day. It wears a giant party hat with balloons tied round it, and extras cheer at its base (cheer). On 'won't' the camera pushes in on the clock face and both hands spin to a blur. Tag stamps in: 'AGE: ???'."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I'm raising a rock. We play fetch. I fetch.",
+   "music": "muffled",
+   "pauses": [
+    0.35,
+    0.3
+   ],
+   "markers": {
+    "fetch": "w:We",
+    "ifetch": "we:I"
+   },
+   "gapAfter": 0.3,
+   "visual": "Party street, dusk. Gerald walks slowly down the middle of the road (walk) holding a lead, and the dressed-up rock drags behind on the end of it with a long scrape SFX. Dancers move round them without noticing. On 'We play fetch': the park with the stone table and tree, day. Gerald throws a stick out of frame (slam, camera punch) while the rock sits still. On 'I fetch': smash cut to Gerald walking back in holding the stick himself (walk, sweat drops, face: sweat). He drops it in front of the rock."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "This is Keith. I taught him to sit. He was already sitting.",
+   "pauses": [
+    0.3,
+    0.35
+   ],
+   "markers": {
+    "keith": "w:Keith",
+    "sit": "w:sit",
+    "already": "w:already"
+   },
+   "gapAfter": 0.3,
+   "visual": "Gerald's bedroom floor, day. The rock wears a dog tag reading 'KEITH'. On 'sit' Gerald points at it (point) and a tag reads 'SIT'. Nothing happens. On 'already' Gerald claps (clap) and sets a biscuit on top of the rock, and a big tag stamps in: 'GOOD BOY'."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Summer Party Pet Show.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Town square, day, banner SUMMER PARTY / PET SHOW / NO PIGEONS. Contestants cross the stage: the cat lying on a plinth (loaf), an extra in a cap walking a toaster on a lead, another extra walking a traffic cone on a lead, and Gerald with Keith. The pigeon sits in the front row of a bleacher anyway (huss chest puff). Judges at the long table: Grandad, the Heckler, and Marcus lying flat on his back on the tabletop (crowdSurf) because he still can't stand up."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A toaster made toast. Total show off.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "toast": "we:toast",
+    "showoff": "w:Total"
+   },
+   "gapAfter": 0.3,
+   "visual": "Centre stage, the toaster on its lead. On 'toast' two slices pop straight up. On 'Total' cut to the judges' table: Grandad and the Heckler sit with crossArms (face: squint) and raise score cards reading '2'. Marcus raises his from flat on his back. Tag stamps in: 'SHOW-OFF'."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Keith's trick was staying.",
+   "gapAfter": 0.3,
+   "visual": "Keith alone at centre stage under a spotlight, in his party hat and cardigan. Nothing happens for a full beat. Tag stamps in: 'TRICK: STAYING'. The crowd leans in (peer)."
+  },
+  {
+   "id": "b10",
+   "kind": "huss",
+   "speaker": "gerald",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "One distraction per HUSS, each with a camera punch, and Keith never moves. HUSS 1: a confetti cannon blasts him from the side. HUSS 2: a balloon pops right next to him. HUSS 3: the Heckler leans into his face and yells (pointLaugh, face: laugh). The crowd behind looks surprised."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "True friends never leave. A stain.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "True friends never leave.",
+    "by": "a stain"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "quote1end": "we:A-0.05"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD: 'True friends never leave.' On 'A stain.' it REVEALS who said it: a floor-level shot of the stage boards. Right next to Keith, still covered in confetti, sits a dark round stain decal with two dot eyes and a smug little mouth, like an old pal. Neither of them has moved."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: Keith let the cone go first.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "top7": "w:seven",
+    "cone": "w:cone"
+   },
+   "gapAfter": 0.3,
+   "visual": "TOP 10 ranking card, #7. Cut to the top of the stage steps, where Keith and the traffic cone on its lead sit side by side. On 'cone' the extra tugs the lead and the cone slides down the steps first while Keith stays put. Tag stamps in: 'AFTER YOU'. The crowd slow-claps (clap)."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Keith won. Then he got warm.",
+   "pauses": [
+    0.45
+   ],
+   "markers": {
+    "won": "w:won",
+    "warm": "w:warm"
+   },
+   "gapAfter": 0.4,
+   "visual": "On 'won': a gold trophy is set down next to Keith, confetti falls and the crowd cheers (cheer). Gerald scoops the rock up and holds it to his chest (crossArms, face: smile). On 'warm': close on Gerald. His face changes from smile to shocked, a white steam wisp curls up off the rock, and one sweat drop pops on his head."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then he cracked.",
+   "music": "none",
+   "markers": {
+    "crack": "w:cracked"
+   },
+   "gapAfter": 0.3,
+   "visual": "Dead silence. On 'cracked': crunch SFX as the wall-crack decal zigzags across the rock. Gerald sets it down on the stage and backs off. The whole crowd freezes (stunned, face: shocked). Cut to the cat getting up off its plinth for the first time in the series (cat idle, from loaf). Tag: 'THE CAT STOOD UP'."
+  },
+  {
+   "id": "b15",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "The HUSSes come from INSIDE the rock. On each one a new crack spreads, the rock jolts and puffs dust, and the camera shakes. The crowd steps back once per HUSS, and the pigeon flaps off the bleacher on HUSS 4. On HUSS 6 the rock splits into two halves with a white flash.",
+   "pitch": 1.4
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It was a baby. It was already ninety one.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "baby": "w:baby",
+    "age91": "w:ninety"
+   },
+   "gapAfter": 0.3,
+   "visual": "Party music kicks back in as the dust clears. Standing between the two rock halves is babygerald: Gerald's rig at 35% scale in cardigan, glasses, mustache, headphones round his neck and party hat (stunned). On 'ninety' a tag stamps in: 'AGE: 91'. Cut to Gerald (face: shocked)."
+  },
+  {
+   "id": "b17",
+   "kind": "quote",
+   "speaker": "babygerald",
+   "text": "Turn that down.",
+   "markers": {
+    "scratch": "end"
+   },
+   "gapAfter": 0.4,
+   "visual": "Tiny Gerald points at the party speaker on the stage (point, face: squint) and speaks in a creaky little old-man voice. On 'scratch' (end): record-scratch SFX, the music cuts, and the whole crowd goes silent (stunned)."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every rock is an egg with patience. My mother. A boulder.",
+   "music": "none",
+   "pauses": [
+    0.4,
+    0.3
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Every rock is an egg with patience.",
+    "by": "my mother, a boulder"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "quote2end": "w:My-0.05",
+    "boulder": "w:boulder"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD: 'Every rock is an egg with patience.' On 'My mother.' it REVEALS who said it: Gerald's bedroom at night, where a big grey boulder sits in a rocking chair wearing glasses, a pearl necklace and a grey bun with knitting needles stuck in the top. Gerald stands beside it (idle, face: smile) and tiny Gerald waves up at it (wave). On 'boulder' a tag stamps in: 'MUM'."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now in this town, everybody parties. Except us.",
+   "music": "muffled",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "exceptUs": "w:Except"
+   },
+   "gapAfter": 0.3,
+   "visual": "Exterior, party_night. The street party is seen through Gerald's window. Inside, in a row: Gerald on the bed, tiny Gerald next to him, and Mum the boulder in her rocking chair. All three wear party hats and sit perfectly still (sitIdle). Dancers bob outside the window."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Also, I collect rocks.",
+   "music": "none",
+   "markers": {
+    "rocks": "w:rocks"
+   },
+   "gapAfter": 0.35,
+   "visual": "Silence. A slow pan along the long shelf from b02. All 20 small rocks now wear tiny party hats. On 'rocks' one wobbles, then another. Cut to Gerald on the bed (face: sweat, sweat drop)."
+  },
+  {
+   "id": "b21",
+   "kind": "huss",
+   "speaker": "babygerald",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 1.5,
+   "visual": "The HUSSes come from inside the shelf. HUSS 1: cracks race across every rock at once (camera punch). HUSS 2: all of them jolt together and puff dust (camera shake). HUSS 3: they all burst with a white flash. Hard cut to about 20 babygeralds standing in a tidy cluster on the carpet, party hats on, all doing 'think' in sync. Iris out on Gerald (stunned). End.",
+   "pitch": 1.4
+  }
+ ],
+ "bed": true
+}

@@ -1,0 +1,527 @@
+{
+ "title": "In This Town — The Cat Did It",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town, every lie makes a raincloud pop over your head, and it rains on you until you tell the truth. I have never had a cloud, not once. Then Grandpa's birthday cake goes missing, I have frosting on my face, and I blame the cat. Every new lie makes my cloud bigger, until it floods the whole town.",
+ "twist": "I break the cloud with a paradox, 'I am lying right now', and it short-circuits and explodes into the biggest rainbow in town history. Then Mom hugs me and says 'It's okay, sweetie. I'm not mad.' Pop: the biggest thunderstorm the town has ever seen appears over HER head.",
+ "caption_hook": "in my town, if you lie, it rains on you. so I blamed the cat.",
+ "vibe": "funny",
+ "sets": [
+  "Main street on a sunny day with houses and street lamps",
+  "Town square with stage and big banner (flashback with the mayor, then Grandpa's birthday party)",
+  "Main street flooded under one giant storm cloud: dark grey sky, rain, fog, lightning flashes",
+  "Rooftops of the houses on main street (pool party, chanting townspeople)",
+  "Town square under the rainbow, back in bright sun"
+ ],
+ "newProps": [
+  "Personal raincloud: a cluster of grey spheres floating above someone's head with thin blue cylinder rain falling only under it. It scales from head-size up to town-size and has a dark thundercloud version",
+  "Lightning bolt: a yellow zigzag of thin boxes plus a white screen flash",
+  "Umbrella hat: a colored cone canopy on a thin pole strapped to the mayor's top hat",
+  "Mrs. Fennick's huge tower of purple hair: stacked boxes and spheres",
+  "Flood water: a see-through blue box plane that rises along main street up to the windows, then drains",
+  "Bathtub boat: a white rounded box tub on little sphere feet, with two plank oars",
+  "Inflatable swim rings: fat, short, brightly colored cylinders",
+  "Empty cake stand: a plate cylinder on a stem covered in tiny brown crumb boxes",
+  "Pink frosting smear: a flat pink box across my mouth",
+  "Giant blocky rainbow: an arc of six colored box segments over the clock tower",
+  "'HAPPY BIRTHDAY GRANDPA' banner swap for the town square",
+  "Briefcase and fishing hat for Mr. Pibbs"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, if you lie, a raincloud pops over your head and rains on you until you tell the truth.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:raincloud",
+     "gain": 0.55
+    },
+    {
+     "type": "thunder",
+     "at": "w:rains",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "LIE = RAIN",
+   "visual": "Main street, sunny day. A man in sunglasses tells his neighbor something with a big fake grin. Pop: a small grey cloud appears right above his head and pours rain on only him, while everyone else stays in the sun."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Five years ago, Mayor Glossy promised everyone free ice cream.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "w:free",
+     "gain": 0.4
+    },
+    {
+     "type": "pop",
+     "at": "w:cream",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "5 YEARS AGO",
+   "visual": "Flashback: the mayor in a top hat and sash stands at a podium on the town square stage with his arms wide, and the crowd cheers. Pop: a tiny thundercloud appears over his top hat."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He wears an umbrella hat now. Still no ice cream.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:umbrella",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "STILL NO ICE CREAM",
+   "visual": "Present day. The mayor walks down main street in an umbrella hat under his own little lightning storm, and it's sunny everywhere else."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Fennick asked the street if they liked her new haircut. Everyone said yes. School got cancelled. Flood.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:Everyone",
+     "gain": 0.45
+    },
+    {
+     "type": "pop",
+     "at": "w:yes",
+     "gain": 0.45
+    },
+    {
+     "type": "thunder",
+     "at": "w:Flood",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "SCHOOL: CANCELLED",
+   "visual": "A lady with an enormous tower of purple hair twirls on main street. Her neighbors give a thumbs-up with fake smiles, then pop-pop-pop-pop: a cloud appears over every single neighbor, and water rises up the street to the door handles.",
+   "markers": {
+    "hair": "w:Mrs",
+    "yes": "w:Everyone",
+    "school": "w:School",
+    "flood": "w:Flood"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Kids dance and cheer on a rooftop in the rain, celebrating no school."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Me? Never had a cloud. Not once. Top ten respect.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:cloud",
+     "gain": 0.45
+    },
+    {
+     "type": "dundun",
+     "at": "w:respect",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "Top 10 respectful moments",
+   "visual": "Me (black hoodie, white knight emblem, headphones) standing with crossed arms and sunglasses in a perfect circle of sunshine, smug, while every extra around me has their own little cloud. In the background Mom quietly carries a folded umbrella, glancing at the sky.",
+   "markers": {
+    "respect": "w:Top"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Until yesterday. Grandpa's birthday trifle went missing. All seven layers.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:missing",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "TRIFLE: MISSING",
+   "visual": "Town square party under a 'HAPPY BIRTHDAY GRANDPA' banner. Grandpa (white beard, party hat) stares at an empty trifle bowl covered in crumbs, and the whole family gasps. Mom stands to the side quietly holding a folded umbrella."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom looked right at me. I had custard on my face.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:custard",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "EVIDENCE",
+   "visual": "Mom (blocky woman, ponytail, cardigan) slowly turns with a squint face. Cut to a close-up of me with a big pink custard smear across my mouth and a sweat face."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And I said... the cat did it.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:cat",
+     "gain": 0.65
+    }
+   ],
+   "overlay": "LIE DETECTED",
+   "visual": "I point at the orange cat sitting innocently on the party table. Pop: a little grey cloud appears above my head, and one drop lands on my nose.",
+   "markers": {
+    "cat": "w:cat"
+   }
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The cat stared at me. Betrayed.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "overlay": "BETRAYED",
+   "visual": "Slow push-in on the orange cat's face in total silence."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I doubled down. The cat and the pigeon. The pigeon was the brains.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:pigeon",
+     "gain": 0.55
+    },
+    {
+     "type": "boom",
+     "at": "w:brains",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "LIE #2 + LIE #3",
+   "visual": "I point at the pigeon on the stage, and the pigeon slowly turns its head, offended. My cloud doubles in size, then triples, thunder rumbles, and rain pours on me.",
+   "markers": {
+    "pigeon": "w:pigeon",
+    "brains": "w:brains"
+   }
+  },
+  {
+   "id": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Lightning flashes and the camera shakes as my cloud swells over the whole town square. I stand there soaked, shouting."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "By lunch, my cloud covered the whole town. Mr. Biggs rowed to work in a bathtub.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:cloud",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Wide shot in dark storm lighting: one giant cloud over every rooftop, and blue water filling main street up to the windows. A man in a fishing hat rows a white bathtub past the street lamps with a briefcase on his lap.",
+   "markers": {
+    "flood": "w:By",
+    "pibbs": "w:Mr"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Goon Squad!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.65
+    },
+    {
+     "type": "scratch",
+     "at": "start+0.4",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "GOON SQUAD!",
+   "visual": "On my roof, three friends (red cap, big glasses, party hat) pose in inflatable swim rings. The stamped word slams in."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And a pool party on my roof.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "w:pool",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The Goon Squad dances in the rain, then cannonballs off the roof into the flooded street with a huge splash."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:way",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "BY THE WAY",
+   "visual": "Cut down to me standing neck-deep in water on main street with the cloud pouring straight onto my head and a sad face."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I tried to tell the truth. It was m... m... the pigeon's cousin.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:cousin",
+     "gain": 0.6
+    }
+   ],
+   "visual": "I take a deep breath, determined, then panic and point at the pigeon, who slowly turns and glares at me. A thunder clap goes off right over me.",
+   "markers": {
+    "pigeon": "w:pigeons"
+   }
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Ah, almost... almost!",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:almost",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "ALMOST!",
+   "visual": "Close-up of my sweaty face. The stamped word slams in."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The town chanted from the rooftops. Drizzao! Pella pip! Pella plonk! Soggani!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:Drizzao",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "DRIZZAO! PELLA PIP! PELLA PLONK! SOGGANI!",
+   "visual": "Soaked townspeople on every rooftop pump their fists and chant down at me. Each word stamps onto the screen.",
+   "markers": {
+    "d1": "w:Drizzao",
+    "d2": "w:pip",
+    "d3": "w:plonk",
+    "d4": "w:Soggani"
+   }
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then, genius idea. I looked up and said: I am lying right now.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "overlay": "\"I AM LYING RIGHT NOW.\"",
+   "visual": "Silence. I point straight up at the giant cloud with a determined face, and the camera tilts up into the cloud.",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:lying",
+     "gain": 0.5
+    }
+   ]
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The cloud froze. If I'm lying, it's true. If it's true, I'm lying.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:froze",
+     "gain": 0.4
+    }
+   ],
+   "overlay": "ERROR",
+   "visual": "The cloud flickers between rain and sunshine, sputters, spins in place, and sparks crackle across it. Everyone on the rooftops tilts their heads."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It spun, sparked, and exploded into the biggest rainbow in town history.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:exploded",
+     "gain": 0.75
+    },
+    {
+     "type": "cheer",
+     "at": "w:rainbow",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Boom: the cloud bursts into a giant blocky rainbow arching over the clock tower. The sun comes out, the water drains away, and the crowd cheers."
+  },
+  {
+   "id": "b23",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "I surf down main street on the bathtub as the water drains, with the cat sitting on my head and the whole town cheering under the rainbow."
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Okay. I ate the trifle. All seven layers.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Under the rainbow, sun out, I look at the camera and confess with a sheepish grin, custard still on my face. No cloud appears. The orange cat nods once, satisfied.",
+   "overlay": "CONFESSED",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:trifle",
+     "gain": 0.45
+    }
+   ]
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mom hugged me. It's okay, sweetie. I'm not mad.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Town square under the rainbow. Mom gives me a warm hug and a gentle smile.",
+   "sfx": []
+  },
+  {
+   "id": "b26",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then... pop. Biggest storm in town history.",
+   "gapAfter": 0.8,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:pop",
+     "gain": 0.6
+    },
+    {
+     "type": "thunder",
+     "at": "w:storm",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "NOT MAD",
+   "visual": "Pop: a gigantic black thundercloud appears over Mom's head, lightning everywhere and the sky going dark. Mom keeps smiling while I slowly back away with a shocked face. Screen shake."
+  }
+ ]
+}

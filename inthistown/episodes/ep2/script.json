@@ -1,0 +1,329 @@
+{
+ "title": "In This Town — Bingo",
+ "lead_in": 0.3,
+ "voices": {
+  "cat": [
+   "af_nicole",
+   0.75,
+   "en-us",
+   null
+  ],
+  "mayor": [
+   "bm_george",
+   0.95,
+   "en-gb",
+   null
+  ]
+ },
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody my age goes out partying.",
+   "music": "party",
+   "markers": {
+    "tagAge": "start+0.2"
+   },
+   "gapAfter": 0.2
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me.",
+   "music": "muffled",
+   "markers": {
+    "tagMe": "w:me"
+   },
+   "gapAfter": 0.25
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Gerald's ninety-one. DJ name: Hip Replacement.",
+   "music": "party",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "tagDJ": "w:DJ"
+   },
+   "gapAfter": 0.25
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I train for bingo.",
+   "music": "muffled",
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "A spoon is just a bowl that believes in itself. A fork. Jealous.",
+   "pauses": [
+    0.35,
+    0.15
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "A spoon is just a bowl that believes in itself.",
+    "by": "a fork, jealous"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "quote1end": "end+0.25"
+   },
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I count to ninety. In random order.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "tag5am": "start"
+   },
+   "gapAfter": 0.25
+  },
+  {
+   "id": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The cat napped on my card. He's a Dalmatian now.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "dalmatian": "w:Dalmatian"
+   },
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b10",
+   "kind": "quote",
+   "speaker": "cat",
+   "text": "Hiss.",
+   "markers": {
+    "hissCat": "start"
+   },
+   "gapAfter": 0.6,
+   "ph": "hˈɪsːːː."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Never trust a pigeon in a hat. A pigeon in a hat.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Never trust a pigeon in a hat.",
+    "by": "a pigeon in a hat"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "quote2end": "end+0.25"
+   },
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Bingo Final.",
+   "music": "party",
+   "markers": {
+    "wednesday": "start"
+   },
+   "gapAfter": 0.2
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Eighty cards. Even the pigeon laughed.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "cards80": "start",
+    "pigeonLaugh": "w:pigeon"
+   },
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "end+0.05",
+     "gain": 0.75
+    }
+   ],
+   "gapAfter": 0.9
+  },
+  {
+   "id": "b14",
+   "kind": "quote",
+   "speaker": "mayor",
+   "text": "First number...",
+   "gapAfter": 0.3
+  },
+  {
+   "id": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Eighty bingos. Zero numbers.",
+   "music": "none",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "counter": "start"
+   },
+   "gapAfter": 0.45
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Silence is applause on airplane mode. My hearing aid.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Silence is applause on airplane mode.",
+    "by": "my hearing aid"
+   },
+   "markers": {
+    "quote3": "start-0.05",
+    "quote3end": "end+0.1",
+    "cheer": "end+0.05"
+   },
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "end+0.05",
+     "gain": 0.8
+    }
+   ],
+   "gapAfter": 0.7
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: the mayor removed his hat.",
+   "music": "party",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "top7": "w:Number"
+   },
+   "gapAfter": 0.3
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Number one: his hair.",
+   "markers": {
+    "top1": "start"
+   },
+   "gapAfter": 0.5
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Banned for life.",
+   "markers": {
+    "banned": "start"
+   },
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The mayor? Dalmatian now.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "dalmatianMayor": "w:Dalmatian"
+   },
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b22",
+   "kind": "quote",
+   "speaker": "mayor",
+   "text": "Hiss.",
+   "markers": {
+    "hissMayor": "start"
+   },
+   "gapAfter": 0.6,
+   "ph": "hˈɪsːːː."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now I crowd-surf on Wednesdays.",
+   "music": "party",
+   "gapAfter": 0.2
+  },
+  {
+   "id": "b24",
+   "kind": "huss",
+   "speaker": "town",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.35
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Bingo.",
+   "markers": {
+    "bingo": "start"
+   },
+   "gapAfter": 1.4
+  }
+ ],
+ "bed": true
+}

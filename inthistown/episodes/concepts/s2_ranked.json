@@ -1,0 +1,3180 @@
+{
+ "ranked": [
+  {
+   "title": "Staff Only",
+   "logline": "In this town the sky is a painted wall you can bonk into. When a kid follows his cat through a crack in the clouds, he finds a STAFF ONLY door, a control room full of levers, and the pigeon who runs the whole world. Then he floats the entire town by accident.",
+   "twist": "After he saves the town by switching everything off and on again, he spots the very last lever. Its label reads THE PERSON WATCHING THIS, and it's switched ON. The pigeon turns to the camera and reaches for it. 'So, uh... don't scroll.' Hard cut to static.",
+   "caption_hook": "the sky in my town has a STAFF ONLY door",
+   "new_props": [
+    "giant painted sky wall: huge flat blue panel that curves around the town, flat white box clouds, flat orange disc sun, a crooked painted bird",
+    "glowing crack in the sky wall (thin bright white sliver)",
+    "small door set into the sky wall with a glowing white outline and a STAFF ONLY sign plate",
+    "control room interior: big dark box room",
+    "lever wall: long box panels with rows of cylinder levers, each with a glowing label plate (SUNRISE, RAIN, TUESDAY, red GRAVITY (DO NOT TOUCH), and one last lone lever: THE PERSON WATCHING THIS)",
+    "bank of glowing monitor boxes showing the town from above",
+    "big spinny chair (cylinder base, box seat and back)",
+    "headphones and sunglasses sized for the pigeon",
+    "huge red MAIN switch with a box handle",
+    "red alarm light that floods the room",
+    "small personal rain cloud: dark gray spheres dripping blue cylinder raindrops",
+    "white sphere baseball",
+    "BAKERY sign for one house",
+    "houses and townspeople lifting off the ground (float animation)"
+   ],
+   "sets": [
+    "main street (day, then dusk) ending at the painted sky wall",
+    "town square stage with the big banner reading SKY RULES (day)",
+    "bedroom interior redressed as Mr. Finch's living room",
+    "edge of town by the painted sunset",
+    "park with table and tree at dusk, by the sky wall",
+    "control room behind the sky (new interior built from boxes)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, if you walk far enough in any direction, you bonk into the sky.",
+     "visual": "Day, main street. The kid (red cap, yellow hoodie) walks to the end of the road, where the houses stop and the road runs straight into a giant flat painted wall: blue sky, white box clouds, an orange disc sun. He walks face-first into it. Camera shake, the wall wobbles.",
+     "music": "lofi",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "BONK."
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid staggers back rubbing his forehead (face: shocked). A punch-in on each HUSS; a painted cloud comes loose and tilts sideways.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "It's a wall. A painted wall. Clouds, sunset, one very lazy bird.",
+     "visual": "Wide crane up: the painted wall curves all the way around the town like a giant fence. Then a close-up of a flat painted bird stuck mid-flap, slightly crooked.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "The grown-ups have three rules. Don't touch the sky. Don't peel the sky. And never, ever knock on the sky.",
+     "visual": "Town square, day. The mayor (top hat, sash) points from the stage under the big banner reading SKY RULES. A stamped card pops in for each rule.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding"
+     ],
+     "overlay": "1. DON'T TOUCH  2. DON'T PEEL  3. NEVER KNOCK"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Finch peeled a corner once. Now it rains on him. Only him. Indoors.",
+     "visual": "Mr. Finch's living room (redressed bedroom). Mr. Finch (gray mustache, glasses, cardigan) sits at a table sipping from a mug, deadpan, while a small dark-gray sphere cloud hovers over his head and drips blue cylinder raindrops on him.",
+     "music": "same",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "INDOORS."
+    },
+    {
+     "kind": "line",
+     "text": "Becky threw a baseball at the sunset. It came back. Signed.",
+     "visual": "Edge of town at the painted sunset. Becky (pigtails, green jersey) winds up and throws a white sphere baseball at the orange sun disc. It bounces off the wall and drops right back into her hands.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It said, nice arm. Love, Management.",
+     "visual": "Close-up of the ball in Becky's hands, then the quote card slams in.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "\"Nice arm.\" \u2014 Management"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Becky stunned. Behind her, a crowd of extras slowly turns to look up at the sky wall, one punch-in per HUSS.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Yesterday my cat squeezed through a crack in the sky behind the park.",
+     "visual": "Dusk at the park. The orange cat trots past the table and the tree to the sky wall and squeezes into a thin glowing crack in the painted clouds.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I followed him. Behind the crack, there was a tiny door. It said, Staff Only.",
+     "visual": "The kid peers into the crack (face: squint). Reveal: a small door set into the painted sky, outlined in glowing white light, with a sign plate.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "STAFF ONLY"
+    },
+    {
+     "kind": "line",
+     "text": "So obviously, I went in.",
+     "visual": "The kid looks straight at the camera, shrugs (shrug pose) and pushes the door open. White light floods the screen.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "A giant control room. Hundreds of levers. Sunrise. Rain. Tuesday. Gravity, do not touch.",
+     "visual": "A huge dark control room: a long wall of cylinder levers on box panels, each with a glowing label plate (SUNRISE, RAIN, TUESDAY, and in red, GRAVITY (DO NOT TOUCH)). Rows of glowing monitors show the town from above. The camera pans along the labels as they're named.",
+     "music": "night",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And in the big spinny chair, wearing headphones... a pigeon.",
+     "visual": "A big spinny chair facing the monitors slowly turns around to reveal the pigeon in chunky headphones and sunglasses.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Staredown: alternating punch-ins between the kid (face: shocked) and the pigeon. On the sixth HUSS the pigeon's sunglasses slide down its beak.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "I screamed. He screamed. I fell backwards, right onto Gravity.",
+     "visual": "The kid (face: shocked) and the pigeon (flapping) both scream. The kid falls backwards and his elbow slams the GRAVITY lever. It flips, and red alarm light floods the room.",
+     "music": "same",
+     "sfx": [
+      "scratch",
+      "siren"
+     ],
+     "overlay": "GRAVITY: OFF"
+    },
+    {
+     "kind": "line",
+     "text": "Outside, the whole town floated up. The bakery. The mayor. Mr. Finch and his little rain cloud.",
+     "visual": "Main street at dusk: houses lift off the ground (one labeled BAKERY), the mayor drifts past upside down holding his top hat, Mr. Finch floats by still sitting in his chair under his rain cloud, and extras drift up flat in crowdSurf pose.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I grabbed Sunrise to steady myself. Then Tuesday. It was Tuesday three times.",
+     "visual": "Control room: the kid grabs SUNRISE, then TUESDAY. On the monitors the sky flashes day, night, day, night. A counter stamps up.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding"
+     ],
+     "overlay": "TUESDAY x3"
+    },
+    {
+     "kind": "line",
+     "text": "Then I remembered how my mom fixes the TV. I switched everything off... and on again.",
+     "visual": "The kid (face: determined) grabs a huge red MAIN switch with both hands and pulls it down. Total blackout. He pushes it back up and the lights blink back on one by one.",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "ding"
+     ],
+     "overlay": "OFF... AND ON AGAIN"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone landed. The pigeon gave me a slow clap. With wings.",
+     "visual": "Main street: every house and townsperson drops back down with a bump and dusts themselves off. Cut back to the control room, where the pigeon slow-claps its wings from the spinny chair.",
+     "music": "lofi",
+     "sfx": [
+      "thump",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid in cheer pose (face: grin). The monitors behind him show the townspeople cheering. A punch-in on the pigeon nodding with each HUSS.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Then I saw the very last lever. It wasn't labeled rain, or sky.",
+     "visual": "The camera tracks slowly down the lever wall, past dozens of labels, to the very last lever at the far end, glowing alone in the dark.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "It said, the person watching this. And it's switched on.",
+     "visual": "Close-up of its glowing label plate: THE PERSON WATCHING THIS. The lever is in the ON position. The pigeon slowly turns and looks straight into the camera.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "THE PERSON WATCHING THIS: ON"
+    },
+    {
+     "kind": "line",
+     "text": "So, uh... don't scroll.",
+     "visual": "The pigeon's wing slowly reaches for the lever. The kid leans into the camera and whispers (face: sweat). Hard cut to static.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "DON'T SCROLL"
+    }
+   ],
+   "vibe": "unknown",
+   "id": "unknown-1",
+   "score": 38.37,
+   "notes": [
+    "Make the ending loop. Let the static resolve into the opening shot of the kid walking toward the painted wall, so the video plays straight into itself and the 'don't scroll' line drives rewatches. Also simplify 'It was Tuesday three times' to 'It was Tuesday. Then Tuesday again,' which a kid will follow faster.",
+    "Pay off rule three, 'never knock on the sky', which is set up and then dropped. As the pigeon reaches for the viewer lever, have it tap knock-knock-knock on the inside of the camera glass. Bring the cat back too, curled on the pigeon's lap in the spinny chair, so both dangling setups land in the final beat.",
+    "Rule three, 'never, ever knock on the sky', is set up but never paid off. Have the kid knock on the STAFF ONLY door to get in (knock SFX \u00d73, the pigeon calls 'Come in'). Then end on three knocks over the final static, as if from inside the viewer's screen. Also put the cat on the pigeon's lap in the control room so it doesn't vanish from the story."
+   ]
+  },
+  {
+   "title": "Zero Aura",
+   "logline": "In this town everyone has a glowing aura number floating over their head. The narrator has the lowest score in town, and after tripping on stage it drops to one point, a step away from turning gray forever. Then they find the one cheat code nobody has tried: not caring.",
+   "twist": "The whole town copies the 'I don't care' trick, but they're all lying, so they all drop to zero and turn gray. The kid finally takes the golden throne. Then a pigeon lands on their head with TWO MILLION aura, because the pigeon has never cared about anything in its life.",
+   "caption_hook": "my aura hit 1 so i tried the one thing nobody in this town has ever done",
+   "new_props": [
+    "glowing aura number tags floating above every character's head (gold for positive, red when dropping, dim when low, '0' when gone)",
+    "thin gold halo ring (flat cylinder) under each number tag",
+    "golden throne on the town square stage (gold boxes, red cushion box, two sphere knobs, light beams behind it)",
+    "'AURA KING' banner on the town square stage",
+    "falling phone (thin black box with glowing screen)",
+    "school photo camera on a tripod (box body, cylinder lens, three thin cylinder legs) with a white flash burst",
+    "gray NPC versions of the townspeople (gray skin and gray clothes, no number tag)",
+    "giant glowing '1,000,000' made of gold boxes towering over the square, with vertical light beams",
+    "'2,000,000' giant tag over the pigeon, much bigger than the kid's"
+   ],
+   "sets": [
+    "town main street (day)",
+    "park with table and tree (day)",
+    "town square with stage and banner (day)",
+    "kid's bedroom (night)",
+    "town square (dusk), filled with gray townspeople walking in a circle"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, everyone has a glowing number floating over their head.",
+     "visual": "Slow push down main street on a sunny day. Every townsperson has a glowing gold number hovering over their head: 4,210, 880, 15,300. Extras walk and wave.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Your aura.",
+     "visual": "Snap zoom onto one townsperson's glowing number tag as it pulses brighter.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "AURA"
+    },
+    {
+     "kind": "line",
+     "text": "Do something cool, it goes up. Do something cringe, it goes down.",
+     "visual": "Two quick cuts. A kid does dance2 and their number flicks up in green. Then a man in a bowtie trips into the stunned pose and his number drops in red.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "record scratch"
+     ],
+     "overlay": "COOL = UP / CRINGE = DOWN"
+    },
+    {
+     "kind": "line",
+     "text": "Highest aura in town gets the golden throne.",
+     "visual": "Town square stage. A glowing golden throne sits under an 'AURA KING' banner, gold light beams behind it, sparkles drifting.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Kevin caught a falling phone without even looking. Plus five hundred.",
+     "visual": "Park. Kevin (sunglasses, red hoodie, smug face) leans on the tree. A phone slides off the table and his hand snaps out and catches it while he keeps staring the other way. His tag flies up: +500.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "ding"
+     ],
+     "overlay": "+500"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Patel waved back at someone who wasn't waving at him. Minus two thousand.",
+     "visual": "Main street. Mr. Patel (mustache, green sweater) waves happily at a woman, but she's waving at someone behind him. He freezes mid-wave with a sweat face, and his tag crashes down in red.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "-2,000"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms, closer each time, on Mr. Patel's frozen sweaty face and hand still raised. Small camera shake.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "And if your aura ever hits zero, you turn gray and walk in circles forever, saying, 'nice weather today.'",
+     "visual": "Main street at dusk. Gray townspeople with no number tags shuffle slowly in a circle around a street lamp, sleepy faces. One slowly turns its head to the camera.",
+     "music": "muffled",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Me? I had twelve. The lowest in town.",
+     "visual": "Kid's bedroom at night. The narrator (tan skin, messy black hair, yellow hoodie, blue cap on backwards) sits on the bed with a sad face. A tiny, dim '12' flickers over their head.",
+     "music": "lofi",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Because I sneezed during the school photo.",
+     "visual": "Flashback in the town square. A row of smiling kids faces the tripod camera. The flash fires white just as the narrator sneezes (surprised face, head snapped forward). Their number plummets.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "-300"
+    },
+    {
+     "kind": "line",
+     "text": "Yesterday, something went terribly wrong. I tripped on the stage in front of the whole town.",
+     "visual": "Town square, day, with a crowd watching. The narrator walks across the stage, catches a foot and falls flat on their face (crowdSurf pose). The crowd switches to shocked faces.",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "My number started dropping. Twelve. Eight. Three...",
+     "visual": "Close on the narrator lying face-down. The red number over their head ticks down in big jumps, flickering.",
+     "music": "none",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding"
+     ],
+     "overlay": "12... 8... 3..."
+    },
+    {
+     "kind": "line",
+     "text": "One.",
+     "visual": "Extreme close-up on a single flickering red '1' over the narrator's head, dark vignette closing in.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "1"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap cuts on shocked faces in the crowd: Kevin lowering his sunglasses, Mr. Patel, a grandma covering her mouth.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "One aura point left. Everyone backed away like I was contagious.",
+     "visual": "Wide shot. The crowd shuffles backward and makes a big empty ring around the stage. Some peer, some cross their arms.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then I figured it out. The coolest thing you can do... is not care.",
+     "visual": "Slow push in on the narrator still lying on the stage. Their face changes from sad to determined, then to a small smug smile.",
+     "music": "lofi",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "So I lay there, looked up at the sky, and said, 'I don't care about aura.'",
+     "visual": "Top-down shot. The narrator rolls onto their back on the stage, arms behind their head, sleepy content face, clouds drifting over. The '1' wobbles.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "My number exploded. One. Million.",
+     "visual": "The '1' bursts into a giant glowing gold '1,000,000' towering over the town square, with vertical light beams. The crowd gets blown back into stunned poses.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "cheer"
+     ],
+     "overlay": "1,000,000"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Fast cuts: the narrator jumps up and dances on stage under the gold beams, the crowd's jaws drop, Kevin's sunglasses fall off, Mr. Patel claps, camera shake on the giant number.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone wanted my secret. So the whole town shouted, 'I don't care about aura!'",
+     "visual": "The whole crowd faces the sky with fists up (cheer pose), shouting together, determined faces.",
+     "music": "same",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "But they were lying. Zero. Zero. Zero.",
+     "visual": "Down the line of the crowd, each number tag pops to a red '0', one after another, and each person turns gray as it hits.",
+     "music": "none",
+     "sfx": [
+      "pop",
+      "pop",
+      "pop"
+     ],
+     "overlay": "0"
+    },
+    {
+     "kind": "line",
+     "text": "Now the whole town walks in circles, saying 'nice weather today.'",
+     "visual": "Town square at dusk. The entire gray town shuffles slowly in one huge circle around the stage, sleepy faces.",
+     "music": "muffled",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And me? I finally sat on the golden throne. Highest aura in town.",
+     "visual": "The narrator lounges on the golden throne with a smug face and the gold '1,000,000' glowing above them. The gray crowd circles slowly below.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then a pigeon landed on my head. Its number? Two million.",
+     "visual": "The pigeon flutters down and lands right on the narrator's cap. A massive '2,000,000' tag appears above the pigeon and dwarfs the kid's. The narrator's face goes shocked.",
+     "music": "none",
+     "sfx": [
+      "whoosh",
+      "ding"
+     ],
+     "overlay": "2,000,000"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms on the pigeon staring blankly into the camera, completely unbothered.",
+     "music": "party"
+    }
+   ],
+   "vibe": "trend",
+   "id": "trend-1",
+   "score": 36.63,
+   "notes": [
+    "The pigeon's 2,000,000 lands well but isn't set up. Put the pigeon in the opening street shot with a blurry '???' tag, sitting completely unbothered while everyone else chases points. The final reveal then pays off on a rewatch and clinches the 'never cared' logic.",
+    "Keep the rule consistent at the end. When the kid lounges smugly on the throne, his 1,000,000 should start ticking down ('...wait, do I care now?') just as the 2,000,000 pigeon lands. The twist then lands as an earned lesson instead of a random topper, and the kid no longer wins cleanly while the whole town stays gray.",
+    "Plant the pigeon. Show it in 2\u20133 early shots with its number tag cropped just out of frame. When the kid lies face-down at 1 point, have the pigeon waddle past and blankly ignore everything, and have the kid copy its stare. That's where he learns not to care, so the 2,000,000 reveal pays off a setup instead of coming out of nowhere."
+   ]
+  },
+  {
+   "title": "Tape Duty",
+   "logline": "In this town there is a crack in the sky, and every night at midnight something tries to push it open. Families take turns climbing the clock tower to tape it shut. On the narrator's first solo shift the tape roll turns out to be empty, and the only thing left to stop giant grey fingers is Grandma's legendary chewing gum.",
+   "twist": "The kid seals the crack, then breaks the one rule: never look inside. On the other side, a small grey figure is taping the crack shut from their end and whispers, 'Phew. The monsters almost got in.' The monsters are us.",
+   "caption_hook": "we've been taping the sky shut for 5 years and nobody asked WHY",
+   "new_props": [
+    "Sky crack: a jagged zigzag of thin glowing purple boxes on the night sky above the clock tower, which pulses brighter with each knock",
+    "Tape strips: wide flat pale-yellow boxes stuck across the crack, which can peel off one by one",
+    "Giant tape roll: a fat pale-yellow cylinder with a darker inner cardboard cylinder (the empty version is just the brown cardboard tube)",
+    "Absurdly tall ladder: two very long thin boxes with rungs reaching from the clock tower into the clouds",
+    "Wrapping paper patch: a red box over part of the crack with green stripe boxes and a bow made of two cones",
+    "Pigeon sunglasses: two tiny black boxes on the pigeon's face",
+    "Giant grey fingers: four huge segmented grey box fingers with too many knuckle joints, which curl over the edge of the crack",
+    "Pocket items: a folded paper box (homework), a striped sock, and a small pink pack of gum",
+    "Gum blob: a cluster of pink spheres smeared across the crack, plus thin pink cylinder strings",
+    "Mayor stuck to the picnic table: pink gum strings between his trousers and the park bench",
+    "Pickle jar: a green-lidded cylinder next to Dad on the floor",
+    "Tiny grey figure on the other side: a small dim grey blocky character with a little tape roll, seen through the last sliver of the crack",
+    "Banner text in the square: TAPE DUTY ROTA with family names"
+   ],
+   "sets": [
+    "Town main street, quiet night preset with fog and the purple crack in the sky",
+    "Clock tower top at night: the kid standing at the edge under the crack, clock face reading 11:58",
+    "Flashback: clock tower in day preset with the giant ladder",
+    "Town square with stage and banner reading TAPE DUTY ROTA",
+    "Park with picnic table and tree, day preset (mayor gag)",
+    "Kid's bedroom interior (Dad on the floor)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, there's a crack in the sky.",
+     "visual": "Wide night shot over foggy rooftops. Above the clock tower, a jagged glowing purple crack splits the sky, covered in giant strips of yellow tape.",
+     "music": "night",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And every night at midnight, something tries to push it open.",
+     "visual": "The crack bulges outward and the tape strips strain. A curtain in a house window snaps shut.",
+     "music": "same",
+     "sfx": [
+      "knock"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The clock tower hits midnight. Purple light flashes from the crack on every HUSS while giant grey fingertips poke through between the tape strips. Extras on the street dive indoors, shocked faces, and the camera shakes.",
+     "overlay": "12:00",
+     "music": "party",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago, Mr. Hamble tried to fix the clock tower with a very tall ladder.",
+     "visual": "Day flashback: a ridiculously tall ladder stretches up the clock tower into the clouds. Mr. Hamble (cap, grey mustache, overalls) climbs at the top, smug face.",
+     "overlay": "5 YEARS AGO",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Too tall. He bumped the sky. Crack.",
+     "visual": "The top of the ladder taps the sky and a purple crack zigzags out across it. Mr. Hamble turns to camera, shocked face.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So now, every night, one family gets Tape Duty.",
+     "visual": "The town square at dusk under a banner reading TAPE DUTY ROTA. The mayor hands a giant tape roll to a family like a trophy. They clap without much enthusiasm.",
+     "overlay": "TAPE DUTY",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Climb the tower. Tape the crack. Never, ever look inside.",
+     "visual": "A rules card appears line by line over a shot of the clock tower top with the crack overhead.",
+     "overlay": "RULE 1: CLIMB. RULE 2: TAPE. RULE 3: NEVER LOOK INSIDE.",
+     "music": "night",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Pell ran out of tape and used wrapping paper. The sky was festive for a week.",
+     "visual": "The crack is covered with red-and-green striped wrapping paper and a giant bow. Mrs. Pell (curly red hair, glasses) stands below, thumbs up, grin face.",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Coach Dennis sneezed into it once. Something sneezed back.",
+     "visual": "Coach Dennis (tracksuit, cap, whistle chain) sneezes up at the crack. A beat later, a gust blasts out of it and blows his cap away. He freezes, stunned.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The pigeon flew in there once. He came back wearing sunglasses. He won't talk about it.",
+     "visual": "The pigeon sits alone on a park bench wearing tiny sunglasses, staring into the distance and not moving.",
+     "music": "none"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The camera zooms in three times, one step per HUSS, until the pigeon slowly turns its head to the lens.",
+     "overlay": "\"coo.\" \u2014 the pigeon",
+     "music": "party",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Last night was our turn. But Dad pulled his back opening a jar.",
+     "visual": "Bedroom: Dad (brown beard, flannel shirt) lies flat on the floor in the crowdSurf pose, sweat face, an unopened pickle jar beside him. The kid (yellow raincoat, black hair) stands over him and crosses his arms.",
+     "overlay": "OUT OF ACTION",
+     "music": "muffled"
+    },
+    {
+     "kind": "line",
+     "text": "So it was me. Alone. Up the clock tower. At eleven fifty-eight.",
+     "visual": "Clock tower top at night: the kid stands at the edge in swirling fog, giant tape roll under one arm, the purple crack humming overhead. The clock face below reads 11:58.",
+     "overlay": "11:58",
+     "music": "night",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I pulled out the tape. Empty roll. Just cardboard.",
+     "visual": "Close-up: the kid lifts the roll and it is just a brown cardboard tube. He looks through it at the camera, shocked face.",
+     "overlay": "EMPTY",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Knock. Knock. Knock.",
+     "visual": "The crack pulses purple with each knock, and with each knock another tape strip peels off and flutters away into the fog.",
+     "music": "none",
+     "sfx": [
+      "knock",
+      "knock",
+      "knock"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The crack got wider. Giant fingers slid through. Long, grey, and way too many knuckles.",
+     "visual": "The crack splits wider. Four huge segmented grey fingers slide out and curl over its edge, every joint bending. Purple light pours down on the kid and the camera shakes hard.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "All I had in my pockets was homework, a sock, and Grandma's chewing gum.",
+     "visual": "Top-down shot of the kid's hands emptying his pockets: folded homework, a striped sock, a little pink pack of gum. The pack gets a glint.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grandma's gum is famous. The mayor's been stuck to that picnic table since spring.",
+     "visual": "Day cutaway in the park: the mayor (top hat, sash) sits on the picnic table bench, pink gum strings holding him in place. He waves sadly while leaves blow past.",
+     "music": "lofi",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I chewed all twelve pieces at once. And I gummed that sky shut.",
+     "visual": "Back on the tower the kid chews with puffed cheeks, squint face, then leaps and slams a giant pink blob onto the crack, slam pose. The fingers flinch.",
+     "music": "night",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "With each HUSS the kid smears more pink gum along the crack, the grey fingers yank back inside, and the crack seals shut piece by piece. Town lights flick on and neighbours cheer from their windows.",
+     "overlay": "SEALED!",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Midnight. Silence. I did it.",
+     "visual": "Clock face reads 12:00. The kid stands in a cheer pose on the tower top, the crack now a quiet pink scar glowing softly. The fog clears.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then I broke rule three. I looked inside.",
+     "visual": "The kid leans in close to one last tiny sliver in the crack, peer pose, one eye to the gap. Slow push in.",
+     "overlay": "RULE 3",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Phew. The monsters almost got in.",
+     "visual": "Through the sliver, a dim purple space. A small grey blocky figure with too many knuckles presses a strip of tape over the crack from their side, sweat face, wiping its brow. Voiced by a second, small whispery character voice.",
+     "overlay": "\"Phew. The monsters almost got in.\" \u2014 the other side",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "The monsters. They meant us.",
+     "visual": "Slow pull back from the kid's frozen, shocked face, out past the tower and the tiny glowing town below, to the sealed crack in the black sky. Hold, then cut to black.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    }
+   ],
+   "vibe": "spooky",
+   "id": "spooky-2",
+   "score": 36.53,
+   "notes": [
+    "The script runs about 270 words, over the 240 cap. Cut the Mr. Hamble ladder origin to one line, \"Five years ago someone bumped the sky with a ladder,\" and drop the Coach Dennis sneeze gag. That gets the kid up the tower by about 40 seconds and keeps the pigeon-with-sunglasses beat, which is the best gag.",
+    "The twist has a logic gap: if a small grey figure is taping the crack from their side, who was knocking and pushing with giant fingers? Show that the fingers belonged to the grey kid's grown-up holding it shut. Change the whisper to 'Phew. The ladder monsters almost got in again.' That ties the reveal back to Mr. Hamble's ladder bumping their world five years ago.",
+    "Move the gag about Grandma's gum and the mayor stuck to the picnic table into the rules montage, next to the wrapping paper and the sneeze. Right now it is explained in the middle of the climax, which stalls the tension. Planted early, the gum becomes a payoff the viewer sees coming. Also keep the other-side figure huge (only one giant grey eye and hand at the sliver) so its scale matches the fingers."
+   ]
+  },
+  {
+   "title": "The 3:33",
+   "logline": "Every night at 3:33 a glowing train with no tracks floats down Main Street, and nobody who boards comes back the same. When a kid's cat strolls on board, he dives in after it, past windows into other versions of town, and pulls the emergency stop to get home.",
+   "twist": "He gets off on his own street, but the clock tower ticks backwards, neighbors say goodbye when they arrive, and his cat has a white paw it never had. At 3:33 the train glides past again, and in the window, waving and holding his real cat, is him.",
+   "caption_hook": "never get on the 3:33. my cat did.",
+   "new_props": [
+    "long silver floating train with no wheels (rounded boxes), rows of glowing yellow windows, cylinder headlight with a cone beam, red tail lights",
+    "fog layer on the street",
+    "train interior: long glowing carriage corridor with box seats and window panels",
+    "three window scenes: green panel with a blocky long-neck dinosaur walking between houses; blue panel with bubble spheres and a box fish swimming past a street lamp; gray panel with pigeons in tiny hats at a bus stop",
+    "tiny conductor's cap for the cat (short cylinder with a brim)",
+    "sandwich (stacked thin boxes)",
+    "big red EMERGENCY STOP lever with a cylinder handle, sparks (small glowing spheres), red flashing light",
+    "knee-length white beard (long tapered box) for Grandpa Otto",
+    "book stacks and a desk for the library (boxes)",
+    "bright white paw on the cat",
+    "clock tower hands animated to spin backwards and set to 3:33",
+    "second identical kid (same outfit) in a train window"
+   ],
+   "sets": [
+    "main street at quiet night with fog, and the clock tower",
+    "main street by day (Otto's return)",
+    "park bench by day",
+    "bedroom interior redressed as the library",
+    "the kid's bedroom at night, window looking out on the street",
+    "train interior (new, built from boxes)",
+    "main street at dusk (the wrong home)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, a train comes through at 3:33 every night. There are no tracks.",
+     "visual": "Quiet night, fog on main street. Close-up of the clock tower as it hits 3:33. Then a long silver train with glowing yellow windows and a big headlight glides down the middle of the street, floating a meter off the ground. No tracks.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "3:33"
+    },
+    {
+     "kind": "line",
+     "text": "It just floats down Main Street, glowing, without making a sound.",
+     "visual": "Low angle from the sidewalk: the train slides silently past the houses. The street lamps flicker as it passes, and its headlight beam sweeps through the fog.",
+     "music": "same"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Glowing windows whip past the camera, one per HUSS, each with a dark passenger silhouette inside.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Nobody who gets on comes back the same.",
+     "visual": "The train stops. A door slides open onto pure white light. Nobody is inside.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grandpa Otto rode it once. He came back twelve seconds later with a beard down to his knees.",
+     "visual": "Main street by day. Grandpa Otto (bald, glasses) steps off the train with an enormous white beard reaching his knees, beaming (face: grin).",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "12 SECONDS LATER"
+    },
+    {
+     "kind": "line",
+     "text": "He says it was the best vacation of his life. He won't say where.",
+     "visual": "Park bench: Otto sits with his huge beard (face: smug) and holds a finger to his lips. A kid leans in to ask, and Otto turns away.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Lacey came back speaking only in rhymes. She's a librarian. It's a problem.",
+     "visual": "The library (redressed bedroom with book-stack boxes). Mrs. Lacey (glasses, gray bun, cardigan) at her desk, finger raised at a kid. The quote card slams in.",
+     "music": "same",
+     "sfx": [
+      "laugh"
+     ],
+     "overlay": "\"This book is late, and that's a crime. Return it now, or pay a dime.\" \u2014 Mrs. Lacey"
+    },
+    {
+     "kind": "line",
+     "text": "So the rule is simple. When the train stops, you stay inside, and you don't look.",
+     "visual": "Night. Up and down the street, house windows go dark one by one as the curtains close. In his bedroom, the kid pulls the blanket over his head while his window glows white.",
+     "music": "night"
+    },
+    {
+     "kind": "line",
+     "text": "Last night it stopped outside my house. And my cat walked right on board.",
+     "visual": "POV from the bedroom window: the train idles outside with its door open, white light spilling across the road. The orange cat strolls across the street and hops up the steps inside.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid (pajamas, face: shocked) presses his face to the window while the train door slides shut, a punch-in on each HUSS.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "I grabbed my backpack and dove through the doors right before they closed.",
+     "visual": "The kid in pajamas and a backpack sprints across the foggy street and dives through the closing doors, which slam shut behind him.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Inside, every window showed a different version of our town.",
+     "visual": "Inside the train: a long glowing carriage of seats, and every window along both sides glows a different color.",
+     "music": "night"
+    },
+    {
+     "kind": "line",
+     "text": "One with dinosaurs. One underwater. One where everyone is a pigeon.",
+     "visual": "Tracking past three windows: green, with a blocky long-neck dinosaur walking between houses; blue, with bubbles and a box fish swimming past a street lamp; gray, with pigeons in tiny hats waiting at a bus stop.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "pop",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And at the very back, in a tiny conductor's hat, eating a sandwich... my cat.",
+     "visual": "At the back of the carriage, the orange cat sits on a seat in a tiny conductor's cap, holding a stacked sandwich.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He looked at me like I was the one who was late.",
+     "visual": "Close-up of the cat: a slow, unimpressed squint. The kid stares back (face: neutral).",
+     "music": "same"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Staredown between the kid and the cat, alternating punch-ins.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "I scooped him up and yanked the emergency stop.",
+     "visual": "The kid tucks the cat under one arm and yanks a big red EMERGENCY STOP lever. Sparks, flashing red light, camera shake.",
+     "music": "none",
+     "sfx": [
+      "scratch",
+      "boom"
+     ],
+     "overlay": "EMERGENCY STOP"
+    },
+    {
+     "kind": "line",
+     "text": "The doors opened. My street. My house. Home.",
+     "visual": "Main street at dusk. The doors open and the kid steps off hugging the cat (face: smile). His house and the street lamps all look normal.",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Except the clock tower was ticking backwards. And everyone said goodbye when they arrived.",
+     "visual": "Close-up of the clock tower as its hands spin backwards. A neighbor walks up to the kid, waving cheerfully.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "GOODBYE!"
+    },
+    {
+     "kind": "line",
+     "text": "And my cat? My cat doesn't have a white paw.",
+     "visual": "Close-up of the cat in his arms: one paw is bright white. The cat slowly turns its head to the camera and winks.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "At 3:33, the train came back. And in the window, waving at me, holding my cat... was me.",
+     "visual": "Night and fog. The clock tower reads 3:33 as the train glides past the kid. In one glowing window stands another kid in the identical outfit, waving and holding the real orange cat (no white paw). Our kid is stunned (stunned pose).",
+     "music": "night",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "3:33"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The train's red tail lights shrink into the fog, one punch-in per HUSS. On the last one, the white-paw cat in his arms slowly grins.",
+     "music": "same"
+    }
+   ],
+   "vibe": "unknown",
+   "id": "unknown-2",
+   "score": 35.63,
+   "notes": [
+    "Show the wrong-world clues instead of telling them. Have Mrs. Lacey actually speak a rhyme in a second voice, and have the neighbor say \"Bye!\" out loud as he walks up. The 'everyone said goodbye when they arrived' clue then lands immediately for a young viewer before the white-paw reveal.",
+    "Make the twist rewatchable and easier to follow. Show the conductor cat's white paw holding the sandwich, with no narration, so sharp viewers catch it the first time. Change the line to 'My cat never had a white paw'. Heard at speed, the current wording sounds like it describes the cat in his arms.",
+    "The middle has no complication: he boards, finds the cat and pulls the stop. Add one escalating beat before the emergency stop. For example, the window towns get stranger and closer to home (his own house, but with a different kid inside), and the cat refuses to come. That gives the stop real stakes and quietly sets up the swap twist."
+   ]
+  },
+  {
+   "title": "Low Moon",
+   "logline": "In this town the moon hangs way too low and creeps closer every night. The only thing that pushes it back up is the whole town shouting at nine o'clock. Then flu season takes everyone's voice, the moon settles on the clock tower, and the one indoor kid who isn't sick has to save the town with five years of recorded shouting.",
+   "twist": "The moon flies back up, then blinks. It isn't a moon. It's a giant eye, and it is staring straight into the narrator's bedroom window. It came down five years ago 'to check on us', and now it knows exactly who pressed play.",
+   "caption_hook": "the moon is NOT supposed to be this close",
+   "new_props": [
+    "Giant moon: huge emissive pale-silver sphere with a few darker crater spheres. It has a hidden dark pupil disc that fades in, and a dome-shaped eyelid (half sphere) that slides down and up over it to blink",
+    "Second smaller far-away moon state (same prop scaled down, high in the sky) for the flashback",
+    "Clock face hands that spin backwards fast (two thin boxes on the clock tower face)",
+    "Bent street lamps: the existing lamp posts tilted 30 degrees away from the moon",
+    "Mayor's sign: a box board on a pole reading NO LOUD MUSIC",
+    "Loose mustache: a detachable mustache box that pops off Big Terry's face and spins away",
+    "Kazoo: a tiny orange cone in Grandma Vee's mouth",
+    "Baby Otis: a blocky human scaled to about 40 percent, riding on his dad's shoulders",
+    "Two big stage speakers: tall black boxes with grey cylinder speaker cones that pulse outward",
+    "Tablet: thin dark box with a glowing screen texture reading SHOUTS (1,825 files)",
+    "Hedge: a green box bush beside the house for Dad to land in",
+    "Moonlight: silver light wash and floating dust particles (small white spheres) drifting upward"
+   ],
+   "sets": [
+    "Town main street, quiet night preset with a giant moon over the rooftops",
+    "Town square with stage, night preset (shout time), banner reading SHOUT TIME 9PM",
+    "Clock tower close-up with the moon sitting on top",
+    "Kid's bedroom interior at night with the window facing the street",
+    "Flashback: town main street, dusk preset with a tiny normal moon"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, the moon is way too close. And it's getting closer.",
+     "visual": "Slow crane up the quiet night main street. Over the rooftops hangs a giant glowing moon, so big it fills half the sky, just above the chimneys. Dust particles drift up toward it.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The only thing that pushes it back up is shouting.",
+     "visual": "The kid (orange hoodie, messy brown hair, headphones round neck) stands on the porch looking up, peer pose, determined face. The moon edges a little lower behind him.",
+     "music": "same"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Town square at night. The whole crowd of extras throws their heads back and shouts at the sky, huss faces. The moon jolts upward one notch per HUSS, camera shaking each time.",
+     "overlay": "SHOUT TIME: 9:00 PM",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago it was a normal moon. Tiny. Polite. Far away.",
+     "visual": "Flashback at dusk on main street: a tiny, normal moon sits high in the sky. Townspeople stroll past, waving at each other.",
+     "overlay": "5 YEARS AGO",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Then the mayor banned loud music. That night, the moon came down to check on us.",
+     "visual": "The mayor (top hat, sash, mustache, smug face) plants a NO LOUD MUSIC sign in the square. Then a hard cut to night: the moon slides down the sky toward the town in one smooth, creepy move.",
+     "overlay": "BANNED",
+     "music": "night",
+     "sfx": [
+      "thump",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now the rules are simple. Every night at nine, everyone goes outside and shouts.",
+     "visual": "The clock tower strikes nine. Front doors open all down the street and townspeople step out in pajamas, all looking up at the huge moon.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Big Terry shouts so hard his mustache flies off.",
+     "visual": "Big Terry (huge, bald, green tank top, thick mustache) shouts, huss face. His mustache pops off and spins away into the dark. He freezes, shocked face.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grandma Vee can't shout, so she brings a kazoo. Honestly? Worse.",
+     "visual": "Grandma Vee (grey bun, glasses, purple cardigan) toots a tiny orange kazoo, smug face. Neighbours on both sides cringe and cover their ears.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "And baby Otis is the loudest person in town. He's six months old.",
+     "visual": "Tiny baby Otis rides on his dad's shoulders in the crowd, determined face. Everyone around him slowly takes a step back.",
+     "overlay": "TOWN RECORD HOLDER",
+     "music": "same"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Close on baby Otis, huss face, mouth wide. The moon rockets up three notches, street lamps flicker, a roof tile pops off a house. His dad is stunned.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Until last Tuesday. Flu season.",
+     "visual": "Main street at night: every window shows a sick townsperson in bed with sleepy and sweat faces. The music sounds stuffed up.",
+     "overlay": "FLU SEASON",
+     "music": "muffled",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The whole town lost their voice. Even Otis. Especially Otis.",
+     "visual": "In the square at nine, the crowd opens their mouths together and nothing comes out. Cut to baby Otis straining with his mouth wide open.",
+     "overlay": "*squeak*",
+     "music": "muffled",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Nine o'clock came. Nobody shouted. And the moon came down.",
+     "visual": "Wide shot of the town. The moon sinks down, down, down until it is level with the rooftops. Silver light floods the street and the camera shakes slowly.",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It sat on the clock tower. The clock started running backwards.",
+     "visual": "The giant moon rests right on top of the clock tower. Its clock hands spin backwards faster and faster.",
+     "music": "same",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Street lamps bent away from it. The cat started floating. Dad floated past my window. Still snoring.",
+     "visual": "Street lamps lean away from the moon. The orange cat drifts upward with a shocked face. Cut to the bedroom window: Dad (blue pajamas, beard) drifts past sideways, lying flat in the crowdSurf pose, sleepy face.",
+     "music": "same",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I was the only one not sick. Because I never go outside. But one voice? Not enough.",
+     "visual": "Bedroom: the kid sits on the bed with his headphones on, perfectly healthy, then shrugs. Through the window behind him the moon glows bigger.",
+     "music": "lofi"
+    },
+    {
+     "kind": "line",
+     "text": "Then I remembered. Every night for five years... I recorded the shouting.",
+     "visual": "The kid holds up a tablet showing a folder labelled SHOUTS. A counter spins up fast. His face turns to a grin.",
+     "overlay": "1,825 SHOUTS",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I dragged Dad's speakers onto the stage and pressed play. All of them. At once.",
+     "visual": "Town square stage at night: the kid shoves two huge black speakers into place, the moon looming right behind the clock tower. He holds the tablet up and slams play, slam pose.",
+     "music": "night",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The speaker cones blast outward. The moon peels off the clock tower and shoots up into the sky, getting smaller with every HUSS. Sick townspeople lean out of their windows cheering, the lamps snap upright, the clock hands spin forwards.",
+     "overlay": "FIVE YEARS OF SHOUTING",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The moon flew back up. The cat came down. Dad didn't wake up.",
+     "visual": "The moon is tiny and far away again. The cat lands on its feet, smug face. Dad drops into the hedge, still lying flat and snoring.",
+     "music": "lofi",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then, way up high... the moon blinked.",
+     "visual": "Slow push in on the tiny moon in a dark sky. An eyelid slides down over it and back up. The kid freezes, stunned.",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It's not a moon. It's an eye.",
+     "visual": "Extreme close-up: a dark pupil fades in on the glowing sphere and slowly swivels toward the town.",
+     "music": "none",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And it's looking straight at my window.",
+     "visual": "Kid's bedroom at night. The whole window is filled by one enormous glowing eye with its pupil locked on the kid. He peeks over his blanket, shocked face. Hold, then cut to black.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    }
+   ],
+   "vibe": "spooky",
+   "id": "spooky-1",
+   "score": 35.4,
+   "notes": [
+    "\"It's an eye\" is a familiar twist and nothing sets it up. Plant it in the opening crane shot: the moon's craters drift a little toward the kid's window, and Grandma Vee says \"it's watching again.\" The final reveal then pays off and rewards a rewatch instead of feeling bolted on.",
+    "Set up the solution earlier. Add a beat to the rules montage where the kid films the 9pm shout from his bedroom window ('I don't shout. I record.'). Then the 1,825-file playback is earned instead of coming from 'then I remembered', and the final eye staring at the one window that never shouted works as a payoff, not a random threat. Trim about 10 words to get under 240.",
+    "Plant the recordings early. In the opening HUSS shot, show the kid filming the crowd on his tablet from his bedroom window instead of standing on the porch. That also fixes the 'I never go outside' contradiction, and it makes the speaker solution feel earned instead of announced. Cut the 'sick person in every window' shot: the town houses have no interiors. A few extras at their front doors, coughing in pajamas, reads better."
+   ]
+  },
+  {
+   "title": "Big Love",
+   "logline": "In this town every pet grows exactly as big as its owner loves it. A kid who is too cool to admit he loves his normal-sized cat Biscuit has to shout it in front of the whole town when Biscuit gets stuck on top of the clock tower in a storm.",
+   "twist": "Saying it out loud makes Biscuit taller than the clock tower and saves him. Then the giant cat purrs at the kid and the kid starts growing too, because in this town it works both ways. Last shot: a giant kid and a giant cat sitting side by side over the tiny town.",
+   "caption_hook": "in my town your pet is as big as you love it and mine was embarrassingly small",
+   "new_props": [
+    "Giant goldfish (orange sphere body, cone tail fin, big glossy black sphere eyes) floating in a house-sized clear glass cylinder bowl",
+    "Wheelbarrow (box tray, cylinder wheel, two thin box handles) full of tiny yellow flake cubes",
+    "Pea-sized brown dog (3 tiny boxes and a cone tail) on a long red leash line",
+    "Giant round hamster (stacked tan spheres, small sphere ears, pink sphere nose) bursting out of a house with the roof popped off",
+    "Giant sleeping grey kitten (spheres and box paws) curled across the road",
+    "ROAD CLOSED sign (striped box barrier on two posts)",
+    "Red fire truck (boxes) with an extending ladder (thin box rails) that reaches only halfway up the clock tower",
+    "Scalable orange cat creature (Biscuit) that grows from normal to taller than the clock tower",
+    "Purple storm sky with lightning flashes and rain streaks (thin falling cylinders)",
+    "Flashlights (small glowing cylinders) held by the crowd",
+    "Scale-up rig for the narrator kid so he towers over the houses"
+   ],
+   "sets": [
+    "Main street, day (goldfish bowl, Mr. Hollis and the invisible dog)",
+    "Mayor's house on main street with the roof popped off",
+    "Road outside town with the sleeping giant kitten",
+    "Kid's bedroom (Biscuit on the bed)",
+    "Town square, day (classmate laughs)",
+    "Clock tower, stormy night with purple sky",
+    "Main street and clock tower, party-night lighting after the rescue",
+    "Hill behind the town at dusk (final wide shot)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, every pet grows exactly as big as you love it.",
+     "visual": "Wide day shot of main street: a giant orange goldfish floating in a house-sized glass bowl towers over the houses. In front, a grumpy old man holds a leash that seems to go to nothing.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mrs. Lin loves her goldfish so much, it's the size of a school bus.",
+     "visual": "Mrs. Lin (grey bun, glasses, green cardigan) waves up at the giant goldfish, which blinks its big black eyes down at her. Camera tilts up the whole height of the bowl.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "SIZE: SCHOOL BUS"
+    },
+    {
+     "kind": "line",
+     "text": "She feeds it with a wheelbarrow.",
+     "visual": "Mrs. Lin tips a full wheelbarrow of yellow flake cubes into the bowl. The fish's mouth opens wide and the whole pile vanishes in one gulp.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grumpy Mr. Hollis has a dog. We think. Nobody has ever actually seen it.",
+     "visual": "Mr. Hollis (bald, mustache, brown vest, crossArms, squint face) stands holding the leash. Camera zooms all the way down the leash to a pea-sized brown dog wagging its tail.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "ACTUAL SIZE"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator kid (red hoodie, backwards cap) jumps into frame on main street, huss face, slam pose. Extras behind him point at the tiny dog and laugh.",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "It started five years ago, when the mayor told his hamster, 'I love you.'",
+     "visual": "Through a house window: the mayor (top hat, gold sash) holds a normal-sized hamster up to his face and hugs it. Hearts pop above them.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "5 YEARS AGO"
+    },
+    {
+     "kind": "line",
+     "text": "It burst straight through his roof.",
+     "visual": "The roof flies off the mayor's house. A giant round hamster head pops out of the top, cheeks puffed. Camera shake, debris cubes everywhere.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "BOOM"
+    },
+    {
+     "kind": "line",
+     "text": "So now there are rules. No saying 'I love you' indoors. And keep grandmas away from the pet shop.",
+     "visual": "Town square banner flips to show the town rules. Townspeople nod seriously. A big red X stamps over a little pet shop sign.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "thump"
+     ],
+     "overlay": "RULE #1: NO 'I LOVE YOU' INDOORS"
+    },
+    {
+     "kind": "line",
+     "text": "Grandma Pearl hugged one kitten. We had to close the highway.",
+     "visual": "A giant grey kitten sleeps curled across the road behind a striped ROAD CLOSED barrier. Tiny Grandma Pearl (purple cardigan, glasses, white hair) pats its huge paw lovingly.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "ROAD CLOSED"
+    },
+    {
+     "kind": "line",
+     "text": "Then there's me and my cat, Biscuit. He's normal-sized. Because I'm way too cool to say it.",
+     "visual": "Kid's bedroom: the orange cat Biscuit, normal size, sits on the bed. The kid stands next to him in sunglasses, crossArms, smug face, refusing to look at the cat.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "At school, Tyler said, 'Your cat's so small, your love must be tiny.'",
+     "visual": "Town square, day. Tyler (blond spiky hair, blue jacket) points at the kid and laughs. A crowd of kids behind him laugh too. The kid's face goes to sweat.",
+     "music": "same",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Tight shot of the kid, huss face, fists clenched. The crowd laughs in the background and the camera punches in on each HUSS.",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then last night, a storm hit. Biscuit chased the mayor's pigeon all the way up the clock tower.",
+     "visual": "Stormy night, purple sky, lightning flash. The pigeon flaps to the top of the clock tower with tiny orange Biscuit clinging behind it on the clock hand. Rain streaks fall.",
+     "music": "night",
+     "sfx": [
+      "thunder",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The fire ladder was too short. The wind got stronger. Biscuit started slipping.",
+     "visual": "A red fire truck's ladder stretches up but stops halfway. The crowd below holds glowing flashlights. Close-up: Biscuit's paw slides off the clock hand. Camera shake.",
+     "music": "muffled",
+     "sfx": [
+      "siren",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid in the rain, shocked huss face, looking up. Lightning flashes on every HUSS and the camera shakes harder each time.",
+     "music": "muffled",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "There was only one way to save him. In front of the whole town.",
+     "visual": "Slow push-in on the kid, face going from sweat to determined. Behind him the whole crowd, about 30 extras including Tyler and Mr. Hollis, turns to stare in silence.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "I LOVE YOU, BISCUIT!",
+     "visual": "The kid throws his arms up in cheer pose and shouts at the sky. Lightning freezes the frame.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ],
+     "overlay": "I LOVE YOU, BISCUIT!"
+    },
+    {
+     "kind": "line",
+     "text": "Biscuit grew. And grew. And GREW. Until he was taller than the clock tower.",
+     "visual": "Biscuit swells in three big jumps until the clock tower is like a little post next to his paw. Crowd in surprised pose, jaws dropped. The storm clouds part around his giant head.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "boom",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He stepped down like it was a curb.",
+     "visual": "Giant Biscuit casually lifts one paw and steps down onto main street. Houses wobble and street lamps bounce. He sits and licks his paw.",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "CASUAL"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Party-night lighting snaps on. The whole crowd cheers and dances in the street around Biscuit's giant paws while the kid does huss face on top of the fire truck.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Even grumpy Mr. Hollis cried. His dog grew three whole inches.",
+     "visual": "Mr. Hollis with sad/teary face, hand on heart. At his feet the pea-sized dog is now mouse-sized and hopping happily.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "+3 INCHES"
+    },
+    {
+     "kind": "line",
+     "text": "But then Biscuit looked down at me, and purred. And I started to grow.",
+     "visual": "Dusk. Giant Biscuit lowers his huge head and nuzzles the kid. The kid looks at his own hands, surprised face, as he shoots up past the street lamps and rooftops.",
+     "music": "lofi",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Turns out, in this town, it works both ways.",
+     "visual": "Final wide shot: the giant kid and giant Biscuit sit side by side on the hill behind the tiny town, orange sunset sky, the kid's arm around the cat. Townspeople wave up from below.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "IT WORKS BOTH WAYS"
+    }
+   ],
+   "vibe": "homey",
+   "id": "homey-1",
+   "score": 35.17,
+   "notes": [
+    "\"It works both ways\" lands as an aww, not a stop-and-rewatch moment. Add one escalation after the side-by-side shot: Grandma Pearl runs up yelling \"I love you, sweetie!\" and the kid shoots past the clouds. Finish on a HUSS x3 so the story ends on a laugh and the HUSS signature.",
+    "Add a failed half-measure before the climax. The kid mumbles 'I... like you, Biscuit', Biscuit grows one inch and Tyler snickers, which forces the full public shout. This turns a climax the viewer can predict into a real escalation. Also rename the cat, because 'Biscuit' is already the T-rex in giants-1.",
+    "The 'works both ways' ending is sweet but soft. Make it a chain reaction: as the kid grows, Grandma Pearl yells 'We love you too, sweetie!' from below, and he rockets up past the clouds with a sweat face. That way the last beat escalates instead of settling into a hug. Rename the cat so it doesn't clash with giants-1's Biscuit."
+   ]
+  },
+  {
+   "title": "Word of the Day",
+   "logline": "Every morning at eight, a giant new word falls out of a crack in the sky and the whole town has to say it all day (skronk, gubbins, flimbo, bonkle). The kid refuses because the words are cringe. Then one morning no word falls, the whole town forgets how to talk, and a giant eye in the crack waits for someone to give it a new word.",
+   "twist": "The kid, the only one who never needed the sky words, panics on stage and the only thing that comes out is 'HUSS!' The town chants it back and the sky is saved. Then a giant hand hands him a pencil: the old word-maker retired, so now he has to come up with tomorrow's word, due at eight.",
+   "caption_hook": "a new word falls from the sky every morning. today it didn't.",
+   "new_props": [
+    "sky crack (jagged zigzag of glowing white-gold thin boxes on the sky that can widen and narrow)",
+    "giant glowing toy alphabet blocks (cubes with a letter on each face) spelling SKRONK, then H-U-S-S",
+    "boxy red lawnmower that pops apart into small blocks",
+    "kid's ridiculous tall spiky block haircut",
+    "PRESS CONFERENCE podium (box)",
+    "lonely BRIDGE signpost (thin post plus an arrow-shaped box sign) at a road that ends in empty air",
+    "tumbleweed (small brown wireframe-ish sphere) rolling across the empty square",
+    "word-bubble tags popping above heads (SKRONK!, FLIMBO!, BONKLE!)",
+    "giant eye in the crack (big white sphere, red glowing iris ring, black pupil sphere; blinks by squashing)",
+    "giant blocky hand descending from the crack",
+    "giant pencil (yellow hex cylinder, pink cylinder eraser, cone tip)",
+    "bedroom wall clock reading 7:59",
+    "speech-length counter overlay"
+   ],
+   "sets": [
+    "town square with stage and clock tower (morning)",
+    "clock tower (quiet night flashback)",
+    "main street front lawn (day)",
+    "house front doorstep (day)",
+    "town square stage with banner reading PRESS CONFERENCE",
+    "edge of main street where the road ends",
+    "park with table and tree",
+    "town square under a red sky",
+    "town square at party night",
+    "kid's bedroom (night)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, every morning at eight, a new word falls out of the sky.",
+     "visual": "Town square, bright morning, clock tower reading 8:00. A jagged glowing crack opens in the blue sky and six giant glowing toy alphabet blocks spelling S-K-R-O-N-K tumble out and slam into the square one by one. Dust puffs, camera shake.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ],
+     "overlay": "8:00 AM"
+    },
+    {
+     "kind": "line",
+     "text": "And everyone has to say it. All day long.",
+     "visual": "Townspeople swarm the letter blocks, pointing and cheering (point and cheer poses). Word-bubble tags reading SKRONK! pop above Grandma, Mr. Okafor and the Mayor as they turn to each other.",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "pop",
+      "cheer"
+     ],
+     "overlay": "SKRONK!"
+    },
+    {
+     "kind": "line",
+     "text": "Everyone except me.",
+     "visual": "Cut to the kid (yellow hoodie, backwards cap) leaning on a street lamp at the edge of the square, crossArms pose, smug face.",
+     "music": "muffled",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "EXCEPT ME"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid snaps out three HUSSes (slam pose, huss face) with a punch-zoom on each. Townspeople behind him turn to stare.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Five years ago, the sky cracked open above the clock tower.",
+     "visual": "Flashback, clock tower on a quiet night. A jagged white-gold crack splits the dark sky above the tower with a flash. Townspeople peer up from their doorways (peer pose).",
+     "music": "night",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "5 YEARS AGO"
+    },
+    {
+     "kind": "line",
+     "text": "Monday's word was skronk. By lunch, Mr. Okafor had skronked his lawnmower.",
+     "visual": "Main street front lawn, day. Mr. Okafor (grey beard, cap) gives a boxy red lawnmower one pat and it pops apart into blocks that bounce down the street. He shrugs (shrug pose).",
+     "music": "party",
+     "sfx": [
+      "pop",
+      "thump"
+     ],
+     "overlay": "MONDAY: SKRONK"
+    },
+    {
+     "kind": "line",
+     "text": "Tuesday was gubbins. Grandma said my haircut was absolute gubbins.",
+     "visual": "Front doorstep of a house. The kid stands there with a ridiculous tall spiky block haircut. Grandma (white hair, glasses, pink cardigan) points at it, then bursts out laughing (point, then laugh pose).",
+     "music": "party",
+     "sfx": [
+      "laugh"
+     ],
+     "overlay": "TUESDAY: GUBBINS"
+    },
+    {
+     "kind": "line",
+     "text": "Wednesday was flimbo. The mayor answered everything with it.",
+     "visual": "Town square stage under a banner reading PRESS CONFERENCE. Mayor Pickles (top hat, sash, mustache) stands at the podium. Extras raise their hands and he points at each one with a smug face.",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "ding"
+     ],
+     "overlay": "WEDNESDAY: FLIMBO"
+    },
+    {
+     "kind": "line",
+     "text": "Someone asked where the bridge went. Flimbo. The bridge is still missing.",
+     "visual": "A quote card slams in. Then cut to the edge of main street where the road just ends in empty air: a lonely signpost with an arrow reading BRIDGE points at nothing, and the pigeon sits on top of it.",
+     "music": "muffled",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "\"Flimbo.\" \u2014 Mayor Pickles, when asked where the bridge went"
+    },
+    {
+     "kind": "line",
+     "text": "Number one word of all time? Bonkle. Nobody knows what it means. Fourteen people cried.",
+     "visual": "Top 10 card: TOP 10 SKY WORDS OF ALL TIME. #3 WOBBLETON, #2 SKRONK, #1 BONKLE (2022), which stamps in with a boom, plus a small tag reading 14 PEOPLE CRIED. Cutaway to townspeople in the square clapping with sad, teary faces.",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "boom",
+      "cheer"
+     ],
+     "overlay": "TOP 10 SKY WORDS OF ALL TIME"
+    },
+    {
+     "kind": "line",
+     "text": "Me? I don't say the words. They're cringe.",
+     "visual": "Park table. The kid sits alone (sit pose, smug face) while townspeople stroll past and word tags pop above their heads: BONKLE!, FLIMBO!, GUBBINS!",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then this morning, eight o'clock... nothing fell.",
+     "visual": "Town square. The whole town is gathered, looking up at the crack (peer pose). The clock tower hands click to 8:00, and the crack stays empty.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "8:00 AM"
+    },
+    {
+     "kind": "line",
+     "text": "No word.",
+     "visual": "Close on the empty spot where the blocks always land. A tumbleweed rolls through and the pigeon walks across. Giant stamp.",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "NO WORD"
+    },
+    {
+     "kind": "line",
+     "text": "And the whole town forgot how to talk.",
+     "visual": "Townspeople open their mouths and nothing comes out. They point at things and shrug. Mr. Okafor and Grandma face each other and just stare (stunned and shrug poses).",
+     "music": "none",
+     "sfx": [
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The mayor tried a speech. Forty minutes of jazz hands.",
+     "visual": "On stage, Mayor Pickles waves both hands frantically (dance2 pose, grin face) at a totally silent crowd. A counter overlay races up to 40:00.",
+     "music": "none",
+     "sfx": [],
+     "overlay": "SPEECH LENGTH: 40:00"
+    },
+    {
+     "kind": "line",
+     "text": "Then the sky turned red, and a giant eye looked down through the crack.",
+     "visual": "The sky floods deep red. The crack widens and a giant glowing eye fills it, staring down over the clock tower. Street lamps flicker and the camera shakes.",
+     "music": "night",
+     "sfx": [
+      "thunder",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "If nobody gave it a new word, the crack would close, and we'd never talk again.",
+     "visual": "The crack's glowing edges slowly start sliding shut around the eye. Townspeople walk in sad little circles below (walkSad pose, sad face).",
+     "music": "night",
+     "sfx": [
+      "static"
+     ],
+     "overlay": "SILENCE: FOREVER"
+    },
+    {
+     "kind": "line",
+     "text": "Only one person in town never needed the sky words. Me.",
+     "visual": "The camera pushes through the frozen crowd and stops on the kid, who slowly points at himself (point pose, sweat face).",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "EXCEPT ME"
+    },
+    {
+     "kind": "line",
+     "text": "I climbed on stage. The whole town stared. The eye stared.",
+     "visual": "The kid alone on the stage under the banner. Reverse shot of the whole silent town staring up at him. Then the giant eye in the crack swivels down to look at him.",
+     "music": "none",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I opened my mouth, and out came...",
+     "visual": "Extreme slow push into the kid's face, with the crack almost shut in the sky behind him. He takes a big breath.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid shouts three HUSSes (slam pose, huss face). Shockwave rings blast up toward the eye and the camera shakes on each one.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The eye blinked. The sky turned gold. And the whole town shouted it back.",
+     "visual": "The giant eye blinks, the crack flares gold, and the red sky floods back to bright golden day. The crowd's mouths open and every fist goes up (cheer pose).",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Party-night lighting. The whole town (Grandma, Mr. Okafor, Mayor Pickles and 30 extras) jumps and chants while the kid crowd-surfs over them (crowdSurf pose). Glowing toy blocks spelling H-U-S-S drop out of the crack.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then a giant hand reached down from the crack and handed me a pencil.",
+     "visual": "The music cuts. A giant blocky hand slowly lowers from the crack holding a giant yellow pencil and offers it to the kid on stage (stunned pose, shocked face).",
+     "music": "none",
+     "sfx": [
+      "whoosh",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Turns out the old word-maker just retired. Tomorrow's word is due at eight.",
+     "visual": "Kid's bedroom at night. He sits on his bed hugging the giant pencil (sit pose, sweat face). The wall clock reads 7:59, and through the window the crack glows with the eye waiting. Stamp.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "DUE: 8:00 AM"
+    }
+   ],
+   "vibe": "meme",
+   "id": "meme-2",
+   "score": 35.07,
+   "notes": [
+    "Turn the twist into comment bait. Last beat: the kid looks at the camera holding the giant pencil and asks \"...so what's tomorrow's word?\" with a 'COMMENT IT' stamp. Viewers supply the next episode's word, which grows the series and its comments. Also vary the sky crack, since spooky-2 already uses one.",
+    "Explain why the town forgets how to talk, and earn the job twist. Add early lines: 'Every word we have came through the crack' and 'I don't use sky words. I make up my own', and treat the kid's opening HUSS run as his homemade word. Then the silence, why he's unaffected, and his hiring as the new word-maker are all fairly set up.",
+    "Over the opening HUSS run, add one narration line saying HUSS is the only word the kid ever made up himself. Then the climax is earned rather than a panic accident, and it explains why the sky hires him as the new word-maker. Also change the red sky and the giant hand reaching down from the crack (a different color, and the pencil floats down alone), because that image closely echoes a reference video."
+   ]
+  },
+  {
+   "title": "Sneeze Season",
+   "logline": "In this town every sneeze comes out as a random sound effect (boom, ding, siren, laugh track), but the kid's sneeze is HUSS. When pollen season makes the whole town sneeze at once, the noise wakes the hill behind town, which turns out to be a giant nose about to sneeze on everyone.",
+   "twist": "The kid calms the giant nose by saying the one thing nobody in town ever says, 'bless you'. Then the nose sneezes, and its sneeze is HUSS! HUSS! HUSS!, exactly like the kid's. Mom puts on sunglasses and says they'll talk about it when he's older.",
+   "caption_hook": "everyone's sneeze is a sound effect. mine is a problem.",
+   "new_props": [
+    "sneeze shockwave ring (thin flat white cylinder ring that scales out fast and fades)",
+    "pepper truck (red box cab plus long white box trailer with a PEPPER sign tile, four black cylinder wheels)",
+    "water tower (big grey cylinder tank on four thin box legs, tips over)",
+    "pepper cloud puffs (clusters of brown semi-transparent spheres that drift)",
+    "siren light bar on Mr. Delgado's cap (small box with one red and one blue glowing sphere that flash in turns)",
+    "mayor's podium (brown box with a small slanted top)",
+    "tiny phones (thin black boxes held in extras' hands)",
+    "pollen specks and fog (tiny yellow spheres plus yellow-green scene fog and tinted sky)",
+    "giant nose (stacked pink boxes with a wedge tip, green grass box cap on top, two huge dark cylinder nostrils), rises from behind the houses on the horizon",
+    "steam puffs (white spheres shooting from the nostrils)",
+    "suction streaks (thin white boxes streaming toward the nostrils)",
+    "pigeon knockout counter overlay",
+    "Mom's sunglasses (accessory)"
+   ],
+   "sets": [
+    "main street (day)",
+    "park with table and tree (dusk flashback, then day)",
+    "clock tower (day, then dusk with the nose behind it)",
+    "town square stage with banner reading TOWN MEETING (day)",
+    "main street with yellow-green pollen sky and fog",
+    "main street at dusk looking toward the horizon",
+    "top of the clock tower facing the giant nose"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, when you sneeze, it comes out as a random sound effect.",
+     "visual": "Main street, bright day. A blocky man in a green cap and orange shirt walks past the houses, stops, leans back (surprised pose, squint face) and sneezes. A white shockwave ring blasts out of his face, his cap pops into the air and the camera shakes.",
+     "music": "party",
+     "sfx": [
+      "boom"
+     ],
+     "overlay": "SNEEZE = SOUND EFFECT"
+    },
+    {
+     "kind": "line",
+     "text": "Everybody has one. Except me.",
+     "visual": "Hard cut to the kid (red hoodie, headphones round his neck, messy brown hair) standing alone in the middle of main street, shrug pose, sweat face. Townspeople behind him stop and turn to look.",
+     "music": "muffled",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "EXCEPT ME"
+    },
+    {
+     "kind": "line",
+     "text": "When I sneeze, it goes...",
+     "visual": "Close-up on the kid's face. His head slowly tilts back (squint face) while the camera creeps in. Everything goes quiet.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid snaps forward three times (slam pose, huss face) with a punch-zoom on each HUSS. Every sneeze sends out a wind ring that knocks the pigeon off a street lamp. Townspeople behind him in stunned pose.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It started five years ago, when a pepper truck crashed into the water tower.",
+     "visual": "Flashback at dusk by the park. A boxy red pepper truck rolls in and slams into the tall water tower. The tank tips over and big brown pepper-cloud puffs pour out and drift over the rooftops.",
+     "music": "lofi",
+     "sfx": [
+      "thump",
+      "boom"
+     ],
+     "overlay": "5 YEARS AGO"
+    },
+    {
+     "kind": "line",
+     "text": "Grandma Rose sneezes a boom. Same pigeon, off the clock tower, nine times.",
+     "visual": "Clock tower, day. Grandma Rose (grey bun, glasses, purple cardigan) at the base sneezes (slam pose). A shockwave ring goes off and the camera shakes. The pigeon on the clock ledge flips off and tumbles past the clock face. The counter ticks from 8 to 9.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "whoosh"
+     ],
+     "overlay": "PIGEON KNOCKOUTS: 9"
+    },
+    {
+     "kind": "line",
+     "text": "Baby Theo sneezes a ding, so the whole park checks their phones.",
+     "visual": "Park by the table and tree. Baby Theo (tiny character, light blue outfit, party hat) does a little sneeze. Ten extras around the park all snap their heads down to the tiny black phones in their hands (peer pose) at the exact same moment.",
+     "music": "party",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "NEW MESSAGE?"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Delgado sneezes a siren. He's turned himself in twice.",
+     "visual": "Main street. Mr. Delgado (big black mustache, blue shirt) sneezes, and the red and blue siren light bar on his cap flashes. He looks left, looks right, then slowly raises both hands (surprised pose, shocked face).",
+     "music": "muffled",
+     "sfx": [
+      "siren"
+     ],
+     "overlay": "TURNED HIMSELF IN: 2"
+    },
+    {
+     "kind": "line",
+     "text": "And Mayor Fitz sneezes a laugh track, so every speech sounds like a sitcom.",
+     "visual": "Town square stage under a banner reading TOWN MEETING. Mayor Fitz (black top hat, red sash, grey beard) sneezes at the podium and the whole crowd of extras snaps into the laugh pose in perfect sync.",
+     "music": "party",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "His last speech was about the town running out of money. Standing ovation.",
+     "visual": "A quote card slams onto the stage shot. Then the crowd leaps up clapping and cheering (clap and cheer poses) while the mayor stands frozen at the podium (sweat face).",
+     "music": "party",
+     "sfx": [
+      "laugh",
+      "cheer"
+     ],
+     "overlay": "\"We are completely out of money.\" \u2014 Mayor Fitz, 1 second before sneezing"
+    },
+    {
+     "kind": "line",
+     "text": "We even have a top ten. Number one is still Grandma at the library.",
+     "visual": "Top 10 card: TOP 10 SNEEZES OF ALL TIME. #3 Baby Theo, double ding. #2 Mr. Delgado, at the bank. #1 Grandma Rose, the library, 2021 (BOOM). The card shakes when #1 stamps in.",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "boom"
+     ],
+     "overlay": "TOP 10 SNEEZES OF ALL TIME"
+    },
+    {
+     "kind": "line",
+     "text": "And nobody ever says bless you. It's way too loud.",
+     "visual": "Wide shot of main street. Five townspeople sneeze one after another, shockwave rings go off everywhere and the others stand in stunned pose. A quote card pops up.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "pop",
+      "siren"
+     ],
+     "overlay": "\"Bless you.\" \u2014 absolutely nobody, ever"
+    },
+    {
+     "kind": "line",
+     "text": "Then yesterday, pollen season hit.",
+     "visual": "Main street. The sky fades from blue to a sickly yellow-green, thick yellow fog rolls between the houses and tiny pollen specks drift everywhere. Townspeople freeze with their noses twitching (think pose).",
+     "music": "muffled",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "POLLEN LEVEL: EXTREME"
+    },
+    {
+     "kind": "line",
+     "text": "The whole town sneezed at once.",
+     "visual": "Wide shot. All 30 extras plus Grandma, Delgado, the Mayor and Baby Theo lean back together, then slam forward. Dozens of shockwave rings go off, siren lights flash, hats fly and the camera shakes hard.",
+     "music": "none",
+     "sfx": [
+      "boom",
+      "siren",
+      "ding",
+      "laugh",
+      "record scratch",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "In the middle of the chaos the kid sneezes six times in a row (slam pose, huss face) with a punch-zoom on each. On the last one Grandma and the Mayor slowly turn to stare at him.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It was so loud, the hill behind town woke up.",
+     "visual": "Dusk. Wide shot from main street toward the horizon. The big green hill behind the houses rumbles and starts to rise. Street lamps flicker and the camera shakes.",
+     "music": "night",
+     "sfx": [
+      "thump",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It wasn't a hill. It was a nose.",
+     "visual": "The hill keeps rising until it's a giant pink blocky nose with grass on top and two huge dark nostrils, towering over the clock tower. Every extra goes into stunned pose. Giant stamp.",
+     "music": "none",
+     "sfx": [
+      "record scratch",
+      "boom"
+     ],
+     "overlay": "IT WAS A NOSE"
+    },
+    {
+     "kind": "line",
+     "text": "Breathing in. About to sneeze on all of us.",
+     "visual": "Low angle. The nostrils flare wide. Yellow fog, townspeople's caps and the pigeon get sucked toward them in white streaks. Townspeople lean back against the pull (peer pose).",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grandma boomed it. Mr. Delgado sirened it. The mayor laugh-tracked it. It just got angrier.",
+     "visual": "Three rapid cuts. Grandma sneezes a shockwave at the nose, Delgado's siren lights flash at it, and the Mayor sneezes. The nose glows red and white steam puffs shoot out of the nostrils.",
+     "music": "night",
+     "sfx": [
+      "boom",
+      "siren",
+      "laugh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then I remembered the one thing nobody in this town ever says.",
+     "visual": "Close-up on the kid in the chaos. Everything goes silent. Think pose, then his face turns determined. The 'Bless you \u2014 absolutely nobody' quote card flashes for a moment.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I climbed the clock tower, looked it right in the nostril, and said, bless you.",
+     "visual": "The kid stands on top of the clock tower, tiny against the giant nose that fills the sky. His hoodie flaps in the wind as he points right at it (point pose, determined face).",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "The nose froze. It sniffled. And it whispered, thank you.",
+     "visual": "The nose stops breathing in, the red glow fades back to pink, and it gives a small embarrassed wobble. Townspeople drop their jaws (surprised pose). Quote card.",
+     "music": "lofi",
+     "sfx": [
+      "pop"
+     ],
+     "overlay": "\"Thank you.\" \u2014 the nose"
+    },
+    {
+     "kind": "line",
+     "text": "Then it sneezed.",
+     "visual": "The nose's tip twitches and it slowly leans back over the town. Everyone, the kid included, braces with eyes squeezed shut (stunned pose, squint face).",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The giant nose sneezes three huge HUSSes. Each blast blows every townsperson's hair and hats backward, bends the park tree and shakes the camera.",
+     "music": "none",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Same sneeze as mine. Mom says we'll talk about it when I'm older.",
+     "visual": "Main street, daylight back. The kid slowly turns to his Mom (green dress) in the crowd. She puts on sunglasses, whistles and walks off (walk pose, sweat face). Stamp.",
+     "music": "party",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "WE'LL TALK LATER"
+    }
+   ],
+   "vibe": "meme",
+   "id": "meme-1",
+   "score": 34.87,
+   "notes": [
+    "At about 320 words this is far over budget. Cut the top-10 card and one sneeze townsperson to get under 240. Also replace Mom's \"we'll talk about it when you're older\" line: it reads as a who's-your-dad joke, which is too close to the no-romance rule. A cleaner ending is two more hills on the horizon rumbling awake and sniffing as the camera pulls back.",
+    "Replace the 'Mom says we'll talk about it when I'm older' button. It suggests a who's-your-real-dad joke that strains the kid-friendly, no-romance rule and blurs the reveal. Use a clean family twist instead: Mom sighs, 'I told you not to wake Grandpa,' and the nose wiggles hello. Also change 'Everybody has one. Except me' to 'Everybody gets a normal one. Except me', because he does have one (HUSS).",
+    "'Mom puts on sunglasses, we'll talk when you're older' reads as a joke about who his dad is, which breaks the no-romance rule and will draw comments for the wrong reason. Swap it for Grandma Rose patting his head: 'Of course. You've got your great-grandpa's nose.' It's a family reveal with a pun, and it keeps the HUSS link."
+   ]
+  },
+  {
+   "title": "The Golden Snagglet",
+   "logline": "In this town everyone is obsessed with Snagglets: tiny grinning monsters sold in mystery boxes, where the Golden one is one in a million. Then a mystery box the size of a house crashes into the town square, and the kid who saved six months of allowance is the only one who can work out how to open it.",
+   "twist": "A three-story Golden Snagglet comes out of the giant box and starts collecting the townspeople. It shakes the kid, checks their feet for a sticker and calls them 'another common.' Then it spots Grandma Rose, who has opened 400 boxes and only ever got plain green ones, and screams: she's the rarest figure in the whole set.",
+   "caption_hook": "spent 6 months of allowance on ONE mystery box and then this fell out of the sky",
+   "new_props": [
+    "Snagglet figure (small, blocky green body, two tall cone ears, big round white sphere eyes with black pupils, wide grin made of tiny white zigzag box teeth)",
+    "mystery box (pink cube with a big glowing '?' built from boxes, a small pull tab at the bottom, a lid that pops open)",
+    "a mountain of hundreds of opened pink boxes, plus rows of identical green Snagglets lined up on Grandma Rose's porch railing",
+    "toy shop sign 'SNAGGLE SHOP' on one of the main street houses",
+    "camping tent (cone) and sleeping bag (cylinder) outside the toy shop",
+    "round sticker (flat disc)",
+    "piggy bank (pink sphere, cylinder snout, cone legs) with coin cylinders spilling out",
+    "house-sized pink mystery box with a glowing '?' and four walls that hinge open like flower petals",
+    "block ladders (two box rails plus rungs) and crowbars (thin bent boxes)",
+    "three-story Golden Snagglet (gold, glowing white eyes, giant zigzag grin, blocky paws)",
+    "giant blocky gold hand and one enormous glowing eye for close-ups",
+    "rainbow sparkle glow (colored spheres orbiting) around Grandma Rose"
+   ],
+   "sets": [
+    "town square with stage and banner (day, then purple sky)",
+    "main street with the toy shop (night to day)",
+    "park with table (close-up unboxing)",
+    "Grandma Rose's house porch on main street (day)",
+    "kid's bedroom (dusk)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, everyone is obsessed with Snagglets.",
+     "visual": "Town square, sunny day. A huge banner reads 'SNAGGLET DROP TODAY'. A long queue of townspeople snakes toward the toy shop, everyone clutching small pink boxes.",
+     "music": "party",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Tiny grinning monsters that come in mystery boxes. You never know which one you'll get.",
+     "visual": "Close-up on a pink mystery box on the park table. The lid pops and a tiny green Snagglet springs up: tall cone ears, big eyes, zigzag grin.",
+     "music": "same",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Rule one: no peeking. Rule two: never, ever shake the box.",
+     "visual": "A townsperson squints into a box (peer pose) and a stamp slams down. Cut to another person shaking a box, and a second stamp slams down.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "record scratch"
+     ],
+     "overlay": "DENIED"
+    },
+    {
+     "kind": "line",
+     "text": "Rule three: whoever gets the Golden Snagglet, the whole town has to bow.",
+     "visual": "Spotlight on the stage: a tiny glowing gold Snagglet rotates slowly on a pedestal, sparkles around it, the crowd kneeling in silhouette.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "1 IN A MILLION"
+    },
+    {
+     "kind": "line",
+     "text": "Grandma Rose has opened four hundred boxes. Four hundred plain green ones.",
+     "visual": "Grandma Rose (white hair, glasses, pink cardigan, squint face) sits on her porch buried in a mountain of opened pink boxes. Rows of identical green Snagglets line the railing. The camera pans slowly along the rows.",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "400"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Okafor camped outside the toy shop for nine days. He got a sticker.",
+     "visual": "Mr. Okafor (beard, cap, sleepy face) crawls out of a cone tent outside the 'SNAGGLE SHOP' at sunrise, opens his box, and holds up one round sticker. His face drops to sad.",
+     "music": "same",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "DAY 9"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms: the sticker, Mr. Okafor's sad face, then the tent collapsing behind him.",
+     "music": "same"
+    },
+    {
+     "kind": "line",
+     "text": "Me? I saved my allowance for six months for one single box.",
+     "visual": "Kid's bedroom. The narrator (brown skin, puffy hair, purple hoodie, headphones round the neck) shakes the piggy bank and coins spill out. A single pink box sits on the desk like treasure under the lamp.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "But before I could open it, the sky turned purple...",
+     "visual": "The narrator walks to the bedroom window, and outside the sky shifts from orange to deep purple. The room light flickers.",
+     "music": "muffled",
+     "sfx": [
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "...and something huge crashed into the town square.",
+     "visual": "Wide shot of the town square. A house-sized pink box with a glowing '?' drops out of the purple clouds and slams down. Dust ring blasts out, the banner flaps, heavy camera shake.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three hard cuts from different angles on the giant box sitting smoking in the square, the purple sky behind it.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "A mystery box. The size of a house.",
+     "visual": "Low angle: tiny townspeople standing at the foot of the giant box, staring up with surprised faces. The pigeon lands on top.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The whole town tried to open it. Ladders. Crowbars. Grandma Rose tried biting it.",
+     "visual": "Montage: extras on block ladders tugging at the lid, two men swinging crowbars (slam pose), then Grandma Rose gnawing on a corner with a determined face.",
+     "music": "party",
+     "sfx": [
+      "knock",
+      "thump",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then I looked at my own little box. 'Pull tab to open.'",
+     "visual": "The narrator stands in the crowd holding their small pink box. Close-up on the tiny tab at its bottom. Their face goes from think to a big grin.",
+     "music": "same",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "PULL TAB TO OPEN"
+    },
+    {
+     "kind": "line",
+     "text": "I found a tab on the giant one, and pulled.",
+     "visual": "The narrator crawls to the base of the giant box, finds a little tab, plants their feet and yanks it with both hands.",
+     "music": "none",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The box unfolded like a flower...",
+     "visual": "Slow motion: the four giant walls fall outward like petals and slam onto the square. Golden light and fog pour out of the middle.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "...and inside stood a Golden Snagglet. Three stories tall.",
+     "visual": "Slow tilt up a giant gold Snagglet taller than the houses: glowing white eyes, enormous zigzag grin, ears poking into the purple clouds.",
+     "music": "none",
+     "sfx": [
+      "thunder"
+     ],
+     "overlay": "1 IN A MILLION"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Rapid cuts with camera shake: shocked crowd faces, Grandma Rose's glasses sliding down her nose, Mr. Okafor dropping his sticker, the pigeon bolting, the narrator's jaw dropping, the Snagglet's grin.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "The whole town bowed. Grandma Rose cried happy tears.",
+     "visual": "From behind the crowd: everyone drops to their knees with heads lowered toward the giant. Close on Grandma Rose's face, laughing and crying at once.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then the Golden Snagglet grinned with all its teeth and reached down for me.",
+     "visual": "A giant blocky gold hand descends from above. The crowd scatters and the narrator freezes with a shocked face as the shadow falls over them.",
+     "music": "muffled",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It held me up to its giant eye, shook me, and checked my feet for a sticker.",
+     "visual": "The narrator dangles upside down in front of one enormous glowing eye with a sweat face, getting shaken. The eye squints at the soles of their shoes.",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "'Ugh,' it said. 'Another common.'",
+     "visual": "The giant eye rolls. The Snagglet plonks the narrator onto Grandma Rose's porch railing, right in the row of plain green Snagglets. (Golden Snagglet speaks in a deep, bored second voice.)",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "COMMON"
+    },
+    {
+     "kind": "line",
+     "text": "Then it saw Grandma Rose... and screamed.",
+     "visual": "The Golden Snagglet's eyes go huge and its paws fly to its cheeks. It stares at Grandma Rose, who is still chewing a corner of the box. Light beams burst behind her.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Three snap zooms on Grandma Rose blinking slowly while a rainbow sparkle glow starts swirling around her.",
+     "music": "none"
+    },
+    {
+     "kind": "line",
+     "text": "Turns out she's the rarest one in the whole set.",
+     "visual": "Grandma Rose stands proud and smug in a swirling rainbow glow while the Golden Snagglet kneels and holds out both paws to her like the ultimate prize. The narrator watches from the railing among the green commons.",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "cheer"
+     ],
+     "overlay": "SECRET RARE"
+    }
+   ],
+   "vibe": "trend",
+   "id": "trend-2",
+   "score": 34.8,
+   "notes": [
+    "'Everyone is obsessed with Snagglets' is a setting, not a weird premise. Cold-open with the big image: \"In this town, a mystery box the size of a house just fell from the sky, and the thing inside collects people.\" Then rewind to the rules. Also push the figure's look further from the real blind-box toy it resembles, for example with round ears instead of tall cone ears.",
+    "Give Grandma's rarity a fair clue. In the HUSS x6 chaos, have Mr. Okafor's dropped sticker land on Grandma Rose's slipper. When the Snagglet checks feet for a sticker, it finds a glowing chase sticker on hers. That ties the sticker gag, the foot check and the twist together, so the reveal isn't arbitrary.",
+    "The kid's six-months-of-allowance box is set up as treasure and never opened. Add a final tag after the Grandma Rose beat: back on the railing, the kid finally pulls his box's tab, and inside is a tiny blocky figure of himself with a COMMON sticker on its foot. It closes the loop and gives one more laugh. Build the upside-down dangle by rotating the whole character rig, not a new pose."
+   ]
+  },
+  {
+   "title": "Biscuit",
+   "logline": "A T-rex the size of a skyscraper has lived on our street for twelve years, and the town looks after him because his arms are too short. When his hiccups start bouncing the whole town into the air, I'm the one who climbs the clock tower to scare them out of him.",
+   "twist": "Biscuit screams at the mirror because he has never seen himself before. For twelve years he thought he was a golden retriever, which explains the dog name, the tail-wagging at 'walk', fetching the bus and the leg-thumping back scratches. The town dresses up as dinosaurs so he won't feel weird, but Grandma (who suggested scaring him in the first place) has a costume so good that he's now terrified of Grandma.",
+   "caption_hook": "nobody had the heart to tell him he was a dinosaur",
+   "new_props": [
+    "Biscuit the T-rex: skyscraper-tall, green, made of boxes. Big box head with a hinged jaw, huge white googly eyes, pink box tongue, tiny useless arms, thick legs, long tail that can wag",
+    "giant street-sweeper toothbrush (long pole with a wide bristle box)",
+    "red fire truck (boxes, cylinder wheels) with an extending ladder",
+    "water tower (tall cylinder tank on four legs) that tips over, with blue cube splash",
+    "yellow school bus (box with window strips) that Biscuit carries in his jaws",
+    "blue drool drips (small translucent blue spheres)",
+    "bird's nest on a lamp post holding Grandpa's false teeth",
+    "bakery house stacked on top of the library roof",
+    "marching band tubas (gold cylinders with cone bells)",
+    "tall silver barbershop mirror with frame (reflective plane, or a fake reflection from a mirrored copy of Biscuit's head behind it)",
+    "roar shockwave ring and white box clouds that slide off-screen",
+    "big hill/mountain behind the town",
+    "green dinosaur costume hoods with cone spikes for the townspeople",
+    "Grandma's huge dinosaur costume with glowing red eyes and a clacking jaw",
+    "'DINOSAUR PARK' arrow sign at the edge of town"
+   ],
+   "sets": [
+    "town main street (day) with houses, street lamps and a water tower",
+    "town square with stage, mic and big banner (day)",
+    "clock tower exterior and top platform (day)",
+    "park beside the clock tower where Biscuit sits",
+    "mountain/hill behind town (dusk) for hiding",
+    "foot of the mountain the next day (day)"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, a T-rex the size of a skyscraper lives at the end of my street.",
+     "visual": "Day lighting. Low camera on main street: the kid narrator (tan skin, spiky brown hair, red cap, blue hoodie) waves in front of his house. The camera tilts up past the rooftops and keeps going to a giant blocky green T-rex towering over the houses, ten times taller than the street lamps, blinking huge googly eyes.",
+     "overlay": "IN THIS TOWN",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "thump",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "His name is Biscuit. Twelve years ago, he walked out of the dinosaur park, sat down, and never left.",
+     "visual": "Wide shot from the park: Biscuit plods in past a 'DINOSAUR PARK' arrow sign at the edge of town and plops down behind the clock tower. Every house hops up off the ground, the camera shakes, and townspeople peek out of their windows.",
+     "overlay": "BISCUIT: 300 FT. AGE: UNKNOWN",
+     "music": "same",
+     "sfx": [
+      "thump",
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Kid in the middle of the street, huss face, slam pose. Biscuit's giant head leans down curiously behind him. Quick punch-in on each HUSS.",
+     "music": "party",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "His arms are way too short, so the whole town takes care of him.",
+     "visual": "Close-up of Biscuit's tiny arms wiggling uselessly at his chest, trying to reach an itch. Cut to the crowd below looking up (think pose), holding brooms and ladders.",
+     "music": "party",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Okafor brushes his teeth with a street sweeper. Firefighters scratch his back with a ladder.",
+     "visual": "Biscuit's jaw opens wide like a garage door. Mr. Okafor (dark skin, mustache, overalls) stands on the pink tongue scrubbing a tooth with a giant brush. Cut to a red fire truck with its ladder raised, scratching Biscuit's back while his huge leg thumps the ground like a happy dog.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Every time somebody says walk, his tail wags so hard it knocks over the water tower.",
+     "visual": "A townsperson in the park points and mouths 'walk'. Biscuit's tail whips across the skyline and knocks over the water tower, which tips over with a splash of blue cubes. Everyone ducks (surprised pose).",
+     "overlay": "NEVER SAY W-A-L-K",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And every morning, he fetches the school bus. Full of kids. Covered in drool.",
+     "visual": "Biscuit trots into the town square with the yellow school bus in his mouth and sets it down gently. The door opens and dripping kids stumble out (sweat faces, shrug poses) as blue drool drips from the roof.",
+     "overlay": "ATTENDANCE: 100% SOGGY",
+     "music": "same",
+     "sfx": [
+      "thump",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then yesterday, he got the hiccups.",
+     "visual": "Close-up of Biscuit's face. His eyes go suddenly wide and the frame freezes.",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Every hiccup bounced the whole town ten feet into the air.",
+     "visual": "Wide shot of the street: Biscuit jolts, and every house, lamp post and townsperson pops ten feet into the air and slams back down. Heavy camera shake, then it happens again.",
+     "overlay": "HIC!",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "thump",
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid hangs mid-air above the street, arms flailing (surprised pose, huss face), with houses floating behind him. Another bounce on each HUSS.",
+     "music": "same",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Grandpa's teeth landed in a bird's nest. The bakery landed on the library.",
+     "visual": "Grandpa (white beard, glasses) in shock with no teeth. Pan up to the pigeon sitting proudly on his false teeth in a nest on a lamp post. Cut to the bakery house stacked on the library roof, with the baker on top shrugging.",
+     "music": "same",
+     "sfx": [
+      "pop",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The only cure for hiccups? Scare it.",
+     "visual": "Town square. Grandma (grey bun, glasses, purple cardigan) at the stage mic, pointing dramatically up at Biscuit while the crowd nods.",
+     "overlay": "\"You gotta scare it.\" \u2014 Grandma",
+     "music": "muffled",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The mayor yelled boo. The marching band played their loudest note. He just yawned.",
+     "visual": "The mayor (top hat, sash) cups his hands on the stage and yells. A marching band blasts gold tubas up at Biscuit. Biscuit gives an enormous slow yawn, then hiccups again and everyone bounces.",
+     "overlay": "SCARE ATTEMPTS: 47 \u2014 FAILED",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I dragged the barbershop mirror to the top of the clock tower.",
+     "visual": "The kid hauls a tall silver-framed mirror up the outside of the clock tower, sweating (sweat face, determined). At the top he heaves it up right in front of Biscuit's gigantic eye.",
+     "music": "muffled",
+     "sfx": [
+      "thump",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "He leaned down, looked into it, and screamed so loud the clouds left town.",
+     "visual": "Biscuit leans in and his reflection appears in the mirror. His eyes go huge, his jaw drops and he ROARS. A shockwave ring pushes all the clouds off-screen, hats fly off the crowd, and the camera shakes hard.",
+     "music": "none",
+     "sfx": [
+      "boom",
+      "whoosh",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid clutches the mirror on top of the clock tower with a huss face. Biscuit tumbles backwards into the park in slow motion while the crowd below cheers and confetti flies.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The hiccups stopped. But then I realized something.",
+     "visual": "Quiet. Biscuit sits in the park staring at the mirror propped against the clock tower, tilting his head like a confused dog. The kid looks up at him (think pose).",
+     "music": "lofi",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "He had never seen himself before. For twelve years, he thought he was a golden retriever.",
+     "visual": "Quick warm-tinted flashback montage: Biscuit wagging his tail, tongue out, fetching the bus, leg thumping during the back scratch.",
+     "overlay": "GOOD BOY?",
+     "music": "lofi",
+     "sfx": [
+      "record scratch",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now he's hiding behind the mountain and won't come out.",
+     "visual": "Dusk lighting. Only Biscuit's two huge sad eyes and the tip of his tail peek over the big hill behind town. Townspeople walk away below (walkSad).",
+     "music": "night",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "So today, the whole town dressed up as dinosaurs, so he wouldn't feel weird.",
+     "visual": "Next day. The whole town lines up at the foot of the mountain in green dinosaur hoods with cone spikes and arms tucked in tiny, doing dance poses. Biscuit peeks out and his tail starts to wag.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "It totally worked. Except Grandma's costume is so good, now he's scared of Grandma.",
+     "visual": "Grandma steps forward in an enormous, terrifyingly realistic dinosaur costume with glowing red eyes and a clacking jaw, and roars. Biscuit yelps, leaps behind the clock tower and covers his face with his tiny arms, trembling.",
+     "overlay": "GRANDMA: 1  BISCUIT: 0",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "laugh"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Grandma in costume strikes a slam pose, lifts the dino mask to show a huss face and winks at the camera. Biscuit shakes as he peeks out from behind the clock tower.",
+     "music": "party",
+     "sfx": []
+    }
+   ],
+   "vibe": "giants",
+   "id": "giants-1",
+   "score": 34.47,
+   "notes": [
+    "The golden-retriever reveal is the real twist, but the softer Grandma-costume ending buries it. Cut the costume ending and finish on the retriever line plus one callback shot: Biscuit wagging behind the mountain in a giant dog collar, fetching the bus again. Also drop the marching band and the bakery-on-library props to lighten the build, and rename the T-rex, because homey-1's cat is also called Biscuit.",
+    "Give the kid a stated reason for the mirror ('What scares a T-rex? Another T-rex.'). The scream then reads as a clever plan that works for the wrong reason, and the golden-retriever reveal recasts it. That reveal is already well set up by the walk, fetch and leg-thump beats.",
+    "The T-rex rig (hinged jaw, segmented wagging tail, wiggling arms, thumping leg) carries every shot and takes a full day by itself. Cut the teeth-in-the-nest, bakery-on-the-library and marching-band beats: they won't read at phone size and add 5+ props. Use that time and the freed narration to plant why the mirror would scare him, for example Biscuit flinching at the dinosaur on the DINOSAUR PARK sign early on. Also rename him, because homey-1's cat is also called Biscuit."
+   ]
+  },
+  {
+   "title": "Sunrise",
+   "logline": "In this town the sun won't come up until somebody makes Grandma Bea laugh, so every morning the whole town lines up at the stage to try. One Tuesday nothing works, and the town is stuck in the dark until noon, until one kid tries something nobody has ever done: asking Grandma to tell HER joke.",
+   "twist": "Grandma laughs so hard at her own terrible joke that the sun bounces into the sky; she only wanted someone to laugh with. Then her grumpy brother Walt moves in next door. The moon only rises when HE laughs, he has never laughed in his life, and Uncle Dave, whose knock-knock joke has never worked, is already knocking on his door.",
+   "caption_hook": "the sun won't rise until grandma laughs and she just stopped laughing",
+   "new_props": [
+    "Giant sleepy sun (huge glowing yellow-orange sphere with closed-eye arcs and a small smile) that sits behind the hills and can rocket up and bounce",
+    "Giant grumpy moon (pale glowing sphere with a frowning face) behind the hills",
+    "Rocking chair (boxes and curved base) on the stage",
+    "Bassinet (box crib with a little canopy) for the flashback",
+    "Frozen fish (light-blue box bodies with cone tails) for juggling",
+    "Empty bucket (open cylinder)",
+    "Flashlights (small glowing cylinders) on the park table",
+    "Cream pie (flat cylinder with a white sphere top)",
+    "Moving van (big white box with cylinder wheels) parked next door",
+    "Spinning clock-hand overlay or clock tower hands that spin",
+    "Counter overlay showing Uncle Dave's knock-knock record"
+   ],
+   "sets": [
+    "Town square stage at pre-dawn, banner reads MAKE BEA LAUGH",
+    "Flashback nursery-style corner with a bassinet at dusk",
+    "Town square in daylight (good mornings)",
+    "Town at quiet night lighting during the day (the endless night)",
+    "Clock tower at night",
+    "Park table at night with flashlights",
+    "Grandma Bea's house and the house next door at dusk"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, the sun won't come up until somebody makes Grandma Bea laugh.",
+     "visual": "Town square before dawn, deep blue sky. Tiny Grandma Bea (white bun, pink cardigan, round glasses) sits in a rocking chair on the stage under a banner that reads MAKE BEA LAUGH. On the horizon a giant sleeping sun with closed eyes peeks over the hills.",
+     "music": "night",
+     "sfx": [
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Eighty years ago, baby Bea giggled, and the sun popped up for the very first time.",
+     "visual": "Flashback at dusk: a little bassinet. A giggle sparkle pops above it, and the giant sun boings up over the hills for the first time. Townspeople in old-fashioned hats gasp.",
+     "music": "lofi",
+     "sfx": [
+      "pop",
+      "ding"
+     ],
+     "overlay": "80 YEARS AGO"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The narrator kid (yellow raincoat, headphones around neck) pops up in front of the stage, huss face, pointing at the sleeping sun.",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "So every morning at five, the whole town lines up at the stage.",
+     "visual": "A long line of about 30 extras in pajamas with sleepy faces snakes across the dark town square up to the stage. Someone holds a mug.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "5:00 AM"
+    },
+    {
+     "kind": "line",
+     "text": "Rule one: no repeat jokes. Rule two: no tickling. That's cheating.",
+     "visual": "The kid holds up fingers to camera. Cut to a man in the line with wiggling fingers sneaking toward Grandma. A big red DENIED stamp slams down on him.",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ],
+     "overlay": "DENIED"
+    },
+    {
+     "kind": "line",
+     "text": "Mr. Okafor juggles frozen fish. Sunrise, six-oh-two.",
+     "visual": "Mr. Okafor (beard, chef apron) juggles three light-blue box fish on stage. Grandma Bea laughs and the sun rises over the hills behind them.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "laugh"
+     ],
+     "overlay": "SUNRISE 6:02"
+    },
+    {
+     "kind": "line",
+     "text": "The mayor once fell off the stage. Best summer ever.",
+     "visual": "The mayor (top hat, sash) waves, steps backward and tumbles off the edge of the stage. Grandma laughs hard and the sun blazes extra bright.",
+     "music": "same",
+     "sfx": [
+      "thump",
+      "laugh"
+     ],
+     "overlay": "SUNRISE 4:58"
+    },
+    {
+     "kind": "line",
+     "text": "Uncle Dave tells the same knock-knock joke every single day. It has never worked. Not once.",
+     "visual": "Uncle Dave (big mustache, bowtie, hopeful grin) knocks on the air on stage. Grandma Bea stares back, neutral face. Crickets of silence. A counter ticks to 0 FOR 4,380.",
+     "music": "none",
+     "sfx": [
+      "knock",
+      "record scratch"
+     ],
+     "overlay": "0 FOR 4,380"
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid face-palms then does huss face beside a deflated Uncle Dave, who shrugs.",
+     "music": "party",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Until Tuesday. Grandma Bea stopped laughing.",
+     "visual": "Dark stage. Grandma Bea sits with crossArms and a sad face. Joke after joke fails in front of her. The sleeping sun on the horizon doesn't move.",
+     "music": "muffled",
+     "sfx": [
+      "record scratch"
+     ],
+     "overlay": "TUESDAY"
+    },
+    {
+     "kind": "line",
+     "text": "Six AM. Nothing. Nine AM. Still dark. By noon, even the pigeons went back to bed.",
+     "visual": "The clock tower at quiet night with its hands spinning. Street lamps glow. The pigeon on the clock tower ledge tucks its head under its wing and falls asleep.",
+     "music": "night",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding"
+     ],
+     "overlay": "12:00 PM"
+    },
+    {
+     "kind": "line",
+     "text": "We ate lunch by flashlight. Mr. Okafor ran out of fish.",
+     "visual": "The park table at night: a family eats sandwiches by the light of glowing flashlights. Mr. Okafor stands nearby holding an empty bucket upside down, sad face.",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid in the middle of the dark town square, shocked huss face. The camera spins around him, street lamps flicker, and the whole crowd panics in the background.",
+     "music": "muffled",
+     "sfx": [
+      "siren"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Everyone tried. Pies. Clowns. Grandad did the worm across the whole stage.",
+     "visual": "Quick montage on stage: a cream pie flies across, someone in a party hat and red nose does a dance, then Grandad (grey beard, cap) slides across the stage flat on his belly doing the worm. Grandma stays stunned.",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "pop",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Nothing. Then I noticed something. Everyone was telling HER jokes. Nobody ever asked for hers.",
+     "visual": "The kid in think pose at the side of the stage. Camera slowly pushes in on Grandma Bea, alone in her chair, looking a little lonely while the crowd argues about who goes next.",
+     "music": "lofi",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "So I sat down next to her and said, 'Grandma, tell me a joke.'",
+     "visual": "The kid sits on the stage edge beside the rocking chair. The crowd goes quiet. Grandma Bea turns her head slowly, surprised face.",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Why didn't the sun go to college? It already had a million degrees!",
+     "visual": "Grandma Bea in Grandma's own voice, grin face, pointing finger up at the sleeping sun as she delivers the punchline.",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ],
+     "overlay": "\"A MILLION DEGREES!\" \u2014 Grandma Bea"
+    },
+    {
+     "kind": "line",
+     "text": "It was terrible. And she laughed so hard she snorted.",
+     "visual": "Grandma Bea doubles over in laugh pose and laugh face, rocking chair tipping back. The kid starts laughing too. A big SNORT stamp pops.",
+     "music": "same",
+     "sfx": [
+      "laugh",
+      "pop"
+     ],
+     "overlay": "SNORT"
+    },
+    {
+     "kind": "line",
+     "text": "The sun shot up so fast it bounced.",
+     "visual": "The giant sun opens its eyes and rockets up from behind the hills, bounces once in the sky, then settles. Lighting snaps from night to bright day. Camera shake, birds scatter.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "whoosh"
+     ],
+     "overlay": "SUNRISE 12:47 PM"
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Sunny town square: the whole town in pajamas cheers and dances. Grandad crowd-surfs across the crowd. The kid does huss face on the stage next to Grandma, who is still giggling.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Turns out she didn't need a show. She just wanted someone to laugh with.",
+     "visual": "Warm close shot: the kid and Grandma Bea sit together on the stage edge in the sunshine, both laughing. The smiling sun glows behind them.",
+     "music": "lofi",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "But today, her brother Walt moved in next door. The moon only rises when HE laughs.",
+     "visual": "Dusk. A moving van parks next to Grandma's house. Walt (long grey beard, flat cap, brown coat) stands on the porch in crossArms with a squint face. Behind the hills, a giant frowning moon waits.",
+     "music": "none",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Walt has never laughed in his life. And Uncle Dave is already knocking.",
+     "visual": "Uncle Dave, hopeful grin, knocks on Walt's front door. Walt stares down at him without blinking. The kid turns slowly to the camera with sweat face.",
+     "music": "night",
+     "sfx": [
+      "knock",
+      "knock",
+      "record scratch"
+     ],
+     "overlay": "NIGHT: CANCELLED?"
+    }
+   ],
+   "vibe": "homey",
+   "id": "homey-2",
+   "score": 33.8,
+   "notes": [
+    "Line 1 is charming but a 12-year-old won't stop scrolling for it. Cold-open on the crisis instead: \"It's noon. It's pitch black. Because Grandma Bea won't laugh,\" with the dark town and the pigeon asleep. Then rewind to the rules. That puts the stakes and the strange visual in the first two seconds.",
+    "Set up the closing twist. Early on, show a night sky that never has a moon ('We haven't had a moon since Grandma's brother moved away.') so Walt's arrival pays something off instead of being a bolted-on sequel hook. Also fix the rule clash: Uncle Dave repeats his joke daily despite 'no repeat jokes', so stamp him an explicit 'special permit'.",
+    "There is a hole in the moon logic: if the moon only rises when Walt laughs and Walt has never laughed, the town has never had a moon. Rewrite the line as 'Walt's old town hasn't seen the moon in eighty years. Tonight, ours didn't come up either.' Show a black sky with the frowning moon stuck behind the hills, so the twist doesn't contradict every earlier night."
+   ]
+  },
+  {
+   "title": "Nugget",
+   "logline": "Ever since the dinosaur park's fence fell over, every kid in town rides a dinosaur to school. I ride a chicken. When I enter her in the Great Dino Race, the whole town laughs, right up until the race turns into a twelve-dinosaur pile-up.",
+   "twist": "Nugget wins by slowly walking past the pile-up and ringing the bell with her face. Then she sits on top of the clock tower and lays an egg bigger than the clock tower itself. Every dinosaur runs screaming back into the dinosaur park and fixes the fence themselves, and the egg starts cracking with a very, very deep 'BAWK'.",
+   "caption_hook": "everyone laughed at my chicken. then she laid an egg.",
+   "new_props": [
+    "Nugget the chicken: small white body (box/sphere), red box comb and wattle, orange cone beak, stick legs, flappy box wings. Kid-sized, so the kid's feet touch the ground when he rides her",
+    "teal triceratops: box body, round frill disc, three cone horns, thick tail",
+    "purple raptor 'Sprinkles': slim upright body, long snout, sickle claws",
+    "long-neck dinosaur: big body, tall cylinder neck whose head is above the rooftops, can tip over sideways",
+    "T-rex (shared rig with the Biscuit build)",
+    "dinosaur park fence: tall wooden plank wall plus a gate with a 'DINOSAUR PARK' sign. It falls over in the flashback and gets fixed at the end",
+    "'THE GREAT DINO RACE' banner and a chalk start line across main street",
+    "starter flag for the mayor",
+    "big gold bell at the top of the clock tower",
+    "clipboard sign-up sheet",
+    "giant white egg (huge sphere, scaled tall) with a zigzag crack and glowing light leaking out",
+    "crumbling clock tower top (box chunks that fall away)",
+    "'KEEP OUT' sign, hammer and nailed boards on the fixed fence",
+    "dust cloud (grey spheres) for the race start"
+   ],
+   "sets": [
+    "town main street (day) with houses and street lamps, used as the race course",
+    "town square with stage and big banner (day)",
+    "clock tower exterior, stairs and top bell platform",
+    "dinosaur park gate and fence at the edge of town",
+    "town square at night with the giant egg"
+   ],
+   "beats": [
+    {
+     "kind": "line",
+     "text": "In this town, everybody rides a dinosaur to school. Except me.",
+     "visual": "Day lighting, main street. Kids ride past on blocky dinosaurs: Priya on a teal triceratops, Big Darnell on a purple raptor, and a long-neck whose head bobs above the rooftops. The kid narrator (light brown skin, curly black hair, yellow jacket, glasses, backpack) stands alone on the sidewalk.",
+     "overlay": "IN THIS TOWN",
+     "music": "party",
+     "sfx": [
+      "thump",
+      "thump",
+      "whoosh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I ride Nugget. Nugget is a chicken.",
+     "visual": "The camera pans down to show the kid sitting on a small white chicken with his sneakers flat on the ground. Nugget blinks at the camera.",
+     "overlay": "NUGGET: 1 CHICKEN POWER",
+     "music": "none",
+     "sfx": [
+      "pop",
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid on Nugget, huss face, cheer pose. Nugget flaps her wings while the dinosaurs behind them stare blankly. Punch-in on each HUSS.",
+     "music": "party",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Ten years ago, the dinosaur park's fence fell over, and they all moved into town.",
+     "visual": "Warm-tinted flashback: the tall plank fence with the 'DINOSAUR PARK' sign tips over with a crash. Dinosaurs stroll out onto main street past the clock tower, one drinks from the fountain and the long-neck peeks into a second-floor window.",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Priya rides a triceratops. Big Darnell has a raptor named Sprinkles. The mailman rides a long-neck and delivers to the roof.",
+     "visual": "Quick character cards, each with a name tag: Priya (ponytail, pink sash) waves from her triceratops. Big Darnell (tall, sunglasses, chain) rears up on Sprinkles the raptor. The mailman (cap) sits on top of the long-neck and drops letters down a chimney.",
+     "music": "same",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And every single day, they all laugh at me.",
+     "visual": "Town square. A crowd of extras and dinosaurs point and laugh at the kid on Nugget (laugh poses). Kid has a sad face and Nugget looks at her feet.",
+     "music": "muffled",
+     "sfx": [
+      "laugh"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then came the Great Dino Race. First one to ring the clock tower bell wins.",
+     "visual": "The town square banner reads 'THE GREAT DINO RACE' and the mayor (top hat, sash) is on the stage. The camera tilts up to the big gold bell glinting at the top of the clock tower.",
+     "overlay": "FINISH LINE: THE BELL",
+     "music": "party",
+     "sfx": [
+      "cheer",
+      "ding"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "I signed up Nugget. The whole town laughed so hard the long-neck fell over.",
+     "visual": "The kid signs a clipboard at the stage with Nugget tucked under his arm. The crowd erupts laughing, and the long-neck laughs so hard it tips sideways onto a house with a crunch.",
+     "music": "same",
+     "sfx": [
+      "laugh",
+      "boom"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid, determined face, crossArms pose, with Nugget sitting on his head. The long-neck lies across a squashed house behind them, legs in the air.",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Three. Two. One. GO!",
+     "visual": "Start line across main street. Twelve dinosaurs stomp and snort in a row, with tiny Nugget at the end. The mayor drops the starter flag.",
+     "overlay": "3... 2... 1... GO!",
+     "music": "party",
+     "sfx": [
+      "ding",
+      "ding",
+      "ding",
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Twelve dinosaurs exploded off the line. Nugget just stood there, pecking at a crumb.",
+     "visual": "The dinosaurs blast off in a huge grey dust cloud and the camera shakes. The dust clears to show Nugget alone at the start line, calmly pecking one crumb, while the kid holds his head (think pose).",
+     "music": "same",
+     "sfx": [
+      "whoosh",
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Then Sprinkles tripped on the triceratops' tail.",
+     "visual": "Slow motion: the raptor's foot catches on the triceratops' tail and Big Darnell's sunglasses fly off. Everything freezes for a beat.",
+     "music": "none",
+     "sfx": [
+      "record scratch"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The triceratops crashed into the stage. The stage launched the mayor. The mayor landed on the T-rex.",
+     "visual": "Chain reaction with whip-pans: the triceratops plows into the stage, which flips up like a seesaw and launches the mayor through the air (top hat spinning). He lands on top of the T-rex's head.",
+     "music": "party",
+     "sfx": [
+      "boom",
+      "whoosh",
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And the T-rex sat on everybody.",
+     "visual": "The confused T-rex sits straight down on the whole pack of dinosaurs. A big dust puff and camera shake.",
+     "music": "same",
+     "sfx": [
+      "boom",
+      "thump"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "A wide shot of the dinosaur pile-up blocking main street, legs and tails sticking out and stunned faces. The kid in the foreground with a huss face.",
+     "music": "same",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Twelve dinosaurs. One giant pile. Nobody could move.",
+     "visual": "Overhead shot of the tangled pile. A long-neck head waves weakly from the bottom.",
+     "overlay": "DINO PILE-UP",
+     "music": "same",
+     "sfx": [
+      "thump"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "And Nugget? Nugget just walked. Slowly. Right past them.",
+     "visual": "Slow motion: Nugget strolls calmly past the pile, one step at a time, and every dinosaur's eyes follow her.",
+     "music": "muffled",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Up the steps. Up the tower. And she rang the bell with her face.",
+     "visual": "Nugget hops up the clock tower steps. At the top she headbutts the giant gold bell, which swings with a huge DONG.",
+     "overlay": "WINNER",
+     "music": "none",
+     "sfx": [
+      "ding"
+     ]
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "The kid sprints into the town square with both arms up (cheer) as confetti falls. Nugget stands on top of the clock tower with her wings spread like a champion.",
+     "music": "party",
+     "sfx": [
+      "cheer"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Nobody was laughing now.",
+     "visual": "The crowd and the dinosaurs stare up at the tower in total silence, jaws dropped (shocked faces).",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "line",
+     "text": "Then Nugget sat down on top of the clock tower and laid an egg.",
+     "visual": "Close on Nugget at the top of the tower. She fluffs up, wiggles, squints hard (squint face) and settles down.",
+     "music": "muffled",
+     "sfx": [
+      "pop"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "The egg was bigger than the clock tower.",
+     "visual": "A gigantic white egg swells out from under Nugget. The clock tower top cracks and crumbles under it, and the egg drops into the town square, dwarfing every dinosaur. The camera tilts up, and up, and up.",
+     "music": "none",
+     "sfx": [
+      "boom",
+      "thunder"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Every dinosaur in town ran screaming back into the dinosaur park and fixed the fence themselves.",
+     "visual": "All twelve dinosaurs scramble screaming through the dinosaur park gate. The triceratops slams the gate, the raptor hammers boards onto the fence, and the long-neck holds up a 'KEEP OUT' sign.",
+     "music": "party",
+     "sfx": [
+      "whoosh",
+      "knock",
+      "knock",
+      "knock"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "Now the egg is cracking. And something inside just went...",
+     "visual": "Night lighting. The kid and Nugget stand beside the colossal egg in the empty town square as a jagged crack zigzags across it with glowing light leaking out.",
+     "music": "night",
+     "sfx": [
+      "thump",
+      "static"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "BAWK.",
+     "visual": "Extreme close-up on the glowing crack. The line is spoken by a very deep, pitched-down extra character voice. The whole town shakes and street lamps flicker.",
+     "overlay": "BAWK.",
+     "music": "none",
+     "sfx": [
+      "boom"
+     ]
+    },
+    {
+     "kind": "line",
+     "text": "In a really, really deep voice.",
+     "visual": "The kid slowly turns to the camera (sweat face) while Nugget puffs out her chest proudly (smug face).",
+     "music": "none",
+     "sfx": []
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "The kid in a slam pose with a huss face as the giant egg wobbles behind him and the pigeon flaps away in a panic.",
+     "music": "party",
+     "sfx": [
+      "thump"
+     ]
+    }
+   ],
+   "vibe": "giants",
+   "id": "giants-2",
+   "score": 32.33,
+   "notes": [
+    "The giant egg comes out of nowhere. Plant one early clue: the T-rex flinches and steps back every time Nugget clucks in the opening street shot, so the egg reads as a reveal and not random. Cut the field from twelve unique dinosaurs to four hero dinos plus reused copies so the pile-up can actually be built.",
+    "Set up the ending. In the opening and race beats, show the dinosaurs quietly scared of Nugget: the T-rex steps around her, and Sprinkles hides when she clucks. Then the giant egg and the stampede back to the park pay off a clue. Give the passive narrator one active move too: he lays a crumb trail up the clock tower steps, using the pecking already set up at the start line.",
+    "As written this needs 4+ unique dinosaur rigs, 12 racers with riders and a seesaw chain reaction, which is too much for a day. Build one shared quadruped body with swappable heads and necks (frill and horns, long neck), give only the T-rex its own rig, and cut the race to 5 dinosaurs. Also drop the HUSS run after the sign-up: the script has 5 runs, over the 2\u20134 cap."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,455 @@
+{
+ "title": "In This Town — Low Moon",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town the moon hangs way too low and creeps closer every night. The only thing that pushes it back up is the whole town shouting at nine o'clock. Then flu season takes everyone's voice, the moon settles on the clock tower, and the one indoor kid who isn't sick has to save the town with five years of recorded shouting.",
+ "twist": "The moon flies back up, then blinks. It isn't a moon. It's a giant eye, and it is staring straight into the narrator's bedroom window. It came down five years ago 'to check on us', and now it knows exactly who pressed play.",
+ "caption_hook": "the moon is NOT supposed to be this close",
+ "vibe": "spooky",
+ "sets": [
+  "Town main street, quiet night preset with a giant moon over the rooftops",
+  "Town square with stage, night preset (shout time), banner reading SHOUT TIME 9PM",
+  "Clock tower close-up with the moon sitting on top",
+  "Kid's bedroom interior at night with the window facing the street",
+  "Flashback: town main street, dusk preset with a tiny normal moon"
+ ],
+ "newProps": [
+  "Giant moon: huge emissive pale-silver sphere with a few darker crater spheres. It has a hidden dark pupil disc that fades in, and a dome-shaped eyelid (half sphere) that slides down and up over it to blink",
+  "Second smaller far-away moon state (same prop scaled down, high in the sky) for the flashback",
+  "Clock face hands that spin backwards fast (two thin boxes on the clock tower face)",
+  "Bent street lamps: the existing lamp posts tilted 30 degrees away from the moon",
+  "Mayor's sign: a box board on a pole reading NO LOUD MUSIC",
+  "Loose mustache: a detachable mustache box that pops off Big Terry's face and spins away",
+  "Kazoo: a tiny orange cone in Grandma Vee's mouth",
+  "Baby Otis: a blocky human scaled to about 40 percent, riding on his dad's shoulders",
+  "Two big stage speakers: tall black boxes with grey cylinder speaker cones that pulse outward",
+  "Tablet: thin dark box with a glowing screen texture reading SHOUTS (1,825 files)",
+  "Hedge: a green box bush beside the house for Dad to land in",
+  "Moonlight: silver light wash and floating dust particles (small white spheres) drifting upward"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, the moon is way too close. And it's getting closer.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:closer",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Slow crane up the quiet night main street. Over the rooftops hangs a giant glowing moon, so big it fills half the sky, just above the chimneys. Dust particles drift up toward it."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The only thing that pushes it back up is shouting.",
+   "gapAfter": 0.3,
+   "visual": "The kid (orange hoodie, messy brown hair, headphones round neck) stands on the porch looking up, peer pose, determined face. The moon edges a little lower behind him.",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:shouting",
+     "gain": 0.5
+    }
+   ]
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "SHOUT TIME: 9:00 PM",
+   "visual": "Town square at night. The whole crowd of extras throws their heads back and shouts at the sky, huss faces. The moon jolts upward one notch per HUSS, camera shaking each time."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Five years ago it was a normal moon. Tiny. Polite. Far away.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "overlay": "5 YEARS AGO",
+   "visual": "Flashback at dusk on main street: a tiny, normal moon sits high in the sky. Townspeople stroll past, waving at each other."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then the mayor banned loud music. That night, the moon came down to check on us.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:banned",
+     "gain": 0.55
+    },
+    {
+     "type": "whoosh",
+     "at": "w:came",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "BANNED",
+   "visual": "The mayor (top hat, sash, mustache, smug face) plants a NO LOUD MUSIC sign in the square. Then a hard cut to night: the moon slides down the sky toward the town in one smooth, creepy move.",
+   "markers": {
+    "ban": "w:banned",
+    "down": "w:came"
+   }
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Now the rules are simple. Every night at nine, everyone goes outside and shouts.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:nine",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The clock tower strikes nine. Front doors open all down the street and townspeople step out in pajamas, all looking up at the huge moon."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Tony the butcher shouts so hard his mustache flies off.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:flies",
+     "gain": 0.55
+    }
+   ],
+   "visual": "Big Tony (huge, bald, green tank top, thick mustache) shouts, huss face. His mustache pops off and spins away into the dark. He freezes, shocked face."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandma Rose can't shout, so she brings a kazoo. Honestly? Worse.",
+   "gapAfter": 0.3,
+   "visual": "Grandma Rose (grey bun, glasses, purple cardigan) toots a tiny orange kazoo, smug face. Neighbours on both sides cringe and cover their ears.",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:kazoo",
+     "gain": 0.4
+    },
+    {
+     "type": "wahwah",
+     "at": "w:Worse",
+     "gain": 0.45
+    }
+   ],
+   "markers": {
+    "kazoo": "w:kazoo",
+    "worse": "w:Honestly"
+   }
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And baby Otis is the loudest person in town. He's six months old.",
+   "gapAfter": 0.3,
+   "overlay": "TOWN RECORD HOLDER",
+   "visual": "Tiny baby Otis rides on his dad's shoulders in the crowd, determined face. Everyone around him slowly takes a step back.",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:six",
+     "gain": 0.45
+    }
+   ]
+  },
+  {
+   "id": "b10",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Close on baby Otis, huss face, mouth wide. The moon rockets up three notches, street lamps flicker, a roof tile pops off a house. His dad is stunned."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then last Tuesday, everybody got the flu.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:flu",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "FLU SEASON",
+   "visual": "Main street at night: every window shows a sick townsperson in bed with sleepy and sweat faces. The music sounds stuffed up."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole town lost their voice. Even Otis. Especially Otis.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:Especially",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "*squeak*",
+   "visual": "In the square at nine, the crowd opens their mouths together and nothing comes out. Cut to baby Otis straining with his mouth wide open."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nine o'clock came. Nobody shouted. And the moon came down.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:moon",
+     "gain": 0.55
+    }
+   ],
+   "visual": "Wide shot of the town. The moon sinks down, down, down until it is level with the rooftops. Silver light floods the street and the camera shakes slowly.",
+   "markers": {
+    "silent": "w:Nobody",
+    "down": "w:moon"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It sat on the clock tower. The clock started running backwards.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:clock",
+     "gain": 0.35
+    },
+    {
+     "type": "rumble",
+     "at": "w:backwards",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The giant moon rests right on top of the clock tower. Its clock hands spin backwards faster and faster.",
+   "markers": {
+    "sit": "w:sat",
+    "back": "w:started"
+   }
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Street lamps bent away from it. The cat started floating. Dad floated past my window. Still snoring.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:bent",
+     "gain": 0.4
+    },
+    {
+     "type": "whoosh",
+     "at": "w:floating",
+     "gain": 0.4
+    }
+   ],
+   "visual": "Street lamps lean away from the moon. The orange cat drifts upward with a shocked face. Cut to the bedroom window: Dad (blue pajamas, beard) drifts past sideways, lying flat in the crowdSurf pose, sleepy face.",
+   "markers": {
+    "lamps": "w:Street",
+    "cat": "w:cat",
+    "dad": "w:Dad"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I was the only one not sick. Because I never go outside. But one voice? Not enough.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "Bedroom: the kid sits on the bed with his headphones on, perfectly healthy, then shrugs. Through the window behind him the moon glows bigger."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I remembered. Every night for five years... I recorded the shouting.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:recorded",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "1,825 SHOUTS",
+   "visual": "The kid holds up a tablet showing a folder labelled SHOUTS. A counter spins up fast. His face turns to a grin."
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I dragged Dad's speakers onto the stage and pressed play. All of them. At once.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:speakers",
+     "gain": 0.55
+    },
+    {
+     "type": "boom",
+     "at": "w:play",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Town square stage at night: the kid shoves two huge black speakers into place, the moon looming right behind the clock tower. He holds the tablet up and slams play, slam pose.",
+   "markers": {
+    "drag": "w:dragged",
+    "play": "w:pressed"
+   }
+  },
+  {
+   "id": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "cheer",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "FIVE YEARS OF SHOUTING",
+   "visual": "The speaker cones blast outward. The moon peels off the clock tower and shoots up into the sky, getting smaller with every HUSS. Sick townspeople lean out of their windows cheering, the lamps snap upright, the clock hands spin forwards."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The moon flew back up. The cat came down. Dad didn't wake up.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:flew",
+     "gain": 0.5
+    },
+    {
+     "type": "thump",
+     "at": "w:came",
+     "gain": 0.45
+    }
+   ],
+   "visual": "The moon is tiny and far away again. The cat lands on its feet, smug face. Dad drops into the hedge, still lying flat and snoring.",
+   "markers": {
+    "up": "w:flew",
+    "cat": "w:cat",
+    "dad": "w:Dad"
+   }
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then, high above the town... the moon slowly blinked.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:blinked",
+     "gain": 0.35
+    }
+   ],
+   "visual": "Slow push in on the tiny moon in a dark sky. An eyelid slides down over it and back up. The kid freezes, stunned."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "It's not a moon. It's an eye.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "sting",
+     "at": "w:eye",
+     "gain": 0.6
+    }
+   ],
+   "visual": "Extreme close-up: a dark pupil fades in on the glowing sphere and slowly swivels toward the town."
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And it's looking straight at my window.",
+   "gapAfter": 0.8,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:window",
+     "gain": 0.8
+    }
+   ],
+   "visual": "Kid's bedroom at night. The whole window is filled by one enormous glowing eye with its pupil locked on the kid. He peeks over his blanket, shocked face. Hold, then cut to black."
+  }
+ ]
+}

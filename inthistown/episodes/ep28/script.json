@@ -1,0 +1,506 @@
+{
+ "title": "In This Town — Out of Colour",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "Fifty years ago a rainbow crashed into the park, and it's the only colour this town has ever had. Colour can run out: paint your door red and somewhere a fire truck turns grey. Then the park, the bakery and the sky start going grey even though nobody used them. I mark every grey spot on a map, and the line leads straight to my own front door. My black hoodie, which I haven't taken off in five years, has been soaking up the town's colour.",
+ "twist": "I cannonball into the fountain and the colour floods back across town. Then Grandma Mabel takes off the black cardigan she's worn since the day the rainbow fell. Fifty years of mixed colour pours out as a brand-new colour nobody has ever seen, and the only word anyone can say about it is HUSS.",
+ "caption_hook": "in this town colours can run out. and somebody's been stealing them.",
+ "vibe": "interesting",
+ "sets": [
+  "main street (day) with Mrs. Kaur's house and the fire truck",
+  "park at dusk under a pink-purple sky (flashback, rainbow crash)",
+  "town square colour market (day)",
+  "mayor's purple house and fruit stall (day)",
+  "Grandma Mabel's porch (day)",
+  "park at dusk going grey",
+  "bakery on main street under a grey sky",
+  "town square stage (day)",
+  "kid's bedroom (night)",
+  "top-down drone view of the town",
+  "town square with fountain (day)"
+ ],
+ "newProps": [
+  "desaturation effect: any house, object, patch of ground or the sky can drain from full colour to grey in a sweeping wave, and fill back up",
+  "paint roller (cylinder + handle) with wet red paint",
+  "boxy red fire truck with a ladder on top",
+  "giant rainbow arch made of seven stacked curved bands of coloured blocks that cracks and topples",
+  "burst of thousands of glowing coloured cubes",
+  "colour market stalls with small glowing colour cubes and signs BLUE: 9 COINS / YELLOW: SOLD OUT",
+  "grape bunches (clusters of small purple spheres) on a fruit stall",
+  "Grandma Mabel's black cardigan (loose black box shell over her torso that lifts off)",
+  "rocking chair and knitting needles",
+  "paper town map on the desk with a grey pencil and dots that line up",
+  "grey trail running across the ground through town",
+  "tiny glowing red, yellow and blue cubes getting sucked into the black hoodie",
+  "town fountain (stacked cylinders with a water column)",
+  "rainbow geyser of coloured cubes that rains over the town",
+  "the impossible new colour: an iridescent, hue-shifting glowing spiral column that spreads across the sky",
+  "bakery storefront with awning"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, colours can run out. Paint your door red, and somewhere a fire truck turns grey.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:red",
+     "gain": 0.45
+    },
+    {
+     "type": "ding",
+     "at": "w:grey",
+     "gain": 0.5
+    }
+   ],
+   "overlay": "RED: -1",
+   "visual": "Main street, day. Mrs. Kaur rolls bright red paint onto her front door. Hard cut to the end of the street, where a boxy red fire truck drains to grey from bumper to ladder while a firefighter in a helmet stares.",
+   "markers": {
+    "paint": "w:Paint",
+    "truck": "w:fire"
+   }
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Fifty years ago, a rainbow crashed into the park, and every colour we have spilled out of it.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:crashed",
+     "gain": 0.65
+    },
+    {
+     "type": "whoosh",
+     "at": "w:spilled",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "50 YEARS AGO",
+   "visual": "Flashback, dusk, pink-purple sky over a grey park. A giant rainbow arch of seven bands of coloured blocks cracks and topples, bursting into thousands of glowing coloured cubes that fly onto the grey houses and paint them."
+  },
+  {
+   "id": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "There's no more where that came from. So colour is basically money.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:money",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Town square market, day. Stalls sell small glowing cubes of colour under signs BLUE: 9 COINS and YELLOW: SOLD OUT, and a kid counts out a pile of coins for one green cube."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "When the mayor painted his house purple, every grape in town went grey.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:grape",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "PURPLE: 0 LEFT",
+   "visual": "The mayor in a top hat and sash poses proudly in front of his freshly purple house. Cut to a fruit stall where a pile of purple grape bunches drains to grey and a shopper holds one up, disgusted.",
+   "markers": {
+    "purple": "w:painted",
+    "grapes": "w:grape"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Me next to the grey grapes shouting HUSS at the camera while the mayor shrugs in the background."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Only Grandma Mabel doesn't care. She's worn the same black cardigan since the day it fell.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:cardigan",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "SINCE DAY ONE",
+   "visual": "Grandma Mabel (grey bun, glasses, black cardigan) knitting in a rocking chair on her porch. She looks up and winks at the camera."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then last week, colours started vanishing that nobody had used.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:vanishing",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "MONDAY: THE PARK",
+   "visual": "Park at dusk. The camera pans as the grass, the tree and the park table drain to grey in one slow wave. (Builder note: do NOT desaturate the whole town; grey out only the hero targets — fire truck, grapes, park tree, bakery, sky — by swapping/crossfading to pre-made grey copies of their materials; the colour-return wave is one sweeping front of coloured cubes.)"
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Tuesday, the bakery. Wednesday, the whole sky.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "static",
+     "at": "w:bakery",
+     "gain": 0.35
+    },
+    {
+     "type": "thunder",
+     "at": "w:sky",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "WEDNESDAY: THE SKY",
+   "visual": "The bakery front drains to grey. Then the sky over main street flattens to dead grey and townspeople freeze and look up, stunned.",
+   "markers": {
+    "bakery": "w:Tuesday",
+    "sky": "w:Wednesday"
+   }
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everyone blamed everyone. Mrs. Kaur painted her door grey just to prove it wasn't her.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:grey",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Town square stage with a shouting crowd all pointing at each other. Cut to Mrs. Kaur, arms crossed, roller in hand, next to her now-grey door."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I marked every grey spot on a map. And they made a line.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:line",
+     "gain": 0.5
+    }
+   ],
+   "visual": "Kid's bedroom at night. Me at the desk with a big paper map of town and a grey pencil (the only colour left), dotting the grey spots until the dots line up."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Down Main Street. Through the park. Past the bakery. Straight to my front door.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:door",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "FOUND!",
+   "visual": "Top-down drone shot following a grey trail across town block by block, ending at my house. The camera drops down to my front door.",
+   "markers": {
+    "main": "w:Down",
+    "park": "w:Through",
+    "bakery": "w:Past",
+    "door": "w:Straight"
+   }
+  },
+  {
+   "id": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Me standing in my doorway, slowly looking down at my own hoodie as the camera spirals in, with screen shake."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I'd been everywhere, right before it went grey.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:grey",
+     "gain": 0.45
+    }
+   ],
+   "visual": "Quick flashes: me eating a donut at the bakery, me sitting in the park, me staring at the sky. Each time, the colours drain the moment I walk away."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Black soaks up light. Every colour. That's science.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:light",
+     "gain": 0.45
+    }
+   ],
+   "overlay": "BLACK ABSORBS EVERY COLOUR",
+   "visual": "Close-up on my black hoodie. Tiny glowing red, yellow and blue cubes drift off a nearby house and get sucked into it like a vacuum, then vanish."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And I haven't taken this hoodie off in five years.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:hoodie",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "SUSPECT: ME",
+   "visual": "Me facing a crowd of townspeople outside my house with a sheepish grin, pointing at the hoodie. The crowd stares, and the pigeon on the fence looks away."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then last week, Mom finally washed it. It came out empty. And thirsty.",
+   "gapAfter": 0.3,
+   "visual": "Quick flashback: Mom pulls the black hoodie out of the washing machine; it is a deeper, emptier black that seems to suck light in, with a little glint; tiny coloured sparkles drift INTO it. 'THIRSTY' stamp.",
+   "overlay": "WASHED: 1ST TIME IN 5 YEARS",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "w:washed",
+     "gain": 0.45
+    },
+    {
+     "type": "pop",
+     "at": "w:thirsty",
+     "gain": 0.55
+    }
+   ],
+   "markers": {
+    "wash": "w:washed",
+    "thirsty": "w:And"
+   }
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I tried wringing it out. Ah, almost... almost!",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:wringing",
+     "gain": 0.45
+    },
+    {
+     "type": "boom",
+     "at": "w:almost",
+     "gain": 0.65
+    }
+   ],
+   "overlay": "AH, ALMOST... ALMOST!",
+   "visual": "Me twisting the hoodie hem with both hands, straining. One blue drop falls and plinks onto the grey street, turning a single paving block blue.",
+   "markers": {
+    "wring": "w:wringing",
+    "almost": "w:Ah"
+   }
+  },
+  {
+   "id": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So I cannonballed into the town fountain.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:cannonballed",
+     "gain": 0.55
+    },
+    {
+     "type": "boom",
+     "at": "w:fountain",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Town square fountain. Me sprinting and leaping into a cannonball while the crowd shields their faces."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The water turned rainbow and blasted every colour back where it belonged.",
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:rainbow",
+     "gain": 0.6
+    },
+    {
+     "type": "cheer",
+     "at": "w:blasted",
+     "gain": 0.45
+    }
+   ],
+   "visual": "A huge rainbow geyser of coloured cubes erupts from the fountain and rains across town. A wave of colour rolls over the houses, the park, the bakery and the fire truck, and the sky snaps back to blue.",
+   "markers": {
+    "rainbow": "w:rainbow",
+    "wave": "w:blasted"
+   }
+  },
+  {
+   "id": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The whole town dances in the rainbow spray: the mayor doing dance2, and Mrs. Kaur happily rolling red back onto her door."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then Grandma Mabel took off her cardigan. For the first time in fifty years.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:cardigan",
+     "gain": 0.55
+    }
+   ],
+   "visual": "The square goes quiet. Grandma Mabel steps up beside the fountain and slowly lifts off her black cardigan."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Fifty years of colour, all mixed together, poured out as one nobody has ever seen.",
+   "gapAfter": 0.3,
+   "music": "night",
+   "sfx": [
+    {
+     "type": "whoosh",
+     "at": "w:poured",
+     "gain": 0.5
+    },
+    {
+     "type": "ding",
+     "at": "w:seen",
+     "gain": 0.55
+    }
+   ],
+   "overlay": "NEW COLOUR",
+   "visual": "A column of impossible shimmering colour (iridescent, always shifting hue) spirals up out of the cardigan and spreads across the sky, lighting up every stunned face.",
+   "markers": {
+    "pour": "w:poured"
+   }
+  },
+  {
+   "id": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Nobody can name it. Whoever looks at it can only say...",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "The whole town staring up open-mouthed. Slow push in on me, the new colour shimmering on my headphones."
+  },
+  {
+   "id": "b24",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.8,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "COLOUR NAME: HUSS",
+   "visual": "Everyone in the square shouts it at the sky together, and a stamped label slaps onto the shimmering colour."
+  }
+ ]
+}

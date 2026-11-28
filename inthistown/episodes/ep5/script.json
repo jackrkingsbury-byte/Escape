@@ -1,0 +1,335 @@
+{
+ "title": "In This Town — Freeze Dance",
+ "lead_in": 0.3,
+ "voices": {
+  "brenda": [
+   "am_fenrir",
+   0.97,
+   "en-us",
+   [
+    1.45,
+    1.12,
+    1.1
+   ]
+  ]
+ },
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody dances.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Crane down the party street, everybody dancing."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me.",
+   "music": "muffled",
+   "gapAfter": 0.25,
+   "visual": "Push in on an upstairs window; inside, Brenda stands bolt upright, sunglasses on, frozen."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "brenda",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Brenda's room: her body doesn't move a millimetre; only her face snaps to 'huss' on each HUSS."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Grandad's DJ name? Grandad.",
+   "music": "party",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "djName": "we:Grandad"
+   },
+   "gapAfter": 0.3,
+   "visual": "Grandad DJing on the street in sunglasses and headphones; tag DJ GRANDAD on the punchline."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "While they're out partying, by the way, I'm home. Not moving.",
+   "music": "muffled",
+   "pauses": [
+    0.3
+   ],
+   "gapAfter": 0.3,
+   "visual": "Static wide of the bedroom: Brenda frozen on the rug, party lights flicker in the window."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Day one: four seconds.",
+   "markers": {
+    "day1": "start",
+    "wobble": "w:seconds"
+   },
+   "gapAfter": 0.3,
+   "visual": "DAY 1 card + stopwatch 0:01-0:04; on 'seconds' she wobbles, face 'sweat'."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Day forty: the cat thinks I'm a bookshelf.",
+   "markers": {
+    "day40": "start",
+    "shelf": "w:bookshelf"
+   },
+   "gapAfter": 0.3,
+   "visual": "DAY 40: the cat loafs on top of her head, staring into the lens."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Be a fridge. Cold. Still. Full of snacks. My dentist.",
+   "pauses": [
+    0.25,
+    0.2,
+    0.2,
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Be a fridge. Cold. Still. Full of snacks.",
+    "by": "my dentist"
+   },
+   "markers": {
+    "quote1": "start-0.05",
+    "quote1end": "end+0.1",
+    "dentist": "we:My"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD over a slow zoom on Brenda with the cat on her head; attribution on 'My dentist'."
+  },
+  {
+   "id": "b09",
+   "kind": "huss",
+   "speaker": "brenda",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "visual": "Tight on Brenda + cat: face 'huss' per HUSS, body still, a sweat drop slides; the cat doesn't blink."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Top ten respectful moments. Number seven: Grandad dusted me.",
+   "pauses": [
+    0.35
+   ],
+   "markers": {
+    "top7": "w:seven",
+    "dust": "w:dusted"
+   },
+   "gapAfter": 0.3,
+   "visual": "TOP 10 card; Grandad dusts Brenda's shoulders and the cat with a feather duster, then nods."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the Freeze Dance Championship.",
+   "music": "party",
+   "gapAfter": 0.2,
+   "visual": "Square, banner SUMMER PARTY / FREEZE DANCE / CHAMPIONSHIP, stage packed with dancers."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Marcus sneezed. He's out!",
+   "music": "none",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "sneeze": "w:sneezed",
+    "out1": "w:He's"
+   },
+   "gapAfter": 0.3,
+   "visual": "Music stops, everyone freezes. Marcus jolts on 'sneezed'; red OUT stamp."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The mayor's mustache twitched. He's out!",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "twitch": "w:twitched",
+    "out2": "w:He's"
+   },
+   "gapAfter": 0.3,
+   "visual": "ECU on the frozen mayor; one tiny twitch; red OUT stamp."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Never trust a man who blinks. A fish.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Never trust a man who blinks.",
+    "by": "a fish"
+   },
+   "markers": {
+    "quote2": "start-0.05",
+    "quote2end": "end+0.1",
+    "fish": "we:A"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD over a slow dolly along the frozen contestants; attribution on 'A fish'."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Hours later. Just me and a lamppost.",
+   "pauses": [
+    0.4
+   ],
+   "markers": {
+    "later": "start",
+    "lamp": "w:lamppost"
+   },
+   "gapAfter": 0.3,
+   "visual": "3 AM card; the stage is empty except Brenda and a lamppost with its own bib. The crowd is half asleep."
+  },
+  {
+   "id": "b15m",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Be the lamp, not the moth. A moth.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Be the lamp, not the moth.",
+    "by": "a moth"
+   },
+   "markers": {
+    "quote4": "start-0.05",
+    "quote4end": "end+0.1",
+    "moth": "we:A"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; behind it a tiny moth circles the lamppost bulb; attribution on 'A moth'."
+  },
+  {
+   "id": "b16",
+   "kind": "huss",
+   "speaker": "brenda",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "visual": "Western face-off: Brenda CU ('huss' face, body still) vs the lamppost, tighter each time; crowd leans in."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The lamppost flickered. It's out!",
+   "music": "party",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "flicker": "w:flickered",
+    "out3": "w:It's"
+   },
+   "sfx": [
+    {
+     "type": "cheer",
+     "at": "w:It's+0.2",
+     "gain": 0.5
+    }
+   ],
+   "gapAfter": 0.3,
+   "visual": "The bulb flickers; OUT stamp on the lamppost; confetti, crowd cheers, trophy in Brenda's hand."
+  },
+  {
+   "id": "b18",
+   "kind": "quote",
+   "speaker": "marcus",
+   "text": "Brenda, how did you win?",
+   "gapAfter": 0.3,
+   "visual": "Marcus walks up, stunned, shrug."
+  },
+  {
+   "id": "b19",
+   "kind": "quote",
+   "speaker": "brenda",
+   "text": "While you were out partying, by the way.",
+   "gapAfter": 0.35,
+   "visual": "CU Brenda: only her mouth moves; sunglasses glint."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Number one: I said that in my sleep.",
+   "pauses": [
+    0.3
+   ],
+   "markers": {
+    "top1": "w:one",
+    "lift": "w:said",
+    "sleep": "w:sleep"
+   },
+   "gapAfter": 0.3,
+   "visual": "TOP 10 #1; Marcus lifts her sunglasses: eyes shut, Zzz."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Stand still long enough and you become a hotel. A pigeon.",
+   "pauses": [
+    0.4
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Stand still long enough and you become a hotel.",
+    "by": "a pigeon"
+   },
+   "markers": {
+    "quote3": "start-0.05",
+    "quote3end": "we:A-0.05"
+   },
+   "gapAfter": 0.3,
+   "visual": "QUOTE CARD; reveal: the pigeon flaps down and settles into Brenda's bun."
+  },
+  {
+   "id": "b22",
+   "kind": "huss",
+   "speaker": "brenda",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 1.4,
+   "visual": "Button: asleep standing up, trophy in hand; each snored HUSS pops a snore bubble, the pigeon puffs with it."
+  }
+ ],
+ "bed": true
+}

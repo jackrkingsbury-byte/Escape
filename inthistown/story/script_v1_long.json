@@ -1,0 +1,289 @@
+{
+ "title": "In This Town — Chess",
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, everybody goes out partying."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except me."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Every night, there's a party somewhere."
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Pool parties."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Foam parties."
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Even a birthday party for the mayor's pigeon."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My best friend Marcus goes to every party."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My neighbor Brenda goes to every party."
+  },
+  {
+   "id": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Even my grandad crowd-surfs on Wednesdays."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "But not me. I play chess."
+  },
+  {
+   "id": "b12",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Three hundred puzzles before breakfast."
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I don't eat breakfast. I sacrifice it."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I castled my bed."
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My cat only moves in L-shapes now."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Day by day."
+  },
+  {
+   "id": "b18",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then came the biggest party of the year."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The Summer Party Chess Match."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Everybody showed up in party hats."
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "When I sat down, everybody laughed.",
+   "sfx_after": "crowd_laugh"
+  },
+  {
+   "id": "b23",
+   "kind": "quote",
+   "speaker": "heckler",
+   "text": "Who brings a chess clock to a party?"
+  },
+  {
+   "id": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My opponent? The mayor. Undefeated for forty years."
+  },
+  {
+   "id": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I touched my first pawn."
+  },
+  {
+   "id": "b26",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b27",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Checkmate. In four moves."
+  },
+  {
+   "id": "b28",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The music stopped. The whole crowd went silent.",
+   "music_stop_word": 2
+  },
+  {
+   "id": "b29",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Marcus asked me,"
+  },
+  {
+   "id": "b30",
+   "kind": "quote",
+   "speaker": "marcus",
+   "text": "When did you get so good?"
+  },
+  {
+   "id": "b31",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I told him the truth."
+  },
+  {
+   "id": "b32",
+   "kind": "quote",
+   "speaker": "me",
+   "text": "While you were out partying."
+  },
+  {
+   "id": "b33",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The next night, something was wrong."
+  },
+  {
+   "id": "b34",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "No music. No party lights. Nothing."
+  },
+  {
+   "id": "b35",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I heard it. From every single window."
+  },
+  {
+   "id": "b36",
+   "kind": "huss",
+   "speaker": "town",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6
+  },
+  {
+   "id": "b37",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Marcus was playing chess."
+  },
+  {
+   "id": "b38",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Brenda was playing chess."
+  },
+  {
+   "id": "b39",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "My grandad was playing blindfolded."
+  },
+  {
+   "id": "b40",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He just lost his glasses."
+  },
+  {
+   "id": "b41",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The whole town is grinding now. Which is great."
+  },
+  {
+   "id": "b42",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Except now, nobody has time to play me."
+  },
+  {
+   "id": "b43",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So my only opponent is the mayor's pigeon."
+  },
+  {
+   "id": "b44",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "He knocks over all the pieces, struts around the board..."
+  },
+  {
+   "id": "b45",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "and honestly? I think he's winning."
+  },
+  {
+   "id": "b46",
+   "kind": "huss",
+   "speaker": "pigeon",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3
+  }
+ ]
+}

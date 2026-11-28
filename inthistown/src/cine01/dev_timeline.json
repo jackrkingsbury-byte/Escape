@@ -1,0 +1,300 @@
+{
+ "fps": 30,
+ "duration": 46,
+ "audio": null,
+ "beats": [
+  {
+   "id": "d01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every time the lightning hits, there's another me",
+   "start": 0.1,
+   "end": 2.34,
+   "words": [
+    {
+     "text": "Every",
+     "start": 0.1,
+     "end": 0.36
+    },
+    {
+     "text": "time",
+     "start": 0.38,
+     "end": 0.64
+    },
+    {
+     "text": "the",
+     "start": 0.66,
+     "end": 0.92
+    },
+    {
+     "text": "lightning",
+     "start": 0.94,
+     "end": 1.2
+    },
+    {
+     "text": "hits",
+     "start": 1.22,
+     "end": 1.48
+    },
+    {
+     "text": "there's",
+     "start": 1.5,
+     "end": 1.76
+    },
+    {
+     "text": "another",
+     "start": 1.78,
+     "end": 2.04
+    },
+    {
+     "text": "me",
+     "start": 2.06,
+     "end": 2.32
+    }
+   ]
+  },
+  {
+   "id": "d02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And every time... he's closer.",
+   "start": 2.2,
+   "end": 3.6,
+   "words": [
+    {
+     "text": "And",
+     "start": 2.2,
+     "end": 2.46
+    },
+    {
+     "text": "every",
+     "start": 2.48,
+     "end": 2.74
+    },
+    {
+     "text": "time",
+     "start": 2.76,
+     "end": 3.02
+    },
+    {
+     "text": "he's",
+     "start": 3.04,
+     "end": 3.3
+    },
+    {
+     "text": "closer",
+     "start": 3.32,
+     "end": 3.58
+    }
+   ]
+  },
+  {
+   "id": "d03",
+   "speaker": "narr",
+   "kind": "huss",
+   "text": "HUSS!",
+   "start": 4.3,
+   "end": 4.6,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 4.3,
+     "end": 4.6
+    }
+   ]
+  },
+  {
+   "id": "d04",
+   "speaker": "copy",
+   "kind": "line",
+   "text": "The cave is safe. Go in.",
+   "start": 6.2,
+   "end": 7.88,
+   "words": [
+    {
+     "text": "The",
+     "start": 6.2,
+     "end": 6.46
+    },
+    {
+     "text": "cave",
+     "start": 6.48,
+     "end": 6.74
+    },
+    {
+     "text": "is",
+     "start": 6.76,
+     "end": 7.02
+    },
+    {
+     "text": "safe",
+     "start": 7.04,
+     "end": 7.3
+    },
+    {
+     "text": "Go",
+     "start": 7.32,
+     "end": 7.58
+    },
+    {
+     "text": "in",
+     "start": 7.6,
+     "end": 7.86
+    }
+   ]
+  },
+  {
+   "id": "d05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "My reflection is half a second late.",
+   "start": 18.2,
+   "end": 20.16,
+   "words": [
+    {
+     "text": "My",
+     "start": 18.2,
+     "end": 18.46
+    },
+    {
+     "text": "reflection",
+     "start": 18.48,
+     "end": 18.74
+    },
+    {
+     "text": "is",
+     "start": 18.76,
+     "end": 19.02
+    },
+    {
+     "text": "half",
+     "start": 19.04,
+     "end": 19.3
+    },
+    {
+     "text": "a",
+     "start": 19.32,
+     "end": 19.58
+    },
+    {
+     "text": "second",
+     "start": 19.6,
+     "end": 19.86
+    },
+    {
+     "text": "late",
+     "start": 19.88,
+     "end": 20.14
+    }
+   ]
+  },
+  {
+   "id": "d06",
+   "speaker": "copy",
+   "kind": "line",
+   "text": "A fishing boat found me at sunrise.",
+   "start": 24.2,
+   "end": 26.16,
+   "words": [
+    {
+     "text": "A",
+     "start": 24.2,
+     "end": 24.46
+    },
+    {
+     "text": "fishing",
+     "start": 24.48,
+     "end": 24.74
+    },
+    {
+     "text": "boat",
+     "start": 24.76,
+     "end": 25.02
+    },
+    {
+     "text": "found",
+     "start": 25.04,
+     "end": 25.3
+    },
+    {
+     "text": "me",
+     "start": 25.32,
+     "end": 25.58
+    },
+    {
+     "text": "at",
+     "start": 25.6,
+     "end": 25.86
+    },
+    {
+     "text": "sunrise",
+     "start": 25.88,
+     "end": 26.14
+    }
+   ]
+  },
+  {
+   "id": "d07",
+   "speaker": "copy",
+   "kind": "line",
+   "text": "Knights always find their way home.",
+   "start": 28.2,
+   "end": 29.88,
+   "words": [
+    {
+     "text": "Knights",
+     "start": 28.2,
+     "end": 28.46
+    },
+    {
+     "text": "always",
+     "start": 28.48,
+     "end": 28.74
+    },
+    {
+     "text": "find",
+     "start": 28.76,
+     "end": 29.02
+    },
+    {
+     "text": "their",
+     "start": 29.04,
+     "end": 29.3
+    },
+    {
+     "text": "way",
+     "start": 29.32,
+     "end": 29.58
+    },
+    {
+     "text": "home",
+     "start": 29.6,
+     "end": 29.86
+    }
+   ]
+  }
+ ],
+ "markers": {
+  "f0": 0.0,
+  "f1": 2.5,
+  "f3": 7.0,
+  "f4": 9.0,
+  "f11": 23.0
+ },
+ "subs": [
+  {
+   "t0": 14.2,
+   "t1": 15.9,
+   "text": "Hi sweetheart. It's Mom. Come home.",
+   "style": "mom",
+   "beat": "d04"
+  },
+  {
+   "t0": 30.3,
+   "t1": 31.9,
+   "text": "You sound different.",
+   "style": "mom",
+   "beat": "d07"
+  }
+ ]
+}

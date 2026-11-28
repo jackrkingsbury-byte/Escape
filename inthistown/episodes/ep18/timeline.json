@@ -1,0 +1,4085 @@
+{
+ "fps": 30,
+ "duration": 92.453,
+ "audio": "episodes/ep18/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, our money floats.",
+   "start": 0.3,
+   "end": 1.874,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "our",
+     "start": 1.112,
+     "end": 1.3
+    },
+    {
+     "text": "money",
+     "start": 1.3,
+     "end": 1.537
+    },
+    {
+     "text": "floats",
+     "start": 1.537,
+     "end": 1.874
+    }
+   ],
+   "overlay": "PIRATE TOKEN",
+   "visual": "Sunny main street: gold skull coins bob on strings above every townsperson like balloons."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The pirate token. A gold skull coin. The more it is wanted, the higher it goes.",
+   "start": 2.189,
+   "end": 6.586,
+   "words": [
+    {
+     "text": "The",
+     "start": 2.204,
+     "end": 2.355
+    },
+    {
+     "text": "pirate",
+     "start": 2.355,
+     "end": 2.721
+    },
+    {
+     "text": "token",
+     "start": 2.721,
+     "end": 3.087
+    },
+    {
+     "text": "A",
+     "start": 3.397,
+     "end": 3.544
+    },
+    {
+     "text": "gold",
+     "start": 3.544,
+     "end": 3.848
+    },
+    {
+     "text": "skull",
+     "start": 3.848,
+     "end": 4.1
+    },
+    {
+     "text": "coin",
+     "start": 4.1,
+     "end": 4.352
+    },
+    {
+     "text": "The",
+     "start": 4.662,
+     "end": 4.797
+    },
+    {
+     "text": "more",
+     "start": 4.797,
+     "end": 4.981
+    },
+    {
+     "text": "it",
+     "start": 4.981,
+     "end": 5.116
+    },
+    {
+     "text": "is",
+     "start": 5.116,
+     "end": 5.251
+    },
+    {
+     "text": "wanted",
+     "start": 5.251,
+     "end": 5.579
+    },
+    {
+     "text": "the",
+     "start": 5.709,
+     "end": 5.871
+    },
+    {
+     "text": "higher",
+     "start": 5.871,
+     "end": 6.148
+    },
+    {
+     "text": "it",
+     "start": 6.148,
+     "end": 6.309
+    },
+    {
+     "text": "goes",
+     "start": 6.309,
+     "end": 6.586
+    }
+   ],
+   "overlay": "PIRATE TOKEN",
+   "visual": "Close on one grinning gold skull coin on a string; it rises higher as two kids stare at it hungrily."
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Five years ago, a pirate ship crashed into the town square, full of them.",
+   "start": 6.901,
+   "end": 10.488,
+   "words": [
+    {
+     "text": "Five",
+     "start": 6.916,
+     "end": 7.174
+    },
+    {
+     "text": "years",
+     "start": 7.174,
+     "end": 7.432
+    },
+    {
+     "text": "ago",
+     "start": 7.432,
+     "end": 7.69
+    },
+    {
+     "text": "a",
+     "start": 7.82,
+     "end": 7.964
+    },
+    {
+     "text": "pirate",
+     "start": 7.964,
+     "end": 8.315
+    },
+    {
+     "text": "ship",
+     "start": 8.315,
+     "end": 8.511
+    },
+    {
+     "text": "crashed",
+     "start": 8.511,
+     "end": 8.81
+    },
+    {
+     "text": "into",
+     "start": 8.81,
+     "end": 9.058
+    },
+    {
+     "text": "the",
+     "start": 9.058,
+     "end": 9.202
+    },
+    {
+     "text": "town",
+     "start": 9.202,
+     "end": 9.45
+    },
+    {
+     "text": "square",
+     "start": 9.45,
+     "end": 9.749
+    },
+    {
+     "text": "full",
+     "start": 9.879,
+     "end": 10.101
+    },
+    {
+     "text": "of",
+     "start": 10.101,
+     "end": 10.266
+    },
+    {
+     "text": "them",
+     "start": 10.266,
+     "end": 10.488
+    }
+   ],
+   "visual": "Flashback in dusk lighting. A chunky blocky pirate ship (brown hull, cone bow, mast, white sail with a black skull) slides into the town square and wedges against the stage. Big camera shake. Glowing gold tokens pour out of a hole in the hull and bounce across the cobbles."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Each one winks, says arr, and floats.",
+   "start": 10.803,
+   "end": 12.949,
+   "words": [
+    {
+     "text": "Each",
+     "start": 10.818,
+     "end": 11.039
+    },
+    {
+     "text": "one",
+     "start": 11.039,
+     "end": 11.26
+    },
+    {
+     "text": "winks",
+     "start": 11.26,
+     "end": 11.597
+    },
+    {
+     "text": "says",
+     "start": 11.727,
+     "end": 12.038
+    },
+    {
+     "text": "arr",
+     "start": 12.038,
+     "end": 12.268
+    },
+    {
+     "text": "and",
+     "start": 12.398,
+     "end": 12.595
+    },
+    {
+     "text": "floats",
+     "start": 12.595,
+     "end": 12.949
+    }
+   ],
+   "overlay": "ARR!",
+   "visual": "Extreme close-up on one token lying on the cobbles. The skull's left eye squashes shut in a wink, an 'ARR!' tag pops beside it, and it drifts slowly up out of frame."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mrs. Higgins traded her car for one. Now she gets to work dangling underneath it.",
+   "start": 13.264,
+   "end": 17.802,
+   "words": [
+    {
+     "text": "Mrs",
+     "start": 13.279,
+     "end": 13.787
+    },
+    {
+     "text": "Higgins",
+     "start": 14.097,
+     "end": 14.43
+    },
+    {
+     "text": "traded",
+     "start": 14.43,
+     "end": 14.813
+    },
+    {
+     "text": "her",
+     "start": 14.813,
+     "end": 14.951
+    },
+    {
+     "text": "car",
+     "start": 14.951,
+     "end": 15.137
+    },
+    {
+     "text": "for",
+     "start": 15.137,
+     "end": 15.324
+    },
+    {
+     "text": "one",
+     "start": 15.324,
+     "end": 15.511
+    },
+    {
+     "text": "Now",
+     "start": 15.821,
+     "end": 16.022
+    },
+    {
+     "text": "she",
+     "start": 16.022,
+     "end": 16.17
+    },
+    {
+     "text": "gets",
+     "start": 16.17,
+     "end": 16.425
+    },
+    {
+     "text": "to",
+     "start": 16.425,
+     "end": 16.573
+    },
+    {
+     "text": "work",
+     "start": 16.573,
+     "end": 16.774
+    },
+    {
+     "text": "dangling",
+     "start": 16.774,
+     "end": 17.241
+    },
+    {
+     "text": "underneath",
+     "start": 17.241,
+     "end": 17.654
+    },
+    {
+     "text": "it",
+     "start": 17.654,
+     "end": 17.802
+    }
+   ],
+   "visual": "Mrs. Higgins (curly grey hair, purple coat, handbag) floats down main street hanging from the string under a gold skull coin, legs dangling, calmly reading a newspaper."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Darnell from the Goon Squad tied twelve to his shoes. He hasn't touched the ground since Tuesday.",
+   "start": 18.117,
+   "end": 22.766,
+   "words": [
+    {
+     "text": "Darnell",
+     "start": 18.132,
+     "end": 18.517
+    },
+    {
+     "text": "from",
+     "start": 18.517,
+     "end": 18.789
+    },
+    {
+     "text": "the",
+     "start": 18.789,
+     "end": 18.948
+    },
+    {
+     "text": "Goon",
+     "start": 18.948,
+     "end": 19.163
+    },
+    {
+     "text": "Squad",
+     "start": 19.163,
+     "end": 19.492
+    },
+    {
+     "text": "tied",
+     "start": 19.492,
+     "end": 19.763
+    },
+    {
+     "text": "twelve",
+     "start": 19.763,
+     "end": 20.092
+    },
+    {
+     "text": "to",
+     "start": 20.092,
+     "end": 20.25
+    },
+    {
+     "text": "his",
+     "start": 20.25,
+     "end": 20.466
+    },
+    {
+     "text": "shoes",
+     "start": 20.466,
+     "end": 20.681
+    },
+    {
+     "text": "He",
+     "start": 20.991,
+     "end": 21.127
+    },
+    {
+     "text": "hasn't",
+     "start": 21.127,
+     "end": 21.456
+    },
+    {
+     "text": "touched",
+     "start": 21.456,
+     "end": 21.738
+    },
+    {
+     "text": "the",
+     "start": 21.738,
+     "end": 21.873
+    },
+    {
+     "text": "ground",
+     "start": 21.873,
+     "end": 22.203
+    },
+    {
+     "text": "since",
+     "start": 22.203,
+     "end": 22.436
+    },
+    {
+     "text": "Tuesday",
+     "start": 22.436,
+     "end": 22.766
+    }
+   ],
+   "overlay": "GOON SQUAD!",
+   "visual": "Darnell (dark skin, sunglasses, red cap, gold chain) floats upright three meters above the street with arms crossed and a smug face. A cluster of twelve glowing tokens is tied to his white sneakers. Below him, two friends in matching sunglasses do crossArms. A big 'GOON SQUAD!' stamp slams onto the screen."
+  },
+  {
+   "id": "b07",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 23.081,
+   "end": 23.741,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 23.081,
+     "end": 23.341
+    },
+    {
+     "text": "HUSS!",
+     "start": 23.291,
+     "end": 23.551
+    },
+    {
+     "text": "HUSS!",
+     "start": 23.48,
+     "end": 23.741
+    }
+   ],
+   "visual": "Three snap zooms, closer each time: Darnell's dangling sneakers, his token cluster, then his smug face. Small camera shake on each hit."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And me? I didn't buy a single one. I saved my money for a sandwich.",
+   "start": 24.081,
+   "end": 27.895,
+   "words": [
+    {
+     "text": "And",
+     "start": 24.096,
+     "end": 24.367
+    },
+    {
+     "text": "me?",
+     "start": 24.367,
+     "end": 24.567
+    },
+    {
+     "text": "I",
+     "start": 24.917,
+     "end": 25.043
+    },
+    {
+     "text": "didn't",
+     "start": 25.043,
+     "end": 25.303
+    },
+    {
+     "text": "buy",
+     "start": 25.303,
+     "end": 25.474
+    },
+    {
+     "text": "a",
+     "start": 25.474,
+     "end": 25.599
+    },
+    {
+     "text": "single",
+     "start": 25.599,
+     "end": 25.905
+    },
+    {
+     "text": "one",
+     "start": 25.905,
+     "end": 26.075
+    },
+    {
+     "text": "I",
+     "start": 26.385,
+     "end": 26.515
+    },
+    {
+     "text": "saved",
+     "start": 26.515,
+     "end": 26.784
+    },
+    {
+     "text": "my",
+     "start": 26.784,
+     "end": 26.96
+    },
+    {
+     "text": "money",
+     "start": 26.96,
+     "end": 27.182
+    },
+    {
+     "text": "for",
+     "start": 27.182,
+     "end": 27.358
+    },
+    {
+     "text": "a",
+     "start": 27.358,
+     "end": 27.488
+    },
+    {
+     "text": "sandwich",
+     "start": 27.488,
+     "end": 27.895
+    }
+   ],
+   "visual": "Kid's bedroom, day. Me (black hoodie with white knight emblem, grey pants, white shoes, fade haircut, headphones) sits on the bed proudly holding up a huge blocky sandwich (bread, green lettuce, red tomato layers) with a determined face. Tokens drift past the window like balloons."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Darnell floated past laughing. Enjoy your sandwich, peasant!",
+   "start": 28.21,
+   "end": 31.479,
+   "words": [
+    {
+     "text": "Darnell",
+     "start": 28.225,
+     "end": 28.602
+    },
+    {
+     "text": "floated",
+     "start": 28.602,
+     "end": 29.034
+    },
+    {
+     "text": "past",
+     "start": 29.034,
+     "end": 29.3
+    },
+    {
+     "text": "laughing",
+     "start": 29.3,
+     "end": 29.622
+    },
+    {
+     "text": "Enjoy",
+     "start": 29.932,
+     "end": 30.273
+    },
+    {
+     "text": "your",
+     "start": 30.273,
+     "end": 30.463
+    },
+    {
+     "text": "sandwich",
+     "start": 30.463,
+     "end": 30.905
+    },
+    {
+     "text": "peasant!",
+     "start": 31.035,
+     "end": 31.479
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "Enjoy your sandwich, peasant!",
+    "by": "Darnell"
+   },
+   "visual": "Darnell drifts slowly past the bedroom window on his tokens, pointing at me in the laugh pose. Me stares back with a squint face, still holding the sandwich."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Even Principal Dunmore wanted one. Nobody wants what Principal Dunmore wants.",
+   "start": 31.794,
+   "end": 36.174,
+   "words": [
+    {
+     "text": "Even",
+     "start": 31.809,
+     "end": 32.09
+    },
+    {
+     "text": "Principal",
+     "start": 32.09,
+     "end": 32.664
+    },
+    {
+     "text": "Dunmore",
+     "start": 32.664,
+     "end": 33.061
+    },
+    {
+     "text": "wanted",
+     "start": 33.061,
+     "end": 33.459
+    },
+    {
+     "text": "one",
+     "start": 33.459,
+     "end": 33.682
+    },
+    {
+     "text": "Nobody",
+     "start": 33.992,
+     "end": 34.419
+    },
+    {
+     "text": "wants",
+     "start": 34.419,
+     "end": 34.737
+    },
+    {
+     "text": "what",
+     "start": 34.737,
+     "end": 34.946
+    },
+    {
+     "text": "Principal",
+     "start": 34.946,
+     "end": 35.483
+    },
+    {
+     "text": "Dunmore",
+     "start": 35.483,
+     "end": 35.856
+    },
+    {
+     "text": "wants",
+     "start": 35.856,
+     "end": 36.174
+    }
+   ],
+   "visual": "Principal Dunmore (bald, tiny glasses, brown suit, sweater vest) waves a token hopefully at a group of kids; they all scatter away. He stands alone, sad."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Until yesterday. The mayor went on TV and said pirate token is going to the moon.",
+   "start": 36.489,
+   "end": 41.218,
+   "words": [
+    {
+     "text": "Until",
+     "start": 36.504,
+     "end": 36.843
+    },
+    {
+     "text": "yesterday",
+     "start": 36.843,
+     "end": 37.358
+    },
+    {
+     "text": "The",
+     "start": 37.668,
+     "end": 37.835
+    },
+    {
+     "text": "mayor",
+     "start": 37.835,
+     "end": 38.123
+    },
+    {
+     "text": "went",
+     "start": 38.123,
+     "end": 38.411
+    },
+    {
+     "text": "on",
+     "start": 38.411,
+     "end": 38.579
+    },
+    {
+     "text": "TV",
+     "start": 38.579,
+     "end": 38.867
+    },
+    {
+     "text": "and",
+     "start": 38.867,
+     "end": 39.095
+    },
+    {
+     "text": "said",
+     "start": 39.095,
+     "end": 39.323
+    },
+    {
+     "text": "pirate",
+     "start": 39.323,
+     "end": 39.73
+    },
+    {
+     "text": "token",
+     "start": 39.73,
+     "end": 40.138
+    },
+    {
+     "text": "is",
+     "start": 40.138,
+     "end": 40.306
+    },
+    {
+     "text": "going",
+     "start": 40.306,
+     "end": 40.654
+    },
+    {
+     "text": "to",
+     "start": 40.654,
+     "end": 40.822
+    },
+    {
+     "text": "the",
+     "start": 40.822,
+     "end": 40.99
+    },
+    {
+     "text": "moon",
+     "start": 40.99,
+     "end": 41.218
+    }
+   ],
+   "overlay": "TO THE MOON",
+   "visual": "Town square, day. A giant TV screen stands on the stage in front of the crashed ship. On it, the mayor (top hat, mustache, red sash) points straight up. The picture flickers with static, and the crowd gathers in front of it."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Everyone wanted it at the same time.",
+   "start": 41.533,
+   "end": 43.146,
+   "words": [
+    {
+     "text": "Everyone",
+     "start": 41.548,
+     "end": 41.93
+    },
+    {
+     "text": "wanted",
+     "start": 41.93,
+     "end": 42.263
+    },
+    {
+     "text": "it",
+     "start": 42.263,
+     "end": 42.401
+    },
+    {
+     "text": "at",
+     "start": 42.401,
+     "end": 42.538
+    },
+    {
+     "text": "the",
+     "start": 42.538,
+     "end": 42.675
+    },
+    {
+     "text": "same",
+     "start": 42.675,
+     "end": 42.911
+    },
+    {
+     "text": "time",
+     "start": 42.911,
+     "end": 43.146
+    }
+   ],
+   "visual": "The whole crowd throws their fists up in cheer poses with grin faces. Every token above every head flares bright gold at the same moment, and the strings go tight."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Every token shot into the sky, still tied to everything. Houses. Cars. The clock tower.",
+   "start": 43.461,
+   "end": 49.089,
+   "words": [
+    {
+     "text": "Every",
+     "start": 43.476,
+     "end": 43.749
+    },
+    {
+     "text": "token",
+     "start": 43.749,
+     "end": 44.136
+    },
+    {
+     "text": "shot",
+     "start": 44.136,
+     "end": 44.353
+    },
+    {
+     "text": "into",
+     "start": 44.353,
+     "end": 44.626
+    },
+    {
+     "text": "the",
+     "start": 44.626,
+     "end": 44.785
+    },
+    {
+     "text": "sky",
+     "start": 44.785,
+     "end": 45.058
+    },
+    {
+     "text": "still",
+     "start": 45.188,
+     "end": 45.449
+    },
+    {
+     "text": "tied",
+     "start": 45.449,
+     "end": 45.71
+    },
+    {
+     "text": "to",
+     "start": 45.71,
+     "end": 45.863
+    },
+    {
+     "text": "everything",
+     "start": 45.863,
+     "end": 46.287
+    },
+    {
+     "text": "Houses",
+     "start": 46.597,
+     "end": 47.162
+    },
+    {
+     "text": "Cars",
+     "start": 47.472,
+     "end": 47.975
+    },
+    {
+     "text": "The",
+     "start": 48.285,
+     "end": 48.466
+    },
+    {
+     "text": "clock",
+     "start": 48.466,
+     "end": 48.777
+    },
+    {
+     "text": "tower",
+     "start": 48.777,
+     "end": 49.089
+    }
+   ],
+   "visual": "Wide shot of the town. Houses tear up from the ground on token clusters, with grey rock cones hanging underneath. A car floats past, and the clock tower tilts and rises. Heavy camera shake while the sky fades from blue to purple."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mr. Okafor reached for a lamp post. Ah, almost... almost!",
+   "start": 49.404,
+   "end": 54.108,
+   "words": [
+    {
+     "text": "Mr",
+     "start": 49.419,
+     "end": 49.92
+    },
+    {
+     "text": "Okafor",
+     "start": 50.23,
+     "end": 50.53
+    },
+    {
+     "text": "reached",
+     "start": 50.53,
+     "end": 50.831
+    },
+    {
+     "text": "for",
+     "start": 50.831,
+     "end": 51.027
+    },
+    {
+     "text": "a",
+     "start": 51.027,
+     "end": 51.172
+    },
+    {
+     "text": "lamp",
+     "start": 51.172,
+     "end": 51.421
+    },
+    {
+     "text": "post",
+     "start": 51.421,
+     "end": 51.721
+    },
+    {
+     "text": "Ah",
+     "start": 52.031,
+     "end": 52.414
+    },
+    {
+     "text": "almost",
+     "start": 52.544,
+     "end": 53.127
+    },
+    {
+     "text": "almost!",
+     "start": 53.497,
+     "end": 54.108
+    }
+   ],
+   "overlay": "ALMOST!",
+   "visual": "Mr. Okafor (beard, green sweater) is being lifted by tokens tied to his backpack. He stretches toward a street lamp with a sweat face, and his fingertips miss it by a hair as he drifts up. 'ALMOST!' stamps on screen."
+  },
+  {
+   "id": "b15",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 54.422,
+   "end": 55.082,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 54.422,
+     "end": 54.682
+    },
+    {
+     "text": "HUSS!",
+     "start": 54.633,
+     "end": 54.892
+    },
+    {
+     "text": "HUSS!",
+     "start": 54.822,
+     "end": 55.082
+    }
+   ],
+   "visual": "Three snap cuts: a house rising past the camera, Mrs. Higgins clinging to her floating roof, Darnell spinning upside down above the clouds."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The sky turned purple. The only way down? Make everyone stop wanting it.",
+   "start": 55.422,
+   "end": 59.442,
+   "words": [
+    {
+     "text": "The",
+     "start": 55.438,
+     "end": 55.604
+    },
+    {
+     "text": "sky",
+     "start": 55.604,
+     "end": 55.89
+    },
+    {
+     "text": "turned",
+     "start": 55.89,
+     "end": 56.176
+    },
+    {
+     "text": "purple",
+     "start": 56.176,
+     "end": 56.521
+    },
+    {
+     "text": "The",
+     "start": 56.831,
+     "end": 56.968
+    },
+    {
+     "text": "only",
+     "start": 56.968,
+     "end": 57.252
+    },
+    {
+     "text": "way",
+     "start": 57.252,
+     "end": 57.437
+    },
+    {
+     "text": "down?",
+     "start": 57.437,
+     "end": 57.672
+    },
+    {
+     "text": "Make",
+     "start": 58.022,
+     "end": 58.274
+    },
+    {
+     "text": "everyone",
+     "start": 58.274,
+     "end": 58.685
+    },
+    {
+     "text": "stop",
+     "start": 58.685,
+     "end": 58.937
+    },
+    {
+     "text": "wanting",
+     "start": 58.937,
+     "end": 59.295
+    },
+    {
+     "text": "it",
+     "start": 59.295,
+     "end": 59.442
+    }
+   ],
+   "visual": "The whole town floats on a huge slab of ground among puffy clouds under a purple sky with stars coming out. Me stands on the town square stage in the think pose, then switches to a determined face."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "So I grabbed the mic and said the most uncool thing in history.",
+   "start": 59.757,
+   "end": 62.815,
+   "words": [
+    {
+     "text": "So",
+     "start": 59.772,
+     "end": 59.977
+    },
+    {
+     "text": "I",
+     "start": 59.977,
+     "end": 60.128
+    },
+    {
+     "text": "grabbed",
+     "start": 60.128,
+     "end": 60.441
+    },
+    {
+     "text": "the",
+     "start": 60.441,
+     "end": 60.592
+    },
+    {
+     "text": "mic",
+     "start": 60.592,
+     "end": 60.851
+    },
+    {
+     "text": "and",
+     "start": 60.851,
+     "end": 61.056
+    },
+    {
+     "text": "said",
+     "start": 61.056,
+     "end": 61.261
+    },
+    {
+     "text": "the",
+     "start": 61.261,
+     "end": 61.412
+    },
+    {
+     "text": "most",
+     "start": 61.412,
+     "end": 61.725
+    },
+    {
+     "text": "uncool",
+     "start": 61.725,
+     "end": 62.038
+    },
+    {
+     "text": "thing",
+     "start": 62.038,
+     "end": 62.243
+    },
+    {
+     "text": "in",
+     "start": 62.243,
+     "end": 62.394
+    },
+    {
+     "text": "history",
+     "start": 62.394,
+     "end": 62.815
+    }
+   ],
+   "visual": "Me grabs a microphone on a stand at the front of the stage. The floating crowd turns to look. Slow push in on my face."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Principal Dunmore just bought pirate token.",
+   "start": 63.13,
+   "end": 65.267,
+   "words": [
+    {
+     "text": "Principal",
+     "start": 63.145,
+     "end": 63.668
+    },
+    {
+     "text": "Dunmore",
+     "start": 63.668,
+     "end": 64.03
+    },
+    {
+     "text": "just",
+     "start": 64.03,
+     "end": 64.339
+    },
+    {
+     "text": "bought",
+     "start": 64.339,
+     "end": 64.542
+    },
+    {
+     "text": "pirate",
+     "start": 64.542,
+     "end": 64.905
+    },
+    {
+     "text": "token",
+     "start": 64.905,
+     "end": 65.267
+    }
+   ],
+   "overlay": "PRINCIPAL DUNMORE BOUGHT IT",
+   "visual": "Hard cut to Principal Dunmore (bald, glasses, grey suit, bowtie) on a floating bench, grinning and waving a token at the camera with both arms."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Everyone screamed. Ew! Gross! Instant crash.",
+   "start": 65.582,
+   "end": 69.023,
+   "words": [
+    {
+     "text": "Everyone",
+     "start": 65.597,
+     "end": 66.068
+    },
+    {
+     "text": "screamed",
+     "start": 66.068,
+     "end": 66.479
+    },
+    {
+     "text": "Ew!",
+     "start": 66.789,
+     "end": 67.217
+    },
+    {
+     "text": "Gross!",
+     "start": 67.507,
+     "end": 67.948
+    },
+    {
+     "text": "Instant",
+     "start": 68.238,
+     "end": 68.724
+    },
+    {
+     "text": "crash",
+     "start": 68.724,
+     "end": 69.023
+    }
+   ],
+   "overlay": "CRASH",
+   "visual": "The crowd's faces flip to shocked and squint, and they all let go of their strings. Every token dims to dull brown, and the whole town drops out of the sky and slams back onto the ground. Huge camera shake and a dust puff."
+  },
+  {
+   "id": "b20",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 69.338,
+   "end": 70.978,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 69.338,
+     "end": 69.598
+    },
+    {
+     "text": "HUSS!",
+     "start": 69.548,
+     "end": 69.808
+    },
+    {
+     "text": "HUSS!",
+     "start": 69.738,
+     "end": 69.998
+    },
+    {
+     "text": "HUSS!",
+     "start": 70.318,
+     "end": 70.578
+    },
+    {
+     "text": "HUSS!",
+     "start": 70.528,
+     "end": 70.788
+    },
+    {
+     "text": "HUSS!",
+     "start": 70.718,
+     "end": 70.978
+    }
+   ],
+   "visual": "One fast cut per hit: houses thudding down, the clock tower slamming upright, Darnell landing on his bottom, Mr. Okafor hugging the lamp post, the crowd cheering, me holding the mic high."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Top ten respect. Kid saves town with one sentence.",
+   "start": 71.318,
+   "end": 74.156,
+   "words": [
+    {
+     "text": "Top",
+     "start": 71.333,
+     "end": 71.558
+    },
+    {
+     "text": "ten",
+     "start": 71.558,
+     "end": 71.782
+    },
+    {
+     "text": "respect",
+     "start": 71.782,
+     "end": 72.244
+    },
+    {
+     "text": "Kid",
+     "start": 72.554,
+     "end": 72.758
+    },
+    {
+     "text": "saves",
+     "start": 72.758,
+     "end": 73.07
+    },
+    {
+     "text": "town",
+     "start": 73.07,
+     "end": 73.328
+    },
+    {
+     "text": "with",
+     "start": 73.328,
+     "end": 73.532
+    },
+    {
+     "text": "one",
+     "start": 73.532,
+     "end": 73.737
+    },
+    {
+     "text": "sentence",
+     "start": 73.737,
+     "end": 74.156
+    }
+   ],
+   "overlay": "TOP 10 RESPECTFUL MOMENTS \u2014 #1: KID SAVES TOWN WITH ONE SENTENCE",
+   "visual": "Freeze frame of me on the stage holding the mic high in front of the pirate ship. The Top 10 card slides in over it."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Victory chant! Bonkaroo! Skalla mee! Doobi tash! Arrbanoo!",
+   "start": 74.471,
+   "end": 78.924,
+   "words": [
+    {
+     "text": "Victory",
+     "start": 74.486,
+     "end": 74.919
+    },
+    {
+     "text": "chant!",
+     "start": 74.919,
+     "end": 75.24
+    },
+    {
+     "text": "Bonkaroo!",
+     "start": 75.53,
+     "end": 76.121
+    },
+    {
+     "text": "Skalla",
+     "start": 76.411,
+     "end": 76.837
+    },
+    {
+     "text": "mee!",
+     "start": 76.837,
+     "end": 77.043
+    },
+    {
+     "text": "Doobi",
+     "start": 77.333,
+     "end": 77.773
+    },
+    {
+     "text": "tash!",
+     "start": 77.773,
+     "end": 78.061
+    },
+    {
+     "text": "Arrbanoo!",
+     "start": 78.351,
+     "end": 78.924
+    }
+   ],
+   "overlay": "BONKAROO! SKALLA MEE! DOOBI TASH! ARRBANOO!",
+   "visual": "Me does dance2 on the stage in front of the crashed ship while the crowd dances behind. Each nonsense word stamps on screen in a different color with a camera punch."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "While they were floating, by the way, I ate my sandwich.",
+   "start": 79.239,
+   "end": 81.884,
+   "words": [
+    {
+     "text": "While",
+     "start": 79.254,
+     "end": 79.466
+    },
+    {
+     "text": "they",
+     "start": 79.466,
+     "end": 79.633
+    },
+    {
+     "text": "were",
+     "start": 79.633,
+     "end": 79.757
+    },
+    {
+     "text": "floating",
+     "start": 79.757,
+     "end": 80.101
+    },
+    {
+     "text": "by",
+     "start": 80.23,
+     "end": 80.415
+    },
+    {
+     "text": "the",
+     "start": 80.415,
+     "end": 80.551
+    },
+    {
+     "text": "way",
+     "start": 80.551,
+     "end": 80.736
+    },
+    {
+     "text": "I",
+     "start": 80.866,
+     "end": 81.015
+    },
+    {
+     "text": "ate",
+     "start": 81.015,
+     "end": 81.216
+    },
+    {
+     "text": "my",
+     "start": 81.216,
+     "end": 81.418
+    },
+    {
+     "text": "sandwich",
+     "start": 81.418,
+     "end": 81.884
+    }
+   ],
+   "visual": "Me sits on the edge of the stage with a smug face, eating the giant sandwich, while dusty townspeople pick themselves up behind."
+  },
+  {
+   "id": "b24",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now nobody wants pirate token. Except Principal Dunmore. And the more he wants it, the higher he goes.",
+   "start": 82.199,
+   "end": 87.738,
+   "words": [
+    {
+     "text": "Now",
+     "start": 82.214,
+     "end": 82.411
+    },
+    {
+     "text": "nobody",
+     "start": 82.411,
+     "end": 82.814
+    },
+    {
+     "text": "wants",
+     "start": 82.814,
+     "end": 83.114
+    },
+    {
+     "text": "pirate",
+     "start": 83.114,
+     "end": 83.465
+    },
+    {
+     "text": "token",
+     "start": 83.465,
+     "end": 83.817
+    },
+    {
+     "text": "Except",
+     "start": 84.127,
+     "end": 84.499
+    },
+    {
+     "text": "Principal",
+     "start": 84.499,
+     "end": 85.035
+    },
+    {
+     "text": "Dunmore",
+     "start": 85.035,
+     "end": 85.407
+    },
+    {
+     "text": "And",
+     "start": 85.717,
+     "end": 85.891
+    },
+    {
+     "text": "the",
+     "start": 85.891,
+     "end": 86.019
+    },
+    {
+     "text": "more",
+     "start": 86.019,
+     "end": 86.192
+    },
+    {
+     "text": "he",
+     "start": 86.192,
+     "end": 86.32
+    },
+    {
+     "text": "wants",
+     "start": 86.32,
+     "end": 86.585
+    },
+    {
+     "text": "it",
+     "start": 86.585,
+     "end": 86.713
+    },
+    {
+     "text": "the",
+     "start": 86.843,
+     "end": 87.008
+    },
+    {
+     "text": "higher",
+     "start": 87.008,
+     "end": 87.291
+    },
+    {
+     "text": "he",
+     "start": 87.291,
+     "end": 87.456
+    },
+    {
+     "text": "goes",
+     "start": 87.456,
+     "end": 87.738
+    }
+   ],
+   "visual": "Quiet night. Principal Dunmore stands in his front garden hugging a massive glowing cluster of thousands of tokens, with a grin face. His shoes slowly lift off the grass."
+  },
+  {
+   "id": "b25",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "He lives on the moon now. School is cancelled forever.",
+   "start": 88.053,
+   "end": 90.638,
+   "words": [
+    {
+     "text": "He",
+     "start": 88.068,
+     "end": 88.198
+    },
+    {
+     "text": "lives",
+     "start": 88.198,
+     "end": 88.467
+    },
+    {
+     "text": "on",
+     "start": 88.467,
+     "end": 88.597
+    },
+    {
+     "text": "the",
+     "start": 88.597,
+     "end": 88.726
+    },
+    {
+     "text": "moon",
+     "start": 88.726,
+     "end": 88.902
+    },
+    {
+     "text": "now",
+     "start": 88.902,
+     "end": 89.078
+    },
+    {
+     "text": "School",
+     "start": 89.388,
+     "end": 89.658
+    },
+    {
+     "text": "is",
+     "start": 89.658,
+     "end": 89.816
+    },
+    {
+     "text": "cancelled",
+     "start": 89.816,
+     "end": 90.255
+    },
+    {
+     "text": "forever",
+     "start": 90.255,
+     "end": 90.638
+    }
+   ],
+   "overlay": "SCHOOL: CANCELLED FOREVER",
+   "visual": "Night sky with a huge glowing moon. A tiny Principal Dunmore drifts past it on his token cluster, waving. Cut to me in the bedroom doing the cheer pose with a laugh face."
+  },
+  {
+   "id": "b26",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 90.953,
+   "end": 91.613,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 90.953,
+     "end": 91.213
+    },
+    {
+     "text": "HUSS!",
+     "start": 91.163,
+     "end": 91.423
+    },
+    {
+     "text": "HUSS!",
+     "start": 91.353,
+     "end": 91.613
+    }
+   ],
+   "visual": "Three snap zooms on the moon, closer each time, until the tiny waving principal fills the frame."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "our",
+   "start": 1.112,
+   "end": 1.3,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "money",
+   "start": 1.3,
+   "end": 1.537,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "floats",
+   "start": 1.537,
+   "end": 1.874,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 2.204,
+   "end": 2.355,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "pirate",
+   "start": 2.355,
+   "end": 2.721,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "token",
+   "start": 2.721,
+   "end": 3.087,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "A",
+   "start": 3.397,
+   "end": 3.544,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "gold",
+   "start": 3.544,
+   "end": 3.848,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "skull",
+   "start": 3.848,
+   "end": 4.1,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "coin",
+   "start": 4.1,
+   "end": 4.352,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "The",
+   "start": 4.662,
+   "end": 4.797,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "more",
+   "start": 4.797,
+   "end": 4.981,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "it",
+   "start": 4.981,
+   "end": 5.116,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "is",
+   "start": 5.116,
+   "end": 5.251,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "wanted",
+   "start": 5.251,
+   "end": 5.579,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "the",
+   "start": 5.709,
+   "end": 5.871,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "higher",
+   "start": 5.871,
+   "end": 6.148,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "it",
+   "start": 6.148,
+   "end": 6.309,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "goes",
+   "start": 6.309,
+   "end": 6.586,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Five",
+   "start": 6.916,
+   "end": 7.174,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "years",
+   "start": 7.174,
+   "end": 7.432,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "ago",
+   "start": 7.432,
+   "end": 7.69,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 7.82,
+   "end": 7.964,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "pirate",
+   "start": 7.964,
+   "end": 8.315,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "ship",
+   "start": 8.315,
+   "end": 8.511,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "crashed",
+   "start": 8.511,
+   "end": 8.81,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "into",
+   "start": 8.81,
+   "end": 9.058,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 9.058,
+   "end": 9.202,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "town",
+   "start": 9.202,
+   "end": 9.45,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "square",
+   "start": 9.45,
+   "end": 9.749,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "full",
+   "start": 9.879,
+   "end": 10.101,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "of",
+   "start": 10.101,
+   "end": 10.266,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "them",
+   "start": 10.266,
+   "end": 10.488,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Each",
+   "start": 10.818,
+   "end": 11.039,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "one",
+   "start": 11.039,
+   "end": 11.26,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "winks",
+   "start": 11.26,
+   "end": 11.597,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "says",
+   "start": 11.727,
+   "end": 12.038,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "arr",
+   "start": 12.038,
+   "end": 12.268,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "and",
+   "start": 12.398,
+   "end": 12.595,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "floats",
+   "start": 12.595,
+   "end": 12.949,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Mrs",
+   "start": 13.279,
+   "end": 13.787,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Higgins",
+   "start": 14.097,
+   "end": 14.43,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "traded",
+   "start": 14.43,
+   "end": 14.813,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "her",
+   "start": 14.813,
+   "end": 14.951,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "car",
+   "start": 14.951,
+   "end": 15.137,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "for",
+   "start": 15.137,
+   "end": 15.324,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "one",
+   "start": 15.324,
+   "end": 15.511,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Now",
+   "start": 15.821,
+   "end": 16.022,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "she",
+   "start": 16.022,
+   "end": 16.17,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "gets",
+   "start": 16.17,
+   "end": 16.425,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "to",
+   "start": 16.425,
+   "end": 16.573,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "work",
+   "start": 16.573,
+   "end": 16.774,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "dangling",
+   "start": 16.774,
+   "end": 17.241,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "underneath",
+   "start": 17.241,
+   "end": 17.654,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "it",
+   "start": 17.654,
+   "end": 17.802,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Darnell",
+   "start": 18.132,
+   "end": 18.517,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "from",
+   "start": 18.517,
+   "end": 18.789,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 18.789,
+   "end": 18.948,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Goon",
+   "start": 18.948,
+   "end": 19.163,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Squad",
+   "start": 19.163,
+   "end": 19.492,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "tied",
+   "start": 19.492,
+   "end": 19.763,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "twelve",
+   "start": 19.763,
+   "end": 20.092,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "to",
+   "start": 20.092,
+   "end": 20.25,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "his",
+   "start": 20.25,
+   "end": 20.466,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "shoes",
+   "start": 20.466,
+   "end": 20.681,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "He",
+   "start": 20.991,
+   "end": 21.127,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "hasn't",
+   "start": 21.127,
+   "end": 21.456,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "touched",
+   "start": 21.456,
+   "end": 21.738,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "the",
+   "start": 21.738,
+   "end": 21.873,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "ground",
+   "start": 21.873,
+   "end": 22.203,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "since",
+   "start": 22.203,
+   "end": 22.436,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Tuesday",
+   "start": 22.436,
+   "end": 22.766,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "HUSS!",
+   "start": 23.081,
+   "end": 23.341,
+   "beat": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 23.291,
+   "end": 23.551,
+   "beat": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 23.48,
+   "end": 23.741,
+   "beat": "b07",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "And",
+   "start": 24.096,
+   "end": 24.367,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "me?",
+   "start": 24.367,
+   "end": 24.567,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "I",
+   "start": 24.917,
+   "end": 25.043,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "didn't",
+   "start": 25.043,
+   "end": 25.303,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "buy",
+   "start": 25.303,
+   "end": 25.474,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 25.474,
+   "end": 25.599,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "single",
+   "start": 25.599,
+   "end": 25.905,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "one",
+   "start": 25.905,
+   "end": 26.075,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "I",
+   "start": 26.385,
+   "end": 26.515,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "saved",
+   "start": 26.515,
+   "end": 26.784,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "my",
+   "start": 26.784,
+   "end": 26.96,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "money",
+   "start": 26.96,
+   "end": 27.182,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "for",
+   "start": 27.182,
+   "end": 27.358,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "a",
+   "start": 27.358,
+   "end": 27.488,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "sandwich",
+   "start": 27.488,
+   "end": 27.895,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Darnell",
+   "start": 28.225,
+   "end": 28.602,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "floated",
+   "start": 28.602,
+   "end": 29.034,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "past",
+   "start": 29.034,
+   "end": 29.3,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "laughing",
+   "start": 29.3,
+   "end": 29.622,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Enjoy",
+   "start": 29.932,
+   "end": 30.273,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "your",
+   "start": 30.273,
+   "end": 30.463,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "sandwich",
+   "start": 30.463,
+   "end": 30.905,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "peasant!",
+   "start": 31.035,
+   "end": 31.479,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Even",
+   "start": 31.809,
+   "end": 32.09,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Principal",
+   "start": 32.09,
+   "end": 32.664,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Dunmore",
+   "start": 32.664,
+   "end": 33.061,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "wanted",
+   "start": 33.061,
+   "end": 33.459,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "one",
+   "start": 33.459,
+   "end": 33.682,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Nobody",
+   "start": 33.992,
+   "end": 34.419,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "wants",
+   "start": 34.419,
+   "end": 34.737,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "what",
+   "start": 34.737,
+   "end": 34.946,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Principal",
+   "start": 34.946,
+   "end": 35.483,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Dunmore",
+   "start": 35.483,
+   "end": 35.856,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "wants",
+   "start": 35.856,
+   "end": 36.174,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Until",
+   "start": 36.504,
+   "end": 36.843,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "yesterday",
+   "start": 36.843,
+   "end": 37.358,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "The",
+   "start": 37.668,
+   "end": 37.835,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "mayor",
+   "start": 37.835,
+   "end": 38.123,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "went",
+   "start": 38.123,
+   "end": 38.411,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "on",
+   "start": 38.411,
+   "end": 38.579,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "TV",
+   "start": 38.579,
+   "end": 38.867,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "and",
+   "start": 38.867,
+   "end": 39.095,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "said",
+   "start": 39.095,
+   "end": 39.323,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "pirate",
+   "start": 39.323,
+   "end": 39.73,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "token",
+   "start": 39.73,
+   "end": 40.138,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "is",
+   "start": 40.138,
+   "end": 40.306,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "going",
+   "start": 40.306,
+   "end": 40.654,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "to",
+   "start": 40.654,
+   "end": 40.822,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "the",
+   "start": 40.822,
+   "end": 40.99,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "moon",
+   "start": 40.99,
+   "end": 41.218,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "Everyone",
+   "start": 41.548,
+   "end": 41.93,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "wanted",
+   "start": 41.93,
+   "end": 42.263,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "it",
+   "start": 42.263,
+   "end": 42.401,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "at",
+   "start": 42.401,
+   "end": 42.538,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 42.538,
+   "end": 42.675,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "same",
+   "start": 42.675,
+   "end": 42.911,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "time",
+   "start": 42.911,
+   "end": 43.146,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Every",
+   "start": 43.476,
+   "end": 43.749,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "token",
+   "start": 43.749,
+   "end": 44.136,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "shot",
+   "start": 44.136,
+   "end": 44.353,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "into",
+   "start": 44.353,
+   "end": 44.626,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 44.626,
+   "end": 44.785,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "sky",
+   "start": 44.785,
+   "end": 45.058,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "still",
+   "start": 45.188,
+   "end": 45.449,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "tied",
+   "start": 45.449,
+   "end": 45.71,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "to",
+   "start": 45.71,
+   "end": 45.863,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "everything",
+   "start": 45.863,
+   "end": 46.287,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Houses",
+   "start": 46.597,
+   "end": 47.162,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Cars",
+   "start": 47.472,
+   "end": 47.975,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "The",
+   "start": 48.285,
+   "end": 48.466,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "clock",
+   "start": 48.466,
+   "end": 48.777,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "tower",
+   "start": 48.777,
+   "end": 49.089,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Mr",
+   "start": 49.419,
+   "end": 49.92,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Okafor",
+   "start": 50.23,
+   "end": 50.53,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "reached",
+   "start": 50.53,
+   "end": 50.831,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "for",
+   "start": 50.831,
+   "end": 51.027,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 51.027,
+   "end": 51.172,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "lamp",
+   "start": 51.172,
+   "end": 51.421,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "post",
+   "start": 51.421,
+   "end": 51.721,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Ah",
+   "start": 52.031,
+   "end": 52.414,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "almost",
+   "start": 52.544,
+   "end": 53.127,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "almost!",
+   "start": 53.497,
+   "end": 54.108,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSS!",
+   "start": 54.422,
+   "end": 54.682,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 54.633,
+   "end": 54.892,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 54.822,
+   "end": 55.082,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "The",
+   "start": 55.438,
+   "end": 55.604,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "sky",
+   "start": 55.604,
+   "end": 55.89,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "turned",
+   "start": 55.89,
+   "end": 56.176,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "purple",
+   "start": 56.176,
+   "end": 56.521,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "The",
+   "start": 56.831,
+   "end": 56.968,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "only",
+   "start": 56.968,
+   "end": 57.252,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 57.252,
+   "end": 57.437,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "down?",
+   "start": 57.437,
+   "end": 57.672,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Make",
+   "start": 58.022,
+   "end": 58.274,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "everyone",
+   "start": 58.274,
+   "end": 58.685,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "stop",
+   "start": 58.685,
+   "end": 58.937,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "wanting",
+   "start": 58.937,
+   "end": 59.295,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "it",
+   "start": 59.295,
+   "end": 59.442,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "So",
+   "start": 59.772,
+   "end": 59.977,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 59.977,
+   "end": 60.128,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "grabbed",
+   "start": 60.128,
+   "end": 60.441,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 60.441,
+   "end": 60.592,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "mic",
+   "start": 60.592,
+   "end": 60.851,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "and",
+   "start": 60.851,
+   "end": 61.056,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "said",
+   "start": 61.056,
+   "end": 61.261,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "the",
+   "start": 61.261,
+   "end": 61.412,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "most",
+   "start": 61.412,
+   "end": 61.725,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "uncool",
+   "start": 61.725,
+   "end": 62.038,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "thing",
+   "start": 62.038,
+   "end": 62.243,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "in",
+   "start": 62.243,
+   "end": 62.394,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "history",
+   "start": 62.394,
+   "end": 62.815,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Principal",
+   "start": 63.145,
+   "end": 63.668,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Dunmore",
+   "start": 63.668,
+   "end": 64.03,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "just",
+   "start": 64.03,
+   "end": 64.339,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "bought",
+   "start": 64.339,
+   "end": 64.542,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "pirate",
+   "start": 64.542,
+   "end": 64.905,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "token",
+   "start": 64.905,
+   "end": 65.267,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Everyone",
+   "start": 65.597,
+   "end": 66.068,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "screamed",
+   "start": 66.068,
+   "end": 66.479,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Ew!",
+   "start": 66.789,
+   "end": 67.217,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Gross!",
+   "start": 67.507,
+   "end": 67.948,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Instant",
+   "start": 68.238,
+   "end": 68.724,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "crash",
+   "start": 68.724,
+   "end": 69.023,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "HUSS!",
+   "start": 69.338,
+   "end": 69.598,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 69.548,
+   "end": 69.808,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 69.738,
+   "end": 69.998,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 70.318,
+   "end": 70.578,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 70.528,
+   "end": 70.788,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 70.718,
+   "end": 70.978,
+   "beat": "b20",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Top",
+   "start": 71.333,
+   "end": 71.558,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "ten",
+   "start": 71.558,
+   "end": 71.782,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "respect",
+   "start": 71.782,
+   "end": 72.244,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Kid",
+   "start": 72.554,
+   "end": 72.758,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "saves",
+   "start": 72.758,
+   "end": 73.07,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "town",
+   "start": 73.07,
+   "end": 73.328,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "with",
+   "start": 73.328,
+   "end": 73.532,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "one",
+   "start": 73.532,
+   "end": 73.737,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "sentence",
+   "start": 73.737,
+   "end": 74.156,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "Victory",
+   "start": 74.486,
+   "end": 74.919,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "chant!",
+   "start": 74.919,
+   "end": 75.24,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Bonkaroo!",
+   "start": 75.53,
+   "end": 76.121,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Skalla",
+   "start": 76.411,
+   "end": 76.837,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "mee!",
+   "start": 76.837,
+   "end": 77.043,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Doobi",
+   "start": 77.333,
+   "end": 77.773,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "tash!",
+   "start": 77.773,
+   "end": 78.061,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Arrbanoo!",
+   "start": 78.351,
+   "end": 78.924,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "While",
+   "start": 79.254,
+   "end": 79.466,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "they",
+   "start": 79.466,
+   "end": 79.633,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "were",
+   "start": 79.633,
+   "end": 79.757,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "floating",
+   "start": 79.757,
+   "end": 80.101,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "by",
+   "start": 80.23,
+   "end": 80.415,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 80.415,
+   "end": 80.551,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "way",
+   "start": 80.551,
+   "end": 80.736,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 80.866,
+   "end": 81.015,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "ate",
+   "start": 81.015,
+   "end": 81.216,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "my",
+   "start": 81.216,
+   "end": 81.418,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "sandwich",
+   "start": 81.418,
+   "end": 81.884,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Now",
+   "start": 82.214,
+   "end": 82.411,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "nobody",
+   "start": 82.411,
+   "end": 82.814,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "wants",
+   "start": 82.814,
+   "end": 83.114,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "pirate",
+   "start": 83.114,
+   "end": 83.465,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "token",
+   "start": 83.465,
+   "end": 83.817,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Except",
+   "start": 84.127,
+   "end": 84.499,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "Principal",
+   "start": 84.499,
+   "end": 85.035,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Dunmore",
+   "start": 85.035,
+   "end": 85.407,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "And",
+   "start": 85.717,
+   "end": 85.891,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 85.891,
+   "end": 86.019,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "more",
+   "start": 86.019,
+   "end": 86.192,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "he",
+   "start": 86.192,
+   "end": 86.32,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "wants",
+   "start": 86.32,
+   "end": 86.585,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "it",
+   "start": 86.585,
+   "end": 86.713,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "the",
+   "start": 86.843,
+   "end": 87.008,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "higher",
+   "start": 87.008,
+   "end": 87.291,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "he",
+   "start": 87.291,
+   "end": 87.456,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "goes",
+   "start": 87.456,
+   "end": 87.738,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "He",
+   "start": 88.068,
+   "end": 88.198,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "lives",
+   "start": 88.198,
+   "end": 88.467,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "on",
+   "start": 88.467,
+   "end": 88.597,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 88.597,
+   "end": 88.726,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "moon",
+   "start": 88.726,
+   "end": 88.902,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "now",
+   "start": 88.902,
+   "end": 89.078,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "School",
+   "start": 89.388,
+   "end": 89.658,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "is",
+   "start": 89.658,
+   "end": 89.816,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "cancelled",
+   "start": 89.816,
+   "end": 90.255,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "forever",
+   "start": 90.255,
+   "end": 90.638,
+   "beat": "b25",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSS!",
+   "start": 90.953,
+   "end": 91.213,
+   "beat": "b26",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 91.163,
+   "end": 91.423,
+   "beat": "b26",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 91.353,
+   "end": 91.613,
+   "beat": "b26",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 24.001,
+   "mode": "lofi"
+  },
+  {
+   "t": 36.409,
+   "mode": "none"
+  },
+  {
+   "t": 41.453,
+   "mode": "party"
+  },
+  {
+   "t": 55.342,
+   "mode": "muffled"
+  },
+  {
+   "t": 59.677,
+   "mode": "none"
+  },
+  {
+   "t": 71.238,
+   "mode": "party"
+  },
+  {
+   "t": 79.159,
+   "mode": "lofi"
+  },
+  {
+   "t": 82.119,
+   "mode": "night"
+  },
+  {
+   "t": 87.973,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "goon": 18.948,
+  "almost": 52.544,
+  "dunmore": 63.668,
+  "top10": 71.782,
+  "chant": 75.53
+ },
+ "title": "In This Town \u2014 Pirate Token to the Moon"
+}

@@ -1,0 +1,4232 @@
+{
+ "fps": 30,
+ "duration": 90.079,
+ "audio": "episodes/ep19/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, there's a song so catchy that if you hear one second of it, you dance for as long as it's playing.",
+   "start": 0.3,
+   "end": 5.551,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.315,
+     "end": 0.479
+    },
+    {
+     "text": "this",
+     "start": 0.479,
+     "end": 0.701
+    },
+    {
+     "text": "town",
+     "start": 0.701,
+     "end": 0.982
+    },
+    {
+     "text": "there's",
+     "start": 1.112,
+     "end": 1.377
+    },
+    {
+     "text": "a",
+     "start": 1.377,
+     "end": 1.531
+    },
+    {
+     "text": "song",
+     "start": 1.531,
+     "end": 1.741
+    },
+    {
+     "text": "so",
+     "start": 1.741,
+     "end": 1.951
+    },
+    {
+     "text": "catchy",
+     "start": 1.951,
+     "end": 2.271
+    },
+    {
+     "text": "that",
+     "start": 2.271,
+     "end": 2.481
+    },
+    {
+     "text": "if",
+     "start": 2.481,
+     "end": 2.636
+    },
+    {
+     "text": "you",
+     "start": 2.636,
+     "end": 2.791
+    },
+    {
+     "text": "hear",
+     "start": 2.791,
+     "end": 3.0
+    },
+    {
+     "text": "one",
+     "start": 3.0,
+     "end": 3.21
+    },
+    {
+     "text": "second",
+     "start": 3.21,
+     "end": 3.586
+    },
+    {
+     "text": "of",
+     "start": 3.586,
+     "end": 3.74
+    },
+    {
+     "text": "it",
+     "start": 3.74,
+     "end": 3.895
+    },
+    {
+     "text": "you",
+     "start": 4.025,
+     "end": 4.161
+    },
+    {
+     "text": "dance",
+     "start": 4.161,
+     "end": 4.394
+    },
+    {
+     "text": "for",
+     "start": 4.394,
+     "end": 4.579
+    },
+    {
+     "text": "as",
+     "start": 4.579,
+     "end": 4.715
+    },
+    {
+     "text": "long",
+     "start": 4.715,
+     "end": 4.9
+    },
+    {
+     "text": "as",
+     "start": 4.9,
+     "end": 5.036
+    },
+    {
+     "text": "it's",
+     "start": 5.036,
+     "end": 5.22
+    },
+    {
+     "text": "playing",
+     "start": 5.22,
+     "end": 5.551
+    }
+   ],
+   "visual": "Dawn on main street. Thirty townspeople dance in perfect sync with sweaty, sleepy faces. In the middle the narrator (my avatar with headphones) stands still, arms crossed, deadpan."
+  },
+  {
+   "id": "b02",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It started at the town fair, when DJ Noodle played a mystery track.",
+   "start": 5.866,
+   "end": 9.081,
+   "words": [
+    {
+     "text": "It",
+     "start": 5.881,
+     "end": 6.009
+    },
+    {
+     "text": "started",
+     "start": 6.009,
+     "end": 6.365
+    },
+    {
+     "text": "at",
+     "start": 6.365,
+     "end": 6.493
+    },
+    {
+     "text": "the",
+     "start": 6.493,
+     "end": 6.621
+    },
+    {
+     "text": "town",
+     "start": 6.621,
+     "end": 6.84
+    },
+    {
+     "text": "fair",
+     "start": 6.84,
+     "end": 7.014
+    },
+    {
+     "text": "when",
+     "start": 7.144,
+     "end": 7.339
+    },
+    {
+     "text": "DJ",
+     "start": 7.339,
+     "end": 7.69
+    },
+    {
+     "text": "Noodle",
+     "start": 7.69,
+     "end": 7.989
+    },
+    {
+     "text": "played",
+     "start": 7.989,
+     "end": 8.287
+    },
+    {
+     "text": "a",
+     "start": 8.287,
+     "end": 8.432
+    },
+    {
+     "text": "mystery",
+     "start": 8.432,
+     "end": 8.833
+    },
+    {
+     "text": "track",
+     "start": 8.833,
+     "end": 9.081
+    }
+   ],
+   "overlay": "ONE YEAR AGO",
+   "visual": "Flashback, day, town square. The stage banner reads 'TOWN FAIR'. DJ Noodle (sunglasses, gold chain, yellow cap) stands behind a glowing DJ booth with two spinning turntables."
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It only had four words.",
+   "start": 9.396,
+   "end": 10.607,
+   "words": [
+    {
+     "text": "It",
+     "start": 9.411,
+     "end": 9.57
+    },
+    {
+     "text": "only",
+     "start": 9.57,
+     "end": 9.901
+    },
+    {
+     "text": "had",
+     "start": 9.901,
+     "end": 10.117
+    },
+    {
+     "text": "four",
+     "start": 10.117,
+     "end": 10.333
+    },
+    {
+     "text": "words",
+     "start": 10.333,
+     "end": 10.607
+    }
+   ],
+   "visual": "Close-up of DJ Noodle's smug face as he slowly presses a big red button on the booth."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Bimbalo! Fezza-ree! Oonga vay! Dooblanni!",
+   "start": 10.922,
+   "end": 14.138,
+   "words": [
+    {
+     "text": "Bimbalo!",
+     "start": 10.937,
+     "end": 11.555
+    },
+    {
+     "text": "Fezza-ree!",
+     "start": 11.845,
+     "end": 12.398
+    },
+    {
+     "text": "Oonga",
+     "start": 12.688,
+     "end": 13.029
+    },
+    {
+     "text": "vay!",
+     "start": 13.029,
+     "end": 13.299
+    },
+    {
+     "text": "Dooblanni!",
+     "start": 13.589,
+     "end": 14.138
+    }
+   ],
+   "overlay": "BIMBALO! FEZZA-REE! OONGA VAY! DOOBLANNI!",
+   "visual": "Giant stamped words slam across the screen one at a time over pulsing purple fair lights. A small note at the bottom says 'DON'T SING THIS'."
+  },
+  {
+   "id": "b05",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 14.453,
+   "end": 15.113,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 14.453,
+     "end": 14.713
+    },
+    {
+     "text": "HUSS!",
+     "start": 14.663,
+     "end": 14.923
+    },
+    {
+     "text": "HUSS!",
+     "start": 14.853,
+     "end": 15.113
+    }
+   ],
+   "visual": "The whole fair crowd snaps into dance2 at once. Party night lighting kicks in, camera shake on each HUSS."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Now we have rules. Always wear headphones. Never hum. And never look a dancer in the eyes.",
+   "start": 15.453,
+   "end": 20.535,
+   "words": [
+    {
+     "text": "Now",
+     "start": 15.468,
+     "end": 15.69
+    },
+    {
+     "text": "we",
+     "start": 15.69,
+     "end": 15.854
+    },
+    {
+     "text": "have",
+     "start": 15.854,
+     "end": 16.076
+    },
+    {
+     "text": "rules",
+     "start": 16.076,
+     "end": 16.357
+    },
+    {
+     "text": "Always",
+     "start": 16.667,
+     "end": 17.038
+    },
+    {
+     "text": "wear",
+     "start": 17.038,
+     "end": 17.245
+    },
+    {
+     "text": "headphones",
+     "start": 17.245,
+     "end": 17.726
+    },
+    {
+     "text": "Never",
+     "start": 18.036,
+     "end": 18.363
+    },
+    {
+     "text": "hum",
+     "start": 18.363,
+     "end": 18.622
+    },
+    {
+     "text": "And",
+     "start": 18.932,
+     "end": 19.133
+    },
+    {
+     "text": "never",
+     "start": 19.133,
+     "end": 19.386
+    },
+    {
+     "text": "look",
+     "start": 19.386,
+     "end": 19.586
+    },
+    {
+     "text": "a",
+     "start": 19.586,
+     "end": 19.733
+    },
+    {
+     "text": "dancer",
+     "start": 19.733,
+     "end": 20.039
+    },
+    {
+     "text": "in",
+     "start": 20.039,
+     "end": 20.187
+    },
+    {
+     "text": "the",
+     "start": 20.187,
+     "end": 20.334
+    },
+    {
+     "text": "eyes",
+     "start": 20.334,
+     "end": 20.535
+    }
+   ],
+   "overlay": "RULE 1: HEADPHONES. RULE 2: NO HUMMING. RULE 3: NO EYE CONTACT.",
+   "visual": "Main street, day. Three rule cards pop in one by one: a kid in giant headphones, a crossed-out humming face, a kid covering his eyes as he walks past a dancer."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mrs. Pell hummed it in the bakery. Twelve customers danced out the door.",
+   "start": 20.85,
+   "end": 24.858,
+   "words": [
+    {
+     "text": "Mrs",
+     "start": 20.865,
+     "end": 21.372
+    },
+    {
+     "text": "Pell",
+     "start": 21.682,
+     "end": 21.858
+    },
+    {
+     "text": "hummed",
+     "start": 21.858,
+     "end": 22.08
+    },
+    {
+     "text": "it",
+     "start": 22.08,
+     "end": 22.209
+    },
+    {
+     "text": "in",
+     "start": 22.209,
+     "end": 22.339
+    },
+    {
+     "text": "the",
+     "start": 22.339,
+     "end": 22.469
+    },
+    {
+     "text": "bakery",
+     "start": 22.469,
+     "end": 22.83
+    },
+    {
+     "text": "Twelve",
+     "start": 23.14,
+     "end": 23.463
+    },
+    {
+     "text": "customers",
+     "start": 23.463,
+     "end": 23.954
+    },
+    {
+     "text": "danced",
+     "start": 23.954,
+     "end": 24.278
+    },
+    {
+     "text": "out",
+     "start": 24.278,
+     "end": 24.49
+    },
+    {
+     "text": "the",
+     "start": 24.49,
+     "end": 24.646
+    },
+    {
+     "text": "door",
+     "start": 24.646,
+     "end": 24.858
+    }
+   ],
+   "visual": "Main street bakery. Mrs. Pell (apron, hair bun, glasses) hums with her eyes closed. A conga line of twelve customers dances out of the door and down the street."
+  },
+  {
+   "id": "b08",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Officer Brandt sneezed it. The whole police station did the worm.",
+   "start": 25.173,
+   "end": 28.317,
+   "words": [
+    {
+     "text": "Officer",
+     "start": 25.188,
+     "end": 25.52
+    },
+    {
+     "text": "Brandt",
+     "start": 25.52,
+     "end": 25.853
+    },
+    {
+     "text": "sneezed",
+     "start": 25.853,
+     "end": 26.186
+    },
+    {
+     "text": "it",
+     "start": 26.186,
+     "end": 26.346
+    },
+    {
+     "text": "The",
+     "start": 26.656,
+     "end": 26.803
+    },
+    {
+     "text": "whole",
+     "start": 26.803,
+     "end": 27.056
+    },
+    {
+     "text": "police",
+     "start": 27.056,
+     "end": 27.36
+    },
+    {
+     "text": "station",
+     "start": 27.36,
+     "end": 27.77
+    },
+    {
+     "text": "did",
+     "start": 27.77,
+     "end": 27.97
+    },
+    {
+     "text": "the",
+     "start": 27.97,
+     "end": 28.117
+    },
+    {
+     "text": "worm",
+     "start": 28.117,
+     "end": 28.317
+    }
+   ],
+   "visual": "Officer Brandt (blue cap, mustache) sneezes. Cut to three officers lying flat (crowdSurf pose) in a row on the street, wiggling the worm in sync."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Me? I never take my headphones off. Not even in the shower.",
+   "start": 28.632,
+   "end": 32.059,
+   "words": [
+    {
+     "text": "Me?",
+     "start": 28.647,
+     "end": 29.05
+    },
+    {
+     "text": "I",
+     "start": 29.4,
+     "end": 29.542
+    },
+    {
+     "text": "never",
+     "start": 29.542,
+     "end": 29.786
+    },
+    {
+     "text": "take",
+     "start": 29.786,
+     "end": 30.03
+    },
+    {
+     "text": "my",
+     "start": 30.03,
+     "end": 30.223
+    },
+    {
+     "text": "headphones",
+     "start": 30.223,
+     "end": 30.67
+    },
+    {
+     "text": "off",
+     "start": 30.67,
+     "end": 30.812
+    },
+    {
+     "text": "Not",
+     "start": 31.122,
+     "end": 31.31
+    },
+    {
+     "text": "even",
+     "start": 31.31,
+     "end": 31.546
+    },
+    {
+     "text": "in",
+     "start": 31.546,
+     "end": 31.684
+    },
+    {
+     "text": "the",
+     "start": 31.684,
+     "end": 31.822
+    },
+    {
+     "text": "shower",
+     "start": 31.822,
+     "end": 32.059
+    }
+   ],
+   "visual": "Kid's bedroom. The narrator sleeps in bed with headphones on. Gag cut: he wears a shower cap over the headphones and holds a rubber duck, smug face."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Until yesterday, when someone in a hood, with glowing green eyes, hacked the clock tower speakers.",
+   "start": 32.374,
+   "end": 37.116,
+   "words": [
+    {
+     "text": "Until",
+     "start": 32.389,
+     "end": 32.73
+    },
+    {
+     "text": "yesterday",
+     "start": 32.73,
+     "end": 33.249
+    },
+    {
+     "text": "when",
+     "start": 33.379,
+     "end": 33.551
+    },
+    {
+     "text": "someone",
+     "start": 33.551,
+     "end": 33.86
+    },
+    {
+     "text": "in",
+     "start": 33.86,
+     "end": 33.988
+    },
+    {
+     "text": "a",
+     "start": 33.988,
+     "end": 34.115
+    },
+    {
+     "text": "hood",
+     "start": 34.115,
+     "end": 34.288
+    },
+    {
+     "text": "with",
+     "start": 34.418,
+     "end": 34.643
+    },
+    {
+     "text": "glowing",
+     "start": 34.643,
+     "end": 35.046
+    },
+    {
+     "text": "green",
+     "start": 35.046,
+     "end": 35.331
+    },
+    {
+     "text": "eyes",
+     "start": 35.331,
+     "end": 35.556
+    },
+    {
+     "text": "hacked",
+     "start": 35.686,
+     "end": 35.972
+    },
+    {
+     "text": "the",
+     "start": 35.972,
+     "end": 36.139
+    },
+    {
+     "text": "clock",
+     "start": 36.139,
+     "end": 36.425
+    },
+    {
+     "text": "tower",
+     "start": 36.425,
+     "end": 36.711
+    },
+    {
+     "text": "speakers",
+     "start": 36.711,
+     "end": 37.116
+    }
+   ],
+   "overlay": "HACKED",
+   "visual": "Night: a hooded figure with two glowing green eyes crouches at the clock tower speakers and plugs in a cable. HACKED stamps over it."
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The whole town started dancing. Grandma. The mailman. Even the pigeon.",
+   "start": 37.431,
+   "end": 41.655,
+   "words": [
+    {
+     "text": "The",
+     "start": 37.446,
+     "end": 37.59
+    },
+    {
+     "text": "whole",
+     "start": 37.59,
+     "end": 37.838
+    },
+    {
+     "text": "town",
+     "start": 37.838,
+     "end": 38.085
+    },
+    {
+     "text": "started",
+     "start": 38.085,
+     "end": 38.487
+    },
+    {
+     "text": "dancing",
+     "start": 38.487,
+     "end": 38.837
+    },
+    {
+     "text": "Grandma",
+     "start": 39.147,
+     "end": 39.698
+    },
+    {
+     "text": "The",
+     "start": 40.008,
+     "end": 40.155
+    },
+    {
+     "text": "mailman",
+     "start": 40.155,
+     "end": 40.566
+    },
+    {
+     "text": "Even",
+     "start": 40.876,
+     "end": 41.136
+    },
+    {
+     "text": "the",
+     "start": 41.136,
+     "end": 41.287
+    },
+    {
+     "text": "pigeon",
+     "start": 41.287,
+     "end": 41.655
+    }
+   ],
+   "visual": "Party night. The speakers blast glowing music notes over town. Quick cuts: Grandma starts dancing, the mailman (blue cap, sash bag) starts dance2, the pigeon bobs its head in time."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "They danced all night... while they're out partying, by the way.",
+   "start": 41.97,
+   "end": 44.976,
+   "words": [
+    {
+     "text": "They",
+     "start": 41.985,
+     "end": 42.204
+    },
+    {
+     "text": "danced",
+     "start": 42.204,
+     "end": 42.538
+    },
+    {
+     "text": "all",
+     "start": 42.538,
+     "end": 42.699
+    },
+    {
+     "text": "night",
+     "start": 42.699,
+     "end": 42.975
+    },
+    {
+     "text": "while",
+     "start": 43.345,
+     "end": 43.568
+    },
+    {
+     "text": "they're",
+     "start": 43.568,
+     "end": 43.791
+    },
+    {
+     "text": "out",
+     "start": 43.791,
+     "end": 43.967
+    },
+    {
+     "text": "partying",
+     "start": 43.967,
+     "end": 44.33
+    },
+    {
+     "text": "by",
+     "start": 44.46,
+     "end": 44.649
+    },
+    {
+     "text": "the",
+     "start": 44.649,
+     "end": 44.788
+    },
+    {
+     "text": "way",
+     "start": 44.788,
+     "end": 44.976
+    }
+   ],
+   "overlay": "WHILE THEY'RE OUT PARTYING, BY THE WAY",
+   "visual": "Party night montage: a conga line around the clock tower and a crowd-surfer in the square. The narrator sits alone on the park picnic table with headphones on, deadpan."
+  },
+  {
+   "id": "b13",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "start": 45.291,
+   "end": 46.931,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 45.291,
+     "end": 45.551
+    },
+    {
+     "text": "HUSS!",
+     "start": 45.501,
+     "end": 45.761
+    },
+    {
+     "text": "HUSS!",
+     "start": 45.691,
+     "end": 45.951
+    },
+    {
+     "text": "HUSS!",
+     "start": 46.271,
+     "end": 46.531
+    },
+    {
+     "text": "HUSS!",
+     "start": 46.481,
+     "end": 46.741
+    },
+    {
+     "text": "HUSS!",
+     "start": 46.671,
+     "end": 46.931
+    }
+   ],
+   "visual": "Rapid cuts of dancers' huss faces under pink and purple strobe lights, camera shake on every HUSS."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then my headphones beeped. Battery: five percent.",
+   "start": 47.271,
+   "end": 49.809,
+   "words": [
+    {
+     "text": "Then",
+     "start": 47.286,
+     "end": 47.483
+    },
+    {
+     "text": "my",
+     "start": 47.483,
+     "end": 47.679
+    },
+    {
+     "text": "headphones",
+     "start": 47.679,
+     "end": 48.134
+    },
+    {
+     "text": "beeped",
+     "start": 48.134,
+     "end": 48.382
+    },
+    {
+     "text": "Battery",
+     "start": 48.692,
+     "end": 49.105
+    },
+    {
+     "text": "five",
+     "start": 49.105,
+     "end": 49.396
+    },
+    {
+     "text": "percent",
+     "start": 49.396,
+     "end": 49.809
+    }
+   ],
+   "overlay": "BATTERY: 5%",
+   "visual": "Close-up on the narrator's headphones flashing red as a battery icon appears. His face turns to sweat."
+  },
+  {
+   "id": "b15",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Four. Three. The song leaked in. My foot started tapping. Ah, almost... almost!",
+   "start": 50.124,
+   "end": 56.207,
+   "words": [
+    {
+     "text": "Four",
+     "start": 50.139,
+     "end": 50.519
+    },
+    {
+     "text": "Three",
+     "start": 50.829,
+     "end": 51.281
+    },
+    {
+     "text": "The",
+     "start": 51.591,
+     "end": 51.756
+    },
+    {
+     "text": "song",
+     "start": 51.756,
+     "end": 51.982
+    },
+    {
+     "text": "leaked",
+     "start": 51.982,
+     "end": 52.266
+    },
+    {
+     "text": "in",
+     "start": 52.266,
+     "end": 52.432
+    },
+    {
+     "text": "My",
+     "start": 52.742,
+     "end": 52.936
+    },
+    {
+     "text": "foot",
+     "start": 52.936,
+     "end": 53.129
+    },
+    {
+     "text": "started",
+     "start": 53.129,
+     "end": 53.526
+    },
+    {
+     "text": "tapping",
+     "start": 53.526,
+     "end": 53.821
+    },
+    {
+     "text": "Ah",
+     "start": 54.131,
+     "end": 54.514
+    },
+    {
+     "text": "almost",
+     "start": 54.644,
+     "end": 55.226
+    },
+    {
+     "text": "almost!",
+     "start": 55.596,
+     "end": 56.207
+    }
+   ],
+   "overlay": "AH, ALMOST... ALMOST!",
+   "visual": "The battery counter drops 4%, then 3%, and the muffled music gets louder. The narrator's foot starts tapping and he catches himself with a jolt (stunned pose)."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I had to reach the clock tower. But the streets were jammed.",
+   "start": 56.522,
+   "end": 59.302,
+   "words": [
+    {
+     "text": "I",
+     "start": 56.537,
+     "end": 56.685
+    },
+    {
+     "text": "had",
+     "start": 56.685,
+     "end": 56.885
+    },
+    {
+     "text": "to",
+     "start": 56.885,
+     "end": 57.033
+    },
+    {
+     "text": "reach",
+     "start": 57.033,
+     "end": 57.286
+    },
+    {
+     "text": "the",
+     "start": 57.286,
+     "end": 57.433
+    },
+    {
+     "text": "clock",
+     "start": 57.433,
+     "end": 57.686
+    },
+    {
+     "text": "tower",
+     "start": 57.686,
+     "end": 57.939
+    },
+    {
+     "text": "But",
+     "start": 58.249,
+     "end": 58.431
+    },
+    {
+     "text": "the",
+     "start": 58.431,
+     "end": 58.565
+    },
+    {
+     "text": "streets",
+     "start": 58.565,
+     "end": 58.891
+    },
+    {
+     "text": "were",
+     "start": 58.891,
+     "end": 59.025
+    },
+    {
+     "text": "jammed",
+     "start": 59.025,
+     "end": 59.302
+    }
+   ],
+   "overlay": "BATTERY: 2%",
+   "visual": "Wide shot from the narrator's view: the glowing clock tower far away past a main street packed wall to wall with dancers."
+  },
+  {
+   "id": "b17",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then it hit me. If they have to dance... they can dance me there.",
+   "start": 59.617,
+   "end": 62.964,
+   "words": [
+    {
+     "text": "Then",
+     "start": 59.632,
+     "end": 59.838
+    },
+    {
+     "text": "it",
+     "start": 59.838,
+     "end": 59.99
+    },
+    {
+     "text": "hit",
+     "start": 59.99,
+     "end": 60.196
+    },
+    {
+     "text": "me",
+     "start": 60.196,
+     "end": 60.348
+    },
+    {
+     "text": "If",
+     "start": 60.658,
+     "end": 60.805
+    },
+    {
+     "text": "they",
+     "start": 60.805,
+     "end": 61.005
+    },
+    {
+     "text": "have",
+     "start": 61.005,
+     "end": 61.206
+    },
+    {
+     "text": "to",
+     "start": 61.206,
+     "end": 61.353
+    },
+    {
+     "text": "dance",
+     "start": 61.353,
+     "end": 61.606
+    },
+    {
+     "text": "they",
+     "start": 61.976,
+     "end": 62.173
+    },
+    {
+     "text": "can",
+     "start": 62.173,
+     "end": 62.371
+    },
+    {
+     "text": "dance",
+     "start": 62.371,
+     "end": 62.621
+    },
+    {
+     "text": "me",
+     "start": 62.621,
+     "end": 62.766
+    },
+    {
+     "text": "there",
+     "start": 62.766,
+     "end": 62.964
+    }
+   ],
+   "visual": "The narrator in the think pose, then a sly grin as a lightbulb pops above his head."
+  },
+  {
+   "id": "b18",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I squeezed my eyes shut, because you never look a dancer in the eyes, and dove into the crowd. Goon Squad!",
+   "start": 63.279,
+   "end": 68.58,
+   "words": [
+    {
+     "text": "I",
+     "start": 63.294,
+     "end": 63.442
+    },
+    {
+     "text": "squeezed",
+     "start": 63.442,
+     "end": 63.801
+    },
+    {
+     "text": "my",
+     "start": 63.801,
+     "end": 64.002
+    },
+    {
+     "text": "eyes",
+     "start": 64.002,
+     "end": 64.203
+    },
+    {
+     "text": "shut",
+     "start": 64.203,
+     "end": 64.404
+    },
+    {
+     "text": "because",
+     "start": 64.534,
+     "end": 64.849
+    },
+    {
+     "text": "you",
+     "start": 64.849,
+     "end": 65.001
+    },
+    {
+     "text": "never",
+     "start": 65.001,
+     "end": 65.262
+    },
+    {
+     "text": "look",
+     "start": 65.262,
+     "end": 65.469
+    },
+    {
+     "text": "a",
+     "start": 65.469,
+     "end": 65.621
+    },
+    {
+     "text": "dancer",
+     "start": 65.621,
+     "end": 65.937
+    },
+    {
+     "text": "in",
+     "start": 65.937,
+     "end": 66.089
+    },
+    {
+     "text": "the",
+     "start": 66.089,
+     "end": 66.241
+    },
+    {
+     "text": "eyes",
+     "start": 66.241,
+     "end": 66.448
+    },
+    {
+     "text": "and",
+     "start": 66.578,
+     "end": 66.757
+    },
+    {
+     "text": "dove",
+     "start": 66.757,
+     "end": 66.936
+    },
+    {
+     "text": "into",
+     "start": 66.936,
+     "end": 67.162
+    },
+    {
+     "text": "the",
+     "start": 67.162,
+     "end": 67.294
+    },
+    {
+     "text": "crowd",
+     "start": 67.294,
+     "end": 67.567
+    },
+    {
+     "text": "Goon",
+     "start": 67.877,
+     "end": 68.155
+    },
+    {
+     "text": "Squad!",
+     "start": 68.155,
+     "end": 68.58
+    }
+   ],
+   "overlay": "GOON SQUAD!",
+   "visual": "The narrator leaps backward off the picnic table into the crowd, arms out. The dancers snap to attention in sunglasses and catch him."
+  },
+  {
+   "id": "b19",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The whole town passed me over their heads, right to the clock tower.",
+   "start": 68.895,
+   "end": 71.959,
+   "words": [
+    {
+     "text": "The",
+     "start": 68.91,
+     "end": 69.063
+    },
+    {
+     "text": "whole",
+     "start": 69.063,
+     "end": 69.324
+    },
+    {
+     "text": "town",
+     "start": 69.324,
+     "end": 69.586
+    },
+    {
+     "text": "passed",
+     "start": 69.586,
+     "end": 69.847
+    },
+    {
+     "text": "me",
+     "start": 69.847,
+     "end": 70.0
+    },
+    {
+     "text": "over",
+     "start": 70.0,
+     "end": 70.262
+    },
+    {
+     "text": "their",
+     "start": 70.262,
+     "end": 70.469
+    },
+    {
+     "text": "heads",
+     "start": 70.469,
+     "end": 70.73
+    },
+    {
+     "text": "right",
+     "start": 70.86,
+     "end": 71.124
+    },
+    {
+     "text": "to",
+     "start": 71.124,
+     "end": 71.278
+    },
+    {
+     "text": "the",
+     "start": 71.278,
+     "end": 71.432
+    },
+    {
+     "text": "clock",
+     "start": 71.432,
+     "end": 71.696
+    },
+    {
+     "text": "tower",
+     "start": 71.696,
+     "end": 71.959
+    }
+   ],
+   "visual": "The narrator in the crowdSurf pose glides over a sea of dancing townspeople down main street toward the glowing clock tower, camera tracking alongside."
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I climbed the ladder. One percent left. I yanked the plug.",
+   "start": 72.274,
+   "end": 75.551,
+   "words": [
+    {
+     "text": "I",
+     "start": 72.289,
+     "end": 72.43
+    },
+    {
+     "text": "climbed",
+     "start": 72.43,
+     "end": 72.771
+    },
+    {
+     "text": "the",
+     "start": 72.771,
+     "end": 72.911
+    },
+    {
+     "text": "ladder",
+     "start": 72.911,
+     "end": 73.152
+    },
+    {
+     "text": "One",
+     "start": 73.462,
+     "end": 73.692
+    },
+    {
+     "text": "percent",
+     "start": 73.692,
+     "end": 74.103
+    },
+    {
+     "text": "left",
+     "start": 74.103,
+     "end": 74.394
+    },
+    {
+     "text": "I",
+     "start": 74.704,
+     "end": 74.85
+    },
+    {
+     "text": "yanked",
+     "start": 74.85,
+     "end": 75.154
+    },
+    {
+     "text": "the",
+     "start": 75.154,
+     "end": 75.3
+    },
+    {
+     "text": "plug",
+     "start": 75.3,
+     "end": 75.551
+    }
+   ],
+   "overlay": "BATTERY: 1%",
+   "visual": "The narrator climbs a ladder up the clock tower with the battery icon blinking red. He grabs a giant glowing power plug and yanks it out in a burst of sparks."
+  },
+  {
+   "id": "b21",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS! HUSS!",
+   "start": 75.866,
+   "end": 76.526,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 75.866,
+     "end": 76.126
+    },
+    {
+     "text": "HUSS!",
+     "start": 76.076,
+     "end": 76.336
+    },
+    {
+     "text": "HUSS!",
+     "start": 76.266,
+     "end": 76.526
+    }
+   ],
+   "visual": "Total silence, then three slow-motion HUSS cuts of the narrator on top of the clock tower holding the plug up in the moonlight, huss face."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Everyone flopped like noodles. Then they cheered. Top ten respect.",
+   "start": 76.866,
+   "end": 80.569,
+   "words": [
+    {
+     "text": "Everyone",
+     "start": 76.881,
+     "end": 77.331
+    },
+    {
+     "text": "flopped",
+     "start": 77.331,
+     "end": 77.666
+    },
+    {
+     "text": "like",
+     "start": 77.666,
+     "end": 77.943
+    },
+    {
+     "text": "noodles",
+     "start": 77.943,
+     "end": 78.335
+    },
+    {
+     "text": "Then",
+     "start": 78.645,
+     "end": 78.845
+    },
+    {
+     "text": "they",
+     "start": 78.845,
+     "end": 79.044
+    },
+    {
+     "text": "cheered",
+     "start": 79.044,
+     "end": 79.349
+    },
+    {
+     "text": "Top",
+     "start": 79.659,
+     "end": 79.883
+    },
+    {
+     "text": "ten",
+     "start": 79.883,
+     "end": 80.108
+    },
+    {
+     "text": "respect",
+     "start": 80.108,
+     "end": 80.569
+    }
+   ],
+   "overlay": "TOP 10 RESPECTFUL MOMENTS: #1 THE TOWN CARRIED ME",
+   "visual": "The whole town collapses flat on the ground, then jumps up cheering and clapping at the narrator. A Top 10 card slides in."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then the sky turned purple. A giant spaceship came down, blasting the remix. And in every window, glowing green eyes.",
+   "start": 80.884,
+   "end": 87.11,
+   "words": [
+    {
+     "text": "Then",
+     "start": 80.899,
+     "end": 81.098
+    },
+    {
+     "text": "the",
+     "start": 81.098,
+     "end": 81.245
+    },
+    {
+     "text": "sky",
+     "start": 81.245,
+     "end": 81.497
+    },
+    {
+     "text": "turned",
+     "start": 81.497,
+     "end": 81.748
+    },
+    {
+     "text": "purple",
+     "start": 81.748,
+     "end": 82.052
+    },
+    {
+     "text": "A",
+     "start": 82.362,
+     "end": 82.502
+    },
+    {
+     "text": "giant",
+     "start": 82.502,
+     "end": 82.891
+    },
+    {
+     "text": "spaceship",
+     "start": 82.891,
+     "end": 83.331
+    },
+    {
+     "text": "came",
+     "start": 83.331,
+     "end": 83.57
+    },
+    {
+     "text": "down",
+     "start": 83.57,
+     "end": 83.81
+    },
+    {
+     "text": "blasting",
+     "start": 83.94,
+     "end": 84.355
+    },
+    {
+     "text": "the",
+     "start": 84.355,
+     "end": 84.504
+    },
+    {
+     "text": "remix",
+     "start": 84.504,
+     "end": 84.866
+    },
+    {
+     "text": "And",
+     "start": 85.176,
+     "end": 85.356
+    },
+    {
+     "text": "in",
+     "start": 85.356,
+     "end": 85.488
+    },
+    {
+     "text": "every",
+     "start": 85.488,
+     "end": 85.714
+    },
+    {
+     "text": "window",
+     "start": 85.714,
+     "end": 86.035
+    },
+    {
+     "text": "glowing",
+     "start": 86.165,
+     "end": 86.582
+    },
+    {
+     "text": "green",
+     "start": 86.582,
+     "end": 86.877
+    },
+    {
+     "text": "eyes",
+     "start": 86.877,
+     "end": 87.11
+    }
+   ],
+   "overlay": "THE REMIX",
+   "visual": "Purple sky: a huge round blocky spaceship lowers over the clock tower, rings of speakers pumping; every porthole glows with pairs of green eyes (the same as the hacker's)."
+  },
+  {
+   "id": "b24",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And my battery? Zero percent.",
+   "start": 87.425,
+   "end": 89.264,
+   "words": [
+    {
+     "text": "And",
+     "start": 87.44,
+     "end": 87.632
+    },
+    {
+     "text": "my",
+     "start": 87.632,
+     "end": 87.823
+    },
+    {
+     "text": "battery?",
+     "start": 87.823,
+     "end": 88.166
+    },
+    {
+     "text": "Zero",
+     "start": 88.516,
+     "end": 88.89
+    },
+    {
+     "text": "percent",
+     "start": 88.89,
+     "end": 89.264
+    }
+   ],
+   "overlay": "BATTERY: 0%",
+   "visual": "Close-up: the narrator's headphones go dark and the battery icon hits 0%. His foot taps, his shocked face fights it, and he breaks into a reluctant dance. Cut to black."
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.315,
+   "end": 0.479,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.479,
+   "end": 0.701,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.701,
+   "end": 0.982,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "there's",
+   "start": 1.112,
+   "end": 1.377,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "a",
+   "start": 1.377,
+   "end": 1.531,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "song",
+   "start": 1.531,
+   "end": 1.741,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "so",
+   "start": 1.741,
+   "end": 1.951,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "catchy",
+   "start": 1.951,
+   "end": 2.271,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "that",
+   "start": 2.271,
+   "end": 2.481,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "if",
+   "start": 2.481,
+   "end": 2.636,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "you",
+   "start": 2.636,
+   "end": 2.791,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "hear",
+   "start": 2.791,
+   "end": 3.0,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "one",
+   "start": 3.0,
+   "end": 3.21,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "second",
+   "start": 3.21,
+   "end": 3.586,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "of",
+   "start": 3.586,
+   "end": 3.74,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "it",
+   "start": 3.74,
+   "end": 3.895,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "you",
+   "start": 4.025,
+   "end": 4.161,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "dance",
+   "start": 4.161,
+   "end": 4.394,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "for",
+   "start": 4.394,
+   "end": 4.579,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "as",
+   "start": 4.579,
+   "end": 4.715,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "long",
+   "start": 4.715,
+   "end": 4.9,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "as",
+   "start": 4.9,
+   "end": 5.036,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 21
+  },
+  {
+   "text": "it's",
+   "start": 5.036,
+   "end": 5.22,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 22
+  },
+  {
+   "text": "playing",
+   "start": 5.22,
+   "end": 5.551,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 23
+  },
+  {
+   "text": "It",
+   "start": 5.881,
+   "end": 6.009,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "started",
+   "start": 6.009,
+   "end": 6.365,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "at",
+   "start": 6.365,
+   "end": 6.493,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 6.493,
+   "end": 6.621,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "town",
+   "start": 6.621,
+   "end": 6.84,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "fair",
+   "start": 6.84,
+   "end": 7.014,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "when",
+   "start": 7.144,
+   "end": 7.339,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "DJ",
+   "start": 7.339,
+   "end": 7.69,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Noodle",
+   "start": 7.69,
+   "end": 7.989,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "played",
+   "start": 7.989,
+   "end": 8.287,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "a",
+   "start": 8.287,
+   "end": 8.432,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "mystery",
+   "start": 8.432,
+   "end": 8.833,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "track",
+   "start": 8.833,
+   "end": 9.081,
+   "beat": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "It",
+   "start": 9.411,
+   "end": 9.57,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "only",
+   "start": 9.57,
+   "end": 9.901,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "had",
+   "start": 9.901,
+   "end": 10.117,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "four",
+   "start": 10.117,
+   "end": 10.333,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "words",
+   "start": 10.333,
+   "end": 10.607,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Bimbalo!",
+   "start": 10.937,
+   "end": 11.555,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Fezza-ree!",
+   "start": 11.845,
+   "end": 12.398,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Oonga",
+   "start": 12.688,
+   "end": 13.029,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "vay!",
+   "start": 13.029,
+   "end": 13.299,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Dooblanni!",
+   "start": 13.589,
+   "end": 14.138,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 14.453,
+   "end": 14.713,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 14.663,
+   "end": 14.923,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 14.853,
+   "end": 15.113,
+   "beat": "b05",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Now",
+   "start": 15.468,
+   "end": 15.69,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "we",
+   "start": 15.69,
+   "end": 15.854,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "have",
+   "start": 15.854,
+   "end": 16.076,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "rules",
+   "start": 16.076,
+   "end": 16.357,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Always",
+   "start": 16.667,
+   "end": 17.038,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "wear",
+   "start": 17.038,
+   "end": 17.245,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "headphones",
+   "start": 17.245,
+   "end": 17.726,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Never",
+   "start": 18.036,
+   "end": 18.363,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "hum",
+   "start": 18.363,
+   "end": 18.622,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "And",
+   "start": 18.932,
+   "end": 19.133,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "never",
+   "start": 19.133,
+   "end": 19.386,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "look",
+   "start": 19.386,
+   "end": 19.586,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "a",
+   "start": 19.586,
+   "end": 19.733,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "dancer",
+   "start": 19.733,
+   "end": 20.039,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "in",
+   "start": 20.039,
+   "end": 20.187,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "the",
+   "start": 20.187,
+   "end": 20.334,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "eyes",
+   "start": 20.334,
+   "end": 20.535,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "Mrs",
+   "start": 20.865,
+   "end": 21.372,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Pell",
+   "start": 21.682,
+   "end": 21.858,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hummed",
+   "start": 21.858,
+   "end": 22.08,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 22.08,
+   "end": 22.209,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "in",
+   "start": 22.209,
+   "end": 22.339,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 22.339,
+   "end": 22.469,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "bakery",
+   "start": 22.469,
+   "end": 22.83,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Twelve",
+   "start": 23.14,
+   "end": 23.463,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "customers",
+   "start": 23.463,
+   "end": 23.954,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "danced",
+   "start": 23.954,
+   "end": 24.278,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "out",
+   "start": 24.278,
+   "end": 24.49,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 24.49,
+   "end": 24.646,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "door",
+   "start": 24.646,
+   "end": 24.858,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Officer",
+   "start": 25.188,
+   "end": 25.52,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Brandt",
+   "start": 25.52,
+   "end": 25.853,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "sneezed",
+   "start": 25.853,
+   "end": 26.186,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "it",
+   "start": 26.186,
+   "end": 26.346,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "The",
+   "start": 26.656,
+   "end": 26.803,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "whole",
+   "start": 26.803,
+   "end": 27.056,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "police",
+   "start": 27.056,
+   "end": 27.36,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "station",
+   "start": 27.36,
+   "end": 27.77,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "did",
+   "start": 27.77,
+   "end": 27.97,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 27.97,
+   "end": 28.117,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "worm",
+   "start": 28.117,
+   "end": 28.317,
+   "beat": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "Me?",
+   "start": 28.647,
+   "end": 29.05,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 29.4,
+   "end": 29.542,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "never",
+   "start": 29.542,
+   "end": 29.786,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "take",
+   "start": 29.786,
+   "end": 30.03,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "my",
+   "start": 30.03,
+   "end": 30.223,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "headphones",
+   "start": 30.223,
+   "end": 30.67,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "off",
+   "start": 30.67,
+   "end": 30.812,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Not",
+   "start": 31.122,
+   "end": 31.31,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "even",
+   "start": 31.31,
+   "end": 31.546,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "in",
+   "start": 31.546,
+   "end": 31.684,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "the",
+   "start": 31.684,
+   "end": 31.822,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "shower",
+   "start": 31.822,
+   "end": 32.059,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Until",
+   "start": 32.389,
+   "end": 32.73,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "yesterday",
+   "start": 32.73,
+   "end": 33.249,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "when",
+   "start": 33.379,
+   "end": 33.551,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "someone",
+   "start": 33.551,
+   "end": 33.86,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "in",
+   "start": 33.86,
+   "end": 33.988,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "a",
+   "start": 33.988,
+   "end": 34.115,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "hood",
+   "start": 34.115,
+   "end": 34.288,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "with",
+   "start": 34.418,
+   "end": 34.643,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "glowing",
+   "start": 34.643,
+   "end": 35.046,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "green",
+   "start": 35.046,
+   "end": 35.331,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "eyes",
+   "start": 35.331,
+   "end": 35.556,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "hacked",
+   "start": 35.686,
+   "end": 35.972,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "the",
+   "start": 35.972,
+   "end": 36.139,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "clock",
+   "start": 36.139,
+   "end": 36.425,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "tower",
+   "start": 36.425,
+   "end": 36.711,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "speakers",
+   "start": 36.711,
+   "end": 37.116,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "The",
+   "start": 37.446,
+   "end": 37.59,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "whole",
+   "start": 37.59,
+   "end": 37.838,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 37.838,
+   "end": 38.085,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "started",
+   "start": 38.085,
+   "end": 38.487,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "dancing",
+   "start": 38.487,
+   "end": 38.837,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "Grandma",
+   "start": 39.147,
+   "end": 39.698,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "The",
+   "start": 40.008,
+   "end": 40.155,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "mailman",
+   "start": 40.155,
+   "end": 40.566,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Even",
+   "start": 40.876,
+   "end": 41.136,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 41.136,
+   "end": 41.287,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "pigeon",
+   "start": 41.287,
+   "end": 41.655,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "They",
+   "start": 41.985,
+   "end": 42.204,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "danced",
+   "start": 42.204,
+   "end": 42.538,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "all",
+   "start": 42.538,
+   "end": 42.699,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "night",
+   "start": 42.699,
+   "end": 42.975,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "while",
+   "start": 43.345,
+   "end": 43.568,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "they're",
+   "start": 43.568,
+   "end": 43.791,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "out",
+   "start": 43.791,
+   "end": 43.967,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "partying",
+   "start": 43.967,
+   "end": 44.33,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "by",
+   "start": 44.46,
+   "end": 44.649,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 44.649,
+   "end": 44.788,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "way",
+   "start": 44.788,
+   "end": 44.976,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 45.291,
+   "end": 45.551,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 45.501,
+   "end": 45.761,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 45.691,
+   "end": 45.951,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "HUSS!",
+   "start": 46.271,
+   "end": 46.531,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 3
+  },
+  {
+   "text": "HUSS!",
+   "start": 46.481,
+   "end": 46.741,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 46.671,
+   "end": 46.931,
+   "beat": "b13",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 5
+  },
+  {
+   "text": "Then",
+   "start": 47.286,
+   "end": 47.483,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "my",
+   "start": 47.483,
+   "end": 47.679,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "headphones",
+   "start": 47.679,
+   "end": 48.134,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "beeped",
+   "start": 48.134,
+   "end": 48.382,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Battery",
+   "start": 48.692,
+   "end": 49.105,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "five",
+   "start": 49.105,
+   "end": 49.396,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "percent",
+   "start": 49.396,
+   "end": 49.809,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Four",
+   "start": 50.139,
+   "end": 50.519,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Three",
+   "start": 50.829,
+   "end": 51.281,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "The",
+   "start": 51.591,
+   "end": 51.756,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "song",
+   "start": 51.756,
+   "end": 51.982,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "leaked",
+   "start": 51.982,
+   "end": 52.266,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "in",
+   "start": 52.266,
+   "end": 52.432,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "My",
+   "start": 52.742,
+   "end": 52.936,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "foot",
+   "start": 52.936,
+   "end": 53.129,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "started",
+   "start": 53.129,
+   "end": 53.526,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "tapping",
+   "start": 53.526,
+   "end": 53.821,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Ah",
+   "start": 54.131,
+   "end": 54.514,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "almost",
+   "start": 54.644,
+   "end": 55.226,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "almost!",
+   "start": 55.596,
+   "end": 56.207,
+   "beat": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "I",
+   "start": 56.537,
+   "end": 56.685,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "had",
+   "start": 56.685,
+   "end": 56.885,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "to",
+   "start": 56.885,
+   "end": 57.033,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "reach",
+   "start": 57.033,
+   "end": 57.286,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "the",
+   "start": 57.286,
+   "end": 57.433,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "clock",
+   "start": 57.433,
+   "end": 57.686,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "tower",
+   "start": 57.686,
+   "end": 57.939,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "But",
+   "start": 58.249,
+   "end": 58.431,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "the",
+   "start": 58.431,
+   "end": 58.565,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "streets",
+   "start": 58.565,
+   "end": 58.891,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "were",
+   "start": 58.891,
+   "end": 59.025,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "jammed",
+   "start": 59.025,
+   "end": 59.302,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Then",
+   "start": 59.632,
+   "end": 59.838,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "it",
+   "start": 59.838,
+   "end": 59.99,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hit",
+   "start": 59.99,
+   "end": 60.196,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "me",
+   "start": 60.196,
+   "end": 60.348,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "If",
+   "start": 60.658,
+   "end": 60.805,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "they",
+   "start": 60.805,
+   "end": 61.005,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "have",
+   "start": 61.005,
+   "end": 61.206,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "to",
+   "start": 61.206,
+   "end": 61.353,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "dance",
+   "start": 61.353,
+   "end": 61.606,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "they",
+   "start": 61.976,
+   "end": 62.173,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "can",
+   "start": 62.173,
+   "end": 62.371,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "dance",
+   "start": 62.371,
+   "end": 62.621,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "me",
+   "start": 62.621,
+   "end": 62.766,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "there",
+   "start": 62.766,
+   "end": 62.964,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "I",
+   "start": 63.294,
+   "end": 63.442,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "squeezed",
+   "start": 63.442,
+   "end": 63.801,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "my",
+   "start": 63.801,
+   "end": 64.002,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "eyes",
+   "start": 64.002,
+   "end": 64.203,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "shut",
+   "start": 64.203,
+   "end": 64.404,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "because",
+   "start": 64.534,
+   "end": 64.849,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "you",
+   "start": 64.849,
+   "end": 65.001,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "never",
+   "start": 65.001,
+   "end": 65.262,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "look",
+   "start": 65.262,
+   "end": 65.469,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "a",
+   "start": 65.469,
+   "end": 65.621,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "dancer",
+   "start": 65.621,
+   "end": 65.937,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "in",
+   "start": 65.937,
+   "end": 66.089,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "the",
+   "start": 66.089,
+   "end": 66.241,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "eyes",
+   "start": 66.241,
+   "end": 66.448,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "and",
+   "start": 66.578,
+   "end": 66.757,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "dove",
+   "start": 66.757,
+   "end": 66.936,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "into",
+   "start": 66.936,
+   "end": 67.162,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "the",
+   "start": 67.162,
+   "end": 67.294,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "crowd",
+   "start": 67.294,
+   "end": 67.567,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "Goon",
+   "start": 67.877,
+   "end": 68.155,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "Squad!",
+   "start": 68.155,
+   "end": 68.58,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "The",
+   "start": 68.91,
+   "end": 69.063,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "whole",
+   "start": 69.063,
+   "end": 69.324,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 69.324,
+   "end": 69.586,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "passed",
+   "start": 69.586,
+   "end": 69.847,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "me",
+   "start": 69.847,
+   "end": 70.0,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "over",
+   "start": 70.0,
+   "end": 70.262,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "their",
+   "start": 70.262,
+   "end": 70.469,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "heads",
+   "start": 70.469,
+   "end": 70.73,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "right",
+   "start": 70.86,
+   "end": 71.124,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "to",
+   "start": 71.124,
+   "end": 71.278,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "the",
+   "start": 71.278,
+   "end": 71.432,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "clock",
+   "start": 71.432,
+   "end": 71.696,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "tower",
+   "start": 71.696,
+   "end": 71.959,
+   "beat": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "I",
+   "start": 72.289,
+   "end": 72.43,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "climbed",
+   "start": 72.43,
+   "end": 72.771,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "the",
+   "start": 72.771,
+   "end": 72.911,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "ladder",
+   "start": 72.911,
+   "end": 73.152,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "One",
+   "start": 73.462,
+   "end": 73.692,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "percent",
+   "start": 73.692,
+   "end": 74.103,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "left",
+   "start": 74.103,
+   "end": 74.394,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 74.704,
+   "end": 74.85,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "yanked",
+   "start": 74.85,
+   "end": 75.154,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 75.154,
+   "end": 75.3,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "plug",
+   "start": 75.3,
+   "end": 75.551,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "HUSS!",
+   "start": 75.866,
+   "end": 76.126,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 76.076,
+   "end": 76.336,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "HUSS!",
+   "start": 76.266,
+   "end": 76.526,
+   "beat": "b21",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 2
+  },
+  {
+   "text": "Everyone",
+   "start": 76.881,
+   "end": 77.331,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "flopped",
+   "start": 77.331,
+   "end": 77.666,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "like",
+   "start": 77.666,
+   "end": 77.943,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "noodles",
+   "start": 77.943,
+   "end": 78.335,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Then",
+   "start": 78.645,
+   "end": 78.845,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "they",
+   "start": 78.845,
+   "end": 79.044,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "cheered",
+   "start": 79.044,
+   "end": 79.349,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Top",
+   "start": 79.659,
+   "end": 79.883,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "ten",
+   "start": 79.883,
+   "end": 80.108,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "respect",
+   "start": 80.108,
+   "end": 80.569,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Then",
+   "start": 80.899,
+   "end": 81.098,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "the",
+   "start": 81.098,
+   "end": 81.245,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "sky",
+   "start": 81.245,
+   "end": 81.497,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "turned",
+   "start": 81.497,
+   "end": 81.748,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "purple",
+   "start": 81.748,
+   "end": 82.052,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "A",
+   "start": 82.362,
+   "end": 82.502,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "giant",
+   "start": 82.502,
+   "end": 82.891,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "spaceship",
+   "start": 82.891,
+   "end": 83.331,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "came",
+   "start": 83.331,
+   "end": 83.57,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "down",
+   "start": 83.57,
+   "end": 83.81,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "blasting",
+   "start": 83.94,
+   "end": 84.355,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 84.355,
+   "end": 84.504,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "remix",
+   "start": 84.504,
+   "end": 84.866,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "And",
+   "start": 85.176,
+   "end": 85.356,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "in",
+   "start": 85.356,
+   "end": 85.488,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "every",
+   "start": 85.488,
+   "end": 85.714,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "window",
+   "start": 85.714,
+   "end": 86.035,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "glowing",
+   "start": 86.165,
+   "end": 86.582,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "green",
+   "start": 86.582,
+   "end": 86.877,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "eyes",
+   "start": 86.877,
+   "end": 87.11,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "And",
+   "start": 87.44,
+   "end": 87.632,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "my",
+   "start": 87.632,
+   "end": 87.823,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "battery?",
+   "start": 87.823,
+   "end": 88.166,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Zero",
+   "start": 88.516,
+   "end": 88.89,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "percent",
+   "start": 88.89,
+   "end": 89.264,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  }
+ ],
+ "music": [
+  {
+   "t": 0.22,
+   "mode": "party"
+  },
+  {
+   "t": 9.316,
+   "mode": "none"
+  },
+  {
+   "t": 10.842,
+   "mode": "party"
+  },
+  {
+   "t": 15.373,
+   "mode": "lofi"
+  },
+  {
+   "t": 28.552,
+   "mode": "lofi"
+  },
+  {
+   "t": 32.294,
+   "mode": "night"
+  },
+  {
+   "t": 37.351,
+   "mode": "party"
+  },
+  {
+   "t": 47.191,
+   "mode": "muffled"
+  },
+  {
+   "t": 50.044,
+   "mode": "muffled"
+  },
+  {
+   "t": 56.442,
+   "mode": "muffled"
+  },
+  {
+   "t": 59.537,
+   "mode": "muffled"
+  },
+  {
+   "t": 63.199,
+   "mode": "party"
+  },
+  {
+   "t": 68.815,
+   "mode": "party"
+  },
+  {
+   "t": 75.786,
+   "mode": "none"
+  },
+  {
+   "t": 76.786,
+   "mode": "lofi"
+  },
+  {
+   "t": 80.804,
+   "mode": "party"
+  },
+  {
+   "t": 87.345,
+   "mode": "party"
+  }
+ ],
+ "markers": {
+  "bim": 10.937,
+  "green": 35.046,
+  "btw": 44.788,
+  "almost": 54.644,
+  "goon": 67.877,
+  "top10": 80.108,
+  "remix": 84.504,
+  "eyes": 86.877,
+  "zero": 88.516
+ },
+ "title": "In This Town \u2014 Battery 1%"
+}

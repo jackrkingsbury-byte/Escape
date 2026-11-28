@@ -1,0 +1,1224 @@
+{
+ "winner": 0,
+ "totals": [
+  85,
+  76.25,
+  80.25,
+  76.75
+ ],
+ "polished": {
+  "title": "In This Town \u2014 Bingo (60s)",
+  "logline": "Everybody Grandad's age parties every night. Grandad (74) stays home and trains for bingo, a game of pure luck, like it's the Olympics. At the Wednesday Bingo Final he dabs all 80 cards, the table, the pigeon and the mayor before the first number is even called. He earns a Top 10 respect ranking (the mayor removes his hat, then his hair), gets banned for life by a pigeon in a hat, and leaves the mayor a Dalmatian. So now he spends Wednesdays crowd-surfing.",
+  "narrator": "GRANDAD narrates in first person (cast id 'grandad': green cardigan, white grandpa hair, glasses, mustache, scale 0.97). He uses the same young, deadpan, sing-songy 'jinxy' narrator voice as ep1 (same TTS voice and youth processing). A kid's voice coming out of a 74-year-old is part of the joke, and two tags sell it in the first 3 seconds: 'AVERAGE AGE: 81' over the partying crowd, then 'ME (74)' on 'Except me.' In this episode speaker 'me' = grandad, so every 'me' HUSS beat is Grandad.",
+  "beats": [
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "In this town, everybody my age goes out partying.",
+    "visual": "Town at party_night. Crane down from street.camHigh toward street.crowdA. All 18 extras are restyled as SENIORS with a seniorSpecs() override: hair 'grandpa' #e8e8e8 or 'bald', 'cardigan'/'dress' tops in the usual bright colours, glasses/beard/mustache mixed in, and EVERYONE in a partyHat. They dance and dance2 under the string lights. One granny (hair 'bun' #e8e8e8, dress, glasses) crowd-surfs across the background on raised hands (crowdSurf). On-screen tag over the crowd: 'AVERAGE AGE: 81'."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Except me.",
+    "visual": "Hard cut to the outside of myHouse.window: slow push-in on the lit upstairs window, party lights flickering on the glass. Cut inside: buildRoom variant 'grandad', window 'party', lighting 'night'. Grandad sits at the desk (sit) and turns only his head to the lens (headYaw), neutral face. Name tag pops in beside him: 'ME (74)'."
+   },
+   {
+    "kind": "huss",
+    "speaker": "me",
+    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+    "n": 6,
+    "visual": "Same room, room.camClose. Grandad does sitSlam with params.hits on each HUSS, slamming a chunky red bingo dabber onto a bingo card on the desk, huss face. Every hit fires makeImpactBurst and leaves a fat BLACK ink dot on the card. Small camera kick per hit. Tag with an arrow: 'BINGO DABBER'."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Gerald's ninety-one. DJ name: Hip Replacement.",
+    "visual": "Foam street, foam 0.6, party_night, foam.cam. 'Gerald' (senior extra: beard, sunglasses, headphones round his neck, partyHat, cardigan) arm-pumps (dance2) behind simple DJ decks next to the existing speaker. Seniors bounce waist-deep in foam around him. Tag: 'DJ HIP REPLACEMENT (91)'."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "While they're out partying, by the way, I train for bingo.",
+    "visual": "Back in Grandad's room, room.cam. He sits at the desk (sitIdle) beside a tall stack of bingo cards, dabber in his right hand on the desk, determined face, staring dead into the lens. Party lights strobe in the window behind him. He never looks at them."
+   },
+   {
+    "kind": "quote",
+    "speaker": "narr",
+    "text": "\"A spoon is just a bowl that believes in itself.\" \u2014 a fork, jealous.",
+    "visual": "Insert on Grandad's desk under the lamp: a spoon prop and a fork prop stand upright side by side, and the fork slowly leans away from the spoon. QUOTE CARD drops in out of nowhere: cream card, big serif quote, small italic attribution. The music dips under the card."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "I count to ninety. In random order.",
+    "visual": "Room, lighting 'dawn', window 'sunrise' (the window shows the time of day, so no clock is needed). Grandad sits on the edge of the bed (room.bed, sit) in the think pose with the 'sleepy' face (eyes closed), meditating. Random numbers pop in and out around his head as on-screen text: '47\u2026 3\u2026 88\u2026 12\u2026 61\u2026'. Tag: '5:00 AM'."
+   },
+   {
+    "kind": "huss",
+    "speaker": "me",
+    "text": "HUSS! HUSS! HUSS!",
+    "n": 3,
+    "visual": "Training montage, one cut per HUSS (~0.22 s each). (1) Grandad stands at the desk and slams (standing) onto a card: huss face, impact burst. (2) The stack of finished cards is now taller than he is; he slams the top card, sweat face. (3) Outside on the windowsill, the pigeon in a tiny partyHat salutes with one wing (flap held at the top)."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "The cat napped on my card. He's a Dalmatian now.",
+    "visual": "Locked medium close-up on the desk. The cat sits in 'stare', its orange body covered in about 20 big BLACK dot decals (large enough to read at phone size), staring dead into the lens. Tag: 'DALMATIAN (now)'."
+   },
+   {
+    "kind": "quote",
+    "speaker": "cat",
+    "text": "Hiss.",
+    "visual": "Same locked shot. The cat does not move. Its mouth opens a tiny bit and a 'HISS.' caption appears. Hold one beat of silence. The mayor will repeat this framing and timing exactly later."
+   },
+   {
+    "kind": "quote",
+    "speaker": "narr",
+    "text": "\"Never trust a pigeon in a hat.\" \u2014 a pigeon in a hat.",
+    "visual": "The pigeon sits on Grandad's windowsill outside the glass (room.window), still in its tiny partyHat, staring in at him: idle, then a slow head tilt. QUOTE CARD drops in."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Then came the Bingo Final.",
+    "visual": "Town square, lighting dusk, square.cam1. The banner now reads 'SUMMER PARTY BINGO FINAL'. Bunting and balloons are up. Bleachers (square.standA/standB rows) are packed with seniors and party extras in party hats. On stage: a bingo cage on a stand and a mic stand. Tag: 'WEDNESDAY' (sets up the ending)."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Eighty cards. Even the pigeon laughed.",
+    "visual": "Grandad is already seated at square.chairA. The whole long table is covered in a pre-laid 8 x 10 grid of bingo cards, so nobody has to carry them. Tag: '80 CARDS'. The bleachers laugh (laugh pose) and the heckler points. Quick cut: the pigeon in its party hat, perched on the end of the table, flaps with a laugh face."
+   },
+   {
+    "kind": "quote",
+    "speaker": "mayor",
+    "text": "First number...",
+    "visual": "The mayor at the mic stand, one hand inside the bingo cage, smug face, mouth open mid-word (gold-outline mayor caption). Reverse shot: Grandad holds a dabber in his right hand and a spare in his left, determined face."
+   },
+   {
+    "kind": "huss",
+    "speaker": "me",
+    "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+    "n": 6,
+    "visual": "Three cuts, two hits each (sitSlam params.hits, right arm only; the left hand just holds the spare dabber). CUT 1 (hits 1-2): over the cards, huss face. Impact bursts ripple down the table, and the dot layers fill 40 cards per hit until all 80 are black-dotted. CUT 2 (hits 3-4): he dabs the bare wooden table (black dot on the wood), then the pigeon (one black dot on its chest; the pigeon makes its 'shocked' face). CUT 3 (hits 5-6): the mayor has leaned in to inspect (peer pose, which puts his face at table height). The camera is behind the mayor's head as the dabber slams down twice where his face is (impact bursts). His face is NOT shown, and his other hand is still in the cage."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Eighty bingos. Zero numbers.",
+    "visual": "Wide, square.cam2. The music cuts out. Every square on every card is dotted. Grandad sits back with a smug face and blows on his dabber tip like a gunslinger. The mayor has straightened up with his back to camera, frozen, ball never drawn. The crowd is stunned (stunned pose) and the heckler's party hat slowly tilts over. On-screen counter: 'BINGOS: 80 \u00b7 NUMBERS CALLED: 0'."
+   },
+   {
+    "kind": "quote",
+    "speaker": "narr",
+    "text": "\"Silence is applause on airplane mode.\" \u2014 my hearing aid.",
+    "visual": "QUOTE CARD over the dead-silent bleachers. Insert: Grandad taps a tiny beige hearing aid at his ear (think pose). On the word 'aid' the whole crowd erupts (cheer) and confetti bursts over the stage (makeConfetti)."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Top ten respectful moments. Number seven: the mayor removed his hat.",
+    "visual": "A RANKING CARD slides in: 'TOP 10 RESPECTFUL MOMENTS \u2014 #7'. The mayor is shot from 3/4 behind so his face stays hidden. He lifts off his top hat (topHat accessory off, hat prop in his right hand) and holds it to his chest (clap pose frozen with the hands together at chest height). The crowd goes reverently quiet."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Number one: his hair.",
+    "visual": "The card flips to '#1'. Same angle: the mayor lifts off his hair too (cut to mayor spec hair 'bald'; a brown toupee prop appears in his left hand) and holds hat and toupee together at his chest. His bald dome gleams in the dusk light. Hold one dead-serious beat."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Banned for life.",
+    "visual": "Close on the table. The pigeon (party hat, one black dot on its chest) glares at Grandad and does its 'huss' action (chest puffs, beak wide open) as a red rubber-stamp graphic 'BANNED FOR LIFE' slams onto the screen. Grandad shrugs with a smug face. This pays off 'never trust a pigeon in a hat': the pigeon laughed at him, then banned him."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "The mayor? Dalmatian now.",
+    "visual": "The mayor slowly turns to camera, bald, hat and toupee still held to his chest. His whole face and head are covered in about 15 big black dots (black on pale skin reads as a real Dalmatian at phone size). Tag: 'DALMATIAN (now)', in exactly the same style as the cat's tag."
+   },
+   {
+    "kind": "quote",
+    "speaker": "mayor",
+    "text": "Hiss.",
+    "visual": "Exactly the same framing and timing as the cat's hiss: a dead stare into the lens, the mouth opens a tiny bit, 'HISS.' caption. Hold."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Now I crowd-surf on Wednesdays.",
+    "visual": "Street at party_night with the string lights on. Grandad, in a party hat, crowd-surfs on the seniors' raised hands (crowdSurf) with a dabber in each fist and a calm, smug face. Tag: 'WEDNESDAY', which pays off the Bingo Final tag: bingo night is free now. Easter egg for returning viewers: this is the origin of ep1's 'My grandad crowd-surfs on Wednesdays'."
+   },
+   {
+    "kind": "huss",
+    "speaker": "town",
+    "text": "HUSS! HUSS! HUSS!",
+    "n": 3,
+    "visual": "The crowd bounces Grandad up on each HUSS, and each time he slams a dabber onto a party hat below him (a black dot appears on the hat). Party lights pulse on every hit. Huss face. He can't stop dabbing."
+   },
+   {
+    "kind": "line",
+    "speaker": "narr",
+    "text": "Bingo.",
+    "visual": "Mid-surf, Grandad turns his head to the lens with a wink face, reaches toward the camera and DABS IT. A black ink dot blooms from the centre of frame until it fills the whole screen, and that is the cut to black. The viewer is the last square."
+   }
+  ],
+  "quoteCards": [
+   "\"A spoon is just a bowl that believes in itself.\" \u2014 a fork, jealous",
+   "\"Never trust a pigeon in a hat.\" \u2014 a pigeon in a hat",
+   "\"Silence is applause on airplane mode.\" \u2014 my hearing aid"
+  ],
+  "newProps": [
+   "Bingo dabber: chunky red cylinder body, cap and rounded tip that prints BLACK ink. Grandad holds one in his right hand, plus a static spare in his left at the final. Each slam spawns a black dot decal.",
+   "Bingo cards: thin flat boxes with a canvas 5x5 number grid and a 'BINGO' header. Each card has a dot-decal canvas layer that fills in step by step (redraw only when the count changes).",
+   "Card stack for the room: stacked flat boxes, with the height set per shot (desk-high, then taller than Grandad).",
+   "80-card layout: an 8 x 10 grid of cards pre-laid across the square's long table. No carry animation is needed.",
+   "Black ink dot decals (flat black discs): on cards, one on the wooden table, one on the pigeon's chest, about 20 large ones on the orange cat, and about 15 on the mayor's face and bald head.",
+   "Spoon and fork props for the quote-card insert: thin box handles, a flattened-sphere spoon bowl, four thin box tines on the fork.",
+   "Bingo cage (a wire cube from thin boxes on a small stand) and a mic stand (cylinder pole + sphere head) on the stage.",
+   "DJ decks: a box with two flat discs, placed beside the existing speaker in the foam street.",
+   "Mayor hat-and-hair gag: the topHat accessory turns off and a hat prop appears in his right hand. For '#1' onwards the mayor's spec swaps hair 'short' to 'bald' and a brown toupee prop (flat rounded box) appears in his left hand. Hands to chest = 'clap' pose frozen with the hands together.",
+   "Tiny beige hearing aid: a small box at Grandad's ear.",
+   "Pigeon wears the existing partyHat accessory in every pigeon shot.",
+   "Senior crowd: a seniorSpecs() override on EXTRAS (hair 'grandpa' #e8e8e8 or 'bald', cardigans, glasses/beards/mustaches, all partyHat) applied in the street, foam and square sets.",
+   "Square banner text changed to 'SUMMER PARTY BINGO FINAL'.",
+   "On-screen overlays: three quote cards; a ranking card 'TOP 10 RESPECTFUL MOMENTS \u2014 #7' that flips to '#1'; a red 'BANNED FOR LIFE' rubber-stamp slam; tags 'AVERAGE AGE: 81', 'ME (74)', 'BINGO DABBER', 'DJ HIP REPLACEMENT (91)', '5:00 AM', 'DALMATIAN (now)' (used twice, identical style), 'WEDNESDAY' (used twice), '80 CARDS'; counter 'BINGOS: 80 \u00b7 NUMBERS CALLED: 0'; floating random numbers; a final black ink-dot iris that grows from the centre to full screen as the cut to black."
+  ],
+  "spokenWordCount": 126,
+  "whyItsFunny": "THE ENGINE: Bingo is pure luck, so a 74-year-old grinding for it at full HUSS intensity is already absurd. Each training beat pushes 'luck as a skill' one step further: counting to ninety in random order, then a cat turned 'Dalmatian' that only says 'Hiss.' (the user's literal 'hiss'). The two tags 'AVERAGE AGE: 81' and 'ME (74)' sell the kid's voice coming out of a mustached grandad within 3 seconds, so it plays as a joke, not confusion.\n\nFIXES TO THE JUDGES' NOTES:\n- 'Legs eleven' is gone. It is replaced by the mayor saying 'First number...', which anyone understands. The joke is that Grandad finishes before the number exists.\n- 'Eighty bingos. One number.' becomes 'Eighty bingos. Zero numbers.' The frenzy SHOWS how: every card, then the table, then the pigeon, then the mayor's face. So the counter, the ban and the reveal all explain themselves, and the impossibility now reads as the punchline.\n- The frenzy escalates (cards, table, pigeon, mayor), so it is more visual than ep1's chess slam. The ending adds crowd-surf dabbing and a fourth-wall lens dab.\n- Top 10 is now a visual laugh: #7 the mayor removes his hat (normal respect), #1 he removes his HAIR. A bald dome and a toupee held to his chest in dead-serious silence.\n- No 'dab' dance pun. Dabbing is only the literal bingo tool.\n- Dots are BLACK. The cat's dots read even with the tag, and on the mayor's pale skin they genuinely look like a Dalmatian.\n- The weakest quote (birth certificate) is replaced by the judges' favourite line, 'A spoon is just a bowl that believes in itself' \u2014 a fork, jealous (grafted from pitch 1). The silence quote is rewritten as 'applause on airplane mode', which teens recognise and which avoids repeating the 'X is just Y' shape.\n- The ending works without ep1. The biggest laugh is a callback inside this episode: the mayor turns to camera covered in dots, 'The mayor? Dalmatian now.', then he says 'Hiss.' in exactly the cat's framing. The 'WEDNESDAY' tag planted at the Bingo Final pays off when the ban frees up his Wednesdays, and 'Except me' flips to him finally being the one at the party. 'Bingo.' as he dabs the lens is the button: the viewer is the last square. For returning viewers, it is also the origin of 'My grandad crowd-surfs on Wednesdays'.\n- 'Never trust a pigeon in a hat' pays off without words: the same pigeon in a hat laughs at him, gets dabbed, then puffs up as the ban stamp lands.\n\nTIMING: 126 spoken words, 4 huss beats, 18 HUSSes. Measured on ep1's real timeline, a 6-HUSS takes 1.64 s and a 3-HUSS 0.66 s, so the HUSSes total about 4.6 s. Ep1 fit 127 words, 27 HUSSes (6.9 s) and 27 beats into 60.2 s. This script has 9 fewer HUSSes and 2 fewer beats, which leaves about 2-3 s for the three quote-card holds and the two 'Hiss.' holds, so it lands around 58-60 s.\n\nPRODUCTION NOTES:\n- Right arm only (sitSlam/slam with params.hits); the second dabber is just held, so no mirrored left-arm slam is needed.\n- No carry: the 80 cards are pre-laid on the table.\n- No clock through the window: window 'sunrise' plus a '5:00 AM' tag.\n- No flying glasses.\n- The mayor's face stays hidden (shot from behind or 3/4 behind) from the frenzy until the reveal. 'Peer' puts his face at table height so the downward slam works.\n- Hat to chest is the 'clap' pose frozen.\n- The toupee is a spec hair swap to 'bald' on a cut plus a prop.\n- One seniorSpecs() override covers the street, foam and square sets.\n- Montage: 3 inserts of about 0.22 s. Frenzy: 3 cuts with 2 hits each."
+ },
+ "pitches": [
+  {
+   "title": "In This Town \u2014 Bingo (60s)",
+   "logline": "Everybody Grandad's age parties every night. Grandad stays home and trains for bingo, a game of pure luck, like it's the Olympics. He gets eighty bingos off one number, earns a respect ranking that the pigeon tops, and is banned for life for dabbing the mayor. That ban is why he crowd-surfs on Wednesdays.",
+   "narrator": "GRANDAD (cast id 'grandad': green cardigan, white grandpa hair, glasses, mustache) narrates in first person. He uses the same young, deadpan, sing-songy 'jinxy' narrator voice as ep1, and a kid's voice coming out of a 70-something man is part of the joke. In this episode speaker 'me' = grandad, so all 'me' HUSS beats are Grandad.",
+   "beats": [
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "In this town, everybody my age goes out partying.",
+     "visual": "Town at party_night, crane down the string-lit street (street.camHigh). The dancing crowd is restyled as SENIORS: extras with white grandpa hair, cardigans, glasses, beards and mustaches, all in party hats, doing dance and dance2. One granny crowd-surfs past in the background."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Except me.",
+     "visual": "Push in on an upstairs house window (house window anchor). Inside, Grandad sits at his desk in the 'grandad' room variant and turns to camera with a neutral face. Party lights flicker on the glass."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "n": 6,
+     "visual": "Interior: grandad room, window 'party', lighting 'night'. Grandad slams a fat red BINGO DABBER onto a bingo card (sitSlam, hits synced to each HUSS) with the huss face. A red dot appears on each hit and his glasses bounce. Small on-screen tag: 'BINGO DABBER'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Gerald's ninety-one. His DJ name is Hip Replacement.",
+     "visual": "Foam street, foam at 0.6. A senior extra (beard, sunglasses, headphones, party hat) arm-pumps (dance2) behind a speaker and simple DJ decks while seniors bounce in the foam. On-screen tag: 'DJ HIP REPLACEMENT (91)'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "While they're out partying, by the way, I train for bingo.",
+     "visual": "Back in Grandad's room. He sits at the desk beside a tall stack of bingo cards with the dabber in hand and stares at camera with a determined face. Party lights strobe in the window behind him. He does not look at them."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"I've been young. It's overrated.\" \u2014 my birth certificate.",
+     "visual": "QUOTE CARD drops in out of nowhere over a still of Grandad in his room (sit, smug face): big serif quote and a small attribution line. The music dips for the card."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Every morning, I count to ninety. In random order.",
+     "visual": "Room lighting 'dawn'. Grandad sits on the bed with his eyes closed (think pose), meditating. Random numbers pop around his head as on-screen text: '47\u2026 3\u2026 88\u2026 12\u2026 61\u2026'. The clock tower outside the window reads 5:00."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "text": "HUSS! HUSS! HUSS!",
+     "n": 3,
+     "visual": "Extreme close-up: the dabber slams the card three times (impact bursts), leaving red dots in a perfect diagonal. Then a quick cut to Grandad's huss face."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "The cat napped on my card. He's a Dalmatian now.",
+     "visual": "The cat sits on the desk in 'stare', covered head to tail in red dabber dots (flat red disc decals on the orange tabby). It stares dead into the lens. On-screen tag: 'DALMATIAN (now)'."
+    },
+    {
+     "kind": "quote",
+     "speaker": "cat",
+     "text": "Hiss.",
+     "visual": "Same shot. The cat does not move. Its mouth opens a tiny bit and a 'HISS.' caption appears. Hold for one beat."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Never trust a pigeon in a hat.\" \u2014 a pigeon in a hat.",
+     "visual": "QUOTE CARD over a shot of the pigeon on Grandad's windowsill wearing a tiny party hat and staring in through the glass (idle, then a slow head tilt)."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "n": 6,
+     "visual": "Training montage, one cut per HUSS: Grandad dabs with both hands (slam, standing), the card stack grows past his head, the clock tower hands spin, the party window flashes, the pigeon salutes with a wing (flap), and Grandad dabs again, sweat face, glasses askew."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Then came the Bingo Final.",
+     "visual": "Town square at dusk. The big banner now reads 'SUMMER PARTY BINGO FINAL'. Bunting and balloons are up. Bleachers are packed with the party crowd in party hats, and the pigeon sits on the end of the long stage table."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I brought eighty cards. Even the pigeon laughed.",
+     "visual": "Grandad walks onstage carrying a wobbly tower of 80 bingo cards up to his eyebrows and thunks it onto the long table. The crowd laughs (laugh pose) and the heckler points. Cut to the pigeon flapping with a laugh face."
+    },
+    {
+     "kind": "quote",
+     "speaker": "mayor",
+     "text": "Legs eleven.",
+     "visual": "The mayor stands at a mic stand on the stage holding a bingo ball printed '11' up to the crowd with a smug face. Grandad's cards are fanned across the whole table. Grandad holds a dabber in each hand, determined face."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "n": 6,
+     "visual": "Grandad seated, sitSlam at triple speed, both dabbers alternating, huss face. Impact bursts ripple down the table and red dots spread across all 80 cards. His glasses fly up and land back on his nose. The crowd's laughs freeze mid-laugh."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Eighty bingos. One number.",
+     "visual": "Wide shot: every card is fully dotted. Grandad sits back with a smug face and blows on a dabber. The music stops. The crowd is stunned (stunned pose) and the heckler's party hat slowly droops. On-screen counter: '80/80'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Top ten respectful moments. Number seven: the mayor removed his hat.",
+     "visual": "A RANKING CARD slides in: 'TOP 10 RESPECTFUL MOMENTS \u2014 #7'. The mayor slowly lifts off his top hat (topHat accessory off, hat prop in hand) and holds it to his chest. Plant: ONE small red dab dot is visible on his forehead."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Number one: so did the pigeon.",
+     "visual": "The ranking card flips to '#1'. On the table, the pigeon (the one that laughed) takes off its tiny party hat (partyHat off, tiny hat prop under one wing) and bows its head. Hold for one dead-serious beat."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Silence is just applause that's thinking.\" \u2014 my hearing aid.",
+     "visual": "QUOTE CARD over the dead-silent bleachers. Grandad taps the tiny beige hearing aid at his ear (think pose). On the last word the whole crowd erupts into a cheer and confetti bursts over the stage."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Banned for life. Apparently, you can't dab the mayor.",
+     "visual": "Hard cut out of the celebration. The mayor turns to camera and his whole face is covered in red dab dots (a dozen red disc decals). Grandad stands beside him and shrugs with a smug face. A red rubber-stamp card slams on screen: 'BANNED FOR LIFE'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Now I crowd-surf on Wednesdays.",
+     "visual": "Street at party_night with the string lights on. Grandad crowd-surfs (crowdSurf, carried on the dancing crowd's raised hands) with a dabber in each fist and a calm face. On-screen tag: 'WEDNESDAY'. Callback to ep1's line 'My grandad crowd-surfs on Wednesdays'."
+    },
+    {
+     "kind": "huss",
+     "speaker": "town",
+     "text": "HUSS! HUSS! HUSS!",
+     "n": 3,
+     "visual": "The crowd bounces Grandad up on each HUSS and he slams both dabbers into the air in sync, huss face, party lights pulsing on every hit."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Bingo.",
+     "visual": "Mid-surf, Grandad turns his head to camera with a wink, reaches toward the lens and DABS IT. A huge red dot splats over the whole screen, then cut to black."
+    }
+   ],
+   "quoteCards": [
+    "\"I've been young. It's overrated.\" \u2014 my birth certificate",
+    "\"Never trust a pigeon in a hat.\" \u2014 a pigeon in a hat",
+    "\"Silence is just applause that's thinking.\" \u2014 my hearing aid"
+   ],
+   "newProps": [
+    "Bingo dabber: red cylinder body, cap and rounded tip. Grandad holds one, later two. Each slam leaves a red dot decal.",
+    "Bingo cards: thin flat boxes with a canvas number-grid texture and a red-dot decal layer that fills in step by step.",
+    "Wobbly tower of 80 bingo cards: stacked flat boxes, carried and then fanned across the long stage table.",
+    "Bingo ball printed '11': a sphere with a canvas number. An optional bingo cage can be built as a wire cube from thin boxes.",
+    "Mic stand for the mayor: a cylinder pole with a sphere head.",
+    "DJ decks: a box with two flat discs, placed beside the existing speaker in the foam street.",
+    "Red dot decals (small flat discs) for the spotty 'Dalmatian' cat and the mayor's dotted face (one dot first, then a dozen).",
+    "Hand-held top hat and tiny party hat props for the two hat removals (accessory off, prop moves to hand or wing).",
+    "Tiny beige hearing aid: a small box at Grandad's ear.",
+    "Square banner text changed to 'SUMMER PARTY BINGO FINAL'.",
+    "Senior party crowd: restyled extra specs with grandpa hair #e8e8e8 or bald, cardigans, glasses, beards and mustaches, all in party hats.",
+    "On-screen overlay cards: three quote cards; ranking card 'TOP 10 RESPECTFUL MOMENTS \u2014 #7' that flips to '#1'; 'BANNED FOR LIFE' rubber stamp; tags 'BINGO DABBER', 'DJ HIP REPLACEMENT (91)', 'DALMATIAN (now)', 'WEDNESDAY'; '80/80' counter; floating random numbers; final full-screen red lens splat."
+   ],
+   "spokenWordCount": 132,
+   "whyItsFunny": "The base joke is that bingo is pure luck, so a man grinding for it at full intensity with HUSS dab-slams is already absurd. The 'grandad' room variant and the sitSlam action make it easy to film. Each training beat pushes the 'luck as a skill' logic one step further: counting to ninety in random order, then the cat turned into a 'Dalmatian' that just says 'Hiss.' (a nod to the 'hiss' in the request). The payoff is a feat that can't happen, eighty bingos off one number. The 'Top ten respectful moments' bit has an extra layer. The mayor's hat removal ranks only #7, and #1 goes to the same pigeon that laughed at him, which also quietly answers the earlier quote 'Never trust a pigeon in a hat' (no hat, so now you can trust it). The three quotes drop in at random but still fit loosely: an old man who skips parties, the pigeon in a hat, and a silent crowd. The single red dot planted on the mayor's forehead pays off in the twist: banned for life for dabbing the mayor. The final line reveals the backstory behind ep1's throwaway line 'My grandad crowd-surfs on Wednesdays', so it pays off for returning viewers. The last gag, Grandad dabbing the camera lens on 'Bingo.', gives a clean, quotable ending. On top of all this, a kid's deadpan sing-song voice is coming out of a mustached old man in a cardigan."
+  },
+  {
+   "title": "In This Town \u2014 Pigeon for Mayor (60s)",
+   "logline": "The mayor's pigeon skips his own birthday conga to grind the one thing nobody in a party town bothers with: campaigning. He knocks on 400 empty doors and rehearses his speech ten thousand times. He wins the Summer Party Election with a single \"Coo.\" and bans parties. Then he realises too late that no parties means no crumbs, so now he's the only one in town still partying.",
+   "narrator": "THE PIGEON (cast id 'pigeon'), the mayor's pigeon from ep1. In ep1 the town threw him a birthday party and he ended up beating the chess kid. He's a grey-blue blocky pigeon with an iridescent green/purple neck band and an orange eye. He wears no accessories until he inherits the mayor's human-size top hat, which swallows him so only his feet show. Voice: young, deadpan, sing-songy (the \"jinxy\" narrator voice the user asked for). He stays completely flat, even on \"Coo.\" and the quote cards. Narration beats are speaker 'narr' in his voice. When he speaks or HUSSes on screen, the speaker is 'pigeon'.",
+   "beats": [
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "In this town, everybody parties. Even the pigeons.",
+     "visual": "TOWN, party_night, fireworks on. Crane down from street.camHigh along the string-lit main street: dancing crowd of party extras in party hats (dance/dance2), Marcus and Brenda dancing, Grandad crowdSurfing on hands. On 'Even the pigeons': cut to a lamp-post top where three party-hat pigeons strut-bob to the beat."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Except me.",
+     "visual": "Camera slides to the NEXT lamp post: OUR pigeon alone, no hat, face 'determined'. He turns his head slowly to camera. Music ducks."
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "speaker": "pigeon",
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Pigeon 'huss' action on the lamp post as two tight triplets: chest puffs up and beak opens wide on every HUSS, with a small camera shake per hit. Partygoers below glance up, confused."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "They did a conga at my birthday. Without me.",
+     "visual": "BACKYARD POOL, party_night: a conga line of 6 party-hat pigeons struts in a loop around a pigeon-sized birthday cake (makeCake, flickering candles) under a mini banner 'HAPPY BIRTHDAY PIGEON'. Humans clap along. On 'Without me.': cut to the PARK stone table (quiet_night) where our pigeon sits alone, face 'determined', with the party's coloured glow behind the trees."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I'm running for mayor.",
+     "visual": "Same park, slow push-in. A hand-painted 'VOTE PIGEON' yard sign scale-pops up beside him on the stone table. Pigeon turns to camera, face 'smug'."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "'A spoon is just a bowl that believes in itself.' \u2014 a fork, jealous.",
+     "visual": "Hard cut to a QUOTE CARD: cream paper, giant curly quote marks, serif italic text, attribution in small caps '\u2014 a fork, jealous'. A tiny doodled fork with angry eyebrows sits in the corner. The pigeon nods slowly at bottom-left of frame. Soft 'ding' when the card lands."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "While they're out partying, by the way, I'm knocking on their doors.",
+     "visual": "TOWN, party_night, a residential street (house fronts / myHouse.door). All windows are dark and the party glow and music are faint at street.farEnd. Pigeon on a doorstep does 'knock' (wing swipe) on a big front door. The door does not open. Deadpan."
+    },
+    {
+     "kind": "huss",
+     "n": 6,
+     "speaker": "pigeon",
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Whip-cut montage, one cut per HUSS: pigeon 'knock'-swipes six different doors (house.N fronts) and none open. On-screen counter 'DOORS: 1 \u2026 400'. The last door has a knob-hanger sign 'BACK AFTER THE PARTY'."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "'He who honks first, honks loudest.' \u2014 a goose, under oath.",
+     "visual": "Same QUOTE CARD template: 'He who honks first, honks loudest.' / '\u2014 a goose, under oath'. A tiny doodled gavel stamps the card on 'under oath'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I rehearsed my speech ten thousand times.",
+     "visual": "INTERIOR BEDROOM (night lighting, window 'party' flickering). Pigeon stands on the desk under the desk lamp in front of a tiny desk microphone. A sticky note covered in tally marks is stuck to the lamp. The cat lies on the bed in 'loaf', unimpressed."
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "speaker": "pigeon",
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Pigeon 'huss' into the tiny mic three times. Chest puffs, the desk lamp wobbles, and a flip counter on the desk ticks 9,998 \u2192 9,999 \u2192 10,000. The cat switches to 'stare'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Then came Election Day.",
+     "visual": "TOWN SQUARE, dusk. The big banner over the stage now reads 'SUMMER PARTY ELECTION'. Bleachers are packed with party extras in party hats, with balloons and bunting. Wide on square.cam1, slow push."
+    },
+    {
+     "kind": "quote",
+     "speaker": "mayor",
+     "text": "PARTY!",
+     "visual": "Mayor at a tall stage mic stand, top hat on, both arms up ('cheer'). Confetti cannons burst (makeConfetti) and the whole crowd cheers. Grandad gets lifted into a mini crowd-surf."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "My speech:",
+     "visual": "Pigeon hops onto a stack of three books in front of the mic stand, with the mic still way above him. An extra lowers the mic to beak height. The crowd settles. Close on pigeon, face 'determined'."
+    },
+    {
+     "kind": "quote",
+     "speaker": "pigeon",
+     "text": "Coo.",
+     "visual": "Extreme close-up: pigeon leans into the mic and opens his beak a little. One flat 'Coo.' Small mic-feedback squeak SFX."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Silence. A balloon fainted.",
+     "visual": "Wide: music cuts. Every crowd member goes 'stunned' with face 'shocked'. On stage, one balloon (makeBalloon) slowly loses height, wobbles, and flops onto the stage floor. Cricket SFX."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Top ten most respectful moments.",
+     "visual": "RANKING CARD slides in from the right in bold red/gold countdown style: 'TOP 10 MOST RESPECTFUL MOMENTS'. Below it, the mayor (still 'stunned') slowly lowers his head."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Number seven: the mayor gave me his hat.",
+     "visual": "Card stamps '#7'. Cut: mayor now hatless (topHat accessory off) holds out a human-size top-hat prop and gently lowers it onto the pigeon. The hat swallows him completely, leaving only two little orange feet sticking out. Crowd starts a slow 'clap'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Numbers one to six? Also me.",
+     "visual": "Ranking card rapid-flips #6 \u2192 #1. Each slot shows a polaroid of the pigeon doing something mundane: standing, pecking, sitting on a bench, mid-blink, a blurry photo, the back of his head. Under the hat, the feet tap smugly."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I won. The cat voted for himself.",
+     "visual": "The square's scoreboard sign flips to 'PIGEON 1,203 \u00b7 MAYOR 0 \u00b7 CAT 1' and confetti falls. Cut to the cat sitting alone in an empty bleacher row with a tiny rosette, 'stare' dead into camera."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "First law: no more parties.",
+     "visual": "Pigeon at the mic with the top hat tipped back just enough to show one 'smug' eye. The banner flips to 'NO MORE PARTIES'. Crowd faces go 'shocked' and a party hat slides off Marcus's head in slow-mo. Lighting drops from dusk to quiet_night."
+    },
+    {
+     "kind": "huss",
+     "n": 3,
+     "speaker": "town",
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "TOWN, quiet_night, partyProps off (string lights dark). Every front house window is lit cool white with someone grinding inside, all pumping on each HUSS: Grandad lifting a dumbbell, Brenda karate-chopping ('slam'), Marcus slamming with headphones on, the hatless mayor curling a dumbbell with face 'huss'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "No parties means no crumbs.",
+     "visual": "The big top hat (feet only) struts down the empty, spotless street. It stops and tilts, the pigeon's beak pokes out, and he pecks a clean paving stone: nothing. Face 'sweat'."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "'The moon is just a big crumb.' \u2014 me, hungry.",
+     "visual": "Pigeon peeks out under the hat brim and stares up at the big moon over the clock tower, with a slow push onto the moon. QUOTE CARD (same template): 'The moon is just a big crumb.' / '\u2014 me, hungry'. His beak slowly opens toward the moon."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Now in this town, everybody grinds.",
+     "visual": "Crane up over the quiet_night town: every window glowing with a grinder inside, no music. It mirrors the opening crane shot."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Except me.",
+     "visual": "Crane down to a single lamp-post pool of light in the empty street: the giant top hat, with a tiny party hat stuck on top, bounces to a pigeon-sized party speaker (makeSpeaker) next to the birthday cake (makeCake, candles lit). Crumbs everywhere and one sad little confetti puff. Tinny party music returns."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Don't tell the mayor.",
+     "visual": "The hat lifts an inch and the pigeon peeks out with face 'wink' and a cake crumb on his beak. The hat drops back down and keeps bouncing to the beat. Smash to black / end card."
+    }
+   ],
+   "quoteCards": [
+    "\"A spoon is just a bowl that believes in itself.\" \u2014 a fork, jealous",
+    "\"He who honks first, honks loudest.\" \u2014 a goose, under oath",
+    "\"The moon is just a big crumb.\" \u2014 me, hungry"
+   ],
+   "newProps": [
+    "Detachable human-size TOP HAT prop (mayor's hat; toggle mayor topHat accessory off when it's in hand). Placed on the pigeon it covers him completely except his feet. Can carry a tiny party hat on top.",
+    "'VOTE PIGEON' yard sign on a stake (box + canvas text), scale-pop in",
+    "Tiny desk microphone (cylinders) for the bedroom rehearsal + tall stage mic stand on the square",
+    "Stack of 3 books (boxes) as the pigeon's step at the stage mic",
+    "Sticky note with tally marks + desk flip counter (canvas: 9,998 \u2192 9,999 \u2192 10,000)",
+    "Door-knob hanger sign 'BACK AFTER THE PARTY'",
+    "Mini banner 'HAPPY BIRTHDAY PIGEON' for the pigeon-sized party (uses existing makeCake)",
+    "Election scoreboard: reuse the square's '\u265e vs \u265a' sign with new canvas text 'PIGEON 1,203 \u00b7 MAYOR 0 \u00b7 CAT 1'",
+    "Tiny rosette on the cat (flat disc + ribbon boxes)",
+    "Dumbbell (box/cylinder) for the window grinders (Grandad, mayor)",
+    "Square banner text swaps: 'SUMMER PARTY ELECTION' \u2192 'NO MORE PARTIES' (existing banner, new canvas text)",
+    "Fainting balloon: existing makeBalloon animated sinking, wobbling and flopping onto the stage",
+    "Extra pigeon instances (makeCreature('pigeon') \u00d76) wearing party hats for the conga and the lamp-post bobbers",
+    "2D overlays: QUOTE CARD template (cream card, big curly quotes, serif italic, small-caps attribution, tiny doodle slot for the angry fork / gavel); TOP-10 RANKING CARD (red/gold) with '#7' stamp and a rapid flip-through of #6\u2013#1 pigeon polaroids; on-screen 'DOORS: 1 \u2026 400' counter"
+   ],
+   "spokenWordCount": 134,
+   "whyItsFunny": "1) The opener hides a reveal. \"Everybody parties. Even the pigeons. ... Except me.\" Then the camera lands on a pigeon, so the narrator turns out to be the pigeon. 2) It's a bird's-eye version of the format. The most pointless thing a pigeon could grind is a political campaign. The catchphrase also does real story work: \"While they're out partying, by the way, I'm knocking on their doors\" is exactly why 400 doors never open. 3) The setup pays off cleanly: \"ten thousand rehearsals\" becomes one flat \"Coo.\" Then \"Silence. A balloon fainted.\" swaps the standard \"crowd went silent\" for an absurd image. 4) The Top 10 bit lands as a joke, not a list. The mayor giving up his hat is only #7, and \"Numbers one to six? Also me.\" flips through polaroids of the pigeon doing nothing. The hat swallowing him whole is a visual gag that runs to the end. 5) It calls back to ep1 several times: the town threw \"a birthday party for the mayor's pigeon\", the mayor, the cat (who now votes for himself), and the pigeon who \"was winning\". 6) The twist uses bird logic and flips the format. The grinder wins and bans parties, which kills his own food supply: no parties, no crumbs. So the closing mirrors the opening: \"Now in this town, everybody grinds. Except me.\" He's the only one partying, with a cake for crumbs, and says \"Don't tell the mayor\" while he is the mayor. 7) Each quote card is a random non-sequitur that still loosely fits where it drops. A spoon \"believing in itself\" is the underdog campaign. The goose \"under oath\" fits speeches and loudness. \"The moon is just a big crumb\" lands on the hunger twist. The attributions (a jealous fork, a goose under oath, \"me, hungry\") each carry a second joke."
+  },
+  {
+   "title": "In This Town \u2014 Don't Blink (60s)",
+   "logline": "Everybody in town parties every night except one wide-eyed kid who trains to never blink. She beats the undefeated town cat at the Summer Party Staring Contest, then blinks in the victory photo, and that photo becomes her statue.",
+   "narrator": "IVY, a new kid who plays 'me' this episode. Look: small (scale 0.85), spiky lilac hair (#b48cff), mint hoodie (#3ee0c8) with a big white EYE emblem (new emblem), yellow shorts, red shoes, round 'glasses'. Her face stays on 'shocked' round eyes with blinking turned OFF for the whole episode until the photo beat. Voice: the young, deadpan, sing-songy 'jinxy' narrator. Flat and slightly creepy-cute, with a little upward lilt on the last word of each line. She never sounds impressed with herself.",
+   "beats": [
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "In this town, everybody goes out partying.",
+     "visual": "Town, party_night. Crane shot from street.camHigh down main street: string lights zig-zag, ~18 extras in party hats dancing (dance / dance2), fireworks on."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Except me.",
+     "visual": "Push into myHouse.window. Ivy sits at her desk (hero room, window = 'party') and stares straight down the lens. Eyes huge and perfectly still. No blink."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Close-up of Ivy. New face 'hussWide': eyes stay WIDE open (the opposite of the normal squeezed huss face) with the mouth shouting. Three tight head-snaps toward camera."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Pool parties. Foam parties. A retirement party for a traffic cone.",
+     "visual": "Quick cuts: pool party (pool.cam), foam street (foam 0.8), then a sidewalk where an orange traffic cone wears a party hat beside a small cake and a 'HAPPY RETIREMENT' sign. Two extras hug it (sad faces), one claps."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "But not me. I practice not blinking.",
+     "visual": "Hero room, night. Ivy kneels nose-to-nose with the cat on the rug. Cat in 'stare'. Neither moves. Slow push-in."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Grind montage on the beats: mini-dumbbell curls (slam-pose arm pumps) with her eyes locked on camera; staring at the desk lamp; staring at the ceiling from bed. Face 'hussWide' every hit, never blinking."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"A fish has no eyelids. Be the fish.\" The fish.",
+     "visual": "QUOTE CARD drops over a tight shot of Ivy's eyes: \"A fish has no eyelids. Be the fish.\" \u2014 the fish. A new FISH poster hangs on her wall behind her."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I stare at toasters until they pop. Out of fear.",
+     "visual": "Ivy at the desk, chin on hands, staring down a blocky toaster. A sweat drop (makeSweatDrop) appears on the toaster, then a toast slice shoots straight up. Ivy doesn't flinch."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "While they're out partying, by the way, I'm staring at a wall.",
+     "visual": "Deadpan wide shot: Ivy stands 10 cm from the bedroom wall, perfectly still. Party lights flicker in the window beside her."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "It cracked first.",
+     "visual": "Insert shot: a zig-zag crack decal grows across the wall with a small crunch SFX. Ivy, unmoved, gives a tiny nod (smug)."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Ivy turns to camera, 'hussWide', three snaps. The crack spreads a bit further with each HUSS."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Blinking is a nap for cowards.\" Grandad, mid-nap.",
+     "visual": "Cut to the pool party: grandad fast asleep in a deck chair in a party hat (face 'sleepy', gentle snore bob). QUOTE CARD: \"Blinking is a nap for cowards.\" \u2014 Grandad, mid-nap."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Then came the Summer Party Staring Contest.",
+     "visual": "Town square, dusk. Banner text changed to SUMMER PARTY STARING CONTEST. Bleachers full of party hats, balloons and bunting. The scoreboard sign reads BLINKS 0 \u2013 0."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "My opponent? The town cat. Nine lives. Zero blinks.",
+     "visual": "The cat sits on a velvet cushion on the stage table at square.chairB with a tiny gold medal, in 'stare'. Ivy sits at square.chairA. Hard two-shot. Easter egg: in the bleachers, the ep1 chess kid plays chess against the pigeon."
+    },
+    {
+     "kind": "huss",
+     "speaker": "me",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Western-style alternating extreme close-ups: Ivy's wide eyes ('hussWide') vs the cat's eyes, cutting faster on each HUSS. The crowd leans in (peer)."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Four hours. The DJ fell asleep.",
+     "visual": "Clock tower hands spin (time-lapse) while the lighting slides from dusk to party_night. Crowd faces go 'sleepy'. The DJ (extra in headphones) slumps face-down on the speaker and the music cuts out. Ivy and the cat haven't moved."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Eyes are windows. Never close a window.\" A burglar.",
+     "visual": "QUOTE CARD over the stalemate: \"Eyes are windows. Never close a window.\" \u2014 a burglar. In the bleachers, an extra in a black-and-white striped tee with a sack gives a friendly wave."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Then the cat blinked.",
+     "visual": "Slow-mo extreme close-up: the cat's eyes close ('sleepy') for half a second. Total silence. Crowd faces 'shocked'. Scoreboard flips to BLINKS 0 \u2013 1. Confetti bursts and the crowd cheers."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Top ten most respectful moments. Number seven:",
+     "visual": "RANKING CARD slams in: TOP 10 MOST RESPECTFUL MOMENTS, with a giant #7. The bleachers are blurred behind it."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "The pigeon removed his hat.",
+     "visual": "In the bleachers the pigeon solemnly takes off his party hat (setAccessory off) and holds it to his chest with one wing. Choir-sting SFX."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "One to six? Also the pigeon.",
+     "visual": "The ranking card rapid-flips #6 #5 #4 #3 #2 #1, each card the same pigeon doing something mildly polite: bowing, holding a door, clapping, taking off his hat again, waving, sitting very nicely."
+    },
+    {
+     "kind": "quote",
+     "speaker": "mayor",
+     "text": "Say cheese!",
+     "visual": "Dialogue caption, not a quote card. On stage the mayor hands Ivy a trophy with an eyeball topper, then raises a big blocky camera."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I blinked.",
+     "visual": "White camera FLASH, then a freeze-frame polaroid: everyone smiling perfectly, Ivy holding the trophy with her eyes CLOSED (first blink of the episode, face 'sleepy'). Record-scratch."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "They built me a statue. Eyes closed.",
+     "visual": "Town square, day. A grey stone statue of Ivy on a pedestal holds the trophy, eyes shut. Plaque reads NEVER BLINKED. Real Ivy stands beside it, arms crossed, eyes wide, deadpan. The pigeon lands on the statue's head and respectfully takes off his hat. End."
+    }
+   ],
+   "quoteCards": [
+    "\"A fish has no eyelids. Be the fish.\" \u2014 the fish",
+    "\"Blinking is a nap for cowards.\" \u2014 Grandad, mid-nap",
+    "\"Eyes are windows. Never close a window.\" \u2014 a burglar",
+    "RANKING CARD: TOP 10 MOST RESPECTFUL MOMENTS \u2014 #7: The pigeon removed his hat. (then rapid flip #6 to #1: all the pigeon)"
+   ],
+   "newProps": [
+    "Ivy character spec (scale 0.85, spiky lilac hair, mint hoodie, yellow shorts, red shoes, glasses) + new 'eye' chest emblem",
+    "Face variant 'hussWide': round wide-open eyes + shouting mouth; plus a per-character blink-disable flag",
+    "Traffic cone (orange cone + white stripe) wearing a party hat, with a 'HAPPY RETIREMENT' sign",
+    "Blocky toaster + toast slice that pops up",
+    "Mini dumbbells (box + cylinders)",
+    "Wall crack decal that grows (canvas texture or thin dark boxes)",
+    "Fish poster for the hero-room poster slot",
+    "Velvet cushion + tiny gold medal for the cat",
+    "Square banner text: SUMMER PARTY STARING CONTEST; scoreboard text BLINKS 0 \u2013 0 / 0 \u2013 1",
+    "Trophy with an eyeball topper",
+    "Mayor's big blocky camera + white flash frame + polaroid freeze-frame overlay",
+    "Stone statue of Ivy (character clone in grey stone material, face 'sleepy') on a box pedestal with a NEVER BLINKED plaque",
+    "Burglar extra: black-and-white striped tee + sack prop",
+    "Quote card overlay + TOP 10 ranking card overlay with rapid-flip #6 to #1 pigeon stills"
+   ],
+   "spokenWordCount": 134,
+   "whyItsFunny": "The skill is absurd but very simple: not blinking. That gives the grind deadpan gags that cost almost nothing to animate (out-staring a toaster, a wall that cracks first). The HUSS face is flipped from eyes squeezed to eyes wide, so even the grind sound becomes a joke. The three quotes drop in out of nowhere, and each attribution is the punchline: the fish quoting itself, Grandad saying it while asleep, and a burglar with an obvious reason to want windows open. The Top 10 bit is a reversal. The narrator builds it up as a solemn countdown, number seven is just a pigeon taking his hat off, and then numbers one to six are also the pigeon. The twist is that after a year of training she loses to one ordinary 'Say cheese!' She blinks for the first time in the one photo that matters, and the town turns it into a statue with a NEVER BLINKED plaque. The pigeon taking his hat off on the statue's head closes the episode by calling back the respect gag."
+  },
+  {
+   "title": "In This Town \u2014 Freeze Dance (60s)",
+   "logline": "In a town that never stops dancing, Brenda secretly trains for the Summer Party Freeze Dance by standing perfectly still for forty days. She beats the whole town, then a lamppost. Then Marcus lifts her sunglasses and finds out she's been asleep the entire time.",
+   "narrator": "BRENDA narrates in first person (cast id 'brenda'): sunglasses that stay on until the twist, purple dress with a gold heart emblem, red bun, pink shoes. Voice: young, deadpan, sing-songy 'jinxy' narrator voice, flat on every punchline. In this episode the speaker 'brenda' (her on-screen line and all HUSS beats) uses the same voice as 'narr'. The weird quotes are read by the narrator too: the quote, a tiny pause, then the attribution, while a quote card is on screen.",
+   "beats": [
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "In this town, everybody dances.",
+     "visual": "TOWN, party_night. Crane down from street.camHigh over the dancing crowd under the zig-zag string lights (extras in party hats, dance/dance2). Quick cuts: extras dancing at the pool edge (pool.cam), extras bouncing in the foam street (foam 0.8). Fireworks on."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Except me.",
+     "visual": "Slow push from the street up to one house's upstairs window (house.<i>.window anchor). Inside the warm-lit window Brenda stands bolt upright, arms at her sides, sunglasses on, holding completely still (idle pose frozen, intensity 0). Party lights reflect in the glass."
+    },
+    {
+     "kind": "huss",
+     "speaker": "brenda",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "INTERIOR room variant 'brenda', lighting night, window 'party' (coloured lights flicker behind her). Brenda dead centre, slow push-in. Her body does NOT move a millimetre. Only her face snaps between 'determined' and 'huss' on each HUSS. The joke is the strongest grind in the series with zero motion."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Grandad's DJ name? Grandad.",
+     "visual": "TOWN street, party_night. Grandad (cardigan, glasses, mustache, plus sunglasses and headphones) behind a DJ booth made from a box table, two turntable discs and the party speaker, pumping one arm (dance2). A hanging sign over him reads 'DJ GRANDAD'. Crowd cheers."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "While they're out partying, by the way, I'm home. Not moving.",
+     "visual": "Brenda's bedroom (variant 'brenda', night, window 'party'), static wide from room.cam. Brenda stands frozen on the rug. Through the window the party lights flicker and muffled music thumps. The shot holds dead still on purpose."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "I'm training for freeze dance.",
+     "visual": "Cut to her wall: a poster (canvas texture) reads 'SUMMER PARTY FREEZE DANCE CHAMPIONSHIP: MOVE AND YOU'RE OUT!' beside a calendar with days crossed off. Pull back to Brenda, still frozen."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Day one: four seconds.",
+     "visual": "On-screen card 'DAY 1' and a stopwatch counting 0:01-0:04. At 0:04 Brenda wobbles (quick 'surprised' jolt), face 'sweat'. Buzzer SFX."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Day forty: the cat thinks I'm a shelf.",
+     "visual": "Card 'DAY 40'. Same room. Brenda perfectly still. The orange cat is in a 'loaf' on top of her red bun, staring into the camera ('stare'). Brenda does not react."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Be a fridge. Cold. Still. Full of snacks.\" \u2014 My dentist.",
+     "visual": "QUOTE CARD (bold serif on a dark framed card) over a slow zoom on Brenda with the cat on her head: \"Be a fridge. Cold. Still. Full of snacks.\" \u2014 my dentist."
+    },
+    {
+     "kind": "huss",
+     "speaker": "brenda",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "Tight on Brenda with the cat on her head: her face goes 'huss' on each HUSS, her body stays still, and one sweat drop (makeSweatDrop) slides down. The cat does not blink."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Top ten most respectful moments. Number seven: Grandad dusted me.",
+     "visual": "RANKING CARD slams in: 'TOP 10 MOST RESPECTFUL MOMENTS: #7'. Grandad walks into her room with a feather duster and gently dusts Brenda's shoulders, then the cat. Brenda doesn't flinch. Grandad gives a slow respectful nod (face 'smile')."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Then came the Freeze Dance Championship.",
+     "visual": "TOWN SQUARE, party_night. The banner now reads 'SUMMER PARTY FREEZE DANCE'. Bunting, balloons, full bleachers. The long stage table is DJ Grandad's booth with the speaker. The stage is packed with dancers: Brenda (sunglasses, contestant bib '07'), Marcus, the mayor and extras, all doing dance/dance2. Easter egg: the ep1 chess kid sits in the bleachers playing chess against the pigeon."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Marcus sneezed. Out.",
+     "visual": "Record-scratch SFX. Everyone freezes mid-dance (each pose held at a fixed t). Close on Marcus: a quick 'surprised' jolt as he sneezes. A big red 'OUT' stamp slams onto the screen. He walks off (walkSad)."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "The mayor's mustache twitched. Out.",
+     "visual": "Extreme close-up of the frozen mayor (top hat, sash). His mustache gives one tiny wiggle (a small jiggle on the mustache accessory mesh). Red 'OUT' stamp. Mayor face 'shocked'."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Never trust a man who blinks.\" \u2014 A fish.",
+     "visual": "QUOTE CARD over a slow dolly along the remaining frozen contestants: \"Never trust a man who blinks.\" \u2014 a fish."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Hours later: me and a lamppost.",
+     "visual": "Quick cut to the clock tower showing 3:00 (card '3 AM'). Back to the stage: empty except Brenda and one lone lamppost standing next to her like a fellow contestant, with its own bib. The crowd in the bleachers is half asleep (faces 'sleepy'), leaning in."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Be the lamp, not the moth.\" \u2014 A moth.",
+     "visual": "QUOTE CARD. Behind it, a tiny moth (two box wings) circles the lamppost's bulb: \"Be the lamp, not the moth.\" \u2014 a moth."
+    },
+    {
+     "kind": "huss",
+     "speaker": "brenda",
+     "n": 6,
+     "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+     "visual": "Western-style face-off. Alternating push-ins: Brenda (face 'huss' on each HUSS, body still, sunglasses glinting) vs the lamppost (perfectly still). The crowd wakes up and leans forward ('peer'). A sweat drop rolls down Brenda's face."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "The lamppost flickered. Out.",
+     "visual": "The lamppost bulb flickers off and back on. Red 'OUT' stamp on the lamppost. Confetti cannons (makeConfetti) burst, the crowd cheers and claps, fireworks go off. The mayor places a gold trophy in Brenda's hand (the trophy is a tiny gold figure standing still on a plinth). She doesn't move to take it."
+    },
+    {
+     "kind": "quote",
+     "speaker": "marcus",
+     "text": "Brenda. How?",
+     "visual": "Marcus walks up to Brenda on stage, stunned (face 'shocked'), arms out ('shrug')."
+    },
+    {
+     "kind": "quote",
+     "speaker": "brenda",
+     "text": "While you were out partying, by the way.",
+     "visual": "Close-up on Brenda: only her mouth moves, body frozen, trophy in hand, a deadpan glint off her sunglasses. Crowd goes 'ooooh'."
+    },
+    {
+     "kind": "line",
+     "speaker": "narr",
+     "text": "Number one: I said that in my sleep.",
+     "visual": "RANKING CARD: 'TOP 10 MOST RESPECTFUL MOMENTS: #1'. Marcus slowly lifts Brenda's sunglasses (turn the sunglasses accessory off and show a sunglasses prop in his raised hand). Her eyes are shut (face 'sleepy') and a 'Zzz' bubble floats up. Marcus 'shocked', the crowd 'stunned', and Grandad drops his headphones."
+    },
+    {
+     "kind": "quote",
+     "speaker": "narr",
+     "text": "\"Stand still long enough and you become a hotel.\" \u2014 A pigeon.",
+     "visual": "The mayor's pigeon flutters down ('flap') and settles into Brenda's red bun like a nest ('sit'), with a tiny twig ring around it. QUOTE CARD: \"Stand still long enough and you become a hotel.\" \u2014 a pigeon."
+    },
+    {
+     "kind": "huss",
+     "speaker": "brenda",
+     "n": 3,
+     "text": "HUSS! HUSS! HUSS!",
+     "visual": "BUTTON: Brenda is asleep standing up, trophy in hand, confetti still falling. Her snore IS the HUSS: three tight, sleepy, snored HUSSes. Each one pops a cartoon snore bubble that reads 'HUSS', and the pigeon in her bun puffs up with it (pigeon 'huss' action). Hold, then cut to black."
+    }
+   ],
+   "quoteCards": [
+    "\"Be a fridge. Cold. Still. Full of snacks.\" \u2014 my dentist",
+    "\"Never trust a man who blinks.\" \u2014 a fish",
+    "\"Be the lamp, not the moth.\" \u2014 a moth",
+    "\"Stand still long enough and you become a hotel.\" \u2014 a pigeon"
+   ],
+   "newProps": [
+    "Feather duster (box handle with a cluster of fluffy spheres) for Grandad",
+    "DJ booth: box turntable deck with two spinning discs, set on the existing stage long table, plus the party speaker",
+    "'DJ GRANDAD' hanging sign (canvas-texture plank)",
+    "Bedroom poster texture: 'SUMMER PARTY FREEZE DANCE CHAMPIONSHIP: MOVE AND YOU'RE OUT!' plus a wall calendar with crossed-off days",
+    "Square banner text changed to 'SUMMER PARTY FREEZE DANCE'",
+    "Standalone lamppost for the stage (box pole and lamp head, emissive bulb that can flicker), wearing a contestant bib",
+    "Contestant number bibs (thin box plate on the chest, e.g. '07')",
+    "Tiny moth (box body with two flat box wings) circling the lamp",
+    "Gold trophy: a small gold blocky figure standing still on a plinth",
+    "Handheld sunglasses prop for Marcus's lift (Brenda's sunglasses accessory toggled off at the same moment)",
+    "Small twig-ring nest for the pigeon in Brenda's bun",
+    "2D overlays (not 3D): red 'OUT' stamp, 'DAY 1' / 'DAY 40' / '3 AM' cards, stopwatch, Top-10 ranking card (#7 and #1), quote card frame, 'Zzz' and 'HUSS' snore bubbles"
+   ],
+   "spokenWordCount": 128,
+   "whyItsFunny": "It flips the format. In a town that never stops moving, the grind is literally not moving, so every HUSS is a sweaty shout from a body that stays completely still. Freeze poses are also the easiest thing our rig can do. The training escalates from 'four seconds' to 'the cat thinks I'm a shelf' and Grandad dusting her like furniture, which is also Top-10 respectful moment #7. The final opponent being a lamppost, knocked out for 'flickering', is a dumb-perfect payoff. The 'while you were out partying, by the way' line looks like a cool mic drop. Then the ranking card comes back for #1: Marcus lifts her sunglasses, she's asleep, and the comeback was sleep-talk. That turns her signature sunglasses into a twist, and it also explains how she out-froze a lamppost. The weird quotes land as non-sequiturs that still click: fish can't blink, a moth warns you not to be a moth, a dentist tells you to be full of snacks, and the pigeon's 'hotel' line plays while it literally moves into her bun. The last button is that her snore is a HUSS, so she is still grinding in her sleep."
+  }
+ ],
+ "judgements": [
+  {
+   "reasoning": "Judged as a 15-year-old scrolling TikTok: which one gets a laugh out loud and gets sent to the group chat?\n\nThe winner is Pitch 1, Pigeon for Mayor. It has the most clip-able moments.\n- After ten thousand HUSS rehearsals, the whole speech is one flat \"Coo.\" That is the biggest single laugh in any of the four pitches.\n- Two visual punchlines follow it right away: \"A balloon fainted\" and the top hat swallowing the pigeon so only its feet stick out.\n- It has the best version of the Top 10 bit. \"Numbers one to six? Also me.\" is a joke in its own right, not just a ranking card. The spoon/fork quote is the line that would get copied into the comments.\n- The pigeon was ep1's final punchline, so a pigeon narrator in the jinxy voice already feels like a fan-favourite spin-off.\n- The catchphrase does work here. Door-knocking \"while they're out partying\" means nobody is home to answer.\n\nThe risks are real:\n- It is too dense: 27 beats in 134 words, across seven locations.\n- The ending (\"now everybody grinds\", window HUSSers) repeats ep1's ending, and the \"partying alone at the end\" twist is close to the cricket reference.\n- The goose quote is filler.\n- Fixes: cut the goose quote and \"My speech:\", and make the birthday motive clearer. Then it is the strongest episode.\n\nThe other three:\n- **Pitch 2 (Don't Blink)** is a close second and has the tightest story with the best twist: she blinks in the photo and the statue has its eyes closed. But its Top 10 bit has nothing to do with her story. It also needs engine work: a new hero, a new face variant and a flag to switch blinking off.\n- **Pitch 0 (Bingo)** has great individual lines (\"DJ Hip Replacement\", the Dalmatian cat, a literal \"Hiss.\", the lens-dab ending). But \"Legs eleven\" won't land with most teens, and the twist only pays off if you remember ep1.\n- **Pitch 3 (Freeze Dance)** is the easiest to produce and has clever structure: the catchphrase is the punchline and the twist goes through the Top 10. But it has fewer big laughs, and a hero who never moves makes the HUSS beats visually flat.",
+   "scores": [
+    {
+     "index": 0,
+     "funny": 7,
+     "format": 8,
+     "producible": 8,
+     "bestGags": [
+      "Gerald's ninety-one. His DJ name is Hip Replacement.",
+      "The cat napped on my card. He's a Dalmatian now. / Hiss.",
+      "'Never trust a pigeon in a hat.' \u2014 a pigeon in a hat",
+      "Banned for life. Apparently, you can't dab the mayor. (one dot planted on his forehead earlier, then a whole face of dots)",
+      "Final 'Bingo.' then he dabs the camera lens and a red splat fills the screen"
+     ],
+     "problems": [
+      "'Legs eleven' is British bingo slang most teens won't get, so it lands as dead air.",
+      "'Eighty bingos. One number' is impossible even as cartoon logic, and the joke doesn't explain itself. It reads as a hand-wave, not a punchline.",
+      "The twist (banned, so now he crowd-surfs on Wednesdays) only works if you remember ep1's throwaway line. New viewers get a weak ending.",
+      "A 70-year-old with a kid's voice could be confusing rather than funny unless the opening sells it immediately.",
+      "Bingo is the least visually exciting grind. Dabbing a card is close to ep1's sitSlam chess move.",
+      "The Top 10 bit is fine but soft: #7 the mayor removes his hat, #1 so does the pigeon. That is a mild reversal, not a laugh.",
+      "'Dab' as a dance-move pun is a bit dated for teens."
+     ]
+    },
+    {
+     "index": 1,
+     "funny": 9,
+     "format": 9,
+     "producible": 6,
+     "bestGags": [
+      "'My speech:' then one flat 'Coo.' after ten thousand rehearsals",
+      "Silence. A balloon fainted. (balloon slowly sinks and flops)",
+      "The mayor's top hat swallows the pigeon so only its feet stick out, tapping smugly",
+      "Top ten most respectful moments, #7 the mayor gave me his hat, then 'Numbers one to six? Also me.' with polaroids of the pigeon blinking and the back of its head",
+      "'A spoon is just a bowl that believes in itself.' \u2014 a fork, jealous",
+      "While they're out partying, by the way, I'm knocking on their doors. (nobody is home, 400 doors)",
+      "I won. The cat voted for himself.",
+      "'Don't tell the mayor.' He is the mayor."
+     ],
+     "problems": [
+      "Way too dense: 27 beats and 134 words (the limit is 135) across seven locations (street, pool, park, residential street, bedroom, square, empty town). At about 2.2 s per beat, half the jokes won't get time to breathe.",
+      "The ending retreads ep1. 'Now the whole town is grinding' plus HUSSers in the windows is exactly ep1's b21-22, and 'partying alone while everyone grinds' is close to the cricket reference's ending.",
+      "'They did a conga at my birthday. Without me.' is a muddy motive. Was he excluded, or did he skip it? The logline says he skipped it, and the line implies he was excluded.",
+      "'He who honks first, honks loudest.' \u2014 a goose, under oath is the weakest quote and is filler. Cut it to buy time.",
+      "The crumbs twist is a two-step logic chain (no parties, so no crumbs, so he's hungry) that viewers have to work out mid-scroll.",
+      "The pigeon is tiny (about 0.45 tall), so most shots need careful close-ups, plus six extra conga pigeons and the window-grinders shot. That is more shot-building than the other pitches."
+     ]
+    },
+    {
+     "index": 2,
+     "funny": 8,
+     "format": 7,
+     "producible": 7,
+     "bestGags": [
+      "A retirement party for a traffic cone. (two extras hug it, crying)",
+      "I stare at toasters until they pop. Out of fear.",
+      "While they're out partying, by the way, I'm staring at a wall. / It cracked first.",
+      "'Blinking is a nap for cowards.' \u2014 Grandad, mid-nap",
+      "'Eyes are windows. Never close a window.' \u2014 a burglar (a striped-shirt burglar waves from the bleachers)",
+      "'Say cheese!' / 'I blinked.' Then the stone statue with its eyes closed and a 'NEVER BLINKED' plaque."
+     ],
+     "problems": [
+      "The Top 10 bit is disconnected from her story. A random pigeon removing his hat, then 'One to six? Also the pigeon', isn't about her win or the staring contest, so it feels pasted in.",
+      "A brand-new hero has no series pull. Ivy needs a new spec, a new 'eye' emblem, a new 'hussWide' face and a flag to switch blinking off. That is engine work the other pitches don't need.",
+      "The HUSS beats are only head-snaps with wide eyes. The grind is about not moving, so the HUSS has no physical action to sync to.",
+      "'A fish has no eyelids. Be the fish.' \u2014 the fish is the weakest quote, and the attribution being the fish itself is a tired pattern.",
+      "Lots of cuts to grandad's nap, the toaster, the cone and the wall before the contest. The middle could feel like a list of bits."
+     ]
+    },
+    {
+     "index": 3,
+     "funny": 7,
+     "format": 8,
+     "producible": 9,
+     "bestGags": [
+      "Day forty: the cat thinks I'm a shelf. (cat loafed on her bun)",
+      "Top ten most respectful moments, #7: Grandad dusted me. (feather duster on a frozen Brenda, then the cat)",
+      "Hours later: me and a lamppost. (the lamppost wears a contestant bib)",
+      "The lamppost flickered. Out.",
+      "'Be the lamp, not the moth.' \u2014 a moth",
+      "Brenda: 'While you were out partying, by the way.' Then '#1: I said that in my sleep.' (sunglasses lifted, eyes shut, Zzz)",
+      "The snore is the HUSS: three sleepy snored HUSSes with a pigeon nesting in her bun"
+     ],
+     "problems": [
+      "'Grandad's DJ name? Grandad.' is a weak anti-joke. Pitch 0's 'Hip Replacement' shows how this beat should land.",
+      "A hero who never moves makes the HUSS beats face-swaps only. It's clever on paper, but HUSS is the meme's energy beat, so it's visually flat on a phone.",
+      "Four quote cards plus two OUT stamps, DAY cards, a stopwatch and the ranking card make for heavy overlays. Quotes stop feeling random and start feeling like a rhythm.",
+      "'Never trust a man who blinks.' \u2014 a fish overlaps with the other pitches' fish/blink material and is the weakest of the four quotes.",
+      "The asleep twist muddies the HUSS beats: was she asleep while her face was snapping to 'huss'? Viewers might not buy that she was asleep the whole time.",
+      "The Marcus 'how?' / catchphrase exchange is almost exactly ep1's ending exchange, so it feels like a rerun beat."
+     ]
+    }
+   ],
+   "winner": 1
+  },
+  {
+   "scores": [
+    {
+     "index": 0,
+     "funny": 8,
+     "format": 9,
+     "producible": 8,
+     "bestGags": [
+      "Gerald's ninety-one. His DJ name is Hip Replacement.",
+      "Every morning, I count to ninety. In random order.",
+      "The cat napped on my card. He's a Dalmatian now. / (cat) Hiss.",
+      "\"Silence is just applause that's thinking.\" \u2014 my hearing aid",
+      "\"Never trust a pigeon in a hat.\" \u2014 a pigeon in a hat (pays off when the pigeon takes its hat off at #1)",
+      "Banned for life. Apparently, you can't dab the mayor. (the dot on his forehead is planted at #7)",
+      "Now I crowd-surf on Wednesdays. (origin story for ep1's line)",
+      "Bingo. (he dabs the lens and a red dot fills the screen)"
+     ],
+     "problems": [
+      "Heaviest HUSS load: 5 beats, 24 HUSSes (about 8 s) plus about 129 words plus three quote-card holds will run past 60 s. Cut the training-montage 6-HUSS to 3, or drop one huss beat.",
+      "'Eighty bingos. One number.' is the payoff, but the audience never sees HOW. Show him dabbing every square (and the table, and the mayor) so the ban line explains it rather than confuses.",
+      "Red dots on an orange tabby will not read as 'Dalmatian' at phone size. Use dark dots, or the tag has to do all the work.",
+      "'Legs eleven' is a British bingo call that US teens won't recognise. It survives as a weird line only if the caption and the '11' ball sell it.",
+      "The premise skews old (seniors, bingo). It is saved by absurdity, but it is the least teen-relatable world of the four.",
+      "The ending is a callback more than a twist: for viewers who missed ep1, it lands as 'now he parties', which is fine but not a gasp.",
+      "Top 10 #7 ('the mayor removed his hat') is mild on its own. It only works because #1 cashes in the pigeon callbacks."
+     ]
+    },
+    {
+     "index": 1,
+     "funny": 7,
+     "format": 7,
+     "producible": 5,
+     "bestGags": [
+      "My speech: / (pigeon) Coo.",
+      "Silence. A balloon fainted.",
+      "Numbers one to six? Also me. (polaroids of the pigeon blinking, pecking, back of its head)",
+      "I won. The cat voted for himself.",
+      "\"A spoon is just a bowl that believes in itself.\" \u2014 a fork, jealous",
+      "\"The moon is just a big crumb.\" \u2014 me, hungry",
+      "The giant top hat that swallows the pigeon so only its feet show"
+     ],
+     "problems": [
+      "Overstuffed: 28 beats, 134 words, 18 HUSSes and 3 quote cards. There is no room for any visual gag to breathe, and it will overrun or feel rushed.",
+      "The ending copies ep1 (and the reference video) almost shot for shot: 'now the whole town grinds' plus HUSS from every window. That is series fatigue in episode 2.",
+      "The grind (campaigning or knocking doors) is a premise, not an absurd skill. It is weaker and less visual than bingo, staring or standing still.",
+      "A 0.45 m narrator with only beak-open, half-lid and wink expressions makes deadpan reactions hard to sell. Almost every shot needs macro framing.",
+      "It has the most locations and builds: lamp post, pool, park, doorsteps, bedroom, square, quiet town, six extra conga pigeons, scoreboard, hat swallow. This is the most expensive pitch.",
+      "'Don't tell the mayor' when he IS the mayor will read as a writing error to some viewers.",
+      "The goose quote ('He who honks first, honks loudest') is the weakest card in any pitch."
+     ]
+    },
+    {
+     "index": 2,
+     "funny": 8,
+     "format": 7,
+     "producible": 6,
+     "bestGags": [
+      "I stare at toasters until they pop. Out of fear.",
+      "While they're out partying, by the way, I'm staring at a wall. / It cracked first.",
+      "A retirement party for a traffic cone.",
+      "\"Blinking is a nap for cowards.\" \u2014 Grandad, mid-nap",
+      "\"Eyes are windows. Never close a window.\" \u2014 a burglar (who waves from the bleachers)",
+      "Say cheese! / I blinked. / They built me a statue. Eyes closed. (plaque: NEVER BLINKED). The best twist of the four."
+     ],
+     "problems": [
+      "The structure is a near-template fill of ep1 ('Pool parties. Foam parties. A ___ party for ___.' / 'But not me. I ___.'), so it feels like a rerun with nouns swapped.",
+      "The Top 10 bit has nothing to do with Ivy's story: the pigeon removes his hat for no reason. It also uses the same 'one to six? also the pigeon' joke as pitch 1.",
+      "135 words exactly, at the cap, plus 18 HUSSes. No slack for the quote-card holds.",
+      "Engine work is needed before any shot: a new character spec, a new eye emblem, a new 'hussWide' face, and a per-character blink-disable flag in characters.js.",
+      "The payoff stretch is visually static (two characters staring), and 'Four hours. The DJ fell asleep.' is a soft beat right where it should escalate.",
+      "The cat blinking is the climax, but it's a half-second face swap on a 0.5 m creature. It needs a huge extreme close-up or it won't read."
+     ]
+    },
+    {
+     "index": 3,
+     "funny": 7,
+     "format": 6,
+     "producible": 7,
+     "bestGags": [
+      "Day forty: the cat thinks I'm a shelf.",
+      "Hours later: me and a lamppost. / The lamppost flickered. Out.",
+      "\"Stand still long enough and you become a hotel.\" \u2014 a pigeon (it nests in her bun)",
+      "\"Be a fridge. Cold. Still. Full of snacks.\" \u2014 my dentist",
+      "Top 10 #7: Grandad dusted me.",
+      "Snored HUSSes as the button, retroactively turning every HUSS into a snore"
+     ],
+     "problems": [
+      "Four HUSS beats with ZERO body motion kill the format's kinetic peak. On a phone, a frozen character plus face swaps reads as a stalled render, not a joke.",
+      "The twist (she was asleep the whole time) cancels the grind premise, and it's internally muddled: the Day-1 wobble and the 'determined' faces show her awake, and 'I said that in my sleep' as the #1 respectful moment is fuzzy logic.",
+      "It reuses ep1's 'When did you get so good?' / 'While you were out partying' exchange nearly word for word ('Brenda. How?' / 'While you were out partying, by the way').",
+      "'Grandad's DJ name? Grandad.' is a placeholder-level joke (pitch 0 does the DJ-name gag far better).",
+      "Overlay clutter: 4 quote cards, 2 ranking cards, 3 OUT stamps, DAY 1, DAY 40 and 3 AM cards, and a stopwatch. The back half goes card, card, card.",
+      "The opener says 'everybody dances', not 'partying', and the fish attribution overlaps the other pitches."
+     ]
+    }
+   ],
+   "winner": 0,
+   "reasoning": "Bingo wins. It has the best absurd-grind premise in the batch: Grandad trains like it's the Olympics for bingo, a game of pure luck. That is the same energy as the burger-wrapping reference, but original.\n\nJoke density is the highest of the four. 'DJ name is Hip Replacement', 'count to ninety in random order' and 'He's a Dalmatian now' are each clippable on their own. The Dalmatian line plus 'Hiss.' also literally covers the user's 'weird stuff like hiss'.\n\nIt is also the only pitch where the required bits work together instead of sitting side by side:\n- The quote 'Never trust a pigeon in a hat' sets up the pigeon who laughs at Grandad.\n- That pigeon then removes its hat as Top 10 #1, so the skip from #7 to #1 lands.\n- The single dab dot planted on the mayor's forehead at #7 pays off as 'Banned for life. Apparently, you can't dab the mayor.'\n- The ending turns ep1's throwaway 'My grandad crowd-surfs on Wednesdays' into an origin story, which rewards returning viewers. The lens-dab 'Bingo.' button is the best final frame of the four.\n\nIt is also the cheapest to make: existing grandad room, sitSlam with synced hits for kinetic HUSSes, crowdSurf, setAccessory for the hat removals, impact bursts, and senior extras restyled with the existing grandpa hair and cardigan.\n\nBefore production, fix three things:\n1. Cut one HUSS triplet so 24 HUSSes, about 129 words and the card holds fit in 60 s.\n2. Show him dabbing everything, so the 80 bingos read and the ban makes sense.\n3. Make the Dalmatian dots dark so they read.\n\nRunner-up is pitch 2 (Don't Blink). It has the single best twist (the blink in the photo leads to a NEVER BLINKED statue with its eyes shut) and the most teen-relatable premise. But it is a near line-for-line ep1 template, its Top 10 bit is a disconnected pigeon gag shared with pitch 1, and it needs new character and face-system work. It's worth keeping in the bank for ep3.\n\nPitch 1 has great moments ('My speech: Coo.', 'A balloon fainted'). But it is overstuffed at 28 beats, the most expensive to build, and its ending repeats ep1's town-grinds finale.\n\nPitch 3 has the best lamppost and hotel lines. But its HUSS beats are motionless, its asleep twist undercuts the grind, and it reuses ep1's burn exchange."
+  },
+  {
+   "scores": [
+    {
+     "index": 0,
+     "funny": 8,
+     "format": 9,
+     "producible": 8.5,
+     "bestGags": [
+      "Banned for life. Apparently, you can't dab the mayor. (bingo dabber vs the dance move, set up by one red dot on his forehead in the #7 card, then paid off with a dozen)",
+      "The cat napped on my card. He's a Dalmatian now. + a dead-still cat stare + 'Hiss.' (also covers the user's literal 'hiss')",
+      "Gerald's ninety-one. His DJ name is Hip Replacement.",
+      "Every morning, I count to ninety. In random order. (the 'training for pure luck' joke in one line)",
+      "'Never trust a pigeon in a hat.' \u2014 a pigeon in a hat",
+      "Top 10 #1: so did the pigeon (callback to ep1's pigeon winning)",
+      "Now I crowd-surf on Wednesdays: turns ep1's throwaway line into the ending, and he dabs the lens for a full-screen red splat"
+     ],
+     "problems": [
+      "HUSS sync is close to free: sitSlam with params.hits is what we built for ep1's chess slams. But 'both dabbers alternating' needs a mirrored left-arm slam, because sitSlam only drives the right arm, so that's a new param or hand-keyed joints",
+      "No carry pose for the wobbly 80-card tower: needs a custom arms-forward walk, and the tower wobble has to be hand-driven",
+      "'Clock tower reads 5:00 outside the window' can't work from inside: the room window is a painted canvas backdrop. Cut to an exterior clock shot or put a clock on the wall",
+      "Glasses flying up and landing back on his nose means animating the accessory mesh transform, which we haven't done before",
+      "'Eighty bingos. One number.' is impossible on purpose. It works as absurdism, but some viewers will stall on the logic. 'Legs eleven' is bingo lingo teens may not know",
+      "Restyling 18 extras as seniors is easy with a spec override (grandpa hair, cardigans), but it has to be done for both the street and the foam set",
+      "5 HUSS beats (the max) plus 24 beats in 60 s is tight. The montage HUSS needs six distinct inserts at about 0.15 s each",
+      "'I've been young. It's overrated.' \u2014 my birth certificate is the weakest of the three quotes"
+     ]
+    },
+    {
+     "index": 1,
+     "funny": 7.5,
+     "format": 8,
+     "producible": 6,
+     "bestGags": [
+      "While they're out partying, by the way, I'm knocking on their doors. (best use of the catchphrase of the four: of course nobody answers)",
+      "My speech: 'Coo.' / Silence. A balloon fainted.",
+      "Top 10 #7: the mayor's top hat swallows the pigeon until only two orange feet stick out, then the hat struts down the street",
+      "'A spoon is just a bowl that believes in itself.' \u2014 a fork, jealous (the most quotable line in any pitch)",
+      "'He who honks first, honks loudest.' \u2014 a goose, under oath",
+      "I won. The cat voted for himself."
+     ],
+     "problems": [
+      "The ending is the reference video's twist (party ban, everyone grinds, the hero is the only one still partying) plus a re-run of ep1's HUSS-from-every-window shot. Fans have seen this exact ending twice",
+      "The 0.45 m hero means nearly every shot is macro framing inside a town built at human scale: giant doors and lamp posts, plus depth-of-field and shadow-resolution problems at that distance",
+      "The door montage needs per-house door anchors. Only myHouse.door exists, so the other doors have to be computed",
+      "'Numbers one to six? Also me' needs six pigeon polaroids in a 2D overlay. cards.js only draws text, so this means render-to-texture or pre-rendered stills",
+      "An extra lowering the mic to beak height needs hand-to-mic arm keys. The dusk to quiet_night drop happens mid-shot, but lighting presets are discrete and would need interpolating",
+      "28 beats and about 25 separate setups (lamp post, pool conga, park, residential street, bedroom, square, books, scoreboard, windows, moon, cake party): the heaviest shot count of the four, at 134 words, right at the cap",
+      "'Don't tell the mayor' (he IS the mayor) is subtle and could read as a writing error",
+      "'The moon is just a big crumb' \u2014 me, hungry has the weakest attribution of the quotes"
+     ]
+    },
+    {
+     "index": 2,
+     "funny": 8.5,
+     "format": 9,
+     "producible": 7.5,
+     "bestGags": [
+      "I stare at toasters until they pop. Out of fear. (sweat drop on the toaster, toast shoots up)",
+      "While they're out partying, by the way, I'm staring at a wall. / It cracked first.",
+      "A retirement party for a traffic cone.",
+      "'Blinking is a nap for cowards.' \u2014 Grandad, mid-nap",
+      "'Eyes are windows. Never close a window.' \u2014 a burglar, with the burglar extra waving in the bleachers",
+      "My opponent? The town cat. Nine lives. Zero blinks. (cat 'stare' action and face already exist)",
+      "Twist: she blinks in the victory photo and the statue gets built eyes-closed with a 'NEVER BLINKED' plaque. Clean, visual, shareable"
+     ],
+     "problems": [
+      "New hero Ivy: the spec is trivial (spiky hair, hoodie, shorts exist), but the new 'eye' emblem painter and the per-character blink-disable flag are code changes. 'hussWide' is cheap because the face table already has 'wide' eyes and a 'shout' mouth",
+      "The stone statue needs a character clone with every material overridden to grey stone, plus a grey 'sleepy' face texture: moderate work",
+      "The Top 10 is a pigeon non-sequitur unrelated to Ivy, and 'One to six? Also the pigeon' needs six pigeon polaroids. That's the same render-to-texture cost as pitch 1, and the same gag as pitch 1",
+      "No pose for hugging the cone, kneeling nose-to-nose with the cat, or the DJ slumping onto the speaker: all custom joint keys",
+      "The four-hour time-lapse from dusk to party_night needs lighting preset interpolation. A hard cut on the clock spin is the fallback",
+      "The burglar's black-and-white striped tee needs a new full-tee stripe texture. The 'stripe' emblem is only a chest stripe",
+      "HUSS beats are head snaps and mini-curls: less physical punch than a slam, and staring is a low-motion premise, so it leans on the Western-style eye cut-ups for energy",
+      "134 words, right at the cap"
+     ]
+    },
+    {
+     "index": 3,
+     "funny": 6.5,
+     "format": 7.5,
+     "producible": 8.5,
+     "bestGags": [
+      "Day forty: the cat thinks I'm a shelf. (cat 'loaf' on her bun)",
+      "'Be a fridge. Cold. Still. Full of snacks.' \u2014 my dentist",
+      "Hours later: me and a lamppost. / The lamppost flickered. Out.",
+      "'Be the lamp, not the moth.' \u2014 a moth",
+      "Sunglasses lifted: she's been asleep. 'Stand still long enough and you become a hotel.' \u2014 a pigeon nesting in her bun",
+      "Snore HUSS button with 'HUSS' snore bubbles"
+     ],
+     "problems": [
+      "The core visual premise is a character not moving, so the HUSS beats are face-only snaps with zero body motion. That throws away the signature energy beat, and her sunglasses hide the squeezed 'huss' eyes, so only the mouth reads at phone size",
+      "'Brenda. How?' / 'While you were out partying, by the way.' is almost word for word ep1's climax exchange ('When did you get so good?' / 'While you were out partying.')",
+      "Top 10 #1 'I said that in my sleep' isn't a respectful moment, so the ranking joke collapses into plain exposition",
+      "'Asleep the entire time' contradicts the determined/huss face snaps during training and the face-off",
+      "'Grandad's DJ name? Grandad.' is flat next to the other pitches. 'Never trust a man who blinks \u2014 a fish' repeats the fish-quote idea",
+      "Four quote cards (the max) eat about 8 s of a 60 s runtime",
+      "Small custom work: Marcus's hand-to-face pose to lift the sunglasses, plus the jiggle on the mustache mesh. Otherwise the easiest to build, because frozen poses are just pose(action, fixed t)"
+     ]
+    }
+   ],
+   "winner": 0,
+   "reasoning": "Pitch 0 (Grandad Bingo) wins on producibility plus visual comedy, with Pitch 2 a close second. Bingo builds almost entirely on assets we already have: the grandad character and his room variant, the square with a swappable banner, the foam street and speaker, the bleacher crowd, and the ep1 grandad crowd-surf. It needs no new character, face, emblem or material system. Its HUSS beats are the best fit of the four for our engine: a dabber slammed on every HUSS is exactly what sitSlam with params.hits was built for in ep1, and every hit leaves a visible red dot. The visual jokes are physical and read at phone size: the dotted Dalmatian cat stares and goes 'Hiss.' (which also covers the user's literal word), the mayor's face is covered in dots, he crowd-surfs gripping a dabber in each fist, and he dabs the lens for a full-screen red splat. The writing plants the payoff: one dot on the mayor's forehead in the #7 card becomes a dozen in the BANNED reveal. 'You can't dab the mayor' is a double meaning teens get instantly. The ending turns ep1's throwaway 'My grandad crowd-surfs on Wednesdays' into a payoff for fans. It has every format element (5 HUSS beats, the catchphrase mid-sentence, Top 10 #7 then #1, 3 absurd quotes) at 132 words. Fixes before it ships: a mirrored left-arm slam for two-handed dabbing, a carry pose for the card tower, cutting to an exterior for the 5:00 clock, and tightening the montage.\n\nPitch 2 (Don't Blink) has the cleanest twist and the densest jokes (toaster, 'It cracked first', the statue that 'NEVER BLINKED'). It costs more custom work: a new hero spec plus emblem, a blink flag, a stone-material statue, render-to-texture pigeon polaroids, hug/kneel/slump poses and a lighting time-lapse. Its Top 10 is also an unrelated pigeon gag. It's the clear backup and should be the next episode.\n\nPitch 1 (Pigeon for Mayor) has the best single quote (the spoon) and the best catchphrase use (knocking on doors while everyone is out partying). But it copies the reference video's party-ban twist and re-runs ep1's window-grinders ending. It's also the hardest to shoot: a 0.45 m hero in a human-scale set, 28 beats, about 25 setups, and missing door anchors.\n\nPitch 3 (Freeze Dance) is the easiest to build, but its premise is a character standing still. That kills the HUSS energy, and her sunglasses hide the huss eyes. It also re-runs ep1's 'While you were out partying' exchange almost word for word, and its Top 10 #1 isn't a respectful moment."
+  }
+ ]
+}

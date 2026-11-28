@@ -1,0 +1,434 @@
+{
+ "title": "In This Town — Tape Duty",
+ "lead_in": 0.3,
+ "bed": true,
+ "voices": {},
+ "logline": "In this town there is a crack in the sky, and every night at midnight something tries to push it open. Families take turns climbing the clock tower to tape it shut. On the narrator's first solo shift the tape roll turns out to be empty, and the only thing left to stop giant grey fingers is Grandma's legendary chewing gum.",
+ "twist": "The kid seals the crack, then breaks the one rule: never look inside. On the other side, a small grey figure is taping the crack shut from their end and whispers, 'Phew. The monsters almost got in.' The monsters are us.",
+ "caption_hook": "we've been taping the sky shut for 5 years and nobody asked WHY",
+ "vibe": "spooky",
+ "sets": [
+  "Town main street, quiet night preset with fog and the purple crack in the sky",
+  "Clock tower top at night: the kid standing at the edge under the crack, clock face reading 11:58",
+  "Flashback: clock tower in day preset with the giant ladder",
+  "Town square with stage and banner reading TAPE DUTY ROTA",
+  "Park with picnic table and tree, day preset (mayor gag)",
+  "Kid's bedroom interior (Dad on the floor)"
+ ],
+ "newProps": [
+  "Sky crack: a jagged zigzag of thin glowing purple boxes on the night sky above the clock tower, which pulses brighter with each knock",
+  "Tape strips: wide flat pale-yellow boxes stuck across the crack, which can peel off one by one",
+  "Giant tape roll: a fat pale-yellow cylinder with a darker inner cardboard cylinder (the empty version is just the brown cardboard tube)",
+  "Absurdly tall ladder: two very long thin boxes with rungs reaching from the clock tower into the clouds",
+  "Wrapping paper patch: a red box over part of the crack with green stripe boxes and a bow made of two cones",
+  "Pigeon sunglasses: two tiny black boxes on the pigeon's face",
+  "Giant grey fingers: four huge segmented grey box fingers with too many knuckle joints, which curl over the edge of the crack",
+  "Pocket items: a folded paper box (homework), a striped sock, and a small pink pack of gum",
+  "Gum blob: a cluster of pink spheres smeared across the crack, plus thin pink cylinder strings",
+  "Mayor stuck to the picnic table: pink gum strings between his trousers and the park bench",
+  "Pickle jar: a green-lidded cylinder next to Dad on the floor",
+  "Tiny grey figure on the other side: a small dim grey blocky character with a little tape roll, seen through the last sliver of the crack",
+  "Banner text in the square: TAPE DUTY ROTA with family names"
+ ],
+ "beats": [
+  {
+   "id": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "In this town, there's a crack in the sky.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Wide night shot over foggy rooftops. Above the clock tower, a jagged glowing purple crack splits the sky, covered in giant strips of yellow tape."
+  },
+  {
+   "id": "b02",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And every night at midnight, something tries to push it open.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "The crack bulges outward and the tape strips strain. A curtain in a house window snaps shut."
+  },
+  {
+   "id": "b03",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "12:00",
+   "visual": "The clock tower hits midnight. Purple light flashes from the crack on every HUSS while giant grey fingertips poke through between the tape strips. Extras on the street dive indoors, shocked faces, and the camera shakes."
+  },
+  {
+   "id": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Five years ago, Mr. Hamble bumped the sky with a very tall ladder. Crack.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "overlay": "5 YEARS AGO",
+   "visual": "Day flashback: a ridiculously tall ladder leans on the clock tower, reaching into the clouds; Mr. Hamble (cap, grey mustache, overalls) at the top taps the sky and a purple crack zigzags out. He turns to camera, shocked face.",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:Crack",
+     "gain": 0.8
+    }
+   ],
+   "markers": {
+    "crack5": "w:Crack"
+   }
+  },
+  {
+   "id": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So now, every night, one family gets Tape Duty.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "TAPE DUTY",
+   "visual": "The town square at dusk under a banner reading TAPE DUTY ROTA. The mayor hands a giant tape roll to a family like a trophy. They clap without much enthusiasm."
+  },
+  {
+   "id": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Climb the tower. Tape the crack. Never, ever look inside.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "pop",
+     "at": "w:Climb",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:Tape",
+     "gain": 0.6
+    },
+    {
+     "type": "pop",
+     "at": "w:Never",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "RULE 1: CLIMB. RULE 2: TAPE. RULE 3: NEVER LOOK INSIDE.",
+   "visual": "A rules card appears line by line over a shot of the clock tower top with the crack overhead.",
+   "markers": {
+    "rule1": "w:Climb",
+    "rule2": "w:Tape",
+    "rule3": "w:Never"
+   }
+  },
+  {
+   "id": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Mrs. Pell ran out of tape and used wrapping paper. The sky was festive for a week.",
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "visual": "The crack is covered with red-and-green striped wrapping paper and a giant bow. Mrs. Pell (curly red hair, glasses) stands below, thumbs up, grin face."
+  },
+  {
+   "id": "b08",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "And Grandma's chewing gum is so sticky, the mayor has been stuck to a picnic table since spring.",
+   "sfx": [
+    {
+     "type": "laugh",
+     "at": "w:stuck",
+     "gain": 0.5
+    }
+   ],
+   "markers": {
+    "stuck": "w:stuck"
+   },
+   "gapAfter": 0.3,
+   "visual": "Day cutaway in the park: the mayor (top hat, sash) sits on the picnic table bench, pink gum strings holding him in place. He waves sadly while leaves blow past. Grandma (white bun, glasses) chews proudly beside him."
+  },
+  {
+   "id": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The pigeon flew in there once. He came back wearing sunglasses. He won't talk about it.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "visual": "The pigeon sits alone on a park bench wearing tiny sunglasses, staring into the distance and not moving."
+  },
+  {
+   "id": "b10",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS!",
+   "n": 3,
+   "gapAfter": 0.3,
+   "music": "lofi",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "card": {
+    "type": "quote",
+    "quote": "coo.",
+    "by": "the pigeon"
+   },
+   "visual": "The camera zooms in three times, one step per HUSS, until the pigeon slowly turns its head to the lens."
+  },
+  {
+   "id": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Last night was our turn. But Dad pulled his back opening a jar.",
+   "gapAfter": 0.3,
+   "music": "muffled",
+   "overlay": "OUT OF ACTION",
+   "visual": "Bedroom: Dad (brown beard, flannel shirt) lies flat on the floor in the crowdSurf pose, sweat face, an unopened pickle jar beside him. The kid (yellow raincoat, black hair) stands over him and crosses his arms."
+  },
+  {
+   "id": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "So it was me. Alone. Up the clock tower. At eleven fifty-eight.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "11:58",
+   "visual": "Clock tower top at night: the kid stands at the edge in swirling fog, giant tape roll under one arm, the purple crack humming overhead. The clock face below reads 11:58."
+  },
+  {
+   "id": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I pulled out the tape. Empty roll. Just cardboard.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "scratch",
+     "at": "w:Empty",
+     "gain": 0.6
+    }
+   ],
+   "overlay": "EMPTY",
+   "visual": "Close-up: the kid lifts the roll and it is just a brown cardboard tube. He looks through it at the camera, shocked face.",
+   "markers": {
+    "empty": "w:Empty"
+   }
+  },
+  {
+   "id": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Knock. Knock. Knock.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "knock",
+     "at": "w:Knock",
+     "gain": 0.9
+    },
+    {
+     "type": "knock",
+     "at": "w:Knock+0.62",
+     "gain": 0.9
+    },
+    {
+     "type": "knock",
+     "at": "w:Knock+1.24",
+     "gain": 0.95
+    }
+   ],
+   "visual": "The crack pulses purple with each knock, and with each knock another tape strip peels off and flutters away into the fog."
+  },
+  {
+   "id": "b15",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The crack split open. Giant fingers slid through. Long and grey, with way too many knuckles.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thunder",
+     "at": "w:split",
+     "gain": 0.6
+    },
+    {
+     "type": "rumble",
+     "at": "w:fingers",
+     "gain": 0.6
+    }
+   ],
+   "visual": "The crack splits wider. Four huge segmented grey fingers slide out and curl over its edge, every joint bending. Purple light pours down on the kid and the camera shakes hard.",
+   "markers": {
+    "fingers": "w:fingers"
+   }
+  },
+  {
+   "id": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "All I had in my pockets was homework, a sock, and Grandma's chewing gum.",
+   "gapAfter": 0.3,
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Top-down shot of the kid's hands emptying his pockets: folded homework, a striped sock, a little pink pack of gum. The pack gets a glint."
+  },
+  {
+   "id": "b17",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "I chewed all twelve pieces at once. And I gummed that crack closed.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "thump",
+     "at": "w:gummed",
+     "gain": 0.9
+    }
+   ],
+   "visual": "Back on the tower the kid chews with puffed cheeks, squint face, then leaps and slams a giant pink blob onto the crack, slam pose. The fingers flinch.",
+   "markers": {
+    "gummed": "w:gummed"
+   }
+  },
+  {
+   "id": "b18",
+   "kind": "huss",
+   "speaker": "me",
+   "text": "HUSS! HUSS! HUSS! HUSS! HUSS! HUSS!",
+   "n": 6,
+   "gapAfter": 0.3,
+   "music": "party",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "start",
+     "gain": 0.7
+    },
+    {
+     "type": "cheer",
+     "at": "start+0.55",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "SEALED!",
+   "visual": "With each HUSS the kid smears more pink gum along the crack, the grey fingers yank back inside, and the crack seals shut piece by piece. Town lights flick on and neighbours cheer from their windows."
+  },
+  {
+   "id": "b19",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Midnight. Silence. I did it.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "ding",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "visual": "Clock face reads 12:00. The kid stands in a cheer pose on the tower top, the crack now a quiet pink scar glowing softly. The fog clears."
+  },
+  {
+   "id": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Then I broke rule three. I looked inside.",
+   "gapAfter": 0.3,
+   "music": "spooky",
+   "sfx": [
+    {
+     "type": "static",
+     "at": "start",
+     "gain": 0.7
+    }
+   ],
+   "overlay": "RULE 3",
+   "visual": "The kid leans in close to one last tiny sliver in the crack, peer pose, one eye to the gap. Slow push in."
+  },
+  {
+   "id": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "Phew. The ladder monsters almost got in again.",
+   "gapAfter": 0.3,
+   "music": "none",
+   "card": {
+    "type": "quote",
+    "quote": "Phew. The ladder monsters almost got in again.",
+    "by": "the other side"
+   },
+   "visual": "Through the sliver: a dim purple space. A small grey blocky kid with too many knuckles presses tape over the crack from their side, sweat face, wiping its brow; behind it a GIANT grey grown-up hand (the fingers from before) lowers away, relieved. Only one huge grey eye of the grown-up is visible at the edge.",
+   "markers": {
+    "quote2": "start-0.05"
+   }
+  },
+  {
+   "id": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "text": "The monsters. They meant us.",
+   "gapAfter": 0.8,
+   "music": "none",
+   "sfx": [
+    {
+     "type": "boom",
+     "at": "w:us",
+     "gain": 0.85
+    }
+   ],
+   "visual": "Slow pull back from the kid's frozen, shocked face, out past the tower and the tiny glowing town below, to the sealed crack in the black sky. Hold, then cut to black.",
+   "markers": {
+    "us": "w:us"
+   }
+  }
+ ]
+}
