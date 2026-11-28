@@ -45,7 +45,8 @@ Test module: ${P}/src/kits/test_props.js (+ timeline): a prop table/turntable an
 ]
 
 phase('Kit')
-const parts = await parallel(PARTS.map((pt) => () => agent(`${BRIEF}\n\n${pt.prompt}\n\nWhen done, return the API summary (files, exact API, test command, regression result, perf, gaps).`, { label: `kit: ${pt.key}`, phase: 'Kit', schema: API, effort: 'high' })))
+const RESUME = { direction: `\nRESUMING: a previous agent on this exact part was cut off by a usage limit after ~1 hour. Its unfinished work is already in the files (see git log -1 and: cd /home/user/Escape && git show --stat HEAD; git diff HEAD~3 -- inthistown/src/direct.js inthistown/src/engine.js inthistown/audio/build_episode.py; and inthistown/src/kits/test_direction.js + test_direction_timeline.json). Review it critically, keep what is good, finish and test everything, and run the regression check (it was never run).`, props: `\nRESUMING: a previous agent on this part was cut off by a usage limit before it wrote any file; start fresh. The look (src/lib/look.js) and the home kit (src/kits/home.js) now exist — read their API headers and build the props to match their scale and lighting.` }
+const parts = await parallel(PARTS.map((pt) => () => agent(`${BRIEF}\n\n${pt.prompt}${RESUME[pt.key] || ''}\n\nWhen done, return the API summary (files, exact API, test command, regression result, perf, gaps).`, { label: `kit: ${pt.key}`, phase: 'Kit', schema: API, effort: 'high' })))
 const apis = parts.map((p, i) => ({ part: PARTS[i].key, ...(p || { gaps: 'AGENT FAILED - nothing delivered' }) }))
 log('kit parts: ' + apis.map((a) => `${a.part}${a.files ? ' ok' : ' FAILED'}`).join(', '))
 
