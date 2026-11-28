@@ -38,7 +38,9 @@
  *                      noise 0.6 (0..1 wisp contrast), noiseScale 0.045 (1/m), wind [1.2, 0, 0.4] (m/s drift),
  *                      sunDir [0,1,0] (world, toward the light), sunColor '#ffffff' (×color for in-scattering),
  *                      glow 0 (forward-scatter strength), glowPower 6 }
- *   ao        null | { radius 0.5 (m), intensity 1, bias 0.03 }      depth-only SSAO multiplies the lit colour
+ *   ao        null | { radius 0.5 (m), intensity 1, bias 0.03, dither 'white' | 'ign' }   depth-only SSAO multiplies the lit
+ *             colour. dither 'ign' (opt-in) rotates the 8 taps with interleaved gradient noise instead of white noise:
+ *             a fine regular pattern FXAA smooths out (src/lib/look.js uses it); the default is unchanged.
  *   dof       null | { focus 4 (m, distance along the view ray), aperture 1 (CoC scale: px of blur per unit of
  *                      |1 - focus/dist| at 1080 px wide), maxBlur 16 (px at 1080 wide) }
  *   bloom     { strength 0.1, threshold 1.0 (linear HDR), knee 0.6, radius 1 (0..1 upsample spread) } | false
@@ -138,7 +140,12 @@ void main() {
     float rpx = aoRadius * resolution.y * 0.5 / (max(0.05, -vp.z) * projInv[1][1]);
     rpx = clamp(rpx, 2.0, 60.0);
     float occ = 0.0;
+#ifdef AO_IGN
+    // interleaved gradient noise: a structured 2-pixel pattern FXAA resolves (no sandpaper speckle on skin/fabric)
+    float ang = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715)))) * 6.2831853;
+#else
     float ang = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) * 6.2831853;
+#endif
     for (int i = 0; i < 8; i++) {
       float fi = float(i);
       float r = (fi + 0.5) / 8.0;
@@ -400,10 +407,11 @@ export function createPost(ctx, opts = {}) {
     aoRadius: 0.5, aoIntensity: 1, aoBias: 0.03, flashF: 0, dofFocus: 4, dofAperture: 1, dofMax: 16 });
   const atmosMats = new Map();
   const atmosMat = (fog, ao, dof) => {
-    const key = `${+!!fog}${+!!ao}${+!!dof}`;
+    const ign = !!(ao && ao.dither === 'ign');
+    const key = `${+!!fog}${+!!ao}${+!!dof}${ign ? 'i' : ''}`;
     let m = atmosMats.get(key);
     if (!m) {
-      const d = {}; if (fog) d.USE_FOG = ''; if (ao) d.USE_AO = ''; if (dof) d.USE_DOF = '';
+      const d = {}; if (fog) d.USE_FOG = ''; if (ao) d.USE_AO = ''; if (dof) d.USE_DOF = ''; if (ign) d.AO_IGN = '';
       m = mat(ATMOS_FRAG, atmosU, d); atmosMats.set(key, m);
     }
     return m;

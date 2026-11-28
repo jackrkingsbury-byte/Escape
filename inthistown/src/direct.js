@@ -8,12 +8,22 @@
 // Call the helpers in shot.update every frame (they set ctx.cam for this frame and return what they did); they are
 // pure functions of ctx.t / ctx.lt / ctx.u plus the scene, so random access and re-renders give identical frames.
 //
-//   configureDirect({ focusOn, bounds })  once at module load:
+//   configureDirect({ focusOn, lightOn, bounds, keepSize })  once at module load:
 //       focusOn  look.js's focusOn → every helper also sets depth of field on its subject (closer = shallower):
-//                import { focusOn } from '../lib/look.js'; configureDirect({ focusOn });  (without it: no DOF)
+//                import { focusOn, lightOn } from '../lib/look.js'; configureDirect({ focusOn, lightOn });
+//                (without it: no DOF)
+//       lightOn  look.js's lightOn → every helper also lights its subject (character or prop) with the camera-relative
+//                key + rim rig (soft warm key 37° camera-left / 25° up, cool rim behind on the other side). Per call:
+//                key 0..1.5 | false (default 'auto' = set.subjectKey: home.js gives 1.0 night, 0.8 warm / morning /
+//                dusk, 0.55 dark states), rim 0..1.5 | false, keySide 'L' | 'R', light: false (no rig at all),
+//                lightTarget (light someone other than the framed subject: always the FRONTMOST face — the rig
+//                caps the light on every other head, so a nearer character never blows out). key:false + rim = a
+//                deliberate silhouette with an edge.
 //       bounds   boxBounds([x0,y0,z0], [x1,y1,z1]) | (ctx) => box | null — keep helper cameras inside the room: a
-//                camera outside the box slides toward its subject along the subject→camera ray (angle kept, the
-//                subject just gets bigger). e.g. the home kit hall: (ctx) => ctx.set.__name === 'home' ?
+//                camera outside the box slides toward its subject along the subject→camera ray (angle kept). When the
+//                slide shortens the distance by > 15 % the lens WIDENS (up to maxFov = 60°) so the subject keeps the
+//                requested size (keepSize: false per call / in configureDirect → the old "subject gets bigger").
+//                e.g. the home kit hall: (ctx) => ctx.set.__name === 'home' ?
 //                boxBounds([-1.15, 0.12, 0.15], [1.15, 3.25, 9.85]) : null. Per call: bounds: box | null.
 //   boxBounds(min, max) → { min, max }
 //
@@ -37,11 +47,17 @@
 //   subjectPoint(ctx, who, part = 'face') → world Vector3 of a subject (parts as `part` above)
 //   shoot(ctx, { pos, target, fov, frame, look?, … })   the core: push / drift / bounds / aim / dutch / handheld / DOF,
 //            then ctx.cam.set. Use it for any custom placement (pos + target Vector3s) to get the same treatment.
-//   closeUp(ctx, who, { size = 0.34 (head height as a fraction of frame height), angle = 0.25 (rad around the
+//   closeUp(ctx, who, { size = 0.22 (head height as a fraction of frame height), angle = 0.25 (rad around the
 //            subject, 0 = straight in front, + = toward the subject's left), elev = 4 (deg above face height),
-//            dist (overrides size), yaw (absolute world yaw of the camera direction from the subject), fov = 36,
-//            dof 0.7 })                medium close-up; size 0.2 ≈ medium shot, 0.45 ≈ tight close-up
-//   ecu(ctx, who, o)                     extreme close-up on the face: size 0.6, fov 30, frame [0.5, 0.33], dof 1.2
+//            dist (overrides size), yaw (absolute world yaw of the camera direction from the subject), fov = 44,
+//            frame [0.5, 0.28], dof 0.35 })   close-up that keeps hair, shoulders and arms (the references shoot
+//            wide and close); size 0.15 ≈ medium shot, 0.3 ≈ tight close-up. Two-character emotional beats: shoot
+//            3/4 front (angle ≈ 0.5), never pure profile.
+//   ecu(ctx, who, o)                     extreme close-up: the WHOLE head ≈ 71 % of the width: size 0.36, fov 38,
+//            frame [0.5, 0.3], dof 0.6
+//   hussFrame(ctx, who, o)               medium-close for HUSS / body acting: part 'chest', size 0.2, angle 0.35,
+//            elev 6, fov 46, frame [0.5, 0.42] (face ≈ y 0.25), dof 0.3 — both arms + the load in frame.
+//            hussBeat(…, { camera: true | opts }) calls it for you.
 //   ots(ctx, over, at, { side = 'R' (over's right shoulder) | 'L', back = 1.8, up = 0.3 (m above over's head joint ≈ ear
 //            height), overEdge = 0.3 / 0.7,
 //            sideOff = 0.72 (used only with overEdge:false), fov = 34 })
@@ -56,16 +72,21 @@
 //            handsY the camera tilts down until they sit there (the `at` face never goes above frame y atMinY). Put
 //            his hands forward with the pose, e.g. ch.pose('idle', t, { reachL: 'out', reachR: 'out' }) or reach to a
 //            world point.
+//            Looking UP at something (a hatch, a tall parent) with the hands in frame: the default eye sits on the face
+//            plane of the block head, in front of chest-height hands — pass eye: [0, 0.3, -0.25] (back of the hidden
+//            head) and atMinY ≈ 0.07 so the subject and both hands fit (see src/kits/showcase.js shot 7).
 //   insert(ctx, target, { size = 0.3 (m: subject size that fills `fill` of the frame height), fill = 0.45,
 //            fov = 24 (clamped 20–28), angle (world yaw the camera looks ALONG; default: facing the target's +Z
 //            front), elev = 18 (deg down onto it), track = 0.05 (m lateral slide over the shot), frame [0.5, 0.36],
-//            dof = 1.3 })              macro prop insert
+//            dof = 0.9 })              macro prop insert
 //   lowHero(ctx, who, { height = 0.45 (camera m above the subject's feet), dist = 2.3·scale, angle = 0.3, fov = 42,
 //            frame [0.5, 0.28] })      low hero from kid height, looking up at the face
 //   topDown(ctx, target, { height = 3.0 (m above the target point), maxY (ceiling clamp, e.g. 3.25 indoors),
 //            heading (world yaw that points to the TOP of the frame; default subject facing), spin = 0 (rad/s),
-//            fov = 50 })               "god" shot straight down
-//   wide(ctx, who, { size = 0.065, angle = 0.4, elev = 8, fov = 40, frame = [0.5, 0.34] })   character-in-room wide
+//            fov = 50, lean = 0.4 for characters / 0 for props (rad off vertical, toward leanYaw = the subject's
+//            facing by default, so the FACE reads instead of a hair rectangle; heading/spin apply only at lean 0) })
+//            "god" shot from above
+//   wide(ctx, who, { size = 0.065, angle = 0.4, elev = 8, fov = 40, frame = [0.5, 0.34], dof 0.1 })   character-in-room wide
 //            (indoors it is usually limited by `bounds`: the camera backs up to the wall)
 //   dutch(ctx, deg = 8, { sway = 1.5 (deg), rate = 0.35 (Hz) })  roll the camera set this frame (re-aims the last
 //            helper call so its subject stays framed)
@@ -82,9 +103,17 @@
 //            (ctx, lt, u) => void | a shot def with a `camera(ctx, lt, u)` field | a shot name or index (ctx.shots).
 //            Write shot 1's camera as such a function and call it from both shots. whipIn is skipped inside it.
 //
+//   blockingCheck(ctx, ids?, { maxCover = 0.3, warn = true }) → [{ who, by, cover }]   lint: a principal's head
+//            more than 30 % covered (screen box) by a nearer character's head or torso. Call after the framing helper.
+//   DOF rule: the references are mostly deep focus. Defaults are gentle (wide 0.1, closeUp 0.35, ecu 0.6, insert 0.9,
+//            look.js maxBlur 8). Focus the largest face in frame unless the shot is an insert; when lanterns and a
+//            foreground character share the frame, focus the character and let the lanterns bloom.
+//
 //   hussBeat(ctx, t = ctx.t, { who = 'me', beat (HUSS beat id; default: the HUSS beat nearest t), double = false,
 //            face = 'huss', faceHold = 0.32, punch = 0.11, shake = 0.35, slow = 0.3, rate = 0.3, ramp = 0.07,
-//            stamp = 'caption' | 'fx' | false, stampY = 0.59 })
+//            stamp = 'caption' | 'fx' | false, stampY = 0.59, camera = false | true | hussFrame opts })
+//            HUSS framing rule: a medium-close (hussFrame: chest, head ≈ 20 % of the frame) so the strain reads in
+//            the BODY (arms, the load) — not a face wall. camera:true frames it for you.
 //            → { t (WARPED time: drive the body/prop animation with it), raw, hits, on, k, since, beat }
 //            The HUSS ritual (bible §3): cam.punch on the hit(s) (+ a short impact shake), ~0.3 s of ramped slow
 //            motion after the hit (rate 0.3×; returned as warped time — time-warp only what you animate with it),
@@ -225,10 +254,12 @@ export function animateCrowd(list, t, { action = null, face = 'grin', speed = 1,
 
 
 // ═══════════════════════════════════════════════════════════════════════════════════════ v2 camera helpers
-const DIRECT = { focusOn: null, bounds: null };
+const DIRECT = { focusOn: null, bounds: null, lightOn: null, keepSize: true };
 export function configureDirect(o = {}) {
   if ('focusOn' in o) DIRECT.focusOn = o.focusOn;
   if ('bounds' in o) DIRECT.bounds = o.bounds;
+  if ('lightOn' in o) DIRECT.lightOn = o.lightOn;
+  if ('keepSize' in o) DIRECT.keepSize = o.keepSize;
   return DIRECT;
 }
 /** A camera box for `bounds`: boxBounds([x0, y0, z0], [x1, y1, z1]). */
@@ -347,14 +378,28 @@ export function shoot(ctx, req) {
     pos.z += r.drift * noise1(t * 0.21, seed + 23);
   }
   const bnd = r.bounds !== undefined ? r.bounds : (typeof DIRECT.bounds === 'function' ? DIRECT.bounds(ctx) : DIRECT.bounds);
-  if (bnd && r.look == null) pos = clipToBox(pos, target, bnd);
+  let fov = r.fov;
+  if (bnd && r.look == null) {
+    const d0 = pos.distanceTo(target);
+    pos = clipToBox(pos, target, bnd);
+    // the wall pushed the camera in: rather than turning a close-up into a face wall, widen the lens (≤ maxFov) so the
+    // subject keeps the requested size (keepSize: false → old behaviour, the subject just gets bigger)
+    const ratio = d0 > 1e-6 ? pos.distanceTo(target) / d0 : 1;
+    const keep = r.keepSize ?? DIRECT.keepSize;
+    if (keep && ratio < 0.85) fov = Math.min(r.maxFov ?? 60, 2 * Math.atan(Math.tan(fov * D2R / 2) / ratio) / D2R);
+  }
   const roll = r.roll != null ? r.roll : (r.dutch ? r.dutch * D2R : 0);
-  const look = r.look ? r.look.clone() : aimLook(pos, target, { fov: r.fov, frame: r.frame, roll });
-  const spec = { pos, look, fov: r.fov, roll, target, focus: r.focus || target };
+  const look = r.look ? r.look.clone() : aimLook(pos, target, { fov, frame: r.frame, roll });
+  const spec = { pos, look, fov, roll, target, focus: r.focus || target };
   if (r.apply !== false) {
-    ctx.cam.set({ pos, look, fov: r.fov, roll });
+    ctx.cam.set({ pos, look, fov, roll });
     if (r.handheld && !r.__reapply) ctx.cam.shake(r.handheld, ctx.t, seed);
     if (DIRECT.focusOn && r.dof !== false && r.dof != null) DIRECT.focusOn(ctx, r.focusTarget ?? spec.focus, { aperture: r.dof, part: r.part || 'face' });
+    // subject light (look.js lightOn): key + rim on the helper's subject; key/rim: 0..1.5 | false; light: false = none
+    const lt = r.lightTarget !== undefined ? r.lightTarget : (r.focusTarget ?? spec.focus);
+    if (DIRECT.lightOn && r.light !== false && lt != null && !(r.key === false && r.rim === false)) {
+      DIRECT.lightOn(ctx, lt, { key: r.key, rim: r.rim, side: r.keySide, part: r.lightPart || (charOf(ctx, lt) ? 'face' : undefined) });
+    }
   }
   return spec;
 }
@@ -376,13 +421,13 @@ function around(ctx, who, o, defs) {
 }
 
 function closeUp_(ctx, who, o = {}) {
-  return around(ctx, who, o, { size: 0.34, angle: 0.25, elev: 4, fov: 36, frame: [0.5, 0.3], dof: 0.7 });
+  return around(ctx, who, o, { size: 0.22, angle: 0.25, elev: 4, fov: 44, frame: [0.5, 0.28], dof: 0.35 });
 }
 function ecu_(ctx, who, o = {}) {
-  return around(ctx, who, o, { size: 0.6, angle: 0.12, elev: 2, fov: 30, frame: [0.5, 0.33], dof: 1.2, push: 0.04, drift: 0.015, handheld: 0.05 });
+  return around(ctx, who, o, { size: 0.36, angle: 0.12, elev: 2, fov: 38, frame: [0.5, 0.3], dof: 0.6, push: 0.04, drift: 0.015, handheld: 0.05 });
 }
 function wide_(ctx, who, o = {}) {
-  return around(ctx, who, o, { size: 0.065, angle: 0.4, elev: 8, fov: 40, frame: [0.5, 0.34], dof: 0.25, push: 0.05 });
+  return around(ctx, who, o, { size: 0.065, angle: 0.4, elev: 8, fov: 40, frame: [0.5, 0.34], dof: 0.1, push: 0.05 });
 }
 
 function ots_(ctx, over, at, o = {}) {
@@ -436,11 +481,17 @@ function pov_(ctx, who, o = {}) {
     // keep both hands in frame: if they would fall below frame y `handsY` (0.86), tilt down until they sit there
     const hp = subjectPoint(ctx, ch, 'hands');
     const L = aimLook(eye, target, { fov: r.fov, frame, roll: r.dutch ? r.dutch * D2R : 0 });
-    const sy = projectFrom(eye, L, r.fov, r.dutch ? r.dutch * D2R : 0, hp)[1];
+    // a hand point BEHIND the eye plane (block heads: the eye sits on the face plane, 0.33 m ahead of the head centre,
+    // so hands held low near the chest can be behind it) projects with NDC z > 1 and a mirrored y — treat it as
+    // "below the frame" so the camera still tilts down to the hands (integration fix: the POV never showed hands when
+    // the subject was above eye level).
+    const pr = projectFrom(eye, L, r.fov, r.dutch ? r.dutch * D2R : 0, hp);
+    const behind = !(pr[2] < 1);
+    const sy = behind ? Infinity : pr[1];
     const hy = r.handsY ?? 0.86;
     if (sy > hy) {
       const roll = r.dutch ? r.dutch * D2R : 0;
-      let L2 = aimLook(eye, hp, { fov: r.fov, frame: [projectFrom(eye, L, r.fov, 0, hp)[0], hy], roll });
+      let L2 = aimLook(eye, hp, { fov: r.fov, frame: [behind ? 0.5 : projectFrom(eye, L, r.fov, 0, hp)[0], hy], roll });
       // never push the looked-at subject off the top: then it sits at y 0.12 and the hands go as low as they must
       const minY = r.atMinY ?? 0.2;
       if (r.at != null && projectFrom(eye, L2, r.fov, roll, target)[1] < minY) L2 = aimLook(eye, target, { fov: r.fov, frame: [frame[0], minY], roll });
@@ -451,7 +502,7 @@ function pov_(ctx, who, o = {}) {
 }
 
 function insert_(ctx, target, o = {}) {
-  const r = { size: 0.3, fill: 0.45, fov: 24, elev: 18, track: 0.05, frame: [0.5, 0.36], dof: 1.3, handheld: 0.04, drift: 0.01, push: 0.05, ...o };
+  const r = { size: 0.3, fill: 0.45, fov: 24, elev: 18, track: 0.05, frame: [0.5, 0.36], dof: 0.9, handheld: 0.04, drift: 0.01, push: 0.05, ...o };
   r.fov = clamp(r.fov, 20, 28);
   const T = o.point ? o.point.clone() : pt(ctx, target, r.part || 'face', r);
   const dist = r.dist ?? r.size / (r.fill * 2 * Math.tan(r.fov * D2R / 2));
@@ -481,12 +532,20 @@ function lowHero_(ctx, who, o = {}) {
 function topDown_(ctx, target, o = {}) {
   const r = { height: 3.0, fov: 50, spin: 0, handheld: 0.035, drift: 0.015, push: 0.05, dof: 0.3, frame: [0.5, 0.5], ...o };
   const ch = charOf(ctx, target);
+  const lean = r.lean ?? (ch ? 0.4 : 0);
   const T = r.point ? r.point.clone() : pt(ctx, target, r.part || (ch ? 'chest' : 'face'), r);
   let y = T.y + r.height;
   if (r.maxY != null) y = Math.min(y, r.maxY);
   const h = Math.max(0.3, y - T.y);
   const heading = (r.heading != null ? r.heading : facingOf(ctx, target)) + r.spin * ctx.lt;
   const fwd = dirFromYaw(heading);
+  if (lean > 0.02) {
+    // lean off vertical toward the subject's FACE (leanYaw = world yaw to lean toward; default the subject's facing)
+    // so a block head reads as a face, not a hair rectangle; the camera height above the target stays h
+    const ld = dirFromYaw(r.leanYaw != null ? r.leanYaw : facingOf(ctx, target));
+    const pos = T.clone().addScaledVector(ld, h * Math.tan(lean)); pos.y = T.y + h;
+    return shoot(ctx, { ...r, pos, target: T, focusTarget: ch || T, part: ch ? 'chest' : r.part });
+  }
   // a hair off vertical so lookAt is well defined; the frame's top points along `heading`
   const pos = T.clone().addScaledVector(fwd, -h * 0.02); pos.y = T.y + h;
   return shoot(ctx, { ...r, pos, target: T, look: T.clone().addScaledVector(fwd, h * 0.001), focusTarget: ch || T, part: ch ? 'chest' : r.part });
@@ -502,8 +561,57 @@ function tracked(fn, nargs) {
     return res;
   };
 }
+// medium-close for HUSS / body-acting beats: chest-centred, head ≈ 20 % of the frame height, both arms + the load in
+// frame, face at y ≈ 0.25 (clear of the caption band)
+function hussFrame_(ctx, who, o = {}) {
+  return around(ctx, who, o, { part: 'chest', size: 0.2, angle: 0.35, elev: 6, fov: 46, frame: [0.5, 0.42], dof: 0.3, push: 0.04 });
+}
 export const closeUp = tracked(closeUp_, 1), ecu = tracked(ecu_, 1), wide = tracked(wide_, 1), ots = tracked(ots_, 2),
-  pov = tracked(pov_, 1), insert = tracked(insert_, 1), lowHero = tracked(lowHero_, 1), topDown = tracked(topDown_, 1);
+  pov = tracked(pov_, 1), insert = tracked(insert_, 1), lowHero = tracked(lowHero_, 1), topDown = tracked(topDown_, 1),
+  hussFrame = tracked(hussFrame_, 1);
+
+/**
+ * Blocking lint: is any principal's head covered by another character (nearer the camera) by more than maxCover?
+ * Uses this frame's camera (call AFTER the framing helper). Returns [{ who, by, cover }] (cover 0..1 of the head's
+ * screen box); warn:true logs each problem once per shot with console.warn.
+ */
+export function blockingCheck(ctx, ids = null, { maxCover = 0.3, warn = true } = {}) {
+  const st = ctx.cam.state;
+  const list = (ids || Object.keys(ctx.cast || {})).map((id) => [id, ctx.cast[id]]).filter(([, ch]) => ch && ch.joints && ch.root && ch.root.parent && ch.root.visible);
+  const camPos = st.pos;
+  const rectOf = (pts) => {
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, ok = false;
+    for (const p of pts) { const q = projectFrom(st.pos, st.look, st.fov, st.roll || 0, p); if (q[2] >= 1 || q[2] <= -1) continue; ok = true; x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); }
+    return ok ? [x0, y0, x1, y1] : null;
+  };
+  const box = (ch, joint, w, h0, h1, d) => { const J = ch.joints[joint]; const out = []; for (const x of [-w, w]) for (const y of [h0, h1]) for (const z of [-d, d]) out.push(J.localToWorld(new THREE.Vector3(x, y, z))); return out; };
+  const info = list.map(([id, ch]) => {
+    ch.root.updateMatrixWorld(true);
+    const head = rectOf(box(ch, 'head', 0.32, 0, 0.6, 0.28));
+    const torso = rectOf(box(ch, 'torso', 0.36, -0.45, 0.5, 0.2));
+    const dist = ch.joints.head.getWorldPosition(new THREE.Vector3()).distanceTo(camPos);
+    const tdist = ch.joints.torso.getWorldPosition(new THREE.Vector3()).distanceTo(camPos);
+    return { id, head, torso, dist, tdist };
+  });
+  const area = (r) => Math.max(0, r[2] - r[0]) * Math.max(0, r[3] - r[1]);
+  const inter = (a, b) => [Math.max(a[0], b[0]), Math.max(a[1], b[1]), Math.min(a[2], b[2]), Math.min(a[3], b[3])];
+  const out = [];
+  for (const a of info) {
+    if (!a.head || area(a.head) <= 0) continue;
+    for (const b of info) {
+      if (a === b) continue;
+      let cover = 0;
+      if (b.head && b.dist < a.dist - 0.15) cover = Math.max(cover, area(inter(a.head, b.head)) / area(a.head));
+      if (b.torso && b.tdist < a.dist - 0.15) cover = Math.max(cover, area(inter(a.head, b.torso)) / area(a.head));
+      if (cover > maxCover) {
+        out.push({ who: a.id, by: b.id, cover });
+        const key = `__blk_${a.id}_${b.id}`;
+        if (warn && !ctx.store[key]) { ctx.store[key] = true; console.warn(`[blocking] shot "${ctx.shot && ctx.shot.name}": ${a.id}'s head is ${(cover * 100) | 0}% covered by ${b.id}`); }
+      }
+    }
+  }
+  return out;
+}
 function reapply(ctx, extra) {
   const last = ctx.store.__dirCall;
   if (!last || last.t !== ctx.t) return null;
@@ -621,7 +729,8 @@ function bumpIntegral(t, a, b, L) {
 
 export function hussBeat(ctx, t = ctx.t, o = {}) {
   const r = { who: 'me', double: false, face: 'huss', faceHold: 0.32, punch: 0.11, shake: 0.35, slow: 0.3, rate: 0.3, ramp: 0.07,
-    stamp: 'caption', stampY: 0.59, ...o };
+    stamp: 'caption', stampY: 0.59, camera: false, ...o };
+  if (r.camera) hussFrame(ctx, r.who, r.camera === true ? {} : r.camera);   // medium-close framing (before the punch)
   const beat = r.beat ? ctx.beat(r.beat) : nearestHussBeat(ctx, t);
   const out = { t, raw: t, hits: [], on: false, k: 0, since: Infinity, beat: beat ? beat.id : null };
   if (!beat) return out;

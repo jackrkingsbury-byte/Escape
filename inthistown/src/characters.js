@@ -83,6 +83,8 @@
 //   poses use poseMix(a, ta, pa, b, tb, pb, w)). Body units below are unscaled metres (× spec.scale in the world).
 //   haul       bent-double strain over a low load in FRONT (hands straight down to the grip, face up to the camera).
 //              gripY / gripZ: world m of the grip above / ahead of the root (default 0.5·s / 0.62·s).
+//              low 0..1 (default 0): deeper, lower bend (head top ≈1.45·s → ≈1.05·s) for SETUP A, where anything
+//              between the camera and the door glass must stay under 0.7 + 0.21·d m (also on drag).
 //              behind:true → strap over the right shoulder, load behind, leaning into it.
 //   drag       CYCLE of haul: walks BACKWARD (move the root −Z at DRAG_SPEED·speed·scale m/s); behind:true walks
 //              forward (+Z). The S01 wardrobe drag.
@@ -123,12 +125,32 @@
 //   pass reachL/reachR 'chest'; hangs down the front and puddles forward).
 // v2 exports: SPRINT_SPEED 3.3, DRAG_SPEED 0.38, BACKUP_SPEED 0.6, CHARGE_SPEED 3.0 (m/s at speed 1, scale 1),
 //   REACH_PRESETS. ACTIONS / EXPRESSIONS have the v2 names appended.
+// v2 TOY FINISH (look fix pass; all opt-in — specs without these fields build byte-identical v1 figures):
+//   v2: true                     shorthand for all of the following defaults (cast.js FAMILY / FAMILY_NIGHT / MAIN_V2)
+//   head: { round: 0.16 }        rounded head: real corner radius in metres (v1 ≈ 0.017), 4 segments; hair caps and the
+//                                fade shell round to match; the face decal is bent onto the rounded surface
+//   face: { scale 1.2, stroke 1.3, res 1024, sclera true }   features scaled about the face centre, every stroke ×1.3,
+//                                white sclera + outline on the open eyes, 1024² face canvas (crisp when a face fills
+//                                the frame)
+//   finish: { roughness 0.6, hair 0.5 }   toy-plastic sheen on the body (v1 0.78) and a separate glossier hair material
+//   joints: 'ball'               spheres at shoulders + elbows so bent arms stay visually connected
+//   (v2 also: thin glasses temples tucked to the head; smoother 'puffs')
+// v2 ACCESSORY 'headphonesOn': band over the head + cups on the ears (parented to the head). Pose param
+//   cupBack: 'L' | 'R' | null pushes that cup back off the ear (b03 / b16 / b21). The old 'headphones' (round the neck)
+//   is unchanged. MAIN_V2.me wears 'headphonesOn'.
+// v2 FACE GLINTS: ch.face(expr, t, { glints: n, glintColor = '#ffbe78' }) paints n tiny warm catchlights in a row in
+//   each pupil (S02/S08 five lantern glints, S24 three). Without the third argument the face is the v1 texture.
+// v2 FACE THE CAMERA: any pose accepts faceCam 0..1 + cam (world Vector3 camera position): the head turns toward the
+//   camera (yaw ≤ 0.9 rad from the body, pitch partly) — for leanIn / hugNeck / glances back over a shoulder, so a 3/4
+//   front camera sees the child's face. The parent looks down at the child with lookAt (existing) or faceCam too.
+//   Pose once WITHOUT faceCam, then get the camera: const c = closeUp(ctx, who, { …, apply: false }); then pose again
+//   with { faceCam: 0.8, cam: c.pos } — never read the camera from last frame's pose (breaks random-access determinism).
 //
 // Units: metres, Y up, feet at the origin, facing +Z.  Deterministic: pose()/face() are pure functions
 // of their arguments (no random, no clocks) — every call resets every joint from the rest pose.
 import * as THREE from 'three';
 import { mergeGeometries, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
-import { clamp, lerp, smooth, ease, hash, noise1, canvasTexture, rbox as rboxU } from './lib/util.js';
+import { clamp, lerp, smooth, ease, hash, noise1, canvasTexture, rbox as rboxU, BLOCKY } from './lib/util.js';
 
 export const CHARACTER_HEIGHT = 2.0;
 export const SEAT_HEIGHT = 0.55;
@@ -137,6 +159,7 @@ export const SEAT_HEIGHT = 0.55;
 //            true  → one SkinnedMesh per figure (fewest draw calls; pick this if draw calls ever dominate)
 export const CHARACTER_OPTIONS = { skinned: false };
 let _lowDetail = false;
+let _kindRemap = null;        // v2 finish: material kind remap applied at Bag.add time (null = v1, byte-identical)
 
 export const ACTIONS = ['idle', 'dance', 'dance2', 'walk', 'sit', 'sitSlam', 'slam', 'laugh', 'point', 'clap',
   'cheer', 'surprised', 'shrug', 'think', 'peer', 'crowdSurf', 'walkSad', 'stunned', 'wave', 'sitIdle',
@@ -206,6 +229,7 @@ const _vcMats = {};
 function vcMat(kind) {
   if (!_vcMats[kind]) {
     const o = { vertexColors: true, roughness: 0.78, metalness: 0 };
+    if (kind.startsWith('vc@') || kind.startsWith('hair@')) o.roughness = parseFloat(kind.split('@')[1]);   // v2 finish
     if (kind === 'gloss') o.roughness = 0.3;
     if (kind === 'gold') { o.roughness = 0.36; o.metalness = 0.35; }
     _vcMats[kind] = new THREE.MeshStandardMaterial(o);
@@ -238,6 +262,7 @@ function taperBox(w, h, d, r, taper) {
 class Bag {
   constructor() { this.items = []; }
   add(geo, color, pos = [0, 0, 0], rot = [0, 0, 0], scl = [1, 1, 1], kind = 'vc', flat = false) {
+    if (_kindRemap && _kindRemap[kind]) kind = _kindRemap[kind];
     const m = new THREE.Matrix4().compose(_v1.set(pos[0], pos[1], pos[2]),
       _q1.setFromEuler(_e1.set(rot[0], rot[1], rot[2], rot[3] || 'XYZ')),
       _v2.set(scl[0], scl[1], scl[2]));
@@ -437,7 +462,12 @@ function humanEye(g, kind, x, y, side, C) {
     ell(g, x + dx + 10 * s, y + 13 * s, 5 * s, 5 * s); g.fill();
   };
   switch (kind) {
-    case 'open': oval(); shine(); break;
+    case 'open':
+      if (C.sclera) {            // v2: white sclera + outline around a slightly smaller pupil
+        g.fillStyle = '#ffffff'; ell(g, x, y, 37, 45); g.fill(); g.lineWidth = 6; g.strokeStyle = LINE; g.stroke();
+        g.fillStyle = C.eye; ell(g, x - inn * 2, y + 6, 25, 33); g.fill(); shine(-inn * 2, 0.85);
+      } else { oval(); shine(); }
+      break;
     case 'small': oval(25, 33, 8); shine(8, 0.8); break;
     case 'happy':
       oval(32, 40); shine();
@@ -652,11 +682,64 @@ function drawHumanFace(g, expr, blink, C) {
   }
 }
 
-function humanFaceTexture(expr, blink, C) {
-  const key = `h|${expr}|${blink ? 1 : 0}|${C.eye}|${C.brow}|${C.nose}`;
+function humanFaceTexture(expr, blink, C, fo = null) {
+  let key = `h|${expr}|${blink ? 1 : 0}|${C.eye}|${C.brow}|${C.nose}`;
+  if (fo) key += `|v2|${fo.scale ?? 1}|${fo.stroke ?? 1}|${fo.res ?? 512}|${fo.sclera ? 1 : 0}|${fo.glints || 0}|${fo.glintColor || ''}`;
   let t = _faceTex.get(key);
-  if (!t) { t = canvasTexture(512, 512, (g) => drawHumanFace(g, expr, blink, C)); _faceTex.set(key, t); }
+  if (!t) {
+    const res = fo ? (fo.res ?? 512) : 512;
+    t = canvasTexture(res, res, (g) => (fo ? drawHumanFaceV2(g, expr, blink, C, fo) : drawHumanFace(g, expr, blink, C)));
+    _faceTex.set(key, t);
+  }
   return t;
+}
+// v2 face: the same drawing scaled about the face centre (features × fo.scale), every stroke × fo.stroke, optional
+// white sclera on the open eyes and n warm glints in each pupil, on a res² canvas (1024: crisp in an ECU)
+const FACE_CX = 256, FACE_CY = 290;
+function drawHumanFaceV2(g, expr, blink, C, fo) {
+  const res = fo.res ?? 512, k = fo.scale ?? 1, sk = fo.stroke ?? 1;
+  g.clearRect(0, 0, res, res);
+  g.save();
+  g.scale(res / 512, res / 512);
+  g.translate(FACE_CX, FACE_CY); g.scale(k, k); g.translate(-FACE_CX, -FACE_CY);
+  if (sk !== 1) {
+    const d = Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype, 'lineWidth');
+    Object.defineProperty(g, 'lineWidth', { configurable: true, get() { return d.get.call(g) / sk; }, set(v) { d.set.call(g, v * sk); } });
+  }
+  drawHumanFace(g, expr, blink, { ...C, sclera: !!fo.sclera });
+  if (fo.glints) {
+    const F = HUMAN_FACES[expr] || HUMAN_FACES.neutral;
+    for (const [x, side, kind] of [[256 - FX, -1, blink && F.blink ? F.blink : F.e], [256 + FX, 1, blink && F.blink ? F.blink : (F.eR || F.e)]]) {
+      const P = GLINT_PUPIL[kind];
+      if (!P) continue;
+      const n = fo.glints, w = P[2] * 2, sp = n > 1 ? w / (n - 1) : 0, rr = Math.min(5.2, Math.max(2.6, 18 / n));
+      for (let i = 0; i < n; i++) {
+        const gx = x + P[0] + (n > 1 ? -w / 2 + i * sp : 0), gy = FEY + P[1] + 0.9 * Math.sin(i * 1.7);
+        g.fillStyle = fo.glintColor || '#ffbe78'; ell(g, gx, gy, rr, rr); g.fill();
+        g.fillStyle = '#fffaf0'; ell(g, gx - rr * 0.2, gy - rr * 0.25, rr * 0.45, rr * 0.45); g.fill();
+      }
+    }
+  }
+  if (sk !== 1) delete g.lineWidth;
+  g.restore();
+}
+// pupil centre offset [dx toward the nose(+)… applied with the side, dy, half-width of the glint row] per eye kind
+const GLINT_PUPIL = { open: [0, 6, 16], small: [8, 4, 12], happy: [0, 0, 16], determined: [0, 10, 14], sad: [0, 8, 15],
+  half: [0, 14, 14], wide: [0, 3, 9], welling: [0, 6, 17], pin: [0, 0, 4] };
+// face decal bent onto a rounded head (v2 spec.head.round): vertices follow the rounded box surface at the corners
+function conformedFacePlane(round) {
+  const g = new THREE.PlaneGeometry(FACE_SIZE, FACE_SIZE, 16, 16);
+  const P = g.attributes.position;
+  const hx = HEAD_W / 2, hy = HEAD_H / 2, hz = HEAD_D / 2, r = Math.min(round, hx - 1e-3, hy - 1e-3, hz - 1e-3);
+  for (let i = 0; i < P.count; i++) {
+    const x = P.getX(i), yh = P.getY(i) + FACE_Y;
+    const dx = Math.max(0, Math.abs(x) - (hx - r)), dy = Math.max(0, Math.abs(yh - hy) - (hy - r));
+    const q = dx * dx + dy * dy;
+    const zs = q < r * r ? hz - r + Math.sqrt(r * r - q) : hz - r - 0.02;
+    P.setZ(i, zs - hz);
+  }
+  g.computeVertexNormals();
+  return g;
 }
 
 // --- pigeon face (256 px ↔ 0.14 m) ---
@@ -1504,10 +1587,13 @@ function stepFoot(c, side, cps, stride, dir, zc, lift, duty = 0.6, xo = 0.03) {
 function haulPose(c, behind, feet, bob, tug) {
   const I = c.I, sh = trem(c, 11, 0.012 * I), sh2 = trem(c, 8, 0.012 * I, 3);
   if (!behind) {
-    hipsAt(c, 0, 0.64 + bob, -0.14, 0.42 + tug * 0.4, 0, sh2);
+    // low 0..1 (opt-in, default 0 = unchanged): a deeper, lower bend — head top ≈1.45·s → ≈1.05·s — so the haul stays
+    // under the SETUP-A occlusion envelope (home.js: 0.7 + 0.21·d m) and the lantern row behind stays visible.
+    const lo = clamp(c.p.low ?? 0, 0, 1);
+    hipsAt(c, 0, 0.64 - 0.17 * lo + bob, -0.14 - 0.06 * lo, 0.42 + 0.2 * lo + tug * 0.4, 0, sh2);
     legsTo(c, feet.L, feet.R, V(0.25, 0, 1), V(-0.25, 0, 1));
-    eul(c, 'torso', 0.62 + tug + sh, 0, 0);
-    setHead(c, -0.75, 0, 0);
+    eul(c, 'torso', 0.62 + 0.22 * lo + tug + sh, 0, 0);
+    setHead(c, -0.75 - 0.3 * lo, 0, 0);
     const gy = c.p.gripY !== undefined ? c.p.gripY / c.s : 0.45, gz = c.p.gripZ !== undefined ? c.p.gripZ / c.s : 0.62;
     armBody(c, 'L', [0.22, gy + sh, gz], [0.6, 0.2, -1]);
     armBody(c, 'R', [-0.22, gy - sh, gz], [-0.6, 0.2, -1]);
@@ -1898,6 +1984,12 @@ function normSpec(spec) {
     shoeStyle: spec.shoeStyle,              // 'wellies' | 'boots' | 'slippers'
     blanketColor: spec.blanketColor ?? '#b9a3e3',
     apronColor: spec.apronColor ?? '#f4f1ea',
+    // v2 TOY FINISH (opt-in; absent = v1 byte-identical). v2: true = all of them with the defaults below.
+    v2: !!spec.v2,
+    head: spec.head ?? (spec.v2 ? { round: 0.16 } : null),                                   // rounded head (m)
+    face: spec.face ?? (spec.v2 ? { scale: 1.2, stroke: 1.3, res: 1024, sclera: true } : null),
+    finish: spec.finish ?? (spec.v2 ? { roughness: 0.6, hair: 0.5 } : null),                // toy-plastic sheen
+    joints: spec.joints ?? (spec.v2 ? 'ball' : null),                                       // 'ball' = shoulder/elbow spheres
   };
 }
 
@@ -1906,7 +1998,7 @@ function seedOf(id) { let s = 7; const str = String(id); for (let i = 0; i < str
 export function makeCharacter(spec = {}) {
   const low = spec.lod === 'low' || !!spec.lowDetail;
   _lowDetail = low;
-  try { return buildHuman(spec, low); } finally { _lowDetail = false; _collect = null; }
+  try { return buildHuman(spec, low); } finally { _lowDetail = false; _collect = null; _kindRemap = null; }
 }
 
 function buildHuman(spec, low) {
@@ -2137,6 +2229,10 @@ function buildHuman(spec, low) {
       ba.add(rbox(aw * 0.94, ul, ARM_D * 0.94, 0.045), skin, [0, 0.08 - ul / 2, 0]);
       ba.add(rbox(aw + 0.02, topStyle === 'dress' ? 0.11 : 0.19, ARM_D + 0.02, 0.05), topC, [0, topStyle === 'dress' ? 0.03 : -0.01, 0]);
     }
+    if (S.joints === 'ball' && !low) {        // v2: spheres keep bent arms visually connected (shoulder + elbow)
+      ba.add(sph(Math.max(aw, ARM_D) * 0.56, 16, 12), topC, [0, 0.0, 0]);
+      ba.add(sph(Math.max(aw, ARM_D) * 0.5, 14, 10), longSleeve ? topC : skin, [0, -UPPER, 0]);
+    }
     ba.build(J['arm' + side]);
     const bf = new Bag();
     const fl = FORE - HAND / 2 + 0.06;
@@ -2168,18 +2264,22 @@ function buildHuman(spec, low) {
   let hairTop = 0;
   {
     const b = new Bag();
-    b.add(rbox(HEAD_W, HEAD_H, HEAD_D, HEAD_R, 2), skin, [0, HEAD_H / 2, 0]);
+    if (S.head && S.head.round) b.add(rboxU(HEAD_W, HEAD_H, HEAD_D, S.head.round / BLOCKY, low ? 2 : 4), skin, [0, HEAD_H / 2, 0]);   // v2 round head
+    else b.add(rbox(HEAD_W, HEAD_H, HEAD_D, HEAD_R, 2), skin, [0, HEAD_H / 2, 0]);
     if (S.hair.style !== 'long') for (const sx of [-1, 1]) b.add(rbox(0.07, 0.14, 0.11, 0.03), skin, [sx * (HEAD_W / 2 + 0.012), 0.27, -0.01]);
     const extras = [];
+    const remap0 = _kindRemap;
+    if (S.finish) _kindRemap = { vc: 'hair@' + (S.finish.hair ?? 0.5) };
     hairTop = addHair(b, S.hair.style, hairC, skin, S, extras);
+    _kindRemap = remap0;
     b.build(J.head);
     for (const m of extras) J.head.add(m);
   }
   _collect = null;
   skinC.build(body, [...HUMAN_JOINTS, 'fingerL', 'fingerR'].map((n) => J[n]));
   for (const f of Object.values(fingers)) f.scale.setScalar(1e-5);
-  const faceMat = makeFaceMaterial(humanFaceTexture('neutral', false, faceColors));
-  const faceMesh = new THREE.Mesh(plane(FACE_SIZE, FACE_SIZE), faceMat);
+  const faceMat = makeFaceMaterial(humanFaceTexture('neutral', false, faceColors, S.face));
+  const faceMesh = new THREE.Mesh(S.head && S.head.round ? conformedFacePlane(S.head.round) : plane(FACE_SIZE, FACE_SIZE), faceMat);
   faceMesh.position.set(0, FACE_Y, HEAD_D / 2 + 0.0025); faceMesh.name = 'face';
   J.head.add(faceMesh);
 
@@ -2226,10 +2326,13 @@ function buildHuman(spec, low) {
       applyHuman(recM);
       return ch;
     },
-    face(expr = 'neutral', t = 0) {
+    face(expr = 'neutral', t = 0, opts = null) {
       const e = HUMAN_FACES[expr] ? expr : 'neutral';
       ch.expression = e;
-      faceMat.map = humanFaceTexture(e, isBlinking(t, blinkPhase), faceColors);
+      // v2: opts.glints = n warm catchlights in each pupil (opts.glintColor); absent → the v1 texture
+      const gl = opts && opts.glints ? opts.glints | 0 : 0;
+      const fo = S.face || gl ? { ...(S.face || {}), glints: gl, glintColor: (opts && opts.glintColor) || '#ffbe78' } : null;
+      faceMat.map = humanFaceTexture(e, isBlinking(t, blinkPhase), faceColors, fo);
       return ch;
     },
     setAccessory(name, on = true) {
@@ -2266,6 +2369,11 @@ function buildHuman(spec, low) {
     for (const sd of ['L', 'R']) { const on = (rec.x['finger' + sd] || 0) > 0.5; fingers[sd].scale.setScalar(on ? 1 : 1e-5); fingers[sd].visible = on; }
     if (rec.x.footZ !== undefined) ch.sitInfo.footZ = rec.x.footZ;
     lastRec = rec;
+    const hp = accs.headphonesOn;                              // v2 head-worn headphones: one cup pushed back
+    if (hp && hp.userData.cups) for (const sd of ['L', 'R']) {
+      const back = rec.x.cupBack === sd;
+      const cp = hp.userData.cups[sd]; cp.rotation.set(back ? -1.05 : 0, 0, back ? (sd === 'L' ? -0.35 : 0.35) : 0);
+    }
     const bl = accs.blanket;                                   // v2 blanket follows the hand(s)
     if (bl && bl.visible) shapeBlanket(bl.userData.blanket, rec, rec.x.blanketMode || 'drag', rec.x.blanketHand || 'L', rec.x.bt || 0);
   }
@@ -2299,6 +2407,19 @@ function computeHuman(ch, rec, action, t, params) {
     hx = -Math.atan2(d.y, Math.hypot(d.x, d.z));
     if (Math.abs(hy) > 2.4) hy = 0;   // target behind: don't spin
   }
+  if (params.faceCam && params.cam && ch.root) {
+    // v2: turn the face toward the camera (world point params.cam) by faceCam 0..1, yaw ≤ 0.9 rad from the body
+    ch.root.updateWorldMatrix(true, false);
+    _m1.copy(ch.root.matrixWorld).multiply(ch.body.matrix.compose(ch.body.position, ch.body.quaternion, ch.body.scale));
+    _m2.compose(rec.j.hips.p, rec.j.hips.q, _v1.set(1, 1, 1)); _m1.multiply(_m2);
+    _m2.compose(rec.j.torso.p, rec.j.torso.q, _v1.set(1, 1, 1)); _m1.multiply(_m2);
+    const L = _v2.copy(params.cam).applyMatrix4(_m1.invert());
+    const d = L.sub(_v3.set(0, NECK_Y + 0.31, 0));
+    const k = clamp(params.faceCam, 0, 1);
+    const cy = clamp(Math.atan2(d.x, d.z), -0.9, 0.9), cx = clamp(-Math.atan2(d.y, Math.hypot(d.x, d.z)), -0.5, 0.5);
+    hy = lerp(hy, cy, k); hx = lerp(hx, cx, k * 0.6); hz *= 1 - 0.6 * k;
+  }
+  if (params.cupBack !== undefined) c.x.cupBack = params.cupBack;
   hy += params.headYaw ?? 0;
   hx += params.headPitch ?? 0;
   hy = clamp(hy, -1.25, 1.25); hx = clamp(hx, -0.75, 0.8);
@@ -2307,7 +2428,7 @@ function computeHuman(ch, rec, action, t, params) {
 
 // ---- hair ------------------------------------------------------------------------------------------
 const _shellMats = new Map();
-function fadeShell(hc, skin) {
+function fadeShell(hc, skin, round = 0) {
   const key = hc + skin;
   let mat = _shellMats.get(key);
   if (!mat) {
@@ -2329,7 +2450,7 @@ function fadeShell(hc, skin) {
   }
   const h = 0.6, y0 = -0.005;
   // one material (1 draw): the front face sits 6 mm inside the face so the head hides it
-  const m = new THREE.Mesh(rbox(HEAD_W + 0.012, h, HEAD_D, HEAD_R + 0.006, 2), mat);
+  const m = new THREE.Mesh(round ? rboxU(HEAD_W + 0.012, h, HEAD_D, (round + 0.006) / BLOCKY, 4) : rbox(HEAD_W + 0.012, h, HEAD_D, HEAD_R + 0.006, 2), mat);
   m.position.set(0, y0 + h / 2, -0.006); m.castShadow = true; m.receiveShadow = true; m.name = 'fadeShell';
   return m;
 }
@@ -2337,9 +2458,11 @@ function fadeShell(hc, skin) {
 function addHair(b, style, hc, skin, S, extras = null) {
   const W = HEAD_W, Dp = HEAD_D, Hh = HEAD_H;
   const capFrontZ = (d) => (Dp / 2 - 0.012) - d / 2;   // z centre so the cap front sits just inside the face
+  const vr = S.head && S.head.round ? S.head.round : 0;        // v2 round head → rounded hair caps
   const cap = (h, yTop, extra = 0.022, col = hc, r = 0.075) => {
     const d = Dp + extra;
-    b.add(rbox(W + extra, h, d, r, 3), col, [0, yTop - h / 2, capFrontZ(d)]);
+    if (vr) b.add(rboxU(W + extra, h, d, Math.min(vr + extra / 2, h / 2 - 0.004) / BLOCKY, _lowDetail ? 2 : 4), col, [0, yTop - h / 2, capFrontZ(d)]);
+    else b.add(rbox(W + extra, h, d, r, 3), col, [0, yTop - h / 2, capFrontZ(d)]);
   };
   const dark = shade(hc, 0.86);
   switch (style) {
@@ -2347,7 +2470,7 @@ function addHair(b, style, hc, skin, S, extras = null) {
     case 'fade': {
       // crop on top; the sides/back are a gradient shell (hair → skin) = a clean skin fade
       cap(Hh + 0.035 - 0.47, Hh + 0.035, 0.024);
-      if (extras && !_lowDetail) extras.push(fadeShell(hc, skin));
+      if (extras && !_lowDetail) extras.push(fadeShell(hc, skin, S.head && S.head.round ? S.head.round : 0));
       else cap(0.17, Hh + 0.035 - 0.25, 0.014, mixHex(hc, skin, 0.35), 0.07);
       b.add(rbox(0.6, 0.07, 0.5, 0.035), hc, [0, Hh + 0.05, -0.035]);
       b.add(rbox(0.54, 0.1, 0.19, 0.045), hc, [0, Hh + 0.075, 0.115], [-0.3, 0, 0]);
@@ -2406,10 +2529,10 @@ function addHair(b, style, hc, skin, S, extras = null) {
       const tie = S.hair.tie ?? (S.top.accent === '#ffffff' ? '#ff4fa3' : S.top.accent);
       for (const sx of [-1, 1]) {
         const px = sx * 0.25, py = Hh + 0.13, pz = -0.03;
-        b.add(sph(0.165, 16, 12), hc, [px, py, pz], [0, 0, 0], [1, 0.94, 0.94]);
+        b.add(S.v2 ? sph(0.165, 24, 18) : sph(0.165, 16, 12), hc, [px, py, pz], [0, 0, 0], [1, 0.94, 0.94]);
         if (!_lowDetail) for (let k = 0; k < 5; k++) {
           const a = k / 5 * TAU + sx;
-          b.add(ico(0.07, 0), k % 2 ? dark : hc, [px + Math.cos(a) * 0.13, py + 0.03 + Math.sin(a) * 0.12, pz + 0.05 * Math.sin(a * 2)], [k, a, 0], [1, 1, 1], 'vc', true);
+          b.add(ico(0.07, S.v2 ? 1 : 0), k % 2 ? dark : hc, [px + Math.cos(a) * 0.13, py + 0.03 + Math.sin(a) * 0.12, pz + 0.05 * Math.sin(a * 2)], [k, a, 0], [1, 1, 1], 'vc', !S.v2);
         }
         b.add(cyl(0.085, 0.09, 0.05, 14), tie, [sx * 0.19, Hh + 0.03, pz], [0, 0, sx * 0.55]);
       }
@@ -2566,6 +2689,25 @@ function buildHumanAccessory(name, ctx) {
       }
       break;
     }
+    case 'headphonesOn': {     // v2: worn ON the head (band over the hair, cups on the ears); pose param cupBack 'L'|'R'
+      const white = '#f4f4f6', pad = '#3a3b42';
+      const ex = HEAD_W / 2 + 0.05, top = HEAD_H + Math.max(0.05, hairTop * 0.8) + 0.03, cy = 0.27, bz = -0.01;
+      const pts = [];
+      for (let i = 0; i <= 10; i++) { const a = PI * i / 10; pts.push(new THREE.Vector3(Math.cos(a) * ex, cy + 0.1 + Math.sin(a) * (top - cy - 0.1), bz)); }
+      const tube = cgeo(`hpOnBand${ex.toFixed(3)}|${top.toFixed(3)}`, () => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 20, 0.028, 7, false));
+      b.add(tube, white);
+      grp.userData.cups = {};
+      for (const sx of [1, -1]) {
+        const pivot = new THREE.Group(); pivot.name = 'cup' + (sx > 0 ? 'L' : 'R'); pivot.position.set(sx * ex, cy + 0.1, bz);
+        const cb = new Bag();
+        cb.add(cyl(0.105, 0.105, 0.07, 18), white, [sx * 0.01, -0.1, 0], [0, 0, PI / 2]);
+        cb.add(cyl(0.085, 0.085, 0.03, 16), pad, [-sx * 0.035, -0.1, 0], [0, 0, PI / 2]);
+        cb.add(cyl(0.06, 0.06, 0.012, 14), shade(white, 0.86), [sx * 0.05, -0.1, 0], [0, 0, PI / 2]);
+        cb.build(pivot);
+        grp.add(pivot); grp.userData.cups[sx > 0 ? 'L' : 'R'] = pivot;
+      }
+      break;
+    }
     case 'glasses': {
       const fc = '#3b2a22';
       for (const sx of [-1, 1]) {
@@ -2574,7 +2716,8 @@ function buildHumanAccessory(name, ctx) {
         b.add(rbox(0.17, 0.022, 0.02, 0.008), fc, [x, eyeY - 0.062, z]);
         b.add(rbox(0.022, 0.146, 0.02, 0.008), fc, [x - 0.074, eyeY, z]);
         b.add(rbox(0.022, 0.146, 0.02, 0.008), fc, [x + 0.074, eyeY, z]);
-        b.add(rbox(0.018, 0.02, 0.3, 0.006), fc, [sx * (HEAD_W / 2 + 0.012), eyeY + 0.04, z - 0.15]);
+        if (S.v2) b.add(rbox(0.012, 0.012, 0.3, 0.004), fc, [sx * (HEAD_W / 2 + 0.003), eyeY + 0.04, z - 0.15]);   // v2: thin, tucked to the head
+        else b.add(rbox(0.018, 0.02, 0.3, 0.006), fc, [sx * (HEAD_W / 2 + 0.012), eyeY + 0.04, z - 0.15]);
       }
       b.add(rbox(0.07, 0.02, 0.02, 0.006), fc, [0, eyeY + 0.03, faceZ + 0.02]);
       break;

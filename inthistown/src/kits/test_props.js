@@ -25,6 +25,10 @@
  *   15 home    night_lamp  SETUP A with the real lantern row on the porch hooks (tags), wardrobe lying on its back
  *   16 home    night_lamp  beam macro from the porch (fov 24): flare on the blank tag (S03)
  *   17 home    night_lamp  hall-table insert with the kit's family photo (home option photo:false)
+ * Measured (SwiftShader 4 CPU, scale 0.75 = 810×1440, 1 worker, look.js post incl. AO + DOF + bloom; render.mjs --bench 8,
+ *   render only): studio prop table 1.35 s/frame (367 draw calls incl. 2 characters), torch shot 1.0, crib top-down 1.1,
+ *   home setup A + lantern row + wardrobe 2.5, home beam macro 3.1. --check-determinism on 2.5, 3.3 (smoke), 7.5,
+ *   14.5, 16.4 (flare): identical across orders and processes.
  */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
@@ -68,11 +72,11 @@ function buildStudio(ctx) {
         warm: { key: 70, keyCol: '#ffd2a0', hemi: 0.45, fill: 6, env: 0.35, bg: '#2a2420', mood: 'warm' },
         night: { key: 0, keyCol: '#ffd2a0', hemi: 0.07, fill: 2.5, env: 0.05, bg: '#0b0f1a', mood: 'night' },
         dark: { key: 0, keyCol: '#ffd2a0', hemi: 0.02, fill: 0.6, env: 0.015, bg: '#05070c', mood: 'dark' },
-        fridge: { key: 55, keyCol: '#e4f0ff', hemi: 0.05, fill: 0.8, env: 0.06, bg: '#05070c', mood: 'dark' },
+        fridge: { key: 5, keyCol: '#e4f0ff', hemi: 0.05, fill: 0.8, env: 0.06, bg: '#05070c', mood: 'dark' },
       }[name] || {};
       key.intensity = P.key; key.color.set(P.keyCol); key.visible = true;
       hemi.intensity = P.hemi; fill.intensity = P.fill; S.envK = P.env; bg.set(P.bg); S.mood = P.mood;
-      if (name === 'fridge') { key.position.set(0.2, 1.6, 1.6); keyT.position.set(0, 0.8, 0); } else { key.position.set(3.2, 5.2, 5.2); keyT.position.set(0, 0.6, 0); }
+      if (name === 'fridge') { key.position.set(0.3, 1.7, 1.5); keyT.position.set(0, 0.8, 0); } else { key.position.set(3.2, 5.2, 5.2); keyT.position.set(0, 0.6, 0); }
     },
     update() { ctx.scene.environment = env; ctx.scene.environmentIntensity = S.envK; },
     post: () => MOODS[S.mood] || {},
@@ -120,7 +124,7 @@ export function init(ctx) {
   P.doorSign = K.makeDoorSign();
   P.torch = K.makeTorchProp();
   P.torch2 = K.makeTorchProp({ beam: 0.3 });
-  P.dustFall = K.makeDustBurst({ mode: 'fall', count: 220, size: [0.9, 0.05, 0.9], life: 2.4, intensity: 1.2, seed: 7 });
+  P.dustFall = K.makeDustBurst({ mode: 'fall', count: 220, size: [0.9, 0.05, 0.9], life: 2.4, intensity: 0.55, seed: 7 });
   P.cobweb = K.makeCobweb(); P.cobweb2 = K.makeCobweb({ size: 0.5 });
   P.loaf = K.makeLoaf();
   P.eyes = K.makeEyeGlints();
@@ -164,7 +168,7 @@ export const shots = [
     update(ctx, lt) {
       ctx.cast.me.pose('idle', lt); ctx.cast.pip.pose('idle', lt); ctx.cast.me.face('smile', ctx.t); ctx.cast.pip.face('smile', ctx.t);
       ctx.props.lantern.userData.set(ctx.t, 'lit');
-      ctx.cam.orbit([0, 0.9, -0.5], 6.4, 2.4, 0.15 + lt * 0.2, 46);
+      ctx.cam.orbit([0, 0.7, -0.8], 9.5, 4.2, 0.12 + lt * 0.2, 44);
     },
     focus: { target: 'me', aperture: 0.2 } },
   { name: 'prop table B', start: 1, set: 'studio', lighting: 'warm', cast: ['me', 'pip'],
@@ -172,7 +176,7 @@ export const shots = [
     update(ctx, lt) {
       ctx.cast.me.pose('idle', lt); ctx.cast.pip.pose('idle', lt);
       ctx.props.lantern.userData.set(ctx.t, 'lit');
-      ctx.cam.orbit([0.3, 0.7, -0.6], 5.4, 1.1, -0.75 + lt * 0.2, 50);
+      ctx.cam.orbit([0.3, 0.8, -0.6], 7.5, 1.4, -0.75 + lt * 0.2, 50);
     },
     focus: { target: 'pip', aperture: 0.2 } },
   { name: 'lantern states', start: 2, set: 'studio', lighting: 'night', cast: [],
@@ -186,14 +190,14 @@ export const shots = [
         { initial: 'folded', events: [{ at: 2.25, do: 'light' }] },
         { initial: 'lit', events: [{ at: 2.0, do: 'tap' }] },
       ]);
-      cam(ctx, [0.15, 1.95, 3.3], [0, 2.05, 0], 24); ctx.cam.shake(0.03, ctx.t, 2);
+      cam(ctx, [0.3, 1.75, 7.6], [0, 2.1, 0], 24); ctx.cam.shake(0.03, ctx.t, 2);
     },
     focus: { target: [0, 2.05, 0], aperture: 0.5 } },
   { name: 'lantern row inside', start: 3, set: 'studio', lighting: 'night', cast: [],
     setup(ctx) { add(ctx, ctx.props.row6, [0, 2.4, 0], 0); },
     update(ctx, lt) {
       ctx.props.row6.userData.set(ctx.t, (i) => (i === 0 || i === 4 ? { initial: 'lit', events: [{ at: 3.05, do: 'out' }] } : i === 5 ? 'folded' : 'lit'));
-      cam(ctx, [-0.3, 1.5, -3.4], [0, 2.1, 0], 30); ctx.cam.shake(0.03, ctx.t, 3);
+      cam(ctx, [-0.4, 1.4, -6.4], [0, 2.1, 0], 26); ctx.cam.shake(0.03, ctx.t, 3);
     },
     focus: { target: [0, 2.1, 0], aperture: 0.4 } },
   { name: 'crib top-down', start: 4, set: 'studio', lighting: 'warm', cast: ['me'],
@@ -211,13 +215,14 @@ export const shots = [
     },
     focus: { target: 'me', aperture: 0.25 } },
   { name: 'ultrasound insert', start: 5, set: 'studio', lighting: 'warm', cast: ['mom'],
-    setup(ctx) { ctx.place('mom', [0, 0, 0], { yaw: 0 }); ctx.add(ctx.props.us, ctx.cast.mom.joints.handR); ctx.props.us.position.set(0, 0.02, 0.1); ctx.props.us.rotation.set(-0.2, 0, 0); },
+    setup(ctx) { ctx.place('mom', [0, 0, 0], { yaw: 0 }); ctx.add(ctx.props.us); },
     update(ctx, lt) {
       ctx.cast.mom.pose('idle', lt, { reachR: 'out' }); ctx.cast.mom.face('smile', ctx.t);
       ctx.props.us.userData.set(ctx.t, {});
       ctx.scene.updateMatrixWorld(true);
-      const p = ctx.props.us.getWorldPosition(new THREE.Vector3());
-      cam(ctx, [p.x + 0.12, p.y + 0.06, p.z + 0.62], [p.x, p.y, p.z], 22);
+      const p = ctx.cast.mom.joints.handR.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.13, 0.06 + 0.02 * lt));
+      ctx.props.us.position.copy(p); ctx.props.us.rotation.set(-0.15, -0.15, 0.08);
+      cam(ctx, [p.x + 0.14, p.y + 0.02, p.z + 0.95], [p.x, p.y - 0.01, p.z], 22);
       focusOn(ctx, ctx.props.us, { aperture: 1.2 });
     } },
   { name: 'family photo insert', start: 6, set: 'studio', lighting: 'night', cast: [],
@@ -241,7 +246,7 @@ export const shots = [
       ctx.props.torch.userData.set(ctx.t, { onAt: 7.02 });
       ctx.props.coats.userData.set(ctx.t, { part: { i: 2, amount: 0.8 }, swayAt: 7.1 });
       ctx.props.dustFall.userData.set(ctx.t, { at: 6.6 });
-      cam(ctx, [-2.4, 1.1, 1.6], [0.0, 1.3, -2.4], 40); ctx.cam.shake(0.06, ctx.t, 7);
+      cam(ctx, [1.7, 1.35, 1.5], [0.1, 1.3, -2.4], 44); ctx.cam.shake(0.06, ctx.t, 7);
     },
     focus: { target: 'me', aperture: 0.25 } },
   { name: 'wardrobe on its back', start: 8, set: 'studio', lighting: 'night', cast: ['me'],
@@ -257,7 +262,7 @@ export const shots = [
       ctx.props.wardrobe2.userData.set(ctx.t, { tilt: 0, doors: 0.25 });
       ctx.props.stool.userData.set(ctx.t, { tipAt: 8.25 });
       ctx.props.table.userData.set(ctx.t, { lamp: 1 });
-      cam(ctx, [0.3, 0.6, 3.6], [0.1, 1.2, -2], 34); ctx.cam.shake(0.05, ctx.t, 8);
+      cam(ctx, [3.0, 1.05, 2.2], [0.3, 0.65, -0.5], 40); ctx.cam.shake(0.05, ctx.t, 8);
     },
     focus: { target: 'me', aperture: 0.3 } },
   { name: 'doormat floor', start: 9, set: 'studio', lighting: 'night', cast: [],
@@ -270,14 +275,14 @@ export const shots = [
   { name: 'fridge insert', start: 10, set: 'studio', lighting: 'fridge', cast: [],
     setup(ctx) {
       add(ctx, ctx.props.jar, [-0.22, 0.6, 0], 0.4); add(ctx, ctx.props.tub, [0.16, 0.6, 0.05], 0);
-      const pk = add(ctx, ctx.props.pickle, [0.17, 0.92, 0.07], 0); pk.rotation.set(-1.15, 0.3, 0);
+      const pk = add(ctx, ctx.props.pickle, [0.15, 0.88, 0.07], 0); pk.rotation.set(-1.15, 0.3, 0);
       const shelf = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.03, 0.8), new THREE.MeshStandardMaterial({ color: '#e8eef4', roughness: 0.2, transparent: true, opacity: 0.85 }));
       shelf.position.set(0, 0.585, 0); shelf.receiveShadow = true; ctx.add(shelf);
     },
     update(ctx, lt) {
       ctx.props.pickle.userData.set(ctx.t, { dip: 0.45, drip: 0.6 + 0.4 * Math.sin(ctx.t * 3) });
-      ctx.props.pickle.position.y = 0.92 + 0.03 * Math.sin(lt * 2);
-      cam(ctx, [0.05, 0.98, 0.95], [-0.02, 0.8, 0], 26);
+      ctx.props.pickle.position.y = 0.88 + 0.03 * Math.sin(lt * 2);
+      cam(ctx, [0.05, 1.0, 1.7], [0.0, 0.8, 0], 26);
       focusOn(ctx, ctx.props.pickle, { aperture: 1.1 });
     } },
   { name: 'paint + tools', start: 11, set: 'studio', lighting: 'warm', cast: [],
@@ -314,34 +319,34 @@ export const shots = [
   { name: 'text wall', start: 13, set: 'studio', lighting: 'warm', cast: [],
     setup(ctx) {
       const P = ctx.props;
-      add(ctx, P.calendar, [-0.55, 1.6, -3.17], 0); add(ctx, P.drawings, [0.25, 2.05, -3.17], 0); add(ctx, P.doorSign, [0.95, 1.55, -3.17], 0);
+      add(ctx, P.calendar, [-0.42, 1.6, -3.17], 0); add(ctx, P.drawings, [0.18, 2.05, -3.17], 0); add(ctx, P.doorSign, [0.74, 1.6, -3.17], 0);
       add(ctx, P.sticky, [-0.05, 1.3, -3.17], 0); P.sticky.rotation.z = 0.08;
     },
-    update(ctx, lt) { cam(ctx, [0.15, 1.35, -1.1], [0.15, 1.35, -3.2], 50); },
+    update(ctx, lt) { cam(ctx, [0.15, 1.4, 0.6], [0.15, 1.35, -3.2], 44); },
     focus: { target: [0.15, 1.4, -3.17], aperture: 0.25 } },
   { name: 'sign + phone + letter', start: 14, set: 'studio', lighting: 'warm', cast: [],
     setup(ctx) {
       const P = ctx.props;
-      add(ctx, P.sign, [0, 2.3, -2.4], 0); add(ctx, P.labelBox, [-0.8, 0, -1.4], 0.3); add(ctx, P.parcel, [0.75, 0, -1.2], -0.3);
-      const ph = add(ctx, P.phone, [0.1, 0.008, -0.85], 0); ph.rotation.set(-Math.PI / 2, 0, -0.2);
-      const le = add(ctx, P.letter, [-0.3, 0.003, -0.75], 0); le.rotation.set(-Math.PI / 2, 0, 0.25);
+      add(ctx, P.sign, [0, 2.3, -2.4], 0); add(ctx, P.labelBox, [-0.8, 0, -0.6], 0.3); add(ctx, P.parcel, [0.75, 0, -1.2], -0.3);
+      const ph = add(ctx, P.phone, [0.12, 0.008, -0.25], 0); ph.rotation.set(-Math.PI / 2, 0, -0.2);
+      const le = add(ctx, P.letter, [-0.3, 0.003, -0.2], 0); le.rotation.set(-Math.PI / 2, 0, 0.25);
     },
     update(ctx, lt) {
       ctx.props.parcel.userData.set(ctx.t, { socks: 1 }); ctx.props.letter.userData.set(ctx.t, { fold: 0.15 }); ctx.props.sign.userData.set(ctx.t, {}); ctx.props.phone.userData.set(ctx.t, {}); ctx.props.labelBox.userData.set(ctx.t, {});
-      cam(ctx, [0.1, 1.7, 0.6], [0, 0.9, -1.6], 44);
+      cam(ctx, [0.1, 1.55, 2.1], [0, 0.7, -1.0], 50);
     },
     focus: { target: [0, 0.3, -1.1], aperture: 0.2 } },
   { name: 'home setup A lanterns', start: 15, set: 'home', lighting: 'night_lamp', cast: ['me'], options: { lanterns: 0 },
     setup(ctx) {
       ctx.add(ctx.props.rowHome); K.hangOnHooks(ctx, ctx.props.rowHome);
-      add(ctx, ctx.props.wardrobe, [0.15, 0, 8.4], 0); ctx.props.wardrobe.rotation.y = 0.12;
-      ctx.place('me', [0.25, 0, 8.55], { yaw: Math.PI - 0.15 });
+      add(ctx, ctx.props.wardrobe, [0.1, 0, 8.3], 0.04);
+      ctx.place('me', [0.6, 0, 8.65], { yaw: Math.PI - 0.25 });
     },
     update(ctx, lt) {
       ctx.props.rowHome.userData.set(ctx.t, 5);
       ctx.props.wardrobe.userData.set(ctx.t, { tilt: 1 });
-      ctx.cast.me.pose('haul', lt); ctx.cast.me.face('determined', ctx.t);
-      const c = HOME_CAMS.setupA; ctx.cam.set({ pos: c.pos, look: c.look, fov: c.fov }); ctx.cam.shake(0.06, ctx.t, 15);
+      ctx.cast.me.pose('drag', lt); ctx.cast.me.face('determined', ctx.t);
+      const c = HOME_CAMS.setupA; ctx.cam.set({ pos: [0, 0.75, 5.2], look: c.look, fov: c.fov }); ctx.cam.shake(0.06, ctx.t, 15);
     },
     focus: { target: 'me', aperture: 0.3 } },
   { name: 'home beam macro', start: 16, set: 'home', lighting: 'night_lamp', cast: [], options: { lanterns: 0, outdoors: true },
@@ -349,14 +354,16 @@ export const shots = [
     update(ctx, lt) {
       ctx.props.rowHome.userData.set(ctx.t, (i) => (i === 4 ? { initial: 'lit', events: [{ at: 16.3, do: 'flare' }] } : i < 5 ? 'lit' : 'folded'));
       const u = lt;
-      ctx.cam.set({ pos: [1.0 - 0.9 * u, 2.2, 13.0], look: [0.3 - 0.9 * u, 2.25, 12.15], fov: 24 }); ctx.cam.shake(0.03, ctx.t, 16);
+      ctx.cam.set({ pos: [0.9 - 0.9 * u, 2.05, 14.0], look: [0.3 - 0.9 * u, 2.25, 12.15], fov: 24 }); ctx.cam.shake(0.03, ctx.t, 16);
       focusOn(ctx, ctx.props.rowHome.userData.lanterns[4], { aperture: 0.8, offset: [0, -0.32, 0] });
     } },
   { name: 'home hall table photo', start: 17, set: 'home', lighting: 'night_lamp', cast: [], options: { photo: false },
     setup(ctx) { ctx.add(ctx.props.photo); ctx.place(ctx.props.photo, 'hall.table.photo'); ctx.props.photo.rotation.y += Math.PI / 2 * 0; },
     update(ctx, lt) {
       ctx.props.photo.userData.set(ctx.t, {});
-      const c = HOME_CAMS.hallTable; ctx.cam.set({ pos: c.pos, look: c.look, fov: c.fov }); ctx.cam.shake(0.03, ctx.t, 17);
+      const a = ctx.anchor('hall.table.photo'); a.updateMatrixWorld(true);
+      const p = a.getWorldPosition(new THREE.Vector3()), f = new THREE.Vector3(0, 0, 1).applyQuaternion(a.getWorldQuaternion(new THREE.Quaternion()));
+      ctx.cam.set({ pos: [p.x + f.x * 1.1 + 0.15, p.y + 0.42, p.z + f.z * 1.1 + 0.3], look: [p.x, p.y + 0.17, p.z], fov: 30 }); ctx.cam.shake(0.03, ctx.t, 17);
       focusOn(ctx, ctx.props.photo, { aperture: 0.9, offset: [0, 0.16, 0] });
     } },
 ];

@@ -46,9 +46,12 @@
  *       Returns the resolved { lit, fold, flare, … } (the row uses it to drive its shared light).
  *     Lit look: emissive paper ×2.6 (blooms through the look preset's 0.9 threshold) with a slow 2-band flicker from
  *     noise1(t), soft additive halo sprite; flare = ×3 flash + a 3× halo burst decaying over 0.6 s.
+ *     A folded lantern reads as NOTHING: its tag shrinks to zero over the last 10 % of the fold (fold 0.9 → 1).
+ *     tag: null = no tag at all; '' = a blank board; 'MOM' … painted; tagStyle 'crayon' = Pip's crayon letters (fixed:
+ *     the crayon fill is now painted on its own canvas and masked once by the glyphs — it used to render blank).
  *     userData: { globe, tag, tagPivot, halo, light, tagTexture(text, style) }
  *   makeLanternRow({ count = 5, pitch = 0.3, xs = null, tags = [], tagStyles = [], light = false, lightIntensity = 1,
- *                    lightDistance = 8, lightOffset = [0, -0.15, -0.35], beam = false, unlit = 'dark',
+ *                    lightDistance = 8, lightOffset = [0, -0.45, -0.6], beam = false, unlit = 'dark',
  *                    …any makeLantern opts })
  *     N lanterns along local X. Lantern i hangs at x = xs[i] ?? ((count−1)/2 − i)·pitch, i.e. i = 0 is the LEFTMOST as
  *     seen from INSIDE the hall looking out (+Z) — the home.js hook order (HOME.HOOKS = +0.6 … −0.9). Tag i = tags[i].
@@ -70,6 +73,12 @@
  *     set(t, { tilt 0..1 (0 upright, 1 lying ON ITS BACK: pivots about the bottom-back edge, the top ends at z = −h, the
  *              doors face up and it is only d = 0.62 m tall — under the setup-A occlusion envelope), doors 0..1,
  *              thudAt (time: a heavy landing → 0.5 s rock + dust puff at the base), wobble rad })
+ *     ONE wardrobe per film (continuity): ep30 uses makeWardrobe({ h: 2.3, d: 0.42 }) for the S01 drag AND the S04/S05
+ *     heave — 2.3 m covers Pip's 1.16 m-wide door upright; lying it is a ≈0.52 m slab (d + crown/doors ≈ 0.1).
+ *     SETUP A placement that keeps both me and the slab inside the 0.7 + 0.21·d envelope (verified in showcase S1):
+ *     camera (0.05, 0.6, 4.0) tilt 3°, fov 34; me ≈ 4.9 m from the camera (z 8.9, drag low 0.5) hauling the slab in
+ *     front of me (origin z 8.45, spanning ≈ 2.2–4.5 m from the camera). Lanterns ≈ 85 px at 1080, face at y ≈ 0.45.
+ *     (At the scripted 2 m my 0.64 m head is 70 % of the frame width and the slab cannot fit — use this instead.)
  *     userData: { body, dust }
  *   makeHallTable({ w = 1.2, d = 0.45, h = 1.0, lamp = true, lampShadow = true, lampHeight = 0.72, photo = true,
  *                   clutter = true })   console table + look.js makeLamp (shadowed key spot + glow) + makeFamilyPhoto +
@@ -91,28 +100,34 @@
  *     set(t, { swayAt (time), part: { i, amount 0..1 } (coat i pushed aside by the torch sweep) }). userData: { coats }
  *
  * ─── HANDHELD / TOOLS ───────────────────────────────────────────────────────────────────────────────────────────────
- *   makeTorchProp({ shadow = true, angle = 0.36, reach = 14, intensity = 1, beam = 0.22, beamLength = 3.2, color })
+ *   makeTorchProp({ shadow = true, angle = 0.36, reach = 14, intensity = 1, beam = 0.12, beamLength = 3.2, color })
  *     Rubber-grip torch with a REAL shadowed SpotLight + a soft visible beam cone (additive, fades along its length and
  *     near the lens; beam 0 = off). Origin = grip centre, light along +Z. set(t, { on 0..1 (default 1), onAt (click on:
  *     a 2-frame stutter), offAt, flicker 0..1, beam }) ; userData: { spot, lens, beamMesh, aim(fromVec3, toVec3) (world,
  *     every frame, like look.makeTorch), setOn(v) }
  *   makeStool({ h = 0.62, top = '#c08a55', legs = '#f1ece0' })   two-step wooden step stool (top at h, lower step at
  *     0.5 h forward on +Z). set(t, { tip 0..1 | tipAt (time: tips over onto its +X side in 0.45 s with a bounce) }).
+ *   makeStepLadder({ h = 1.35, w = 0.62, steps = 4, color, rail })   A-frame step ladder for the attic hatch beats
+ *     (home.js HATCH REACH table: palms on the 3.4 m hatch = top 1.35 for me; head through the hatch ≈ 1.95).
+ *     Origin = floor under the centre of the top platform; climbing side +Z. userData { topY, stepY: [tread heights],
+ *     set(t, { wobble }) }. Stand a character on it with ctx.place(id, anchor, { offset: [0, topY, 0] }).
  *   makeBroom({ length = 1.8 })   origin = bristle tips on the floor, handle up +Y. userData.gripY (upper grip height).
  *   makeFryingPan({ r = 0.2 })    origin = grip centre, pan along +Z, cooking face +Y (Pip's helmet: rotate x = π).
  *   makeScrewdriver()             0.3 m, yellow/black grip, origin = grip centre, tip along +Z.
  *
  * ─── ATTIC / RACCOONS ───────────────────────────────────────────────────────────────────────────────────────────────
  *   makeCardboardBox({ w = 0.7, h = 0.5, d = 0.5, label = '', labelStyle = 'marker', flaps = 0, tape = true,
- *                      dusty = 0.3, seed })   procedural corrugated board; label = marker text on the +Z face (and the
- *     lid when flaps = 0). set(t, { flaps 0..1 (lid flaps open outward) }).  makeLabelledBox(label, opts) = same.
- *   makeCobweb({ size = 0.7, sag = 0.12 })   corner web (alpha card, catches torch light) spanning the local −X/+Y
- *     corner, facing +Z. set(t, { sway }) (gentle drift from noise1(t) × sway).
+ *                      dusty = 0.3, seed })   procedural corrugated board, taped lid; label = marker text on a taped
+ *     paper label on the +Z face. set(t, { flaps 0..1 (lid flaps open outward) }).  makeLabelledBox(label, opts) = same.
+ *   makeCobweb({ size = 0.7, sag = 0.12 })   corner web (alpha card, catches torch light, faces +Z). Origin = the
+ *     web's anchor corner; the card extends +X and −Y from it (put the origin in the rafter angle and rotate).
+ *     set(t, { sway = 1 }) (gentle drift from noise1(t) × sway).
  *   makeLoaf({ length = 0.46 })   crusty bloomer with 3 slashes, a bite out of one end.
  *   makeEyeGlints({ pairs = 2, spacing = 0.42, eye = 0.055, color = '#e8ff9c' })   eye-shine sprites (additive, bloom)
- *     for raccoons frozen in a torch beam. set(t, { on 0..1, blink = true (seeded blinks), look [x, y] jitter }).
- *   makeRaccoonTail({ length = 0.62, rings = 5 })   furry ringed grey tail (8 bending segments), base at origin,
- *     extends along +X. set(t, { curl rad, wave, flickAt (time: one fast swipe across over 0.13 s = 4 frames), hide })
+ *     for raccoons frozen in a torch beam (pairs spread along X). set(t, { on 0..1, blink = true (seeded blinks) }).
+ *   makeRaccoonTail({ length = 0.62, rings = 5, segs = 10 })   furry ringed grey tail (bending segments), base at the
+ *     origin, extends along +X. set(t, { curl rad (0.6), wave (0.15), flickAt (time: one fast swipe across, base yaw
+ *     +1.25 → −1.25 rad over 0.13 s = 4 frames), flickOnly (visible only during the flick), hide })
  *
  * ─── BOX ROOM (the nursery reveal) ─────────────────────────────────────────────────────────────────────────────────
  *   makeCrib({ l = 1.5, wd = 0.92, h = 1.0, base = 0.32, wood = '#e8cfa4', mattress = false, stage = 'half' })
@@ -130,7 +145,8 @@
  *   makePaintTray({ w = 0.42, d = 0.56 })   tray with a yellow pool. set(t, { rock rad | rockAt (time) }).
  *
  * ─── KITCHEN (the pickle) ───────────────────────────────────────────────────────────────────────────────────────────
- *   makePickleJar({ r = 0.13, h = 0.34, pickles = 8, lid = true })   glass jar, brine, pickles, PICKLES label.
+ *   makePickleJar({ r = 0.13, h = 0.34, pickles = 8, lid = true })   clear glass (opacity 0.1), light yellow-green brine
+ *     (0.25), long light-green bumpy gherkins at angles, PICKLES label slightly emissive (0.15) with dark ink.
  *   makeIceCreamTub({ r = 0.13, h = 0.17, lid = false, flavour = 'VANILLA' })   open tub, scooped cream surface.
  *   makePickle({ length = 0.14, dip = 0 })   one bumpy pickle along +Z (origin = its middle); dip 0..1 = how much of the
  *     +Z end is coated in ice cream. set(t, { dip, drip 0..1 (a brine drop hanging off the end) }).
@@ -150,13 +166,21 @@
  *   makeStickyNote({ text = 'BUY PICKLES!!', color = '#ffe66b', size = 0.17 })   (curled corner).
  *   makeCalendar({ w = 0.42, h = 0.58, month = 'NOVEMBER', marks = { 12: 'circle', 20: 'x', 28: 'DUE?' } , start = 5 })
  *     spiral calendar for home.js 'kitchen.calendar'.
- *   makePhone({ w = 0.2, lines = [{ from: 'mom'|'me', text }], title = 'Mom', on = 1, glow = 1.2 })   phone with an
- *     emissive chat screen (rounded bubbles). set(t, { on, glow }).
+ *   makePhone({ w = 0.13 (h = 2.05 w), lines = [{ from: 'mom'|'me', text }], title = 'Mom', on = 1, glow = 1.2,
+ *               lock = false, time = '23:58' })   phone (no brand) with an emissive chat screen (rounded bubbles, wrapped
+ *     text) or a lock screen; screen faces +Z. set(t, { on, glow }).
  *   makeCrayonDrawings({ count = 7, ringed = 4, w = 0.28, h = 0.2, gap = 0.04 })   column of crayon drawings taped
  *     to the wall, each five yellow lanterns on a beam, lantern `ringed` circled in red; origin = top of the column,
  *     papers hang down −Y, face +Z (home.js anchor 'hall.pipDoor.drawings').
  *   makeDoorSign({ text = 'NO BROTHERS', headphones = true, w = 0.4, h = 0.28 })   crayon sign, headphones crossed out.
- *   makeTextCard({ w, h, draw(g, W, H), rough = 0.85, px = 1024 })   any custom canvas-painted card (low level).
+ *   makeTextCard({ w, h, draw(g, W, H), rough = 0.85, px = 1024 (long side), thick = 0.002, emissive = 0 })   any custom
+ *     canvas-painted card (low level; draw is called once with the 2D context and the canvas size). userData: { face,
+ *     texture, canvas }.
+ *
+ * ─── Misc exports ───────────────────────────────────────────────────────────────────────────────────────────────────
+ *   lanternStateAt(t, state, seed) → { lit, fold, flare, pulse, smoke, swing, tagSwing }  (pure; what set() applies)
+ *   familyPortraitTexture() → the cached CanvasTexture of the family portrait (reuse it on other frames / walls)
+ *   PROP_COLORS (palette: wardrobe, mom, dad, me, pip, paint, wood, pale, brass, …), PROP_KIT { name: factory }
  *
  * ─── PARTICLES ──────────────────────────────────────────────────────────────────────────────────────────────────────
  *   makeDustBurst({ mode = 'puff' | 'fall', count = 160, size = [0.8, 0.05, 0.8] (emitter box), color = '#d9cbb2',
@@ -191,6 +215,7 @@ export const PROP_COLORS = {
 // (box projection, see prepGeom), so `tile` = metres per texture repeat.
 const KINDS = {
   oak: { home: 'oak', ns: 0.6 }, paint: { home: 'paintwood', ns: 0.4, ao: 0.4 }, plaster: { home: 'plaster', ns: 0.4 },
+  matte: { home: 'paintwood', ns: 0.45, ao: 0.4, noRough: true, rough: 0.8, env: 0.55 },
   carpet: { home: 'carpet', ns: 0.8, ao: 0.6 }, coir: { home: 'coir', ns: 1 }, floor: { home: 'floorboards', ns: 0.8 },
   knit: { real: 'fabric', tile: 0.22, ns: 0.9, rough: 1 }, denim: { real: 'denim', tile: 0.3, ns: 0.7 },
   fur: { real: 'fabric', tile: 0.08, ns: 1.6, rough: 1 },
@@ -211,10 +236,11 @@ function kindMat(kind) {
   else if (s.real) set = getPBR(s.real).repeat(1 / s.tile, 1 / s.tile);
   else if (s.card) set = cardboardSet().repeat(1 / s.tile, 1 / s.tile);
   if (set) {
-    m.map = set.map; m.normalMap = set.normalMap; m.roughnessMap = set.roughnessMap;
+    m.map = set.map; m.normalMap = set.normalMap; if (!s.noRough) m.roughnessMap = set.roughnessMap;
     m.normalScale.set(s.ns ?? 1, s.ns ?? 1);
     if (s.ao) { m.aoMap = set.roughnessMap; m.aoMapIntensity = s.ao; }
   }
+  if (s.env != null) m.envMapIntensity = s.env;
   m.name = 'props:' + kind;
   _mats.set(kind, m);
   return m;
@@ -347,14 +373,19 @@ function crayonText(g, text, cx, cy, { size = 60, maxW = 400, color = '#e0457b',
     m.save(); m.translate(x + cw / 2, cy + (r() - 0.5) * s * 0.18); m.rotate((r() - 0.5) * 0.22); m.fillStyle = '#000'; m.fillText(ch, -cw / 2, 0); m.restore();
     x += cw * (0.96 + r() * 0.1);
   }
-  m.globalCompositeOperation = 'source-in';
-  m.strokeStyle = color; m.lineCap = 'round';
-  for (let k = 0; k < 900; k++) {
+  // crayon fill: a waxy base + diagonal strokes painted on their OWN canvas (normal source-over), then masked ONCE by
+  // the glyphs (destination-in). (Bug fix: 'source-in' per stroke erased everything outside each stroke → blank tags.)
+  const [sc, sg] = cvs(W, H);
+  sg.globalAlpha = 0.62; sg.fillStyle = color; sg.fillRect(0, 0, W, H);
+  sg.strokeStyle = color; sg.lineCap = 'round';
+  const n = Math.max(900, Math.round(W * H / 70));
+  for (let k = 0; k < n; k++) {
     const px = r() * W, py = r() * H, l = 4 + r() * 10;
-    m.globalAlpha = 0.55 + r() * 0.45; m.lineWidth = 1.5 + r() * 2.5;
-    m.beginPath(); m.moveTo(px, py); m.lineTo(px + l, py - l * 0.8); m.stroke();
+    sg.globalAlpha = 0.55 + r() * 0.45; sg.lineWidth = 1.5 + r() * 2.5;
+    sg.beginPath(); sg.moveTo(px, py); sg.lineTo(px + l, py - l * 0.8); sg.stroke();
   }
-  g.drawImage(mc, 0, 0);
+  sg.globalAlpha = 1; sg.globalCompositeOperation = 'destination-in'; sg.drawImage(mc, 0, 0);
+  g.drawImage(sc, 0, 0);
   return s;
 }
 /** crayon stroke (circle / line) helper: several jittered passes. */
@@ -546,7 +577,7 @@ export function makeLantern(opts = {}) {
   const topY = R * SQUASH * Y_TOP, hg = R * SQUASH * (Y_TOP - Y_BOT);
   const foldPivot = group('fold', swingPivot); foldPivot.position.y = -o.cord;
   const paperCol = new THREE.Color(o.paper).offsetHSL((hash(o.seed * 3.3) - 0.5) * 0.02, 0, (hash(o.seed * 5.1) - 0.5) * 0.04);
-  const paperMat = new THREE.MeshStandardMaterial({ color: paperCol, map: T.map, roughness: 0.88, side: THREE.DoubleSide, emissive: new THREE.Color(o.color), emissiveMap: T.emap, emissiveIntensity: 0 });
+  const paperMat = new THREE.MeshStandardMaterial({ color: paperCol, map: T.map, roughness: 0.88, side: THREE.DoubleSide, emissive: new THREE.Color(o.color).offsetHSL(-0.01, 0.25, -0.1), emissiveMap: T.emap, emissiveIntensity: 0 });
   const globe = new THREE.Mesh(lanternGeometry(), paperMat);
   globe.scale.setScalar(R); globe.position.y = -topY; globe.castShadow = false; globe.receiveShadow = true;
   foldPivot.add(globe);
@@ -559,7 +590,7 @@ export function makeLantern(opts = {}) {
   swingPivot.add(bottom);
   // halo / flare sprite + smoke wisps
   const halo = additiveSprite(glowTex(), o.color); halo.position.y = -o.cord - hg * 0.55; swingPivot.add(halo);
-  const smokeMat = new THREE.SpriteMaterial({ map: smokeTex(), color: new THREE.Color('#a49c90'), transparent: true, depthWrite: false, opacity: 0 });
+  const smokeMat = new THREE.SpriteMaterial({ map: smokeTex(), color: new THREE.Color('#c9c0b4'), transparent: true, depthWrite: false, opacity: 0 });
   const smoke = [];
   for (let i = 0; i < 6; i++) { const s = new THREE.Sprite(smokeMat.clone()); s.renderOrder = 6; s.visible = false; root.add(s); smoke.push(s); }
   // tag
@@ -597,15 +628,20 @@ export function makeLantern(opts = {}) {
       bottom.position.y = bottomY; bottom.scale.setScalar(lerp(1, 2.0, clamp(fold, 0, 1)));
       halo.position.y = -o.cord - hg * Math.max(0.04, sy) * 0.55;
       if (light) light.position.y = halo.position.y;
-      if (tagPivot) { tagPivot.position.y = bottomY - 0.004; tagPivot.rotation.x = s.tagSwing + 0.03 * noise1(t * 0.9, o.seed + 7); }
+      if (tagPivot) {
+        tagPivot.position.y = bottomY - 0.004; tagPivot.rotation.x = s.tagSwing + 0.03 * noise1(t * 0.9, o.seed + 7);
+        // a folded lantern reads as NOTHING: the tag shrinks away over the last 10 % of the fold (0.9 → 1)
+        const tk = 1 - smooth(clamp((fold - 0.9) / 0.1, 0, 1));
+        tagPivot.scale.setScalar(Math.max(1e-4, tk)); tagPivot.visible = tk > 1e-3;
+      }
       swingPivot.rotation.z = s.swing + 0.012 * noise1(t * 0.6, o.seed + 3);
       swingPivot.rotation.x = 0.4 * s.swing * Math.sin(1.3) + 0.008 * noise1(t * 0.5, o.seed + 9);
       // light
       const flick = 1 + 0.07 * noise1(t * 6.3, o.seed) + 0.04 * noise1(t * 17.1, o.seed + 3);
-      const em = o.glow * (2.6 * lit * flick * (1 - 0.6 * clamp(fold, 0, 1)) + 3.2 * s.flare + 1.3 * s.pulse * lit);
+      const em = o.glow * (1.55 * lit * flick * (1 - 0.6 * clamp(fold, 0, 1)) + 3.2 * s.flare + 1.3 * s.pulse * lit);
       paperMat.emissiveIntensity = em;
       paperMat.color.copy(baseCol).lerp(dark, (1 - lit) * 0.5 + clamp(fold, 0, 1) * 0.3);
-      const hk = 0.32 * lit * flick + 2.4 * s.flare + 0.5 * s.pulse * lit;
+      const hk = 0.17 * lit * flick + 2.0 * s.flare + 0.5 * s.pulse * lit;
       halo.visible = hk > 0.003; halo.material.color.set(o.color).multiplyScalar(hk * o.glow);
       halo.scale.setScalar(o.size * (2.1 + 1.8 * s.flare));
       for (const m of tagMats) m.emissiveIntensity = 0.16 * lit * flick + 0.25 * s.flare;
@@ -620,7 +656,7 @@ export function makeLantern(opts = {}) {
         const curl = Math.sin(a * 2.4 + i * 1.1 + smokeSeed) * 0.05 * (0.3 + a);
         sp_.position.set(curl + (hash(smokeSeed + i) - 0.5) * 0.04, -o.cord - hg * 0.3 + a * 0.32 + 0.02 * i, Math.cos(a * 1.9 + i) * 0.03 * a);
         sp_.scale.setScalar(o.size * (0.35 + 1.4 * u) * (0.8 + 0.4 * hash(smokeSeed * 3 + i)));
-        sp_.material.opacity = 0.5 * smooth(a / 0.15) * Math.pow(1 - u, 1.4);
+        sp_.material.opacity = 0.75 * smooth(a / 0.15) * Math.pow(1 - u, 1.3);
         sp_.material.rotation = a * 0.6 + i;
       });
       return s;
@@ -632,7 +668,7 @@ export function makeLantern(opts = {}) {
 
 export function makeLanternRow(opts = {}) {
   const o = { count: 5, pitch: 0.3, xs: null, tags: [], tagStyles: [], tagColors: [], light: false, lightIntensity: 1, lightDistance: 8,
-    lightOffset: [0, -0.15, -0.35], beam: false, unlit: 'dark', ...opts };
+    lightOffset: [0, -0.45, -0.6], beam: false, unlit: 'dark', ...opts };
   const root = rootProp('lanternRow');
   const lanterns = [];
   for (let i = 0; i < o.count; i++) {
@@ -739,12 +775,12 @@ export function makeWardrobe(opts = {}) {
   const body = group('body', root);
   const col = new THREE.Color(o.color), dk = '#' + col.clone().multiplyScalar(0.72).getHexString(), lt = '#' + col.clone().lerp(new THREE.Color('#ffffff'), 0.12).getHexString();
   const B = new Batch();
-  B.add('paint', rb(0.05, h - 0.14, d, 0.012), { pos: [-w / 2 + 0.025, 0.12 + (h - 0.14) / 2 - 0.02, d / 2], color: o.color });
-  B.add('paint', rb(0.05, h - 0.14, d, 0.012), { pos: [w / 2 - 0.025, 0.12 + (h - 0.14) / 2 - 0.02, d / 2], color: o.color });
-  B.add('paint', rb(w + 0.1, 0.07, d + 0.07, 0.015), { pos: [0, h - 0.035, d / 2 + 0.02], color: lt });           // crown
-  B.add('paint', rb(w + 0.04, 0.05, d + 0.03, 0.012), { pos: [0, h - 0.095, d / 2 + 0.01], color: o.color });
-  B.add('paint', rb(w, 0.12, d - 0.02, 0.012), { pos: [0, 0.06, d / 2], color: dk });                          // plinth
-  B.add('paint', rb(w - 0.04, h - 0.2, 0.03, 0.01), { pos: [0, h / 2, 0.015], color: dk });                     // back
+  B.add('matte', rb(0.05, h - 0.14, d, 0.012), { pos: [-w / 2 + 0.025, 0.12 + (h - 0.14) / 2 - 0.02, d / 2], color: o.color });
+  B.add('matte', rb(0.05, h - 0.14, d, 0.012), { pos: [w / 2 - 0.025, 0.12 + (h - 0.14) / 2 - 0.02, d / 2], color: o.color });
+  B.add('matte', rb(w + 0.1, 0.07, d + 0.07, 0.015), { pos: [0, h - 0.035, d / 2 + 0.02], color: lt });           // crown
+  B.add('matte', rb(w + 0.04, 0.05, d + 0.03, 0.012), { pos: [0, h - 0.095, d / 2 + 0.01], color: o.color });
+  B.add('matte', rb(w, 0.12, d - 0.02, 0.012), { pos: [0, 0.06, d / 2], color: dk });                          // plinth
+  B.add('matte', rb(w - 0.04, h - 0.2, 0.03, 0.01), { pos: [0, h / 2, 0.015], color: dk });                     // back
   B.add('plain', rb(w - 0.1, h - 0.3, 0.02, 0.005), { pos: [0, h / 2, d - 0.08], color: '#1a1c22' });           // dark interior face
   for (const sx of [-1, 1]) for (const sz of [0.06, d - 0.06]) B.add('oak', cy(0.03, 0.025, 0.05, 10), { pos: [sx * (w / 2 - 0.07), -0.0, sz], color: '#4a3020' });
   B.build(body, { name: 'wardrobe' });
@@ -754,12 +790,12 @@ export function makeWardrobe(opts = {}) {
   for (const s of [-1, 1]) {
     const hinge = group('door', body); hinge.position.set(s * (w / 2 - 0.03), 0.14, d + 0.002);
     const D = new Batch();
-    D.add('paint', rb(dw, dh, 0.035, 0.008), { pos: [-s * dw / 2, dh / 2, 0.0175], color: o.color });
+    D.add('matte', rb(dw, dh, 0.035, 0.008), { pos: [-s * dw / 2, dh / 2, 0.0175], color: o.color });
     const ph = (dh - 0.32) / 3;
     for (let k = 0; k < 3; k++) {
       const py = 0.1 + ph / 2 + k * (ph + 0.06);
-      D.add('paint', rb(dw - 0.14, ph, 0.02, 0.006), { pos: [-s * dw / 2, py, 0.04], color: lt });
-      D.add('paint', rb(dw - 0.2, ph - 0.06, 0.012, 0.004), { pos: [-s * dw / 2, py, 0.052], color: o.color });
+      D.add('matte', rb(dw - 0.14, ph, 0.02, 0.006), { pos: [-s * dw / 2, py, 0.04], color: lt });
+      D.add('matte', rb(dw - 0.2, ph - 0.06, 0.012, 0.004), { pos: [-s * dw / 2, py, 0.052], color: o.color });
     }
     D.add('metal', sp(0.03, 12, 8), { pos: [-s * (dw - 0.07), dh * 0.52, 0.065], color: o.knob });
     D.add('metal', cy(0.012, 0.012, 0.03, 8), { pos: [-s * (dw - 0.07), dh * 0.52, 0.045], rot: [Math.PI / 2, 0, 0], color: o.knob });
@@ -1047,13 +1083,13 @@ const BEAM_F = `uniform vec3 uColor; uniform float uK, uLen, uTime; uniform samp
 void main(){
   float z = clamp(vP.z / uLen, 0.0, 1.0);
   float core = pow(abs(dot(normalize(vN), normalize(vV))), 1.6);           // chord length through the cone
-  float fall = pow(1.0 - z, 1.4) * smoothstep(0.0, 0.08, z);
+  float fall = pow(1.0 - z, 1.8) * smoothstep(0.0, 0.12, z);
   float n = texture2D(tNoise, vec2(vP.x * 0.8 + vP.z * 0.13, vP.y * 0.8 - uTime * 0.02)).r;
   float nearFade = smoothstep(0.35, 1.6, vCam);
   gl_FragColor = vec4(uColor * uK * core * fall * (0.7 + 0.6 * n) * nearFade, 1.0);
 }`;
 export function makeTorchProp(opts = {}) {
-  const o = { shadow: true, angle: 0.36, reach: 14, intensity: 1, beam: 0.22, beamLength: 3.2, color: COLORS.torch, ...opts };
+  const o = { shadow: true, angle: 0.36, reach: 14, intensity: 1, beam: 0.12, beamLength: 3.2, color: COLORS.torch, ...opts };
   const root = rootProp('torch');
   const B = new Batch();
   B.add('rubber', cy(0.04, 0.037, 0.22, 16).rotateX(Math.PI / 2), { pos: [0, 0, -0.05], color: '#22252c' });
@@ -1065,7 +1101,7 @@ export function makeTorchProp(opts = {}) {
   B.build(root, { name: 'torch', cast: false });
   const lensMat = new THREE.MeshStandardMaterial({ color: '#000000', emissive: new THREE.Color(o.color), emissiveIntensity: 0, roughness: 0.2 });
   const lens = new THREE.Mesh(new THREE.CircleGeometry(0.062, 20), lensMat); lens.position.z = 0.151; root.add(lens);
-  const spot = new THREE.SpotLight(o.color, 0, o.reach, o.angle, 0.6, 2);
+  const spot = new THREE.SpotLight(o.color, 0, o.reach, o.angle, 0.6, 1);   // decay 1 like look.makeTorch (no near blow-out)
   spot.position.set(0, 0, 0.16);
   const tgt = new THREE.Object3D(); tgt.position.set(0, 0, 3); root.add(tgt); spot.target = tgt;
   if (o.shadow) tuneShadow(spot, { mapSize: 1024, radius: 3, near: 0.3, far: o.reach });
@@ -1082,7 +1118,7 @@ export function makeTorchProp(opts = {}) {
   const _m = new THREE.Matrix4();
   const setOn = (v, beamK = o.beam) => {
     v = clamp(v, 0, 1.5);
-    spot.intensity = 24 * o.intensity * v; lensMat.emissiveIntensity = 2.2 * v;
+    spot.intensity = 8 * o.intensity * v; lensMat.emissiveIntensity = 2.2 * v;
     if (beamU) { beamU.uK.value = beamK * v; beamMesh.visible = v > 0.001 && beamK > 0; }
   };
   root.userData = {
@@ -1134,6 +1170,40 @@ export function makeStool(opts = {}) {
       if (s.tipAt != null) tip = Math.max(tip, bounceOut((t - s.tipAt) / 0.45));
       pivot.rotation.z = -Math.PI / 2 * tip;
     },
+  };
+  return root;
+}
+/**
+ * makeStepLadder({ h = 1.35 (top step height, m), w = 0.62, steps = 4, color, rail }) → root
+ * A-frame step ladder for the attic beats (see the HATCH REACH table in src/kits/home.js): the character climbs with
+ * pose('stepUp', t, { height: userData.stepY[0], dist }) step by step, then stands at userData.topY (re-place the root
+ * there). Origin = floor under the centre of the top platform; climbing side faces +Z (front legs at z +0.3·h).
+ * userData: { topY, stepY: [heights of the treads, lowest first], set(t, { wobble }) }.
+ */
+export function makeStepLadder(opts = {}) {
+  const o = { h: 1.35, w: 0.62, steps: 4, color: '#d9dde2', rail: '#e0533d', ...opts };
+  const { h, w } = o;
+  const root = rootProp('stepLadder');
+  const body = group('body', root);
+  const B = new Batch();
+  const fz = 0.3 * h, bz = -0.28 * h;                                  // feet of the front (climbing) and back legs
+  const leg = (x, z0) => { const a = V3(x, 0, z0), b = V3(x, h, 0), m = a.clone().add(b).multiplyScalar(0.5), dir = b.clone().sub(a);
+    B.add('metal', rb(0.05, dir.length(), 0.035, 0.01), { matrix: new THREE.Matrix4().compose(m, new THREE.Quaternion().setFromUnitVectors(V3(0, 1, 0), dir.normalize()), V3(1, 1, 1)), color: o.color }); };
+  for (const sx of [-1, 1]) { leg(sx * (w / 2 - 0.03), fz); leg(sx * (w / 2 - 0.05), bz); B.add('rubber', rb(0.07, 0.03, 0.06, 0.008), { pos: [sx * (w / 2 - 0.03), 0.015, fz], color: '#333' }); B.add('rubber', rb(0.07, 0.03, 0.06, 0.008), { pos: [sx * (w / 2 - 0.05), 0.015, bz], color: '#333' }); }
+  const stepY = [];
+  for (let k = 1; k <= o.steps; k++) {
+    const y = h * k / (o.steps + 1) + (k === o.steps ? 0 : 0), z = fz * (1 - y / h);
+    stepY.push(y);
+    B.add('oak', rb(w - 0.04, 0.035, 0.16, 0.008), { pos: [0, y - 0.018, z], color: '#c99b62' });
+  }
+  B.add('oak', rb(w + 0.02, 0.05, 0.36, 0.012), { pos: [0, h - 0.025, -0.02], color: '#c99b62' });            // top platform
+  for (const sx of [-1, 1]) B.add('paint', rb(0.03, 0.03, 0.42, 0.01), { pos: [sx * (w / 2 + 0.01), h + 0.35, -0.04], color: o.rail });
+  B.add('paint', rb(w + 0.05, 0.035, 0.035, 0.01), { pos: [0, h + 0.55, -0.12], color: o.rail });               // safety rail
+  for (const sx of [-1, 1]) B.add('paint', rb(0.03, 0.6, 0.03, 0.01), { pos: [sx * (w / 2 + 0.01), h + 0.27, -0.12], color: o.rail });
+  B.build(body, { name: 'stepLadder' });
+  root.userData = {
+    ...root.userData, body, topY: h, stepY,
+    set(t, st = {}) { body.rotation.z = (st.wobble ?? 0) * 0.04 * Math.sin(t * 13); },
   };
   return root;
 }
@@ -1257,8 +1327,7 @@ export function makeCobweb(opts = {}) {
   const geo = new THREE.PlaneGeometry(o.size, o.size, 6, 6);
   const P = geo.attributes.position, uv = geo.attributes.uv;
   for (let k = 0; k < P.count; k++) {
-    uv.setY(k, 1 - uv.getY(k));                     // texture corner (0,0) at the card's top-left (−X, +Y)
-    const u = uv.getX(k), v = uv.getY(k);
+    const u = uv.getX(k), v = uv.getY(k);            // canvas top-left (the web's hub) = the card's top-left vertex
     P.setZ(k, -o.sag * Math.sin(Math.PI * Math.min(1, u)) * Math.sin(Math.PI * Math.min(1, v)) * 0.6);
   }
   geo.translate(o.size / 2, -o.size / 2, 0); geo.computeVertexNormals();
@@ -1371,14 +1440,14 @@ const ease01 = (u) => smooth(clamp(u, 0, 1));
 
 // ═════════════════════════════════════════════ BOX ROOM: CRIB / FLAT-PACK / PAINT ═════════════════════════════════
 export function makeCrib(opts = {}) {
-  const o = { l: 1.5, wd: 0.92, h: 1.0, base: 0.32, wood: PROP_COLORS.pale, mattress: false, stage: 'half', ...opts };
+  const o = { l: 1.5, wd: 0.92, h: 1.0, base: 0.32, wood: '#f3dfba', mattress: false, stage: 'half', ...opts };
   const { l, wd, h, base } = o;
   const root = rootProp('crib');
   const wood = o.wood, dk = '#' + new THREE.Color(wood).multiplyScalar(0.82).getHexString();
   const B = new Batch();
-  B.add('oak', rb(l - 0.08, 0.06, wd - 0.08, 0.01), { pos: [0, base - 0.03, 0], color: dk });
-  for (const sx of [-1, 1]) for (const sz of [-1, 1]) B.add('oak', rb(0.06, base - 0.06, 0.06, 0.01), { pos: [sx * (l / 2 - 0.1), (base - 0.06) / 2, sz * (wd / 2 - 0.1)], color: dk });
-  for (let k = 0; k < 5; k++) B.add('oak', rb(0.07, 0.025, wd - 0.12, 0.006), { pos: [-l / 2 + 0.2 + k * (l - 0.4) / 4, base - 0.0, 0], color: wood });
+  B.add('paint', rb(l - 0.08, 0.06, wd - 0.08, 0.01), { pos: [0, base - 0.03, 0], color: dk });
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) B.add('paint', rb(0.06, base - 0.06, 0.06, 0.01), { pos: [sx * (l / 2 - 0.1), (base - 0.06) / 2, sz * (wd / 2 - 0.1)], color: dk });
+  for (let k = 0; k < 5; k++) B.add('paint', rb(0.07, 0.025, wd - 0.12, 0.006), { pos: [-l / 2 + 0.2 + k * (l - 0.4) / 4, base - 0.0, 0], color: wood });
   if (o.mattress) B.add('knit', rb(l - 0.14, 0.1, wd - 0.14, 0.04), { pos: [0, base + 0.05, 0], color: '#dce9f2' });
   if (o.stage === 'half') {
     const r = rng(97);
@@ -1393,10 +1462,10 @@ export function makeCrib(opts = {}) {
   for (const sz of [1, -1]) {
     const hinge = group('cribSide', root); hinge.position.set(0, base, sz * (wd / 2 - 0.02));
     const P = new Batch();
-    P.add('oak', rb(l - 0.14, 0.07, 0.05, 0.012), { pos: [0, sideH - 0.035, 0], color: wood });
-    P.add('oak', rb(l - 0.14, 0.06, 0.045, 0.01), { pos: [0, 0.05, 0], color: wood });
+    P.add('paint', rb(l - 0.14, 0.07, 0.05, 0.012), { pos: [0, sideH - 0.035, 0], color: wood });
+    P.add('paint', rb(l - 0.14, 0.06, 0.045, 0.01), { pos: [0, 0.05, 0], color: wood });
     const n = Math.round((l - 0.2) / 0.1);
-    for (let k = 0; k <= n; k++) P.add('oak', rb(0.035, sideH - 0.1, 0.035, 0.008), { pos: [-(l - 0.2) / 2 + k * (l - 0.2) / n, sideH / 2, 0], color: wood });
+    for (let k = 0; k <= n; k++) P.add('paint', rb(0.035, sideH - 0.1, 0.035, 0.008), { pos: [-(l - 0.2) / 2 + k * (l - 0.2) / n, sideH / 2, 0], color: wood });
     P.build(hinge, { name: 'cribSide' });
     panels.push({ hinge, axis: 'x', sgn: sz, max: theta });
   }
@@ -1405,13 +1474,13 @@ export function makeCrib(opts = {}) {
     const hinge = group('cribEnd', root); hinge.position.set(sx * l / 2, 0, 0);
     const P = new Batch();
     for (const sz of [-1, 1]) {
-      P.add('oak', rb(0.075, h + 0.05, 0.075, 0.014), { pos: [-sx * 0.04, (h + 0.05) / 2, sz * (wd / 2 - 0.04)], color: wood });
-      P.add('oak', sp(0.05, 12, 8), { pos: [-sx * 0.04, h + 0.09, sz * (wd / 2 - 0.04)], color: wood });
+      P.add('paint', rb(0.075, h + 0.05, 0.075, 0.014), { pos: [-sx * 0.04, (h + 0.05) / 2, sz * (wd / 2 - 0.04)], color: wood });
+      P.add('paint', sp(0.05, 12, 8), { pos: [-sx * 0.04, h + 0.09, sz * (wd / 2 - 0.04)], color: wood });
     }
-    P.add('oak', rb(0.05, 0.2, wd - 0.1, 0.02), { pos: [-sx * 0.04, h - 0.1, 0], color: wood });
-    P.add('oak', rb(0.045, 0.06, wd - 0.1, 0.01), { pos: [-sx * 0.04, base + 0.05, 0], color: wood });
+    P.add('paint', rb(0.05, 0.2, wd - 0.1, 0.02), { pos: [-sx * 0.04, h - 0.1, 0], color: wood });
+    P.add('paint', rb(0.045, 0.06, wd - 0.1, 0.01), { pos: [-sx * 0.04, base + 0.05, 0], color: wood });
     const n = 6;
-    for (let k = 0; k <= n; k++) P.add('oak', rb(0.035, h - base - 0.25, 0.035, 0.008), { pos: [-sx * 0.04, base + 0.05 + (h - base - 0.25) / 2, -(wd - 0.22) / 2 + k * (wd - 0.22) / n], color: wood });
+    for (let k = 0; k <= n; k++) P.add('paint', rb(0.035, h - base - 0.25, 0.035, 0.008), { pos: [-sx * 0.04, base + 0.05 + (h - base - 0.25) / 2, -(wd - 0.22) / 2 + k * (wd - 0.22) / n], color: wood });
     P.add('paint', sp(0.055, 12, 8).scale(1, 1, 0.3), { pos: [-sx * 0.04 + sx * 0.03, h - 0.1, 0], rot: [0, Math.PI / 2, 0], color: '#ffd23f' });   // star cut-out
     P.build(hinge, { name: 'cribEnd' });
     panels.push({ hinge, axis: 'z', sgn: sx, max: Math.PI / 2 });
@@ -1625,9 +1694,9 @@ export function makePickle(opts = {}) {
   root.userData.set(0, {});
   return root;
 }
-function labelBand(r, h, tex, y, arc = Math.PI * 1.1) {
-  const g = new THREE.CylinderGeometry(r, r, h, 32, 1, true, Math.PI / 2 - arc / 2 + Math.PI, arc);
-  const m = texMesh(g, tex, { rough: 0.7 }); m.position.y = y; return m;
+function labelBand(r, h, tex, y, arc = Math.PI * 1.1, emissive = 0) {
+  const g = new THREE.CylinderGeometry(r, r, h, 32, 1, true, -arc / 2, arc);      // centred on +Z
+  const m = texMesh(g, tex, { rough: 0.7, emissive }); m.position.y = y; return m;
 }
 export function makePickleJar(opts = {}) {
   const o = { r: 0.13, h: 0.34, pickles: 8, lid: true, ...opts };
@@ -1636,7 +1705,8 @@ export function makePickleJar(opts = {}) {
   const P = new Batch(), hr = rng(131);
   for (let k = 0; k < o.pickles; k++) {
     const a = (k / o.pickles) * TAU + hr() * 0.3, rr = r * (0.45 + hr() * 0.2);
-    P.add('gloss', pickleGeom(h * 0.7, 0.03, 10 + k), { pos: [Math.cos(a) * rr, h * 0.42, Math.sin(a) * rr], rot: [Math.PI / 2 + (hr() - 0.5) * 0.3, 0, (hr() - 0.5) * 0.3], color: hr() < 0.5 ? '#557f26' : '#4a7322' });
+    // long, light, bumpy gherkins leaning at angles (they read as pickles, not olives, through the clearer glass)
+    P.add('gloss', pickleGeom(h * 0.8, 0.034, 10 + k), { pos: [Math.cos(a) * rr, h * 0.44, Math.sin(a) * rr], rot: [Math.PI / 2 + (hr() - 0.5) * 0.5, 0, (hr() - 0.5) * 0.5], color: hr() < 0.5 ? '#7fae3a' : '#6f9e30' });
   }
   for (let k = 0; k < 6; k++) P.add('plain', sp(0.012, 6, 4), { pos: [(hr() - 0.5) * r, h * (0.2 + hr() * 0.5), (hr() - 0.5) * r], color: '#3f5f1f' });
   P.add('metal', cy(r * 1.0, r * 1.0, 0.012, 32), { pos: [0, 0.006, 0], color: '#d8e6d0' });
@@ -1645,17 +1715,17 @@ export function makePickleJar(opts = {}) {
     P.add('metal', cy(r * 0.88, r * 0.88, 0.004, 32), { pos: [0, h + 0.056, 0], color: '#d9b45a' });
   }
   P.build(root, { name: 'jarContents' });
-  const brine = new THREE.Mesh(cy(r * 0.93, r * 0.93, h * 0.82, 32), new THREE.MeshStandardMaterial({ color: '#c9d98a', roughness: 0.1, transparent: true, opacity: 0.42, depthWrite: false }));
+  const brine = new THREE.Mesh(cy(r * 0.93, r * 0.93, h * 0.82, 32), new THREE.MeshStandardMaterial({ color: '#d8e66a', roughness: 0.1, transparent: true, opacity: 0.25, depthWrite: false }));
   brine.position.y = h * 0.42; brine.renderOrder = 2; root.add(brine);
-  const glass = new THREE.Mesh(cy(r, r, h, 40, true), new THREE.MeshStandardMaterial({ color: '#eef6ee', roughness: 0.04, metalness: 0.0, transparent: true, opacity: 0.22, depthWrite: false, side: THREE.DoubleSide }));
+  const glass = new THREE.Mesh(cy(r, r, h, 40, true), new THREE.MeshStandardMaterial({ color: '#eef6ee', roughness: 0.04, metalness: 0.0, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide }));
   glass.position.y = h / 2 + 0.002; glass.renderOrder = 3; root.add(glass);
   const shoulder = new THREE.Mesh(new THREE.TorusGeometry(r * 0.94, 0.01, 6, 32), glass.material); shoulder.rotation.x = Math.PI / 2; shoulder.position.y = h; shoulder.renderOrder = 3; root.add(shoulder);
   const [c, g] = cvs(1024, 256);
-  g.fillStyle = '#f5ecd0'; g.fillRect(0, 0, 1024, 256); g.fillStyle = '#2f6b3a'; g.fillRect(0, 0, 1024, 26); g.fillRect(0, 230, 1024, 26);
-  g.fillStyle = '#2f6b3a'; g.font = `900 120px ${SERIF}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('PICKLES', 512, 120);
+  g.fillStyle = '#f5ecd0'; g.fillRect(0, 0, 1024, 256); g.fillStyle = '#1f4a28'; g.fillRect(0, 0, 1024, 26); g.fillRect(0, 230, 1024, 26);
+  g.fillStyle = '#163d20'; g.font = `900 120px ${SERIF}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('PICKLES', 512, 120);
   g.font = `700 30px ${SANS}`; g.fillText('extra crunchy · dill', 512, 200);
   for (const x of [120, 904]) { g.strokeStyle = '#557f26'; g.lineWidth = 6; g.beginPath(); g.moveTo(x, 200); g.lineTo(x, 60); g.stroke(); for (let k = 0; k < 6; k++) { g.beginPath(); g.moveTo(x, 70 + k * 22); g.lineTo(x + (k % 2 ? 30 : -30), 50 + k * 22); g.stroke(); } }
-  root.add(labelBand(r * 1.004, h * 0.42, ctex(c), h * 0.45));
+  root.add(labelBand(r * 1.004, h * 0.42, ctex(c), h * 0.45, Math.PI * 1.1, 0.15));   // slightly emissive: reads in the fridge light
   return root;
 }
 export function makeIceCreamTub(opts = {}) {
@@ -1963,7 +2033,7 @@ export function makeDoorSign(opts = {}) {
 /** catalogue: name → factory (for turntables / look-dev). */
 export const PROP_KIT = {
   lantern: makeLantern, lanternRow: makeLanternRow, wardrobe: makeWardrobe, hallTable: makeHallTable, familyPhoto: makeFamilyPhoto,
-  doormat: makeDoormat, coatHooks: makeCoatHooks, torch: makeTorchProp, stool: makeStool, broom: makeBroom, fryingPan: makeFryingPan,
+  doormat: makeDoormat, coatHooks: makeCoatHooks, torch: makeTorchProp, stool: makeStool, stepLadder: makeStepLadder, broom: makeBroom, fryingPan: makeFryingPan,
   screwdriver: makeScrewdriver, cardboardBox: makeCardboardBox, cobweb: makeCobweb, loaf: makeLoaf, eyeGlints: makeEyeGlints,
   raccoonTail: makeRaccoonTail, crib: makeCrib, cribBox: makeCribBox, instructionSheet: makeInstructionSheet, paintTin: makePaintTin,
   paintRoller: makePaintRoller, paintTray: makePaintTray, pickleJar: makePickleJar, iceCreamTub: makeIceCreamTub, pickle: makePickle,

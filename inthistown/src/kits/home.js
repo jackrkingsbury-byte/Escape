@@ -17,7 +17,10 @@
  *   Set = { root, anchors, options, set(key, v), setLighting(preset), update(t), background, fog, exposure, post(ctx),
  *           torch, lamp, fridgeLight, strip, sun, hemi, porchGlow, boxLamp, sky, parts, info }
  *   opts = initial options (below) + build-time only: { seed = 7, neighbours = true (the two neighbour houses +
- *           porches), opposite = true (row of houses across the street) }
+ *           porches), opposite = true (row of houses across the street), wallColor = '#e8cf9c' (hall walls: warm
+ *           buttercream; teal stays as the accent on the front door + coats), hatchSoffit = null | y (e.g. 2.75: a
+ *           lowered bulkhead x −1.3…1.0, z 5.8…7.4 with the attic hatch in its underside at that height — see the
+ *           HATCH REACH table) }
  *   set.parts = { frontDoor, pipDoor, boxDoor, hatch, fridgeDoor, shoes, coats, photo, standIns, interior, exterior }
  *   (Groups; driven by the options every frame — don't move them yourself, set the option)
  *   Options (set(key, value); all plain values, snapshotted by the engine and restored at every shot change):
@@ -25,7 +28,7 @@
  *                    | 'boxroom_lamp'   (≡ setLighting(name)); see LIGHTING below
  *     nightMix       0..1   only for 'dusk_to_night': 0 = golden dusk, 1 = blue night (drive it from t in update)
  *     practical      'fridge' | 'strip' | 'both'   which practical 'dark_practical' uses (default 'fridge')
- *     lamp           null | 0..1   override the hall table lamp (null = preset)
+ *     lamp           null | 0..1   override the hall table lamp (null = preset; also scales its room-bounce light)
  *     porchGlow      null | 0..1   override the porch lantern-row PointLight (null = preset; the lantern props are NOT
  *                                  part of this kit — the shared light that lanterns imply is)
  *     torch          null | 0..1   override the torch (set.torch; aim it every frame with set.torch.aim(from, to))
@@ -70,9 +73,18 @@
  *     dusk_to_night  dusk → night_lamp-without-lamp as nightMix goes 0 → 1 (sun turns into moonlight, sky darkens,
  *                    shafts fade, street lamps come on at 0.6).
  *     dark_practical lamp off, near-black ambient, faint moon; the single practical (fridge spot shadowed, and/or the
- *                    hot strip under the box-room door) does the lighting.        exposure 1.05, MOODS.dark
+ *                    hot strip under the box-room door) does the lighting; a faint warm kitchen glow (≥ 0.15) keeps
+ *                    the tiles / calendar readable.                                exposure 1.2, MOODS.dark
  *     morning        bright sun from the south-east (shadowed) pouring in through the front door/glass, shafts + dust,
- *                    blue sky, soft fill.                                            exposure 1.0, MOODS.morning
+ *                    saturated blue sky (horizon #9fd0f2, zenith #3f8fe0), low raking warm sun '#ffe2b8' 3.2 → a warm
+ *                    patch down the hall floor; shafts default 0.5; clear day haze.  exposure 1.0, MOODS.morning
+ *   FILL (look fix pass — rooms had almost no fill): hemisphere / environment per state: night 0.45 / 0.15 (sky
+ *     '#5f76a8'), dusk 0.6 / 0.25, morning 0.6 / 0.3; dark-state multipliers night_torch 0.6, dark_practical 0.45,
+ *     boxroom_lamp 0.8. The hall lamp also drives an unshadowed warm bounce light (hall centre, ≈25 % of the
+ *     lamp, under the ceiling at y 3.25, decay 1) and its glow reaches 7 m. Haze: night 0.012 / max 0.6; day states 0.0015 / max 0.2.
+ *   set.subjectKey  key strength for look.lightOn's 'auto' (direct.js helpers): 1.0 night_lamp, 0.55 night_torch and
+ *     dark_practical (faces stay ≥ 0.35), 0.8 elsewhere. Faces need that subject light; ambient alone only lifts
+ *     them to ≈ 0.3–0.45.
  *     boxroom_lamp   inside the box room: the floor work lamp is the key (shadowed), hall dark behind, lanterns glow at
  *                    the far end of the hall.                                        exposure 1.0, MOODS.warm
  *   set.torch  = look.makeTorch() (parented to the set root; aim(fromVec3, toVec3) every frame; or ctx.add your own)
@@ -111,6 +123,18 @@
  *   should sit ≤ 3 m from the door or shift x by +0.2. Occlusion envelope: anything between camera and door must
  *   stay under 0.7 + 0.21·d metres at distance d (1.13 m at 2 m, 1.35 m at 3 m) or it covers the name tags.
  *
+ * ─── HATCH REACH (what stool / step-ladder top height each attic beat needs; feet on the stool top) ────────────────
+ *   Body numbers (characters.js): palms flat overhead (pushUp u = 1) ≈ 2.05·s above the feet; shoulder tops ≈ 1.40·s
+ *   standing (≈ 1.2·s at pushUp u 0); eyes ≈ 1.71·s; head top 2.0·s.  me s = 1.0, Pip s = 0.7.
+ *                                         hatch at CEIL 3.40            hatchSoffit 2.75
+ *     palms flat on the panel (S55, S57)   me 1.35 · Pip 1.97           me 0.70 · Pip 1.32
+ *     shoulders wedged under it (S18)      me 2.00 (u 0) / 1.95         me 1.35 (u 0) / 1.30 · Pip 1.74
+ *     legs straighten, hatch pops (S19)    = palms row (pushUp u 0 → 1 from the shoulders-wedged stool)
+ *     head + torch up through it (S20)     eyes above the attic floor (3.55 + 0.1): me ≥ 1.95, Pip ≥ 2.45 (any soffit)
+ *   Use props_home.makeStepLadder({ h }) (top step = h; userData.topY) with pose('stepUp', t, { height: h }) and
+ *   then re-place the root at userData.topY. S57 (Pip and me, palms on the hatch, waist-up) with the 3.4 m ceiling is
+ *   a camera cheat: Pip stands on a hidden riser (frame her waist-up so the riser is out of shot).
+ *
  * ─── Anchors (THREE.Object3D; +Z of an anchor = the way it faces; HOME_ANCHORS lists them with notes) ─────────────────
  *   see HOME_ANCHORS below. Camera presets: HOME_CAMS[name] = { pos, look, fov } and anchors 'cam.<name>' +
  *   'cam.<name>.look' (so ctx.cam.set({ pos: 'cam.setupA', look: 'cam.setupA.look', fov: HOME_CAMS.setupA.fov })).
@@ -128,6 +152,7 @@ import { getHomePBR, HOME_TILE } from '../real/textures_home.js';
 import { setFrame } from '../real/materials.js';
 import { makeSky } from '../real/env.js';
 import { MOODS, COLORS, tuneShadow, makeLamp, makeTorch, makePointGlow, makeFridgeLight, makeDoorStrip, makeWindowShaft, makeDust } from '../lib/look.js';
+import { makeTextCard, makeIceCreamTub } from './props_home.js';
 
 const TAU = Math.PI * 2;
 const V3 = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -172,14 +197,14 @@ export const HOME_CAMS = {
 
 // ═════════════════════════════════════════════ materials ══════════════════════════════════════════════════════════
 const MAT_SPECS = {
-  plaster: { tex: 'plaster', ns: 0.45, ao: 0.6 },
-  paint: { tex: 'paintwood', ns: 0.4, ao: 0.5 },
+  plaster: { tex: 'plaster', ns: 0.25, ao: 0.6 },
+  paint: { tex: 'paintwood', ns: 0.15, ao: 0.5 },
   oak: { tex: 'oak', ns: 0.6 },
-  floor: { tex: 'floorboards', ns: 0.8, ao: 0.8 },
+  floor: { tex: 'floorboards', ns: 0.5, ao: 0.8 },
   tile: { tex: 'tile', texOpts: { checker: ['#efe6d4', '#9b6b56'] }, ns: 1, ao: 0.7, tile: 1.2 },
   wtile: { tex: 'tile', ns: 1, ao: 0.7, tile: 0.6 },
   slab: { tex: 'tile', ns: 0.7, ao: 0.6, tile: 3.0 },
-  fabric: { tex: 'carpet', ns: 0.8, ao: 0.7 },
+  fabric: { tex: 'carpet', ns: 0.35, ao: 0.7 },
   siding: { tex: 'siding', ns: 1, ao: 0.8 },
   shingle: { tex: 'shingle', ns: 1, ao: 0.6 },
   brick: { tex: 'brick', ns: 1, ao: 0.6 },
@@ -486,7 +511,7 @@ export function buildHome(ctx, opts = {}) {
 
   // ── palette ────────────────────────────────────────────────────────────────────────────────────────────────────
   const C = {
-    hallWall: '#7fa49a', hallPanel: '#efe5cf', ceiling: '#f3ede2', trim: '#f5eee2', floor: '#ffffff', doorInt: '#e8e0d0',
+    hallWall: opts.wallColor ?? '#e8cf9c', hallPanel: '#efe5cf', ceiling: '#f3ede2', trim: '#f5eee2', floor: '#ffffff', doorInt: '#e8e0d0',
     pipDoor: '#d9b5c8', frontDoor: '#2d5a86', kitchenWall: '#f0d9a0', cabinet: '#93ad8c', boxWall: '#d9d3c8', yellow: '#f2c94c',
     pipWall: '#a993cf', siding: '#efe6d2', shutter: '#3f6a8f', plinth: '#ffffff', porch: '#9aa0a3', post: '#f5f0e6',
   };
@@ -670,18 +695,28 @@ export function buildHome(ctx, opts = {}) {
   anchor('pip.room', [-3.2, 0, 8.2], Math.PI / 2);
 
   // ════════════════════════════════════════ attic hatch ════════════════════════════════════════════════════════
-  for (const [a, b] of [[[HT.x0 - 0.08, CE - 0.03, HT.z0 - 0.08], [HT.x1 + 0.08, CE, HT.z0]], [[HT.x0 - 0.08, CE - 0.03, HT.z1], [HT.x1 + 0.08, CE, HT.z1 + 0.08]],
-    [[HT.x0 - 0.08, CE - 0.03, HT.z0], [HT.x0, CE, HT.z1]], [[HT.x1, CE - 0.03, HT.z0], [HT.x1 + 0.08, CE, HT.z1]]]) B.box('paint', a, b, { color: C.trim });
-  for (const [a, b] of [[[HT.x0, CE, HT.z0], [HT.x1, CE + 0.25, HT.z0 + 0.03]], [[HT.x0, CE, HT.z1 - 0.03], [HT.x1, CE + 0.25, HT.z1]], [[HT.x0, CE, HT.z0], [HT.x0 + 0.03, CE + 0.25, HT.z1]], [[HT.x1 - 0.03, CE, HT.z0], [HT.x1, CE + 0.25, HT.z1]]])
-    B.box('oak', a, b, { color: '#c9a77c' });                                          // hatch lining
-  const hatch = new THREE.Group(); hatch.name = 'hatch'; hatch.position.set(0, CE - 0.005, HT.z0 + 0.01); interior.add(hatch);
+  // opts.hatchSoffit (build-time, e.g. 2.75): a lowered ceiling box (bulkhead) around the hatch, x −1.3…1.0,
+  // z 5.8…7.4, its underside at that height, with the hatch in it — so a 2 m figure on a stool can reach it.
+  const HSF = opts.hatchSoffit != null ? opts.hatchSoffit : null, HY = HSF ?? CE;
+  if (HSF != null) {
+    const sx0 = -1.3, sx1 = 1.0, sz0 = 5.8, sz1 = 7.4;
+    for (const [a, b] of [[[sx0, HSF, sz0], [sx1, CE, HT.z0]], [[sx0, HSF, HT.z1], [sx1, CE, sz1]], [[sx0, HSF, HT.z0], [HT.x0, CE, HT.z1]], [[HT.x1, HSF, HT.z0], [sx1, CE, HT.z1]]])
+      B.box('plaster', a, b, { color: C.ceiling });
+    for (const [a, b] of [[[sx0, HSF - 0.04, sz0 - 0.03], [sx1 + 0.03, HSF + 0.06, sz0]], [[sx0, HSF - 0.04, sz1], [sx1 + 0.03, HSF + 0.06, sz1 + 0.03]], [[sx1, HSF - 0.04, sz0], [sx1 + 0.03, HSF + 0.06, sz1]]])
+      B.box('paint', a, b, { color: C.trim });                                       // bulkhead edge trim
+  }
+  for (const [a, b] of [[[HT.x0 - 0.08, HY - 0.03, HT.z0 - 0.08], [HT.x1 + 0.08, HY, HT.z0]], [[HT.x0 - 0.08, HY - 0.03, HT.z1], [HT.x1 + 0.08, HY, HT.z1 + 0.08]],
+    [[HT.x0 - 0.08, HY - 0.03, HT.z0], [HT.x0, HY, HT.z1]], [[HT.x1, HY - 0.03, HT.z0], [HT.x1 + 0.08, HY, HT.z1]]]) B.box('paint', a, b, { color: C.trim });
+  for (const [a, b] of [[[HT.x0, HY, HT.z0], [HT.x1, CE + 0.25, HT.z0 + 0.03]], [[HT.x0, HY, HT.z1 - 0.03], [HT.x1, CE + 0.25, HT.z1]], [[HT.x0, HY, HT.z0], [HT.x0 + 0.03, CE + 0.25, HT.z1]], [[HT.x1 - 0.03, HY, HT.z0], [HT.x1, CE + 0.25, HT.z1]]])
+    B.box('oak', a, b, { color: '#c9a77c' });                                          // hatch lining (shaft up to the attic floor)
+  const hatch = new THREE.Group(); hatch.name = 'hatch'; hatch.position.set(0, HY - 0.005, HT.z0 + 0.01); interior.add(hatch);
   {
     const D = batcher();
     D.box('paint', [HT.x0 + 0.015, 0, 0], [HT.x1 - 0.015, 0.05, HT.z1 - HT.z0 - 0.02], { color: C.ceiling });
     D.add('metal', cyl(0.035, 0.035, 0.02, 12), { pos: [0, -0.01, HT.z1 - HT.z0 - 0.12], color: '#b8b8b8' });
     D.build(hatch, M, { name: 'hatch' });
   }
-  anchor('hall.hatch', [0, CE, (HT.z0 + HT.z1) / 2], 0);
+  anchor('hall.hatch', [0, HY, (HT.z0 + HT.z1) / 2], 0, root, { note: 'centre of the hatch panel underside (CEIL, or hatchSoffit)' });
   anchor('hall.underHatch', [0, 0, (HT.z0 + HT.z1) / 2], 0);
   anchor('attic.hatch', [0, CE + 0.15, (HT.z0 + HT.z1) / 2], 0);
 
@@ -883,13 +918,58 @@ export function buildHome(ctx, opts = {}) {
   B.box('gloss', [fx0 + 0.05, 0.12, fz0 + 0.05], [K.x1 - 0.06, 0.16, fz1 - 0.05], { color: '#eef6f2' });
   B.box('gloss', [fx0 + 0.05, 1.62, fz0 + 0.05], [K.x1 - 0.06, 1.68, fz1 - 0.05], { color: '#dfeee8' });   // freezer divider
   for (const y of [0.55, 0.95, 1.3]) B.box('gloss', [fx0 + 0.1, y, fz0 + 0.05], [K.x1 - 0.06, y + 0.015, fz1 - 0.05], { color: '#e8f4f6' });
-  // fridge contents (shelves): bottles, milk, jars, cheese, veg drawer
-  B.box('gloss', [fx0 + 0.12, 0.16, fz0 + 0.07], [K.x1 - 0.08, 0.45, fz1 - 0.07], { color: '#d9efe6' });
-  B.add('plain', cyl(0.06, 0.06, 0.28, 12), { pos: [fx0 + 0.3, 0.71, fz0 + 0.2], color: '#f7f5ee' });
-  B.add('gloss', cyl(0.04, 0.05, 0.3, 10), { pos: [fx0 + 0.3, 0.72, fz0 + 0.36], color: '#4caf50' });
-  B.add('gloss', cyl(0.07, 0.07, 0.14, 14), { pos: [fx0 + 0.35, 1.04, fz1 - 0.25], color: '#e8483b' });
-  B.add('plain', boxG(0.2, 0.08, 0.14), { pos: [fx0 + 0.32, 0.6, fz1 - 0.25], color: '#f2d43b' });
-  B.add('gloss', cyl(0.06, 0.06, 0.18, 12), { pos: [fx0 + 0.4, 1.4, fz0 + 0.3], color: '#7a4a24' });
+  // fridge contents: a dozen+ recognisable items (shapes + colours + canvas labels), leaving the FRONT-CENTRE of
+  // shelf 1 free for prop inserts (kitchen.fridge.shelf.1: the pickle jar / ice-cream tub / pickle of the S10 insert)
+  {
+    const SY = [0.565, 0.965, 1.315], FZ = FR.z, BX = K.x1 - 0.1;          // shelf tops, fridge centre z, back x
+    const xs = (d) => fx0 + 0.12 + d;                                       // d = depth from the front of the shelves
+    B.box('gloss', [fx0 + 0.12, 0.16, fz0 + 0.07], [K.x1 - 0.08, 0.45, fz1 - 0.07], { color: '#d9efe6' });   // veg drawer
+    // veg drawer: apples, oranges, a lettuce, carrots (seen through the drawer front from above)
+    for (const [d, z, c] of [[0.12, -0.25, '#d93a2b'], [0.22, -0.16, '#e2452f'], [0.14, -0.06, '#8fc23a'], [0.3, 0.05, '#f39a1e'], [0.2, 0.14, '#f5a623']])
+      B.add('gloss', sph(0.06, 12, 8), { pos: [xs(d), 0.5, FZ + z], color: c });
+    B.add('plain', new THREE.IcosahedronGeometry(0.1, 1), { pos: [xs(0.4), 0.5, FZ + 0.27], color: '#6aa84f' });
+    for (let k = 0; k < 3; k++) B.add('plain', new THREE.ConeGeometry(0.025, 0.2, 8), { pos: [xs(0.42 + k * 0.05), 0.48, FZ - 0.3 + k * 0.03], rot: [0, 0, Math.PI / 2 + 0.1 * k], color: '#ef7d1a' });
+    // shelf 0: milk carton (gable top), egg box, cheese wedge, butter
+    B.box('plain', [xs(0.08), SY[0], FZ - 0.36], [xs(0.18), SY[0] + 0.24, FZ - 0.26], { color: '#f7f7f4' });
+    B.box('plain', [xs(0.08) - 0.002, SY[0] + 0.16, FZ - 0.362], [xs(0.18) + 0.002, SY[0] + 0.2, FZ - 0.258], { color: '#2f6fd6' });
+    B.add('plain', new THREE.CylinderGeometry(0.0001, 0.07, 0.06, 4, 1).rotateY(Math.PI / 4), { pos: [xs(0.13), SY[0] + 0.27, FZ - 0.31], scale: [1, 1, 0.72], color: '#f7f7f4' });
+    B.box('plain', [xs(0.05), SY[0], FZ - 0.16], [xs(0.19), SY[0] + 0.075, FZ + 0.16], { color: '#cdb38a' });       // egg box
+    for (let k = 0; k < 6; k++) B.add('plain', sph(0.028, 8, 6), { pos: [xs(0.08 + (k % 2) * 0.08), SY[0] + 0.075, FZ - 0.12 + Math.floor(k / 2) * 0.12], scale: [1, 0.6, 1], color: '#d8c39a' });
+    B.add('gloss', new THREE.CylinderGeometry(0.1, 0.1, 0.07, 3, 1), { pos: [xs(0.32), SY[0] + 0.035, FZ + 0.25], rot: [0, 0.4, 0], color: '#f4c430' });
+    B.box('gloss', [xs(0.3), SY[0], FZ - 0.05], [xs(0.42), SY[0] + 0.05, FZ + 0.07], { color: '#fbe58a' });           // butter
+    // shelf 1 (back corners only): jam jar, three yoghurts
+    B.add('gloss', cyl(0.055, 0.055, 0.12, 14), { pos: [BX - 0.05, SY[1] + 0.06, FZ + 0.3], color: '#b3172f' });
+    B.add('metal', cyl(0.058, 0.058, 0.025, 14), { pos: [BX - 0.05, SY[1] + 0.13, FZ + 0.3], color: '#d9b45a' });
+    for (let k = 0; k < 3; k++) {
+      B.add('plain', cyl(0.04, 0.034, 0.08, 12), { pos: [BX - 0.04, SY[1] + 0.04, FZ - 0.36 + k * 0.09], color: '#f7f3ec' });
+      B.add('gloss', cyl(0.042, 0.042, 0.01, 12), { pos: [BX - 0.04, SY[1] + 0.085, FZ - 0.36 + k * 0.09], color: ['#ff7aa8', '#ffcf3f', '#7fc2ff'][k] });
+    }
+    // shelf 2: orange juice + green lemonade bottles, ketchup, a leftovers box
+    for (const [z, c, cap] of [[-0.3, '#ff9f1c', '#ffffff'], [-0.18, '#4caf50', '#e8e0c8']]) {
+      B.add('gloss', cyl(0.045, 0.05, 0.24, 14), { pos: [xs(0.2), SY[2] + 0.12, FZ + z], color: c });
+      B.add('gloss', cyl(0.02, 0.04, 0.06, 12), { pos: [xs(0.2), SY[2] + 0.27, FZ + z], color: c });
+      B.add('plain', cyl(0.022, 0.022, 0.03, 10), { pos: [xs(0.2), SY[2] + 0.315, FZ + z], color: cap });
+    }
+    B.add('gloss', cyl(0.04, 0.045, 0.2, 12), { pos: [xs(0.32), SY[2] + 0.1, FZ + 0.0], color: '#d1242a' });
+    B.add('plain', cyl(0.018, 0.03, 0.05, 10), { pos: [xs(0.32), SY[2] + 0.225, FZ + 0.0], color: '#f1f1ec' });
+    B.box('gloss', [xs(0.06), SY[2], FZ + 0.1], [xs(0.26), SY[2] + 0.09, FZ + 0.34], { color: '#e9f1f4' });
+    B.box('gloss', [xs(0.055), SY[2] + 0.09, FZ + 0.095], [xs(0.265), SY[2] + 0.11, FZ + 0.345], { color: '#3a82d6' });
+    // freezer: a bag of peas
+    B.add('plain', boxG(0.28, 0.06, 0.2), { pos: [xs(0.3), 1.71, FZ + 0.2], rot: [0, 0.3, 0.05], color: '#3f9a4a' });
+    // canvas labels (one draw call each; text faces −x = out of the fridge)
+    const label = (text, w, h, bg, ink, pos) => {
+      const c = makeTextCard({ w, h, px: 256, thick: 0, rough: 0.6, draw(g, W, Hh) {
+        g.fillStyle = bg; g.fillRect(0, 0, W, Hh); g.fillStyle = ink; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.font = `900 ${Math.round(Hh * 0.62)}px DejaVu Sans, sans-serif`; g.fillText(text, W / 2, Hh * 0.54);
+      } });
+      c.position.set(...pos); c.rotation.y = -Math.PI / 2; interior.add(c);
+    };
+    label('MILK', 0.095, 0.07, '#f7f7f4', '#2f6fd6', [xs(0.08) - 0.003, SY[0] + 0.1, FZ - 0.31]);
+    label('EGGS', 0.16, 0.05, '#cdb38a', '#5a3d1f', [xs(0.05) - 0.003, SY[0] + 0.04, FZ]);
+    label('JUICE', 0.08, 0.06, '#ffffff', '#e26a00', [xs(0.2) - 0.051, SY[2] + 0.12, FZ - 0.3]);
+    label('JAM', 0.07, 0.045, '#fff3d6', '#9a1026', [BX - 0.107, SY[1] + 0.06, FZ + 0.3]);
+    const tub = makeIceCreamTub({ flavour: 'MINT' }); tub.position.set(xs(0.16), 1.68, FZ - 0.18); tub.rotation.y = -Math.PI / 2; interior.add(tub);
+  }
   anchor('kitchen.fridge', [fx0 - 0.55, 0, FR.z], -Math.PI / 2, root, { note: 'floor in front of the fridge, facing out of it (−x, toward the arch)' });
   anchor('kitchen.fridge.inside', [fx0 + 0.35, 1.0, FR.z], -Math.PI / 2);
   for (const [i, y] of [[0, 0.57], [1, 0.97], [2, 1.32]]) anchor(`kitchen.fridge.shelf.${i}`, [fx0 + 0.32, y, FR.z], -Math.PI / 2);
@@ -931,6 +1011,10 @@ export function buildHome(ctx, opts = {}) {
   // kitchen ceiling glow (option) + pendant
   const kitchenGlow = makePointGlow({ color: '#ffc58a', intensity: 1, distance: 7 });
   kitchenGlow.root.position.set(3.3, 3.0, 6.6); interior.add(kitchenGlow.root);
+  // the hall lamp's room bounce: one unshadowed warm PointLight under the hall ceiling at ≈25 % of the lamp, driven
+  // by the `lamp` option (fakes the light the lamp throws off the warm walls and ceiling)
+  const lampBounce = new THREE.PointLight('#ffd3a0', 0, 9, 1); lampBounce.name = 'lampBounce';
+  lampBounce.position.set(0, 3.25, 5.5); interior.add(lampBounce);      // just under the ceiling: soft fill from above
   B.add('metal', cyl(0.006, 0.006, 0.5, 4), { pos: [3.3, CE - 0.25, 7.9], color: '#333' });
   { const p = new THREE.Mesh(sph(0.22, 18, 10, 0, TAU, 0, Math.PI * 0.55), pendantMat); p.position.set(3.3, CE - 0.62, 7.9); p.rotation.x = Math.PI; interior.add(p); }
 
@@ -979,7 +1063,7 @@ export function buildHome(ctx, opts = {}) {
   }
   // work lamp (floor): stand + metal shade, spot aimed at the half-painted wall/ceiling, shadowed key in boxroom_lamp
   const boxLampGroup = new THREE.Group(); boxLampGroup.name = 'workLamp'; boxLampGroup.position.set(1.35, 0, -3.1); interior.add(boxLampGroup);
-  const boxLampSpot = new THREE.SpotLight(COLORS.lamp, 0, 9, 1.2, 0.7, 2);
+  const boxLampSpot = new THREE.SpotLight(COLORS.lamp, 0, 9, 1.2, 0.7, 1);   // decay 1 like look.makeLamp (no near-field blow-out on faces)
   const boxLampGlow = new THREE.PointLight(COLORS.lamp, 0, 4.5, 2);
   const workBulbMat = new THREE.MeshStandardMaterial({ color: '#000', emissive: new THREE.Color(COLORS.bulb), emissiveIntensity: 0 });
   {
@@ -991,7 +1075,7 @@ export function buildHome(ctx, opts = {}) {
     const bulb = new THREE.Mesh(sph(0.05, 10, 8), workBulbMat); bulb.position.set(0, 0.95, 0.03); boxLampGroup.add(bulb);
     boxLampSpot.position.set(0, 0.97, 0.02);
     const tgt = new THREE.Object3D(); tgt.position.set(0, 1.2, 3.0); boxLampGroup.add(tgt); boxLampSpot.target = tgt;
-    tuneShadow(boxLampSpot, { mapSize: 1024, radius: 5, near: 0.1, far: 9 });
+    tuneShadow(boxLampSpot, { mapSize: 1536, radius: 5, near: 0.1, far: 9 });
     boxLampGlow.position.set(0, 1.15, 0.1);
     boxLampGroup.add(boxLampSpot, boxLampGlow);
     boxLampGroup.rotation.y = -0.75;   // shade faces across the room toward the door (and the hall beyond)
@@ -1166,12 +1250,12 @@ export function buildHome(ctx, opts = {}) {
   // ── front yard, street, lamps, houses opposite, neighbours ──
   const streetLampHeads = [];
   {
-    X.box('fabric', [-60, GY - 0.3, -20], [60, GY, 16.5], { color: '#4f7a3e', tile: 0.6 });               // lawns
+    X.box('fabric', [-60, GY - 0.3, -20], [60, GY, 16.5], { color: '#5f9a3c', tile: 0.6 });               // lawns (saturated: the morning ending)
     X.box('slab', [-1.0, GY, 13.5], [1.0, GY + 0.02, 16.5], { color: '#bdb5a8' });                          // path
     X.box('slab', [-60, GY, 16.5], [60, GY + 0.05, 18.5], { color: '#b9b2a8' });                             // pavement
     X.box('plain', [-60, GY - 0.12, 18.5], [60, GY - 0.02, 25.5], { color: '#3a3c42' });                     // road
     X.box('slab', [-60, GY, 25.5], [60, GY + 0.05, 27.5], { color: '#b9b2a8' });
-    X.box('fabric', [-60, GY - 0.3, 27.5], [60, GY, 60], { color: '#4f7a3e', tile: 0.6 });
+    X.box('fabric', [-60, GY - 0.3, 27.5], [60, GY, 60], { color: '#5f9a3c', tile: 0.6 });
     for (let x = -57; x < 60; x += 6) X.box('plain', [x, GY - 0.015, 21.95], [x + 2.5, GY - 0.012, 22.05], { color: '#e8e0c8' });   // centre dashes
     X.box('plain', [-60, GY - 0.02, 18.4], [60, GY + 0.08, 18.55], { color: '#8d8a84' });                     // curbs
     X.box('plain', [-60, GY - 0.02, 25.45], [60, GY + 0.08, 25.6], { color: '#8d8a84' });
@@ -1231,7 +1315,7 @@ export function buildHome(ctx, opts = {}) {
     glass([win.x0, win.y0, z1 - 0.06], [win.x1, win.y1, z1 - 0.04]);
     // door leaf (dynamic for neighbour 0), porch, beam, hooks
     const door = new THREE.Group(); door.name = `neighbourDoor${ni}`; door.position.set(cx - 0.7, 0, z1 - 0.08); exterior.add(door);
-    { const D = batcher(); D.box('paint', [0, 0, -0.035], [1.4, 2.74, 0.035], { color: ni === 0 ? '#c0392b' : '#2f6f4f' }); D.add('metal', sph(0.04, 8, 6), { pos: [1.25, 1.3, 0.06], color: '#c9a45c' }); D.build(door, M, { name: 'nbDoor' }); }
+    { const D = batcher(); D.box('paint', [0, 0, -0.035], [1.4, 2.74, 0.035], { color: ni === 0 ? '#d63a2a' : '#2a78c8' }); D.add('metal', sph(0.04, 8, 6), { pos: [1.25, 1.3, 0.06], color: '#c9a45c' }); D.build(door, M, { name: 'nbDoor' }); }
     const PY = H.PORCH_Y;
     X.box('brick', [cx - 2.65, GY, z1], [cx + 2.65, PY - 0.06, 12.5]);
     X.box('floor', [cx - 2.65, PY - 0.06, z1], [cx + 2.65, PY, 12.55], { color: '#a7a19a', tile: [1.2, 2.4] });
@@ -1301,7 +1385,7 @@ export function buildHome(ctx, opts = {}) {
     c.root.position.set(0, 3.05, 10.0); interior.add(c.root);
     return { setOn(v) { a.setOn(v); b.setOn(v * 0.8); c.setOn(v * 0.8); } };
   };
-  const SUN_DUSK = [-0.12, 0.3, 1], SUN_MORNING = [0.3, 0.55, 1];
+  const SUN_DUSK = [-0.12, 0.3, 1], SUN_MORNING = [0.25, 0.42, 1];   // morning: low raking sun → warm patch down the hall floor
   const shaftsDusk = mkShafts(SUN_DUSK, '#ffc98f', 3), shaftsMorning = mkShafts(SUN_MORNING, '#fff1dc', 13);
   const dust = makeDust({ box: [2.5, 3.2, 7], count: 320, size: 0.01, intensity: 0.9 });
   dust.root.position.set(0, 1.7, 6.2); interior.add(dust.root);
@@ -1323,13 +1407,13 @@ export function buildHome(ctx, opts = {}) {
     boxLamp: { root: boxLampGroup, spot: boxLampSpot, glow: boxLampGlow },
     parts: { frontDoor, pipDoor, boxDoor, hatch, fridgeDoor, shoes: shoeGroup, coats: coatGroup, photo: photoGroup, standIns: standInGroup, interior, exterior },
     info: { name: 'home', presets: HOME_PRESETS },
-    mood: MOODS.night, haze: null,
+    mood: MOODS.night, haze: null, subjectKey: 1,
   };
   const C3 = (h) => new THREE.Color(h);
   const STATES = {
-    night: { sun: ['#a9bde0', 0.35, [-0.45, 0.55, 1]], hemi: ['#3a4f7a', '#2a2018', 0.16], env: 0.05, sky: { zenith: '#0a1430', horizon: '#2a3d66', cloudColor: '#1e2a44', cloudDark: '#070b16', sunColor: '#a9bde0', sunIntensity: 0.25, brightness: 1 }, fog: '#1b2945' },
-    dusk: { sun: ['#ffb36e', 4.2, SUN_DUSK], hemi: ['#f0b98a', '#5a4030', 0.28], env: 0.1, sky: { zenith: '#36598f', horizon: '#ffb070', cloudColor: '#ffd2a0', cloudDark: '#c0806a', sunColor: '#ffb36e', sunIntensity: 2.2, brightness: 1.15 }, fog: '#e0a879' },
-    morning: { sun: ['#fff0d6', 4.0, SUN_MORNING], hemi: ['#cfe2f5', '#8a7a62', 0.34], env: 0.14, sky: { zenith: '#5d9ad8', horizon: '#dcecf6', cloudColor: '#ffffff', cloudDark: '#a9b6c4', sunColor: '#fff4e0', sunIntensity: 1.6, brightness: 1.2 }, fog: '#cfe0ee' },
+    night: { sun: ['#a9bde0', 0.35, [-0.45, 0.55, 1]], hemi: ['#5f76a8', '#3a2c20', 0.45], env: 0.15, sky: { zenith: '#0a1430', horizon: '#2a3d66', cloudColor: '#1e2a44', cloudDark: '#070b16', sunColor: '#a9bde0', sunIntensity: 0.25, brightness: 1 }, fog: '#1b2945' },
+    dusk: { sun: ['#ffb36e', 4.2, SUN_DUSK], hemi: ['#f0b98a', '#5a4030', 0.6], env: 0.25, sky: { zenith: '#36598f', horizon: '#ffb070', cloudColor: '#ffd2a0', cloudDark: '#c0806a', sunColor: '#ffb36e', sunIntensity: 2.2, brightness: 1.15 }, fog: '#e0a879' },
+    morning: { sun: ['#ffe2b8', 3.2, SUN_MORNING], hemi: ['#cfe2f5', '#8a7a62', 0.6], env: 0.3, sky: { zenith: '#3f8fe0', horizon: '#9fd0f2', cloudColor: '#ffffff', cloudDark: '#a9b6c4', sunColor: '#fff4e0', sunIntensity: 1.6, brightness: 1.0 }, fog: '#b9d6ee' },
   };
   const mixState = (a, b, u) => ({
     sun: [C3(a.sun[0]).lerp(C3(b.sun[0]), u), lerp(a.sun[1], b.sun[1], u), a.sun[2].map((v, i) => lerp(v, b.sun[2][i], u))],
@@ -1363,9 +1447,9 @@ export function buildHome(ctx, opts = {}) {
     const nightness = L === 'dusk_to_night' ? nightU : isNight ? 1 : 0;
     // darker ambient in torch / practical / boxroom states
     let hemiK = o.outdoors ? 1.5 : 1, sunK = 1, envK = o.outdoors ? 2.0 : 1;
-    if (L === 'night_torch') { hemiK = 0.45; sunK = 0.55; envK = 0.5; }
-    if (L === 'dark_practical') { hemiK = 0.3; sunK = 0.35; envK = 0.35; }
-    if (L === 'boxroom_lamp') { hemiK = 0.5; sunK = 0.5; envK = 0.6; }
+    if (L === 'night_torch') { hemiK = 0.6; sunK = 0.55; envK = 0.6; }
+    if (L === 'dark_practical') { hemiK = 0.45; sunK = 0.35; envK = 0.45; }
+    if (L === 'boxroom_lamp') { hemiK = 0.8; sunK = 0.5; envK = 0.8; }
     sun.color.copy(st.sun[0]); sun.intensity = st.sun[1] * sunK;
     const d = new THREE.Vector3(...(o.sunDir || st.sun[2])).normalize();
     sun.position.copy(sunTarget.position).addScaledVector(d, 40);
@@ -1381,10 +1465,11 @@ export function buildHome(ctx, opts = {}) {
     const boxV = o.boxRoomLight != null ? o.boxRoomLight : ((L === 'dark_practical' && (o.practical === 'strip' || o.practical === 'both')) || L === 'boxroom_lamp' ? 1 : 0);
     const fridgeV = o.fridgeLight ? clamp(o.fridgeOpen * 3, 0, 1) : 0;
     const stripV = o.strip != null ? o.strip : boxV * clamp(1 - o.boxDoorOpen * 8, 0, 1);
-    lamp.setOn(lampV); torch.setOn(torchV); torch.root.visible = torchV > 0; porchGlow.setOn(porchV * 0.6); fridgeL.setOn(fridgeV);
+    lamp.setOn(lampV); lampBounce.intensity = 1.3 * lampV; lampBounce.visible = lampV > 0; torch.setOn(torchV); torch.root.visible = torchV > 0; porchGlow.setOn(porchV * 0.6); fridgeL.setOn(fridgeV);
     strip.setOn(stripV); strip.setFeet(o.stripFeet || []);
-    boxLampSpot.intensity = 30 * boxV; boxLampGlow.intensity = 6 * boxV; boxLampSpot.visible = boxLampGlow.visible = boxV > 0; workBulbMat.emissiveIntensity = 8 * boxV;
-    kitchenGlow.setOn(o.kitchenLight); atticGlow.setOn(o.atticLight * 0.6);
+    boxLampSpot.intensity = 12 * boxV; boxLampGlow.intensity = 3.5 * boxV; boxLampSpot.visible = boxLampGlow.visible = boxV > 0; workBulbMat.emissiveIntensity = 8 * boxV;
+    // dark_practical keeps a faint warm kitchen glow so the tiles / calendar read behind the fridge practical
+    kitchenGlow.setOn(L === 'dark_practical' ? Math.max(o.kitchenLight, 0.15) : o.kitchenLight); atticGlow.setOn(o.atticLight * 0.6);
     pendantMat.emissiveIntensity = 1.5 * o.pendants;
     // exactly one shadowed key per state (others unshadowed; hidden lights cost nothing)
     sun.castShadow = !isNight || L === 'dusk_to_night' ? true : !!o.moonShadow;
@@ -1394,7 +1479,7 @@ export function buildHome(ctx, opts = {}) {
     boxLampSpot.castShadow = boxV > 0 && (L === 'boxroom_lamp' || (L === 'dark_practical' && o.practical !== 'fridge'));
     if (L === 'dark_practical' && o.practical === 'both') boxLampSpot.castShadow = false;
     // shafts / dust / street / windows
-    const shaftV = o.shafts != null ? o.shafts : (L === 'dusk' ? 1 : L === 'morning' ? 1.2 : L === 'dusk_to_night' ? 1 - nightU : 0);
+    const shaftV = o.shafts != null ? o.shafts : (L === 'dusk' ? 1 : L === 'morning' ? 0.5 : L === 'dusk_to_night' ? 1 - nightU : 0);
     shaftsDusk.setOn(L === 'morning' ? 0 : shaftV); shaftsMorning.setOn(L === 'morning' ? shaftV : 0);
     const dustV = o.dust != null ? o.dust : (L === 'morning' ? 1 : L === 'dusk' ? 0.8 : L === 'dusk_to_night' ? 0.8 * (1 - nightU) : L === 'night_torch' ? 0.6 : 0.25);
     dust.setOn(dustV); atticDust.setOn(L === 'night_torch' ? 1 : 0.4);
@@ -1416,10 +1501,14 @@ export function buildHome(ctx, opts = {}) {
     const nL = clamp(Math.round(o.lanterns), 0, 6);
     standIns.forEach((s, i) => { s.g.visible = i < nL; s.m.emissiveIntensity = i < o.lanternsLit ? 1.4 : 0; s.g.scale.setScalar(i < o.lanternsLit ? 1 : 0.35); });
     // exposure + mood
-    set.exposure = L === 'dark_practical' ? 1.05 : 1.0;
+    set.exposure = L === 'dark_practical' ? 1.2 : 1.0;
+    // subject-light key strength for look.lightOn / direct.js helpers (key 'auto'): face ≥ 0.35 even in dark states
+    set.subjectKey = L === 'night_torch' || L === 'dark_practical' ? 0.55 : L === 'night_lamp' ? 1.0 : 0.8;
     set.mood = L === 'dusk' ? MOODS.dusk : L === 'morning' ? MOODS.morning : L === 'dusk_to_night' ? moods(MOODS.dusk, MOODS.night, nightU)
       : L === 'night_torch' || L === 'dark_practical' ? MOODS.dark : L === 'boxroom_lamp' ? MOODS.warm : MOODS.night;
-    set.haze = { color: st.fog, density: isNight ? 0.012 : 0.005, start: 11, falloff: 0.08, height: 0, noise: 0.3, max: 0.6, sky: 0.25 };
+    set.haze = isNight
+      ? { color: st.fog, density: 0.012, start: 11, falloff: 0.08, height: 0, noise: 0.3, max: 0.6, sky: 0.25 }
+      : { color: st.fog, density: 0.0015, start: 11, falloff: 0.08, height: 0, noise: 0.3, max: 0.2, sky: 0.25 };   // day: clear air, saturated exterior
   }
   set.set = (k, v) => { if (!(k in DEFAULT_OPTIONS)) throw new Error(`home.set: unknown option "${k}"`); options[k] = v; apply(); };
   set.setLighting = (p) => { if (!HOME_PRESETS.includes(p)) throw new Error(`home.setLighting: unknown preset "${p}" (have ${HOME_PRESETS.join(', ')})`); options.lighting = p; apply(); };
@@ -1457,7 +1546,7 @@ export const HOME_ANCHORS = {
   'hall.pipDoor.gap': 'the dark gap at the latch edge of Pip\'s door at eye height (1.62 m), for the eye-in-the-gap ECU',
   'hall.pipDoor.drawings': 'wall spot beside her door frame (kid height) for the column of 7 crayon drawings, facing +x',
   'hall.kitchenArch': 'floor in the kitchen arch (east wall), facing into the hall (−x)',
-  'hall.hatch / hall.underHatch / attic.hatch': 'attic hatch centre at the ceiling / on the hall floor below it / at the attic floor',
+  'hall.hatch / hall.underHatch / attic.hatch': 'attic hatch centre at the ceiling (or the hatchSoffit underside) / on the hall floor below it / at the attic floor',
   'hall.boxDoor / hall.boxDoor.strip': 'hall floor in front of the box-room door (facing it) / the strip of light under it',
   'hall.radiator': 'in front of the radiator (east wall z 2.5)',
   'kitchen.center / kitchen.fridge / kitchen.fridge.inside / kitchen.fridge.shelf.0..2 / kitchen.fridge.door': 'fridge faces west through the arch',

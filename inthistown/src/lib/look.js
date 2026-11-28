@@ -3,21 +3,24 @@
  * of field helpers, and cheap motivated-light builders (shadowed key + visible practicals) for SwiftShader.
  *
  * ─── Quick start (a shots module) ───────────────────────────────────────────────────────────────────────────────────
- *   import { renderFrame as lookRender, focusOn, focusPull, lookFrame } from '../lib/look.js';
+ *   import { renderFrame as lookRender, focusOn, focusPull, lookFrame, lightOn } from '../lib/look.js';
  *   export const renderFrame = lookRender;              // EVERY frame goes through post.js with the series preset
  *   shots: { …, focus: 'me' }                           // optional per-shot DOF on a cast member's face (each frame)
  *          { …, focus: { target: 'pip', aperture: 0.8, part: 'face' } }  |  focus: (ctx, lt, u) => target|cfg|null
  *          { …, post: { exposure: 0.9, grade: { temperature: 0.2 } } }   |  post: (ctx, lt, u) => cfg   (post.js cfg)
+ *          { …, light: 'me' }  |  light: { target: 'pip', key: 0.8, rim: 1 }  |  light: (ctx, lt, u) => …   (subject light)
  *   in shot.update:  focusOn(ctx, ctx.cast.me)  ·  focusOn(ctx, 'hall.table.photo', { aperture: 1.2 })
  *                    focusPull(ctx, photoObj, ctx.cast.pip, ctx.progress('pull0', 'pull1'))
  *                    lookFrame(ctx, { exposure: 0.8, fade: { color: '#fff', amount: u } })   (any post.js cfg, this frame)
  *
  * ─── Exports ────────────────────────────────────────────────────────────────────────────────────────────────────────
- *   LOOK                       the series preset (post.js cfg, §8): grade temperature +0.1, saturation 0.95, bleach 0,
- *                              contrast 1.1, shadowAmt 0.1, highlightAmt 0.1; ao radius 0.4; bloom 0.15 / threshold 0.9;
- *                              vignette 0.3; grain 0.02; ca 0.001; fxaa on, msaa 0; fx layer off; dof off (per shot).
+ *   LOOK                       the series preset (post.js cfg, §8; look fix pass): grade temperature +0.1, saturation
+ *                              1.15, bleach 0, contrast 1.04, blackPoint 0, shadowAmt 0.1, highlightAmt 0.1; ao radius 0.3
+ *                              intensity 0.6 dither 'ign' (no speckle on skin/fabric); bloom 0.15 / threshold 0.9;
+ *                              vignette 0.18; grain 0.02; ca 0.001; fxaa on, msaa 0; fx layer off; dof off (per shot).
  *   MOODS                      small per-lighting-state tweaks merged on top of LOOK (a set's `post` can return them):
- *                              MOODS.night / dusk / morning / dark / warm. Example: set.post = () => MOODS.night.
+ *                              MOODS.night (sat 1.12) / dusk / morning (temperature 0.14, sat 1.15, bloom threshold 0.95) /
+ *                              dark (sat 1.05, contrast 1.06, vignette 0.28) / warm. Example: set.post = () => MOODS.night.
  *   renderFrame(ctx)           export it from the shots module. Lazily creates post (createPost(ctx, { msaa: 0 })),
  *                              post.defaults(LOOK), then per frame merges, in order: set.post (object or fn(ctx)),
  *                              shot.post (object or fn(ctx, lt, u)), shot.focus, everything queued with lookFrame /
@@ -27,15 +30,33 @@
  *   lookFrame(ctx, cfg)        queue post.js overrides for THIS frame only (deep-merged; cleared after the render).
  *   focusOn(ctx, target, opts) per-frame DOF focus on a target; resolved at render time with the FINAL camera (after
  *                              shake / punch), so call it in update every frame. target: cast id ('me'), Character,
- *                              Object3D, Vector3, [x,y,z], or an anchor name ('hall.table'). opts:
+ *                              Object3D, Vector3, [x,y,z], or an anchor name ('hall.table'). Gentle by default (the
+ *                              references are mostly deep focus): focus the largest face unless the shot is an insert. opts:
  *                                part 'face' (default for characters: middle of the painted face) | 'head' | 'chest' |
  *                                     'hands' | 'feet' ;  offset [x,y,z] (world, added to the point)
  *                                aperture 0.6 (post.js units: CoC px per |1 − focus/dist| ÷ 30 at 1080 wide; 0.3 subtle
  *                                     wide, 0.6 medium close-up, 1.0–1.6 macro / extreme close-up)
- *                                maxBlur 14 (px at 1080 wide), focusBias 0 (m added to the distance)
+ *                                maxBlur 8 (px at 1080 wide), focusBias 0 (m added to the distance)
  *   focusPull(ctx, a, b, u, opts)   focus distance eased (smoothstep) from target a (u = 0) to b (u = 1); opts as focusOn.
  *   focusDistance(ctx, target, opts) → metres from the CURRENT camera position (use only after the camera is final).
  *   targetPoint(ctx, target, part?, out?) → world Vector3 of a target (character part / object / anchor / vec).
+ *
+ *   SUBJECT LIGHT (look fix pass: characters were unlit — faces 0.04–0.17 luma, the black hoodie a void):
+ *   lightOn(ctx, target, { key = 'auto' | 0..1.5 | false, rim = 1 | 0..1.5 | false, side = 'L' | 'R', part = 'face',
+ *            offset, keyDist, keyAz = 37, keyEl = 25, keyColor, rimColor })   call in update every frame (or shot.light)
+ *       Resolved at render time from the FINAL camera (after shake / punch), like focusOn. Two unshadowed decay-1
+ *       PointLights parented to the camera (they never leave the scene → no shader recompiles; off = intensity 0):
+ *         key  warm '#ffe6cc', keyDist (default 0.8·min(2.4 m, camera distance)) from the head, 37° to camera-LEFT
+ *              (side 'R' mirrors) and 25° up, intensity 1.35 × key × distance (constant irradiance at the face),
+ *              cutoff 2.4 × distance;  'auto' = ctx.set.subjectKey (home.js: 1.0 night_lamp, 0.8 dusk / morning /
+ *              boxroom, 0.55 torch / dark practical) or 1.
+ *         rim  COLORS.moon behind the subject on the side opposite the key, 0.55 m up, intensity 2.6 × rim × distance,
+ *              cutoff 6.5 m — gives hair and the black hoodie an edge.
+ *       Every OTHER cast head in the scene is capped at irradiance 2.0 from either light, so keying a subject behind
+ *       someone never blows out the nearer face. key:false + rim → a deliberate silhouette with an edge. Use keyDist
+ *       (e.g. 0.9) when a prop sits between the subject and the lens. src/direct.js helpers call lightOn for you when
+ *       configured: configureDirect({ focusOn, lightOn }). SUBJECT_LIGHT holds the constants (tunable).
+ *       Measured (showcase): face luma 0.45–0.75, +≈1 % render cost.
  *
  *   Light builders (all return { root, …, setOn(v 0..1) }; nothing animates unless you call the method; deterministic):
  *   COLORS                     motivated practical colours, kept low in saturation so the black hoodie stays black:
@@ -46,7 +67,8 @@
  *   makeLamp({ shade = '#f3e6cf', base = '#7a5a3c', height = 0.62, on = 1, shadow = true, intensity = 1,
  *              spotAngle = 1.15, color = COLORS.lamp, reach = 9 })
  *     → { root, spot (SpotLight, aims down/out through the shade: the KEY with shadows), glow (PointLight, unshadowed,
- *         short-range warm wash on the nearest wall + ceiling), shade, bulb, setOn(v), aim(targetWorldVec3) }
+ *         warm wash on the walls + ceiling: intensity 6, reach ≤ 7 m — fakes the room bounce), shade, bulb, setOn(v),
+ *         aim(targetWorldVec3) }
  *       origin = bottom of the lamp base; spot target defaults to 1.6 m in front (+Z) on the floor.
  *   makeTorch({ color = COLORS.torch, intensity = 1, angle = 0.36, shadow = true, reach = 14 })
  *     → { root (small torch body: parent it into a hand or ctx.add it), spot, lens, setOn(v), aim(fromVec3, toVec3) }
@@ -54,8 +76,12 @@
  *   makePointGlow({ color = COLORS.lantern, intensity = 1, distance = 7, size = 0 })
  *     → { root, light, orb|null, setOn(v) }   unshadowed practical (lantern row, candle, night light). size > 0 adds a
  *       visible emissive orb of that radius.
- *   makeFridgeLight({ intensity = 1, shadow = true, angle = 1.05 }) → { root, spot, panel, setOn(v) }
- *       origin = centre of the fridge's open interior; spot points along +Z out of the fridge; panel = emissive back wall.
+ *   makeFridgeLight({ intensity = 1, shadow = true, angle = 1.05 }) → { root, spot, panel, fill, setOn(v) }
+ *       origin = centre of the fridge's open interior; spot (decay 1) sits just outside the front (local z 0.47) and points
+ *       along +Z out of the fridge; fill = soft short-range PointLight on the contents (0.8); panel = dim warm-white
+ *       emissive back wall (0.25, so the contents read instead of a white sheet).
+ *   Near-field rule (integration fix): the lamp, torch and fridge spots use decay 1 (not the physical 2) — a point source
+ *       with inverse-square blew out faces / shelves within ~1 m; intensities are matched to the old look at 2.5–3 m.
  *   makeDoorStrip({ width = 1.1, color = COLORS.strip, intensity = 1, depth = 0.9 })
  *     → { root, strip (emissive sliver), pool (soft additive light pool on the floor), light (PointLight), setOn(v),
  *         setFeet(list) }  origin = floor at the middle of the door's bottom edge, +Z = toward the viewer's side.
@@ -87,22 +113,22 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 export const LOOK = {
   exposure: 1,
   fog: null,
-  ao: { radius: 0.4, intensity: 0.9, bias: 0.03 },
+  ao: { radius: 0.3, intensity: 0.6, bias: 0.03, dither: 'ign' },
   dof: null,
   bloom: { strength: 0.15, threshold: 0.9, knee: 0.6, radius: 1 },
   grade: {
-    temperature: 0.1, tint: 0, saturation: 0.95, bleach: 0, contrast: 1.1, pivot: 0.42, blackPoint: 0.012, whitePoint: 1.0,
+    temperature: 0.1, tint: 0, saturation: 1.15, bleach: 0, contrast: 1.04, pivot: 0.42, blackPoint: 0, whitePoint: 1.0,
     lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1],
     shadowTint: '#3a4f73', shadowAmt: 0.1, highlightTint: '#ffd2a0', highlightAmt: 0.1,
   },
-  ca: 0.001, vignette: 0.3, grain: 0.02, letterbox: 0, fade: null, fxaa: true, fx: false,
+  ca: 0.001, vignette: 0.18, grain: 0.02, letterbox: 0, fade: null, fxaa: true, fx: false,
 };
 export const MOODS = {
   warm: {},
   dusk: { grade: { temperature: 0.16, highlightAmt: 0.14 }, bloom: { strength: 0.18 } },
-  night: { grade: { temperature: 0.04, saturation: 0.9, shadowTint: '#2a3d66', shadowAmt: 0.16 }, bloom: { strength: 0.2, threshold: 0.8 } },
-  dark: { grade: { temperature: 0.02, saturation: 0.88, shadowTint: '#25335a', shadowAmt: 0.18, contrast: 1.14 }, bloom: { strength: 0.22, threshold: 0.75 }, vignette: 0.38 },
-  morning: { grade: { temperature: 0.08, saturation: 1.0, highlightAmt: 0.06 }, bloom: { strength: 0.17, threshold: 0.95 } },
+  night: { grade: { temperature: 0.04, saturation: 1.12, shadowTint: '#2a3d66', shadowAmt: 0.16 }, bloom: { strength: 0.2, threshold: 0.8 } },
+  dark: { grade: { temperature: 0.02, saturation: 1.05, shadowTint: '#25335a', shadowAmt: 0.18, contrast: 1.06 }, bloom: { strength: 0.22, threshold: 0.75 }, vignette: 0.28 },
+  morning: { grade: { temperature: 0.14, saturation: 1.15, highlightAmt: 0.06 }, bloom: { strength: 0.17, threshold: 0.95 } },
 };
 
 const isObj = (v) => v && typeof v === 'object' && !Array.isArray(v) && !(v instanceof THREE.Color) && !v.isVector3 && !v.isObject3D;
@@ -117,8 +143,11 @@ function merge(a, b) {
 // ═════════════════════════════════════════════ render hook ════════════════════════════════════════════════════════
 let pending = {};
 let pendingFocus = null;
+let pendingLight = null;
 export function lookFrame(ctx, cfg) { if (cfg) pending = merge(pending, cfg); }
 export function focusOn(ctx, target, opts = {}) { pendingFocus = { a: target, b: null, u: 0, opts }; }
+/** Per-frame subject light (key + rim) on `target`, resolved at render time from the FINAL camera (see header). */
+export function lightOn(ctx, target, opts = {}) { pendingLight = target == null || target === false ? null : { target, opts }; }
 export function focusPull(ctx, a, b, u, opts = {}) { pendingFocus = { a, b, u: clamp(u, 0, 1), opts }; }
 
 const FACE_LOCAL = new THREE.Vector3(0, 0.3, 0.3);
@@ -149,18 +178,86 @@ export function focusDistance(ctx, target, opts = {}) {
   const c = _v.setFromMatrixPosition(ctx.camera.matrixWorld);
   return Math.max(0.05, c.distanceTo(p) + (opts.focusBias || 0));
 }
+
+// ─── subject light rig: two unshadowed decay-1 PointLights that live on the camera (the engine never removes the
+// camera, so they stay in the scene → no shader recompiles; off = intensity 0). Placed per frame at render time.
+export const SUBJECT_LIGHT = { keyColor: '#ffe6cc', keyAz: 37, keyEl: 25, keyK: 1.35, rimK: 2.6, rimCut: 6.5, cap: 2.0 };
+const SUBJ = SUBJECT_LIGHT;
+function makeSubjectRig(ctx) {
+  const key = new THREE.PointLight(SUBJ.keyColor, 0, 0, 1); key.name = 'look:subjectKey';
+  const rim = new THREE.PointLight(COLORS.moon, 0, SUBJ.rimCut, 1); rim.name = 'look:subjectRim';
+  key.castShadow = rim.castShadow = false;
+  ctx.camera.add(key, rim);
+  return { key, rim };
+}
+const _lc = new THREE.Vector3(), _lf = new THREE.Vector3(), _lr = new THREE.Vector3(), _lu = new THREE.Vector3(), _lw = new THREE.Vector3(), _lh = new THREE.Vector3();
+/** default key strength for the active set: set.subjectKey (home.js sets it per lighting state) or 1 */
+function autoKey(ctx) { const s = ctx.set; return s && typeof s.subjectKey === 'number' ? s.subjectKey : 1; }
+function placeSubjectRig(ctx, rig, req) {
+  rig.key.intensity = 0; rig.rim.intensity = 0;
+  if (!req) return null;
+  const o = req.opts || {};
+  const cam = ctx.camera; cam.updateMatrixWorld(true);
+  const tgtCh = typeof req.target === 'string' && ctx.cast ? ctx.cast[req.target] : req.target;
+  const H = targetPoint(ctx, req.target, o.part || 'face', _lh);
+  if (o.offset) H.add(_lw.set(o.offset[0], o.offset[1], o.offset[2]));
+  _lc.setFromMatrixPosition(cam.matrixWorld);
+  const camDist = Math.max(0.2, _lc.distanceTo(H));
+  _lf.copy(_lc).sub(H).normalize();                                   // subject → camera
+  _lr.crossVectors(_lf, _lu.set(0, 1, 0));                            // f × up = frame-LEFT (seen from the camera)
+  if (_lr.lengthSq() < 1e-6) _lr.set(1, 0, 0);
+  _lr.normalize();
+  const side = (o.side || 'L') === 'L' ? 1 : -1;
+  const keyK = o.key === false ? 0 : (o.key == null || o.key === 'auto' ? autoKey(ctx) : o.key);
+  const rimK = o.rim === false ? 0 : (o.rim ?? 1);
+  // never blow out someone standing nearer the light than the subject (cap the irradiance on every other head)
+  const others = [];
+  if (ctx.cast) for (const ch of Object.values(ctx.cast)) {
+    if (!ch || !ch.joints || !ch.root || !ch.root.parent || ch === tgtCh) continue;
+    ch.root.updateMatrixWorld(true);
+    others.push(ch.joints.head.localToWorld(new THREE.Vector3(0, 0.3, 0.15)));
+  }
+  const capAt = (L, I) => { let k = I; for (const p of others) k = Math.min(k, SUBJ.cap * Math.max(0.05, L.distanceTo(p))); return k; };
+  if (keyK > 0) {
+    const d = o.keyDist ?? 0.8 * Math.min(2.4, camDist);              // keyDist: pull the key in (props near the lens)
+    const az = (o.keyAz ?? SUBJ.keyAz) * Math.PI / 180 * side, el = (o.keyEl ?? SUBJ.keyEl) * Math.PI / 180;
+    _lw.copy(_lf).multiplyScalar(Math.cos(az)).addScaledVector(_lr, Math.sin(az)).normalize();
+    _lw.multiplyScalar(Math.cos(el)).addScaledVector(_lu.set(0, 1, 0), Math.sin(el)).normalize();
+    const P = H.clone().addScaledVector(_lw, d);
+    rig.key.distance = d * 2.4;
+    rig.key.intensity = capAt(P, SUBJ.keyK * keyK * d / 0.92);       // /0.92: the distance-cutoff window at the head
+    rig.key.color.set(o.keyColor || SUBJ.keyColor);
+    rig.key.position.copy(cam.worldToLocal(P));
+  }
+  if (rimK > 0) {                                                     // behind, opposite the key, a little up
+    const P = H.clone().addScaledVector(_lf, -1.25).addScaledVector(_lr, -0.85 * side).addScaledVector(_lu.set(0, 1, 0), 0.55);
+    const d = P.distanceTo(H);
+    rig.rim.intensity = capAt(P, SUBJ.rimK * rimK * d);
+    rig.rim.color.set(o.rimColor || COLORS.moon);
+    rig.rim.position.copy(cam.worldToLocal(P));
+  }
+  return { keyK, rimK };
+}
 function resolveFocus(ctx, f) {
   const o = f.opts || {};
   let d = focusDistance(ctx, f.a, o);
   if (f.b != null) d = lerp(d, focusDistance(ctx, f.b, o.partB ? { ...o, part: o.partB } : o), smooth(f.u));
-  return { focus: d, aperture: o.aperture ?? 0.6, maxBlur: o.maxBlur ?? 14 };
+  return { focus: d, aperture: o.aperture ?? 0.6, maxBlur: o.maxBlur ?? 8 };
 }
 
-export function makeLookRenderFrame({ defaults = {}, msaa = 0, shotKey = 'post', setKey = 'post', focusKey = 'focus' } = {}) {
-  let post = null;
+export function makeLookRenderFrame({ defaults = {}, msaa = 0, shotKey = 'post', setKey = 'post', focusKey = 'focus', lightKey = 'light' } = {}) {
+  let post = null, rig = null;
   return function renderFrame(ctx) {
     if (!post) { post = createPost(ctx, { msaa }); post.defaults(merge(LOOK, defaults)); }
+    if (!rig || rig.key.parent !== ctx.camera) rig = makeSubjectRig(ctx);
     try {
+      let l = ctx.shot && ctx.shot[lightKey];
+      if (typeof l === 'function') l = l(ctx, ctx.lt, ctx.u);
+      if (l != null && l !== false && !pendingLight) {
+        const isCfg = isObj(l) && l.target !== undefined;
+        pendingLight = { target: isCfg ? l.target : l, opts: isCfg ? l : {} };
+      }
+      placeSubjectRig(ctx, rig, pendingLight);
       const set = ctx.set;
       if (set && set[setKey]) post.set(typeof set[setKey] === 'function' ? set[setKey](ctx) || {} : set[setKey]);
       const shot = ctx.shot;
@@ -174,7 +271,7 @@ export function makeLookRenderFrame({ defaults = {}, msaa = 0, shotKey = 'post',
       }
       if (pendingFocus) post.set({ dof: resolveFocus(ctx, pendingFocus) });
       post.set(pending);
-    } finally { pending = {}; pendingFocus = null; }
+    } finally { pending = {}; pendingFocus = null; pendingLight = null; }
     post.render(ctx);
   };
 }
@@ -217,18 +314,20 @@ export function makeLamp(opts = {}) {
   shade.castShadow = false; bulb.castShadow = false;
   root.add(foot, body, stem, shade, bulb);
   // light: a downward-biased spot (casts the shade's cut-off pool + shadows) + a soft unshadowed glow
-  const spot = new THREE.SpotLight(o.color, 0, o.reach, o.spotAngle, 0.85, 2);
+  // decay 1 (not the physical 2): a lamp is an area source, and inverse-square from a point blew out faces within ~1.5 m
+  // of the table (integration fix); the intensity is matched to the old falloff at ≈2.5 m so the hall reads the same.
+  const spot = new THREE.SpotLight(o.color, 0, o.reach, o.spotAngle, 0.85, 1);
   spot.position.set(0, shadeY - 0.04, 0);
   const tgt = new THREE.Object3D(); tgt.position.set(0, 0, 1.6); root.add(tgt); spot.target = tgt;
   if (o.shadow) tuneShadow(spot, { mapSize: 1024, radius: 5, near: 0.08, far: o.reach });
-  const glow = new THREE.PointLight(o.color, 0, Math.min(o.reach, 4.5), 2);
+  const glow = new THREE.PointLight(o.color, 0, Math.min(o.reach, 7), 2);   // reach 7 + ×2 intensity: fakes the room bounce
   glow.position.set(0, shadeY + 0.05, 0);
   root.add(spot, glow);
   const lamp = {
     root, spot, glow, shade, bulb, target: tgt,
     setOn(v) {
       v = clamp(v, 0, 1);
-      spot.intensity = 26 * o.intensity * v; glow.intensity = 5 * o.intensity * v;
+      spot.intensity = 10.5 * o.intensity * v; glow.intensity = 6 * o.intensity * v;
       spot.visible = v > 0; glow.visible = v > 0;
       shadeMat.emissiveIntensity = 0.55 * v; bulbMat.emissiveIntensity = 6 * v;
     },
@@ -248,7 +347,7 @@ export function makeTorch(opts = {}) {
   const lens = new THREE.Mesh(new THREE.CircleGeometry(0.043, 16), lensMat); lens.position.z = 0.056;
   body.castShadow = head.castShadow = false;
   root.add(body, head, lens);
-  const spot = new THREE.SpotLight(o.color, 0, o.reach, o.angle, 0.75, 2);
+  const spot = new THREE.SpotLight(o.color, 0, o.reach, o.angle, 0.75, 1);   // decay 1: no blow-out on near surfaces
   spot.position.set(0, 0, 0.06);
   const tgt = new THREE.Object3D(); tgt.position.set(0, 0, 3); root.add(tgt); spot.target = tgt;
   if (o.shadow) tuneShadow(spot, { mapSize: 1024, radius: 3, near: 0.35, far: o.reach });   // near 0.35: the holder's own hand/arm never blocks the beam
@@ -256,7 +355,7 @@ export function makeTorch(opts = {}) {
   const _m = new THREE.Matrix4();
   return {
     root, spot, lens,
-    setOn(v) { v = clamp(v, 0, 1); spot.intensity = 24 * o.intensity * v; spot.visible = v > 0; lensMat.emissiveIntensity = 1.5 * v; },
+    setOn(v) { v = clamp(v, 0, 1); spot.intensity = 8 * o.intensity * v; spot.visible = v > 0; lensMat.emissiveIntensity = 1.5 * v; },
     aim(from, to) {
       const f = from.isVector3 ? from : new THREE.Vector3(...from), t = to.isVector3 ? to : new THREE.Vector3(...to);
       root.position.copy(f);
@@ -283,17 +382,25 @@ export function makePointGlow(opts = {}) {
 export function makeFridgeLight(opts = {}) {
   const o = { intensity: 1, shadow: true, angle: 0.8, color: COLORS.fridge, ...opts };
   const root = new THREE.Group(); root.name = 'fridgeLight';
-  const panelMat = emissive(o.color, 0);
+  const panelMat = emissive('#fff4e2', 0);                        // warm white back panel (dim: the contents read)
   const panel = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 1.3), panelMat); panel.position.z = -0.25;
   root.add(panel);
-  const spot = new THREE.SpotLight(o.color, 0, 10, o.angle, 0.8, 2);
-  spot.position.set(0, 0.2, -0.22);
+  // The key spot sits just OUTSIDE the open front (local z +0.47) with decay 1, so it lights whoever stands at the fridge
+  // and the room but not the shelves (integration fix: the old spot deep inside blew the contents out to white in any
+  // insert). The contents get a soft short-range interior fill instead.
+  const spot = new THREE.SpotLight(o.color, 0, 10, o.angle, 0.8, 1);
+  spot.position.set(0, 0.25, 0.47);
   const tgt = new THREE.Object3D(); tgt.position.set(0, -0.7, 3); root.add(tgt); spot.target = tgt;
   if (o.shadow) tuneShadow(spot, { mapSize: 1024, radius: 4, near: 0.1, far: 10 });
-  root.add(spot);
+  const fill = new THREE.PointLight(o.color, 0, 1.2, 2);
+  fill.position.set(0, 0.45, 0.1);
+  root.add(spot, fill);
   return {
-    root, spot, panel,
-    setOn(v) { v = clamp(v, 0, 1); spot.intensity = 26 * o.intensity * v; spot.visible = v > 0; panelMat.emissiveIntensity = 0.6 * v; },
+    root, spot, panel, fill,
+    setOn(v) {
+      v = clamp(v, 0, 1); spot.intensity = 9 * o.intensity * v; spot.visible = v > 0; panelMat.emissiveIntensity = 0.25 * v;
+      fill.intensity = 0.8 * o.intensity * v; fill.visible = v > 0;
+    },
   };
 }
 
