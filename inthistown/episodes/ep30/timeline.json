@@ -1,0 +1,4081 @@
+{
+ "fps": 30,
+ "duration": 67.93,
+ "audio": "episodes/ep30/mix.wav",
+ "beats": [
+  {
+   "id": "b01",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, every house lights one lantern for every beating heart inside. Except ours.",
+   "start": 0.1,
+   "end": 4.469,
+   "words": [
+    {
+     "text": "In",
+     "start": 0.115,
+     "end": 0.26
+    },
+    {
+     "text": "this",
+     "start": 0.26,
+     "end": 0.456
+    },
+    {
+     "text": "town",
+     "start": 0.456,
+     "end": 0.704
+    },
+    {
+     "text": "every",
+     "start": 0.784,
+     "end": 1.057
+    },
+    {
+     "text": "house",
+     "start": 1.057,
+     "end": 1.33
+    },
+    {
+     "text": "lights",
+     "start": 1.33,
+     "end": 1.66
+    },
+    {
+     "text": "one",
+     "start": 1.66,
+     "end": 1.876
+    },
+    {
+     "text": "lantern",
+     "start": 1.876,
+     "end": 2.264
+    },
+    {
+     "text": "for",
+     "start": 2.264,
+     "end": 2.48
+    },
+    {
+     "text": "every",
+     "start": 2.48,
+     "end": 2.753
+    },
+    {
+     "text": "beating",
+     "start": 2.753,
+     "end": 3.083
+    },
+    {
+     "text": "heart",
+     "start": 3.083,
+     "end": 3.356
+    },
+    {
+     "text": "inside",
+     "start": 3.356,
+     "end": 3.744
+    },
+    {
+     "text": "Except",
+     "start": 3.843,
+     "end": 4.21
+    },
+    {
+     "text": "ours",
+     "start": 4.21,
+     "end": 4.469
+    }
+   ],
+   "amb": {
+    "name": "jungle_night",
+    "gain": 0.3
+   },
+   "slot": "HOOK",
+   "red": [
+    "heart",
+    "Except"
+   ],
+   "visual": "HOOK. Set: hallway, night, lit by one warm table lamp and the lantern glow through the front door. Four shots; the third starts before 2.0 s, so the first 3 s hold three shots. S01 (frame 0 to 'house', about 1.0 s): frame 0 is a whip-in (a fast yaw plus shake, as in ep25 b13) with a whoosh, narration already running. SETUP A (the episode's motif framing; numbers under sets): low hero from kid height (0.6 m), one-point toward the front door 3 m away, fov 34, slow push-in, handheld shake 0.06. Top third of the frame: the door glass with FIVE glowing paper lanterns in one evenly spaced row on the low porch beam, each about 150 px wide, a small name tag under each. Middle of the frame: I (black hoodie, white knight emblem, headphones on my head) am bent double about 2 m from the camera, walking backward and hauling a tall blue wardrobe that lies on its back, so it stays a low blue slab along the bottom of the frame and my head stays under the lantern row: drag cycle, 'determined' face toward the camera. Along the bottom edge by the door: the doormat with four pairs of shoes side by side (Dad's big boots, Mom's teal flats, my black wellies, Pip's tiny yellow wellies) and four coats on four hooks. S02 ('house' to 'lantern', about 0.9 s): extreme close-up of Pip's eye in the 5 cm crack of her door, wide and scared, five tiny lantern glints in the pupil. Shallow depth of field. S03 ('lantern' to 'Except', about 1.7 s): macro insert (fov 24) from outside, tracking along the porch beam. A small wooden name tag hangs under each lantern, hand-painted: MOM, DAD, ME, PIP. The fifth tag is BLANK. On 'heart' the fifth lantern's flame flares (emissive + bloom, soft match-strike foley and one lub-dub) and the move settles sharp on the blank tag. S04 ('Except ours.', about 0.85 s): the sound-off rule image, four against five in one frame. Camera on the hall floor (0.15 m high) 1.5 m from the doormat, tilted up about 20 degrees, fov about 60: the four pairs of shoes sharp in a row across the bottom fifth of the frame, and above them through the door glass the five lanterns (at least 100 px each; keep the blur mild so they stay five separate discs). My white sneakers skid backward into the left edge of the frame and the foot of the wardrobe scrapes in after them. Light: the lamp is the motivated key (shadows on), cool moonlight rims my hoodie through the glass, lantern light kept low in saturation so the hoodie reads black."
+  },
+  {
+   "id": "b02",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS!",
+   "start": 4.514,
+   "end": 4.984,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 4.514,
+     "end": 4.774
+    },
+    {
+     "text": "HUSS!",
+     "start": 4.724,
+     "end": 4.984
+    }
+   ],
+   "space": "room",
+   "slot": "H1",
+   "visual": "H1, the brand sting, by 0:05. S05: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). I get my shoulder under the top end of the wardrobe and heave it upright. On the second HUSS it thuds upright flat across Pip's door: dust puff, the table lamp wobbles, the framed family photo on the hall table rattles. Meaning of this HUSS: I block a door to keep number five OUT (H4 flips it). The reaction close-up is the first shot of the next beat."
+  },
+  {
+   "id": "b03",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "5 lanterns. 4 of us. My little sister Pip whispers, who's the other one?",
+   "start": 5.124,
+   "end": 8.673,
+   "words": [
+    {
+     "text": "5",
+     "start": 5.139,
+     "end": 5.335
+    },
+    {
+     "text": "lanterns",
+     "start": 5.335,
+     "end": 5.846
+    },
+    {
+     "text": "4",
+     "start": 5.976,
+     "end": 6.156
+    },
+    {
+     "text": "of",
+     "start": 6.156,
+     "end": 6.325
+    },
+    {
+     "text": "us",
+     "start": 6.325,
+     "end": 6.494
+    },
+    {
+     "text": "My",
+     "start": 6.644,
+     "end": 6.831
+    },
+    {
+     "text": "little",
+     "start": 6.831,
+     "end": 7.116
+    },
+    {
+     "text": "sister",
+     "start": 7.116,
+     "end": 7.402
+    },
+    {
+     "text": "Pip",
+     "start": 7.402,
+     "end": 7.589
+    },
+    {
+     "text": "whispers",
+     "start": 7.589,
+     "end": 7.924
+    },
+    {
+     "text": "who's",
+     "start": 8.014,
+     "end": 8.19
+    },
+    {
+     "text": "the",
+     "start": 8.19,
+     "end": 8.32
+    },
+    {
+     "text": "other",
+     "start": 8.32,
+     "end": 8.496
+    },
+    {
+     "text": "one?",
+     "start": 8.496,
+     "end": 8.673
+    }
+   ],
+   "slot": "HOOK (personal problem, loved one named at 0:07)",
+   "red": [
+    "5",
+    "4",
+    "other"
+   ],
+   "bubble": {
+    "who": "pip",
+    "text": "Who's the other one?",
+    "at": "bub1"
+   },
+   "visual": "Hallway, night. Three shots; the hook ends on Pip's question. S06 ('5 lanterns. 4 of us.', about 1.4 s): count shot and H1 reaction in one. Through the door glass the five lanterns pulse once each, left to right, 1-2-3-4-5; the camera tilts down to the framed photo on the hall table: Mom (tall bun), Dad (beard, glasses), me (headphones), Pip (two puff buns). Four faces under five lights in one frame. I am in the edge of frame, breathing hard against the wardrobe. S07 ('My little sister Pip whispers,'): over-the-shoulder past my headphones. I am crouched at the gap between the wardrobe and her door frame and I have pushed one ear cup back to hear her (the headphones stay on my head). Her small hand comes through the gap and holds my sleeve. My face in profile: worried. Slow push-in. S08 ('who's the other one?'): extreme close-up of Pip in the gap, one eye and her mouth, 'sad' face, lantern glints in her eye. Chat bubble 1 above her head: Who's the other one? Hold on her eye through the gap after the line."
+  },
+  {
+   "id": "b04",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Lanterns are never wrong. Next door, 7 cousins, 7 lanterns. The baker's alone. 3 lanterns. That's how she found the raccoons.",
+   "start": 8.788,
+   "end": 15.024,
+   "words": [
+    {
+     "text": "Lanterns",
+     "start": 8.803,
+     "end": 9.189
+    },
+    {
+     "text": "are",
+     "start": 9.189,
+     "end": 9.328
+    },
+    {
+     "text": "never",
+     "start": 9.328,
+     "end": 9.565
+    },
+    {
+     "text": "wrong",
+     "start": 9.565,
+     "end": 9.753
+    },
+    {
+     "text": "Next",
+     "start": 9.883,
+     "end": 10.221
+    },
+    {
+     "text": "door",
+     "start": 10.221,
+     "end": 10.442
+    },
+    {
+     "text": "7",
+     "start": 10.522,
+     "end": 10.737
+    },
+    {
+     "text": "cousins",
+     "start": 10.737,
+     "end": 11.224
+    },
+    {
+     "text": "7",
+     "start": 11.304,
+     "end": 11.51
+    },
+    {
+     "text": "lanterns",
+     "start": 11.51,
+     "end": 12.044
+    },
+    {
+     "text": "The",
+     "start": 12.174,
+     "end": 12.316
+    },
+    {
+     "text": "baker's",
+     "start": 12.316,
+     "end": 12.661
+    },
+    {
+     "text": "alone",
+     "start": 12.661,
+     "end": 12.956
+    },
+    {
+     "text": "3",
+     "start": 13.036,
+     "end": 13.22
+    },
+    {
+     "text": "lanterns",
+     "start": 13.22,
+     "end": 13.698
+    },
+    {
+     "text": "That's",
+     "start": 13.828,
+     "end": 14.042
+    },
+    {
+     "text": "how",
+     "start": 14.042,
+     "end": 14.211
+    },
+    {
+     "text": "she",
+     "start": 14.211,
+     "end": 14.336
+    },
+    {
+     "text": "found",
+     "start": 14.336,
+     "end": 14.595
+    },
+    {
+     "text": "the",
+     "start": 14.595,
+     "end": 14.72
+    },
+    {
+     "text": "raccoons",
+     "start": 14.72,
+     "end": 15.024
+    }
+   ],
+   "slot": "RULE PROOF",
+   "red": [
+    "never",
+    "alone",
+    "raccoons"
+   ],
+   "visual": "RULE PROOF. Set: our street at warm dusk (golden sky, long shadows, every porch glowing). Five shots, each a new framing, each planting something the ending uses. S09 ('Lanterns are never wrong.'): low tracking shot along the porches with me walking through the foreground carrying a step stool and a broom (my plan: fix our lantern). Behind me a porch with two lanterns and two people in the lit window. S10 ('Next door, 7 cousins,'): the porch next to ours. Their front door bangs open and a conga line of seven small cousins runs up the path and through it (their mom is still on the path with the shopping bags, outside). S11 ('7 lanterns.'): tilt up to their beam in the same low angle: seven folded paper lanterns pop open and catch one by one as each cousin crosses the doorstep, on camera, each with a small flare, until seven glow. Seven heads at the lit window underneath. Never more than seven lanterns in any shot. S12 ('The baker's alone. 3 lanterns.'): another porch on our street with a hand-painted BAKERY sign. The baker, alone at her lit window in an apron, looks up nervously; on '3' (marker tilt12) the camera tilts up to THREE lanterns over her door, one lub-dub, and she counts them on her fingers. S13 ('That's how she found the raccoons.'): top-down god shot through her attic hatch: her torch beam lands on a stolen loaf, four eye glints and two ringed tails frozen in the light (no creature rig). Hard comedy cut. Plants: the lanterns count what you cannot see, the attic, and the ringed tail."
+  },
+  {
+   "id": "b05",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mom just laughs. It's broken, she says.",
+   "start": 15.139,
+   "end": 17.158,
+   "words": [
+    {
+     "text": "Mom",
+     "start": 15.154,
+     "end": 15.354
+    },
+    {
+     "text": "just",
+     "start": 15.354,
+     "end": 15.659
+    },
+    {
+     "text": "laughs",
+     "start": 15.659,
+     "end": 15.912
+    },
+    {
+     "text": "It's",
+     "start": 16.042,
+     "end": 16.251
+    },
+    {
+     "text": "broken",
+     "start": 16.251,
+     "end": 16.68
+    },
+    {
+     "text": "she",
+     "start": 16.76,
+     "end": 16.929
+    },
+    {
+     "text": "says",
+     "start": 16.929,
+     "end": 17.158
+    }
+   ],
+   "slot": "RULE PROOF (clue 1)",
+   "red": [
+    "broken"
+   ],
+   "bubble": {
+    "who": "mom",
+    "text": "It's broken!",
+    "at": "bub2",
+    "until": "s15"
+   },
+   "visual": "Our porch at dusk. Two shots. S14 ('Mom just laughs.'): medium-wide count shot with all four of us under our five lanterns. I stand on the step stool tapping lantern five with the broom handle; it stays lit. Mom (tall bun, teal cardigan) throws her head back in a belly laugh with BOTH HANDS ON HER STOMACH for half a second, no longer, then waves it off. Clue 1: a first watch reads laughing, a rewatch reads pregnant. No close-up of it. Pip watches from the window, Dad leans in the doorway. Chat bubble 2 over Mom: It's broken! (it ends on the cut). Out of focus at the next porch rail, all seven cousins are grinning and waving at our porch under their seven lanterns (plant for 'the whole street knew'). S15 ('It's broken, she says.', 1.0 s): macro insert from below: the BLANK name tag still swinging under lantern five after the broom tap, the lantern steady and bright above it. Shallow depth of field, soft lantern light. The tag is the question, not Mom."
+  },
+  {
+   "id": "b06",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "And Pip hasn't slept all week. So tonight, I hunt it.",
+   "start": 17.273,
+   "end": 19.815,
+   "words": [
+    {
+     "text": "And",
+     "start": 17.288,
+     "end": 17.474
+    },
+    {
+     "text": "Pip",
+     "start": 17.474,
+     "end": 17.659
+    },
+    {
+     "text": "hasn't",
+     "start": 17.659,
+     "end": 17.991
+    },
+    {
+     "text": "slept",
+     "start": 17.991,
+     "end": 18.275
+    },
+    {
+     "text": "all",
+     "start": 18.275,
+     "end": 18.411
+    },
+    {
+     "text": "week",
+     "start": 18.411,
+     "end": 18.597
+    },
+    {
+     "text": "So",
+     "start": 18.747,
+     "end": 18.924
+    },
+    {
+     "text": "tonight",
+     "start": 18.924,
+     "end": 19.242
+    },
+    {
+     "text": "I",
+     "start": 19.322,
+     "end": 19.455
+    },
+    {
+     "text": "hunt",
+     "start": 19.455,
+     "end": 19.682
+    },
+    {
+     "text": "it",
+     "start": 19.682,
+     "end": 19.815
+    }
+   ],
+   "slot": "THE HIT",
+   "red": [
+    "slept",
+    "hunt"
+   ],
+   "visual": "THE HIT: stake and clock in one sentence. Two shots, both in the hallway. S16 ('And Pip hasn't slept all week.'): hallway at night, lamp on. Close on the 5 cm gap between the wardrobe and her door frame (the S02 gap): Pip's eye over her blanket, wide open, 'sleepy' rings under it. Taped down the wall beside the frame, at kid height, a column of seven crayon drawings, one per night: five yellow circles each, the fifth ringed in red. The drawings and her eye sit at the same depth, so both are sharp. S17 ('So tonight, I hunt it.'): the lamp now off (darker state). Low hero from below: I click on a torch (the only shadowed practical, a SpotLight) and it lights my 'determined' face from under the chin. I sweep the beam behind the coats and under the hall table: nothing. Fix 1. Push-in on 'hunt'."
+  },
+  {
+   "id": "b07",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "I get my shoulders under the attic hatch and shove.",
+   "start": 19.93,
+   "end": 21.881,
+   "words": [
+    {
+     "text": "I",
+     "start": 19.945,
+     "end": 20.071
+    },
+    {
+     "text": "get",
+     "start": 20.071,
+     "end": 20.242
+    },
+    {
+     "text": "my",
+     "start": 20.242,
+     "end": 20.413
+    },
+    {
+     "text": "shoulders",
+     "start": 20.413,
+     "end": 20.764
+    },
+    {
+     "text": "under",
+     "start": 20.764,
+     "end": 20.98
+    },
+    {
+     "text": "the",
+     "start": 20.98,
+     "end": 21.107
+    },
+    {
+     "text": "attic",
+     "start": 21.107,
+     "end": 21.323
+    },
+    {
+     "text": "hatch",
+     "start": 21.323,
+     "end": 21.539
+    },
+    {
+     "text": "and",
+     "start": 21.539,
+     "end": 21.71
+    },
+    {
+     "text": "shove",
+     "start": 21.71,
+     "end": 21.881
+    }
+   ],
+   "slot": "FIXES",
+   "visual": "FIXES, fix 2. S18 (one shot, 1.7 s): hallway, torchlight only. Side-on low angle: I step up onto the step stool under the ceiling hatch (pose tween), torch clamped under my arm pointing up, and wedge both shoulders under the hatch. The camera booms up with me. 'Shove' runs straight into the HUSS (0.04 s gap)."
+  },
+  {
+   "id": "b08",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS!",
+   "start": 21.936,
+   "end": 22.196,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 21.936,
+     "end": 22.196
+    }
+   ],
+   "space": "room",
+   "slot": "H2",
+   "visual": "H2, single, bigger strain than H1. S19: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). Seen from the hall floor looking up: my legs straighten and the hatch pops up; dust pours down through the torch beam. Reaction close-up is the start of the next shot."
+  },
+  {
+   "id": "b09",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Nothing but dust. The hatch slams shut, and Pip screams: you're scarier than it is.",
+   "start": 22.376,
+   "end": 25.897,
+   "words": [
+    {
+     "text": "Nothing",
+     "start": 22.391,
+     "end": 22.693
+    },
+    {
+     "text": "but",
+     "start": 22.693,
+     "end": 22.891
+    },
+    {
+     "text": "dust",
+     "start": 22.891,
+     "end": 23.141
+    },
+    {
+     "text": "The",
+     "start": 23.271,
+     "end": 23.409
+    },
+    {
+     "text": "hatch",
+     "start": 23.409,
+     "end": 23.646
+    },
+    {
+     "text": "slams",
+     "start": 23.646,
+     "end": 23.932
+    },
+    {
+     "text": "shut",
+     "start": 23.932,
+     "end": 24.119
+    },
+    {
+     "text": "and",
+     "start": 24.199,
+     "end": 24.387
+    },
+    {
+     "text": "Pip",
+     "start": 24.387,
+     "end": 24.574
+    },
+    {
+     "text": "screams",
+     "start": 24.574,
+     "end": 24.91
+    },
+    {
+     "text": "you're",
+     "start": 24.91,
+     "end": 25.098
+    },
+    {
+     "text": "scarier",
+     "start": 25.098,
+     "end": 25.433
+    },
+    {
+     "text": "than",
+     "start": 25.433,
+     "end": 25.621
+    },
+    {
+     "text": "it",
+     "start": 25.621,
+     "end": 25.759
+    },
+    {
+     "text": "is",
+     "start": 25.759,
+     "end": 25.897
+    }
+   ],
+   "slot": "FIXES (backfire on Pip)",
+   "red": [
+    "dust",
+    "scarier"
+   ],
+   "visual": "Fix 2 backfires on Pip. Three shots. S20 ('Nothing but dust. The hatch slams shut,'): top-down god shot from inside the attic. My head and torch come up through the square of the hatch; the beam sweeps rafters, cobwebs, one cardboard box, drifting dust. Empty. On 'slams' the stool tips, I drop out of frame and the hatch bangs shut: the frame goes black for 3 frames, camera shake 0.1. S21 ('and Pip screams:'): extreme close-up, big face 1: Pip's face in the gap beside the wardrobe, the new 'crying' face, tears, mouth wide. S22 ('you're scarier than it is.'): reverse shot from the floor where I landed: Dad (beard, glasses, striped pyjamas) stands in Pip's open doorway with Pip clutching his pyjama leg; the wardrobe has been pushed aside off screen and only its blue edge shows. Both stare down at me, Pip pointing at me. Cut-in on the last two words: my face on the floorboards in the torchlight, 'sad'."
+  },
+  {
+   "id": "b10",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Next evening, Mom walks to the shop and 2 lanterns go out.",
+   "start": 26.012,
+   "end": 28.876,
+   "words": [
+    {
+     "text": "Next",
+     "start": 26.027,
+     "end": 26.342
+    },
+    {
+     "text": "evening",
+     "start": 26.342,
+     "end": 26.657
+    },
+    {
+     "text": "Mom",
+     "start": 26.787,
+     "end": 26.984
+    },
+    {
+     "text": "walks",
+     "start": 26.984,
+     "end": 27.234
+    },
+    {
+     "text": "to",
+     "start": 27.234,
+     "end": 27.379
+    },
+    {
+     "text": "the",
+     "start": 27.379,
+     "end": 27.525
+    },
+    {
+     "text": "shop",
+     "start": 27.525,
+     "end": 27.722
+    },
+    {
+     "text": "and",
+     "start": 27.722,
+     "end": 27.92
+    },
+    {
+     "text": "2",
+     "start": 27.92,
+     "end": 28.076
+    },
+    {
+     "text": "lanterns",
+     "start": 28.076,
+     "end": 28.481
+    },
+    {
+     "text": "go",
+     "start": 28.481,
+     "end": 28.679
+    },
+    {
+     "text": "out",
+     "start": 28.679,
+     "end": 28.876
+    }
+   ],
+   "slot": "MIDPOINT (set-up: the count breaks)",
+   "visual": "MIDPOINT set-up. The only time jump before the ending. Set: hallway at golden dusk, warm light through the door glass. S23 (one shot for the whole line, just under 3 s): SETUP B, over-the-shoulder past my headphones at the front door, standing height. Through the glass: Mom with a shopping bag walks across the porch and down the steps. The five lanterns hang across the top of the frame with their tags readable, MOM first and the blank one last. A small parcel with a yellow ribbon sits on the top step, unremarked (plant: a neighbour's gift). On 'go out', as Mom's foot leaves the last porch step, lantern 1 (MOM tag) and lantern 5 (blank tag) fold shut together and go dark ON CAMERA, each with a soft whuff and a curl of smoke: five becomes three, with Mom in the same frame. DAD, ME and PIP stay lit between two dark tags. The warm glow on my shoulder and headphones drops with them. The music and the light have not changed yet; they flip on the first word of the next beat.",
+   "red": [
+    "2"
+   ]
+  },
+  {
+   "id": "b11",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Not 1 but 2. It isn't hiding in our house. It's following Mom.",
+   "start": 28.991,
+   "end": 32.049,
+   "words": [
+    {
+     "text": "Not",
+     "start": 29.006,
+     "end": 29.216
+    },
+    {
+     "text": "1",
+     "start": 29.216,
+     "end": 29.381
+    },
+    {
+     "text": "but",
+     "start": 29.381,
+     "end": 29.591
+    },
+    {
+     "text": "2",
+     "start": 29.591,
+     "end": 29.757
+    },
+    {
+     "text": "It",
+     "start": 29.927,
+     "end": 30.05
+    },
+    {
+     "text": "isn't",
+     "start": 30.05,
+     "end": 30.305
+    },
+    {
+     "text": "hiding",
+     "start": 30.305,
+     "end": 30.604
+    },
+    {
+     "text": "in",
+     "start": 30.604,
+     "end": 30.728
+    },
+    {
+     "text": "our",
+     "start": 30.728,
+     "end": 30.895
+    },
+    {
+     "text": "house",
+     "start": 30.895,
+     "end": 31.106
+    },
+    {
+     "text": "It's",
+     "start": 31.256,
+     "end": 31.452
+    },
+    {
+     "text": "following",
+     "start": 31.452,
+     "end": 31.854
+    },
+    {
+     "text": "Mom",
+     "start": 31.854,
+     "end": 32.049
+    }
+   ],
+   "slot": "MIDPOINT TURN",
+   "red": [
+    "Not",
+    "following"
+   ],
+   "visual": "MIDPOINT TURN at 0:28 to 0:33: the line, the lighting flip and the music section change all land on the first word of this beat (marker flip). S24 ('Not 1 but 2.'): extreme close-up of my eyes, big face 2, 'shocked'. In 0.6 s the hallway falls from golden dusk to blue night, and three lantern glints replace five in my eyes. S25 ('It isn't hiding in our house.'): count shot from the back of the hallway: through the glass three lit lanterns, DAD, ME, PIP, with the MOM and blank lanterns dark at either end, and inside exactly three of us: me at the door, Dad in the kitchen arch with a tea towel, Pip peeking round her door. S26 ('It's following Mom.'): long lens through the glass: Mom, small, walking away under a street lamp into the dark. Slow push that ends on my reflection in the glass. One lub-dub in the gap after the line. A 6 degree Dutch tilt starts here and stays through the escalation."
+  },
+  {
+   "id": "b12",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mom comes home. Number 5 follows her in. I warn Dad, but he's hiding something.",
+   "start": 32.304,
+   "end": 36.173,
+   "words": [
+    {
+     "text": "Mom",
+     "start": 32.319,
+     "end": 32.526
+    },
+    {
+     "text": "comes",
+     "start": 32.526,
+     "end": 32.788
+    },
+    {
+     "text": "home",
+     "start": 32.788,
+     "end": 33.049
+    },
+    {
+     "text": "Number",
+     "start": 33.179,
+     "end": 33.508
+    },
+    {
+     "text": "5",
+     "start": 33.508,
+     "end": 33.679
+    },
+    {
+     "text": "follows",
+     "start": 33.679,
+     "end": 34.065
+    },
+    {
+     "text": "her",
+     "start": 34.065,
+     "end": 34.223
+    },
+    {
+     "text": "in",
+     "start": 34.223,
+     "end": 34.382
+    },
+    {
+     "text": "I",
+     "start": 34.512,
+     "end": 34.664
+    },
+    {
+     "text": "warn",
+     "start": 34.664,
+     "end": 34.925
+    },
+    {
+     "text": "Dad",
+     "start": 34.925,
+     "end": 35.131
+    },
+    {
+     "text": "but",
+     "start": 35.211,
+     "end": 35.384
+    },
+    {
+     "text": "he's",
+     "start": 35.384,
+     "end": 35.556
+    },
+    {
+     "text": "hiding",
+     "start": 35.556,
+     "end": 35.864
+    },
+    {
+     "text": "something",
+     "start": 35.864,
+     "end": 36.173
+    }
+   ],
+   "slot": "ESCALATION 1 (the link to Mom, clue 2)",
+   "red": [
+    "5",
+    "hiding"
+   ],
+   "visual": "ESCALATION, beat 1 of 3: it comes home with Mom, and Dad is no help. Hallway, night-dark state: lamp off, cool moon through the glass, a warm sliver from the kitchen. Dutch 6 degrees, shake 0.08. Three shots. S27a ('Mom comes home.', about 0.9 s): SETUP B again (second and last use), over-the-shoulder past my headphones at the front door. Mom steps back in over the doorstep with her shopping bag, and above her head the MOM lantern and the blank-tag lantern unfold and relight together with one flare: three becomes five. The warm glow comes back onto my shoulder. S27b ('Number 5 follows her in.', about 1.2 s): extreme close-up of my eyes (the S24 framing, second and last use): five lantern glints again where there were three; 'squint'. From here the shape that comes home in Mom's robe is 'it'. S27 ('I warn Dad, but he's hiding something.'): low two-shot from behind Dad, composed in depth. Sharp in the foreground, filling the lower third of the frame: his two hands hold a paint tin with yellow drips down its side and a paint roller behind his back. Clue 2. Beyond him I tug his pyjama sleeve and point at the front door; he backs toward the far end of the hall with a too-wide 'smile' and the 'sweat' drop. On 'hiding' (marker tin_turn) I lean to look round his hip with a 'squint' face and he turns to keep the tin out of my sight."
+  },
+  {
+   "id": "b13",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "At midnight, something's in our kitchen, eating straight out of the fridge. Not human.",
+   "start": 36.288,
+   "end": 39.845,
+   "words": [
+    {
+     "text": "At",
+     "start": 36.303,
+     "end": 36.445
+    },
+    {
+     "text": "midnight",
+     "start": 36.445,
+     "end": 36.841
+    },
+    {
+     "text": "something's",
+     "start": 36.921,
+     "end": 37.286
+    },
+    {
+     "text": "in",
+     "start": 37.286,
+     "end": 37.417
+    },
+    {
+     "text": "our",
+     "start": 37.417,
+     "end": 37.595
+    },
+    {
+     "text": "kitchen",
+     "start": 37.595,
+     "end": 37.913
+    },
+    {
+     "text": "eating",
+     "start": 37.993,
+     "end": 38.194
+    },
+    {
+     "text": "straight",
+     "start": 38.194,
+     "end": 38.479
+    },
+    {
+     "text": "out",
+     "start": 38.479,
+     "end": 38.638
+    },
+    {
+     "text": "of",
+     "start": 38.638,
+     "end": 38.755
+    },
+    {
+     "text": "the",
+     "start": 38.755,
+     "end": 38.872
+    },
+    {
+     "text": "fridge",
+     "start": 38.872,
+     "end": 39.114
+    },
+    {
+     "text": "Not",
+     "start": 39.284,
+     "end": 39.485
+    },
+    {
+     "text": "human",
+     "start": 39.485,
+     "end": 39.845
+    }
+   ],
+   "slot": "ESCALATION 2 (clue 3)",
+   "red": [
+    "something's",
+    "human"
+   ],
+   "visual": "ESCALATION, beat 2 of 3, shot as a scare. The darkest look of the episode: the open fridge is the single practical. Four shots. S29 ('At midnight,'): POV with my hands in frame, a frying pan gripped in the right and the dead torch in the left, creeping down the black hallway toward a cold white glow spilling from the kitchen arch. Dutch 8 degrees. Optional, in passing: Pip's shut door with a crayon sign, NO BROTHERS, headphones crossed out. S30 ('something's in our kitchen, eating straight out of the', about 2 s, slow push-in): from behind my shoulder at the arch. The fridge door is open. A hunched SILHOUETTE stands in its light, chewing: tall bun, long robe. It is Mom, and the bun and robe must be recognisable on a rewatch. S31 ('fridge.', 0.6 s at most, picture only): macro insert in the fridge light: a hand lifts a pickle, dripping, out of a tub of ice cream. Clue 3. The narration never names it. S32 ('Not human.'): extreme close-up of my face behind the raised frying pan, big face 3: 'shocked' with the 'sweat' drop, fridge light on one cheek. I back out of frame."
+  },
+  {
+   "id": "b14",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Then hammering, from the room nobody opens. I charge the door and",
+   "start": 40.16,
+   "end": 43.087,
+   "words": [
+    {
+     "text": "Then",
+     "start": 40.175,
+     "end": 40.379
+    },
+    {
+     "text": "hammering",
+     "start": 40.379,
+     "end": 40.799
+    },
+    {
+     "text": "from",
+     "start": 40.879,
+     "end": 41.094
+    },
+    {
+     "text": "the",
+     "start": 41.094,
+     "end": 41.219
+    },
+    {
+     "text": "room",
+     "start": 41.219,
+     "end": 41.389
+    },
+    {
+     "text": "nobody",
+     "start": 41.389,
+     "end": 41.739
+    },
+    {
+     "text": "opens",
+     "start": 41.739,
+     "end": 42.043
+    },
+    {
+     "text": "I",
+     "start": 42.173,
+     "end": 42.301
+    },
+    {
+     "text": "charge",
+     "start": 42.301,
+     "end": 42.612
+    },
+    {
+     "text": "the",
+     "start": 42.612,
+     "end": 42.74
+    },
+    {
+     "text": "door",
+     "start": 42.74,
+     "end": 42.913
+    },
+    {
+     "text": "and",
+     "start": 42.913,
+     "end": 43.087
+    }
+   ],
+   "slot": "ESCALATION 3",
+   "red": [
+    "hammering",
+    "charge"
+   ],
+   "visual": "ESCALATION, beat 3 of 3. Two shots. Three hammer blows land in the 0.3 s gap before the line (the cut to S33 is on the first blow, marker s33), so the sound comes first and the narrator names it; two quiet taps carry on under the words. S33 ('Then hammering, from the room nobody opens.'): the one act-break whip, 180 degrees from the kitchen arch to the far end of the hall (a fast yaw plus shake, as in ep25 b13). SETUP C: one-point corridor, the box-room door at the vanishing point with a hot strip of yellow light under it. Bang, bang, bang: the strip flickers on each blow. The door handle is furred with dust. S34 ('I charge the door and'): low tracking shot beside my white sneakers as I run at it (sprint cycle); the frying pan clangs to the floor behind me. The sentence runs straight into the HUSS."
+  },
+  {
+   "id": "b15",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS!",
+   "start": 43.142,
+   "end": 43.402,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 43.142,
+     "end": 43.402
+    }
+   ],
+   "space": "room",
+   "slot": "H3",
+   "visual": "H3, single, the biggest strain so far, and it fails. S35: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). My shoulder hits the box-room door. It shudders in its frame, dust jumps off the handle, and it holds. The light strip under it does not even flicker."
+  },
+  {
+   "id": "b16",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It holds. Then footsteps.",
+   "start": 43.522,
+   "end": 45.007,
+   "words": [
+    {
+     "text": "It",
+     "start": 43.537,
+     "end": 43.684
+    },
+    {
+     "text": "holds",
+     "start": 43.684,
+     "end": 44.04
+    },
+    {
+     "text": "Then",
+     "start": 44.31,
+     "end": 44.52
+    },
+    {
+     "text": "footsteps",
+     "start": 44.52,
+     "end": 45.007
+    }
+   ],
+   "slot": "ESCALATION (it fails)",
+   "red": [
+    "holds",
+    "Footsteps"
+   ],
+   "visual": "Two shots. S36 ('It holds.' and the pause after it): reaction close-up. I bounce off the door and slide down it to sitting, one ear cup pushed back, ear against the wood (the headphones stay on my head). The hammering has stopped; dust hangs in the light strip. S37 ('Then footsteps.'): macro insert at floor level: the strip of yellow light under the door. Two foot-shaped shadows walk into it and stop; the two footfalls sound in the gap after the word, not on it. A heartbeat climbs under the score."
+  },
+  {
+   "id": "b17",
+   "speaker": "narrlow",
+   "kind": "line",
+   "text": "I back up the whole hallway.",
+   "start": 45.242,
+   "end": 46.394,
+   "words": [
+    {
+     "text": "I",
+     "start": 45.257,
+     "end": 45.39
+    },
+    {
+     "text": "back",
+     "start": 45.39,
+     "end": 45.572
+    },
+    {
+     "text": "up",
+     "start": 45.572,
+     "end": 45.706
+    },
+    {
+     "text": "the",
+     "start": 45.706,
+     "end": 45.84
+    },
+    {
+     "text": "whole",
+     "start": 45.84,
+     "end": 46.069
+    },
+    {
+     "text": "hallway",
+     "start": 46.069,
+     "end": 46.394
+    }
+   ],
+   "slot": "CLIMAX",
+   "red": [
+    "whole"
+   ],
+   "visual": "CLIMAX. The one line before the climax, spoken slightly lower and slower (speaker narrlow). S38 (one shot, 1.2 s): SETUP C again (second and last use): the camera dollies back with me as I back away from the door, step by step, the whole length of the hall, until my shoulders touch the front door glass. The lit strip with the two foot shadows shrinks at the vanishing point. The five lanterns glow behind my head through the glass. 'determined' face. The score's swell peaks on the last word."
+  },
+  {
+   "id": "b18",
+   "speaker": "narrlow",
+   "kind": "line",
+   "text": "Then I run at it.",
+   "start": 46.509,
+   "end": 47.387,
+   "words": [
+    {
+     "text": "Then",
+     "start": 46.524,
+     "end": 46.729
+    },
+    {
+     "text": "I",
+     "start": 46.729,
+     "end": 46.88
+    },
+    {
+     "text": "run",
+     "start": 46.88,
+     "end": 47.085
+    },
+    {
+     "text": "at",
+     "start": 47.085,
+     "end": 47.236
+    },
+    {
+     "text": "it",
+     "start": 47.236,
+     "end": 47.387
+    }
+   ],
+   "amb": "none",
+   "ambFade": 0.3,
+   "slot": "CLIMAX (silence 0.55 s)",
+   "red": [
+    "run"
+   ],
+   "visual": "The deliberate near-silence. The music and ambience cut dead on this beat; after the last word there is 0.55 s with no voice and no music, only four soft footfalls. S39 (one shot, about 1.4 s, running through the silence): side-on tracking shot at 50 percent speed: my sneaker kicks off the doormat and scatters the four pairs of shoes, then I sprint the hallway straight at the box-room door, hoodie strings flying, 'huss' face building. No shake, no drift: the stillness is the point."
+  },
+  {
+   "id": "b19",
+   "speaker": "me",
+   "kind": "huss",
+   "text": "HUSS! HUSS!",
+   "start": 47.952,
+   "end": 48.422,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 47.952,
+     "end": 48.212
+    },
+    {
+     "text": "HUSS!",
+     "start": 48.162,
+     "end": 48.422
+    }
+   ],
+   "space": "room",
+   "slot": "H4",
+   "visual": "H4, the title drop, and the flip of H1: at 0:04 I blocked a door to keep number five out, now I break one open to find it. S40: the HUSS ritual as always (the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample), with one difference: there is no music dip here, because the music comes back from silence on this HUSS (\"dip\": false). Low hero from the door's side: I launch shoulder-first. On the second HUSS the door swings open by itself an instant before I touch it (Dad's hand is on the inside handle) and I sail through into warm yellow light. The music box score slams back in, full, on this HUSS and stays bright under the crash; it drops to its soft version at the picture (b21). Keep the light on the hoodie low in saturation: rim only, hoodie black.",
+   "dip": false
+  },
+  {
+   "id": "b20",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "The door just opens. I land in a half-built crib. Dad's holding a screwdriver. Mom's dipping a pickle in ice cream.",
+   "start": 48.562,
+   "end": 53.584,
+   "words": [
+    {
+     "text": "The",
+     "start": 48.577,
+     "end": 48.706
+    },
+    {
+     "text": "door",
+     "start": 48.706,
+     "end": 48.88
+    },
+    {
+     "text": "just",
+     "start": 48.88,
+     "end": 49.147
+    },
+    {
+     "text": "opens",
+     "start": 49.147,
+     "end": 49.459
+    },
+    {
+     "text": "I",
+     "start": 49.589,
+     "end": 49.714
+    },
+    {
+     "text": "land",
+     "start": 49.714,
+     "end": 49.927
+    },
+    {
+     "text": "in",
+     "start": 49.927,
+     "end": 50.052
+    },
+    {
+     "text": "a",
+     "start": 50.052,
+     "end": 50.177
+    },
+    {
+     "text": "half-built",
+     "start": 50.177,
+     "end": 50.523
+    },
+    {
+     "text": "crib",
+     "start": 50.523,
+     "end": 50.737
+    },
+    {
+     "text": "Dad's",
+     "start": 50.887,
+     "end": 51.085
+    },
+    {
+     "text": "holding",
+     "start": 51.085,
+     "end": 51.407
+    },
+    {
+     "text": "a",
+     "start": 51.407,
+     "end": 51.522
+    },
+    {
+     "text": "screwdriver",
+     "start": 51.522,
+     "end": 51.968
+    },
+    {
+     "text": "Mom's",
+     "start": 52.098,
+     "end": 52.331
+    },
+    {
+     "text": "dipping",
+     "start": 52.331,
+     "end": 52.613
+    },
+    {
+     "text": "a",
+     "start": 52.613,
+     "end": 52.749
+    },
+    {
+     "text": "pickle",
+     "start": 52.749,
+     "end": 53.03
+    },
+    {
+     "text": "in",
+     "start": 53.03,
+     "end": 53.166
+    },
+    {
+     "text": "ice",
+     "start": 53.166,
+     "end": 53.351
+    },
+    {
+     "text": "cream",
+     "start": 53.351,
+     "end": 53.584
+    }
+   ],
+   "slot": "CLIMAX (payoff)",
+   "red": [
+    "opens",
+    "crib",
+    "pickle"
+   ],
+   "visual": "The scare flips to comedy. Set: the box room, small, lit by one warm work lamp on the floor; one wall half painted yellow. Three shots. S41 ('The door just opens.'): from inside the room: the door wide, me flying through it (one static flying pose moved along a path) in slow motion that ramps back to full speed; Dad flattened against the wall behind the door, still holding the handle. S42 ('I land in a half-built crib.'): top-down god shot: I crash into a half-built wooden crib and its slatted sides fall flat around me like petals. Beside my head lies the flat-pack box with a big line drawing of a crib on it, sharp and readable. The paint tray rocks. The cost: I have wrecked their surprise. S43 ('Dad's holding a screwdriver. Mom's dipping a pickle in ice cream.'): my POV from the floor, my hands in frame. First Dad: striped pyjamas, glasses crooked, a screwdriver in his fist, 'sweat' grin, and behind him the half-yellow wall, the roller and the dripping paint tin from S27. On 'Mom' (marker pov_whip) the POV whips past him to the doorway: Mom in her robe and bun (the fridge silhouette, now in warm light), the pickle jar under one arm, the ice-cream tub in her hand and a pickle frozen halfway into it, 'shocked'. This is the laugh line: the picture from S31 finally gets its words. Pip peeks from behind her robe. All three stare down at me (reverse shot of everyone staring)."
+  },
+  {
+   "id": "b21",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Mom holds up a tiny black picture. And Pip whispers: is that the other one?",
+   "start": 53.699,
+   "end": 56.989,
+   "words": [
+    {
+     "text": "Mom",
+     "start": 53.714,
+     "end": 53.892
+    },
+    {
+     "text": "holds",
+     "start": 53.892,
+     "end": 54.212
+    },
+    {
+     "text": "up",
+     "start": 54.212,
+     "end": 54.343
+    },
+    {
+     "text": "a",
+     "start": 54.343,
+     "end": 54.474
+    },
+    {
+     "text": "tiny",
+     "start": 54.474,
+     "end": 54.747
+    },
+    {
+     "text": "black",
+     "start": 54.747,
+     "end": 54.972
+    },
+    {
+     "text": "picture",
+     "start": 54.972,
+     "end": 55.292
+    },
+    {
+     "text": "And",
+     "start": 55.442,
+     "end": 55.629
+    },
+    {
+     "text": "Pip",
+     "start": 55.629,
+     "end": 55.816
+    },
+    {
+     "text": "whispers",
+     "start": 55.816,
+     "end": 56.151
+    },
+    {
+     "text": "is",
+     "start": 56.151,
+     "end": 56.289
+    },
+    {
+     "text": "that",
+     "start": 56.289,
+     "end": 56.477
+    },
+    {
+     "text": "the",
+     "start": 56.477,
+     "end": 56.615
+    },
+    {
+     "text": "other",
+     "start": 56.615,
+     "end": 56.802
+    },
+    {
+     "text": "one?",
+     "start": 56.802,
+     "end": 56.989
+    }
+   ],
+   "slot": "TWIST (prop reveal)",
+   "red": [
+    "picture",
+    "other"
+   ],
+   "bubble": {
+    "who": "pip",
+    "text": "Is that the other one?",
+    "at": "bub3"
+   },
+   "visual": "TWIST, the prop reveal. No HUSS anywhere near this beat; the score drops to its soft version. Two shots. S44 ('Mom holds up a tiny black picture.', 1.6 s): macro insert (fov 22): Mom's hand lifts a small glossy black card out of her robe pocket: a bright fan shape with one white bean in it. A tiny, fast heartbeat starts under the music. S45 (from 'And Pip whispers: is that the other one?' through 'It was never following Mom:' in the next beat: the one long hold of the episode, about 3 s): from INSIDE the box room at Pip's eye height, looking out through its open door: Mom and Pip in the doorway, and behind them the whole dark hallway running to the front-door glass, where our five lanterns are five soft warm glows at the far end (the motif axis, seen in reverse). Slow push-in. Pip steps out from behind the robe, blanket trailing, and looks from the picture up to Mom's stomach. Chat bubble 3 over Pip: Is that the other one? Mom nods with a 'smile'. The one focus pull of the reveal: from the picture to Pip's face as it goes from scared to a 'smile'. She leans in and presses her ear to Mom's stomach (lean-in pose) and Mom's hand rests on her head. I sit up in the wreck of the crib at the edge of frame, out of focus, one ear cup still pushed back."
+  },
+  {
+   "id": "b22",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "It was never following Mom: it was inside her. The whole street knew. Except me.",
+   "start": 57.124,
+   "end": 61.045,
+   "words": [
+    {
+     "text": "It",
+     "start": 57.139,
+     "end": 57.286
+    },
+    {
+     "text": "was",
+     "start": 57.286,
+     "end": 57.485
+    },
+    {
+     "text": "never",
+     "start": 57.485,
+     "end": 57.737
+    },
+    {
+     "text": "following",
+     "start": 57.737,
+     "end": 58.145
+    },
+    {
+     "text": "Mom",
+     "start": 58.145,
+     "end": 58.344
+    },
+    {
+     "text": "it",
+     "start": 58.344,
+     "end": 58.491
+    },
+    {
+     "text": "was",
+     "start": 58.491,
+     "end": 58.69
+    },
+    {
+     "text": "inside",
+     "start": 58.69,
+     "end": 59.046
+    },
+    {
+     "text": "her",
+     "start": 59.046,
+     "end": 59.193
+    },
+    {
+     "text": "The",
+     "start": 59.423,
+     "end": 59.568
+    },
+    {
+     "text": "whole",
+     "start": 59.568,
+     "end": 59.816
+    },
+    {
+     "text": "street",
+     "start": 59.816,
+     "end": 60.116
+    },
+    {
+     "text": "knew",
+     "start": 60.116,
+     "end": 60.26
+    },
+    {
+     "text": "Except",
+     "start": 60.49,
+     "end": 60.883
+    },
+    {
+     "text": "me",
+     "start": 60.883,
+     "end": 61.045
+    }
+   ],
+   "slot": "TWIST (reframe)",
+   "red": [
+    "inside",
+    "me"
+   ],
+   "visual": "TWIST, the reframe: the midpoint theory is answered in its own words, and the scary line turns out to be the literal answer. 'Inside' echoes line 1. The first sentence is written with a colon so the voice says it in one breath (two separate clips swallowed the word 'It'). S45 holds through 'It was never following Mom:' (Pip's ear on Mom's stomach, five soft lantern glows down the hall behind them; the tiny heartbeat has just stopped so the line is clean). S46 (flash-cut on 'it was inside', about 0.6 s): Mom's belly laugh on the porch from S14, both hands on her stomach, now centre frame. S47 (flash-cut on 'her.' and the 0.2 s pause, about 0.45 s): the paint tin behind Dad's back (S27). S49 ('The whole street', about 0.6 s): the seven cousins next door grinning and waving at our porch (from S14), now in focus; then on 'knew' and the 0.2 s pause after it (marker s49b, about 0.4 s) a cut-in on the yellow-ribbon parcel on our top step, a pair of tiny knitted socks poking out of it. S50 ('Except me.'): top-down: I lie in the wreck of the crib; Pip, Mom and Dad lean in from three edges of the frame and Pip's arms go round my neck. My sheepish 'smile' in the middle, a crib slat stuck through my hood, headphones on."
+  },
+  {
+   "id": "b23",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "Next morning, lantern number 6 lights up. Something thumps in the attic.",
+   "start": 61.22,
+   "end": 64.187,
+   "words": [
+    {
+     "text": "Next",
+     "start": 61.235,
+     "end": 61.511
+    },
+    {
+     "text": "morning",
+     "start": 61.511,
+     "end": 61.835
+    },
+    {
+     "text": "lantern",
+     "start": 61.915,
+     "end": 62.246
+    },
+    {
+     "text": "number",
+     "start": 62.246,
+     "end": 62.528
+    },
+    {
+     "text": "6",
+     "start": 62.528,
+     "end": 62.675
+    },
+    {
+     "text": "lights",
+     "start": 62.675,
+     "end": 62.957
+    },
+    {
+     "text": "up",
+     "start": 62.957,
+     "end": 63.094
+    },
+    {
+     "text": "Something",
+     "start": 63.224,
+     "end": 63.508
+    },
+    {
+     "text": "thumps",
+     "start": 63.508,
+     "end": 63.751
+    },
+    {
+     "text": "in",
+     "start": 63.751,
+     "end": 63.868
+    },
+    {
+     "text": "the",
+     "start": 63.868,
+     "end": 63.986
+    },
+    {
+     "text": "attic",
+     "start": 63.986,
+     "end": 64.187
+    }
+   ],
+   "slot": "BUTTON",
+   "red": [
+    "6",
+    "thumps"
+   ],
+   "visual": "BUTTON, the unresolved sting. A dip through white (fx.overlay, the only one) into morning, the third lighting state: sun pours down the hallway through the front door, which stands open for the first time, with light shafts in the dust. The soft music box score carries on to the last frame. Three shots. S51 ('Next morning,'): from the porch looking in through the open front door. Across the top of the frame hang our five lanterns, and the fifth tag now reads BABY in Pip's crayon. Inside: I am on my knees rebuilding the crib with Dad's screwdriver (my cost) and Pip hands me a slat; behind us Mom stands with a hand on her stomach and Dad holds the instruction sheet upside down. S52 ('lantern number 6 lights up.'): macro insert on the beam, the mirror of S03: next to BABY a sixth paper lantern unfolds and catches with a flare and one lub-dub. Its tag is blank. S54 ('Something thumps in the attic.'): top-down from the ceiling hatch: four faces snap upward at once (reverse shot of everyone staring). Dust sifts down from the edges of the hatch."
+  },
+  {
+   "id": "b24",
+   "speaker": "narr",
+   "kind": "line",
+   "text": "In this town, lanterns are never wrong: 6 lanterns. 5 of us.",
+   "start": 64.302,
+   "end": 67.525,
+   "words": [
+    {
+     "text": "In",
+     "start": 64.317,
+     "end": 64.461
+    },
+    {
+     "text": "this",
+     "start": 64.461,
+     "end": 64.657
+    },
+    {
+     "text": "town",
+     "start": 64.657,
+     "end": 64.905
+    },
+    {
+     "text": "lanterns",
+     "start": 64.985,
+     "end": 65.47
+    },
+    {
+     "text": "are",
+     "start": 65.47,
+     "end": 65.644
+    },
+    {
+     "text": "never",
+     "start": 65.644,
+     "end": 65.943
+    },
+    {
+     "text": "wrong",
+     "start": 65.943,
+     "end": 66.179
+    },
+    {
+     "text": "6",
+     "start": 66.179,
+     "end": 66.366
+    },
+    {
+     "text": "lanterns",
+     "start": 66.366,
+     "end": 66.851
+    },
+    {
+     "text": "5",
+     "start": 67.001,
+     "end": 67.184
+    },
+    {
+     "text": "of",
+     "start": 67.184,
+     "end": 67.355
+    },
+    {
+     "text": "us",
+     "start": 67.355,
+     "end": 67.525
+    }
+   ],
+   "slot": "BUTTON (last line)",
+   "red": [
+    "6",
+    "5"
+   ],
+   "visual": "Last line: line 1 returns with one thing changed, and '6 lanterns. 5 of us.' mirrors '5 lanterns. 4 of us.' so the end loops into the opening. Two shots. S55 ('In this town, lanterns are never wrong:'): low hero: I plant the step stool under the hatch again. Pip is already standing on it beside me, wearing the frying pan as a helmet and holding the torch. She is hunting with me now. S56 ('6 lanterns. 5 of us.'): count shot from the hall through the open front door: six lanterns in a row in the morning sun (MOM, DAD, ME, PIP, BABY and one blank tag), and all of us in the same frame: Pip and me under the hatch with our hands flat on it, Mom and Dad behind us, Mom with both hands on her stomach (the S14 gesture, now out in the open: she is two of the five). Six lights, five of us, one blank tag."
+  },
+  {
+   "id": "b25",
+   "speaker": "pip",
+   "kind": "huss",
+   "text": "HUSS!",
+   "start": 67.58,
+   "end": 67.84,
+   "words": [
+    {
+     "text": "HUSS!",
+     "start": 67.58,
+     "end": 67.84
+    }
+   ],
+   "pitch": 1.42,
+   "space": "room",
+   "slot": "H5 (callback)",
+   "visual": "H5, the callback, and the last sound of the video: Pip's HUSS (the real HUSS sample pitched up, never a TTS voice). S57: HUSS ritual, identical every time: the cut lands on the HUSS; medium-close low hero on the narrator; 'huss' strain face; cam.punch; about 0.3 s of ramped slow motion; the yellow HUSS! stamp; a foley impact under the sample; the music dips 6 dB for 0.3 s and carries on (the new HUSS dip in build_episode, engine_features 3). The bookend: SETUP A's low angle from kid height toward the front door, second and last use, but tight (fov 38): Pip on the stool and me side by side, waist up, both of us with our palms on the hatch at the top of the frame, 'huss' faces; behind us, soft through depth of field, the sunny open front door and six lanterns where five glowed at night. Where I heaved the wardrobe alone, we shove together. The hatch lifts a hand's width, and a ringed grey tail flicks across the gap for four frames. HARD CUT TO BLACK on the sound. No outro, no end card. The question left for the comments: twins, or raccoons?"
+  }
+ ],
+ "words": [
+  {
+   "text": "In",
+   "start": 0.115,
+   "end": 0.26,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 0.26,
+   "end": 0.456,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 0.456,
+   "end": 0.704,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "every",
+   "start": 0.784,
+   "end": 1.057,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "house",
+   "start": 1.057,
+   "end": 1.33,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "lights",
+   "start": 1.33,
+   "end": 1.66,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "one",
+   "start": 1.66,
+   "end": 1.876,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "lantern",
+   "start": 1.876,
+   "end": 2.264,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "for",
+   "start": 2.264,
+   "end": 2.48,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "every",
+   "start": 2.48,
+   "end": 2.753,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "beating",
+   "start": 2.753,
+   "end": 3.083,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "heart",
+   "start": 3.083,
+   "end": 3.356,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "inside",
+   "start": 3.356,
+   "end": 3.744,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Except",
+   "start": 3.843,
+   "end": 4.21,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "ours",
+   "start": 4.21,
+   "end": 4.469,
+   "beat": "b01",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.514,
+   "end": 4.774,
+   "beat": "b02",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 4.724,
+   "end": 4.984,
+   "beat": "b02",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "5",
+   "start": 5.139,
+   "end": 5.335,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "lanterns",
+   "start": 5.335,
+   "end": 5.846,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "4",
+   "start": 5.976,
+   "end": 6.156,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "of",
+   "start": 6.156,
+   "end": 6.325,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "us",
+   "start": 6.325,
+   "end": 6.494,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "My",
+   "start": 6.644,
+   "end": 6.831,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "little",
+   "start": 6.831,
+   "end": 7.116,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "sister",
+   "start": 7.116,
+   "end": 7.402,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Pip",
+   "start": 7.402,
+   "end": 7.589,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "whispers",
+   "start": 7.589,
+   "end": 7.924,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "who's",
+   "start": 8.014,
+   "end": 8.19,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "the",
+   "start": 8.19,
+   "end": 8.32,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "other",
+   "start": 8.32,
+   "end": 8.496,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "one?",
+   "start": 8.496,
+   "end": 8.673,
+   "beat": "b03",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Lanterns",
+   "start": 8.803,
+   "end": 9.189,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "are",
+   "start": 9.189,
+   "end": 9.328,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "never",
+   "start": 9.328,
+   "end": 9.565,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "wrong",
+   "start": 9.565,
+   "end": 9.753,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Next",
+   "start": 9.883,
+   "end": 10.221,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "door",
+   "start": 10.221,
+   "end": 10.442,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "7",
+   "start": 10.522,
+   "end": 10.737,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "cousins",
+   "start": 10.737,
+   "end": 11.224,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "7",
+   "start": 11.304,
+   "end": 11.51,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "lanterns",
+   "start": 11.51,
+   "end": 12.044,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "The",
+   "start": 12.174,
+   "end": 12.316,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "baker's",
+   "start": 12.316,
+   "end": 12.661,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "alone",
+   "start": 12.661,
+   "end": 12.956,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "3",
+   "start": 13.036,
+   "end": 13.22,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "lanterns",
+   "start": 13.22,
+   "end": 13.698,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "That's",
+   "start": 13.828,
+   "end": 14.042,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "how",
+   "start": 14.042,
+   "end": 14.211,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "she",
+   "start": 14.211,
+   "end": 14.336,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "found",
+   "start": 14.336,
+   "end": 14.595,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "the",
+   "start": 14.595,
+   "end": 14.72,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "raccoons",
+   "start": 14.72,
+   "end": 15.024,
+   "beat": "b04",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "Mom",
+   "start": 15.154,
+   "end": 15.354,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "just",
+   "start": 15.354,
+   "end": 15.659,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "laughs",
+   "start": 15.659,
+   "end": 15.912,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "It's",
+   "start": 16.042,
+   "end": 16.251,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "broken",
+   "start": 16.251,
+   "end": 16.68,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "she",
+   "start": 16.76,
+   "end": 16.929,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "says",
+   "start": 16.929,
+   "end": 17.158,
+   "beat": "b05",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "And",
+   "start": 17.288,
+   "end": 17.474,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "Pip",
+   "start": 17.474,
+   "end": 17.659,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "hasn't",
+   "start": 17.659,
+   "end": 17.991,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "slept",
+   "start": 17.991,
+   "end": 18.275,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "all",
+   "start": 18.275,
+   "end": 18.411,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "week",
+   "start": 18.411,
+   "end": 18.597,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "So",
+   "start": 18.747,
+   "end": 18.924,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "tonight",
+   "start": 18.924,
+   "end": 19.242,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "I",
+   "start": 19.322,
+   "end": 19.455,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "hunt",
+   "start": 19.455,
+   "end": 19.682,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "it",
+   "start": 19.682,
+   "end": 19.815,
+   "beat": "b06",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "I",
+   "start": 19.945,
+   "end": 20.071,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "get",
+   "start": 20.071,
+   "end": 20.242,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "my",
+   "start": 20.242,
+   "end": 20.413,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "shoulders",
+   "start": 20.413,
+   "end": 20.764,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "under",
+   "start": 20.764,
+   "end": 20.98,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 20.98,
+   "end": 21.107,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "attic",
+   "start": 21.107,
+   "end": 21.323,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "hatch",
+   "start": 21.323,
+   "end": 21.539,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "and",
+   "start": 21.539,
+   "end": 21.71,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "shove",
+   "start": 21.71,
+   "end": 21.881,
+   "beat": "b07",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "HUSS!",
+   "start": 21.936,
+   "end": 22.196,
+   "beat": "b08",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "Nothing",
+   "start": 22.391,
+   "end": 22.693,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "but",
+   "start": 22.693,
+   "end": 22.891,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "dust",
+   "start": 22.891,
+   "end": 23.141,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "The",
+   "start": 23.271,
+   "end": 23.409,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "hatch",
+   "start": 23.409,
+   "end": 23.646,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "slams",
+   "start": 23.646,
+   "end": 23.932,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "shut",
+   "start": 23.932,
+   "end": 24.119,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "and",
+   "start": 24.199,
+   "end": 24.387,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Pip",
+   "start": 24.387,
+   "end": 24.574,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "screams",
+   "start": 24.574,
+   "end": 24.91,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "you're",
+   "start": 24.91,
+   "end": 25.098,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "scarier",
+   "start": 25.098,
+   "end": 25.433,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "than",
+   "start": 25.433,
+   "end": 25.621,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "it",
+   "start": 25.621,
+   "end": 25.759,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "is",
+   "start": 25.759,
+   "end": 25.897,
+   "beat": "b09",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Next",
+   "start": 26.027,
+   "end": 26.342,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "evening",
+   "start": 26.342,
+   "end": 26.657,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Mom",
+   "start": 26.787,
+   "end": 26.984,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "walks",
+   "start": 26.984,
+   "end": 27.234,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "to",
+   "start": 27.234,
+   "end": 27.379,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "the",
+   "start": 27.379,
+   "end": 27.525,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "shop",
+   "start": 27.525,
+   "end": 27.722,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "and",
+   "start": 27.722,
+   "end": 27.92,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "2",
+   "start": 27.92,
+   "end": 28.076,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "lanterns",
+   "start": 28.076,
+   "end": 28.481,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "go",
+   "start": 28.481,
+   "end": 28.679,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "out",
+   "start": 28.679,
+   "end": 28.876,
+   "beat": "b10",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Not",
+   "start": 29.006,
+   "end": 29.216,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "1",
+   "start": 29.216,
+   "end": 29.381,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "but",
+   "start": 29.381,
+   "end": 29.591,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "2",
+   "start": 29.591,
+   "end": 29.757,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "It",
+   "start": 29.927,
+   "end": 30.05,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "isn't",
+   "start": 30.05,
+   "end": 30.305,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "hiding",
+   "start": 30.305,
+   "end": 30.604,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "in",
+   "start": 30.604,
+   "end": 30.728,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "our",
+   "start": 30.728,
+   "end": 30.895,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "house",
+   "start": 30.895,
+   "end": 31.106,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "It's",
+   "start": 31.256,
+   "end": 31.452,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "following",
+   "start": 31.452,
+   "end": 31.854,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Mom",
+   "start": 31.854,
+   "end": 32.049,
+   "beat": "b11",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Mom",
+   "start": 32.319,
+   "end": 32.526,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "comes",
+   "start": 32.526,
+   "end": 32.788,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "home",
+   "start": 32.788,
+   "end": 33.049,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "Number",
+   "start": 33.179,
+   "end": 33.508,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "5",
+   "start": 33.508,
+   "end": 33.679,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "follows",
+   "start": 33.679,
+   "end": 34.065,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "her",
+   "start": 34.065,
+   "end": 34.223,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "in",
+   "start": 34.223,
+   "end": 34.382,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "I",
+   "start": 34.512,
+   "end": 34.664,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "warn",
+   "start": 34.664,
+   "end": 34.925,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Dad",
+   "start": 34.925,
+   "end": 35.131,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "but",
+   "start": 35.211,
+   "end": 35.384,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "he's",
+   "start": 35.384,
+   "end": 35.556,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "hiding",
+   "start": 35.556,
+   "end": 35.864,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "something",
+   "start": 35.864,
+   "end": 36.173,
+   "beat": "b12",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "At",
+   "start": 36.303,
+   "end": 36.445,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "midnight",
+   "start": 36.445,
+   "end": 36.841,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "something's",
+   "start": 36.921,
+   "end": 37.286,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "in",
+   "start": 37.286,
+   "end": 37.417,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "our",
+   "start": 37.417,
+   "end": 37.595,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "kitchen",
+   "start": 37.595,
+   "end": 37.913,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "eating",
+   "start": 37.993,
+   "end": 38.194,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "straight",
+   "start": 38.194,
+   "end": 38.479,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "out",
+   "start": 38.479,
+   "end": 38.638,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "of",
+   "start": 38.638,
+   "end": 38.755,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "the",
+   "start": 38.755,
+   "end": 38.872,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "fridge",
+   "start": 38.872,
+   "end": 39.114,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "Not",
+   "start": 39.284,
+   "end": 39.485,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "human",
+   "start": 39.485,
+   "end": 39.845,
+   "beat": "b13",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Then",
+   "start": 40.175,
+   "end": 40.379,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "hammering",
+   "start": 40.379,
+   "end": 40.799,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "from",
+   "start": 40.879,
+   "end": 41.094,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 41.094,
+   "end": 41.219,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "room",
+   "start": 41.219,
+   "end": 41.389,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "nobody",
+   "start": 41.389,
+   "end": 41.739,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "opens",
+   "start": 41.739,
+   "end": 42.043,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "I",
+   "start": 42.173,
+   "end": 42.301,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "charge",
+   "start": 42.301,
+   "end": 42.612,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "the",
+   "start": 42.612,
+   "end": 42.74,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "door",
+   "start": 42.74,
+   "end": 42.913,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "and",
+   "start": 42.913,
+   "end": 43.087,
+   "beat": "b14",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "HUSS!",
+   "start": 43.142,
+   "end": 43.402,
+   "beat": "b15",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "It",
+   "start": 43.537,
+   "end": 43.684,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "holds",
+   "start": 43.684,
+   "end": 44.04,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "Then",
+   "start": 44.31,
+   "end": 44.52,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "footsteps",
+   "start": 44.52,
+   "end": 45.007,
+   "beat": "b16",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "I",
+   "start": 45.257,
+   "end": 45.39,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 0
+  },
+  {
+   "text": "back",
+   "start": 45.39,
+   "end": 45.572,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 1
+  },
+  {
+   "text": "up",
+   "start": 45.572,
+   "end": 45.706,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 2
+  },
+  {
+   "text": "the",
+   "start": 45.706,
+   "end": 45.84,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 3
+  },
+  {
+   "text": "whole",
+   "start": 45.84,
+   "end": 46.069,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 4
+  },
+  {
+   "text": "hallway",
+   "start": 46.069,
+   "end": 46.394,
+   "beat": "b17",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 5
+  },
+  {
+   "text": "Then",
+   "start": 46.524,
+   "end": 46.729,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 0
+  },
+  {
+   "text": "I",
+   "start": 46.729,
+   "end": 46.88,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 1
+  },
+  {
+   "text": "run",
+   "start": 46.88,
+   "end": 47.085,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 2
+  },
+  {
+   "text": "at",
+   "start": 47.085,
+   "end": 47.236,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 3
+  },
+  {
+   "text": "it",
+   "start": 47.236,
+   "end": 47.387,
+   "beat": "b18",
+   "kind": "line",
+   "speaker": "narrlow",
+   "i": 4
+  },
+  {
+   "text": "HUSS!",
+   "start": 47.952,
+   "end": 48.212,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 0
+  },
+  {
+   "text": "HUSS!",
+   "start": 48.162,
+   "end": 48.422,
+   "beat": "b19",
+   "kind": "huss",
+   "speaker": "me",
+   "i": 1
+  },
+  {
+   "text": "The",
+   "start": 48.577,
+   "end": 48.706,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "door",
+   "start": 48.706,
+   "end": 48.88,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "just",
+   "start": 48.88,
+   "end": 49.147,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "opens",
+   "start": 49.147,
+   "end": 49.459,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "I",
+   "start": 49.589,
+   "end": 49.714,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "land",
+   "start": 49.714,
+   "end": 49.927,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "in",
+   "start": 49.927,
+   "end": 50.052,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "a",
+   "start": 50.052,
+   "end": 50.177,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "half-built",
+   "start": 50.177,
+   "end": 50.523,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "crib",
+   "start": 50.523,
+   "end": 50.737,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "Dad's",
+   "start": 50.887,
+   "end": 51.085,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "holding",
+   "start": 51.085,
+   "end": 51.407,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "a",
+   "start": 51.407,
+   "end": 51.522,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "screwdriver",
+   "start": 51.522,
+   "end": 51.968,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "Mom's",
+   "start": 52.098,
+   "end": 52.331,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "dipping",
+   "start": 52.331,
+   "end": 52.613,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 15
+  },
+  {
+   "text": "a",
+   "start": 52.613,
+   "end": 52.749,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 16
+  },
+  {
+   "text": "pickle",
+   "start": 52.749,
+   "end": 53.03,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 17
+  },
+  {
+   "text": "in",
+   "start": 53.03,
+   "end": 53.166,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 18
+  },
+  {
+   "text": "ice",
+   "start": 53.166,
+   "end": 53.351,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 19
+  },
+  {
+   "text": "cream",
+   "start": 53.351,
+   "end": 53.584,
+   "beat": "b20",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 20
+  },
+  {
+   "text": "Mom",
+   "start": 53.714,
+   "end": 53.892,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "holds",
+   "start": 53.892,
+   "end": 54.212,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "up",
+   "start": 54.212,
+   "end": 54.343,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "a",
+   "start": 54.343,
+   "end": 54.474,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "tiny",
+   "start": 54.474,
+   "end": 54.747,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "black",
+   "start": 54.747,
+   "end": 54.972,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "picture",
+   "start": 54.972,
+   "end": 55.292,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "And",
+   "start": 55.442,
+   "end": 55.629,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "Pip",
+   "start": 55.629,
+   "end": 55.816,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "whispers",
+   "start": 55.816,
+   "end": 56.151,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "is",
+   "start": 56.151,
+   "end": 56.289,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "that",
+   "start": 56.289,
+   "end": 56.477,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "the",
+   "start": 56.477,
+   "end": 56.615,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "other",
+   "start": 56.615,
+   "end": 56.802,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "one?",
+   "start": 56.802,
+   "end": 56.989,
+   "beat": "b21",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "It",
+   "start": 57.139,
+   "end": 57.286,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "was",
+   "start": 57.286,
+   "end": 57.485,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "never",
+   "start": 57.485,
+   "end": 57.737,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "following",
+   "start": 57.737,
+   "end": 58.145,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "Mom",
+   "start": 58.145,
+   "end": 58.344,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "it",
+   "start": 58.344,
+   "end": 58.491,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "was",
+   "start": 58.491,
+   "end": 58.69,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "inside",
+   "start": 58.69,
+   "end": 59.046,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "her",
+   "start": 59.046,
+   "end": 59.193,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "The",
+   "start": 59.423,
+   "end": 59.568,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "whole",
+   "start": 59.568,
+   "end": 59.816,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "street",
+   "start": 59.816,
+   "end": 60.116,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "knew",
+   "start": 60.116,
+   "end": 60.26,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 12
+  },
+  {
+   "text": "Except",
+   "start": 60.49,
+   "end": 60.883,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 13
+  },
+  {
+   "text": "me",
+   "start": 60.883,
+   "end": 61.045,
+   "beat": "b22",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 14
+  },
+  {
+   "text": "Next",
+   "start": 61.235,
+   "end": 61.511,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "morning",
+   "start": 61.511,
+   "end": 61.835,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "lantern",
+   "start": 61.915,
+   "end": 62.246,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "number",
+   "start": 62.246,
+   "end": 62.528,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "6",
+   "start": 62.528,
+   "end": 62.675,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "lights",
+   "start": 62.675,
+   "end": 62.957,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "up",
+   "start": 62.957,
+   "end": 63.094,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "Something",
+   "start": 63.224,
+   "end": 63.508,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "thumps",
+   "start": 63.508,
+   "end": 63.751,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "in",
+   "start": 63.751,
+   "end": 63.868,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "the",
+   "start": 63.868,
+   "end": 63.986,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "attic",
+   "start": 63.986,
+   "end": 64.187,
+   "beat": "b23",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "In",
+   "start": 64.317,
+   "end": 64.461,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 0
+  },
+  {
+   "text": "this",
+   "start": 64.461,
+   "end": 64.657,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 1
+  },
+  {
+   "text": "town",
+   "start": 64.657,
+   "end": 64.905,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 2
+  },
+  {
+   "text": "lanterns",
+   "start": 64.985,
+   "end": 65.47,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 3
+  },
+  {
+   "text": "are",
+   "start": 65.47,
+   "end": 65.644,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 4
+  },
+  {
+   "text": "never",
+   "start": 65.644,
+   "end": 65.943,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 5
+  },
+  {
+   "text": "wrong",
+   "start": 65.943,
+   "end": 66.179,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 6
+  },
+  {
+   "text": "6",
+   "start": 66.179,
+   "end": 66.366,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 7
+  },
+  {
+   "text": "lanterns",
+   "start": 66.366,
+   "end": 66.851,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 8
+  },
+  {
+   "text": "5",
+   "start": 67.001,
+   "end": 67.184,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 9
+  },
+  {
+   "text": "of",
+   "start": 67.184,
+   "end": 67.355,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 10
+  },
+  {
+   "text": "us",
+   "start": 67.355,
+   "end": 67.525,
+   "beat": "b24",
+   "kind": "line",
+   "speaker": "narr",
+   "i": 11
+  },
+  {
+   "text": "HUSS!",
+   "start": 67.58,
+   "end": 67.84,
+   "beat": "b25",
+   "kind": "huss",
+   "speaker": "pip",
+   "i": 0
+  }
+ ],
+ "music": [
+  {
+   "t": 0.02,
+   "mode": "lofi"
+  },
+  {
+   "t": 28.911,
+   "mode": "spooky"
+  },
+  {
+   "t": 40.08,
+   "mode": "cine_swell"
+  },
+  {
+   "t": 46.429,
+   "mode": "none"
+  },
+  {
+   "t": 47.872,
+   "mode": "party"
+  },
+  {
+   "t": 53.619,
+   "mode": "lofi"
+  }
+ ],
+ "markers": {
+  "s02": 1.057,
+  "s03": 1.876,
+  "s04": 3.843,
+  "s07": 6.644,
+  "s08": 8.014,
+  "bub1": 8.014,
+  "s10": 9.883,
+  "s11": 11.272,
+  "s12": 12.196,
+  "tilt12": 13.036,
+  "s13": 13.828,
+  "bub2": 15.289,
+  "s15": 16.042,
+  "s17": 18.747,
+  "s21": 24.199,
+  "s22": 24.91,
+  "s24": 28.991,
+  "flip": 28.991,
+  "s25": 29.927,
+  "s26": 31.256,
+  "s27b": 33.179,
+  "s27": 34.512,
+  "tin_turn": 35.556,
+  "s30": 36.921,
+  "s31": 38.752,
+  "s32": 39.284,
+  "s33": 39.88,
+  "s34": 42.173,
+  "s37": 44.21,
+  "s42": 49.589,
+  "s43": 50.887,
+  "pov_whip": 52.098,
+  "s45": 55.292,
+  "bub3": 56.151,
+  "s46": 58.34,
+  "s47": 58.946,
+  "s49": 59.423,
+  "s49b": 60.066,
+  "s50": 60.49,
+  "s52": 61.915,
+  "s54": 63.224,
+  "s56": 66.179
+ },
+ "title": "In This Town \u2014 Five Lanterns",
+ "amb": [
+  {
+   "t": 0.0,
+   "bed": {
+    "name": "jungle_night",
+    "gain": 0.3
+   }
+  },
+  {
+   "t": 46.409,
+   "bed": "none"
+  }
+ ]
+}
